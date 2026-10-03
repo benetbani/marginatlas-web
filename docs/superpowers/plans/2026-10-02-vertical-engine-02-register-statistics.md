@@ -22,7 +22,8 @@
 - The tree holds many untracked files that are not this plan's. Every commit names its files; never `git add -A` or `.`.
 - The edits to existing builders are given as exact Replace / With pairs. Apply them in the order given: each "Replace"
   block then occurs exactly once (checked on 2026-10-02 by applying them in order to fresh copies of the real builders and
-  rebuilding every table; the slices exported from them were byte-identical to the validated ones).
+  rebuilding every table, and again on 2026-10-03 with the hardened estimators: every table rebuilt, the 36 tests passing,
+  and plan 03's 139 checks and its registers gate passing on the slices exported from them).
 - Rebuild order, because each step reads the one before: `build_nomis.py` -> `build_demography.py` ->
   `enrich_failure_rates.py` -> `build_editorial.py` -> `draft_stories.py`; `export_for_site.py` last (plan 03 runs it into
   the website).
@@ -36,6 +37,7 @@
 |---|---|
 | `registers/uk/estimators/__init__.py` | marks the package (empty) |
 | `registers/uk/estimators/banded.py` | band quantiles, the CDF, the rounding range, the anchor mean, the lognormal model check |
+| `registers/uk/estimators/rounding.py` | `half_up`: a printed figure rounded the website's way (pennies at any number of places) |
 | `registers/uk/estimators/rates.py` | Wilson and Garwood intervals, the publication rule, two-proportion tests, Holm |
 | `registers/uk/estimators/survival.py` | the synthetic cohort (survival on the latest year's closure rates) with Greenwood intervals |
 | `registers/uk/tests/conftest.py` | puts `registers/uk` on the import path for pytest run from `E:/atlas` |
@@ -53,15 +55,22 @@
 The register gives counts in ten turnover bands and nothing inside a band. Inside a band [L, U) businesses are read as
 log-uniform, so the q-quantile in band k is `Q = L (U / L)^((qN - C_{k-1}) / n_k)` and the CDF is the same formula inverted;
 the first band is floored at 5k and the open top band capped at 100m, and a quantile in either prints only as "under 50k" or
-"over 50m". Each count is rounded to the nearest 5, so the rounding range of a quantile comes from four corner evaluations:
-every band below the quantile's band moved one way by 2.5, every band above the other way, the quantile's own band tried
-both ways (a quantile is monotone in each count, so the corners are the extremes). `trimmed_mean` is the anchor of plan
+"over 50m". Each count is rounded to the nearest 5, so the rounding range of a quantile is its smallest and largest value
+over the box of counts each within 2.5 of the printed ones. The quantile is the smallest x at which
+`sum_k c_k (G_k(x) - q) >= 0` (`G_k(x)` the share of band k below x); for any x that sum is linear in the counts, so its
+largest value over the box sits at a corner where every band below some m is high and every band from m on is low: the
+range is the smallest and largest quantile over those 22 threshold corners, equal to trying all 1,024 (the test does).
+The first version tried only the corners split at the band holding the printed quantile, and missed the extreme wherever the
+quantile can move to another band: 288 of the 2,597 London cells (five businesses a band with an empty band between:
+136k to 1,587k where the counts allow 100k to 5,612k). Counts are checked: ten of them, finite and not negative (a NaN
+total once came back as an empty area). `trimmed_mean` is the anchor of plan
 03's size rule: the mean sales of businesses in the bands below 5m, each band at its shape's mean: log-flat
 `(U - L) / ln(U / L)` by default, flat `(U + L) / 2` or Pareto `L U ln(U / L) / (U - L)`, which bracket the plausible
 shapes (Pareto <= geometric mean <= log-flat <= flat in every band), with hard bounds that hold whatever the shape.
 `lognormal_fit` maximises
-`sum_k n_k ln(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))` and runs the G-test: it recovers a true lognormal from
-rounded counts and rejects London restaurants at p about 1e-64, which is why pages never print a fitted curve.
+`sum_k n_k ln(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))` and runs the G-test with 10 - 1 - 2 = 7 degrees of
+freedom (an empty band is still a cell of the fit; the first version counted only the non-empty ones): it recovers a true
+lognormal from rounded counts and rejects London restaurants at p about 1e-64, which is why pages never print a fitted curve.
 
 **Files:**
 - Create: `registers/uk/estimators/__init__.py`
@@ -89,6 +98,7 @@ Create `registers/uk/tests/test_banded.py`:
 
 ```python
 """Tests for estimators/banded.py. Run: python -m pytest registers/uk/tests -q"""
+import itertools
 import math
 
 import pytest
@@ -137,6 +147,7 @@ def test_rounding_range_is_narrow_for_london_and_wide_for_a_borough():
 
 def test_lognormal_recovered_when_true():
     fit = lognormal_fit(SYNTHETIC)
+    assert fit["df"] == 7  # ten bands, less one, less two fitted: the two empty bands are cells of the fit too
     assert abs(fit["median_k"] - 280) < 1.0
     assert abs(fit["sigma"] - 1.0) < 0.01
     assert fit["p"] > 0.01
@@ -173,6 +184,31 @@ def test_trimmed_mean_under_the_three_band_shapes():
     assert round(trimmed_mean(RESTAURANTS_LONDON, shape="pareto")[0], 5) == 566.21168
     with pytest.raises(ValueError):
         trimmed_mean(RESTAURANTS_LONDON, shape="normal")
+
+
+def test_rounding_range_finds_an_extreme_in_another_band():
+    # five businesses a band with an empty band between: the median can fall to 100k or rise to 5,612k; trying only the
+    # median's own band saw 136k to 1,587k
+    lo, hi = rounding_range([5, 5, 5, 5, 5, 5, 0, 5, 5, 0], 0.5)
+    assert round(lo, 1) == 100.0 and round(hi, 1) == 5612.3
+
+
+def test_rounding_range_equals_trying_every_corner():
+    # the extremes over the box of possible counts sit at its corners, so all 1,024 of them give the exact answer
+    for counts in ([5, 5, 5, 5, 5, 5, 0, 5, 5, 0], HAIR_BEAUTY_CAMDEN, [10, 0, 5, 0, 15, 0, 5, 0, 0, 5], [0, 5, 0, 0, 10, 5, 0, 0, 5, 0]):
+        values = [v for signs in itertools.product((-2.5, 2.5), repeat=10)
+                  if (v := empirical_quantile([max(0.0, c + d) for c, d in zip(counts, signs)], 0.5)) is not None]
+        lo, hi = rounding_range(counts, 0.5)
+        assert math.isclose(lo, min(values)) and math.isclose(hi, max(values))
+
+
+def test_counts_must_be_ten_finite_and_not_negative():
+    bad_counts = ([1] * 9, [1] * 11, [5, -5] + [0] * 8, [5, math.nan] + [0] * 8, [5, math.inf] + [0] * 8)
+    readers = (lambda c: empirical_quantile(c, 0.5), lambda c: empirical_cdf(c, 100), lambda c: rounding_range(c, 0.5), lognormal_fit, trimmed_mean)
+    for counts in bad_counts:
+        for read in readers:
+            with pytest.raises(ValueError):
+                read(counts)
 ```
 
 - [ ] **Step 3: Run it and watch it fail**
@@ -205,15 +241,24 @@ above any sales figure comes from the same assumption as the quantiles.
 
 LOGNORMAL (the model check). A lognormal fitted by maximum likelihood to the band counts:
     log L(mu, sigma) = sum_k n_k * log(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))
-with the G-test of fit (df = non-empty bands - 3). When the fit holds (p >= 0.01) and its median sits within 10% of the
+with the G-test of fit, df = 10 - 1 - 2 = 7: the fit is the multinomial's over all ten bands, so an empty band is still a
+cell (its observed 0 adds nothing to G, its expected count is in the fit). When the fit holds (p >= 0.01) and its median sits within 10% of the
 empirical one, the two agree and the empirical figure prints; when they disagree the figure still prints (it assumes less)
 and the disagreement is recorded for review.
 
 ROUNDING, not sampling. The register is a census: there is no sampling error. Its error is that every count is rounded to
-the nearest 5. rounding_range() gives the smallest and largest quantile the true counts could produce: each count can be
-off by up to 2.5, a quantile falls when counts below it rise or counts above it fall, so the extremes are reached at the
-corners where every band below moves one way and every band above the other (the band holding the quantile is tried both
-ways).
+the nearest 5. rounding_range() gives the smallest and largest quantile the true counts could produce, each count being off
+by up to 2.5 (never below 0). It is exact: the quantile is the smallest x at which sum_k c_k (G_k(x) - q) >= 0, G_k(x)
+being the share of band k below x, and for any x that sum is linear in the counts, so its largest value over the box of
+possible counts is at a corner where every band below some m is high and every band from m on is low (the band holding x
+on whichever side its share below x puts it). The smallest possible quantile is therefore the smallest over the eleven such
+corners, and the largest the same with the sides swapped: twenty-two evaluations, equal to trying all 1,024 corners.
+Trying only the corners split at the band that holds the printed quantile misses the extreme whenever the quantile can move
+to another band: on the London table of 2026-10-02 it did in 288 of 2,597 cells (five businesses a band with an empty band
+between: 136k to 1,587k where the counts allow 100k to 5,612k).
+
+COUNTS are the ten band counts, finite and not negative; anything else is refused (a NaN total compared false with every
+bound and the quantile came back None as if the area were empty).
 """
 from __future__ import annotations
 
@@ -230,6 +275,15 @@ FLOOR_K = 5.0
 TOP_CAP_K = 100000.0
 
 
+def _counts(counts: Sequence[float]) -> list[float]:
+    if len(counts) != len(BANDS_K):
+        raise ValueError("ten band counts expected")
+    out = [float(c) for c in counts]
+    if any(not math.isfinite(c) or c < 0 for c in out):
+        raise ValueError(f"band counts must be finite and not negative: {list(counts)}")
+    return out
+
+
 def _log_edges(k: int) -> tuple[float, float]:
     lo, hi = BANDS_K[k]
     return math.log(max(lo, FLOOR_K)), math.log(min(hi, TOP_CAP_K))
@@ -239,7 +293,8 @@ def empirical_quantile(counts: Sequence[float], q: float) -> float | None:
     """The q-quantile of sales in thousands of pounds, or None when there are no businesses."""
     if not 0 < q < 1:
         raise ValueError("q must be strictly between 0 and 1")
-    n = float(sum(counts))
+    counts = _counts(counts)
+    n = sum(counts)
     if n <= 0:
         return None
     target = q * n
@@ -271,8 +326,7 @@ def trimmed_mean(counts: Sequence[float], upto_band: int = 7, shape: str = "log-
     site's, not one site's. Returns (mean, lo, hi), lo and hi bounding the mean whatever the shape inside each band (every
     business on its band's lower or upper edge, the first band from 0); None when those bands hold nobody. Equal to the
     website's bandMeanK (src/lib/uk/pnl/banded.ts), which anchors the profit-and-loss model's size rule."""
-    if len(counts) != len(BANDS_K):
-        raise ValueError("ten band counts expected")
+    counts = _counts(counts)
     if not 1 <= upto_band < len(BANDS_K):
         raise ValueError("upto_band must be 1 to 9 (the top band is open)")
     n = total = lo = hi = 0.0
@@ -287,7 +341,8 @@ def trimmed_mean(counts: Sequence[float], upto_band: int = 7, shape: str = "log-
 
 def empirical_cdf(counts: Sequence[float], x_k: float) -> float | None:
     """The share of businesses with sales below x_k (thousands of pounds)."""
-    n = float(sum(counts))
+    counts = _counts(counts)
+    n = sum(counts)
     if n <= 0:
         return None
     if x_k <= 0:
@@ -304,30 +359,15 @@ def empirical_cdf(counts: Sequence[float], x_k: float) -> float | None:
 
 
 def rounding_range(counts: Sequence[float], q: float, half: float = 2.5) -> tuple[float, float] | None:
-    """The smallest and largest q-quantile that counts each within +-half of these could give."""
-    base = empirical_quantile(counts, q)
-    if base is None:
+    """The smallest and largest q-quantile that counts each within +-half of these could give (exact: see the header)."""
+    if empirical_quantile(counts, q) is None:
         return None
-    n = float(sum(counts))
-    cum = 0.0
-    kq = len(counts) - 1
-    for k, c in enumerate(counts):
-        if c > 0 and cum + c >= q * n:
-            kq = k
-            break
-        cum += c
+    counts = _counts(counts)
     out = []
-    for low_side in (True, False):
-        for at in (-half, half):
-            adj = []
-            for k, c in enumerate(counts):
-                # a printed 0 can hide up to 2 businesses, so an empty band moves like any other (but never below 0)
-                if k < kq:
-                    adj.append(max(0.0, c + (half if low_side else -half)))
-                elif k > kq:
-                    adj.append(max(0.0, c - (half if low_side else -half)))
-                else:
-                    adj.append(max(0.0, c + at))
+    for m in range(len(counts) + 1):  # the bands below m move one way, the bands from m the other
+        for below in (half, -half):
+            # a printed 0 can hide up to 2 businesses, so an empty band moves like any other (but never below 0)
+            adj = [max(0.0, c + below) if k < m else max(0.0, c - below) for k, c in enumerate(counts)]
             v = empirical_quantile(adj, q)
             if v is not None:
                 out.append(v)
@@ -342,6 +382,7 @@ def _phi(z: float) -> float:
 
 def lognormal_fit(counts: Sequence[float]) -> dict | None:
     """Maximum-likelihood lognormal for band counts: mu, sigma (of ln sales in thousands), the G statistic and its p-value."""
+    counts = _counts(counts)
     nonempty = [k for k, c in enumerate(counts) if c > 0]
     if len(nonempty) < 3:
         return None
@@ -363,7 +404,7 @@ def lognormal_fit(counts: Sequence[float]) -> dict | None:
         s = math.exp(ls)
         return -sum(counts[k] * math.log(max(band_p(k, m, s), 1e-300)) for k in nonempty)
 
-    n = float(sum(counts))
+    n = sum(counts)
     med = empirical_quantile(counts, 0.5) or 100.0
     res = optimize.minimize(nll, [math.log(med), 0.0], method="Nelder-Mead", options={"xatol": 1e-9, "fatol": 1e-9, "maxiter": 10000})
     m, s = float(res.x[0]), float(math.exp(res.x[1]))
@@ -371,7 +412,7 @@ def lognormal_fit(counts: Sequence[float]) -> dict | None:
     for k in nonempty:
         e = n * band_p(k, m, s)
         g += 2 * counts[k] * math.log(counts[k] / max(e, 1e-300))
-    df = len(nonempty) - 3
+    df = len(BANDS_K) - 3
     p = float(stats.chi2.sf(g, df)) if df > 0 else None
     return {"mu": m, "sigma": s, "median_k": math.exp(m), "g": g, "df": df, "p": p}
 ```
@@ -382,7 +423,7 @@ def lognormal_fit(counts: Sequence[float]) -> dict | None:
 python -m pytest registers/uk/tests/test_banded.py -q
 ```
 
-Expected: `10 passed`.
+Expected: `13 passed`.
 
 - [ ] **Step 6: Commit**
 
@@ -401,8 +442,15 @@ where the formula leaves a floating-point crumb); a count alone gets Garwood's e
 from 10 cases (RSE 32% or less) and carries "few cases" from 10 to 29. A duel between the highest and the lowest trade is
 tested with the pooled two-proportion z-test; the home page compares every top member with every bottom member, so the
 p-values are Holm-adjusted (sort ascending, multiply the i-th smallest by m - i + 1, keep them non-decreasing, cap at 1).
+Every printed figure rounds the website's way, through `half_up` in `estimators/rounding.py`: pennies at any number of
+places, half away from zero after 1e-7 of the last unit (Python's `round` sends an exact binary half to the even digit:
+41 insolvencies among 4,000 companies is exactly 10.25 per 1,000, which it prints 10.2 where the website prints 10.3; on
+100,000 numbers `half_up` and the website's pennies agree to the digit). Counts are whole and within their totals, or
+refused. The test pins both edges of the publication rule, the exact top edge of Wilson's interval, a duel with no events
+on either side and Holm's cap.
 
 **Files:**
+- Create: `registers/uk/estimators/rounding.py`
 - Create: `registers/uk/estimators/rates.py`
 - Test: `registers/uk/tests/test_rates.py` (create)
 
@@ -415,6 +463,7 @@ Create `registers/uk/tests/test_rates.py`:
 import pytest
 
 from estimators.rates import garwood, holm, rate_per_1000, two_proportions, wilson
+from estimators.rounding import half_up
 
 
 def test_wilson_on_restaurant_failures():
@@ -448,6 +497,41 @@ def test_duel_is_real():
 
 def test_holm():
     assert [round(v, 4) for v in holm([0.01, 0.04, 0.03])] == [0.03, 0.06, 0.06]
+
+
+def test_publication_rule_at_its_edges():
+    assert rate_per_1000(9, 5000)["publishable"] is False and rate_per_1000(10, 5000)["publishable"] is True
+    assert rate_per_1000(10, 5000)["few_cases"] is True and rate_per_1000(29, 5000)["few_cases"] is True
+    assert rate_per_1000(30, 5000)["few_cases"] is False
+
+
+def test_figures_round_as_the_website_rounds():
+    # 41 of 4,000 is exactly 10.25 per 1,000: Python's round gives 10.2 (half to even), the website's pennies 10.3
+    assert rate_per_1000(41, 4000)["value"] == 10.3
+    assert half_up(2.675, 2) == 2.68 and half_up(-2.5, 0) == -3.0
+    assert half_up(0.03 * 18_544.5, 2) == 556.34  # 556.335 stored a hair low: the 1e-7 allowance is what rounds it up
+    assert half_up(-0.004, 2) == 0.0 and str(half_up(-0.004, 2)) == "0.0"
+
+
+def test_wilson_at_the_top_edge():
+    lo, hi = wilson(500, 500)
+    assert hi == 1.0 and round(1000 * lo, 3) == 992.376
+    assert wilson(10, 10)[1] == 1.0  # the formula's top is 0.9999999999999999 here: the edge is set, not computed
+
+
+def test_no_events_on_either_side_is_no_difference():
+    assert two_proportions(0, 100, 0, 200) == (0.0, 1.0)
+
+
+def test_counts_must_be_whole_and_within_their_totals():
+    for bad in (lambda: wilson(2.5, 10), lambda: wilson(float("nan"), 10), lambda: wilson(-1, 10), lambda: garwood(1.5),
+                lambda: two_proportions(0, 0, 1, 10), lambda: two_proportions(11, 10, 1, 10), lambda: half_up(float("inf"), 1)):
+        with pytest.raises(ValueError):
+            bad()
+
+
+def test_holm_caps_at_one():
+    assert holm([0.6, 0.7]) == [1.0, 1.0]
 ```
 
 - [ ] **Step 2: Run it and watch it fail**
@@ -459,6 +543,35 @@ python -m pytest registers/uk/tests/test_rates.py -q
 Expected: a collection error ending `ModuleNotFoundError: No module named 'estimators.rates'`, exit code 2.
 
 - [ ] **Step 3: Write the implementation**
+
+Create `registers/uk/estimators/rounding.py`:
+
+```python
+"""
+estimators/rounding.py: the one way a register figure is rounded for print, the website's way.
+
+The website rounds money with pennies() in src/lib/uk/law/money.ts: half away from zero, after adding 1e-7 of the last unit,
+so a decimal half that binary floating point stores a hair low (2.675 is 2.67499999999999982...) still rounds up. Python's
+round() differs twice: it sends an exact binary half to the even digit (round(10.25, 1) is 10.2, where a page prints 10.3),
+and it rounds a stored-low half down (round(2.675, 2) is 2.67). half_up() is pennies() at any number of places, computed in
+the same order with the same doubles, so the registers and the website print the same digits for the same number.
+"""
+from __future__ import annotations
+
+import math
+
+
+def half_up(x: float, places: int) -> float:
+    """x rounded to `places` decimals, half away from zero, never -0.0 (which a formatter prints as -0)."""
+    if not math.isfinite(x):
+        raise ValueError(f"half_up: not a finite number ({x})")
+    scale = 10 ** places
+    v = abs(x) * scale + 1e-7
+    q = math.floor(v)
+    if v - q >= 0.5:  # Math.round in the website: the nearest integer, a half going up
+        q += 1
+    return 0.0 if q == 0 else math.copysign(q / scale, x)
+```
 
 Create `registers/uk/estimators/rates.py`:
 
@@ -478,6 +591,9 @@ company is to fail in a year"), and a risk estimated from x events has the uncer
   TWO RATES (a duel): the pooled two-proportion z-test; when one page compares many pairs, the p-values are Holm-adjusted
       (sort ascending, multiply the i-th smallest by (m - i + 1), keep them non-decreasing, cap at 1), and a difference is
       "real" at an adjusted p below 0.01.
+
+Counts are whole numbers: a part count, a negative one or one that is not a number is refused (a NaN slipped through every
+comparison and came back as the interval [0, 1]). Printed figures round as the website rounds (estimators/rounding.py).
 """
 from __future__ import annotations
 
@@ -486,11 +602,21 @@ from typing import Sequence
 
 from scipy import stats
 
+from .rounding import half_up
+
 Z95 = 1.959963984540054
 
 
+def _count(v: float, what: str) -> int:
+    f = float(v)
+    if not f.is_integer() or f < 0:
+        raise ValueError(f"{what}: {v} is not a count")
+    return int(f)
+
+
 def wilson(x: int, n: int, z: float = Z95) -> tuple[float, float]:
-    if n <= 0 or x < 0 or x > n:
+    x, n = _count(x, "wilson"), _count(n, "wilson")
+    if n <= 0 or x > n:
         raise ValueError("wilson: need 0 <= x <= n and n > 0")
     p = x / n
     den = 1 + z * z / n
@@ -503,8 +629,7 @@ def wilson(x: int, n: int, z: float = Z95) -> tuple[float, float]:
 
 
 def garwood(x: int, alpha: float = 0.05) -> tuple[float, float]:
-    if x < 0:
-        raise ValueError("garwood: a count cannot be negative")
+    x = _count(x, "garwood")
     lo = 0.0 if x == 0 else float(stats.chi2.ppf(alpha / 2, 2 * x)) / 2
     hi = float(stats.chi2.ppf(1 - alpha / 2, 2 * (x + 1))) / 2
     return lo, hi
@@ -514,10 +639,10 @@ def rate_per_1000(x: int, n: int) -> dict:
     lo, hi = wilson(x, n)
     rse = 1 / math.sqrt(x) if x > 0 else None
     return {
-        "value": round(1000 * x / n, 1),
-        "lo": round(1000 * lo, 1),
-        "hi": round(1000 * hi, 1),
-        "rse": None if rse is None else round(rse, 3),
+        "value": half_up(1000 * x / n, 1),
+        "lo": half_up(1000 * lo, 1),
+        "hi": half_up(1000 * hi, 1),
+        "rse": None if rse is None else half_up(rse, 3),
         "publishable": x >= 10,
         "few_cases": 10 <= x < 30,
     }
@@ -525,6 +650,9 @@ def rate_per_1000(x: int, n: int) -> dict:
 
 def two_proportions(x1: int, n1: int, x2: int, n2: int) -> tuple[float, float]:
     """Pooled two-proportion z statistic and its two-sided p-value."""
+    x1, n1, x2, n2 = (_count(v, "two_proportions") for v in (x1, n1, x2, n2))
+    if n1 <= 0 or n2 <= 0 or x1 > n1 or x2 > n2:
+        raise ValueError("two_proportions: need 0 <= x <= n and n > 0 on both sides")
     p = (x1 + x2) / (n1 + n2)
     se = math.sqrt(p * (1 - p) * (1 / n1 + 1 / n2))
     if se == 0:
@@ -550,12 +678,12 @@ def holm(pvalues: Sequence[float]) -> list[float]:
 python -m pytest registers/uk/tests/test_rates.py -q
 ```
 
-Expected: `6 passed`.
+Expected: `12 passed`.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add registers/uk/estimators/rates.py registers/uk/tests/test_rates.py
+git add registers/uk/estimators/rounding.py registers/uk/estimators/rates.py registers/uk/tests/test_rates.py
 git commit -m "registers/uk: rates with Wilson and Garwood intervals, the 10-case publication rule, two-proportion tests and Holm, test-first" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
@@ -567,7 +695,9 @@ For a cohort born in year c, `h_c(t) = 1 - s_c(t)/s_c(t-1)` is its chance of clo
 needs is survival on today's closure rates: take each year's hazard from the newest cohort that has both ends of that year
 and chain them, `S(t) = prod_{j<=t} (1 - h_j)`, with Greenwood's variance `S(t)^2 sum_j h_j / (n_j (1 - h_j))`. With the
 2024 tables every hazard is calendar 2024's. Printing each horizon from its own latest cohort instead mixes cohorts and can
-rise from one year to the next, which survival cannot do; the test builds exactly that case.
+rise from one year to the next, which survival cannot do; the test builds exactly that case. It also pins the Greenwood
+bounds (computed independently with exact fractions), stops the curve at a year no cohort has, never uses a cohort without
+the year before, and refuses survivors that rise or fall below zero; figures round the website's way.
 
 **Files:**
 - Create: `registers/uk/estimators/survival.py`
@@ -579,6 +709,8 @@ Create `registers/uk/tests/test_survival.py`:
 
 ```python
 """Tests for estimators/survival.py. Run: python -m pytest registers/uk/tests -q"""
+import pytest
+
 from estimators.survival import synthetic_cohort
 
 BIRTHS = {2019: 1000, 2020: 1000, 2023: 1000}
@@ -609,6 +741,28 @@ def test_mixing_cohorts_rises_where_the_synthetic_curve_cannot():
     assert mixed == [0.95, 0.6, 0.82] and mixed[2] > mixed[1]  # a curve that rises: survival cannot do that
     s = [r["survival"] for r in synthetic_cohort(births, survivors, horizon=3)]
     assert s == [0.95, 0.7125, 0.6874]
+
+
+def test_greenwood_interval():
+    rows = synthetic_cohort(BIRTHS, SURVIVORS)
+    assert [(r["lo"], r["hi"]) for r in rows] == [(0.9365, 0.9635), (0.7244, 0.7789), (0.6064, 0.6672), (0.5114, 0.5744), (0.4027, 0.4659)]
+
+
+def test_a_missing_year_ends_the_curve():
+    rows = synthetic_cohort({2019: 1000}, {2019: {1: 900, 2: 800, 4: 600, 5: 500}})  # year 3 withheld
+    assert [r["year"] for r in rows] == [1, 2]
+
+
+def test_a_cohort_without_the_year_before_is_not_used():
+    rows = synthetic_cohort({2019: 1000, 2021: 1000}, {2019: {1: 900, 2: 800, 3: 700}, 2021: {1: 950, 3: 850}})
+    assert [r["cohort"] for r in rows] == [2021, 2019, 2019]
+
+
+def test_survivors_cannot_rise_or_fall_below_zero():
+    with pytest.raises(ValueError):
+        synthetic_cohort({2019: 1000}, {2019: {1: 900, 2: 950}})
+    with pytest.raises(ValueError):
+        synthetic_cohort({2019: 1000}, {2019: {1: -5}})
 ```
 
 - [ ] **Step 2: Run it and watch it fail**
@@ -641,10 +795,17 @@ It cannot rise, it uses the newest evidence for every year, and S(1) equals the 
 GREENWOOD'S VARIANCE gives each S(t) an interval: Var S(t) ~ S(t)^2 * sum_{j <= t} h_j / (n_j (1 - h_j)), n_j being the
 businesses at risk at the start of year j in the cohort used for that year. With counts rounded to 5, the interval is a
 floor on the uncertainty, not all of it.
+
+A cohort's survivors cannot rise from one year to the next, nor fall below zero (true counts never rise, and rounding to 5
+keeps their order), so either in the data is refused: a rise would make S climb, a negative count would make it negative.
+A year missing from every usable cohort ends the curve there; the years after a gap are not chained across it. Printed
+figures round as the website rounds (estimators/rounding.py).
 """
 from __future__ import annotations
 
 import math
+
+from .rounding import half_up
 
 
 def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]], horizon: int = 5) -> list[dict]:
@@ -660,12 +821,14 @@ def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]
         at_risk = births[c] if t == 1 else survivors[c][t - 1]
         if at_risk <= 0:
             break
+        if not 0 <= survivors[c][t] <= at_risk:
+            raise ValueError(f"synthetic_cohort: cohort {c} has {survivors[c][t]} at year {t} against {at_risk} the year before")
         h = 1 - survivors[c][t] / at_risk
         s *= 1 - h
         if 0 < h < 1:
             var_sum += h / (at_risk * (1 - h))
         se = s * math.sqrt(var_sum)
-        rows.append({"year": t, "cohort": c, "hazard": round(h, 4), "survival": round(s, 4), "lo": round(max(0.0, s - 1.96 * se), 4), "hi": round(min(1.0, s + 1.96 * se), 4)})
+        rows.append({"year": t, "cohort": c, "hazard": half_up(h, 4), "survival": half_up(s, 4), "lo": half_up(max(0.0, s - 1.96 * se), 4), "hi": half_up(min(1.0, s + 1.96 * se), 4)})
     return rows
 ```
 
@@ -675,7 +838,7 @@ def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]
 python -m pytest registers/uk/tests/test_survival.py -q
 ```
 
-Expected: `3 passed`.
+Expected: `7 passed`.
 
 - [ ] **Step 5: Commit**
 
@@ -1398,7 +1561,7 @@ Expected: exit code 0 and one line per feed item.
 python -m pytest registers/uk/tests -q
 ```
 
-Expected: `23 passed`.
+Expected: `36 passed`.
 
 - [ ] **Step 12: Read the four changed items**
 
@@ -1594,9 +1757,9 @@ python registers/uk/export_for_site.py "$(mktemp -d)"
 Expected, on the tables of 2026-10-02 (hashes change when a table is refreshed):
 
 ```
-turnover.json: 4795 rows, 68bf73750597
+turnover.json: 4795 rows, 6b696df64d05
 premises.json: 42 rows, 4bdd8332330c
-survival.json: 114 rows, b5257411f3e0
+survival.json: 114 rows, d41a03c3d50f
 failures.json: 137 rows, 12ceff334174
 ```
 
@@ -1635,8 +1798,9 @@ Tests: `python -m pytest registers/uk/tests -q` from `E:/atlas` (the estimators,
 
 **Estimators (`estimators/`):** `banded.py` (band quantiles, the CDF, the rounding range of a quantile, the anchor mean,
 the lognormal model check), `rates.py` (Wilson and Garwood intervals, the 10-case publication rule, two-proportion tests,
-Holm), `survival.py` (survival on the latest year's closure rates with Greenwood intervals). Their formulas are in each
-module's docstring and in `E:/atlas/website/docs/superpowers/plans/2026-10-02-vertical-engine-00-master.md`.
+Holm), `survival.py` (survival on the latest year's closure rates with Greenwood intervals), `rounding.py` (a printed
+figure rounded the website's way). Their formulas are in each module's docstring and in
+`E:/atlas/website/docs/superpowers/plans/2026-10-02-vertical-engine-00-master.md`.
 ```
 
 - [ ] **Step 2: Run the whole suite once more**
@@ -1645,7 +1809,7 @@ module's docstring and in `E:/atlas/website/docs/superpowers/plans/2026-10-02-ve
 python -m pytest registers/uk/tests -q
 ```
 
-Expected: `23 passed`.
+Expected: `36 passed`.
 
 - [ ] **Step 3: Commit**
 

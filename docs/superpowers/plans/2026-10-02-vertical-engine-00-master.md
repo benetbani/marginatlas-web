@@ -28,7 +28,7 @@ The registers now hold what nobody else publishes in this cut (`E:/atlas/registe
 
 ## 1. What the validation of 2026-10-02 established
 
-Every code block in plans 01 to 04 was written to a scratch copy of the repo layout and run: 335 TypeScript checks pass (law 163, profit and loss 139, presentation 33; counted again on 2026-10-03, after every law and presentation test was hardened against deliberate faults before its run), `tsc --strict` is clean, and every new test's red names a file, a rule and a remedy by the gate-reds census's own classifier (20 of 20 scripts). The builder edits were applied in order to fresh copies of the real builders, every table rebuilt, and 23 Python tests pass on the rebuilt tables; the four slices exported from them are byte-identical to the validated ones. An independent Python implementation (decimal arithmetic, half-up at the penny) agreed with the TypeScript to the penny on every money figure below.
+Every code block in plans 01 to 04 was written to a scratch copy of the repo layout and run: 335 TypeScript checks pass (law 163, profit and loss 139, presentation 33; counted again on 2026-10-03, after every law and presentation test was hardened against deliberate faults before its run), `tsc --strict` is clean, and every new test's red names a file, a rule and a remedy by the gate-reds census's own classifier (20 of 20 scripts). The builder edits were applied in order to fresh copies of the real builders, every table rebuilt, and the Python tests pass on the rebuilt tables (36 since 2026-10-03, when every table was rebuilt again with the hardened estimators: the exported slices changed only where the hardening meant them to, 288 rounding ranges widened to their true extremes and three survival figures rounded the website's way at the fourth decimal, and plan 03's 139 checks and its registers gate pass on them). An independent Python implementation (decimal arithmetic, half-up at the penny) agreed with the TypeScript to the penny on every money figure below.
 
 Validation also corrected two things in the first draft of this plan, recorded so they are not re-made:
 
@@ -194,7 +194,7 @@ F(x) = (C_{k-1} + n_k (ln x - ln L_k) / (ln U_k - ln L_k)) / N
 
 The first band is floored at 5k and the open top band capped at 100m; a quantile in either prints only as "under 50k" or "over 50m". F inverts Q exactly (tested).
 
-**Rounding range.** Each count is within 2.5 of the truth. A quantile is monotone in each count, falling when counts below its band rise or counts above fall, so its extremes are at the corners: four evaluations give the range.
+**Rounding range.** Each count is within 2.5 of the truth (decision 7). The quantile is the smallest x with `sum_k c_k (G_k(x) - q) >= 0`, `G_k(x)` the share of band k below x; for any x that sum is linear in the counts, so its largest value over the box of possible counts sits at a corner where every band below some m is high and every band from m on is low. The range is the smallest and largest quantile over those 22 threshold corners, which equals trying all 1,024 (tested). The first draft split the corners only at the band holding the printed quantile and missed the extreme in 288 of the 2,597 London cells, wherever the quantile can move to another band (five businesses a band with an empty band between: 136k to 1,587k where the counts allow 100k to 5,612k).
 
 **The anchor mean**, used by the size rule (3.14): the mean sales of the businesses in bands 1 to 7 (below 5m, because an enterprise above 5m is mostly a chain whose turnover is every site's). Each band contributes its mean under a shape:
 
@@ -206,7 +206,7 @@ Pareto   (density ~ 1/x^2, a right-skewed tail):    L U ln(U / L) / (U - L)   = 
 
 Since G <= Lm <= (L + U)/2 (the classic mean inequality), Pareto <= G <= log-flat <= flat in every band: the three bracket the plausible shapes. Hard bounds (every business on its band's lower or upper edge) hold whatever the shape. London hair and beauty: 130.83k, 139.41k, 148.44k (hard bounds 88.46k to 207.18k); restaurants 566.21k, 597.44k, 629.47k.
 
-**Why not a fitted curve.** A lognormal fitted by maximum likelihood to the interval-censored counts, `ln L = sum_k n_k ln(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))`, recovers a true lognormal from rounded counts to within 0.1% (tested), and the G-test rejects it in 1,847 of 2,542 real cells: chains make the top far heavier. The fit stays in the tables as a model check (`lognormal_fit_p`), never on a page.
+**Why not a fitted curve.** A lognormal fitted by maximum likelihood to the interval-censored counts, `ln L = sum_k n_k ln(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))`, recovers a true lognormal from rounded counts to within 0.1% (tested), and the G-test (10 - 1 - 2 = 7 degrees of freedom: an empty band is still a cell of the fit) rejects it in 1,379 of 2,587 real cells: chains make the top far heavier. The fit stays in the tables as a model check (`lognormal_fit_p`), never on a page.
 
 ### 3.11 Rates and their intervals
 
@@ -337,7 +337,7 @@ Groups publish at 10 reports or more, with no report above half the group's tota
 | Plan | File | Builds | Depends on | Done when |
 |---|---|---|---|---|
 | 01 | `2026-10-02-vertical-engine-01-uk-law.md` | the readings; `src/lib/uk/law/*`; ten gates | nothing | 163 law checks pass in the chain; the readings recorded and matching |
-| 02 | `2026-10-02-vertical-engine-02-register-statistics.md` | `registers/uk/estimators/*`, builder edits, rates, the feed, drafts, the export | nothing | 23 pytest tests pass on rebuilt tables; 4,795 medians unchanged |
+| 02 | `2026-10-02-vertical-engine-02-register-statistics.md` | `registers/uk/estimators/*`, builder edits, rates, the feed, drafts, the export | nothing | 36 pytest tests pass on rebuilt tables; 4,795 medians unchanged |
 | 03 | `2026-10-02-vertical-engine-03-profit-and-loss.md` | the slices and their gate; `src/lib/uk/pnl/*` | 01, 02 | 139 checks across 7 test files and the `uk-registers` gate, each planted and green |
 | 04 | `2026-10-02-vertical-engine-04-presentation.md` | `src/lib/uk/present/*` | nothing | 33 presentation checks pass |
 | 05 | owners' numbers statistics (outline below) | `src/lib/uk/owners/*`, the aggregate view | the owner-numbers schema (SPEC-2026-10-02) | written after 03 |
@@ -372,6 +372,7 @@ Plans 01, 02 and 04 can run in parallel; 03 needs 01 (the law) and 02 (the expor
 4. **Survival, period or cohort first.** Recommendation: period (what a new owner faces), the 2019 cohort's once beside it.
 5. **Currency on UK pages.** The engine works in pounds; recommendation: pounds on UK pages, the dollar under the plus at one dated rate.
 6. **The downloads in section 6.** Recommendation: the Annual Business Survey first (it replaces the research shares with UK ones for every trade at once), then the borough population.
+7. **How far a rounded count can be from the truth.** The register's counts are whole numbers rounded to the nearest 5, so each is within 2 of the truth, not 2.5 (2.5 is the bound for a count that could be fractional). The plans use 2.5, the cautious bound: ranges a little wider, figures printed a little coarser. Recommendation: 2, which is exact for whole counts; it narrows every rounding range (London restaurants 280.3k to 283.5k becomes 280.7k to 283.2k; Camden hair and beauty 73.9k to 81.1k becomes 74.4k to 80.1k, both still printing 282,000 and 76,000) and lets 278 of the 2,597 London medians print one digit finer. Changing it moves figures, so it waits for his word.
 
 ## 8. The verification standard
 
