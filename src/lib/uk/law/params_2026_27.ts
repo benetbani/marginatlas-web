@@ -17,6 +17,8 @@ export const UK_2026_27 = {
     personalAllowance: 12_570,
     /** The allowance falls by 1 pound for every 2 pounds of adjusted net income above this. */
     taperThreshold: 100_000,
+    /** ...by 1 pound for every this many complete pounds above the threshold. */
+    taperDivisor: 2,
     /** https://www.gov.uk/government/publications/rates-and-allowances-income-tax/income-tax-rates-and-allowances-current-and-past (the rates page prints the band only as 12,571 to 50,270) */
     basicRateBand: 37_700,
     additionalRateThreshold: 125_140,

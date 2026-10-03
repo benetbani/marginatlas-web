@@ -9,7 +9,10 @@
  * taxed at 0% but still use up band.
  *
  * THE TAPER: the allowance falls by 1 pound for every 2 pounds of adjusted net income above 100,000, so it is zero from
- * 125,140. Read as "1 pound for every complete 2 pounds", the reduction is floor(excess / 2).
+ * 125,140. Read as "1 pound for every complete 2 pounds", the reduction is floor(excess / 2), so the allowance is a
+ * staircase: at each even pound of excess (100,002, 100,004, ... 125,140, 12,570 steps) a whole pound of allowance goes at
+ * once and the tax steps up by 40p (the higher rate on that pound). Between the steps the marginal rate is 40%; over each 2
+ * pounds the tax rises 1.20, the 60% the band is known for. The schedule never falls.
  *
  * Every band's tax is rounded to the penny and the lines summed, so the breakdown adds up to the total.
  */
@@ -20,8 +23,9 @@ const IT = L.incomeTax;
 const DV = L.dividends;
 
 export function personalAllowance(adjustedNetIncome: number): number {
+  if (!Number.isFinite(adjustedNetIncome)) throw new Error(`personalAllowance: not a finite income (${adjustedNetIncome})`);
   if (adjustedNetIncome <= IT.taperThreshold) return IT.personalAllowance;
-  const reduction = Math.floor((adjustedNetIncome - IT.taperThreshold) / 2);
+  const reduction = Math.floor((adjustedNetIncome - IT.taperThreshold) / IT.taperDivisor);
   return Math.max(0, IT.personalAllowance - reduction);
 }
 
@@ -41,9 +45,13 @@ function fill(start: number, amount: number, rates: readonly [number, number, nu
   return lines;
 }
 
+/** A year's income tax, in pounds; every amount annual and gross. */
 export type IncomeTaxBreakdown = {
+  /** the personal allowance after the taper */
   allowance: number;
+  /** non-savings income above the allowance */
   taxableNonSavings: number;
+  /** dividends above what is left of the allowance, the 500 taxed at 0% included */
   taxableDividends: number;
   nonSavingsTax: number;
   dividendTax: number;
@@ -52,6 +60,7 @@ export type IncomeTaxBreakdown = {
 
 export function incomeTax(nonSavings: number, dividends = 0): IncomeTaxBreakdown {
   if (nonSavings < 0 || dividends < 0) throw new Error("incomeTax: income cannot be negative");
+  // personalAllowance refuses a sum that is not finite, so NaN or Infinity in either input is refused there
   const allowance = personalAllowance(nonSavings + dividends);
   const paNonSavings = Math.min(allowance, nonSavings);
   const paDividends = Math.min(allowance - paNonSavings, dividends);

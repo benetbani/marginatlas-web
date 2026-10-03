@@ -32,27 +32,41 @@ check("nothing below the allowance", incomeTax(12_570).total === 0);
 check("salary 12,570 and 40,000 of dividends: 4,821.25", incomeTax(12_570, 40_000).total === 4821.25);
 check("the first 500 of dividends are free", incomeTax(12_570, 500).total === 0);
 check("1,000 of dividends: 500 free, 500 at 10.75% = 53.75", incomeTax(12_570, 1000).total === 53.75);
+// Dividends on top of taxable non-savings income (each figure computed independently in Python, 2026-10-03).
+check("50,000 and 10,000 of dividends: the free 500 straddles the basic band's edge, 10,882.25", incomeTax(50_000, 10_000).total === 10_882.25);
+check("5,000 and 20,000 of dividends: the allowance left after salary covers dividends, 1,282.48", incomeTax(5_000, 20_000).total === 1_282.48);
+check("124,000 and 5,000 of dividends: dividends cross 125,140 into the 39.35% rate, 43,807.71", incomeTax(124_000, 5_000).total === 43_807.71);
+check("100,000 and 10,000 of dividends: the taper counts dividends, 32,828.25", incomeTax(100_000, 10_000).total === 32_828.25);
 
 // The 60% band: between 100,000 and 125,140 a pound of income costs 40p plus 20p of lost allowance.
 const m = (incomeTax(110_002).total - incomeTax(110_000).total) / 2;
 check("marginal rate 60% inside the taper", Math.abs(m - 0.6) < 1e-9);
 
-// Shape: never decreasing, never a step (a penny of income moves the tax by at most a penny, plus rounding).
+// Shape: never decreasing (sampled every 37 pounds).
 let monotone = true;
-let continuous = true;
 let prev = incomeTax(0).total;
 for (let x = 1; x <= 200_000; x += 37) {
   const t = incomeTax(x).total;
   if (t < prev) monotone = false;
   prev = t;
-  const step = incomeTax(x + 0.01).total - t;
-  if (step < -0.011 || step > 0.011) continuous = false;
 }
 check("income tax never falls as income rises (0 to 200,000)", monotone);
-check("no step anywhere: a penny of income moves the tax by a penny at most", continuous);
-let threw = false;
-try { incomeTax(-1); } catch { threw = true; }
-check("negative income is refused", threw);
+// Shape: the last penny before every whole pound moves the tax by a penny at most, except the taper's steps, where a
+// whole pound of allowance goes at once: exactly 40p at each even pound from 100,002 to 125,140.
+let steps = 0;
+let firstBreak: number | null = null;
+for (let x = 1; x <= 200_000; x++) {
+  const s = incomeTax(x).total - incomeTax(x - 0.01).total;
+  const allowanceStep = x > 100_000 && x <= 125_140 && (x - 100_000) % 2 === 0;
+  if (allowanceStep) steps++;
+  const ok = allowanceStep ? Math.abs(s - 0.4) < 1e-9 : Math.abs(s) <= 0.011;
+  if (!ok && firstBreak === null) firstBreak = x;
+}
+check(`a penny moves the tax by a penny at most, except ${steps.toLocaleString("en-GB")} taper steps of 40p${firstBreak === null ? "" : ` (first break at ${firstBreak})`}`, firstBreak === null && steps === 12_570);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("negative income is refused", refuses(() => incomeTax(-1)));
+check("negative dividends are refused", refuses(() => incomeTax(50_000, -1)));
+check("an income that is not a number is refused, never taxed at zero", refuses(() => incomeTax(Number.NaN)) && refuses(() => incomeTax(50_000, Number.NaN)) && refuses(() => personalAllowance(Number.NaN)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/income_tax: all pass");
