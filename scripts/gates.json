@@ -1422,6 +1422,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-employer-cost",
+      "script": "tests/uk/law/employer_cost.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "One hire all in (Pro section 77), against the law research's worked examples of 2026-10-02.",
+      "reads": [
+        "src/lib/uk/law/employer_cost.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
