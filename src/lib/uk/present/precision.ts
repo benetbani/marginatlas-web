@@ -18,7 +18,10 @@
  * range is refused, never printed as if exact.
  *
  * ROUNDING is half away from zero, as pennies rounds, so a loss rounds as the same profit does (-4,500 to the 1,000 is
- * -5,000, not -4,000), and a figure that rounds to nothing is 0, never -0 (which a formatter prints as "-0").
+ * -5,000, not -4,000), and a figure that rounds to nothing is 0, never -0 (which a formatter prints as "-0"). As pennies
+ * adds 1e-7 of a penny, a hair of 1e-9 of the unit is added first, so a decimal half stored a hair low still rounds up
+ * (0.29 x 1,450 is 420.49999999999994 in floating point and prints 421, as 420.5 does). Units are whole numbers, 1 at the
+ * least: the module prints money-sized figures, and a share is printed through its percentage.
  *
  * ONE COLUMN, ONE DECIMAL COUNT (MODEL PART 5): a column prints every value with the decimals its most precise member
  * needs, up to a cap, so 26 and 28.9 print as 26.0 and 28.9. A value has k decimals when 10^k times it is a whole number
@@ -28,15 +31,17 @@
  * SHARES THAT ADD UP: largest remainder. Floor every share, then hand the missing units to the largest remainders (ties to
  * the earlier row), so a split of 100 prints as integers that sum to 100. Remainders are compared on a grid of 1e-9, so
  * two that are equal in decimal tie even when floating point leaves them a few ulps apart (4, 1, 1 of 100: each has two
- * thirds over, and the first two rows get the units).
+ * thirds over, and the first two rows get the units); the grid is exact for totals up to a million.
  */
 export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs = 3): number {
   if (!Number.isFinite(value)) throw new RangeError(`honestUnit: not a finite figure (${value})`);
   const ranged = lo !== undefined || hi !== undefined;
   const l = lo ?? Number.NaN, h = hi ?? Number.NaN;
-  if (ranged && !(Number.isFinite(l) && Number.isFinite(h) && l <= value && value <= h)) throw new RangeError(`honestUnit: a range needs two finite ends around its figure (${lo} to ${hi}, figure ${value})`);
+  // a NaN or missing end fails both comparisons; an infinite end makes the half-width infinite, refused below
+  if (ranged && !(l <= value && value <= h)) throw new RangeError(`honestUnit: a range needs two ends around its figure (${lo} to ${hi}, figure ${value})`);
   if (!Number.isInteger(maxSigFigs) || maxSigFigs < 1) throw new RangeError(`honestUnit: not a count of significant figures (${maxSigFigs})`);
   const half = ranged ? (h - l) / 2 : 0;
+  if (!Number.isFinite(half)) throw new RangeError(`honestUnit: a range with an infinite end, or too wide to measure (${lo} to ${hi})`);
   let u = 1;
   while (u * 10 <= half * (1 + 1e-9)) u *= 10;
   const magnitude = Math.abs(value) > 0 ? Math.floor(Math.log10(Math.abs(value))) : 0;
@@ -45,8 +50,8 @@ export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs =
 }
 
 export function roundToUnit(value: number, unit: number): number {
-  if (!Number.isFinite(value) || !Number.isFinite(unit) || unit <= 0) throw new RangeError(`roundToUnit: not a figure and a unit (${value}, ${unit})`);
-  const q = Math.round(Math.abs(value) / unit) * unit;
+  if (!Number.isFinite(value) || !Number.isInteger(unit) || unit < 1) throw new RangeError(`roundToUnit: not a figure and a whole unit (${value}, ${unit})`);
+  const q = Math.round(Math.abs(value) / unit + 1e-9) * unit;
   return q === 0 ? 0 : Math.sign(value) * q;
 }
 
@@ -80,7 +85,7 @@ export function largestRemainder(shares: readonly number[], total = 100): number
   const sum = shares.reduce((a, b) => a + b, 0);
   if (sum <= 0) return shares.map(() => 0);
   const exact = shares.map((s) => (s / sum) * total);
-  const floors = exact.map(Math.floor);
+  const floors = exact.map((e) => Math.floor(e) + 0); // + 0 turns a -0 share into 0
   let missing = total - floors.reduce((a, b) => a + b, 0);
   const order = exact.map((e, i) => ({ i, r: Math.round((e - Math.floor(e)) * 1e9) })).sort((a, b) => b.r - a.r || a.i - b.i);
   for (const { i } of order) {
