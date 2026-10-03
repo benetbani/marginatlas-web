@@ -535,6 +535,7 @@ const GATES: Gate[] = [
   { name: "uk-law-take-home", script: "tests/uk/law/take_home.test.ts" },
   { name: "uk-law-employer-cost", script: "tests/uk/law/employer_cost.test.ts" },
   { name: "uk-law-business-rates", script: "tests/uk/law/business_rates.test.ts" },
+  { name: "uk-law-lease-tax", script: "tests/uk/law/lease_tax.test.ts" },
   /* A placeholder is not a figure (2026-09-23 night): two new builders read one
      each as "modelled" the same evening (London's calendar, printed on
      production; North Korea's household budget, unserved only because /kp is a

@@ -1444,6 +1444,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-lease-tax",
+      "script": "tests/uk/law/lease_tax.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Tax on a lease's rent: NPV at 3.5%, the highest-of-the-first-five rule, SDLT and LTT bands.",
+      "reads": [
+        "src/lib/uk/law/lease_tax.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
