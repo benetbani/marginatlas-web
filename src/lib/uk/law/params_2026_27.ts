@@ -46,7 +46,7 @@ export const UK_2026_27 = {
     additional: 0.02,
   },
   class1Secondary: {
-    /** same page; the 15% rate from the National Insurance Contributions (Secondary Class 1 Contributions) Act 2025 */
+    /** same page; the 15% rate from the National Insurance Contributions (Secondary Class 1 Contributions) Act 2025, s.1: https://www.legislation.gov.uk/ukpga/2025/11/section/1 */
     secondaryThreshold: 5_000,
     /** under 21s, apprentices under 25 and veterans: 0% up to this */
     upperSecondaryThreshold: 50_270,
@@ -59,8 +59,9 @@ export const UK_2026_27 = {
     qualifyingLower: 6_240,
     qualifyingUpper: 50_270,
     employerMinimum: 0.03,
+    /** aged between 22 and State Pension age: https://www.gov.uk/workplace-pensions/joining-a-workplace-pension */
     minAge: 22,
-    /** State Pension age is 66 rising to 67 between 2026 and 2028; 66 is used, the change dated in the guide */
+    /** State Pension age is 66 rising to 67 between 2026 and 2028 (https://www.gov.uk/government/publications/state-pension-age-timetable/state-pension-age-timetable); 66 is used, the change dated in the guide */
     statePensionAge: 66,
   },
   corporationTax: {
@@ -79,7 +80,7 @@ export const UK_2026_27 = {
     rhlStandardMultiplier: 0.43,
     /** the small multipliers apply below this rateable value */
     smallThreshold: 51_000,
-    /** at and above this the high-value multiplier applies (500,000 itself is high-value); out of scope for street businesses, the function refuses it */
+    /** at and above this the high-value multiplier applies (500,000 itself is high-value: https://www.gov.uk/estimate-your-business-rates); out of scope for street businesses, the function refuses it */
     highValueThreshold: 500_000,
     /** https://www.gov.uk/business-rates-relief/small-business-rate-relief */
     sbrrFullUpTo: 12_000,
@@ -99,7 +100,7 @@ export const UK_2026_27 = {
       { upTo: 2_000_000, rate: 0.01 },
       { upTo: Infinity, rate: 0.02 },
     ],
-    /** the rent taken for every year after the fifth: the highest of the first five */
+    /** the rent taken for every year after the fifth: the highest of the first five (Finance Act 2003 Sch 17A para 7(3); https://www.gov.uk/guidance/stamp-duty-land-tax-leasehold-purchases) */
     yearsBeforeHighestRule: 5,
   },
   redundancy: {

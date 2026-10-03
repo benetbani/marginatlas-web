@@ -23,6 +23,8 @@ check("a negative half-penny rounds away from zero", pennies(-0.005) === -0.01);
 check("an exact amount is unchanged", pennies(24_784.5) === 24_784.5);
 check("parts sum as pence: 24,784.50 + 2,967.68 + 556.34 = 28,308.52", sumPennies([24_784.5, 2967.675, 556.335]) === 28_308.52);
 check("the raw sum would have said 28,308.51, which the reader cannot rebuild", pennies(24_784.5 + 2967.675 + 556.335) === 28_308.51);
+check("each line is rounded inside the sum: the products 0.15 x 19,784.50 and 0.03 x 18,544.50 still give 28,308.52", sumPennies([24_784.5, 0.15 * 19_784.5, 0.03 * 18_544.5]) === 28_308.52);
+check("a negative amount under half a penny is zero, never -0 (a formatter prints -0 as -0.00)", Object.is(pennies(-0.001), 0) && Object.is(pennies(0.3 - (0.1 + 0.2)), 0));
 check("banded tax: 1% of NPV above 150,000 on 207,915.13 is 579.15", bandedTax(207_915.13, [{ upTo: 150_000, rate: 0 }, { upTo: 5_000_000, rate: 0.01 }, { upTo: Infinity, rate: 0.02 }]) === 579.15);
 let threw = false;
 try { pennies(NaN); } catch { threw = true; }

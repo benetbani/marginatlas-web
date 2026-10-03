@@ -17,10 +17,12 @@
 export function pennies(x: number): number {
   if (!Number.isFinite(x)) throw new Error(`pennies: not a finite amount (${x})`);
   const sign = x < 0 ? -1 : 1;
-  return (sign * Math.round(Math.abs(x) * 100 + 1e-7)) / 100;
+  const pence = Math.round(Math.abs(x) * 100 + 1e-7);
+  // a negative amount under half a penny is zero, never -0 (which a currency formatter prints as -0.00)
+  return pence === 0 ? 0 : (sign * pence) / 100;
 }
 
-/** The sum of already-rounded lines, itself exact to the penny (integer arithmetic on pence). */
+/** The sum of lines, each rounded to the penny here first, exact to the penny (integer arithmetic on pence). */
 export function sumPennies(lines: readonly number[]): number {
   let pence = 0;
   for (const l of lines) pence += Math.round(pennies(l) * 100);
