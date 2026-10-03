@@ -59,7 +59,14 @@ it in floating point (3,234.14 - 1,234.14 is 1,999.9999999999998), so the unit a
 figure between two finite ends: an infinite end would hang the loop that widens the unit. A column's decimals allow
 floating-point noise in proportion to the figure (100 x 299,264.78 is 29,926,478.000000004), and remainders are compared on
 a grid of 1e-9, so 4, 1, 1 of 100 prints 67, 17, 16 as the tie rule says (raw floating point gave 66, 17, 17). Four of nine
-deliberate faults passed the first version of this test; all 25 now fail it (one by hanging it).
+deliberate faults passed the first version of this test. Its review of 2026-10-03 found 36 more that passed the hardened
+one, none printing a wrong figure from the code as written: the column cap and the column's maximum, the significant-figure
+cap on losses and below 28,308.52, the allowance from above (half-widths of 950 and 999.5 have a unit of 100; exactly
+100,000, and 100,000,000, have their own), both ends of the range, the total and the tie rule's direction. The test now pins
+them, and four hardenings went in: a range too wide to measure is refused (-1e308 to 1e308 overflowed the half-width and
+the loop never ended); a decimal half stored a hair low rounds up (0.29 x 1,450 prints 421, as 420.5 does); units are
+whole numbers; a -0 share prints as 0. The finite-ends clause went, since an infinite end now fails the half-width check.
+All 45 deliberate faults fail it.
 
 **Files:**
 - Create: `src/lib/uk/present/precision.ts`
@@ -96,7 +103,7 @@ check("London restaurants' median 281,900 (280,300 to 283,500, half-width 1,600)
 check("Camden's hair and beauty median 76,400 (73,900 to 81,100, half-width 3,600) prints 76,000", honestRound(76_400, 73_900, 81_100) === 76_000);
 check("the London restaurant at the median keeps 13,756.27 (11,534 to 15,558 across the band shapes) and prints 14,000", honestRound(13_756.27, 11_534, 15_558) === 14_000);
 check("a figure known only to 50,000 to 110,000 prints to the 10,000: 76,400 prints 80,000", honestRound(76_400, 50_000, 110_000) === 80_000);
-check("the printed figure stays inside its range widened by half a unit", Math.abs(honestRound(281_900, 280_300, 283_500) - 281_900) <= honestUnit(281_900, 280_300, 283_500) / 2 && 282_000 >= 280_300 - 500 && 282_000 <= 283_500 + 500);
+check("each worked example prints inside its range widened by half its unit, and within half a unit of the figure", ([[281_900, 280_300, 283_500], [76_400, 73_900, 81_100], [13_756.27, 11_534, 15_558], [76_400, 50_000, 110_000]] as const).every(([v, lo, hi]) => { const u = honestUnit(v, lo, hi), p = honestRound(v, lo, hi); return Math.abs(p - v) <= u / 2 && lo - u / 2 <= p && p <= hi + u / 2; }));
 check("an exact law figure keeps three significant figures: 28,308.52 prints 28,300", honestRound(28_308.52) === 28_300);
 check("a small exact figure keeps its pounds: 740 prints 740", honestRound(740) === 740);
 check("the unit never goes below 1", honestUnit(3.2) === 1);
@@ -108,7 +115,7 @@ check("largest remainder: floors 18,14,11,10,7,6,31 (97), the three largest rema
 check("the unit is the leading digit of the half-width: 13,756 known to 13,156 to 14,356 (half-width 600) prints 13,800, not 14,000", honestRound(13_756, 13_156, 14_356) === 13_800);
 check("a half-width of 1,000 in decimal gives a unit of 1,000 when floating point puts it a hair below: 2,234.14 (1,234.14 to 3,234.14, 1,999.9999999999998 apart) prints 2,000", honestRound(2_234.14, 1_234.14, 3_234.14) === 2_000);
 check("a loss rounds as the same profit does, half away from zero: -4,500 (-6,000 to -3,000) prints -5,000 as 4,500 prints 5,000; -300 at a unit of 1,000 is 0, never -0", honestRound(-4_500, -6_000, -3_000) === -5_000 && honestRound(4_500, 3_000, 6_000) === 5_000 && Object.is(roundToUnit(-300, 1_000), 0));
-check("ties go to the earlier row in decimal, not in floating point: 4, 1, 1 of 100 (66.67, 16.67, 16.67, two thirds over each) prints 67, 17, 16", largestRemainder([4, 1, 1]).join(",") === "67,17,16");
+check("ties go to the earlier row in decimal, not in floating point, even when a later row is bigger: 4, 1, 1 of 100 (66.67, 16.67, 16.67, two thirds over each) prints 67, 17, 16 and 1, 1, 4 prints 17, 17, 66", largestRemainder([4, 1, 1]).join(",") === "67,17,16" && largestRemainder([1, 1, 4]).join(",") === "17,17,66");
 check("nothing to split prints zeros", largestRemainder([0, 0, 0]).join(",") === "0,0,0");
 check("a two-decimal figure above 100,000 reads as two decimals under a cap of 3 (100 x 299,264.78 is 29,926,478.000000004)", decimalsForColumn([299_264.78], 3) === 2);
 /** The guards throw a RangeError; a missing guard shows as a hang, a plain Error, or a figure printed as if exact. */
@@ -118,6 +125,22 @@ check("a figure must be finite and the significant figures a whole count of at l
 check("a column must hold finite figures and a whole cap of at least 0: NaN in a column, a cap of -1 or 1.5 are refused", refuses(() => decimalsForColumn([26, Number.NaN])) && refuses(() => decimalsForColumn([26], -1)) && refuses(() => decimalsForColumn([26], 1.5)));
 check("shares must be finite and not negative, and the total whole: -1, NaN, a hole and a total of 99.5 are refused", refuses(() => largestRemainder([50, -1, 51])) && refuses(() => largestRemainder([50, Number.NaN])) && refuses(() => largestRemainder(new Array<number>(3))) && refuses(() => largestRemainder([50, 50], 99.5)));
 
+check("exact figures keep three significant figures: 76,400 prints 76,400 and 5,678 prints 5,680", honestRound(76_400) === 76_400 && honestRound(5_678) === 5_680);
+check("a loss with no range keeps three significant figures: -28,308.52 prints -28,300", honestRound(-28_308.52) === -28_300);
+check("two significant figures when asked: 28,308.52 has a unit of 1,000", honestUnit(28_308.52, undefined, undefined, 2) === 1_000);
+check("half-widths of 950 and 999.5 have a unit of 100: 13,756 prints 13,800", honestRound(13_756, 13_000, 14_900) === 13_800 && honestRound(13_756, 13_000.5, 14_999.5) === 13_800);
+check("a half-width of exactly 100,000 (99,999.99999999977 in floating point) has a unit of 100,000: 4,110,973.77 prints 4,100,000", honestRound(4_110_973.77, 4_010_973.77, 4_210_973.77) === 4_100_000);
+check("the allowance is relative: a half-width of 100,000,000 (612,490,866.91 less 412,490,866.91, halved) has a unit of 100,000,000", honestRound(512_490_866.91, 412_490_866.91, 612_490_866.91) === 500_000_000);
+check("a figure at either end of its range, or in a range of no width, is accepted", honestRound(73_900, 73_900, 81_100) === 74_000 && honestRound(81_100, 73_900, 81_100) === 81_000 && honestRound(5_000, 5_000, 5_000) === 5_000);
+check("refused: a high end alone, a figure below its range, an infinite high end, a range too wide to measure, an infinite figure, an infinite or a part unit", refuses(() => honestUnit(76_400, undefined, 81_100)) && refuses(() => honestUnit(50_000, 73_900, 81_100)) && refuses(() => honestUnit(5, 0, Infinity)) && refuses(() => honestUnit(0, -1e308, 1e308)) && refuses(() => honestUnit(Infinity)) && refuses(() => roundToUnit(740, Infinity)) && refuses(() => roundToUnit(740, 0.1)) && refuses(() => roundToUnit(Infinity, 10)));
+check("a decimal half stored a hair low rounds up: 0.29 x 1,450 (420.49999999999994) prints 421, as 420.5 does", honestRound(0.29 * 1450) === 421 && honestRound(420.5) === 421);
+check("the cap binds: [12.34, 56.78] is one decimal, 12.345 under a cap of 2 is two, 12.3456 under a cap of 0 is none", decimalsForColumn([12.34, 56.78]) === 1 && decimalsForColumn([12.345], 2) === 2 && decimalsForColumn([12.3456], 0) === 0);
+check("the most precise member sets the column wherever it sits", decimalsForColumn([28.9, 26]) === 1 && decimalsForColumn([26, 28.9, 12]) === 1);
+check("noise on a figure is not a decimal: [0.1 + 0.2 - 0.3, 4] and [29.999999999999996, 40] have none, 0.1 + 0.2 under a cap of 4 has one", decimalsForColumn([0.1 + 0.2 - 0.3, 4]) === 0 && decimalsForColumn([29.999999999999996, 40]) === 0 && decimalsForColumn([0.1 + 0.2], 4) === 1);
+check("an infinite figure in a column is refused", refuses(() => decimalsForColumn([Infinity])));
+check("remainders 3e-7 apart are not a tie: 20.4000001, 20.4000004, 59.1999995 print 20, 21, 59", largestRemainder([20.4000001, 20.4000004, 59.1999995]).join(",") === "20,21,59");
+check("the total is used: 1, 1, 1 of 10 is 4, 3, 3 and 1, 2, 3 of 1,000 is 167, 333, 500", largestRemainder([1, 1, 1], 10).join(",") === "4,3,3" && largestRemainder([1, 2, 3], 1000).join(",") === "167,333,500");
+check("a negative first share and a negative total are refused, and a -0 share prints as 0", refuses(() => largestRemainder([-1, 50, 51])) && refuses(() => largestRemainder([1, 1], -10)) && Object.is(largestRemainder([-0, 5, 5])[0], 0));
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/precision: all pass");
 ```
@@ -155,7 +178,10 @@ Create `src/lib/uk/present/precision.ts`:
  * range is refused, never printed as if exact.
  *
  * ROUNDING is half away from zero, as pennies rounds, so a loss rounds as the same profit does (-4,500 to the 1,000 is
- * -5,000, not -4,000), and a figure that rounds to nothing is 0, never -0 (which a formatter prints as "-0").
+ * -5,000, not -4,000), and a figure that rounds to nothing is 0, never -0 (which a formatter prints as "-0"). As pennies
+ * adds 1e-7 of a penny, a hair of 1e-9 of the unit is added first, so a decimal half stored a hair low still rounds up
+ * (0.29 x 1,450 is 420.49999999999994 in floating point and prints 421, as 420.5 does). Units are whole numbers, 1 at the
+ * least: the module prints money-sized figures, and a share is printed through its percentage.
  *
  * ONE COLUMN, ONE DECIMAL COUNT (MODEL PART 5): a column prints every value with the decimals its most precise member
  * needs, up to a cap, so 26 and 28.9 print as 26.0 and 28.9. A value has k decimals when 10^k times it is a whole number
@@ -165,15 +191,17 @@ Create `src/lib/uk/present/precision.ts`:
  * SHARES THAT ADD UP: largest remainder. Floor every share, then hand the missing units to the largest remainders (ties to
  * the earlier row), so a split of 100 prints as integers that sum to 100. Remainders are compared on a grid of 1e-9, so
  * two that are equal in decimal tie even when floating point leaves them a few ulps apart (4, 1, 1 of 100: each has two
- * thirds over, and the first two rows get the units).
+ * thirds over, and the first two rows get the units); the grid is exact for totals up to a million.
  */
 export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs = 3): number {
   if (!Number.isFinite(value)) throw new RangeError(`honestUnit: not a finite figure (${value})`);
   const ranged = lo !== undefined || hi !== undefined;
   const l = lo ?? Number.NaN, h = hi ?? Number.NaN;
-  if (ranged && !(Number.isFinite(l) && Number.isFinite(h) && l <= value && value <= h)) throw new RangeError(`honestUnit: a range needs two finite ends around its figure (${lo} to ${hi}, figure ${value})`);
+  // a NaN or missing end fails both comparisons; an infinite end makes the half-width infinite, refused below
+  if (ranged && !(l <= value && value <= h)) throw new RangeError(`honestUnit: a range needs two ends around its figure (${lo} to ${hi}, figure ${value})`);
   if (!Number.isInteger(maxSigFigs) || maxSigFigs < 1) throw new RangeError(`honestUnit: not a count of significant figures (${maxSigFigs})`);
   const half = ranged ? (h - l) / 2 : 0;
+  if (!Number.isFinite(half)) throw new RangeError(`honestUnit: a range with an infinite end, or too wide to measure (${lo} to ${hi})`);
   let u = 1;
   while (u * 10 <= half * (1 + 1e-9)) u *= 10;
   const magnitude = Math.abs(value) > 0 ? Math.floor(Math.log10(Math.abs(value))) : 0;
@@ -182,8 +210,8 @@ export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs =
 }
 
 export function roundToUnit(value: number, unit: number): number {
-  if (!Number.isFinite(value) || !Number.isFinite(unit) || unit <= 0) throw new RangeError(`roundToUnit: not a figure and a unit (${value}, ${unit})`);
-  const q = Math.round(Math.abs(value) / unit) * unit;
+  if (!Number.isFinite(value) || !Number.isInteger(unit) || unit < 1) throw new RangeError(`roundToUnit: not a figure and a whole unit (${value}, ${unit})`);
+  const q = Math.round(Math.abs(value) / unit + 1e-9) * unit;
   return q === 0 ? 0 : Math.sign(value) * q;
 }
 
@@ -217,7 +245,7 @@ export function largestRemainder(shares: readonly number[], total = 100): number
   const sum = shares.reduce((a, b) => a + b, 0);
   if (sum <= 0) return shares.map(() => 0);
   const exact = shares.map((s) => (s / sum) * total);
-  const floors = exact.map(Math.floor);
+  const floors = exact.map((e) => Math.floor(e) + 0); // + 0 turns a -0 share into 0
   let missing = total - floors.reduce((a, b) => a + b, 0);
   const order = exact.map((e, i) => ({ i, r: Math.round((e - Math.floor(e)) * 1e9) })).sort((a, b) => b.r - a.r || a.i - b.i);
   for (const { i } of order) {
@@ -235,7 +263,7 @@ export function largestRemainder(shares: readonly number[], total = 100): number
 npx tsx tests/uk/present/precision.test.ts
 ```
 
-Expected: 22 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
+Expected: 38 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
