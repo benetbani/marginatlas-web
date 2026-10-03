@@ -1433,6 +1433,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-business-rates",
+      "script": "tests/uk/law/business_rates.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Business rates 2026-27 (England): multipliers, the small business relief taper, the 51,000 cliff.",
+      "reads": [
+        "src/lib/uk/law/business_rates.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
