@@ -1045,8 +1045,12 @@ the taper points, the two salaries that land `pi(s)` exactly on a corporation-ta
 kept to the penny because the best salary can be the whole profit less its NI. Inside the taper each even pound of adjusted
 net income takes a whole pound of allowance, so K drops by up to 40p there (a sawtooth); the grid and the refine to the pound
 find the best tooth: at 150,000 the best salary is 4,996, 14p better than 5,000, so pages print the salary to the nearest
-100. The test proves the search against a brute-force 10-pound grid at three profits. At 100,000 of
-profit a sole trader keeps 69,311.40 and the company 65,209.63: the 2026-27 dividend rates reversed the old advice.
+100. The test pins both exactly (4,996 and 85,321.30, the best of every whole-pound salary from 4,750 to 5,250 computed
+independently), pins the penny-precise largest salary (on 11,947.90 the best salary is all of it less its NI, 11,041.65,
+where whole pounds would keep 11,041.61), pins employee NI inside the take-home (a 30,000 salary on 60,000 keeps 43,902.00
+after 1,394.40), and proves the search against a brute-force 10-pound grid at three profits. An amount that is not finite
+is refused, and a company with a loss has no feasible salary. At 100,000 of profit a sole trader keeps 69,311.40 and the
+company 65,209.63: the 2026-27 dividend rates reversed the old advice.
 
 **Files:**
 - Create: `src/lib/uk/law/take_home.ts`
@@ -1091,6 +1095,8 @@ check("profit after salary 46,294.50, corporation tax 8,795.96", c.profitAfterSa
 check("dividends 37,498.54", c.dividends === 37_498.54);
 check("keeps 46,091.20", c.takeHome === 46_091.2);
 check("a salary the profit cannot pay is refused", companyTakeHome(10_000, 20_000) === null);
+const c30 = companyTakeHome(60_000, 30_000)!;
+check("company 60,000, salary 30,000: employee NI 1,394.40 comes off, the owner keeps 43,902.00", c30.employeeNi === 1394.4 && c30.takeHome === 43_902);
 
 const cases: Array<[number, number, number]> = [
   [30_000, 12_570, 24_403.45],
@@ -1101,11 +1107,15 @@ for (const [profit, salary, keep] of cases) {
   const b = bestCompanyTakeHome(profit);
   check(`company ${profit}: best salary ${salary}, keeps ${keep}`, b.salary === salary && b.takeHome === keep);
 }
-// Inside the allowance taper the whole-pound rule (1 pound per complete 2) makes a sawtooth worth pennies, so the best
-// salary can sit a few pounds off the kink: at 150,000 it is 4,996, 14p better than 5,000 (85,321.30 against 85,321.16).
+// Inside the allowance taper each even pound of adjusted net income takes a whole pound of allowance, so keep(salary) is a
+// sawtooth and the best salary sits off the kink: at 150,000 it is 4,996, 14p better than 5,000 (85,321.30 against
+// 85,321.16; the best of every whole-pound salary from 4,750 to 5,250, computed independently). Only the refine finds it.
 const b150 = bestCompanyTakeHome(150_000);
-check("company 150,000: best salary within 100 of 5,000, within a pound of 85,321.16 and not below it",
-  Math.abs(b150.salary - 5_000) <= 100 && b150.takeHome >= 85_321.16 && b150.takeHome - 85_321.16 < 1);
+check("company 150,000: the refine finds salary 4,996, keeping 85,321.30 (5,000 keeps 85,321.16)", b150.salary === 4_996 && b150.takeHome === 85_321.3);
+// When salary below the allowance beats corporation tax, the best salary is the whole profit less its employer NI, found
+// to the penny: whole pounds would stop at 11,041 and keep 11,041.61.
+const small = bestCompanyTakeHome(11_947.9);
+check("company 11,947.90: the best salary is all of it less its NI, 11,041.65 to the penny, kept whole", small.salary === 11_041.65 && small.takeHome === 11_041.65);
 // The search is at least as good as every salary on a 10-pound grid (a brute-force check).
 let beaten = false;
 for (const profit of [45_000, 80_000, 120_000]) {
@@ -1117,6 +1127,9 @@ for (const profit of [45_000, 80_000, 120_000]) {
 }
 check("no salary on a 10-pound grid beats the search (45k, 80k, 120k)", !beaten);
 check("at 100,000 a sole trader keeps more than a company (69,311.40 against 65,209.63)", soleTraderTakeHome(100_000).takeHome > bestCompanyTakeHome(100_000).takeHome);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("an amount that is not finite is refused, never kept as zero", refuses(() => soleTraderTakeHome(-Infinity)) && refuses(() => companyTakeHome(60_000, -Infinity)) && refuses(() => companyTakeHome(Number.NaN, 0)) && refuses(() => bestCompanyTakeHome(Infinity)));
+check("a company with a loss has no feasible salary and is refused", refuses(() => bestCompanyTakeHome(-5_000)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/take_home: all pass");
@@ -1171,7 +1184,13 @@ import { pennies, sumPennies } from "./money";
 
 export type SoleTraderTakeHome = { profit: number; incomeTax: number; class4: number; takeHome: number };
 
+function finite(x: number, what: string): void {
+  if (!Number.isFinite(x)) throw new RangeError(`${what}: not a finite amount (${x})`);
+}
+
+/** What a sole trader keeps of a year's profit after income tax and Class 4; a loss keeps nothing and pays nothing. */
 export function soleTraderTakeHome(profit: number): SoleTraderTakeHome {
+  finite(profit, "soleTraderTakeHome");
   const p = Math.max(0, profit);
   const it = incomeTax(p).total;
   const c4 = class4(p);
@@ -1190,7 +1209,11 @@ export type CompanyTakeHome = {
   takeHome: number;
 };
 
+/** What a one-director company's owner keeps with a given salary, the rest paid out as dividends; null when the profit
+ *  cannot pay the salary and its employer NI. */
 export function companyTakeHome(companyProfit: number, salary: number): CompanyTakeHome | null {
+  finite(companyProfit, "companyTakeHome");
+  finite(salary, "companyTakeHome");
   const s = pennies(Math.max(0, salary));
   const er = employerClass1(s);
   const pi = pennies(companyProfit - s - er);
@@ -1238,6 +1261,8 @@ function salaryForCompanyProfit(companyProfit: number, target: number, sMax: num
   return pennies(lo);
 }
 
+/** The salary that leaves the owner the most, searched to the pound; a loss has no feasible salary and is refused (so is
+ *  a profit that is not finite, by companyTakeHome). */
 export function bestCompanyTakeHome(companyProfit: number): CompanyTakeHome {
   const sMax = maxSalary(companyProfit);
   const named = [
@@ -1278,7 +1303,7 @@ export function bestCompanyTakeHome(companyProfit: number): CompanyTakeHome {
 npx tsx tests/uk/law/take_home.test.ts
 ```
 
-Expected: 16 lines starting `PASS`, the last line `uk/law/take_home: all pass`, exit code 0.
+Expected: 20 lines starting `PASS`, the last line `uk/law/take_home: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
