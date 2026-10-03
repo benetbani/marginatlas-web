@@ -66,7 +66,10 @@ cap on losses and below 28,308.52, the allowance from above (half-widths of 950 
 them, and four hardenings went in: a range too wide to measure is refused (-1e308 to 1e308 overflowed the half-width and
 the loop never ended); a decimal half stored a hair low rounds up (0.29 x 1,450 prints 421, as 420.5 does); units are
 whole numbers; a -0 share prints as 0. The finite-ends clause went, since an infinite end now fails the half-width check.
-All 45 deliberate faults fail it.
+Its second review found five shapes of a wrong implementation that still passed (the cap skipped when a range is given,
+two roundings where one is specified, the tie grid snapped down, the print clamped into its raw range, noise tolerance on a
+negative figure): nine checks pin them, and the header says the tie grid is exact for totals up to 100,000 (not a
+million). All 50 deliberate faults fail it.
 
 **Files:**
 - Create: `src/lib/uk/present/precision.ts`
@@ -141,6 +144,15 @@ check("an infinite figure in a column is refused", refuses(() => decimalsForColu
 check("remainders 3e-7 apart are not a tie: 20.4000001, 20.4000004, 59.1999995 print 20, 21, 59", largestRemainder([20.4000001, 20.4000004, 59.1999995]).join(",") === "20,21,59");
 check("the total is used: 1, 1, 1 of 10 is 4, 3, 3 and 1, 2, 3 of 1,000 is 167, 333, 500", largestRemainder([1, 1, 1], 10).join(",") === "4,3,3" && largestRemainder([1, 2, 3], 1000).join(",") === "167,333,500");
 check("a negative first share and a negative total are refused, and a -0 share prints as 0", refuses(() => largestRemainder([-1, 50, 51])) && refuses(() => largestRemainder([1, 1], -10)) && Object.is(largestRemainder([-0, 5, 5])[0], 0));
+check("the cap of three significant figures holds with a range: 28,308.52 in 28,250 to 28,350 prints 28,300; -13,756.27 in -13,761 to -13,751 prints -13,800; it counts the figure's digits, not the range's: 9,950 in 9,940 to 10,100 prints 9,950; two when asked: 13,756.27 in 13,751 to 13,761 has a unit of 1,000", honestRound(28_308.52, 28_250, 28_350) === 28_300 && honestRound(-13_756.27, -13_761, -13_751) === -13_800 && honestRound(9_950, 9_940, 10_100) === 9_950 && honestUnit(13_756.27, 13_751, 13_761, 2) === 1_000);
+check("one rounding, not two: 13,480 in 11,534 to 15,558 prints 13,000, not 14,000 by way of 13,500; 28,349.6 prints 28,300 with or without the range 28,250 to 28,350, not 28,400 by way of 28,350", honestRound(13_480, 11_534, 15_558) === 13_000 && honestRound(28_349.6, 28_250, 28_350) === 28_300 && honestRound(28_349.6) === 28_300);
+check("a print may land outside its raw range by less than half a unit and still sits on the unit: 74,200 in 74,200 to 78,200 prints 74,000; 78,800 in 74,200 to 78,800 prints 79,000", honestRound(74_200, 74_200, 78_200) === 74_000 && honestRound(78_800, 74_200, 78_800) === 79_000);
+check("remainders equal in decimal tie on the grid whichever side floating point leaves them: 20.4, 14.4, 65.2 (two remainders of .4) print 21, 14, 65", largestRemainder([20.4, 14.4, 65.2]).join(",") === "21,14,65");
+check("noise on a negative figure is not a decimal either: -299,264.78 under a cap of 3 has two", decimalsForColumn([-299_264.78], 3) === 2);
+check("the cap binds when the capped figure ends in a zero: 12.04 with 40 under a cap of 1 has one decimal; an empty column has none", decimalsForColumn([12.04, 40]) === 1 && decimalsForColumn([]) === 0);
+check("shares may be fractions of a whole: 0.3 and 0.6 print 33 and 67", largestRemainder([0.3, 0.6]).join(",") === "33,67");
+check("a unit is a whole number, and one significant figure is allowed: roundToUnit at 2.5 is refused, 13,756 at one significant figure has a unit of 10,000", refuses(() => roundToUnit(740, 2.5)) && honestUnit(13_756, undefined, undefined, 1) === 10_000);
+check("the allowances stay a hair: a half-width of 999,999.99 keeps a unit of 100,000 (honestUnit of 0 in -999,999.99 to 999,999.99), and 4,149,999.99 a penny under a half of 100,000 prints 4,100,000", honestUnit(0, -999_999.99, 999_999.99) === 100_000 && honestRound(4_149_999.99, 4_049_999.99, 4_249_999.99) === 4_100_000);
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/precision: all pass");
 ```
@@ -191,7 +203,9 @@ Create `src/lib/uk/present/precision.ts`:
  * SHARES THAT ADD UP: largest remainder. Floor every share, then hand the missing units to the largest remainders (ties to
  * the earlier row), so a split of 100 prints as integers that sum to 100. Remainders are compared on a grid of 1e-9, so
  * two that are equal in decimal tie even when floating point leaves them a few ulps apart (4, 1, 1 of 100: each has two
- * thirds over, and the first two rows get the units); the grid is exact for totals up to a million.
+ * thirds over, and the first two rows get the units); the grid is exact for totals up to 100,000 (at a million, three
+ * splits in 1.5 million random ones part from the exact rule by a unit). The two 1e-9 allowances can show only at units of
+ * ten million and above.
  */
 export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs = 3): number {
   if (!Number.isFinite(value)) throw new RangeError(`honestUnit: not a finite figure (${value})`);
@@ -263,7 +277,7 @@ export function largestRemainder(shares: readonly number[], total = 100): number
 npx tsx tests/uk/present/precision.test.ts
 ```
 
-Expected: 38 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
+Expected: 47 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -314,10 +328,10 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 ### Task 2: Ranks with ties, and set medians without fill values
 
-Two members are ranked apart only when their intervals separate; otherwise the lower is level with the group above it and
-shares its rank. Overlap is the conservative test (two 95% intervals that do not overlap imply p below about 0.006 for equal
-standard errors), so the site never orders what the data cannot: pubs (24.3 to 27.8 per 1,000) and bars (23.0 to 28.6) share
-restaurants' rank, dental practices (0.8 to 1.9) stand alone at the bottom. A set's median uses only members whose figure is
+A member shares the rank of the group above when its interval overlaps that group's leader's; otherwise it starts a new
+group. Overlap is the conservative test (two 95% intervals that do not overlap imply p below about 0.006 for equal standard
+errors), so no member is ranked below a leader the data cannot tell it apart from: pubs (24.3 to 27.8 per 1,000) and bars
+(23.0 to 28.6) share restaurants' rank, dental practices (0.8 to 1.9) stand alone at the bottom. A set's median uses only members whose figure is
 their own; fill values are counted and left out, and a set of fills only has no median (MODEL PART 9, clause 46).
 Intervals are closed (two that touch at one point are level); a member is compared with its group's head, not the member
 above it (8, 7 to 9, under 9.5, 8.5 to 10.5, under 11, 10 to 12, ranks 3); every interval must hold its figure. An even
@@ -332,9 +346,12 @@ ends must now be finite, and a member must say whether it is a fill. Its re-revi
 unpinned (nine variants passed) and a null figure ranked as 0 once the finite-figure clause was dropped as redundant (it is
 redundant only for numbers): the clause is back, and each tie-break key and their order are pinned in both row orders,
 with two zero rates (0 of 100 and 0 of 400 under 0.02) among them. The header states only what the rule gives: every
-member overlaps its own group's leader, no leader overlaps the leader above, ranks never rise down the list; a member can
+member overlaps its own group's leader, no leader overlaps the leader above, a rank never improves down the list; a member can
 still overlap a higher member, even a leader, and rank lower (28.9, 12 and 11 with intervals 27.3 to 30.5, 11 to 13 and 2
-to 29 rank 1, 2, 2), so a page marks the top group by rank. All 38 deliberate faults now fail it.
+to 29 rank 1, 2, 2), so a page marks the top group by rank. Its final re-review found the guard's refusals tested on
+one-row sets only (a guard that read the first row alone passed): a bad row is now refused first, between good rows and
+last. The header no longer claims the tie-break gives the fewest groups (it does up to four members, not always beyond).
+All 38 deliberate faults fail it, and the scope variants too.
 
 **Files:**
 - Create: `src/lib/uk/present/compare.ts`
@@ -348,8 +365,8 @@ Create `tests/uk/present/compare.test.ts`:
 
 ```ts
 /**
- * Comparison: members ranked apart only when their intervals separate (ties share a rank); set medians over members'
- * own figures, fill values counted and left out.
+ * Comparison: members share a rank only when the lower overlaps its group's leader (overlapping intervals tie); set
+ * medians over members' own figures, fill values counted and left out.
  *
  * Run: npx tsx tests/uk/present/compare.test.ts
  */
@@ -434,6 +451,11 @@ rankWithTies([rb, rc]);
 check("rows are copied, not written to: a ranking keeps its ranks after the same rows are ranked in another set", show(firstRanking) === "a:1 b:2 c:3" && !("rank" in ra) && !("levelWithAbove" in rb));
 const flag = (isFill: unknown) => ({ value: 1, isFill: isFill as boolean });
 check("a fill flag of null, 0 or a string is refused, and so is a missing one after good ones", refuses(() => medianExcludingFills([flag(null)])) && refuses(() => medianExcludingFills([flag(0)])) && refuses(() => medianExcludingFills([flag("no")])) && refuses(() => medianExcludingFills([{ value: 1, isFill: false }, { value: 100, isFill: undefined as unknown as boolean }, { value: 3, isFill: false }])));
+const okA: Row = { id: "a", value: 9, lo: 8, hi: 10 }, okB: Row = { id: "b", value: 5, lo: 4, hi: 6 };
+const badRows: Row[] = [{ id: "x", value: null as unknown as number, lo: 0, hi: 5 }, { id: "x", value: Number.NaN, lo: 0, hi: 1 }, { id: "x", value: "3" as unknown as number, lo: 2, hi: 5 }, { id: "x", value: 5, lo: -Infinity, hi: 6 }, { id: "x", value: -3, lo: -5, hi: null as unknown as number }];
+check("a bad row is refused wherever it sits: first, between good rows and last (a null, a NaN, a string, a low end of minus infinity, a missing high end)", badRows.every((x) => refuses(() => rankWithTies([x, okA, okB])) && refuses(() => rankWithTies([okA, x, okB])) && refuses(() => rankWithTies([okA, okB, x]))));
+check("the rule is about leaders: 28.9 (27.3 to 30.5), 12 (11 to 13) and 11 (2 to 29) rank 1, 2, 2, though the 11 overlaps the 28.9", show(rankWithTies([{ id: "p", value: 28.9, lo: 27.3, hi: 30.5 }, { id: "q", value: 12, lo: 11, hi: 13 }, { id: "r", value: 11, lo: 2, hi: 29 }])) === "p:1 q:2 r:2=");
+check("an own figure equal to a fill's value is kept, and a bad own figure in the middle of a set is refused", (() => { const m = medianExcludingFills([{ value: 6, isFill: false }, { value: 6, isFill: true }, { value: 8, isFill: false }]); return m.median === 7 && m.used === 2 && m.leftOut === 1; })() && refuses(() => medianExcludingFills([{ value: 1, isFill: false }, { value: Number.NaN, isFill: false }, { value: 3, isFill: false }])));
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/present/compare: all pass");
 ```
@@ -460,16 +482,17 @@ Create `src/lib/uk/present/compare.ts`:
  * overlaps the interval of that group's first member, its leader; otherwise it starts a new group. Members of one group
  * share a rank (1, 1, 1, 4), and a page that marks "the highest" marks a group, not a member, when the leader is level with
  * the next. What holds by construction: every member overlaps its own group's leader; no leader overlaps the leader of the
- * group above; ranks never rise down the list. It is a rule about leaders, not about every pair: a member can sit in a lower
+ * group above; a rank never improves down the list. It is a rule about leaders, not about every pair: a member can sit in a lower
  * group while overlapping a member, even a leader, of a higher one (28.9 (27.3 to 30.5), 12 (11 to 13) and 11 (2 to 29)
  * rank 1, 2, 2: the 11 overlaps the 28.9 but comes after the 12, which starts the second group). So levelWithAbove means
  * "level with its group's leader", and a page marks the top group by rank, never by levelWithAbove (two identical rows are
  * level in either order, but which of them carries the flag follows the rows). Intervals are closed: two that touch at one
- * point overlap. Members with the same figure are taken lowest-reaching interval first, then highest-reaching: that pools
- * the most (the fewest groups, in every one of 23,030 random tied sets), at the price of leaving a member below a leader it
- * overlaps a little more often than highest-reaching first would; either way no rank depends on the order of the rows. A
- * figure and both ends must be finite numbers, the figure between the ends: anything else is refused (a null would
- * otherwise compare as 0, and the overlap test means nothing for it).
+ * point overlap. Members with the same figure are taken lowest-reaching interval first, then highest-reaching, so a group
+ * that starts among them is led by the one that can be told apart from the fewest members below it, and no rank depends on
+ * the order of the rows (highest-reaching first would leave a member below a leader it overlaps less often, at the price of
+ * more groups). Every row's figure and both ends must be finite numbers, the figure between the ends, wherever the row
+ * sits in the list: anything else is refused (a null would otherwise compare as 0, and the overlap test means nothing for
+ * it).
  *
  * SET STATISTICS WITHOUT FILLS. A set's median is taken over members whose figure is their own: a member carrying a fill
  * value (a default written in for a missing figure) is left out, and the count left out is returned, so a "world median"
@@ -517,7 +540,7 @@ export function medianExcludingFills(values: readonly { value: number; isFill: b
 npx tsx tests/uk/present/compare.test.ts
 ```
 
-Expected: 30 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
+Expected: 33 lines starting `PASS`, the last line `uk/present/compare: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 

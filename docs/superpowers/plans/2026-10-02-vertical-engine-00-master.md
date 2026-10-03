@@ -70,7 +70,7 @@ Arithmetic never launders an estimate (`src/lib/uk/pnl/kinds.ts`).
 
 **P4. Itemised parts are rounded first and summed.** A bill printed as lines adds up to its printed total (`sumPennies`). Shares of a whole are integers that sum to the whole (largest remainder).
 
-**P5. Like for like.** One dimension varies, the other is held: trades in one place, or places for one trade. Two members are ranked apart only when their intervals separate; otherwise they share a rank.
+**P5. Like for like.** One dimension varies, the other is held: trades in one place, or places for one trade. A member shares the rank of the group above when its interval overlaps that group's leader's; otherwise it starts a new group, whose leader the data can tell apart from the leader above (3.17).
 
 **P6. No clamp manufactures a number.** No margin floor, no fill value, no cap that becomes a figure. A figure that cannot be computed honestly is withheld with its reason.
 
@@ -302,7 +302,7 @@ Each line carries its kind; a range is the sum of the low lines and the sum of t
 - **Honest unit (the measurement convention).** A figure with range [lo, hi] prints at the place of the leading digit of its half-width, `u = 10^floor(log10((hi - lo)/2))`, never past three significant figures. The printed figure lies within its range widened by half a unit. London restaurants' median 281.9k (280.3k to 283.5k) prints 282,000; Camden's 76.4k (73.9k to 81.1k) prints 76,000; the median restaurant's take-home 13,756 (11,534 to 15,558) prints 14,000; an exact law figure prints three significant figures on a card and its pennies in an itemised bill.
 - **One decimal count per column** (MODEL PART 5).
 - **Largest remainder** for shares of a whole.
-- **Ranks with ties:** a member is level with the group above when its interval overlaps the interval of that group's leader; overlap is conservative (non-overlapping 95% intervals imply p below about 0.006 for equal standard errors, up to about 0.05 when one error is a hundred times the other). By construction every member overlaps its own group's leader, no leader overlaps the leader above, and ranks never rise down the list; it is a rule about leaders, not every pair (28.9, 12 and 11 with intervals 27.3 to 30.5, 11 to 13 and 2 to 29 rank 1, 2, 2), so a page marks the top group by rank. Members with the same figure are taken lowest-reaching interval first, then highest-reaching, so no rank depends on the order of the rows.
+- **Ranks with ties:** a member is level with the group above when its interval overlaps the interval of that group's leader; overlap is conservative (non-overlapping 95% intervals imply p below about 0.006 for equal standard errors, up to about 0.05 when one error is a hundred times the other). By construction every member overlaps its own group's leader, no leader overlaps the leader above, and a rank never improves down the list; it is a rule about leaders, not every pair (28.9, 12 and 11 with intervals 27.3 to 30.5, 11 to 13 and 2 to 29 rank 1, 2, 2), so a page marks the top group by rank. Members with the same figure are taken lowest-reaching interval first, then highest-reaching, so no rank depends on the order of the rows.
 - **Set statistics without fills:** a set's median uses members whose figure is their own; fills are counted and left out (PART 9 clause 46).
 - **Placement in tenths** (`src/lib/spine/placement.ts`, unchanged): `n = floor(10 x strictly lower / total)`, ties not lower, clamped to nine; already defended by `tests/spine/placement.test.ts` over every pair up to 200 members.
 
