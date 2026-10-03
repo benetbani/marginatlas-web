@@ -677,8 +677,12 @@ Employee Class 1 on pay G: `8% x clamp(G, 12,570, 50,270) + 2% x max(0, G - 50,2
 `15% x max(0, G - 5,000)`, or `15% x max(0, G - 50,270)` for an employee under 21 or an apprentice under 25. The Employment
 Allowance is one budget for the business: `net = max(0, sum_i er_i - 10,500)`, so how it is spread across employees cannot
 change the bill (`sum - min(A, sum)` depends only on the sum); a company whose only NI-liable employee is its one director
-cannot claim it. Payroll actually runs on period thresholds (96 a week, 417 a month); the annual basis differs by about a
-pound on 30,000 and says so in the module.
+cannot claim it. The business's bill is the sum of its rounded lines, never the rounding of the raw sum (two bills of
+2,967.675 make 5,935.36, not 5,935.35); a negative bill and an amount that is not finite are refused rather than charged at
+zero. The test pins every band edge above its threshold (employee Class 1 at 60,000, the relief at 50,270 and 50,271) and
+the allowance's cap (two living-wage staff use 5,935.36 of it and pay nothing): the review of 2026-10-03 showed five of
+seven planted faults passing the first draft's checks. Payroll actually runs on period thresholds (96 a week, 417 a month);
+the annual basis differs by about a pound on 30,000 and says so in the module.
 
 **Files:**
 - Create: `src/lib/uk/law/national_insurance.ts`
@@ -697,6 +701,7 @@ Create `tests/uk/law/national_insurance.test.ts`:
  * Run: npx tsx tests/uk/law/national_insurance.test.ts
  */
 import { class4, employeeClass1, employerClass1, employerNiAfterAllowance } from "../../../src/lib/uk/law/national_insurance";
+import { UK_2026_27 } from "../../../src/lib/uk/law/params_2026_27";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-law-national-insurance";
@@ -714,9 +719,13 @@ check("Class 4 on 30,000: 6% of 17,430 = 1,045.80", class4(30_000) === 1045.8);
 check("Class 4 on 60,000: 2,262 + 2% of 9,730 = 2,456.60", class4(60_000) === 2456.6);
 check("Class 4 nothing at 12,570", class4(12_570) === 0);
 check("employee Class 1 on 30,000: 8% of 17,430 = 1,394.40", employeeClass1(30_000) === 1394.4);
+check("employee Class 1 on 60,000: 3,016.00 + 2% of 9,730 = 3,210.60", employeeClass1(60_000) === 3210.6);
+check("employee Class 1 nothing at 12,570", employeeClass1(12_570) === 0);
 check("employer on 30,000: 15% of 25,000 = 3,750.00", employerClass1(30_000) === 3750);
 check("employer on a living-wage year (24,784.50): 2,967.68", employerClass1(24_784.5) === 2967.68);
 check("employer on an under-21's 21,157.50: nothing below 50,270", employerClass1(21_157.5, { reliefToUpperSecondary: true }) === 0);
+check("employer on an under-21's 60,000: 15% of the 9,730 above 50,270 = 1,459.50", employerClass1(60_000, { reliefToUpperSecondary: true }) === 1459.5);
+check("the relief ends exactly at 50,270: nothing on 50,270, 0.15 on 50,271", employerClass1(50_270, { reliefToUpperSecondary: true }) === 0 && employerClass1(50_271, { reliefToUpperSecondary: true }) === 0.15);
 check("employer nothing at the secondary threshold", employerClass1(5_000) === 0);
 
 const four = employerNiAfterAllowance([2967.68, 2967.68, 2967.68, 2967.68], true);
@@ -724,7 +733,13 @@ check("four living-wage staff: 11,870.72 of employer NI", four.gross === 11_870.
 check("the allowance takes 10,500 of it", four.allowanceUsed === 10_500);
 check("the business pays 1,370.72", four.net === 1370.72);
 check("a sole director cannot claim: pays it all", employerNiAfterAllowance([3750], false).net === 3750);
-check("the allowance covers about 3.54 living-wage staff", Math.abs(10_500 / 2967.675 - 3.538) < 0.001);
+check("the allowance covers about 3.54 living-wage staff", Math.abs(UK_2026_27.class1Secondary.employmentAllowance / employerClass1(24_784.5) - 3.538) < 0.001);
+const two = employerNiAfterAllowance([2967.68, 2967.68], true);
+check("two living-wage staff: the allowance covers the whole 5,935.36 and never more, nothing to pay", two.gross === 5935.36 && two.allowanceUsed === 5935.36 && two.net === 0);
+check("the bill is the sum of rounded lines: two bills of 2,967.675 make 5,935.36, not the raw sum's 5,935.35", employerNiAfterAllowance([2967.675, 2967.675], false).gross === 5935.36);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("a negative employer bill is refused", refuses(() => employerNiAfterAllowance([-100], true)));
+check("an amount that is not finite is refused, never charged at zero", refuses(() => class4(-Infinity)) && refuses(() => employeeClass1(Number.NaN)) && refuses(() => employerClass1(Infinity)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/national_insurance: all pass");
@@ -754,9 +769,15 @@ Create `src/lib/uk/law/national_insurance.ts`:
  * on 30,000 of pay; the vertical prints yearly figures, so the annual basis is the one used and the difference is stated.
  */
 import { UK_2026_27 as L } from "./params_2026_27";
-import { bandedTax, pennies } from "./money";
+import { bandedTax, pennies, sumPennies } from "./money";
 
+function finite(x: number, what: string): void {
+  if (!Number.isFinite(x)) throw new RangeError(`${what}: not a finite amount (${x})`);
+}
+
+/** Class 4 on a sole trader's annual profit; a loss pays nothing. */
 export function class4(profit: number): number {
+  finite(profit, "class4");
   const c = L.class4;
   return bandedTax(Math.max(0, profit), [
     { upTo: c.lowerProfitsLimit, rate: 0 },
@@ -765,7 +786,9 @@ export function class4(profit: number): number {
   ]);
 }
 
+/** Class 1 primary on an employee's annual pay (the director's annual earnings period); no pay pays nothing. */
 export function employeeClass1(pay: number): number {
+  finite(pay, "employeeClass1");
   const c = L.class1Primary;
   return bandedTax(Math.max(0, pay), [
     { upTo: c.primaryThreshold, rate: 0 },
@@ -774,21 +797,30 @@ export function employeeClass1(pay: number): number {
   ]);
 }
 
-/** The employer's NI on one employee's annual pay, before the Employment Allowance. */
+/**
+ * The employer's NI on one employee's annual pay, before the Employment Allowance. `reliefToUpperSecondary` is for an
+ * employee under 21, an apprentice under 25 or a veteran in their first year: 0% up to the upper secondary threshold.
+ */
 export function employerClass1(pay: number, opts: { reliefToUpperSecondary?: boolean } = {}): number {
+  finite(pay, "employerClass1");
   const c = L.class1Secondary;
   const from = opts.reliefToUpperSecondary ? c.upperSecondaryThreshold : c.secondaryThreshold;
   return pennies(Math.max(0, pay - from) * c.rate);
 }
 
 /**
- * The Employment Allowance is one budget for the whole business (10,500 a year), spent against the employer's NI of all
- * staff together, so how it is "allocated" between employees does not change the business's bill:
+ * The Employment Allowance is one budget for the whole business (the year's amount is in params_2026_27.ts), spent
+ * against the employer's NI of all staff together, so how it is "allocated" between employees does not change the bill:
  *   netEmployerNi = max(0, sum of employer NI - allowance), when the business can claim it.
- * A company whose only employee paid above the secondary threshold is its single director cannot claim it.
+ * The bill is the sum of its rounded lines (money.ts). A company whose only employee paid above the secondary threshold
+ * is its single director cannot claim it; the caller says so with `canClaim`.
  */
 export function employerNiAfterAllowance(employerNiByEmployee: readonly number[], canClaim: boolean): { gross: number; allowanceUsed: number; net: number } {
-  const gross = pennies(employerNiByEmployee.reduce((a, b) => a + b, 0));
+  for (const x of employerNiByEmployee) {
+    finite(x, "employerNiAfterAllowance");
+    if (x < 0) throw new RangeError(`employerNiAfterAllowance: an employer NI bill cannot be negative (${x})`);
+  }
+  const gross = sumPennies(employerNiByEmployee);
   const allowanceUsed = canClaim ? Math.min(L.class1Secondary.employmentAllowance, gross) : 0;
   return { gross, allowanceUsed, net: pennies(gross - allowanceUsed) };
 }
@@ -800,7 +832,7 @@ export function employerNiAfterAllowance(employerNiByEmployee: readonly number[]
 npx tsx tests/uk/law/national_insurance.test.ts
 ```
 
-Expected: 13 lines starting `PASS`, the last line `uk/law/national_insurance: all pass`, exit code 0.
+Expected: 21 lines starting `PASS`, the last line `uk/law/national_insurance: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
