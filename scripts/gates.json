@@ -1367,6 +1367,17 @@
       "claims": []
     },
     {
+      "name": "uk-present-precision",
+      "script": "tests/uk/present/precision.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Honest precision: a figure prints no finer than its uncertainty and no more than three significant figures; one decimal count per column; shares of a whole as integers that add to the whole (largest r",
+      "reads": [
+        "src/lib/uk/present/precision.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-law-money",
       "script": "tests/uk/law/money.test.ts",
       "args": [],

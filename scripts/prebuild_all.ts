@@ -526,6 +526,9 @@ const GATES: Gate[] = [
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },
   { name: "facts-confidence", script: "tests/facts/confidence.test.ts" },
+  /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
+     a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
+  { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },
   /* The UK law engine (docs/superpowers/plans/2026-10-02-vertical-engine-01-uk-law.md): every rate and threshold
      of 2026-27 in one dated file, each module proved on official worked examples to the penny. */
   { name: "uk-law-money", script: "tests/uk/law/money.test.ts" },
