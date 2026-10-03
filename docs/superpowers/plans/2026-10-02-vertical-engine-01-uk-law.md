@@ -885,7 +885,9 @@ One company, a 12-month period, no associated companies (each of those is out of
 `CT(P) = 19% P` up to 50,000; `25% P - (3/200)(250,000 - P)` between the limits; `25% P` above 250,000. Between the limits
 `CT(P) = 0.265 P - 3,750`, so the marginal rate is 26.5% and the average rate climbs from 19% to 25%. Continuity is the
 check that the fraction is right: `CT(50,000) = 9,500` and `CT(250,000) = 62,500` from both sides, which holds only for
-3/200 (task 1 reads the fraction on the official page).
+3/200 (task 1 read the fraction on the official page). Continuity also hides a wrong branch at the limit, so the test pins
+19% strictly below it too (30,000 pays 5,700; the marginal formula would give 4,200), and a profit that is not finite is
+refused rather than taxed at zero (minus infinity used to slip through the loss branch).
 
 **Files:**
 - Create: `src/lib/uk/law/corporation_tax.ts`
@@ -918,6 +920,8 @@ const check = (label: string, ok: boolean) => {
 };
 
 check("no tax on a loss", corporationTax(-5_000) === 0);
+check("nothing on no profit", corporationTax(0) === 0);
+check("19% below the lower limit: 30,000 pays 5,700 (the marginal formula would give 4,200)", corporationTax(30_000) === 5_700);
 check("19% at 50,000: 9,500", corporationTax(50_000) === 9_500);
 check("marginal relief at 100,000: 25,000 - 2,250 = 22,750", corporationTax(100_000) === 22_750);
 check("25% at 250,000: 62,500", corporationTax(250_000) === 62_500);
@@ -930,6 +934,8 @@ for (let p = 50_100; p < 250_000; p += 997) {
   if (Math.abs(m - 26.5) > 0.02) ok = false;
 }
 check("between the limits every extra 100 pounds costs 26.50", ok);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("a profit that is not finite is refused, never taxed at zero", refuses(() => corporationTax(-Infinity)) && refuses(() => corporationTax(Number.NaN)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/corporation_tax: all pass");
@@ -964,7 +970,9 @@ Create `src/lib/uk/law/corporation_tax.ts`:
 import { UK_2026_27 as L } from "./params_2026_27";
 import { pennies } from "./money";
 
+/** Corporation tax on a year's taxable profit; a loss or no profit pays nothing; a profit that is not finite is refused. */
 export function corporationTax(profit: number): number {
+  if (!Number.isFinite(profit)) throw new RangeError(`corporationTax: not a finite profit (${profit})`);
   const c = L.corporationTax;
   if (profit <= 0) return 0;
   if (profit <= c.lowerLimit) return pennies(c.smallProfitsRate * profit);
@@ -979,7 +987,7 @@ export function corporationTax(profit: number): number {
 npx tsx tests/uk/law/corporation_tax.test.ts
 ```
 
-Expected: 8 lines starting `PASS`, the last line `uk/law/corporation_tax: all pass`, exit code 0.
+Expected: 11 lines starting `PASS`, the last line `uk/law/corporation_tax: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
