@@ -1747,8 +1747,10 @@ five (the rule that stops a lease back-loading its rent to dodge the tax). SDLT 
 2% above; Land Transaction Tax in Wales: 0% to 225,000, 1% to 2,000,000, 2% above. Worked: 25,000 a year for ten years is an
 NPV of 207,915.13 and 579.15 of SDLT; the same rent for five years (112,876.31) pays nothing. The test also reaches both 2%
 bands (the official worked example: an NPV of 5,100,000 pays 50,500.00 of SDLT; 2,100,000 pays 19,750.00 of LTT), takes
-the highest of the first five where it falls first (30,000 then four years of 20,000: NPV 214,009.47), and refuses a
-negative rent or one that is not a number (a fault sweep before this task ran found the first draft blind to all three).
+the highest of the first five where it falls first (30,000 then four years of 20,000: NPV 214,009.47) and where year five
+is the single highest with a higher year six (years 6 to 10 take 30,000: NPV 212,767.37; the review of 2026-10-03 showed
+four off-by-one readings of the rule passing without it), and refuses a negative rent or one that is not a number, after
+year five too, where the rule would hide it.
 
 **Files:**
 - Create: `src/lib/uk/law/lease_tax.ts`
@@ -1791,10 +1793,11 @@ check("half the first year rent-free: NPV 195,837.84, SDLT 458.38", leaseRentNpv
 check("years after the fifth take the highest of the first five", leaseRentNpv([20_000, 20_000, 20_000, 25_000, 25_000, 0, 0, 0, 0, 0]) === 193_906.95);
 check("an empty lease has no NPV", leaseRentNpv([]) === 0);
 check("the highest of the first five, wherever it falls: 30,000 then four years of 20,000 then five empty years, NPV 214,009.47", leaseRentNpv([30_000, 20_000, 20_000, 20_000, 20_000, 0, 0, 0, 0, 0]) === 214_009.47);
+check("year five the single highest and year six higher still: years 6 to 10 take year five's 30,000, NPV 212,767.37", leaseRentNpv([20_000, 20_000, 20_000, 20_000, 30_000, 40_000, 0, 0, 0, 0]) === 212_767.37);
 check("SDLT's 2% band, the official worked example: an NPV of 5,100,000 pays 48,500 + 2,000 = 50,500.00", sdltOnLeaseRent(5_100_000) === 50_500);
 check("LTT's 2% band: an NPV of 2,100,000 pays 17,750 + 2,000 = 19,750.00", lttOnLeaseRent(2_100_000) === 19_750);
 const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
-check("a negative rent, or one that is not a number, is refused", refuses(() => leaseRentNpv([25_000, -1])) && refuses(() => leaseRentNpv([Number.NaN])));
+check("a negative rent, or one that is not a number, is refused, after year five too (where the rule would hide it)", refuses(() => leaseRentNpv([25_000, -1])) && refuses(() => leaseRentNpv([Number.NaN])) && refuses(() => leaseRentNpv([25_000, 25_000, 25_000, 25_000, 25_000, 0, Number.NaN])));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/lease_tax: all pass");
@@ -1832,9 +1835,9 @@ import { bandedTax, pennies } from "./money";
 /** The net present value of a lease's rent, year by year; a rent that is negative or not a number is refused. */
 export function leaseRentNpv(yearlyRents: readonly number[]): number {
   const t = L.leaseRentTax;
-  for (const r of yearlyRents) {
-    if (!Number.isFinite(r) || r < 0) throw new RangeError(`leaseRentNpv: not a yearly rent (${r})`);
-  }
+  yearlyRents.forEach((r, i) => {
+    if (!Number.isFinite(r) || r < 0) throw new RangeError(`leaseRentNpv: year ${i + 1} is not a yearly rent (${r})`);
+  });
   if (yearlyRents.length === 0) return 0;
   const early = yearlyRents.slice(0, t.yearsBeforeHighestRule);
   const highest = Math.max(...early);
@@ -1861,7 +1864,7 @@ export function lttOnLeaseRent(npv: number): number {
 npx tsx tests/uk/law/lease_tax.test.ts
 ```
 
-Expected: 13 lines starting `PASS`, the last line `uk/law/lease_tax: all pass`, exit code 0.
+Expected: 14 lines starting `PASS`, the last line `uk/law/lease_tax: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
