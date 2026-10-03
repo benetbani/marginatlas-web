@@ -1455,6 +1455,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-redundancy",
+      "script": "tests/uk/law/redundancy.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Statutory redundancy pay and notice (Employment Rights Act 1996 ss.",
+      "reads": [
+        "src/lib/uk/law/redundancy.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
