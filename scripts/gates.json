@@ -1367,6 +1367,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-money",
+      "script": "tests/uk/law/money.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The vertical's money rounding: half-pennies round up, parts add to the total.",
+      "reads": [
+        "src/lib/uk/law/money.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],
