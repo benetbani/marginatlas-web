@@ -1411,6 +1411,17 @@
       "claims": []
     },
     {
+      "name": "uk-law-take-home",
+      "script": "tests/uk/law/take_home.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "What an owner keeps after tax, sole trader and company, and the company's best salary.",
+      "reads": [
+        "src/lib/uk/law/take_home.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],

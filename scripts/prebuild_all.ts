@@ -532,6 +532,7 @@ const GATES: Gate[] = [
   { name: "uk-law-income-tax", script: "tests/uk/law/income_tax.test.ts" },
   { name: "uk-law-national-insurance", script: "tests/uk/law/national_insurance.test.ts" },
   { name: "uk-law-corporation-tax", script: "tests/uk/law/corporation_tax.test.ts" },
+  { name: "uk-law-take-home", script: "tests/uk/law/take_home.test.ts" },
   /* A placeholder is not a figure (2026-09-23 night): two new builders read one
      each as "modelled" the same evening (London's calendar, printed on
      production; North Korea's household budget, unserved only because /kp is a
