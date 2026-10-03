@@ -126,7 +126,9 @@ exactly 556.335 in decimal but 556.33499999999992269... in binary, and times 100
 `Math.round(x * 100) / 100` prints 556.33 where every payroll and every gov.uk worked example prints 556.34 (the test's
 second check fails without the guard; checked on 2026-10-02). Itemised bills round each part first and add the parts as integer pence
 (`sumPennies`), so a reader adding the printed lines gets the printed total: 24,784.50 + 2,967.68 + 556.34 = 28,308.52,
-where the unrounded sum would print 28,308.51. `bandedTax(amount, bands)` taxes slices and rounds each slice the same way.
+where the unrounded sum would print 28,308.51 (the test feeds the raw products too, so the guard inside the sum is proved).
+A negative amount under half a penny rounds to zero, never to -0, which a currency formatter prints as -0.00 (found by the
+task review of 2026-10-03). `bandedTax(amount, bands)` taxes slices and rounds each slice the same way.
 
 **Files:**
 - Create: `src/lib/uk/law/params_2026_27.ts`
@@ -165,6 +167,8 @@ check("a negative half-penny rounds away from zero", pennies(-0.005) === -0.01);
 check("an exact amount is unchanged", pennies(24_784.5) === 24_784.5);
 check("parts sum as pence: 24,784.50 + 2,967.68 + 556.34 = 28,308.52", sumPennies([24_784.5, 2967.675, 556.335]) === 28_308.52);
 check("the raw sum would have said 28,308.51, which the reader cannot rebuild", pennies(24_784.5 + 2967.675 + 556.335) === 28_308.51);
+check("each line is rounded inside the sum: the products 0.15 x 19,784.50 and 0.03 x 18,544.50 still give 28,308.52", sumPennies([24_784.5, 0.15 * 19_784.5, 0.03 * 18_544.5]) === 28_308.52);
+check("a negative amount under half a penny is zero, never -0 (a formatter prints -0 as -0.00)", Object.is(pennies(-0.001), 0) && Object.is(pennies(0.3 - (0.1 + 0.2)), 0));
 check("banded tax: 1% of NPV above 150,000 on 207,915.13 is 579.15", bandedTax(207_915.13, [{ upTo: 150_000, rate: 0 }, { upTo: 5_000_000, rate: 0.01 }, { upTo: Infinity, rate: 0.02 }]) === 579.15);
 let threw = false;
 try { pennies(NaN); } catch { threw = true; }
@@ -235,7 +239,7 @@ export const UK_2026_27 = {
     additional: 0.02,
   },
   class1Secondary: {
-    /** same page; the 15% rate from the National Insurance Contributions (Secondary Class 1 Contributions) Act 2025 */
+    /** same page; the 15% rate from the National Insurance Contributions (Secondary Class 1 Contributions) Act 2025, s.1: https://www.legislation.gov.uk/ukpga/2025/11/section/1 */
     secondaryThreshold: 5_000,
     /** under 21s, apprentices under 25 and veterans: 0% up to this */
     upperSecondaryThreshold: 50_270,
@@ -248,8 +252,9 @@ export const UK_2026_27 = {
     qualifyingLower: 6_240,
     qualifyingUpper: 50_270,
     employerMinimum: 0.03,
+    /** aged between 22 and State Pension age: https://www.gov.uk/workplace-pensions/joining-a-workplace-pension */
     minAge: 22,
-    /** State Pension age is 66 rising to 67 between 2026 and 2028; 66 is used, the change dated in the guide */
+    /** State Pension age is 66 rising to 67 between 2026 and 2028 (https://www.gov.uk/government/publications/state-pension-age-timetable/state-pension-age-timetable); 66 is used, the change dated in the guide */
     statePensionAge: 66,
   },
   corporationTax: {
@@ -268,7 +273,7 @@ export const UK_2026_27 = {
     rhlStandardMultiplier: 0.43,
     /** the small multipliers apply below this rateable value */
     smallThreshold: 51_000,
-    /** at and above this the high-value multiplier applies (500,000 itself is high-value); out of scope for street businesses, the function refuses it */
+    /** at and above this the high-value multiplier applies (500,000 itself is high-value: https://www.gov.uk/estimate-your-business-rates); out of scope for street businesses, the function refuses it */
     highValueThreshold: 500_000,
     /** https://www.gov.uk/business-rates-relief/small-business-rate-relief */
     sbrrFullUpTo: 12_000,
@@ -288,7 +293,7 @@ export const UK_2026_27 = {
       { upTo: 2_000_000, rate: 0.01 },
       { upTo: Infinity, rate: 0.02 },
     ],
-    /** the rent taken for every year after the fifth: the highest of the first five */
+    /** the rent taken for every year after the fifth: the highest of the first five (Finance Act 2003 Sch 17A para 7(3); https://www.gov.uk/guidance/stamp-duty-land-tax-leasehold-purchases) */
     yearsBeforeHighestRule: 5,
   },
   redundancy: {
@@ -335,10 +340,12 @@ Create `src/lib/uk/law/money.ts`:
 export function pennies(x: number): number {
   if (!Number.isFinite(x)) throw new Error(`pennies: not a finite amount (${x})`);
   const sign = x < 0 ? -1 : 1;
-  return (sign * Math.round(Math.abs(x) * 100 + 1e-7)) / 100;
+  const pence = Math.round(Math.abs(x) * 100 + 1e-7);
+  // a negative amount under half a penny is zero, never -0 (which a currency formatter prints as -0.00)
+  return pence === 0 ? 0 : (sign * pence) / 100;
 }
 
-/** The sum of already-rounded lines, itself exact to the penny (integer arithmetic on pence). */
+/** The sum of lines, each rounded to the penny here first, exact to the penny (integer arithmetic on pence). */
 export function sumPennies(lines: readonly number[]): number {
   let pence = 0;
   for (const l of lines) pence += Math.round(pennies(l) * 100);
@@ -365,7 +372,7 @@ export function bandedTax(amount: number, bands: readonly { upTo: number; rate: 
 npx tsx tests/uk/law/money.test.ts
 ```
 
-Expected: 8 lines starting `PASS`, the last line `uk/law/money: all pass`, exit code 0.
+Expected: 10 lines starting `PASS`, the last line `uk/law/money: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
