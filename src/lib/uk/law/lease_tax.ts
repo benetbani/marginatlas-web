@@ -17,9 +17,9 @@ import { bandedTax, pennies } from "./money";
 /** The net present value of a lease's rent, year by year; a rent that is negative or not a number is refused. */
 export function leaseRentNpv(yearlyRents: readonly number[]): number {
   const t = L.leaseRentTax;
-  for (const r of yearlyRents) {
-    if (!Number.isFinite(r) || r < 0) throw new RangeError(`leaseRentNpv: not a yearly rent (${r})`);
-  }
+  yearlyRents.forEach((r, i) => {
+    if (!Number.isFinite(r) || r < 0) throw new RangeError(`leaseRentNpv: year ${i + 1} is not a yearly rent (${r})`);
+  });
   if (yearlyRents.length === 0) return 0;
   const early = yearlyRents.slice(0, t.yearsBeforeHighestRule);
   const highest = Math.max(...early);

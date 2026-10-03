@@ -28,10 +28,11 @@ check("half the first year rent-free: NPV 195,837.84, SDLT 458.38", leaseRentNpv
 check("years after the fifth take the highest of the first five", leaseRentNpv([20_000, 20_000, 20_000, 25_000, 25_000, 0, 0, 0, 0, 0]) === 193_906.95);
 check("an empty lease has no NPV", leaseRentNpv([]) === 0);
 check("the highest of the first five, wherever it falls: 30,000 then four years of 20,000 then five empty years, NPV 214,009.47", leaseRentNpv([30_000, 20_000, 20_000, 20_000, 20_000, 0, 0, 0, 0, 0]) === 214_009.47);
+check("year five the single highest and year six higher still: years 6 to 10 take year five's 30,000, NPV 212,767.37", leaseRentNpv([20_000, 20_000, 20_000, 20_000, 30_000, 40_000, 0, 0, 0, 0]) === 212_767.37);
 check("SDLT's 2% band, the official worked example: an NPV of 5,100,000 pays 48,500 + 2,000 = 50,500.00", sdltOnLeaseRent(5_100_000) === 50_500);
 check("LTT's 2% band: an NPV of 2,100,000 pays 17,750 + 2,000 = 19,750.00", lttOnLeaseRent(2_100_000) === 19_750);
 const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
-check("a negative rent, or one that is not a number, is refused", refuses(() => leaseRentNpv([25_000, -1])) && refuses(() => leaseRentNpv([Number.NaN])));
+check("a negative rent, or one that is not a number, is refused, after year five too (where the rule would hide it)", refuses(() => leaseRentNpv([25_000, -1])) && refuses(() => leaseRentNpv([Number.NaN])) && refuses(() => leaseRentNpv([25_000, 25_000, 25_000, 25_000, 25_000, 0, Number.NaN])));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/lease_tax: all pass");
