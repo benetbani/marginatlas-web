@@ -2085,6 +2085,12 @@ Expected: one commit; `git status --short` lists none of the files above.
 A loan of A at an annual rate R over n months repays `A r / (1 - (1 + r)^-n)` a month, `r = R / 12`; at R = 0 it is A / n.
 Worked: 25,000 at 7.5% over 60 months is 500.95 a month, 30,056.92 repaid, 5,056.92 of interest. The country page's
 start-up loan lever computes the same thing today; this moves it into the law engine where the rest of the money is.
+The denominator is computed as `-expm1(-n log1p(r))`, the same number as `1 - (1 + r)^-n` with its digits kept when r is
+tiny (the plain form divides by zero once 1 + r rounds to 1); the two forms agree to the penny on 540,000 loans (1 to 360
+months, 0.1% to 30%, five principals), and 5,000 random loans agree with 60-digit decimal arithmetic. The test also pins
+one month (1,000 at 12%: 1,010.00), nothing borrowed and a rate of 1e-13 %, and refuses a principal or a rate that is not
+a finite number or is negative, and months that are not a whole number of at least one; three of nine deliberate faults
+passed the first version of this test.
 
 **Files:**
 - Create: `src/lib/uk/law/loan.ts`
@@ -2120,6 +2126,14 @@ const loan = annuity({ principal: 25_000, annualRatePct: 7.5, months: 60 });
 check("25,000 at 7.5% over five years: 500.95 a month", loan.monthly === 500.95);
 check("30,056.92 repaid in all, 5,056.92 of interest", loan.totalRepaid === 30_056.92 && loan.interest === 5056.92);
 check("no interest: the principal over the months", annuity({ principal: 12_000, annualRatePct: 0, months: 24 }).monthly === 500);
+check("one month: the principal and a month's interest (1,000 at 12%: 1,010.00, 10.00 of interest)", (() => { const x = annuity({ principal: 1000, annualRatePct: 12, months: 1 }); return x.monthly === 1010 && x.totalRepaid === 1010 && x.interest === 10; })());
+check("nothing borrowed: nothing to repay", (() => { const x = annuity({ principal: 0, annualRatePct: 7.5, months: 60 }); return x.monthly === 0 && x.totalRepaid === 0 && x.interest === 0; })());
+check("a rate of 1e-13 %, where 1 + r is exactly 1 in floating point: still the principal over the months (416.67 a month, 25,000.00 in all), not a division by zero", (() => { const x = annuity({ principal: 25_000, annualRatePct: 1e-13, months: 60 }); return x.monthly === 416.67 && x.totalRepaid === 25_000 && x.interest === 0; })());
+/** The guards throw a RangeError; pennies throws a plain Error on a NaN or an infinity, which would hide a missing guard. */
+const refuses = (f: () => unknown) => { try { f(); return false; } catch (e) { return e instanceof RangeError; } };
+check("a principal must be a finite number and not negative: NaN, Infinity and -1 are refused", [Number.NaN, Infinity, -1].every((principal) => refuses(() => annuity({ principal, annualRatePct: 7.5, months: 60 }))));
+check("a rate must be a finite number and not negative: NaN, Infinity and -1 are refused", [Number.NaN, Infinity, -1].every((annualRatePct) => refuses(() => annuity({ principal: 25_000, annualRatePct, months: 60 }))));
+check("months must be a whole number, at least one: 0, 1.5 and NaN are refused", [0, 1.5, Number.NaN].every((months) => refuses(() => annuity({ principal: 25_000, annualRatePct: 7.5, months }))));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/law/loan: all pass");
@@ -2144,16 +2158,22 @@ Create `src/lib/uk/law/loan.ts`:
  * The repayment of a fixed-rate loan repaid monthly over n months (an annuity):
  *   payment = A x r / (1 - (1 + r)^-n),   r = annual rate / 12;   payment = A / n when r = 0.
  * Derivation: the present value of n payments of size x at rate r is x (1 - (1 + r)^-n) / r; set it equal to A.
- * The total repaid is n x the exact payment, rounded once (a lender's schedule rounds each payment and settles the pennies
- * in the last one; the difference is under a pound over five years).
+ * The denominator is computed as -expm1(-n log1p(r)), since (1 + r)^-n = exp(-n ln(1 + r)): the same number, but it keeps
+ * its digits when r is tiny, where 1 + r rounds to exactly 1 and the plain form divides by zero. (The two forms agree to
+ * the penny on 540,000 loans of 1 to 360 months at 0.1% to 30%.)
+ * The total repaid is n x the exact payment, rounded once. A lender's schedule pays the rounded payment and settles the
+ * pennies in the last one: on the worked example, each month's interest rounded to the penny, 59 x 500.95 and a last
+ * 500.91, 4p more in all.
  */
 import { pennies } from "./money";
 
 export function annuity(input: { principal: number; annualRatePct: number; months: number }): { monthly: number; totalRepaid: number; interest: number } {
   const { principal: A, annualRatePct, months: n } = input;
-  if (!(A >= 0) || !(n >= 1)) throw new Error("annuity: principal >= 0 and at least one month");
+  if (!Number.isFinite(A) || A < 0) throw new RangeError(`annuity: not a principal (${A})`);
+  if (!Number.isFinite(annualRatePct) || annualRatePct < 0) throw new RangeError(`annuity: not an annual rate (${annualRatePct})`);
+  if (!Number.isInteger(n) || n < 1) throw new RangeError(`annuity: not a whole number of months, at least one (${n})`);
   const r = annualRatePct / 100 / 12;
-  const exact = r === 0 ? A / n : (A * r) / (1 - Math.pow(1 + r, -n));
+  const exact = r === 0 ? A / n : (A * r) / -Math.expm1(-n * Math.log1p(r));
   const totalRepaid = pennies(exact * n);
   return { monthly: pennies(exact), totalRepaid, interest: pennies(totalRepaid - A) };
 }
@@ -2165,7 +2185,7 @@ export function annuity(input: { principal: number; annualRatePct: number; month
 npx tsx tests/uk/law/loan.test.ts
 ```
 
-Expected: 3 lines starting `PASS`, the last line `uk/law/loan: all pass`, exit code 0.
+Expected: 9 lines starting `PASS`, the last line `uk/law/loan: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
