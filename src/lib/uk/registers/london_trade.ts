@@ -4,7 +4,7 @@
  * A London trade's register figures, the one place a page builder reads them (plan 06, task A1; his ruling of 2026-10-04:
  * London is Greater London, E12000007). Server-side only: turnover.json is two megabytes.
  *
- * What it gives: the count of enterprises and local units on the register, and the median and quartiles of yearly sales read
+ * What it gives: the count of enterprises and local units on the register, and the median, tenths and quartiles of yearly sales read
  * once from the band counts (`bandQuantile`, never the slice's stored quantiles, which are rounded to the 100 already), with
  * the share under 100,000 pounds. A quantile in an open band (under 50,000 or over 50,000,000 pounds) carries only its edge,
  * since the register cannot place a business inside it.
@@ -71,9 +71,12 @@ export type LondonTradeRegister = {
 export type SalesQuantile = { open: false; gbp: number } | { open: "below" | "above"; edgeGbp: number };
 
 export type LondonTradeSales = {
+  /** The bottom and top tenths (his N9 of 2026-08-30: a spread is the tenths and the typical, never quarters). */
+  q10: SalesQuantile;
   q25: SalesQuantile;
   q50: SalesQuantile;
   q75: SalesQuantile;
+  q90: SalesQuantile;
   /** The median in pounds, or null when it falls in an open band (then it prints only in words). */
   medianGbp: number | null;
   /** The median's range from the register's rounding (counts rounded to 5), in pounds, or null when the file holds none. */
@@ -114,15 +117,19 @@ export function londonTradeSales(slug: string): LondonTradeSales | null {
   const { row } = londonRow(slug)!;
   const bands = row.turnover_bands_k;
   if (row.thin || !bands || bands.every((c) => c === 0)) return null;
+  const q10 = quantile(bands, 0.1);
   const q25 = quantile(bands, 0.25);
   const q50 = quantile(bands, 0.5);
   const q75 = quantile(bands, 0.75);
+  const q90 = quantile(bands, 0.9);
   const under = bandCdf(bands, 100);
-  if (!q25 || !q50 || !q75 || under === null) return null;
+  if (!q10 || !q25 || !q50 || !q75 || !q90 || under === null) return null;
   return {
+    q10,
     q25,
     q50,
     q75,
+    q90,
     medianGbp: q50.open === false ? q50.gbp : null,
     medianRangeGbp: row.median_range_k ? [gbp(row.median_range_k[0]), gbp(row.median_range_k[1])] : null,
     shareUnder100k: under,

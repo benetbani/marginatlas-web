@@ -41,13 +41,13 @@ check("barbershops: 9,695 registered, every hair or beauty business, and 63 of 1
 check("barbershops: no plus", b !== null && b.detail === null);
 check("pizzerias (an approximate code): no London hero", londonTradeHero("pizzerias") === null);
 
-/* The strip: restaurants' quartiles 124,596.43, 281,941.82 and 759,125.14 pounds, rounded once in dollars. */
+/* The strip: restaurants' bottom tenth, median and top tenth (57.5k, 281.9k and 1,923.1k pounds), rounded once in dollars. */
 const s = londonTradeStrip("restaurants");
-check("restaurants: three marks, the lower quarter, the middle and the upper quarter", s !== null && s.marks.map((m) => m.key).join(",") === "q25,typical,q75");
+check("restaurants: three marks, the bottom tenth, the typical and the top tenth (never the quarters, his N9)", s !== null && s.marks.map((m) => m.key).join(",") === "p10,typical,p90");
 check("restaurants: the middle mark is the head's figure, 374,000", s !== null && s.marks[1].value === 374_000);
-check("restaurants: the strip's basis", s !== null && s.basis === "Yearly sales of registered businesses in London.");
+check("restaurants: the strip's basis", s !== null && s.basis === "Registered businesses in London.");
 const bs = londonTradeStrip("barbershops");
-check("barbershops: the strip's basis names the group", bs !== null && bs.basis === "Yearly sales of every hair or beauty business in London.");
+check("barbershops: the bottom tenth sits in the open band, so two marks and the basis says where it lies", bs !== null && bs.marks.map((m) => m.key).join(",") === "typical,p90" && bs.basis === "Every hair or beauty business in London, bottom tenth under $66K.");
 
 /* The masthead and the strip take the London branch from the seed the adapter builds. */
 const seed = { meta: { trade: "Restaurants", city: "London", iso2: "GB", money_shown: false }, london: londonTradeHero("restaurants"), london_strip: londonTradeStrip("restaurants") };

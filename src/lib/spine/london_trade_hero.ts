@@ -51,7 +51,7 @@ export type LondonTradeHero = {
   foot: string;
 };
 
-export type LondonStripMark = { key: "q25" | "typical" | "q75"; label: string; value: number; lead?: boolean };
+export type LondonStripMark = { key: "p10" | "typical" | "p90"; label: string; value: number; lead?: boolean };
 export type LondonTradeStrip = { marks: LondonStripMark[]; basis: string };
 
 const C = () => COPY.londonTrade;
@@ -142,8 +142,9 @@ export function londonTradeHero(slug: string): LondonTradeHero | null {
   return breakEvenHero(slug) ?? salesHero(slug);
 }
 
-/** The sales strip: the register's lower quartile, median and upper quartile, each rounded once; a quartile in an open
- *  band draws no mark (the register cannot place it) and the basis says where it lies. */
+/** The sales strip: the register's bottom tenth, median and top tenth (his N9 of 2026-08-30: "the average, the top ten percent
+ *  and the bottom ten percent", never the quarters), each rounded once; a tenth in an open band draws no mark (the register
+ *  cannot place it) and the basis says where it lies. */
 export function londonTradeStrip(slug: string): LondonTradeStrip | null {
   const reg = londonTradeRegister(slug);
   const sales = londonTradeSales(slug);
@@ -152,18 +153,20 @@ export function londonTradeStrip(slug: string): LondonTradeStrip | null {
   const marks: LondonStripMark[] = [];
   const opens: string[] = [];
   const mark = (key: LondonStripMark["key"], q: SalesQuantile, label: string, lead = false) => {
-    if (q.open !== false) { opens.push(`${label}: ${openWords(q)}`); return; }
+    if (q.open !== false) { opens.push(`${label.toLowerCase()} ${openWords(q)}`); return; }
     /* The middle mark is the head's own figure (the same median rounded once through its range), so the strip and the
-       answer are one number; the quartiles hold no range in the file, so they round to three figures. */
+       answer are one number; the tenths hold no range in the file, so they round to three figures. */
     const value = key === "typical" && sales.medianRangeGbp
       ? honestRound(usdOf(q.gbp), usdOf(sales.medianRangeGbp[0]), usdOf(sales.medianRangeGbp[1]))
       : honestRound(usdOf(q.gbp));
     marks.push({ key, label, value, ...(lead ? { lead: true } : {}) });
   };
-  mark("q25", sales.q25, C().marks.lower);
-  mark("typical", sales.q50, C().marks.middle, true);
-  mark("q75", sales.q75, C().marks.upper);
+  mark("p10", sales.q10, COPY.customers.marks.bottom);
+  mark("typical", sales.q50, COPY.customers.marks.typical, true);
+  mark("p90", sales.q90, COPY.customers.marks.top);
   if (marks.length < 2 || !head) return null;
   const basis = reg.group ? C().stripBasisGroup.replace("{group}", reg.group) : C().stripBasis;
-  return { marks, basis: opens.length ? `${basis} ${opens.join("; ")}.` : basis };
+  /* A tenth in an open band is said in the one line, inside the copy gate's twelve words ("Every hair or beauty business in
+     London, bottom tenth under $66K."; no semicolon, the copy gate's rule). */
+  return { marks, basis: opens.length ? `${basis.replace(/\.$/, "")}, ${opens.join(", ")}.` : basis };
 }

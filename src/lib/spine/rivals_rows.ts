@@ -129,15 +129,20 @@ export function buildRivals(seed: any): RivalsData | null {
     return { state: "withheld", rows: [], middle: null, middleLabel: "", withheld, withheldLine: null, stateLine, ...common };
   }
   /* Digits in the withheld line, the country money card's and the mark list's own idiom ("6 cities withheld"), which the copy gate holds to a digit. */
-  const withheldLine = withheld === 0 ? null : withheld === 1 ? c.withheldOne : fill(c.withheldMany, { n: String(withheld) });
+  const counted = withheld === 0 ? null : withheld === 1 ? c.withheldOne : fill(c.withheldMany, { n: String(withheld) });
+  /* ONE SUPPORTING LINE (the copy gate's LINES): at a place's prices the estimate's words lead the withheld count on the same
+     line, and the basis stands empty. */
+  const placeLine = factor != null && city ? c.basisPlace.replace("{city}", city) : null;
+  const withheldLine = counted && placeLine ? `${placeLine} ${counted}` : counted;
   return {
+    ...common,
     state: "list",
     rows: keyedRows,
     middle: middleOf(keyedRows.map((r) => r.value)),
     middleLabel: COPY.markList.middleOfDrawn.replace("{n}", countWord(keyedRows.length)),
     withheld,
     withheldLine,
+    basis: counted && placeLine ? c.basis : common.basis,
     stateLine: null,
-    ...common,
   };
 }

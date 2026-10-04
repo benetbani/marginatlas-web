@@ -38,7 +38,7 @@ const rivals = buildRivals({
 });
 const restRow = rivals?.rows.find((r) => r.key === "restaurants");
 check("the other trades' figures take London's factor too", restRow !== undefined && restRow.value === Math.round(startupCapitalArchetypeKeyed("restaurants")! * 0.75));
-check("the other trades' basis says estimates at London prices", rivals !== null && rivals.basis === "Estimates at London prices.");
+check("the other trades say estimates at London prices once: on the basis, or leading the withheld count when one stands", rivals !== null && (rivals.withheldLine ? rivals.withheldLine.startsWith("Estimates at London prices.") && rivals.basis === "" : rivals.basis === "Estimates at London prices."));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/uk_open_permits: all pass");
