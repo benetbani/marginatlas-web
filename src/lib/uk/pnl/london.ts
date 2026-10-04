@@ -15,6 +15,7 @@ import premisesJson from "../../../../data/uk/registers/premises.json";
 import { buildInputs, type PremisesRow } from "./inputs";
 import { RECIPES } from "./recipes";
 import { summarise, type Form, type PnlInputs, type PnlSummary } from "./model";
+import { shapeRanges, type PnlRanges } from "./ranges";
 
 type TurnoverFile = { trades: Record<string, { by_geography: Record<string, { turnover_bands_k: number[] | null; thin: boolean; enterprises: number }> }> };
 type PremisesFile = { trade_category: Record<string, string>; rows: Record<string, { categories: Record<string, Partial<PremisesRow>> }> };
@@ -52,4 +53,10 @@ export function londonTradeInputs(slug: string, form: Form = "sole trader"): Pnl
 export function londonTradeSummary(slug: string, form: Form = "sole trader"): PnlSummary | null {
   const inputs = londonTradeInputs(slug, form);
   return inputs ? summarise(inputs) : null;
+}
+
+/** The headline figures' range across the three band shapes (ranges.ts), or null when the trade is withheld. */
+export function londonTradeRanges(slug: string, form: Form = "sole trader"): PnlRanges | null {
+  const inputs = londonTradeInputs(slug, form);
+  return inputs ? shapeRanges(inputs) : null;
 }
