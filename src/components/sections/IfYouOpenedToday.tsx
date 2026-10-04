@@ -80,7 +80,8 @@ function formatDate(d: Date): string {
 export function IfYouOpenedToday({ cell }: Props) {
   const setup = cell.setup_costs;
   const rev = cell.revenue_per_firm ?? cell.rev_p50;
-  if (!setup || !rev || rev <= 0 || !cell.industry_id) return null;
+  /* A bill reached through the parent trade's row is that trade's (plan 06, task A3). */
+  if (!setup || cell._fromParentIndustry || !rev || rev <= 0 || !cell.industry_id) return null;
   const totalSetup =
     (setup.registration?.total_estimated ?? 0) +
     (setup.capital?.total_estimated ?? 0);

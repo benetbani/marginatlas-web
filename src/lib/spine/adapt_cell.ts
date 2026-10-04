@@ -39,6 +39,7 @@ import {
   withBudget,
 } from "@/lib/cells";
 import type { Cell } from "@/lib/cells";
+import { setupItemsFromCell } from "./setup_items";
 import { buildCellRelatedLinks, fetchCellSiblings } from "@/lib/cells/related_links";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { computeBreakeven } from "@/lib/economics/breakeven";
@@ -689,31 +690,4 @@ export async function buildSpineCellSeed(
   };
 }
 
-/** Build the setup line items from a cell's real setup_costs block. Only called
- * when hasSetupCostData(cell) is true, so at least one line is real. */
-function setupItemsFromCell(cell: Cell): { surface_line?: string; items: Array<{ name: string; usd: number }> } | undefined {
-  const setup = cell.setup_costs;
-  if (!setup) return undefined;
-  const items: Array<{ name: string; usd: number }> = [];
-  const reg = setup.registration;
-  const cap = setup.capital;
-  const push = (name: string, usd: number | undefined) => {
-    if (isNum(usd) && usd > 0) items.push({ name, usd: Math.round(usd) });
-  };
-  if (cap) {
-    push("Fit-out", cap.property_fitout);
-    push("Equipment", cap.equipment_initial);
-    push("Initial inventory", cap.initial_inventory);
-    push("Lease deposit", cap.lease_deposit);
-    push("Pre-opening marketing", cap.pre_opening_marketing);
-  }
-  if (reg) {
-    push("Business registration", reg.business_registration_fee);
-    push("Industry licences", reg.industry_licenses_fee);
-    push("Professional licences", reg.professional_license_fee);
-    push("Insurance and bonds", reg.insurance_bond_initial);
-    push("Certifications", reg.certifications_initial);
-  }
-  if (items.length === 0) return undefined;
-  return { items };
-}
+/* setupItemsFromCell lives in setup_items.ts (pure, so its test needs no database client). */

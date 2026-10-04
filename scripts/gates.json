@@ -1499,6 +1499,17 @@
       "claims": []
     },
     {
+      "name": "bill-own-trade",
+      "script": "tests/cells/bill_own_trade.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A bill to open prints only on the trade it was written for (plan 06, task A3).",
+      "reads": [
+        "src/lib/spine/setup_items.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

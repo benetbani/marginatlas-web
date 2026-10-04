@@ -47,7 +47,8 @@ const CAPITAL_LINES: Array<{ field: keyof SetupCapital; label: string }> = [
  */
 export function hasSetupCostData(cell: Cell): boolean {
   const setup = cell.setup_costs;
-  if (!setup) return false;
+  /* A bill reached through the parent trade's row is that trade's, not this one's (plan 06, task A3). */
+  if (!setup || cell._fromParentIndustry) return false;
   const reg = setup.registration;
   const cap = setup.capital;
   const regTotal =
@@ -61,7 +62,7 @@ export function hasSetupCostData(cell: Cell): boolean {
 
 export function SetupCostBlock({ cell, id }: Props) {
   const setup = cell.setup_costs;
-  if (!setup) return null;
+  if (!setup || cell._fromParentIndustry) return null;
 
   const reg = setup.registration;
   const cap = setup.capital;

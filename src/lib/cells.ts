@@ -166,6 +166,11 @@ export type Cell = {
   // cell. The figure itself is untouched, which is the whole point: keep the
   // figure, drop the label. Never persisted (cells are read-only at this layer).
   _revenueFilled?: boolean;
+  /** THE ROW CAME FROM ANOTHER TRADE (plan 06, task A3, 2026-10-04): the matched row is the measured parent's, reached by the
+   *  parent fallback (industryQueryCandidates puts it last), so a figure that belongs to one trade's own business (its bill
+   *  to open) must not print on this one: the United Kingdom's restaurant bill stood on cafes, bars, bakeries, food trucks,
+   *  ice cream, pizzerias, pubs, tea houses, personal training and yoga. The parent's id; never persisted. */
+  _fromParentIndustry?: string;
 };
 
 /**
@@ -300,6 +305,10 @@ export async function getRegionalCell(
   let cell = normalizeRegionalRow(row);
   // Apply field-level overrides if any
   cell = applyCellOverrides(rowCountry, rowGeo, rowInd, cell);
+  /* The row is the measured parent's when it matched the fallback candidate, not the trade or its legacy ids (task A3). */
+  const asked = slugToIndustry(industrySlug);
+  const parent = asked ? resolveToMeasuredIndustry(asked) : null;
+  if (asked && parent && parent.id !== asked.id && rowInd === parent.id) cell._fromParentIndustry = parent.id;
   // If the URL used a friendly city slug,
   // override geo_name to the canonical display label. /es/barcelona renders
   // 'Barcelona' regardless of whatever the DB row has for that field.
