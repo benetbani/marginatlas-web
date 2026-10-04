@@ -6,9 +6,9 @@
  *
  * Withholds, never guesses, and says why (londonWithholding): no recipe; no London bands for the trade's code; under 40
  * businesses in London on the register (the register's own floor: no quantile prints there); no kind of premises for the
- * trade; a kind of premises that averages over unlike occupiers (shops, offices); or under 100 premises
- * of that kind in London, where the valuation's rounding (counts to 10, floorspace to 1,000 m2) moves the average area by
- * more than a tenth.
+ * trade; a kind of premises that averages over unlike occupiers (the valuation's three bulk classes: shops, offices, and
+ * factories, workshops and warehouses); or under 100 premises of that kind in London, where the valuation's rounding
+ * (counts to 10, floorspace to 1,000 m2) moves the average area by more than a tenth.
  */
 import turnoverJson from "../../../../data/uk/registers/turnover.json";
 import premisesJson from "../../../../data/uk/registers/premises.json";
@@ -22,7 +22,7 @@ type PremisesFile = { trade_category: Record<string, string>; rows: Record<strin
 const TURNOVER = turnoverJson as unknown as TurnoverFile;
 const PREMISES = premisesJson as unknown as PremisesFile;
 const LONDON = "E12000007";
-export const GENERIC_PREMISES: ReadonlySet<string> = new Set(["Shops", "Offices (Inc Computer Centres)"]);
+export const GENERIC_PREMISES: ReadonlySet<string> = new Set(["Shops", "Offices (Inc Computer Centres)", "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)"]);
 export const MIN_PREMISES = 100;
 
 /** Why a trade's London money is withheld, or null when it can be built. The data's limits are checked before the

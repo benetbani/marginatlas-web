@@ -1,6 +1,8 @@
 /**
- * The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants.
- * Every value agreed to the penny with the independent Python implementation at each shape's anchor (2026-10-02).
+ * The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants, each
+ * run reading the anchor, the quartiles and the share above break-even under one shape (decision 9, 2026-10-04). Every value
+ * agreed to the penny with an independent exact implementation; the company form's under the engine's own rule, which
+ * searches the director's salary to the whole pound (a search to the penny finds one penny more at two of the three).
  *
  * Run: npx tsx tests/uk/pnl/ranges.test.ts
  */
@@ -24,17 +26,17 @@ const r4 = (x: number) => Math.round(x * 10_000) / 10_000;
 const b = londonTradeRanges("barbershops")!;
 check("barbershops: the anchor 130,831.17 (pareto), 139,406.36 (log-flat), 148,438.79 (flat)", b.anchorSales.lo === 130_831.17 && b.anchorSales.mid === 139_406.36 && b.anchorSales.hi === 148_438.79);
 check("barbershops: break-even 62,453.27 to 65,861.19 around 64,112.98", b.breakEven.lo === 62_453.27 && b.breakEven.mid === 64_112.98 && b.breakEven.hi === 65_861.19);
-check("barbershops: 0.5986 to 0.6282 of registered businesses above it, around 0.6136", r4(b.shareAbove.lo) === 0.5986 && r4(b.shareAbove.mid) === 0.6136 && r4(b.shareAbove.hi) === 0.6282);
-check("barbershops: the median owner keeps 24,951.65 to 25,830.38 around 25,407.33", b.keepsQ50.lo === 24_951.65 && b.keepsQ50.mid === 25_407.33 && b.keepsQ50.hi === 25_830.38);
+check("barbershops: 0.5981 to 0.6296 of registered businesses above it, around 0.6136", r4(b.shareAbove.lo) === 0.5981 && r4(b.shareAbove.mid) === 0.6136 && r4(b.shareAbove.hi) === 0.6296);
+check("barbershops: the median owner keeps 23,743.01 to 26,986.22 around 25,407.33 (the median's own sales 74,243 to 82,654)", b.keepsQ50.lo === 23_743.01 && b.keepsQ50.mid === 25_407.33 && b.keepsQ50.hi === 26_986.22);
 
 const r = londonTradeRanges("restaurants")!;
 check("restaurants: break-even 535,523.20 to 577,038.50 around 556,017.36", r.breakEven.lo === 535_523.2 && r.breakEven.mid === 556_017.36 && r.breakEven.hi === 577_038.5);
-check("restaurants: the median owner keeps 11,533.69 to 15,558.30 around 13,756.27: a thin margin moves most", r.keepsQ50.lo === 11_533.69 && r.keepsQ50.mid === 13_756.27 && r.keepsQ50.hi === 15_558.3);
+check("restaurants: the median owner keeps 11,198.28 to 16,056.34 around 13,756.27: a thin margin moves most", r.keepsQ50.lo === 11_198.28 && r.keepsQ50.mid === 13_756.27 && r.keepsQ50.hi === 16_056.34);
 check("restaurants: the margin at the median 4.09% to 5.89% around 5.03%", r4(r.marginAtMedian.lo) === 0.0409 && r4(r.marginAtMedian.mid) === 0.0503 && r4(r.marginAtMedian.hi) === 0.0589);
 check("mid is the log-flat reading the summary prints, so the two never disagree", shapeRanges(londonTradeInputs("restaurants")!)!.keepsQ50.mid === 13_756.27);
 check("a withheld trade has no range", londonTradeRanges("grocery-stores") === null);
 const co = londonTradeRanges("barbershops", "company")!;
-check("the company form reaches the range: the median barbershop as a company keeps 23,898.82 to 24,757.28 around 24,343.99", co.keepsQ50.lo === 23_898.82 && co.keepsQ50.mid === 24_343.99 && co.keepsQ50.hi === 24_757.28);
+check("the company form reaches the range: the median barbershop as a company keeps 22,718.07 to 25,886.44 around 24,343.99", co.keepsQ50.lo === 22_718.07 && co.keepsQ50.mid === 24_343.99 && co.keepsQ50.hi === 25_886.44);
 check("for every built trade in both forms, mid is the summary's own figure and lo <= mid <= hi",
   Object.keys(RECIPES).every((slug) => (["sole trader", "company"] as const).every((form) => {
     const x = londonTradeRanges(slug, form), s = londonTradeSummary(slug, form);

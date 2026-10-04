@@ -33,9 +33,14 @@
  * WHAT IT CANNOT SEE: businesses outside the register; costs other than the recipe's lines; the costs' own spread (one set
  * of shares, not a distribution); premises whose size does not follow sales (a large room for small takings, or the
  * reverse); the valuation's premises and the register's businesses are different counts of different things, so the
- * anchor is the best match available, not a measured pairing.
+ * anchor is the best match available, not a measured pairing. The company form assumes the director is the company's only
+ * employee, so no Employment Allowance: a company with staff can claim it, and then keeps more (the median London
+ * barbershop as a company: 24,343.99 without the allowance, 25,164.87 with it).
+ *
+ * A QUARTILE IN AN OPEN BAND (under 50k or over 50m) rests on the 5k floor or the 100m cap, so its sales print only in
+ * words, and so does any money of the business at it: sales.open says which quartiles do.
  */
-import { bandCdf, bandQuantile } from "./banded";
+import { bandCdf, bandQuantile, type BandShape } from "./banded";
 import { combineKinds, type Kind } from "./kinds";
 import { pennies, sumPennies } from "../law/money";
 import { businessRates } from "../law/business_rates";
@@ -70,8 +75,16 @@ export function billAt(sales: number, inputs: PnlInputs): Line[] {
   return [
     ...inputs.variable.map((x) => ({ key: x.key, amount: pennies(x.share * sales), kind: x.kind, source: x.source })),
     ...inputs.sized.map((x) => ({ key: x.key, amount: pennies(x.share * sales), kind: x.kind, source: x.source })),
-    { key: "rent", amount: rv, kind: inputs.premises.kind, source: inputs.premises.source },
-    { key: "business rates", amount: rates, kind: "worked out", source: `2026-27 rates on a rateable value of ${Math.round(rv).toLocaleString("en-GB")}` },
+    {
+      key: "rent",
+      amount: rv,
+      kind: combineKinds([inputs.premises.kind, inputs.anchorSales.kind]),
+      // at any sales but the anchor's the amount is the average premises scaled by the size rule, and the words say so
+      source: sales === inputs.anchorSales.value
+        ? inputs.premises.source
+        : `${inputs.premises.source}, scaled to this business's sales: ${Math.round((inputs.premises.areaM2 * sales) / inputs.anchorSales.value)} m2 at the same rent per m2 (the size rule)`,
+    },
+    { key: "business rates", amount: rates, kind: combineKinds([inputs.premises.kind, inputs.anchorSales.kind, "looked up"]), source: `2026-27 rates on a rateable value of ${Math.round(rv).toLocaleString("en-GB")}` },
   ];
 }
 
@@ -98,8 +111,9 @@ export function breakEvenSales(inputs: PnlInputs): number {
   return pennies(anchorFixed(inputs) / (1 - total(inputs.variable)));
 }
 
-export function shareAboveBreakEven(inputs: PnlInputs): number | null {
-  const cdf = bandCdf(inputs.revenueBandsK, breakEvenSales(inputs) / 1000);
+/** The share of registered businesses whose sales clear the break-even, the bands read under `shape` (log-flat by default). */
+export function shareAboveBreakEven(inputs: PnlInputs, shape: BandShape = "log-flat"): number | null {
+  const cdf = bandCdf(inputs.revenueBandsK, breakEvenSales(inputs) / 1000, shape);
   return cdf === null ? null : 1 - cdf;
 }
 
@@ -110,7 +124,7 @@ export function afterTaxCostOf(extra: number, sales: number, inputs: PnlInputs):
 }
 
 export type PnlSummary = {
-  sales: { q25: number; q50: number; q75: number; kind: Kind };
+  sales: { q25: number; q50: number; q75: number; open: { q25: boolean; q50: boolean; q75: boolean }; kind: Kind };
   anchor: { sales: number; fixed: number; kind: Kind };
   breakEven: { value: number; kind: Kind };
   shareAbove: { value: number; kind: Kind } | null;
@@ -119,17 +133,23 @@ export type PnlSummary = {
   keeps: { q25: number; q50: number; q75: number; kind: Kind };
 };
 
-export function summarise(inputs: PnlInputs): PnlSummary | null {
+/** The headline figures, the register's bands read under `shape` (log-flat, the figure a page prints, by default; ranges.ts
+ *  reads them under all three). */
+export function summarise(inputs: PnlInputs, shape: BandShape = "log-flat"): PnlSummary | null {
   check(inputs);
-  const q = (p: number) => bandQuantile(inputs.revenueBandsK, p);
+  const q = (p: number) => bandQuantile(inputs.revenueBandsK, p, shape);
   const q25 = q(0.25), q50 = q(0.5), q75 = q(0.75);
   if (!q25 || !q50 || !q75) return null;
   const s25 = pennies(q25.k * 1000), s50 = pennies(q50.k * 1000), s75 = pennies(q75.k * 1000);
   const costKind = combineKinds([...inputs.variable.map((x) => x.kind), ...inputs.sized.map((x) => x.kind), inputs.premises.kind, inputs.anchorSales.kind]);
-  const share = shareAboveBreakEven(inputs);
+  const share = shareAboveBreakEven(inputs, shape);
   const profit50 = profitAt(s50, inputs);
   return {
-    sales: { q25: s25, q50: s50, q75: s75, kind: combineKinds(["counted"]) },
+    sales: {
+      q25: s25, q50: s50, q75: s75,
+      open: { q25: q25.openBelow || q25.openAbove, q50: q50.openBelow || q50.openAbove, q75: q75.openBelow || q75.openAbove },
+      kind: combineKinds(["counted"]),
+    },
     anchor: { sales: inputs.anchorSales.value, fixed: anchorFixed(inputs), kind: costKind },
     breakEven: { value: breakEvenSales(inputs), kind: costKind },
     shareAbove: share === null ? null : { value: share, kind: combineKinds(["counted", costKind]) },

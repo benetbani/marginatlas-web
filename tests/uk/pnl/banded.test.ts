@@ -4,7 +4,7 @@
  *
  * Run: npx tsx tests/uk/pnl/banded.test.ts
  */
-import { bandCdf, bandMeanK, bandQuantile, inOpenBand } from "../../../src/lib/uk/pnl/banded";
+import { bandCdf, bandMeanK, bandQuantile, inOpenBand, type BandShape } from "../../../src/lib/uk/pnl/banded";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-pnl-banded";
@@ -93,6 +93,29 @@ check("uptoBand 0 and 2.5 are refused", refuses(() => bandMeanK(RESTAURANTS_LOND
 const ten = (bad: unknown) => [bad, 0, 0, 0, 0, 0, 0, 0, 0, 10] as unknown as number[];
 check("a count under zero by any amount, and an eleventh count, are refused by all three",
   [ten(-0.5), ten(-1e-9), [...RESTAURANTS_LONDON, 1]].every((c) => refuses(() => bandQuantile(c, 0.1)) && refuses(() => bandCdf(c, 100)) && refuses(() => bandMeanK(c))));
+
+// ---- the flat and Pareto shapes for the quantile and the CDF (decision 9), each equal to its own formula computed apart
+// from this code (Python, 2026-10-04): flat F(x) = (x - L) / (U - L), Pareto F(x) = (1/L - 1/x) / (1/L - 1/U)
+check("hair and beauty's median under each shape equals the Python's: 74.24 (pareto), 78.63 (log-flat), 82.65 (flat)",
+  near(bandQuantile(HAIR_BEAUTY_LONDON, 0.5, "pareto")!.k, 74.24317617866005) && near(bandQuantile(HAIR_BEAUTY_LONDON, 0.5, "flat")!.k, 82.65374331550802));
+check("restaurants' q10 and q90 under the flat and Pareto shapes equal the Python's",
+  near(bandQuantile(RESTAURANTS_LONDON, 0.1, "flat")!.k, 60.0625) && near(bandQuantile(RESTAURANTS_LONDON, 0.9, "flat")!.k, 1943.4482758620688)
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.1, "pareto")!.k, 55.59416261292564) && near(bandQuantile(RESTAURANTS_LONDON, 0.9, "pareto")!.k, 1892.9503916449082));
+check("the CDF under each shape equals the Python's: hair and beauty below 64.11298k and 25k, restaurants below 750k",
+  near(bandCdf(HAIR_BEAUTY_LONDON, 64.11298, "flat")!, 0.35695213037648266) && near(bandCdf(HAIR_BEAUTY_LONDON, 64.11298, "pareto")!, 0.41790075977002106)
+  && near(bandCdf(HAIR_BEAUTY_LONDON, 25, "flat")!, 0.11025156151509942) && near(bandCdf(HAIR_BEAUTY_LONDON, 25, "pareto")!, 0.22050312303019884)
+  && near(bandCdf(RESTAURANTS_LONDON, 750, "flat")!, 0.7337786259541985) && near(bandCdf(RESTAURANTS_LONDON, 750, "pareto")!, 0.760178117048346));
+const ALL: BandShape[] = ["pareto", "log-flat", "flat"];
+check("under every shape a quantile on an edge is the edge exactly, and the open top band reads to the cap: 75,000 flat, 66,666.67 Pareto",
+  ALL.every((s) => bandQuantile([5, 0, 5, 0, 0, 0, 0, 0, 0, 0], 0.5, s)!.k === 50) && bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5, "flat")!.k === 75_000
+  && near(bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5, "pareto")!.k, 66666.66666666666));
+check("under every shape the CDF inverts the quantile", ALL.every((s) => [0.1, 0.25, 0.5, 0.75, 0.9].every((q) =>
+  Math.abs(bandCdf(HAIR_BEAUTY_LONDON, bandQuantile(HAIR_BEAUTY_LONDON, q, s)!.k, s)! - q) <= 1e-9)));
+check("a shape that is not one of the three, and a q or a sales figure that is not a number, are refused",
+  refuses(() => bandQuantile(RESTAURANTS_LONDON, 0.5, "normal" as BandShape)) && refuses(() => bandCdf(RESTAURANTS_LONDON, 100, "normal" as BandShape))
+  && refuses(() => bandMeanK(RESTAURANTS_LONDON, 7, "normal" as BandShape)) && refuses(() => bandQuantile(RESTAURANTS_LONDON, "0.5" as unknown as number))
+  && refuses(() => bandCdf(RESTAURANTS_LONDON, undefined as unknown as number)) && refuses(() => bandCdf(RESTAURANTS_LONDON, null as unknown as number))
+  && refuses(() => bandCdf(RESTAURANTS_LONDON, "100" as unknown as number)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/banded: all pass");

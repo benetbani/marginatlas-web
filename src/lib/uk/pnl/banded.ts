@@ -10,8 +10,13 @@
  * cap, so it prints only in words ("under 50k", "over 50m": inOpenBand); one exactly on either edge rests on neither and
  * prints as a figure. A quantile on a band's edge is the edge itself, exactly (L (U / L)^frac, as the Python computes it).
  *
- * The counts are the register's ten, numbers, finite and not negative, with a finite total; a sales figure that is not a
- * number is refused. Anything else would read as an empty area or as nobody below the figure.
+ * The quantile and the CDF read the log-flat shape by default, as the Python does; either can be read under the flat or the
+ * Pareto shape too (BandShape below), so a figure's range can move every reading of the bands together (ranges.ts; the
+ * founder's decision 9, 2026-10-04). Those two shapes are this port's own: the Python prints only the log-flat reading.
+ *
+ * The counts are the register's ten, numbers, finite and not negative, with a finite total; a sales figure or a q that is
+ * not a number, and a shape that is not one of the three, are refused. Anything else would read as an empty area or as
+ * nobody below the figure.
  */
 export const BANDS_K: ReadonlyArray<readonly [number, number]> = [
   [0, 50], [50, 100], [100, 250], [250, 500], [500, 1000], [1000, 2000], [2000, 5000], [5000, 10000], [10000, 50000], [50000, Infinity],
@@ -26,6 +31,29 @@ function checkCounts(counts: readonly number[], fn: string): void {
   }
 }
 
+const SHAPES: readonly string[] = ["flat", "log-flat", "pareto"];
+
+function checkShape(shape: string, fn: string): void {
+  if (!SHAPES.includes(shape)) throw new Error(`${fn}: the band shape must be flat, log-flat or pareto (${shape})`);
+}
+
+/** The point a fraction f of the way through a band's businesses under each shape: log-flat L (U / L)^f (the Python's
+ *  formula), flat L + f (U - L), Pareto (density ~ 1/x^2) 1 / (1/L - f (1/L - 1/U)); the band's edge itself at f = 0 or 1. */
+function inBand(low: number, high: number, f: number, shape: BandShape): number {
+  if (f === 0) return low;
+  if (f === 1) return high;
+  if (shape === "flat") return low + f * (high - low);
+  if (shape === "pareto") return 1 / (1 / low - f * (1 / low - 1 / high));
+  return low * (high / low) ** f;
+}
+
+/** The share of a band's businesses below x (low < x < high) under each shape, the inverse of inBand. */
+function shareBelow(low: number, high: number, x: number, shape: BandShape): number {
+  if (shape === "flat") return (x - low) / (high - low);
+  if (shape === "pareto") return (1 / low - 1 / x) / (1 / low - 1 / high);
+  return (Math.log(x) - Math.log(low)) / (Math.log(high) - Math.log(low));
+}
+
 function edges(k: number): [number, number] {
   const [lo, hi] = BANDS_K[k];
   return [Math.max(lo, FLOOR_K), Math.min(hi, TOP_CAP_K)];
@@ -38,9 +66,11 @@ export function inOpenBand(xK: number): boolean {
 
 export type Quantile = { k: number; band: number; openBelow: boolean; openAbove: boolean };
 
-/** The q-quantile in thousands of pounds, with the band it fell in; null when there are no businesses. */
-export function bandQuantile(counts: readonly number[], q: number): Quantile | null {
-  if (!(q > 0 && q < 1)) throw new Error("bandQuantile: q must be strictly between 0 and 1");
+/** The q-quantile in thousands of pounds, with the band it fell in; null when there are no businesses. `shape` is how the
+ *  businesses spread inside the band it falls in (log-flat, the register's reading, by default). */
+export function bandQuantile(counts: readonly number[], q: number, shape: BandShape = "log-flat"): Quantile | null {
+  if (typeof q !== "number" || !(q > 0 && q < 1)) throw new Error("bandQuantile: q must be a number strictly between 0 and 1");
+  checkShape(shape, "bandQuantile");
   checkCounts(counts, "bandQuantile");
   const n = counts.reduce((a, b) => a + b, 0);
   if (n <= 0) return null;
@@ -50,7 +80,7 @@ export function bandQuantile(counts: readonly number[], q: number): Quantile | n
     const c = counts[k];
     if (c > 0 && cum + c >= target) {
       const [low, high] = edges(k);
-      const x = low * (high / low) ** ((target - cum) / c);
+      const x = inBand(low, high, (target - cum) / c, shape);
       return { k: x, band: k, openBelow: x < BANDS_K[0][1], openAbove: x > BANDS_K[BANDS_K.length - 1][0] };
     }
     cum += c;
@@ -67,6 +97,7 @@ export function bandQuantile(counts: readonly number[], q: number): Quantile | n
 export type BandShape = "flat" | "log-flat" | "pareto";
 
 function shapeMean(low: number, high: number, shape: BandShape): number {
+  checkShape(shape, "bandMeanK");
   if (shape === "flat") return (low + high) / 2;
   if (shape === "log-flat") return (high - low) / Math.log(high / low);
   return (low * high * Math.log(high / low)) / (high - low);
@@ -92,19 +123,20 @@ export function bandMeanK(counts: readonly number[], uptoBand = 7, shape: BandSh
   return n > 0 ? { k: sum / n, lo: lo / n, hi: hi / n } : null;
 }
 
-/** The share of businesses with sales below xK (thousands of pounds). */
-export function bandCdf(counts: readonly number[], xK: number): number | null {
-  if (Number.isNaN(xK)) throw new Error("bandCdf: the sales figure is not a number");
+/** The share of businesses with sales below xK (thousands of pounds), the businesses inside each band spread by `shape`. */
+export function bandCdf(counts: readonly number[], xK: number, shape: BandShape = "log-flat"): number | null {
+  if (typeof xK !== "number" || Number.isNaN(xK)) throw new Error("bandCdf: the sales figure is not a number");
+  checkShape(shape, "bandCdf");
   checkCounts(counts, "bandCdf");
   const n = counts.reduce((a, b) => a + b, 0);
   if (n <= 0) return null;
   if (xK <= 0) return 0;
-  const lx = Math.log(Math.max(xK, FLOOR_K));
+  const x = Math.max(xK, FLOOR_K);
   let below = 0;
   for (let k = 0; k < counts.length; k++) {
-    const [a, b] = edges(k).map(Math.log);
-    if (lx >= b) below += counts[k];
-    else if (lx > a) below += (counts[k] * (lx - a)) / (b - a);
+    const [low, high] = edges(k);
+    if (x >= high) below += counts[k];
+    else if (x > low) below += counts[k] * shareBelow(low, high, x, shape);
   }
   return Math.min(1, below / n);
 }

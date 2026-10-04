@@ -31,9 +31,11 @@
  * SHARES THAT ADD UP: largest remainder. Floor every share, then hand the missing units to the largest remainders (ties to
  * the earlier row), so a split of 100 prints as integers that sum to 100. Remainders are compared on a grid of 1e-9, so
  * two that are equal in decimal tie even when floating point leaves them a few ulps apart (4, 1, 1 of 100: each has two
- * thirds over, and the first two rows get the units); the grid is exact for totals up to 100,000 (at a million, three
- * splits in 1.5 million random ones part from the exact rule by a unit). The two 1e-9 allowances can show only at units of
- * ten million and above.
+ * thirds over, and the first two rows get the units). Whole shares (counts) skip the grid: when share x total stays a safe
+ * integer, floors and remainders are integers and a tie is a tie, so the rule holds exactly ([13062, 5348, 1547, 523] of
+ * 100 prints 64, 26, 8, 2; on the grid an exact remainder can land on a half-step of 1e-9 and send the unit to the later of
+ * two tied rows, 64, 26, 7, 3). Fractional shares use the grid, which ties nearly every decimal tie, not every one. The two
+ * 1e-9 allowances can show only at units of ten million and above.
  */
 export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs = 3): number {
   if (!Number.isFinite(value)) throw new RangeError(`honestUnit: not a finite figure (${value})`);
@@ -86,6 +88,18 @@ export function largestRemainder(shares: readonly number[], total = 100): number
   }
   const sum = shares.reduce((a, b) => a + b, 0);
   if (sum <= 0) return shares.map(() => 0);
+  if (shares.every((s) => Number.isInteger(s)) && Number.isSafeInteger(sum * total)) {
+    // whole shares: share x total = floor x sum + remainder, all integers, so equal remainders compare equal
+    const rem = shares.map((s) => (s * total) % sum);
+    const whole = shares.map((s, i) => (s * total - rem[i]) / sum + 0); // + 0 turns a -0 share into 0
+    let left = total - whole.reduce((a, b) => a + b, 0);
+    for (const { i } of rem.map((r, i) => ({ i, r })).sort((a, b) => b.r - a.r || a.i - b.i)) {
+      if (left <= 0) break;
+      whole[i] += 1;
+      left -= 1;
+    }
+    return whole;
+  }
   const exact = shares.map((s) => (s / sum) * total);
   const floors = exact.map((e) => Math.floor(e) + 0); // + 0 turns a -0 share into 0
   let missing = total - floors.reduce((a, b) => a + b, 0);

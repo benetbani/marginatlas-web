@@ -1448,7 +1448,7 @@
       "script": "tests/uk/pnl/ranges.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants.",
+      "asserts": "The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants, each run reading the anchor, the quartiles and the share above break-even under o",
       "reads": [
         "src/lib/uk/pnl/ranges.ts"
       ],

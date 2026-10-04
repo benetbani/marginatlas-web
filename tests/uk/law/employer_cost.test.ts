@@ -32,6 +32,7 @@ check("an 18 to 20 year old at 10.85: 21,157.50, no employer NI, no pension", d.
 const e = hireAllIn({ gross: annualGross(8, 30), age: 23, apprentice: true });
 check("an apprentice of 23: no employer NI below 50,270", e.employerNi === 0);
 check("a part-timer on 9,000 is not auto-enrolled", hireAllIn({ gross: 9_000, age: 30 }).pension === 0);
+check("an allowance smaller than the bill is all used: 1,000 left on 30,000 at 40 pays 2,750.00 of the 3,750.00, all in 33,462.80", (() => { const x = hireAllIn({ gross: 30_000, age: 40, allowanceRemaining: 1_000 }); return x.allowanceUsed === 1_000 && x.employerNi === 3750 && x.allIn === 33_462.8; })());
 check("the allowance never makes the bill smaller than the pay", hireAllIn({ gross: 6_000, age: 30, allowanceRemaining: 10_500 }).allIn === 6_000);
 // Every boundary, on 30,000 of pay unless stated (figures computed independently in Python, 2026-10-03).
 check("the under-21 relief ends at 21: 20 pays no employer NI, 21 pays 3,750.00", hireAllIn({ gross: 30_000, age: 20 }).employerNi === 0 && hireAllIn({ gross: 30_000, age: 21 }).employerNi === 3750);

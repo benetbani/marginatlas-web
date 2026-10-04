@@ -13,8 +13,9 @@
  *
  * It reads only files in this repo (the chain never touches the network or another repo).
  *
- * What it cannot see: whether the tables themselves are right; that is the registers' own tests
- * (E:/atlas/registers/uk/tests) and their builders' checks.
+ * What it cannot see: whether the tables themselves are right (the registers' own tests, E:/atlas/registers/uk/tests, and
+ * their builders' checks); a hand edit that also rewrites manifest.json, since nothing signs the manifest; and a stale
+ * export, slices older than tables rebuilt since (the chain never reads the other repo): re-export after every rebuild.
  *
  *   npx tsx scripts/verify_uk_registers.ts
  */

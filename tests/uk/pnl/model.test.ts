@@ -48,6 +48,9 @@ check("the median business's year, line by line: 23,587.74 + 6,290.06 + 9,435.10
   s.medianBill.lines.map((l) => l.amount).join(",") === "23587.74,6290.06,9435.1,9395.16,0");
 check("its room is a 34 m2 share of the average salon at a rateable value of 9,395.16: small business relief takes the whole bill", billAt(78_625.81, barber)[4].amount === 0);
 check("the median business's profit 29,917.75, the bill and the profit adding to its sales", s.medianBill.profit === 29_917.75 && Math.round((s.medianBill.lines.reduce((a, l) => a + l.amount, 0) + s.medianBill.profit) * 100) / 100 === 78_625.81);
+const flat = summarise(barber, "flat")!;
+check("the bands can be read under another shape (ranges.ts runs all three): flat puts the median at 82,653.74 and 0.6430 of businesses above the same break-even",
+  flat.sales.q50 === 82_653.74 && Math.round(flat.shareAbove!.value * 10_000) / 10_000 === 0.643 && flat.breakEven.value === 64_112.98);
 check("margin at the median 38.05%, the median business's own profit over its own sales", Math.round(s.marginAtMedian * 10_000) / 10_000 === 0.3805 && s.marginAtMedian === s.medianBill.profit / s.sales.q50);
 check("the business at each sales quartile keeps 17,396.00 / 25,407.33 / 39,819.57 after tax", s.keeps.q25 === 17_396 && s.keeps.q50 === 25_407.33 && s.keeps.q75 === 39_819.57);
 check("in order, and an estimate", s.keeps.q25 <= s.keeps.q50 && s.keeps.q50 <= s.keeps.q75 && s.keeps.kind === "estimate");
@@ -58,6 +61,17 @@ check("as a company the median business keeps the company optimum on 29,917.75, 
 // ---- a loss is a loss ----
 const heavy: PnlInputs = { ...barber, sized: [{ key: "staff", share: 0.6, kind: "estimate", source: "fixture" }] };
 check("with staff at 60% of sales the lower-quartile business loses 4,991.92 and keeps the loss, untaxed", profitAt(50_174.05, heavy) === -4_991.92 && keepsAt(50_174.05, heavy) === -4_991.92);
+
+check("the company form keeps a loss as a loss too, never searched for a salary", keepsAt(50_174.05, { ...heavy, form: "company" }) === -4_991.92);
+
+// ---- a quartile in an open band says so (its business's money prints only in words) ----
+check("no barbershop quartile rests on the floor or the cap: q25 50,174.05 is a figure", s.sales.open?.q25 === false && s.sales.open?.q50 === false && s.sales.open?.q75 === false);
+const floorQ25 = summarise({ ...barber, revenueBandsK: [3405, 3740, 2655, 525, 245, 70, 40, 10, 5, 0] })!;
+check("1,000 more businesses under 50k put the lower quartile at 30,493.85, under 50k: open, the median and upper quartile not", floorQ25.sales.q25 === 30_493.85 && floorQ25.sales.open?.q25 === true && floorQ25.sales.open?.q50 === false && floorQ25.sales.open?.q75 === false);
+
+// ---- the rent line says what it is at every size ----
+check("at the anchor's sales the rent is the average premises' own: 16,657.95, its source as given", billAt(139_406.36, barber)[3].amount === 16_657.95 && billAt(139_406.36, barber)[3].source === "fixture");
+check("at the median the rent is the size rule's share and says so: 9,395.16 for 34 m2", billAt(78_625.81, barber)[3].source === "fixture, scaled to this business's sales: 34 m2 at the same rent per m2 (the size rule)" && billAt(78_625.81, barber)[3].kind === "worked out");
 
 // ---- profit falls with sales only where the law steps ----
 let onlyAtTheStep = true;

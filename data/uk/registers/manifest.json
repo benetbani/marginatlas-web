@@ -19,7 +19,7 @@
   "turnover.json": {
    "data": "March 2026 register snapshot; turnover is VAT-return turnover for the latest year the register holds",
    "rows": 4795,
-   "sha256": "51d1dbb39e5a0fa5937a95cc9d795359dfec4815e5199784a271f63b5c155f25"
+   "sha256": "0ddba579e10100ff7a680825f77519b9016bba4377c661dd192a94a5a84ab3fe"
   }
  },
  "what": "Slices of E:/atlas/registers/uk/tables the website reads; do not edit by hand"

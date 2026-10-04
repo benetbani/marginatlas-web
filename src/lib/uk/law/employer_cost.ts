@@ -6,8 +6,12 @@
  *   allIn = gross + employerNi - allowanceUsed + pension
  *   employerNi = 15% x max(0, gross - 5,000), or 15% x max(0, gross - 50,270) under 21 and for apprentices under 25
  *   allowanceUsed = min(allowance still unspent this year, employerNi)        (0 for a company whose only employee is its director)
+ *                   allowanceRemaining is what is still unspent when this hire is costed: a caller costing several hires
+ *                   subtracts each hire's allowanceUsed before the next
  *   pension = 3% x max(0, min(gross, 50,270) - 6,240) when aged 22 to State Pension age and gross over 10,000
  *
+ * State Pension age is held at 66 (params_2026_27.ts): someone of 66 born after 5 April 1960 has not reached it in 2026-27,
+ * so for them the pension here is 0 where the law can still ask for it (up to 1,320.90 a year).
  * gross already contains the 5.6 weeks of paid holiday. Statutory sick, maternity and paternity pay are contingent costs in
  * the weeks they happen and are not in the yearly figure (stated). Employers' liability insurance has no official price and
  * is not in it either.

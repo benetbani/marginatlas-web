@@ -64,7 +64,7 @@ check("the rent line says what it is: the official estimate of a year's rent, th
   inputs.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation" && Math.round(inputs.premises.areaM2 * 10) / 10 === 60.8);
 check("the anchor says what it is", inputs.anchorSales.source === "the mean sales of the registered businesses under 5m in London");
 const other = buildInputs({ ...BARBERSHOPS, retailHospitalityLeisure: false }, { ...CTX, form: "company", place: "Leeds" });
-check("a trade outside retail, hospitality and leisure pays the standard multiplier: break-even 65,456.35 (rates 7,196.23 on the average room)",
+check("a trade outside retail, hospitality and leisure pays the 43.2p small business multiplier, not the 38.2p one: break-even 65,456.35 (rates 7,196.23 on the average room)",
   other.premises.retailHospitalityLeisure === false && summarise(other)!.breakEven.value === 65_456.35);
 check("the form and the place reach the inputs", other.form === "company" && other.premises.source.includes("in Leeds") && other.anchorSales.source.endsWith("in Leeds"));
 check("a negative or non-numeric valuation row is refused", refusesRow({ rv_per_m2: -1, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: -5, floorspace_k_m2: 1 })

@@ -44,6 +44,11 @@ check("the floor of 100 premises lets exactly 100 through: garden centres' 100 p
 check("withheld: 60 dance schools' premises are too few for the valuation's rounding", londonWithholding("dance-studios") === "60 dance schools & centres premises in London, too few for the valuation's rounding");
 check("withheld: pet training has a kind of premises but no London valuation row for it", londonWithholding("pet-training") === "no London valuation row for pet grooming parlours");
 check("withheld: 30 hostels are under the register's floor, said before they lack a kind of premises", londonWithholding("hostels") === "30 businesses in London on the register, under the 40 its figures need");
+check("the loader names London in the rent and anchor sentences, and the median's rent line says it is scaled",
+  barber!.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation"
+  && barber!.anchorSales.source === "the mean sales of the registered businesses under 5m in London"
+  && b.medianBill.lines[3].source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation, scaled to this business's sales: 34 m2 at the same rent per m2 (the size rule)");
+check("withheld: cabinet makers' premises are valued as factories, workshops and warehouses, an average over unlike occupiers (446 m2)", londonWithholding("cabinet-making")!.startsWith("its premises are valued as factories,workshops and warehouses"));
 check("the company form reaches the model: the median barbershop as a company keeps the company optimum on 29,917.75",
   londonTradeSummary("barbershops", "company")!.keeps.q50 === bestCompanyTakeHome(29_917.75).takeHome && londonTradeSummary("barbershops")!.keeps.q50 === 25_407.33);
 

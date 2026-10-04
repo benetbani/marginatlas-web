@@ -2,18 +2,15 @@
  * src/lib/uk/pnl/ranges.ts
  *
  * How far the headline figures move with the one assumption the register cannot settle: how businesses spread inside a
- * turnover band, which sets the anchor (the business in the average premises, model.ts). The figures are recomputed with
- * the anchor at each of the three band shapes (banded.ts BandShape); `mid` is the log-flat reading, the one every quantile
- * uses, and `lo` and `hi` the least and greatest of the three. A page prints `mid` rounded to its range
- * (present/precision.ts honestRound), so no figure claims more than the band shapes allow for the anchor.
+ * turnover band. The shape sets the anchor (the business in the average premises, model.ts), the register's quartiles and
+ * the share of businesses above break-even, so each run reads all of them under one of the three shapes (banded.ts
+ * BandShape): the founder's decision 9 (2026-10-04), consistent ranges, so no figure claims more than the band shapes allow,
+ * its own sales included. `mid` is the log-flat run, the figure the summary prints, and `lo` and `hi` the least and greatest
+ * of the three. A page prints `mid` rounded to its range (present/precision.ts honestRound).
  *
- * The range moves the anchor only: the register's quartiles and the share above break-even are read log-flat in every run,
- * so the range is conditional on the register's median. Reading them under each shape too widens it (the median
- * barbershop's take-home 23,743.01 to 26,986.22 instead of 24,951.65 to 25,830.38; restaurants 11,198.28 to 16,056.34 instead
- * of 11,533.69 to 15,558.30); which to print waits for the founder (decision 9 in the master plan).
- *
- * Measured on London, 2026-10-02: the anchor moves about 5% either way; the median business's take-home moves most where
- * its margin is thin (restaurants 11,534 to 15,558 around 13,756).
+ * Measured on London, 2026-10-04: the anchor moves about 6% either way; the median barbershop's take-home 23,743.01 to
+ * 26,986.22 around 25,407.33 (it prints 25,000), the restaurant's 11,198.28 to 16,056.34 around 13,756.27 (14,000). Break-even
+ * rests on the anchor alone, so its range is the anchor's.
  */
 import { bandMeanK, type BandShape } from "./banded";
 import { pennies } from "../law/money";
@@ -30,7 +27,7 @@ export function shapeRanges(inputs: PnlInputs): PnlRanges | null {
     const m = bandMeanK(inputs.revenueBandsK, 7, shape);
     if (!m) return null;
     const anchor = pennies(m.k * 1000);
-    const s = summarise({ ...inputs, anchorSales: { ...inputs.anchorSales, value: anchor } });
+    const s = summarise({ ...inputs, anchorSales: { ...inputs.anchorSales, value: anchor } }, shape);
     if (!s || !s.shareAbove) return null;
     runs.push({ anchor, s });
   }

@@ -18,11 +18,11 @@ const check = (label: string, ok: boolean) => {
   red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
 };
 
-check("London restaurants' median 281,900 (280,300 to 283,500, half-width 1,600) prints 282,000", honestRound(281_900, 280_300, 283_500) === 282_000);
-check("Camden's hair and beauty median 76,400 (73,900 to 81,100, half-width 3,600) prints 76,000", honestRound(76_400, 73_900, 81_100) === 76_000);
-check("the London restaurant at the median keeps 13,756.27 (11,534 to 15,558 across the band shapes) and prints 14,000", honestRound(13_756.27, 11_534, 15_558) === 14_000);
+check("London restaurants' median 281,900 (280,659 to 283,227, half-width 1,284) prints 282,000", honestRound(281_900, 280_659, 283_227) === 282_000);
+check("Camden's hair and beauty median 76,400 (74,380 to 80,133, half-width 2,876.5) prints 76,000", honestRound(76_400, 74_380, 80_133) === 76_000);
+check("the London restaurant at the median keeps 13,756.27 (11,198 to 16,056 across the band shapes) and prints 14,000", honestRound(13_756.27, 11_198, 16_056) === 14_000);
 check("a figure known only to 50,000 to 110,000 prints to the 10,000: 76,400 prints 80,000", honestRound(76_400, 50_000, 110_000) === 80_000);
-check("each worked example prints inside its range widened by half its unit, and within half a unit of the figure", ([[281_900, 280_300, 283_500], [76_400, 73_900, 81_100], [13_756.27, 11_534, 15_558], [76_400, 50_000, 110_000]] as const).every(([v, lo, hi]) => { const u = honestUnit(v, lo, hi), p = honestRound(v, lo, hi); return Math.abs(p - v) <= u / 2 && lo - u / 2 <= p && p <= hi + u / 2; }));
+check("each worked example prints inside its range widened by half its unit, and within half a unit of the figure", ([[281_900, 280_659, 283_227], [76_400, 74_380, 80_133], [13_756.27, 11_198, 16_056], [76_400, 50_000, 110_000]] as const).every(([v, lo, hi]) => { const u = honestUnit(v, lo, hi), p = honestRound(v, lo, hi); return Math.abs(p - v) <= u / 2 && lo - u / 2 <= p && p <= hi + u / 2; }));
 check("an exact law figure keeps three significant figures: 28,308.52 prints 28,300", honestRound(28_308.52) === 28_300);
 check("a small exact figure keeps its pounds: 740 prints 740", honestRound(740) === 740);
 check("the unit never goes below 1", honestUnit(3.2) === 1);
@@ -66,7 +66,9 @@ check("a print may land outside its raw range by less than half a unit and still
 check("remainders equal in decimal tie on the grid whichever side floating point leaves them: 20.4, 14.4, 65.2 (two remainders of .4) print 21, 14, 65", largestRemainder([20.4, 14.4, 65.2]).join(",") === "21,14,65");
 check("noise on a negative figure is not a decimal either: -299,264.78 under a cap of 3 has two", decimalsForColumn([-299_264.78], 3) === 2);
 check("the cap binds when the capped figure ends in a zero: 12.04 with 40 under a cap of 1 has one decimal; an empty column has none", decimalsForColumn([12.04, 40]) === 1 && decimalsForColumn([]) === 0);
+check("whole shares split exactly, a decimal tie a tie wherever floating point leaves it: [13062, 5348, 1547, 523] of 100 is 64, 26, 8, 2 (remainders .78, .11, .55, .55; the earlier of the tied rows gets the unit)", largestRemainder([13062, 5348, 1547, 523]).join(",") === "64,26,8,2");
 check("shares may be fractions of a whole: 0.3 and 0.6 print 33 and 67", largestRemainder([0.3, 0.6]).join(",") === "33,67");
+check("fractional shares use the total too, and a -0 among them prints as 0: 0.3 and 0.6 of 10 are 3 and 7; -0, 0.25, 0.75 of 4 are 0, 1, 3", largestRemainder([0.3, 0.6], 10).join(",") === "3,7" && (() => { const x = largestRemainder([-0, 0.25, 0.75], 4); return Object.is(x[0], 0) && x.join(",") === "0,1,3"; })());
 check("a unit is a whole number, and one significant figure is allowed: roundToUnit at 2.5 is refused, 13,756 at one significant figure has a unit of 10,000", refuses(() => roundToUnit(740, 2.5)) && honestUnit(13_756, undefined, undefined, 1) === 10_000);
 check("the allowances stay a hair: a half-width of 999,999.99 keeps a unit of 100,000 (honestUnit of 0 in -999,999.99 to 999,999.99), and 4,149,999.99 a penny under a half of 100,000 prints 4,100,000", honestUnit(0, -999_999.99, 999_999.99) === 100_000 && honestRound(4_149_999.99, 4_049_999.99, 4_249_999.99) === 4_100_000);
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
