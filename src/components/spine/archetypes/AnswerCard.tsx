@@ -40,6 +40,7 @@ import { CountryFlag } from "@/components/CountryFlag";
 import { KvGrid, type KvCell } from "./KvGrid";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { COPY } from "./copy";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
 export type AnswerCardProps = {
   id?: string;
@@ -49,7 +50,7 @@ export type AnswerCardProps = {
   image?: { src: string; alt: string } | null;
   subtitle: string | null;
   /** `basis` replaces the country's composed basis line when the caller has its own (a city's "of the workforce"). */
-  answer: { label: string; value: string; regime?: string | null; basis?: string | null; confidence: "measured" | "modeled" | "placeholder" } | null;
+  answer: { label: string; value: string; regime?: string | null; basis?: string | null; confidence: "measured" | "modeled" | "placeholder"; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance } | null;
   /** THE ANSWER DRAWN (2026-09-24, HeroBoard's `answerBar` one altitude down): a share of a whole under the answer's line on SegmentBar's bare form, the figure never printed twice (his law of 2026-09-19, "a share of a whole is drawn"). `value` out of 100. */
   answerBar?: { value: number; part?: string; rest?: string; ends?: readonly [string, string]; aria: string } | null;
   cells: KvCell[];
@@ -163,7 +164,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
                 <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{answer.label}</div>
                 {tagged ? <SampleTag /> : null}
               </div>
-              <div className={`fig text-[length:var(--t-answer)] leading-none ${tone === "ink" ? "text-[var(--c-ink)]" : "text-[var(--terra-text)]"}`}>{answer.value}</div>
+              <div className={`fig text-[length:var(--t-answer)] leading-none ${tone === "ink" ? "text-[var(--c-ink)]" : "text-[var(--terra-text)]"}`} {...provAttrs(answer.prov)}>{answer.value}</div>
               <div className="mt-3 max-w-[40ch] text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">
                 {answer.basis != null ? answer.basis : COPY.answer.basis}
                 {answer.regime ? (

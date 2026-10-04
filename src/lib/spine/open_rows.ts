@@ -85,6 +85,7 @@ import { getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export const OPEN_METRICS = { ramp: "first_year.ramp_to_breakeven_months", payback: "first_year.payback_years" } as const;
 /** The formats' names and their opening cost against the trade's typical, in percent (the shard's own fields). */
@@ -102,6 +103,9 @@ export const DRAWN_LINES_CAP = 5;
 
 export type OpenData = {
   state: OpenState;
+  /** Where the focal figure came from (plan 06, task B5): set on the keyed baseline, an estimate (New York's index, at the page's
+   *  city's prices where the city holds a cost of living). Absent elsewhere. */
+  prov?: Provenance;
   /** The setup lines as RankedBars rows (held only): the biggest DRAWN_LINES_CAP of them; RankedBars sorts them. */
   rows: BarRow[];
   /** The lines past the cap (held only): their count and their sum, stated under the basis; null when every line draws. */
@@ -253,6 +257,7 @@ export function buildOpen(seed: any): OpenData | null {
     const formats = buildOpenFormats(industryId, keyed);
     return {
       state: "baseline", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: usd(keyed), value: keyed, withheld: null,
+      prov: { src: `markets/startup_capital_archetypes:${slug}${factor != null && typeof meta.geo === "string" ? `:${meta.geo}` : ""}`, kind: "estimate" },
       basis: factor != null && city ? COPY.tradeOpen.basisPlace.replace("{city}", city) : formats.length > 0 ? (foot.length > 0 ? COPY.tradeOpen.basisFormats : COPY.tradeOpen.basisFormatsAlone) : foot.length > 0 ? COPY.tradeOpen.basisBaseline : COPY.tradeOpen.basisBaselineAlone,
       foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: true, confidence: "modeled",
       formats, recover: false,

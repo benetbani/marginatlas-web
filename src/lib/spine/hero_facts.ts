@@ -25,6 +25,7 @@
  * Constraint-safe: no em-dashes, no source-agency names, USD-only money.
  */
 import { getCountryRates, getFormationRowByTier } from "@/lib/tax/country_rates";
+import type { Provenance } from "@/lib/spine/provenance";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { getCountryProfile } from "@/lib/economic_profile";
 import { COUNTRIES } from "@/lib/taxonomy";
@@ -50,7 +51,7 @@ export type HeroFacts = {
   iso2: string;
   name: string;
   /** `share` is the effective rate as a fraction of profit (0.2 for 20%), for the board's drawing of it; `value` is the one printed form. */
-  answer: { label: string; value: string; regime: string | null; confidence: Confidence; share?: number } | null;
+  answer: { label: string; value: string; regime: string | null; confidence: Confidence; share?: number; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance } | null;
   cells: HeroCell[];
   /** Composed from what resolved, never promising an absent cell. */
   subtitle: string | null;

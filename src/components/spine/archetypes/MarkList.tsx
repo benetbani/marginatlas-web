@@ -122,6 +122,7 @@ import { Box, Fig, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import { CompanionRow, type Companion } from "./BentoBand";
+import type { Provenance } from "@/lib/spine/provenance";
 
 /** PART 9 rule 22's floor, the model's and not this file's: "a ranked
  *  comparison with fewer than four members". Under four the card draws
@@ -147,6 +148,8 @@ export type MarkRow = {
   href?: string;
   /** What a row that navigates promises: the kind its page's masthead answers (door_kinds.ts), set by the builder with the href and stamped as `data-lands` (plan step 39, 2026-09-19). */
   lands?: DoorKind;
+  /** Where the figure came from (plan 06, task B5), stamped on the row's figure. */
+  prov?: Provenance;
 };
 
 export type MarkListProps = {
@@ -156,7 +159,7 @@ export type MarkListProps = {
   tagged?: boolean;
   /** The set's own figure and the words over it. Formatted with the same `fmt`
    *  as every row, so the card cannot hold two notations for one quantity. */
-  headline: { label: string; value: number };
+  headline: { label: string; value: number; prov?: Provenance };
   basis: string;
   /** The two column heads. The unit is said HERE, once, and nowhere else
    *  (PART 5: "THE UNIT. Said once, in the column head"). */
@@ -263,7 +266,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
       {/* THE HEADLINE: the set's middle, at the focal rung, in ink. Clause 3. */}
       <div data-answer="1">
         <div className={HEAD_CLS}>{headline.label}</div>
-        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{fmt(headline.value)}</Fig>
+        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]" prov={headline.prov}>{fmt(headline.value)}</Fig>
       </div>
       {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
       {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS: the same `GEO`, an
@@ -330,7 +333,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
                 </span>
               ) : null}
               <span data-label className={NAME_CLS}>{r.name}</span>
-              <Fig className="py-0.5 text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{fmt(r.value)}</Fig>
+              <Fig className="py-0.5 text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" prov={r.prov}>{fmt(r.value)}</Fig>
               {/* THE ARROW, at the right edge of a row that navigates and on
                   no other (PART 5, LINKS LOOK LIKE LINKS): the cell is drawn
                   on every row of a card with doors so the columns hold, and

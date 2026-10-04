@@ -145,11 +145,12 @@ export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; 
         <WorkedFigure
           label={W.cells.yr5}
           figure={`${lasts.values.yr5}%`}
+          prov={lasts.prov?.period}
           working={[
-            { figure: `${lasts.values.yr1}%`, words: W.working.yr1 },
-            { figure: `${lasts.values.yr3}%`, words: W.working.yr3 },
+            { figure: `${lasts.values.yr1}%`, words: W.working.yr1, prov: lasts.prov?.period },
+            { figure: `${lasts.values.yr3}%`, words: W.working.yr3, prov: lasts.prov?.period },
             /* The 2019 starters beside the period figure, once (his ruling of 2026-10-04): the same five years, one cohort's record. */
-            ...(lasts.cohort2019 !== undefined ? [{ figure: `${lasts.cohort2019}%`, words: W.working.cohort }] : []),
+            ...(lasts.cohort2019 !== undefined ? [{ figure: `${lasts.cohort2019}%`, words: W.working.cohort, prov: lasts.prov?.cohort }] : []),
           ]}
           list={list}
         />

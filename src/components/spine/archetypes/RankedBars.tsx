@@ -156,6 +156,7 @@ import * as React from "react";
 import { Box, Rail, Fig, Ico } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
+import type { Provenance } from "@/lib/spine/provenance";
 import { COPY } from "./copy";
 /* THE HATCH IS SHARED, NOT REINVENTED (task 12): IncomeBreakdown.tsx drew
  * the one repeating-line pattern this site uses for "not the answer, still
@@ -177,6 +178,8 @@ export type BarRow = { key: string; name: string; href?: string;
   /** What a row that navigates promises: the kind its page's masthead answers (src/lib/spine/door_kinds.ts), set by the builder with the href and stamped as `data-lands` for the chain's `doors` gate (plan step 39, 2026-09-19). */
   lands?: DoorKind;
   value: number; flagged?: boolean;
+  /** Where the figure came from (plan 06, task B5), stamped on the row's figure. */
+  prov?: Provenance;
   /** NO LONGER DRAWN ANYWHERE (task 13, 2026-09-10). The field stays on the
    * type so `scripts/verify_model_laws_copy.ts`'s DISTRICT ADJECTIVE ratchet
    * can keep reading `row.note` on every builder and prove it is unset;
@@ -264,7 +267,7 @@ export type RankedBarsProps = {
    *  card is called "The cost to open" and the focal is that cost; a focal that
    *  is NOT what the kicker names has to say what it is, or it is a number
    *  floating over a list. A label, never a sentence (PART 9). */
-  focal?: { figure: string; accent?: boolean; words?: string };
+  focal?: { figure: string; accent?: boolean; words?: string; prov?: Provenance };
   /** THE FOOT, PART 7's fourth part, where earned: companion figures at 16
    *  under a hairline after the drawing (the cost to open's months to break
    *  even and years to pay back), then one micro line saying what they are.
@@ -469,7 +472,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
       {focal ? (
         /* The slot is a div because the kit's Fig carries no data attributes; the checkers read `[data-focal]` on the slot. */
         <div data-focal="1" className="mb-2">
-          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{focal.figure}</Fig>
+          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={focal.prov}>{focal.figure}</Fig>
           {focal.words ? <span className="mt-1 block max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
         </div>
       ) : null}
@@ -516,7 +519,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                       data-pill={figPill ? "1" : undefined}
                       className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${figPill ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
                     >
-                      <Fig className="font-medium">{fmt(r.value)}</Fig>
+                      <Fig className="font-medium" prov={r.prov}>{fmt(r.value)}</Fig>
                     </span>
                   </div>
                   <div aria-hidden="true" style={{ width: 28, height: h, borderRadius: "2px 2px 0 0", ...(r.key === selfKey && !(isLeader && marks) ? SELF_FILL : barFill(isLeader, marks)) }} />
@@ -595,7 +598,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                       median and the page filter reported NO LEAD, nothing for
                       the eye to start on. The chart form this table replaced
                       drew its figures at the same 16. */}
-                  <Fig className="text-[length:var(--t-lead)] font-semibold">
+                  <Fig className="text-[length:var(--t-lead)] font-semibold" prov={r.prov}>
                     <span
                       data-pill={figPill ? "1" : undefined}
                       className={`inline-flex items-center justify-center rounded-full px-2 py-0.5 ${figPill ? "bg-[var(--c-ink)] text-white" : "text-[var(--c-ink)]"}`}
@@ -639,7 +642,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
             const row = (
               <>
                 <span data-label data-self={r.key === selfKey ? "1" : undefined} className={r.key === selfKey ? selfName(NAME_CLS) : NAME_CLS}>{r.name}</span>
-                <Fig className="text-right text-[length:var(--t-body)] font-semibold" >
+                <Fig className="text-right text-[length:var(--t-body)] font-semibold" prov={r.prov}>
                   {/* THE SAME RESERVED SLOT AS THE BAR FIGURE, above: every
                       row gets the rounded, padded span, only the leader's
                       gets the ink fill and `data-pill`, so a phone row is

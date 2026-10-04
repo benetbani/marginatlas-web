@@ -46,6 +46,7 @@ import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "@/lib/spine/copy";
 import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import { LONDON_GEOGRAPHY, londonTradeRegister } from "@/lib/uk/registers/london_trade";
+import { registerSrc, type Provenance } from "@/lib/spine/provenance";
 
 type CityRow = { slug: string; name: string; iso2: string };
 const CITIES = (cityListJson as { cities: CityRow[] }).cities;
@@ -118,7 +119,7 @@ export type CityMarketData = {
   /** The market in figures behind his plus (two or more rows), or null. */
   detail: { summary: string; rows: CityMarketDetailRow[] } | null;
   /** The card's one figure at 30: every business in the city (`comp.total_businesses`), the figure the bars do not print (PART 4), or null where the shard holds none. */
-  focal: { figure: string; tag: FactTag } | null;
+  focal: { figure: string; tag: FactTag; prov?: Provenance } | null;
 };
 
 export function buildCityMarket(slug: string): CityMarketData | null {
@@ -202,7 +203,7 @@ function registerMarket(city: CityRow, iso2: string, geography: string, shardNam
     if (seen.has(code)) continue;
     seen.add(code);
     /* The tile follows the shard's word ("Cafes & coffee" is a cafe), never the group's ("unlicensed restaurants" would read as a restaurant). */
-    rows.push({ key: slug, name, value: reg.enterprises, icon: tradeIconFor(word) });
+    rows.push({ key: slug, name, value: reg.enterprises, icon: tradeIconFor(word), prov: { src: registerSrc("turnover.json", slug, geography), kind: "counted" } });
   }
   if (rows.length < CITY_MARKET_MIN_TRADES) return null;
   rows.sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
@@ -219,6 +220,6 @@ function registerMarket(city: CityRow, iso2: string, geography: string, shardNam
     foot: null,
     sample: false,
     detail: null,
-    focal: { figure: all.toLocaleString("en-US"), tag: "held" },
+    focal: { figure: all.toLocaleString("en-US"), tag: "held", prov: { src: registerSrc("turnover.json", rows.map((r) => r.key).join("+"), geography), kind: "worked out" } },
   };
 }

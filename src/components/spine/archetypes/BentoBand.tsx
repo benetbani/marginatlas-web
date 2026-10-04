@@ -111,6 +111,7 @@
 import * as React from "react";
 import { Box, Fig, Ico, SampleTag, InfoTip } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export const BENTO_MIN_CELLS = 3;
 /** FIVE since 2026-09-20 late evening: his gold standard for a part of a page is a five-card bento (design/references/founder-2026-09-20-gold-standard-sections.md, "a subscription-billing product's five-card feature grid"), and the trade's market cluster took its fifth cell (the dayparts) that evening; the packer's ceiling of eight rows still holds five cells of at most two rows. Six is a list. */
@@ -398,7 +399,7 @@ export function BentoBand({ id, cols, cells }: { id?: string; cols: BentoCols; c
  *  document order and still wins, measured on the three cluster stories.
  */
 /** One companion figure at the lead rung with its words: "21 days" "until you can trade". */
-export type Companion = { figure: string; words: string };
+export type Companion = { figure: string; words: string; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance };
 
 /**
  * THE COMPANION ROW, law 1's markup once, drawn for one companion (the
@@ -416,7 +417,7 @@ export function CompanionRow({ items }: { items: Companion[] }) {
     <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
       {items.map((c, i) => (
         <span key={`${c.figure}-${i}`} data-companion className="inline-flex flex-wrap items-baseline gap-x-2">
-          <Fig className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{c.figure}</Fig>
+          <Fig className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]" prov={c.prov}>{c.figure}</Fig>
           <span className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{c.words}</span>
         </span>
       ))}
@@ -439,7 +440,10 @@ export function BentoMetric({
   lean = false,
   detail,
   gloss,
+  prov,
 }: {
+  /** Where the focal figure came from (plan 06, task B5), stamped on it. */
+  prov?: Provenance;
   /** The section's id when the cell stands alone as a block; a cluster cell passes none. */
   id?: string;
   kicker: string;
@@ -485,7 +489,7 @@ export function BentoMetric({
       </div>
       <div className="flex flex-1 flex-col justify-center py-2">
         {figure != null ? (
-          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</Fig>
+          <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={prov}>{figure}</Fig>
         ) : (
           <p data-withheld-line="focal" className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p>
         )}

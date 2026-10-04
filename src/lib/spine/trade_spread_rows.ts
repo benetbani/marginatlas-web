@@ -34,10 +34,11 @@
  */
 import { COPY } from "@/lib/spine/copy";
 import type { LondonTradeStrip } from "@/lib/spine/london_trade_hero";
+import type { Provenance } from "@/lib/spine/provenance";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-export type TradeSpreadMark = { key: "p10" | "typical" | "p90"; label: string; value: number; lead?: boolean };
+export type TradeSpreadMark = { key: "p10" | "typical" | "p90"; label: string; value: number; lead?: boolean; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance };
 
 export type TradeSpreadData = {
   /** Three marks where the seed holds them, fewer where it holds fewer, none off `moneyShown`. */

@@ -73,10 +73,10 @@ export function RivalsCard({ id = "rivals", rivals, oneColumn = false }: { id?: 
         icon="subtype"
         kicker={rivals.kicker}
         tagged={rivals.sample}
-        headline={{ label: rivals.middleLabel, value: rivals.middle }}
+        headline={{ label: rivals.middleLabel, value: rivals.middle, prov: rivals.rows.find((r) => r.value === rivals.middle)?.prov }}
         basis={rivals.basis}
         head={rivals.head}
-        rows={rivals.rows.map((r) => ({ key: r.key, name: r.name, value: r.value, href: r.href, lands: r.lands }))}
+        rows={rivals.rows.map((r) => ({ key: r.key, name: r.name, value: r.value, href: r.href, lands: r.lands, prov: r.prov }))}
         fmt={rivals.fmt}
         withheld={rivals.withheld}
         withheldLine={rivals.withheldLine}

@@ -27,6 +27,7 @@ import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import { Pill } from "@/components/ui/pill";
 import { AtlasMark } from "./marks";
 import { areSampleMarksVisible } from "@/lib/feature_flags";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
 export const TERRA = "#fb8469"; // atlas-300 soft terracotta , the only fill color
 export const TRACK = "#e6e6e6";
@@ -92,8 +93,10 @@ export function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "ter
     </span>
   );
 }
-export function Fig({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <span className={`fig ${className}`}>{children}</span>;
+/** `prov` (plan 06, task B5): where the figure came from, stamped as `data-src` and `data-kind` (src/lib/spine/provenance.ts) for
+ *  the provenance ratchet (scripts/harness/check_provenance.mjs). */
+export function Fig({ children, className = "", prov }: { children: React.ReactNode; className?: string; prov?: Provenance | null }) {
+  return <span className={`fig ${className}`} {...provAttrs(prov)}>{children}</span>;
 }
 export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?: string; endLabels?: [string, string]; w?: number }) {
   if (value == null || !Number.isFinite(value)) return null;

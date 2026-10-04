@@ -1,0 +1,14 @@
+{
+  "why": "The provenance ratchet (plan 06, task B5): per harness page, the figures (the `fig` class) printed without both data-src and data-kind. It only falls: lower it with --write-baseline, never raise it by hand.",
+  "pages": {
+    "country-GB": 290,
+    "country-AF": 31,
+    "howto-GB": 17,
+    "city-london": 90,
+    "cell-gb-london-restaurants": 65,
+    "cell-gb-london-barbershops": 123,
+    "industry-restaurants": 57,
+    "hood-london": 27,
+    "hood-london-city-of-london": 28
+  }
+}

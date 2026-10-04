@@ -42,7 +42,8 @@ import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { LONDON_MARKET } from "@/lib/london/market";
 import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
 import { tradeIconFor } from "@/lib/spine/trade_icon";
-import { londonTradeRegister, londonTradeSales } from "@/lib/uk/registers/london_trade";
+import { LONDON_GEOGRAPHY, londonTradeRegister, londonTradeSales } from "@/lib/uk/registers/london_trade";
+import { registerSrc } from "@/lib/spine/provenance";
 import { honestRound } from "@/lib/uk/present/precision";
 import { convertToUsd } from "@/lib/finance/fx";
 
@@ -261,7 +262,7 @@ export function buildLondonTradeSales(): { rows: BarRow[]; worldMax: number } | 
     const r = sales.medianRangeGbp;
     const value = r ? honestRound(usdOf(sales.q50.gbp), usdOf(r[0]), usdOf(r[1])) : honestRound(usdOf(sales.q50.gbp));
     if (!isNum(value) || value <= 0) continue;
-    rows.push({ key: slug, name, href: `/${iso}/${city}/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value });
+    rows.push({ key: slug, name, href: `/${iso}/${city}/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value, prov: { src: registerSrc("turnover.json", slug, LONDON_GEOGRAPHY), kind: "worked out" } });
   }
   if (rows.length < 3) return null;
   rows.sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));

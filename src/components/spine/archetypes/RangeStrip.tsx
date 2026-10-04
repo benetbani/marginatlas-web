@@ -52,8 +52,9 @@
  */
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
+import type { Provenance } from "@/lib/spine/provenance";
 
-export type StripMark = { key: string; label: string; value: number; accent?: boolean; lead?: boolean; sub?: string };
+export type StripMark = { key: string; label: string; value: number; accent?: boolean; lead?: boolean; sub?: string; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance };
 export type RangeStripProps = {
   marks: StripMark[];
   scale?: "log" | "linear";
@@ -82,7 +83,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
     return (
       <div data-archetype="range-strip" data-idea="I12" data-marks="1">
         <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{m.label}</div>
-        <Fig className={`mt-1 block font-semibold leading-none ${m.lead ? "text-[length:var(--t-focal)]" : "text-[length:var(--t-head)]"} ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(m.value)}</Fig>
+        <Fig className={`mt-1 block font-semibold leading-none ${m.lead ? "text-[length:var(--t-focal)]" : "text-[length:var(--t-head)]"} ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={m.prov}>{fmt(m.value)}</Fig>
         {basis ? <p className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
         {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
         {extra ? <Extra extra={extra} /> : null}
@@ -123,7 +124,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra }:
         {/* the figures, over their ticks */}
         {placed.map((p, i) => (
           <div key={p.m.key} data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x, !!p.m.lead), top: rows[i] === 1 ? 18 : 0 }}>
-            <Fig className={`block font-semibold leading-none ${p.m.lead ? "text-[length:var(--t-focal)]" : p.m.accent ? "text-[length:var(--t-head)]" : "text-[length:var(--t-body)]"} ${p.m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{fmt(p.m.value)}</Fig>
+            <Fig className={`block font-semibold leading-none ${p.m.lead ? "text-[length:var(--t-focal)]" : p.m.accent ? "text-[length:var(--t-head)]" : "text-[length:var(--t-body)]"} ${p.m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={p.m.prov}>{fmt(p.m.value)}</Fig>
           </div>
         ))}
         {/* the track and the ticks */}

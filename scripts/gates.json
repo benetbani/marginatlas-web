@@ -171,6 +171,21 @@
       "claims": []
     },
     {
+      "name": "provenance",
+      "script": "scripts/harness/check_provenance.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": false,
+      "asserts": "THE PROVENANCE RATCHET (plan 06, task B5, 2026-10-04): on every page in scripts/harness/pages.json, the figures that do not say where they came from, counted, held to a baseline that only falls.",
+      "reads": [
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scripts/harness/pages.json",
+        "scripts/harness/provenance_baseline.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "loud-seats",
       "script": "scripts/verify_loud_seats.mjs",
       "args": [],

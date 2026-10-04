@@ -205,7 +205,7 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
      full-time pay (the figure the salary row prints), as a share of it: a sole trader on that profit pays that share, and the
      words under the figure say so. Other countries keep their regime's rate. */
   const uk = iso2 === "GB" ? ukTaxOnProfit() : null;
-  if (uk && facts.answer) facts.answer = { ...facts.answer, value: `${uk.percent}%`, share: uk.share, confidence: "measured" };
+  if (uk && facts.answer) facts.answer = { ...facts.answer, value: `${uk.percent}%`, share: uk.share, confidence: "measured", prov: { src: "uk/law/take_home.ts:sole trader:median full-time pay", kind: "worked out" } };
   const share = facts.answer && isNum(facts.answer.share) && facts.answer.share > 0 && facts.answer.share < 1 ? facts.answer.share : null;
   const answerBar = share != null && facts.answer ? { value: share * 100, part: COPY.heroBoard.share.part, rest: COPY.heroBoard.share.rest, aria: `${facts.answer.value} ${COPY.heroBoard.share.of}` } : null;
   return { iso2, name: facts.name, answer: facts.answer, ...(uk ? { answerBasis: COPY.answer.basisUk.replace("{profit}", usd(uk.profitUsd)) } : {}), subtitle: facts.subtitle, answerBar, rows, taxes: heroTaxes(iso2), image: heroImageFor(iso2) };

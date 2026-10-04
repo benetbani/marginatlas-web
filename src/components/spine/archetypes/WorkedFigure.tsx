@@ -49,12 +49,13 @@
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
 import { CompanionRow, type Companion } from "@/components/spine/archetypes/BentoBand";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export const WORKING_MIN = 2;
 export const WORKING_MAX = 4;
 
 /** `fill` (the list form only, 2026-09-24): the rows grow into a card the level stretches, a hairline between them, the team table's remedy (B12's fifth row) for a short list beside a tall partner; the licences card's three waits stood in 132 of air beside the cost to open's chart on the long tail. Under 560 of the card only; from 560 the working stands in its own column and takes no height from the level. */
-export function WorkedFigure({ label, figure, working, accent = false, list = false, fill = false }: { label: string; figure: string; working: Companion[]; accent?: boolean; list?: boolean; fill?: boolean }) {
+export function WorkedFigure({ label, figure, working, accent = false, list = false, fill = false, prov }: { label: string; figure: string; working: Companion[]; accent?: boolean; list?: boolean; fill?: boolean; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance }) {
   if (!figure || working.length < WORKING_MIN) return null;
   const shown = working.slice(0, WORKING_MAX);
   const grow = list && fill;
@@ -68,7 +69,7 @@ export function WorkedFigure({ label, figure, working, accent = false, list = fa
       <div className={`[@container(min-width:560px)]:grid ${list ? "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]" : "[@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"} [@container(min-width:560px)]:items-center [@container(min-width:560px)]:gap-x-8 ${grow ? "flex flex-1 flex-col" : ""}`}>
         <div>
           <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{label}</div>
-          <Fig className={`mt-1 block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</Fig>
+          <Fig className={`mt-1 block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={prov}>{figure}</Fig>
         </div>
         <div data-second className={`mt-4 border-t border-[var(--c-border)] pt-3 [@container(min-width:560px)]:mt-0 [@container(min-width:560px)]:border-l [@container(min-width:560px)]:border-t-0 [@container(min-width:560px)]:pl-6 [@container(min-width:560px)]:pt-0 ${grow ? "flex flex-1 flex-col" : ""}`}>
           {grow ? (
@@ -76,7 +77,7 @@ export function WorkedFigure({ label, figure, working, accent = false, list = fa
             <div className="grid flex-1 auto-rows-fr grid-cols-[auto_minmax(0,1fr)] divide-y divide-[var(--c-border)]">
               {shown.map((c, i) => (
                 <div key={`${c.figure}-${i}`} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
-                  <Fig className="text-right text-[length:var(--t-lead)] font-semibold leading-none tabular-nums text-[var(--c-ink)]">{c.figure}</Fig>
+                  <Fig className="text-right text-[length:var(--t-lead)] font-semibold leading-none tabular-nums text-[var(--c-ink)]" prov={c.prov}>{c.figure}</Fig>
                   <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.words}</span>
                 </div>
               ))}
@@ -85,7 +86,7 @@ export function WorkedFigure({ label, figure, working, accent = false, list = fa
             <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-3 gap-y-2">
               {shown.map((c, i) => (
                 <React.Fragment key={`${c.figure}-${i}`}>
-                  <Fig className="text-right text-[length:var(--t-lead)] font-semibold leading-none tabular-nums text-[var(--c-ink)]">{c.figure}</Fig>
+                  <Fig className="text-right text-[length:var(--t-lead)] font-semibold leading-none tabular-nums text-[var(--c-ink)]" prov={c.prov}>{c.figure}</Fig>
                   <span className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{c.words}</span>
                 </React.Fragment>
               ))}

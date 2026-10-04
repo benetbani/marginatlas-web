@@ -56,5 +56,14 @@ check("the masthead reads the London block: $740K, three cells, the plus, no net
 const sp = buildTradeSpread(seed);
 check("the strip reads the London block: three counted marks, not modelled", sp !== null && sp.marks.length === 3 && sp.modelled === false && sp.sample === false);
 
+/* WHERE EACH FIGURE CAME FROM (plan 06, task B5): the register's count counted, a median or share read from its bands worked out,
+   the engine's figures an estimate; the masthead and the strip carry the stamps through to the page. */
+const reg = (slug: string) => `uk/registers/turnover.json:${slug}:E12000007`;
+check("restaurants: break-even, the share above it and the keeps are the engine's estimate", r !== null && r.answer.prov.kind === "estimate" && r.answer.prov.src === "uk/pnl:restaurants:E12000007" && r.cells.filter((c) => c.key !== "firms").every((c) => c.prov?.kind === "estimate"));
+check("restaurants: the firm count is the register's, counted", r?.cells.find((c) => c.key === "firms")?.prov?.kind === "counted" && r?.cells.find((c) => c.key === "firms")?.prov?.src === reg("restaurants"));
+check("barbershops: the typical sales and the share under $133K are worked out from the register's bands", b !== null && b.answer.prov.kind === "worked out" && b.answer.prov.src === reg("barbershops") && b.cells.find((c) => c.key === "under")?.prov?.kind === "worked out");
+check("the strip's marks are worked out from the register's bands", s !== null && s.marks.every((m) => m.prov.kind === "worked out" && m.prov.src === reg("restaurants")));
+check("the masthead and the strip carry the stamps through", f?.answer?.prov?.kind === "estimate" && f.cells.every((c) => !!c.prov) && !!sp && sp.marks.every((m) => !!m.prov));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_trade_hero: all pass");

@@ -166,7 +166,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
         <Rail icon="startup-cost" kicker={COPY.tradeOpen.kicker} sample={open.sample} />
         {/* THE ANSWER ON THE LEVEL'S LINE (the goal's D7): at the top, as the licences card's beside it; the floor keeps the foot. */}
         <div className="flex flex-1 flex-col">
-          <WorkedFigure list accent={open.accent} label={lead.name} figure={open.figure ?? lead.figure} working={rest.map((f) => ({ figure: f.figure, words: f.name }))} />
+          <WorkedFigure list accent={open.accent} label={lead.name} figure={open.figure ?? lead.figure} prov={open.figure ? open.prov : undefined} working={rest.map((f) => ({ figure: f.figure, words: f.name }))} />
         </div>
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
           {open.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.basis}</p> : null}
@@ -207,7 +207,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
         topLabel={COPY.tradeOpen.biggest}
         fmt={(v) => usd(v)}
         phoneHead={COPY.tradeOpen.phoneHead}
-        focal={open.figure ? { figure: open.figure, accent: open.accent } : undefined}
+        focal={open.figure ? { figure: open.figure, accent: open.accent, prov: open.prov } : undefined}
         foot={{ items: open.foot, line: open.footLine }}
       />
     );
@@ -220,6 +220,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
       sample={open.sample}
       accent={open.accent}
       figure={open.figure ?? undefined}
+      prov={open.prov}
       withheld={open.withheld ?? undefined}
       second={open.foot.length > 0 ? open.foot : { withheld: open.footLine ?? COPY.tradeOpen.footWithheld }}
       basis={open.basis ?? undefined}

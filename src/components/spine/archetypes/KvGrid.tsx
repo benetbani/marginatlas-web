@@ -45,6 +45,7 @@
 import * as React from "react";
 import { Fig, Ico, SampleTag } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export type KvCell = {
   key: string;
@@ -55,6 +56,8 @@ export type KvCell = {
   confidence?: "measured" | "modeled" | "placeholder";
   /** The cell's glyph, before its label (the header's AN ICON A CELL). */
   icon?: AtlasIconId;
+  /** Where the figure came from (plan 06, task B5), stamped on its figure. */
+  prov?: Provenance;
 };
 
 /* The container-query classes are written out in full below, never assembled from a constant: the stylesheet compiler scans source for literal class strings and generates nothing for a template. */
@@ -185,7 +188,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                   </div>
                   {/* On the "row" reserve the figure sits on the cell's floor (`mt-auto`), so a row's figures share one top whatever their labels wrap to. */}
                   <div className={`${byRow ? "mt-auto pt-1" : "mt-1"} flex flex-wrap items-baseline gap-x-2 gap-y-1`}>
-                    <Fig className={`${under ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-head)]"} leading-none text-[var(--c-ink)]`}>{c.value}</Fig>
+                    <Fig className={`${under ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-head)]"} leading-none text-[var(--c-ink)]`} prov={c.prov}>{c.value}</Fig>
                     {c.confidence && c.confidence !== "measured" ? <SampleTag /> : null}
                   </div>
                   {c.note ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" style={{ textWrap: "balance" }}>{c.note}</div> : null}

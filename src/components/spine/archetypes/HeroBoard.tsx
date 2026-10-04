@@ -44,6 +44,7 @@ import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
 import { Pie } from "@/components/spine/charts/Pie";
+import { provAttrs } from "@/lib/spine/provenance";
 
 export const HERO_BOARD_ROWS_CAP = 6;
 
@@ -83,11 +84,11 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                     keeps the one-row bar with its ends named, under the figure. */}
                 {board.answerBar && board.answerBar.part && board.answerBar.rest && !board.answerBar.ends ? (
                   <div className="mt-2 flex items-center gap-5">
-                    <div data-hero-figure className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{board.answer.value}</div>
+                    <div data-hero-figure className="fig text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]" {...provAttrs(board.answer.prov)}>{board.answer.value}</div>
                     <div data-answer-bar><Pie share={board.answerBar.value / 100} aria={board.answerBar.aria} className="h-28 w-28" /></div>
                   </div>
                 ) : (
-                  <div data-hero-figure className="fig mt-1 text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]">{board.answer.value}</div>
+                  <div data-hero-figure className="fig mt-1 text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]" {...provAttrs(board.answer.prov)}>{board.answer.value}</div>
                 )}
                 {board.answerBar && board.answerBar.part && board.answerBar.rest && !board.answerBar.ends ? null : board.answerBar ? (
                   <div data-answer-bar className="mt-4 max-w-[28ch]">

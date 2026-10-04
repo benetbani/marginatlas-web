@@ -47,6 +47,7 @@ import { COPY } from "@/lib/spine/copy";
 import { tradeNounFor } from "@/lib/taxonomy";
 import type { TradeNet } from "@/lib/spine/trade_net";
 import type { LondonTradeHero } from "@/lib/spine/london_trade_hero";
+import type { Provenance } from "@/lib/spine/provenance";
 
 type Conf = "measured" | "modeled" | "placeholder";
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -56,7 +57,7 @@ export type TradeHeroFacts = {
   name: string;
   iso2?: string;
   /** The take-home, or null where money is not shown for the cell. */
-  answer: { label: string; value: string; basis: string; confidence: Conf } | null;
+  answer: { label: string; value: string; basis: string; confidence: Conf; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance } | null;
   /** The state word's strings, drawn where `answer` is null. */
   absent: { label: string; word: string; note: string };
   cells: KvCell[];

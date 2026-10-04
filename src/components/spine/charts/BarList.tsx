@@ -8,8 +8,9 @@
 import * as React from "react";
 import { Fig, Ico } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
+import type { Provenance } from "@/lib/spine/provenance";
 
-export type BarItem = { key: string; label: string; value: number; display: string; href?: string; icon?: AtlasIconId; badge?: string | null };
+export type BarItem = { key: string; label: string; value: number; display: string; href?: string; icon?: AtlasIconId; badge?: string | null; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance };
 
 /** `look`: "icons" draws each thing's glyph before its name (a list of trades); "plain" draws the name alone, for a list whose
  *  items share no glyph worth drawing (the covers of one insurance). The page laws read it as the two lists' difference. */
@@ -50,7 +51,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
               {/* The badge is the page's one chip shape (the level pill on the ranges, the buyers on the sale card), 2026-09-26. */}
               {i.badge ? <>{" "}<span className="ml-1 rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 align-middle text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{i.badge}</span></> : null}
             </span>
-            <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{i.display}</Fig>
+            <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" prov={i.prov}>{i.display}</Fig>
             <span className={`relative col-span-full block rounded-full [@container(min-width:420px)]:col-span-1 ${look === "icons" ? "h-2.5" : "h-4"}`} role="img" aria-label={`${i.label}: ${i.display}${ariaUnit}`}>
               {/* The track is a painted leaf of its own, so it is ink to anything that measures the card. */}
               <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />

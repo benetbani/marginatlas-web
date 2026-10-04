@@ -63,13 +63,14 @@ import { usd } from "@/components/spine/kit";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { placeCostFactor } from "@/lib/spine/open_rows";
+import type { Provenance } from "@/lib/spine/provenance";
 import { honestRound } from "@/lib/uk/present/precision";
 import { COPY } from "@/lib/spine/copy";
 import { countWord } from "@/lib/spine/district_rows";
 import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
 
 /** Every row lands on a sibling trade's page in this city, "A typical owner keeps" (8.6's doors paragraph): the promise, declared once here (plan step 39). */
-export type RivalRow = { key: string; name: string; value: number; href: string; lands: DoorKind };
+export type RivalRow = { key: string; name: string; value: number; href: string; lands: DoorKind; /** Where the figure came from (plan 06, task B5): an estimate, as the cost to open is. */ prov?: Provenance };
 
 export type RivalsData = {
   state: "list" | "withheld";
@@ -117,7 +118,7 @@ export function buildRivals(seed: any): RivalsData | null {
     const ny = startupCapitalArchetypeKeyed(s.slug);
     if (ny == null) { withheld++; continue; }
     const v = factor != null ? honestRound(ny * factor) : ny;
-    keyedRows.push({ key: s.slug, name: s.name, value: v, href: s.href, lands: SURFACE_ANSWERS.cell });
+    keyedRows.push({ key: s.slug, name: s.name, value: v, href: s.href, lands: SURFACE_ANSWERS.cell, prov: { src: `markets/startup_capital_archetypes:${s.slug}${factor != null && typeof meta.geo === "string" ? `:${meta.geo}` : ""}`, kind: "estimate" } });
   }
   keyedRows.sort((a, b) => b.value - a.value);
   const c = COPY.tradeRivals;

@@ -24,7 +24,7 @@
 import premisesJson from "../../../data/uk/registers/premises.json";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
-import { londonTradeRegister, londonTradeSales, OPEN_ABOVE_GBP, OPEN_BELOW_GBP, type SalesQuantile } from "@/lib/uk/registers/london_trade";
+import { LONDON_GEOGRAPHY, londonTradeRegister, londonTradeSales, OPEN_ABOVE_GBP, OPEN_BELOW_GBP, type SalesQuantile } from "@/lib/uk/registers/london_trade";
 import { londonTradeRanges, londonWithholding } from "@/lib/uk/pnl/london";
 import { RECIPES } from "@/lib/uk/pnl/recipes";
 import type { Range } from "@/lib/uk/pnl/ranges";
@@ -32,6 +32,7 @@ import { convertToUsd } from "@/lib/finance/fx";
 import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/lib/spine/money";
 import { COPY } from "@/lib/spine/copy";
+import { registerSrc, type Provenance } from "@/lib/spine/provenance";
 
 const PREMISES = premisesJson as unknown as { trade_category: Record<string, string> };
 
@@ -44,17 +45,22 @@ export const PREMISES_NOUN: Readonly<Record<string, string>> = {
 
 export type LondonTradeHero = {
   kind: "breakEven" | "sales";
-  answer: { label: string; value: string; basis: string; confidence: "measured" | "modeled" };
+  answer: { label: string; value: string; basis: string; confidence: "measured" | "modeled"; prov: Provenance };
   cells: KvCell[];
   /** The company's keeps beside the sole trader's, under the plus, on a money trade. */
   detail: { summary: string; rows: DetailRow[] } | null;
   foot: string;
 };
 
-export type LondonStripMark = { key: "p10" | "typical" | "p90"; label: string; value: number; lead?: boolean };
+export type LondonStripMark = { key: "p10" | "typical" | "p90"; label: string; value: number; lead?: boolean; prov: Provenance };
 export type LondonTradeStrip = { marks: LondonStripMark[]; basis: string };
 
 const C = () => COPY.londonTrade;
+/* WHERE EACH FIGURE CAME FROM (plan 06, task B5): the register's count as counted, a median or a share read from its band counts as
+   worked out, and the engine's break-even, share above it and keeps as an estimate (the recipes' shares are judgement). */
+const counted = (slug: string): Provenance => ({ src: registerSrc("turnover.json", slug, LONDON_GEOGRAPHY), kind: "counted" });
+const fromBands = (slug: string): Provenance => ({ src: registerSrc("turnover.json", slug, LONDON_GEOGRAPHY), kind: "worked out" });
+const fromEngine = (slug: string): Provenance => ({ src: `uk/pnl:${slug}:${LONDON_GEOGRAPHY}`, kind: "estimate" });
 const usdOf = (gbp: number): number => convertToUsd("GBP", gbp) ?? Number.NaN;
 /** A range of pounds rounded once in dollars. */
 const roundRange = (r: Range): number => honestRound(usdOf(r.mid), usdOf(r.lo), usdOf(r.hi));
@@ -74,6 +80,7 @@ function firmsCell(slug: string): KvCell | null {
     value: reg.enterprises.toLocaleString("en-US"),
     ...(reg.group ? { note: C().cells.firmsGroup.replace("{group}", reg.group) } : {}),
     confidence: "measured",
+    prov: counted(slug),
   };
 }
 
@@ -87,10 +94,10 @@ function breakEvenHero(slug: string): LondonTradeHero | null {
   const keepsSt = usd(roundRange(st.keepsQ50));
   return {
     kind: "breakEven",
-    answer: { label: C().breakEvenLabel, value: usd(roundRange(st.breakEven)), basis: C().breakEvenBasis.replace("{noun}", noun), confidence: "modeled" },
+    answer: { label: C().breakEvenLabel, value: usd(roundRange(st.breakEven)), basis: C().breakEvenBasis.replace("{noun}", noun), confidence: "modeled", prov: fromEngine(slug) },
     cells: [
-      { key: "above", label: C().cells.above, value: `${percentOf(st.shareAbove)} of 100`, confidence: "modeled" },
-      { key: "keeps", label: C().cells.keeps, value: keepsSt, note: C().cells.keepsNote, confidence: "modeled" },
+      { key: "above", label: C().cells.above, value: `${percentOf(st.shareAbove)} of 100`, confidence: "modeled", prov: fromEngine(slug) },
+      { key: "keeps", label: C().cells.keeps, value: keepsSt, note: C().cells.keepsNote, confidence: "modeled", prov: fromEngine(slug) },
       firms,
     ],
     detail: {
@@ -126,10 +133,11 @@ function salesHero(slug: string): LondonTradeHero | null {
       value,
       basis: reg.group ? C().salesBasisGroup.replace("{group}", reg.group) : C().salesBasis,
       confidence: "measured",
+      prov: fromBands(slug),
     },
     cells: [
       firms,
-      { key: "under", label: C().cells.under.replace("{edge}", usd(honestRound(usdOf(100_000)))), value: `${Math.round(sales.shareUnder100k * 100)} of 100`, confidence: "measured" },
+      { key: "under", label: C().cells.under.replace("{edge}", usd(honestRound(usdOf(100_000)))), value: `${Math.round(sales.shareUnder100k * 100)} of 100`, confidence: "measured", prov: fromBands(slug) },
     ],
     detail: null,
     foot: C().foot,
@@ -159,7 +167,7 @@ export function londonTradeStrip(slug: string): LondonTradeStrip | null {
     const value = key === "typical" && sales.medianRangeGbp
       ? honestRound(usdOf(q.gbp), usdOf(sales.medianRangeGbp[0]), usdOf(sales.medianRangeGbp[1]))
       : honestRound(usdOf(q.gbp));
-    marks.push({ key, label, value, ...(lead ? { lead: true } : {}) });
+    marks.push({ key, label, value, ...(lead ? { lead: true } : {}), prov: fromBands(slug) });
   };
   mark("p10", sales.q10, COPY.customers.marks.bottom);
   mark("typical", sales.q50, COPY.customers.marks.typical, true);

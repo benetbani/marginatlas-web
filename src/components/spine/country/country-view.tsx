@@ -783,7 +783,7 @@ function LondonSalesBars({ sales }: { sales: NonNullable<ReturnType<typeof build
           The bars share one scale, the list's highest, so the plus's rows read against the same top. */}
       {/* THE MIDDLE DRAWN (goal 2026-09-26, M6): the figure is the middle trade's, so every track carries a tick at it and the key
           under the list names it; a reader sees which trades keep more than the middle without reading a percent. */}
-      <BarList items={sales.rows.slice(0, SHOWN_MARGINS).map((r) => ({ key: r.key, label: r.name, value: r.value, display: usd(r.value), href: r.href, icon: r.icon }))} max={sales.worldMax} reference={{ value: middle, label: L.middleKey }} />
+      <BarList items={sales.rows.slice(0, SHOWN_MARGINS).map((r) => ({ key: r.key, label: r.name, value: r.value, display: usd(r.value), href: r.href, icon: r.icon, prov: r.prov }))} max={sales.worldMax} reference={{ value: middle, label: L.middleKey }} />
       {sales.rows.length > SHOWN_MARGINS ? <DetailPanel name="money-more" summary={L.more.replace("{n}", String(sales.rows.length - SHOWN_MARGINS))} rows={sales.rows.slice(SHOWN_MARGINS).map((r) => ({ label: r.name, value: usd(r.value) }))} /> : null}
     </Box>
   );

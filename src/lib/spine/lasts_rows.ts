@@ -45,6 +45,7 @@ import { industryFigure } from "@/lib/facts/industry_shard";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import { COPY } from "@/lib/spine/copy";
 import { tradeSurvivalUk } from "@/lib/uk/registers/survival";
+import { registerSrc, type Provenance } from "@/lib/spine/provenance";
 import { honestRound } from "@/lib/uk/present/precision";
 
 export const LASTS_METRICS = { yr1: "survival.yr1_pct", yr3: "survival.yr3_pct", yr5: "survival.yr5_pct" } as const;
@@ -66,6 +67,9 @@ export type LastsData = {
   foot: string;
   /** "measured" on a UK page (the business demography's own figures), "modeled" off it (the trade's shard). */
   confidence: "modeled" | "measured";
+  /** Where the UK card's figures came from (plan 06, task B5): the group's period survival and its 2019 starters, both read from
+   *  the business demography's slice and worked out there (shares of births still trading). Absent off the UK. */
+  prov?: { period: Provenance; cohort: Provenance };
 };
 
 const isPct = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v) && v > 0 && v <= 100;
@@ -90,6 +94,10 @@ function buildLastsUk(industryId: string, slug: string | undefined): LastsData |
     basis: "",
     foot: COPY.tradeLasts.footUk.replace("{group}", uk.groupName),
     confidence: "measured",
+    prov: {
+      period: { src: registerSrc("survival.json", uk.group, "period"), kind: "worked out" },
+      cohort: { src: registerSrc("survival.json", uk.group, "cohort2019"), kind: "worked out" },
+    },
   };
 }
 
