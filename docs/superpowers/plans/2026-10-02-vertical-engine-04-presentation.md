@@ -351,7 +351,7 @@ still overlap a higher member, even a leader, and rank lower (28.9, 12 and 11 wi
 to 29 rank 1, 2, 2), so a page marks the top group by rank. Its final re-review found the guard's refusals tested on
 one-row sets only (a guard that read the first row alone passed): a bad row is now refused first, between good rows and
 last. The header no longer claims the tie-break gives the fewest groups (it does up to four members, not always beyond).
-All 38 deliberate faults fail it, and the scope variants too.
+All 41 deliberate faults fail it, the scope variants among them.
 
 **Files:**
 - Create: `src/lib/uk/present/compare.ts`

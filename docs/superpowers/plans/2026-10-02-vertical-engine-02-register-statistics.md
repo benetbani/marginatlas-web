@@ -22,11 +22,13 @@
 - The tree holds many untracked files that are not this plan's. Every commit names its files; never `git add -A` or `.`.
 - The edits to existing builders are given as exact Replace / With pairs. Apply them in the order given: each "Replace"
   block then occurs exactly once (checked on 2026-10-02 by applying them in order to fresh copies of the real builders and
-  rebuilding every table, and again on 2026-10-03 after the reviews of tasks 1 to 3: every table rebuilt, the 60 tests
-  passing, and plan 03's 139 checks and its registers gate passing on the slices exported from them).
+  rebuilding every table, and again on 2026-10-03 after the reviews of every task: every table, draft, the ledger and the
+  pack rebuilt, the 75 tests passing, 27 of 28 deliberate faults in the builders' new rules failing them (the 28th, a
+  median of exactly 50m flagged in the builder's own words, no table today can show), and plan 03's 140 checks and its
+  registers gate passing on the slices exported from them).
 - Rebuild order, because each step reads the one before: `build_nomis.py` -> `build_demography.py` ->
-  `enrich_failure_rates.py` -> `build_editorial.py` -> `draft_stories.py`; `export_for_site.py` last (plan 03 runs it into
-  the website).
+  `enrich_failure_rates.py` -> `build_ledger.py` -> `build_pack.py` -> `build_editorial.py` -> `draft_stories.py`;
+  `export_for_site.py` last (plan 03 runs it into the website).
 - Commits: one per task, never pushed by this plan, on the branch `E:/atlas` is on (`p4-seam` on 2026-10-02; if it is on
   its default branch, create `vertical-engine` first). The controlling session commits; a subagent executing a task stops
   before its commit step and reports. Never `--no-verify`.
@@ -36,26 +38,28 @@
 | File | Responsibility |
 |---|---|
 | `registers/uk/estimators/__init__.py` | marks the package (empty) |
-| `registers/uk/estimators/banded.py` | band quantiles, the CDF, the rounding range, the anchor mean, the lognormal model check |
+| `registers/uk/estimators/banded.py` | band quantiles, which of them print in words, the CDF, the rounding range, the anchor mean, the lognormal model check |
 | `registers/uk/estimators/rounding.py` | `half_up`: a printed figure rounded the website's way (pennies at any number of places) |
 | `registers/uk/estimators/rates.py` | Wilson and Garwood intervals, the publication rule, two-proportion tests, Holm |
 | `registers/uk/estimators/survival.py` | the synthetic cohort (survival on the latest year's closure rates) with Greenwood intervals |
 | `registers/uk/tests/conftest.py` | puts `registers/uk` on the import path for pytest run from `E:/atlas` |
-| `registers/uk/tests/test_*.py` | one test file per estimator, and `test_tables.py` for the built tables' invariants |
-| `registers/uk/build_nomis.py` (modify) | quantiles, open-band flags, the median's rounding range, the model check per area |
-| `registers/uk/build_demography.py` (modify) | `survival_period` per borough and per trade group |
+| `registers/uk/tests/test_*.py` | one test file per estimator; `test_tables.py` for the built tables' invariants; `test_demography.py`, `test_drafts.py` and `test_export.py` for the builders' own rules |
+| `registers/uk/build_nomis.py` (modify) | quantiles, open-band flags, the median's rounding range (rounded outward), the model check per area, plain caveats |
+| `registers/uk/build_demography.py` (modify) | `survival_period` per borough and per trade group (twelve decimals), shares rounded half up, the City of London flagged as never ranked |
 | `registers/uk/enrich_failure_rates.py` (create) | `uk_rate` per trade: the rate, its interval, the publication flags |
-| `registers/uk/build_editorial.py` (modify) | the feed on publishable rates, period survival, the City of London out of demography rankings |
-| `registers/uk/draft_stories.py` (modify) | the restaurant draft's sentence says which survival it gives |
-| `registers/uk/export_for_site.py` (create) | the slices the website reads, with a SHA-256 manifest |
+| `registers/uk/build_editorial.py` (modify) | the feed on publishable rates, period survival, the City of London out of demography rankings by the table's flag, no open-band median among the takings |
+| `registers/uk/draft_stories.py` (modify) | each draft says which survival a figure is, marks few cases, rounds half up and names what is not ranked; it can write into a scratch folder |
+| `registers/uk/export_for_site.py` (create) | the slices the website reads, with a SHA-256 manifest; a stale table is refused |
 | `registers/uk/README.md` (modify) | the run order and the new files |
+| `registers/uk/build_ledger.py` (modify) | the ledger's rows for the turnover quantiles, survival on current closure rates and the rates' intervals |
+| `registers/uk/build_pack.py` (modify) | the data pack's survival and failure columns from the same |
 
 ### Task 1: The band estimator
 
 The register gives counts in ten turnover bands and nothing inside a band. Inside a band [L, U) businesses are read as
 log-uniform, so the q-quantile in band k is `Q = L (U / L)^((qN - C_{k-1}) / n_k)` and the CDF is the same formula inverted;
 the first band is floored at 5k and the open top band capped at 100m, and a quantile in either prints only as "under 50k" or
-"over 50m". Each count is rounded to the nearest 5, so the rounding range of a quantile is its smallest and largest value
+"over 50m" (`in_open_band`; one exactly on 50k or 50m rests on neither and prints as a figure). Each count is rounded to the nearest 5, so the rounding range of a quantile is its smallest and largest value
 over the box of counts each within 2.5 of the printed ones. The quantile is the smallest x at which
 `sum_k c_k (G_k(x) - q) >= 0` (`G_k(x)` the share of band k below x); for any x that sum is linear in the counts, so its
 largest value over the box sits at a corner where every band below some m is high and every band from m on is low: the
@@ -78,7 +82,7 @@ the quantile's band, or the fit's own figures. The test now pins them all from i
 went in: a quantile on an edge is the edge exactly (`L (U / L)^frac`, not exp of the logs, which gave 50.000000000000014);
 the normal CDF goes through erfc, with a band wholly above the centre as a difference of upper tails, so a lopsided fit
 stays the maximum-likelihood one (one band far above the rest stalled at twice its G); and a sales figure that is not a
-number is refused, with the counts checked as numbers with a finite total. All 46 deliberate faults on the module fail.
+number is refused, with the counts checked as numbers with a finite total. All 47 deliberate faults on the module fail.
 
 **Files:**
 - Create: `registers/uk/estimators/__init__.py`
@@ -111,7 +115,7 @@ import math
 
 import pytest
 
-from estimators.banded import empirical_cdf, empirical_quantile, lognormal_fit, rounding_range, trimmed_mean
+from estimators.banded import FLOOR_K, empirical_cdf, empirical_quantile, in_open_band, lognormal_fit, rounding_range, trimmed_mean
 
 # London, licensed restaurants (SIC 56101), enterprises by turnover band, March 2026 (Nomis NM_199_1, read 2026-10-02)
 RESTAURANTS_LONDON = [625, 800, 2250, 1470, 1245, 725, 500, 140, 75, 30]
@@ -286,6 +290,13 @@ def test_a_sales_figure_or_a_count_that_is_not_a_number_is_refused():
 def test_a_lopsided_fit_stays_the_maximum_likelihood_one():
     fit = lognormal_fit([5, 5000, 0, 0, 0, 5, 0, 0, 0, 0])  # one band far above the rest: the 1 + erf form stalled at twice this G
     assert round(fit["mu"], 4) == 4.2682 and round(fit["sigma"], 4) == 0.1749 and round(fit["g"], 1) == 1546.2
+
+
+def test_a_quantile_off_the_floor_and_the_cap_prints_as_a_figure():
+    assert in_open_band(49.99) and in_open_band(FLOOR_K) and in_open_band(50000.01)
+    assert not in_open_band(50.0) and not in_open_band(787.2) and not in_open_band(50000.0)
+    # a band that ends exactly on the median, the next band empty of the half below, puts the median on the 50m edge
+    assert empirical_quantile([0, 0, 0, 0, 0, 0, 0, 0, 5, 5], 0.5) == 50000.0
 ```
 
 - [ ] **Step 3: Run it and watch it fail**
@@ -313,8 +324,9 @@ log-uniform at this resolution), so the q-quantile in band k is
 where N is all businesses, C_{k-1} the businesses below band k and n_k the band's own count. The first band starts at 0,
 where a log scale has no floor: it is floored at 5k (a register entry turning over less than 5k a year is a dormant or PAYE-only
 unit, and the floor moves only quantiles that fall in the first band). The open top band is capped at 100,000k for the same
-reason; a quantile landing there is marked "above 50,000k". The CDF is the same formula inverted, so the share of businesses
-above any sales figure comes from the same assumption as the quantiles.
+reason. A quantile below 50k or above 50,000k rests on the floor or the cap, so a page prints it only in words ("under 50k",
+"over 50m": in_open_band); one exactly on either edge rests on neither and prints as a figure. The CDF is the same
+formula inverted, so the share of businesses above any sales figure comes from the same assumption as the quantiles.
 
 LOGNORMAL (the model check). A lognormal fitted by maximum likelihood to the band counts:
     log L(mu, sigma) = sum_k n_k * log(Phi((ln U_k - mu)/sigma) - Phi((ln L_k - mu)/sigma))
@@ -357,6 +369,12 @@ BANDS_K: tuple[tuple[float, float], ...] = (
 )
 FLOOR_K = 5.0
 TOP_CAP_K = 100000.0
+
+
+def in_open_band(x_k: float) -> bool:
+    """Whether a quantile rests on the 5k floor (below 50k) or the 100,000k cap (above 50,000k), so it prints only in words;
+    an edge itself (50k or 50,000k exactly) rests on neither."""
+    return x_k < BANDS_K[0][1] or x_k > BANDS_K[-1][0]
 
 
 def _counts(counts: Sequence[float]) -> list[float]:
@@ -515,7 +533,7 @@ def lognormal_fit(counts: Sequence[float]) -> dict | None:
 python -m pytest registers/uk/tests/test_banded.py -q
 ```
 
-Expected: `21 passed`.
+Expected: `22 passed`.
 
 - [ ] **Step 6: Commit**
 
@@ -855,10 +873,12 @@ the year before, and refuses survivors that rise or fall below zero; figures rou
 everyone has, which printed "100%, from 100% to 100%": there the interval is now the exact one (with no closure so far,
 the lower limit is 0.025^(1 / n), n the fewest at risk in any year so far; once a year closes everyone, the upper limit is
 1 - 0.025^(1 / n) for the n at risk then). The counts are checked from the cohort's births through every year read, before
-the curve can stop on nobody at risk (a rise from 0 and a rise behind the year read went through). Shares are stored to six
-decimals: printed as percentages to one decimal, four decimals rounded again got about one figure in twenty a tenth off.
-And eight tests pin the clip, half-up ties, the hazards, the horizon, the order of the cohorts, year one's births, a
-cohort without year one, and the zero-width cases. All 17 deliberate faults on the module fail.
+the curve can stop on nobody at risk (a rise from 0 and a rise behind the year read went through). Shares are rounded to
+six decimals, or to `digits` (the builder stores twelve): printed as percentages to one decimal, four decimals rounded
+again got about one figure in twenty a tenth off, and six still one in two thousand (the review of tasks 6 to 8 found
+group 561's five-year upper limit, 0.29949967, stored as 0.2995 and printed 30.0 for 29.9). And eight tests pin the clip, half-up ties, the hazards, the horizon, the order of the cohorts, year one's births, a
+cohort without year one, and the zero-width cases; a sixteenth pins twelve decimals against six. All 17 deliberate faults
+on the module fail.
 
 **Files:**
 - Create: `registers/uk/estimators/survival.py`
@@ -875,6 +895,7 @@ Every expected figure was computed apart from the module, with exact fractions f
 decimals for the square roots and the exact limits, and half-up rounding of the exact value to six decimals."""
 import pytest
 
+from estimators.rounding import half_up
 from estimators.survival import synthetic_cohort
 
 BIRTHS = {2019: 1000, 2020: 1000, 2023: 1000}
@@ -985,6 +1006,16 @@ def test_counts_that_rise_or_fall_below_zero_are_refused():
     ):
         with pytest.raises(ValueError, match="synthetic_cohort"):
             synthetic_cohort(births, survivors)
+
+
+def test_twelve_decimals_keep_a_share_on_its_side_of_a_printed_tenth():
+    # 29,949,967 of 100,000,000 still trading after a year is 29.949967%, which prints 29.9; stored to six decimals it
+    # becomes 0.2995 and prints 30.0 (group 561's five-year upper limit in the 2024 tables does exactly this)
+    six = synthetic_cohort({2023: 100_000_000}, {2023: {1: 29_949_967}})[0]
+    twelve = synthetic_cohort({2023: 100_000_000}, {2023: {1: 29_949_967}}, digits=12)[0]
+    assert six["survival"] == 0.2995 and half_up(six["survival"] * 100, 1) == 30.0
+    assert twelve["survival"] == 0.29949967 and half_up(twelve["survival"] * 100, 1) == 29.9
+    assert twelve["hazard"] == 0.70050033 and twelve["lo"] < twelve["survival"] < twelve["hi"]
 ```
 
 - [ ] **Step 2: Run it and watch it fail**
@@ -1026,14 +1057,16 @@ any year so far (for one year this is Clopper-Pearson's exact limit); once a yea
 that year's own upper limit, 1 - 0.025^(1 / n) for the n at risk then.
 
 THE COUNTS a curve reads are checked: from a cohort's births through every year the curve uses, its counts must not rise
-or fall below zero, or the cohort is refused (ValueError). True counts never rise and rounding to 5 keeps their order,
-but published counts can (a revision or a reclassification: one small group rose from 5 to 10 between two years in the
-2024 tables), so the builder decides what to do with a refused group.
+or fall below zero, or the cohort is refused (ValueError). True counts never rise; published ones can, because each count
+is rounded on its own (the workbook's notes say so): in the 2024 tables eight cohort rows in five small groups rise. The
+builder decides what to do with a refused group.
 
-Each row: year, cohort, hazard (that year's chance of closing), survival, and lo and hi (its 95% interval), shares stored
-to six decimals the website's way (estimators/rounding.py). A page prints a share as a percentage to one decimal; a share
-stored to four decimals and rounded again would print about one figure in twenty a tenth off (0.41449 stored as 0.4145
-prints 41.5 for 41.4), six leave about one in two thousand.
+Each row: year, cohort, hazard (that year's chance of closing), survival, and lo and hi (its 95% interval), shares rounded
+half up to `digits` decimals (estimators/rounding.py): six by default, twelve where a builder stores them. A page prints a
+share as a percentage to one decimal, so a stored share is rounded twice: stored to four decimals, about one figure in
+twenty would print a tenth off (0.41449 stored as 0.4145 prints 41.5 for 41.4); six leave about one in two thousand
+(group 561's five-year upper limit in the 2024 tables, 0.29949967, stored as 0.2995, printed 30.0 for 29.9); twelve,
+about one in two thousand million.
 """
 from __future__ import annotations
 
@@ -1045,8 +1078,9 @@ Z = 1.96
 TAIL = 0.025  # each side of a 95% interval
 
 
-def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]], horizon: int = 5) -> list[dict]:
-    """births[c] = the cohort's births; survivors[c][t] = still trading t years on. Returns one row per year t."""
+def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]], horizon: int = 5, digits: int = 6) -> list[dict]:
+    """births[c] = the cohort's births; survivors[c][t] = still trading t years on. Returns one row per year t, its shares
+    rounded half up to `digits` decimals."""
     rows = []
     s = 1.0
     var_sum = 0.0
@@ -1076,7 +1110,7 @@ def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]
             lo = TAIL ** (1 / n_min)
         elif s == 0.0:
             hi = 1 - TAIL ** (1 / n_zero)
-        rows.append({"year": t, "cohort": c, "hazard": half_up(h, 6), "survival": half_up(s, 6), "lo": half_up(lo, 6), "hi": half_up(hi, 6)})
+        rows.append({"year": t, "cohort": c, "hazard": half_up(h, digits), "survival": half_up(s, digits), "lo": half_up(lo, digits), "hi": half_up(hi, digits)})
     return rows
 ```
 
@@ -1086,7 +1120,7 @@ def synthetic_cohort(births: dict[int, int], survivors: dict[int, dict[int, int]
 python -m pytest registers/uk/tests/test_survival.py -q
 ```
 
-Expected: `15 passed`.
+Expected: `16 passed`.
 
 - [ ] **Step 5: Commit**
 
@@ -1101,8 +1135,14 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 The builders' edits in tasks 5 to 8 change tables, not functions, so their red-then-green cycle is a test over the built
 tables. It pins no figure (the registers refresh monthly and yearly) and only invariants: quantiles in order and bracketing
-the median, survival that never rises and sits inside its interval, rates inside their intervals with the publication rule
-applied, and a feed that prints only publishable rates and leaves the City of London out of demography rankings.
+the median, and every stored turnover field equal to the estimators' own output on the stored counts (the quantiles, which
+of them print in words, the median's range rounded outward, the thin rule); survival that never rises, sits inside its
+interval and is stored to twelve decimals, with only the City of London never ranked; rates inside their intervals with
+the publication rule applied; and a feed that prints only publishable rates, keeps its survival items full, leaves the
+City of London out of demography rankings and says so, ranks no open-band median among the takings, and reads from the
+figures which way the 2019 cohort differs. Its review of 2026-10-03 broke 20 rebuilds on purpose and 17 passed the first
+version; this one is checked against 28 deliberate faults in the builders' new rules and fails all but one, which no table
+today can show (a median of exactly 50m flagged in the builder's own words).
 
 **Files:**
 - Test: `registers/uk/tests/test_tables.py` (create)
@@ -1116,7 +1156,11 @@ Create `registers/uk/tests/test_tables.py`:
 so it runs after the builders (python -m pytest registers/uk/tests -q). No figure is pinned here: the registers refresh
 monthly and yearly; a pinned figure belongs in a builder's own check, not in a test that must hold next month."""
 import json
+import math
 from pathlib import Path
+
+from estimators.banded import empirical_quantile, in_open_band, rounding_range
+from estimators.rounding import half_up
 
 TABLES = Path(__file__).resolve().parent.parent / "tables"
 CITY_OF_LONDON = "E09000001"
@@ -1138,7 +1182,7 @@ def test_turnover_quantiles_are_ordered_and_bracket_the_median():
             seen += 1
             assert q["q10"] <= q["q25"] <= q["q50"] <= q["q75"] <= q["q90"], (slug, geo)
             lo, hi = r["median_range_k"]
-            assert lo <= q["q50"] <= hi, (slug, geo)
+            assert lo - 0.05 <= q["q50"] <= hi + 0.05, (slug, geo)  # the stored median is rounded to a tenth, the range outward to the pound
             assert r["median_turnover_k"] == q["q50"], (slug, geo)
             assert set(r["quantiles_in_open_band"]) <= set(q), (slug, geo)
     assert seen > 0
@@ -1146,6 +1190,7 @@ def test_turnover_quantiles_are_ordered_and_bracket_the_median():
 
 def test_period_survival_never_rises_and_sits_inside_its_interval():
     d = load("survival_london_and_trades.json")
+    assert all(b["ranked"] == (code != CITY_OF_LONDON) and bool(b["not_ranked_because"]) == (code == CITY_OF_LONDON) for code, b in d["by_borough"].items())
     curves = [b["survival_period"] for b in d["by_borough"].values()]
     curves += [g["survival_period"] for t in d["by_trade"].values() for g in t["groups"]]
     assert curves
@@ -1154,6 +1199,9 @@ def test_period_survival_never_rises_and_sits_inside_its_interval():
         assert all(a >= b for a, b in zip(s, s[1:]))
         assert all(r["lo"] <= r["survival"] <= r["hi"] for r in c)
         assert [r["year"] for r in c] == list(range(1, len(c) + 1))
+    assert sum(len(c) == 5 for c in curves) >= 0.9 * len(curves)  # a refused group is withheld (empty); most curves are whole
+    shares = [r[k] for c in curves for r in c for k in ("survival", "lo", "hi")]
+    assert all(half_up(x, 12) == x for x in shares) and sum(half_up(x, 6) != x for x in shares) > 0.9 * len(shares)  # twelve decimals: a page rounds once
 
 
 def test_failure_rates_carry_their_interval_and_the_publication_rule():
@@ -1176,22 +1224,66 @@ def test_feed_prints_only_publishable_rates_and_leaves_the_city_out_of_demograph
     fail = items["fail-most"]
     assert fail["floor"].startswith("10 insolvencies")
     assert all(r["lo"] <= r["value"] <= r["hi"] for r in fail["top"] + fail["bottom"])
+    assert all(r["insolvent"] >= 10 and r["few_cases"] == (r["insolvent"] < 30) for r in fail["top"] + fail["bottom"])
     assert fail["duel"]["pairs_tested"] == len(fail["top"]) * len(fail["bottom"])
     longest = items["last-longest"]
+    assert longest["top"] and longest["bottom"] and items["last-where"]["top"] and items["last-where"]["bottom"]
     assert all("cohort_2019_five_years" in r and r["lo"] <= r["value"] <= r["hi"] for r in longest["top"] + longest["bottom"])
-    assert set(items["restaurants-year-one"]["answer"]) == {"after_one_year", "after_five_years", "after_five_years_2019_cohort"}
+    rest = items["restaurants-year-one"]
+    assert set(rest["answer"]) == {"after_one_year", "after_five_years", "after_five_years_2019_cohort"}
+    assert ("closed fewer" in rest["definition"]) == (rest["answer"]["after_five_years_2019_cohort"] > rest["answer"]["after_five_years"])
+    nb = load("london_trades_by_borough.json")["trades"]
+    takings = items["takings"]["top"] + items["takings"]["bottom"]
+    assert takings and all("q50" not in nb[r["trades"][0]]["by_geography"]["E12000007"]["quantiles_in_open_band"] for r in takings)  # an open-band median prints in words
+    boroughs = {c: b for c, b in load("survival_london_and_trades.json")["by_borough"].items() if c.startswith("E09")}
     for key in ("last-where", "open-close"):
-        assert all(r.get("code") != CITY_OF_LONDON for r in items[key]["top"] + items[key]["bottom"]), key
+        assert [x["code"] for x in items[key]["not_ranked"]] == [CITY_OF_LONDON], key
+        assert all(r["code"] != CITY_OF_LONDON for r in items[key]["top"] + items[key]["bottom"]), key
+    assert items["open-close"]["members"] == sum(1 for b in boroughs.values() if b["ranked"] and b["active_2024"])
+    assert items["last-where"]["members"] + items["last-where"]["left_out"] == sum(1 for b in boroughs.values() if b["ranked"])
+
+
+QUANTILES = {"q10": 0.1, "q25": 0.25, "q50": 0.5, "q75": 0.75, "q90": 0.9}
+
+
+def test_turnover_fields_are_the_estimators_own_on_the_stored_counts():
+    d = load("london_trades_by_borough.json")
+    checked = 0
+    for slug, t in d["trades"].items():
+        for geo, r in t["by_geography"].items():
+            where = (slug, geo)
+            b = r["turnover_bands_k"]
+            assert len(b) == 10 and all(isinstance(c, int) and not isinstance(c, bool) and c >= 0 for c in b), where
+            assert r["thin"] == (r["enterprises"] < 40), where
+            q = r["turnover_quantiles_k"]
+            if r["thin"] or sum(b) == 0:
+                assert (q is None and r["median_range_k"] is None and r["lognormal_fit_p"] is None
+                        and r["median_turnover_k"] is None and r["quantiles_in_open_band"] == []), where
+                continue
+            assert abs(sum(b) - r["enterprises"]) <= 25, where  # each count rounded to 5 on its own
+            assert set(q) == set(QUANTILES), where
+            for name, p in QUANTILES.items():
+                v = empirical_quantile(b, p)
+                assert q[name] == round(v, 1), (where, name)
+                assert (name in r["quantiles_in_open_band"]) == in_open_band(v), (where, name)
+            lo, hi = rounding_range(b, 0.5)
+            assert r["median_range_k"] == [math.floor(lo * 1000) / 1000, math.ceil(hi * 1000) / 1000], where
+            assert r["median_range_k"][0] <= empirical_quantile(b, 0.5) <= r["median_range_k"][1], where
+            assert r["under_100k_share"] == round((b[0] + b[1]) / sum(b), 3), where
+            p = r["lognormal_fit_p"]
+            assert (p is None) == (sum(1 for c in b if c > 0) < 3) and (p is None or 0 <= p <= 1), where
+            checked += 1
+    assert checked > 0
 ```
 
-- [ ] **Step 2: Run it against today's tables and watch all four fail**
+- [ ] **Step 2: Run it against today's tables and watch all five fail**
 
 ```bash
 python -m pytest registers/uk/tests/test_tables.py -q
 ```
 
-Expected: `4 failed`: a `KeyError: 'turnover_bands_k'`, a `KeyError: 'survival_period'`, an `AssertionError` naming a trade
-(no `uk_rate` yet) and an `AssertionError` in the feed test. Tasks 5 to 8 turn them green one by one.
+Expected: `5 failed`: a `KeyError: 'turnover_bands_k'` in both turnover tests, a `KeyError: 'ranked'`, an `AssertionError`
+naming a trade (no `uk_rate` yet) and an `AssertionError` in the feed test. Tasks 5 to 8 turn them green one by one.
 
 - [ ] **Step 3: Commit**
 
@@ -1205,9 +1297,11 @@ Expected: one commit.
 ### Task 5: Turnover quantiles, their rounding range and the model check in `build_nomis.py`
 
 The builder's own median (`median_k`) becomes `empirical_quantile(bands, 0.5)`, the same log-uniform reading, so every
-published median stays the same (checked: 4,795 of 4,795); the old function and its `math` import are deleted. Per area it
-adds the ten band counts, q10 to q90 (not for an area under 40 enterprises), which of them fall in an open band, the
-median's rounding range and the lognormal model check's p-value, with three caveats saying what each is.
+published median stays the same (checked: 4,795 of 4,795); the old function is deleted. Per area it adds the ten band
+counts, q10 to q90 (not for an area under 40 enterprises), which of them print in words (`in_open_band`), the median's
+rounding range and the lognormal model check's p-value, with plain caveats saying what each is (the ledger prints them on
+About the figures, and the drafts in their articles). The range is stored rounded outward to the pound: rounded to the
+nearest 100 pounds, an end could fall inside the median it must hold. The shared-code caveat loses its file name.
 
 **Files:**
 - Modify: `registers/uk/build_nomis.py`
@@ -1226,7 +1320,7 @@ with:
 ```python
 from pathlib import Path
 
-from estimators.banded import empirical_quantile, lognormal_fit, rounding_range
+from estimators.banded import empirical_quantile, in_open_band, lognormal_fit, rounding_range
 ```
 
 - [ ] **Step 2: Edit build_nomis.py**
@@ -1270,7 +1364,7 @@ with:
                 for name, q in QUANTILES.items():
                     v = empirical_quantile(bands, q)
                     quants[name] = round(v, 1)
-                    if v < 50 or v >= 50000:
+                    if in_open_band(v):
                         open_q.append(name)
             rng = rounding_range(bands, 0.5) if (n_bands and not thin_count(ent)) else None
             fit = lognormal_fit(bands) if (n_bands and not thin_count(ent)) else None
@@ -1294,7 +1388,8 @@ with:
                 "turnover_bands_k": bands,
                 "turnover_quantiles_k": quants or None,
                 "quantiles_in_open_band": open_q,
-                "median_range_k": None if rng is None else [round(rng[0], 1), round(rng[1], 1)],
+                # outward to the pound, so the stored range always holds the median and never narrows it
+                "median_range_k": None if rng is None else [math.floor(rng[0] * 1000) / 1000, math.ceil(rng[1] * 1000) / 1000],
                 "lognormal_fit_p": None if (fit is None or fit["p"] is None) else float(f"{fit['p']:.3g}"),
             }
 ```
@@ -1304,27 +1399,21 @@ with:
 In `registers/uk/build_nomis.py`, replace:
 
 ```python
+            "a shared SIC code gives the whole group's figure (trades_sic.json, match 'shared' or 'approx')",
             "the median is interpolated inside a turnover band on a log scale; it is not printed where an area holds under 40 enterprises",
 ```
 
 with:
 
 ```python
-            "the median is interpolated inside a turnover band on a log scale; it is not printed where an area holds under 40 enterprises",
-            "quantiles q10 to q90 use the same interpolation (estimators/banded.py); one inside the first band (under 50k) or the open top band (over 50,000k) rests on the 5k floor or the cap and prints only as 'under 50k' or 'over 50m' (quantiles_in_open_band)",
-            "median_range_k is the smallest and largest median the true counts could give, each count being rounded to the nearest 5 (the register is a census: rounding, not sampling, is its error)",
-            "lognormal_fit_p is a model check, not a figure: real turnover is far from lognormal in most cells (London restaurants p about 1e-64), so pages never print the model",
+            "where several trades share one SIC code, or a trade's code is only near it, the figure is the whole code's",
+            "the median is interpolated inside a turnover band on a log scale; neither it nor the quarter and tenth points are printed where an area holds under 40 enterprises (the register's own total)",
+            "the quarter and tenth points of sales are read the same way; one below 50k or above 50m rests on an assumed floor or ceiling, so it prints only as 'under 50k' or 'over 50m'",
+            "the range around the median is the lowest and highest median the true counts could give, each count being off by up to 2.5 because counts are rounded to the nearest 5 (the register is a census: rounding, not sampling, is its error); it does not cover where inside its band the median sits",
+            "a smooth curve fitted to the bands is kept only as a check and never printed: real takings are far from such a curve in most places, London restaurants most of all",
 ```
 
 - [ ] **Step 6: Edit build_nomis.py**
-
-In `registers/uk/build_nomis.py`, delete:
-
-```python
-import math
-```
-
-- [ ] **Step 7: Edit build_nomis.py**
 
 In `registers/uk/build_nomis.py`, delete (with the blank lines that follow it):
 
@@ -1345,7 +1434,7 @@ def median_k(h: dict[str, int]) -> float | None:
     return None
 ```
 
-- [ ] **Step 8: Rebuild the table**
+- [ ] **Step 7: Rebuild the table**
 
 ```bash
 python registers/uk/build_nomis.py
@@ -1353,7 +1442,7 @@ python registers/uk/build_nomis.py
 
 Expected (about 30 seconds): the last line `built 137 trades x 35 geographies from E:\atlas\cache\uk\nomis\2026-10-02`.
 
-- [ ] **Step 9: Prove every published median is unchanged**
+- [ ] **Step 8: Prove every published median is unchanged**
 
 ```bash
 python -c "
@@ -1369,15 +1458,15 @@ print(f'{same} of {len(rows)} medians unchanged')
 Expected: `4795 of 4795 medians unchanged`, and `git diff --stat registers/uk/tables/london_trades_by_borough.csv` prints
 nothing (the CSV's columns are unchanged).
 
-- [ ] **Step 10: The turnover invariant turns green**
+- [ ] **Step 9: The turnover invariant turns green**
 
 ```bash
 python -m pytest registers/uk/tests/test_tables.py -q -k turnover
 ```
 
-Expected: `1 passed, 3 deselected`.
+Expected: `2 passed, 3 deselected`.
 
-- [ ] **Step 11: Commit**
+- [ ] **Step 10: Commit**
 
 ```bash
 git add registers/uk/build_nomis.py registers/uk/tables/london_trades_by_borough.json
@@ -1389,17 +1478,51 @@ Expected: one commit; `git status --short` lists none of the files above.
 ### Task 6: Survival on current closure rates in `build_demography.py`
 
 Each borough and each trade group gets `survival_period`: years 1 to 5 from `synthetic_cohort`, each row naming the cohort
-its hazard came from. The old `survival` field (each horizon from its own latest cohort) stays for comparison, and the
-`horizons` note says which is which and why the period curve prints by default. A group whose published counts rise from
-one year to the next (a revision; two small groups do in the 2024 workbook, none of the 114 curves built today) is refused
-by the estimator: its curve is left empty, so nothing prints it, and the run prints which group and why, instead of
-stopping the whole build.
+its hazard came from, stored to twelve decimals so a page rounds it once. The old `survival` field (each horizon from its
+own latest cohort) stays for comparison, and the `horizons` note says which is which and why the period curve prints by
+default. Published counts can rise from one year to the next (each is rounded on its own; five small groups do in the 2024
+workbook, none of the groups our trades use): the estimator refuses such a group, its curve is left empty so nothing prints
+it, and the run says which group and why, once per group, instead of stopping the whole build. Every share is stored
+rounded half up (`share`): Python's `round` gave 0.487 for group 869's 1,365 of 2,800, which the feed then printed 48.7 for
+48.8. The City of London is flagged in the table itself as never ranked, with the reason (its register counts head offices
+and formation addresses: on the 2024 rates it would top London's five-year survival while its 2019 cohort sat in the bottom
+three), so the feed, the export and every page read one rule.
 
 **Files:**
 - Modify: `registers/uk/build_demography.py`
+- Test: `registers/uk/tests/test_demography.py` (create)
 - Rebuilt: `registers/uk/tables/survival_london_and_trades.json`
 
-- [ ] **Step 1: Edit build_demography.py**
+- [ ] **Step 1: Write the test**
+
+Create `registers/uk/tests/test_demography.py`:
+
+```python
+"""The survival builder's own rule on small inputs: a share is stored rounded half up, so a page rounds it once (python -m
+pytest registers/uk/tests -q)."""
+import build_demography
+
+
+def test_a_survival_share_is_rounded_half_up_once():
+    assert build_demography.share(1365, 2800) == 0.488  # group 869's five years; Python's round gives 0.487
+    assert build_demography.share(3150, 5600) == 0.563  # Camden's three years; Python's round gives 0.562
+    pts, births = build_demography.curve({"2019": {"869": {"name": "Other human health activities", "births": 2800, 5: 1365}}}, "869")
+    assert pts == {"5y": 0.488} and births["2019"] == 2800
+
+
+def test_only_the_city_of_london_is_never_ranked():
+    assert set(build_demography.NOT_RANKED) == {"E09000001"} and build_demography.NOT_RANKED["E09000001"]
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+python -m pytest registers/uk/tests/test_demography.py -q
+```
+
+Expected: `2 failed`, each with `AttributeError: module 'build_demography' has no attribute` (`share`, then `NOT_RANKED`).
+
+- [ ] **Step 3: Edit build_demography.py**
 
 In `registers/uk/build_demography.py`, replace:
 
@@ -1412,10 +1535,25 @@ with:
 ```python
 import openpyxl
 
+from estimators.rounding import half_up
 from estimators.survival import synthetic_cohort
 ```
 
-- [ ] **Step 2: Edit build_demography.py**
+- [ ] **Step 4: Edit build_demography.py**
+
+In `registers/uk/build_demography.py`, replace:
+
+```python
+            pts[f"{h}y"] = round(row[h] / row["births"], 3)
+```
+
+with:
+
+```python
+            pts[f"{h}y"] = share(row[h], row["births"])
+```
+
+- [ ] **Step 5: Edit build_demography.py**
 
 In `registers/uk/build_demography.py`, replace:
 
@@ -1426,12 +1564,26 @@ def main() -> int:
 with:
 
 ```python
+# The City of London never ranks among boroughs on business demography (survival, births, closures): its register is
+# dominated by head offices and formation addresses, so its figures describe paperwork, not the shops on its streets.
+# Measured 2026-10-02: on the 2024 closure rates it would top London's five-year survival (47.8 of 100) while its 2019
+# cohort sat in the bottom three (32.5). Its rows stay, with the reason, for a page that prints the City on its own.
+NOT_RANKED = {"E09000001": "its register counts head offices and formation addresses, not the shops on its streets"}
+
+
+def share(part: float, whole: float) -> float:
+    """A share stored to three decimals, rounded half up the website's way, so a page printing it as a percentage to one
+    decimal rounds it once (Python's round gives 0.487 for group 869's 1,365 of 2,800, which then printed 48.7 for 48.8)."""
+    return half_up(part / whole, 3)
+
+
 def period_curve(per_cohort: dict, key: str) -> list[dict]:
     """Survival on the latest year's closure rates (a synthetic cohort, estimators/survival.py): each year's chance of
     closing from the newest cohort that has both ends of that year, chained. Cannot rise; S(1) equals the latest one-year
-    figure. Each row names the cohort it used. A group whose published counts rise from one year to the next (a revision:
-    true counts cannot) is refused by the estimator: its curve is left empty, so nothing prints it, and the run says
-    which group and why."""
+    figure. Each row names the cohort it used; shares are stored to twelve decimals, so a page rounds them once. Published
+    counts can rise from one year to the next (each is rounded on its own; five small groups do in the 2024 workbook, none
+    of the groups our trades use): the estimator refuses such a group, its curve is left empty so nothing prints it, and
+    the run says which group and why."""
     births, survivors = {}, {}
     for c in per_cohort:
         row = per_cohort[c].get(key)
@@ -1439,16 +1591,22 @@ def period_curve(per_cohort: dict, key: str) -> list[dict]:
             births[int(c)] = row["births"]
             survivors[int(c)] = {t: row[t] for t in range(1, 6) if t in row}
     try:
-        return synthetic_cohort(births, survivors)
+        return synthetic_cohort(births, survivors, digits=12)
     except ValueError as e:
         print(f"survival_period withheld for {key}: {e}")
         return []
 
 
+def five(row: dict) -> tuple:
+    """The five-year figure on the latest closure rates beside the 2019 cohort's own, for the run's printout."""
+    per = row.get("survival_period") or []
+    return (round(per[4]["survival"], 3) if len(per) == 5 else None, (row.get("survival") or {}).get("5y"))
+
+
 def main() -> int:
 ```
 
-- [ ] **Step 3: Edit build_demography.py**
+- [ ] **Step 6: Edit build_demography.py**
 
 In `registers/uk/build_demography.py`, replace:
 
@@ -1463,11 +1621,43 @@ with:
 ```python
         by_borough[k] = {
             "name": names[k],
+            "ranked": k not in NOT_RANKED,
+            "not_ranked_because": NOT_RANKED.get(k),
             "survival": pts,
             "survival_period": period_curve(la, k),
 ```
 
-- [ ] **Step 4: Edit build_demography.py**
+- [ ] **Step 7: Edit build_demography.py**
+
+In `registers/uk/build_demography.py`, replace:
+
+```python
+            "birth_rate_2024": round(births24[k] / active24[k], 3) if births24.get(k) and active24.get(k) else None,
+            "death_rate_2024": round(deaths24[k] / active24[k], 3) if deaths24.get(k) and active24.get(k) else None,
+```
+
+with:
+
+```python
+            "birth_rate_2024": share(births24[k], active24[k]) if births24.get(k) and active24.get(k) else None,
+            "death_rate_2024": share(deaths24[k], active24[k]) if deaths24.get(k) and active24.get(k) else None,
+```
+
+- [ ] **Step 8: Edit build_demography.py**
+
+In `registers/uk/build_demography.py`, replace:
+
+```python
+    by_trade = {}
+```
+
+with:
+
+```python
+    by_trade, periods = {}, {}
+```
+
+- [ ] **Step 9: Edit build_demography.py**
 
 In `registers/uk/build_demography.py`, replace:
 
@@ -1478,10 +1668,12 @@ In `registers/uk/build_demography.py`, replace:
 with:
 
 ```python
-            res.append({"group": key, "group_name": gnames[key], "survival": pts, "survival_period": period_curve(sic, key), "births_by_cohort": births})
+            if key not in periods:
+                periods[key] = period_curve(sic, key)  # once per group: a group several trades share is read once
+            res.append({"group": key, "group_name": gnames[key], "survival": pts, "survival_period": periods[key], "births_by_cohort": births})
 ```
 
-- [ ] **Step 5: Edit build_demography.py**
+- [ ] **Step 10: Edit build_demography.py**
 
 In `registers/uk/build_demography.py`, replace:
 
@@ -1495,27 +1687,51 @@ with:
         "horizons": "survival: each horizon from the latest cohort that reaches it (5y born 2019 to 1y born 2023), which mixes cohorts; survival_period: the chance of still trading after 1 to 5 years on the closure rates of the latest year, chained from each year's newest cohort (prints by default: it cannot rise and it uses the newest evidence for every year)",
 ```
 
-- [ ] **Step 6: Rebuild the table**
+- [ ] **Step 11: Edit build_demography.py**
+
+In `registers/uk/build_demography.py`, replace:
+
+```python
+    lon = by_borough.get("E12000007") or {}
+    print("London:", lon.get("survival"), "| England:", by_borough.get("E92000001", {}).get("survival"))
+    for slug in ["restaurants", "cafes-coffee-shops", "barbershops", "accounting-tax", "dry-cleaning-laundry"]:
+        print(slug, [(g["group"], g["group_name"], g["survival"]) for g in by_trade[slug]["groups"]])
+```
+
+with:
+
+```python
+    print("five years on the 2024 closure rates, then the 2019 cohort's own: London", five(by_borough.get("E12000007") or {}),
+          "| England", five(by_borough.get("E92000001") or {}))
+    for slug in ["restaurants", "cafes-coffee-shops", "barbershops", "accounting-tax", "dry-cleaning-laundry"]:
+        print(slug, [(g["group"], g["group_name"], five(g)) for g in by_trade[slug]["groups"]])
+    withheld = sorted(k for k, v in periods.items() if not v) + sorted(k for k, v in by_borough.items() if not v["survival_period"])
+    print(f"period curves: {len(periods)} groups and {len(by_borough)} areas; withheld: {withheld or 'none'}")
+```
+
+- [ ] **Step 12: Rebuild the table**
 
 ```bash
 python registers/uk/build_demography.py
 ```
 
-Expected: exit code 0.
+Expected: exit code 0; among the lines it prints, `restaurants [('561', 'Restaurants and mobile food service activities',
+(0.293, 0.391))]` (five years on the 2024 closure rates, then the 2019 cohort's own), and last `period curves: 76 groups
+and 38 areas; withheld: none`.
 
-- [ ] **Step 7: The survival invariant turns green**
+- [ ] **Step 13: The builder's rule and the survival invariant turn green**
 
 ```bash
-python -m pytest registers/uk/tests/test_tables.py -q -k survival
+python -m pytest registers/uk/tests/test_demography.py registers/uk/tests/test_tables.py::test_period_survival_never_rises_and_sits_inside_its_interval -q
 ```
 
-Expected: `1 passed, 3 deselected`.
+Expected: `3 passed`.
 
-- [ ] **Step 8: Commit**
+- [ ] **Step 14: Commit**
 
 ```bash
-git add registers/uk/build_demography.py registers/uk/tables/survival_london_and_trades.json
-git commit -m "registers/uk: build_demography adds survival on the 2024 closure rates (a synthetic cohort) per borough and trade group" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+git add registers/uk/build_demography.py registers/uk/tests/test_demography.py registers/uk/tables/survival_london_and_trades.json
+git commit -m "registers/uk: build_demography adds survival on the 2024 closure rates (a synthetic cohort) per borough and trade group, shares rounded half up, the City of London never ranked" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
 Expected: one commit; `git status --short` lists none of the files above.
@@ -1524,7 +1740,8 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 `company_failures_by_trade.json` is built by `build_gazette.py`, whose name matching takes minutes and is not re-run here; a
 new script adds `uk_rate` to it: the rate per 1,000 live companies, its Wilson interval, the relative standard error and the
-two flags. It is idempotent, so the monthly refresh can run it after every Gazette rebuild.
+two flags. It is idempotent, so the monthly refresh can run it after every Gazette rebuild. Its caveat is in plain words: the
+ledger prints it on About the figures, and the drafts in their articles.
 
 **Files:**
 - Create: `registers/uk/enrich_failure_rates.py`
@@ -1565,7 +1782,7 @@ def main() -> int:
         v["uk_rate"] = rate_per_1000(x, n)
         n_all += 1
         n_pub += v["uk_rate"]["publishable"]
-    rule = "uk_rate: Wilson 95% interval on insolvencies over live companies; publishable when 10 or more insolvencies (relative standard error 32% or less), 'few cases' from 10 to 29"
+    rule = "each rate per 1,000 live companies carries a 95% interval; it prints only where the year holds 10 or more insolvencies, and from 10 to 29 it is marked 'few cases'"
     if rule not in d["caveats"]:
         d["caveats"].append(rule)
     TABLE.write_text(json.dumps(d, indent=1, ensure_ascii=False), encoding="utf-8")
@@ -1593,7 +1810,7 @@ Expected: `rates: 137 trades, 117 publishable`. Run the same command again: the 
 python -m pytest registers/uk/tests/test_tables.py -q -k failure
 ```
 
-Expected: `1 passed, 3 deselected`.
+Expected: `1 passed, 4 deselected`.
 
 - [ ] **Step 4: Commit**
 
@@ -1606,13 +1823,15 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 ### Task 8: The home feed on the new statistics in `build_editorial.py`
 
-Four feed items change. "Which trades fail most" ranks only publishable rates (10 insolvencies or more), carries each rate's
+Six feed items change. "Which trades fail most" ranks only publishable rates (10 insolvencies or more), carries each rate's
 interval and "few cases" flag, and records the duel (the top against the bottom, every pair tested, the largest
 Holm-adjusted p). "Which trades last longest", "Where firms last" and the restaurant answer use survival on the 2024 closure
-rates, with the 2019 cohort's figure beside it. The City of London leaves every ranking built on business demography: its
-register is head offices and formation addresses, and on the 2024 rates it would jump from the bottom three to the top.
-Survival percentages round once, the website's way (`half_up` on the six-decimal shares): Python's `round` on a four-decimal
-share put three of the feed's figures a tenth off.
+rates, with the 2019 cohort's figure beside it, and the restaurant answer says in plain words what its five-year figure is
+and which way the 2019 cohort differs (read from the figures, never assumed). The City of London leaves every ranking built
+on business demography by the table's own flag (task 6), and the two borough items name it with the reason. Survival
+percentages round once, the website's way (`half_up` on the twelve-decimal shares). "Typical takings" ranks no median that
+prints in words (under 50k or over 50m): couriers' 44.6k rested on the 5k floor. The fail-most floor and the survival
+period read in plain words, with no source named.
 
 **Files:**
 - Modify: `registers/uk/build_editorial.py`
@@ -1666,7 +1885,7 @@ with:
     duel = {"top": top[0]["member"], "bottom": bottom[-1]["member"], "pairs_tested": len(tests), "max_holm_p": max(holm(tests)) if tests else None}
     items.append(item(id="fail-most", title="Which trades fail most", unit="insolvencies a year per 1,000 companies",
                       line="Insolvencies in a year per 1,000 live companies, UK.", dimension="trade", held="place: United Kingdom",
-                      floor="10 insolvencies in the year (relative standard error 32% or less)", left_out=left, period="notices October 2025 to September 2026; register of May 2026", source="company_failures_by_trade.json",
+                      floor="10 insolvencies in the year", left_out=left, period="notices October 2025 to September 2026; register of May 2026", source="company_failures_by_trade.json",
                       refresh="monthly (the Gazette)", top=top, bottom=bottom, duel=duel, members=len(rows)))
 ```
 
@@ -1705,7 +1924,7 @@ with:
     rows.sort(key=lambda x: -x["value"])
     items.append(item(id="last-longest", title="Which trades last longest", unit="of 100 new firms still trading after five years",
                       line="On the closure rates of 2024, still trading after five years.", dimension="trade group", held="place: United Kingdom",
-                      floor="1,000 births in the 2019 cohort", left_out=None, period="closure rates of 2024 (cohorts born 2019 to 2023), ONS business demography 2024",
+                      floor="1,000 births in the 2019 cohort", left_out=None, period="closure rates of 2024 (cohorts born 2019 to 2023)",
 ```
 
 - [ ] **Step 4: Edit build_editorial.py**
@@ -1722,7 +1941,7 @@ with:
 ```python
                           floor=None, left_out=None, period="closure rates of 2024; the 2019 cohort for comparison", source="survival_london_and_trades.json",
                           refresh="yearly", answer={"after_one_year": rest["one_year"], "after_five_years": rest["value"], "after_five_years_2019_cohort": rest["cohort_2019_five_years"]},
-                          definition="after_five_years chains each year's closure rate of 2024 (a synthetic cohort); the 2019 cohort's own five years closed fewer of its businesses"))
+                          definition=survival_definition(rest["value"], rest["cohort_2019_five_years"])))
 ```
 
 - [ ] **Step 5: Edit build_editorial.py**
@@ -1737,9 +1956,11 @@ In `registers/uk/build_editorial.py`, replace:
 with:
 
 ```python
+    boroughs = {code: b for code, b in s["by_borough"].items() if code.startswith("E09")}
+    not_ranked = [{"member": b["name"], "code": code, "why": b["not_ranked_because"]} for code, b in boroughs.items() if not b["ranked"]]
     rows = [{"member": b["name"], "code": code, "value": half_up(b["survival_period"][4]["survival"] * 100, 1), "lo": half_up(b["survival_period"][4]["lo"] * 100, 1),
              "hi": half_up(b["survival_period"][4]["hi"] * 100, 1), "units": b["births_by_cohort"].get("2019")}
-            for code, b in s["by_borough"].items() if code.startswith("E09") and len(b.get("survival_period") or []) == 5 and (b["births_by_cohort"].get("2019") or 0) >= 500]
+            for code, b in boroughs.items() if b["ranked"] and len(b.get("survival_period") or []) == 5 and (b["births_by_cohort"].get("2019") or 0) >= 500]
 ```
 
 - [ ] **Step 6: Edit build_editorial.py**
@@ -1755,7 +1976,8 @@ with:
 
 ```python
                       line="On the closure rates of 2024, still trading after five years.", dimension="borough", held="trade: all trades",
-                      floor="500 births in the 2019 cohort", left_out=None, period="closure rates of 2024", source="survival_london_and_trades.json",
+                      floor="500 births in the 2019 cohort", left_out=len(boroughs) - len(not_ranked) - len(rows), not_ranked=not_ranked,
+                      period="closure rates of 2024", source="survival_london_and_trades.json",
 ```
 
 - [ ] **Step 7: Edit build_editorial.py**
@@ -1763,13 +1985,15 @@ with:
 In `registers/uk/build_editorial.py`, replace:
 
 ```python
-            for code, b in s["by_borough"].items() if code.startswith("E09") and len(b.get("survival_period") or []) == 5 and (b["births_by_cohort"].get("2019") or 0) >= 500]
+    rows = [{"member": b["name"], "code": code, "born": round(b["birth_rate_2024"] * 100, 1), "closed": round(b["death_rate_2024"] * 100, 1), "units": b["active_2024"]}
+            for code, b in s["by_borough"].items() if code.startswith("E09") and b.get("active_2024")]
 ```
 
 with:
 
 ```python
-            for code, b in s["by_borough"].items() if code.startswith("E09") and code not in DEMOGRAPHY_EXCLUDED and len(b.get("survival_period") or []) == 5 and (b["births_by_cohort"].get("2019") or 0) >= 500]
+    rows = [{"member": b["name"], "code": code, "born": half_up(b["birth_rate_2024"] * 100, 1), "closed": half_up(b["death_rate_2024"] * 100, 1), "units": b["active_2024"]}
+            for code, b in boroughs.items() if b["ranked"] and b.get("active_2024")]
 ```
 
 - [ ] **Step 8: Edit build_editorial.py**
@@ -1777,13 +2001,13 @@ with:
 In `registers/uk/build_editorial.py`, replace:
 
 ```python
-            for code, b in s["by_borough"].items() if code.startswith("E09") and b.get("active_2024")]
+                      floor=None, left_out=None, period="2024", source="survival_london_and_trades.json", refresh="yearly",
 ```
 
 with:
 
 ```python
-            for code, b in s["by_borough"].items() if code.startswith("E09") and code not in DEMOGRAPHY_EXCLUDED and b.get("active_2024")]
+                      floor=None, left_out=None, not_ranked=not_ranked, period="2024", source="survival_london_and_trades.json", refresh="yearly",
 ```
 
 - [ ] **Step 9: Edit build_editorial.py**
@@ -1797,17 +2021,56 @@ def main() -> int:
 with:
 
 ```python
-# The City of London is left out of every ranking built on business demography (survival, births, closures): its register
-# is dominated by head offices and formation addresses, so its figures describe paperwork, not the shops on its streets.
-# Measured 2026-10-02: on the 2024 closure rates it would top the five-year survival ranking (47.8 of 100) while its 2019
-# cohort sat in the bottom three (32.5). Premises and hygiene rankings keep it: those count real premises.
-DEMOGRAPHY_EXCLUDED = {"E09000001"}
+def survival_definition(period: float, cohort: float | None) -> str:
+    """What the restaurant item's five-year figure is, in plain words; which way the 2019 cohort differs is read from the
+    figures, never assumed."""
+    s = "after five years: the chance of closing in 2024 at each age from one to five, applied in turn"
+    if cohort is None or cohort == period:
+        return s
+    return s + f"; the businesses born in 2019 lived through years that closed {'fewer' if cohort > period else 'more'} of them"
 
 
 def main() -> int:
 ```
 
-- [ ] **Step 10: Rebuild the feed**
+- [ ] **Step 10: Edit build_editorial.py**
+
+In `registers/uk/build_editorial.py`, replace:
+
+```python
+        if (lon.get("enterprises") or 0) < 500:
+            left += 1
+            continue
+        rows.append({"member": g["label"], "sic": list(key), "trades": g["trades"], "shared": g["shared"], "value_gbp_k": lon["median_turnover_k"], "units": lon["enterprises"]})
+```
+
+with:
+
+```python
+        if (lon.get("enterprises") or 0) < 500:
+            left += 1
+            continue
+        if "q50" in (lon.get("quantiles_in_open_band") or []):  # a median under 50k or over 50m prints only in words
+            left += 1
+            continue
+        rows.append({"member": g["label"], "sic": list(key), "trades": g["trades"], "shared": g["shared"], "value_gbp_k": lon["median_turnover_k"], "units": lon["enterprises"]})
+```
+
+- [ ] **Step 11: Edit build_editorial.py**
+
+In `registers/uk/build_editorial.py`, replace:
+
+```python
+floor="500 enterprises", left_out=left, period=nb.get("snapshot"), source="london_trades_by_borough.json",
+```
+
+with:
+
+```python
+floor="500 enterprises, and a median from 50k to 50m", left_out=left, period=nb.get("snapshot"), source="london_trades_by_borough.json",
+```
+
+- [ ] **Step 12: Rebuild the feed**
 
 ```bash
 python registers/uk/build_editorial.py
@@ -1815,15 +2078,15 @@ python registers/uk/build_editorial.py
 
 Expected: exit code 0 and one line per feed item.
 
-- [ ] **Step 11: The feed invariant turns green, and the full suite passes**
+- [ ] **Step 13: The feed invariant turns green, and the full suite passes**
 
 ```bash
 python -m pytest registers/uk/tests -q
 ```
 
-Expected: `60 passed`.
+Expected: `65 passed`.
 
-- [ ] **Step 12: Read the four changed items**
+- [ ] **Step 14: Read the four changed items**
 
 ```bash
 python -c "
@@ -1832,38 +2095,215 @@ items = {i['id']: i for i in json.load(open('registers/uk/tables/editorial_feed.
 f = items['fail-most']; print(f['floor'], '|', f['members'], 'members,', f['left_out'], 'left out |', f['duel'])
 print([(r['member'], r['value'], r['lo'], r['hi']) for r in f['top'][:2]], [(r['member'], r['value'], r['few_cases']) for r in f['bottom'][-1:]])
 print(items['restaurants-year-one']['answer'])
-w = items['last-where']; print(w['members'], [(r['member'], r['value']) for r in w['top'][:1] + w['bottom'][-1:]])
+w = items['last-where']; print(w['members'], w['left_out'], [x['member'] for x in w['not_ranked']], [(r['member'], r['value']) for r in w['top'][:1] + w['bottom'][-1:]])
 "
 ```
 
 Expected, on the tables of 2026-10-02 (a later Gazette month moves the rates, not the shape):
 
 ```
-10 insolvencies in the year (relative standard error 32% or less) | 76 members, 31 left out | {'top': 'Restaurants', 'bottom': 'Dental practices', 'pairs_tested': 24, 'max_holm_p': 6.40721251356562e-25}
+10 insolvencies in the year | 76 members, 31 left out | {'top': 'Restaurants', 'bottom': 'Dental practices', 'pairs_tested': 24, 'max_holm_p': 6.40721251356562e-25}
 [('Restaurants', 28.9, 27.3, 30.5), ('Public houses and bars', 26.0, 24.3, 27.8)] [('Dental practices', 1.3, True)]
 {'after_one_year': 94.0, 'after_five_years': 29.3, 'after_five_years_2019_cohort': 39.1}
-32 [('Richmond upon Thames', 44.9), ('Newham', 29.9)]
+32 0 ['City of London'] [('Richmond upon Thames', 44.9), ('Newham', 29.9)]
 ```
 
-- [ ] **Step 13: Commit**
+- [ ] **Step 15: Commit**
 
 ```bash
 git add registers/uk/build_editorial.py registers/uk/tables/editorial_feed.json
-git commit -m "registers/uk: the feed ranks publishable rates with intervals and a Holm-tested duel, survival on 2024 closure rates, the City of London out of demography rankings" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+git commit -m "registers/uk: the feed ranks publishable rates with intervals and a Holm-tested duel, survival on 2024 closure rates, the City of London out of demography rankings, no open-band median among the takings" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
 Expected: one commit; `git status --short` lists none of the files above.
 
-### Task 9: The blog drafts say which survival they give
+### Task 9: The blog drafts say what each figure is
 
-`draft_stories.py` turns each feed item into a draft. Its restaurant sentence says "were still trading", which reads as a
-cohort fact; with the period figure it must say "on the closure rates of 2024" and give the 2019 cohort's figure beside it.
+`draft_stories.py` turns each feed item into a draft. A survival figure on the 2024 closure rates is no cohort's history,
+so the words "on the closure rates of 2024" go wherever one prints (the lead and the column), and the column of units says
+it counts the 2019 cohort's births; the restaurant sentence gives the 2019 cohort's figure beside the period one, with
+takeaways named (group 561 holds them), and the feed's definition under it. A rate resting on 10 to 29 insolvencies prints
+"(few cases)", every figure rounds half up the website's way (Python's format rounds 52.5 to 52), a member left unranked is
+named with its reason, and the script can write into a folder given as its argument, so its test never touches the
+drafts folder. The test also proves that no field or file name reaches the text a reader would see.
 
 **Files:**
 - Modify: `registers/uk/draft_stories.py`
+- Test: `registers/uk/tests/test_drafts.py` (create)
 - Regenerated: `design/loop/build/goal-2026-10-02/drafts/blog/*.md`
 
-- [ ] **Step 1: Edit draft_stories.py**
+- [ ] **Step 1: Write the test**
+
+Create `registers/uk/tests/test_drafts.py`:
+
+```python
+"""The blog drafts print each figure as the feed holds it: rounded half up, with its basis and its few-cases mark, and no
+field or file name where a reader would see it. Reads registers/uk/tables and writes the drafts into pytest's scratch
+folder (python -m pytest registers/uk/tests -q)."""
+import json
+import re
+
+import build_demography
+import draft_stories
+from estimators.rounding import half_up
+
+CITY_OF_LONDON = "E09000001"
+
+
+def test_a_draft_figure_is_rounded_half_up():
+    assert draft_stories.fmt(52.5, "of 100 live companies under two years old") == "53"
+    assert draft_stories.fmt(0.125, "of 100", 2) == "0.13"
+    assert draft_stories.fmt(787.25, "thousand pounds a year, the middle business") == "£787.3k"
+
+
+def test_the_drafts_say_what_each_figure_is(tmp_path):
+    assert draft_stories.main(tmp_path) == 0
+    items = {i["id"]: i for i in json.loads((draft_stories.T / "editorial_feed.json").read_text(encoding="utf-8"))["items"]}
+    drafts = {p.stem: p.read_text(encoding="utf-8") for p in tmp_path.glob("*.md")}
+    assert set(drafts) == set(items)
+    lines = {}
+    for key, text in drafts.items():
+        reader = text.split("\n---\n", 1)[1].split("## Before publishing")[0]  # what a reader of the article would see
+        assert not re.search(r"\w_\w|\.py\b", reader), key  # no field or file name
+        lines[key] = reader.strip().splitlines()
+    for key in ("last-longest", "last-where"):  # survival on 2024's closure rates is no cohort's history
+        lead, header = lines[key][2], lines[key][4]
+        assert "still trading after five years, on the closure rates of 2024." in lead, lead
+        assert ", on the closure rates of 2024 | Born in 2019 |" in header, header
+    fail = items["fail-most"]
+    assert any(r["few_cases"] for r in fail["top"] + fail["bottom"])
+    for r in fail["top"] + fail["bottom"]:
+        row = next(x for x in lines["fail-most"] if x.startswith(f"| {r['member']} | "))
+        assert ("(few cases)" in row) == r["few_cases"], row
+    assert ("(few cases)" in lines["fail-most"][2]) == (fail["top"][0]["few_cases"] or fail["bottom"][-1]["few_cases"])
+    a = items["restaurants-year-one"]["answer"]
+    one, five, cohort = (f"{half_up(a[k], 0):.0f}" for k in ("after_one_year", "after_five_years", "after_five_years_2019_cohort"))
+    assert lines["restaurants-year-one"][2] == (f"On the closure rates of 2024, of 100 new restaurants, cafes, takeaways and food stalls in the UK, {one} would "
+                                                f"still be trading after one year and {five} after five. Of every 100 that opened in 2019, {cohort} were still trading five years on.")
+    for key in ("last-where", "open-close"):
+        assert f"City of London is not ranked: {build_demography.NOT_RANKED[CITY_OF_LONDON]}." in lines[key], key
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+python -m pytest registers/uk/tests/test_drafts.py -q
+```
+
+Expected: `2 failed`: `AssertionError: assert '52' == '53'` and `TypeError: main() takes 0 positional arguments but 1 was
+given`.
+
+- [ ] **Step 3: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+Reads tables/editorial_feed.json (built by build_editorial.py) and the caveats of each item's source table; writes
+design/loop/build/goal-2026-10-02/drafts/blog/<id>.md. A draft is never published by this script: articles wait until after
+```
+
+with:
+
+```python
+Reads tables/editorial_feed.json (built by build_editorial.py) and the caveats of each item's source table; writes
+design/loop/build/goal-2026-10-02/drafts/blog/<id>.md, or into the folder given as the first argument (the tests write into
+a scratch folder). A draft is never published by this script: articles wait until after
+```
+
+- [ ] **Step 4: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+import json
+from pathlib import Path
+```
+
+with:
+
+```python
+import json
+import re
+import sys
+from pathlib import Path
+
+from estimators.rounding import half_up
+```
+
+- [ ] **Step 5: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+def fmt(v, unit: str, decimals: int = 0) -> str:
+    """One decimal count per column (MODEL PART 5): the caller passes the item's count."""
+    if v is None:
+        return "n/a"
+    if "pounds" in unit and "thousand" in unit:
+        return f"£{v:,.1f}k"
+    if "pounds" in unit:
+        return f"£{v:,.0f}"
+    return f"{v:,.{decimals}f}"
+```
+
+with:
+
+```python
+def fmt(v, unit: str, decimals: int = 0) -> str:
+    """One decimal count per column (MODEL PART 5): the caller passes the item's count. Rounded half up, the website's way
+    (Python's format rounds 0.125 to 0.12 and 52.5 to 52)."""
+    if v is None:
+        return "n/a"
+    if "pounds" in unit and "thousand" in unit:
+        return f"£{half_up(v, 1):,.1f}k"
+    if "pounds" in unit:
+        return f"£{half_up(v, 0):,.0f}"
+    return f"{half_up(v, decimals):,.{decimals}f}"
+
+
+def basis(item: dict) -> str:
+    """Survival on a year's closure rates is no cohort's history: the words go wherever its figure prints."""
+    m = re.match(r"closure rates of \d{4}", item.get("period") or "")
+    return f", on the {m.group(0)}" if m else ""
+
+
+def mark(r: dict) -> str:
+    """A rate resting on 10 to 29 cases prints with its mark (estimators/rates.py)."""
+    return " (few cases)" if r.get("few_cases") else ""
+```
+
+- [ ] **Step 6: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+    words = unit_words(unit)
+    out.append(f"| {head} | {words[0].upper() + words[1:]} | Based on |")
+    out.append("|---|---|---|")
+    for part in ("top", "bottom"):
+        for r in item.get(part, []):
+            base = r.get("units")
+            d = decimals_of(item)
+            out.append(f"| {r['member']} | {fmt(value(r), unit, d)} | {base:,} |" if base else f"| {r['member']} | {fmt(value(r), unit, d)} | |")
+```
+
+with:
+
+```python
+    words = unit_words(unit)
+    born = re.search(r"births in the (\d{4}) cohort", item.get("floor") or "")  # a survival item counts that cohort's births
+    based = f"Born in {born.group(1)}" if born else "Based on"
+    out.append(f"| {head} | {words[0].upper() + words[1:]}{basis(item)} | {based} |")
+    out.append("|---|---|---|")
+    for part in ("top", "bottom"):
+        for r in item.get(part, []):
+            base = r.get("units")
+            d = decimals_of(item)
+            figure = fmt(value(r), unit, d) + mark(r)
+            out.append(f"| {r['member']} | {figure} | {base:,} |" if base else f"| {r['member']} | {figure} | |")
+```
+
+- [ ] **Step 7: Edit draft_stories.py**
 
 In `registers/uk/draft_stories.py`, replace:
 
@@ -1875,36 +2315,145 @@ In `registers/uk/draft_stories.py`, replace:
 with:
 
 ```python
-        return (f"On the closure rates of 2024, of 100 new restaurants, cafes and food stalls in the UK, {a['after_one_year']:.0f} would still "
-                f"be trading after one year and {a['after_five_years']:.0f} after five; of those born in 2019, "
-                f"{a['after_five_years_2019_cohort']:.0f} were.")
+        one, five, cohort = (f"{half_up(a[k], 0):.0f}" for k in ("after_one_year", "after_five_years", "after_five_years_2019_cohort"))
+        return (f"On the closure rates of 2024, of 100 new restaurants, cafes, takeaways and food stalls in the UK, {one} would "
+                f"still be trading after one year and {five} after five. Of every 100 that opened in 2019, {cohort} were still "
+                "trading five years on.")
 ```
 
-- [ ] **Step 2: Regenerate the drafts**
+- [ ] **Step 8: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+    d = decimals_of(item)
+    s = f"{top[0]['member']}: {fmt(value(top[0]), unit, d)} {unit_words(unit)}."
+    if bottom:
+        s += f" {bottom[-1]['member']}: {fmt(value(bottom[-1]), unit, d)}."
+```
+
+with:
+
+```python
+    d = decimals_of(item)
+    s = f"{top[0]['member']}: {fmt(value(top[0]), unit, d)}{mark(top[0])} {unit_words(unit)}{basis(item)}."
+    if bottom:
+        s += f" {bottom[-1]['member']}: {fmt(value(bottom[-1]), unit, d)}{mark(bottom[-1])}."
+```
+
+- [ ] **Step 9: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+def main() -> int:
+    feed = json.loads((T / "editorial_feed.json").read_text(encoding="utf-8"))
+    OUT.mkdir(parents=True, exist_ok=True)
+```
+
+with:
+
+```python
+def main(out: Path = OUT) -> int:
+    feed = json.loads((T / "editorial_feed.json").read_text(encoding="utf-8"))
+    out.mkdir(parents=True, exist_ok=True)
+```
+
+- [ ] **Step 10: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+        body = [f"# {item['title']}", "", first_line(item), ""]
+```
+
+with:
+
+```python
+        body = [f"# {item['title']}", "", first_line(item), ""]
+        if item.get("definition"):
+            body += [item["definition"][0].upper() + item["definition"][1:] + ".", ""]
+```
+
+- [ ] **Step 11: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+            body.append(f"Chosen from {item['members']} members" + (f"; {item['left_out']} left out under the floor or on an approximate code." if item.get("left_out") else "."))
+            body.append("")
+```
+
+with:
+
+```python
+            body.append(f"Chosen from {item['members']} members" + (f"; {item['left_out']} left out under the floor or on an approximate code." if item.get("left_out") else "."))
+            body.append("")
+        for x in item.get("not_ranked") or []:
+            body += [f"{x['member']} is not ranked: {x['why']}.", ""]
+```
+
+- [ ] **Step 12: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+        (OUT / f"{item['id']}.md").write_text("\n".join(fm + body), encoding="utf-8")
+```
+
+with:
+
+```python
+        (out / f"{item['id']}.md").write_text("\n".join(fm + body), encoding="utf-8")
+```
+
+- [ ] **Step 13: Edit draft_stories.py**
+
+In `registers/uk/draft_stories.py`, replace:
+
+```python
+    raise SystemExit(main())
+```
+
+with:
+
+```python
+    raise SystemExit(main(Path(sys.argv[1]) if len(sys.argv) > 1 else OUT))
+```
+
+- [ ] **Step 14: Run the test and watch it pass**
+
+```bash
+python -m pytest registers/uk/tests/test_drafts.py -q
+```
+
+Expected: `2 passed`.
+
+- [ ] **Step 15: Regenerate the drafts**
 
 ```bash
 python registers/uk/draft_stories.py
 ```
 
 Expected: one `draft: <id>` line per feed item. `git diff --stat design/loop/build/goal-2026-10-02/drafts/blog` lists six
-files whose figures or words change: fail-most, last-longest, last-where, open-close, restaurants-year-one and takings (its
-source table gained three caveats). The other six change only their `generated:` date line when the drafts are remade on a
-later day than they were last made, and not at all on the same day.
+files whose figures or words change: fail-most, last-longest, last-where, open-close, restaurants-year-one and takings. The
+other six change only their `generated:` line, which carries the feed's build date (task 8 rebuilt the feed).
 
-- [ ] **Step 3: Read the restaurant sentence**
+- [ ] **Step 16: Read the restaurant sentence**
 
 ```bash
 grep -n "closure rates of 2024, of 100" design/loop/build/goal-2026-10-02/drafts/blog/restaurants-year-one.md
 ```
 
-Expected: one line reading `On the closure rates of 2024, of 100 new restaurants, cafes and food stalls in the UK, 94 would
-still be trading after one year and 29 after five; of those born in 2019, 39 were.`
+Expected: one line reading `On the closure rates of 2024, of 100 new restaurants, cafes, takeaways and food stalls in the
+UK, 94 would still be trading after one year and 29 after five. Of every 100 that opened in 2019, 39 were still trading
+five years on.`
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 17: Commit**
 
 ```bash
-git add registers/uk/draft_stories.py design/loop/build/goal-2026-10-02/drafts/blog
-git commit -m "registers/uk: the blog drafts name the survival they give (2024 closure rates, the 2019 cohort beside it)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+git add registers/uk/draft_stories.py registers/uk/tests/test_drafts.py design/loop/build/goal-2026-10-02/drafts/blog
+git commit -m "registers/uk: the blog drafts say what each figure is (2024 closure rates, few cases, half up, the City not ranked)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
 Expected: one commit; `git status --short` lists none of the files above.
@@ -1913,13 +2462,88 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 The website's chain must never read another repository or the network, so the figures it prints from the registers are
 copied in, sliced to what the pages use, and fingerprinted: `export_for_site.py` writes four slices and a manifest of each
-file's SHA-256 (plan 03, task 1 runs it into the website and adds the gate that recomputes the hashes). This task creates
-the script and proves it into a scratch folder.
+file's SHA-256 (plan 03, task 1 runs it into the website and adds the gate that recomputes the hashes). A stale or
+half-built table is refused, never exported as nulls: its review found that a failures table without its rates exported
+137 null rates and the gate passed. The survival slice holds London and its boroughs with the City's flag and the 2019
+births the floors read. This task creates the script and proves it into a scratch folder.
 
 **Files:**
 - Create: `registers/uk/export_for_site.py`
+- Test: `registers/uk/tests/test_export.py` (create)
 
-- [ ] **Step 1: Write the script**
+- [ ] **Step 1: Write the test**
+
+Create `registers/uk/tests/test_export.py`:
+
+```python
+"""The export writes the four slices the website reads, each hashed as written, and refuses a stale table rather than
+exporting nulls. Reads registers/uk/tables and writes into pytest's scratch folder, never the website (python -m pytest
+registers/uk/tests -q)."""
+import hashlib
+import json
+import shutil
+
+import pytest
+
+import export_for_site
+
+TABLES = export_for_site.T
+CITY_OF_LONDON = "E09000001"
+
+
+def test_the_export_writes_four_slices_as_hashed(tmp_path):
+    out = tmp_path / "registers"
+    assert export_for_site.main(out) == 0
+    manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
+    assert sorted(manifest["files"]) == ["failures.json", "premises.json", "survival.json", "turnover.json"]
+    assert sorted(p.name for p in out.iterdir()) == ["failures.json", "manifest.json", "premises.json", "survival.json", "turnover.json"]
+    for name, m in manifest["files"].items():
+        raw = (out / name).read_bytes()
+        assert b"\r" not in raw and hashlib.sha256(raw).hexdigest() == m["sha256"], name
+    sv = json.loads((out / "survival.json").read_text(encoding="utf-8"))
+    assert len(sv["areas"]) == 34 and all(c == "E12000007" or c.startswith("E09") for c in sv["areas"])
+    assert [c for c, a in sv["areas"].items() if not a["ranked"]] == [CITY_OF_LONDON] and sv["areas"][CITY_OF_LONDON]["not_ranked_because"]
+    assert all(len(g["period"]) in (0, 5) and "births_2019" in g for g in list(sv["groups"].values()) + list(sv["areas"].values()))
+    fl = json.loads((out / "failures.json").read_text(encoding="utf-8"))
+    assert all(v["uk_rate"] is not None for v in fl["trades"].values() if v["uk_live_companies"])
+
+
+BREAKAGES = {
+    "a failure rate never computed": ("company_failures_by_trade.json", lambda d: next(v for v in d["trades"].values() if v["uk_live_companies"]).pop("uk_rate")),
+    "a null rate for a trade with live companies": ("company_failures_by_trade.json", lambda d: next(v for v in d["trades"].values() if v["uk_live_companies"]).update(uk_rate=None)),
+    "a borough without its period curve": ("survival_london_and_trades.json", lambda d: d["by_borough"]["E09000002"].pop("survival_period")),
+    "a group with a short curve": ("survival_london_and_trades.json", lambda d: d["by_trade"]["restaurants"]["groups"][0]["survival_period"].pop()),
+    "an area that does not say whether it ranks": ("survival_london_and_trades.json", lambda d: d["by_borough"][CITY_OF_LONDON].pop("ranked")),
+    "no London premises row": ("london_premises_value_by_borough.json", lambda d: d["areas"].pop("E12000007")),
+    "a turnover row without its range": ("london_trades_by_borough.json", lambda d: next(iter(d["trades"].values()))["by_geography"]["E12000007"].pop("median_range_k")),
+}
+
+
+@pytest.mark.parametrize("breakage", sorted(BREAKAGES))
+def test_the_export_refuses_a_stale_table_and_writes_nothing(tmp_path, monkeypatch, breakage):
+    tables = tmp_path / "tables"
+    tables.mkdir()
+    for name in ("london_trades_by_borough.json", "london_premises_value_by_borough.json", "survival_london_and_trades.json", "company_failures_by_trade.json"):
+        shutil.copy2(TABLES / name, tables / name)
+    name, edit = BREAKAGES[breakage]
+    d = json.loads((tables / name).read_text(encoding="utf-8"))
+    edit(d)
+    (tables / name).write_text(json.dumps(d), encoding="utf-8")
+    monkeypatch.setattr(export_for_site, "T", tables)
+    with pytest.raises(SystemExit, match="export refused"):
+        export_for_site.main(tmp_path / "registers")
+    assert not (tmp_path / "registers").exists()
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+python -m pytest registers/uk/tests/test_export.py -q
+```
+
+Expected: `1 error` while collecting, `ModuleNotFoundError: No module named 'export_for_site'`.
+
+- [ ] **Step 3: Write the script**
 
 Create `registers/uk/export_for_site.py`:
 
@@ -1928,18 +2552,28 @@ Create `registers/uk/export_for_site.py`:
 export_for_site.py: the slices of the register tables the website reads, written into the website repo with a manifest.
 
 The website's build never reads the network or another repo (its chain must run on Vercel), so the figures it prints from
-the registers are copied in, sliced to what the pages use, and fingerprinted: website/scripts/verify_uk_registers.ts
-recomputes every file's SHA-256 against manifest.json, so a hand edit to a figure fails the chain.
+the registers are copied in, sliced to what the pages use, and fingerprinted: the website's registers gate
+(scripts/verify_uk_registers.ts, added by plan 03) recomputes every file's SHA-256 against manifest.json, so a hand edit to
+a figure fails the chain. Every file is written with LF line ends and hashed as written; the website pins
+data/uk/registers/*.json to LF in its .gitattributes, or a Windows checkout would rewrite them.
 
-Writes (default target E:/atlas/website/data/uk/registers, or the path given as the first argument):
-  turnover.json   per trade code set and geography: the ten band counts, q10 to q90, the open-band flags, the median's
-                  rounding range, enterprises (London, England and the 33 boroughs)
-  premises.json   per kind of premises: the London and England rows of the valuation statistics (count, floorspace, value
-                  per m2) and the valuation date
-  survival.json   per SIC group and per borough: the period curve (survival on the latest year's closure rates) and the
-                  2019 cohort's five-year figure for comparison
+A stale or half-built table is refused, never exported as nulls: each geography's turnover fields, the London and England
+premises rows, every survival curve and every failure rate where a trade has live companies must be there. Rebuild the
+tables in the README's run order, then export again.
+
+Writes (default target E:/atlas/website/data/uk/registers, or the folder given as the first argument):
+  turnover.json   per trade (by slug: trades that share a code carry the same rows) and geography: the ten band counts, q10
+                  to q90, the open-band flags, the median's range, enterprises, premises and the thin flag (London, England
+                  and the 33 boroughs)
+  premises.json   the valuation date, each trade's kind of premises (trade_category), and the London and England rows of
+                  the valuation statistics per kind (count, floorspace, value per m2)
+  survival.json   per SIC group and per area (London and its 33 boroughs): the period curve (survival on the latest year's
+                  closure rates), the 2019 cohort's five-year figure for comparison and its births (the feed's floors read
+                  them); each area says whether it ranks (the City of London does not, and says why); trade_groups maps
+                  each trade to its groups
   failures.json   per trade: the year's insolvencies, live companies and the rate with its interval and flags
-  manifest.json   each file's SHA-256, row count and the source table's own date line
+  manifest.json   each file's SHA-256, row count and the source table's own date line (for survival and failures, the
+                  table's source line, which names its source: for the Sources page only)
 """
 from __future__ import annotations
 
@@ -1951,11 +2585,23 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 T = HERE / "tables"
 DEFAULT_TARGET = Path(r"E:\atlas\website\data\uk\registers")
-KEEP_GEOS = ("E12000007", "E92000001")
+LONDON, ENGLAND = "E12000007", "E92000001"
+TURNOVER_FIELDS = ("name", "enterprises", "local_units", "thin", "turnover_bands_k", "turnover_quantiles_k", "quantiles_in_open_band", "median_range_k")
 
 
 def load(name: str) -> dict:
     return json.loads((T / name).read_text(encoding="utf-8"))
+
+
+def need(ok: bool, what: str) -> None:
+    if not ok:
+        raise SystemExit(f"export refused: {what}; rebuild the tables in the README's run order, then export again")
+
+
+def curve(row: dict, where: str) -> list:
+    c = row.get("survival_period")
+    need(isinstance(c, list) and len(c) in (0, 5), f"{where} has no whole period curve")  # empty: a group the estimator refused
+    return c
 
 
 def write(target: Path, name: str, obj: dict, rows: int, manifest: dict, dated: str) -> None:
@@ -1964,41 +2610,51 @@ def write(target: Path, name: str, obj: dict, rows: int, manifest: dict, dated: 
     manifest["files"][name] = {"sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "rows": rows, "data": dated}
 
 
-def main() -> int:
-    target = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_TARGET
-    target.mkdir(parents=True, exist_ok=True)
-    manifest: dict = {"what": "Slices of E:/atlas/registers/uk/tables the website reads; do not edit by hand", "built_by": "E:/atlas/registers/uk/export_for_site.py", "files": {}}
-
+def main(target: Path = DEFAULT_TARGET) -> int:
+    print(f"exporting into {target}")
     nb = load("london_trades_by_borough.json")
     turnover, rows = {}, 0
     for slug, t in nb["trades"].items():
         per = {}
         for geo, r in t["by_geography"].items():
-            if not (geo in KEEP_GEOS or geo.startswith("E09")):
+            if not (geo in (LONDON, ENGLAND) or geo.startswith("E09")):
                 continue
-            per[geo] = {k: r.get(k) for k in ("name", "enterprises", "local_units", "thin", "turnover_bands_k", "turnover_quantiles_k", "quantiles_in_open_band", "median_range_k")}
+            need(all(k in r for k in TURNOVER_FIELDS), f"turnover row {slug} {geo} lacks a field")
+            per[geo] = {k: r[k] for k in TURNOVER_FIELDS}
             rows += 1
+        need(LONDON in per and ENGLAND in per, f"turnover {slug} has no London or England row")
         turnover[slug] = {"sic": t["sic"], "match": t["match"], "by_geography": per}
-    write(target, "turnover.json", {"snapshot": nb["snapshot"], "trades": turnover}, rows, manifest, nb["snapshot"])
 
     pv = load("london_premises_value_by_borough.json")
-    premises = {"valuation_date": pv["valuation_date"], "trade_category": pv["trade_scat"], "rows": {g: pv["areas"][g] for g in KEEP_GEOS if g in pv["areas"]}}
-    write(target, "premises.json", premises, sum(len(r["categories"]) for r in premises["rows"].values()), manifest, pv["valuation_date"])
+    need(LONDON in pv["areas"] and ENGLAND in pv["areas"], "the premises table has no London or England row")
+    premises = {"valuation_date": pv["valuation_date"], "trade_category": pv["trade_scat"], "rows": {g: pv["areas"][g] for g in (LONDON, ENGLAND)}}
 
     sv = load("survival_london_and_trades.json")
-    groups, boroughs = {}, {}
+    groups, areas = {}, {}
     for t in sv["by_trade"].values():
         for g in t["groups"]:
-            groups[g["group"]] = {"name": g["group_name"], "period": g.get("survival_period"), "cohort_2019_five_years": g["survival"].get("5y")}
+            groups[g["group"]] = {"name": g["group_name"], "period": curve(g, f"group {g['group']}"), "cohort_2019_five_years": g["survival"].get("5y"),
+                                  "births_2019": g["births_by_cohort"].get("2019")}
     for code, b in sv["by_borough"].items():
-        boroughs[code] = {"name": b["name"], "period": b.get("survival_period"), "cohort_2019_five_years": b["survival"].get("5y")}
+        if code == LONDON or code.startswith("E09"):
+            need("ranked" in b, f"area {code} does not say whether it ranks")
+            areas[code] = {"name": b["name"], "period": curve(b, f"area {code}"), "cohort_2019_five_years": b["survival"].get("5y"),
+                           "births_2019": b["births_by_cohort"].get("2019"), "ranked": b["ranked"], "not_ranked_because": b["not_ranked_because"]}
+    need(len(areas) == 34, f"survival holds {len(areas)} of London and its 33 boroughs")
     trade_groups = {slug: [g["group"] for g in t["groups"]] for slug, t in sv["by_trade"].items()}
-    write(target, "survival.json", {"source": sv["source"], "groups": groups, "boroughs": boroughs, "trade_groups": trade_groups}, len(groups) + len(boroughs), manifest, sv["source"])
 
     fl = load("company_failures_by_trade.json")
-    failures = {slug: {k: v.get(k) for k in ("sic", "match", "uk_live_companies", "uk_insolvent", "uk_rate")} for slug, v in fl["trades"].items()}
-    write(target, "failures.json", {"source": fl["source"], "trades": failures}, len(failures), manifest, fl["source"])
+    failures = {}
+    for slug, v in fl["trades"].items():
+        need("uk_rate" in v and (v["uk_rate"] is not None or not v["uk_live_companies"]), f"failures {slug} has live companies and no rate (run enrich_failure_rates.py)")
+        failures[slug] = {k: v[k] for k in ("sic", "match", "uk_live_companies", "uk_insolvent", "uk_rate")}
 
+    target.mkdir(parents=True, exist_ok=True)
+    manifest: dict = {"what": "Slices of E:/atlas/registers/uk/tables the website reads; do not edit by hand", "built_by": "E:/atlas/registers/uk/export_for_site.py", "files": {}}
+    write(target, "turnover.json", {"snapshot": nb["snapshot"], "trades": turnover}, rows, manifest, nb["snapshot"])
+    write(target, "premises.json", premises, sum(len(r["categories"]) for r in premises["rows"].values()), manifest, pv["valuation_date"])
+    write(target, "survival.json", {"source": sv["source"], "groups": groups, "areas": areas, "trade_groups": trade_groups}, len(groups) + len(areas), manifest, sv["source"])
+    write(target, "failures.json", {"source": fl["source"], "trades": failures}, len(failures), manifest, fl["source"])
     (target / "manifest.json").write_text(json.dumps(manifest, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     for name, m in manifest["files"].items():
         print(f"{name}: {m['rows']} rows, {m['sha256'][:12]}")
@@ -2006,29 +2662,37 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(main(Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_TARGET))
 ```
 
-- [ ] **Step 2: Export into a scratch folder**
+- [ ] **Step 4: Run the test and watch it pass**
+
+```bash
+python -m pytest registers/uk/tests/test_export.py -q
+```
+
+Expected: `8 passed`.
+
+- [ ] **Step 5: Export into a scratch folder**
 
 ```bash
 python registers/uk/export_for_site.py "$(mktemp -d)"
 ```
 
-Expected, on the tables of 2026-10-02 (hashes change when a table is refreshed):
+Expected, after the scratch folder's name, on the tables of 2026-10-03 (hashes change when a table is refreshed):
 
 ```
-turnover.json: 4795 rows, 6b696df64d05
+turnover.json: 4795 rows, 51d1dbb39e5a
 premises.json: 42 rows, 4bdd8332330c
-survival.json: 114 rows, 497a930180f0
+survival.json: 110 rows, 2675b0544984
 failures.json: 137 rows, 12ceff334174
 ```
 
-- [ ] **Step 3: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add registers/uk/export_for_site.py
-git commit -m "registers/uk: export_for_site writes the slices the website reads with a SHA-256 manifest" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+git add registers/uk/export_for_site.py registers/uk/tests/test_export.py
+git commit -m "registers/uk: export_for_site writes the slices the website reads with a SHA-256 manifest, and refuses a stale table" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
 Expected: one commit; `git status --short` lists none of the files above.
@@ -2038,7 +2702,7 @@ Expected: one commit; `git status --short` lists none of the files above.
 **Files:**
 - Modify: `registers/uk/README.md`
 
-- [ ] **Step 1: Update the run order**
+- [ ] **Step 1: Edit README.md**
 
 In `registers/uk/README.md`, replace:
 
@@ -2046,37 +2710,268 @@ In `registers/uk/README.md`, replace:
 **Run order:** `fetch_nomis.py`, `fetch_fsa.py`, `fetch_misc.py`, `fetch_gazette.py`; then the `build_*.py` scripts in any order
 (`build_companies.py`, `build_formations.py` and `build_gazette.py` read the FSA snapshot for London's postcode districts, so run `build_fsa.py` first;
 `build_editorial.py` reads every table, so it runs last).
+Every fetch was approved by the founder on 2026-10-02; re-running skips files already on disk.
 ```
 
 with:
 
 ```markdown
-**Run order:** `fetch_nomis.py`, `fetch_fsa.py`, `fetch_misc.py`, `fetch_gazette.py`; then the `build_*.py` scripts
+**Run order:** `fetch_nomis.py`, `fetch_fsa.py`, `fetch_misc.py`, `fetch_gazette.py` (every fetch was approved by the founder
+on 2026-10-02; re-running skips files already on disk); then the `build_*.py` scripts that read the downloads
 (`build_companies.py`, `build_formations.py` and `build_gazette.py` read the FSA snapshot for London's postcode districts, so run `build_fsa.py` first);
-then `enrich_failure_rates.py` (after every `build_gazette.py`); then `build_editorial.py`, which reads every table; then
-`draft_stories.py`; then `export_for_site.py`, which writes the slices the website reads into `E:/atlas/website/data/uk/registers`.
-Tests: `python -m pytest registers/uk/tests -q` from `E:/atlas` (the estimators, and the invariants of the built tables).
+then `enrich_failure_rates.py` (after every `build_gazette.py`); then `build_ledger.py` and `build_pack.py`, which copy every
+table's caveats; then `build_editorial.py`, which reads every table; then `draft_stories.py`; then `export_for_site.py`, which
+writes the slices the website reads into `E:/atlas/website/data/uk/registers` (or into the folder given as its argument) and
+refuses a table that is stale or half built.
+Tests: `python -m pytest registers/uk/tests -q` from `E:/atlas` (the estimators, the builders' own rules, and the invariants of
+the built tables).
 
-**Estimators (`estimators/`):** `banded.py` (band quantiles, the CDF, the rounding range of a quantile, the anchor mean,
-the lognormal model check), `rates.py` (Wilson and Garwood intervals, the 10-case publication rule, two-proportion tests,
-Holm), `survival.py` (survival on the latest year's closure rates with Greenwood intervals), `rounding.py` (a printed
-figure rounded the website's way). Their formulas are in each module's docstring and in
+**Estimators (`estimators/`):** `banded.py` (band quantiles, the CDF, the rounding range of a quantile, which quantiles print
+in words, the anchor mean, the lognormal model check), `rates.py` (Wilson and Garwood intervals, the 10-case publication rule,
+two-proportion tests, Holm), `survival.py` (survival on the latest year's closure rates with Greenwood intervals),
+`rounding.py` (a printed figure rounded the website's way). Their formulas are in each module's docstring and in
 `E:/atlas/website/docs/superpowers/plans/2026-10-02-vertical-engine-00-master.md`.
 ```
 
-- [ ] **Step 2: Run the whole suite once more**
+- [ ] **Step 2: Edit README.md**
+
+In `registers/uk/README.md`, replace:
+
+```markdown
+VAT/PAYE-registered businesses, premises, median VAT turnover, share under 100k, premises by staff size |
+```
+
+with:
+
+```markdown
+VAT/PAYE-registered businesses, premises, the ten turnover band counts, median VAT turnover with the tenth and quarter points and the median's range, share under 100k, premises by staff size |
+```
+
+- [ ] **Step 3: Edit README.md**
+
+In `registers/uk/README.md`, replace:
+
+```markdown
+| `survival_london_and_trades.json` | 1 to 5-year survival of new businesses per London borough (all trades) and per trade's SIC group (UK); 2024 births and deaths per borough |
+```
+
+with:
+
+```markdown
+| `survival_london_and_trades.json` | survival of new businesses after 1 to 5 years on the 2024 closure rates, with intervals, and each cohort's own figure, per London borough (all trades; the City of London never ranks) and per trade's SIC group (UK); 2024 births and deaths per borough |
+```
+
+- [ ] **Step 4: Edit README.md**
+
+In `registers/uk/README.md`, replace:
+
+```markdown
+solvent closures per trade, UK and London districts, per 1,000 live companies |
+```
+
+with:
+
+```markdown
+solvent closures per trade, UK and London districts, per 1,000 live companies, with a 95% interval, printed from 10 insolvencies |
+```
+
+- [ ] **Step 5: Run the whole suite once more**
 
 ```bash
 python -m pytest registers/uk/tests -q
 ```
 
-Expected: `60 passed`.
+Expected: `75 passed`.
 
-- [ ] **Step 3: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add registers/uk/README.md
-git commit -m "registers/uk: README gives the run order with the estimators, the rates, the drafts and the export" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+git commit -m "registers/uk: README gives the run order with the estimators, the rates, the ledger, the drafts and the export" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+### Task 12: The ledger and the data pack describe the figures the pages print
+
+`build_ledger.py` writes `tables/ledger.json`, the source of About the figures: one row per kind of figure, how it is
+made, and the table's caveats. Its rows still described survival as each cohort's survivors over its births and listed no
+rates, and `build_pack.py` wrote the data pack's survival columns from the mixed-cohort curve, so the About page and the
+pack would disagree with the printed figures. The rows now say how the turnover quantiles, survival on current closure
+rates and the rates' intervals are made, and the pack carries the period curve, its five-year interval, the 2019 cohort's
+own figure, the ranked flag and each rate's interval and flags. The pack is written to the git-ignored cache and published
+by nobody until the founder sets the free line.
+
+**Files:**
+- Modify: `registers/uk/build_ledger.py`, `registers/uk/build_pack.py`
+- Rebuilt: `registers/uk/tables/ledger.json` (the pack goes to `E:/atlas/cache/uk/pack/<version>/`, ignored by git)
+
+- [ ] **Step 1: Edit build_ledger.py**
+
+In `registers/uk/build_ledger.py`, replace:
+
+```python
+    ("uk.turnover.median", "The middle business's yearly turnover per trade and borough", "worked out",
+     "the median read from the official counts by turnover band, interpolated on a log scale inside its band; withheld under 40 enterprises",
+     "london_trades_by_borough.json", ["median_turnover_k", "thin"], "ons", "yearly"),
+```
+
+with:
+
+```python
+    ("uk.turnover.median", "The middle business's yearly turnover per trade and borough, with the quarter and tenth points", "worked out",
+     "read from the official counts by turnover band, on a log scale inside the band; a point below 50,000 pounds or above 50 million prints in words; the range around the middle is the lowest and highest the rounded counts allow; withheld under 40 enterprises",
+     "london_trades_by_borough.json", ["median_turnover_k", "turnover_quantiles_k", "quantiles_in_open_band", "median_range_k", "turnover_bands_k", "thin"], "ons", "yearly"),
+```
+
+- [ ] **Step 2: Edit build_ledger.py**
+
+In `registers/uk/build_ledger.py`, replace:
+
+```python
+     "the survivors of each birth cohort over its births, from the published counts", "survival_london_and_trades.json",
+     ["survival", "births_by_cohort"], "ons", "yearly (November)"),
+```
+
+with:
+
+```python
+     "on the latest year's closure rates: each year's chance of closing, from the newest cohort with both ends of that year, applied in turn, with a 95% interval; the 2019 cohort's own five years beside it; the City of London never ranks",
+     "survival_london_and_trades.json", ["survival_period", "survival", "births_by_cohort", "ranked"], "ons", "yearly (November)"),
+```
+
+- [ ] **Step 3: Edit build_ledger.py**
+
+In `registers/uk/build_ledger.py`, replace:
+
+```python
+     "insolvency notices over twelve months, matched by company name to the register, over the trade's live companies",
+     "company_failures_by_trade.json", ["uk_insolvent", "uk_live_companies", "uk_insolvent_per_1000"], "gazette", "monthly"),
+```
+
+with:
+
+```python
+     "insolvency notices over twelve months, matched by company name to the register, over the trade's live companies, with a 95% interval; printed from 10 insolvencies in the year, marked few cases from 10 to 29",
+     "company_failures_by_trade.json", ["uk_insolvent", "uk_live_companies", "uk_rate"], "gazette", "monthly"),
+```
+
+- [ ] **Step 4: Edit build_pack.py**
+
+In `registers/uk/build_pack.py`, replace:
+
+```python
+def main() -> int:
+```
+
+with:
+
+```python
+def period(row: dict) -> list:
+    """The period curve's five years (survival on the latest closure rates) and the five-year interval; blank if withheld."""
+    per = row.get("survival_period") or []
+    return [r["survival"] for r in per] + [per[4]["lo"], per[4]["hi"]] if len(per) == 5 else [None] * 7
+
+
+def rate(v: dict) -> list:
+    """A trade's insolvency rate interval and flags; blank where no rate was computed."""
+    r = v.get("uk_rate")
+    return [r["lo"], r["hi"], r["publishable"], r["few_cases"]] if r else [None] * 4
+
+
+def main() -> int:
+```
+
+- [ ] **Step 5: Edit build_pack.py**
+
+In `registers/uk/build_pack.py`, replace:
+
+```python
+    counts["survival_by_borough.csv"] = write("survival_by_borough.csv",
+        ["code", "borough", "survival_1y", "survival_2y", "survival_3y", "survival_4y", "survival_5y", "births_2024", "deaths_2024", "active_2024"],
+        ((code, b["name"], *(b["survival"].get(k) for k in ("1y", "2y", "3y", "4y", "5y")), b.get("births_2024"), b.get("deaths_2024"), b.get("active_2024"))
+         for code, b in s["by_borough"].items()))
+```
+
+with:
+
+```python
+    curve_cols = ["survival_1y", "survival_2y", "survival_3y", "survival_4y", "survival_5y", "survival_5y_lo", "survival_5y_hi", "cohort_2019_survival_5y", "births_2019"]
+    counts["survival_by_borough.csv"] = write("survival_by_borough.csv",
+        ["code", "borough", "ranked", *curve_cols, "births_2024", "deaths_2024", "active_2024"],
+        ((code, b["name"], b["ranked"], *period(b), b["survival"].get("5y"), b["births_by_cohort"].get("2019"), b.get("births_2024"), b.get("deaths_2024"), b.get("active_2024"))
+         for code, b in s["by_borough"].items()))
+```
+
+- [ ] **Step 6: Edit build_pack.py**
+
+In `registers/uk/build_pack.py`, replace:
+
+```python
+            rows.append((g["group"], g["group_name"], *(g["survival"].get(k) for k in ("1y", "2y", "3y", "4y", "5y")), g["births_by_cohort"].get("2019")))
+    counts["survival_by_trade_group.csv"] = write("survival_by_trade_group.csv",
+        ["sic_group", "group_name", "survival_1y", "survival_2y", "survival_3y", "survival_4y", "survival_5y", "births_2019"], rows)
+```
+
+with:
+
+```python
+            rows.append((g["group"], g["group_name"], *period(g), g["survival"].get("5y"), g["births_by_cohort"].get("2019")))
+    counts["survival_by_trade_group.csv"] = write("survival_by_trade_group.csv", ["sic_group", "group_name", *curve_cols], rows)
+```
+
+- [ ] **Step 7: Edit build_pack.py**
+
+In `registers/uk/build_pack.py`, replace:
+
+```python
+        ["trade", "sic", "match", "uk_live_companies", "uk_insolvent", "uk_solvent", "uk_insolvent_per_1000", "london_insolvent", "london_solvent"],
+        ((t, " ".join(v["sic"]), v["match"], v.get("uk_live_companies"), v.get("uk_insolvent"), v.get("uk_solvent"), v.get("uk_insolvent_per_1000"),
+          (v.get("london") or {}).get("insolvent"), (v.get("london") or {}).get("solvent")) for t, v in fl["trades"].items()))
+```
+
+with:
+
+```python
+        ["trade", "sic", "match", "uk_live_companies", "uk_insolvent", "uk_solvent", "uk_insolvent_per_1000", "rate_lo", "rate_hi", "publishable", "few_cases",
+         "london_insolvent", "london_solvent"],
+        ((t, " ".join(v["sic"]), v["match"], v.get("uk_live_companies"), v.get("uk_insolvent"), v.get("uk_solvent"), v.get("uk_insolvent_per_1000"), *rate(v),
+          (v.get("london") or {}).get("insolvent"), (v.get("london") or {}).get("solvent")) for t, v in fl["trades"].items()))
+```
+
+- [ ] **Step 8: Rebuild the ledger and the pack**
+
+```bash
+python registers/uk/build_ledger.py
+python registers/uk/build_pack.py
+```
+
+Expected: fourteen ledger lines (`uk.survival` among them), then `pack <version>: 13 files` with `survival_by_borough.csv:
+38 rows`, `survival_by_trade_group.csv: 76 rows` and `failures_by_trade.csv: 137 rows`.
+
+- [ ] **Step 9: Read the rows that changed**
+
+```bash
+python -c "
+import json
+rows = {r['key']: r for r in json.load(open('registers/uk/tables/ledger.json', encoding='utf-8'))['rows']}
+for k in ('uk.turnover.median', 'uk.survival', 'uk.failures'): print(k, rows[k]['fields'])
+"
+```
+
+Expected:
+
+```
+uk.turnover.median ['median_turnover_k', 'turnover_quantiles_k', 'quantiles_in_open_band', 'median_range_k', 'turnover_bands_k', 'thin']
+uk.survival ['survival_period', 'survival', 'births_by_cohort', 'ranked']
+uk.failures ['uk_insolvent', 'uk_live_companies', 'uk_rate']
+```
+
+- [ ] **Step 10: Commit**
+
+```bash
+git add registers/uk/build_ledger.py registers/uk/build_pack.py registers/uk/tables/ledger.json
+git commit -m "registers/uk: the ledger and the data pack describe survival on current closure rates, the turnover quantiles and the rates' intervals" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
 Expected: one commit; `git status --short` lists none of the files above.
