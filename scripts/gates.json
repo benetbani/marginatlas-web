@@ -1367,6 +1367,15 @@
       "claims": []
     },
     {
+      "name": "uk-registers",
+      "script": "scripts/verify_uk_registers.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "scripts/verify_uk_registers.ts , THE REGISTER FIGURES ARE THE REGISTERS' (chain gate `uk-registers`).",
+      "reads": [],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

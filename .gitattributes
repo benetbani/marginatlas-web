@@ -24,3 +24,10 @@
 
 src/styles/atlas-spine.css      text eol=lf
 src/components/spine2/glyphs.ts text eol=lf
+
+# The UK register slices are the third case (2026-10-03): the `uk-registers`
+# gate hashes data/uk/registers/*.json against the manifest the export wrote
+# in LF, and a checkout that rewrote them to CRLF would fail it on this
+# machine while the deploy passed.
+
+data/uk/registers/*.json        text eol=lf

@@ -1,0 +1,26 @@
+{
+ "built_by": "E:/atlas/registers/uk/export_for_site.py",
+ "files": {
+  "failures.json": {
+   "data": "The Gazette company insolvency notices (codes 2441, 2452, 2410 insolvent; 2431 solvent), published 2025-10-01 to 2026-09-30; Companies House register snapshot 2026-05-01",
+   "rows": 137,
+   "sha256": "12ceff334174f9ad7e62493062be3c028cb7e4771b2b03090e3aae085e269d25"
+  },
+  "premises.json": {
+   "data": "1 April 2021 (the 2023 rating list counted at 31 March 2025)",
+   "rows": 42,
+   "sha256": "4bdd8332330ce14785ed4cddf432288345851d6d08d6ca928569c0776a291b86"
+  },
+  "survival.json": {
+   "data": "ONS Business Demography, UK: 2024, reference tables (published 20 November 2025)",
+   "rows": 110,
+   "sha256": "2675b05449841baa8c1199308d29e331e1013da02d9bf8e35104e377d2f56891"
+  },
+  "turnover.json": {
+   "data": "March 2026 register snapshot; turnover is VAT-return turnover for the latest year the register holds",
+   "rows": 4795,
+   "sha256": "51d1dbb39e5a0fa5937a95cc9d795359dfec4815e5199784a271f63b5c155f25"
+  }
+ },
+ "what": "Slices of E:/atlas/registers/uk/tables the website reads; do not edit by hand"
+}

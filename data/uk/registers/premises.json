@@ -1,0 +1,327 @@
+{
+ "rows": {
+  "E12000007": {
+   "categories": {
+    "Betting Offices": {
+     "count": 790.0,
+     "floorspace_k_m2": 90.0,
+     "rv_per_m2": 265.0
+    },
+    "Cafes": {
+     "count": 2750.0,
+     "floorspace_k_m2": 248.0,
+     "rv_per_m2": 310.0
+    },
+    "Car Showrooms": {
+     "count": 330.0,
+     "floorspace_k_m2": 386.0,
+     "rv_per_m2": 133.0
+    },
+    "Convenience Store": {
+     "count": 540.0,
+     "floorspace_k_m2": 199.0,
+     "rv_per_m2": 232.0
+    },
+    "Dance Schools & Centres": {
+     "count": 60.0,
+     "floorspace_k_m2": 26.0,
+     "rv_per_m2": 163.0
+    },
+    "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)": {
+     "count": 28580.0,
+     "floorspace_k_m2": 12752.0,
+     "rv_per_m2": 100.0
+    },
+    "Funeral Parlours/Chapels Of Rest": {
+     "count": 10.0,
+     "floorspace_k_m2": 5.0,
+     "rv_per_m2": 133.0
+    },
+    "Garden Centres": {
+     "count": 100.0,
+     "floorspace_k_m2": 282.0,
+     "rv_per_m2": 23.0
+    },
+    "Gymnasia/Fitness Suites": {
+     "count": 660.0,
+     "floorspace_k_m2": 201.0,
+     "rv_per_m2": 183.0
+    },
+    "Hairdressing/Beauty Salons": {
+     "count": 1760.0,
+     "floorspace_k_m2": 107.0,
+     "rv_per_m2": 274.0
+    },
+    "Offices (Inc Computer Centres)": {
+     "count": 103530.0,
+     "floorspace_k_m2": 22868.0,
+     "rv_per_m2": 406.0
+    },
+    "Pet Grooming Parlours": {
+     "count": null,
+     "floorspace_k_m2": null,
+     "rv_per_m2": null
+    },
+    "Pharmacies": {
+     "count": 160.0,
+     "floorspace_k_m2": 23.0,
+     "rv_per_m2": 198.0
+    },
+    "Recording Studios": {
+     "count": 160.0,
+     "floorspace_k_m2": 37.0,
+     "rv_per_m2": 182.0
+    },
+    "Restaurants": {
+     "count": 8170.0,
+     "floorspace_k_m2": 1656.0,
+     "rv_per_m2": 362.0
+    },
+    "Shops": {
+     "count": 80470.0,
+     "floorspace_k_m2": 8409.0,
+     "rv_per_m2": 322.0
+    },
+    "Studios": {
+     "count": 410.0,
+     "floorspace_k_m2": 41.0,
+     "rv_per_m2": 229.0
+    },
+    "Surgeries/Clinics/Heath Centres (Rental Valuation)": {
+     "count": 3260.0,
+     "floorspace_k_m2": 469.0,
+     "rv_per_m2": 317.0
+    },
+    "Takeaway Food Outlet (Predominantly Off Premises)": {
+     "count": 130.0,
+     "floorspace_k_m2": 9.0,
+     "rv_per_m2": 266.0
+    },
+    "Vehicle Repair Workshops & Garages": {
+     "count": 1480.0,
+     "floorspace_k_m2": 386.0,
+     "rv_per_m2": 101.0
+    },
+    "Veterinary Clinics / Animal Clinics": {
+     "count": 40.0,
+     "floorspace_k_m2": 10.0,
+     "rv_per_m2": 178.0
+    }
+   },
+   "name": "London"
+  },
+  "E92000001": {
+   "categories": {
+    "Betting Offices": {
+     "count": 3590.0,
+     "floorspace_k_m2": 407.0,
+     "rv_per_m2": 160.0
+    },
+    "Cafes": {
+     "count": 15960.0,
+     "floorspace_k_m2": 1665.0,
+     "rv_per_m2": 151.0
+    },
+    "Car Showrooms": {
+     "count": 5130.0,
+     "floorspace_k_m2": 6600.0,
+     "rv_per_m2": 99.0
+    },
+    "Convenience Store": {
+     "count": 7350.0,
+     "floorspace_k_m2": 2278.0,
+     "rv_per_m2": 131.0
+    },
+    "Dance Schools & Centres": {
+     "count": 1000.0,
+     "floorspace_k_m2": 258.0,
+     "rv_per_m2": 59.0
+    },
+    "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)": {
+     "count": 357840.0,
+     "floorspace_k_m2": 215133.0,
+     "rv_per_m2": 49.0
+    },
+    "Funeral Parlours/Chapels Of Rest": {
+     "count": 1630.0,
+     "floorspace_k_m2": 384.0,
+     "rv_per_m2": 71.0
+    },
+    "Garden Centres": {
+     "count": 2180.0,
+     "floorspace_k_m2": 7077.0,
+     "rv_per_m2": 17.0
+    },
+    "Gymnasia/Fitness Suites": {
+     "count": 4810.0,
+     "floorspace_k_m2": 1579.0,
+     "rv_per_m2": 69.0
+    },
+    "Hairdressing/Beauty Salons": {
+     "count": 21130.0,
+     "floorspace_k_m2": 1204.0,
+     "rv_per_m2": 127.0
+    },
+    "Offices (Inc Computer Centres)": {
+     "count": 405330.0,
+     "floorspace_k_m2": 74539.0,
+     "rv_per_m2": 210.0
+    },
+    "Pet Grooming Parlours": {
+     "count": 630.0,
+     "floorspace_k_m2": 17.0,
+     "rv_per_m2": 71.0
+    },
+    "Pharmacies": {
+     "count": 1410.0,
+     "floorspace_k_m2": 189.0,
+     "rv_per_m2": 119.0
+    },
+    "Recording Studios": {
+     "count": 390.0,
+     "floorspace_k_m2": 85.0,
+     "rv_per_m2": 116.0
+    },
+    "Restaurants": {
+     "count": 28570.0,
+     "floorspace_k_m2": 6015.0,
+     "rv_per_m2": 195.0
+    },
+    "Shops": {
+     "count": 393850.0,
+     "floorspace_k_m2": 42467.0,
+     "rv_per_m2": 165.0
+    },
+    "Studios": {
+     "count": 1380.0,
+     "floorspace_k_m2": 133.0,
+     "rv_per_m2": 116.0
+    },
+    "Surgeries/Clinics/Heath Centres (Rental Valuation)": {
+     "count": 15040.0,
+     "floorspace_k_m2": 2222.0,
+     "rv_per_m2": 158.0
+    },
+    "Takeaway Food Outlet (Predominantly Off Premises)": {
+     "count": 4940.0,
+     "floorspace_k_m2": 359.0,
+     "rv_per_m2": 128.0
+    },
+    "Vehicle Repair Workshops & Garages": {
+     "count": 16680.0,
+     "floorspace_k_m2": 4951.0,
+     "rv_per_m2": 54.0
+    },
+    "Veterinary Clinics / Animal Clinics": {
+     "count": 1650.0,
+     "floorspace_k_m2": 404.0,
+     "rv_per_m2": 100.0
+    }
+   },
+   "name": "England"
+  }
+ },
+ "trade_category": {
+  "accounting-tax": "Offices (Inc Computer Centres)",
+  "art-classes-studios": "Studios",
+  "art-craft-supply-shops": "Shops",
+  "auto-body-shops": "Vehicle Repair Workshops & Garages",
+  "auto-dealers": "Car Showrooms",
+  "auto-repair-shops": "Vehicle Repair Workshops & Garages",
+  "bags-leather-goods": "Shops",
+  "bakeries-retail": "Cafes",
+  "barbershops": "Hairdressing/Beauty Salons",
+  "bike-repair-shops": "Shops",
+  "brow-lash-studios": "Hairdressing/Beauty Salons",
+  "cabinet-making": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "cafes-coffee-shops": "Cafes",
+  "catering-food-service-contractors": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "chiropractic-clinics": "Surgeries/Clinics/Heath Centres (Rental Valuation)",
+  "clothing-shoe-stores": "Shops",
+  "coding-bootcamps-schools": "Offices (Inc Computer Centres)",
+  "coffee-roasters": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "cosmetics-beauty-shops": "Shops",
+  "craft-breweries-taprooms": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "custom-apparel-uniforms": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "custom-furniture-makers": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "custom-jewelers-mfg": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "dance-studios": "Dance Schools & Centres",
+  "day-spas": "Hairdressing/Beauty Salons",
+  "dental-practices": "Surgeries/Clinics/Heath Centres (Rental Valuation)",
+  "doctors-clinics": "Surgeries/Clinics/Heath Centres (Rental Valuation)",
+  "dry-cleaning-laundry": "Shops",
+  "electronics-appliance-stores": "Shops",
+  "electronics-phone-repair": "Shops",
+  "employment-services": "Offices (Inc Computer Centres)",
+  "engineering-architecture": "Offices (Inc Computer Centres)",
+  "eyewear-optical-retail": "Shops",
+  "florist-shops": "Shops",
+  "food-trucks": "Takeaway Food Outlet (Predominantly Off Premises)",
+  "funeral-services": "Funeral Parlours/Chapels Of Rest",
+  "furniture-stores": "Shops",
+  "gambling-amusement": "Betting Offices",
+  "game-development-studios": "Offices (Inc Computer Centres)",
+  "garden-centers-nurseries": "Garden Centres",
+  "general-merchandise-stores": "Shops",
+  "grocery-stores": "Convenience Store",
+  "hairdressers-beauty": "Hairdressing/Beauty Salons",
+  "hardware-stores-local": "Shops",
+  "home-decor-gift-shops": "Shops",
+  "ice-cream-frozen-dessert-shops": "Cafes",
+  "independent-art-galleries": "Shops",
+  "independent-insurance-brokers": "Offices (Inc Computer Centres)",
+  "indie-bookstores": "Shops",
+  "it-services-hosting": "Offices (Inc Computer Centres)",
+  "jewelry-stores": "Shops",
+  "language-schools": "Offices (Inc Computer Centres)",
+  "legal-services": "Offices (Inc Computer Centres)",
+  "locksmiths": "Shops",
+  "marketing-design-agencies": "Offices (Inc Computer Centres)",
+  "martial-arts-dojos": "Gymnasia/Fitness Suites",
+  "massage-therapy-clinics": "Hairdressing/Beauty Salons",
+  "mental-health-practices-small": "Offices (Inc Computer Centres)",
+  "metal-fabrication-machine-shops": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "motion-picture-sound-recording": "Recording Studios",
+  "music-instrument-shops": "Shops",
+  "music-schools-private-lessons": "Studios",
+  "nail-salons": "Hairdressing/Beauty Salons",
+  "news-periodical-publishing": "Offices (Inc Computer Centres)",
+  "nutritionist-dietician-practices": "Offices (Inc Computer Centres)",
+  "office-business-support": "Offices (Inc Computer Centres)",
+  "optometry-vision-centers": "Shops",
+  "personal-training": "Gymnasia/Fitness Suites",
+  "pet-daycare-boarding": "Pet Grooming Parlours",
+  "pet-stores": "Shops",
+  "pet-training": "Pet Grooming Parlours",
+  "pet-walking-sitting": "Pet Grooming Parlours",
+  "pharmacies-health-stores": "Pharmacies",
+  "photography-studios": "Studios",
+  "physical-therapy-clinics": "Surgeries/Clinics/Heath Centres (Rental Valuation)",
+  "pizzerias": "Restaurants",
+  "print-shops-offset-digital": "Shops",
+  "real-estate-agencies": "Shops",
+  "restaurants": "Restaurants",
+  "shoe-repair": "Shops",
+  "sign-shops-graphics-fab": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "small-leather-goods": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "soap-candle-makers": "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)",
+  "software-development": "Offices (Inc Computer Centres)",
+  "specialty-grocers-delis": "Shops",
+  "sporting-goods-specialty": "Shops",
+  "sports-fitness": "Gymnasia/Fitness Suites",
+  "stationery-paper-goods": "Shops",
+  "tailoring-alterations": "Shops",
+  "tanning-salons": "Hairdressing/Beauty Salons",
+  "tattoo-piercing-studios": "Hairdressing/Beauty Salons",
+  "tea-houses-matcha-bars": "Cafes",
+  "toy-game-stores": "Shops",
+  "travel-agencies": "Shops",
+  "tutoring-centers": "Offices (Inc Computer Centres)",
+  "veterinary-pet-care": "Veterinary Clinics / Animal Clinics",
+  "vocational-other-training": "Offices (Inc Computer Centres)",
+  "watch-jewelry-repair": "Shops",
+  "wine-liquor-stores": "Shops",
+  "yoga-pilates-studios": "Gymnasia/Fitness Suites"
+ },
+ "valuation_date": "1 April 2021 (the 2023 rating list counted at 31 March 2025)"
+}

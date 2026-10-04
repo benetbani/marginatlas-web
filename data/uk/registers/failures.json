@@ -1,0 +1,2239 @@
+{
+ "source": "The Gazette company insolvency notices (codes 2441, 2452, 2410 insolvent; 2431 solvent), published 2025-10-01 to 2026-09-30; Companies House register snapshot 2026-05-01",
+ "trades": {
+  "accounting-tax": {
+   "match": "exact",
+   "sic": [
+    "69201",
+    "69202",
+    "69203"
+   ],
+   "uk_insolvent": 127,
+   "uk_live_companies": 54328,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.8,
+    "lo": 2.0,
+    "publishable": true,
+    "rse": 0.089,
+    "value": 2.3
+   }
+  },
+  "alarm-systems-install": {
+   "match": "exact",
+   "sic": [
+    "80200"
+   ],
+   "uk_insolvent": 67,
+   "uk_live_companies": 8973,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.5,
+    "lo": 5.9,
+    "publishable": true,
+    "rse": 0.122,
+    "value": 7.5
+   }
+  },
+  "appliance-repair": {
+   "match": "exact",
+   "sic": [
+    "95220"
+   ],
+   "uk_insolvent": 6,
+   "uk_live_companies": 2143,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.1,
+    "lo": 1.3,
+    "publishable": false,
+    "rse": 0.408,
+    "value": 2.8
+   }
+  },
+  "art-classes-studios": {
+   "match": "shared",
+   "sic": [
+    "85520"
+   ],
+   "uk_insolvent": 16,
+   "uk_live_companies": 10151,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 2.6,
+    "lo": 1.0,
+    "publishable": true,
+    "rse": 0.25,
+    "value": 1.6
+   }
+  },
+  "art-craft-supply-shops": {
+   "match": "approx",
+   "sic": [
+    "47789"
+   ],
+   "uk_insolvent": 118,
+   "uk_live_companies": 12375,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 11.4,
+    "lo": 8.0,
+    "publishable": true,
+    "rse": 0.092,
+    "value": 9.5
+   }
+  },
+  "auto-body-shops": {
+   "match": "shared",
+   "sic": [
+    "45200"
+   ],
+   "uk_insolvent": 330,
+   "uk_live_companies": 53743,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.8,
+    "lo": 5.5,
+    "publishable": true,
+    "rse": 0.055,
+    "value": 6.1
+   }
+  },
+  "auto-dealers": {
+   "match": "exact",
+   "sic": [
+    "45111",
+    "45112"
+   ],
+   "uk_insolvent": 235,
+   "uk_live_companies": 34489,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 7.7,
+    "lo": 6.0,
+    "publishable": true,
+    "rse": 0.065,
+    "value": 6.8
+   }
+  },
+  "auto-repair-shops": {
+   "match": "shared",
+   "sic": [
+    "45200"
+   ],
+   "uk_insolvent": 330,
+   "uk_live_companies": 53743,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.8,
+    "lo": 5.5,
+    "publishable": true,
+    "rse": 0.055,
+    "value": 6.1
+   }
+  },
+  "bags-leather-goods": {
+   "match": "exact",
+   "sic": [
+    "47722"
+   ],
+   "uk_insolvent": 10,
+   "uk_live_companies": 1534,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 12.0,
+    "lo": 3.5,
+    "publishable": true,
+    "rse": 0.316,
+    "value": 6.5
+   }
+  },
+  "bakeries-retail": {
+   "match": "exact",
+   "sic": [
+    "47240",
+    "10710"
+   ],
+   "uk_insolvent": 71,
+   "uk_live_companies": 10459,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.6,
+    "lo": 5.4,
+    "publishable": true,
+    "rse": 0.119,
+    "value": 6.8
+   }
+  },
+  "barbershops": {
+   "match": "shared",
+   "sic": [
+    "96020"
+   ],
+   "uk_insolvent": 311,
+   "uk_live_companies": 66524,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.2,
+    "lo": 4.2,
+    "publishable": true,
+    "rse": 0.057,
+    "value": 4.7
+   }
+  },
+  "bars-nightclubs": {
+   "match": "shared",
+   "sic": [
+    "56302",
+    "56301"
+   ],
+   "uk_insolvent": 868,
+   "uk_live_companies": 33836,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 27.4,
+    "lo": 24.0,
+    "publishable": true,
+    "rse": 0.034,
+    "value": 25.7
+   }
+  },
+  "bike-repair-shops": {
+   "match": "approx",
+   "sic": [
+    "95290"
+   ],
+   "uk_insolvent": 2,
+   "uk_live_companies": 1368,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.3,
+    "lo": 0.4,
+    "publishable": false,
+    "rse": 0.707,
+    "value": 1.5
+   }
+  },
+  "bricklaying-services": {
+   "match": "approx",
+   "sic": [
+    "43999"
+   ],
+   "uk_insolvent": 514,
+   "uk_live_companies": 57725,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.7,
+    "lo": 8.2,
+    "publishable": true,
+    "rse": 0.044,
+    "value": 8.9
+   }
+  },
+  "brow-lash-studios": {
+   "match": "shared",
+   "sic": [
+    "96020"
+   ],
+   "uk_insolvent": 311,
+   "uk_live_companies": 66524,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.2,
+    "lo": 4.2,
+    "publishable": true,
+    "rse": 0.057,
+    "value": 4.7
+   }
+  },
+  "cabinet-making": {
+   "match": "exact",
+   "sic": [
+    "31020",
+    "43320"
+   ],
+   "uk_insolvent": 227,
+   "uk_live_companies": 23520,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 11.0,
+    "lo": 8.5,
+    "publishable": true,
+    "rse": 0.066,
+    "value": 9.7
+   }
+  },
+  "cafes-coffee-shops": {
+   "match": "shared",
+   "sic": [
+    "56102"
+   ],
+   "uk_insolvent": 491,
+   "uk_live_companies": 40165,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 13.3,
+    "lo": 11.2,
+    "publishable": true,
+    "rse": 0.045,
+    "value": 12.2
+   }
+  },
+  "campgrounds-rv-parks": {
+   "match": "exact",
+   "sic": [
+    "55300"
+   ],
+   "uk_insolvent": 8,
+   "uk_live_companies": 3055,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.2,
+    "lo": 1.3,
+    "publishable": false,
+    "rse": 0.354,
+    "value": 2.6
+   }
+  },
+  "carpenters-finish-work": {
+   "match": "exact",
+   "sic": [
+    "43320"
+   ],
+   "uk_insolvent": 184,
+   "uk_live_companies": 21220,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.0,
+    "lo": 7.5,
+    "publishable": true,
+    "rse": 0.074,
+    "value": 8.7
+   }
+  },
+  "catering-food-service-contractors": {
+   "match": "exact",
+   "sic": [
+    "56210",
+    "56290"
+   ],
+   "uk_insolvent": 398,
+   "uk_live_companies": 48160,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.1,
+    "lo": 7.5,
+    "publishable": true,
+    "rse": 0.05,
+    "value": 8.3
+   }
+  },
+  "chiropractic-clinics": {
+   "match": "shared",
+   "sic": [
+    "86900"
+   ],
+   "uk_insolvent": 257,
+   "uk_live_companies": 92670,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.1,
+    "lo": 2.5,
+    "publishable": true,
+    "rse": 0.062,
+    "value": 2.8
+   }
+  },
+  "cleaning-services": {
+   "match": "exact",
+   "sic": [
+    "81210",
+    "81229"
+   ],
+   "uk_insolvent": 127,
+   "uk_live_companies": 25600,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.9,
+    "lo": 4.2,
+    "publishable": true,
+    "rse": 0.089,
+    "value": 5.0
+   }
+  },
+  "clothing-shoe-stores": {
+   "match": "exact",
+   "sic": [
+    "47710",
+    "47721"
+   ],
+   "uk_insolvent": 206,
+   "uk_live_companies": 26662,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.9,
+    "lo": 6.7,
+    "publishable": true,
+    "rse": 0.07,
+    "value": 7.7
+   }
+  },
+  "coding-bootcamps-schools": {
+   "match": "shared",
+   "sic": [
+    "85590"
+   ],
+   "uk_insolvent": 137,
+   "uk_live_companies": 56814,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.8,
+    "lo": 2.0,
+    "publishable": true,
+    "rse": 0.085,
+    "value": 2.4
+   }
+  },
+  "coffee-roasters": {
+   "match": "exact",
+   "sic": [
+    "10832"
+   ],
+   "uk_insolvent": 2,
+   "uk_live_companies": 1541,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.7,
+    "lo": 0.4,
+    "publishable": false,
+    "rse": 0.707,
+    "value": 1.3
+   }
+  },
+  "cosmetics-beauty-shops": {
+   "match": "exact",
+   "sic": [
+    "47750"
+   ],
+   "uk_insolvent": 36,
+   "uk_live_companies": 9003,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.5,
+    "lo": 2.9,
+    "publishable": true,
+    "rse": 0.167,
+    "value": 4.0
+   }
+  },
+  "couriers-messengers": {
+   "match": "exact",
+   "sic": [
+    "53202",
+    "53201"
+   ],
+   "uk_insolvent": 97,
+   "uk_live_companies": 13109,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.0,
+    "lo": 6.1,
+    "publishable": true,
+    "rse": 0.102,
+    "value": 7.4
+   }
+  },
+  "craft-breweries-taprooms": {
+   "match": "exact",
+   "sic": [
+    "11050"
+   ],
+   "uk_insolvent": 39,
+   "uk_live_companies": 1770,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 30.0,
+    "lo": 16.2,
+    "publishable": true,
+    "rse": 0.16,
+    "value": 22.0
+   }
+  },
+  "custom-apparel-uniforms": {
+   "match": "approx",
+   "sic": [
+    "14120",
+    "14190"
+   ],
+   "uk_insolvent": 35,
+   "uk_live_companies": 5256,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.2,
+    "lo": 4.8,
+    "publishable": true,
+    "rse": 0.169,
+    "value": 6.7
+   }
+  },
+  "custom-furniture-makers": {
+   "match": "approx",
+   "sic": [
+    "31090"
+   ],
+   "uk_insolvent": 85,
+   "uk_live_companies": 5940,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 17.7,
+    "lo": 11.6,
+    "publishable": true,
+    "rse": 0.108,
+    "value": 14.3
+   }
+  },
+  "custom-jewelers-mfg": {
+   "match": "exact",
+   "sic": [
+    "32120"
+   ],
+   "uk_insolvent": 15,
+   "uk_live_companies": 3365,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 7.3,
+    "lo": 2.7,
+    "publishable": true,
+    "rse": 0.258,
+    "value": 4.5
+   }
+  },
+  "dance-studios": {
+   "match": "shared",
+   "sic": [
+    "85520"
+   ],
+   "uk_insolvent": 16,
+   "uk_live_companies": 10151,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 2.6,
+    "lo": 1.0,
+    "publishable": true,
+    "rse": 0.25,
+    "value": 1.6
+   }
+  },
+  "day-spas": {
+   "match": "shared",
+   "sic": [
+    "96040"
+   ],
+   "uk_insolvent": 36,
+   "uk_live_companies": 16504,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.0,
+    "lo": 1.6,
+    "publishable": true,
+    "rse": 0.167,
+    "value": 2.2
+   }
+  },
+  "daycare-preschool": {
+   "match": "exact",
+   "sic": [
+    "88910",
+    "85100"
+   ],
+   "uk_insolvent": 85,
+   "uk_live_companies": 17425,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.0,
+    "lo": 3.9,
+    "publishable": true,
+    "rse": 0.108,
+    "value": 4.9
+   }
+  },
+  "dental-practices": {
+   "match": "exact",
+   "sic": [
+    "86230"
+   ],
+   "uk_insolvent": 25,
+   "uk_live_companies": 18790,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 2.0,
+    "lo": 0.9,
+    "publishable": true,
+    "rse": 0.2,
+    "value": 1.3
+   }
+  },
+  "doctors-clinics": {
+   "match": "exact",
+   "sic": [
+    "86210",
+    "86220"
+   ],
+   "uk_insolvent": 96,
+   "uk_live_companies": 54686,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.1,
+    "lo": 1.4,
+    "publishable": true,
+    "rse": 0.102,
+    "value": 1.8
+   }
+  },
+  "driving-schools": {
+   "match": "exact",
+   "sic": [
+    "85530"
+   ],
+   "uk_insolvent": 8,
+   "uk_live_companies": 3845,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.1,
+    "lo": 1.1,
+    "publishable": false,
+    "rse": 0.354,
+    "value": 2.1
+   }
+  },
+  "dry-cleaning-laundry": {
+   "match": "exact",
+   "sic": [
+    "96010"
+   ],
+   "uk_insolvent": 42,
+   "uk_live_companies": 4200,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 13.5,
+    "lo": 7.4,
+    "publishable": true,
+    "rse": 0.154,
+    "value": 10.0
+   }
+  },
+  "electricians": {
+   "match": "exact",
+   "sic": [
+    "43210"
+   ],
+   "uk_insolvent": 389,
+   "uk_live_companies": 52380,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.2,
+    "lo": 6.7,
+    "publishable": true,
+    "rse": 0.051,
+    "value": 7.4
+   }
+  },
+  "electronics-appliance-stores": {
+   "match": "exact",
+   "sic": [
+    "47430",
+    "47540",
+    "47410"
+   ],
+   "uk_insolvent": 51,
+   "uk_live_companies": 7860,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.5,
+    "lo": 4.9,
+    "publishable": true,
+    "rse": 0.14,
+    "value": 6.5
+   }
+  },
+  "electronics-phone-repair": {
+   "match": "exact",
+   "sic": [
+    "95120",
+    "95210"
+   ],
+   "uk_insolvent": 8,
+   "uk_live_companies": 2783,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.7,
+    "lo": 1.5,
+    "publishable": false,
+    "rse": 0.354,
+    "value": 2.9
+   }
+  },
+  "employment-services": {
+   "match": "exact",
+   "sic": [
+    "78109",
+    "78200"
+   ],
+   "uk_insolvent": 573,
+   "uk_live_companies": 40403,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 15.4,
+    "lo": 13.1,
+    "publishable": true,
+    "rse": 0.042,
+    "value": 14.2
+   }
+  },
+  "engineering-architecture": {
+   "match": "exact",
+   "sic": [
+    "71111",
+    "71121",
+    "71122",
+    "71129"
+   ],
+   "uk_insolvent": 379,
+   "uk_live_companies": 88319,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.7,
+    "lo": 3.9,
+    "publishable": true,
+    "rse": 0.051,
+    "value": 4.3
+   }
+  },
+  "equipment-rental-leasing": {
+   "match": "approx",
+   "sic": [
+    "77390",
+    "77299",
+    "77320"
+   ],
+   "uk_insolvent": 83,
+   "uk_live_companies": 12463,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.2,
+    "lo": 5.4,
+    "publishable": true,
+    "rse": 0.11,
+    "value": 6.7
+   }
+  },
+  "event-production-small": {
+   "match": "approx",
+   "sic": [
+    "90020",
+    "82302"
+   ],
+   "uk_insolvent": 90,
+   "uk_live_companies": 23520,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.7,
+    "lo": 3.1,
+    "publishable": true,
+    "rse": 0.105,
+    "value": 3.8
+   }
+  },
+  "eyewear-optical-retail": {
+   "match": "shared",
+   "sic": [
+    "47782"
+   ],
+   "uk_insolvent": 11,
+   "uk_live_companies": 3771,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 5.2,
+    "lo": 1.6,
+    "publishable": true,
+    "rse": 0.302,
+    "value": 2.9
+   }
+  },
+  "flooring-installers": {
+   "match": "shared",
+   "sic": [
+    "43330"
+   ],
+   "uk_insolvent": 96,
+   "uk_live_companies": 10929,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.7,
+    "lo": 7.2,
+    "publishable": true,
+    "rse": 0.102,
+    "value": 8.8
+   }
+  },
+  "florist-shops": {
+   "match": "shared",
+   "sic": [
+    "47760"
+   ],
+   "uk_insolvent": 53,
+   "uk_live_companies": 6878,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.1,
+    "lo": 5.9,
+    "publishable": true,
+    "rse": 0.137,
+    "value": 7.7
+   }
+  },
+  "food-trucks": {
+   "match": "shared",
+   "sic": [
+    "56103"
+   ],
+   "uk_insolvent": 667,
+   "uk_live_companies": 69552,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.3,
+    "lo": 8.9,
+    "publishable": true,
+    "rse": 0.039,
+    "value": 9.6
+   }
+  },
+  "funeral-services": {
+   "match": "exact",
+   "sic": [
+    "96030"
+   ],
+   "uk_insolvent": 8,
+   "uk_live_companies": 3060,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.2,
+    "lo": 1.3,
+    "publishable": false,
+    "rse": 0.354,
+    "value": 2.6
+   }
+  },
+  "furniture-stores": {
+   "match": "exact",
+   "sic": [
+    "47599"
+   ],
+   "uk_insolvent": 136,
+   "uk_live_companies": 9320,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 17.2,
+    "lo": 12.4,
+    "publishable": true,
+    "rse": 0.086,
+    "value": 14.6
+   }
+  },
+  "gambling-amusement": {
+   "match": "exact",
+   "sic": [
+    "92000",
+    "93290"
+   ],
+   "uk_insolvent": 149,
+   "uk_live_companies": 22477,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 7.8,
+    "lo": 5.6,
+    "publishable": true,
+    "rse": 0.082,
+    "value": 6.6
+   }
+  },
+  "game-development-studios": {
+   "match": "exact",
+   "sic": [
+    "62011",
+    "58210"
+   ],
+   "uk_insolvent": 29,
+   "uk_live_companies": 11180,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 3.7,
+    "lo": 1.8,
+    "publishable": true,
+    "rse": 0.186,
+    "value": 2.6
+   }
+  },
+  "garden-centers-nurseries": {
+   "match": "shared",
+   "sic": [
+    "47760"
+   ],
+   "uk_insolvent": 53,
+   "uk_live_companies": 6878,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.1,
+    "lo": 5.9,
+    "publishable": true,
+    "rse": 0.137,
+    "value": 7.7
+   }
+  },
+  "gas-stations": {
+   "match": "exact",
+   "sic": [
+    "47300"
+   ],
+   "uk_insolvent": 8,
+   "uk_live_companies": 2204,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 7.1,
+    "lo": 1.8,
+    "publishable": false,
+    "rse": 0.354,
+    "value": 3.6
+   }
+  },
+  "general-merchandise-stores": {
+   "match": "exact",
+   "sic": [
+    "47190"
+   ],
+   "uk_insolvent": 180,
+   "uk_live_companies": 32813,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.3,
+    "lo": 4.7,
+    "publishable": true,
+    "rse": 0.075,
+    "value": 5.5
+   }
+  },
+  "grocery-stores": {
+   "match": "exact",
+   "sic": [
+    "47110"
+   ],
+   "uk_insolvent": 161,
+   "uk_live_companies": 32104,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.8,
+    "lo": 4.3,
+    "publishable": true,
+    "rse": 0.079,
+    "value": 5.0
+   }
+  },
+  "guest-houses-pensions": {
+   "match": "shared",
+   "sic": [
+    "55100"
+   ],
+   "uk_insolvent": 159,
+   "uk_live_companies": 17125,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.8,
+    "lo": 8.0,
+    "publishable": true,
+    "rse": 0.079,
+    "value": 9.3
+   }
+  },
+  "hairdressers-beauty": {
+   "match": "shared",
+   "sic": [
+    "96020"
+   ],
+   "uk_insolvent": 311,
+   "uk_live_companies": 66524,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.2,
+    "lo": 4.2,
+    "publishable": true,
+    "rse": 0.057,
+    "value": 4.7
+   }
+  },
+  "hardware-stores-local": {
+   "match": "exact",
+   "sic": [
+    "47520"
+   ],
+   "uk_insolvent": 28,
+   "uk_live_companies": 3208,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 12.6,
+    "lo": 6.0,
+    "publishable": true,
+    "rse": 0.189,
+    "value": 8.7
+   }
+  },
+  "home-decor-gift-shops": {
+   "match": "approx",
+   "sic": [
+    "47789"
+   ],
+   "uk_insolvent": 118,
+   "uk_live_companies": 12375,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 11.4,
+    "lo": 8.0,
+    "publishable": true,
+    "rse": 0.092,
+    "value": 9.5
+   }
+  },
+  "hostels": {
+   "match": "exact",
+   "sic": [
+    "55202"
+   ],
+   "uk_insolvent": 0,
+   "uk_live_companies": 326,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 11.6,
+    "lo": 0.0,
+    "publishable": false,
+    "rse": null,
+    "value": 0.0
+   }
+  },
+  "hotels-lodging": {
+   "match": "shared",
+   "sic": [
+    "55100"
+   ],
+   "uk_insolvent": 159,
+   "uk_live_companies": 17125,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.8,
+    "lo": 8.0,
+    "publishable": true,
+    "rse": 0.079,
+    "value": 9.3
+   }
+  },
+  "hvac-services": {
+   "match": "shared",
+   "sic": [
+    "43220"
+   ],
+   "uk_insolvent": 343,
+   "uk_live_companies": 46500,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.2,
+    "lo": 6.6,
+    "publishable": true,
+    "rse": 0.054,
+    "value": 7.4
+   }
+  },
+  "ice-cream-frozen-dessert-shops": {
+   "match": "approx",
+   "sic": [
+    "56103"
+   ],
+   "uk_insolvent": 667,
+   "uk_live_companies": 69552,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.3,
+    "lo": 8.9,
+    "publishable": true,
+    "rse": 0.039,
+    "value": 9.6
+   }
+  },
+  "independent-art-galleries": {
+   "match": "exact",
+   "sic": [
+    "47781"
+   ],
+   "uk_insolvent": 16,
+   "uk_live_companies": 2440,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 10.6,
+    "lo": 4.0,
+    "publishable": true,
+    "rse": 0.25,
+    "value": 6.6
+   }
+  },
+  "independent-insurance-brokers": {
+   "match": "exact",
+   "sic": [
+    "66220"
+   ],
+   "uk_insolvent": 19,
+   "uk_live_companies": 7364,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 4.0,
+    "lo": 1.7,
+    "publishable": true,
+    "rse": 0.229,
+    "value": 2.6
+   }
+  },
+  "indie-bookstores": {
+   "match": "exact",
+   "sic": [
+    "47610"
+   ],
+   "uk_insolvent": 3,
+   "uk_live_companies": 2148,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.1,
+    "lo": 0.5,
+    "publishable": false,
+    "rse": 0.577,
+    "value": 1.4
+   }
+  },
+  "it-services-hosting": {
+   "match": "exact",
+   "sic": [
+    "62020",
+    "63110"
+   ],
+   "uk_insolvent": 471,
+   "uk_live_companies": 155242,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.3,
+    "lo": 2.8,
+    "publishable": true,
+    "rse": 0.046,
+    "value": 3.0
+   }
+  },
+  "jewelry-stores": {
+   "match": "exact",
+   "sic": [
+    "47770"
+   ],
+   "uk_insolvent": 32,
+   "uk_live_companies": 7721,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.8,
+    "lo": 2.9,
+    "publishable": true,
+    "rse": 0.177,
+    "value": 4.1
+   }
+  },
+  "junk-removal-small-moving": {
+   "match": "approx",
+   "sic": [
+    "49420"
+   ],
+   "uk_insolvent": 45,
+   "uk_live_companies": 6756,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.9,
+    "lo": 5.0,
+    "publishable": true,
+    "rse": 0.149,
+    "value": 6.7
+   }
+  },
+  "landscaping-lawn-care": {
+   "match": "exact",
+   "sic": [
+    "81300"
+   ],
+   "uk_insolvent": 131,
+   "uk_live_companies": 21634,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 7.2,
+    "lo": 5.1,
+    "publishable": true,
+    "rse": 0.087,
+    "value": 6.1
+   }
+  },
+  "language-schools": {
+   "match": "shared",
+   "sic": [
+    "85590"
+   ],
+   "uk_insolvent": 137,
+   "uk_live_companies": 56814,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.8,
+    "lo": 2.0,
+    "publishable": true,
+    "rse": 0.085,
+    "value": 2.4
+   }
+  },
+  "legal-services": {
+   "match": "exact",
+   "sic": [
+    "69102",
+    "69109"
+   ],
+   "uk_insolvent": 79,
+   "uk_live_companies": 18867,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.2,
+    "lo": 3.4,
+    "publishable": true,
+    "rse": 0.113,
+    "value": 4.2
+   }
+  },
+  "locksmiths": {
+   "match": "approx",
+   "sic": [
+    "95290"
+   ],
+   "uk_insolvent": 2,
+   "uk_live_companies": 1368,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.3,
+    "lo": 0.4,
+    "publishable": false,
+    "rse": 0.707,
+    "value": 1.5
+   }
+  },
+  "marketing-design-agencies": {
+   "match": "exact",
+   "sic": [
+    "73110",
+    "74100"
+   ],
+   "uk_insolvent": 358,
+   "uk_live_companies": 88403,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.5,
+    "lo": 3.7,
+    "publishable": true,
+    "rse": 0.053,
+    "value": 4.0
+   }
+  },
+  "martial-arts-dojos": {
+   "match": "shared",
+   "sic": [
+    "85510"
+   ],
+   "uk_insolvent": 39,
+   "uk_live_companies": 14636,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.6,
+    "lo": 1.9,
+    "publishable": true,
+    "rse": 0.16,
+    "value": 2.7
+   }
+  },
+  "massage-therapy-clinics": {
+   "match": "shared",
+   "sic": [
+    "96040"
+   ],
+   "uk_insolvent": 36,
+   "uk_live_companies": 16504,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.0,
+    "lo": 1.6,
+    "publishable": true,
+    "rse": 0.167,
+    "value": 2.2
+   }
+  },
+  "mental-health-practices-small": {
+   "match": "shared",
+   "sic": [
+    "86900"
+   ],
+   "uk_insolvent": 257,
+   "uk_live_companies": 92670,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.1,
+    "lo": 2.5,
+    "publishable": true,
+    "rse": 0.062,
+    "value": 2.8
+   }
+  },
+  "metal-fabrication-machine-shops": {
+   "match": "exact",
+   "sic": [
+    "25620",
+    "25110"
+   ],
+   "uk_insolvent": 115,
+   "uk_live_companies": 7018,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 19.6,
+    "lo": 13.7,
+    "publishable": true,
+    "rse": 0.093,
+    "value": 16.4
+   }
+  },
+  "motion-picture-sound-recording": {
+   "match": "exact",
+   "sic": [
+    "59111",
+    "59200"
+   ],
+   "uk_insolvent": 95,
+   "uk_live_companies": 34535,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.4,
+    "lo": 2.3,
+    "publishable": true,
+    "rse": 0.103,
+    "value": 2.8
+   }
+  },
+  "museums-cultural": {
+   "match": "exact",
+   "sic": [
+    "91020"
+   ],
+   "uk_insolvent": 3,
+   "uk_live_companies": 1432,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.1,
+    "lo": 0.7,
+    "publishable": false,
+    "rse": 0.577,
+    "value": 2.1
+   }
+  },
+  "music-instrument-shops": {
+   "match": "exact",
+   "sic": [
+    "47591"
+   ],
+   "uk_insolvent": 3,
+   "uk_live_companies": 883,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.9,
+    "lo": 1.2,
+    "publishable": false,
+    "rse": 0.577,
+    "value": 3.4
+   }
+  },
+  "music-schools-private-lessons": {
+   "match": "shared",
+   "sic": [
+    "85520"
+   ],
+   "uk_insolvent": 16,
+   "uk_live_companies": 10151,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 2.6,
+    "lo": 1.0,
+    "publishable": true,
+    "rse": 0.25,
+    "value": 1.6
+   }
+  },
+  "nail-salons": {
+   "match": "shared",
+   "sic": [
+    "96020"
+   ],
+   "uk_insolvent": 311,
+   "uk_live_companies": 66524,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.2,
+    "lo": 4.2,
+    "publishable": true,
+    "rse": 0.057,
+    "value": 4.7
+   }
+  },
+  "news-periodical-publishing": {
+   "match": "exact",
+   "sic": [
+    "58130",
+    "58142"
+   ],
+   "uk_insolvent": 22,
+   "uk_live_companies": 3429,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 9.7,
+    "lo": 4.2,
+    "publishable": true,
+    "rse": 0.213,
+    "value": 6.4
+   }
+  },
+  "nursing-elderly-care": {
+   "match": "exact",
+   "sic": [
+    "87300",
+    "87100",
+    "88100"
+   ],
+   "uk_insolvent": 137,
+   "uk_live_companies": 25119,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.4,
+    "lo": 4.6,
+    "publishable": true,
+    "rse": 0.085,
+    "value": 5.5
+   }
+  },
+  "nutritionist-dietician-practices": {
+   "match": "shared",
+   "sic": [
+    "86900"
+   ],
+   "uk_insolvent": 257,
+   "uk_live_companies": 92670,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.1,
+    "lo": 2.5,
+    "publishable": true,
+    "rse": 0.062,
+    "value": 2.8
+   }
+  },
+  "office-business-support": {
+   "match": "exact",
+   "sic": [
+    "82110",
+    "82990"
+   ],
+   "uk_insolvent": 1103,
+   "uk_live_companies": 195589,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.0,
+    "lo": 5.3,
+    "publishable": true,
+    "rse": 0.03,
+    "value": 5.6
+   }
+  },
+  "optometry-vision-centers": {
+   "match": "shared",
+   "sic": [
+    "47782"
+   ],
+   "uk_insolvent": 11,
+   "uk_live_companies": 3771,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 5.2,
+    "lo": 1.6,
+    "publishable": true,
+    "rse": 0.302,
+    "value": 2.9
+   }
+  },
+  "painters-residential": {
+   "match": "exact",
+   "sic": [
+    "43341"
+   ],
+   "uk_insolvent": 83,
+   "uk_live_companies": 15528,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.6,
+    "lo": 4.3,
+    "publishable": true,
+    "rse": 0.11,
+    "value": 5.3
+   }
+  },
+  "performing-arts": {
+   "match": "exact",
+   "sic": [
+    "90010"
+   ],
+   "uk_insolvent": 54,
+   "uk_live_companies": 22437,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.1,
+    "lo": 1.8,
+    "publishable": true,
+    "rse": 0.136,
+    "value": 2.4
+   }
+  },
+  "personal-training": {
+   "match": "shared",
+   "sic": [
+    "93130",
+    "85510"
+   ],
+   "uk_insolvent": 137,
+   "uk_live_companies": 29066,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.6,
+    "lo": 4.0,
+    "publishable": true,
+    "rse": 0.085,
+    "value": 4.7
+   }
+  },
+  "pest-control-local": {
+   "match": "exact",
+   "sic": [
+    "81291"
+   ],
+   "uk_insolvent": 7,
+   "uk_live_companies": 1307,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 11.0,
+    "lo": 2.6,
+    "publishable": false,
+    "rse": 0.378,
+    "value": 5.4
+   }
+  },
+  "pet-daycare-boarding": {
+   "match": "approx",
+   "sic": [
+    "96090"
+   ],
+   "uk_insolvent": 653,
+   "uk_live_companies": 124657,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.7,
+    "lo": 4.9,
+    "publishable": true,
+    "rse": 0.039,
+    "value": 5.2
+   }
+  },
+  "pet-stores": {
+   "match": "shared",
+   "sic": [
+    "47760"
+   ],
+   "uk_insolvent": 53,
+   "uk_live_companies": 6878,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.1,
+    "lo": 5.9,
+    "publishable": true,
+    "rse": 0.137,
+    "value": 7.7
+   }
+  },
+  "pet-training": {
+   "match": "approx",
+   "sic": [
+    "96090"
+   ],
+   "uk_insolvent": 653,
+   "uk_live_companies": 124657,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.7,
+    "lo": 4.9,
+    "publishable": true,
+    "rse": 0.039,
+    "value": 5.2
+   }
+  },
+  "pet-walking-sitting": {
+   "match": "approx",
+   "sic": [
+    "96090"
+   ],
+   "uk_insolvent": 653,
+   "uk_live_companies": 124657,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.7,
+    "lo": 4.9,
+    "publishable": true,
+    "rse": 0.039,
+    "value": 5.2
+   }
+  },
+  "pharmacies-health-stores": {
+   "match": "exact",
+   "sic": [
+    "47730"
+   ],
+   "uk_insolvent": 59,
+   "uk_live_companies": 7250,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.5,
+    "lo": 6.3,
+    "publishable": true,
+    "rse": 0.13,
+    "value": 8.1
+   }
+  },
+  "photography-studios": {
+   "match": "exact",
+   "sic": [
+    "74201",
+    "74209"
+   ],
+   "uk_insolvent": 34,
+   "uk_live_companies": 9525,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.0,
+    "lo": 2.6,
+    "publishable": true,
+    "rse": 0.171,
+    "value": 3.6
+   }
+  },
+  "physical-therapy-clinics": {
+   "match": "shared",
+   "sic": [
+    "86900"
+   ],
+   "uk_insolvent": 257,
+   "uk_live_companies": 92670,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.1,
+    "lo": 2.5,
+    "publishable": true,
+    "rse": 0.062,
+    "value": 2.8
+   }
+  },
+  "pizzerias": {
+   "match": "approx",
+   "sic": [
+    "56101",
+    "56103"
+   ],
+   "uk_insolvent": 1853,
+   "uk_live_companies": 109042,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 17.8,
+    "lo": 16.2,
+    "publishable": true,
+    "rse": 0.023,
+    "value": 17.0
+   }
+  },
+  "plastering-services": {
+   "match": "exact",
+   "sic": [
+    "43310"
+   ],
+   "uk_insolvent": 52,
+   "uk_live_companies": 8704,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 7.8,
+    "lo": 4.6,
+    "publishable": true,
+    "rse": 0.139,
+    "value": 6.0
+   }
+  },
+  "plumbers": {
+   "match": "shared",
+   "sic": [
+    "43220"
+   ],
+   "uk_insolvent": 343,
+   "uk_live_companies": 46500,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.2,
+    "lo": 6.6,
+    "publishable": true,
+    "rse": 0.054,
+    "value": 7.4
+   }
+  },
+  "print-shops-offset-digital": {
+   "match": "exact",
+   "sic": [
+    "18129"
+   ],
+   "uk_insolvent": 100,
+   "uk_live_companies": 8084,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 15.0,
+    "lo": 10.2,
+    "publishable": true,
+    "rse": 0.1,
+    "value": 12.4
+   }
+  },
+  "pubs-taverns": {
+   "match": "shared",
+   "sic": [
+    "56302"
+   ],
+   "uk_insolvent": 830,
+   "uk_live_companies": 31956,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 27.8,
+    "lo": 24.3,
+    "publishable": true,
+    "rse": 0.035,
+    "value": 26.0
+   }
+  },
+  "real-estate-agencies": {
+   "match": "exact",
+   "sic": [
+    "68310"
+   ],
+   "uk_insolvent": 124,
+   "uk_live_companies": 33109,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.5,
+    "lo": 3.1,
+    "publishable": true,
+    "rse": 0.09,
+    "value": 3.7
+   }
+  },
+  "restaurants": {
+   "match": "exact",
+   "sic": [
+    "56101"
+   ],
+   "uk_insolvent": 1259,
+   "uk_live_companies": 43634,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 30.5,
+    "lo": 27.3,
+    "publishable": true,
+    "rse": 0.028,
+    "value": 28.9
+   }
+  },
+  "roofers": {
+   "match": "exact",
+   "sic": [
+    "43910"
+   ],
+   "uk_insolvent": 117,
+   "uk_live_companies": 16391,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.5,
+    "lo": 6.0,
+    "publishable": true,
+    "rse": 0.092,
+    "value": 7.1
+   }
+  },
+  "scenic-sightseeing-transport": {
+   "match": "approx",
+   "sic": [
+    "49390"
+   ],
+   "uk_insolvent": 43,
+   "uk_live_companies": 8492,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.8,
+    "lo": 3.8,
+    "publishable": true,
+    "rse": 0.152,
+    "value": 5.1
+   }
+  },
+  "security-services": {
+   "match": "exact",
+   "sic": [
+    "80100"
+   ],
+   "uk_insolvent": 116,
+   "uk_live_companies": 12731,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.9,
+    "lo": 7.6,
+    "publishable": true,
+    "rse": 0.093,
+    "value": 9.1
+   }
+  },
+  "shoe-repair": {
+   "match": "exact",
+   "sic": [
+    "95230"
+   ],
+   "uk_insolvent": 1,
+   "uk_live_companies": 362,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 15.5,
+    "lo": 0.5,
+    "publishable": false,
+    "rse": 1.0,
+    "value": 2.8
+   }
+  },
+  "short-term-rental-management": {
+   "match": "approx",
+   "sic": [
+    "55209",
+    "68320"
+   ],
+   "uk_insolvent": 222,
+   "uk_live_companies": 118617,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.1,
+    "lo": 1.6,
+    "publishable": true,
+    "rse": 0.067,
+    "value": 1.9
+   }
+  },
+  "sign-shops-graphics-fab": {
+   "match": "approx",
+   "sic": [
+    "32990"
+   ],
+   "uk_insolvent": 193,
+   "uk_live_companies": 16463,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 13.5,
+    "lo": 10.2,
+    "publishable": true,
+    "rse": 0.072,
+    "value": 11.7
+   }
+  },
+  "small-leather-goods": {
+   "match": "exact",
+   "sic": [
+    "15120"
+   ],
+   "uk_insolvent": 1,
+   "uk_live_companies": 995,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.7,
+    "lo": 0.2,
+    "publishable": false,
+    "rse": 1.0,
+    "value": 1.0
+   }
+  },
+  "soap-candle-makers": {
+   "match": "approx",
+   "sic": [
+    "20411"
+   ],
+   "uk_insolvent": 1,
+   "uk_live_companies": 838,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.7,
+    "lo": 0.2,
+    "publishable": false,
+    "rse": 1.0,
+    "value": 1.2
+   }
+  },
+  "software-development": {
+   "match": "exact",
+   "sic": [
+    "62012"
+   ],
+   "uk_insolvent": 281,
+   "uk_live_companies": 91298,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.5,
+    "lo": 2.7,
+    "publishable": true,
+    "rse": 0.06,
+    "value": 3.1
+   }
+  },
+  "specialty-grocers-delis": {
+   "match": "exact",
+   "sic": [
+    "47290",
+    "47210",
+    "47220",
+    "47230"
+   ],
+   "uk_insolvent": 129,
+   "uk_live_companies": 19117,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.0,
+    "lo": 5.7,
+    "publishable": true,
+    "rse": 0.088,
+    "value": 6.7
+   }
+  },
+  "specialty-trades-mixed": {
+   "match": "approx",
+   "sic": [
+    "43999"
+   ],
+   "uk_insolvent": 514,
+   "uk_live_companies": 57725,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.7,
+    "lo": 8.2,
+    "publishable": true,
+    "rse": 0.044,
+    "value": 8.9
+   }
+  },
+  "sporting-goods-specialty": {
+   "match": "exact",
+   "sic": [
+    "47640"
+   ],
+   "uk_insolvent": 62,
+   "uk_live_companies": 8830,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.0,
+    "lo": 5.5,
+    "publishable": true,
+    "rse": 0.127,
+    "value": 7.0
+   }
+  },
+  "sports-fitness": {
+   "match": "shared",
+   "sic": [
+    "93130",
+    "93110"
+   ],
+   "uk_insolvent": 130,
+   "uk_live_companies": 22856,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 6.7,
+    "lo": 4.8,
+    "publishable": true,
+    "rse": 0.088,
+    "value": 5.7
+   }
+  },
+  "stationery-paper-goods": {
+   "match": "exact",
+   "sic": [
+    "47620"
+   ],
+   "uk_insolvent": 18,
+   "uk_live_companies": 2131,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 13.3,
+    "lo": 5.3,
+    "publishable": true,
+    "rse": 0.236,
+    "value": 8.4
+   }
+  },
+  "tailoring-alterations": {
+   "match": "approx",
+   "sic": [
+    "95290"
+   ],
+   "uk_insolvent": 2,
+   "uk_live_companies": 1368,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.3,
+    "lo": 0.4,
+    "publishable": false,
+    "rse": 0.707,
+    "value": 1.5
+   }
+  },
+  "tanning-salons": {
+   "match": "shared",
+   "sic": [
+    "96040"
+   ],
+   "uk_insolvent": 36,
+   "uk_live_companies": 16504,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 3.0,
+    "lo": 1.6,
+    "publishable": true,
+    "rse": 0.167,
+    "value": 2.2
+   }
+  },
+  "tattoo-piercing-studios": {
+   "match": "approx",
+   "sic": [
+    "96090"
+   ],
+   "uk_insolvent": 653,
+   "uk_live_companies": 124657,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.7,
+    "lo": 4.9,
+    "publishable": true,
+    "rse": 0.039,
+    "value": 5.2
+   }
+  },
+  "tea-houses-matcha-bars": {
+   "match": "shared",
+   "sic": [
+    "56102"
+   ],
+   "uk_insolvent": 491,
+   "uk_live_companies": 40165,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 13.3,
+    "lo": 11.2,
+    "publishable": true,
+    "rse": 0.045,
+    "value": 12.2
+   }
+  },
+  "tiling-services": {
+   "match": "shared",
+   "sic": [
+    "43330"
+   ],
+   "uk_insolvent": 96,
+   "uk_live_companies": 10929,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 10.7,
+    "lo": 7.2,
+    "publishable": true,
+    "rse": 0.102,
+    "value": 8.8
+   }
+  },
+  "toy-game-stores": {
+   "match": "exact",
+   "sic": [
+    "47650"
+   ],
+   "uk_insolvent": 20,
+   "uk_live_companies": 4173,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 7.4,
+    "lo": 3.1,
+    "publishable": true,
+    "rse": 0.224,
+    "value": 4.8
+   }
+  },
+  "travel-agencies": {
+   "match": "exact",
+   "sic": [
+    "79110"
+   ],
+   "uk_insolvent": 42,
+   "uk_live_companies": 13873,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 4.1,
+    "lo": 2.2,
+    "publishable": true,
+    "rse": 0.154,
+    "value": 3.0
+   }
+  },
+  "tutoring-centers": {
+   "match": "shared",
+   "sic": [
+    "85590"
+   ],
+   "uk_insolvent": 137,
+   "uk_live_companies": 56814,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.8,
+    "lo": 2.0,
+    "publishable": true,
+    "rse": 0.085,
+    "value": 2.4
+   }
+  },
+  "veterinary-pet-care": {
+   "match": "exact",
+   "sic": [
+    "75000"
+   ],
+   "uk_insolvent": 7,
+   "uk_live_companies": 5329,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.7,
+    "lo": 0.6,
+    "publishable": false,
+    "rse": 0.378,
+    "value": 1.3
+   }
+  },
+  "vocational-other-training": {
+   "match": "shared",
+   "sic": [
+    "85590"
+   ],
+   "uk_insolvent": 137,
+   "uk_live_companies": 56814,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 2.8,
+    "lo": 2.0,
+    "publishable": true,
+    "rse": 0.085,
+    "value": 2.4
+   }
+  },
+  "watch-jewelry-repair": {
+   "match": "exact",
+   "sic": [
+    "95250"
+   ],
+   "uk_insolvent": 4,
+   "uk_live_companies": 1038,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 9.9,
+    "lo": 1.5,
+    "publishable": false,
+    "rse": 0.5,
+    "value": 3.9
+   }
+  },
+  "wedding-planning-coordination": {
+   "match": "approx",
+   "sic": [
+    "96090"
+   ],
+   "uk_insolvent": 653,
+   "uk_live_companies": 124657,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 5.7,
+    "lo": 4.9,
+    "publishable": true,
+    "rse": 0.039,
+    "value": 5.2
+   }
+  },
+  "window-washing": {
+   "match": "exact",
+   "sic": [
+    "81221"
+   ],
+   "uk_insolvent": 15,
+   "uk_live_companies": 4655,
+   "uk_rate": {
+    "few_cases": true,
+    "hi": 5.3,
+    "lo": 2.0,
+    "publishable": true,
+    "rse": 0.258,
+    "value": 3.2
+   }
+  },
+  "wine-liquor-stores": {
+   "match": "exact",
+   "sic": [
+    "47250"
+   ],
+   "uk_insolvent": 65,
+   "uk_live_companies": 4996,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 16.5,
+    "lo": 10.2,
+    "publishable": true,
+    "rse": 0.124,
+    "value": 13.0
+   }
+  },
+  "yoga-pilates-studios": {
+   "match": "shared",
+   "sic": [
+    "93130"
+   ],
+   "uk_insolvent": 100,
+   "uk_live_companies": 14895,
+   "uk_rate": {
+    "few_cases": false,
+    "hi": 8.2,
+    "lo": 5.5,
+    "publishable": true,
+    "rse": 0.1,
+    "value": 6.7
+   }
+  }
+ }
+}
