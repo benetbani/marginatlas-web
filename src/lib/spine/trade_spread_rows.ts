@@ -33,10 +33,11 @@
  *    exemption.
  */
 import { COPY } from "@/lib/spine/copy";
+import type { LondonTradeStrip } from "@/lib/spine/london_trade_hero";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-export type TradeSpreadMark = { key: "p10" | "typical" | "p90"; label: string; value: number; lead?: boolean };
+export type TradeSpreadMark = { key: "p10" | "q25" | "typical" | "q75" | "p90"; label: string; value: number; lead?: boolean };
 
 export type TradeSpreadData = {
   /** Three marks where the seed holds them, fewer where it holds fewer, none off `moneyShown`. */
@@ -56,6 +57,12 @@ export type TradeSpreadData = {
 export function buildTradeSpread(seed: any): TradeSpreadData | null {
   const meta = seed?.meta;
   if (!meta || typeof meta.trade !== "string") return null;
+  /* A LONDON TRADE: the register's lower quartile, median and upper quartile (plan 06, task A5), counted, not modelled. */
+  const ls = seed?.london_strip as LondonTradeStrip | undefined;
+  if (ls && Array.isArray(ls.marks) && ls.marks.length >= 2) {
+    const at = (k: string) => ls.marks.find((m) => m.key === k)?.value ?? null;
+    return { marks: ls.marks, basis: ls.basis, withheld: null, modelled: false, sample: false, figures: { p10: at("q25"), p50: at("typical"), p90: at("q75"), moneyShown: false } };
+  }
   const moneyShown = meta.money_shown === true;
   const h = seed?.headline ?? {};
   const p10 = isNum(h.rev_p10_usd) && h.rev_p10_usd > 0 ? h.rev_p10_usd : null;

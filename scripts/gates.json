@@ -1521,6 +1521,17 @@
       "claims": []
     },
     {
+      "name": "london-trade-hero",
+      "script": "tests/spine/london_trade_hero.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The London trade hero and sales strip (plan 06, task A5; his rulings of 2026-10-04): break-even and the middle owner's keeps from the engine on the three trades whose money prints (restaurants, nail s",
+      "reads": [
+        "src/lib/spine/london_trade_hero.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

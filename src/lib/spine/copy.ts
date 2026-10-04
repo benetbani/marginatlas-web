@@ -1536,6 +1536,33 @@ export const COPY = {
    *  London where the three marks are fixed multipliers of the typical; the
    *  measured basis says whose figures they are on a trusted local cell; the
    *  withheld line stands where the figure would off `moneyShown`. */
+  /** A London trade's masthead and sales strip from the register and the engine (plan 06, task A5; his rulings of 2026-10-04:
+   *  Greater London; break-even leads with the middle owner's keeps as a sole trader beside it, the company's under the plus).
+   *  Labels of three words at most; "an estimate" beside engine money (its range covers the band shapes only); no agency names. */
+  londonTrade: {
+    breakEvenLabel: "Sales to break even",
+    breakEvenBasis: "a year, to carry an average London {noun}",
+    salesLabel: "Typical yearly sales",
+    salesBasis: "the middle registered business in London",
+    salesBasisGroup: "the middle {group} in London",
+    cells: {
+      above: "Take that much",
+      keeps: "Middle one keeps",
+      keepsNote: "as a sole trader, an estimate",
+      firms: "Registered businesses",
+      firmsGroup: "every {group}",
+      under: "Take under {edge}",
+    },
+    companySummary: "What a company keeps",
+    companyRow: "As a company",
+    soleTraderRow: "As a sole trader",
+    foot: "Registered businesses in London, March 2026.",
+    marks: { lower: "Lower quarter", middle: "Middle", upper: "Upper quarter" },
+    stripBasis: "Yearly sales of registered businesses in London.",
+    stripBasisGroup: "Yearly sales of every {group} in London.",
+    under: "under",
+    over: "over",
+  },
   tradeSpread: {
     kicker: "Sales a year",
     basisModelled: "From a quiet shop to a busy one.",
@@ -1905,8 +1932,9 @@ export const COPY = {
     working: { yr1: "after one year", yr3: "after three years", cohort: "of the 2019 starters" },
     basis: "",
     foot: "Out of every 100 that open.",
-    /** On a UK page (plan 06, task A2): the period figure's rates and the group it is read for, which is broader than the trade. */
-    footUk: "Out of every 100 that open, at recent rates, across UK {group}.",
+    /** On a UK page (plan 06, task A2): the period figure's rates and the group it is read for, which is broader than the trade;
+     *  seven words and the group's five at most, inside the copy gate's twelve. */
+    footUk: "Per 100 that open, recent rates, UK {group}.",
     /** The drawn hundred's name for a screen reader, after the count: "50 of every 100 still open after five years". */
     drawn: "of every 100 still open after five years",
   },

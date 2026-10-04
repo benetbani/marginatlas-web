@@ -46,6 +46,7 @@ import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import { tradeNounFor } from "@/lib/taxonomy";
 import type { TradeNet } from "@/lib/spine/trade_net";
+import type { LondonTradeHero } from "@/lib/spine/london_trade_hero";
 
 type Conf = "measured" | "modeled" | "placeholder";
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -66,11 +67,31 @@ export type TradeHeroFacts = {
   net: TradeNet | null;
   /** The withheld line, off `moneyShown`, or null. */
   withheld: string | null;
+  /** Under the plus: a London money trade's company keeps beside the sole trader's (plan 06, task A5), or null. */
+  detail: { summary: string; rows: Array<{ label: string; value: string; note?: string }> } | null;
 };
 
 export function tradeHeroFacts(seed: any): TradeHeroFacts | null {
   const meta = seed?.meta;
   if (!meta || typeof meta.trade !== "string" || typeof meta.city !== "string") return null;
+  /* A LONDON TRADE: the register's and the engine's facts, carried on the seed by the adapter (plan 06, task A5; his rulings of
+     2026-10-04). Break-even and the middle owner's keeps on the three money trades, typical yearly sales and the count on every
+     other; the foot names the register; no net (no table holds a London margin). */
+  const london = seed?.london as LondonTradeHero | undefined;
+  if (london && london.answer && Array.isArray(london.cells)) {
+    return {
+      name: meta.trade,
+      iso2: typeof meta.iso2 === "string" ? meta.iso2.toLowerCase() : undefined,
+      answer: london.answer,
+      absent: { label: COPY.tradeHero.answerLabel, word: COPY.tradeHero.absent, note: COPY.tradeHero.absentNote },
+      cells: london.cells,
+      foot: { text: london.foot, modeled: false },
+      moneyShown: false,
+      net: null,
+      withheld: null,
+      detail: london.detail,
+    };
+  }
   const moneyShown = meta.money_shown === true;
   const net: TradeNet | null = seed?.net && isNum(seed.net.pct) && typeof seed.net.text === "string" ? (seed.net as TradeNet) : null;
   const take = seed?.owner?.take_home_usd;
@@ -105,6 +126,7 @@ export function tradeHeroFacts(seed: any): TradeHeroFacts | null {
     moneyShown,
     net,
     withheld,
+    detail: null,
   };
 }
 

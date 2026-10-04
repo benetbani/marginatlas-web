@@ -272,24 +272,15 @@ export function buildCellView(rawInput: CellViewInput): CellView {
       ? `A ${placeName} ${tradeNoun} clears about ${usd(ownerTakeHome)} for its owner in a normal year.`
       : `What a ${tradeNoun} in ${placeName} really earns.`;
 
-  // Spread: London derives its band from the modeled revenue the way the board
-  // does; elsewhere use the cell's measured percentiles, only when money shows.
-  /* THE LONDON BAND IS INVENTED AND NOW SAYS SO. Every number below is the
-     typical revenue times a constant, so the band has the SAME SHAPE for a
-     restaurant, a barbershop and a dental practice: p90/p10 is 3.6 on all of
-     them. It was rendered under "Bottom 10%" and "Top 10%", which is a
-     percentile claim about data that does not exist.
-
-     `docs/adr/0001` already ruled on this: a Band whose shape is invented should
-     be marked, because "an unmarked band is a claim about spread that the figures
-     behind it do not support". `basis` carries that mark to the strip, which
-     drops the percentile wording when it is set. The numbers are unchanged; what
-     changes is that they stop pretending to be measurements. */
+  // Spread: the cell's measured percentiles, only when money shows.
+  /* THE INVENTED LONDON BAND IS GONE (plan 06, task A5, 2026-10-04): it was the typical revenue times 0.5, 0.72, 1.35 and 1.8,
+     one shape for every trade, printed under "bottom tenth" and "top tenth". A London trade page draws the register's own
+     quartiles now (src/lib/spine/london_trade_hero.ts, londonTradeStrip), and the curated London entry no longer reaches
+     this view from the trade page (adapt_cell.ts). */
   let spread: CellViewMasthead["spread"] = null;
-  if (isLondon && isNum(typicalRevenue)) {
-    const r = typicalRevenue;
-    spread = { p10: r * 0.5, p25: r * 0.72, p50: r, p75: r * 1.35, p90: r * 1.8, basis: "modelled" };
-  } else if (moneyShown && isNum(cell.rev_p10) && isNum(cell.rev_p90)) {
+  /* Read percentiles only: a filled revenue's percentiles are fixed multipliers of a filled figure (fill_defaults.ts), and the
+     neighbourhood trade route still passes the London entry, so its money gate alone would let them through. */
+  if (moneyShown && !cell._revenueFilled && isNum(cell.rev_p10) && isNum(cell.rev_p90)) {
     spread = {
       p10: cell.rev_p10 ?? null,
       p25: cell.rev_p25 ?? null,

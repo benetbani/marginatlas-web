@@ -40,6 +40,7 @@ import {
 } from "@/lib/cells";
 import type { Cell } from "@/lib/cells";
 import { setupItemsFromCell } from "./setup_items";
+import { londonTradeHero, londonTradeStrip } from "./london_trade_hero";
 import { buildCellRelatedLinks, fetchCellSiblings } from "@/lib/cells/related_links";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { computeBreakeven } from "@/lib/economics/breakeven";
@@ -54,7 +55,7 @@ import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
-import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
+import { buildCellBoard, getLondonEntry, isLondonCell } from "@/lib/scores/cell_board";
 import { buildCellView } from "@/lib/cells/cell_view";
 import type { CellView } from "@/lib/cells/cell_view";
 import { slugToIndustry, tradeNounFor } from "@/lib/taxonomy";
@@ -173,7 +174,12 @@ export async function loadCellView(
   const wageEstimate =
     cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id, geo);
 
-  const londonEntry = getLondonEntry(cell);
+  /* LONDON IS GREATER LONDON, AND ITS FIGURES ARE THE REGISTER'S (plan 06, task A5; his rulings of 2026-10-04): the trade page no
+     longer reads the curated London entry (a hand-typed model file) or the database row the London alias resolves to (the City
+     of London's, a different place), so no money from either reaches the view; the seed carries the register's figures and the
+     engine's instead (`london` and `london_strip`, below). */
+  const isLondonTrade = isLondonCell(cell);
+  const londonEntry = isLondonTrade ? null : getLondonEntry(cell);
 
   const { breakInRating } = buildCellBoard({
     cell,
@@ -186,7 +192,7 @@ export async function loadCellView(
 
   const Le = londonEntry?.economics ?? null;
   const expectedIndustryId = slugToIndustry(industry)?.id ?? cell.industry_id ?? undefined;
-  const trustedLocalCell = isTrustedLocalCell(cell, expectedIndustryId);
+  const trustedLocalCell = !isLondonTrade && isTrustedLocalCell(cell, expectedIndustryId);
   // The credibility screen's yardstick (buildCellView): the country's own
   // median full-time pay, counted only when this country's profile row is
   // actually held (getCountryProfile answers a generic fallback otherwise).
@@ -388,6 +394,12 @@ export async function buildSpineCellSeed(
     money_shown: moneyShown,
     industry_id: industryId,
   };
+
+  /* -- london: the register's and the engine's figures for a London trade (plan 06, task A5) --------------------------
+     The masthead and the sales strip read these where they hold (trade_hero_facts.ts, trade_spread_rows.ts); every other
+     card reads the seed as off London, its money gate shut (no curated entry, no City of London row). */
+  const london = isLondonCell(cell) ? londonTradeHero(industry.toLowerCase()) : null;
+  const london_strip = london ? londonTradeStrip(industry.toLowerCase()) : null;
 
   /* -- net: THE ONE BUILDER'S FIGURE (trade_net.ts, R7, DATA-REQUIREMENTS
      item 58; plan step 33's first dispatch, 2026-09-18) ------------------
@@ -666,6 +678,8 @@ export async function buildSpineCellSeed(
 
   return {
     meta,
+    london: london ?? undefined,
+    london_strip: london_strip ?? undefined,
     headline,
     margins,
     net: net ?? undefined,

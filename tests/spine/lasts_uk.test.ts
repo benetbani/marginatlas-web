@@ -21,7 +21,7 @@ const check = (label: string, ok: boolean) => {
 const uk = buildLasts("restaurants", "place", { iso2: "GB", slug: "restaurants" });
 check("London restaurants: 94, 50 and 29 of 100 at one, three and five years, at recent rates", uk !== null && uk.values.yr1 === 94 && uk.values.yr3 === 50 && uk.values.yr5 === 29);
 check("London restaurants: 39 of the 2019 starters after five years", uk !== null && uk.cohort2019 === 39);
-check("London restaurants: the foot names the group", uk !== null && uk.foot === "Out of every 100 that open, at recent rates, across UK restaurants and mobile food.");
+check("London restaurants: the foot names the group", uk !== null && uk.foot === "Per 100 that open, recent rates, UK restaurants and mobile food.");
 check("London restaurants: the demography's own figures", uk !== null && uk.confidence === "measured");
 check("a UK trade in two groups (bakeries) draws no card", buildLasts("bakeries_retail", "place", { iso2: "GB", slug: "bakeries-retail" }) === null);
 const de = buildLasts("restaurants", "place", { iso2: "DE", slug: "restaurants" });

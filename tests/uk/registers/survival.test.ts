@@ -30,6 +30,10 @@ check("bakeries map to two groups: no single figure", tradeSurvivalUk("bakeries-
 check("a trade with no group: nothing", tradeSurvivalUk("pool-service-maintenance") === null);
 check("an unknown trade: nothing", tradeSurvivalUk("no-such-trade") === null);
 
+/* Every group name is five words at most, so the survival card's foot stays inside the copy gate's twelve. */
+const long = Object.entries(SURVIVAL_GROUP_NAME).filter(([, n]) => n.split(/\s+/).length > 5).map(([g, n]) => `${g} "${n}"`);
+check(`every group name is five words at most${long.length ? `: ${long.join(", ")}` : ""}`, long.length === 0);
+
 /* Every group a trade maps to alone has a plain name, so no survival prints without saying whose it is. */
 type S = { trade_groups: Record<string, string[]> };
 const single = new Set(Object.values((survivalJson as unknown as S).trade_groups).filter((g) => g.length === 1).map((g) => g[0]));

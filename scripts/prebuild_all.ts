@@ -550,6 +550,8 @@ const GATES: Gate[] = [
   { name: "bill-own-trade", script: "tests/cells/bill_own_trade.test.ts" },
   /* The trade head's one figure (plan 06, task A4): London's register median or a read revenue, never a filled constant. */
   { name: "trade-head", script: "tests/spine/trade_head.test.ts" },
+  /* The London trade hero and strip from the register and the engine (plan 06, task A5; his rulings of 2026-10-04). */
+  { name: "london-trade-hero", script: "tests/spine/london_trade_hero.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },
