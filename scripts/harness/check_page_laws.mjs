@@ -159,6 +159,9 @@ function inPage(width) {
          clusters are one card each under clauses 50 and 53. The cluster fills
          its level by construction; a hole inside a cell is the page filter's. */
       if (band.getAttribute("data-band") === "bento") continue;
+      /* A LEVEL ON A BAND PAGE IS A ZONE (MODEL.md PART 10, "what it supersedes, on a band page only": clauses 50, 52 and 53):
+         a masthead standing in its zone is read by the zone laws below, never as a bento level that must fill and draw. */
+      if (band.closest("[data-zone]")) continue;
       const kids = [...band.children].filter((k) => k.getClientRects().length);
       if (kids.length === 0) continue;
       const br = band.getBoundingClientRect();
@@ -420,7 +423,8 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
       if (top !== wantTop || bottom !== want[1]) red(zid, "ZONE PAD", `padding ${top} above and ${bottom} below; the ladder asks ${wantTop} and ${want[1]} at ${width}`);
       const split = z.getAttribute("data-zone");
       const cells = [...z.querySelectorAll(":scope > [data-zone-level] > [data-zone-cell]")];
-      if (split && split !== "wide" && cells.length !== 2) red(zid, "ZONE SPLIT", `a zone declared ${split} draws ${cells.length} cell(s)`);
+      const cellsAsked = split === "wide" || split === "lone" ? 1 : split === "1-1-1" ? 3 : 2;
+      if (split && cells.length !== cellsAsked) red(zid, "ZONE SPLIT", `a zone declared ${split} draws ${cells.length} cell(s)`);
       for (const c of cells) {
         const r = c.getBoundingClientRect();
         if (r.height < 8 || !(c.textContent || "").trim()) red(zid, "ZONE SPLIT", `an empty cell in a zone (${Math.round(r.width)} by ${Math.round(r.height)})`);

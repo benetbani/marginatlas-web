@@ -7,12 +7,14 @@
  *
  * THE LAW, inside the component:
  *  - THE CARD'S ONE FIGURE is the span, cheapest budget to dearest, with the shop and the VAT in one line under it.
- *  - FROM 720px OF CARD, THE FOUR BUDGETS SIDE BY SIDE, a price table: each head the budget's name, its price mark (one to four
+ *  - FROM 760px OF SECTION, THE FOUR BUDGETS SIDE BY SIDE, a price table: each head the budget's name, its price mark (one to four
  *    dollar signs, the filled ones in ink), its total, and a bar of the total against the dearest budget (zero-based, in
  *    the accent's gradient). Under the heads, one row a piece of kit: its glyph, its name and its count, then each budget's named
  *    product under the line's cost, so a row reads across as one chair at four prices.
- *  - UNDER 720px, A SWITCH OF THE FOUR BUDGETS (the heads as buttons, the chosen one pressed) over the chosen budget's list:
- *    the same rows, one budget at a time, since four named products do not fit a phone's line.
+ *  - UNDER 760px, A SWITCH OF THE FOUR BUDGETS (the heads as buttons, the chosen one pressed) over the chosen budget's list:
+ *    the same rows, one budget at a time, since four named products do not fit a phone's line. 760, not 720 (2026-10-04, the
+ *    band page): open on a tablet's band the section took the whole 720px the card's padding used to keep it under, the table
+ *    drew at 127px a budget, and "Takara Belmont Yume Espoir" was cut to 127 of its 156px (the page laws' TEXT CUT, clause 56).
  *  - Every figure is whole dollars with its thousands comma, in the columns and the heads alike (PART 5: one grammar a column).
  *  - `data-archetype="stock-tiers"`, `data-visual="1"`, `data-tiers`, `data-rows`; `data-row` and `data-label` on each row, so
  *    the model laws read the figures on their row's line.
@@ -99,8 +101,8 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
       </div>
       <div className="[container-type:inline-size]">
         <div data-archetype="stock-tiers" data-visual="1" data-tiers={String(kit.tiers.length)} data-rows={String(rows.length)}>
-          {/* THE TABLE, from 720px of card. */}
-          <div data-form="table" className="hidden [@container(min-width:720px)]:grid grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] gap-x-4">
+          {/* THE TABLE, from 760px of section. */}
+          <div data-form="table" className="hidden [@container(min-width:760px)]:grid grid-cols-[minmax(0,1.15fr)_repeat(4,minmax(0,1fr))] gap-x-4">
             <span aria-hidden />
             {kit.tiers.map((t) => (
               <div key={t.key} data-tier={t.key} className="pb-3">
@@ -119,8 +121,8 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
               </InlineDisclosure>
             ) : null}
           </div>
-          {/* THE SWITCH, under 720px of card: the four heads as buttons over the chosen budget's list. */}
-          <div data-form="switch" className="[@container(min-width:720px)]:hidden">
+          {/* THE SWITCH, under 760px of section: the four heads as buttons over the chosen budget's list. */}
+          <div data-form="switch" className="[@container(min-width:760px)]:hidden">
             {/* The buttons are controls, so the small radius (8px, `rounded-sm`): at `rounded-lg`, the site's 16, four of them stood
                 off the one scale (the chain's radius-uniform, 2026-09-25: 12 for a card, 8 or under for a control, or a pill). */}
             <div role="group" aria-label={S.pick} className="grid grid-cols-2 gap-2 [@container(min-width:420px)]:grid-cols-4">

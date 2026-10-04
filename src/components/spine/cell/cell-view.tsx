@@ -131,7 +131,8 @@
  */
 import * as React from "react";
 import { spineCellSeed } from "@/lib/spine-seeds";
-import { Box, Rail, Movement, usd, Band } from "@/components/spine/kit";
+import { Box, Rail, usd } from "@/components/spine/kit";
+import { Zone, type ZoneSplit } from "@/components/spine/zones";
 import { Masthead } from "./masthead";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "./turn-one";
 import { ClearsCard, LastsCard, MixCard } from "./turn-two";
@@ -376,257 +377,62 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const turnTwo = !!(clears && lasts);
   const turnThree = !!market;
 
+  /* THE BAND PAGE (2026-10-04, his "push forward man" after the United Kingdom's band page went live; MODEL.md PART 10): each level
+     a zone, the tone by its place, the sections open on it, each chapter's number and title on the first level of the chapter that
+     draws. The levels, their pairs, their splits and the tablet's stacking are the bento's, each measured there (this file before
+     2026-10-04 carries the numbers): the answer; the spread (or the customers) beside who it suits; 01 the permits beside opening,
+     the stock or the market's hold beside the thresholds, the split beside the team, the peers table (the whole column); 02 what
+     clears beside how long it lasts; 03 the market's cluster, the mix beside the other trades, the apps beside spending by income,
+     the customers beside what it is worth; the close. A level whose partner self-omits keeps the kit's two thirds (zones.tsx). */
+  type CellZone = { key: string; split: ZoneSplit; stack?: "lg"; chapter?: "01" | "02" | "03"; label: string; body: React.ReactNode[] };
+  const CHAPTERS = { "01": COPY.tradeChapters.costs, "02": COPY.tradeChapters.keep, "03": COPY.tradeChapters.trade } as const;
+  const keep = (xs: React.ReactNode[]) => xs.filter(Boolean);
+  const opening: React.ReactNode[] = spreadDrawn
+    ? [<Spread key="spread" d={d} />, <Suits key="suits" d={d} />]
+    : customers && hasSuits
+      ? [<CustomersCard key="customers" customers={customers} />, <Suits key="suits" d={d} />]
+      : keep([hasSpread ? <Spread key="spread" d={d} /> : null, hasSuits ? <Suits key="suits" d={d} /> : null]);
+  const openSplit: ZoneSplit = open ? (openForm(open) === "metric" ? "2-1" : openForm(open) === "list" ? "1-1" : "1-2") : "1-2";
+  const cellZonesAll: CellZone[] = [
+    { key: "take", split: "wide", label: "The answer", body: [<Masthead key="take" d={d} />] },
+    { key: "opening", split: "1-2", stack: "lg", label: "Is the money in it", body: opening },
+    { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne && permits && open ? [<PermitsCard key="permits" permits={permits} top={openForm(open) === "list"} />, <OpenCard key="open" open={open} />] : [] },
+    {
+      key: "stock",
+      split: kit && lines ? "3-2" : "2-3",
+      stack: "lg",
+      chapter: "01",
+      label: "Stock",
+      body: turnOne && lines ? (kit ? [<StockTiers key="stock" id="stock" kit={kit} />, <Thresholds key="thresholds" id="thresholds" data={lines} fill />] : hold ? [<MarketHold key="hold" id="market-hold" data={hold} />, <Thresholds key="thresholds" id="thresholds" data={lines} fill />] : []) : [],
+    },
+    { key: "split", split: "3-2", stack: "lg", chapter: "01", label: "Where the money goes", body: turnOne && split && team ? [<SplitCard key="split" split={split} />, <TeamCard key="team" team={team} />] : [] },
+    { key: "peers", split: "wide", chapter: "01", label: COPY.tradePeers.kicker, body: turnOne && peers && peers.peers > 0 ? [<PeersCard key="peers" peers={peers} zone />] : [] },
+    { key: "clears", split: "1-1", chapter: "02", label: COPY.tradeChapters.keep, body: turnTwo && clears && lasts ? [<ClearsCard key="clears" clears={clears} />, <LastsCard key="lasts" lasts={lasts} />] : [] },
+    { key: "market", split: "wide", chapter: "03", label: COPY.tradeChapters.trade, body: turnThree ? [<MarketBand key="market" market={market} />] : [] },
+    { key: "mix", split: "1-2", stack: mix && rivals ? undefined : "lg", chapter: "03", label: "The mix", body: keep([mix ? <MixCard key="mix" mix={mix} /> : null, rivals ? <RivalsCard key="rivals" rivals={rivals} oneColumn={!!mix} /> : null]) },
+    { key: "apps", split: "3-2", stack: "lg", chapter: "03", label: "Paying here", body: apps && spendIncome ? [<LocalApps key="apps" id="apps" data={apps} />, <SpendByIncome key="spend" id="spend-income" data={spendIncome} />] : [] },
+    { key: "exit", split: "1-1", stack: exitCustomers && worthDrawn ? undefined : "lg", chapter: "03", label: "The way out", body: keep([exitCustomers ? <CustomersCard key="customers" customers={exitCustomers} /> : null, worthDrawn ? <WorthCard key="worth" worth={worthDrawn} /> : null]) },
+    /* THE EXIT ON THE HERO BAND THE BENTO'S CLOSE STOOD ON (`Band hero`, exit.tsx says why): the page's third full width, the
+       sanction the full-width gates and the section-bands baseline read on this page. */
+    { key: "close", split: "wide", label: "Where to next", body: doors.length > 0 ? [<div key="close" data-hero="1"><CloseCard doors={doors} /></div>] : [] },
+  ];
+  const cellZones = cellZonesAll.filter((z) => z.body.length > 0);
+  /* The chapter's number and title stand on the first level of the chapter that draws. */
+  const headed = new Set<string>();
   return (
-    <div className="py-2" data-spine-body>
-      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
-         wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
-         landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
-         375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
-      {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): country, place, this
-          trade. Above the masthead, outside the levels, no figure. */}
+    <>
+      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
       <Crumbs items={buildCellCrumbs(d.meta)} />
-      {/* `00 take`, FULL WIDTH, the page's only 40 (8.6, loud one): the answer
-          card draws its own hero band, the attribute the full-width gate reads. */}
-      <Masthead d={d} />
-      {/* `01 spread | 02 suits`, 1-1, the opening's one band (8.6): is the money
-          in the range I pictured, and am I the kind of person this suits. The
-          strip LEFT (the dot family's seat, M10), the notes RIGHT, both quiet.
-          MEASURED at 1-1 after it was seated (the dispatch's report carries
-          the numbers): 8.6's own expectation was that five notes would open
-          air under the strip and the split would move to 2-3 with `02` wide;
-          the card holds four notes, and the measurement decided the split. */}
-      {/* WHERE THE SPREAD IS WITHHELD, WHAT A CUSTOMER SPENDS TAKES ITS SEAT
-          (the goal's A5, 2026-09-24): the opening asks "is the money in the
-          range I pictured", and where the trust gate withholds a year's
-          takings (a filled London row without a curated entry) the card that
-          still answers money coming in is a regular's year, the trade's own,
-          which every page holds; it stood in the exit beside the worth, and
-          the worth leaves with the spread (below), so nothing prints twice
-          and no absence card stands. Money-shown pages keep the spread. */}
-      {spreadDrawn ? (
-        <Band split="1-2" stack="lg">
-          <Spread d={d} />
-          <Suits d={d} />
-        </Band>
-      ) : customers && hasSuits ? (
-        <Band split="1-2" stack="lg">
-          <CustomersCard customers={customers} />
-          <Suits d={d} />
-        </Band>
-      ) : hasSpread || hasSuits ? (
-        <Band split="1-2" stack="lg">
-          <Spread d={d} />
-          <Suits d={d} />
-        </Band>
-      ) : null}
-
-      {/* CHAPTER TURN ONE (8.6, "What it costs to open, and to run", the site's
-          string, M7): the kit's Movement, the muted index and one plain
-          heading, no eyebrow and no icon (8.4). */}
-      {turnOne ? (
-        <>
-          <Movement index="01" heading={COPY.tradeChapters.costs} />
-          {/* `03 permits | 04 open`, the permits narrow LEFT and the cost to open
-              wide RIGHT in all three of its states (8.6), AT 1-2, RULED BY
-              MEASUREMENT 2026-09-18 (8.4 rule 1, the closed set): at 8.6's
-              expected 2-3 the exemplar's held card stood 610 (nine setup lines
-              as a table) against the four-cell licence grid's 268, a 376 by
-              342 hole and 40 percent ink at 1280; with the bill's five biggest
-              lines drawn and the rest stated (open_rows.ts) the card is 426,
-              and at 1-2 the grid's labels wrap to its phone form, 316, so the
-              air under it is 110, under the 120 floor, 0 holes at three
-              widths; at 2-3 it would still be 133. The baseline and withheld
-              states hold at either split (269 and 238 against the grid at
-              2-3, measured). `stack="lg"` because without it the grid at a
-              tablet's 344 stretched to the bill's height with 373 of air
-              (measured). Both cards draw on every cell whose trade holds a
-              shard. */}
-          {permits && open ? (
-            /* A FIGURE CARD TAKES THE NARROW THIRD (the goal's B12, 2026-09-24):
-               the months to earn it back since A4, and now the lone total too,
-               which sat in the wide two thirds with a blank of about 613 by 126
-               round its figure on 40 London trades at 1280 (E7's sweep). THE
-               KINDS-OF-SHOP LIST STANDS AT HALVES: at 1-2 the licences at a third
-               wrapped to their phone grid and outgrew it, a 613 by 120 to 150
-               blank round the list on 11 of its 41 pages; at 1-1 the licences
-               widen and shorten, measured on the 41 (the numbers in the
-               commit). The bill keeps the wide side (the 2026-09-18 reading). */
-            <Band split={openForm(open) === "metric" ? "2-1" : openForm(open) === "list" ? "1-1" : "1-2"} stack="lg">
-              <PermitsCard permits={permits} top={openForm(open) === "list"} />
-              <OpenCard open={open} />
-            </Band>
-          ) : null}
-          {/* `03b kit | 03c lines` (2026-09-25): the kit wide LEFT, its four budgets as a switch under 720px of card (every seat on this
-              page is under it at 1280), the lines narrow RIGHT; one drawing on the level, the kit's bars. */}
-          {kit && lines ? (
-            <Band split="3-2" stack="lg">
-              <StockTiers id="stock" kit={kit} />
-              <Thresholds id="thresholds" data={lines} fill />
-            </Band>
-          ) : hold && lines ? (
-            /* THE MARKET NARROW AND THE LINES WIDE, 2-3 (measured on the London grocery page, 2026-09-25): at three fifths the market
-               stood 64px short of the lines beside it; at two fifths its parts take one column and the lines take their two. */
-            <Band split="2-3" stack="lg">
-              <MarketHold id="market-hold" data={hold} />
-              <Thresholds id="thresholds" data={lines} fill />
-            </Band>
-          ) : null}
-          {/* `05 split | 06 team`, the split wide LEFT (fill-bar two, M10) and the
-              team narrow RIGHT (8.6), AT 3-2 as expected, RULED BY MEASUREMENT
-              2026-09-18 (8.4 rule 1; the dispatch's report carries the numbers
-              at three widths on the three story cells). `stack="lg"` because at
-              a tablet's 344 the split's legend fell to one column and the
-              seven-row table stood past it. Both cards draw on every cell whose
-              trade holds a shard. */}
-          {split && team ? (
-            <Band split="3-2" stack="lg">
-              <SplitCard split={split} />
-              <TeamCard team={team} />
-            </Band>
-          ) : null}
-          {/* `07 peers`, FULL WIDTH, the page's second of three (8.6, R1: the
-              take, the peers, the close), closing turn one: the table on
-              CompareTable, which draws its own `data-wide-table` wrapper, the
-              sanction the full-width and lone-card gates read; the
-              section-bands baseline for this page moved 0 to 1 with it, the
-              city's precedent (its history entry says so). Quiet by table
-              law, no colour; the rows never navigate (M23). */}
-          {/* WITHHELD WHEN NO PEER RESOLVES (his word of 2026-09-19, "will you
-              say not gathered yet?", verbatim in rules/FOUNDER-VERDICTS.md,
-              over the 2026-09-08 seated reading): off the United States the
-              table held the home row alone under "Not gathered yet: the same
-              trade in other places", one row of a comparison, on the London
-              page he is shown. The builder still builds the seated shape (its
-              copy gate reads it, the sheet draws it as the form's own story);
-              the page draws the table only where a peer stands in it, and it
-              returns with the peers (DATA-REQUIREMENTS item 57). */}
-          {peers && peers.peers > 0 ? <PeersCard peers={peers} /> : null}
-        </>
-      ) : null}
-
-      {/* CHAPTER TURN TWO (8.6, "What it takes to keep it open"): does an
-          ordinary day cover the costs, and do places like this last. */}
-      {turnTwo ? (
-        <>
-          <Movement index="02" heading={COPY.tradeChapters.keep} />
-          {/* `08 clears | 09 lasts`, 1-1 AS EXPECTED, the share LEFT (loud three
-              in 8.6, the page's third and last accent, on BentoMetric while
-              the ring waits for his click) and the survival grid RIGHT, quiet,
-              ink. MEASURED 2026-09-18 at three widths on London, California
-              and Mumbai cafes (the dispatch's report carries the numbers): a
-              one-figure card against three cells, 0 holes. Both cards draw on
-              every cell whose trade holds a shard. */}
-          {/* RE-PAIRED 2026-09-20 UNDER HIS PAGE LAWS AND THE GOLD STANDARD (the
-              loop's composition, reversible; the readings in
-              scratchpad/step23 and the plan's log): `08 clears | 09 lasts | 14
-              worth` AT THREE THIRDS, the kit's `1-1-1` (clause 50 allows
-              three), the ring beside its words LEFT (the page's third accent),
-              the survival cells in the middle, the two-mark strip RIGHT:
-              221, 254 and 241 tall at a third, one level with no card
-              short of its neighbour by more than the foot's 48, two visuals
-              (the ring, the strip). `10 watch`, the drawn blocked seat, LEFT
-              THE PAGE: no "not gathered yet" card in front of him (his word
-              of 2026-09-19), its data 0 of 243 (item 53), and beside the
-              donut it stretched to 271 and fell to 56 percent ink (the
-              art-direction gate's E2 on the first render); it returns with
-              its data as his B1 bars. `11 mix` moved down to the exit beside
-              `13 rivals` (below). MEASURED ON THE WAY, the pairings refused:
-              the ring beside the donut at 1-1 (the donut's card 50 taller,
-              and stacked at 768 the ring's words left 255 by 180 of air); the
-              donut beside the list at 1-2 with the list in two columns (the
-              list 84 short); `14` alone at two thirds (LEVEL UNFILLED, 65
-              percent); every 2 + 2 + 1 of five cards leaves one alone. */}
-          {/* BACK TO THE PAIR the night of 2026-09-20: `14 worth` left this level
-              for the exit's second pair beside `16 customers` (below), the
-              section his "more sections" added; the ring beside the survival
-              cells, 221 / 221 at 1280, measured on 2026-09-20. */}
-          {clears && lasts ? (
-            <Band split="1-1">
-              <ClearsCard clears={clears} />
-              <LastsCard lasts={lasts} />
-            </Band>
-          ) : null}
-        </>
-      ) : null}
-
-      {/* CHAPTER TURN THREE (8.6, "What the trade is like"): the one-band turn,
-          `12 market`, the bento, its own band with zero accent; the heading
-          draws when the cluster does (every trade that holds a shard). */}
-      {turnThree ? (
-        <>
-          <Movement index="03" heading={COPY.tradeChapters.trade} />
-          <MarketBand market={market} />
-        </>
-      ) : null}
-
-      {/* THE EXIT (no chapter break, PART 1). Until 2026-09-20 it was `13
-          rivals | 14 worth` at 2-1, ruled by measurement on 2026-09-18 (air
-          under `14` at 1-1, the list's two-column form on the wide seat;
-          exit.tsx carries the four readings and the six-row residual); the
-          strip now stands on turn two's level of three, and the list's
-          partner is the donut. */}
-      {/* `11 mix | 13 rivals` AT 1-2 (2026-09-20, the exit's new pair): the
-          donut's card LEFT at a third, where the ring stands above its three
-          rows (409 tall, measured), and the list of other trades RIGHT in ONE
-          column (MarkList's `oneColumn`, 397 tall at 693 by the 2026-09-18
-          reading): 12 apart, the closest pair on the page. The two-column
-          form the list took beside the strip stood 308 and left 100 of air
-          under it beside the donut. No `stack`: at a tablet's equal halves
-          the donut stacks to 409 and the one-column list to 413, the same
-          match. Under the chapter's own heading, "What the trade is like":
-          how the money comes in, and what the other trades here keep. */}
-      {mix && rivals ? (
-        <Band split="1-2">
-          <MixCard mix={mix} />
-          <RivalsCard rivals={rivals} oneColumn />
-        </Band>
-      ) : (
-        <>
-          {mix ? <Band split="1-2" stack="lg"><MixCard mix={mix} /></Band> : null}
-          {rivals ? <Band split="2-1" stack="lg"><RivalsCard rivals={rivals} /></Band> : null}
-        </>
-      )}
-      {/* `17 apps | 18 spend` AT 3-2 (2026-09-25): the apps wide LEFT in their two balanced columns (they need 560px of card for two),
-          who spends on the trade's item by income RIGHT, its columns taking the height the directory lends them; the level's one
-          drawing. Under "What the trade is like": the tools the trade runs on, and who buys from it. */}
-      {apps && spendIncome ? (
-        <Band split="3-2" stack="lg">
-          <LocalApps id="apps" data={apps} />
-          <SpendByIncome id="spend-income" data={spendIncome} />
-        </Band>
-      ) : null}
-      {/* `16 customers | 14 worth` AT 1-1 (2026-09-20 night, his "more
-          sections" from what the shard holds): what one regular customer is
-          worth a year LEFT, the fact card with its computation at 30, and
-          what the whole business sells for RIGHT, the two-mark strip, the
-          level's visual; the exit's second pair, one reading of worth beside
-          the other. Both draw on every trade holding a shard; a survivor
-          stands alone at two thirds. Measured on London, the numbers in the
-          commit. */}
-      {/* THE WORTH DRAWS ONLY ITS STRIP (the goal's A5): its withheld state
-          ("Not measured yet: the take-home here that a sale price is worked
-          from.", 117 of the 138 live London trades) and its other-basis state
-          ("Not worked out yet", 4) are absence cards, and they leave; the
-          customers card stands here only where it did not move up. */}
-      {exitCustomers && worthDrawn ? (
-        <Band split="1-1">
-          <CustomersCard customers={exitCustomers} />
-          <WorthCard worth={worthDrawn} />
-        </Band>
-      ) : exitCustomers ? (
-        <Band split="2-1" stack="lg"><CustomersCard customers={exitCustomers} /></Band>
-      ) : worthDrawn ? (
-        <Band split="2-1" stack="lg"><WorthCard worth={worthDrawn} /></Band>
-      ) : null}
-      {/* `15 close`, FULL WIDTH (8.6, R1), the page's third of three: the
-          terminus on the hero band the old close stood on, the sanction the
-          full-width gate, the lone-card rule and the section-bands baseline
-          read on this page (exit.tsx says why it stays there). */}
-      {doors.length > 0 ? (
-        <div className="mt-6 mb-2">
-          <Band hero><CloseCard doors={doors} /></Band>
-        </div>
-      ) : null}
-    </div>
+      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+        {cellZones.map((z) => {
+          const chapter = z.chapter && !headed.has(z.chapter) ? (headed.add(z.chapter), { index: z.chapter, heading: CHAPTERS[z.chapter] }) : undefined;
+          return (
+            <Zone key={z.key} split={z.split} stack={z.stack} label={z.label} chapter={chapter}>
+              {z.body}
+            </Zone>
+          );
+        })}
+      </div>
+    </>
   );
 }

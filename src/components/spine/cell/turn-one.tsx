@@ -268,7 +268,8 @@ export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | 
   );
 }
 
-export function PeersCard({ id = "peers", peers }: { id?: string; peers: TradePeersData | null }) {
+/** `zone` (2026-10-04, the band page): the table is the page's instrument, a card from 768 and open on a phone (CompareTable). */
+export function PeersCard({ id = "peers", peers, zone = false }: { id?: string; peers: TradePeersData | null; zone?: boolean }) {
   if (!peers) return null;
   return (
     <CompareTable
@@ -283,6 +284,7 @@ export function PeersCard({ id = "peers", peers }: { id?: string; peers: TradePe
       caveat={peers.caveat}
       flags={false}
       sample={peers.confidence !== "measured"}
+      zone={zone}
     />
   );
 }

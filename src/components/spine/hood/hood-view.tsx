@@ -71,7 +71,7 @@
  */
 import * as React from "react";
 import { spineHoodSeed } from "@/lib/spine-seeds";
-import { Movement, Band } from "@/components/spine/kit";
+import { Zone } from "@/components/spine/zones";
 import { SpineShell } from "@/components/spine/shell";
 import { COPY } from "@/lib/spine/copy";
 import { buildHoodTake } from "@/lib/spine/hood_take_rows";
@@ -114,79 +114,33 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
   const character = buildHoodCharacter(slug, focus);
   const doors = buildHoodCloseDoors(slug, focus);
 
+  /* THE BAND PAGE (2026-10-04, his "push forward man" after the United Kingdom's band page went live; MODEL.md PART 10): each level
+     a zone, the tone by its place, the sections open on it. The answer; 01 the rent table beside the visitors (2-1, one under the
+     other until 1024: at a tablet's halves the table's head names the reference district in four words over 344px); 02 the notes
+     beside the exit (2-1, the same), or the exit alone where the district holds no notes. The bento's measurements are in git (this
+     file before 2026-10-04). */
   return (
     <SpineShell>
-      <div className="py-2" data-spine-body>
-        {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
-           wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
-           landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
-           375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
-        {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
-        <Crumbs items={buildHoodCrumbs(slug, focus)} />
-        {/* `00 take`, FULL WIDTH, the page's only 40 (8.8, loud 1): the archetype's own hero band carries the attribute the full-width gate reads. */}
-        <HoodTake take={take} />
-        {/* CHAPTER TURN ONE (8.8, "What rent costs, district by district"): the
-            kit's Movement, the muted index and one plain heading, no icon (the
-            old heading passed one and the kit voids it; the prop goes). */}
-        <Movement index="01" heading={COPY.hoodChapters.rent} />
-        {/* `01 rank | 02 premium`, 2-1 (8.8's provisional split, RULED BY
-            MEASUREMENT on London at 1280, 768 and 375 with the probe and the
-            page filter; the numbers are in the dispatch's report): the seven-row
-            rent table wide, the visitor list narrow. Stacked until lg: at a
-            tablet's equal halves the seven-row table's head names the reference
-            district in four words over a 344px card and the list's figures
-            would sit under a wrapped head. Both cards build on every admitted
-            city (the rent on every district, the visitors on every district
-            holding a figure, four or more), so the band holds two children. */}
-        {rank || premium ? (
-          <Band split="2-1" stack="lg">
-            <RankCard rank={rank} />
-            <PremiumCard premium={premium} />
-          </Band>
-        ) : null}
-        {/* `03 compare` LEFT THE PAGE (2026-09-24, the goal's A18 and its
-            NEVER list, "print one figure twice"): the side-by-side table held
-            the seven rent multiples of `01 rank` and the seven visitor figures
-            of `02 premium` and nothing else, fourteen second prints on one
-            page, a full width his ban of 2026-08-25 allows the page one of.
-            The two readings stand in the level above, each with its drawing;
-            the builder and the card stay for the day a column of its own
-            arrives (a district-level figure no other card holds). */}
-        {/* CHAPTER TURN TWO (8.8, "What lifts revenue, and what the place is
-            like"): one band, the blocked seat beside the prose. */}
-        <Movement index="02" heading={COPY.hoodChapters.works} />
-        {/* `04 works | 05 character`, 1-2, the seat narrow and the notes wide,
-            RULED BY MEASUREMENT (8.4 rule 1: the taller card takes the wide
-            side; 8.8's provisional 1-1 measured on London and the City of
-            London with the probe and the page filter, the numbers in the
-            dispatch's report): at 1-1 the seat, a Rail, one line and a foot,
-            stands 149 tall at 1280 beside notes of 277 (the hub) and 296 (the
-            City of London), so stretched level it carries 128 to 147 pixels of
-            air under its foot, over the filter's 120 floor; at 1-2 its one line
-            wraps to two in the 347 seat and the notes' one-line facts stay one
-            line at 693, so the air falls under the floor. Stacked until lg: at
-            a tablet's equal halves the notes wrap to 313 beside the seat's 171.
-            8.8's order stands, the seat before the prose. The seat stands on
-            every page; the notes on every district holding an authored row
-            (London's seven), so the band holds two children; a city whose
-            cheapest district holds no row would show the seat alone, LONE CARD
-            by the rule. */}
-        {/* THE WORKS SEAT LEFT THE PAGE (the goal of 2026-09-24, its NEVER
-            list: "a 'not gathered yet' card on a UK page"; every admitted city
-            is London today): "We don't know yet what lifts sales most" was that
-            card in other words, the lift figure waiting on DATA-REQUIREMENTS
-            item 70. Its level re-seats as the notes beside the exit, 2-1
-            (measured 2026-09-24 at 1280: the notes 693 by 187, the exit's three
-            doors stacked in the third about as tall), stacked until lg as the
-            band before. A district with no notes keeps the exit on the hero
-            band, full width, as before. */}
+      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
+      {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
+      <Crumbs items={buildHoodCrumbs(slug, focus)} />
+      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+        <Zone split="wide" label="The answer">
+          <HoodTake take={take} />
+        </Zone>
+        <Zone split="2-1" stack="lg" label={COPY.hoodChapters.rent} chapter={{ index: "01", heading: COPY.hoodChapters.rent }}>
+          {rank ? <RankCard rank={rank} /> : null}
+          {premium ? <PremiumCard premium={premium} /> : null}
+        </Zone>
         {character ? (
-          <Band split="2-1" stack="lg">
+          <Zone split="2-1" stack="lg" label={COPY.hoodChapters.works} chapter={{ index: "02", heading: COPY.hoodChapters.works }}>
             <CharacterCard character={character} />
             <HoodClose doors={doors} />
-          </Band>
+          </Zone>
         ) : (
-          <Band hero><HoodClose doors={doors} /></Band>
+          <Zone split="wide" label={COPY.close.kicker}>
+            <HoodClose doors={doors} />
+          </Zone>
         )}
       </div>
     </SpineShell>

@@ -1153,16 +1153,16 @@
 }
 /* THE PAGE'S TOP EDGE TO THE MASTHEAD IS 64 AT 1024 AND UP (DISTANCES.md 2.3): the site column already opens 16 under the
    header, so the first zone gives 48 of its own (40 and 48 in all at 375 and 768). */
-[data-zone]:first-child {
+[data-zone]:nth-child(1 of [data-zone]) {
   padding-top: 24px;
 }
 @media (min-width: 768px) {
-  [data-zone]:first-child {
+  [data-zone]:nth-child(1 of [data-zone]) {
     padding-top: 32px;
   }
 }
 @media (min-width: 1024px) {
-  [data-zone]:first-child {
+  [data-zone]:nth-child(1 of [data-zone]) {
     padding-top: 48px;
   }
 }
@@ -1171,25 +1171,27 @@
    band's colour 100vmax to either side and none above or below; like the shadow it is ink overflow, so nothing scrolls sideways.
    IN LONGHAND, NEVER THE SHORTHAND'S "fill 0 // 0 100vmax": the production build's CSS minimizer parses as SCSS, where "//" opens
    a line comment, and the shorthand cost the first deploy of 2026-10-04 ("Missed semicolon"); the dev server never saw it. */
-[data-zone][data-tone="paper"] {
-  background: var(--zone-paper);
-  border-image-source: conic-gradient(var(--zone-paper) 0 0);
+/* THE TONE, GIVEN OR BY PLACE (2026-10-04, the roll-out to every page type): a zone the page names takes its tone; a zone the page
+   does not name takes it from its place among its sibling zones, the first tint, then alternating (`:nth-child(odd of
+   [data-zone])`), so a level that self-omits never leaves two neighbours in one colour. One custom property carries the colour to
+   the fill and to the bleed. */
+[data-zone] {
+  --zone-bg: var(--zone-paper);
+  background: var(--zone-bg);
+  border-image-source: conic-gradient(var(--zone-bg) 0 0);
   border-image-slice: 0 fill;
   border-image-width: 0;
   border-image-outset: 0 100vmax;
 }
-[data-zone][data-tone="tint"] {
-  background: var(--zone-tint);
-  border-image-source: conic-gradient(var(--zone-tint) 0 0);
-  border-image-slice: 0 fill;
-  border-image-width: 0;
-  border-image-outset: 0 100vmax;
+[data-zone][data-tone="tint"],
+[data-zone]:not([data-tone]):nth-child(odd of [data-zone]) {
+  --zone-bg: var(--zone-tint);
   /* A SOFT FILL VANISHES ON THE TINT (1.01:1, research R3 pitfall 4), so on a tint zone the open content's soft fills (a
      home row, a disclosure panel, a chip) turn white, one step above the band as they were one step below the card. */
   --c-soft: var(--zone-paper);
   --c-surface: var(--zone-tint);
 }
-[data-zone][data-tone="tint"] [data-keep-card] {
+[data-zone] [data-keep-card] {
   --c-soft: var(--soft-card);
   --c-surface: var(--c-card);
 }
@@ -1294,7 +1296,10 @@
   padding: 12px 0;
   border-bottom: 1px solid var(--c-border);
 }
-[data-zone] [data-archetype="share-bar"] [data-expect-rows] > [data-row] > span:last-child {
+/* The donut's legend the same (2026-10-04, the roll-out: the trade page's sales mix and the industry page's channels kept the
+   chips the share bar lost on the band, two row styles one band apart). */
+[data-zone] [data-archetype="share-bar"] [data-expect-rows] > [data-row] > span:last-child,
+[data-zone] [data-archetype="donut"] [data-expect-rows] > [data-row] > span:last-child {
   border: 0;
   background: transparent;
   padding: 0;
@@ -1307,6 +1312,38 @@
 [data-zone] [data-detail-row] > dt + dd {
   font-size: var(--t-body);
   line-height: 20px;
+}
+/* A CLUSTER ON A BAND (2026-10-04, the roll-out to the city, trade and industry pages: the premises, the market, what a trade
+   pays). The bento's cluster stands open like every other level: no 32 of its own under the chapter head (the head gives the 24
+   and the 32, DISTANCES.md 2.5; London's premises measured 56 and 73), each cell the height of its own content (a cell stretched
+   to its neighbour centred its figure in the spare height, which floated mid-band once the box was gone), stacked on a phone as
+   stacked sections are (24, a hairline, 24, where the cluster had 32 and no rule), and from 768 the zone's own distances
+   between sections, 48 across (64 from 1024) and 48 down. */
+[data-zone] [data-band="bento"] {
+  margin-top: 0;
+  align-items: start;
+  row-gap: 0;
+}
+[data-zone] [data-band="bento"] > [data-bento-cell] {
+  height: auto;
+}
+@media (max-width: 767px) {
+  [data-zone] [data-band="bento"] > [data-bento-cell] + [data-bento-cell] {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--c-border);
+  }
+}
+@media (min-width: 768px) {
+  [data-zone] [data-band="bento"] {
+    column-gap: 48px;
+    row-gap: 48px;
+  }
+}
+@media (min-width: 1024px) {
+  [data-zone] [data-band="bento"] {
+    column-gap: 64px;
+  }
 }
 
 /* ---- atlas-eyebrow — the small tracked uppercase label ------------------- */

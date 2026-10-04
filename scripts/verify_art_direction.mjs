@@ -251,7 +251,11 @@ const collect = () => {
        hollow marks clustering at one end (four small-business loan rates of 4.3 to 4.5% on a world that reaches 78%) is a reading,
        not room reserved for values that cannot occur. */
     if (track.querySelector("[data-track-hairlines]")) continue;
+    /* A BAR IS NOT A MARK (2026-10-04, the band page): a column's fill is drawn as its height from a baseline (`data-bar`), the
+       form this rule says above it does not read; on the band the spending-by-income columns kept their own 144px instead of
+       the directory's height beside them, and three short fills of 37 by 20 to 34 read as three marks bunched on a track. */
     const marks = [...track.querySelectorAll("*")].filter((e) => {
+      if (e.hasAttribute("data-bar")) return false;
       if (getComputedStyle(e).position !== "absolute") return false;
       const b = e.getBoundingClientRect();
       return b.width > 2 && b.width < 40 && b.height > 2 && b.height < 40;

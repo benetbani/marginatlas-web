@@ -11,8 +11,11 @@
  *  - EACH JOB A BLOCK: its glyph and its name (the card's lead, a rung over its rows), then its apps, the country's own first. Each app a row: the flag of the country it
  *    was founded in (the local cue is the flag, never a word), its name, and its fee as one short figure with its unit as a
  *    symbol ("1.69%/sale", "$44/mo", "Free").
- *  - Blocks flow down balanced columns (one under 560px of card, two from 560px, three from 900px), each kept whole, so seven
- *    jobs never leave a row two thirds empty the way a grid of three does (the harness's LONE STAT, 697 by 138 at 1280).
+ *  - Blocks flow down balanced columns (one under 480px of section, two from 480px, three from 900px), each kept whole, so seven
+ *    jobs never leave a row two thirds empty the way a grid of three does (the harness's LONE STAT, 697 by 138 at 1280). Two
+ *    from 480, not 560 (2026-10-04, the band page): open on a band the section lost its card's 40px of padding, and at 1024 its
+ *    528px stayed one column, 1020px tall beside spending by income's 318; the widest row needs 212 (a flag, "Google Business
+ *    Profile"), so a column of 224 holds every row.
  *  - A JOB WHOSE EVERY APP IS FREE says so once, beside its name, and its rows carry no fee: three rows reading "Free" were three
  *    readings of one fact (ART-DIRECTION H3 on the card's first seat, 2026-09-25).
  *  - The note a fee carries on its page (the plan, the limit) is the row's title, for a pointer; never a line of its own.
@@ -37,7 +40,7 @@ export function LocalApps({ id = "local-apps", data }: { id?: string; data: Loca
         </div>
       ) : null}
       <div className="[container-type:inline-size]">
-        <div data-archetype="local-apps" data-visual="1" data-jobs={String(data.jobs.length)} className="gap-x-8 [@container(min-width:560px)]:columns-2 [@container(min-width:900px)]:columns-3">
+        <div data-archetype="local-apps" data-visual="1" data-jobs={String(data.jobs.length)} className="gap-x-8 [@container(min-width:480px)]:columns-2 [@container(min-width:900px)]:columns-3">
           {data.jobs.map((j) => {
             const allFree = j.apps.every((a) => a.fee === COPY.localApps.fee.free);
             return (

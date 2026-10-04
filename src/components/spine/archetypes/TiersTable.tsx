@@ -71,8 +71,10 @@ const HEAD = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
 const GRID = "grid grid-cols-[minmax(0,1fr)_3.5rem_3.75rem_5.25rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem_5.25rem]";
 /* name | fee | time, the registering shape with the dots off. */
 const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_3.5rem_3.75rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem]";
-/* name | a | b, the figures shape: a count and a year's pay ("$44K", "$8,500"). */
-const GRID_FIGURES = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3";
+/* name | a | b, the figures shape: a count and a year's pay ("$44K", "$8,500"). From 330px of table the name keeps its column, the
+   two readings narrowed to 60 and 68 until 480 (a wait of "120 days", a fee of "$12,000", "Pay a year" in one line), which leaves
+   the name 178 to 327px: "Skilled tradesperson and foreman" in two lines at a phone's 343. */
+const GRID_FIGURES = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3 [@container(min-width:330px)]:grid-cols-[minmax(0,1fr)_3.75rem_4.25rem] [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_4.5rem_5.5rem]";
 const DASH = <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>;
 
 /** `tone`: the table's dots are the reading and carry the accent; the legend's dots only say what one and five dots mean, so they
@@ -253,7 +255,11 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
      taller, four split cards beside it pushed over the page filter's floor),
      so the rows are a flex column that only grows into spare height. */
   return (
-    /* The figures shape follows its card too (2026-09-26), from 360px of it: two readings take 160px and 24px of gaps. */
+    /* THE NAME KEEPS ITS COLUMN FROM 330PX OF TABLE (2026-10-04, the band page's phone standard, DISTANCES.md 2.5: three number
+       columns at the most beside a name). Under 360px of table the name took the row and its two figures stood on a second line
+       under the two-line reserve, 26px below a one-line name (London's permits, every row, on a phone's 343px band). A table
+       under 330 (a card's 303 at 375, a band's 288 at 320) still stands the name over its figures: beside two readings it would
+       hold 136px, and "Skilled tradesperson and foreman" would need three lines of them (the archetype harness's TEXT CUT). */
     <div data-archetype="tiers-table" data-shape="figures" data-heads={nameHead ? 3 : 2} className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
       {/* THE HEADS, ONCE, AT EVERY WIDTH, at the micro rung a reader reads
           (PART 5: never 10px). The name column's head reads on every width
@@ -269,9 +275,9 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
           <div key={r.key} className={fill ? "flex grow items-center py-2 first:pt-2 last:pb-0" : "py-2 first:pt-2 last:pb-0"}>
             <div className="flex w-full">
               {/* ONE GRID FOR THE ROW at every width, the registering shape's
-                  own phone form: the name block spans the row on a phone and
-                  takes its own column from md, the figures under their heads
-                  on the line below. */}
+                  own phone form: from 330px of table the name block in its
+                  column and the figures on its first line; under 330 the name
+                  block spans the row, the figures under their heads below. */}
               <span className={`${GRID_FIGURES} w-full items-baseline gap-y-1`} data-tier-row={i}>
                 {/* THE NAME BLOCK: two lines reserved on every row (2.5rem, two
                     lines of the lead rung at its tight leading, measured: the
@@ -279,7 +285,7 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                     number), the name wrapping into the second when it must
                     (clamped there, so two lines is the block's ceiling and its
                     floor) and the second name standing there otherwise. */}
-                <span className="col-span-3 min-h-[2.5rem] min-w-0 [@container(min-width:360px)]:col-span-1">
+                <span className="col-span-3 min-h-[2.5rem] min-w-0 [@container(min-width:330px)]:col-span-1">
                   {r.sub ? (
                     <>
                       <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{r.name}</span>
@@ -289,8 +295,8 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                     <span data-label className="line-clamp-2 text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{r.name}</span>
                   )}
                 </span>
-                {/* On a phone the figures sit on their own row under the heads; a spacer keeps them in their columns. */}
-                <span aria-hidden className="[@container(min-width:360px)]:hidden" />
+                {/* Under 330px of table the figures sit on their own row under the heads; a spacer keeps them in their columns. */}
+                <span aria-hidden className="[@container(min-width:330px)]:hidden" />
                 <span className="text-right" data-col="a">
                   {r.a != null ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.a}</Fig> : DASH}
                 </span>

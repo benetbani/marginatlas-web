@@ -237,7 +237,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               ))}
             </div>
           </div>
-          <div className="mt-3 [container-type:inline-size] [@container(min-width:640px)]:col-start-2 [@container(min-width:640px)]:row-span-2 [@container(min-width:640px)]:row-start-1 [@container(min-width:640px)]:mt-0">
+          <div className="mt-3 [container-type:inline-size] [@container(min-width:640px)]:col-start-2 [@container(min-width:640px)]:row-span-2 [@container(min-width:640px)]:row-start-1 [@container(min-width:640px)]:mt-0 [@container(min-width:640px)]:max-w-[18rem]">
             {/* The legend's head says whose shares these are (a label, the tables' head style): of the costs, never of sales. */}
             <div data-mix-head className="mb-2 text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{COPY.incomeBreakdown.costsHead}</div>
             <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
@@ -325,8 +325,11 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               and supplies" at 114px in a 96px cell, measured), and a name cut
               on a phone is clause 31's fault; a tablet's 344 half gets one
               column the same way, which is also why the trade page stacks the
-              band until lg. */}
-          <div className="mt-3 [container-type:inline-size] [@container(min-width:640px)]:col-start-2 [@container(min-width:640px)]:row-span-2 [@container(min-width:640px)]:row-start-1 [@container(min-width:640px)]:mt-0">
+              band until lg. AT MOST 288 BESIDE THE BAR (2026-10-04, the band
+              page): open on a tablet's 720px band, the right half's one column
+              set each share 242px from its name, over a third of the section
+              (LABEL GAP); a phone keeps its full-width rows. */}
+          <div className="mt-3 [container-type:inline-size] [@container(min-width:640px)]:col-start-2 [@container(min-width:640px)]:row-span-2 [@container(min-width:640px)]:row-start-1 [@container(min-width:640px)]:mt-0 [@container(min-width:640px)]:max-w-[18rem]">
           {/* One column is the phone row form (PART 5: below 420 the row is
               [1fr auto] and the gap is the card's own inner width), so the
               rows take hairlines between them the way every phone row does,

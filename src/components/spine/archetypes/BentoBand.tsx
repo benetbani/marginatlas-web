@@ -508,9 +508,17 @@ export function BentoMetric({
           tablet's width, 720) put the basis, the foot and the plus down its
           left side over an empty right half, a 312 by 138 blank the page filter
           read on every industry page at 768. Under 560, and on every card
-          without a plus, the floor stacks as it did. */}
-      {detail ? (
-        <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
+          without a plus, the floor stacks as it did. ON THE BASIS'S LINE
+          (2026-10-04, London's premises at 1280): aligned by their feet, the
+          plus's 44px tap centred its words 14px above the basis beside it,
+          and opening it pushed the basis down to the panel's foot; aligned by
+          their first lines, the two read as one line and the panel opens
+          under the plus alone. ONLY BESIDE WORDS (2026-10-04): a card with a
+          plus and no basis or foot (the industry page's licences at 768) set
+          its plus alone in the right half over an empty left one, so the plus
+          then stands where the basis would have. */}
+      {detail && (basis || foot) ? (
+        <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [@container(min-width:560px)]:items-baseline [@container(min-width:560px)]:gap-x-8">
           <div>
             {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
             {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
@@ -521,6 +529,7 @@ export function BentoMetric({
         <>
           {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
           {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+          {detail}
         </>
       )}
     </Box>

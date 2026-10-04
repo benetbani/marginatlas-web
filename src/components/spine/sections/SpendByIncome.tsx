@@ -36,10 +36,12 @@ export function SpendByIncome({ id = "spend-by-income", data }: { id?: string; d
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.figure}</div>
         <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.words}</p>
       </div>
-      {/* EACH TENTH READS ITS WEEK (goal 2026-09-26, M1): under 480px of card the ten values are not printed, and a tap reads one. */}
+      {/* EACH TENTH READS ITS WEEK (goal 2026-09-26, M1): under 480px of card the ten values are not printed, and a tap reads one.
+          240 TALL FROM 1024 (2026-10-04, the band page): the columns took the height the apps' directory lent them inside the bento's
+          equal cards; open on a band they kept their 144 floor beside a directory of 588, the level's one drawing at a quarter of it. */}
       <Marks label={C.caption} data-archetype="spend-by-income" data-visual="1" data-cols={String(data.tenths.length)} className="flex flex-1 flex-col [container-type:inline-size]">
         <div className="mb-2 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.caption}</div>
-        <div className="flex min-h-36 flex-1 items-stretch gap-1 pt-5 [@container(min-width:480px)]:gap-2" role="img" aria-label={`${C.caption}: ${data.tenths.map((t) => usdCents(t.usd)).join(", ")}`}>
+        <div className="flex min-h-36 flex-1 items-stretch gap-1 pt-5 lg:min-h-60 [@container(min-width:480px)]:gap-2" role="img" aria-label={`${C.caption}: ${data.tenths.map((t) => usdCents(t.usd)).join(", ")}`}>
           {data.tenths.map((t) => (
             <div key={t.tenth} data-col={t.tenth} data-readout-figure={usdCents(t.usd)} data-readout-words={C.readout.replace("{n}", String(t.tenth))} className="relative min-w-0 flex-1">
               <span aria-hidden className="absolute inset-0 rounded-t-[2px] bg-[var(--c-soft2)]" />

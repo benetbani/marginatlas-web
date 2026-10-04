@@ -130,7 +130,7 @@
  */
 import * as React from "react";
 import { spineIndustrySeed } from "@/lib/spine-seeds";
-import { Movement, Band } from "@/components/spine/kit";
+import { Zone } from "@/components/spine/zones";
 import { Masthead, BenchmarkCard } from "./opening";
 import { SplitCard, OpenCard, PaysBand } from "./turn-one";
 import { PlacesTable, FormatsCard, ChannelsCard } from "./turn-two";
@@ -239,171 +239,66 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
   const turnTwo = placesDrawn || (!!formats && !!mix);
   const turnThree = !!know && !!field;
 
+  /* THE BAND PAGE (2026-10-04, his "push forward man" after the United Kingdom's band page went live; MODEL.md PART 10): each level
+     a zone, the tone by its place, the sections open on it, each chapter's number and title on the first zone it owns. The answer;
+     how long a trade lasts beside the sector's keep (1-2, or the survival alone at two thirds); 01 where the money goes beside what
+     it takes to open (2-1), then what the trade pays (its cluster, the whole column); 02 the places table (the whole column), then
+     the formats beside the channels (2-1); 03 what owners say beside the field (2-1); the close. The splits and the tablet's
+     stacking are the bento's, measured there (this file before 2026-10-04 carries the numbers). */
+  const oneFirst = !!split && !!open;
+  const twoFirst = placesDrawn;
   return (
-    <div className="py-2" data-spine-body>
-      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
-         wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
-         landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
-         375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
+    <>
+      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
       {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
       <Crumbs items={buildIndustryCrumbs(industryId)} />
-      {/* `00 take`, FULL WIDTH, the page's only 40 (8.7, loud one): the answer
-          card draws its own hero band, the attribute the full-width gate reads. */}
-      <Masthead facts={hero} />
-      {/* `01 lasts | 02 benchmark`, the opening's one band (8.7): do they
-          survive, and is that keep high or low. The survival grid LEFT, the
-          bars RIGHT (fill-bar one of three, RIGHT, so it never shares a column
-          with `03`, M10), both quiet. RULED BY MEASUREMENT 2026-09-18 (8.4 rule
-          1, the closed set; the dispatch's report carries the numbers at three
-          widths on restaurants, a two-member sector and a fill shard): see the
-          split below. `stack="lg"` because at a tablet's equal halves the
-          five bars stand past the three-cell grid. */}
-      {lasts && benchmarkDrawn ? (
-        <Band split="1-2" stack="lg">
-          {/* The list form beside the benchmark's taller card (his copy correction of 2026-09-24 took the method lines that filled its foot): the two earlier years stand one under the other and the card holds no gathered hole. */}
-          <LastsCard lasts={lasts} list />
-          <BenchmarkCard benchmark={benchmarkDrawn} />
-        </Band>
-      ) : lasts ? (
-        <Band split="2-1" stack="lg">
-          <LastsCard lasts={lasts} />
-        </Band>
-      ) : null}
-
-      {/* CHAPTER TURN ONE (8.7, "What it costs to open, and what it keeps", the
-          spine's own string: 8.7's chapter-turns paragraph leaves the industry
-          strings to the composition round and names no winner, and M7 bound
-          the trade page alone; the controller may rule the site's words in):
-          the kit's Movement, the muted index and one plain heading. */}
-      {turnOne ? (
-        <>
-          <Movement index="01" heading={COPY.industryChapters.costs} />
-          {/* `03 split | 04 open` (8.7): where each $100 goes before the owner
-              sees any of it, beside what it takes to be allowed to open the
-              doors. The breakdown LEFT and wide (fill-bar two of three, LEFT,
-              so it never shares a column with `02`'s bars, M10), the licence
-              grid RIGHT, both quiet. `2-1`, NOT 8.7's expected `3-2`, RULED
-              BY MEASUREMENT 2026-09-18 (8.4 rule 1, the closed set), and the
-              instrument had to be corrected first: probe_page and the page
-              filter count a closed plus's hidden rows as ink (a closed
-              <details>' rows still report client rects), so both read the
-              licence card as full at every split; measured with those rows
-              excluded (the art-direction gate's own inDeadDetails), the
-              breakdown stands 360 of content at every split and every width
-              on restaurants, hardware stores and watch repair, and the
-              licence card 237 at `3-2` and at `1-1` (123 of air under its
-              plus, over the filter's 120 floor to the eye) against 253 at
-              `2-1` (108 of air, "The slowest licence" wrapping to two lines
-              in the 347 seat), which is the one split in the set under the
-              floor; E2 reads 66 and 70 percent ink. `stack="lg"`, as the
-              trade page's split band: at a tablet's equal halves the legend
-              goes to one column under 360px of card and the breakdown stands
-              past the grid. */}
-          {split && open ? (
-            <Band split="2-1" stack="lg">
-              <SplitCard split={split} />
-              <OpenCard open={open} />
-            </Band>
-          ) : null}
-          {/* `05 pays` (8.7): the bento, its own band; the payback lit, turn
-              one's accent and the page's second, the crew, the fixed part of
-              the costs and the day's share in ink. FOUR CELLS ON THE TRADE
-              MARKET'S TILING, not 8.7's three on two columns: 8.7's crew cell
-              was a 1072px card, full width by the section-bands gate and by
-              his ban (0 to 1 on a baseline that may only fall), and a tall
-              crew cell cannot hold a whole that runs 2 to 38; pays_rows.ts
-              and turn-one.tsx carry the numbers, the controller the ruling
-              (QUEUE industry:pays-fourth-cell). The cluster proves its own
-              tiling (2 + 1 + 1 + 2 = 6 of 6 on three columns; BentoBand.tsx). */}
-          <PaysBand pays={pays} />
-        </>
-      ) : null}
-
-      {/* CHAPTER TURN TWO (8.7, "Where it pays, and what to sell", the spine's
-          own string): `06 places`, the one table, FULL WIDTH, the page's
-          second of three (R1), quiet by table law; the table where four
-          cities hold figures of their own and the drawn blocked seat at the
-          same width otherwise, which today is every trade (turn-two.tsx and
-          the builder say how and why). Then the band `07 formats | 08
-          channels`. */}
-      {turnTwo ? (
-        <>
-          <Movement index="02" heading={COPY.industryChapters.where} />
-          {placesDrawn ? <PlacesTable places={places} /> : null}
-          {/* `07 formats | 08 channels` (8.7): which format of the trade to
-              open, beside which lines of it you would mostly be selling. The
-              list LEFT (the mark list, quiet by its form's law, the middle at
-              30 in ink) and the mix RIGHT (the donut's seat on KvGrid,
-              candidate 5 awaiting his click, no 30 and no accent until then,
-              so the page carries two loud moments). The split is measured
-              below this comment's last line (8.4 rule 1, the closed set), at
-              three widths on restaurants, a four-format shard with a
-              four-part mix and the fill shard; the dispatch's report carries
-              the numbers. Both cards draw on every trade holding a shard.
-              SINCE THE DONUT (2026-09-20, the senior review of that evening):
-              the list stays ONE column on the wide seat (MarkList's
-              `oneColumn`), because the donut's card at a third stands 409
-              (the ring above its rows) and the two-column list stood 332
-              with 78 of air under it (the page laws' CARD FOOT BLANK); one
-              column of five rows stands level with the donut, the trade
-              page's `11 | 13` precedent. No `stack`: at a tablet's halves the
-              two stand at their own heights, the donut stacked and the list
-              one column. */}
-          {formats && mix ? (
-            <Band split="2-1">
-              <FormatsCard formats={formats} oneColumn />
-              <ChannelsCard id="channels" mix={mix} />
-            </Band>
-          ) : null}
-        </>
-      ) : null}
-
-      {/* CHAPTER TURN THREE (8.7, "What the trade is like"): the band `09 know
-          | 10 field`, what owners say beside what the field looks like in
-          figures (the country page's `locals | footing`). The notes LEFT and
-          wide (the page's one prose section, two columns of notes at the
-          wide seat), the field RIGHT (the fact card with a focal, unclicked),
-          both quiet; turn three carries zero accent. `2-1`, 8.7's own split,
-          RULED BY MEASUREMENT 2026-09-19 (8.4 rule 1, the closed set;
-          scratchpad/step34d/splits.txt): the notes take their two-column
-          form only at the 693 seat (NoteList's 600px container query), so on
-          restaurants (four notes) the band stands 326 with the notes at 325
-          of content beside the grid's 275 (51 of air, under the 120 floor),
-          against 410 beside 242 at 1-1, 391 beside 258 at 3-2, 465 beside
-          242 at 2-3 and 542 beside 242 at 1-2, every other split opening
-          134 to 301 of air under the grid; on plumbers (two notes, the shape
-          227 of 243 trades take) the notes stand 210 beside the grid's 275
-          at 2-1 (66 of air under the notes; 3-2 would be 257 beside 258 on
-          that shape and 391 beside 258 on this page's), 0 holes at three
-          widths on both; the planted one-row card (no live trade) stands
-          143 on the sheet at this seat, so beside the grid's 275 it would
-          open 132 of air, the one residual over the floor, on a fixture
-          only. `stack="lg"`: at a tablet's equal halves the notes fall to
-          one column under 600px of card and stand 542 beside the grid's 306
-          (237 of air); stacked, 306 over 274. The heading draws when the
-          band does. */}
-      {turnThree ? (
-        <>
-          <Movement index="03" heading={COPY.industryChapters.trade} />
-          <Band split="2-1" stack="lg">
+      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+        <Zone split="wide" label="The answer">
+          <Masthead facts={hero} />
+        </Zone>
+        {lasts ? (
+          <Zone split={benchmarkDrawn ? "1-2" : "2-1"} stack="lg" label="How long it lasts">
+            <LastsCard lasts={lasts} list={!!benchmarkDrawn} />
+            {benchmarkDrawn ? <BenchmarkCard benchmark={benchmarkDrawn} /> : null}
+          </Zone>
+        ) : null}
+        {turnOne && oneFirst ? (
+          <Zone split="2-1" stack="lg" label={COPY.industryChapters.costs} chapter={{ index: "01", heading: COPY.industryChapters.costs }}>
+            <SplitCard split={split} />
+            <OpenCard open={open} />
+          </Zone>
+        ) : null}
+        {turnOne && pays ? (
+          <Zone split="wide" label="What it pays back" chapter={oneFirst ? undefined : { index: "01", heading: COPY.industryChapters.costs }}>
+            <PaysBand pays={pays} />
+          </Zone>
+        ) : null}
+        {turnTwo && twoFirst ? (
+          <Zone split="wide" label={COPY.industryChapters.where} chapter={{ index: "02", heading: COPY.industryChapters.where }}>
+            <PlacesTable places={places} />
+          </Zone>
+        ) : null}
+        {turnTwo && formats && mix ? (
+          <Zone split="2-1" label="Formats and channels" chapter={twoFirst ? undefined : { index: "02", heading: COPY.industryChapters.where }}>
+            <FormatsCard formats={formats} oneColumn />
+            <ChannelsCard id="channels" mix={mix} />
+          </Zone>
+        ) : null}
+        {turnThree ? (
+          <Zone split="2-1" stack="lg" label={COPY.industryChapters.trade} chapter={{ index: "03", heading: COPY.industryChapters.trade }}>
             <KnowCard know={know} />
             <FieldCard market={field} />
-          </Band>
-        </>
-      ) : null}
-
-      {/* THE EXIT (no chapter break, 8.7): `11 close`, FULL WIDTH, the page's
-          third of three (R1), the terminus on the hero band the old close
-          stood on and the trade's close stands on, the sanction the
-          full-width gate, the lone-card rule and the section-bands baseline
-          read on this page (cell/exit.tsx says why it stays there). Doors
-          with arrows, the compare pill last, no recap figure, no accent, no
-          verdict. */}
-      {doors.length > 0 ? (
-        <div className="mt-6 mb-2">
-          <Band hero><CloseCard doors={doors} /></Band>
-        </div>
-      ) : null}
-    </div>
+          </Zone>
+        ) : null}
+        {doors.length > 0 ? (
+          <Zone split="wide" label="Where to next">
+            {/* The exit on the hero band the bento's close stood on: the page's third full width, the full-width gates' sanction. */}
+            <div data-hero="1">
+              <CloseCard doors={doors} />
+            </div>
+          </Zone>
+        ) : null}
+      </div>
+    </>
   );
 }

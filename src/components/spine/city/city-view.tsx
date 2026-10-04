@@ -93,7 +93,8 @@ import { spineCitySeed } from "@/lib/spine-seeds";
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Movement, Box, Rail, Ico, SampleTag, Band, usd, Fig } from "@/components/spine/kit";
+import { Box, Rail, Ico, SampleTag, usd, Fig } from "@/components/spine/kit";
+import { Zone, type ZoneSplit } from "@/components/spine/zones";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 import { countWord } from "@/lib/spine/district_rows";
@@ -570,10 +571,10 @@ function TradesHere({ d }: { d: any }) {
    written for label, figure, track) is a form decision on a card shared with
    the country page and praised there, so the five rows are recorded for the
    controller with these numbers rather than moved by this dispatch. */
-function CityPeers({ d }: { d: any }) {
+function CityPeers({ d, zone = false }: { d: any; zone?: boolean }) {
   const t = buildCityPeerTable(d);
   if (!t) return null;
-  return <CompareTable id="peers" kicker={COPY.cityPeers.kicker} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} inBand />;
+  return <CompareTable id="peers" kicker={COPY.cityPeers.kicker} icon="benchmark" entityHead={t.entityHead} rows={t.rows} columns={t.columns} caveat={t.caveat} inBand zone={zone} />;
 }
 
 /* ================= TURN THREE , WHAT THE PLACE IS LIKE ================= */
@@ -819,11 +820,11 @@ export function Season({ season, id = "season" }: { season: CitySeasonData | nul
    (the old kit's `OneThing` printed "Last checked" and "Flag it." from props
    no caller ever passed), so neither is drawn here or on the country's close,
    and both wait on the controller. The page's third full width (R1). */
-function CityClose({ d }: { d: any }) {
+function CityClose({ d, zone = false }: { d: any; zone?: boolean }) {
   const doors = buildCityCloseDoors(d);
   if (doors.length === 0) return null;
   return (
-    <div data-terminus className="mt-8">
+    <div data-terminus className={zone ? undefined : "mt-8"}>
       <Box id="close">
         <Terminus kicker={COPY.close.kicker} doors={doors} />
       </Box>
@@ -900,341 +901,57 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const demandBesideSeason = !hoodsDrawn && !!season && demandDrawn;
   const seasonAtFoot = demandBesideSeason ? null : season;
 
+  /* THE BAND PAGE (2026-10-04, his "push forward man" after the United Kingdom's band page went live; MODEL.md PART 10): each level
+     a zone, the tone by its place, the sections open on it, each chapter's number and title on the first level of the chapter that
+     draws. The levels and their conditions are the bento's, measured there (this file before 2026-10-04 carries every number and
+     ruling: the premises cluster, the permits beside who trades here, the living level of three where the spend or the strip takes
+     the third seat, the crew beside the texture, the calendar beside the strip, the districts beside the trades, the peers beside
+     the people, the neighbourhoods beside the season); a level whose partner self-omits keeps the kit's two thirds (zones.tsx). */
+  type CityZone = { key: string; split: ZoneSplit; stack?: "lg"; chapter?: "01" | "02" | "03"; label: string; body: React.ReactNode[] };
+  const CHAPTERS = { "01": COPY.chapters.costs, "02": COPY.chapters.where, "03": COPY.chapters.place } as const;
+  const keep = (xs: React.ReactNode[]) => xs.filter(Boolean);
+  const livingThree = !!living && !!runway && demandDrawn && !demandBesideSeason;
+  const cityZonesAll: CityZone[] = [
+    { key: "take", split: "wide", label: "The answer", body: [cityBoard ? <HeroBoard key="take" id="city-take" board={cityBoard} answers={SURFACE_ANSWERS.city} /> : <CityHero key="take" d={d} />] },
+    { key: "premises", split: "wide", chapter: "01", label: "Premises", body: keep([premises ? <Premises key="premises" bento={premises} /> : null]) },
+    { key: "gates", split: "1-1", stack: "lg", chapter: "01", label: "Opening here", body: keep([gates ? <GatesCard key="gates" gates={gates} /> : null, cityMarket ? <MarketCard key="market" market={cityMarket} /> : null]) },
+    {
+      key: "living",
+      split: livingThree || earningsOnLiving ? "1-1-1" : "1-1",
+      chapter: "01",
+      label: "Living here",
+      body: livingThree
+        ? [<Living key="living" living={living} />, <Runway key="runway" runway={runway} />, <Demand key="demand" demand={demand} />]
+        : earningsOnLiving
+          ? [<Living key="living" living={living} />, <Runway key="runway" runway={runway} />, <Earnings key="earnings" strip={earnings} />]
+          : keep([living ? <Living key="living" living={living} /> : null, runway ? <Runway key="runway" runway={runway} /> : null]),
+    },
+    { key: "demand", split: "1-1", chapter: "01", label: "Who buys", body: demandBesideSeason ? [<Demand key="demand" demand={demand} />, <Season key="season" season={season} />] : [] },
+    { key: "crew", split: "1-1", chapter: "01", label: "The crew", body: keep([crew ? <Crew key="crew" crew={crew} /> : null, texture ? <Texture key="texture" texture={texture} /> : null]) },
+    { key: "calendar", split: "2-1", stack: "lg", chapter: "01", label: "The year", body: calendar ? keep([<SpendCalendar key="calendar" calendar={calendar} />, earnings ? <Earnings key="earnings" strip={earnings} /> : null]) : [] },
+    { key: "earnings", split: "2-1", chapter: "02", label: "What customers earn", body: !calendar && earnings && !earningsOnLiving ? [<Earnings key="earnings" strip={earnings} />] : [] },
+    { key: "districts", split: "2-1", stack: "lg", chapter: "02", label: "Where to trade", body: keep([districts ? <WhereToTrade key="districts" d={d} /> : null, trades ? <TradesHere key="trades" d={d} /> : null]) },
+    { key: "peers", split: "1-1", chapter: "03", label: "The peers", body: keep([peersDrawn ? <CityPeers key="peers" d={d} zone /> : null, people ? <CharacterPeople key="people" people={people} /> : null]) },
+    { key: "hoods", split: "2-1", stack: "lg", chapter: "03", label: "The neighbourhoods", body: keep([hoodsDrawn ? <Neighbourhoods key="hoods" hoods={hoods} /> : null, seasonAtFoot ? <Season key="season" season={seasonAtFoot} /> : null]) },
+    { key: "close", split: "wide", label: "Where to next", body: [<CityClose key="close" d={d} zone />] },
+  ];
+  const cityZones = cityZonesAll.filter((z) => z.body.length > 0);
+  /* The chapter's number and title stand on the first level of the chapter that draws. */
+  const headed = new Set<string>();
   return (
-    <div className="py-2" data-spine-body>
-      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
-         wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
-         landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
-         375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
-      {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
+    <>
+      {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
       <Crumbs items={buildCityCrumbs(slug)} />
-      {/* `00 masthead`, FULL WIDTH, the page's only 40 (8.3, loud 1). SINCE THE
-          EVENING OF 2026-09-20 THE BOARD OF HIS DESIGN, the country's hero at
-          the city altitude (HeroBoard.tsx, city_hero_board.ts; his word after
-          the push: the pages "cohesive, fitting to each other", and the London
-          masthead as served stood with its right half blank): the flag and
-          the city's name, the typical customer pay as the main figure off the
-          one income builder, the placeholder picture in the centre, five of
-          the city's own figures placed among the covered cities on the right
-          with a level chip each. `01 glance` and `02 among-cities` DISSOLVE
-          INTO IT, the country's own precedent on his word ("at a glance is
-          irrelevant; among the countries bundled by category"): the glance's
-          three cells and the seat's two figures are the board's rows, so
-          neither card draws; their components and builders stay for the
-          sheet and the gates, and the old answer card stands where the
-          board cannot build (a city off the list). */}
-      {cityBoard ? <HeroBoard id="city-take" board={cityBoard} answers={SURFACE_ANSWERS.city} /> : <CityHero d={d} />}
-      {/* CHAPTER TURN ONE (8.3, "What it costs to open, and to run"): the kit's
-          Movement, the muted index and one plain heading, no eyebrow and no icon
-          (8.4). 48 above and 12 below, the next Band's own 32 absorbing the 12
-          by margin collapse. The opening above carries no break (PART 1). */}
-      <Movement index="01" heading={COPY.chapters.costs} />
-      {/* `04 premises`, the bento, its own band, loud 2 on the prime rent cell
-          (8.3): the cluster IS the band, never a child of Band, four cells
-          tiling 3 by 2 at 1280, 2 by 3 at 768, one column under. It stands
-          between the two fact-grid bands, so no two adjacent bands share a
-          form (M1). Built for every listed city whose shard loads, 252 today. */}
-      <Premises bento={premises} />
-      {/* `05 living | 06 runway`, 1-1 (8.3; plan step 32, third dispatch): the
-          page's second one-form-two-readings band, under the same R8 reading
-          as `01 | 02` (the fact grid, and the fact grid with a focal), both
-          on KvGrid while their clicked forms (candidates 1 and 3) wait, both
-          quiet, ink. What living here costs beside a year of one-bed rent as
-          a share of a year of typical income, the income the one absolute the
-          living card does not hold (M1). Both cards exist for every covered
-          city (252 of 252 hold the four living figures and the salary); on
-          the thirty cities where the share is withheld the ratio card prints
-          the income under its withheld line, so the band holds two children
-          everywhere. MEASURED after it was seated, on London, Frankfurt and
-          Abidjan with the probe and the page filter: at 1280 the band stands
-          level at 520 by 243 (the living card's two rows of cells want 242,
-          the ratio card's one row 166, or 211 under Abidjan's withheld
-          line), at 768's equal halves 344 by 274 (273 against 198 or 243),
-          at 375 each card at its own height, 274 and 199 (Abidjan 244); the
-          ratio card's stretch is 77 pixels at most, under the filter's 120
-          floor, and the filter finds no hole in either card at any width.
-          The old kit cards stood level at 244, so the band's height did not
-          move. */}
-      {/* `17 gates | 18 market` AT 1-1 (2026-09-20 late evening, his "more
-          sections" from what the file holds; opening.tsx): the city's own
-          permits gate by gate LEFT, the table with the fee total at 30 in
-          ink, and who is already trading RIGHT, his bars with each trade's
-          tile and the market's figures behind his plus, the level's one
-          visual. Both draw on every city whose shard holds the rows (London:
-          five gates, six trades); a survivor stands alone at two thirds.
-          Measured on London: 490 beside 491 at 1280; `stack="lg"` because at
-          a tablet's halves the bars' head ("Densest trade 9.1") ran 39px past
-          a 344 card, so each stands full width there at its own height.
-          SEATED BEFORE THE LIVING LEVEL since the night of 2026-09-20 (his
-          words on the market bento, clause 64: two drawings of one sort
-          keep a level between them): the market's bars stood on the level
-          right above the districts' bars; the living level now stands
-          between them. Where a person expects them (clause 66): what the
-          city charges to open, then who is already there, then what living
-          here costs. */}
-      {gates && cityMarket ? (
-        <Band split="1-1" stack="lg">
-          <GatesCard gates={gates} />
-          <MarketCard market={cityMarket} />
-        </Band>
-      ) : gates ? (
-        <Band split="2-1" stack="lg"><GatesCard gates={gates} /></Band>
-      ) : cityMarket ? (
-        <Band split="2-1" stack="lg"><MarketCard market={cityMarket} /></Band>
-      ) : null}
-      {/* THE STRIP JOINS THIS LEVEL WHERE THE SPEND CARD IS WITHHELD (2026-09-20
-          evening, his words on the London page: a card that is one withheld
-          sentence, "The spend is withheld: the figure on file for London is a
-          placeholder", is a bland section in front of him, and the seated
-          reading of 2026-09-08 he overruled on 2026-09-19 covers a withheld
-          line as it covers a "not gathered" one). Where `08 demand` holds no
-          figure (London alone today, item 23) the card does not draw. THE
-          THIRD SEAT, since 2026-09-23: on the 251 cities whose spend is a
-          figure it is the spend card (the calendar level below takes the
-          strip); where the spend AND the calendar are withheld (London alone,
-          both the bank's one placeholder of 252) it is `07 earnings`, `05 | 06
-          | 07` at the kit's three thirds: the living cells, the ring, the
-          strip; two visuals (clause 53). Measured on the fresh render, the
-          numbers in the commit. */}
-      {living && runway && demandDrawn && !demandBesideSeason ? (
-        <Band split="1-1-1">
-          <Living living={living} />
-          <Runway runway={runway} />
-          <Demand demand={demand} />
-        </Band>
-      ) : earningsOnLiving ? (
-        <Band split="1-1-1">
-          <Living living={living} />
-          <Runway runway={runway} />
-          <Earnings strip={earnings} />
-        </Band>
-      ) : living || runway ? (
-        <Band split="1-1">
-          <Living living={living} />
-          <Runway runway={runway} />
-        </Band>
-      ) : null}
-      {/* `08 demand | 15 season`, 1-1, only where the neighbourhoods draw
-          nothing (`demandBesideSeason` above, the goal's B13). */}
-      {demandBesideSeason ? (
-        <Band split="1-1">
-          <Demand demand={demand} />
-          <Season season={season} />
-        </Band>
-      ) : null}
-      {/* `20 crew | 21 texture`, 1-1 (2026-09-23 evening, on his "continue with
-          the city page sections"). What five roles are paid a month here, and
-          how the city deals: the two sections the city bank still held that
-          nothing drew, that carry no coined index, no placeholder on the
-          exemplar and no figure the page already prints. The builders' headers
-          name their fields and their coverage.
-          THEY ARRIVE AS A PAIR because one card cannot be seated at all: this
-          page's band cards come in pairs on every city, and the twelfth breaks
-          the level (the brief's section 6, learned the hard way this
-          afternoon). The level stands in the first chapter, after what living
-          costs and what the money lasts, because what the crew costs is the
-          same question and the texture is what a person meets in the same week.
-          The two new kinds are free on this page: the list of figures spends no
-          ranked-bars seat (both are taken), and the spectra table is the
-          page's second, three levels clear of `14 character-people` (clause
-          64), with the ink dot against that table's terracotta so the pair
-          looks different (clause 55). */}
-      {crew && texture ? (
-        <Band split="1-1">
-          <Crew crew={crew} />
-          <Texture texture={texture} />
-        </Band>
-      ) : crew ? (
-        <Band split="2-1"><Crew crew={crew} /></Band>
-      ) : texture ? (
-        <Band split="2-1"><Texture texture={texture} /></Band>
-      ) : null}
-      {/* `19 calendar | 07 earnings`, 2-1 (2026-09-23 afternoon). THE CALENDAR
-          DOES NOT STAND FULL WIDTH, and the reason is his, twice: "for every
-          subsection that stretches left to right full width, I think we should
-          ban it except hero section" (2026-08-25, carried in
-          verify_full_width_sitewide's own header). It shipped full width this
-          morning and the sitewide gate counted it, which is how the rule was
-          found again.
-          THE LEVEL IS THE ONLY ONE AVAILABLE, and that is arithmetic, not
-          taste: without the calendar this page's band cards come in pairs on
-          every city, so a twelfth card cannot be added without breaking a
-          level and re-pairing. The calendar's nearest partner by height is the
-          earnings strip (331 against 254 at 1280 on London), so the two take
-          one level, the twelve columns on the wide side by 8.4 rule 1, and the
-          strip takes the slack inside its own card the way RankedBars' rows do.
-          WHAT MOVED WITH IT: `08 demand` was the earnings strip's partner in
-          chapter two on the 251 cities that hold a spend figure; it joins the
-          living level as its third, where it is among the other money-of-the-
-          city cards, and chapter two now opens on the districts and the trades,
-          which is what "where to open it" means. ON LONDON THIS LEVEL DOES NOT
-          DRAW (2026-09-23 night): the calendar's twelve months are the one
-          placeholder of 252 and the builder withholds them, and the spend is
-          withheld too (item 23), so the strip takes the living level's third
-          seat, the composition London stood on before the calendar came
-          (`earningsOnLiving` above). */}
-      {calendar && earnings ? (
-        <Band split="2-1" stack="lg">
-          <SpendCalendar calendar={calendar} />
-          <Earnings strip={earnings} />
-        </Band>
-      ) : calendar ? (
-        /* A SURVIVOR STANDS ALONE AT TWO THIRDS, this page's own idiom for a
-           card whose partner is absent, never at the full width. No city
-           reaches this branch today: all 252 hold both. */
-        <Band split="2-1" stack="lg"><SpendCalendar calendar={calendar} /></Band>
-      ) : null}
-      {/* CHAPTER TURN TWO (8.3, "Where to open it, and what to open"): the market
-          sized before the street is picked. */}
-      <Movement index="02" heading={COPY.chapters.where} />
-      {/* `08 demand | 07 earnings`, 1-1, demand LEFT and the strip RIGHT
-          (8.3: `07` is the dot family, right column, M10; plan step 32, fourth
-          dispatch, 2026-09-18): what the whole city spends beside what one
-          customer earns, the market sized before the street is picked, both
-          quiet, both cards built for every listed city (the spend is held or
-          withheld with its line for 252, the typical for 252), so the band
-          holds two children everywhere. THE PAIR HOLDS, MEASURED after it was
-          seated on London, Frankfurt and Abidjan with the page filter and a
-          band probe at 1280, 768 and 375: at 1280 both cards stand level at
-          520 by 212 on London and Frankfurt (the strip's own height: a Rail,
-          the 116 of a strip holding a lead, the basis) and 520 by 174 on
-          Abidjan (the strip's typical alone, its two notes); at 768's equal
-          halves 344 by 212, 212 and 192; at 375 each card at its own height,
-          the spend card 136 (London's withheld line), 159 and 159 under the
-          strip's 212, 212 and 192. Zero holes in either card at any width on
-          the three cities. The old spend card could not be seated at any
-          split because its one figure sat in the top left corner of a
-          stretched box with three quarters of it empty; BentoMetric puts the
-          opener at the top, the basis at the foot and the 30 centred in what
-          is left (Frankfurt's air at 1280: 26 above the opener, 21 under the
-          foot), so the stretched card reads as composed. */}
-      {/* `08 demand` AND `07 earnings` BOTH LEFT THIS BAND on 2026-09-23 (the
-          calendar's level above says why): the spend card stands third on the
-          living level where it holds a figure, and the strip stands beside the
-          calendar. Nothing is dropped; the two cards moved up one chapter, and
-          this band draws only on a city with no calendar to seat the strip,
-          which no city is today. */}
-      {!calendar && earnings && !earningsOnLiving ? (
-        /* The spend card is already on the living level where it draws, so the
-           strip stands alone at two thirds here rather than beside a second
-           copy of it. */
-        <Band split="2-1"><Earnings strip={earnings} /></Band>
-      ) : null}
-      {/* `03 districts | 09 trades` (8.3): rent by district, the page's one
-          fill-bar card, LEFT; the trades with local figures RIGHT, at 2-1
-          (plan step 32, fifth dispatch, 2026-09-18; the measurements are in
-          the dispatch's report and below). London alone draws `03` (8.3:
-          LONDON ONLY); `09` draws on 101 of 252 cities (counted through the
-          adapter's own path, 2026-09-18). THE BAND DRAWS ON EVERY CITY
-          (QUEUE launch:city-seats-off-london, 2026-09-19): where a card's
-          data is absent its seat stands in its place, the drawn blocked
-          seat with its stated line and the item it waits on, the way the
-          country page seats `07 workforce` (PART 4's idiom), so the block
-          counts toward the floor and a reader is told what is missing
-          instead of meeting nothing. Plan step 50's first run found
-          Frankfurt and Abidjan at 14 of 17 because both blocks self-omitted
-          here. On the cities under four local trades and off London the
-          band is two seats, level at their own height (Frankfurt and
-          Abidjan, 0 holes at three widths). Where ONE of the pair draws and
-          the other is a seat (New York: six trade rows, no districts), the
-          two cannot share a band: the seat stretched to the rows' height
-          carried a 653 by 240 blank inside a 653 by 352 card, the page
-          filter's WHITE SPACE red, MEASURED 2026-09-19; so each stands in
-          its own band at the survivor's two thirds, the country's precedent
-          for `12 money | 16 locals` and this page's own for `12 | 13`
-          below, LONE CARD twice, expected. */}
-      {/* THE SEATS LEFT THE PAGE ON 2026-09-24 (the goal's A4b; QUEUE
-          city:uk-not-gathered-seats): his word of 2026-09-19 ("will you say
-          not gathered yet?") took the seats off London on 2026-09-20, and the
-          same two lines still stood on every city off London, three a page on
-          Manchester, Birmingham and Leeds on production (the NEVER list's card
-          on a UK page). Where both cards draw they share the band; where one
-          draws it stands alone at two thirds (the band's rule, LONE CARD,
-          expected); where neither draws the band leaves with them. The block
-          floor (16, the spine where its data exists) is met on London and
-          read short on a city that holds neither; the checker names the cause. */}
-      {districts && trades ? (
-        <Band split="2-1" stack="lg">
-          <WhereToTrade d={d} />
-          <TradesHere d={d} />
-        </Band>
-      ) : districts || trades ? (
-        <Band split="2-1" stack="lg">{districts ? <WhereToTrade d={d} /> : <TradesHere d={d} />}</Band>
-      ) : null}
-      {/* CHAPTER TURN THREE (8.3, "What the place is like"): zero accent from
-          here to the exit. The heading stands over the peers and the people
-          since 2026-09-20 (below); the index stays "03" because the two turns
-          above always draw. */}
-      <Movement index="03" heading={COPY.chapters.place} />
-      {/* `11 peers | 12 character-people` AT 1-1 SINCE THE EVENING OF 2026-09-20,
-          his words on the London page as served: the comparison table "should
-          just not be that wide for three columns", "the middle part is quite
-          empty", and the lone people table under chapter three was "a strange
-          blank space on the right of the section number three" (MODEL PART 9
-          clauses 59 and 62). The table leaves its full width (8.3's seam, R1's
-          second full width, both withdrawn by his word) for half the page,
-          and takes SEVEN peers instead of three so eight rows fill the half
-          beside the five-trait table (adapt_city.ts, comparable_cities.ts:
-          the three roles first, then the nearest by similarity). Measured on
-          the fresh render, the numbers in the commit and MODEL 8.3's brackets.
-          Where only one of the two draws it stands alone at two thirds, the
-          band's own rule. */}
-      {people && peersDrawn ? (
-        <Band split="1-1">
-          <CityPeers d={d} />
-          <CharacterPeople people={people} />
-        </Band>
-      ) : (
-        <>
-          {peersDrawn ? <Band split="2-1" stack="lg"><CityPeers d={d} /></Band> : null}
-          {people ? (
-            <Band split="2-1" stack="lg">
-              <CharacterPeople people={people} />
-            </Band>
-          ) : null}
-        </>
-      )}
-      {/* `12 character-people | 13 locals`, 1-1 in 8.3 (plan step 32, sixth
-          dispatch, 2026-09-18): the people table at full form beside the
-          locals seat. THE PAIR CANNOT BE SEATED, MEASURED on London with the
-          probe and the page filter at the 1-1 split: the six-row table
-          stands 572 tall at 1280 (content 571) and the seat, a Rail, one
-          line and a foot, wants 149, so stretched level it carries a 480 by
-          420 blank inside its 480 by 532 card, the filter's WHITE SPACE red
-          and the art-direction gate's E2 floor of 60 percent ink missed by
-          forty points; no split in the closed set holds a 149-tall seat
-          level with a 572-tall table (the seat's foot sits under its line by
-          the seat's own law, so the air falls below it at any width). So
-          each stands in its own band, the country's precedent for `12 money
-          | 16 locals` on the 21 countries holding a drawn card beside a
-          seated one: the table at the survivor's two thirds (693 by 572 at
-          1280), the seat at two thirds at its own 150, LONE CARD twice,
-          expected, until the notes land (item 6) or the composition
-          re-decides the split; both bands stack until lg. */}
-      {/* `13 locals` WITHHELD since the evening of 2026-09-20: the seat printed
-          "Not gathered yet: what locals know about opening here." on the
-          London page he is shown, the line he refused on 2026-09-19 ("will
-          you say not gathered yet?", over the 2026-09-08 seated reading). The
-          seat component stays for the sheet's story; the card returns with
-          the notes (item 6), and the floor with it. The people table stands
-          alone at two thirds until then (LEVEL UNFILLED, recorded for his
-          corrections: no card on this page pairs with a 487-tall table by
-          measurement, the plan's step 4 readings). */}
-      {/* `14 neighbourhoods | 15 season`, 2-1, the neighbourhoods wide (8.3):
-          the pager or its seat beside the two shares. Both cards exist for
-          every listed city (the scheme for 252, the shares for 252), so the
-          band holds two children everywhere; stacked until lg so the pager's
-          cards keep a row of four at the wide side and the pair is never
-          two slivers at 768. MEASURED after it was seated, the numbers in
-          the dispatch's report. */}
-      {hoodsDrawn || seasonAtFoot ? (
-        <Band split="2-1" stack="lg">
-          <Neighbourhoods hoods={hoods} />
-          <Season season={seasonAtFoot} />
-        </Band>
-      ) : null}
-      {/* `16 close`, FULL WIDTH (8.3, R1): the exit carries no break (PART 1). */}
-      <CityClose d={d} />
-    </div>
+      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+        {cityZones.map((z) => {
+          const chapter = z.chapter && !headed.has(z.chapter) ? (headed.add(z.chapter), { index: z.chapter, heading: CHAPTERS[z.chapter] }) : undefined;
+          return (
+            <Zone key={z.key} split={z.split} stack={z.stack} label={z.label} chapter={chapter}>
+              {z.body}
+            </Zone>
+          );
+        })}
+      </div>
+    </>
   );
 }

@@ -9,8 +9,8 @@
  * here as a plain module and the route imports it.
  *
  * TASK 10 BUILT THE MASTHEAD. Tasks 11 to 18 append the remaining sections, one
- * per task, each with its own form from the kit and its own entry in
- * RAIL_SECTIONS below. The flag stays shut until the page is whole: a page with
+ * per task, each with its own form from the kit and its own entry in the
+ * rail list the composition builds beside its zones. The flag stays shut until the page is whole: a page with
  * one section must never be reachable, and isSpineReformEnabledFor("country")
  * returns false with the master switch unable to open it.
  *
@@ -29,7 +29,7 @@
  * exemption that recorded the gap is gone with the gap.
  */
 import * as React from "react";
-import { Band, Box, Fig, Ico, Movement, Rail, SampleTag, usd } from "@/components/spine/kit";
+import { Box, Fig, Ico, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
@@ -77,6 +77,7 @@ import { WorldRangeRows, type WorldRangeRow } from "@/components/spine/charts/Wo
 import { BarList } from "@/components/spine/charts/BarList";
 import { DonutStat } from "@/components/spine/charts/DonutStat";
 import { HireLever } from "@/components/spine/interact/HireLever";
+import type { AtlasIconId } from "@/components/brand/icons";
 import { Switch } from "@/components/spine/interact/Switch";
 import { CoverPicker } from "@/components/spine/interact/CoverPicker";
 import { LoanLever } from "@/components/spine/interact/LoanLever";
@@ -109,38 +110,6 @@ import { buildSurvival, buildObstacles } from "@/lib/spine/sections/first_years"
 import { buildAgeMix, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildJobMarket } from "@/lib/spine/sections/market_jobs";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
-
-/**
- * The on-this-page rail's entries, in page order, and the ONE list that says
- * what this page is made of. A section task appends its own entry here in the
- * same change that mounts the section, so the rail can never promise a section
- * that is not there (a dead in-page link fails to scroll and reads as missing
- * content, which is worse than a 404 because nothing tells the reader).
- *
- * THE ORDER IS MODEL.md 8.2's (plan step 31, 2026-09-17): the opening, then
- * what it costs to open and to run, then where to open it and what to open,
- * then what the place is like, then the exit. The two drawn blocked seats
- * (workforce, easiest) are listed because they are on the page, saying what
- * they do not hold; a rail that skipped them would promise a shorter page
- * than the one that renders.
- */
-const RAIL_SECTIONS: Array<{ id: string; label: string }> = [
-  { id: "take", label: "The tax burden" },
-  { id: "setup", label: "Registering, by legal form" },
-  { id: "entry-bill", label: "The bill to register" },
-  { id: "running-costs", label: "Running costs" },
-  { id: "hiring", label: "What staff cost" },
-  { id: "peers", label: "Against the peers" },
-  { id: "cities", label: "The cities" },
-  { id: "customers", label: "What customers earn" },
-  { id: "money", label: "Net profit margin" },
-  { id: "locals", label: "What locals know" },
-  { id: "character", label: "The character" },
-  /* The two sections of 2026-09-23, in the order the page draws them. The
-     exit's row is the one this list was missing the day it was built. */
-  { id: "spend", label: "What households spend on" },
-  { id: "exit", label: "How long it takes to sell" },
-];
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.2's
@@ -834,31 +803,6 @@ function SpendBar({ spend }: { spend: CountrySpendData }) {
         <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill bracket={COPY.countrySpend.bracket} />
       </div>
     </Box>
-  );
-}
-
-function Character({ iso2 }: { iso2?: string }) {
-  if (!iso2) return null;
-  const t = buildCharacterTables(iso2);
-  if (!t.state && !t.people) return null;
-  return (
-    <Band split="1-1">
-      {t.state ? (
-        <Box id="character">
-          <Rail icon="bank" kicker={COPY.character.state.kicker} sample />
-          <SpectraTable rows={t.state.rows} dot={t.state.dot} foot={t.state.foot} />
-        </Box>
-      ) : null}
-      {t.people ? (
-        /* The second table is a section card of its own (MODEL.md 8.2, `15
-           character-people`) and carries no id while the first holds
-           "character", so it names its block explicitly for BLOCK FLOOR. */
-        <Box {...(t.state ? {} : { id: "character" })} data-block="character-people">
-          <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
-          <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} />
-        </Box>
-      ) : null}
-    </Band>
   );
 }
 
@@ -1750,304 +1694,140 @@ export function SpineCountryBody({ data }: { data?: any }) {
     );
   }
 
-  /* THE THIN COUNTRY, SEATED (MODEL.md 8.2's paragraph of that name; plan
-     step 31's seventh dispatch, 2026-09-18, measured on Afghanistan, which
-     drew 16 of 21). Every block is present on every country, drawn or
-     seated, and the one omission PART 7 allows is `10 cities` on a country
-     with no covered city. Four blocks used to self-omit on thin data and
-     now draw the blocked seat where the card would stand, pairing with the
-     same partner, so LONE CARD closes rather than opens: `03 setup` on the
-     43 with no legal form (`hasSetup`), `09 peers` where the table does not
-     resolve (`peers`, above), `12 money` where the engine holds under two
-     credible margins (`hasMoney`, 173) and `16 locals` where no notes are
-     authored (`locals`, 194). The counts are verify_archetype_copy's,
-     measured over the taxonomy every run. The seats' words are COPY.blocked's
-     and their kickers the drawn cards' own. BlockedSeat draws its own Box
-     the way BentoMetric and AnswerCard do, so the four are blocks on the page
-     (`data-blocked="1"`, BLOCK FLOOR counts them), and the census prints
-     each as its card's other state since 2026-09-24 ("RankedBars or
-     BlockedSeat" on `money`); their form to the checkers is `blocked-seat`,
-     exempt from FOCAL and NO LEAD by its law.
-
-     AND THE FIFTH THIN-COUNTRY SEAT, `10 cities` (plan step 49, 2026-09-19,
-     the FLOOR bracket's option A): PART 7's one omission is withdrawn for
-     this row; on the 90 countries the city list holds no row for, the seat
-     stands in the cards' band with its composed line (`citiesSeat`, above),
-     so Afghanistan reads 21 blocks where it read 20. The census's `cities`
-     row carries both states since 2026-09-24 ("CityCards or BlockedSeat"),
-     like the four above. */
-
-  /* THE ORDER AND THE PAIRS ARE MODEL.md 8.2's (plan step 31, 2026-09-17, the
-     first of six dispatches), with the twelve blocks that exist today seated
-     where the composition puts them: the opening full width; turn one,
-     registering beside the bill to register (seated by the third dispatch
-     the same day), premises beside power and living costs (seated by the
-     fourth dispatch, 2026-09-18), the workforce seat beside what
-     staff cost, then the peers table full width; turn two, the cities beside
-     what customers earn, the margin beside what locals know; turn three, the
-     two character tables, the footing beside the easiest seat; the close full
-     width. Blocks 01 and 02 were seated by the second dispatch the same day;
-     18 and 19, the exit's pair, by the fifth (2026-09-18); the three chapter
-     breaks by the sixth (2026-09-18), which also re-measured `07 | 08` and
-     left it unseated on the seat's ink share (its band's comment); the four
-     thin-country seats by the seventh (2026-09-18, the comment above the
-     return). A band
-     whose partner is not built yet
-     holds its one card in its own Band, unpadded: the LONE CARD finding on it
-     is expected and temporary, and the kit's only-child rule gives the
-     survivor two thirds so the composition reads as a choice meanwhile.
-     Three full widths, R1: the take, the peers, the close. */
+  /* EVERY OTHER COUNTRY ON THE BAND PAGE (2026-10-04, his "push forward man" the same day the United Kingdom's band page went
+     live; his message of that morning: "abandon the bento in favor of a more traditional thing where the sections have
+     alternating background colors"). The page draws the same fifteen blocks it drew as a bento (every country draws all fifteen,
+     a block without its data standing as its seat: measured on twenty-one countries that day), now as zones (zones.tsx; MODEL.md
+     PART 10), one level a zone, alternating tint and paper from the masthead down, each chapter's number and title at the top of
+     its first zone:
+       the masthead;
+       01 what it costs to open, and to run: registering | the bill (3-2; the seat 2-3), running costs | what staff cost, the
+          peers table (wide);
+       02 where to open it, and what to open: the cities | what customers earn (2-1; 1-1 where the cities are a seat), the margins
+          | what locals know (1-1; the three seats side by side where the margins, the notes and the peers are all seats);
+       03 what the place is like: dealing with the state | dealing with people; what households spend on | the time to sell;
+       the close (wide).
+     A block that holds nothing draws nothing and its zone takes only what draws; the seats stay, because the page's floor of
+     blocks is his clause 63 ("a main page with too few sections"). The old bento composition and its measurements are in git
+     (this file before 2026-10-04). */
+  const charTables = iso2 ? buildCharacterTables(iso2) : null;
+  /* A SEAT NEVER HOLDS A BAND ALONE (2026-10-04, Afghanistan at 1280: "Against the peers" took a whole band for one sentence):
+     where the peer table does not resolve its seat leaves chapter 01's full-width zone and stands under what locals know, the
+     two seats one cell beside the margins (or their seat), parted as stacked sections are, a hairline with 24 either side. */
+  const peersSeat = !peers;
+  const seatOf = (id: "setup" | "locals" | "money", icon: AtlasIconId) => (
+    <BlockedSeat key={id} id={id} icon={icon} kicker={COPY.blocked[id].kicker} line={COPY.blocked[id].line} foot={COPY.blocked[id].foot} />
+  );
+  /* A SEAT IS ONE LINE, SO IT NEVER TAKES THE WIDE SIDE (2026-10-04, Afghanistan and Germany at 1280): the cities' seat stood in
+     two thirds of its band with one sentence, and a two-column margins table stretched to two thirds with its figures 300px
+     from their trades (his "a section that has no information can only be so wide"). The cities' seat takes a half beside what
+     customers earn; the margins take a half beside the notes or their seat; and where the margins, the notes and the peers are
+     all seats, the three stand side by side in thirds, one line each, rather than one seat beside two stacked. */
+  const citiesAsSeat = !cities && !!citiesSeat;
+  const threeSeats = !hasMoney && !locals && peersSeat;
+  const generalZonesAll: Array<{ key: string; split: ZoneSplit; label: string; chapter?: { index: string; heading: string }; body: React.ReactNode[] }> = [
+    { key: "take", split: "wide", label: "The tax burden", body: [<Masthead key="take" name={name} iso2={iso2} hero={d.hero} />] },
+    {
+      key: "setup",
+      split: hasSetup ? "3-2" : "2-3",
+      label: COPY.tiers.kicker,
+      chapter: { index: "01", heading: COPY.chapters.costs },
+      body: [
+        hasSetup ? <Setup key="setup" setup={d.setup} iso2={iso2} /> : seatOf("setup", "register-cost"),
+        /* The steps only beside the registering table: where the table is a seat the bill keeps its short form. */
+        <EntryBill key="bill" bill={bill} steps={hasSetup ? billSteps : null} licences={hasSetup ? licences : null} />,
+      ],
+    },
+    {
+      key: "running",
+      split: "1-1",
+      label: COPY.pay.kicker,
+      body: [costs ? <RunningCosts key="running" costs={costs} /> : null, <Hiring key="hiring" hiring={d.hiring} iso2={iso2} />].filter(Boolean) as React.ReactNode[],
+    },
+    { key: "peers", split: "wide", label: "Against the peers", body: peersSeat ? [] : [<Peers key="peers" table={peers} zone />] },
+    {
+      key: "cities",
+      split: citiesAsSeat ? "1-1" : "2-1",
+      label: "The cities",
+      chapter: { index: "02", heading: COPY.chapters.where },
+      body: [cities || citiesSeat ? <Cities key="cities" cards={cities} seat={citiesSeat} /> : null, customers ? <Customers key="customers" strip={customers} /> : null].filter(Boolean) as React.ReactNode[],
+    },
+    {
+      key: "money",
+      split: threeSeats ? "1-1-1" : "1-1",
+      label: COPY.blocked.money.kicker,
+      body: threeSeats ? [
+        seatOf("money", "owner-keeps"),
+        seatOf("locals", "locals-know"),
+        <BlockedSeat key="peers" id="peers" icon="benchmark" kicker={COPY.blocked.peers.kicker} line={COPY.blocked.peers.line} foot={COPY.blocked.peers.foot} />,
+      ] : [
+        hasMoney ? <Money key="money" money={d.money} card={margin} /> : seatOf("money", "owner-keeps"),
+        peersSeat ? (
+          /* Each seat in its own cell, so the hairline between them belongs to the stack (the zones' open-section rule takes a
+             section box's own border away, as it does in a pair). */
+          <div key="seats" data-zone-stack="" className="flex flex-col gap-6 [&>*+*]:border-t [&>*+*]:border-[var(--c-border)] [&>*+*]:pt-6">
+            <div className="min-w-0">{locals ? <LocalsKnow notes={locals} /> : seatOf("locals", "locals-know")}</div>
+            <div className="min-w-0">
+              <BlockedSeat id="peers" icon="benchmark" kicker={COPY.blocked.peers.kicker} line={COPY.blocked.peers.line} foot={COPY.blocked.peers.foot} />
+            </div>
+          </div>
+        ) : locals ? (
+          <LocalsKnow key="locals" notes={locals} />
+        ) : (
+          seatOf("locals", "locals-know")
+        ),
+      ],
+    },
+    {
+      key: "character",
+      split: "1-1",
+      label: COPY.character.state.kicker,
+      chapter: { index: "03", heading: COPY.chapters.place },
+      body: [charTables?.state ? <CharacterCard key="state" iso2={iso2} which="state" zone /> : null, charTables?.people ? <CharacterCard key="people" iso2={iso2} which="people" zone /> : null].filter(Boolean) as React.ReactNode[],
+    },
+    {
+      key: "spend",
+      split: "2-1",
+      label: "What households spend on",
+      body: [spendData ? <SpendCard key="spend" spend={spendData} /> : null, exitData ? <ExitCard key="exit" exit={exitData} /> : null].filter(Boolean) as React.ReactNode[],
+    },
+    { key: "close", split: "wide", label: "Where to next", body: [<Close key="close" meta={d.meta} name={name} zone />] },
+  ];
+  const generalZones = generalZonesAll.filter((z) => z.body.length > 0);
+  /* The rail lists what the page draws, in its order, each under its chapter. */
+  const generalSections: RailSection[] = [
+    { id: "take", label: "The tax burden" },
+    { id: "setup", label: COPY.tiers.kicker, chapter: "01" },
+    { id: "entry-bill", label: COPY.entryBill.kicker, chapter: "01" },
+    ...(costs ? [{ id: "running-costs", label: "Running costs", chapter: "01" }] : []),
+    { id: "hiring", label: COPY.pay.kicker, chapter: "01" },
+    ...(peersSeat ? [] : [{ id: "peers", label: "Against the peers", chapter: "01" }]),
+    ...(cities || citiesSeat ? [{ id: "cities", label: "The cities", chapter: "02" }] : []),
+    ...(customers ? [{ id: "customers", label: "What customers earn", chapter: "02" }] : []),
+    { id: "money", label: "Net profit margin", chapter: "02" },
+    { id: "locals", label: COPY.locals.kicker, chapter: "02" },
+    ...(peersSeat ? [{ id: "peers", label: "Against the peers", chapter: "02" }] : []),
+    ...(charTables?.state ? [{ id: "character", label: COPY.character.state.kicker, chapter: "03" }] : []),
+    ...(charTables?.people ? [{ id: "character-people", label: COPY.character.people.kicker, chapter: "03" }] : []),
+    ...(spendData ? [{ id: "spend", label: "What households spend on", chapter: "03" }] : []),
+    ...(exitData ? [{ id: "exit", label: "How long it takes to sell", chapter: "03" }] : []),
+  ];
+  const generalChapters = {
+    "01": { index: "01", heading: COPY.chapters.costs },
+    "02": { index: "02", heading: COPY.chapters.where },
+    "03": { index: "03", heading: COPY.chapters.place },
+  };
   return (
     <>
-      <div className="py-2" data-spine-body>
-        {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body
-           wraps it in SiteChrome, whose <main> is `max-w-content mx-auto px-6`; a second main here nested the
-           landmark and doubled the gutter, 1024 of content at 1280 where the pages are built at 1072 and 295 at
-           375 where they are built wider (measured on production). The harness wraps its renders the same way. */}
-        <Masthead name={name} iso2={iso2} hero={d.hero} />
-        {/* `01 glance | 02 world-seat` LEFT THE PAGE on 2026-09-20 by his word
-            (rules/FOUNDER-VERDICTS.md, that date; MODEL.md 8.2 row 00's
-            bracket): "at a glance becomes irrelevant because we already put it
-            at the hero section", and "among the countries" is not drawn as a
-            card of unrelated figures; its rent goes to the city cards, its
-            payroll on-cost is the staff card's, its lending rate waits on the
-            financing section he asked for. The builders stay (glance_rows.ts,
-            world_seat_rows.ts) because the copy gates read their strings and
-            the board reads the same modules; the components below draw
-            nothing today and are kept until his corrections on the rest of
-            the page land, then retired with the others they take with them. */}
-        {/* CHAPTER TURN ONE (8.2, "What it costs to open, and to run"; plan step
-            31's sixth dispatch, 2026-09-18): the kit's Movement, the muted index
-            and one plain heading, no eyebrow and no icon (8.4; the cell page
-            passes both and the kit draws neither). It spaces itself: 48 above
-            (the chapter rung) and 12 below, which the next Band's own 32
-            absorbs by margin collapse, so the heading sits 32 over its first
-            band. The opening above carries no break (PART 1). The rail does
-            not list the turns: the cell page, the other page on Movement,
-            carries no rail at all, so there is no idiom for it. */}
-        <Movement index="01" heading={COPY.chapters.costs} />
-        {/* `03 setup | 04 entry-bill`, 3-2, the registering table wide and the
-            bill narrow (8.2; plan step 31, third dispatch). MEASURED BEFORE IT
-            WAS PAIRED, on GB with the page filter at every width: 1280, the
-            table 624 by 320 and the bill 416 by 320 on one level, the bill's
-            own content about 210 at that width, so its 110px of air is
-            distributed around the 30 (57px between the figure and the
-            hairline, about as much above) and no blank reaches the filter's
-            120 floor; 1024, 566 and 378 by 320; 768, equal halves 344 by 337;
-            375, stacked, the bill 238 against the table's 421. Zero holes on
-            18 cards at three widths. The filter's blind spot, stated: the
-            focal is a block-level leaf, so its full-width box counts as ink
-            and the air to the right of "$148" is not measured; it is the
-            cell's own composition (B4, one number, big, alone, with room
-            around it) and was judged by eye in the dispatch's photographs.
-            The table draws on 152 countries and the bill on 195; on the 43
-            with no legal form on file THE SETUP SEAT stands where the table
-            would, beside the same bill (the seventh dispatch, 2026-09-18;
-            8.2's "THE THIN COUNTRY, SEATED"), so LONE CARD closes, and the
-            band is always drawn because the seat exists for every country.
-            THE SEATED BAND TAKES 2-3, NOT THE TABLE'S 3-2, by 8.4 rule 1
-            (the taller card takes the wide side), MEASURED ON AFGHANISTAN
-            with the probe, the page filter and the art-direction gate: at
-            1280 the bill (on a country with no LLC row the guard has nothing
-            to check against, so it prints its $50 at 30 and 7 days at 16,
-            marked modelled in its foot) wants 221 of height at 416 and at
-            624 alike, and the seat wants 149 at 624 (one line) or 171 at
-            416 (two); so at 3-2 the seat stretched to 222 carries 109 of
-            ink in 182 inside, 59 percent against the gate's E2 floor of 60,
-            the sixth dispatch's fault on the workforce seat in a second
-            place; at 2-3 it carries 131 in 182, 72 percent, and the bill
-            stands at its own height on the wide side with no hole (the
-            filter: 0 holes on 20 cards at 1280, 768 and 375). At 768 the
-            two take equal halves, 344 by 238, the seat's two lines 131 in
-            198, 66 percent; at 375 they stack at their own heights. */}
-        {/* 3-2 WITH THE STEPS COMPACT (2026-09-25, measured both ways): at 2-3 the table truncated "Private Limited Company" at
-            416 and the steps spread across 624 with their names wrapped in a 146px column; at 3-2 with the steps' wide form they stood
-            two lines each and the bill card ran 187 past the table. The compact steps (the Stepper's `compact`) keep the table's
-            width and bring the two cards within a line of each other. */}
-        <Band split={hasSetup ? "3-2" : "2-3"}>
-          {hasSetup ? (
-            <Setup setup={d.setup} iso2={iso2} />
-          ) : (
-            <BlockedSeat id="setup" icon="register-cost" kicker={COPY.blocked.setup.kicker} line={COPY.blocked.setup.line} foot={COPY.blocked.setup.foot} />
-          )}
-          {/* The steps only beside the registering table (2026-09-25): where the table is seated (43 countries with no legal form on
-              file; Afghanistan measured) the seat is one line, and the bill's tall steps beside it opened a 376 by 126 blank in the
-              seat's card; there the bill keeps its short form. */}
-          <EntryBill bill={bill} steps={hasSetup ? billSteps : null} licences={hasSetup ? licences : null} />
-        </Band>
-        {/* `05 premises` LEFT THE PAGE on 2026-09-20 by his word (COUNTRY-PAGE-
-            SECTIONS-PLAN-2026-09-20.md, correction 6: "premises" is the wrong
-            word and the wrong concept for a country page; rent per square
-            metre goes to the CITY cards; the country page holds the costs that
-            are the same everywhere in the country). `06 running-costs` now
-            holds those and pairs with `08 hiring` below. */}
-        {/* `07 workforce | 08 hiring`, 1-1 in 8.2, the seat on the left and the
-            loud staff card on the right (its order list, its rhythm line
-            "blocked-seat · pay-bars", its ledger "08, band 4, right"). THE PAIR
-            STILL CANNOT BE SEATED, re-measured on 2026-09-18 (plan step 31's
-            sixth dispatch) the day 08's placement lines landed, which is the
-            day the first dispatch named. That dispatch had measured a 150 by
-            156 void on the staff card at 520 and left each card in its own
-            band, the staff card lean at 347. WITH THE LINES the staff card's
-            void is gone: at 1-1 and 1280 the card at 520 (480 inside) carries
-            a 190 by 60 blank, under the page filter's 120 floor, and the seat
-            stretched to the staff card's 232 a 480 by 102 one, also under it;
-            at 768's equal halves the staff card takes PART 5's phone row and
-            runs 301 tall and the seat stretched to it opens a 304 by 168
-            blank, which stack="lg" would close. What does not hold is the
-            art-direction gate's E2 on the seat: 133 of ink in a card
-            stretched to 232 is 57 percent against its floor of 60, a baseline
-            of 0 that never rises. The seat cannot gain ink (its law is one
-            line and a foot), and the staff card cannot lose the 11px that
-            would lift the seat to 60 except by 8.2's own next move for `08`:
-            the on-cost sentence and the informal line (91px of the card's
-            face) go behind the plus, closed on arrival, and the card falls to
-            about 177 inside, where the seat's 133 is 75 percent. So each still
-            stands in its own band in 8.2's order: the seat at the survivor's
-            two thirds at its own height, the staff card lean at 347, where it
-            draws PART 5's phone row (the card is under 420) with the
-            placement line under each full-width track and carries an 89 by
-            102 blank, under the floor. One Band at 1-1 the day the plus lands. */}
-        {/* `06 running-costs | 08 hiring`, 1-1 (2026-09-20): what it costs to
-            run beside what staff cost, the two cost cards on one level. The
-            workforce seat (`07`) is off the page by his word of 2026-09-19 (no
-            "not gathered yet" card in front of him; its three figures wait on
-            DATA-REQUIREMENTS items 40 and 17 and the card returns with them,
-            under a title he will name: "Who you can hire" is wrong, correction
-            8). */}
-        {/* ONE COLUMN UNTIL lg (2026-09-24): the running costs hold two rows and one line since the copy rewrite, and at 768's equal halves they stood 90 short of what staff cost (the page laws, CARD FOOT BLANK; Afghanistan's, one row and one line, 132). */}
-        {costs ? (
-          <Band split="1-1" stack="lg">
-            <RunningCosts costs={costs} />
-            <Hiring hiring={d.hiring} iso2={iso2} />
-          </Band>
-        ) : (
-          <Band split="1-1">
-            <Hiring hiring={d.hiring} iso2={iso2} />
-          </Band>
-        )}
-        <Peers table={peers} />
-        {/* CHAPTER TURN TWO (8.2, "Where to open it, and what to open"): the
-            page's biggest volume jump, the break and the area band in one
-            breath. */}
-        <Movement index="02" heading={COPY.chapters.where} />
-        {/* `10 cities | 13 customers`, 3-2 cities wide in 8.2: THE PAIR CANNOT BE
-            SEATED TODAY, measured on 2026-09-17 (plan step 31) with the page
-            filter at 1280 and every split tried. The four field cards need
-            600px of inner width (CityCards' `minmax(9rem,1fr)` columns), and
-            3-2 gives 584: the cards fold to three and one, a 389 by 210 hole.
-            At 2-1 the cards sit four in a row at 693 and the strip beside them
-            at 347 carries 132px of air, twelve over the filter's floor (the
-            strip's content is 199 tall against the cards' 334; 8.2's own
-            heights on file, 181 and 199, predate the photograph). 1-1 and 2-3
-            fold the cards too. So each stands in its own band, in 8.2's
-            order, unpadded, and the filter reports LONE CARD on both; the
-            pair seats the day the strip gains its `reach` row (8.1, spending
-            per citizen) or the composition re-decides it.
-            THE SEAT TAKES THE CARDS' BAND (plan step 49, 2026-09-19): on the
-            90 countries with no covered city the seat stands where the cards
-            would, alone at the survivor's two thirds in 8.2's order, so LONE
-            CARD fires on it as it fires on the cards (the same row GB carries
-            on this band) and BLOCK FLOOR counts it. A seat needs no 600px, so
-            `10 | 13` could pair on these 90 where the cards cannot; that is
-            8.4 rule 1's to measure, not this dispatch's to guess. */}
-        {/* THE SECOND TURN TO HIS PAGE LAWS OF 2026-09-20 (clauses 50 to 58) and
-            the loop's own composition, since his corrections on sections 10
-            to 21 are not in yet (DOCTRINE 16: the loop decides, records it as
-            reversible, and never asks him to look). Three pairings were
-            measured on the live render this evening and two refused: 8.2's
-            `10 | 13` at 3-2 (the four city cards wrap in a 584px seat, 389 by
-            216 of air; the strip beside them 376 by 366) and `13 | 16` at 1-1
-            (the strip stretched to the notes' 323 carries 480 by 150). What
-            holds: `10 cities | 16 locals` at 2-1, the four field cards wide
-            beside the notes, which stand about as tall (the notes at 307
-            inside, under half the page, clause 51); and `12 money | 13
-            customers` at 2-1, the margin bars wide beside the strip in its
-            phone form at the narrow third. Each level holds one visual card
-            and one text card, or two visuals. Where a card is a seat the two
-            stand in their own bands, the precedent for a drawn card beside a
-            seat. */}
-        {(cities || citiesSeat) && locals ? (
-          <Band split="2-1" stack="lg">
-            <Cities cards={cities} seat={citiesSeat} />
-            <LocalsKnow notes={locals} />
-          </Band>
-        ) : (
-          <>
-            {cities || citiesSeat ? (
-              <Band split="2-1">
-                <Cities cards={cities} seat={citiesSeat} />
-              </Band>
-            ) : null}
-            {locals ? (
-              <Band split="2-3" stack="lg">
-                <LocalsKnow notes={locals} />
-              </Band>
-            ) : (
-              <Band split="2-3" stack="lg">
-                <BlockedSeat id="locals" icon="locals-know" kicker={COPY.blocked.locals.kicker} line={COPY.blocked.locals.line} foot={COPY.blocked.locals.foot} />
-              </Band>
-            )}
-          </>
-        )}
-        {hasMoney && customers ? (
-          <Band split="2-1" stack="lg">
-            <Money money={d.money} card={margin} />
-            <Customers strip={customers} />
-          </Band>
-        ) : (
-          <>
-            {hasMoney ? (
-              <Band split="2-1" stack="lg">
-                <Money money={d.money} card={margin} />
-              </Band>
-            ) : (
-              <Band split="2-1" stack="lg">
-                <BlockedSeat id="money" icon="owner-keeps" kicker={COPY.blocked.money.kicker} line={COPY.blocked.money.line} foot={COPY.blocked.money.foot} />
-              </Band>
-            )}
-            {customers ? (
-              <Band split="2-1">
-                <Customers strip={customers} />
-              </Band>
-            ) : null}
-          </>
-        )}
-        {/* CHAPTER TURN THREE (8.2, "What the place is like"): the character
-            pair, five traits each by his ruling of 2026-09-19, then the exit.
-            `17 footing` LEFT THE PAGE on 2026-09-20: its two scores are the
-            hero board's first two rows (clean dealing, admin ease), and a
-            figure does not print twice on one page. `11 easiest` is off the
-            page until its six figures exist (no "not gathered yet" card, his
-            word of 2026-09-19). `18 checks` left the page (three sentences,
-            no figure; the close card says why) and `19 compare` is the close
-            card's pill (M21: the pill on every page is the compare tool), so
-            the exit is one card. */}
-        <Movement index="03" heading={COPY.chapters.place} />
-        <Character iso2={iso2} />
-        {/* `18 spend | 17 exit`, 2-1 (2026-09-23): where a household's money
-            goes, seven parts of a hundred, beside how long a sale takes.
-            NEITHER STANDS FULL WIDTH, and the reason is his, twice stated
-            (2026-08-25, verify_section_bands' own header): "for every
-            subsection that stretches left to right full width, I think we
-            should ban it except hero section". The exit card shipped full
-            width this morning and the gate counted it, which is how the rule
-            was found again; the spend card was written the same way and both
-            are paired here. The page's full widths stay the three the model
-            allows: the opening, the peers table and the close.
-            THE PAIR IS THE ONLY ONE AVAILABLE, and that is a measurement, not
-            a preference: at 1280 the page's other short cards are the margin
-            bars (235) and the earnings strip (211), and the exit is a range
-            strip, which clause 64 keeps a level clear of the other strip. So
-            the tall new card and the short new card take one level, the table
-            on the wide side by 8.4 rule 1. */}
-        <Band split="2-1" stack="lg">
-          <SpendCard spend={buildCountrySpend(iso2 ?? "")} />
-          <ExitCard exit={buildCountryExit(iso2 ?? "")} />
-        </Band>
-        <Close meta={d.meta} name={name} />
+      {/* The same frame as the United Kingdom's: 16px of phone gutter, the bands' colour edge to edge. */}
+      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+        {generalZones.map((z, i) => (
+          <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label} chapter={z.chapter}>
+            {z.body}
+          </Zone>
+        ))}
       </div>
-      <OnThisPage sections={RAIL_SECTIONS} />
+      <OnThisPage sections={generalSections} chapters={generalChapters} />
     </>
   );
 }
