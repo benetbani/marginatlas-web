@@ -129,13 +129,15 @@ code puts on the page>`.
 
 ## Latest handoff
 
-- **`docs/handoff/HANDOFF-marginatlas-2026-09-26.md` IS THE CURRENT HANDOFF, READ IT FIRST**
-  (the goal of 2026-09-26 afternoon: every section understandable and digestible; batches
-  41 to 53 shipped and proven live, production at ee48a5bc: readouts and linked parts on
-  the drawings, four levers, a switch, the tables' sort, his plus on the legal forms, an
-  icon a cell; the `interact` gate; two trade-page rows queued; its re-hydration prompt is
-  its section 14). `E:/atlas/design/loop/build/STATE.md` is the state of record and is
-  newer than any handoff: read its `step-in-flight` before acting.
+- **`docs/handoff/HANDOFF-marginatlas-2026-10-04.md` IS THE CURRENT HANDOFF, READ IT FIRST**
+  (2026-10-04 night: the truth pass live at 38f81e8a; milestone 1 of his launch interview
+  built on branch `milestone-1`, NOT pushed, his yes needed before any push or deploy; the
+  Pro code map for milestone 2 at `docs/superpowers/research/2026-10-04-pro-code-map.md`;
+  its re-hydration prompt is its section 14). `E:/atlas/design/loop/build/STATE.md` is the
+  state of record and is newer than any handoff: read its `step-in-flight` before acting.
+- `docs/handoff/HANDOFF-marginatlas-2026-09-26.md` is the PRIOR handoff (the goal of
+  2026-09-26 afternoon: every section understandable and digestible; batches 41 to 53,
+  production then at ee48a5bc; the `interact` gate).
 - `docs/handoff/HANDOFF-marginatlas-2026-09-25.md` is the PRIOR handoff (the UK page goal
   of 2026-09-25 and his page-agnostic sections: batches 20 to 32, production then at
   7eb744b4; every section of his list built or ruled out).
