@@ -531,6 +531,7 @@ const GATES: Gate[] = [
   { name: "uk-registers", script: "scripts/verify_uk_registers.ts" },
   { name: "uk-pnl-banded", script: "tests/uk/pnl/banded.test.ts" },
   { name: "uk-pnl-kinds", script: "tests/uk/pnl/kinds.test.ts" },
+  { name: "uk-pnl-model", script: "tests/uk/pnl/model.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

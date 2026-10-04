@@ -1398,6 +1398,17 @@
       "claims": []
     },
     {
+      "name": "uk-pnl-model",
+      "script": "tests/uk/pnl/model.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The profit-and-loss model on a worked example: a London barbershop (the register's hair and beauty bands, the official valuation's average London salon, the trade research's shares).",
+      "reads": [
+        "src/lib/uk/pnl/model.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],
