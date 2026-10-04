@@ -4,8 +4,8 @@ import { UK_SOURCES } from "@/lib/spine/uk_sources";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "About the data | Margin Atlas",
-  description: "What Margin Atlas covers and how to read it.",
+  title: "About the figures | Margin Atlas",
+  description: "How to read a figure on Margin Atlas: what is counted, worked out, looked up or estimated, and where each comes from.",
   alternates: { canonical: "/about-data" },
 };
 
@@ -33,14 +33,48 @@ export default function AboutDataPage() {
          pages). Stale "40+ countries" copy updated to reflect the real
          coverage. */}
       <SectionEyebrow size="md" className="mb-3">Reference</SectionEyebrow>
+      {/* ABOUT THE FIGURES (his interview of 2026-09-26: estimates signalled by the pages' quiet notes plus an "About the figures"
+          page in the footer; milestone 1, M9). The URL stays /about-data: a slug is never renamed. */}
       <h1 className="text-4xl font-semibold tracking-tight text-ink-900">
-        About the data
+        About the figures
       </h1>
       <p className="mt-4 text-lg text-ink-800 leading-relaxed">
         Margin Atlas brings together small-business benchmarks across every
         country: revenue, employment, wages, and the spread between the
         smallest and largest firms in every industry.
       </p>
+
+      <section className="mt-10">
+        {/* THE FOUR KINDS (milestone 1, M9): the register ledger's own words, the same four every truth-pass figure carries in its
+            markup (src/lib/spine/provenance.ts), each with a figure a reader meets on the United Kingdom's pages. */}
+        <h2 id="reading" className="scroll-mt-24 text-xl font-semibold text-ink-900">How to read a figure</h2>
+        <p className="mt-3 text-ink-800">
+          Every figure on the United Kingdom&rsquo;s pages is one of four kinds, and where it matters the line under it says which.
+        </p>
+        <ul className="mt-4 space-y-3 text-ink-800">
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Counted.</strong> Taken straight from an official register or table: the 7,865 registered restaurants in London.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Worked out.</strong> Our arithmetic on official figures: a typical restaurant&rsquo;s yearly sales, read from the register&rsquo;s sales bands, or the tax a sole trader pays at this year&rsquo;s rates.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Looked up.</strong> A rule, a price or a published count read on a named page on a stated day: the minimum wage, a card reader&rsquo;s fee.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Estimate.</strong> Our judgement where no register holds the figure, and the line under it says so: the sales a London restaurant needs to break even, or the cost to open at London prices.</span>
+          </li>
+        </ul>
+        <p className="mt-3 text-sm text-ink-700">
+          Outside the United Kingdom most figures are estimates from national statistics and a trade&rsquo;s typical shape, and each
+          page says so once, at the foot of its first card. Where the figures come from is listed under{" "}
+          <a href="#sources" className="underline underline-offset-2">Sources and licences</a>.
+        </p>
+      </section>
 
       <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">What you'll find</h2>

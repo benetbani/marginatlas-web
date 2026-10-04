@@ -250,7 +250,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                       believe any of this asks a question before they read a
                       methodology note. */}
                   <li><a href="/faq" className="hover:text-atlas-500">Common questions</a></li>
-                  <li><a href="/about-data#quality" className="hover:text-atlas-500">Quality methodology</a></li>
+                  {/* "About the figures" in the footer (his interview of 2026-09-26; milestone 1, M9): how to read a figure, then the sources. */}
+                  <li><a href="/about-data#reading" className="hover:text-atlas-500">About the figures</a></li>
                   <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">Where the numbers come from</a></li>
                   <li><a href="/coverage" className="hover:text-atlas-500">Coverage report</a></li>
                   <li><a href="/contact" className="hover:text-atlas-500">Contact</a></li>

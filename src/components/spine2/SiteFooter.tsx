@@ -140,7 +140,7 @@ const COLUMNS: ReadonlyArray<FooterColumn> = [
     title: "How this works",
     links: [
       { label: "How a figure is built", href: "/methodology" },
-      { label: "About the data", href: "/about-data" },
+      { label: "About the figures", href: "/about-data" },
       { label: "What is covered", href: "/coverage" },
       /* THE KNOWLEDGE BASE HAD ONE INBOUND LINK IN THE WHOLE SITE, and it was
          on the 404 page. 54 articles, declared in full in the sitemap, and the
