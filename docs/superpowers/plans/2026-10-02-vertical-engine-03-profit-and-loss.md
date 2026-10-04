@@ -585,9 +585,14 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 ### Task 3: The kind algebra
 
-Four kinds: counted, looked up, worked out, estimate. `kind(f(x1..xn))` is estimate if any input is, worked out once any
-arithmetic is done, and the input's own kind when one input passes through untouched. A figure can never claim more than
-its weakest input, and arithmetic never launders an estimate.
+Four kinds: counted, looked up, worked out, estimate. `combineKinds([x1..xn])` is estimate if any input is, worked out once
+any arithmetic is done, and the input's own kind when one input passes through untouched. A figure can never claim more
+than its weakest input, and arithmetic never launders an estimate. `transformed` defaults to true, so a figure computed from
+one input (a quantile of counted bands) is worked out unless the caller says it passed through untouched; the model relies
+on that three times. Its review of 2026-10-04 found 9 of 12 deliberate faults passed the first four checks (the default
+flipped, equal inputs passed through, several untouched inputs taking the first one's kind, the estimate checked on the
+first input only): six more checks pin them, and all 10 faults that can change a kind now fail the test (the eleventh, the
+estimate checked after the pass-through, cannot: an untouched estimate is an estimate either way).
 
 **Files:**
 - Create: `src/lib/uk/pnl/kinds.ts`
@@ -624,6 +629,12 @@ check("kinds: an estimate anywhere makes an estimate", combineKinds(["counted", 
 check("kinds: arithmetic on counted figures is worked out", combineKinds(["counted", "looked up"]) === "worked out");
 check("kinds: one input untouched keeps its kind", combineKinds(["counted"], false) === "counted");
 check("kinds: a figure with no inputs is refused", (() => { try { combineKinds([]); return false; } catch { return true; } })());
+check("kinds: an estimate in any position makes an estimate", combineKinds(["estimate", "counted"]) === "estimate" && combineKinds(["counted", "estimate", "looked up"]) === "estimate");
+check("kinds: an estimate passed through untouched stays an estimate", combineKinds(["estimate"], false) === "estimate" && combineKinds(["estimate"]) === "estimate");
+check("kinds: one input is transformed by default, so a band quantile of counted bands is worked out", combineKinds(["counted"]) === "worked out" && combineKinds(["looked up"], true) === "worked out");
+check("kinds: two counted figures together are worked out, never counted", combineKinds(["counted", "counted"]) === "worked out" && combineKinds(["counted", "counted"], false) === "worked out");
+check("kinds: several inputs flagged untouched are still arithmetic", combineKinds(["counted", "looked up"], false) === "worked out");
+check("kinds: a worked-out or looked-up input passed through keeps its kind", combineKinds(["worked out"], false) === "worked out" && combineKinds(["looked up"], false) === "looked up");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/kinds: all pass");
@@ -652,11 +663,13 @@ Create `src/lib/uk/pnl/kinds.ts`:
  *   worked out  arithmetic on counted or looked-up figures, the method stated
  *   estimate    our judgement where no register exists, the basis stated
  *
- *   kindOf(f(x1..xn)) = estimate      if any input is an estimate
- *                     = worked out    otherwise, once any arithmetic is done (two or more inputs, or a transformation)
- *                     = kind(x1)      when the figure is one input passed through untouched
+ *   combineKinds([x1..xn]) = estimate      if any input is an estimate
+ *                          = worked out    otherwise, once any arithmetic is done (two or more inputs, or a transformation)
+ *                          = kind(x1)      when the figure is one input passed through untouched (transformed = false)
  *
- * So a figure can never claim more than its weakest input, and arithmetic never launders an estimate into "worked out".
+ * `transformed` defaults to true: a figure computed from one input (a quantile of counted bands) is worked out unless the
+ * caller says it passed through untouched. So a figure can never claim more than its weakest input, and arithmetic never
+ * launders an estimate into "worked out".
  */
 export type Kind = "counted" | "looked up" | "worked out" | "estimate";
 
@@ -674,7 +687,7 @@ export function combineKinds(inputs: readonly Kind[], transformed = true): Kind 
 npx tsx tests/uk/pnl/kinds.test.ts
 ```
 
-Expected: 4 lines starting `PASS`, the last line `uk/pnl/kinds: all pass`, exit code 0.
+Expected: 10 lines starting `PASS`, the last line `uk/pnl/kinds: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
