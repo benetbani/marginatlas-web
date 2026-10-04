@@ -2242,6 +2242,18 @@
       "claims": []
     },
     {
+      "name": "copy-no-method-words",
+      "script": "tests/spine/copy_no_method_words.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO METHOD WORD IN ANY CARD STRING, ON ANY PAGE (milestone 1, M11; his copy correction of 2026-09-24: \"avoid words like modelled, withheld\").",
+      "reads": [
+        "scripts/harness/check_copy_plain.mjs",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "useless-tiles",
       "script": "scripts/audit/find_useless_tiles.ts",
       "args": [],
@@ -2915,7 +2927,8 @@
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/hood/hood-view.tsx",
         "src/lib/cells/related_links.ts",
-        "src/lib/geo/page_targets.ts"
+        "src/lib/geo/page_targets.ts",
+        "src/lib/taxonomy/retired_paths.ts"
       ],
       "claims": []
     }

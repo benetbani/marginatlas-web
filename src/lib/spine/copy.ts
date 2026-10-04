@@ -483,7 +483,7 @@ export const COPY = {
     foot: "Typical for the country; where each sits among the countries is not shown yet.",
     footOne: "Typical for the country; where it sits among the countries is not shown yet.",
     withheld: {
-      payroll: "Payroll on wages is not on file for this country.",
+      payroll: "No payroll figure for this country yet.",
       lending: "A lending rate is held but its definition is not.",
     },
   },
@@ -642,7 +642,7 @@ export const COPY = {
     kicker: "What staff cost",
     minimum: "Minimum salary",
     average: "Typical salary",
-    withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
+    withheld: "Typical salary is not shown: it sits too close to the minimum.",
     /** THE ON-COST ON THE BAR (section 9's plan, 2026-09-20): the darker piece at the average bar's end, said under the track; `{pct}` is the employer's payroll on-cost as printed. */
     employerAdds: "Employer adds {pct}.",
     /** The employer's share standing as its own figure where no hire's lever draws (milestone 1, M3: the average's bar it rode on left the card). */
@@ -942,7 +942,7 @@ export const COPY = {
     ofCosts: "of the costs",
     /** The costs-only legend's head, a label (2026-09-26). */
     costsHead: "Share of costs",
-    basis: "A typical split of revenue for this trade, modelled worldwide rather than measured for this place.",
+    basis: "This trade's typical split of revenue, the same everywhere.",
     otherLabel: "Smaller costs",
     residualLabel: "Unallocated",
     /** One word per cost line the source file can name, in the practical
@@ -1017,19 +1017,19 @@ export const COPY = {
     /** The one unit clause the labels do not carry themselves: "56 days" of what. Visitors a year and businesses per 10,000 residents say their unit in the label and the figure. */
     units: { days: "days to clear the city's own permits" },
     /** `{what}` is a list of the names below; `{verb}` is "is" or "are". */
-    footModelled: "{what} {verb} modelled.",
+    footModelled: "{what} {verb} estimated.",
     /** The cells as the foot names them, singular so the sentence reads: "The permit days and the business count are modelled." */
     footNames: { days: "the permit days", density: "the business count" },
     /** `{n}` of the four cells, `{reasons}` the joined reasons below. */
-    withheld: "{n} of 4 withheld: {reasons}.",
+    withheld: "{n} of 4 left out: {reasons}.",
     reasons: {
       /** Item 20: the country's arrivals divided by a size-class constant, which is not a count of this city's visitors. */
-      visitorsCountry: "the visitor count on file is the country's",
-      visitorsNone: "the visitor count is not on file",
+      visitorsCountry: "the visitor count is the country's",
+      visitorsNone: "no visitor count yet",
       /** Every row on file is the country's figure plus a step for the city's size class; no city holds a reading of its own. */
       hdi: "human development is the country's figure",
-      daysNone: "the city's permit days are not on file",
-      densityNone: "the business count is not on file",
+      daysNone: "no permit days yet",
+      densityNone: "no business count yet",
     },
   },
   /** AMONG THE CITIES, the city's `02 among-cities` (MODEL.md 8.3; the same
@@ -1400,7 +1400,7 @@ export const COPY = {
        shape he struck out , and this line says which row is missing and why.
        It goes the day the wait between registering and trading lands in
        data/legal/business_formation_costs_v1.json, and the row returns. */
-    setupWithheld: "Time until the doors open is withheld: nothing on file measures the wait between registering and trading.",
+    setupWithheld: "The wait between registering and opening is not known yet.",
     pay: "What moves this figure",
     customers: `${CUSTOMERS_KICKER}, by tenth`,
   },
@@ -1485,8 +1485,8 @@ export const COPY = {
       head: { name: "City", value: "Pay a year" },
       basis: "The {n} highest-paying of the {universe} cities we cover. Pay before tax.",
       basisIn: "The {n} highest-paying of the {universe} cities we cover in {country}. Pay before tax.",
-      withheldOne: "1 city withheld: no pay figure above zero is on file.",
-      withheldMany: "{n} cities withheld: no pay figure above zero is on file.",
+      withheldOne: "1 city left out: no pay figure yet.",
+      withheldMany: "{n} cities left out: no pay figures yet.",
     },
     /** The covered cities by visitors in a year, the one city field with real
      *  gaps in it, which is why the withheld line here is a line a reader
@@ -1505,8 +1505,8 @@ export const COPY = {
       head: { name: "City", value: "Visitors a year" },
       basis: "The {n} most visited of the {universe} cities we cover.",
       basisIn: "The {n} most visited of the {universe} cities we cover in {country}.",
-      withheldOne: "1 city withheld: no visitor figure above zero is on file.",
-      withheldMany: "{n} cities withheld: no visitor figure above zero is on file.",
+      withheldOne: "1 city left out: no visitor figure yet.",
+      withheldMany: "{n} cities left out: no visitor figures yet.",
     },
     /** One trade across every country the margin model measures. The kicker is
      *  the money card's own, and the withheld sentence is the money card's own
@@ -1517,8 +1517,8 @@ export const COPY = {
       middle: "Middle country",
       head: { name: "Country", value: "Net margin" },
       basis: "The {n} highest of the {universe} countries measured. What a shop keeps after costs and tax.",
-      withheldOne: "1 country withheld: the model returns a loss or a floor for a typical shop.",
-      withheldMany: "{n} countries withheld: the model returns a loss or a floor for a typical shop.",
+      withheldOne: "1 country left out: our figure for it isn't reliable.",
+      withheldMany: "{n} countries left out: our figures for them aren't reliable.",
     },
   },
   /** THE TRADE PAGE'S OPENING (MODEL.md 8.6, `00 take`, `01 spread`, `02
@@ -1532,12 +1532,13 @@ export const COPY = {
    *  came from, because the sample mark is off site-wide and the cell is the
    *  only place left that can say it. The engine's is a model over the city's
    *  own revenue and payroll; the shard's and the profile's are the trade's
-   *  world figures (R12: every shard figure prints as modelled). */
+   *  world figures (R12 said every shard figure prints as modelled; his copy correction of 2026-09-24
+   *  struck the word, so the note says whose figure it is, not how it was made). */
   tradeNet: {
     notes: {
       engine: "from this city's own figures",
-      shard: "typical for the trade, modelled",
-      profile: "the sector's typical, modelled",
+      shard: "typical for the trade",
+      profile: "typical for the sector",
     },
   },
   /** `00 take`: the answer label is 8.6's title; the basis says what the

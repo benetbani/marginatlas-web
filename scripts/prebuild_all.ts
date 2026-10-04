@@ -692,6 +692,7 @@ const GATES: Gate[] = [
      behind it held to the renders outside the UK; the thin page's notify-me ask and its endpoint tag (M9). */
   { name: "indexable", script: "tests/seo/indexable.test.ts" },
   { name: "depth-notify", script: "tests/seo/depth_notify.test.ts" },
+  { name: "copy-no-method-words", script: "tests/spine/copy_no_method_words.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },
