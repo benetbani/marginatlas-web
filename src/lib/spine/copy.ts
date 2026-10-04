@@ -642,7 +642,7 @@ export const COPY = {
     kicker: "What staff cost",
     minimum: "Minimum salary",
     average: "Typical salary",
-    withheld: "Typical salary is not shown: it sits too close to the minimum.",
+    withheld: "Pay is not shown: typical pay sits too close to the minimum.",
     /** THE ON-COST ON THE BAR (section 9's plan, 2026-09-20): the darker piece at the average bar's end, said under the track; `{pct}` is the employer's payroll on-cost as printed. */
     employerAdds: "Employer adds {pct}.",
     /** The employer's share standing as its own figure where no hire's lever draws (milestone 1, M3: the average's bar it rode on left the card). */
