@@ -346,8 +346,8 @@ cancelled there, and the clamp it needed put a false barrier in the likelihood).
 ROUNDING, not sampling. The register is a census: there is no sampling error. Its error is that every count is rounded to
 the nearest 5. rounding_range() gives the smallest and largest quantile the true counts could produce, each count being off
 by up to 2 (never below 0): a whole count rounded to the nearest 5 is within 2 of the truth (2.5 bounds a count that could be
-fractional, the cautious margin the plans first used; the founder chose 2 on 2026-10-04, decision 7). It is exact: the quantile is the smallest x at which sum_k c_k (G_k(x) - q) >= 0, G_k(x)
-being the share of band k below x, and for any x that sum is linear in the counts, so its largest value over the box of
+fractional, the cautious margin the plans first used; the founder chose 2 on 2026-10-04, decision 7). It is exact: the
+quantile is the smallest x at which sum_k c_k (G_k(x) - q) >= 0, G_k(x) being the share of band k below x, and for any x that sum is linear in the counts, so its largest value over the box of
 possible counts is at a corner where every band below some m is high and every band from m on is low (the band holding x
 on whichever side its share below x puts it). The smallest possible quantile is therefore the smallest over the eleven such
 corners, and the largest the same with the sides swapped: twenty-two evaluations, equal to trying all 1,024 corners.
