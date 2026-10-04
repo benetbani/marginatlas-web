@@ -24,7 +24,7 @@
   block then occurs exactly once (checked on 2026-10-02 by applying them in order to fresh copies of the real builders and
   rebuilding every table, and again on 2026-10-03 after the reviews of every task: every table, draft, the ledger and the
   pack rebuilt, the 75 tests passing, 27 of 28 deliberate faults in the builders' new rules failing them (the 28th, a
-  median of exactly 50m flagged in the builder's own words, no table today can show), and plan 03's 158 checks and its
+  median of exactly 50m flagged in the builder's own words, no table today can show), and plan 03's 186 checks and its
   registers gate passing on the slices exported from them).
 - Rebuild order, because each step reads the one before: `build_nomis.py` -> `build_demography.py` ->
   `enrich_failure_rates.py` -> `build_ledger.py` -> `build_pack.py` -> `build_editorial.py` -> `draft_stories.py`;

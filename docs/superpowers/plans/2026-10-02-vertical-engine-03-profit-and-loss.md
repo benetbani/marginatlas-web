@@ -308,7 +308,10 @@ the edge exactly (`L (U / L)^frac`, not exp of the logs), whether a quantile pri
 band (an exact 50k is a figure, not "under 50k"), the counts must be finite numbers, not negative, with a finite total, and a
 sales figure that is not a number is refused rather than read as nobody below it. Every quantile equals the Python's to
 twelve significant figures; 18 of 20 deliberate faults fail the test, and the two that pass change nothing a page can see (a
-string count already fails the total; the CDF's cap at 1 binds only on floating-point error).
+string count already fails the total; the CDF's cap at 1 binds only on floating-point error). Its review (2026-10-04) compared
+the port with the Python on all 4,795 register vectors (quantiles within 2.6e-16, means bitwise equal) and added five checks
+for what still passed: q outside (0, 1), bands 7 and 8 (5m to 50m), the mean over 1, 3, 8 and 9 bands, and a count under zero
+by any amount or an eleventh count.
 
 **Files:**
 - Create: `src/lib/uk/pnl/banded.ts`
@@ -400,6 +403,22 @@ const BAD = [[-5, 0, 0, 0, 0, 0, 0, 0, 0, 10], [Number.NaN, 0, 0, 0, 0, 0, 0, 0,
 check("counts that are negative, not numbers, infinite or overflow their total are refused by all three", BAD.every((b) =>
   refuses(() => bandQuantile(b, 0.5)) && refuses(() => bandCdf(b, 100)) && refuses(() => bandMeanK(b))));
 check("a sales figure that is not a number is refused, never read as nobody below it", refuses(() => bandCdf(RESTAURANTS_LONDON, Number.NaN)));
+
+
+// ---- review additions
+check("a q outside (0, 1), or not a number, is refused", [0, 1, -0.1, 1.5, Number.NaN].every((q) => refuses(() => bandQuantile(RESTAURANTS_LONDON, q))));
+check("bands 7 and 8 (5m to 50m) equal Python's: restaurants cdf 0.97925 at 7,500k and 0.99075 at 20,000k, q98 7,722.5k (band 7), q99.5 40,954.1k (band 8)",
+  near(bandCdf(RESTAURANTS_LONDON, 7_500)!, 0.9792486959415981) && near(bandCdf(RESTAURANTS_LONDON, 20_000)!, 0.9907507305159675)
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.98)!.k, 7722.515984513339) && bandQuantile(RESTAURANTS_LONDON, 0.98)!.band === 7
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.995)!.k, 40954.131817211535) && bandQuantile(RESTAURANTS_LONDON, 0.995)!.band === 8 && bandQuantile(RESTAURANTS_LONDON, 0.5)!.band === 3);
+const m1 = bandMeanK(RESTAURANTS_LONDON, 1)!, m3 = bandMeanK(RESTAURANTS_LONDON, 3)!, m8 = bandMeanK(RESTAURANTS_LONDON, 8)!, m9 = bandMeanK(RESTAURANTS_LONDON, 9)!;
+check("the mean stops where uptoBand says: restaurants over 1, 3, 8 and 9 bands equal Python's (mean, lower bound, upper bound)",
+  near(m1.k, 19.54325168564633) && m1.lo === 0 && m1.hi === 50 && near(m3.k, 119.25311819535328) && near(m3.lo, 72.10884353741497) && near(m3.hi, 183.33333333333334)
+  && near(m8.k, 716.8792695062162) && near(m8.lo, 474.53255963894264) && near(m8.hi, 1032.0760799484203) && near(m9.k, 948.071971736851) && near(m9.lo, 565.7726692209451) && near(m9.hi, 1501.117496807152));
+check("uptoBand 0 and 2.5 are refused", refuses(() => bandMeanK(RESTAURANTS_LONDON, 0)) && refuses(() => bandMeanK(RESTAURANTS_LONDON, 2.5)));
+const ten = (bad: unknown) => [bad, 0, 0, 0, 0, 0, 0, 0, 0, 10] as unknown as number[];
+check("a count under zero by any amount, and an eleventh count, are refused by all three",
+  [ten(-0.5), ten(-1e-9), [...RESTAURANTS_LONDON, 1]].every((c) => refuses(() => bandQuantile(c, 0.1)) && refuses(() => bandCdf(c, 100)) && refuses(() => bandMeanK(c))));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/banded: all pass");
@@ -536,7 +555,7 @@ export function bandCdf(counts: readonly number[], xK: number): number | null {
 npx tsx tests/uk/pnl/banded.test.ts
 ```
 
-Expected: 23 lines starting `PASS`, the last line `uk/pnl/banded: all pass`, exit code 0.
+Expected: 28 lines starting `PASS`, the last line `uk/pnl/banded: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -592,7 +611,8 @@ one input (a quantile of counted bands) is worked out unless the caller says it 
 on that three times. Its review of 2026-10-04 found 9 of 12 deliberate faults passed the first four checks (the default
 flipped, equal inputs passed through, several untouched inputs taking the first one's kind, the estimate checked on the
 first input only): six more checks pin them, and all 10 faults that can change a kind now fail the test (the eleventh, the
-estimate checked after the pass-through, cannot: an untouched estimate is an estimate either way).
+estimate checked after the pass-through, cannot: an untouched estimate is an estimate either way). Its re-review added two:
+an estimate wins whatever its partners and whatever the flag, and in the third or a later place.
 
 **Files:**
 - Create: `src/lib/uk/pnl/kinds.ts`
@@ -635,6 +655,9 @@ check("kinds: one input is transformed by default, so a band quantile of counted
 check("kinds: two counted figures together are worked out, never counted", combineKinds(["counted", "counted"]) === "worked out" && combineKinds(["counted", "counted"], false) === "worked out");
 check("kinds: several inputs flagged untouched are still arithmetic", combineKinds(["counted", "looked up"], false) === "worked out");
 check("kinds: a worked-out or looked-up input passed through keeps its kind", combineKinds(["worked out"], false) === "worked out" && combineKinds(["looked up"], false) === "looked up");
+
+check("kinds: an estimate wins whatever its partners and whatever the flag", combineKinds(["looked up", "estimate"]) === "estimate" && combineKinds(["worked out", "estimate"]) === "estimate" && combineKinds(["counted", "estimate"], false) === "estimate");
+check("kinds: an estimate in the third or later place still wins", combineKinds(["counted", "counted", "estimate"]) === "estimate" && combineKinds(["looked up", "worked out", "counted", "estimate"]) === "estimate");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/kinds: all pass");
@@ -687,7 +710,7 @@ export function combineKinds(inputs: readonly Kind[], transformed = true): Kind 
 npx tsx tests/uk/pnl/kinds.test.ts
 ```
 
-Expected: 10 lines starting `PASS`, the last line `uk/pnl/kinds: all pass`, exit code 0.
+Expected: 12 lines starting `PASS`, the last line `uk/pnl/kinds: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -1064,7 +1087,10 @@ The average premises come from the valuation statistics for the trade's kind of 
 count, `RV_A = rv_per_m2 x area`, the official estimate of a year's rent at April 2021 (a rent proxy dated 2021, and the page
 says so). The anchor comes from the bands. The recipe supplies only shares: which costs move with each pound of sales and
 which are sized by the business. Rent and rates are never in a recipe, so a trade researched at "rent 15% of sales" prints
-its place's measured rent.
+its place's measured rent. Its review (2026-10-04) found the test pinned four numbers and two phrases, so 19 faults passed
+(a recipe's estimate passed on as counted, the relief flag or the form hard-coded, the source sentences changed): seven
+checks pin what passes through, and a trade outside retail, hospitality and leisure pays the standard multiplier (break-even
+65,456.35, rates 7,196.23 on the average room).
 
 **Files:**
 - Create: `src/lib/uk/pnl/inputs.ts`
@@ -1131,6 +1157,23 @@ check("an empty valuation row, and bands with nobody under 5m, are refused, not 
 const refusesRow = (row: { rv_per_m2: number; count: number; floorspace_k_m2: number }) => { try { premisesFromValuation(row); return false; } catch { return true; } };
 check("a valuation row with no value, no floorspace or no premises is refused, each on its own",
   refusesRow({ rv_per_m2: 0, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: 5, floorspace_k_m2: 0 }) && refusesRow({ rv_per_m2: 274, count: 0, floorspace_k_m2: 1 }));
+
+
+// ---- what passes through unchanged (review additions)
+const CTX = { revenueBandsK: HAIR_BEAUTY_LONDON, premises: LONDON_SALONS, premisesCategory: "Hairdressing/Beauty Salons", place: "London", form: "sole trader" as const };
+check("recipe lines keep their keys and the basis they were given", inputs.variable.map((x) => x.key).join("|") === "barbers' commission|supplies and product" && inputs.sized[0].key === "running costs"
+  && inputs.variable[0].source === "fixture (data/facts/industry/barbershops.json)" && inputs.sized[0].source === "fixture (data/facts/industry/barbershops.json)");
+const looked = buildInputs({ ...BARBERSHOPS, variable: [{ ...BARBERSHOPS.variable[0], kind: "looked up" }, BARBERSHOPS.variable[1]] }, CTX);
+check("a line's kind is the recipe's: looked up stays looked up, estimate stays estimate", looked.variable[0].kind === "looked up" && looked.variable[1].kind === "estimate" && looked.sized[0].kind === "estimate");
+check("the rent line says what it is: the official estimate of a year's rent, the average room, the place, April 2021",
+  inputs.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation" && Math.round(inputs.premises.areaM2 * 10) / 10 === 60.8);
+check("the anchor says what it is", inputs.anchorSales.source === "the mean sales of the registered businesses under 5m in London");
+const other = buildInputs({ ...BARBERSHOPS, retailHospitalityLeisure: false }, { ...CTX, form: "company", place: "Leeds" });
+check("a trade outside retail, hospitality and leisure pays the standard multiplier: break-even 65,456.35 (rates 7,196.23 on the average room)",
+  other.premises.retailHospitalityLeisure === false && summarise(other)!.breakEven.value === 65_456.35);
+check("the form and the place reach the inputs", other.form === "company" && other.premises.source.includes("in Leeds") && other.anchorSales.source.endsWith("in Leeds"));
+check("a negative or non-numeric valuation row is refused", refusesRow({ rv_per_m2: -1, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: -5, floorspace_k_m2: 1 })
+  && refusesRow({ rv_per_m2: 274, count: 5, floorspace_k_m2: -1 }) && refusesRow({ rv_per_m2: NaN, count: 5, floorspace_k_m2: 1 }));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/inputs: all pass");
@@ -1224,7 +1267,7 @@ export function buildInputs(
 npx tsx tests/uk/pnl/inputs.test.ts
 ```
 
-Expected: 10 lines starting `PASS`, the last line `uk/pnl/inputs: all pass`, exit code 0.
+Expected: 17 lines starting `PASS`, the last line `uk/pnl/inputs: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -1286,7 +1329,7 @@ Seven trades pass. London, sole trader, the business at the median, on the slice
 | Trade | Average premises | Break-even of the average premises' business | Registered businesses above it | Margin at the median | Keeps at the median |
 |---|---|---|---|---|---|
 | barbershops | 61 m2, RV 16,658 | 64,113 | 61 of 100 | 38.1% | 25,407 |
-| nail-salons | 61 m2, RV 16,658 | 68,802 | 57 of 100 | 29.7% | 20,561 |
+| nail-salons | 61 m2, RV 16,658 | 68,806 | 57 of 100 | 29.7% | 20,559 |
 | restaurants | 203 m2, RV 73,375 | 556,017 | 32 of 100 | 5.0% | 13,756 |
 | bakeries-retail | 90 m2, RV 27,956 (valued as cafes) | 351,741 | 36 of 100 | 16.8% | 30,399 |
 | sports-fitness | 305 m2, RV 55,732 | 275,028 | 34 of 100 | 23.3% | 30,960 |
@@ -1373,6 +1416,27 @@ for (const [slug, r] of Object.entries(RECIPES)) {
   check(`${slug}: the median business's margin is above 0 and below 60% (${m.toFixed(4)})`, m > 0 && m < 0.6);
 }
 
+// Each recipe's London figures and relief flag. The figures were computed apart from this code (Python, decimal arithmetic,
+// half-up at the penny; the review of 2026-10-04 agreed with the TypeScript on all 241 it compared); the flags are the 2026-27
+// readings' (docs/uk-law/2026-27-readings.md: garages qualify, dentistry does not). A driver moved between the costs that grow
+// with sales and the sized ones, or a flag flipped, moves these figures.
+const PINNED: Record<string, { rhl: boolean; breakEven: number; shareAbove: number; keeps: number }> = {
+  "barbershops": { rhl: true, breakEven: 64_112.98, shareAbove: 0.6136, keeps: 25_407.33 },
+  "nail-salons": { rhl: true, breakEven: 68_806.31, shareAbove: 0.5742, keeps: 20_558.74 },
+  "restaurants": { rhl: true, breakEven: 556_017.36, shareAbove: 0.3212, keeps: 13_756.27 },
+  "bakeries-retail": { rhl: true, breakEven: 351_741.28, shareAbove: 0.3587, keeps: 30_399.25 },
+  "sports-fitness": { rhl: true, breakEven: 275_028.36, shareAbove: 0.3429, keeps: 30_960.42 },
+  "auto-repair-shops": { rhl: true, breakEven: 213_359.52, shareAbove: 0.3851, keeps: 29_164.44 },
+  "dental-practices": { rhl: false, breakEven: 198_710.65, shareAbove: 0.4723, keeps: 39_216.37 },
+};
+check("every recipe is pinned below, and nothing else", Object.keys(PINNED).sort().join() === Object.keys(RECIPES).sort().join());
+for (const [slug, p] of Object.entries(PINNED)) {
+  const s = londonTradeSummary(slug);
+  check(`${slug}: relief ${p.rhl ? "applies" : "does not apply"}; break-even ${p.breakEven}, ${p.shareAbove} of registered businesses above it, the median business keeps ${p.keeps}`,
+    RECIPES[slug]?.retailHospitalityLeisure === p.rhl && s !== null && s.breakEven.value === p.breakEven && s.shareAbove !== null
+    && Math.round(s.shareAbove.value * 10_000) / 10_000 === p.shareAbove && s.keeps.q50 === p.keeps);
+}
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/recipes: all pass");
 ```
@@ -1422,6 +1486,10 @@ check("withheld: hotels have no kind of premises in the valuation statistics", l
 check("withheld: 15 coffee roasters in London are under the register's floor of 40", londonWithholding("coffee-roasters") === "15 businesses in London on the register, under the 40 its figures need");
 check("withheld: an unknown trade has no bands", londonWithholding("no-such-trade") === "no London turnover bands for the trade's code" && londonTradeSummary("no-such-trade") === null);
 check("built: barbershops are not withheld", londonWithholding("barbershops") === null);
+check("the floor of 100 premises lets exactly 100 through: garden centres' 100 premises reach the recipe check", londonWithholding("garden-centers-nurseries") === "no recipe");
+check("withheld: 60 dance schools' premises are too few for the valuation's rounding", londonWithholding("dance-studios") === "60 dance schools & centres premises in London, too few for the valuation's rounding");
+check("withheld: pet training has a kind of premises but no London valuation row for it", londonWithholding("pet-training") === "no London valuation row for pet grooming parlours");
+check("withheld: 30 hostels are under the register's floor, said before they lack a kind of premises", londonWithholding("hostels") === "30 businesses in London on the register, under the 40 its figures need");
 check("the company form reaches the model: the median barbershop as a company keeps the company optimum on 29,917.75",
   londonTradeSummary("barbershops", "company")!.keeps.q50 === bestCompanyTakeHome(29_917.75).takeHome && londonTradeSummary("barbershops")!.keeps.q50 === 25_407.33);
 
@@ -1630,7 +1698,7 @@ npx tsx tests/uk/pnl/recipes.test.ts
 npx tsx tests/uk/pnl/london.test.ts
 ```
 
-Expected: 72 `PASS` lines then `uk/pnl/recipes: all pass`; 16 `PASS` lines then `uk/pnl/london: all pass`.
+Expected: 80 `PASS` lines then `uk/pnl/recipes: all pass`; 20 `PASS` lines then `uk/pnl/london: all pass`.
 
 - [ ] **Step 5: Plant a grocery recipe and a wrong share, and watch the gate refuse them**
 
@@ -1724,8 +1792,11 @@ the headline figures with the anchor at each of the three shapes gives each a ra
 and plan 04's `honestRound` prints it to the place its range allows. On London the anchor moves about 5% either way and the
 figures stay close, except where a margin is thin: the restaurant at the median keeps 11,533.69 to 15,558.30 around
 13,756.27, so it prints as 14,000; the barbershop's 24,951.65 to 25,830.38 prints as 25,400. The hard bounds of the anchor
-(every business on a band edge) would swing the restaurant from a loss of 13,568 to a profit of 24,772: that is why the
-shapes, not the bounds, set the range.
+(every business on a band edge) would swing the restaurant from a loss of 13,568 to keeping 24,772 (a profit of 29,059):
+that is why the shapes, not the bounds, set the range. The range moves the anchor only: the register's quartiles and the
+share above break-even are read log-flat in every run, so it is conditional on the register's median. Reading them under
+each shape too widens it (the median barbershop 23,743.01 to 26,986.22, restaurants 11,198.28 to 16,056.34); which to print
+is decision 9 in the master plan, and the module's header says so.
 
 **Files:**
 - Create: `src/lib/uk/pnl/ranges.ts`
@@ -1746,7 +1817,8 @@ Create `tests/uk/pnl/ranges.test.ts`:
  * Run: npx tsx tests/uk/pnl/ranges.test.ts
  */
 import { shapeRanges } from "../../../src/lib/uk/pnl/ranges";
-import { londonTradeInputs, londonTradeRanges } from "../../../src/lib/uk/pnl/london";
+import { londonTradeInputs, londonTradeRanges, londonTradeSummary } from "../../../src/lib/uk/pnl/london";
+import { RECIPES } from "../../../src/lib/uk/pnl/recipes";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-pnl-ranges";
@@ -1773,6 +1845,13 @@ check("restaurants: the median owner keeps 11,533.69 to 15,558.30 around 13,756.
 check("restaurants: the margin at the median 4.09% to 5.89% around 5.03%", r4(r.marginAtMedian.lo) === 0.0409 && r4(r.marginAtMedian.mid) === 0.0503 && r4(r.marginAtMedian.hi) === 0.0589);
 check("mid is the log-flat reading the summary prints, so the two never disagree", shapeRanges(londonTradeInputs("restaurants")!)!.keepsQ50.mid === 13_756.27);
 check("a withheld trade has no range", londonTradeRanges("grocery-stores") === null);
+const co = londonTradeRanges("barbershops", "company")!;
+check("the company form reaches the range: the median barbershop as a company keeps 23,898.82 to 24,757.28 around 24,343.99", co.keepsQ50.lo === 23_898.82 && co.keepsQ50.mid === 24_343.99 && co.keepsQ50.hi === 24_757.28);
+check("for every built trade in both forms, mid is the summary's own figure and lo <= mid <= hi",
+  Object.keys(RECIPES).every((slug) => (["sole trader", "company"] as const).every((form) => {
+    const x = londonTradeRanges(slug, form), s = londonTradeSummary(slug, form);
+    return x !== null && s !== null && x.keepsQ50.mid === s.keeps.q50 && x.breakEven.mid === s.breakEven.value && x.keepsQ50.lo <= x.keepsQ50.mid && x.keepsQ50.mid <= x.keepsQ50.hi;
+  })));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/ranges: all pass");
@@ -1798,7 +1877,12 @@ Create `src/lib/uk/pnl/ranges.ts`:
  * turnover band, which sets the anchor (the business in the average premises, model.ts). The figures are recomputed with
  * the anchor at each of the three band shapes (banded.ts BandShape); `mid` is the log-flat reading, the one every quantile
  * uses, and `lo` and `hi` the least and greatest of the three. A page prints `mid` rounded to its range
- * (present/precision.ts honestRound), so no figure claims more than the band shapes allow.
+ * (present/precision.ts honestRound), so no figure claims more than the band shapes allow for the anchor.
+ *
+ * The range moves the anchor only: the register's quartiles and the share above break-even are read log-flat in every run,
+ * so the range is conditional on the register's median. Reading them under each shape too widens it (the median
+ * barbershop's take-home 23,743.01 to 26,986.22 instead of 24,951.65 to 25,830.38; restaurants 11,198.28 to 16,056.34 instead
+ * of 11,533.69 to 15,558.30); which to print waits for the founder (decision 9 in the master plan).
  *
  * Measured on London, 2026-10-02: the anchor moves about 5% either way; the median business's take-home moves most where
  * its margin is thin (restaurants 11,534 to 15,558 around 13,756).
@@ -1866,7 +1950,7 @@ npx tsx tests/uk/pnl/ranges.test.ts
 npx tsx tests/uk/pnl/london.test.ts
 ```
 
-Expected: 9 `PASS` lines then `uk/pnl/ranges: all pass`; the London test still ends `uk/pnl/london: all pass`.
+Expected: 11 `PASS` lines then `uk/pnl/ranges: all pass`; the London test still ends `uk/pnl/london: all pass`.
 
 - [ ] **Step 5: Wire it into the chain**
 
