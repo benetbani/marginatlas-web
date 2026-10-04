@@ -1,7 +1,7 @@
 /**
  * WorldRange, A FIGURE DRAWN ON THE WORLD'S RANGE (2026-09-25). His words that day: the numbers "you just blast them over there
  * with no relation to each other". A row here is a figure and where it stands: the country's value as a marker on a track that runs
- * from the world's lowest to its highest, the middle half of the countries shaded, the median marked and named. The value is read in
+ * from the world's lowest to its highest, the middle half of the countries shaded, no median (plan 06, task B2). The value is read in
  * the row's head beside its label; the track says whether it is dear or cheap without a sentence. The bullet chart of his shadcn
  * blocks (chart-card26's band and reference line), drawn here in the page's own marks and on the server, so the page carries it in
  * its first byte and the harness reads it.
@@ -24,7 +24,7 @@ export type WorldRangeRow = {
   value: number;
   /** The world's range, or null: the row then prints its figure alone, no track (a figure newer than the world's set is not placed on it). */
   range: WorldRange | null;
-  /** The world's two ends and its median, as printed (the same formatter as the figure). */
+  /** The world's two ends, as printed (the same formatter as the figure). */
   fmt: (v: number) => string;
   icon?: AtlasIconId;
   scale?: "linear" | "log";
@@ -81,7 +81,7 @@ function pos(v: number, r: WorldRange, scale: "linear" | "log"): number {
  *  prints the same, so the card's figure is never printed twice (the figure at 30 above, again at the track's end). */
 export type RangeEnds = { lowest: string; highest: string };
 
-export function WorldRangeRows({ rows, medianWord, headless = false, ends }: { rows: WorldRangeRow[]; medianWord: string; headless?: boolean; ends?: RangeEnds }) {
+export function WorldRangeRows({ rows, headless = false, ends }: { rows: WorldRangeRow[]; headless?: boolean; ends?: RangeEnds }) {
   const live = rows.filter((r) => r && Number.isFinite(r.value));
   if (live.length === 0) return null;
   return (
@@ -102,7 +102,7 @@ export function WorldRangeRows({ rows, medianWord, headless = false, ends }: { r
                 <span data-level={r.level} className="ml-auto rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{r.level}</span>
               ) : null}
             </div>}
-            {range ? <Track r={r} range={range} scale={scale} medianWord={medianWord} headless={headless || !!r.headless} ends={ends} /> : null}
+            {range ? <Track r={r} range={range} scale={scale} headless={headless || !!r.headless} ends={ends} /> : null}
           </div>
         );
       })}
@@ -110,17 +110,16 @@ export function WorldRangeRows({ rows, medianWord, headless = false, ends }: { r
   );
 }
 
-function Track({ r, range, scale, medianWord, headless, ends }: { r: WorldRangeRow; range: WorldRange; scale: "linear" | "log"; medianWord: string; headless: boolean; ends?: RangeEnds }) {
+function Track({ r, range, scale, headless, ends }: { r: WorldRangeRow; range: WorldRange; scale: "linear" | "log"; headless: boolean; ends?: RangeEnds }) {
   const at = pos(r.value, range, scale);
   const a = pos(range.p25, range, scale);
   const b = pos(range.p75, range, scale);
-  const m = pos(range.median, range, scale);
   const own = r.fmt(r.value);
   const low = ends && own === r.fmt(range.min) ? ends.lowest : r.fmt(range.min);
   const high = ends && own === r.fmt(range.max) ? ends.highest : r.fmt(range.max);
   return (
           <>
-            <div className={`relative ${r.refs && r.refs.length ? "mt-4" : headless ? "mt-1" : "mt-3"} h-3`} role="img" aria-label={`${r.label}: ${r.display}${r.unit ? ` ${r.unit}` : ""}; the world's median ${r.fmt(range.median)}, from ${r.fmt(range.min)} to ${r.fmt(range.max)}${r.peers && r.peers.length ? `; ${r.peers.map((p) => `${p.name} ${r.fmt(p.value)}`).join(", ")}` : ""}${r.refs && r.refs.length ? `; ${r.refs.map((x) => `${x.label} ${x.display ?? r.fmt(x.value)}`).join(", ")}` : ""}`}>
+            <div className={`relative ${r.refs && r.refs.length ? "mt-4" : headless ? "mt-1" : "mt-3"} h-3`} role="img" aria-label={`${r.label}: ${r.display}${r.unit ? ` ${r.unit}` : ""}; the world from ${r.fmt(range.min)} to ${r.fmt(range.max)}${r.peers && r.peers.length ? `; ${r.peers.map((p) => `${p.name} ${r.fmt(p.value)}`).join(", ")}` : ""}${r.refs && r.refs.length ? `; ${r.refs.map((x) => `${x.label} ${x.display ?? r.fmt(x.value)}`).join(", ")}` : ""}`}>
               <span aria-hidden className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--c-soft2)]" />
               <span aria-hidden data-track-band className="absolute top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--c-border)]" style={{ left: `${a}%`, width: `${Math.max(1, b - a)}%` }} />
               {/* THE COUNTRIES THE RANGE WAS COUNTED FROM, one hairline each, in one drawing (a mark per country would be 197 nodes):
@@ -130,7 +129,8 @@ function Track({ r, range, scale, medianWord, headless, ends }: { r: WorldRangeR
                   <path d={r.hairlines.map((v) => `M${pos(v, range, scale).toFixed(2)} 0V8`).join("")} stroke="var(--c-ink2)" strokeOpacity={0.32} strokeWidth={1} vectorEffect="non-scaling-stroke" fill="none" />
                 </svg>
               ) : null}
-              <span aria-hidden data-track-median className="absolute top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-[var(--c-ink2)]" style={{ left: `calc(${m}% - 1px)` }} />
+              {/* NO MEDIAN, DRAWN OR NAMED (plan 06, task B2; PART 9 clause 46): the world's median was computed over a profile where 146 of
+                  197 countries are interpolated and 52 hold one fill value (electricity's 0.13), so it was not a statistic of the world. */}
               {/* A PEER UNDER THE COUNTRY'S OWN DOT IS NOT DRAWN (2026-10-04, the borrowing track at 375: four peers a few pixels left
                   of the United Kingdom's dot showed as a "C", a ring cut by the dot): within 4.5% of the track (15px of a 343px
                   phone track, the two marks' radii) the dot stands alone and the key line still names the peer with its figure. */}
@@ -159,12 +159,6 @@ function Track({ r, range, scale, medianWord, headless, ends }: { r: WorldRangeR
                   ))
                 : null}
               <span data-end="high" className="absolute right-0 tabular-nums">{high}</span>
-            </div>
-            {/* THE MEDIAN ON ITS OWN LINE, under its tick, pulled left by its own share of the way along (so at either end it
-                aligns inward): measured at 375, on the ends' line it ran into the lowest figure. */}
-            <div className="relative h-4 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
-              {/* Bounded to the track as well as pulled inward, so the scale-end gate sees the protection it cannot infer. */}
-              <span data-mark-label className="absolute whitespace-nowrap" style={{ left: `${Math.min(100, Math.max(0, m))}%`, transform: `translateX(-${Math.min(100, Math.max(0, m))}%)` }}>{medianWord} {r.fmt(range.median)}</span>
             </div>
             {/* THE PEERS NAMED ONCE, in the order their marks stand, each with its figure: a key, not a sentence (no comparison word, no
                 difference, no rank; clause 15). On a phone it wraps under itself; the marks above stay unlabelled. A key is part of

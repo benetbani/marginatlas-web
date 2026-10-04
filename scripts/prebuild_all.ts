@@ -556,6 +556,8 @@ const GATES: Gate[] = [
   { name: "uk-open-permits", script: "tests/spine/uk_open_permits.test.ts" },
   /* The country hero's rows say what they hold (plan 06, task B1): the UK's tax on profit worked out, the typical salary, the index's year, the company's registration days, and the peers' home row the same. */
   { name: "hero-rows", script: "tests/spine/hero_rows.test.ts" },
+  /* No world median on a world track (plan 06, task B2; PART 9 clause 46): 146 of 197 countries interpolated and 52 on one fill made it. */
+  { name: "world-range-no-median", script: "tests/spine/world_range_no_median.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

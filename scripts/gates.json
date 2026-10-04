@@ -1554,6 +1554,19 @@
       "claims": []
     },
     {
+      "name": "world-range-no-median",
+      "script": "tests/spine/world_range_no_median.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "No world median on a world track (plan 06, task B2; MODEL.md PART 9 clause 46: a fill value or an interpolation is not a statistic).",
+      "reads": [
+        "src/components/spine/charts/WorldRange.tsx",
+        "src/components/spine/country/country-view.tsx",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

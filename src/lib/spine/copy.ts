@@ -547,7 +547,6 @@ export const COPY = {
     kicker: "Running costs",
     rows: { electricity: "Business electricity", living: "Cost of living" },
     units: { kwh: "a kilowatt hour", of100: "/100" },
-    medianCity: "Median city",
     cells: { electricity: "Electricity per kilowatt hour", living: "Cost of living" },
     /** The one line explains the cost of living's 1-to-100 scale; the electricity row names its own rate ("Business electricity"), so it adds no clause. */
     basisElectricity: "",
@@ -870,7 +869,7 @@ export const COPY = {
     focalWords: "to close a company with no debts, online",
   },
   /** The world's range under a figure (charts/WorldRange.tsx, 2026-09-25): the median's word and the rows' labels and units. */
-  ranged: { median: "World median", ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", dieselNote: "at the pump", perLitre: "/L", lending: "Rate on a small-business loan", peers: "Peers" },
+  ranged: { ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", dieselNote: "at the pump", perLitre: "/L", lending: "Rate on a small-business loan", peers: "Peers" },
   /** What a full-time hire at the average salary costs the employer (the staff card, 2026-09-25). */
   hireCost: { label: "A full-time hire", labelFirst: "A first hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", pension: "pension", ni: "employer NI", rule: "{rate} on pay above {threshold} a year.", niLabel: "Employer NI", niRule: "{rate} above {threshold}, less the {allowance} allowance", pensionLabel: "Pension", pensionRule: "{rate} of pay from {lower} to {upper}", lever: "Pay" },
   londonMargins: {
