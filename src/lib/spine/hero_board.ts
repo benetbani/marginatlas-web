@@ -62,6 +62,7 @@ import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
+import { ukTaxOnProfit } from "@/lib/spine/uk_tax_on_profit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { queryFacts } from "@/lib/facts/store";
 import { loadCountryShard, countryEntityId } from "@/lib/facts/country_shard";
@@ -136,7 +137,8 @@ function sweeps() {
   const codes: string[] = Array.isArray(list) ? list.map((c: any) => String(c.iso2 ?? c.code ?? "").toUpperCase()).filter(Boolean) : Object.keys(list).map((k) => k.toUpperCase());
   for (const iso2 of codes) {
     const bill = buildEntryBill(iso2);
-    if (bill?.verdict.days.state === "printed") llcDays.push(bill.verdict.days.value);
+    /* The company's own registration days, the formation file's LLC row (his ruling of 2026-09-20: time to register is the LLC's). */
+    if (bill?.table && isPos(bill.table.days)) llcDays.push(bill.table.days);
     if (bill?.verdict.bill.state === "printed") llcCost.push(bill.verdict.bill.value);
   }
   sweep = { clean, admin, llcDays, llcCost };
@@ -175,9 +177,12 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
   }
   const bill = buildEntryBill(iso2);
   const hiring = hireEase(iso2);
-  if (bill?.verdict.days.state === "printed" && isPos(bill.verdict.days.value)) {
-    const d = bill.verdict.days.value;
-    rows.push({ key: "llc-days", icon: "red-tape", label: COPY.heroBoard.rows.llcDays, value: String(d), unit: d === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(d, s.llcDays), confidence: bill.verdict.days.tag === "held" ? "measured" : "modeled", placement: placementOf(d, s.llcDays, "countries") });
+  /* DAYS TO REGISTER, THE COMPANY'S (plan 06, task B1; his ruling of 2026-09-20: "cost and time to register are the LLC's, always"):
+     the formation file's LLC row, the days the "registering, by legal form" table prints. The row read the shard's days to
+     trade, which on the United Kingdom is the bank account's 21 days, no official figure, under a label that promised the whole. */
+  if (bill?.table && isPos(bill.table.days)) {
+    const d = bill.table.days;
+    rows.push({ key: "llc-days", icon: "red-tape", label: COPY.heroBoard.rows.llcDays, value: String(d), unit: d === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(d, s.llcDays), confidence: "measured", placement: placementOf(d, s.llcDays, "countries") });
   }
   /* HOW EASY IT IS TO HIRE (his hero list of 2026-09-20: "how easy it is to hire ... definitely an aspect"; 2026-09-25). The shard's
      word for the country (`people_pay.hiring.hire_ease`: easy on 25, moderate on 168, hard on 4 of 198), printed as the row's value;
@@ -195,10 +200,17 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
     rows.push({ key: "llc-cost", icon: "register-cost", label: COPY.heroBoard.rows.llcCost, value: usd(c), unit: COPY.heroBoard.units.allIn, level: levelOf(c, s.llcCost), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled", placement: placementOf(c, s.llcCost, "countries") });
   }
 
+  /* THE UNITED KINGDOM'S TAX ON PROFIT, WORKED OUT (plan 06, task B1): the hero printed a typed 20% under "total effective tax
+     burden" (his words, 2026-08-30). The law engine's income tax and Class 4 national insurance on a stated profit, the median
+     full-time pay (the figure the salary row prints), as a share of it: a sole trader on that profit pays that share, and the
+     words under the figure say so. Other countries keep their regime's rate. */
+  const uk = iso2 === "GB" ? ukTaxOnProfit() : null;
+  if (uk && facts.answer) facts.answer = { ...facts.answer, value: `${uk.percent}%`, share: uk.share, confidence: "measured" };
   const share = facts.answer && isNum(facts.answer.share) && facts.answer.share > 0 && facts.answer.share < 1 ? facts.answer.share : null;
   const answerBar = share != null && facts.answer ? { value: share * 100, part: COPY.heroBoard.share.part, rest: COPY.heroBoard.share.rest, aria: `${facts.answer.value} ${COPY.heroBoard.share.of}` } : null;
-  return { iso2, name: facts.name, answer: facts.answer, subtitle: facts.subtitle, answerBar, rows, taxes: heroTaxes(iso2), image: heroImageFor(iso2) };
+  return { iso2, name: facts.name, answer: facts.answer, ...(uk ? { answerBasis: COPY.answer.basisUk.replace("{profit}", usd(uk.profitUsd)) } : {}), subtitle: facts.subtitle, answerBar, rows, taxes: heroTaxes(iso2), image: heroImageFor(iso2) };
 }
+
 
 /** The shard's word for how easy hiring is, as the board prints it, or null. */
 function hireEase(iso2: string): string | null {

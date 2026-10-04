@@ -554,6 +554,8 @@ const GATES: Gate[] = [
   { name: "london-trade-hero", script: "tests/spine/london_trade_hero.test.ts" },
   /* The cost to open at the city's prices and no shard licence list on a UK page (plan 06, task A6). */
   { name: "uk-open-permits", script: "tests/spine/uk_open_permits.test.ts" },
+  /* The country hero's rows say what they hold (plan 06, task B1): the UK's tax on profit worked out, the typical salary, the index's year, the company's registration days, and the peers' home row the same. */
+  { name: "hero-rows", script: "tests/spine/hero_rows.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

@@ -430,7 +430,8 @@ function inPage(storySelector) {
       r.payOut = [...card.querySelectorAll("[data-track]")].filter((t) => { const b = t.querySelector("[data-bar]"); if (!b) return false; const tb = t.getBoundingClientRect(), bb = b.getBoundingClientRect(); return bb.right > tb.right + 0.5 || bb.left < tb.left - 0.5; }).length;
       const edge = card.querySelector("[data-edge]"); const cb2 = card.getBoundingClientRect();
       r.payEdgeOut = edge ? (edge.getBoundingClientRect().right > cb2.right + 1 || edge.scrollWidth > edge.clientWidth + 1 ? 1 : 0) : 0;
-      const txt = card.textContent || ""; r.payWords = (/Minimum salary/.test(txt) ? 1 : 0) + (/Average salary/.test(txt) ? 1 : 0);
+      /* "Typical salary" since the truth pass (plan 06, task B1): the figure is the median, his "average monthly salary" said true. */
+      const txt = card.textContent || ""; r.payWords = (/Minimum salary/.test(txt) ? 1 : 0) + (/Typical salary/.test(txt) ? 1 : 0);
       /* THE PLACEMENT LINES (plan step 31's sixth dispatch, 2026-09-18): every
          line on the card, how many drawn bars have one in their own column
          (the track's parent, the same element the PLACEMENT law in

@@ -238,7 +238,8 @@ for (const iso2 of codes) {
   const shouldWithhold = f != null && a != null && a < f * PAY_RATIO_FLOOR;
   if (shouldWithhold !== !!d.withheld) reds.push(`${iso2}: withholding disagrees with the ratio (${f}, ${a})`);
   if (d.withheld) payWithheld++;
-  for (const r of d.rows) { if (!/^(Minimum salary|Average salary)$/.test(r.label)) reds.push(`${iso2}: a pay label is not the founder's word ("${r.label}")`); if (d.worldMax && r.value > d.worldMax.value) reds.push(`${iso2}: ${r.label} ${r.value} exceeds the world's highest ${d.worldMax.value}`); }
+  /* His words for the pair, said true (plan 06, task B1): the second figure is the median full-time pay, so "Typical salary". */
+  for (const r of d.rows) { if (!/^(Minimum salary|Typical salary)$/.test(r.label)) reds.push(`${iso2}: a pay label is not the founder's word ("${r.label}")`); if (d.worldMax && r.value > d.worldMax.value) reds.push(`${iso2}: ${r.label} ${r.value} exceeds the world's highest ${d.worldMax.value}`); }
 }
 /* THE CITY TERMINI (city:close, run 19): every city in the list gets its doors
    from its meta alone (no adapter, so no district is ranked here and the door

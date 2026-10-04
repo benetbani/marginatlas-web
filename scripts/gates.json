@@ -1543,6 +1543,17 @@
       "claims": []
     },
     {
+      "name": "hero-rows",
+      "script": "tests/spine/hero_rows.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The country hero's rows say what they hold (plan 06, task B1).",
+      "reads": [
+        "src/lib/spine/hero_board.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

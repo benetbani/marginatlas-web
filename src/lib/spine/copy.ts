@@ -60,6 +60,8 @@ export const COPY = {
     /** The basis clause; the regime name is appended in ink by the card. */
     basis: "on profit, for a small business",
     basisUnder: "under",
+    /** The United Kingdom's worked figure (plan 06, task B1): income tax and national insurance on the stated profit. */
+    basisUk: "on {profit} of profit, a sole trader under Self Assessment",
     /** The state word when no small-business regime row is held (catalogue I9). */
     absent: "Not known yet",
     absentNote: "we have no small-business tax regime for this country yet",
@@ -340,10 +342,10 @@ export const COPY = {
     marksLabel: "The six figures, among the countries",
     rows: {
       clean: CLEAN_DEALING,
-      admin: "Admin ease",
-      llcDays: "Days to trade",
+      admin: "Admin ease, 2020",
+      llcDays: "Days to register",
       hiring: "Hiring staff",
-      salaryMonth: "Average salary",
+      salaryMonth: "Typical salary",
       llcCost: "Register a company",
     },
     /** The shard's three words for how easy hiring is, as the board prints them. */
@@ -622,7 +624,7 @@ export const COPY = {
   pay: {
     kicker: "What staff cost",
     minimum: "Minimum salary",
-    average: "Average salary",
+    average: "Typical salary",
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
     /** THE ON-COST ON THE BAR (section 9's plan, 2026-09-20): the darker piece at the average bar's end, said under the track; `{pct}` is the employer's payroll on-cost as printed. */
     employerAdds: "Employer adds {pct}.",
@@ -1246,7 +1248,7 @@ export const COPY = {
     kicker: PEERS_KICKER,
     /* The LLC's two columns are the hero's concepts since 2026-09-25 (his rulings 3 and 4 of 2026-09-04: the total cost to put an LLC
        in action, the time until the business opens), and the average salary is his plan's fourth column. */
-    cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC, all in", llcDays: "Days to trade", salary: "Average salary" },
+    cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC, all in", llcDays: "Days to register", salary: "Typical salary" },
     caveat: "Countries of similar size and market, not neighbours.",
   },
   /** A table's heads order its rows (the goal of 2026-09-26, M5; interact/SortTable.tsx): the polite line a screen reader hears

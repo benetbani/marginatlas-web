@@ -105,7 +105,7 @@ function Page() {
         <LoanLever min={663} max={33152} rate={7.5} termMin={1} termMax={5} words={{ label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "repaid in all" }} />
       </div>
       <div id="peers" style={{ marginTop: 60, maxWidth: 560 }}>
-        <SortTable label="Against the peers" words={{ said: "Sorted by {head}, {dir}", low: "lowest first", high: "highest first" }} columns={[{ key: "tax", head: "Effective tax", best: "min" }, { key: "pay", head: "Average salary", best: "none" }]} rows={sortRows} entityHead="Country" wideClass="" phoneClass="" phoneCols="grid-cols-2" />
+        <SortTable label="Against the peers" words={{ said: "Sorted by {head}, {dir}", low: "lowest first", high: "highest first" }} columns={[{ key: "tax", head: "Effective tax", best: "min" }, { key: "pay", head: "Typical salary", best: "none" }]} rows={sortRows} entityHead="Country" wideClass="" phoneClass="" phoneCols="grid-cols-2" />
       </div>
       <p id="away" style={{ marginTop: 300, position: "relative", zIndex: 30 }}>Elsewhere on the page.</p>
     </div>

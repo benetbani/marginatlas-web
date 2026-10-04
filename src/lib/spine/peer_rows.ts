@@ -13,6 +13,7 @@
  * are a defined data requirement (design/loop/architecture/research/
  * country-take-llc.md), so the column heads say what is measured until then.
  */
+import { ukTaxOnProfit } from "@/lib/spine/uk_tax_on_profit";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { PEER_GROUPS } from "@/lib/countries/country_view";
 import { getCountryRates } from "@/lib/tax/country_rates";
@@ -48,6 +49,7 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
   const peerCodes = (PEER_GROUPS[code] ?? []).slice(0, 4);
   if (peerCodes.length === 0) return null;
   const rows: PeerRow[] = [];
+  const ukTax = ukTaxOnProfit();
   for (const pc of [code, ...peerCodes]) {
     const name = nameOf(pc);
     if (!name) continue;
@@ -64,10 +66,12 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
       name,
       home: pc === code,
       values: {
-        effective_tax_pct: regime && isNum(regime.effective_rate) ? Math.round(regime.effective_rate * 1000) / 10 : null,
+        /* The UK's home row reads the hero's worked figure (uk_tax_on_profit.ts; plan 06, task B1), so the two never differ. */
+        effective_tax_pct: pc === "GB" && ukTax ? ukTax.percent : regime && isNum(regime.effective_rate) ? Math.round(regime.effective_rate * 1000) / 10 : null,
         payroll_pct: isNum(rates.employerSocial) && rates.employerSocial > 0 ? Math.round(rates.employerSocial * 1000) / 10 : null,
         llc_cost_usd: bill?.verdict.bill.state === "printed" ? Math.round(bill.verdict.bill.value) : null,
-        llc_days: bill?.verdict.days.state === "printed" ? Math.round(bill.verdict.days.value) : null,
+        /* The company's registration days, as the hero's row (his ruling of 2026-09-20: time to register is the LLC's). */
+        llc_days: bill?.table && isNum(bill.table.days) && bill.table.days > 0 ? Math.round(bill.table.days) : null,
         salary_usd: isNum(avg) && avg > 0 ? Math.round(avg) : null,
       },
     });
