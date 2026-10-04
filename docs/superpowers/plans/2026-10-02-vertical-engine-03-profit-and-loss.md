@@ -302,7 +302,13 @@ G = sqrt(L U) the geometric mean and Lm = (U - L) / ln(U / L) the logarithmic me
 and the identity Pareto mean = G^2 / Lm give Pareto <= G <= log-flat <= flat for every band, so the three bracket the
 plausible shapes; task 7 carries the spread into every headline figure. The test
 holds the two implementations equal on the Python values: London restaurants' q10 to q90, the shares above 100k, the anchor
-means under all three shapes (hair and beauty 130.83117k, 139.40636k, 148.43879k) and their hard bounds.
+means under all three shapes (hair and beauty 130.83117k, 139.40636k, 148.43879k) and their hard bounds. It also holds the
+port to the Python's rules where the first port differed (found on 2026-10-04, before the run): a quantile on a band's edge is
+the edge exactly (`L (U / L)^frac`, not exp of the logs), whether a quantile prints in words is read from its value, not its
+band (an exact 50k is a figure, not "under 50k"), the counts must be finite numbers, not negative, with a finite total, and a
+sales figure that is not a number is refused rather than read as nobody below it. Every quantile equals the Python's to
+twelve significant figures; 18 of 20 deliberate faults fail the test, and the two that pass change nothing a page can see (a
+string count already fails the total; the CDF's cap at 1 binds only on floating-point error).
 
 **Files:**
 - Create: `src/lib/uk/pnl/banded.ts`
@@ -321,7 +327,7 @@ Create `tests/uk/pnl/banded.test.ts`:
  *
  * Run: npx tsx tests/uk/pnl/banded.test.ts
  */
-import { bandCdf, bandMeanK, bandQuantile } from "../../../src/lib/uk/pnl/banded";
+import { bandCdf, bandMeanK, bandQuantile, inOpenBand } from "../../../src/lib/uk/pnl/banded";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-pnl-banded";
@@ -373,6 +379,28 @@ let openTop = false;
 try { bandMeanK(RESTAURANTS_LONDON, 10); } catch { openTop = true; }
 check("the open top band is refused: its mean would rest on the cap", openTop);
 
+// Parity with the Python to the last digits, the edges exact, and the same refusals (estimators/banded.py, 2026-10-03).
+const near = (x: number, y: number) => Math.abs(x - y) <= 1e-12 * Math.abs(y);
+const PY_R = [57.48470287863078, 124.59643091957105, 281.94181923933206, 759.1251417365786, 1923.1193177966609];
+const PY_H = [12.649941218765644, 50.17405236988422, 78.62580926652228, 147.50474862510842, 243.65409068712677];
+check("every quantile equals Python's to twelve significant figures (restaurants and hair and beauty, q10 to q90)",
+  [0.1, 0.25, 0.5, 0.75, 0.9].every((q, i) => near(bandQuantile(RESTAURANTS_LONDON, q)!.k, PY_R[i]) && near(bandQuantile(HAIR_BEAUTY_LONDON, q)!.k, PY_H[i])));
+const e50 = bandQuantile([5, 0, 5, 0, 0, 0, 0, 0, 0, 0], 0.5)!, e50m = bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 5, 5], 0.5)!;
+check("a quantile on an edge is the edge exactly and prints as a figure: 50 (not under 50k) and 50,000 (not over 50m)",
+  e50.k === 50 && !e50.openBelow && !e50.openAbove && e50m.k === 50_000 && !e50m.openAbove && !inOpenBand(50) && !inOpenBand(50_000));
+const top = bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5)!, bottom = bandQuantile([4, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.5)!;
+check("inside the open bands the floor and the cap are used and flagged: 70,710.68 over 50m, 15.81 under 50k (Python's)",
+  near(top.k, 70710.67811865476) && top.openAbove && near(bottom.k, 15.811388300841898) && bottom.openBelow && inOpenBand(49.99) && inOpenBand(50_000.01));
+check("hair and beauty q25 at 50.17k is a figure, not under 50k", !bandQuantile(HAIR_BEAUTY_LONDON, 0.25)!.openBelow);
+check("the CDF equals Python's: 0 below the floor and at or below 0, 1 above the cap, 0.49982 at 78.6k, 0.99842 at 75,000k",
+  bandCdf(RESTAURANTS_LONDON, 4) === 0 && bandCdf(RESTAURANTS_LONDON, 0) === 0 && bandCdf(RESTAURANTS_LONDON, -3) === 0 && bandCdf(RESTAURANTS_LONDON, 200_000) === 1
+  && near(bandCdf(HAIR_BEAUTY_LONDON, 78.6)!, 0.4998172824972646) && near(bandCdf(RESTAURANTS_LONDON, 75_000)!, 0.9984158874073327));
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+const BAD = [[-5, 0, 0, 0, 0, 0, 0, 0, 0, 10], [Number.NaN, 0, 0, 0, 0, 0, 0, 0, 0, 10], [Infinity, 0, 0, 0, 0, 0, 0, 0, 0, 10], ["5" as unknown as number, 0, 0, 0, 0, 0, 0, 0, 0, 10], [Number.MAX_VALUE, Number.MAX_VALUE, 0, 0, 0, 0, 0, 0, 0, 0]];
+check("counts that are negative, not numbers, infinite or overflow their total are refused by all three", BAD.every((b) =>
+  refuses(() => bandQuantile(b, 0.5)) && refuses(() => bandCdf(b, 100)) && refuses(() => bandMeanK(b))));
+check("a sales figure that is not a number is refused, never read as nobody below it", refuses(() => bandCdf(RESTAURANTS_LONDON, Number.NaN)));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/banded: all pass");
 ```
@@ -398,9 +426,12 @@ Create `src/lib/uk/pnl/banded.ts`:
  * implementations are held equal by tests/uk/pnl/banded.test.ts, whose expected values were produced by the Python one.
  *
  * Inside a band [L, U) businesses are spread evenly on a log scale; the first band is floored at 5k and the open top band
- * capped at 100,000k (amounts in thousands of pounds). A quantile that lands in the first band is reported as "under 50k"
- * and one in the top band as "over 50,000k": the floor and the cap are assumptions, so no figure is printed that rests on
- * them.
+ * capped at 100,000k (amounts in thousands of pounds). A quantile below 50k or above 50,000k rests on the floor or the
+ * cap, so it prints only in words ("under 50k", "over 50m": inOpenBand); one exactly on either edge rests on neither and
+ * prints as a figure. A quantile on a band's edge is the edge itself, exactly (L (U / L)^frac, as the Python computes it).
+ *
+ * The counts are the register's ten, numbers, finite and not negative, with a finite total; a sales figure that is not a
+ * number is refused. Anything else would read as an empty area or as nobody below the figure.
  */
 export const BANDS_K: ReadonlyArray<readonly [number, number]> = [
   [0, 50], [50, 100], [100, 250], [250, 500], [500, 1000], [1000, 2000], [2000, 5000], [5000, 10000], [10000, 50000], [50000, Infinity],
@@ -408,9 +439,21 @@ export const BANDS_K: ReadonlyArray<readonly [number, number]> = [
 const FLOOR_K = 5;
 const TOP_CAP_K = 100_000;
 
-function logEdges(k: number): [number, number] {
+function checkCounts(counts: readonly number[], fn: string): void {
+  if (counts.length !== BANDS_K.length) throw new Error(`${fn}: ten band counts expected`);
+  if (!counts.every((c) => typeof c === "number" && Number.isFinite(c) && c >= 0) || !Number.isFinite(counts.reduce((a, b) => a + b, 0))) {
+    throw new Error(`${fn}: band counts must be finite numbers, not negative, with a finite total`);
+  }
+}
+
+function edges(k: number): [number, number] {
   const [lo, hi] = BANDS_K[k];
-  return [Math.log(Math.max(lo, FLOOR_K)), Math.log(Math.min(hi, TOP_CAP_K))];
+  return [Math.max(lo, FLOOR_K), Math.min(hi, TOP_CAP_K)];
+}
+
+/** Whether a quantile rests on the 5k floor (below 50k) or the 100,000k cap (above 50,000k), so it prints only in words. */
+export function inOpenBand(xK: number): boolean {
+  return xK < BANDS_K[0][1] || xK > BANDS_K[BANDS_K.length - 1][0];
 }
 
 export type Quantile = { k: number; band: number; openBelow: boolean; openAbove: boolean };
@@ -418,7 +461,7 @@ export type Quantile = { k: number; band: number; openBelow: boolean; openAbove:
 /** The q-quantile in thousands of pounds, with the band it fell in; null when there are no businesses. */
 export function bandQuantile(counts: readonly number[], q: number): Quantile | null {
   if (!(q > 0 && q < 1)) throw new Error("bandQuantile: q must be strictly between 0 and 1");
-  if (counts.length !== BANDS_K.length) throw new Error("bandQuantile: ten band counts expected");
+  checkCounts(counts, "bandQuantile");
   const n = counts.reduce((a, b) => a + b, 0);
   if (n <= 0) return null;
   const target = q * n;
@@ -426,9 +469,9 @@ export function bandQuantile(counts: readonly number[], q: number): Quantile | n
   for (let k = 0; k < counts.length; k++) {
     const c = counts[k];
     if (c > 0 && cum + c >= target) {
-      const frac = (target - cum) / c;
-      const [a, b] = logEdges(k);
-      return { k: Math.exp(a + frac * (b - a)), band: k, openBelow: k === 0, openAbove: k === BANDS_K.length - 1 };
+      const [low, high] = edges(k);
+      const x = low * (high / low) ** ((target - cum) / c);
+      return { k: x, band: k, openBelow: x < BANDS_K[0][1], openAbove: x > BANDS_K[BANDS_K.length - 1][0] };
     }
     cum += c;
   }
@@ -438,7 +481,7 @@ export function bandQuantile(counts: readonly number[], q: number): Quantile | n
 /**
  * How businesses spread inside one band [L, U), for the mean: "log-flat" (evenly on a log scale, density ~ 1/x, the reading
  * every quantile here uses), "flat" (evenly on the pound, density ~ 1) and "pareto" (density ~ 1/x^2, the shape of a
- * right-skewed size distribution's upper tail). Their means: (U + L) / 2, (U - L) / ln(U / L), L U ln(U / L) / (U - L).
+ * right-skewed size distribution's upper tail). Their means: (U - L) / ln(U / L), (U + L) / 2, L U ln(U / L) / (U - L).
  * The three bracket the plausible shapes; the spread of a figure across them is its shape range (ranges.ts).
  */
 export type BandShape = "flat" | "log-flat" | "pareto";
@@ -456,7 +499,7 @@ function shapeMean(low: number, high: number, shape: BandShape): number {
  * band's lower or upper edge, the first band from 0). Null when the bands hold nobody.
  */
 export function bandMeanK(counts: readonly number[], uptoBand = 7, shape: BandShape = "log-flat"): { k: number; lo: number; hi: number } | null {
-  if (counts.length !== BANDS_K.length) throw new Error("bandMeanK: ten band counts expected");
+  checkCounts(counts, "bandMeanK");
   if (!(Number.isInteger(uptoBand) && uptoBand >= 1 && uptoBand < BANDS_K.length)) throw new Error("bandMeanK: uptoBand must be 1 to 9 (the top band is open)");
   let n = 0, sum = 0, lo = 0, hi = 0;
   for (let k = 0; k < uptoBand; k++) {
@@ -471,13 +514,15 @@ export function bandMeanK(counts: readonly number[], uptoBand = 7, shape: BandSh
 
 /** The share of businesses with sales below xK (thousands of pounds). */
 export function bandCdf(counts: readonly number[], xK: number): number | null {
+  if (Number.isNaN(xK)) throw new Error("bandCdf: the sales figure is not a number");
+  checkCounts(counts, "bandCdf");
   const n = counts.reduce((a, b) => a + b, 0);
   if (n <= 0) return null;
   if (xK <= 0) return 0;
   const lx = Math.log(Math.max(xK, FLOOR_K));
   let below = 0;
   for (let k = 0; k < counts.length; k++) {
-    const [a, b] = logEdges(k);
+    const [a, b] = edges(k).map(Math.log);
     if (lx >= b) below += counts[k];
     else if (lx > a) below += (counts[k] * (lx - a)) / (b - a);
   }
@@ -491,7 +536,7 @@ export function bandCdf(counts: readonly number[], xK: number): number | null {
 npx tsx tests/uk/pnl/banded.test.ts
 ```
 
-Expected: 16 lines starting `PASS`, the last line `uk/pnl/banded: all pass`, exit code 0.
+Expected: 23 lines starting `PASS`, the last line `uk/pnl/banded: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -578,6 +623,7 @@ const check = (label: string, ok: boolean) => {
 check("kinds: an estimate anywhere makes an estimate", combineKinds(["counted", "estimate"]) === "estimate");
 check("kinds: arithmetic on counted figures is worked out", combineKinds(["counted", "looked up"]) === "worked out");
 check("kinds: one input untouched keeps its kind", combineKinds(["counted"], false) === "counted");
+check("kinds: a figure with no inputs is refused", (() => { try { combineKinds([]); return false; } catch { return true; } })());
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/kinds: all pass");
@@ -628,7 +674,7 @@ export function combineKinds(inputs: readonly Kind[], transformed = true): Kind 
 npx tsx tests/uk/pnl/kinds.test.ts
 ```
 
-Expected: 3 lines starting `PASS`, the last line `uk/pnl/kinds: all pass`, exit code 0.
+Expected: 4 lines starting `PASS`, the last line `uk/pnl/kinds: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -754,7 +800,7 @@ check("the median business's year, line by line: 23,587.74 + 6,290.06 + 9,435.10
   s.medianBill.lines.map((l) => l.amount).join(",") === "23587.74,6290.06,9435.1,9395.16,0");
 check("its room is a 34 m2 share of the average salon at a rateable value of 9,395.16: small business relief takes the whole bill", billAt(78_625.81, barber)[4].amount === 0);
 check("the median business's profit 29,917.75, the bill and the profit adding to its sales", s.medianBill.profit === 29_917.75 && Math.round((s.medianBill.lines.reduce((a, l) => a + l.amount, 0) + s.medianBill.profit) * 100) / 100 === 78_625.81);
-check("margin at the median 38.05%", Math.round(s.marginAtMedian * 10_000) / 10_000 === 0.3805);
+check("margin at the median 38.05%, the median business's own profit over its own sales", Math.round(s.marginAtMedian * 10_000) / 10_000 === 0.3805 && s.marginAtMedian === s.medianBill.profit / s.sales.q50);
 check("the business at each sales quartile keeps 17,396.00 / 25,407.33 / 39,819.57 after tax", s.keeps.q25 === 17_396 && s.keeps.q50 === 25_407.33 && s.keeps.q75 === 39_819.57);
 check("in order, and an estimate", s.keeps.q25 <= s.keeps.q50 && s.keeps.q50 <= s.keeps.q75 && s.keeps.kind === "estimate");
 check("1,000 more cost a year takes 740.00 from the median business's owner (20% income tax and 6% Class 4 come back)", afterTaxCostOf(1_000, 78_625.81, barber) === 740);
@@ -780,6 +826,10 @@ let threw = 0;
 try { profitAt(50_000, { ...barber, sized: [{ key: "x", share: 0.7, kind: "estimate", source: "fixture" }] }); } catch { threw++; }
 try { profitAt(50_000, { ...barber, anchorSales: { value: 0, kind: "worked out", source: "fixture" } }); } catch { threw++; }
 check("shares that leave nothing of a pound, and an anchor of no sales, are refused", threw === 2);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("shares that take exactly the whole pound, and a negative share, are refused too",
+  refuses(() => profitAt(50_000, { ...barber, variable: [{ key: "x", share: 0.5, kind: "estimate", source: "fixture" }], sized: [{ key: "y", share: 0.5, kind: "estimate", source: "fixture" }] }))
+  && refuses(() => profitAt(50_000, { ...barber, sized: [{ key: "x", share: -0.1, kind: "estimate", source: "fixture" }] })));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/model: all pass");
@@ -946,7 +996,7 @@ export function summarise(inputs: PnlInputs): PnlSummary | null {
 npx tsx tests/uk/pnl/model.test.ts
 ```
 
-Expected: 17 lines starting `PASS`, the last line `uk/pnl/model: all pass`, exit code 0.
+Expected: 18 lines starting `PASS`, the last line `uk/pnl/model: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -1063,6 +1113,9 @@ let threw = 0;
 try { premisesFromValuation({ rv_per_m2: 0, count: 0, floorspace_k_m2: 0 }); } catch { threw++; }
 try { buildInputs(BARBERSHOPS, { revenueBandsK: [0, 0, 0, 0, 0, 0, 0, 3, 2, 1], premises: LONDON_SALONS, premisesCategory: "Hairdressing/Beauty Salons", place: "London", form: "sole trader" }); } catch { threw++; }
 check("an empty valuation row, and bands with nobody under 5m, are refused, not divided by", threw === 2);
+const refusesRow = (row: { rv_per_m2: number; count: number; floorspace_k_m2: number }) => { try { premisesFromValuation(row); return false; } catch { return true; } };
+check("a valuation row with no value, no floorspace or no premises is refused, each on its own",
+  refusesRow({ rv_per_m2: 0, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: 5, floorspace_k_m2: 0 }) && refusesRow({ rv_per_m2: 274, count: 0, floorspace_k_m2: 1 }));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/inputs: all pass");
@@ -1156,7 +1209,7 @@ export function buildInputs(
 npx tsx tests/uk/pnl/inputs.test.ts
 ```
 
-Expected: 9 lines starting `PASS`, the last line `uk/pnl/inputs: all pass`, exit code 0.
+Expected: 10 lines starting `PASS`, the last line `uk/pnl/inputs: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -1278,6 +1331,7 @@ function drivers(file: string): { name: string; pct: number }[] {
   return names.map((name, i) => ({ name, pct: pcts[i] }));
 }
 
+check("nail salons' commission is its basis exactly: 40% of sales on five technicians of six", RECIPES["nail-salons"].variable[0].shareOfSales === (0.4 * 5) / 6);
 check("seven recipes, each keyed by its own trade", Object.keys(RECIPES).length === 7 && Object.entries(RECIPES).every(([slug, r]) => r.trade === slug));
 for (const [slug, r] of Object.entries(RECIPES)) {
   const entity = slug.replace(/-/g, "_");
@@ -1318,6 +1372,7 @@ Create `tests/uk/pnl/london.test.ts`:
  * Run: npx tsx tests/uk/pnl/london.test.ts
  */
 import { londonTradeInputs, londonTradeSummary, londonWithholding } from "../../../src/lib/uk/pnl/london";
+import { bestCompanyTakeHome } from "../../../src/lib/uk/law/take_home";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-pnl-london";
@@ -1352,6 +1407,8 @@ check("withheld: hotels have no kind of premises in the valuation statistics", l
 check("withheld: 15 coffee roasters in London are under the register's floor of 40", londonWithholding("coffee-roasters") === "15 businesses in London on the register, under the 40 its figures need");
 check("withheld: an unknown trade has no bands", londonWithholding("no-such-trade") === "no London turnover bands for the trade's code" && londonTradeSummary("no-such-trade") === null);
 check("built: barbershops are not withheld", londonWithholding("barbershops") === null);
+check("the company form reaches the model: the median barbershop as a company keeps the company optimum on 29,917.75",
+  londonTradeSummary("barbershops", "company")!.keeps.q50 === bestCompanyTakeHome(29_917.75).takeHome && londonTradeSummary("barbershops")!.keeps.q50 === 25_407.33);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/london: all pass");
@@ -1420,7 +1477,7 @@ export const RECIPES: Readonly<Record<string, Recipe>> = {
     retailHospitalityLeisure: true,
     utilitiesCarried: true,
     variable: [
-      { key: "technicians' commission", driver: "Technician labor and commissions", shareOfSales: 0.3333, kind: "estimate", basis: "technician labour and commissions 40% of sales, on the five employed technicians of six" },
+      { key: "technicians' commission", driver: "Technician labor and commissions", shareOfSales: (0.4 * 5) / 6, kind: "estimate", basis: "technician labour and commissions 40% of sales, on the five employed technicians of six" },
       { key: "supplies and consumables", driver: "Supplies and consumables", shareOfSales: 0.17, kind: "estimate", basis: "supplies and consumables 17% of sales" },
     ],
     sized: [{ key: "utilities, insurance, admin", driver: "Utilities, insurance, admin", shareOfSales: 0.08, kind: "estimate", basis: "utilities, insurance and admin 8% of sales" }],
@@ -1558,7 +1615,7 @@ npx tsx tests/uk/pnl/recipes.test.ts
 npx tsx tests/uk/pnl/london.test.ts
 ```
 
-Expected: 71 `PASS` lines then `uk/pnl/recipes: all pass`; 15 `PASS` lines then `uk/pnl/london: all pass`.
+Expected: 72 `PASS` lines then `uk/pnl/recipes: all pass`; 16 `PASS` lines then `uk/pnl/london: all pass`.
 
 - [ ] **Step 5: Plant a grocery recipe and a wrong share, and watch the gate refuse them**
 
