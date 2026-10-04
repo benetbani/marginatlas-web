@@ -1421,6 +1421,29 @@
       "claims": []
     },
     {
+      "name": "uk-pnl-recipes",
+      "script": "tests/uk/pnl/recipes.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Every recipe keeps the protocol in src/lib/uk/pnl/recipes.ts, and its London figures pass two screens before a page may print them: at least a quarter of the registered businesses reach break-even (a ",
+      "reads": [
+        "data/facts/industry/${entity}.json",
+        "src/lib/uk/pnl/recipes.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-london",
+      "script": "tests/uk/pnl/london.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "London trades from the register slices (data/uk/registers): barbershops and restaurants end to end, and every reason a trade's money is withheld.",
+      "reads": [
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],
