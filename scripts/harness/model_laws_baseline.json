@@ -1,11 +1,11 @@
 {
-  "country-GB": 3,
+  "country-GB": 0,
   "howto-GB": 1,
-  "city-london": 4,
+  "city-london": 3,
   "cell-gb-london-restaurants": 2,
   "industry-restaurants": 2,
   "hood-london": 1,
-  "country-AF": 3,
+  "country-AF": 1,
   "hood-london-city-of-london": 1,
   "cell-gb-london-barbershops": 1
 }

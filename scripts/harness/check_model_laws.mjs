@@ -811,7 +811,13 @@ function inPage(ctx) {
      is a loosening of the rule, because a card that could carry a 30 and does
      not still reds, which is 47 cards on the six pages the day this landed
      minus the heroes and the prose. */
-  const FOCAL_EXEMPT_FORMS = new Set([...EVEN_BY_RULING, "note-list"]);
+  /* HIS THREE KEPT FORMS (his interview of 2026-09-26, answer 31; QUEUE country:focal-kept-forms; milestone 1, M4): the two
+     six-spectra character tables ("Dealing with the state", "Dealing with people"; his forms of 2026-06-18 and 2026-08-30) and
+     the city cards with the city's photograph (2026-09-04) hold no figure at 30 because no single figure is their answer (the
+     tables read how dealing with the state and with people feels; a coined index is banned). "Recorded as his exceptions; the
+     UK's model-law count goes to zero." By form, wherever the form stands, as every exemption here is. */
+  const KEPT_BY_HIS_RULING_31 = ["spectra-table", "city-cards"];
+  const FOCAL_EXEMPT_FORMS = new Set([...EVEN_BY_RULING, "note-list", ...KEPT_BY_HIS_RULING_31]);
   for (const block of topBlocks) {
     if (!block.getClientRects().length || FOCAL_EXEMPT_FORMS.has(formOf(block))) continue;
     const sizes = sizesOf(block);
