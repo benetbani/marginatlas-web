@@ -1409,6 +1409,18 @@
       "claims": []
     },
     {
+      "name": "uk-pnl-inputs",
+      "script": "tests/uk/pnl/inputs.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A trade's inputs from its recipe: London barbershops, the official valuation's London salon row, the register's hair and beauty bands.",
+      "reads": [
+        "data/facts/industry/barbershops.json",
+        "src/lib/uk/pnl/inputs.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],
