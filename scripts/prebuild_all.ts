@@ -540,6 +540,9 @@ const GATES: Gate[] = [
   { name: "uk-pnl-recipes", script: "tests/uk/pnl/recipes.test.ts" },
   { name: "uk-pnl-london", script: "tests/uk/pnl/london.test.ts" },
   { name: "uk-pnl-ranges", script: "tests/uk/pnl/ranges.test.ts" },
+  /* A London trade's register figures for the pages (plan 06, task A1): counts, the median and quartiles read once from the
+     band counts, the share under 100k, shared codes named and approximate codes refused. */
+  { name: "uk-london-trade", script: "tests/uk/registers/london_trade.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

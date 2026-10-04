@@ -1466,6 +1466,17 @@
       "claims": []
     },
     {
+      "name": "uk-london-trade",
+      "script": "tests/uk/registers/london_trade.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A London trade's register figures (data/uk/registers/turnover.json, Greater London E12000007): the counts, the median and quartiles read from the band counts once, the share under 100,000 pounds, and ",
+      "reads": [
+        "src/lib/uk/registers/london_trade.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],
