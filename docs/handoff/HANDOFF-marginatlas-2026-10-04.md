@@ -1,9 +1,10 @@
 # HANDOFF: marginatlas, 2026-10-04 (night)
 
 The truth pass is LIVE (website `main` 38f81e8a, proven on production); milestone 1 of his launch interview is BUILT on website
-branch `milestone-1` (M1 a3e8af73 to M11 97fa4226, then docs), NOT pushed; its full chain passed 210 of 211 on 97fa4226 (the
-one red a renderer's crash on exit, green alone); milestone 2 (Pro) is not started, its code map is written. Written 2026-10-04,
-late night; closed 2026-10-05 after midnight.
+branch `milestone-1` (M1 a3e8af73 to M11 97fa4226), its full chain 210 of 211 on 97fa4226 (the one red a renderer's crash on exit,
+green alone), **LIVE since 2026-10-05 at `main` 128c66b6 on his "Push and deploy now"**, proven on production 18 of 19 (the 19th,
+the estimate mark's hover label, fixed on branch `m1-followups` 0e0eba92, NOT pushed); milestone 2 (Pro) is not started, its code
+map is written. Written 2026-10-04, late night; closed and shipped 2026-10-05 after midnight.
 
 > **How to use this document.** Read top to bottom once. Then read the files in section 7 in the given order. Do not start work
 > until you can answer the checklist in section 13. A ready-to-paste re-hydration prompt is in section 14.
@@ -17,9 +18,8 @@ the register's figure, the law engine's or an estimate said so; London is Greate
 truth-pass figure stamped with its provenance), merged with the vertical engine under it and deployed on his "Merge and deploy now"
 (38f81e8a). Then, on his "push forward", the loop built milestone 1 of his 2026-09-26 launch interview (ten open launch fixes, M1 to
 M10, including indexing by a floor census) on branch `milestone-1`. **The single most important thing: `milestone-1` is not pushed
-and nothing may be pushed or deployed without his explicit yes.** The chain is proven (210 of 211 on 97fa4226, the one red green alone) and the
-changes are photographed (`E:/atlas/design/loop/build/photos/m1/MILESTONE-1-SHEET.jpeg`); the next action: his word on the push and
-deploy, then deploy and probe production, then his milestone review, then plan milestone 2 (Pro) from the code map
+and nothing may be pushed or deployed without his explicit yes.** Milestone 1 is LIVE (128c66b6, his "Push and deploy now", proven on production) and
+photographed (`E:/atlas/design/loop/build/photos/m1/MILESTONE-1-SHEET.jpeg`); the next action: then his milestone review, then plan milestone 2 (Pro) from the code map
 (`docs/superpowers/research/2026-10-04-pro-code-map.md`: nearly everything exists, switched off, built for the old Basic and
 Premium plans, wired to no live page).
 
@@ -41,7 +41,7 @@ Premium plans, wired to no live page).
 
 | Component | Status | Notes |
 |---|---|---|
-| Production (www.marginatlas.com) | LIVE at website `main` 38f81e8a | band page, truth pass, vertical engine; proven 2026-10-04 on 8 URLs at 1280 and 375 (`website/scratchpad/reform/_prod_truth.mjs`, 16 of 16 ok) |
+| Production (www.marginatlas.com) | LIVE at website `main` 128c66b6 (milestone 1, 2026-10-05) | milestone 1 proven by `website/scratchpad/reform/_prod_m1.mjs`, 18 of 19. Before it, at 38f81e8a: | band page, truth pass, vertical engine; proven 2026-10-04 on 8 URLs at 1280 and 375 (`website/scratchpad/reform/_prod_truth.mjs`, 16 of 16 ok) |
 | Website branch `milestone-1` | BUILT, NOT PUSHED | on top of 38f81e8a: M1 a3e8af73, M2 ced69596, M3 c74110e0, M4 b0ae3dbb, M5 3333ee2d, M6 b1242302, M7 331ffe8c, M8 2d60e156, M9 02018341, M10 3d3ea1ef, gate fixes cd2185a6, 642ce9ea, 8d985049, M11 8d23abd1 and 97fa4226 (counts 0332d3d4), docs |
 | Full chain on `milestone-1` | GREEN on 97fa4226 (210 of 211, the one red green alone) | started on 3d3ea1ef's tree; output `C:\Users\benet\AppData\Local\Temp\claude\E--atlas\180d5f78-520f-4ed5-8bc8-0e423e0c92bb\scratchpad\chain_m1close.txt`; at 113 of 210 gates, two red, both in the new census gate and both fixed after the run read them: `harness-preflight` (no preflight call, cd2185a6) and `gate-reds-ratchet` (its red printed without a rule, 642ce9ea); each rechecked alone green. The first run ended 207 of 210, its third red `geo-link-construction` (four country-tree paths built from parts) fixed in 8d985049. The second run, on 97fa4226 (`chain_m1final.txt` in the same scratchpad folder): 210 of 211, `pages-fresh` red only because its renderer crashed on exit (3221226505) after writing all nine pages; green alone at once. |
 | Floor census | WRITTEN 2026-10-04T21:34 | `website/data/seo/floor_census.json`: 1,515 spine pages outside the UK, 646 at their floor (countries 194/194, how-to 151/151, industries 133/138, cities 42/245, trade pages 126/787) |
@@ -163,7 +163,8 @@ Premium plans, wired to no live page).
    hostels headers, About the figures (`scratchpad/reform/_about_render.tsx` then `#reading`), the notify form on `/cities/frankfurt`.
    Send them with a plain, short report (what changed for a reader; the 203 non-UK city pages now noindexed, named as his rule's
    consequence; his switch for analytics).
-3. **Ask him** (one AskUserQuestion, recommendation first): push and deploy milestone 1? On yes: `git checkout main && git merge
+3. **DONE 2026-10-05 (his "Push and deploy now (Recommended)"; live 128c66b6; `_prod_m1.mjs` 18 of 19, the 19th fixed on
+   `m1-followups` 0e0eba92 and shipping with the next deploy he approves). Was: ask him** (one AskUserQuestion, recommendation first): push and deploy milestone 1? On yes: `git checkout main && git merge
    --ff-only milestone-1 && git push origin main`; watch with `MSYS_NO_PATHCONV=1 node scripts/deploy_watch.mjs
    --marker="full time at the minimum wage" --minutes=22` (that phrase is new on `/gb`); then probe: `/gb/london/banking` answers 308
    to `/cities/london` (`scratchpad/reform/_status_probe.mjs`, www host), `/cities/frankfurt` carries `noindex`, `/gb` and

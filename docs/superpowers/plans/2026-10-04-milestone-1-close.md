@@ -36,7 +36,7 @@ production probe, one commit. The full chain before any push; his word before an
   this task before anything is built.
 - [x] **M11. No method word in any card string, on any page** (found by the milestone's photographs, 2026-10-05): sixteen COPY
   strings still said "modelled", "withheld", "on file" or "the model" on pages the plain-copy harness never renders.
-- [x] **Close:** QUEUE statuses, the full chain, photographs. Waiting: his word on the push and deploy, then his milestone review.
+- [x] **Close:** QUEUE statuses, the full chain, photographs. SHIPPED 2026-10-05 on his "Push and deploy now" (main 128c66b6, proven on production 18 of 19). Waiting: his milestone review.
 
 ## As built (2026-10-04, night; branch `milestone-1`)
 
