@@ -1970,6 +1970,9 @@ export const COPY = {
     /** On a UK page (plan 06, task A2): the period figure's rates and the group it is read for, which is broader than the trade;
      *  seven words and the group's five at most, inside the copy gate's twelve. */
     footUk: "Per 100 that open, recent rates, UK {group}.",
+    /** On the industry page (his interview of 2026-09-26, answer 32; milestone 1, M7): the trade's own figure, said to be no one
+     *  country's, twelve words. */
+    footWorld: "Out of every 100 that open, the trade anywhere, not one country's.",
     /** The drawn hundred's name for a screen reader, after the count: "50 of every 100 still open after five years". */
     drawn: "of every 100 still open after five years",
   },

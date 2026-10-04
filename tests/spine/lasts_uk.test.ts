@@ -28,6 +28,9 @@ const de = buildLasts("restaurants", "place", { iso2: "DE", slug: "restaurants" 
 check("Berlin restaurants: the shard's figures as before, no 2019 starters", de !== null && de.cohort2019 === undefined && de.confidence === "modeled");
 const world = buildLasts("restaurants", "world");
 check("the industry page: the shard's figures as before", world !== null && world.confidence === "modeled" && world.values.yr5 === de!.values.yr5);
+/* His interview of 2026-09-26, answer 32 (milestone 1, M7): the industry page keeps its figure and says it is not one country's. */
+check("the industry page says its figure is the trade anywhere, not one country's", world?.foot === "Out of every 100 that open, the trade anywhere, not one country's.");
+check("a place page off the UK keeps its own foot", de?.foot === "Out of every 100 that open.");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/lasts_uk: all pass");

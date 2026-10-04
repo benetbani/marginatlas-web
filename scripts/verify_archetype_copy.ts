@@ -1958,7 +1958,9 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (!w || !p) { reds.push(`industry lasts ${id}: no card off a shard that holds the triple`); continue; }
     worldLasts++;
     if (w.basis !== COPY.industryLasts.basis || /city/i.test(w.basis)) reds.push(`industry lasts ${id}: the world basis names a city or is not the copy table's ("${w.basis}")`);
-    if (w.foot !== p.foot || JSON.stringify(w.cells) !== JSON.stringify(p.cells) || JSON.stringify(w.values) !== JSON.stringify(p.values)) reds.push(`industry lasts ${id}: the world card and the trade card disagree off one builder`);
+    /* One builder, one set of figures; the feet differ by his interview of 2026-09-26, answer 32 (milestone 1, M7): the industry page
+       says its figure is the trade anywhere, not one country's. */
+    if (w.foot !== COPY.tradeLasts.footWorld || p.foot !== COPY.tradeLasts.foot || JSON.stringify(w.cells) !== JSON.stringify(p.cells) || JSON.stringify(w.values) !== JSON.stringify(p.values)) reds.push(`industry lasts ${id}: the world card and the trade card disagree off one builder`);
     if (w.altitude !== "world" || p.altitude !== "place") reds.push(`industry lasts ${id}: the altitude is not carried`);
     ban(`industry lasts ${id}`, [w.basis, w.foot, ...w.cells.map((c) => c.label)]);
   }

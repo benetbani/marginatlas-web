@@ -117,7 +117,9 @@ export function buildLasts(industryId: string | undefined, altitude: LastsAltitu
     focal: { key: "yr5", value: values.yr5 },
     values,
     basis: altitude === "world" ? COPY.industryLasts.basis : COPY.tradeLasts.basis,
-    foot: COPY.tradeLasts.foot,
+    /* THE INDUSTRY PAGE SAYS WHOSE FIGURE IT IS (his interview of 2026-09-26, answer 32; milestone 1, M7): the trade's own survival,
+       the trade anywhere, never one country's; the UK's own by trade group prints on the UK pages (buildLastsUk). */
+    foot: altitude === "world" ? COPY.tradeLasts.footWorld : COPY.tradeLasts.foot,
     confidence: "modeled",
   };
 }
