@@ -13,6 +13,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { countTopBlocks, floorsFromLaws } from "../lib/block_count.mjs";
 import { preflight } from "./preflight.mjs";
+import { red, redSummary } from "../lib/red.mjs";
 
 preflight({ name: "check_floor_census" });
 
@@ -49,7 +50,9 @@ for (const p of pages) {
 }
 
 if (reds.length) {
-  for (const r of reds) console.log(`x floor-census ${r}. Remedy: run scripts/seo/floor_census.tsx (its header has the command) and commit data/seo/floor_census.json`);
+  const remedy = "run scripts/seo/floor_census.tsx (its header has the command) and commit data/seo/floor_census.json";
+  for (const r of reds) red({ rule: "floor-census-fresh", file: "data/seo/floor_census.json", detail: r, remedy });
+  redSummary("floor-census-fresh", reds.length, remedy, "census entries disagree with the renders");
   process.exit(1);
 }
 console.log(`floor-census: the census (written ${census.generated_at}) holds on ${held} render(s) outside the UK and the model laws' floors`);
