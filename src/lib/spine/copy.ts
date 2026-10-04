@@ -1574,6 +1574,10 @@ export const COPY = {
    *  Greater London; break-even leads with the middle owner's keeps as a sole trader beside it, the company's under the plus).
    *  Labels of three words at most; "an estimate" beside engine money (its range covers the band shapes only); no agency names. */
   londonTrade: {
+    /** Where the register holds no row (milestone 1, M8): the cost to open, its words the open card's own; else the UK's survival. */
+    openLabel: "Cost to open",
+    lastsLabel: "Still trading after five years",
+    lastsBasis: "of UK {group} that open, at recent rates",
     breakEvenLabel: "Sales to break even",
     breakEvenBasis: "a year, to carry an average London {noun}",
     salesLabel: "Typical yearly sales",

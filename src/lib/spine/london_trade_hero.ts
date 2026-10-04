@@ -33,6 +33,9 @@ import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/lib/spine/money";
 import { COPY } from "@/lib/spine/copy";
 import { registerSrc, type Provenance } from "@/lib/spine/provenance";
+import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
+import { placeCostFactor } from "@/lib/spine/open_rows";
+import { tradeSurvivalUk } from "@/lib/uk/registers/survival";
 
 const PREMISES = premisesJson as unknown as { trade_category: Record<string, string> };
 
@@ -148,6 +151,38 @@ function salesHero(slug: string): LondonTradeHero | null {
 export function londonTradeHero(slug: string): LondonTradeHero | null {
   if (!londonTradeRegister(slug) || !londonTradeSales(slug)) return null;
   return breakEvenHero(slug) ?? salesHero(slug);
+}
+
+/** THE HEADER NEVER OPENS ON A BLANK (his interview of 2026-09-26, answer 2: "a figure we trust (cost to open, sales a year)";
+ *  QUEUE cell:hero-not-measured; milestone 1, M8). Where the register holds no row the page may print (an approximate, absent or
+ *  thin code: 26 of 138 London trades on 2026-10-04), the answer is the trade's cost to open at London's prices, the open card's
+ *  own figure and its own words ("An estimate at London prices."; open_rows.ts), so the page prints one number; else the UK's
+ *  five-year survival for the trade's group at recent rates, rounded once through its interval (survival.ts); else null, and the
+ *  state word stands (three trades on 2026-10-04). Sales a year are the register's alone, above. */
+export function londonTradeFallbackAnswer(slug: string): LondonTradeHero["answer"] | null {
+  const keyed = startupCapitalArchetypeKeyed(slug);
+  const factor = placeCostFactor({ geo: "london" });
+  if (keyed != null && factor != null) {
+    return {
+      label: C().openLabel,
+      value: usd(honestRound(keyed * factor)),
+      basis: COPY.tradeOpen.basisPlace.replace("{city}", "London"),
+      confidence: "modeled",
+      prov: { src: `markets/startup_capital_archetypes:${slug}:london`, kind: "estimate" },
+    };
+  }
+  const uk = tradeSurvivalUk(slug);
+  if (uk) {
+    const p = uk.period[5];
+    return {
+      label: C().lastsLabel,
+      value: `${honestRound(p.survival * 100, p.lo * 100, p.hi * 100)}%`,
+      basis: C().lastsBasis.replace("{group}", uk.groupName),
+      confidence: "measured",
+      prov: { src: registerSrc("survival.json", uk.group, "period"), kind: "worked out" },
+    };
+  }
+  return null;
 }
 
 /** The sales strip: the register's bottom tenth, median and top tenth (his N9 of 2026-08-30: "the average, the top ten percent

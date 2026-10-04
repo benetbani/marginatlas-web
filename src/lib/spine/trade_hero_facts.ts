@@ -96,9 +96,12 @@ export function tradeHeroFacts(seed: any): TradeHeroFacts | null {
   const moneyShown = meta.money_shown === true;
   const net: TradeNet | null = seed?.net && isNum(seed.net.pct) && typeof seed.net.text === "string" ? (seed.net as TradeNet) : null;
   const take = seed?.owner?.take_home_usd;
+  /* A London trade with no register row and no money shown leads with the adapter's trusted figure, never the state word
+     (milestone 1, M8: his interview of 2026-09-26, answer 2; london_trade_hero.ts `londonTradeFallbackAnswer`). */
+  const fallback = seed?.london_fallback as TradeHeroFacts["answer"] | undefined;
   const answer = moneyShown && isNum(take) && take > 0
     ? { label: COPY.tradeHero.answerLabel, value: usd(take), basis: COPY.tradeHero.answerBasis, confidence: "modeled" as Conf }
-    : null;
+    : fallback ?? null;
   const firms = seed?.headline?.n_firms;
   const takings = seed?.headline?.rev_p50_usd;
   const cells: KvCell[] = [];

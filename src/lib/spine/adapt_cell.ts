@@ -40,7 +40,7 @@ import {
 } from "@/lib/cells";
 import type { Cell } from "@/lib/cells";
 import { setupItemsFromCell } from "./setup_items";
-import { londonTradeHero, londonTradeStrip } from "./london_trade_hero";
+import { londonTradeFallbackAnswer, londonTradeHero, londonTradeStrip } from "./london_trade_hero";
 import { buildCellRelatedLinks, fetchCellSiblings } from "@/lib/cells/related_links";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { computeBreakeven } from "@/lib/economics/breakeven";
@@ -400,6 +400,8 @@ export async function buildSpineCellSeed(
      card reads the seed as off London, its money gate shut (no curated entry, no City of London row). */
   const london = isLondonCell(cell) ? londonTradeHero(industry.toLowerCase()) : null;
   const london_strip = london ? londonTradeStrip(industry.toLowerCase()) : null;
+  /* No register row the page may print: the header still leads with a trusted figure (milestone 1, M8; london_trade_hero.ts). */
+  const london_fallback = isLondonCell(cell) && !london ? londonTradeFallbackAnswer(industry.toLowerCase()) : null;
 
   /* -- net: THE ONE BUILDER'S FIGURE (trade_net.ts, R7, DATA-REQUIREMENTS
      item 58; plan step 33's first dispatch, 2026-09-18) ------------------
@@ -680,6 +682,7 @@ export async function buildSpineCellSeed(
     meta,
     london: london ?? undefined,
     london_strip: london_strip ?? undefined,
+    london_fallback: london_fallback ?? undefined,
     headline,
     margins,
     net: net ?? undefined,
