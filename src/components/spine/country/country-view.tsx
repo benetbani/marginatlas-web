@@ -115,8 +115,8 @@ import { SourcesFoot } from "@/components/spine/SourcesFoot";
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.2's
  * seat table; plan step 40, 2026-09-19). Seat one is the masthead's AnswerCard
- * below (`tone` defaults to the accent), seat two the staff card's PayBars
- * (`Hiring`, the average's bar `--terra`, the minimum hatched), seat three the
+ * below (`tone` defaults to the accent), seat two the staff card (`Hiring`),
+ * held empty since his ruling 30 took the average's bar off it, seat three the
  * money card's leader, unlit by his 2026-09-08 "quiet". The census prints this
  * ledger; the loud-seats gate holds every render to it. The table's word for
  * seat three, RESERVED, is this vocabulary's HELD EMPTY. Literals only, read
@@ -124,7 +124,7 @@ import { SourcesFoot } from "@/components/spine/SourcesFoot";
  */
 export const LOUD_SEATS = [
   { seat: 1, card: "00 take", figure: "the effective rate, 40", state: "LIT", condition: "8.2: the page's only 40, in `--terra-text`, before anything else is read; the regime is held for 58 of 195 and where it is not the card prints the state word and no accent (the AnswerCard's data-state no-answer), the withheld state the gate reads off the render" },
-  { seat: 2, card: "08 hiring", figure: "the average salary; its bar `--terra`, the minimum bar hatched", state: "LIT", condition: "8.2: 195 pairs, 2 withheld (PayBars' data-withheld); the placement sentence beside each; the accent is the AVERAGE, not the wage floor" },
+  { seat: 2, card: "08 hiring", figure: "none: the average salary's bar left the card", state: "HELD EMPTY", condition: "his interview of 2026-09-26, answer 30 (milestone 1, M3): the header and the peers keep the salary; the card prints the wage floor and the hire's lever in ink; lit again only by a figure that answers the card. Before: 8.2: 195 pairs, 2 withheld (PayBars' data-withheld); the placement sentence beside each; the accent is the AVERAGE, not the wage floor" },
   { seat: 3, card: "12 money", figure: "the leading net margin", state: "HELD EMPTY", condition: "8.2: RESERVED, unlit, named; lit the day R7's one builder holds a per-country figure and he lifts his own 2026-09-08 'quiet' (DATA-REQUIREMENTS item 8); the budget is spent at two and openly short of three" },
 ] as const satisfies readonly LoudSeat[];
 
@@ -1017,6 +1017,12 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false, rules = null }: {
   const tagged = (pay && pay.confidence !== "measured") || (typeof hiring?._meta?.confidence === "string" && hiring._meta.confidence !== "measured");
   /* The hire's cost draws where HireCost itself draws: an average salary and an employer's rate above zero. */
   const hireDrawn = hireCost && !!pay && isNum(addPct) && addPct > 0 && (pay.rows.find((r) => r.key === "average")?.value ?? 0) > 0;
+  /* THE AVERAGE LEAVES THE STAFF CARD (milestone 1, M3; his interview of 2026-09-26, answer 30): the header and the peers keep the
+     salary, so the card's one figure (PART 4) is the wage floor's cost of a full-time year, in ink (the accent was the average's and
+     leaves with it), and the hire's lever keeps the average as its starting pay. Where no lever draws, the employer's share, which
+     rode on the average's bar, stands as its own figure. A pair the builder withholds still says why. */
+  const floorRow = pay && !pay.withheld ? pay.rows.find((r) => r.key === "minimum" && r.value > 0) ?? null : null;
+  const shareAlone = !hireDrawn && isNum(addPct) && addPct > 0;
   /* LEAN WHILE IT STANDS ALONE (plan step 31, 2026-09-17; kept by the sixth
      dispatch, 2026-09-18): the kit seats a lone card at two thirds, and at 693
      this card's world track ran on empty past its two short fills, the void
@@ -1042,7 +1048,13 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false, rules = null }: {
           of the sentence that stood here. */}
       {/* THE EMPLOYER'S SHARE SAID ONCE (2026-09-26, the United Kingdom's staff card): where the hire's cost is drawn below, the
           average bar carries no on-cost piece and no "Employer adds 15%" line, which the hire's own rule line said again. */}
-      {pay ? <PayBars rows={pay.rows.map((r) => (r.key === "average" && isNum(addPct) && !hireDrawn ? { ...r, extra: { pct: addPct, label: COPY.pay.employerAdds.replace("{pct}", `${addPct}%`) } } : r))} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
+      {floorRow ? <Focal figure={usd(floorRow.value)} words={COPY.pay.focalWords} /> : pay?.withheld ? <PayBars rows={[]} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
+      {shareAlone ? (
+        <span data-pay="employer-share" className="mt-3 flex items-baseline gap-2">
+          <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{addPct}%</Fig>
+          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{COPY.pay.employerShare}</span>
+        </span>
+      ) : null}
       {/* THE LAW BEHIND THE COST (2026-10-04, the UK page reform): the hourly wage floor in the law's own pounds, the allowance off
           the employer's bill and the pension minimums, as ruled rows between the bars and the hire's lever (rules.json). */}
       {rules && rules.length ? <FactRows rows={rules} className="mt-4" /> : null}

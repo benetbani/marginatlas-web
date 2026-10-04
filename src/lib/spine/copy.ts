@@ -645,6 +645,10 @@ export const COPY = {
     withheld: "The pay figures on file for this country disagree: the average is not ten percent above the minimum. Withheld until they do.",
     /** THE ON-COST ON THE BAR (section 9's plan, 2026-09-20): the darker piece at the average bar's end, said under the track; `{pct}` is the employer's payroll on-cost as printed. */
     employerAdds: "Employer adds {pct}.",
+    /** The employer's share standing as its own figure where no hire's lever draws (milestone 1, M3: the average's bar it rode on left the card). */
+    employerShare: "employer's share on top of pay",
+    /** The staff card's one figure since milestone 1, M3: the minimum wage's cost of a full-time year. */
+    focalWords: "a year, full time at the minimum wage",
   },
   /** THE PLACEMENT SENTENCE (MODEL.md PART 6, decision 2; PART 9 clause 37,
    *  R2): one fixed wording, one direction, on every page of the site, beside

@@ -42,7 +42,9 @@ export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pen
     <div data-hire-cost="" data-lever-card="hire" className="mt-5 border-t border-[var(--c-border)] pt-4">
       <div className="flex items-baseline gap-3">
         <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{W.label}</span>
-        <span aria-live="polite" className="fig text-[length:var(--t-head)] font-semibold text-[var(--c-ink)]">{usd(total)}</span>
+        {/* 16 UNDER THE CARD'S 30 (PART 4's rung; milestone 1, M3 gave the staff card its one figure at 30, the wage floor's year):
+            a 20 between the two is the size the model laws' FOCAL refuses in a card that already holds a 30. */}
+        <span aria-live="polite" className="fig text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{usd(total)}</span>
         <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{W.unit}</span>
       </div>
       <div
