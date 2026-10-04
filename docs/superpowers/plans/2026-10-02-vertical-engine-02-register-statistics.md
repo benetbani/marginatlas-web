@@ -343,17 +343,18 @@ normal CDF is computed through erfc, which keeps its digits in the lower tail, a
 as a difference of two upper tails, so the fit stays the maximum-likelihood one on lopsided counts (the 1 + erf form
 cancelled there, and the clamp it needed put a false barrier in the likelihood).
 
-ROUNDING, not sampling. The register is a census: there is no sampling error. Its error is that every count is rounded to
-the nearest 5. rounding_range() gives the smallest and largest quantile the true counts could produce, each count being off
-by up to 2 (never below 0): a whole count rounded to the nearest 5 is within 2 of the truth (2.5 bounds a count that could be
+ROUNDING, not sampling. The register is a census: there is no sampling error. Its error is that every count is rounded to the
+nearest 5. rounding_range() gives the smallest and largest quantile the true counts could produce, each count being off by up
+to 2 (never below 0): a whole count rounded to the nearest 5 is within 2 of the truth (2.5 bounds a count that could be
 fractional, the cautious margin the plans first used; the founder chose 2 on 2026-10-04, decision 7). It is exact: the
-quantile is the smallest x at which sum_k c_k (G_k(x) - q) >= 0, G_k(x) being the share of band k below x, and for any x that sum is linear in the counts, so its largest value over the box of
-possible counts is at a corner where every band below some m is high and every band from m on is low (the band holding x
-on whichever side its share below x puts it). The smallest possible quantile is therefore the smallest over the eleven such
-corners, and the largest the same with the sides swapped: twenty-two evaluations, equal to trying all 1,024 corners.
-Trying only the corners split at the band that holds the printed quantile misses the extreme whenever the quantile can move
-to another band: on the London table of 2026-10-02, at the margin of 2.5, it did in 288 of 2,597 cells (five businesses a
-band with an empty band between: 136k to 1,587k where the counts allow 100k to 5,612k).
+quantile is the smallest x at which sum_k c_k (G_k(x) - q) >= 0, G_k(x) being the share of band k below x, and for any x that
+sum is linear in the counts, so its largest value over the box of possible counts is at a corner where every band below some
+m is high and every band from m on is low (the band holding x on whichever side its share below x puts it). The smallest
+possible quantile is therefore the smallest over the eleven such corners, and the largest the same with the sides swapped:
+twenty-two evaluations, equal to trying all 1,024 corners. Trying only the corners split at the band that holds the printed
+quantile misses the extreme whenever the quantile can move to another band: on the London table of 2026-10-02, at the margin
+of 2.5, it did in 288 of 2,597 cells (five businesses a band with an empty band between: 136k to 1,587k where the counts
+allow 100k to 5,612k).
 
 COUNTS are the ten band counts, numbers, finite and not negative, with a finite total; anything else is refused (a NaN
 total compared false with every bound and the quantile came back None as if the area were empty). A sales figure that is

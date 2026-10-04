@@ -1405,7 +1405,7 @@ apprentice relief at 24 and 25, enrolment at 21 and 22, at 65 and 66, at 10,000.
 50,270 (60,000 of pay: 1,320.90). An age that is not a number and a negative pay are refused (a fault sweep before this task
 ran found six of seven boundary faults passing the first draft's checks). The final review (2026-10-04) pinned an allowance
 smaller than the bill (1,000 left on 30,000 at 40: all of it used, all in 33,462.80) and the header now states two readings:
-State Pension age is held at 66 (someone of 66 born after 5 April 1960 has not reached it, up to 1,320.90 a year), and a
+State Pension age is held at 66 (someone of 66 born after 5 April 1960 may not yet have reached it, up to 1,320.90 a year), and a
 caller costing several hires subtracts each hire's `allowanceUsed` before the next.
 
 **Files:**
@@ -1495,8 +1495,9 @@ Create `src/lib/uk/law/employer_cost.ts`:
  *                   subtracts each hire's allowanceUsed before the next
  *   pension = 3% x max(0, min(gross, 50,270) - 6,240) when aged 22 to State Pension age and gross over 10,000
  *
- * State Pension age is held at 66 (params_2026_27.ts): someone of 66 born after 5 April 1960 has not reached it in 2026-27,
- * so for them the pension here is 0 where the law can still ask for it (up to 1,320.90 a year).
+ * State Pension age is held at 66 (params_2026_27.ts): someone of 66 born after 5 April 1960 may not yet have reached it
+ * (theirs is 66 and 1 to 11 months), so for them the pension here can be 0 where the law still asks for it (up to 1,320.90
+ * a year).
  * gross already contains the 5.6 weeks of paid holiday. Statutory sick, maternity and paternity pay are contingent costs in
  * the weeks they happen and are not in the yearly figure (stated). Employers' liability insurance has no official price and
  * is not in it either.

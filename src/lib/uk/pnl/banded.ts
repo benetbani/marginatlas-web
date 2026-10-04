@@ -47,11 +47,13 @@ function inBand(low: number, high: number, f: number, shape: BandShape): number 
   return low * (high / low) ** f;
 }
 
-/** The share of a band's businesses below x (low < x < high) under each shape, the inverse of inBand. */
-function shareBelow(low: number, high: number, x: number, shape: BandShape): number {
-  if (shape === "flat") return (x - low) / (high - low);
-  if (shape === "pareto") return (1 / low - 1 / x) / (1 / low - 1 / high);
-  return (Math.log(x) - Math.log(low)) / (Math.log(high) - Math.log(low));
+/** How many of a band's c businesses sit below x (low < x < high) under each shape, the inverse of inBand. The log-flat
+ *  reading multiplies before it divides, in the Python's order; the two can still part in the last bit where the platforms'
+ *  logarithms do (at most 3.2e-15 of the share on 24,000 register cases, 2026-10-04), far below any printed digit. */
+function countBelow(c: number, low: number, high: number, x: number, shape: BandShape): number {
+  if (shape === "flat") return (c * (x - low)) / (high - low);
+  if (shape === "pareto") return (c * (1 / low - 1 / x)) / (1 / low - 1 / high);
+  return (c * (Math.log(x) - Math.log(low))) / (Math.log(high) - Math.log(low));
 }
 
 function edges(k: number): [number, number] {
@@ -136,7 +138,7 @@ export function bandCdf(counts: readonly number[], xK: number, shape: BandShape 
   for (let k = 0; k < counts.length; k++) {
     const [low, high] = edges(k);
     if (x >= high) below += counts[k];
-    else if (x > low) below += counts[k] * shareBelow(low, high, x, shape);
+    else if (x > low) below += countBelow(counts[k], low, high, x, shape);
   }
   return Math.min(1, below / n);
 }

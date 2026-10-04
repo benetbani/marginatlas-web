@@ -8,7 +8,7 @@
  * its own sales included. `mid` is the log-flat run, the figure the summary prints, and `lo` and `hi` the least and greatest
  * of the three. A page prints `mid` rounded to its range (present/precision.ts honestRound).
  *
- * Measured on London, 2026-10-04: the anchor moves about 6% either way; the median barbershop's take-home 23,743.01 to
+ * Measured on London, 2026-10-04: the anchor moves 4.6% to 6.5% either way (hair and beauty 6.2% below, 6.5% above); the median barbershop's take-home 23,743.01 to
  * 26,986.22 around 25,407.33 (it prints 25,000), the restaurant's 11,198.28 to 16,056.34 around 13,756.27 (14,000). Break-even
  * rests on the anchor alone, so its range is the anchor's.
  */

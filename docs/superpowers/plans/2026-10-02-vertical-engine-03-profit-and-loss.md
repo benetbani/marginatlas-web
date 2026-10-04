@@ -513,11 +513,13 @@ function inBand(low: number, high: number, f: number, shape: BandShape): number 
   return low * (high / low) ** f;
 }
 
-/** The share of a band's businesses below x (low < x < high) under each shape, the inverse of inBand. */
-function shareBelow(low: number, high: number, x: number, shape: BandShape): number {
-  if (shape === "flat") return (x - low) / (high - low);
-  if (shape === "pareto") return (1 / low - 1 / x) / (1 / low - 1 / high);
-  return (Math.log(x) - Math.log(low)) / (Math.log(high) - Math.log(low));
+/** How many of a band's c businesses sit below x (low < x < high) under each shape, the inverse of inBand. The log-flat
+ *  reading multiplies before it divides, in the Python's order; the two can still part in the last bit where the platforms'
+ *  logarithms do (at most 3.2e-15 of the share on 24,000 register cases, 2026-10-04), far below any printed digit. */
+function countBelow(c: number, low: number, high: number, x: number, shape: BandShape): number {
+  if (shape === "flat") return (c * (x - low)) / (high - low);
+  if (shape === "pareto") return (c * (1 / low - 1 / x)) / (1 / low - 1 / high);
+  return (c * (Math.log(x) - Math.log(low))) / (Math.log(high) - Math.log(low));
 }
 
 function edges(k: number): [number, number] {
@@ -602,7 +604,7 @@ export function bandCdf(counts: readonly number[], xK: number, shape: BandShape 
   for (let k = 0; k < counts.length; k++) {
     const [low, high] = edges(k);
     if (x >= high) below += counts[k];
-    else if (x > low) below += counts[k] * shareBelow(low, high, x, shape);
+    else if (x > low) below += countBelow(counts[k], low, high, x, shape);
   }
   return Math.min(1, below / n);
 }
@@ -1894,7 +1896,7 @@ The one assumption the register cannot settle is how businesses spread inside a 
 quartiles and the share of businesses above break-even, so each run reads all of them under one of the three shapes (the
 founder's decision 9, 2026-10-04: consistent ranges, so no figure claims more than the band shapes allow, its own sales
 included); the log-flat run is the figure printed, and plan 04's `honestRound` prints it to the place its range allows. On
-London the anchor moves about 6% either way; the barbershop at the median keeps 23,743.01 to 26,986.22 around 25,407.33
+London the anchor moves 4.6% to 6.5% either way; the barbershop at the median keeps 23,743.01 to 26,986.22 around 25,407.33
 (its own sales 74,243 to 82,654), so it prints as 25,000; the restaurant's 11,198.28 to 16,056.34 around 13,756.27 prints
 as 14,000. Break-even rests on the anchor alone, so its range is the anchor's. The hard bounds of the anchor (every
 business on a band edge) would swing the restaurant from a loss of 13,568 to keeping 24,772 (a profit of 29,059): that is
@@ -1984,7 +1986,7 @@ Create `src/lib/uk/pnl/ranges.ts`:
  * its own sales included. `mid` is the log-flat run, the figure the summary prints, and `lo` and `hi` the least and greatest
  * of the three. A page prints `mid` rounded to its range (present/precision.ts honestRound).
  *
- * Measured on London, 2026-10-04: the anchor moves about 6% either way; the median barbershop's take-home 23,743.01 to
+ * Measured on London, 2026-10-04: the anchor moves 4.6% to 6.5% either way (hair and beauty 6.2% below, 6.5% above); the median barbershop's take-home 23,743.01 to
  * 26,986.22 around 25,407.33 (it prints 25,000), the restaurant's 11,198.28 to 16,056.34 around 13,756.27 (14,000). Break-even
  * rests on the anchor alone, so its range is the anchor's.
  */

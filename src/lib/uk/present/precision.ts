@@ -8,9 +8,9 @@
  * h = (hi - lo) / 2, so u = 10^floor(log10 h): the uncertainty is good to one digit, and the figure is printed to that
  * digit's place, no finer. The printed figure is then within the range widened by half a unit. And never more than three
  * significant figures, whatever the range: "281,900" claims a precision a reader cannot use; "282,000" does not.
- *   London restaurants' median 281.9k, range 280.3k to 283.5k (h = 1.6k): u = 1,000, prints 282,000.
- *   Camden's hair and beauty median 76.4k, range 73.9k to 81.1k (h = 3.6k): u = 1,000, prints 76,000.
- *   A London restaurant at the median keeps 13,756, 11,534 to 15,558 across the band shapes (h = 2,012): prints 14,000.
+ *   London restaurants' median 281.9k, range 280.7k to 283.2k (h = 1.28k): u = 1,000, prints 282,000.
+ *   Camden's hair and beauty median 76.4k, range 74.4k to 80.1k (h = 2.88k): u = 1,000, prints 76,000.
+ *   A London restaurant at the median keeps 13,756, 11,198 to 16,056 across the band shapes (h = 2,429): prints 14,000.
  *   A living-wage hire, exact law, no range: three significant figures, 28,300.
  * A half-width that is a power of ten in decimal can land a hair below it in floating point (3,234.14 - 1,234.14 is
  * 1,999.9999999999998), so the comparison allows a relative 1e-9. A range must hold its figure between two finite ends:
