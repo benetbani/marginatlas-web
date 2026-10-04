@@ -1631,6 +1631,8 @@ export const COPY = {
     basisFormats: "",
     basisFormatsAlone: "",
     /** The withheld state earns it back (the same day, the goal's A4): the two figures the card holds, no stated line. */
+    /** At a city's prices (plan 06, task A6): the keyed New York index times the city's place factor, called an estimate. */
+    basisPlace: "An estimate at {city} prices.",
     kickerRecover: "Earning it back",
     basisRecover: "",
     withheld: "No cost figures for this trade here yet.",
@@ -2011,6 +2013,8 @@ export const COPY = {
     kicker: "Other trades to open",
     head: { name: "Trade", value: "To open" },
     basis: "",
+    /** At a city's prices (plan 06, task A6): each trade's keyed figure times the city's place factor. */
+    basisPlace: "Estimates at {city} prices.",
     withheldOne: "1 trade left out: no cost figures yet.",
     withheldMany: "{n} trades left out: no cost figures yet.",
     state: "Only {k} other trades here have cost figures, too few to compare.",

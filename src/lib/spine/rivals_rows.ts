@@ -62,6 +62,8 @@
 import { usd } from "@/components/spine/kit";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
+import { placeCostFactor } from "@/lib/spine/open_rows";
+import { honestRound } from "@/lib/uk/present/precision";
 import { COPY } from "@/lib/spine/copy";
 import { countWord } from "@/lib/spine/district_rows";
 import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
@@ -109,14 +111,19 @@ export function buildRivals(seed: any): RivalsData | null {
   const siblings = list.filter((l) => typeof l.name === "string" && typeof l.slug === "string" && typeof l.href === "string") as Array<{ name: string; slug: string; href: string }>;
   const keyedRows: RivalRow[] = [];
   let withheld = 0;
+  /* At the page's city's prices, as the cost to open is (open_rows.ts placeCostFactor; plan 06, task A6). */
+  const factor = placeCostFactor(meta);
   for (const s of siblings) {
-    const v = startupCapitalArchetypeKeyed(s.slug);
-    if (v == null) { withheld++; continue; }
+    const ny = startupCapitalArchetypeKeyed(s.slug);
+    if (ny == null) { withheld++; continue; }
+    const v = factor != null ? honestRound(ny * factor) : ny;
     keyedRows.push({ key: s.slug, name: s.name, value: v, href: s.href, lands: SURFACE_ANSWERS.cell });
   }
   keyedRows.sort((a, b) => b.value - a.value);
   const c = COPY.tradeRivals;
-  const common = { siblings: siblings.length, keyed: keyedRows.length, kicker: c.kicker, basis: c.basis, head: c.head, fmt: usd, sample: true as const };
+  const city = typeof meta.city === "string" && meta.city ? meta.city : null;
+  const basis = factor != null && city ? c.basisPlace.replace("{city}", city) : c.basis;
+  const common = { siblings: siblings.length, keyed: keyedRows.length, kicker: c.kicker, basis, head: c.head, fmt: usd, sample: true as const };
   if (keyedRows.length < MARK_LIST_FLOOR) {
     const stateLine = siblings.length === 0 ? c.stateNone : fill(c.state, { k: keyedRows.length === 0 ? "none" : countWord(keyedRows.length) });
     return { state: "withheld", rows: [], middle: null, middleLabel: "", withheld, withheldLine: null, stateLine, ...common };

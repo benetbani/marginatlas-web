@@ -373,7 +373,8 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      money cards and the peers (the peers only where a peer resolves, the
      band's note), turn two the share, the survival grid and the strip, turn
      three the bento and then the exit's pair. */
-  const turnOne = !!(permits && open) || !!((kit || hold) && lines) || !!(split && team) || !!(peers && peers.peers > 0);
+  /* Either card holds the opening level (plan 06, task A6): a UK page's cost to open stands alone where the licence list is withheld. */
+  const turnOne = !!(permits || open) || !!((kit || hold) && lines) || !!(split && team) || !!(peers && peers.peers > 0);
   /* Either card holds the level (plan 06, task A2): a UK trade with no single survival group keeps covering the costs, alone. */
   const turnTwo = !!(clears || lasts);
   const turnThree = !!market;
@@ -397,7 +398,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const cellZonesAll: CellZone[] = [
     { key: "take", split: "wide", label: "The answer", body: [<Masthead key="take" d={d} />] },
     { key: "opening", split: "1-2", stack: "lg", label: "Is the money in it", body: opening },
-    { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne && permits && open ? [<PermitsCard key="permits" permits={permits} top={openForm(open) === "list"} />, <OpenCard key="open" open={open} />] : [] },
+    { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne ? keep([permits ? <PermitsCard key="permits" permits={permits} top={!!open && openForm(open) === "list"} /> : null, open ? <OpenCard key="open" open={open} /> : null]) : [] },
     {
       key: "stock",
       split: kit && lines ? "3-2" : "2-3",

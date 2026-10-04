@@ -1532,6 +1532,17 @@
       "claims": []
     },
     {
+      "name": "uk-open-permits",
+      "script": "tests/spine/uk_open_permits.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The cost to open at the city's prices and no licence list in another country's terms on a UK page (plan 06, task A6).",
+      "reads": [
+        "src/lib/spine/open_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

@@ -94,6 +94,10 @@ export function isUsJurisdictionLicence(name: string): boolean {
 }
 
 export function buildPermits(industryId: string, iso2?: string | null): PermitsData | null {
+  /* NO LIST IN ANOTHER COUNTRY'S TERMS ON A UK PAGE (plan 06, task A6, 2026-10-04): the shard's licences are the trade's anywhere,
+     written in United States terms (a sales tax permit, a certificate of occupancy, an individual barber licence), and no UK list
+     keyed by trade exists yet; the UK page's own licences by trade stand on the country page. */
+  if (typeof iso2 === "string" && iso2.trim().toUpperCase() === "GB") return null;
   const names = industryRows(industryId, PERMITS_METRICS.name);
   if (names.length === 0) return null;
   const days = new Map(industryRows(industryId, PERMITS_METRICS.days).map((f) => [f.rowKey, f.value] as const));

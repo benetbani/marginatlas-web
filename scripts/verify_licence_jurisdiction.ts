@@ -52,14 +52,17 @@ for (const ind of INDUSTRIES) {
   const ours = printable.filter(isUsJurisdictionLicence);
   if (ours.length) { tradesTouched++; usNamed += ours.length; }
 
-  const gb = buildPermits(ind.id, "GB");
+  /* A UK page prints no shard licence list at all since plan 06, task A6 (2026-10-04): the shard's names are the trade's anywhere
+     in United States terms. Checks 1 and 4 read another country off the United States, Germany, which keeps the list. */
+  if (buildPermits(ind.id, "GB") !== null) fail(`${ind.id} on a UK page prints the shard's licence list`, "a GB page withholds the shard's list (permits_rows.ts buildPermits)");
+  const gb = buildPermits(ind.id, "DE");
   for (const c of gb?.cells ?? []) {
-    if (isUsJurisdictionLicence(String(c.label))) fail(`${ind.id} on a UK page prints "${c.label}", a licence named for the United States`, "withhold it off a US page through isUsJurisdictionLicence, with the stated line");
+    if (isUsJurisdictionLicence(String(c.label))) fail(`${ind.id} off the United States prints "${c.label}", a licence named for the United States`, "withhold it off a US page through isUsJurisdictionLicence, with the stated line");
   }
   if (ours.length) {
     const line = gb?.withheld ?? "";
     const want = ours.length === 1 ? COPY.tradePermits.foreignOne : COPY.tradePermits.foreignMany.replace("{n}", String(ours.length));
-    if (!line.includes(want)) fail(`${ind.id} on a UK page withholds ${ours.length} US-named licence(s) and its line reads "${line}"`, "state the count in the permits card's withheld line (COPY.tradePermits.foreignOne or foreignMany)");
+    if (!line.includes(want)) fail(`${ind.id} off the United States withholds ${ours.length} US-named licence(s) and its line reads "${line}"`, "state the count in the permits card's withheld line (COPY.tradePermits.foreignOne or foreignMany)");
   }
   const us = buildPermits(ind.id, "US");
   const usLabels = new Set((us?.cells ?? []).map((c) => String(c.label)));
@@ -82,12 +85,12 @@ for (const ind of INDUSTRIES) {
 const hedged = ["State or national pharmacy premises permit", "Therapist professional licence (state or national board)"];
 for (const h of hedged) if (isUsJurisdictionLicence(h)) fail(`"${h}" names both a state and a nation and was read as US-named`, "leave a name that says \"state or national\" to print anywhere");
 
-const beer = buildPermits("craft_beer_mfg", "GB");
-if (!beer || (beer.cells ?? []).some((c) => /federal|state manufacturer/i.test(String(c.label)))) fail("craft_beer_mfg on a UK page still prints a Federal or State licence", "withhold both off a US page");
-if (!beer?.withheld?.includes(COPY.tradePermits.foreignMany.replace("{n}", "2"))) fail(`craft_beer_mfg on a UK page does not say it withholds two US-named licences ("${beer?.withheld ?? ""}")`, "state the count in the withheld line");
+const beer = buildPermits("craft_beer_mfg", "DE");
+if (!beer || (beer.cells ?? []).some((c) => /federal|state manufacturer/i.test(String(c.label)))) fail("craft_beer_mfg off the United States still prints a Federal or State licence", "withhold both off a US page");
+if (!beer?.withheld?.includes(COPY.tradePermits.foreignMany.replace("{n}", "2"))) fail(`craft_beer_mfg off the United States does not say it withholds two US-named licences ("${beer?.withheld ?? ""}")`, "state the count in the withheld line");
 
 if (reds.length) {
   console.error(`verify_licence_jurisdiction: ${reds.length} red(s) above`);
   process.exit(1);
 }
-console.log(`verify_licence_jurisdiction: ${INDUSTRIES.length} live trades; ${usNamed} licence names across ${tradesTouched} trades are named for the United States, printed on a US page and withheld with their line on a UK page; names saying "state or national" print anywhere; craft breweries on a UK page withholds its two and says so.`);
+console.log(`verify_licence_jurisdiction: ${INDUSTRIES.length} live trades; ${usNamed} licence names across ${tradesTouched} trades are named for the United States, printed on a US page and withheld with their line off it (Germany read); a UK page prints no shard list; names saying "state or national" print anywhere; craft breweries off the United States withholds its two and says so.`);

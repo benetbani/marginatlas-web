@@ -80,7 +80,9 @@
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import type { Companion } from "@/components/spine/archetypes/BentoBand";
 import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
-import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
+import { placeFactor, startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
+import { getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
+import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 
@@ -199,6 +201,16 @@ export function openForm(open: OpenData): OpenForm {
   return "metric";
 }
 
+/* THE KEYED FIGURE AT THE PLACE'S PRICES (plan 06, task A6, 2026-10-04): the archetype table is a New York index (cost of
+   living 100), and the trade page printed it unadjusted on every city (a London barbershop at New York's 60,000). Where the
+   page's city holds a cost-of-living index, the figure takes the place factor (London's 75: 0.75), rounded once to three
+   figures, and the basis says it is an estimate at that city's prices; a page with no city index keeps the keyed figure and
+   its empty basis. Never `placeAdjustedStartupCapital`, which answers the 80,000 default for a trade the table does not key. */
+export function placeCostFactor(meta: { geo?: unknown } | null | undefined): number | null {
+  const index = getCityCostOfLivingIndex(typeof meta?.geo === "string" ? meta.geo : null);
+  return index != null ? placeFactor({ costOfLivingIndex: index }) : null;
+}
+
 export function buildOpen(seed: any): OpenData | null {
   const meta = seed?.meta ?? {};
   const industryId: string | null = typeof meta.industry_id === "string" ? meta.industry_id : null;
@@ -232,13 +244,16 @@ export function buildOpen(seed: any): OpenData | null {
   }
 
   /* BASELINE: the trade's keyed figure. WITHHELD: the default, or no key at all. */
-  const keyed = startupCapitalArchetypeKeyed(slug);
-  if (keyed != null) {
-    /* One sentence for the three figures where the companions print (all of them the trade's, modelled); the total's own sentence and the withheld foot where they do not. */
+  const keyedNy = startupCapitalArchetypeKeyed(slug);
+  if (keyedNy != null) {
+    const factor = placeCostFactor(meta);
+    const keyed = factor != null ? honestRound(keyedNy * factor) : keyedNy;
+    const city = typeof meta.city === "string" && meta.city ? meta.city : null;
+    /* One sentence for the three figures where the companions print (all of them the trade's, modelled); the total's own sentence and the withheld foot where they do not; at a place's prices, the estimate's own line. */
     const formats = buildOpenFormats(industryId, keyed);
     return {
       state: "baseline", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: usd(keyed), value: keyed, withheld: null,
-      basis: formats.length > 0 ? (foot.length > 0 ? COPY.tradeOpen.basisFormats : COPY.tradeOpen.basisFormatsAlone) : foot.length > 0 ? COPY.tradeOpen.basisBaseline : COPY.tradeOpen.basisBaselineAlone,
+      basis: factor != null && city ? COPY.tradeOpen.basisPlace.replace("{city}", city) : formats.length > 0 ? (foot.length > 0 ? COPY.tradeOpen.basisFormats : COPY.tradeOpen.basisFormatsAlone) : foot.length > 0 ? COPY.tradeOpen.basisBaseline : COPY.tradeOpen.basisBaselineAlone,
       foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: true, confidence: "modeled",
       formats, recover: false,
     };
