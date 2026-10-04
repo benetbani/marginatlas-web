@@ -29,5 +29,8 @@ check("kinds: two counted figures together are worked out, never counted", combi
 check("kinds: several inputs flagged untouched are still arithmetic", combineKinds(["counted", "looked up"], false) === "worked out");
 check("kinds: a worked-out or looked-up input passed through keeps its kind", combineKinds(["worked out"], false) === "worked out" && combineKinds(["looked up"], false) === "looked up");
 
+check("kinds: an estimate wins whatever its partners and whatever the flag", combineKinds(["looked up", "estimate"]) === "estimate" && combineKinds(["worked out", "estimate"]) === "estimate" && combineKinds(["counted", "estimate"], false) === "estimate");
+check("kinds: an estimate in the third or later place still wins", combineKinds(["counted", "counted", "estimate"]) === "estimate" && combineKinds(["looked up", "worked out", "counted", "estimate"]) === "estimate");
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/kinds: all pass");

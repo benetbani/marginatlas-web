@@ -59,5 +59,26 @@ for (const [slug, r] of Object.entries(RECIPES)) {
   check(`${slug}: the median business's margin is above 0 and below 60% (${m.toFixed(4)})`, m > 0 && m < 0.6);
 }
 
+// Each recipe's London figures and relief flag. The figures were computed apart from this code (Python, decimal arithmetic,
+// half-up at the penny; the review of 2026-10-04 agreed with the TypeScript on all 241 it compared); the flags are the 2026-27
+// readings' (docs/uk-law/2026-27-readings.md: garages qualify, dentistry does not). A driver moved between the costs that grow
+// with sales and the sized ones, or a flag flipped, moves these figures.
+const PINNED: Record<string, { rhl: boolean; breakEven: number; shareAbove: number; keeps: number }> = {
+  "barbershops": { rhl: true, breakEven: 64_112.98, shareAbove: 0.6136, keeps: 25_407.33 },
+  "nail-salons": { rhl: true, breakEven: 68_806.31, shareAbove: 0.5742, keeps: 20_558.74 },
+  "restaurants": { rhl: true, breakEven: 556_017.36, shareAbove: 0.3212, keeps: 13_756.27 },
+  "bakeries-retail": { rhl: true, breakEven: 351_741.28, shareAbove: 0.3587, keeps: 30_399.25 },
+  "sports-fitness": { rhl: true, breakEven: 275_028.36, shareAbove: 0.3429, keeps: 30_960.42 },
+  "auto-repair-shops": { rhl: true, breakEven: 213_359.52, shareAbove: 0.3851, keeps: 29_164.44 },
+  "dental-practices": { rhl: false, breakEven: 198_710.65, shareAbove: 0.4723, keeps: 39_216.37 },
+};
+check("every recipe is pinned below, and nothing else", Object.keys(PINNED).sort().join() === Object.keys(RECIPES).sort().join());
+for (const [slug, p] of Object.entries(PINNED)) {
+  const s = londonTradeSummary(slug);
+  check(`${slug}: relief ${p.rhl ? "applies" : "does not apply"}; break-even ${p.breakEven}, ${p.shareAbove} of registered businesses above it, the median business keeps ${p.keeps}`,
+    RECIPES[slug]?.retailHospitalityLeisure === p.rhl && s !== null && s.breakEven.value === p.breakEven && s.shareAbove !== null
+    && Math.round(s.shareAbove.value * 10_000) / 10_000 === p.shareAbove && s.keeps.q50 === p.keeps);
+}
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/recipes: all pass");

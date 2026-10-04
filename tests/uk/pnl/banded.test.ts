@@ -78,5 +78,21 @@ check("counts that are negative, not numbers, infinite or overflow their total a
   refuses(() => bandQuantile(b, 0.5)) && refuses(() => bandCdf(b, 100)) && refuses(() => bandMeanK(b))));
 check("a sales figure that is not a number is refused, never read as nobody below it", refuses(() => bandCdf(RESTAURANTS_LONDON, Number.NaN)));
 
+
+// ---- review additions
+check("a q outside (0, 1), or not a number, is refused", [0, 1, -0.1, 1.5, Number.NaN].every((q) => refuses(() => bandQuantile(RESTAURANTS_LONDON, q))));
+check("bands 7 and 8 (5m to 50m) equal Python's: restaurants cdf 0.97925 at 7,500k and 0.99075 at 20,000k, q98 7,722.5k (band 7), q99.5 40,954.1k (band 8)",
+  near(bandCdf(RESTAURANTS_LONDON, 7_500)!, 0.9792486959415981) && near(bandCdf(RESTAURANTS_LONDON, 20_000)!, 0.9907507305159675)
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.98)!.k, 7722.515984513339) && bandQuantile(RESTAURANTS_LONDON, 0.98)!.band === 7
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.995)!.k, 40954.131817211535) && bandQuantile(RESTAURANTS_LONDON, 0.995)!.band === 8 && bandQuantile(RESTAURANTS_LONDON, 0.5)!.band === 3);
+const m1 = bandMeanK(RESTAURANTS_LONDON, 1)!, m3 = bandMeanK(RESTAURANTS_LONDON, 3)!, m8 = bandMeanK(RESTAURANTS_LONDON, 8)!, m9 = bandMeanK(RESTAURANTS_LONDON, 9)!;
+check("the mean stops where uptoBand says: restaurants over 1, 3, 8 and 9 bands equal Python's (mean, lower bound, upper bound)",
+  near(m1.k, 19.54325168564633) && m1.lo === 0 && m1.hi === 50 && near(m3.k, 119.25311819535328) && near(m3.lo, 72.10884353741497) && near(m3.hi, 183.33333333333334)
+  && near(m8.k, 716.8792695062162) && near(m8.lo, 474.53255963894264) && near(m8.hi, 1032.0760799484203) && near(m9.k, 948.071971736851) && near(m9.lo, 565.7726692209451) && near(m9.hi, 1501.117496807152));
+check("uptoBand 0 and 2.5 are refused", refuses(() => bandMeanK(RESTAURANTS_LONDON, 0)) && refuses(() => bandMeanK(RESTAURANTS_LONDON, 2.5)));
+const ten = (bad: unknown) => [bad, 0, 0, 0, 0, 0, 0, 0, 0, 10] as unknown as number[];
+check("a count under zero by any amount, and an eleventh count, are refused by all three",
+  [ten(-0.5), ten(-1e-9), [...RESTAURANTS_LONDON, 1]].every((c) => refuses(() => bandQuantile(c, 0.1)) && refuses(() => bandCdf(c, 100)) && refuses(() => bandMeanK(c))));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/banded: all pass");

@@ -40,6 +40,10 @@ check("withheld: hotels have no kind of premises in the valuation statistics", l
 check("withheld: 15 coffee roasters in London are under the register's floor of 40", londonWithholding("coffee-roasters") === "15 businesses in London on the register, under the 40 its figures need");
 check("withheld: an unknown trade has no bands", londonWithholding("no-such-trade") === "no London turnover bands for the trade's code" && londonTradeSummary("no-such-trade") === null);
 check("built: barbershops are not withheld", londonWithholding("barbershops") === null);
+check("the floor of 100 premises lets exactly 100 through: garden centres' 100 premises reach the recipe check", londonWithholding("garden-centers-nurseries") === "no recipe");
+check("withheld: 60 dance schools' premises are too few for the valuation's rounding", londonWithholding("dance-studios") === "60 dance schools & centres premises in London, too few for the valuation's rounding");
+check("withheld: pet training has a kind of premises but no London valuation row for it", londonWithholding("pet-training") === "no London valuation row for pet grooming parlours");
+check("withheld: 30 hostels are under the register's floor, said before they lack a kind of premises", londonWithholding("hostels") === "30 businesses in London on the register, under the 40 its figures need");
 check("the company form reaches the model: the median barbershop as a company keeps the company optimum on 29,917.75",
   londonTradeSummary("barbershops", "company")!.keeps.q50 === bestCompanyTakeHome(29_917.75).takeHome && londonTradeSummary("barbershops")!.keeps.q50 === 25_407.33);
 

@@ -5,7 +5,8 @@
  * Run: npx tsx tests/uk/pnl/ranges.test.ts
  */
 import { shapeRanges } from "../../../src/lib/uk/pnl/ranges";
-import { londonTradeInputs, londonTradeRanges } from "../../../src/lib/uk/pnl/london";
+import { londonTradeInputs, londonTradeRanges, londonTradeSummary } from "../../../src/lib/uk/pnl/london";
+import { RECIPES } from "../../../src/lib/uk/pnl/recipes";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-pnl-ranges";
@@ -32,6 +33,13 @@ check("restaurants: the median owner keeps 11,533.69 to 15,558.30 around 13,756.
 check("restaurants: the margin at the median 4.09% to 5.89% around 5.03%", r4(r.marginAtMedian.lo) === 0.0409 && r4(r.marginAtMedian.mid) === 0.0503 && r4(r.marginAtMedian.hi) === 0.0589);
 check("mid is the log-flat reading the summary prints, so the two never disagree", shapeRanges(londonTradeInputs("restaurants")!)!.keepsQ50.mid === 13_756.27);
 check("a withheld trade has no range", londonTradeRanges("grocery-stores") === null);
+const co = londonTradeRanges("barbershops", "company")!;
+check("the company form reaches the range: the median barbershop as a company keeps 23,898.82 to 24,757.28 around 24,343.99", co.keepsQ50.lo === 23_898.82 && co.keepsQ50.mid === 24_343.99 && co.keepsQ50.hi === 24_757.28);
+check("for every built trade in both forms, mid is the summary's own figure and lo <= mid <= hi",
+  Object.keys(RECIPES).every((slug) => (["sole trader", "company"] as const).every((form) => {
+    const x = londonTradeRanges(slug, form), s = londonTradeSummary(slug, form);
+    return x !== null && s !== null && x.keepsQ50.mid === s.keeps.q50 && x.breakEven.mid === s.breakEven.value && x.keepsQ50.lo <= x.keepsQ50.mid && x.keepsQ50.mid <= x.keepsQ50.hi;
+  })));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/ranges: all pass");

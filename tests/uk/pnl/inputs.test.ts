@@ -53,5 +53,22 @@ const refusesRow = (row: { rv_per_m2: number; count: number; floorspace_k_m2: nu
 check("a valuation row with no value, no floorspace or no premises is refused, each on its own",
   refusesRow({ rv_per_m2: 0, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: 5, floorspace_k_m2: 0 }) && refusesRow({ rv_per_m2: 274, count: 0, floorspace_k_m2: 1 }));
 
+
+// ---- what passes through unchanged (review additions)
+const CTX = { revenueBandsK: HAIR_BEAUTY_LONDON, premises: LONDON_SALONS, premisesCategory: "Hairdressing/Beauty Salons", place: "London", form: "sole trader" as const };
+check("recipe lines keep their keys and the basis they were given", inputs.variable.map((x) => x.key).join("|") === "barbers' commission|supplies and product" && inputs.sized[0].key === "running costs"
+  && inputs.variable[0].source === "fixture (data/facts/industry/barbershops.json)" && inputs.sized[0].source === "fixture (data/facts/industry/barbershops.json)");
+const looked = buildInputs({ ...BARBERSHOPS, variable: [{ ...BARBERSHOPS.variable[0], kind: "looked up" }, BARBERSHOPS.variable[1]] }, CTX);
+check("a line's kind is the recipe's: looked up stays looked up, estimate stays estimate", looked.variable[0].kind === "looked up" && looked.variable[1].kind === "estimate" && looked.sized[0].kind === "estimate");
+check("the rent line says what it is: the official estimate of a year's rent, the average room, the place, April 2021",
+  inputs.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation" && Math.round(inputs.premises.areaM2 * 10) / 10 === 60.8);
+check("the anchor says what it is", inputs.anchorSales.source === "the mean sales of the registered businesses under 5m in London");
+const other = buildInputs({ ...BARBERSHOPS, retailHospitalityLeisure: false }, { ...CTX, form: "company", place: "Leeds" });
+check("a trade outside retail, hospitality and leisure pays the standard multiplier: break-even 65,456.35 (rates 7,196.23 on the average room)",
+  other.premises.retailHospitalityLeisure === false && summarise(other)!.breakEven.value === 65_456.35);
+check("the form and the place reach the inputs", other.form === "company" && other.premises.source.includes("in Leeds") && other.anchorSales.source.endsWith("in Leeds"));
+check("a negative or non-numeric valuation row is refused", refusesRow({ rv_per_m2: -1, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: -5, floorspace_k_m2: 1 })
+  && refusesRow({ rv_per_m2: 274, count: 5, floorspace_k_m2: -1 }) && refusesRow({ rv_per_m2: NaN, count: 5, floorspace_k_m2: 1 }));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/inputs: all pass");
