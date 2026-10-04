@@ -85,8 +85,9 @@ Create `scripts/verify_uk_registers.ts`:
  *
  * It reads only files in this repo (the chain never touches the network or another repo).
  *
- * What it cannot see: whether the tables themselves are right; that is the registers' own tests
- * (E:/atlas/registers/uk/tests) and their builders' checks.
+ * What it cannot see: whether the tables themselves are right (the registers' own tests, E:/atlas/registers/uk/tests, and
+ * their builders' checks); a hand edit that also rewrites manifest.json, since nothing signs the manifest; and a stale
+ * export, slices older than tables rebuilt since (the chain never reads the other repo): re-export after every rebuild.
  *
  *   npx tsx scripts/verify_uk_registers.ts
  */
@@ -189,7 +190,7 @@ python registers/uk/export_for_site.py
 ```
 
 Expected: `exporting into E:\atlas\website\data\uk\registers`, then four lines, on the tables of 2026-10-03
-`turnover.json: 4795 rows, 51d1dbb39e5a`, `premises.json: 42 rows, 4bdd8332330c`, `survival.json: 110 rows, 2675b0544984`,
+`turnover.json: 4795 rows, 0ddba579e101`, `premises.json: 42 rows, 4bdd8332330c`, `survival.json: 110 rows, 2675b0544984`,
 `failures.json: 137 rows, 12ceff334174` (hashes differ if a table was refreshed since).
 
 - [ ] **Step 5: Run the gate and watch it pass**
@@ -311,7 +312,10 @@ twelve significant figures; 18 of 20 deliberate faults fail the test, and the tw
 string count already fails the total; the CDF's cap at 1 binds only on floating-point error). Its review (2026-10-04) compared
 the port with the Python on all 4,795 register vectors (quantiles within 2.6e-16, means bitwise equal) and added five checks
 for what still passed: q outside (0, 1), bands 7 and 8 (5m to 50m), the mean over 1, 3, 8 and 9 bands, and a count under zero
-by any amount or an eleventh count.
+by any amount or an eleventh count. With the founder's decision 9 (2026-10-04) the quantile and the CDF read under the flat
+and Pareto shapes too, the port's own (the Python prints only the log-flat reading): flat `F(x) = (x - L) / (U - L)`,
+Pareto `F(x) = (1/L - 1/x) / (1/L - 1/U)`, each checked against its own formula computed apart from this code, the edge
+exact under every shape, and a shape, a q or a sales figure that is not one refused (six checks).
 
 **Files:**
 - Create: `src/lib/uk/pnl/banded.ts`
@@ -330,7 +334,7 @@ Create `tests/uk/pnl/banded.test.ts`:
  *
  * Run: npx tsx tests/uk/pnl/banded.test.ts
  */
-import { bandCdf, bandMeanK, bandQuantile, inOpenBand } from "../../../src/lib/uk/pnl/banded";
+import { bandCdf, bandMeanK, bandQuantile, inOpenBand, type BandShape } from "../../../src/lib/uk/pnl/banded";
 import { red, redSummary } from "../../../scripts/lib/red";
 
 const RULE = "uk-pnl-banded";
@@ -420,6 +424,29 @@ const ten = (bad: unknown) => [bad, 0, 0, 0, 0, 0, 0, 0, 0, 10] as unknown as nu
 check("a count under zero by any amount, and an eleventh count, are refused by all three",
   [ten(-0.5), ten(-1e-9), [...RESTAURANTS_LONDON, 1]].every((c) => refuses(() => bandQuantile(c, 0.1)) && refuses(() => bandCdf(c, 100)) && refuses(() => bandMeanK(c))));
 
+// ---- the flat and Pareto shapes for the quantile and the CDF (decision 9), each equal to its own formula computed apart
+// from this code (Python, 2026-10-04): flat F(x) = (x - L) / (U - L), Pareto F(x) = (1/L - 1/x) / (1/L - 1/U)
+check("hair and beauty's median under each shape equals the Python's: 74.24 (pareto), 78.63 (log-flat), 82.65 (flat)",
+  near(bandQuantile(HAIR_BEAUTY_LONDON, 0.5, "pareto")!.k, 74.24317617866005) && near(bandQuantile(HAIR_BEAUTY_LONDON, 0.5, "flat")!.k, 82.65374331550802));
+check("restaurants' q10 and q90 under the flat and Pareto shapes equal the Python's",
+  near(bandQuantile(RESTAURANTS_LONDON, 0.1, "flat")!.k, 60.0625) && near(bandQuantile(RESTAURANTS_LONDON, 0.9, "flat")!.k, 1943.4482758620688)
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.1, "pareto")!.k, 55.59416261292564) && near(bandQuantile(RESTAURANTS_LONDON, 0.9, "pareto")!.k, 1892.9503916449082));
+check("the CDF under each shape equals the Python's: hair and beauty below 64.11298k and 25k, restaurants below 750k",
+  near(bandCdf(HAIR_BEAUTY_LONDON, 64.11298, "flat")!, 0.35695213037648266) && near(bandCdf(HAIR_BEAUTY_LONDON, 64.11298, "pareto")!, 0.41790075977002106)
+  && near(bandCdf(HAIR_BEAUTY_LONDON, 25, "flat")!, 0.11025156151509942) && near(bandCdf(HAIR_BEAUTY_LONDON, 25, "pareto")!, 0.22050312303019884)
+  && near(bandCdf(RESTAURANTS_LONDON, 750, "flat")!, 0.7337786259541985) && near(bandCdf(RESTAURANTS_LONDON, 750, "pareto")!, 0.760178117048346));
+const ALL: BandShape[] = ["pareto", "log-flat", "flat"];
+check("under every shape a quantile on an edge is the edge exactly, and the open top band reads to the cap: 75,000 flat, 66,666.67 Pareto",
+  ALL.every((s) => bandQuantile([5, 0, 5, 0, 0, 0, 0, 0, 0, 0], 0.5, s)!.k === 50) && bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5, "flat")!.k === 75_000
+  && near(bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5, "pareto")!.k, 66666.66666666666));
+check("under every shape the CDF inverts the quantile", ALL.every((s) => [0.1, 0.25, 0.5, 0.75, 0.9].every((q) =>
+  Math.abs(bandCdf(HAIR_BEAUTY_LONDON, bandQuantile(HAIR_BEAUTY_LONDON, q, s)!.k, s)! - q) <= 1e-9)));
+check("a shape that is not one of the three, and a q or a sales figure that is not a number, are refused",
+  refuses(() => bandQuantile(RESTAURANTS_LONDON, 0.5, "normal" as BandShape)) && refuses(() => bandCdf(RESTAURANTS_LONDON, 100, "normal" as BandShape))
+  && refuses(() => bandMeanK(RESTAURANTS_LONDON, 7, "normal" as BandShape)) && refuses(() => bandQuantile(RESTAURANTS_LONDON, "0.5" as unknown as number))
+  && refuses(() => bandCdf(RESTAURANTS_LONDON, undefined as unknown as number)) && refuses(() => bandCdf(RESTAURANTS_LONDON, null as unknown as number))
+  && refuses(() => bandCdf(RESTAURANTS_LONDON, "100" as unknown as number)));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/banded: all pass");
 ```
@@ -449,8 +476,13 @@ Create `src/lib/uk/pnl/banded.ts`:
  * cap, so it prints only in words ("under 50k", "over 50m": inOpenBand); one exactly on either edge rests on neither and
  * prints as a figure. A quantile on a band's edge is the edge itself, exactly (L (U / L)^frac, as the Python computes it).
  *
- * The counts are the register's ten, numbers, finite and not negative, with a finite total; a sales figure that is not a
- * number is refused. Anything else would read as an empty area or as nobody below the figure.
+ * The quantile and the CDF read the log-flat shape by default, as the Python does; either can be read under the flat or the
+ * Pareto shape too (BandShape below), so a figure's range can move every reading of the bands together (ranges.ts; the
+ * founder's decision 9, 2026-10-04). Those two shapes are this port's own: the Python prints only the log-flat reading.
+ *
+ * The counts are the register's ten, numbers, finite and not negative, with a finite total; a sales figure or a q that is
+ * not a number, and a shape that is not one of the three, are refused. Anything else would read as an empty area or as
+ * nobody below the figure.
  */
 export const BANDS_K: ReadonlyArray<readonly [number, number]> = [
   [0, 50], [50, 100], [100, 250], [250, 500], [500, 1000], [1000, 2000], [2000, 5000], [5000, 10000], [10000, 50000], [50000, Infinity],
@@ -465,6 +497,29 @@ function checkCounts(counts: readonly number[], fn: string): void {
   }
 }
 
+const SHAPES: readonly string[] = ["flat", "log-flat", "pareto"];
+
+function checkShape(shape: string, fn: string): void {
+  if (!SHAPES.includes(shape)) throw new Error(`${fn}: the band shape must be flat, log-flat or pareto (${shape})`);
+}
+
+/** The point a fraction f of the way through a band's businesses under each shape: log-flat L (U / L)^f (the Python's
+ *  formula), flat L + f (U - L), Pareto (density ~ 1/x^2) 1 / (1/L - f (1/L - 1/U)); the band's edge itself at f = 0 or 1. */
+function inBand(low: number, high: number, f: number, shape: BandShape): number {
+  if (f === 0) return low;
+  if (f === 1) return high;
+  if (shape === "flat") return low + f * (high - low);
+  if (shape === "pareto") return 1 / (1 / low - f * (1 / low - 1 / high));
+  return low * (high / low) ** f;
+}
+
+/** The share of a band's businesses below x (low < x < high) under each shape, the inverse of inBand. */
+function shareBelow(low: number, high: number, x: number, shape: BandShape): number {
+  if (shape === "flat") return (x - low) / (high - low);
+  if (shape === "pareto") return (1 / low - 1 / x) / (1 / low - 1 / high);
+  return (Math.log(x) - Math.log(low)) / (Math.log(high) - Math.log(low));
+}
+
 function edges(k: number): [number, number] {
   const [lo, hi] = BANDS_K[k];
   return [Math.max(lo, FLOOR_K), Math.min(hi, TOP_CAP_K)];
@@ -477,9 +532,11 @@ export function inOpenBand(xK: number): boolean {
 
 export type Quantile = { k: number; band: number; openBelow: boolean; openAbove: boolean };
 
-/** The q-quantile in thousands of pounds, with the band it fell in; null when there are no businesses. */
-export function bandQuantile(counts: readonly number[], q: number): Quantile | null {
-  if (!(q > 0 && q < 1)) throw new Error("bandQuantile: q must be strictly between 0 and 1");
+/** The q-quantile in thousands of pounds, with the band it fell in; null when there are no businesses. `shape` is how the
+ *  businesses spread inside the band it falls in (log-flat, the register's reading, by default). */
+export function bandQuantile(counts: readonly number[], q: number, shape: BandShape = "log-flat"): Quantile | null {
+  if (typeof q !== "number" || !(q > 0 && q < 1)) throw new Error("bandQuantile: q must be a number strictly between 0 and 1");
+  checkShape(shape, "bandQuantile");
   checkCounts(counts, "bandQuantile");
   const n = counts.reduce((a, b) => a + b, 0);
   if (n <= 0) return null;
@@ -489,7 +546,7 @@ export function bandQuantile(counts: readonly number[], q: number): Quantile | n
     const c = counts[k];
     if (c > 0 && cum + c >= target) {
       const [low, high] = edges(k);
-      const x = low * (high / low) ** ((target - cum) / c);
+      const x = inBand(low, high, (target - cum) / c, shape);
       return { k: x, band: k, openBelow: x < BANDS_K[0][1], openAbove: x > BANDS_K[BANDS_K.length - 1][0] };
     }
     cum += c;
@@ -506,6 +563,7 @@ export function bandQuantile(counts: readonly number[], q: number): Quantile | n
 export type BandShape = "flat" | "log-flat" | "pareto";
 
 function shapeMean(low: number, high: number, shape: BandShape): number {
+  checkShape(shape, "bandMeanK");
   if (shape === "flat") return (low + high) / 2;
   if (shape === "log-flat") return (high - low) / Math.log(high / low);
   return (low * high * Math.log(high / low)) / (high - low);
@@ -531,19 +589,20 @@ export function bandMeanK(counts: readonly number[], uptoBand = 7, shape: BandSh
   return n > 0 ? { k: sum / n, lo: lo / n, hi: hi / n } : null;
 }
 
-/** The share of businesses with sales below xK (thousands of pounds). */
-export function bandCdf(counts: readonly number[], xK: number): number | null {
-  if (Number.isNaN(xK)) throw new Error("bandCdf: the sales figure is not a number");
+/** The share of businesses with sales below xK (thousands of pounds), the businesses inside each band spread by `shape`. */
+export function bandCdf(counts: readonly number[], xK: number, shape: BandShape = "log-flat"): number | null {
+  if (typeof xK !== "number" || Number.isNaN(xK)) throw new Error("bandCdf: the sales figure is not a number");
+  checkShape(shape, "bandCdf");
   checkCounts(counts, "bandCdf");
   const n = counts.reduce((a, b) => a + b, 0);
   if (n <= 0) return null;
   if (xK <= 0) return 0;
-  const lx = Math.log(Math.max(xK, FLOOR_K));
+  const x = Math.max(xK, FLOOR_K);
   let below = 0;
   for (let k = 0; k < counts.length; k++) {
-    const [a, b] = edges(k).map(Math.log);
-    if (lx >= b) below += counts[k];
-    else if (lx > a) below += (counts[k] * (lx - a)) / (b - a);
+    const [low, high] = edges(k);
+    if (x >= high) below += counts[k];
+    else if (x > low) below += counts[k] * shareBelow(low, high, x, shape);
   }
   return Math.min(1, below / n);
 }
@@ -555,7 +614,7 @@ export function bandCdf(counts: readonly number[], xK: number): number | null {
 npx tsx tests/uk/pnl/banded.test.ts
 ```
 
-Expected: 28 lines starting `PASS`, the last line `uk/pnl/banded: all pass`, exit code 0.
+Expected: 34 lines starting `PASS`, the last line `uk/pnl/banded: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -775,7 +834,12 @@ from 10k to 1m finds the only falls exactly where the scaled rateable value cros
 cross the relief taper (rateable values 12,000 to 15,000) loses profit there too, so pages say "the business at" a quartile,
 never "a quarter keep less than" (restaurants: the lower-quartile business keeps more than only 12.5 of 100). The worked example is a London barbershop: the
 average salon's business needs 64,112.98 to break even, 61 of 100 registered businesses take that, and the business at the
-median (78,625.81 of sales, a 34 m2 room that small business relief clears of rates) keeps 25,407.33 after tax.
+median (78,625.81 of sales, a 34 m2 room that small business relief clears of rates) keeps 25,407.33 after tax. The summary
+reads the bands under a shape, log-flat by default (task 7 runs all three, decision 9), and carries `sales.open`: a quartile
+under 50k or over 50m rests on the floor or the cap, so its sales print only in words and so does its business's money (one
+more thousand businesses under 50k would put the barbershop's lower quartile at 30,493.85, open). The rent line says when it
+is the average premises scaled to the business's sales (34 m2 at the median), a line's kind follows its inputs, and the
+header says the company form assumes the director is the only employee (the final review, 2026-10-04).
 
 **Files:**
 - Create: `src/lib/uk/pnl/model.ts`
@@ -838,6 +902,9 @@ check("the median business's year, line by line: 23,587.74 + 6,290.06 + 9,435.10
   s.medianBill.lines.map((l) => l.amount).join(",") === "23587.74,6290.06,9435.1,9395.16,0");
 check("its room is a 34 m2 share of the average salon at a rateable value of 9,395.16: small business relief takes the whole bill", billAt(78_625.81, barber)[4].amount === 0);
 check("the median business's profit 29,917.75, the bill and the profit adding to its sales", s.medianBill.profit === 29_917.75 && Math.round((s.medianBill.lines.reduce((a, l) => a + l.amount, 0) + s.medianBill.profit) * 100) / 100 === 78_625.81);
+const flat = summarise(barber, "flat")!;
+check("the bands can be read under another shape (ranges.ts runs all three): flat puts the median at 82,653.74 and 0.6430 of businesses above the same break-even",
+  flat.sales.q50 === 82_653.74 && Math.round(flat.shareAbove!.value * 10_000) / 10_000 === 0.643 && flat.breakEven.value === 64_112.98);
 check("margin at the median 38.05%, the median business's own profit over its own sales", Math.round(s.marginAtMedian * 10_000) / 10_000 === 0.3805 && s.marginAtMedian === s.medianBill.profit / s.sales.q50);
 check("the business at each sales quartile keeps 17,396.00 / 25,407.33 / 39,819.57 after tax", s.keeps.q25 === 17_396 && s.keeps.q50 === 25_407.33 && s.keeps.q75 === 39_819.57);
 check("in order, and an estimate", s.keeps.q25 <= s.keeps.q50 && s.keeps.q50 <= s.keeps.q75 && s.keeps.kind === "estimate");
@@ -848,6 +915,17 @@ check("as a company the median business keeps the company optimum on 29,917.75, 
 // ---- a loss is a loss ----
 const heavy: PnlInputs = { ...barber, sized: [{ key: "staff", share: 0.6, kind: "estimate", source: "fixture" }] };
 check("with staff at 60% of sales the lower-quartile business loses 4,991.92 and keeps the loss, untaxed", profitAt(50_174.05, heavy) === -4_991.92 && keepsAt(50_174.05, heavy) === -4_991.92);
+
+check("the company form keeps a loss as a loss too, never searched for a salary", keepsAt(50_174.05, { ...heavy, form: "company" }) === -4_991.92);
+
+// ---- a quartile in an open band says so (its business's money prints only in words) ----
+check("no barbershop quartile rests on the floor or the cap: q25 50,174.05 is a figure", s.sales.open?.q25 === false && s.sales.open?.q50 === false && s.sales.open?.q75 === false);
+const floorQ25 = summarise({ ...barber, revenueBandsK: [3405, 3740, 2655, 525, 245, 70, 40, 10, 5, 0] })!;
+check("1,000 more businesses under 50k put the lower quartile at 30,493.85, under 50k: open, the median and upper quartile not", floorQ25.sales.q25 === 30_493.85 && floorQ25.sales.open?.q25 === true && floorQ25.sales.open?.q50 === false && floorQ25.sales.open?.q75 === false);
+
+// ---- the rent line says what it is at every size ----
+check("at the anchor's sales the rent is the average premises' own: 16,657.95, its source as given", billAt(139_406.36, barber)[3].amount === 16_657.95 && billAt(139_406.36, barber)[3].source === "fixture");
+check("at the median the rent is the size rule's share and says so: 9,395.16 for 34 m2", billAt(78_625.81, barber)[3].source === "fixture, scaled to this business's sales: 34 m2 at the same rent per m2 (the size rule)" && billAt(78_625.81, barber)[3].kind === "worked out");
 
 // ---- profit falls with sales only where the law steps ----
 let onlyAtTheStep = true;
@@ -921,9 +999,14 @@ Create `src/lib/uk/pnl/model.ts`:
  * WHAT IT CANNOT SEE: businesses outside the register; costs other than the recipe's lines; the costs' own spread (one set
  * of shares, not a distribution); premises whose size does not follow sales (a large room for small takings, or the
  * reverse); the valuation's premises and the register's businesses are different counts of different things, so the
- * anchor is the best match available, not a measured pairing.
+ * anchor is the best match available, not a measured pairing. The company form assumes the director is the company's only
+ * employee, so no Employment Allowance: a company with staff can claim it, and then keeps more (the median London
+ * barbershop as a company: 24,343.99 without the allowance, 25,164.87 with it).
+ *
+ * A QUARTILE IN AN OPEN BAND (under 50k or over 50m) rests on the 5k floor or the 100m cap, so its sales print only in
+ * words, and so does any money of the business at it: sales.open says which quartiles do.
  */
-import { bandCdf, bandQuantile } from "./banded";
+import { bandCdf, bandQuantile, type BandShape } from "./banded";
 import { combineKinds, type Kind } from "./kinds";
 import { pennies, sumPennies } from "../law/money";
 import { businessRates } from "../law/business_rates";
@@ -958,8 +1041,16 @@ export function billAt(sales: number, inputs: PnlInputs): Line[] {
   return [
     ...inputs.variable.map((x) => ({ key: x.key, amount: pennies(x.share * sales), kind: x.kind, source: x.source })),
     ...inputs.sized.map((x) => ({ key: x.key, amount: pennies(x.share * sales), kind: x.kind, source: x.source })),
-    { key: "rent", amount: rv, kind: inputs.premises.kind, source: inputs.premises.source },
-    { key: "business rates", amount: rates, kind: "worked out", source: `2026-27 rates on a rateable value of ${Math.round(rv).toLocaleString("en-GB")}` },
+    {
+      key: "rent",
+      amount: rv,
+      kind: combineKinds([inputs.premises.kind, inputs.anchorSales.kind]),
+      // at any sales but the anchor's the amount is the average premises scaled by the size rule, and the words say so
+      source: sales === inputs.anchorSales.value
+        ? inputs.premises.source
+        : `${inputs.premises.source}, scaled to this business's sales: ${Math.round((inputs.premises.areaM2 * sales) / inputs.anchorSales.value)} m2 at the same rent per m2 (the size rule)`,
+    },
+    { key: "business rates", amount: rates, kind: combineKinds([inputs.premises.kind, inputs.anchorSales.kind, "looked up"]), source: `2026-27 rates on a rateable value of ${Math.round(rv).toLocaleString("en-GB")}` },
   ];
 }
 
@@ -986,8 +1077,9 @@ export function breakEvenSales(inputs: PnlInputs): number {
   return pennies(anchorFixed(inputs) / (1 - total(inputs.variable)));
 }
 
-export function shareAboveBreakEven(inputs: PnlInputs): number | null {
-  const cdf = bandCdf(inputs.revenueBandsK, breakEvenSales(inputs) / 1000);
+/** The share of registered businesses whose sales clear the break-even, the bands read under `shape` (log-flat by default). */
+export function shareAboveBreakEven(inputs: PnlInputs, shape: BandShape = "log-flat"): number | null {
+  const cdf = bandCdf(inputs.revenueBandsK, breakEvenSales(inputs) / 1000, shape);
   return cdf === null ? null : 1 - cdf;
 }
 
@@ -998,7 +1090,7 @@ export function afterTaxCostOf(extra: number, sales: number, inputs: PnlInputs):
 }
 
 export type PnlSummary = {
-  sales: { q25: number; q50: number; q75: number; kind: Kind };
+  sales: { q25: number; q50: number; q75: number; open: { q25: boolean; q50: boolean; q75: boolean }; kind: Kind };
   anchor: { sales: number; fixed: number; kind: Kind };
   breakEven: { value: number; kind: Kind };
   shareAbove: { value: number; kind: Kind } | null;
@@ -1007,17 +1099,23 @@ export type PnlSummary = {
   keeps: { q25: number; q50: number; q75: number; kind: Kind };
 };
 
-export function summarise(inputs: PnlInputs): PnlSummary | null {
+/** The headline figures, the register's bands read under `shape` (log-flat, the figure a page prints, by default; ranges.ts
+ *  reads them under all three). */
+export function summarise(inputs: PnlInputs, shape: BandShape = "log-flat"): PnlSummary | null {
   check(inputs);
-  const q = (p: number) => bandQuantile(inputs.revenueBandsK, p);
+  const q = (p: number) => bandQuantile(inputs.revenueBandsK, p, shape);
   const q25 = q(0.25), q50 = q(0.5), q75 = q(0.75);
   if (!q25 || !q50 || !q75) return null;
   const s25 = pennies(q25.k * 1000), s50 = pennies(q50.k * 1000), s75 = pennies(q75.k * 1000);
   const costKind = combineKinds([...inputs.variable.map((x) => x.kind), ...inputs.sized.map((x) => x.kind), inputs.premises.kind, inputs.anchorSales.kind]);
-  const share = shareAboveBreakEven(inputs);
+  const share = shareAboveBreakEven(inputs, shape);
   const profit50 = profitAt(s50, inputs);
   return {
-    sales: { q25: s25, q50: s50, q75: s75, kind: combineKinds(["counted"]) },
+    sales: {
+      q25: s25, q50: s50, q75: s75,
+      open: { q25: q25.openBelow || q25.openAbove, q50: q50.openBelow || q50.openAbove, q75: q75.openBelow || q75.openAbove },
+      kind: combineKinds(["counted"]),
+    },
     anchor: { sales: inputs.anchorSales.value, fixed: anchorFixed(inputs), kind: costKind },
     breakEven: { value: breakEvenSales(inputs), kind: costKind },
     shareAbove: share === null ? null : { value: share, kind: combineKinds(["counted", costKind]) },
@@ -1034,7 +1132,7 @@ export function summarise(inputs: PnlInputs): PnlSummary | null {
 npx tsx tests/uk/pnl/model.test.ts
 ```
 
-Expected: 18 lines starting `PASS`, the last line `uk/pnl/model: all pass`, exit code 0.
+Expected: 24 lines starting `PASS`, the last line `uk/pnl/model: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 
@@ -1169,7 +1267,7 @@ check("the rent line says what it is: the official estimate of a year's rent, th
   inputs.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation" && Math.round(inputs.premises.areaM2 * 10) / 10 === 60.8);
 check("the anchor says what it is", inputs.anchorSales.source === "the mean sales of the registered businesses under 5m in London");
 const other = buildInputs({ ...BARBERSHOPS, retailHospitalityLeisure: false }, { ...CTX, form: "company", place: "Leeds" });
-check("a trade outside retail, hospitality and leisure pays the standard multiplier: break-even 65,456.35 (rates 7,196.23 on the average room)",
+check("a trade outside retail, hospitality and leisure pays the 43.2p small business multiplier, not the 38.2p one: break-even 65,456.35 (rates 7,196.23 on the average room)",
   other.premises.retailHospitalityLeisure === false && summarise(other)!.breakEven.value === 65_456.35);
 check("the form and the place reach the inputs", other.form === "company" && other.premises.source.includes("in Leeds") && other.anchorSales.source.endsWith("in Leeds"));
 check("a negative or non-numeric valuation row is refused", refusesRow({ rv_per_m2: -1, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: -5, floorspace_k_m2: 1 })
@@ -1490,6 +1588,11 @@ check("the floor of 100 premises lets exactly 100 through: garden centres' 100 p
 check("withheld: 60 dance schools' premises are too few for the valuation's rounding", londonWithholding("dance-studios") === "60 dance schools & centres premises in London, too few for the valuation's rounding");
 check("withheld: pet training has a kind of premises but no London valuation row for it", londonWithholding("pet-training") === "no London valuation row for pet grooming parlours");
 check("withheld: 30 hostels are under the register's floor, said before they lack a kind of premises", londonWithholding("hostels") === "30 businesses in London on the register, under the 40 its figures need");
+check("the loader names London in the rent and anchor sentences, and the median's rent line says it is scaled",
+  barber!.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation"
+  && barber!.anchorSales.source === "the mean sales of the registered businesses under 5m in London"
+  && b.medianBill.lines[3].source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation, scaled to this business's sales: 34 m2 at the same rent per m2 (the size rule)");
+check("withheld: cabinet makers' premises are valued as factories, workshops and warehouses, an average over unlike occupiers (446 m2)", londonWithholding("cabinet-making")!.startsWith("its premises are valued as factories,workshops and warehouses"));
 check("the company form reaches the model: the median barbershop as a company keeps the company optimum on 29,917.75",
   londonTradeSummary("barbershops", "company")!.keeps.q50 === bestCompanyTakeHome(29_917.75).takeHome && londonTradeSummary("barbershops")!.keeps.q50 === 25_407.33);
 
@@ -1642,9 +1745,9 @@ Create `src/lib/uk/pnl/london.ts`:
  *
  * Withholds, never guesses, and says why (londonWithholding): no recipe; no London bands for the trade's code; under 40
  * businesses in London on the register (the register's own floor: no quantile prints there); no kind of premises for the
- * trade; a kind of premises that averages over unlike occupiers (shops, offices); or under 100 premises
- * of that kind in London, where the valuation's rounding (counts to 10, floorspace to 1,000 m2) moves the average area by
- * more than a tenth.
+ * trade; a kind of premises that averages over unlike occupiers (the valuation's three bulk classes: shops, offices, and
+ * factories, workshops and warehouses); or under 100 premises of that kind in London, where the valuation's rounding
+ * (counts to 10, floorspace to 1,000 m2) moves the average area by more than a tenth.
  */
 import turnoverJson from "../../../../data/uk/registers/turnover.json";
 import premisesJson from "../../../../data/uk/registers/premises.json";
@@ -1657,7 +1760,7 @@ type PremisesFile = { trade_category: Record<string, string>; rows: Record<strin
 const TURNOVER = turnoverJson as unknown as TurnoverFile;
 const PREMISES = premisesJson as unknown as PremisesFile;
 const LONDON = "E12000007";
-export const GENERIC_PREMISES: ReadonlySet<string> = new Set(["Shops", "Offices (Inc Computer Centres)"]);
+export const GENERIC_PREMISES: ReadonlySet<string> = new Set(["Shops", "Offices (Inc Computer Centres)", "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)"]);
 export const MIN_PREMISES = 100;
 
 /** Why a trade's London money is withheld, or null when it can be built. The data's limits are checked before the
@@ -1698,7 +1801,7 @@ npx tsx tests/uk/pnl/recipes.test.ts
 npx tsx tests/uk/pnl/london.test.ts
 ```
 
-Expected: 80 `PASS` lines then `uk/pnl/recipes: all pass`; 20 `PASS` lines then `uk/pnl/london: all pass`.
+Expected: 80 `PASS` lines then `uk/pnl/recipes: all pass`; 22 `PASS` lines then `uk/pnl/london: all pass`.
 
 - [ ] **Step 5: Plant a grocery recipe and a wrong share, and watch the gate refuse them**
 
@@ -1787,16 +1890,15 @@ Expected: one commit; `git status --short` lists none of the files above.
 
 ### Task 7: Every headline figure carries its range
 
-The one assumption the register cannot settle is how businesses spread inside a band, and it sets the anchor. Recomputing
-the headline figures with the anchor at each of the three shapes gives each a range; the log-flat run is the figure printed,
-and plan 04's `honestRound` prints it to the place its range allows. On London the anchor moves about 5% either way and the
-figures stay close, except where a margin is thin: the restaurant at the median keeps 11,533.69 to 15,558.30 around
-13,756.27, so it prints as 14,000; the barbershop's 24,951.65 to 25,830.38 prints as 25,400. The hard bounds of the anchor
-(every business on a band edge) would swing the restaurant from a loss of 13,568 to keeping 24,772 (a profit of 29,059):
-that is why the shapes, not the bounds, set the range. The range moves the anchor only: the register's quartiles and the
-share above break-even are read log-flat in every run, so it is conditional on the register's median. Reading them under
-each shape too widens it (the median barbershop 23,743.01 to 26,986.22, restaurants 11,198.28 to 16,056.34); which to print
-is decision 9 in the master plan, and the module's header says so.
+The one assumption the register cannot settle is how businesses spread inside a band. It sets the anchor, the register's
+quartiles and the share of businesses above break-even, so each run reads all of them under one of the three shapes (the
+founder's decision 9, 2026-10-04: consistent ranges, so no figure claims more than the band shapes allow, its own sales
+included); the log-flat run is the figure printed, and plan 04's `honestRound` prints it to the place its range allows. On
+London the anchor moves about 6% either way; the barbershop at the median keeps 23,743.01 to 26,986.22 around 25,407.33
+(its own sales 74,243 to 82,654), so it prints as 25,000; the restaurant's 11,198.28 to 16,056.34 around 13,756.27 prints
+as 14,000. Break-even rests on the anchor alone, so its range is the anchor's. The hard bounds of the anchor (every
+business on a band edge) would swing the restaurant from a loss of 13,568 to keeping 24,772 (a profit of 29,059): that is
+why the shapes, not the bounds, set the range.
 
 **Files:**
 - Create: `src/lib/uk/pnl/ranges.ts`
@@ -1811,8 +1913,10 @@ Create `tests/uk/pnl/ranges.test.ts`:
 
 ```ts
 /**
- * The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants.
- * Every value agreed to the penny with the independent Python implementation at each shape's anchor (2026-10-02).
+ * The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants, each
+ * run reading the anchor, the quartiles and the share above break-even under one shape (decision 9, 2026-10-04). Every value
+ * agreed to the penny with an independent exact implementation; the company form's under the engine's own rule, which
+ * searches the director's salary to the whole pound (a search to the penny finds one penny more at two of the three).
  *
  * Run: npx tsx tests/uk/pnl/ranges.test.ts
  */
@@ -1836,17 +1940,17 @@ const r4 = (x: number) => Math.round(x * 10_000) / 10_000;
 const b = londonTradeRanges("barbershops")!;
 check("barbershops: the anchor 130,831.17 (pareto), 139,406.36 (log-flat), 148,438.79 (flat)", b.anchorSales.lo === 130_831.17 && b.anchorSales.mid === 139_406.36 && b.anchorSales.hi === 148_438.79);
 check("barbershops: break-even 62,453.27 to 65,861.19 around 64,112.98", b.breakEven.lo === 62_453.27 && b.breakEven.mid === 64_112.98 && b.breakEven.hi === 65_861.19);
-check("barbershops: 0.5986 to 0.6282 of registered businesses above it, around 0.6136", r4(b.shareAbove.lo) === 0.5986 && r4(b.shareAbove.mid) === 0.6136 && r4(b.shareAbove.hi) === 0.6282);
-check("barbershops: the median owner keeps 24,951.65 to 25,830.38 around 25,407.33", b.keepsQ50.lo === 24_951.65 && b.keepsQ50.mid === 25_407.33 && b.keepsQ50.hi === 25_830.38);
+check("barbershops: 0.5981 to 0.6296 of registered businesses above it, around 0.6136", r4(b.shareAbove.lo) === 0.5981 && r4(b.shareAbove.mid) === 0.6136 && r4(b.shareAbove.hi) === 0.6296);
+check("barbershops: the median owner keeps 23,743.01 to 26,986.22 around 25,407.33 (the median's own sales 74,243 to 82,654)", b.keepsQ50.lo === 23_743.01 && b.keepsQ50.mid === 25_407.33 && b.keepsQ50.hi === 26_986.22);
 
 const r = londonTradeRanges("restaurants")!;
 check("restaurants: break-even 535,523.20 to 577,038.50 around 556,017.36", r.breakEven.lo === 535_523.2 && r.breakEven.mid === 556_017.36 && r.breakEven.hi === 577_038.5);
-check("restaurants: the median owner keeps 11,533.69 to 15,558.30 around 13,756.27: a thin margin moves most", r.keepsQ50.lo === 11_533.69 && r.keepsQ50.mid === 13_756.27 && r.keepsQ50.hi === 15_558.3);
+check("restaurants: the median owner keeps 11,198.28 to 16,056.34 around 13,756.27: a thin margin moves most", r.keepsQ50.lo === 11_198.28 && r.keepsQ50.mid === 13_756.27 && r.keepsQ50.hi === 16_056.34);
 check("restaurants: the margin at the median 4.09% to 5.89% around 5.03%", r4(r.marginAtMedian.lo) === 0.0409 && r4(r.marginAtMedian.mid) === 0.0503 && r4(r.marginAtMedian.hi) === 0.0589);
 check("mid is the log-flat reading the summary prints, so the two never disagree", shapeRanges(londonTradeInputs("restaurants")!)!.keepsQ50.mid === 13_756.27);
 check("a withheld trade has no range", londonTradeRanges("grocery-stores") === null);
 const co = londonTradeRanges("barbershops", "company")!;
-check("the company form reaches the range: the median barbershop as a company keeps 23,898.82 to 24,757.28 around 24,343.99", co.keepsQ50.lo === 23_898.82 && co.keepsQ50.mid === 24_343.99 && co.keepsQ50.hi === 24_757.28);
+check("the company form reaches the range: the median barbershop as a company keeps 22,718.07 to 25,886.44 around 24,343.99", co.keepsQ50.lo === 22_718.07 && co.keepsQ50.mid === 24_343.99 && co.keepsQ50.hi === 25_886.44);
 check("for every built trade in both forms, mid is the summary's own figure and lo <= mid <= hi",
   Object.keys(RECIPES).every((slug) => (["sole trader", "company"] as const).every((form) => {
     const x = londonTradeRanges(slug, form), s = londonTradeSummary(slug, form);
@@ -1874,18 +1978,15 @@ Create `src/lib/uk/pnl/ranges.ts`:
  * src/lib/uk/pnl/ranges.ts
  *
  * How far the headline figures move with the one assumption the register cannot settle: how businesses spread inside a
- * turnover band, which sets the anchor (the business in the average premises, model.ts). The figures are recomputed with
- * the anchor at each of the three band shapes (banded.ts BandShape); `mid` is the log-flat reading, the one every quantile
- * uses, and `lo` and `hi` the least and greatest of the three. A page prints `mid` rounded to its range
- * (present/precision.ts honestRound), so no figure claims more than the band shapes allow for the anchor.
+ * turnover band. The shape sets the anchor (the business in the average premises, model.ts), the register's quartiles and
+ * the share of businesses above break-even, so each run reads all of them under one of the three shapes (banded.ts
+ * BandShape): the founder's decision 9 (2026-10-04), consistent ranges, so no figure claims more than the band shapes allow,
+ * its own sales included. `mid` is the log-flat run, the figure the summary prints, and `lo` and `hi` the least and greatest
+ * of the three. A page prints `mid` rounded to its range (present/precision.ts honestRound).
  *
- * The range moves the anchor only: the register's quartiles and the share above break-even are read log-flat in every run,
- * so the range is conditional on the register's median. Reading them under each shape too widens it (the median
- * barbershop's take-home 23,743.01 to 26,986.22 instead of 24,951.65 to 25,830.38; restaurants 11,198.28 to 16,056.34 instead
- * of 11,533.69 to 15,558.30); which to print waits for the founder (decision 9 in the master plan).
- *
- * Measured on London, 2026-10-02: the anchor moves about 5% either way; the median business's take-home moves most where
- * its margin is thin (restaurants 11,534 to 15,558 around 13,756).
+ * Measured on London, 2026-10-04: the anchor moves about 6% either way; the median barbershop's take-home 23,743.01 to
+ * 26,986.22 around 25,407.33 (it prints 25,000), the restaurant's 11,198.28 to 16,056.34 around 13,756.27 (14,000). Break-even
+ * rests on the anchor alone, so its range is the anchor's.
  */
 import { bandMeanK, type BandShape } from "./banded";
 import { pennies } from "../law/money";
@@ -1902,7 +2003,7 @@ export function shapeRanges(inputs: PnlInputs): PnlRanges | null {
     const m = bandMeanK(inputs.revenueBandsK, 7, shape);
     if (!m) return null;
     const anchor = pennies(m.k * 1000);
-    const s = summarise({ ...inputs, anchorSales: { ...inputs.anchorSales, value: anchor } });
+    const s = summarise({ ...inputs, anchorSales: { ...inputs.anchorSales, value: anchor } }, shape);
     if (!s || !s.shareAbove) return null;
     runs.push({ anchor, s });
   }

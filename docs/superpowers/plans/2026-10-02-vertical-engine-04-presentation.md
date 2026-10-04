@@ -45,9 +45,9 @@
 A figure prints no finer than its uncertainty and no more than three significant figures, by the measurement convention:
 the half-width `h = (hi - lo) / 2` of its range is good to one digit, so the figure prints at that digit's place,
 `u = 10^floor(log10 h)`, and never finer than its third significant figure. The printed figure then lies within its range
-widened by half a unit. London restaurants' median 281,900 (rounding range 280,300 to 283,500, h = 1,600) prints 282,000;
-Camden's hair and beauty median 76,400 (73,900 to 81,100, h = 3,600) prints 76,000; the London restaurant at the median
-keeps 13,756.27, 11,534 to 15,558 across the band shapes (plan 03, task 7), and prints 14,000; an exact law figure such as
+widened by half a unit. London restaurants' median 281,900 (rounding range 280,659 to 283,227, h = 1,284) prints 282,000;
+Camden's hair and beauty median 76,400 (74,380 to 80,133, h = 2,876.5) prints 76,000; the London restaurant at the median
+keeps 13,756.27, 11,198 to 16,056 across the band shapes (plan 03, task 7), and prints 14,000; an exact law figure such as
 28,308.52 prints 28,300 on a card (the itemised bill keeps its pennies). An earlier version rounded to the first power of
 ten at least the range's whole width; it printed that take-home as 10,000, a quarter off, and was replaced on 2026-10-02.
 A column prints one count of decimals for every row (the most any member needs, capped at one). Shares of a whole print as
@@ -69,7 +69,10 @@ whole numbers; a -0 share prints as 0. The finite-ends clause went, since an inf
 Its second review found five shapes of a wrong implementation that still passed (the cap skipped when a range is given,
 two roundings where one is specified, the tie grid snapped down, the print clamped into its raw range, noise tolerance on a
 negative figure): nine checks pin them, and the header says the tie grid is exact for totals up to 100,000 (not a
-million). All 50 deliberate faults fail it.
+million). All 50 deliberate faults fail it. The final review (2026-10-04) found that claim false for exact half-step ties
+([13062, 5348, 1547, 523] of 100 printed 64, 26, 7, 3 where the rule gives 64, 26, 8, 2): whole shares now split in integer
+arithmetic, floors and remainders exact, and fractional shares keep the grid (two checks; 55 deliberate faults, all but one
+equivalent failing it).
 
 **Files:**
 - Create: `src/lib/uk/present/precision.ts`
@@ -102,11 +105,11 @@ const check = (label: string, ok: boolean) => {
   red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
 };
 
-check("London restaurants' median 281,900 (280,300 to 283,500, half-width 1,600) prints 282,000", honestRound(281_900, 280_300, 283_500) === 282_000);
-check("Camden's hair and beauty median 76,400 (73,900 to 81,100, half-width 3,600) prints 76,000", honestRound(76_400, 73_900, 81_100) === 76_000);
-check("the London restaurant at the median keeps 13,756.27 (11,534 to 15,558 across the band shapes) and prints 14,000", honestRound(13_756.27, 11_534, 15_558) === 14_000);
+check("London restaurants' median 281,900 (280,659 to 283,227, half-width 1,284) prints 282,000", honestRound(281_900, 280_659, 283_227) === 282_000);
+check("Camden's hair and beauty median 76,400 (74,380 to 80,133, half-width 2,876.5) prints 76,000", honestRound(76_400, 74_380, 80_133) === 76_000);
+check("the London restaurant at the median keeps 13,756.27 (11,198 to 16,056 across the band shapes) and prints 14,000", honestRound(13_756.27, 11_198, 16_056) === 14_000);
 check("a figure known only to 50,000 to 110,000 prints to the 10,000: 76,400 prints 80,000", honestRound(76_400, 50_000, 110_000) === 80_000);
-check("each worked example prints inside its range widened by half its unit, and within half a unit of the figure", ([[281_900, 280_300, 283_500], [76_400, 73_900, 81_100], [13_756.27, 11_534, 15_558], [76_400, 50_000, 110_000]] as const).every(([v, lo, hi]) => { const u = honestUnit(v, lo, hi), p = honestRound(v, lo, hi); return Math.abs(p - v) <= u / 2 && lo - u / 2 <= p && p <= hi + u / 2; }));
+check("each worked example prints inside its range widened by half its unit, and within half a unit of the figure", ([[281_900, 280_659, 283_227], [76_400, 74_380, 80_133], [13_756.27, 11_198, 16_056], [76_400, 50_000, 110_000]] as const).every(([v, lo, hi]) => { const u = honestUnit(v, lo, hi), p = honestRound(v, lo, hi); return Math.abs(p - v) <= u / 2 && lo - u / 2 <= p && p <= hi + u / 2; }));
 check("an exact law figure keeps three significant figures: 28,308.52 prints 28,300", honestRound(28_308.52) === 28_300);
 check("a small exact figure keeps its pounds: 740 prints 740", honestRound(740) === 740);
 check("the unit never goes below 1", honestUnit(3.2) === 1);
@@ -150,7 +153,9 @@ check("a print may land outside its raw range by less than half a unit and still
 check("remainders equal in decimal tie on the grid whichever side floating point leaves them: 20.4, 14.4, 65.2 (two remainders of .4) print 21, 14, 65", largestRemainder([20.4, 14.4, 65.2]).join(",") === "21,14,65");
 check("noise on a negative figure is not a decimal either: -299,264.78 under a cap of 3 has two", decimalsForColumn([-299_264.78], 3) === 2);
 check("the cap binds when the capped figure ends in a zero: 12.04 with 40 under a cap of 1 has one decimal; an empty column has none", decimalsForColumn([12.04, 40]) === 1 && decimalsForColumn([]) === 0);
+check("whole shares split exactly, a decimal tie a tie wherever floating point leaves it: [13062, 5348, 1547, 523] of 100 is 64, 26, 8, 2 (remainders .78, .11, .55, .55; the earlier of the tied rows gets the unit)", largestRemainder([13062, 5348, 1547, 523]).join(",") === "64,26,8,2");
 check("shares may be fractions of a whole: 0.3 and 0.6 print 33 and 67", largestRemainder([0.3, 0.6]).join(",") === "33,67");
+check("fractional shares use the total too, and a -0 among them prints as 0: 0.3 and 0.6 of 10 are 3 and 7; -0, 0.25, 0.75 of 4 are 0, 1, 3", largestRemainder([0.3, 0.6], 10).join(",") === "3,7" && (() => { const x = largestRemainder([-0, 0.25, 0.75], 4); return Object.is(x[0], 0) && x.join(",") === "0,1,3"; })());
 check("a unit is a whole number, and one significant figure is allowed: roundToUnit at 2.5 is refused, 13,756 at one significant figure has a unit of 10,000", refuses(() => roundToUnit(740, 2.5)) && honestUnit(13_756, undefined, undefined, 1) === 10_000);
 check("the allowances stay a hair: a half-width of 999,999.99 keeps a unit of 100,000 (honestUnit of 0 in -999,999.99 to 999,999.99), and 4,149,999.99 a penny under a half of 100,000 prints 4,100,000", honestUnit(0, -999_999.99, 999_999.99) === 100_000 && honestRound(4_149_999.99, 4_049_999.99, 4_249_999.99) === 4_100_000);
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
@@ -203,9 +208,11 @@ Create `src/lib/uk/present/precision.ts`:
  * SHARES THAT ADD UP: largest remainder. Floor every share, then hand the missing units to the largest remainders (ties to
  * the earlier row), so a split of 100 prints as integers that sum to 100. Remainders are compared on a grid of 1e-9, so
  * two that are equal in decimal tie even when floating point leaves them a few ulps apart (4, 1, 1 of 100: each has two
- * thirds over, and the first two rows get the units); the grid is exact for totals up to 100,000 (at a million, three
- * splits in 1.5 million random ones part from the exact rule by a unit). The two 1e-9 allowances can show only at units of
- * ten million and above.
+ * thirds over, and the first two rows get the units). Whole shares (counts) skip the grid: when share x total stays a safe
+ * integer, floors and remainders are integers and a tie is a tie, so the rule holds exactly ([13062, 5348, 1547, 523] of
+ * 100 prints 64, 26, 8, 2; on the grid an exact remainder can land on a half-step of 1e-9 and send the unit to the later of
+ * two tied rows, 64, 26, 7, 3). Fractional shares use the grid, which ties nearly every decimal tie, not every one. The two
+ * 1e-9 allowances can show only at units of ten million and above.
  */
 export function honestUnit(value: number, lo?: number, hi?: number, maxSigFigs = 3): number {
   if (!Number.isFinite(value)) throw new RangeError(`honestUnit: not a finite figure (${value})`);
@@ -258,6 +265,18 @@ export function largestRemainder(shares: readonly number[], total = 100): number
   }
   const sum = shares.reduce((a, b) => a + b, 0);
   if (sum <= 0) return shares.map(() => 0);
+  if (shares.every((s) => Number.isInteger(s)) && Number.isSafeInteger(sum * total)) {
+    // whole shares: share x total = floor x sum + remainder, all integers, so equal remainders compare equal
+    const rem = shares.map((s) => (s * total) % sum);
+    const whole = shares.map((s, i) => (s * total - rem[i]) / sum + 0); // + 0 turns a -0 share into 0
+    let left = total - whole.reduce((a, b) => a + b, 0);
+    for (const { i } of rem.map((r, i) => ({ i, r })).sort((a, b) => b.r - a.r || a.i - b.i)) {
+      if (left <= 0) break;
+      whole[i] += 1;
+      left -= 1;
+    }
+    return whole;
+  }
   const exact = shares.map((s) => (s / sum) * total);
   const floors = exact.map((e) => Math.floor(e) + 0); // + 0 turns a -0 share into 0
   let missing = total - floors.reduce((a, b) => a + b, 0);
@@ -277,7 +296,7 @@ export function largestRemainder(shares: readonly number[], total = 100): number
 npx tsx tests/uk/present/precision.test.ts
 ```
 
-Expected: 47 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
+Expected: 49 lines starting `PASS`, the last line `uk/present/precision: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 

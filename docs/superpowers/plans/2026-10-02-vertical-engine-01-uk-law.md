@@ -1403,7 +1403,10 @@ Auto-enrolment follows the Act itself (Pensions Act 2008 s.3(1): "aged at least 
 "earnings of more than 10,000"), and the test pins every boundary on both sides: the under-21 relief at 20 and 21, the
 apprentice relief at 24 and 25, enrolment at 21 and 22, at 65 and 66, at 10,000.00 and 10,000.01, and the pension's cap at
 50,270 (60,000 of pay: 1,320.90). An age that is not a number and a negative pay are refused (a fault sweep before this task
-ran found six of seven boundary faults passing the first draft's checks).
+ran found six of seven boundary faults passing the first draft's checks). The final review (2026-10-04) pinned an allowance
+smaller than the bill (1,000 left on 30,000 at 40: all of it used, all in 33,462.80) and the header now states two readings:
+State Pension age is held at 66 (someone of 66 born after 5 April 1960 has not reached it, up to 1,320.90 a year), and a
+caller costing several hires subtracts each hire's `allowanceUsed` before the next.
 
 **Files:**
 - Create: `src/lib/uk/law/employer_cost.ts`
@@ -1450,6 +1453,7 @@ check("an 18 to 20 year old at 10.85: 21,157.50, no employer NI, no pension", d.
 const e = hireAllIn({ gross: annualGross(8, 30), age: 23, apprentice: true });
 check("an apprentice of 23: no employer NI below 50,270", e.employerNi === 0);
 check("a part-timer on 9,000 is not auto-enrolled", hireAllIn({ gross: 9_000, age: 30 }).pension === 0);
+check("an allowance smaller than the bill is all used: 1,000 left on 30,000 at 40 pays 2,750.00 of the 3,750.00, all in 33,462.80", (() => { const x = hireAllIn({ gross: 30_000, age: 40, allowanceRemaining: 1_000 }); return x.allowanceUsed === 1_000 && x.employerNi === 3750 && x.allIn === 33_462.8; })());
 check("the allowance never makes the bill smaller than the pay", hireAllIn({ gross: 6_000, age: 30, allowanceRemaining: 10_500 }).allIn === 6_000);
 // Every boundary, on 30,000 of pay unless stated (figures computed independently in Python, 2026-10-03).
 check("the under-21 relief ends at 21: 20 pays no employer NI, 21 pays 3,750.00", hireAllIn({ gross: 30_000, age: 20 }).employerNi === 0 && hireAllIn({ gross: 30_000, age: 21 }).employerNi === 3750);
@@ -1487,8 +1491,12 @@ Create `src/lib/uk/law/employer_cost.ts`:
  *   allIn = gross + employerNi - allowanceUsed + pension
  *   employerNi = 15% x max(0, gross - 5,000), or 15% x max(0, gross - 50,270) under 21 and for apprentices under 25
  *   allowanceUsed = min(allowance still unspent this year, employerNi)        (0 for a company whose only employee is its director)
+ *                   allowanceRemaining is what is still unspent when this hire is costed: a caller costing several hires
+ *                   subtracts each hire's allowanceUsed before the next
  *   pension = 3% x max(0, min(gross, 50,270) - 6,240) when aged 22 to State Pension age and gross over 10,000
  *
+ * State Pension age is held at 66 (params_2026_27.ts): someone of 66 born after 5 April 1960 has not reached it in 2026-27,
+ * so for them the pension here is 0 where the law can still ask for it (up to 1,320.90 a year).
  * gross already contains the 5.6 weeks of paid holiday. Statutory sick, maternity and paternity pay are contingent costs in
  * the weeks they happen and are not in the yearly figure (stated). Employers' liability insurance has no official price and
  * is not in it either.
@@ -1529,7 +1537,7 @@ export function hireAllIn(input: { gross: number; age: number; apprentice?: bool
 npx tsx tests/uk/law/employer_cost.test.ts
 ```
 
-Expected: 17 lines starting `PASS`, the last line `uk/law/employer_cost: all pass`, exit code 0.
+Expected: 18 lines starting `PASS`, the last line `uk/law/employer_cost: all pass`, exit code 0.
 
 - [ ] **Step 5: Wire it into the chain**
 

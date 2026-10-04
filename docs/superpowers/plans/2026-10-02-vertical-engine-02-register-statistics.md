@@ -24,7 +24,7 @@
   block then occurs exactly once (checked on 2026-10-02 by applying them in order to fresh copies of the real builders and
   rebuilding every table, and again on 2026-10-03 after the reviews of every task: every table, draft, the ledger and the
   pack rebuilt, the 75 tests passing, 27 of 28 deliberate faults in the builders' new rules failing them (the 28th, a
-  median of exactly 50m flagged in the builder's own words, no table today can show), and plan 03's 186 checks and its
+  median of exactly 50m flagged in the builder's own words, no table today can show), and plan 03's 200 checks and its
   registers gate passing on the slices exported from them).
 - Rebuild order, because each step reads the one before: `build_nomis.py` -> `build_demography.py` ->
   `enrich_failure_rates.py` -> `build_ledger.py` -> `build_pack.py` -> `build_editorial.py` -> `draft_stories.py`;
@@ -60,7 +60,8 @@ The register gives counts in ten turnover bands and nothing inside a band. Insid
 log-uniform, so the q-quantile in band k is `Q = L (U / L)^((qN - C_{k-1}) / n_k)` and the CDF is the same formula inverted;
 the first band is floored at 5k and the open top band capped at 100m, and a quantile in either prints only as "under 50k" or
 "over 50m" (`in_open_band`; one exactly on 50k or 50m rests on neither and prints as a figure). Each count is rounded to the nearest 5, so the rounding range of a quantile is its smallest and largest value
-over the box of counts each within 2.5 of the printed ones. The quantile is the smallest x at which
+over the box of counts each within 2 of the printed ones (a whole count rounded to the nearest 5; 2.5, the cautious
+margin the plans first used, bounds a count that could be fractional, and the founder chose 2 on 2026-10-04, decision 7). The quantile is the smallest x at which
 `sum_k c_k (G_k(x) - q) >= 0` (`G_k(x)` the share of band k below x); for any x that sum is linear in the counts, so its
 largest value over the box sits at a corner where every band below some m is high and every band from m on is low: the
 range is the smallest and largest quantile over those 22 threshold corners, equal to trying all 1,024 (the test does).
@@ -151,11 +152,14 @@ def test_share_above_100k():
 
 
 def test_rounding_range_is_narrow_for_london_and_wide_for_a_borough():
+    # the default margin is 2, a whole count's (decision 7): every corner of the box tried by hand gives the same extremes
     lo, hi = rounding_range(RESTAURANTS_LONDON, 0.5)
-    assert round(lo, 1) == 280.3 and round(hi, 1) == 283.5
+    assert (round(lo, 2), round(hi, 2)) == (280.66, 283.23) and (lo, hi) == rounding_range(RESTAURANTS_LONDON, 0.5, half=2.0)
     lo, hi = rounding_range(HAIR_BEAUTY_CAMDEN, 0.5)
-    assert round(lo, 1) == 73.9 and round(hi, 1) == 81.1
-    assert (hi - lo) / empirical_quantile(HAIR_BEAUTY_CAMDEN, 0.5) > 0.09
+    assert (round(lo, 2), round(hi, 2)) == (74.38, 80.13)
+    assert (hi - lo) / empirical_quantile(HAIR_BEAUTY_CAMDEN, 0.5) > 0.07
+    lo, hi = rounding_range(RESTAURANTS_LONDON, 0.5, half=2.5)  # the cautious margin the plans first used
+    assert (round(lo, 1), round(hi, 1)) == (280.3, 283.5)
 
 
 def test_lognormal_recovered_when_true():
@@ -202,17 +206,18 @@ def test_trimmed_mean_under_the_three_band_shapes():
 def test_rounding_range_finds_an_extreme_in_another_band():
     # five businesses a band with an empty band between: the median can fall to 100k or rise to 5,612k; trying only the
     # median's own band saw 136k to 1,587k
-    lo, hi = rounding_range([5, 5, 5, 5, 5, 5, 0, 5, 5, 0], 0.5)
+    lo, hi = rounding_range([5, 5, 5, 5, 5, 5, 0, 5, 5, 0], 0.5, half=2.5)
     assert round(lo, 1) == 100.0 and round(hi, 1) == 5612.3
 
 
 def test_rounding_range_equals_trying_every_corner():
     # the extremes over the box of possible counts sit at its corners, so all 1,024 of them give the exact answer
-    for counts in ([5, 5, 5, 5, 5, 5, 0, 5, 5, 0], HAIR_BEAUTY_CAMDEN, [10, 0, 5, 0, 15, 0, 5, 0, 0, 5], [0, 5, 0, 0, 10, 5, 0, 0, 5, 0]):
-        values = [v for signs in itertools.product((-2.5, 2.5), repeat=10)
-                  if (v := empirical_quantile([max(0.0, c + d) for c, d in zip(counts, signs)], 0.5)) is not None]
-        lo, hi = rounding_range(counts, 0.5)
-        assert math.isclose(lo, min(values)) and math.isclose(hi, max(values))
+    for half in (2.0, 2.5):
+        for counts in ([5, 5, 5, 5, 5, 5, 0, 5, 5, 0], HAIR_BEAUTY_CAMDEN, [10, 0, 5, 0, 15, 0, 5, 0, 0, 5], [0, 5, 0, 0, 10, 5, 0, 0, 5, 0]):
+            values = [v for signs in itertools.product((-half, half), repeat=10)
+                      if (v := empirical_quantile([max(0.0, c + d) for c, d in zip(counts, signs)], 0.5)) is not None]
+            lo, hi = rounding_range(counts, 0.5, half=half)
+            assert math.isclose(lo, min(values)) and math.isclose(hi, max(values)), (half, counts)
 
 
 def test_counts_must_be_ten_finite_and_not_negative():
@@ -240,15 +245,15 @@ def test_a_quantile_on_a_count_takes_the_smallest_x_and_an_edge_is_exact():
 
 
 def test_rounding_range_at_other_quantiles_other_margins_and_far_thresholds():
-    lo, hi = rounding_range(RESTAURANTS_LONDON, 0.9)
+    lo, hi = rounding_range(RESTAURANTS_LONDON, 0.9, half=2.5)
     assert (round(lo, 2), round(hi, 2)) == (1904.23, 1942.33)
-    lo, hi = rounding_range(RESTAURANTS_LONDON, 0.1)
+    lo, hi = rounding_range(RESTAURANTS_LONDON, 0.1, half=2.5)
     assert (round(lo, 2), round(hi, 2)) == (57.26, 57.71)
     lo, hi = rounding_range(HAIR_BEAUTY_CAMDEN, 0.5, half=2.0)
     assert (round(lo, 2), round(hi, 2)) == (74.38, 80.13)
-    lo, hi = rounding_range([0, 0, 0, 0, 0, 0, 0, 5, 5, 5], 0.5)  # seven empty bands below can each hide 2.5
+    lo, hi = rounding_range([0, 0, 0, 0, 0, 0, 0, 5, 5, 5], 0.5, half=2.5)  # seven empty bands below can each hide 2.5
     assert (round(lo, 1), round(hi, 1)) == (250.0, 56123.1)
-    lo, hi = rounding_range([5, 5, 5, 0, 5, 0, 5, 5, 0, 0], 0.5)  # nursing and elderly care, City of London
+    lo, hi = rounding_range([5, 5, 5, 0, 5, 0, 5, 5, 0, 0], 0.5, half=2.5)  # nursing and elderly care, City of London
     assert (round(lo, 1), round(hi, 1)) == (79.4, 5000.0)
     for bad in (math.nan, -1.0, math.inf):
         with pytest.raises(ValueError):
@@ -340,14 +345,15 @@ cancelled there, and the clamp it needed put a false barrier in the likelihood).
 
 ROUNDING, not sampling. The register is a census: there is no sampling error. Its error is that every count is rounded to
 the nearest 5. rounding_range() gives the smallest and largest quantile the true counts could produce, each count being off
-by up to 2.5 (never below 0). It is exact: the quantile is the smallest x at which sum_k c_k (G_k(x) - q) >= 0, G_k(x)
+by up to 2 (never below 0): a whole count rounded to the nearest 5 is within 2 of the truth (2.5 bounds a count that could be
+fractional, the cautious margin the plans first used; the founder chose 2 on 2026-10-04, decision 7). It is exact: the quantile is the smallest x at which sum_k c_k (G_k(x) - q) >= 0, G_k(x)
 being the share of band k below x, and for any x that sum is linear in the counts, so its largest value over the box of
 possible counts is at a corner where every band below some m is high and every band from m on is low (the band holding x
 on whichever side its share below x puts it). The smallest possible quantile is therefore the smallest over the eleven such
 corners, and the largest the same with the sides swapped: twenty-two evaluations, equal to trying all 1,024 corners.
 Trying only the corners split at the band that holds the printed quantile misses the extreme whenever the quantile can move
-to another band: on the London table of 2026-10-02 it did in 288 of 2,597 cells (five businesses a band with an empty band
-between: 136k to 1,587k where the counts allow 100k to 5,612k).
+to another band: on the London table of 2026-10-02, at the margin of 2.5, it did in 288 of 2,597 cells (five businesses a
+band with an empty band between: 136k to 1,587k where the counts allow 100k to 5,612k).
 
 COUNTS are the ten band counts, numbers, finite and not negative, with a finite total; anything else is refused (a NaN
 total compared false with every bound and the quantile came back None as if the area were empty). A sales figure that is
@@ -465,7 +471,7 @@ def empirical_cdf(counts: Sequence[float], x_k: float) -> float | None:
     return min(1.0, below / n)
 
 
-def rounding_range(counts: Sequence[float], q: float, half: float = 2.5) -> tuple[float, float] | None:
+def rounding_range(counts: Sequence[float], q: float, half: float = 2.0) -> tuple[float, float] | None:
     """The smallest and largest q-quantile that counts each within +-half of these could give (exact: see the header)."""
     if not (math.isfinite(half) and half >= 0):
         raise ValueError(f"rounding_range: half must be a number of businesses, 0 or more ({half})")
@@ -475,7 +481,7 @@ def rounding_range(counts: Sequence[float], q: float, half: float = 2.5) -> tupl
     out = []
     for m in range(len(counts) + 1):  # the bands below m move one way, the bands from m the other
         for below in (half, -half):
-            # a printed 0 can hide businesses (2 of a whole count; the plans allow 2.5, decision 7), so an empty band moves like any other, never below 0
+            # a printed 0 can hide businesses (up to 2 of a whole count, decision 7), so an empty band moves like any other, never below 0
             adj = [max(0.0, c + below) if k < m else max(0.0, c - below) for k, c in enumerate(counts)]
             v = empirical_quantile(adj, q)
             if v is not None:
@@ -1409,7 +1415,7 @@ with:
             "where several trades share one SIC code, or a trade's code is only near it, the figure is the whole code's",
             "the median is interpolated inside a turnover band on a log scale; neither it nor the quarter and tenth points are printed where an area holds under 40 enterprises (the register's own total)",
             "the quarter and tenth points of sales are read the same way; one below 50k or above 50m rests on an assumed floor or ceiling, so it prints only as 'under 50k' or 'over 50m'",
-            "the range around the median is the lowest and highest median the true counts could give, each count being off by up to 2.5 because counts are rounded to the nearest 5 (the register is a census: rounding, not sampling, is its error); it does not cover where inside its band the median sits",
+            "the range around the median is the lowest and highest median the true counts could give, each count being off by up to 2 because every whole count is rounded to the nearest 5 (the register is a census: rounding, not sampling, is its error); it does not cover where inside its band the median sits",
             "a smooth curve fitted to the bands is kept only as a check and never printed: real takings are far from such a curve in most places, London restaurants most of all",
 ```
 
@@ -2682,7 +2688,7 @@ python registers/uk/export_for_site.py "$(mktemp -d)"
 Expected, after the scratch folder's name, on the tables of 2026-10-03 (hashes change when a table is refreshed):
 
 ```
-turnover.json: 4795 rows, 51d1dbb39e5a
+turnover.json: 4795 rows, 0ddba579e101
 premises.json: 42 rows, 4bdd8332330c
 survival.json: 110 rows, 2675b0544984
 failures.json: 137 rows, 12ceff334174
