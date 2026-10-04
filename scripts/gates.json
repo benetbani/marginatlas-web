@@ -1387,6 +1387,17 @@
       "claims": []
     },
     {
+      "name": "uk-pnl-kinds",
+      "script": "tests/uk/pnl/kinds.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The kind algebra: an estimate anywhere makes an estimate; arithmetic on counted or looked-up figures is worked out; one input passed through untouched keeps its kind.",
+      "reads": [
+        "src/lib/uk/pnl/kinds.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],
