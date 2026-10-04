@@ -562,6 +562,8 @@ const GATES: Gate[] = [
   { name: "london-city", script: "tests/spine/london_city.test.ts" },
   /* The UK page's London trades card prints the register's medians its doors print, not the curated file's margins (plan 06, task B3b). */
   { name: "london-trade-sales", script: "tests/spine/london_trade_sales.test.ts" },
+  /* The UK's sources on one page, linked from every UK page's foot (plan 06, task B4; his ruling of 2026-10-04 on R-002). */
+  { name: "uk-sources", script: "tests/spine/uk_sources.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

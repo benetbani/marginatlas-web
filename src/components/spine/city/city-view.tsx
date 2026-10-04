@@ -136,6 +136,7 @@ import { Premises } from "./premises";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
+import { SourcesFoot } from "@/components/spine/SourcesFoot";
 import { AgeMix } from "@/components/spine/sections/AgeMix";
 import { buildAgeMix } from "@/lib/spine/sections/people";
 
@@ -963,6 +964,8 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           );
         })}
       </div>
+      {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
+      <SourcesFoot iso2={d.meta?.iso2} />
     </>
   );
 }

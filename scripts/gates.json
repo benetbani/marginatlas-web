@@ -245,7 +245,8 @@
       "asserts": "Plan v18 — prebuild guard: source-agency leak detector.",
       "reads": [
         "src/components/QualityBadge.tsx",
-        "src/lib/audience.ts"
+        "src/lib/audience.ts",
+        "src/lib/spine/uk_sources.ts"
       ],
       "claims": []
     },
@@ -1585,6 +1586,25 @@
       "asserts": "The United Kingdom's \"What London's trades take\" card prints the register's figures, the ones its doors print (plan 06, task B3b, 2026-10-04).",
       "reads": [
         "src/lib/spine/country_depth_rows.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-sources",
+      "script": "tests/spine/uk_sources.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The UK's sources on one page, linked from every UK page's foot (plan 06, task B4; his ruling of 2026-10-04 on R-002: \"One sources page\").",
+      "reads": [
+        "data/sections",
+        "data/uk/registers/manifest.json",
+        "scripts/verify_no_source_agencies.ts",
+        "src/components/spine/cell/cell-view.tsx",
+        "src/components/spine/city/city-view.tsx",
+        "src/components/spine/country/country-view.tsx",
+        "src/components/spine/country/how-to-view.tsx",
+        "src/components/spine/hood/hood-view.tsx",
+        "src/lib/spine/uk_sources.ts"
       ],
       "claims": []
     },

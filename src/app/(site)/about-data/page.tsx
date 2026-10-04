@@ -1,4 +1,5 @@
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+import { UK_SOURCES } from "@/lib/spine/uk_sources";
 
 export const revalidate = 86400;
 
@@ -171,6 +172,34 @@ export default function AboutDataPage() {
           Professional service fees (lawyers, accountants, registered office
           rental) are not included.
         </p>
+      </section>
+
+      <section className="mt-10">
+        {/* SOURCES AND LICENCES (plan 06, task B4; his ruling of 2026-10-04 on R-002: "One sources page"). Every UK page's foot
+            links here (SourcesFoot.tsx). The list is src/lib/spine/uk_sources.ts, the one module allowed to name a source, built
+            from the repository's own records; an attribution line prints only where those records name the licence. The
+            licence asks that nothing imply a source endorses the site, so the opening line says so. */}
+        <h2 id="sources" className="scroll-mt-24 text-xl font-semibold text-ink-900">Sources and licences</h2>
+        <p className="mt-3 text-ink-800">
+          The United Kingdom&rsquo;s pages are built on these sources. Each is named with what the pages print from it and, where
+          its licence asks for one, its attribution line. No source endorses Margin Atlas or checks how its figures are used here.
+        </p>
+        <ul className="mt-5 space-y-5">
+          {UK_SOURCES.map((s) => (
+            <li key={s.key}>
+              <p className="font-semibold text-ink-900">{s.publisher}</p>
+              <ul className="mt-1 space-y-1 text-sm leading-relaxed text-ink-800">
+                {s.items.map((i) => (
+                  <li key={i.title}>
+                    {i.prints}:{" "}
+                    {i.url ? <a href={i.url} className="underline underline-offset-2">{i.title}</a> : i.title}.
+                  </li>
+                ))}
+              </ul>
+              {s.attribution ? <p className="mt-1 text-sm text-ink-700">{s.attribution}</p> : null}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="mt-10">

@@ -169,6 +169,7 @@ import { buildLocalApps } from "@/lib/spine/sections/local_apps";
 import { buildSpendByIncome } from "@/lib/spine/sections/spend_by_income";
 import { MarketHold } from "@/components/spine/sections/MarketHold";
 import { buildMarketHold, marketForTrade } from "@/lib/spine/sections/market_jobs";
+import { SourcesFoot } from "@/components/spine/SourcesFoot";
 
 const X: any = spineCellSeed;
 
@@ -435,6 +436,8 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           );
         })}
       </div>
+      {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
+      <SourcesFoot iso2={d.meta?.iso2} />
     </>
   );
 }

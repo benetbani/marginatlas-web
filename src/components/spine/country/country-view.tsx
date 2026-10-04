@@ -110,6 +110,7 @@ import { buildSurvival, buildObstacles } from "@/lib/spine/sections/first_years"
 import { buildAgeMix, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildJobMarket } from "@/lib/spine/sections/market_jobs";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
+import { SourcesFoot } from "@/components/spine/SourcesFoot";
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.2's
@@ -1689,6 +1690,8 @@ export function SpineCountryBody({ data }: { data?: any }) {
             </Zone>
           ))}
         </div>
+        {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
+        <SourcesFoot iso2={iso2 as string} />
         <OnThisPage sections={sections} chapters={railChapters} />
       </>
     );
@@ -1827,6 +1830,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
           </Zone>
         ))}
       </div>
+      <SourcesFoot iso2={iso2 as string} />
       <OnThisPage sections={generalSections} chapters={generalChapters} />
     </>
   );
