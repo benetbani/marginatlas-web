@@ -1,0 +1,2126 @@
+# Profit and Loss of a Trade in London Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Compute what a London trade's businesses take, what the average premises costs to run, how many businesses clear its break-even, and what the business at each sales quartile keeps after tax, from the registers, the valuation statistics, the law engine and one research-based recipe per trade.
+
+**Architecture:** Register slices copied into `data/uk/registers` with a SHA-256 manifest and a gate; pure modules under `src/lib/uk/pnl/` (the band estimator, the kind algebra, the model, recipe inputs, the recipes, the London loader); every recipe held by a gate to a written protocol and two plausibility screens. Depends on plan 01 (the law engine) and plan 02 (`export_for_site.py`).
+
+**Tech Stack:** TypeScript 5 (strict) with JSON imports, run by `tsx`; Python 3.13 for the export; the website's prebuild chain.
+
+---
+
+## Before you start (read once)
+
+- Work in `E:/atlas/website`, its own git repository. Run every command from that folder. The master plan,
+  `docs/superpowers/plans/2026-10-02-vertical-engine-00-master.md`, holds the mathematics each task implements; each task
+  below repeats the part it needs.
+- Tests here are self-running TypeScript scripts, not a framework: `npx tsx tests/<path>.test.ts` prints one `PASS  <label>`
+  line per check. On a failure it prints `x <rule> <file>: <label>. Remedy: <remedy>` through `scripts/lib/red` and exits 1.
+  That shape is required: the chain's gate-reds ratchet (`node scripts/audit_gate_reds.mjs`) fails when a newly wired test's
+  red lacks a file, a rule or a remedy. Every test below has it (checked on 2026-10-02 with the census's own classifier);
+  keep it when you edit one.
+- A test nothing runs is not coverage: each task wires its test into the `GATES` array of `scripts/prebuild_all.ts`, then
+  regenerates the counts. `npx tsx scripts/counts.ts --write` rewrites the counts blocks of `CLAUDE.md`,
+  `docs/verification-protocol.md` and `docs/loop/02-ORGANISATION-RESEARCH.md` and the registry `scripts/gates.json`; the
+  `counts-fresh` gate fails the chain when they are stale, so those four files are in every wiring commit.
+- Never pipe a verification command into a filter (a pipe reports the filter's exit code, not the command's). Run it bare,
+  or redirect to a file and read the file.
+- The expected figures were computed independently (Python, decimal arithmetic, half-up at the penny) and agreed with this
+  code to the penny on 2026-10-02. Never change an expected figure to make a test pass. Fix the code, or stop and report.
+- Commits: one per task, never pushed by this plan. The website sits on `main`: before task 1, create the plan's branch
+  (`git switch -c vertical-engine`, or switch to it if an earlier plan made it). The controlling session commits; a
+  subagent executing a task stops before its commit step and reports. Never `--no-verify`.
+
+## File structure
+
+| File | Responsibility |
+|---|---|
+| `data/uk/registers/*.json` | the register slices (turnover, premises, survival, failures) and their manifest, written by `E:/atlas/registers/uk/export_for_site.py` |
+| `scripts/verify_uk_registers.ts` | the `uk-registers` gate: recomputes every slice's SHA-256 against the manifest, requires exactly the four slices, checks the shape pages rely on |
+| `.gitattributes` | one more line: the slices stay LF on a Windows checkout, so their hashes hold |
+| `src/lib/uk/pnl/banded.ts` | band quantiles, the CDF and the anchor mean, equal to the Python estimator |
+| `src/lib/uk/pnl/kinds.ts` | the kind of a computed figure |
+| `src/lib/uk/pnl/model.ts` | the money model: the size rule across businesses, fixed costs within one |
+| `src/lib/uk/pnl/inputs.ts` | premises from the valuation, the anchor from the bands, inputs from a recipe |
+| `src/lib/uk/pnl/recipes.ts` | one recipe per trade, built by the protocol in its header |
+| `src/lib/uk/pnl/london.ts` | London's inputs, summary and ranges per trade, or the reason they are withheld |
+| `src/lib/uk/pnl/ranges.ts` | the headline figures recomputed under the three band shapes: each figure's range |
+| `tests/uk/pnl/*.test.ts` | one test per module; `recipes.test.ts` is the recipe gate |
+
+### Task 1: The register slices and their gate
+
+The website's chain never reads another repository, so the register figures arrive as files with a manifest, and a gate
+recomputes every hash: a figure edited by hand changes a hash and fails the chain, so the only way a register figure
+changes is by re-running the export. The manifest must list exactly the four slices and no other .json may sit beside
+them (a slice dropped from the manifest, or a file nothing hashes, would let a hand edit through), and every trade with
+live companies must carry a rate. The slices are hashed as the export wrote them, in LF: this machine checks text out with
+CRLF (`core.autocrlf=true`), so `.gitattributes` pins them to LF, as it already does for the two generated files the
+`spine-css-fresh` and `glyphs-fresh` gates compare byte for byte (the 2026-08-07 trap); a CRLF copy is named as such by
+the gate, never as a hand edit.
+
+**Files:**
+- Create: `scripts/verify_uk_registers.ts`
+- Create (by the export): `data/uk/registers/turnover.json`, `premises.json`, `survival.json`, `failures.json`, `manifest.json`
+- Modify: `.gitattributes` (one line), `scripts/prebuild_all.ts` (one `GATES` entry)
+- Modify (generated by counts.ts): `CLAUDE.md`, `docs/verification-protocol.md`, `docs/loop/02-ORGANISATION-RESEARCH.md`, `scripts/gates.json`
+
+- [ ] **Step 1: Write the gate**
+
+Create `scripts/verify_uk_registers.ts`:
+
+```ts
+/**
+ * scripts/verify_uk_registers.ts , THE REGISTER FIGURES ARE THE REGISTERS' (chain gate `uk-registers`).
+ *
+ * data/uk/registers/ holds slices of the UK register tables, written by E:/atlas/registers/uk/export_for_site.py with a
+ * manifest of each file's SHA-256. This gate recomputes every hash: a figure edited by hand in the website repo changes a
+ * hash and fails the chain, so the only way a register figure changes is by re-running the export from the tables. The
+ * manifest must list exactly the four slices, and no other .json may sit beside them: a slice dropped from the manifest, or
+ * a file nothing hashes, would let a hand edit through. It also checks the shape the pages rely on: every trade carries
+ * London with its ten band counts, and every trade with live companies carries a rate inside its interval.
+ *
+ * The slices are hashed as written, in LF; .gitattributes pins data/uk/registers/*.json to LF, or a Windows checkout
+ * would rewrite them and every hash would fail here while the deploy passed.
+ *
+ * It reads only files in this repo (the chain never touches the network or another repo).
+ *
+ * What it cannot see: whether the tables themselves are right (the registers' own tests, E:/atlas/registers/uk/tests, and
+ * their builders' checks); a hand edit that also rewrites manifest.json, since nothing signs the manifest; and a stale
+ * export, slices older than tables rebuilt since (the chain never reads the other repo): re-export after every rebuild.
+ *
+ *   npx tsx scripts/verify_uk_registers.ts
+ */
+import { createHash } from "node:crypto";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { red, redSummary } from "./lib/red";
+
+const RULE = "uk-registers";
+const DIR = path.join(process.cwd(), "data", "uk", "registers");
+const MANIFEST = path.join(DIR, "manifest.json");
+const SLICES = ["failures.json", "premises.json", "survival.json", "turnover.json"];
+let failures = 0;
+const fail = (file: string, detail: string, remedy: string) => {
+  failures++;
+  red({ rule: RULE, file, detail, remedy });
+};
+
+if (!existsSync(MANIFEST)) {
+  fail(MANIFEST, "no manifest", "run python E:/atlas/registers/uk/export_for_site.py");
+} else {
+  const manifest = JSON.parse(readFileSync(MANIFEST, "utf8")) as { files: Record<string, { sha256: string; rows: number }> };
+  const listed = Object.keys(manifest.files).sort();
+  if (listed.join() !== SLICES.join()) fail(MANIFEST, `lists ${listed.join(", ") || "nothing"}, not exactly ${SLICES.join(", ")}`, "re-run the export; never edit the manifest");
+  for (const name of readdirSync(DIR).filter((f) => f.endsWith(".json") && f !== "manifest.json" && !SLICES.includes(f))) {
+    fail(path.join(DIR, name), "a file the manifest does not hash", "delete it; only the export writes this folder");
+  }
+  for (const [name, entry] of Object.entries(manifest.files)) {
+    const file = path.join(DIR, name);
+    if (!existsSync(file)) {
+      fail(file, "listed in the manifest but missing", "re-run the export");
+      continue;
+    }
+    const raw = readFileSync(file);
+    const sha = createHash("sha256").update(raw).digest("hex");
+    if (sha === entry.sha256) continue;
+    // a checkout that rewrote LF to CRLF changes every byte hash and no figure: say so, never "edited by hand"
+    const asLf = createHash("sha256").update(raw.toString("utf8").replace(/\r\n/g, "\n")).digest("hex");
+    if (asLf === entry.sha256) fail(file, "its line ends were rewritten to CRLF; the figures are unchanged", "keep data/uk/registers/*.json text eol=lf in .gitattributes and re-run the export");
+    else fail(file, `hash ${sha.slice(0, 12)} is not the manifest's ${entry.sha256.slice(0, 12)}: edited by hand`, "never edit a register slice; re-run the export from the tables");
+  }
+  const turnover = path.join(DIR, "turnover.json");
+  if (existsSync(turnover)) {
+    const t = JSON.parse(readFileSync(turnover, "utf8")) as { trades: Record<string, { by_geography: Record<string, { turnover_bands_k?: number[] }> }> };
+    for (const [slug, v] of Object.entries(t.trades)) {
+      const london = v.by_geography["E12000007"];
+      if (!london || !Array.isArray(london.turnover_bands_k) || london.turnover_bands_k.length !== 10) {
+        fail(turnover, `${slug} has no London row with ten band counts`, "re-run build_nomis.py and the export");
+      }
+    }
+  }
+  const failuresFile = path.join(DIR, "failures.json");
+  if (existsSync(failuresFile)) {
+    const f = JSON.parse(readFileSync(failuresFile, "utf8")) as { trades: Record<string, { uk_live_companies: number | null; uk_rate: { lo: number; hi: number; value: number } | null }> };
+    for (const [slug, v] of Object.entries(f.trades)) {
+      if (v.uk_rate === null || v.uk_rate === undefined) {
+        if (v.uk_live_companies) fail(failuresFile, `${slug}: ${v.uk_live_companies} live companies and no rate`, "re-run enrich_failure_rates.py and the export");
+      } else if (!(v.uk_rate.lo <= v.uk_rate.value && v.uk_rate.value <= v.uk_rate.hi)) {
+        fail(failuresFile, `${slug}: the rate sits outside its own interval`, "re-run enrich_failure_rates.py and the export");
+      }
+    }
+  }
+}
+
+if (failures > 0) {
+  redSummary(RULE, failures, "re-run the registers export; never edit data/uk/registers by hand");
+  process.exit(1);
+}
+console.log(`PASS ${RULE}: every register slice matches its manifest`);
+```
+
+- [ ] **Step 2: Run it before the slices exist and watch it fail**
+
+```bash
+npx tsx scripts/verify_uk_registers.ts
+```
+
+Expected: exit code 1 and `x uk-registers data/uk/registers/manifest.json: no manifest. Remedy: run python
+E:/atlas/registers/uk/export_for_site.py`.
+
+- [ ] **Step 3: Pin the slices to LF**
+
+Append to `.gitattributes` (after its last line, `src/components/spine2/glyphs.ts text eol=lf`):
+
+```text
+# The UK register slices are the third case (2026-10-03): the `uk-registers`
+# gate hashes data/uk/registers/*.json against the manifest the export wrote
+# in LF, and a checkout that rewrote them to CRLF would fail it on this
+# machine while the deploy passed.
+
+data/uk/registers/*.json        text eol=lf
+```
+
+- [ ] **Step 4: Export the slices into the website**
+
+Plan 02 must have landed (tasks 5 to 8 rebuilt the tables; task 10 created the script). From `E:/atlas`:
+
+```bash
+python registers/uk/export_for_site.py
+```
+
+Expected: `exporting into E:\atlas\website\data\uk\registers`, then four lines, on the tables of 2026-10-03
+`turnover.json: 4795 rows, 0ddba579e101`, `premises.json: 42 rows, 4bdd8332330c`, `survival.json: 110 rows, 2675b0544984`,
+`failures.json: 137 rows, 12ceff334174` (hashes differ if a table was refreshed since).
+
+- [ ] **Step 5: Run the gate and watch it pass**
+
+Back in `E:/atlas/website`:
+
+```bash
+npx tsx scripts/verify_uk_registers.ts
+```
+
+Expected: `PASS uk-registers: every register slice matches its manifest`, exit code 0.
+
+- [ ] **Step 6: Plant a hand edit and watch the gate catch it**
+
+```bash
+cp data/uk/registers/failures.json /tmp/failures.json.bak
+sed -i 's/"uk_insolvent": 1259/"uk_insolvent": 1260/' data/uk/registers/failures.json
+npx tsx scripts/verify_uk_registers.ts
+```
+
+Expected: exit code 1 and `x uk-registers data/uk/registers/failures.json: hash <12 hex> is not the manifest's <12 hex>:
+edited by hand. Remedy: never edit a register slice; re-run the export from the tables`. Restore and confirm:
+
+```bash
+cp /tmp/failures.json.bak data/uk/registers/failures.json
+npx tsx scripts/verify_uk_registers.ts
+```
+
+Expected: `PASS uk-registers: every register slice matches its manifest`.
+
+- [ ] **Step 7: Plant a file nothing hashes and watch the gate refuse it**
+
+```bash
+cp data/uk/registers/failures.json data/uk/registers/failures_old.json
+npx tsx scripts/verify_uk_registers.ts
+```
+
+Expected: exit code 1 and `x uk-registers data/uk/registers/failures_old.json: a file the manifest does not hash. Remedy:
+delete it; only the export writes this folder`. Delete it and confirm:
+
+```bash
+rm data/uk/registers/failures_old.json
+npx tsx scripts/verify_uk_registers.ts
+```
+
+Expected: `PASS uk-registers: every register slice matches its manifest`.
+
+- [ ] **Step 8: Wire it into the chain**
+
+In `scripts/prebuild_all.ts`, find this line in `GATES`:
+
+```ts
+  { name: "facts-confidence", script: "tests/facts/confidence.test.ts" },
+```
+
+and add directly below it:
+
+```ts
+  /* The UK registers' figures (docs/superpowers/plans/2026-10-02-vertical-engine-03-profit-and-loss.md):
+     slices of E:/atlas/registers/uk/tables written by export_for_site.py; a hand edit fails here. */
+  { name: "uk-registers", script: "scripts/verify_uk_registers.ts" },
+```
+
+Then run:
+
+```bash
+npx tsx scripts/counts.ts --write
+```
+
+Expected: one line beginning `[counts] wrote 3 carrier(s) and scripts/gates.json:` whose gate count is one higher than before this step.
+
+- [ ] **Step 9: Prove the gate runs in the chain and the ratchet holds**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-registers
+```
+
+Expected: a line `✓ uk-registers` and, at the end, `SUBSET: PASS (not the chain; run without --only for the gate)`.
+
+```bash
+node scripts/audit_gate_reds.mjs
+```
+
+Expected: the last line starts `gate reds: PASS` and ends `the ratchet holds` (the three counts equal the baseline in `scripts/gate_reds_baseline.json`; a new test must not raise them).
+
+- [ ] **Step 10: Commit**
+
+```bash
+git add scripts/verify_uk_registers.ts data/uk/registers .gitattributes scripts/prebuild_all.ts CLAUDE.md docs/verification-protocol.md docs/loop/02-ORGANISATION-RESEARCH.md scripts/gates.json
+git commit -m "uk registers: the slices the pages read, fingerprinted and pinned to LF, and the gate that recomputes their hashes (gate uk-registers)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+- [ ] **Step 11: Prove the slices stay LF on checkout**
+
+```bash
+git ls-files --eol data/uk/registers
+```
+
+Expected: five lines, each beginning `i/lf    w/lf    attr/text eol=lf`.
+
+### Task 2: The band estimator, ported
+
+The same log-uniform reading as `registers/uk/estimators/banded.py` (plan 02, task 1), ported so a page can ask "what share
+of these businesses take more than X?" for any X a lever sets, and so the profit model can find its anchor. The anchor mean
+takes a band shape: inside [L, U) businesses spread log-flat (density ~ 1/x, mean `(U - L) / ln(U / L)`, the reading every
+quantile uses), flat (density ~ 1, mean `(U + L) / 2`) or Pareto (density ~ 1/x^2, mean `L U ln(U / L) / (U - L)`). With
+G = sqrt(L U) the geometric mean and Lm = (U - L) / ln(U / L) the logarithmic mean, the classic inequality G <= Lm <= (L + U)/2
+and the identity Pareto mean = G^2 / Lm give Pareto <= G <= log-flat <= flat for every band, so the three bracket the
+plausible shapes; task 7 carries the spread into every headline figure. The test
+holds the two implementations equal on the Python values: London restaurants' q10 to q90, the shares above 100k, the anchor
+means under all three shapes (hair and beauty 130.83117k, 139.40636k, 148.43879k) and their hard bounds. It also holds the
+port to the Python's rules where the first port differed (found on 2026-10-04, before the run): a quantile on a band's edge is
+the edge exactly (`L (U / L)^frac`, not exp of the logs), whether a quantile prints in words is read from its value, not its
+band (an exact 50k is a figure, not "under 50k"), the counts must be finite numbers, not negative, with a finite total, and a
+sales figure that is not a number is refused rather than read as nobody below it. Every quantile equals the Python's to
+twelve significant figures; 18 of 20 deliberate faults fail the test, and the two that pass change nothing a page can see (a
+string count already fails the total; the CDF's cap at 1 binds only on floating-point error). Its review (2026-10-04) compared
+the port with the Python on all 4,795 register vectors (quantiles within 2.6e-16, means bitwise equal) and added five checks
+for what still passed: q outside (0, 1), bands 7 and 8 (5m to 50m), the mean over 1, 3, 8 and 9 bands, and a count under zero
+by any amount or an eleventh count. With the founder's decision 9 (2026-10-04) the quantile and the CDF read under the flat
+and Pareto shapes too, the port's own (the Python prints only the log-flat reading): flat `F(x) = (x - L) / (U - L)`,
+Pareto `F(x) = (1/L - 1/x) / (1/L - 1/U)`, each checked against its own formula computed apart from this code, the edge
+exact under every shape, and a shape, a q or a sales figure that is not one refused (six checks).
+
+**Files:**
+- Create: `src/lib/uk/pnl/banded.ts`
+- Test: `tests/uk/pnl/banded.test.ts` (create)
+- Modify: `scripts/prebuild_all.ts` (one `GATES` entry)
+- Modify (generated by counts.ts): `CLAUDE.md`, `docs/verification-protocol.md`, `docs/loop/02-ORGANISATION-RESEARCH.md`, `scripts/gates.json`
+
+- [ ] **Step 1: Write the failing test**
+
+Create `tests/uk/pnl/banded.test.ts`:
+
+```ts
+/**
+ * The TypeScript band estimator equals the Python one (registers/uk/estimators/banded.py). The expected values were
+ * produced by the Python implementation on the same counts (Nomis NM_199_1, March 2026, read 2026-10-02).
+ *
+ * Run: npx tsx tests/uk/pnl/banded.test.ts
+ */
+import { bandCdf, bandMeanK, bandQuantile, inOpenBand, type BandShape } from "../../../src/lib/uk/pnl/banded";
+import { red, redSummary } from "../../../scripts/lib/red";
+
+const RULE = "uk-pnl-banded";
+const FILE = "src/lib/uk/pnl/banded.ts";
+const REMEDY = "keep banded.ts equal to registers/uk/estimators/banded.py; never change an expected figure to fit the code (each was computed independently)";
+let failed = 0;
+/** A red names the rule, the file under test and what to do (scripts/lib/red, the gate-reds ratchet's shape). */
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+const r1 = (x: number) => Math.round(x * 10) / 10;
+
+const RESTAURANTS_LONDON = [625, 800, 2250, 1470, 1245, 725, 500, 140, 75, 30];
+const HAIR_BEAUTY_LONDON = [2405, 3740, 2655, 525, 245, 70, 40, 10, 5, 0];
+
+const qs = [0.1, 0.25, 0.5, 0.75, 0.9].map((q) => r1(bandQuantile(RESTAURANTS_LONDON, q)!.k));
+check("restaurants London quantiles equal Python's: 57.5, 124.6, 281.9, 759.1, 1923.1", qs.join(",") === "57.5,124.6,281.9,759.1,1923.1");
+check("hair and beauty London median 78.6k (the published table)", r1(bandQuantile(HAIR_BEAUTY_LONDON, 0.5)!.k) === 78.6);
+check("share above 100k: restaurants 0.819", Math.round((1 - bandCdf(RESTAURANTS_LONDON, 100)!) * 1000) / 1000 === 0.819);
+check("share above 100k: hair and beauty 0.366", Math.round((1 - bandCdf(HAIR_BEAUTY_LONDON, 100)!) * 1000) / 1000 === 0.366);
+const low = bandQuantile(HAIR_BEAUTY_LONDON, 0.1)!;
+check("hair and beauty q10 falls in the first band and says so (prints as under 50k)", low.openBelow && low.band === 0);
+let roundTrip = true;
+for (const q of [0.1, 0.25, 0.5, 0.75, 0.9]) {
+  const x = bandQuantile(HAIR_BEAUTY_LONDON, q)!.k;
+  if (Math.abs(bandCdf(HAIR_BEAUTY_LONDON, x)! - q) > 1e-9) roundTrip = false;
+}
+check("the CDF inverts the quantile", roundTrip);
+check("no businesses, no figure", bandQuantile(new Array(10).fill(0), 0.5) === null && bandCdf(new Array(10).fill(0), 100) === null);
+let threw = false;
+try { bandQuantile([1, 2, 3], 0.5); } catch { threw = true; }
+check("anything but the register's ten bands is refused", threw);
+
+// The anchor: mean sales below 5m, log-uniform inside each band; equal to estimators/banded.py trimmed_mean.
+const hb = bandMeanK(HAIR_BEAUTY_LONDON)!;
+check("hair and beauty London, mean sales under 5m: 139.40636k (Python: 139.40636)", Math.round(hb.k * 100_000) / 100_000 === 139.40636);
+check("its bounds, whatever the shape inside each band: 88.46k to 207.18k", Math.round(hb.lo * 100) / 100 === 88.46 && Math.round(hb.hi * 100) / 100 === 207.18);
+const re = bandMeanK(RESTAURANTS_LONDON)!;
+check("restaurants London: 597.44087k, inside 391.33k to 867.20k", Math.round(re.k * 100_000) / 100_000 === 597.44087 && Math.round(re.lo * 100) / 100 === 391.33 && Math.round(re.hi * 100) / 100 === 867.2);
+check("a band of one value has that mean: 50 businesses all in 100-250k average (250 - 100) / ln 2.5", Math.abs(bandMeanK([0, 0, 50, 0, 0, 0, 0, 0, 0, 0])!.k - 150 / Math.log(2.5)) < 1e-9);
+check("nobody below 5m, no mean", bandMeanK([0, 0, 0, 0, 0, 0, 0, 3, 2, 1]) === null);
+const r5 = (x: number) => Math.round(x * 100_000) / 100_000;
+check("the three band shapes: hair and beauty 130.83117k (pareto) < 139.40636k (log-flat) < 148.43879k (flat), Python's values",
+  r5(bandMeanK(HAIR_BEAUTY_LONDON, 7, "pareto")!.k) === 130.83117 && r5(bandMeanK(HAIR_BEAUTY_LONDON, 7, "log-flat")!.k) === 139.40636 && r5(bandMeanK(HAIR_BEAUTY_LONDON, 7, "flat")!.k) === 148.43879);
+check("restaurants: 566.21168k (pareto) and 629.47308k (flat) either side of 597.44087k", r5(bandMeanK(RESTAURANTS_LONDON, 7, "pareto")!.k) === 566.21168 && r5(bandMeanK(RESTAURANTS_LONDON, 7, "flat")!.k) === 629.47308);
+let openTop = false;
+try { bandMeanK(RESTAURANTS_LONDON, 10); } catch { openTop = true; }
+check("the open top band is refused: its mean would rest on the cap", openTop);
+
+// Parity with the Python to the last digits, the edges exact, and the same refusals (estimators/banded.py, 2026-10-03).
+const near = (x: number, y: number) => Math.abs(x - y) <= 1e-12 * Math.abs(y);
+const PY_R = [57.48470287863078, 124.59643091957105, 281.94181923933206, 759.1251417365786, 1923.1193177966609];
+const PY_H = [12.649941218765644, 50.17405236988422, 78.62580926652228, 147.50474862510842, 243.65409068712677];
+check("every quantile equals Python's to twelve significant figures (restaurants and hair and beauty, q10 to q90)",
+  [0.1, 0.25, 0.5, 0.75, 0.9].every((q, i) => near(bandQuantile(RESTAURANTS_LONDON, q)!.k, PY_R[i]) && near(bandQuantile(HAIR_BEAUTY_LONDON, q)!.k, PY_H[i])));
+const e50 = bandQuantile([5, 0, 5, 0, 0, 0, 0, 0, 0, 0], 0.5)!, e50m = bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 5, 5], 0.5)!;
+check("a quantile on an edge is the edge exactly and prints as a figure: 50 (not under 50k) and 50,000 (not over 50m)",
+  e50.k === 50 && !e50.openBelow && !e50.openAbove && e50m.k === 50_000 && !e50m.openAbove && !inOpenBand(50) && !inOpenBand(50_000));
+const top = bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5)!, bottom = bandQuantile([4, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0.5)!;
+check("inside the open bands the floor and the cap are used and flagged: 70,710.68 over 50m, 15.81 under 50k (Python's)",
+  near(top.k, 70710.67811865476) && top.openAbove && near(bottom.k, 15.811388300841898) && bottom.openBelow && inOpenBand(49.99) && inOpenBand(50_000.01));
+check("hair and beauty q25 at 50.17k is a figure, not under 50k", !bandQuantile(HAIR_BEAUTY_LONDON, 0.25)!.openBelow);
+check("the CDF equals Python's: 0 below the floor and at or below 0, 1 above the cap, 0.49982 at 78.6k, 0.99842 at 75,000k",
+  bandCdf(RESTAURANTS_LONDON, 4) === 0 && bandCdf(RESTAURANTS_LONDON, 0) === 0 && bandCdf(RESTAURANTS_LONDON, -3) === 0 && bandCdf(RESTAURANTS_LONDON, 200_000) === 1
+  && near(bandCdf(HAIR_BEAUTY_LONDON, 78.6)!, 0.4998172824972646) && near(bandCdf(RESTAURANTS_LONDON, 75_000)!, 0.9984158874073327));
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+const BAD = [[-5, 0, 0, 0, 0, 0, 0, 0, 0, 10], [Number.NaN, 0, 0, 0, 0, 0, 0, 0, 0, 10], [Infinity, 0, 0, 0, 0, 0, 0, 0, 0, 10], ["5" as unknown as number, 0, 0, 0, 0, 0, 0, 0, 0, 10], [Number.MAX_VALUE, Number.MAX_VALUE, 0, 0, 0, 0, 0, 0, 0, 0]];
+check("counts that are negative, not numbers, infinite or overflow their total are refused by all three", BAD.every((b) =>
+  refuses(() => bandQuantile(b, 0.5)) && refuses(() => bandCdf(b, 100)) && refuses(() => bandMeanK(b))));
+check("a sales figure that is not a number is refused, never read as nobody below it", refuses(() => bandCdf(RESTAURANTS_LONDON, Number.NaN)));
+
+
+// ---- review additions
+check("a q outside (0, 1), or not a number, is refused", [0, 1, -0.1, 1.5, Number.NaN].every((q) => refuses(() => bandQuantile(RESTAURANTS_LONDON, q))));
+check("bands 7 and 8 (5m to 50m) equal Python's: restaurants cdf 0.97925 at 7,500k and 0.99075 at 20,000k, q98 7,722.5k (band 7), q99.5 40,954.1k (band 8)",
+  near(bandCdf(RESTAURANTS_LONDON, 7_500)!, 0.9792486959415981) && near(bandCdf(RESTAURANTS_LONDON, 20_000)!, 0.9907507305159675)
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.98)!.k, 7722.515984513339) && bandQuantile(RESTAURANTS_LONDON, 0.98)!.band === 7
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.995)!.k, 40954.131817211535) && bandQuantile(RESTAURANTS_LONDON, 0.995)!.band === 8 && bandQuantile(RESTAURANTS_LONDON, 0.5)!.band === 3);
+const m1 = bandMeanK(RESTAURANTS_LONDON, 1)!, m3 = bandMeanK(RESTAURANTS_LONDON, 3)!, m8 = bandMeanK(RESTAURANTS_LONDON, 8)!, m9 = bandMeanK(RESTAURANTS_LONDON, 9)!;
+check("the mean stops where uptoBand says: restaurants over 1, 3, 8 and 9 bands equal Python's (mean, lower bound, upper bound)",
+  near(m1.k, 19.54325168564633) && m1.lo === 0 && m1.hi === 50 && near(m3.k, 119.25311819535328) && near(m3.lo, 72.10884353741497) && near(m3.hi, 183.33333333333334)
+  && near(m8.k, 716.8792695062162) && near(m8.lo, 474.53255963894264) && near(m8.hi, 1032.0760799484203) && near(m9.k, 948.071971736851) && near(m9.lo, 565.7726692209451) && near(m9.hi, 1501.117496807152));
+check("uptoBand 0 and 2.5 are refused", refuses(() => bandMeanK(RESTAURANTS_LONDON, 0)) && refuses(() => bandMeanK(RESTAURANTS_LONDON, 2.5)));
+const ten = (bad: unknown) => [bad, 0, 0, 0, 0, 0, 0, 0, 0, 10] as unknown as number[];
+check("a count under zero by any amount, and an eleventh count, are refused by all three",
+  [ten(-0.5), ten(-1e-9), [...RESTAURANTS_LONDON, 1]].every((c) => refuses(() => bandQuantile(c, 0.1)) && refuses(() => bandCdf(c, 100)) && refuses(() => bandMeanK(c))));
+
+// ---- the flat and Pareto shapes for the quantile and the CDF (decision 9), each equal to its own formula computed apart
+// from this code (Python, 2026-10-04): flat F(x) = (x - L) / (U - L), Pareto F(x) = (1/L - 1/x) / (1/L - 1/U)
+check("hair and beauty's median under each shape equals the Python's: 74.24 (pareto), 78.63 (log-flat), 82.65 (flat)",
+  near(bandQuantile(HAIR_BEAUTY_LONDON, 0.5, "pareto")!.k, 74.24317617866005) && near(bandQuantile(HAIR_BEAUTY_LONDON, 0.5, "flat")!.k, 82.65374331550802));
+check("restaurants' q10 and q90 under the flat and Pareto shapes equal the Python's",
+  near(bandQuantile(RESTAURANTS_LONDON, 0.1, "flat")!.k, 60.0625) && near(bandQuantile(RESTAURANTS_LONDON, 0.9, "flat")!.k, 1943.4482758620688)
+  && near(bandQuantile(RESTAURANTS_LONDON, 0.1, "pareto")!.k, 55.59416261292564) && near(bandQuantile(RESTAURANTS_LONDON, 0.9, "pareto")!.k, 1892.9503916449082));
+check("the CDF under each shape equals the Python's: hair and beauty below 64.11298k and 25k, restaurants below 750k",
+  near(bandCdf(HAIR_BEAUTY_LONDON, 64.11298, "flat")!, 0.35695213037648266) && near(bandCdf(HAIR_BEAUTY_LONDON, 64.11298, "pareto")!, 0.41790075977002106)
+  && near(bandCdf(HAIR_BEAUTY_LONDON, 25, "flat")!, 0.11025156151509942) && near(bandCdf(HAIR_BEAUTY_LONDON, 25, "pareto")!, 0.22050312303019884)
+  && near(bandCdf(RESTAURANTS_LONDON, 750, "flat")!, 0.7337786259541985) && near(bandCdf(RESTAURANTS_LONDON, 750, "pareto")!, 0.760178117048346));
+const ALL: BandShape[] = ["pareto", "log-flat", "flat"];
+check("under every shape a quantile on an edge is the edge exactly, and the open top band reads to the cap: 75,000 flat, 66,666.67 Pareto",
+  ALL.every((s) => bandQuantile([5, 0, 5, 0, 0, 0, 0, 0, 0, 0], 0.5, s)!.k === 50) && bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5, "flat")!.k === 75_000
+  && near(bandQuantile([0, 0, 0, 0, 0, 0, 0, 0, 0, 4], 0.5, "pareto")!.k, 66666.66666666666));
+check("under every shape the CDF inverts the quantile", ALL.every((s) => [0.1, 0.25, 0.5, 0.75, 0.9].every((q) =>
+  Math.abs(bandCdf(HAIR_BEAUTY_LONDON, bandQuantile(HAIR_BEAUTY_LONDON, q, s)!.k, s)! - q) <= 1e-9)));
+check("a shape that is not one of the three, and a q or a sales figure that is not a number, are refused",
+  refuses(() => bandQuantile(RESTAURANTS_LONDON, 0.5, "normal" as BandShape)) && refuses(() => bandCdf(RESTAURANTS_LONDON, 100, "normal" as BandShape))
+  && refuses(() => bandMeanK(RESTAURANTS_LONDON, 7, "normal" as BandShape)) && refuses(() => bandQuantile(RESTAURANTS_LONDON, "0.5" as unknown as number))
+  && refuses(() => bandCdf(RESTAURANTS_LONDON, undefined as unknown as number)) && refuses(() => bandCdf(RESTAURANTS_LONDON, null as unknown as number))
+  && refuses(() => bandCdf(RESTAURANTS_LONDON, "100" as unknown as number)));
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("uk/pnl/banded: all pass");
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+npx tsx tests/uk/pnl/banded.test.ts
+```
+
+Expected: exit code 1 with `Error: Cannot find module '../../../src/lib/uk/pnl/banded'`.
+
+- [ ] **Step 3: Write the implementation**
+
+Create `src/lib/uk/pnl/banded.ts`:
+
+```ts
+/**
+ * src/lib/uk/pnl/banded.ts
+ *
+ * The register's turnover bands, read as a distribution: the same estimator as registers/uk/estimators/banded.py, ported
+ * so a page can ask "what share of these businesses take more than X?" for any X a reader sets with a lever. The two
+ * implementations are held equal by tests/uk/pnl/banded.test.ts, whose expected values were produced by the Python one.
+ *
+ * Inside a band [L, U) businesses are spread evenly on a log scale; the first band is floored at 5k and the open top band
+ * capped at 100,000k (amounts in thousands of pounds). A quantile below 50k or above 50,000k rests on the floor or the
+ * cap, so it prints only in words ("under 50k", "over 50m": inOpenBand); one exactly on either edge rests on neither and
+ * prints as a figure. A quantile on a band's edge is the edge itself, exactly (L (U / L)^frac, as the Python computes it).
+ *
+ * The quantile and the CDF read the log-flat shape by default, as the Python does; either can be read under the flat or the
+ * Pareto shape too (BandShape below), so a figure's range can move every reading of the bands together (ranges.ts; the
+ * founder's decision 9, 2026-10-04). Those two shapes are this port's own: the Python prints only the log-flat reading.
+ *
+ * The counts are the register's ten, numbers, finite and not negative, with a finite total; a sales figure or a q that is
+ * not a number, and a shape that is not one of the three, are refused. Anything else would read as an empty area or as
+ * nobody below the figure.
+ */
+export const BANDS_K: ReadonlyArray<readonly [number, number]> = [
+  [0, 50], [50, 100], [100, 250], [250, 500], [500, 1000], [1000, 2000], [2000, 5000], [5000, 10000], [10000, 50000], [50000, Infinity],
+];
+const FLOOR_K = 5;
+const TOP_CAP_K = 100_000;
+
+function checkCounts(counts: readonly number[], fn: string): void {
+  if (counts.length !== BANDS_K.length) throw new Error(`${fn}: ten band counts expected`);
+  if (!counts.every((c) => typeof c === "number" && Number.isFinite(c) && c >= 0) || !Number.isFinite(counts.reduce((a, b) => a + b, 0))) {
+    throw new Error(`${fn}: band counts must be finite numbers, not negative, with a finite total`);
+  }
+}
+
+const SHAPES: readonly string[] = ["flat", "log-flat", "pareto"];
+
+function checkShape(shape: string, fn: string): void {
+  if (!SHAPES.includes(shape)) throw new Error(`${fn}: the band shape must be flat, log-flat or pareto (${shape})`);
+}
+
+/** The point a fraction f of the way through a band's businesses under each shape: log-flat L (U / L)^f (the Python's
+ *  formula), flat L + f (U - L), Pareto (density ~ 1/x^2) 1 / (1/L - f (1/L - 1/U)); the band's edge itself at f = 0 or 1. */
+function inBand(low: number, high: number, f: number, shape: BandShape): number {
+  if (f === 0) return low;
+  if (f === 1) return high;
+  if (shape === "flat") return low + f * (high - low);
+  if (shape === "pareto") return 1 / (1 / low - f * (1 / low - 1 / high));
+  return low * (high / low) ** f;
+}
+
+/** How many of a band's c businesses sit below x (low < x < high) under each shape, the inverse of inBand. The log-flat
+ *  reading multiplies before it divides, in the Python's order; the two can still part in the last bit where the platforms'
+ *  logarithms do (at most 3.2e-15 of the share on 24,000 register cases, 2026-10-04), far below any printed digit. */
+function countBelow(c: number, low: number, high: number, x: number, shape: BandShape): number {
+  if (shape === "flat") return (c * (x - low)) / (high - low);
+  if (shape === "pareto") return (c * (1 / low - 1 / x)) / (1 / low - 1 / high);
+  return (c * (Math.log(x) - Math.log(low))) / (Math.log(high) - Math.log(low));
+}
+
+function edges(k: number): [number, number] {
+  const [lo, hi] = BANDS_K[k];
+  return [Math.max(lo, FLOOR_K), Math.min(hi, TOP_CAP_K)];
+}
+
+/** Whether a quantile rests on the 5k floor (below 50k) or the 100,000k cap (above 50,000k), so it prints only in words. */
+export function inOpenBand(xK: number): boolean {
+  return xK < BANDS_K[0][1] || xK > BANDS_K[BANDS_K.length - 1][0];
+}
+
+export type Quantile = { k: number; band: number; openBelow: boolean; openAbove: boolean };
+
+/** The q-quantile in thousands of pounds, with the band it fell in; null when there are no businesses. `shape` is how the
+ *  businesses spread inside the band it falls in (log-flat, the register's reading, by default). */
+export function bandQuantile(counts: readonly number[], q: number, shape: BandShape = "log-flat"): Quantile | null {
+  if (typeof q !== "number" || !(q > 0 && q < 1)) throw new Error("bandQuantile: q must be a number strictly between 0 and 1");
+  checkShape(shape, "bandQuantile");
+  checkCounts(counts, "bandQuantile");
+  const n = counts.reduce((a, b) => a + b, 0);
+  if (n <= 0) return null;
+  const target = q * n;
+  let cum = 0;
+  for (let k = 0; k < counts.length; k++) {
+    const c = counts[k];
+    if (c > 0 && cum + c >= target) {
+      const [low, high] = edges(k);
+      const x = inBand(low, high, (target - cum) / c, shape);
+      return { k: x, band: k, openBelow: x < BANDS_K[0][1], openAbove: x > BANDS_K[BANDS_K.length - 1][0] };
+    }
+    cum += c;
+  }
+  return null;
+}
+
+/**
+ * How businesses spread inside one band [L, U), for the mean: "log-flat" (evenly on a log scale, density ~ 1/x, the reading
+ * every quantile here uses), "flat" (evenly on the pound, density ~ 1) and "pareto" (density ~ 1/x^2, the shape of a
+ * right-skewed size distribution's upper tail). Their means: (U - L) / ln(U / L), (U + L) / 2, L U ln(U / L) / (U - L).
+ * The three bracket the plausible shapes; the spread of a figure across them is its shape range (ranges.ts).
+ */
+export type BandShape = "flat" | "log-flat" | "pareto";
+
+function shapeMean(low: number, high: number, shape: BandShape): number {
+  checkShape(shape, "bandMeanK");
+  if (shape === "flat") return (low + high) / 2;
+  if (shape === "log-flat") return (high - low) / Math.log(high / low);
+  return (low * high * Math.log(high / low)) / (high - low);
+}
+
+/**
+ * The mean sales of the businesses in bands 1 to `uptoBand`, in thousands of pounds, each band at its shape's mean, the
+ * first band from the 5k floor. The default stops below 5m: an enterprise above it is mostly a chain, whose turnover is
+ * every site's, not one site's. `lo` and `hi` bound the mean whatever the shape inside each band (every business on its
+ * band's lower or upper edge, the first band from 0). Null when the bands hold nobody.
+ */
+export function bandMeanK(counts: readonly number[], uptoBand = 7, shape: BandShape = "log-flat"): { k: number; lo: number; hi: number } | null {
+  checkCounts(counts, "bandMeanK");
+  if (!(Number.isInteger(uptoBand) && uptoBand >= 1 && uptoBand < BANDS_K.length)) throw new Error("bandMeanK: uptoBand must be 1 to 9 (the top band is open)");
+  let n = 0, sum = 0, lo = 0, hi = 0;
+  for (let k = 0; k < uptoBand; k++) {
+    const [low, high] = BANDS_K[k];
+    n += counts[k];
+    sum += counts[k] * shapeMean(Math.max(low, FLOOR_K), high, shape);
+    lo += counts[k] * low;
+    hi += counts[k] * high;
+  }
+  return n > 0 ? { k: sum / n, lo: lo / n, hi: hi / n } : null;
+}
+
+/** The share of businesses with sales below xK (thousands of pounds), the businesses inside each band spread by `shape`. */
+export function bandCdf(counts: readonly number[], xK: number, shape: BandShape = "log-flat"): number | null {
+  if (typeof xK !== "number" || Number.isNaN(xK)) throw new Error("bandCdf: the sales figure is not a number");
+  checkShape(shape, "bandCdf");
+  checkCounts(counts, "bandCdf");
+  const n = counts.reduce((a, b) => a + b, 0);
+  if (n <= 0) return null;
+  if (xK <= 0) return 0;
+  const x = Math.max(xK, FLOOR_K);
+  let below = 0;
+  for (let k = 0; k < counts.length; k++) {
+    const [low, high] = edges(k);
+    if (x >= high) below += counts[k];
+    else if (x > low) below += countBelow(counts[k], low, high, x, shape);
+  }
+  return Math.min(1, below / n);
+}
+```
+
+- [ ] **Step 4: Run it and watch it pass**
+
+```bash
+npx tsx tests/uk/pnl/banded.test.ts
+```
+
+Expected: 34 lines starting `PASS`, the last line `uk/pnl/banded: all pass`, exit code 0.
+
+- [ ] **Step 5: Wire it into the chain**
+
+In `scripts/prebuild_all.ts`, find this line in `GATES`:
+
+```ts
+  { name: "uk-registers", script: "scripts/verify_uk_registers.ts" },
+```
+
+and add directly below it:
+
+```ts
+  { name: "uk-pnl-banded", script: "tests/uk/pnl/banded.test.ts" },
+```
+
+Then run:
+
+```bash
+npx tsx scripts/counts.ts --write
+```
+
+Expected: one line beginning `[counts] wrote 3 carrier(s) and scripts/gates.json:` whose gate count is one higher than before this step.
+
+- [ ] **Step 6: Prove the gate runs in the chain and the ratchet holds**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-pnl-banded
+```
+
+Expected: a line `✓ uk-pnl-banded` and, at the end, `SUBSET: PASS (not the chain; run without --only for the gate)`.
+
+```bash
+node scripts/audit_gate_reds.mjs
+```
+
+Expected: the last line starts `gate reds: PASS` and ends `the ratchet holds` (the three counts equal the baseline in `scripts/gate_reds_baseline.json`; a new test must not raise them).
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add src/lib/uk/pnl/banded.ts tests/uk/pnl/banded.test.ts scripts/prebuild_all.ts CLAUDE.md docs/verification-protocol.md docs/loop/02-ORGANISATION-RESEARCH.md scripts/gates.json
+git commit -m "uk pnl: the band estimator ported from registers/uk/estimators, held equal to it (gate uk-pnl-banded)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+### Task 3: The kind algebra
+
+Four kinds: counted, looked up, worked out, estimate. `combineKinds([x1..xn])` is estimate if any input is, worked out once
+any arithmetic is done, and the input's own kind when one input passes through untouched. A figure can never claim more
+than its weakest input, and arithmetic never launders an estimate. `transformed` defaults to true, so a figure computed from
+one input (a quantile of counted bands) is worked out unless the caller says it passed through untouched; the model relies
+on that three times. Its review of 2026-10-04 found 9 of 12 deliberate faults passed the first four checks (the default
+flipped, equal inputs passed through, several untouched inputs taking the first one's kind, the estimate checked on the
+first input only): six more checks pin them, and all 10 faults that can change a kind now fail the test (the eleventh, the
+estimate checked after the pass-through, cannot: an untouched estimate is an estimate either way). Its re-review added two:
+an estimate wins whatever its partners and whatever the flag, and in the third or a later place.
+
+**Files:**
+- Create: `src/lib/uk/pnl/kinds.ts`
+- Test: `tests/uk/pnl/kinds.test.ts` (create)
+- Modify: `scripts/prebuild_all.ts` (one `GATES` entry)
+- Modify (generated by counts.ts): `CLAUDE.md`, `docs/verification-protocol.md`, `docs/loop/02-ORGANISATION-RESEARCH.md`, `scripts/gates.json`
+
+- [ ] **Step 1: Write the failing test**
+
+Create `tests/uk/pnl/kinds.test.ts`:
+
+```ts
+/**
+ * The kind algebra: an estimate anywhere makes an estimate; arithmetic on counted or looked-up figures is worked out;
+ * one input passed through untouched keeps its kind.
+ *
+ * Run: npx tsx tests/uk/pnl/kinds.test.ts
+ */
+import { combineKinds } from "../../../src/lib/uk/pnl/kinds";
+import { red, redSummary } from "../../../scripts/lib/red";
+
+const RULE = "uk-pnl-kinds";
+const FILE = "src/lib/uk/pnl/kinds.ts";
+const REMEDY = "fix kinds.ts until this worked example holds; never change an expected figure to fit the code (each was computed independently)";
+let failed = 0;
+/** A red names the rule, the file under test and what to do (scripts/lib/red, the gate-reds ratchet's shape). */
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+
+check("kinds: an estimate anywhere makes an estimate", combineKinds(["counted", "estimate"]) === "estimate");
+check("kinds: arithmetic on counted figures is worked out", combineKinds(["counted", "looked up"]) === "worked out");
+check("kinds: one input untouched keeps its kind", combineKinds(["counted"], false) === "counted");
+check("kinds: a figure with no inputs is refused", (() => { try { combineKinds([]); return false; } catch { return true; } })());
+check("kinds: an estimate in any position makes an estimate", combineKinds(["estimate", "counted"]) === "estimate" && combineKinds(["counted", "estimate", "looked up"]) === "estimate");
+check("kinds: an estimate passed through untouched stays an estimate", combineKinds(["estimate"], false) === "estimate" && combineKinds(["estimate"]) === "estimate");
+check("kinds: one input is transformed by default, so a band quantile of counted bands is worked out", combineKinds(["counted"]) === "worked out" && combineKinds(["looked up"], true) === "worked out");
+check("kinds: two counted figures together are worked out, never counted", combineKinds(["counted", "counted"]) === "worked out" && combineKinds(["counted", "counted"], false) === "worked out");
+check("kinds: several inputs flagged untouched are still arithmetic", combineKinds(["counted", "looked up"], false) === "worked out");
+check("kinds: a worked-out or looked-up input passed through keeps its kind", combineKinds(["worked out"], false) === "worked out" && combineKinds(["looked up"], false) === "looked up");
+
+check("kinds: an estimate wins whatever its partners and whatever the flag", combineKinds(["looked up", "estimate"]) === "estimate" && combineKinds(["worked out", "estimate"]) === "estimate" && combineKinds(["counted", "estimate"], false) === "estimate");
+check("kinds: an estimate in the third or later place still wins", combineKinds(["counted", "counted", "estimate"]) === "estimate" && combineKinds(["looked up", "worked out", "counted", "estimate"]) === "estimate");
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("uk/pnl/kinds: all pass");
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+npx tsx tests/uk/pnl/kinds.test.ts
+```
+
+Expected: exit code 1 with `Error: Cannot find module '../../../src/lib/uk/pnl/kinds'`.
+
+- [ ] **Step 3: Write the implementation**
+
+Create `src/lib/uk/pnl/kinds.ts`:
+
+```ts
+/**
+ * src/lib/uk/pnl/kinds.ts
+ *
+ * The four kinds of figure (CREDIBILITY.md, section 2), and the one rule for the kind of a figure computed from others:
+ *
+ *   counted     taken straight from an official UK register
+ *   looked up   a price or a rule read on a named page on a date
+ *   worked out  arithmetic on counted or looked-up figures, the method stated
+ *   estimate    our judgement where no register exists, the basis stated
+ *
+ *   combineKinds([x1..xn]) = estimate      if any input is an estimate
+ *                          = worked out    otherwise, once any arithmetic is done (two or more inputs, or a transformation)
+ *                          = kind(x1)      when the figure is one input passed through untouched (transformed = false)
+ *
+ * `transformed` defaults to true: a figure computed from one input (a quantile of counted bands) is worked out unless the
+ * caller says it passed through untouched. So a figure can never claim more than its weakest input, and arithmetic never
+ * launders an estimate into "worked out".
+ */
+export type Kind = "counted" | "looked up" | "worked out" | "estimate";
+
+export function combineKinds(inputs: readonly Kind[], transformed = true): Kind {
+  if (inputs.length === 0) throw new Error("combineKinds: a figure needs at least one input");
+  if (inputs.includes("estimate")) return "estimate";
+  if (inputs.length === 1 && !transformed) return inputs[0];
+  return "worked out";
+}
+```
+
+- [ ] **Step 4: Run it and watch it pass**
+
+```bash
+npx tsx tests/uk/pnl/kinds.test.ts
+```
+
+Expected: 12 lines starting `PASS`, the last line `uk/pnl/kinds: all pass`, exit code 0.
+
+- [ ] **Step 5: Wire it into the chain**
+
+In `scripts/prebuild_all.ts`, find this line in `GATES`:
+
+```ts
+  { name: "uk-pnl-banded", script: "tests/uk/pnl/banded.test.ts" },
+```
+
+and add directly below it:
+
+```ts
+  { name: "uk-pnl-kinds", script: "tests/uk/pnl/kinds.test.ts" },
+```
+
+Then run:
+
+```bash
+npx tsx scripts/counts.ts --write
+```
+
+Expected: one line beginning `[counts] wrote 3 carrier(s) and scripts/gates.json:` whose gate count is one higher than before this step.
+
+- [ ] **Step 6: Prove the gate runs in the chain and the ratchet holds**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-pnl-kinds
+```
+
+Expected: a line `✓ uk-pnl-kinds` and, at the end, `SUBSET: PASS (not the chain; run without --only for the gate)`.
+
+```bash
+node scripts/audit_gate_reds.mjs
+```
+
+Expected: the last line starts `gate reds: PASS` and ends `the ratchet holds` (the three counts equal the baseline in `scripts/gate_reds_baseline.json`; a new test must not raise them).
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add src/lib/uk/pnl/kinds.ts tests/uk/pnl/kinds.test.ts scripts/prebuild_all.ts CLAUDE.md docs/verification-protocol.md docs/loop/02-ORGANISATION-RESEARCH.md scripts/gates.json
+git commit -m "uk pnl: the kind of a computed figure is the kind of its weakest input (gate uk-pnl-kinds)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+### Task 4: The model: two readings of one set of costs
+
+The register's quartiles are different businesses of different sizes, so one business's fixed costs cannot be carried
+across them: a restaurant taking 125k does not employ the crew or rent the room of one taking 600k. Holding them fixed (the
+first version of this model, written and then rejected on 2026-10-02) printed a London restaurant at the lower quartile
+losing about 140k, an artifact. The size rule replaces it: across businesses, premises, staff and running costs grow in
+proportion to sales, anchored where the premises are measured. The anchor A is the mean sales of registered businesses
+below 5m (task 2's `bandMeanK`), the sales of the business that occupies the average premises when area grows with sales.
+
+Across businesses, for sales R: `RV(R) = RV_A x R / A`; `rates(RV(R))` by the law, so small business relief and the 51,000
+step apply to each size; `P(R) = R - vR - sR - RV(R) - rates(RV(R))`, every line rounded first; `K(R)` the take-home after
+tax, a loss kept as a loss. One business in the short run: `F_A = sA + RV_A + rates(RV_A)`, break-even `R* = F_A / (1 - v)`,
+and the share of registered businesses above it `1 - cdf(R*)`. At its own sales the two readings agree,
+`P(A) = (1 - v)A - F_A`, and the test proves it. For the barbershop, P is increasing except where the law steps: the sweep
+from 10k to 1m finds the only falls exactly where the scaled rateable value crosses 51,000. A trade whose scaled premises
+cross the relief taper (rateable values 12,000 to 15,000) loses profit there too, so pages say "the business at" a quartile,
+never "a quarter keep less than" (restaurants: the lower-quartile business keeps more than only 12.5 of 100). The worked example is a London barbershop: the
+average salon's business needs 64,112.98 to break even, 61 of 100 registered businesses take that, and the business at the
+median (78,625.81 of sales, a 34 m2 room that small business relief clears of rates) keeps 25,407.33 after tax. The summary
+reads the bands under a shape, log-flat by default (task 7 runs all three, decision 9), and carries `sales.open`: a quartile
+under 50k or over 50m rests on the floor or the cap, so its sales print only in words and so does its business's money (one
+more thousand businesses under 50k would put the barbershop's lower quartile at 30,493.85, open). The rent line says when it
+is the average premises scaled to the business's sales (34 m2 at the median), a line's kind follows its inputs, and the
+header says the company form assumes the director is the only employee (the final review, 2026-10-04).
+
+**Files:**
+- Create: `src/lib/uk/pnl/model.ts`
+- Test: `tests/uk/pnl/model.test.ts` (create)
+- Modify: `scripts/prebuild_all.ts` (one `GATES` entry)
+- Modify (generated by counts.ts): `CLAUDE.md`, `docs/verification-protocol.md`, `docs/loop/02-ORGANISATION-RESEARCH.md`, `scripts/gates.json`
+
+- [ ] **Step 1: Write the failing test**
+
+Create `tests/uk/pnl/model.test.ts`:
+
+```ts
+/**
+ * The profit-and-loss model on a worked example: a London barbershop (the register's hair and beauty bands, the official
+ * valuation's average London salon, the trade research's shares). The shares are a TEST FIXTURE, not a published figure.
+ * Every expected value was computed independently in Python (decimal arithmetic, half-up at the penny, 2026-10-02) and
+ * agreed to the penny.
+ *
+ * Run: npx tsx tests/uk/pnl/model.test.ts
+ */
+import { afterTaxCostOf, anchorFixed, billAt, breakEvenSales, keepsAt, profitAt, summarise, type PnlInputs } from "../../../src/lib/uk/pnl/model";
+import { bestCompanyTakeHome } from "../../../src/lib/uk/law/take_home";
+import { red, redSummary } from "../../../scripts/lib/red";
+
+const RULE = "uk-pnl-model";
+const FILE = "src/lib/uk/pnl/model.ts";
+const REMEDY = "fix model.ts until this worked example holds; never change an expected figure to fit the code (each was computed independently)";
+let failed = 0;
+/** A red names the rule, the file under test and what to do (scripts/lib/red, the gate-reds ratchet's shape). */
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+
+const barber: PnlInputs = {
+  revenueBandsK: [2405, 3740, 2655, 525, 245, 70, 40, 10, 5, 0],
+  variable: [
+    { key: "commission", share: 0.3, kind: "estimate", source: "fixture" },
+    { key: "supplies", share: 0.08, kind: "estimate", source: "fixture" },
+  ],
+  sized: [{ key: "running costs", share: 0.12, kind: "estimate", source: "fixture" }],
+  premises: { rateableValue: 16_657.95, areaM2: 60.8, retailHospitalityLeisure: true, kind: "worked out", source: "fixture" },
+  anchorSales: { value: 139_406.36, kind: "worked out", source: "fixture" },
+  form: "sole trader",
+};
+
+// ---- one business, short run: the average premises and its crew ----
+check("the average salon's business: crew and running costs 16,728.76, rent 16,657.95, rates 6,363.34 = 39,750.05 a year", anchorFixed(barber) === 39_750.05);
+check("it breaks even at sales of 64,112.98 (39,750.05 / 0.62)", breakEvenSales(barber) === 64_112.98);
+check("at its own sales the two readings agree: P(A) = A - variable lines - fixed costs = 46,681.89",
+  profitAt(139_406.36, barber) === 46_681.89 && Math.round((139_406.36 - 41_821.91 - 11_152.51 - 39_750.05) * 100) / 100 === 46_681.89);
+
+// ---- across businesses: the size rule ----
+const s = summarise(barber)!;
+check("sales quartiles 50,174.05 / 78,625.81 / 147,504.75, worked out from counted bands", s.sales.q25 === 50_174.05 && s.sales.q50 === 78_625.81 && s.sales.q75 === 147_504.75 && s.sales.kind === "worked out");
+check("61 of 100 registered businesses take at least the break-even (0.6136)", Math.round(s.shareAbove!.value * 10_000) / 10_000 === 0.6136);
+check("the share is an estimate because the shares are", s.shareAbove!.kind === "estimate" && s.breakEven.kind === "estimate");
+check("the median business's year, line by line: 23,587.74 + 6,290.06 + 9,435.10 + rent 9,395.16 + rates 0.00",
+  s.medianBill.lines.map((l) => l.amount).join(",") === "23587.74,6290.06,9435.1,9395.16,0");
+check("its room is a 34 m2 share of the average salon at a rateable value of 9,395.16: small business relief takes the whole bill", billAt(78_625.81, barber)[4].amount === 0);
+check("the median business's profit 29,917.75, the bill and the profit adding to its sales", s.medianBill.profit === 29_917.75 && Math.round((s.medianBill.lines.reduce((a, l) => a + l.amount, 0) + s.medianBill.profit) * 100) / 100 === 78_625.81);
+const flat = summarise(barber, "flat")!;
+check("the bands can be read under another shape (ranges.ts runs all three): flat puts the median at 82,653.74 and 0.6430 of businesses above the same break-even",
+  flat.sales.q50 === 82_653.74 && Math.round(flat.shareAbove!.value * 10_000) / 10_000 === 0.643 && flat.breakEven.value === 64_112.98);
+check("margin at the median 38.05%, the median business's own profit over its own sales", Math.round(s.marginAtMedian * 10_000) / 10_000 === 0.3805 && s.marginAtMedian === s.medianBill.profit / s.sales.q50);
+check("the business at each sales quartile keeps 17,396.00 / 25,407.33 / 39,819.57 after tax", s.keeps.q25 === 17_396 && s.keeps.q50 === 25_407.33 && s.keeps.q75 === 39_819.57);
+check("in order, and an estimate", s.keeps.q25 <= s.keeps.q50 && s.keeps.q50 <= s.keeps.q75 && s.keeps.kind === "estimate");
+check("1,000 more cost a year takes 740.00 from the median business's owner (20% income tax and 6% Class 4 come back)", afterTaxCostOf(1_000, 78_625.81, barber) === 740);
+check("as a company the median business keeps the company optimum on 29,917.75, less than a sole trader",
+  keepsAt(78_625.81, { ...barber, form: "company" }) === bestCompanyTakeHome(29_917.75).takeHome && bestCompanyTakeHome(29_917.75).takeHome < 25_407.33);
+
+// ---- a loss is a loss ----
+const heavy: PnlInputs = { ...barber, sized: [{ key: "staff", share: 0.6, kind: "estimate", source: "fixture" }] };
+check("with staff at 60% of sales the lower-quartile business loses 4,991.92 and keeps the loss, untaxed", profitAt(50_174.05, heavy) === -4_991.92 && keepsAt(50_174.05, heavy) === -4_991.92);
+
+check("the company form keeps a loss as a loss too, never searched for a salary", keepsAt(50_174.05, { ...heavy, form: "company" }) === -4_991.92);
+
+// ---- a quartile in an open band says so (its business's money prints only in words) ----
+check("no barbershop quartile rests on the floor or the cap: q25 50,174.05 is a figure", s.sales.open?.q25 === false && s.sales.open?.q50 === false && s.sales.open?.q75 === false);
+const floorQ25 = summarise({ ...barber, revenueBandsK: [3405, 3740, 2655, 525, 245, 70, 40, 10, 5, 0] })!;
+check("1,000 more businesses under 50k put the lower quartile at 30,493.85, under 50k: open, the median and upper quartile not", floorQ25.sales.q25 === 30_493.85 && floorQ25.sales.open?.q25 === true && floorQ25.sales.open?.q50 === false && floorQ25.sales.open?.q75 === false);
+
+// ---- the rent line says what it is at every size ----
+check("at the anchor's sales the rent is the average premises' own: 16,657.95, its source as given", billAt(139_406.36, barber)[3].amount === 16_657.95 && billAt(139_406.36, barber)[3].source === "fixture");
+check("at the median the rent is the size rule's share and says so: 9,395.16 for 34 m2", billAt(78_625.81, barber)[3].source === "fixture, scaled to this business's sales: 34 m2 at the same rent per m2 (the size rule)" && billAt(78_625.81, barber)[3].kind === "worked out");
+
+// ---- profit falls with sales only where the law steps ----
+let onlyAtTheStep = true;
+for (let r = 10_000; r < 1_000_000; r += 500) {
+  if (profitAt(r + 500, barber) < profitAt(r, barber)) {
+    const rvBefore = (16_657.95 * r) / 139_406.36, rvAfter = (16_657.95 * (r + 500)) / 139_406.36;
+    if (!(rvBefore < 51_000 && rvAfter >= 51_000)) onlyAtTheStep = false;
+  }
+}
+check("from 10k to 1m of sales, profit falls only where the rateable value crosses 51,000 (the multiplier's step)", onlyAtTheStep);
+
+// ---- what the model refuses ----
+let threw = 0;
+try { profitAt(50_000, { ...barber, sized: [{ key: "x", share: 0.7, kind: "estimate", source: "fixture" }] }); } catch { threw++; }
+try { profitAt(50_000, { ...barber, anchorSales: { value: 0, kind: "worked out", source: "fixture" } }); } catch { threw++; }
+check("shares that leave nothing of a pound, and an anchor of no sales, are refused", threw === 2);
+const refuses = (f: () => unknown) => { try { f(); return false; } catch { return true; } };
+check("shares that take exactly the whole pound, and a negative share, are refused too",
+  refuses(() => profitAt(50_000, { ...barber, variable: [{ key: "x", share: 0.5, kind: "estimate", source: "fixture" }], sized: [{ key: "y", share: 0.5, kind: "estimate", source: "fixture" }] }))
+  && refuses(() => profitAt(50_000, { ...barber, sized: [{ key: "x", share: -0.1, kind: "estimate", source: "fixture" }] })));
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("uk/pnl/model: all pass");
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+npx tsx tests/uk/pnl/model.test.ts
+```
+
+Expected: exit code 1 with `Error: Cannot find module '../../../src/lib/uk/pnl/model'`.
+
+- [ ] **Step 3: Write the implementation**
+
+Create `src/lib/uk/pnl/model.ts`:
+
+```ts
+/**
+ * src/lib/uk/pnl/model.ts
+ *
+ * The money of one trade in one place, built from parts a reader can check, instead of a curated margin.
+ *
+ * TWO QUESTIONS, TWO READINGS OF THE SAME COSTS. The register's quartiles are different businesses of different sizes, so
+ * a business's costs cannot be held fixed across them: a restaurant taking 125k does not employ the crew of one taking
+ * 600k or rent its room. One rule sizes them, THE SIZE RULE: across businesses, premises, staff and running costs grow in
+ * proportion to sales. It is anchored where the premises are measured:
+ *
+ *   anchor sales      A    the mean sales of the registered businesses below 5m (banded.ts bandMeanK)
+ *   average premises       rent proxy RV_A (the valuation's average premises of the trade's kind in the place), whose
+ *                          occupier, under the size rule, is the business with the mean sales
+ *   variable share    v    each pound of sales spent on goods, supplies, commission, delivery fees
+ *   sized share       s    staff and running costs, a share of the sales of a business of any size
+ *
+ * ACROSS BUSINESSES (the quartiles: what owners of different sizes keep):
+ *   rent proxy        RV(R) = RV_A x R / A
+ *   business rates    rates(RV(R)), the law on the scaled value: small business relief and the 51,000 step apply
+ *   profit            P(R) = R - v R - s R - RV(R) - rates(RV(R)), every line rounded first (parts add to the bill)
+ *   owner keeps       K(R) = P - tax(P) when P > 0; P when P <= 0 (a loss is a loss; no tax on it)
+ *
+ * ONE BUSINESS, SHORT RUN (break-even: the business in the average premises cannot shed its crew when sales dip):
+ *   fixed costs       F_A = s A + RV_A + rates(RV_A)
+ *   break-even        R* = F_A / (1 - v)
+ *   share above it    1 - cdf(R*): the registered businesses taking at least what the average premises needs
+ *   At its own sales A the two readings agree: P(A) = (1 - v) A - F_A.
+ *
+ * THE QUARTILE FIGURES are the take-home of the business AT each sales quartile. P is increasing in R except where the law
+ * steps (rates rise by 2,448 at a rateable value of 51,000) and steepens (the relief taper between 12,000 and 15,000), so
+ * near those points this is not exactly the quartile of take-home; the label says "the business at", which it is.
+ *
+ * WHAT IT CANNOT SEE: businesses outside the register; costs other than the recipe's lines; the costs' own spread (one set
+ * of shares, not a distribution); premises whose size does not follow sales (a large room for small takings, or the
+ * reverse); the valuation's premises and the register's businesses are different counts of different things, so the
+ * anchor is the best match available, not a measured pairing. The company form assumes the director is the company's only
+ * employee, so no Employment Allowance: a company with staff can claim it, and then keeps more (the median London
+ * barbershop as a company: 24,343.99 without the allowance, 25,164.87 with it).
+ *
+ * A QUARTILE IN AN OPEN BAND (under 50k or over 50m) rests on the 5k floor or the 100m cap, so its sales print only in
+ * words, and so does any money of the business at it: sales.open says which quartiles do.
+ */
+import { bandCdf, bandQuantile, type BandShape } from "./banded";
+import { combineKinds, type Kind } from "./kinds";
+import { pennies, sumPennies } from "../law/money";
+import { businessRates } from "../law/business_rates";
+import { bestCompanyTakeHome, soleTraderTakeHome } from "../law/take_home";
+
+export type Form = "sole trader" | "company";
+export type Share = { key: string; share: number; kind: Kind; source: string };
+export type Line = { key: string; amount: number; kind: Kind; source: string };
+export type Premises = { rateableValue: number; areaM2: number; retailHospitalityLeisure: boolean; kind: Kind; source: string };
+export type PnlInputs = {
+  revenueBandsK: readonly number[];
+  variable: readonly Share[];
+  sized: readonly Share[];
+  premises: Premises;
+  anchorSales: { value: number; kind: Kind; source: string };
+  form: Form;
+};
+
+const total = (shares: readonly Share[]) => shares.reduce((a, x) => a + x.share, 0);
+
+function check(inputs: PnlInputs): void {
+  const v = total(inputs.variable), s = total(inputs.sized);
+  if (!(v >= 0 && s >= 0 && v + s < 1)) throw new Error("model: shares must be non-negative and leave something of each pound");
+  if (!(inputs.anchorSales.value > 0)) throw new Error("model: the anchor's sales must be positive");
+}
+
+/** One business's year at sales R under the size rule, each line rounded first. */
+export function billAt(sales: number, inputs: PnlInputs): Line[] {
+  check(inputs);
+  const rv = pennies((inputs.premises.rateableValue * sales) / inputs.anchorSales.value);
+  const rates = businessRates({ rateableValue: rv, retailHospitalityLeisure: inputs.premises.retailHospitalityLeisure }).bill;
+  return [
+    ...inputs.variable.map((x) => ({ key: x.key, amount: pennies(x.share * sales), kind: x.kind, source: x.source })),
+    ...inputs.sized.map((x) => ({ key: x.key, amount: pennies(x.share * sales), kind: x.kind, source: x.source })),
+    {
+      key: "rent",
+      amount: rv,
+      kind: combineKinds([inputs.premises.kind, inputs.anchorSales.kind]),
+      // at any sales but the anchor's the amount is the average premises scaled by the size rule, and the words say so
+      source: sales === inputs.anchorSales.value
+        ? inputs.premises.source
+        : `${inputs.premises.source}, scaled to this business's sales: ${Math.round((inputs.premises.areaM2 * sales) / inputs.anchorSales.value)} m2 at the same rent per m2 (the size rule)`,
+    },
+    { key: "business rates", amount: rates, kind: combineKinds([inputs.premises.kind, inputs.anchorSales.kind, "looked up"]), source: `2026-27 rates on a rateable value of ${Math.round(rv).toLocaleString("en-GB")}` },
+  ];
+}
+
+export function profitAt(sales: number, inputs: PnlInputs): number {
+  return pennies(sales - sumPennies(billAt(sales, inputs).map((l) => l.amount)));
+}
+
+export function keepsOfProfit(profit: number, form: Form): number {
+  if (profit <= 0) return profit;
+  return form === "sole trader" ? soleTraderTakeHome(profit).takeHome : bestCompanyTakeHome(profit).takeHome;
+}
+
+export function keepsAt(sales: number, inputs: PnlInputs): number {
+  return keepsOfProfit(profitAt(sales, inputs), inputs.form);
+}
+
+/** The fixed costs of the business in the average premises, a year: its crew and running costs, rent and rates. */
+export function anchorFixed(inputs: PnlInputs): number {
+  const a = inputs.anchorSales.value;
+  return sumPennies(billAt(a, inputs).slice(inputs.variable.length).map((l) => l.amount));
+}
+
+export function breakEvenSales(inputs: PnlInputs): number {
+  return pennies(anchorFixed(inputs) / (1 - total(inputs.variable)));
+}
+
+/** The share of registered businesses whose sales clear the break-even, the bands read under `shape` (log-flat by default). */
+export function shareAboveBreakEven(inputs: PnlInputs, shape: BandShape = "log-flat"): number | null {
+  const cdf = bandCdf(inputs.revenueBandsK, breakEvenSales(inputs) / 1000, shape);
+  return cdf === null ? null : 1 - cdf;
+}
+
+/** What `extra` more cost a year takes from the owner after tax, for the business at `sales` (the marginal view a lever shows). */
+export function afterTaxCostOf(extra: number, sales: number, inputs: PnlInputs): number {
+  const p = profitAt(sales, inputs);
+  return pennies(keepsOfProfit(p, inputs.form) - keepsOfProfit(pennies(p - extra), inputs.form));
+}
+
+export type PnlSummary = {
+  sales: { q25: number; q50: number; q75: number; open: { q25: boolean; q50: boolean; q75: boolean }; kind: Kind };
+  anchor: { sales: number; fixed: number; kind: Kind };
+  breakEven: { value: number; kind: Kind };
+  shareAbove: { value: number; kind: Kind } | null;
+  medianBill: { lines: Line[]; profit: number };
+  marginAtMedian: number;
+  keeps: { q25: number; q50: number; q75: number; kind: Kind };
+};
+
+/** The headline figures, the register's bands read under `shape` (log-flat, the figure a page prints, by default; ranges.ts
+ *  reads them under all three). */
+export function summarise(inputs: PnlInputs, shape: BandShape = "log-flat"): PnlSummary | null {
+  check(inputs);
+  const q = (p: number) => bandQuantile(inputs.revenueBandsK, p, shape);
+  const q25 = q(0.25), q50 = q(0.5), q75 = q(0.75);
+  if (!q25 || !q50 || !q75) return null;
+  const s25 = pennies(q25.k * 1000), s50 = pennies(q50.k * 1000), s75 = pennies(q75.k * 1000);
+  const costKind = combineKinds([...inputs.variable.map((x) => x.kind), ...inputs.sized.map((x) => x.kind), inputs.premises.kind, inputs.anchorSales.kind]);
+  const share = shareAboveBreakEven(inputs, shape);
+  const profit50 = profitAt(s50, inputs);
+  return {
+    sales: {
+      q25: s25, q50: s50, q75: s75,
+      open: { q25: q25.openBelow || q25.openAbove, q50: q50.openBelow || q50.openAbove, q75: q75.openBelow || q75.openAbove },
+      kind: combineKinds(["counted"]),
+    },
+    anchor: { sales: inputs.anchorSales.value, fixed: anchorFixed(inputs), kind: costKind },
+    breakEven: { value: breakEvenSales(inputs), kind: costKind },
+    shareAbove: share === null ? null : { value: share, kind: combineKinds(["counted", costKind]) },
+    medianBill: { lines: billAt(s50, inputs), profit: profit50 },
+    marginAtMedian: profit50 / s50,
+    keeps: { q25: keepsAt(s25, inputs), q50: keepsAt(s50, inputs), q75: keepsAt(s75, inputs), kind: combineKinds(["counted", costKind, "looked up"]) },
+  };
+}
+```
+
+- [ ] **Step 4: Run it and watch it pass**
+
+```bash
+npx tsx tests/uk/pnl/model.test.ts
+```
+
+Expected: 24 lines starting `PASS`, the last line `uk/pnl/model: all pass`, exit code 0.
+
+- [ ] **Step 5: Wire it into the chain**
+
+In `scripts/prebuild_all.ts`, find this line in `GATES`:
+
+```ts
+  { name: "uk-pnl-kinds", script: "tests/uk/pnl/kinds.test.ts" },
+```
+
+and add directly below it:
+
+```ts
+  { name: "uk-pnl-model", script: "tests/uk/pnl/model.test.ts" },
+```
+
+Then run:
+
+```bash
+npx tsx scripts/counts.ts --write
+```
+
+Expected: one line beginning `[counts] wrote 3 carrier(s) and scripts/gates.json:` whose gate count is one higher than before this step.
+
+- [ ] **Step 6: Prove the gate runs in the chain and the ratchet holds**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-pnl-model
+```
+
+Expected: a line `✓ uk-pnl-model` and, at the end, `SUBSET: PASS (not the chain; run without --only for the gate)`.
+
+```bash
+node scripts/audit_gate_reds.mjs
+```
+
+Expected: the last line starts `gate reds: PASS` and ends `the ratchet holds` (the three counts equal the baseline in `scripts/gate_reds_baseline.json`; a new test must not raise them).
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add src/lib/uk/pnl/model.ts tests/uk/pnl/model.test.ts scripts/prebuild_all.ts CLAUDE.md docs/verification-protocol.md docs/loop/02-ORGANISATION-RESEARCH.md scripts/gates.json
+git commit -m "uk pnl: the money model, the size rule across businesses and fixed costs within one, parts first (gate uk-pnl-model)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+### Task 5: Inputs from a recipe
+
+The average premises come from the valuation statistics for the trade's kind of premises in the place: area = floorspace /
+count, `RV_A = rv_per_m2 x area`, the official estimate of a year's rent at April 2021 (a rent proxy dated 2021, and the page
+says so). The anchor comes from the bands. The recipe supplies only shares: which costs move with each pound of sales and
+which are sized by the business. Rent and rates are never in a recipe, so a trade researched at "rent 15% of sales" prints
+its place's measured rent. Its review (2026-10-04) found the test pinned four numbers and two phrases, so 19 faults passed
+(a recipe's estimate passed on as counted, the relief flag or the form hard-coded, the source sentences changed): seven
+checks pin what passes through, and a trade outside retail, hospitality and leisure pays the standard multiplier (break-even
+65,456.35, rates 7,196.23 on the average room).
+
+**Files:**
+- Create: `src/lib/uk/pnl/inputs.ts`
+- Test: `tests/uk/pnl/inputs.test.ts` (create)
+- Modify: `scripts/prebuild_all.ts` (one `GATES` entry)
+- Modify (generated by counts.ts): `CLAUDE.md`, `docs/verification-protocol.md`, `docs/loop/02-ORGANISATION-RESEARCH.md`, `scripts/gates.json`
+
+- [ ] **Step 1: Write the failing test**
+
+Create `tests/uk/pnl/inputs.test.ts`:
+
+```ts
+/**
+ * A trade's inputs from its recipe: London barbershops, the official valuation's London salon row, the register's hair and
+ * beauty bands. The recipe's shares are the trade research's (estimates); rent, rates and the anchor are worked out.
+ *
+ * Run: npx tsx tests/uk/pnl/inputs.test.ts
+ */
+import { anchorSalesFromBands, buildInputs, premisesFromValuation, type Recipe } from "../../../src/lib/uk/pnl/inputs";
+import { summarise } from "../../../src/lib/uk/pnl/model";
+import { red, redSummary } from "../../../scripts/lib/red";
+
+const RULE = "uk-pnl-inputs";
+const FILE = "src/lib/uk/pnl/inputs.ts";
+const REMEDY = "fix inputs.ts until this worked example holds; never change an expected figure to fit the code (each was computed independently)";
+let failed = 0;
+/** A red names the rule, the file under test and what to do (scripts/lib/red, the gate-reds ratchet's shape). */
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+
+// The London row of the valuation statistics for Hairdressing/Beauty Salons (registers/uk/tables, read 2026-10-02)
+const LONDON_SALONS = { rv_per_m2: 274, count: 1760, floorspace_k_m2: 107 };
+const HAIR_BEAUTY_LONDON = [2405, 3740, 2655, 525, 245, 70, 40, 10, 5, 0];
+const BARBERSHOPS: Recipe = {
+  trade: "barbershops",
+  research: "data/facts/industry/barbershops.json",
+  retailHospitalityLeisure: true,
+  utilitiesCarried: false,
+  variable: [
+    { key: "barbers' commission", driver: "Barber pay and commission", shareOfSales: 0.3, kind: "estimate", basis: "fixture" },
+    { key: "supplies and product", driver: "Supplies and product", shareOfSales: 0.08, kind: "estimate", basis: "fixture" },
+  ],
+  sized: [{ key: "running costs", driver: "Other operating", shareOfSales: 0.12, kind: "estimate", basis: "fixture" }],
+};
+
+const p = premisesFromValuation(LONDON_SALONS);
+check("the average London salon is 60.8 m2", Math.round(p.areaM2 * 10) / 10 === 60.8);
+check("its rateable value is 16,657.95 (274 a m2)", p.rateableValue === 16_657.95);
+check("the anchor: mean sales of the registered hair and beauty businesses under 5m, 139,406.36", anchorSalesFromBands(HAIR_BEAUTY_LONDON) === 139_406.36);
+const inputs = buildInputs(BARBERSHOPS, { revenueBandsK: HAIR_BEAUTY_LONDON, premises: LONDON_SALONS, premisesCategory: "Hairdressing/Beauty Salons", place: "London", form: "sole trader" });
+check("the recipe's shares pass through: 0.3 and 0.08 move with sales, 0.12 is sized", inputs.variable.map((x) => x.share).join(",") === "0.3,0.08" && inputs.sized.map((x) => x.share).join(",") === "0.12");
+check("every share names its research file", inputs.variable.every((x) => x.source.endsWith("(data/facts/industry/barbershops.json)")));
+check("the premises are worked out and name the average room (61 m2)", inputs.premises.rateableValue === 16_657.95 && inputs.premises.kind === "worked out" && inputs.premises.source.includes("(61 m2)"));
+check("the anchor is worked out", inputs.anchorSales.value === 139_406.36 && inputs.anchorSales.kind === "worked out");
+const s = summarise(inputs)!;
+check("the recipe gives the model's worked example: break-even 64,112.98, the median owner keeps 25,407.33", s.breakEven.value === 64_112.98 && s.keeps.q50 === 25_407.33);
+let threw = 0;
+try { premisesFromValuation({ rv_per_m2: 0, count: 0, floorspace_k_m2: 0 }); } catch { threw++; }
+try { buildInputs(BARBERSHOPS, { revenueBandsK: [0, 0, 0, 0, 0, 0, 0, 3, 2, 1], premises: LONDON_SALONS, premisesCategory: "Hairdressing/Beauty Salons", place: "London", form: "sole trader" }); } catch { threw++; }
+check("an empty valuation row, and bands with nobody under 5m, are refused, not divided by", threw === 2);
+const refusesRow = (row: { rv_per_m2: number; count: number; floorspace_k_m2: number }) => { try { premisesFromValuation(row); return false; } catch { return true; } };
+check("a valuation row with no value, no floorspace or no premises is refused, each on its own",
+  refusesRow({ rv_per_m2: 0, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: 5, floorspace_k_m2: 0 }) && refusesRow({ rv_per_m2: 274, count: 0, floorspace_k_m2: 1 }));
+
+
+// ---- what passes through unchanged (review additions)
+const CTX = { revenueBandsK: HAIR_BEAUTY_LONDON, premises: LONDON_SALONS, premisesCategory: "Hairdressing/Beauty Salons", place: "London", form: "sole trader" as const };
+check("recipe lines keep their keys and the basis they were given", inputs.variable.map((x) => x.key).join("|") === "barbers' commission|supplies and product" && inputs.sized[0].key === "running costs"
+  && inputs.variable[0].source === "fixture (data/facts/industry/barbershops.json)" && inputs.sized[0].source === "fixture (data/facts/industry/barbershops.json)");
+const looked = buildInputs({ ...BARBERSHOPS, variable: [{ ...BARBERSHOPS.variable[0], kind: "looked up" }, BARBERSHOPS.variable[1]] }, CTX);
+check("a line's kind is the recipe's: looked up stays looked up, estimate stays estimate", looked.variable[0].kind === "looked up" && looked.variable[1].kind === "estimate" && looked.sized[0].kind === "estimate");
+check("the rent line says what it is: the official estimate of a year's rent, the average room, the place, April 2021",
+  inputs.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation" && Math.round(inputs.premises.areaM2 * 10) / 10 === 60.8);
+check("the anchor says what it is", inputs.anchorSales.source === "the mean sales of the registered businesses under 5m in London");
+const other = buildInputs({ ...BARBERSHOPS, retailHospitalityLeisure: false }, { ...CTX, form: "company", place: "Leeds" });
+check("a trade outside retail, hospitality and leisure pays the 43.2p small business multiplier, not the 38.2p one: break-even 65,456.35 (rates 7,196.23 on the average room)",
+  other.premises.retailHospitalityLeisure === false && summarise(other)!.breakEven.value === 65_456.35);
+check("the form and the place reach the inputs", other.form === "company" && other.premises.source.includes("in Leeds") && other.anchorSales.source.endsWith("in Leeds"));
+check("a negative or non-numeric valuation row is refused", refusesRow({ rv_per_m2: -1, count: 5, floorspace_k_m2: 1 }) && refusesRow({ rv_per_m2: 274, count: -5, floorspace_k_m2: 1 })
+  && refusesRow({ rv_per_m2: 274, count: 5, floorspace_k_m2: -1 }) && refusesRow({ rv_per_m2: NaN, count: 5, floorspace_k_m2: 1 }));
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("uk/pnl/inputs: all pass");
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+npx tsx tests/uk/pnl/inputs.test.ts
+```
+
+Expected: exit code 1 with `Error: Cannot find module '../../../src/lib/uk/pnl/inputs'`.
+
+- [ ] **Step 3: Write the implementation**
+
+Create `src/lib/uk/pnl/inputs.ts`:
+
+```ts
+/**
+ * src/lib/uk/pnl/inputs.ts
+ *
+ * A trade's money inputs in one place, from a recipe: measured lines where the registers or the law give them, the trade
+ * research's shares only where nothing better exists, each line carrying its kind and its basis.
+ *
+ * PREMISES, from the official valuation statistics for the trade's kind of premises in the place:
+ *   average area      area = floorspace / count                        (worked out)
+ *   rateable value    RV_A = rv_per_m2 x area                          (worked out; the valuation's estimate of a year's rent at
+ *                                                                       1 April 2021, so a rent proxy dated 2021)
+ * ANCHOR SALES, the business that occupies the average premises under the size rule (model.ts): the mean sales of the
+ *   registered businesses below 5m (banded.ts bandMeanK), worked out from the counted bands.
+ * THE RECIPE says which costs move with each pound of sales (variable) and which are sized by the business's sales across
+ * businesses but fixed within one (sized: staff, running costs). Rent and rates are never in a recipe: a trade researched
+ * at "rent 15% of sales" prints its place's measured rent.
+ */
+import { pennies } from "../law/money";
+import { bandMeanK } from "./banded";
+import type { Kind } from "./kinds";
+import type { Form, PnlInputs } from "./model";
+
+export type PremisesRow = { rv_per_m2: number; count: number; floorspace_k_m2: number };
+/** One recipe line: `driver` is the research cost driver it carries, by its exact name in the research file. */
+export type RecipeShare = { key: string; driver: string; shareOfSales: number; kind: Kind; basis: string };
+export type Recipe = {
+  trade: string;
+  research: string;
+  retailHospitalityLeisure: boolean;
+  utilitiesCarried: boolean;
+  variable: readonly RecipeShare[];
+  sized: readonly RecipeShare[];
+};
+
+export function premisesFromValuation(row: PremisesRow): { areaM2: number; rateableValue: number } {
+  if (!(row.count > 0 && row.floorspace_k_m2 > 0 && row.rv_per_m2 > 0)) throw new Error("premisesFromValuation: an empty valuation row");
+  const areaM2 = (row.floorspace_k_m2 * 1000) / row.count;
+  return { areaM2, rateableValue: pennies(row.rv_per_m2 * areaM2) };
+}
+
+export function anchorSalesFromBands(revenueBandsK: readonly number[]): number | null {
+  const m = bandMeanK(revenueBandsK);
+  return m === null ? null : pennies(m.k * 1000);
+}
+
+export function buildInputs(
+  recipe: Recipe,
+  ctx: { revenueBandsK: readonly number[]; premises: PremisesRow; premisesCategory: string; place: string; form: Form },
+): PnlInputs {
+  const { areaM2, rateableValue } = premisesFromValuation(ctx.premises);
+  const anchor = anchorSalesFromBands(ctx.revenueBandsK);
+  if (anchor === null) throw new Error(`buildInputs: no registered ${recipe.trade} businesses below 5m in ${ctx.place}`);
+  const share = (x: RecipeShare) => ({ key: x.key, share: x.shareOfSales, kind: x.kind, source: `${x.basis} (${recipe.research})` });
+  return {
+    revenueBandsK: ctx.revenueBandsK,
+    variable: recipe.variable.map(share),
+    sized: recipe.sized.map(share),
+    premises: {
+      rateableValue,
+      areaM2,
+      retailHospitalityLeisure: recipe.retailHospitalityLeisure,
+      kind: "worked out",
+      source: `the official estimate of a year's rent for the average ${ctx.premisesCategory.toLowerCase()} premises in ${ctx.place} (${Math.round(areaM2)} m2), April 2021 valuation`,
+    },
+    anchorSales: { value: anchor, kind: "worked out", source: `the mean sales of the registered businesses under 5m in ${ctx.place}` },
+    form: ctx.form,
+  };
+}
+```
+
+- [ ] **Step 4: Run it and watch it pass**
+
+```bash
+npx tsx tests/uk/pnl/inputs.test.ts
+```
+
+Expected: 17 lines starting `PASS`, the last line `uk/pnl/inputs: all pass`, exit code 0.
+
+- [ ] **Step 5: Wire it into the chain**
+
+In `scripts/prebuild_all.ts`, find this line in `GATES`:
+
+```ts
+  { name: "uk-pnl-model", script: "tests/uk/pnl/model.test.ts" },
+```
+
+and add directly below it:
+
+```ts
+  { name: "uk-pnl-inputs", script: "tests/uk/pnl/inputs.test.ts" },
+```
+
+Then run:
+
+```bash
+npx tsx scripts/counts.ts --write
+```
+
+Expected: one line beginning `[counts] wrote 3 carrier(s) and scripts/gates.json:` whose gate count is one higher than before this step.
+
+- [ ] **Step 6: Prove the gate runs in the chain and the ratchet holds**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-pnl-inputs
+```
+
+Expected: a line `✓ uk-pnl-inputs` and, at the end, `SUBSET: PASS (not the chain; run without --only for the gate)`.
+
+```bash
+node scripts/audit_gate_reds.mjs
+```
+
+Expected: the last line starts `gate reds: PASS` and ends `the ratchet holds` (the three counts equal the baseline in `scripts/gate_reds_baseline.json`; a new test must not raise them).
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add src/lib/uk/pnl/inputs.ts tests/uk/pnl/inputs.test.ts scripts/prebuild_all.ts CLAUDE.md docs/verification-protocol.md docs/loop/02-ORGANISATION-RESEARCH.md scripts/gates.json
+git commit -m "uk pnl: a trade's inputs from its recipe, rent and rates measured, the anchor worked out (gate uk-pnl-inputs)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+### Task 6: Recipes and the London loader
+
+A recipe is built from the trade's research file (`data/facts/industry/<trade>.json`, its cost drivers as shares of sales)
+by the protocol written at the top of `recipes.ts`: each driver takes exactly one class (variable, commission, premises,
+sized); premises drivers are dropped because rent and rates are measured; a commission counts only the employed producers
+(the owner's chair is paid by the profit); the owner's pay is never a line. The recipe gate proves the protocol from the
+research file itself (every line names its driver, carries its share, every non-premises driver carried exactly once,
+`utilitiesCarried` as the drivers say) and screens the London result: at least a quarter of registered businesses reach
+break-even, and the median business's margin is above 0 and below 60%.
+
+Seven trades pass. London, sole trader, the business at the median, on the slices of 2026-10-02:
+
+| Trade | Average premises | Break-even of the average premises' business | Registered businesses above it | Margin at the median | Keeps at the median |
+|---|---|---|---|---|---|
+| barbershops | 61 m2, RV 16,658 | 64,113 | 61 of 100 | 38.1% | 25,407 |
+| nail-salons | 61 m2, RV 16,658 | 68,806 | 57 of 100 | 29.7% | 20,559 |
+| restaurants | 203 m2, RV 73,375 | 556,017 | 32 of 100 | 5.0% | 13,756 |
+| bakeries-retail | 90 m2, RV 27,956 (valued as cafes) | 351,741 | 36 of 100 | 16.8% | 30,399 |
+| sports-fitness | 305 m2, RV 55,732 | 275,028 | 34 of 100 | 23.3% | 30,960 |
+| auto-repair-shops | 261 m2, RV 26,342 | 213,360 | 39 of 100 | 21.6% | 29,164 |
+| dental-practices | 144 m2, RV 45,605 | 198,711 | 47 of 100 | 26.5% | 39,216 |
+
+Grocery stores fail both screens (17 of 100 above break-even, a margin of -12.9%): the valuation's 540 convenience stores
+average 369 m2 and are not the register's 6,935 grocers, so the premises do not match the businesses; they stay without a
+recipe. Barbershops, bakeries, auto repair and dental carry `utilitiesCarried: false` (their research lumps utilities with
+rent), so their margins are overstated by their utilities until the master plan's plan 07 adds the energy line; a page prints
+no money for them before then. The London loader withholds with a reason, data first: no bands for the trade's code, no kind
+of premises, premises valued as shops or offices (an average over unlike occupiers), under 100 premises (the valuation's
+rounding moves the average area by more than a tenth), or no recipe.
+
+**Files:**
+- Create: `src/lib/uk/pnl/recipes.ts`, `src/lib/uk/pnl/london.ts`
+- Test: `tests/uk/pnl/recipes.test.ts`, `tests/uk/pnl/london.test.ts` (create)
+- Modify: `scripts/prebuild_all.ts` (two `GATES` entries)
+- Modify (generated by counts.ts): `CLAUDE.md`, `docs/verification-protocol.md`, `docs/loop/02-ORGANISATION-RESEARCH.md`, `scripts/gates.json`
+
+- [ ] **Step 1: Write the failing tests**
+
+Create `tests/uk/pnl/recipes.test.ts`:
+
+```ts
+/**
+ * Every recipe keeps the protocol in src/lib/uk/pnl/recipes.ts, and its London figures pass two screens before a page may
+ * print them: at least a quarter of the registered businesses reach break-even (a trade whose average premises needs more
+ * than three in four of its businesses take is a recipe or a premises mismatch, not a finding), and the median business's
+ * margin is above 0 and below 60% (beyond that a cost line is missing).
+ *
+ * Run: npx tsx tests/uk/pnl/recipes.test.ts
+ */
+import fs from "node:fs";
+import { RECIPES } from "../../../src/lib/uk/pnl/recipes";
+import { londonTradeSummary, londonWithholding } from "../../../src/lib/uk/pnl/london";
+import { red, redSummary } from "../../../scripts/lib/red";
+
+const RULE = "uk-pnl-recipes";
+const FILE = "src/lib/uk/pnl/recipes.ts";
+const REMEDY = "rebuild the recipe from its research file by the protocol at the top of recipes.ts; never loosen a screen to admit a recipe";
+let failed = 0;
+/** A red names the rule, the file under test and what to do (scripts/lib/red, the gate-reds ratchet's shape). */
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+
+type Fact = { metric: string; value: unknown };
+const PREMISES_DRIVER = /rent|occupancy|facility/i;
+
+function drivers(file: string): { name: string; pct: number }[] {
+  const facts = (JSON.parse(fs.readFileSync(file, "utf8")) as { facts: Fact[] }).facts;
+  const names = facts.filter((f) => f.metric === "cost_structure.cost_drivers.*.name").map((f) => String(f.value));
+  const pcts = facts.filter((f) => f.metric === "cost_structure.cost_drivers.*.pct_of_revenue").map((f) => Number(f.value));
+  return names.map((name, i) => ({ name, pct: pcts[i] }));
+}
+
+check("nail salons' commission is its basis exactly: 40% of sales on five technicians of six", RECIPES["nail-salons"].variable[0].shareOfSales === (0.4 * 5) / 6);
+check("seven recipes, each keyed by its own trade", Object.keys(RECIPES).length === 7 && Object.entries(RECIPES).every(([slug, r]) => r.trade === slug));
+for (const [slug, r] of Object.entries(RECIPES)) {
+  const entity = slug.replace(/-/g, "_");
+  check(`${slug}: its research file is its own (data/facts/industry/${entity}.json)`, r.research === `data/facts/industry/${entity}.json` && fs.existsSync(r.research));
+  const ds = drivers(r.research);
+  const lines = [...r.variable, ...r.sized];
+  const v = r.variable.reduce((a, x) => a + x.shareOfSales, 0), s = r.sized.reduce((a, x) => a + x.shareOfSales, 0);
+  check(`${slug}: every share is in (0, 1) and together they leave something of each pound (${(v + s).toFixed(4)})`, lines.every((x) => x.shareOfSales > 0 && x.shareOfSales < 1) && v + s < 1);
+  check(`${slug}: every line is an estimate with a basis`, lines.every((x) => x.kind === "estimate" && x.basis.trim().length > 0));
+  const named = (x: { driver: string }) => ds.find((d) => d.name === x.driver);
+  check(`${slug}: every line names one of its research drivers`, lines.every((x) => named(x) !== undefined));
+  check(`${slug}: a line carries its driver's share, a commission at most that (the owner's chair is paid by the profit)`,
+    lines.every((x) => { const d = named(x); if (!d) return false; return /commission/i.test(x.key) ? /commission/i.test(d.name) && x.shareOfSales <= d.pct / 100 : Math.abs(d.pct / 100 - x.shareOfSales) < 1e-9; }));
+  const carried = lines.map((x) => x.driver);
+  check(`${slug}: every driver is classed once: premises dropped (rent and rates are measured), every other carried exactly once`,
+    ds.every((d) => (PREMISES_DRIVER.test(d.name) ? !carried.includes(d.name) : carried.filter((c) => c === d.name).length === 1)));
+  check(`${slug}: utilitiesCarried is ${r.utilitiesCarried}, as its drivers say`, r.utilitiesCarried === ds.some((d) => /utilit/i.test(d.name) && !PREMISES_DRIVER.test(d.name)));
+  const why = londonWithholding(slug);
+  check(`${slug}: its London money can be built${why ? ` (withheld: ${why})` : ""}`, why === null);
+  const sum = londonTradeSummary(slug);
+  const share = sum?.shareAbove?.value ?? 0;
+  check(`${slug}: at least a quarter of registered businesses reach break-even (${share.toFixed(4)})`, share >= 0.25);
+  const m = sum?.marginAtMedian ?? 0;
+  check(`${slug}: the median business's margin is above 0 and below 60% (${m.toFixed(4)})`, m > 0 && m < 0.6);
+}
+
+// Each recipe's London figures and relief flag. The figures were computed apart from this code (Python, decimal arithmetic,
+// half-up at the penny; the review of 2026-10-04 agreed with the TypeScript on all 241 it compared); the flags are the 2026-27
+// readings' (docs/uk-law/2026-27-readings.md: garages qualify, dentistry does not). A driver moved between the costs that grow
+// with sales and the sized ones, or a flag flipped, moves these figures.
+const PINNED: Record<string, { rhl: boolean; breakEven: number; shareAbove: number; keeps: number }> = {
+  "barbershops": { rhl: true, breakEven: 64_112.98, shareAbove: 0.6136, keeps: 25_407.33 },
+  "nail-salons": { rhl: true, breakEven: 68_806.31, shareAbove: 0.5742, keeps: 20_558.74 },
+  "restaurants": { rhl: true, breakEven: 556_017.36, shareAbove: 0.3212, keeps: 13_756.27 },
+  "bakeries-retail": { rhl: true, breakEven: 351_741.28, shareAbove: 0.3587, keeps: 30_399.25 },
+  "sports-fitness": { rhl: true, breakEven: 275_028.36, shareAbove: 0.3429, keeps: 30_960.42 },
+  "auto-repair-shops": { rhl: true, breakEven: 213_359.52, shareAbove: 0.3851, keeps: 29_164.44 },
+  "dental-practices": { rhl: false, breakEven: 198_710.65, shareAbove: 0.4723, keeps: 39_216.37 },
+};
+check("every recipe is pinned below, and nothing else", Object.keys(PINNED).sort().join() === Object.keys(RECIPES).sort().join());
+for (const [slug, p] of Object.entries(PINNED)) {
+  const s = londonTradeSummary(slug);
+  check(`${slug}: relief ${p.rhl ? "applies" : "does not apply"}; break-even ${p.breakEven}, ${p.shareAbove} of registered businesses above it, the median business keeps ${p.keeps}`,
+    RECIPES[slug]?.retailHospitalityLeisure === p.rhl && s !== null && s.breakEven.value === p.breakEven && s.shareAbove !== null
+    && Math.round(s.shareAbove.value * 10_000) / 10_000 === p.shareAbove && s.keeps.q50 === p.keeps);
+}
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("uk/pnl/recipes: all pass");
+```
+
+Create `tests/uk/pnl/london.test.ts`:
+
+```ts
+/**
+ * London trades from the register slices (data/uk/registers): barbershops and restaurants end to end, and every reason a
+ * trade's money is withheld. Expected values agreed to the penny with the independent Python implementation (2026-10-02).
+ *
+ * Run: npx tsx tests/uk/pnl/london.test.ts
+ */
+import { londonTradeInputs, londonTradeSummary, londonWithholding } from "../../../src/lib/uk/pnl/london";
+import { bestCompanyTakeHome } from "../../../src/lib/uk/law/take_home";
+import { red, redSummary } from "../../../scripts/lib/red";
+
+const RULE = "uk-pnl-london";
+const FILE = "src/lib/uk/pnl/london.ts";
+const REMEDY = "re-export the slices with python registers/uk/export_for_site.py or fix london.ts; never edit data/uk/registers by hand";
+let failed = 0;
+/** A red names the rule, the file under test and what to do (scripts/lib/red, the gate-reds ratchet's shape). */
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+
+const barber = londonTradeInputs("barbershops");
+check("barbershops: the register's London bands for the hair and beauty code", barber !== null && barber.revenueBandsK.join(",") === "2405,3740,2655,525,245,70,40,10,5,0");
+check("barbershops: the London salon row's rateable value 16,657.95 and the anchor 139,406.36", barber!.premises.rateableValue === 16_657.95 && barber!.anchorSales.value === 139_406.36);
+const b = londonTradeSummary("barbershops")!;
+check("barbershops: break-even 64,112.98 and the median owner keeps 25,407.33, the model test's figures", b.breakEven.value === 64_112.98 && b.keeps.q50 === 25_407.33);
+
+const rest = londonTradeInputs("restaurants")!;
+check("restaurants: the average London restaurant (203 m2) at a rateable value of 73,374.79, the anchor 597,440.87", rest.premises.rateableValue === 73_374.79 && rest.anchorSales.value === 597_440.87);
+const r = londonTradeSummary("restaurants")!;
+check("restaurants: the average room's business breaks even at 556,017.36; 32 of 100 registered restaurants take that (0.3212)", r.breakEven.value === 556_017.36 && Math.round(r.shareAbove!.value * 10_000) / 10_000 === 0.3212);
+check("restaurants: the median business (281,941.82) keeps 13,756.27 on a margin of 5.03%", r.keeps.q50 === 13_756.27 && Math.round(r.marginAtMedian * 10_000) / 10_000 === 0.0503);
+check("restaurants: its room's rateable value 34,626.73 is above small business relief: rates 13,227.41", r.medianBill.lines[4].amount === 34_626.73 && r.medianBill.lines[5].amount === 13_227.41);
+
+check("withheld, with the reason: grocery stores have the data and no recipe", londonWithholding("grocery-stores") === "no recipe");
+check("withheld: dry cleaners' premises are valued as shops", londonWithholding("dry-cleaning-laundry") === "its premises are valued as shops, an average over unlike occupiers");
+check("withheld: 40 veterinary premises are too few for the valuation's rounding", londonWithholding("veterinary-pet-care") === "40 veterinary clinics / animal clinics premises in London, too few for the valuation's rounding");
+check("withheld: accountants' premises are valued as offices", londonWithholding("accounting-tax")!.startsWith("its premises are valued as offices"));
+check("withheld: hotels have no kind of premises in the valuation statistics", londonWithholding("hotels-lodging") === "no kind of premises for the trade");
+check("withheld: 15 coffee roasters in London are under the register's floor of 40", londonWithholding("coffee-roasters") === "15 businesses in London on the register, under the 40 its figures need");
+check("withheld: an unknown trade has no bands", londonWithholding("no-such-trade") === "no London turnover bands for the trade's code" && londonTradeSummary("no-such-trade") === null);
+check("built: barbershops are not withheld", londonWithholding("barbershops") === null);
+check("the floor of 100 premises lets exactly 100 through: garden centres' 100 premises reach the recipe check", londonWithholding("garden-centers-nurseries") === "no recipe");
+check("withheld: 60 dance schools' premises are too few for the valuation's rounding", londonWithholding("dance-studios") === "60 dance schools & centres premises in London, too few for the valuation's rounding");
+check("withheld: pet training has a kind of premises but no London valuation row for it", londonWithholding("pet-training") === "no London valuation row for pet grooming parlours");
+check("withheld: 30 hostels are under the register's floor, said before they lack a kind of premises", londonWithholding("hostels") === "30 businesses in London on the register, under the 40 its figures need");
+check("the loader names London in the rent and anchor sentences, and the median's rent line says it is scaled",
+  barber!.premises.source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation"
+  && barber!.anchorSales.source === "the mean sales of the registered businesses under 5m in London"
+  && b.medianBill.lines[3].source === "the official estimate of a year's rent for the average hairdressing/beauty salons premises in London (61 m2), April 2021 valuation, scaled to this business's sales: 34 m2 at the same rent per m2 (the size rule)");
+check("withheld: cabinet makers' premises are valued as factories, workshops and warehouses, an average over unlike occupiers (446 m2)", londonWithholding("cabinet-making")!.startsWith("its premises are valued as factories,workshops and warehouses"));
+check("the company form reaches the model: the median barbershop as a company keeps the company optimum on 29,917.75",
+  londonTradeSummary("barbershops", "company")!.keeps.q50 === bestCompanyTakeHome(29_917.75).takeHome && londonTradeSummary("barbershops")!.keeps.q50 === 25_407.33);
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("uk/pnl/london: all pass");
+```
+
+- [ ] **Step 2: Run them and watch them fail**
+
+```bash
+npx tsx tests/uk/pnl/recipes.test.ts
+npx tsx tests/uk/pnl/london.test.ts
+```
+
+Expected: each exits 1, the first with `Error: Cannot find module '../../../src/lib/uk/pnl/recipes'`, the second with
+`Error: Cannot find module '../../../src/lib/uk/pnl/london'`.
+
+- [ ] **Step 3: Write the recipes and the loader**
+
+Create `src/lib/uk/pnl/recipes.ts`:
+
+```ts
+/**
+ * src/lib/uk/pnl/recipes.ts
+ *
+ * One recipe per trade: which costs move with each pound of sales and which are sized by the business, each with its
+ * basis. Every share here is an ESTIMATE from the trade's research file (data/facts/industry/<file>.json, the cost
+ * drivers' share of sales) and travels to the page with that kind. A trade with no recipe prints no money: the engine
+ * withholds rather than reaching for a curated margin.
+ *
+ * THE PROTOCOL, the same for every trade (plan 2026-10-02-vertical-engine-03, task 6):
+ *   P1  Each research cost driver takes exactly one class:
+ *         variable     goods, ingredients, parts, supplies, lab fees, card and delivery fees: share = its % of sales
+ *         commission   producers paid a share of what they take (barbers, nail technicians): share = its % of sales x
+ *                      employed producers / all producers, from the research roles; the owner's own chair is paid by
+ *                      the profit, which is what the owner keeps
+ *         premises     rent, occupancy, facility: dropped, replaced by the measured rent proxy and the law's rates
+ *         sized        wages, running costs, insurance, marketing, software: share = its % of sales, sized by the
+ *                      business across businesses and fixed within one (model.ts)
+ *   P2  The owner's pay is never a line: the owner keeps the profit.
+ *   P3  utilitiesCarried is true only when a driver other than the premises one names utilities. Otherwise the premises
+ *       driver ("rent and utilities", "rent and occupancy") took them with it, and the margin is overstated by them, a
+ *       few per cent of sales, until the energy line (the master plan's plan 07) carries them; until then a page prints
+ *       no money for such a trade.
+ *   P4  retailHospitalityLeisure follows the 2026-27 multipliers' qualifying uses (plan 01 task 1 records the reading).
+ *   P5  A recipe enters only when the London figures it gives pass tests/uk/pnl/recipes.test.ts (at least a quarter of
+ *       registered businesses above break-even; a positive margin at the median below 60%). Grocery stores fail: the
+ *       valuation's convenience stores (540 premises, 369 m2 on average) are not the register's 6,935 grocers, and the
+ *       premises they give need more sales than five in six of them take.
+ */
+import type { Recipe } from "./inputs";
+
+export const RECIPES: Readonly<Record<string, Recipe>> = {
+  barbershops: {
+    trade: "barbershops",
+    research: "data/facts/industry/barbershops.json",
+    retailHospitalityLeisure: true,
+    utilitiesCarried: false,
+    variable: [
+      { key: "barbers' commission", driver: "Barber pay and commission", shareOfSales: 0.3, kind: "estimate", basis: "barber pay and commission 45% of sales, on the two employed chairs of three" },
+      { key: "supplies and product", driver: "Supplies and product", shareOfSales: 0.08, kind: "estimate", basis: "supplies and product 8% of sales" },
+    ],
+    sized: [{ key: "running costs", driver: "Other operating", shareOfSales: 0.12, kind: "estimate", basis: "other operating costs 12% of sales" }],
+  },
+  "nail-salons": {
+    trade: "nail-salons",
+    research: "data/facts/industry/nail_salons.json",
+    retailHospitalityLeisure: true,
+    utilitiesCarried: true,
+    variable: [
+      { key: "technicians' commission", driver: "Technician labor and commissions", shareOfSales: (0.4 * 5) / 6, kind: "estimate", basis: "technician labour and commissions 40% of sales, on the five employed technicians of six" },
+      { key: "supplies and consumables", driver: "Supplies and consumables", shareOfSales: 0.17, kind: "estimate", basis: "supplies and consumables 17% of sales" },
+    ],
+    sized: [{ key: "utilities, insurance, admin", driver: "Utilities, insurance, admin", shareOfSales: 0.08, kind: "estimate", basis: "utilities, insurance and admin 8% of sales" }],
+  },
+  restaurants: {
+    trade: "restaurants",
+    research: "data/facts/industry/restaurants.json",
+    retailHospitalityLeisure: true,
+    utilitiesCarried: true,
+    variable: [
+      { key: "food and drink", driver: "Food and beverage cost", shareOfSales: 0.32, kind: "estimate", basis: "food and beverage cost 32% of sales" },
+      { key: "marketing and delivery fees", driver: "Marketing and delivery fees", shareOfSales: 0.04, kind: "estimate", basis: "marketing and delivery fees 4% of sales" },
+    ],
+    sized: [
+      { key: "staff", driver: "Labor and payroll", shareOfSales: 0.3, kind: "estimate", basis: "labour and payroll 30% of sales" },
+      { key: "utilities, supplies, running costs", driver: "Utilities, supplies and other operating", shareOfSales: 0.12, kind: "estimate", basis: "utilities, supplies and other operating costs 12% of sales" },
+    ],
+  },
+  "bakeries-retail": {
+    trade: "bakeries-retail",
+    research: "data/facts/industry/bakeries_retail.json",
+    retailHospitalityLeisure: true,
+    utilitiesCarried: false,
+    variable: [{ key: "ingredients and packaging", driver: "Ingredients and packaging", shareOfSales: 0.32, kind: "estimate", basis: "ingredients and packaging 32% of sales" }],
+    sized: [
+      { key: "staff", driver: "Labor and baking staff", shareOfSales: 0.34, kind: "estimate", basis: "labour and baking staff 34% of sales" },
+      { key: "running costs", driver: "Other operating", shareOfSales: 0.1, kind: "estimate", basis: "other operating costs 10% of sales" },
+    ],
+  },
+  "sports-fitness": {
+    trade: "sports-fitness",
+    research: "data/facts/industry/sports_fitness.json",
+    retailHospitalityLeisure: true,
+    utilitiesCarried: true,
+    variable: [],
+    sized: [
+      { key: "trainers and instructors", driver: "Payroll, trainers and instructors", shareOfSales: 0.33, kind: "estimate", basis: "payroll, trainers and instructors 33% of sales" },
+      { key: "equipment upkeep", driver: "Equipment upkeep and depreciation", shareOfSales: 0.08, kind: "estimate", basis: "equipment upkeep and depreciation 8% of sales" },
+      { key: "marketing", driver: "Marketing and member acquisition", shareOfSales: 0.08, kind: "estimate", basis: "marketing and member acquisition 8% of sales" },
+      { key: "utilities, insurance, software", driver: "Utilities, insurance and software", shareOfSales: 0.06, kind: "estimate", basis: "utilities, insurance and software 6% of sales" },
+    ],
+  },
+  "auto-repair-shops": {
+    trade: "auto-repair-shops",
+    research: "data/facts/industry/auto_repair_shops.json",
+    retailHospitalityLeisure: true,
+    utilitiesCarried: false,
+    variable: [{ key: "parts and materials", driver: "Parts and materials", shareOfSales: 0.35, kind: "estimate", basis: "parts and materials 35% of sales" }],
+    sized: [
+      { key: "technicians", driver: "Technician wages and benefits", shareOfSales: 0.24, kind: "estimate", basis: "technician wages and benefits 24% of sales" },
+      { key: "insurance, tools, shop supplies", driver: "Insurance, tools and shop supplies", shareOfSales: 0.09, kind: "estimate", basis: "insurance, tools and shop supplies 9% of sales" },
+    ],
+  },
+  "dental-practices": {
+    trade: "dental-practices",
+    research: "data/facts/industry/dental_practices.json",
+    retailHospitalityLeisure: false,
+    utilitiesCarried: false,
+    variable: [
+      { key: "lab fees", driver: "Dental lab fees", shareOfSales: 0.1, kind: "estimate", basis: "dental lab fees 10% of sales" },
+      { key: "clinical supplies", driver: "Clinical supplies", shareOfSales: 0.06, kind: "estimate", basis: "clinical supplies 6% of sales" },
+    ],
+    sized: [
+      { key: "staff (not dentists)", driver: "Staff wages (non-dentist)", shareOfSales: 0.27, kind: "estimate", basis: "staff wages, not dentists, 27% of sales" },
+      { key: "equipment, insurance, admin", driver: "Equipment, insurance and admin", shareOfSales: 0.08, kind: "estimate", basis: "equipment, insurance and admin 8% of sales" },
+    ],
+  },
+};
+```
+
+Create `src/lib/uk/pnl/london.ts`:
+
+```ts
+/**
+ * src/lib/uk/pnl/london.ts
+ *
+ * The money of a trade in London, from the register slices (data/uk/registers) and the trade's recipe. Server-side only:
+ * turnover.json is two megabytes and never belongs in a client bundle.
+ *
+ * Withholds, never guesses, and says why (londonWithholding): no recipe; no London bands for the trade's code; under 40
+ * businesses in London on the register (the register's own floor: no quantile prints there); no kind of premises for the
+ * trade; a kind of premises that averages over unlike occupiers (the valuation's three bulk classes: shops, offices, and
+ * factories, workshops and warehouses); or under 100 premises of that kind in London, where the valuation's rounding
+ * (counts to 10, floorspace to 1,000 m2) moves the average area by more than a tenth.
+ */
+import turnoverJson from "../../../../data/uk/registers/turnover.json";
+import premisesJson from "../../../../data/uk/registers/premises.json";
+import { buildInputs, type PremisesRow } from "./inputs";
+import { RECIPES } from "./recipes";
+import { summarise, type Form, type PnlInputs, type PnlSummary } from "./model";
+
+type TurnoverFile = { trades: Record<string, { by_geography: Record<string, { turnover_bands_k: number[] | null; thin: boolean; enterprises: number }> }> };
+type PremisesFile = { trade_category: Record<string, string>; rows: Record<string, { categories: Record<string, Partial<PremisesRow>> }> };
+const TURNOVER = turnoverJson as unknown as TurnoverFile;
+const PREMISES = premisesJson as unknown as PremisesFile;
+const LONDON = "E12000007";
+export const GENERIC_PREMISES: ReadonlySet<string> = new Set(["Shops", "Offices (Inc Computer Centres)", "Factories,Workshops And Warehouses(Inc Bakeries & Dairies)"]);
+export const MIN_PREMISES = 100;
+
+/** Why a trade's London money is withheld, or null when it can be built. The data's limits are checked before the
+ *  recipe, so a trade without one still says what else it lacks. */
+export function londonWithholding(slug: string): string | null {
+  const london = TURNOVER.trades[slug]?.by_geography[LONDON];
+  const bands = london?.turnover_bands_k;
+  if (!london || !bands || bands.every((c) => c === 0)) return "no London turnover bands for the trade's code";
+  if (london.thin) return `${london.enterprises} businesses in London on the register, under the 40 its figures need`;
+  const category = PREMISES.trade_category[slug];
+  if (!category) return "no kind of premises for the trade";
+  if (GENERIC_PREMISES.has(category)) return `its premises are valued as ${category.toLowerCase()}, an average over unlike occupiers`;
+  const row = PREMISES.rows[LONDON]?.categories[category];
+  if (!row || !row.rv_per_m2 || !row.count || !row.floorspace_k_m2) return `no London valuation row for ${category.toLowerCase()}`;
+  if (row.count < MIN_PREMISES) return `${row.count} ${category.toLowerCase()} premises in London, too few for the valuation's rounding`;
+  if (!RECIPES[slug]) return "no recipe";
+  return null;
+}
+
+export function londonTradeInputs(slug: string, form: Form = "sole trader"): PnlInputs | null {
+  if (londonWithholding(slug) !== null) return null;
+  const category = PREMISES.trade_category[slug];
+  const row = PREMISES.rows[LONDON].categories[category] as PremisesRow;
+  const bands = TURNOVER.trades[slug].by_geography[LONDON].turnover_bands_k as number[];
+  return buildInputs(RECIPES[slug], { revenueBandsK: bands, premises: row, premisesCategory: category, place: "London", form });
+}
+
+export function londonTradeSummary(slug: string, form: Form = "sole trader"): PnlSummary | null {
+  const inputs = londonTradeInputs(slug, form);
+  return inputs ? summarise(inputs) : null;
+}
+```
+
+- [ ] **Step 4: Run them and watch them pass**
+
+```bash
+npx tsx tests/uk/pnl/recipes.test.ts
+npx tsx tests/uk/pnl/london.test.ts
+```
+
+Expected: 80 `PASS` lines then `uk/pnl/recipes: all pass`; 22 `PASS` lines then `uk/pnl/london: all pass`.
+
+- [ ] **Step 5: Plant a grocery recipe and a wrong share, and watch the gate refuse them**
+
+Set the file aside first, so the plant is undone exactly:
+
+```bash
+cp src/lib/uk/pnl/recipes.ts /tmp/recipes.ts.bak
+```
+
+Then add this entry to `RECIPES` in `src/lib/uk/pnl/recipes.ts`, directly before its closing `};`:
+
+```ts
+  "grocery-stores": {
+    trade: "grocery-stores",
+    research: "data/facts/industry/grocery_stores.json",
+    retailHospitalityLeisure: true,
+    utilitiesCarried: false,
+    variable: [
+      { key: "cost of goods", driver: "Cost of goods sold", shareOfSales: 0.72, kind: "estimate", basis: "cost of goods sold 72% of sales" },
+      { key: "shrinkage", driver: "Shrinkage and spoilage", shareOfSales: 0.02, kind: "estimate", basis: "shrinkage and spoilage 2% of sales" },
+      { key: "card fees", driver: "Card fees and other", shareOfSales: 0.03, kind: "estimate", basis: "card fees and other 3% of sales" },
+    ],
+    sized: [{ key: "staff", driver: "Wages", shareOfSales: 0.14, kind: "estimate", basis: "wages 14% of sales" }],
+  },
+```
+
+and change the barbershops' `supplies and product` share from `0.08` to `0.09`. Run:
+
+```bash
+npx tsx tests/uk/pnl/recipes.test.ts
+```
+
+Expected: exit code 1 and four reds: `seven recipes, each keyed by its own trade`; `barbershops: a line carries its driver's
+share`; `grocery-stores: at least a quarter of registered businesses reach break-even (0.1718)`; `grocery-stores: the
+median business's margin is above 0 and below 60% (-0.1294)`. Restore the file and run the test again:
+
+```bash
+cp /tmp/recipes.ts.bak src/lib/uk/pnl/recipes.ts
+npx tsx tests/uk/pnl/recipes.test.ts
+```
+
+Expected: `uk/pnl/recipes: all pass`.
+
+- [ ] **Step 6: Wire both into the chain**
+
+In `scripts/prebuild_all.ts`, find:
+
+```ts
+  { name: "uk-pnl-inputs", script: "tests/uk/pnl/inputs.test.ts" },
+```
+
+and add directly below it:
+
+```ts
+  { name: "uk-pnl-recipes", script: "tests/uk/pnl/recipes.test.ts" },
+  { name: "uk-pnl-london", script: "tests/uk/pnl/london.test.ts" },
+```
+
+Then run:
+
+```bash
+npx tsx scripts/counts.ts --write
+```
+
+Expected: one line beginning `[counts] wrote 3 carrier(s) and scripts/gates.json:` whose gate count is two higher than
+before this step.
+
+- [ ] **Step 7: Prove the gates run in the chain and the ratchet holds**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-pnl-recipes,uk-pnl-london
+node scripts/audit_gate_reds.mjs
+```
+
+Expected: `✓ uk-pnl-recipes`, `✓ uk-pnl-london`, `SUBSET: PASS`; the audit's last line starts `gate reds: PASS` and ends
+`the ratchet holds`.
+
+- [ ] **Step 8: Commit**
+
+```bash
+git add src/lib/uk/pnl/recipes.ts src/lib/uk/pnl/london.ts tests/uk/pnl/recipes.test.ts tests/uk/pnl/london.test.ts scripts/prebuild_all.ts CLAUDE.md docs/verification-protocol.md docs/loop/02-ORGANISATION-RESEARCH.md scripts/gates.json
+git commit -m "uk pnl: seven London trades' recipes by one protocol, the London loader with its reasons to withhold (gates uk-pnl-recipes, uk-pnl-london)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+### Task 7: Every headline figure carries its range
+
+The one assumption the register cannot settle is how businesses spread inside a band. It sets the anchor, the register's
+quartiles and the share of businesses above break-even, so each run reads all of them under one of the three shapes (the
+founder's decision 9, 2026-10-04: consistent ranges, so no figure claims more than the band shapes allow, its own sales
+included); the log-flat run is the figure printed, and plan 04's `honestRound` prints it to the place its range allows. On
+London the anchor moves 4.6% to 6.5% either way; the barbershop at the median keeps 23,743.01 to 26,986.22 around 25,407.33
+(its own sales 74,243 to 82,654), so it prints as 25,000; the restaurant's 11,198.28 to 16,056.34 around 13,756.27 prints
+as 14,000. Break-even rests on the anchor alone, so its range is the anchor's. The hard bounds of the anchor (every
+business on a band edge) would swing the restaurant from a loss of 13,568 to keeping 24,772 (a profit of 29,059): that is
+why the shapes, not the bounds, set the range.
+
+**Files:**
+- Create: `src/lib/uk/pnl/ranges.ts`
+- Modify: `src/lib/uk/pnl/london.ts` (one import, one function)
+- Test: `tests/uk/pnl/ranges.test.ts` (create)
+- Modify: `scripts/prebuild_all.ts` (one `GATES` entry)
+- Modify (generated by counts.ts): `CLAUDE.md`, `docs/verification-protocol.md`, `docs/loop/02-ORGANISATION-RESEARCH.md`, `scripts/gates.json`
+
+- [ ] **Step 1: Write the failing test**
+
+Create `tests/uk/pnl/ranges.test.ts`:
+
+```ts
+/**
+ * The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants, each
+ * run reading the anchor, the quartiles and the share above break-even under one shape (decision 9, 2026-10-04). Every value
+ * agreed to the penny with an independent exact implementation; the company form's under the engine's own rule, which
+ * searches the director's salary to the whole pound (a search to the penny finds one penny more at two of the three).
+ *
+ * Run: npx tsx tests/uk/pnl/ranges.test.ts
+ */
+import { shapeRanges } from "../../../src/lib/uk/pnl/ranges";
+import { londonTradeInputs, londonTradeRanges, londonTradeSummary } from "../../../src/lib/uk/pnl/london";
+import { RECIPES } from "../../../src/lib/uk/pnl/recipes";
+import { red, redSummary } from "../../../scripts/lib/red";
+
+const RULE = "uk-pnl-ranges";
+const FILE = "src/lib/uk/pnl/ranges.ts";
+const REMEDY = "fix ranges.ts until this worked example holds; never change an expected figure to fit the code (each was computed independently)";
+let failed = 0;
+/** A red names the rule, the file under test and what to do (scripts/lib/red, the gate-reds ratchet's shape). */
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+const r4 = (x: number) => Math.round(x * 10_000) / 10_000;
+
+const b = londonTradeRanges("barbershops")!;
+check("barbershops: the anchor 130,831.17 (pareto), 139,406.36 (log-flat), 148,438.79 (flat)", b.anchorSales.lo === 130_831.17 && b.anchorSales.mid === 139_406.36 && b.anchorSales.hi === 148_438.79);
+check("barbershops: break-even 62,453.27 to 65,861.19 around 64,112.98", b.breakEven.lo === 62_453.27 && b.breakEven.mid === 64_112.98 && b.breakEven.hi === 65_861.19);
+check("barbershops: 0.5981 to 0.6296 of registered businesses above it, around 0.6136", r4(b.shareAbove.lo) === 0.5981 && r4(b.shareAbove.mid) === 0.6136 && r4(b.shareAbove.hi) === 0.6296);
+check("barbershops: the median owner keeps 23,743.01 to 26,986.22 around 25,407.33 (the median's own sales 74,243 to 82,654)", b.keepsQ50.lo === 23_743.01 && b.keepsQ50.mid === 25_407.33 && b.keepsQ50.hi === 26_986.22);
+
+const r = londonTradeRanges("restaurants")!;
+check("restaurants: break-even 535,523.20 to 577,038.50 around 556,017.36", r.breakEven.lo === 535_523.2 && r.breakEven.mid === 556_017.36 && r.breakEven.hi === 577_038.5);
+check("restaurants: the median owner keeps 11,198.28 to 16,056.34 around 13,756.27: a thin margin moves most", r.keepsQ50.lo === 11_198.28 && r.keepsQ50.mid === 13_756.27 && r.keepsQ50.hi === 16_056.34);
+check("restaurants: the margin at the median 4.09% to 5.89% around 5.03%", r4(r.marginAtMedian.lo) === 0.0409 && r4(r.marginAtMedian.mid) === 0.0503 && r4(r.marginAtMedian.hi) === 0.0589);
+check("mid is the log-flat reading the summary prints, so the two never disagree", shapeRanges(londonTradeInputs("restaurants")!)!.keepsQ50.mid === 13_756.27);
+check("a withheld trade has no range", londonTradeRanges("grocery-stores") === null);
+const co = londonTradeRanges("barbershops", "company")!;
+check("the company form reaches the range: the median barbershop as a company keeps 22,718.07 to 25,886.44 around 24,343.99", co.keepsQ50.lo === 22_718.07 && co.keepsQ50.mid === 24_343.99 && co.keepsQ50.hi === 25_886.44);
+check("for every built trade in both forms, mid is the summary's own figure and lo <= mid <= hi",
+  Object.keys(RECIPES).every((slug) => (["sole trader", "company"] as const).every((form) => {
+    const x = londonTradeRanges(slug, form), s = londonTradeSummary(slug, form);
+    return x !== null && s !== null && x.keepsQ50.mid === s.keeps.q50 && x.breakEven.mid === s.breakEven.value && x.keepsQ50.lo <= x.keepsQ50.mid && x.keepsQ50.mid <= x.keepsQ50.hi;
+  })));
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("uk/pnl/ranges: all pass");
+```
+
+- [ ] **Step 2: Run it and watch it fail**
+
+```bash
+npx tsx tests/uk/pnl/ranges.test.ts
+```
+
+Expected: exit code 1 with `Error: Cannot find module '../../../src/lib/uk/pnl/ranges'`.
+
+- [ ] **Step 3: Write the ranges and give the loader its range**
+
+Create `src/lib/uk/pnl/ranges.ts`:
+
+```ts
+/**
+ * src/lib/uk/pnl/ranges.ts
+ *
+ * How far the headline figures move with the one assumption the register cannot settle: how businesses spread inside a
+ * turnover band. The shape sets the anchor (the business in the average premises, model.ts), the register's quartiles and
+ * the share of businesses above break-even, so each run reads all of them under one of the three shapes (banded.ts
+ * BandShape): the founder's decision 9 (2026-10-04), consistent ranges, so no figure claims more than the band shapes allow,
+ * its own sales included. `mid` is the log-flat run, the figure the summary prints, and `lo` and `hi` the least and greatest
+ * of the three. A page prints `mid` rounded to its range (present/precision.ts honestRound).
+ *
+ * Measured on London, 2026-10-04: the anchor moves 4.6% to 6.5% either way (hair and beauty 6.2% below, 6.5% above); the median barbershop's take-home 23,743.01 to
+ * 26,986.22 around 25,407.33 (it prints 25,000), the restaurant's 11,198.28 to 16,056.34 around 13,756.27 (14,000). Break-even
+ * rests on the anchor alone, so its range is the anchor's.
+ */
+import { bandMeanK, type BandShape } from "./banded";
+import { pennies } from "../law/money";
+import { summarise, type PnlInputs, type PnlSummary } from "./model";
+
+export type Range = { lo: number; mid: number; hi: number };
+export type PnlRanges = { anchorSales: Range; breakEven: Range; shareAbove: Range; keepsQ50: Range; marginAtMedian: Range };
+
+const SHAPES: readonly BandShape[] = ["pareto", "log-flat", "flat"];
+
+export function shapeRanges(inputs: PnlInputs): PnlRanges | null {
+  const runs: { anchor: number; s: PnlSummary }[] = [];
+  for (const shape of SHAPES) {
+    const m = bandMeanK(inputs.revenueBandsK, 7, shape);
+    if (!m) return null;
+    const anchor = pennies(m.k * 1000);
+    const s = summarise({ ...inputs, anchorSales: { ...inputs.anchorSales, value: anchor } }, shape);
+    if (!s || !s.shareAbove) return null;
+    runs.push({ anchor, s });
+  }
+  const range = (f: (r: { anchor: number; s: PnlSummary }) => number): Range => {
+    const v = runs.map(f);
+    return { lo: Math.min(...v), mid: v[1], hi: Math.max(...v) };
+  };
+  return {
+    anchorSales: range((r) => r.anchor),
+    breakEven: range((r) => r.s.breakEven.value),
+    shareAbove: range((r) => r.s.shareAbove!.value),
+    keepsQ50: range((r) => r.s.keeps.q50),
+    marginAtMedian: range((r) => r.s.marginAtMedian),
+  };
+}
+```
+
+In `src/lib/uk/pnl/london.ts`, replace:
+
+```ts
+import { summarise, type Form, type PnlInputs, type PnlSummary } from "./model";
+```
+
+with:
+
+```ts
+import { summarise, type Form, type PnlInputs, type PnlSummary } from "./model";
+import { shapeRanges, type PnlRanges } from "./ranges";
+```
+
+and add at the end of the file:
+
+```ts
+/** The headline figures' range across the three band shapes (ranges.ts), or null when the trade is withheld. */
+export function londonTradeRanges(slug: string, form: Form = "sole trader"): PnlRanges | null {
+  const inputs = londonTradeInputs(slug, form);
+  return inputs ? shapeRanges(inputs) : null;
+}
+```
+
+- [ ] **Step 4: Run it and watch it pass**
+
+```bash
+npx tsx tests/uk/pnl/ranges.test.ts
+npx tsx tests/uk/pnl/london.test.ts
+```
+
+Expected: 11 `PASS` lines then `uk/pnl/ranges: all pass`; the London test still ends `uk/pnl/london: all pass`.
+
+- [ ] **Step 5: Wire it into the chain**
+
+In `scripts/prebuild_all.ts`, find this line in `GATES`:
+
+```ts
+  { name: "uk-pnl-london", script: "tests/uk/pnl/london.test.ts" },
+```
+
+and add directly below it:
+
+```ts
+  { name: "uk-pnl-ranges", script: "tests/uk/pnl/ranges.test.ts" },
+```
+
+Then run:
+
+```bash
+npx tsx scripts/counts.ts --write
+```
+
+Expected: one line beginning `[counts] wrote 3 carrier(s) and scripts/gates.json:` whose gate count is one higher than before this step.
+
+- [ ] **Step 6: Prove the gate runs in the chain and the ratchet holds**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-pnl-ranges
+```
+
+Expected: a line `✓ uk-pnl-ranges` and, at the end, `SUBSET: PASS (not the chain; run without --only for the gate)`.
+
+```bash
+node scripts/audit_gate_reds.mjs
+```
+
+Expected: the last line starts `gate reds: PASS` and ends `the ratchet holds` (the three counts equal the baseline in `scripts/gate_reds_baseline.json`; a new test must not raise them).
+
+- [ ] **Step 7: Commit**
+
+```bash
+git add src/lib/uk/pnl/ranges.ts src/lib/uk/pnl/london.ts tests/uk/pnl/ranges.test.ts scripts/prebuild_all.ts CLAUDE.md docs/verification-protocol.md docs/loop/02-ORGANISATION-RESEARCH.md scripts/gates.json
+git commit -m "uk pnl: every headline figure carries its range across the three band shapes (gate uk-pnl-ranges)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+```
+
+Expected: one commit; `git status --short` lists none of the files above.
+
+### Task 8: Prove the whole engine
+
+**Files:** none changed.
+
+- [ ] **Step 1: Run the eight gates of this plan and the law engine's take-home through the chain runner**
+
+```bash
+npx tsx scripts/prebuild_all.ts --only=uk-registers,uk-pnl-banded,uk-pnl-kinds,uk-pnl-model,uk-pnl-inputs,uk-pnl-recipes,uk-pnl-london,uk-pnl-ranges,uk-law-take-home
+```
+
+Expected: nine `✓` lines, `Passed: 9`, `Failed: 0`, `SUBSET: PASS`.
+
+- [ ] **Step 2: Typecheck, and run the static gates that read `src/`**
+
+```bash
+npx tsc --noEmit
+npx tsx scripts/prebuild_all.ts --only=no-em-dashes,no-source-agencies,no-hardcoded-place,take-home-identity,gate-reds-ratchet,counts-fresh
+```
+
+Expected: `tsc` prints nothing; six `✓` lines and `SUBSET: PASS`.
+
+- [ ] **Step 3: Record the result**
+
+No commit: every task committed. Report the outputs to the controlling session, with the seven trades' table from task 6.

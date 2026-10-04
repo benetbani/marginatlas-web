@@ -1378,6 +1378,226 @@
       "claims": []
     },
     {
+      "name": "uk-registers",
+      "script": "scripts/verify_uk_registers.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "scripts/verify_uk_registers.ts , THE REGISTER FIGURES ARE THE REGISTERS' (chain gate `uk-registers`).",
+      "reads": [],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-banded",
+      "script": "tests/uk/pnl/banded.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The TypeScript band estimator equals the Python one (registers/uk/estimators/banded.py).",
+      "reads": [
+        "src/lib/uk/pnl/banded.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-kinds",
+      "script": "tests/uk/pnl/kinds.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The kind algebra: an estimate anywhere makes an estimate; arithmetic on counted or looked-up figures is worked out; one input passed through untouched keeps its kind.",
+      "reads": [
+        "src/lib/uk/pnl/kinds.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-model",
+      "script": "tests/uk/pnl/model.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The profit-and-loss model on a worked example: a London barbershop (the register's hair and beauty bands, the official valuation's average London salon, the trade research's shares).",
+      "reads": [
+        "src/lib/uk/pnl/model.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-inputs",
+      "script": "tests/uk/pnl/inputs.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A trade's inputs from its recipe: London barbershops, the official valuation's London salon row, the register's hair and beauty bands.",
+      "reads": [
+        "data/facts/industry/barbershops.json",
+        "src/lib/uk/pnl/inputs.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-recipes",
+      "script": "tests/uk/pnl/recipes.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Every recipe keeps the protocol in src/lib/uk/pnl/recipes.ts, and its London figures pass two screens before a page may print them: at least a quarter of the registered businesses reach break-even (a ",
+      "reads": [
+        "data/facts/industry/${entity}.json",
+        "src/lib/uk/pnl/recipes.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-london",
+      "script": "tests/uk/pnl/london.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "London trades from the register slices (data/uk/registers): barbershops and restaurants end to end, and every reason a trade's money is withheld.",
+      "reads": [
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-pnl-ranges",
+      "script": "tests/uk/pnl/ranges.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The headline figures' range across the three band shapes (pareto, log-flat, flat), London barbershops and restaurants, each run reading the anchor, the quartiles and the share above break-even under o",
+      "reads": [
+        "src/lib/uk/pnl/ranges.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-present-precision",
+      "script": "tests/uk/present/precision.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Honest precision: a figure prints no finer than its uncertainty and no more than three significant figures; one decimal count per column; shares of a whole as integers that add to the whole (largest r",
+      "reads": [
+        "src/lib/uk/present/precision.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-present-compare",
+      "script": "tests/uk/present/compare.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Comparison: members share a rank only when the lower overlaps its group's leader (overlapping intervals tie); set medians over members' own figures, fill values counted and left out.",
+      "reads": [
+        "src/lib/uk/present/compare.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-money",
+      "script": "tests/uk/law/money.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The vertical's money rounding: half-pennies round up, parts add to the total.",
+      "reads": [
+        "src/lib/uk/law/money.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-income-tax",
+      "script": "tests/uk/law/income_tax.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Income tax 2026-27 (rUK): allowance, taper, bands, dividends on top, and the shape of the schedule.",
+      "reads": [
+        "src/lib/uk/law/income_tax.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-national-insurance",
+      "script": "tests/uk/law/national_insurance.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "National Insurance 2026-27: Class 4, Class 1 primary and secondary, the Employment Allowance as one budget.",
+      "reads": [
+        "src/lib/uk/law/national_insurance.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-corporation-tax",
+      "script": "tests/uk/law/corporation_tax.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Corporation Tax FY2026: the two rates, marginal relief between them, continuity at both limits.",
+      "reads": [
+        "src/lib/uk/law/corporation_tax.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-take-home",
+      "script": "tests/uk/law/take_home.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "What an owner keeps after tax, sole trader and company, and the company's best salary.",
+      "reads": [
+        "src/lib/uk/law/take_home.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-employer-cost",
+      "script": "tests/uk/law/employer_cost.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "One hire all in (Pro section 77), against the law research's worked examples of 2026-10-02.",
+      "reads": [
+        "src/lib/uk/law/employer_cost.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-business-rates",
+      "script": "tests/uk/law/business_rates.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Business rates 2026-27 (England): multipliers, the small business relief taper, the 51,000 cliff.",
+      "reads": [
+        "src/lib/uk/law/business_rates.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-lease-tax",
+      "script": "tests/uk/law/lease_tax.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Tax on a lease's rent: NPV at 3.5%, the highest-of-the-first-five rule, SDLT and LTT bands.",
+      "reads": [
+        "src/lib/uk/law/lease_tax.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-redundancy",
+      "script": "tests/uk/law/redundancy.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Statutory redundancy pay and notice (Employment Rights Act 1996 sections 86, 155 and 162; the weekly cap of 2026-27).",
+      "reads": [
+        "src/lib/uk/law/redundancy.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-law-loan",
+      "script": "tests/uk/law/loan.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The repayment of a fixed-rate loan (the annuity formula), to the penny.",
+      "reads": [
+        "src/lib/uk/law/loan.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "placeholder-never-printed",
       "script": "scripts/verify_placeholder_never_printed.ts",
       "args": [],

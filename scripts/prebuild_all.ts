@@ -530,6 +530,32 @@ const GATES: Gate[] = [
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },
   { name: "facts-confidence", script: "tests/facts/confidence.test.ts" },
+  /* The UK registers' figures (docs/superpowers/plans/2026-10-02-vertical-engine-03-profit-and-loss.md):
+     slices of E:/atlas/registers/uk/tables written by export_for_site.py; a hand edit fails here. */
+  { name: "uk-registers", script: "scripts/verify_uk_registers.ts" },
+  { name: "uk-pnl-banded", script: "tests/uk/pnl/banded.test.ts" },
+  { name: "uk-pnl-kinds", script: "tests/uk/pnl/kinds.test.ts" },
+  { name: "uk-pnl-model", script: "tests/uk/pnl/model.test.ts" },
+  { name: "uk-pnl-inputs", script: "tests/uk/pnl/inputs.test.ts" },
+  { name: "uk-pnl-recipes", script: "tests/uk/pnl/recipes.test.ts" },
+  { name: "uk-pnl-london", script: "tests/uk/pnl/london.test.ts" },
+  { name: "uk-pnl-ranges", script: "tests/uk/pnl/ranges.test.ts" },
+  /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
+     a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
+  { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },
+  { name: "uk-present-compare", script: "tests/uk/present/compare.test.ts" },
+  /* The UK law engine (docs/superpowers/plans/2026-10-02-vertical-engine-01-uk-law.md): every rate and threshold
+     of 2026-27 in one dated file, each module proved on official worked examples to the penny. */
+  { name: "uk-law-money", script: "tests/uk/law/money.test.ts" },
+  { name: "uk-law-income-tax", script: "tests/uk/law/income_tax.test.ts" },
+  { name: "uk-law-national-insurance", script: "tests/uk/law/national_insurance.test.ts" },
+  { name: "uk-law-corporation-tax", script: "tests/uk/law/corporation_tax.test.ts" },
+  { name: "uk-law-take-home", script: "tests/uk/law/take_home.test.ts" },
+  { name: "uk-law-employer-cost", script: "tests/uk/law/employer_cost.test.ts" },
+  { name: "uk-law-business-rates", script: "tests/uk/law/business_rates.test.ts" },
+  { name: "uk-law-lease-tax", script: "tests/uk/law/lease_tax.test.ts" },
+  { name: "uk-law-redundancy", script: "tests/uk/law/redundancy.test.ts" },
+  { name: "uk-law-loan", script: "tests/uk/law/loan.test.ts" },
   /* A placeholder is not a figure (2026-09-23 night): two new builders read one
      each as "modelled" the same evening (London's calendar, printed on
      production; North Korea's household budget, unserved only because /kp is a
