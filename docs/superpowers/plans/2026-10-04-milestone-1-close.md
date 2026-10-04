@@ -29,13 +29,14 @@ production probe, one commit. The full chain before any push; his word before an
 - [x] **M8. The 26 London trade headers with no register figure lead with the page's strongest trusted figure** (QUEUE
   `cell:hero-not-measured`, interview 2): 112 of 138 lead with the register's since the truth pass; the 26 are trades whose code
   is approximate, absent or thin.
-- [ ] **M9. "About the figures" in the footer** and the "notify me when my place reaches this depth" capture on the thinner
+- [x] **M9. "About the figures" in the footer** and the "notify me when my place reaches this depth" capture on the thinner
   pages (interview 17 and the milestone's line).
-- [ ] **M10. Indexing**: UK pages and pages at their floor index, the rest noindex, the sitemap to match (interview 6). Production
+- [x] **M10. Indexing**: UK pages and pages at their floor index, the rest noindex, the sitemap to match (interview 6). Production
   today says "index, follow" on every page. The floor is the harness's block count by page type; the mechanism is designed in
   this task before anything is built.
-- [ ] **Close:** QUEUE statuses (the exemplar URL and the city cards are done already), the full chain, photographs, his
-  milestone review.
+- [x] **M11. No method word in any card string, on any page** (found by the milestone's photographs, 2026-10-05): sixteen COPY
+  strings still said "modelled", "withheld", "on file" or "the model" on pages the plain-copy harness never renders.
+- [x] **Close:** QUEUE statuses, the full chain, photographs. Waiting: his word on the push and deploy, then his milestone review.
 
 ## As built (2026-10-04, night; branch `milestone-1`)
 
@@ -53,3 +54,13 @@ how-to pages at their floor, London's 138 trades and its districts; `floor-censu
 UK, `indexable` tests the rule. **M9b**, the notify-me ask: `DepthNotifyFoot` under the last band of a thin page (counted under its
 floor outside the UK), its tag `depth:<path>` accepted by the newsletter endpoint only for such a page (`depth-notify`).
 
+**The close (2026-10-05, after midnight).** The first full chain (on 3d3ea1ef's tree) passed 207 of 210; its three reds were all
+the new census gate's or milestone 1's own and are fixed: `harness-preflight` (the census gate's preflight call, cd2185a6),
+`gate-reds-ratchet` (its reds through scripts/lib/red, 642ce9ea), `geo-link-construction` (four country-tree paths built from
+parts: the sitemap's country filter and the country view's notify key now ask `countryPageTarget`; `retired_paths.ts` keeps its own
+checks, the middleware runs on the edge, and is sanctioned with those checks as its guards, 8d985049). The photographs
+(`E:/atlas/design/loop/build/photos/m1/`, one sheet `MILESTONE-1-SHEET.jpeg`) caught "typical for the trade, modelled" on the
+London pizzerias header: **M11** (8d23abd1, 97fa4226; the count carriers 0332d3d4) rewrote the sixteen strings in the file's own
+register and added `copy-no-method-words` (211 gates), planted red at its line. Older components' "modeled" strings are QUEUE
+`copy:legacy-modeled-strings`. The second full chain, on 97fa4226: 210 of 211, the one red `pages-fresh` a renderer that wrote all
+nine pages and crashed on exit (3221226505), green alone at once; every browser gate read the nine fresh renders and passed.

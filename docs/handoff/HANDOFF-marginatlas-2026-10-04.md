@@ -1,8 +1,9 @@
 # HANDOFF: marginatlas, 2026-10-04 (night)
 
 The truth pass is LIVE (website `main` 38f81e8a, proven on production); milestone 1 of his launch interview is BUILT on website
-branch `milestone-1` (M1 a3e8af73 to the gate fix 642ce9ea, then this handoff's docs commit), NOT pushed, its full gate chain was
-still running at handoff; milestone 2 (Pro) is not started, its code map is written. Written 2026-10-04, late night.
+branch `milestone-1` (M1 a3e8af73 to M11 97fa4226, then docs), NOT pushed; its full chain passed 210 of 211 on 97fa4226 (the
+one red a renderer's crash on exit, green alone); milestone 2 (Pro) is not started, its code map is written. Written 2026-10-04,
+late night; closed 2026-10-05 after midnight.
 
 > **How to use this document.** Read top to bottom once. Then read the files in section 7 in the given order. Do not start work
 > until you can answer the checklist in section 13. A ready-to-paste re-hydration prompt is in section 14.
@@ -16,9 +17,9 @@ the register's figure, the law engine's or an estimate said so; London is Greate
 truth-pass figure stamped with its provenance), merged with the vertical engine under it and deployed on his "Merge and deploy now"
 (38f81e8a). Then, on his "push forward", the loop built milestone 1 of his 2026-09-26 launch interview (ten open launch fixes, M1 to
 M10, including indexing by a floor census) on branch `milestone-1`. **The single most important thing: `milestone-1` is not pushed
-and nothing may be pushed or deployed without his explicit yes.** The next action: confirm the milestone 1 chain is green (its two
-reds so far, `harness-preflight` and `gate-reds-ratchet`, are fixed in cd2185a6 and 642ce9ea), photograph the changes, ask him whether to push and deploy, then deploy and
-probe production, then his milestone review, then plan milestone 2 (Pro) from the code map
+and nothing may be pushed or deployed without his explicit yes.** The chain is proven (210 of 211 on 97fa4226, the one red green alone) and the
+changes are photographed (`E:/atlas/design/loop/build/photos/m1/MILESTONE-1-SHEET.jpeg`); the next action: his word on the push and
+deploy, then deploy and probe production, then his milestone review, then plan milestone 2 (Pro) from the code map
 (`docs/superpowers/research/2026-10-04-pro-code-map.md`: nearly everything exists, switched off, built for the old Basic and
 Premium plans, wired to no live page).
 
@@ -41,13 +42,13 @@ Premium plans, wired to no live page).
 | Component | Status | Notes |
 |---|---|---|
 | Production (www.marginatlas.com) | LIVE at website `main` 38f81e8a | band page, truth pass, vertical engine; proven 2026-10-04 on 8 URLs at 1280 and 375 (`website/scratchpad/reform/_prod_truth.mjs`, 16 of 16 ok) |
-| Website branch `milestone-1` | BUILT, NOT PUSHED | on top of 38f81e8a: M1 a3e8af73, M2 ced69596, M3 c74110e0, M4 b0ae3dbb, M5 3333ee2d, M6 b1242302, M7 331ffe8c, M8 2d60e156, M9 02018341, M10 3d3ea1ef, gate fixes cd2185a6 and 642ce9ea, then the handoff's docs commit |
-| Full chain on `milestone-1` | RUNNING at handoff | started on 3d3ea1ef's tree; output `C:\Users\benet\AppData\Local\Temp\claude\E--atlas\180d5f78-520f-4ed5-8bc8-0e423e0c92bb\scratchpad\chain_m1close.txt`; at 113 of 210 gates, two red, both in the new census gate and both fixed after the run read them: `harness-preflight` (no preflight call, cd2185a6) and `gate-reds-ratchet` (its red printed without a rule, 642ce9ea); each rechecked alone green. NOT yet proven: the remaining gates, and a clean full run on 642ce9ea. |
+| Website branch `milestone-1` | BUILT, NOT PUSHED | on top of 38f81e8a: M1 a3e8af73, M2 ced69596, M3 c74110e0, M4 b0ae3dbb, M5 3333ee2d, M6 b1242302, M7 331ffe8c, M8 2d60e156, M9 02018341, M10 3d3ea1ef, gate fixes cd2185a6, 642ce9ea, 8d985049, M11 8d23abd1 and 97fa4226 (counts 0332d3d4), docs |
+| Full chain on `milestone-1` | GREEN on 97fa4226 (210 of 211, the one red green alone) | started on 3d3ea1ef's tree; output `C:\Users\benet\AppData\Local\Temp\claude\E--atlas\180d5f78-520f-4ed5-8bc8-0e423e0c92bb\scratchpad\chain_m1close.txt`; at 113 of 210 gates, two red, both in the new census gate and both fixed after the run read them: `harness-preflight` (no preflight call, cd2185a6) and `gate-reds-ratchet` (its red printed without a rule, 642ce9ea); each rechecked alone green. The first run ended 207 of 210, its third red `geo-link-construction` (four country-tree paths built from parts) fixed in 8d985049. The second run, on 97fa4226 (`chain_m1final.txt` in the same scratchpad folder): 210 of 211, `pages-fresh` red only because its renderer crashed on exit (3221226505) after writing all nine pages; green alone at once. |
 | Floor census | WRITTEN 2026-10-04T21:34 | `website/data/seo/floor_census.json`: 1,515 spine pages outside the UK, 646 at their floor (countries 194/194, how-to 151/151, industries 133/138, cities 42/245, trade pages 126/787) |
 | Design repo `E:/atlas` | branch `p4-seam`, local only (no remote) | last commit 7dbb8a8; UNCOMMITTED: `rules/FOUNDER-VERDICTS.md` (his answers of the night appended); commit it |
 | Pro code map (for milestone 2) | WRITTEN | `website/docs/superpowers/research/2026-10-04-pro-code-map.md`: flags all off, Stripe checkout and a signature-checked webhook for Basic/Premium at $37/$77, magic-link accounts, paywall drawings on dev routes only, the two tables not applied to the live database; nine gaps against his ruling listed |
 | Analytics | Clarity removed in code on `milestone-1` | Vercel Web Analytics loads only when he switches it on in the Vercel dashboard AND `NEXT_PUBLIC_WEB_ANALYTICS=1` is set |
-| Main pages' gates | 210 in the chain | count generated in `website/CLAUDE.md` (never type a count) |
+| Main pages' gates | 211 in the chain (M11 added `copy-no-method-words`) | count generated in `website/CLAUDE.md` (never type a count) |
 
 ## 4. How we got here: the decision trail
 
@@ -91,6 +92,9 @@ Premium plans, wired to no live page).
    - M10 indexing (answer 6: "UK pages + every page at its floor; thin pages noindexed until they reach it"; production said
      "index, follow" everywhere): a floor census of renders, not an assumption per page family, because the floor is measured on
      renders and the static count was proven equal to the model laws' BLOCK FLOOR on sixteen pages.
+   - M11, found by the milestone's photographs: "typical for the trade, modelled" on the London pizzerias header. Sixteen COPY
+     strings still carried a word his copy correction of 2026-09-24 struck, each printed only on pages the plain-copy harness never
+     renders; each rewritten in the file's own register, and `copy-no-method-words` walks every COPY value (8d23abd1, 97fa4226).
 
 ## 5. Hard-won truths & mental model
 
@@ -148,13 +152,13 @@ Premium plans, wired to no live page).
 
 **Committed next steps (in order; step 3 needs his explicit yes):**
 
-1. **Prove milestone 1's chain.** Read the chain output (section 3; it ends with a `chain exit` line). Expected: only
+1. **DONE 2026-10-05: prove milestone 1's chain.** Read the chain output (section 3; it ends with a `chain exit` line). Expected: only
    `harness-preflight` and `gate-reds-ratchet` red, both fixed after the run read them. Then run, from `E:/atlas/website`:
    `NODE_OPTIONS=--require=./scripts/lib/pw_edge_fallback.cjs npx tsx scripts/prebuild_all.ts --concurrency=1 --no-bail
    --only=harness-preflight,gate-reds-ratchet,floor-census-fresh > <a file>` and read the file. If the output file is gone or any
    other gate is red, run the full chain again on the branch head (about 20 minutes, serial, nothing else heavy running) and fix
    any red at its source.
-2. **Photograph the changes** (1280 and 375, from fresh renders: `scratchpad/reform/render_some.sh "<surface> <slugs>"` then
+2. **DONE 2026-10-05 (`E:/atlas/design/loop/build/photos/m1/`, sheet `MILESTONE-1-SHEET.jpeg`): photograph the changes** (1280 and 375, from fresh renders: `scratchpad/reform/render_some.sh "<surface> <slugs>"` then
    `_shoot_zone.mjs` or `_shoot_sel.mjs`): the UK staff card (`#hiring`), the London district hub's rent ranking, the pizzerias and
    hostels headers, About the figures (`scratchpad/reform/_about_render.tsx` then `#reading`), the notify form on `/cities/frankfurt`.
    Send them with a plain, short report (what changed for a reader; the 203 non-UK city pages now noindexed, named as his rule's
@@ -214,6 +218,11 @@ changelog pages (QUEUE `cred:about-figures`); the London restaurants header's em
 - Components written for Next's automatic JSX runtime (`CountryFlag`, the about page) need `globalThis.React = React` in a tsx test.
 - A new gate must call the harness preflight (if it lives in `scripts/harness/`) and print its reds through `scripts/lib/red`
   (`red.mjs` for an .mjs gate): `harness-preflight` and `gate-reds-ratchet` each caught the census gate once.
+- A country or region URL is never built from parts: ask `src/lib/geo/page_targets.ts` (`countryPageTarget`, `geoPageTarget`), or
+  sanction the construction in `scripts/verify_geo_link_construction.ts` with the guard that checks the route's own list. The
+  middleware cannot import page_targets cheaply (it pulls the neighbourhood data into the edge bundle).
+- The plain-copy harness reads nine pages; `copy-no-method-words` reads every COPY string. A string printed from outside COPY (older
+  components) is read by neither until it renders on a harness page (QUEUE `copy:legacy-modeled-strings`).
 - The middleware lowercases paths before the retired blocks; a new block placed before canonicalisation would see mixed case.
 - `CompareTable` rows may link only on a table that declares `data-doors="1"`; the doors gate still forbids links on every other table.
 - Two footers exist: `src/components/SiteChrome.tsx` (the main pages) and `src/components/spine2/SiteFooter.tsx`.
