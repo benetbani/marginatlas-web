@@ -1510,6 +1510,17 @@
       "claims": []
     },
     {
+      "name": "trade-head",
+      "script": "tests/spine/trade_head.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The trade page's head and share card (plan 06, task A4): a London trade prints the register's median yearly sales (rounded once through its range, in dollars at the site's pound rate) with its count, ",
+      "reads": [
+        "src/lib/spine/trade_head.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

@@ -75,7 +75,7 @@ import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
 } from "@/lib/extrapolations/fill_missing";
-import { buildCellBoard, getLondonEntry } from "@/lib/scores/cell_board";
+import { buildCellBoard, getLondonEntry, isLondonCell } from "@/lib/scores/cell_board";
 import { AnswerFirstMasthead, StickySectionNav, FreshnessStamp, FlagIt, ZoomControl, AddToWatch } from "@/components/kit";
 import { buildCellView, cellViewNav } from "@/lib/cells/cell_view";
 import { CellDecisionStack } from "@/components/cells/CellDecisionStack";
@@ -100,6 +100,7 @@ import { CoverageBadge } from "@/components/CoverageBadge";
 // when their data isn't on the cell, so they're safe to mount before any
 // cell has been deepened (Phase 1 will populate the data).
 import { SetupCostBlock, hasSetupCostData } from "@/components/sections/SetupCostBlock";
+import { tradeHeadFigure } from "@/lib/spine/trade_head";
 import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 // Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
@@ -270,8 +271,15 @@ export async function generateMetadata({
   const ind = cell.industry_name || cell.industry_description || industry;
   const geoName = cell.geo_name || geo;
   const title = `How much do ${ind.toLowerCase()} earn in ${geoName}? | Margin Atlas`;
-  const median = cell.revenue_per_firm ? `~${formatMoney(cell.revenue_per_firm)} typical revenue` : "Revenue and employment numbers";
-  const desc = `${median} for ${ind.toLowerCase()} in ${geoName}. Bottom-10%, typical, and top-10% benchmarks.`;
+  /* THE HEAD'S ONE FIGURE (plan 06, task A4): London's register median, a row's own read revenue elsewhere, or none; never a
+     filled revenue (the constant ~$675K stood in the head of 103 London trades) and no percentiles the page does not hold. */
+  const head = tradeHeadFigure({ isLondon: isLondonCell(cell), slug: industry.toLowerCase(), revenuePerFirm: cell.revenue_per_firm, revenueFilled: cell._revenueFilled });
+  const desc =
+    head?.kind === "register"
+      ? `${head.usd !== null ? formatMoney(head.usd) : `${head.open!.side === "below" ? "under" : "over"} ${formatMoney(head.open!.edgeUsd)}`} typical yearly sales for ${head.group ? `a ${head.group}` : ind.toLowerCase()} in ${geoName}, from ${head.enterprises.toLocaleString("en-US")} registered businesses.`
+      : head?.kind === "row"
+        ? `~${formatMoney(head.usd)} typical revenue for ${ind.toLowerCase()} in ${geoName}.`
+        : `Revenue and employment numbers for ${ind.toLowerCase()} in ${geoName}.`;
   const ogPath = `/og/cell?country=${encodeURIComponent(country)}&geo=${encodeURIComponent(geo)}&industry=${encodeURIComponent(industry)}`;
   const canonical = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}`;
   return {

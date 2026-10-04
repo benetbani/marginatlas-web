@@ -548,6 +548,8 @@ const GATES: Gate[] = [
   { name: "uk-survival-card", script: "tests/spine/lasts_uk.test.ts" },
   /* A bill to open prints only on its own trade (plan 06, task A3): the parent fallback lent the restaurants bill to ten trades. */
   { name: "bill-own-trade", script: "tests/cells/bill_own_trade.test.ts" },
+  /* The trade head's one figure (plan 06, task A4): London's register median or a read revenue, never a filled constant. */
+  { name: "trade-head", script: "tests/spine/trade_head.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

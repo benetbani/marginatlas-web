@@ -131,6 +131,12 @@ const LONDON_POPULATION = LONDON.london_population;
  * activity is keyed by the cell industry's URL slug. Returns null for non-GB
  * cells and for GB activities not present in the dataset.
  */
+/** Whether a cell is the London alias's own (the one key the routes use; see getLondonEntry below). The trade page's head
+ *  and share card ask this to read London's register figures (plan 06, task A4). */
+export function isLondonCell(cell: Pick<Cell, "country" | "geo_id">): boolean {
+  return cell.country === "GB" && !!LONDON_GEO_ID && (cell.geo_id ?? "").toLowerCase() === LONDON_GEO_ID.toLowerCase();
+}
+
 export function getLondonEntry(cell: Cell): LondonEntry | null {
   if (cell.country !== "GB") return null;
   /* THE ENTRY IS LONDON'S, NOT THE COUNTRY'S (QUEUE cell:gb-aggregate-london-entry,

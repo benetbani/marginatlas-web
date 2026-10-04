@@ -19,6 +19,8 @@
  * image generation. If traffic later justifies Edge, the path is to
  * decouple the triage data from cells.ts via a runtime fetch.
  */
+import { tradeHeadFigure } from "@/lib/spine/trade_head";
+import { isLondonCell } from "@/lib/scores/cell_board";
 import { ImageResponse } from "next/og";
 import { getCellBySlug } from "@/lib/cells";
 // The canonical tier derivation, the same one the pages and the CSV export use,
@@ -99,9 +101,17 @@ export async function GET(request: Request) {
     // publish a provenance claim about a number we withheld on purpose, which
     // is worse than the bare dash this route showed before. Silence about the
     // figure, plus one line naming its absence, is the honest floor.
-    if (cell.revenue_per_firm != null) {
+    /* THE HEAD'S ONE FIGURE (plan 06, task A4), the page's own rule: London's register median with its count, a row's read
+       revenue elsewhere with its range only where the row holds one, or no figure; never a filled revenue (the constant 675K). */
+    const head = tradeHeadFigure({ isLondon: isLondonCell(cell), slug: industry.toLowerCase(), revenuePerFirm: cell.revenue_per_firm, revenueFilled: cell._revenueFilled });
+    if (head?.kind === "register") {
+      subtitle = "Typical yearly sales, registered businesses";
+      median = head.usd !== null ? formatMoney(head.usd) : `${head.open!.side === "below" ? "Under" : "Over"} ${formatMoney(head.open!.edgeUsd)}`;
+      provenance = "The business register, March 2026";
+      detail = `${head.enterprises.toLocaleString("en-US")} registered businesses in ${geoName}${head.group ? `, every ${head.group}` : ""}`;
+    } else if (head?.kind === "row") {
       subtitle = `Typical revenue, employment & wage`;
-      median = formatMoney(cell.revenue_per_firm);
+      median = formatMoney(head.usd);
       // Stated for every tier, not only the weak ones. A card that qualifies
       // itself only when the data is thin teaches readers that an unqualified
       // card is a measurement, which is the same trap by omission.
