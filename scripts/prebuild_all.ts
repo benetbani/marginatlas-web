@@ -151,6 +151,8 @@ const GATES: Gate[] = [
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
   { name: "provenance", script: "scripts/harness/check_provenance.mjs", args: ["--list"] },
+  /* THE FLOOR CENSUS IS NOT STALE (milestone 1, M10): every harness render outside the UK counts the blocks the census recorded. No browser. */
+  { name: "floor-census-fresh", script: "scripts/harness/check_floor_census.mjs" },
   /* THE LOUD-MOMENTS LEDGER AND THE RENDER AGREE (plan step 40, 2026-09-19;
      MODEL.md PART 6 and PART 8's seat tables). Each surface's view declares
      its three loud seats (`LOUD_SEATS`; the census prints them into
@@ -686,6 +688,10 @@ const GATES: Gate[] = [
   { name: "no-session-recording", script: "tests/app/no_session_recording.test.ts" },
   /* The industry page's places table links each place to the trade's page there (milestone 1, M5; his interview of 2026-09-26, answer 35). */
   { name: "places-doors", script: "tests/spine/places_doors.test.ts" },
+  /* Indexing by his rule (milestone 1, M10; his interview of 2026-09-26, answer 6): UK pages and pages at their floor; the census
+     behind it held to the renders outside the UK; the thin page's notify-me ask and its endpoint tag (M9). */
+  { name: "indexable", script: "tests/seo/indexable.test.ts" },
+  { name: "depth-notify", script: "tests/seo/depth_notify.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

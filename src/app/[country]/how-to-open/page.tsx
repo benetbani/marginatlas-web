@@ -13,6 +13,7 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { SpineShell } from "@/components/spine/shell";
 import { HowToBody } from "@/components/spine/country/how-to-view";
 import { buildHowTo } from "@/lib/spine/howto_rows";
+import { robotsFor } from "@/lib/seo/indexable";
 
 type Params = { country: string };
 
@@ -29,6 +30,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     title: `${d.title} | Margin Atlas`,
     description: d.lead,
     alternates: { canonical: `/${country.toLowerCase()}/how-to-open` },
+    /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
+    robots: robotsFor(`/${country.toLowerCase()}/how-to-open`),
   };
 }
 

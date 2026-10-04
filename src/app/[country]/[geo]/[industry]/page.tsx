@@ -115,6 +115,7 @@ import { SpineCellBody as SpineCell } from "@/components/spine/cell/cell-view";
 import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
 import { buildCellCrumbs } from "@/lib/spine/crumb_rows";
 import { SiteChrome } from "@/components/SiteChrome";
+import { robotsFor } from "@/lib/seo/indexable";
 /**
  * MEASURED COST OF THE IMPORT ABOVE (2026-07-26, Loop 2 I-8). Do not "optimise" it
  * without reading PROPOSALS.md F2 first; the obvious fix does not work.
@@ -286,6 +287,8 @@ export async function generateMetadata({
     title,
     description: desc,
     alternates: { canonical },
+    /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
+    robots: robotsFor(canonical),
     openGraph: {
       title,
       description: desc,

@@ -26,6 +26,7 @@ import {
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineHoodBody } from "@/components/spine/hood/hood-view";
 import { buildSpineHoodSeed } from "@/lib/spine/adapt_hood";
+import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 43200;
 
@@ -112,6 +113,8 @@ export async function generateMetadata({
     title: `${city.name} neighborhoods | Margin Atlas`,
     description: `Every neighborhood in ${city.name} with its headline small-business industry.`,
     alternates: { canonical: `/cities/${city.slug}/neighborhoods` },
+    /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
+    robots: robotsFor(`/cities/${city.slug}/neighborhoods`),
   };
 }
 

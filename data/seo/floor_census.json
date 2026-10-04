@@ -1,0 +1,6074 @@
+{
+ "why": "The floor census (milestone 1, M10; his interview of 2026-09-26, answer 6): each spine page outside the United Kingdom with its block count, read by src/lib/seo/indexable.ts. A page indexes when its count meets its type's floor (`floors`, the model laws' FLOOR_BY_SURFACE); UK pages index by his rule and are not counted. Written by scripts/seo/floor_census.tsx; never edited by hand.",
+ "generated_at": "2026-10-04T21:34:17.025Z",
+ "floors": {
+  "country": 13,
+  "city": 16,
+  "cell": 15,
+  "industry": 11,
+  "hood": 4,
+  "howto": 7
+ },
+ "pages": {
+  "/ad": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ae": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ae/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/af": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ag": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/al": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/al/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/am": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/am/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ao": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ao/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ar": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ar/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/at": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/at/at1/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at11/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at12/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at13/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at2/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at21/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at22/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at3/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at31/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at32/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at33/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/at34/metal-products-mfg": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/at/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/au": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/au/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/az": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/az/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ba": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ba/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bb": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bd": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bd/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/be": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/be/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bf": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bf/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bg/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bh": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bh/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bi": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bi/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bj": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bj/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bn/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bo": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bo/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/br": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/br/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bs": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bt": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/bw/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/by": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/by/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/bz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ca": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ca/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cd": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cd/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cf": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cg/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ch": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ch/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ci": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ci/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cities/abidjan": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/abu-dhabi": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/abuja": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/accra": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/addis-ababa": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/adelaide": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/ahmedabad": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/alexandria": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/algiers": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/almaty": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/amman": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/amsterdam": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/ankara": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/antalya": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/athens": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/atlanta": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/auckland": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/austin": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/baghdad": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/baku": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/baltimore": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/bandung": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/bangalore": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/bangkok": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/barcelona": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/basel": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/beijing": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/beirut": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/belgrade": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/belo-horizonte": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/berlin": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/bern": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/bogota": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/boston": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/brasilia": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/bratislava": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/brisbane": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/brussels": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/bucharest": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/budapest": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/buenos-aires": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/buffalo": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/busan": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/cairo": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/calgary": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/cali": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/canberra": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/cape-town": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/caracas": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/casablanca": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/cebu": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/charlotte": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/chengdu": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/chennai": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/chiang-mai": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/chicago": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/chisinau": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/chongqing": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/christchurch": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/cincinnati": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/cleveland": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/cologne": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/colombo": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/columbus": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/copenhagen": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/cordoba": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/daegu": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/dakar": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/dallas": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/dar-es-salaam": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/delhi": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/denver": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/detroit": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/dhaka": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/doha": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/dongguan": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/dubai": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/dublin": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/durban": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/dusseldorf": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/florence": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/fortaleza": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/frankfurt": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/fukuoka": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/geneva": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/guangzhou": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/haifa": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/hamburg": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/hangzhou": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/hanoi": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/helsinki": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/hiroshima": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/ho-chi-minh-city": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/hong-kong": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/honolulu": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/houston": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/hyderabad": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/incheon": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/indianapolis": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/istanbul": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/izmir": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/jaipur": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/jakarta": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/jeddah": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/johannesburg": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kansas-city": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/kaohsiung": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/karachi": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kathmandu": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kobe": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kolkata": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/krakow": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kuala-lumpur": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kuwait-city": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kyiv": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/kyoto": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/lagos": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/lahore": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/las-vegas": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/leipzig": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/lima": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/lisbon": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/ljubljana": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/los-angeles": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/louisville": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/luanda": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/lyon": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/madrid": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/manama": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/manila": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/marseille": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/medellin": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/melbourne": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/memphis": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/mexico-city": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/miami": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/milan": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/milwaukee": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/minneapolis": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/minsk": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/monaco": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/montevideo": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/montreal": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/moscow": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/mumbai": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/munich": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/muscat": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/nagoya": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/nairobi": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/nanjing": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/nantes": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/naples": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/nashville": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/new-orleans": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/new-york": {
+   "surface": "city",
+   "blocks": 17
+  },
+  "/cities/nice": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/nicosia": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/oklahoma-city": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/orlando": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/osaka": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/oslo": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/panama-city": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/paris": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/perth": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/philadelphia": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/phnom-penh": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/phoenix": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/pittsburgh": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/podgorica": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/portland": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/porto": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/porto-alegre": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/prague": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/pristina": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/pune": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/quito": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/raleigh": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/recife": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/reykjavik": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/richmond": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/riga": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/rio-de-janeiro": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/riyadh": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/rome": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/rosario": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/rotterdam": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/sacramento": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/saint-petersburg": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/salt-lake-city": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/salvador": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/san-antonio": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/san-diego": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/san-francisco": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/san-jose": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/san-jose-cr": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/santiago": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/santo-domingo": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/sao-paulo": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/sapporo": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/sarajevo": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/seattle": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/sendai": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/seoul": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/seville": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/shanghai": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/shenzhen": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/singapore": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/skopje": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/sofia": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/st-louis": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/stockholm": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/stuttgart": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/surabaya": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/surat": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/sydney": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/taipei": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tallinn": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tampa": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tbilisi": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tehran": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tel-aviv": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tianjin": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tirana": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tokyo": {
+   "surface": "city",
+   "blocks": 16
+  },
+  "/cities/toronto": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/toulouse": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/tunis": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/turin": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/ulaanbaatar": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/valencia": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/valletta": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/valparaiso": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/vancouver": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/vienna": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/vientiane": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/vilnius": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/warsaw": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/washington-dc": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/wellington": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/wuhan": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/xian": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/yangon": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/yokohama": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/zagreb": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cities/zurich": {
+   "surface": "city",
+   "blocks": 15
+  },
+  "/cl": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cl/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cm/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/co": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/co/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cu": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cv": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cv/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cy": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cy/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/cz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/cz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/de": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/de/dea2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea3/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea4/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea5/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb3/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dec/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deg/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deg0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/dj": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/dj/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/dk": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/dk/dk0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/dk/dk01/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/dk/dk02/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/dk/dk03/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/dk/dk04/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/dk/dk05/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/dk/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/dm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/do": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/do/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/dz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/dz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ec": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ec/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ee": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ee/ee0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ee/ee00/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ee/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/eg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/eg/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/el/el3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el30/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el41/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el42/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el43/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el5/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el51/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el52/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el53/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el54/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el6/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el61/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el62/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el63/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el64/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/el/el65/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/es/es1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es11/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es11/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es12/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es12/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es13/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es13/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es21/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es21/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es22/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es22/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es23/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es23/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es24/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es24/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es3/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es30/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es30/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es4/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es41/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es41/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es42/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es42/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es43/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es43/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es5/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es51/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es52/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es53/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es6/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es61/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es7/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/es70/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/es/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/et": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/et/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/fi": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/fi/fi1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fi/fi19/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fi/fi1b/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fi/fi1c/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fi/fi1d/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fi/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/fj": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/fj/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/fm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/fr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/fr/fr1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fr10/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frb/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frb0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frc/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frc/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frc1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frc1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frc2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frc2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frd/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frd/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frd1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frd1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frd2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frd2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fre/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fre/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fre1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fre1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fre2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fre2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frf/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frf/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frf1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frf1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frf2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frf3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frg/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frg0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frh/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frh0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fri/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fri1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fri2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fri3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frj/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frj1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frj2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frk/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frk1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frk2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frl/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/frl0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fry/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fry2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/fry4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/fr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ga": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ga/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gd": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ge": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ge/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gh": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/gh/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/gm/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/gn/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gq": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/gq/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/gr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gt": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/gt/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/gw/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/gy": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/hk": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/hk/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/hn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/hn/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/hr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/hr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/hr/hr0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hr/hr02/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hr/hr03/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hr/hr05/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hr/hr06/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hr/hr06/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ht": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/hu": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/hu/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/hu/hu1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu11/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu11/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu12/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu12/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu21/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu21/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu22/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu22/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu23/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu23/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu3/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu31/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu31/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu32/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu32/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu33/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/hu/hu33/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/id": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/id/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ie": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ie/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ie/ie0/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ie/ie04/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ie/ie05/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ie/ie06/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/il": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/il/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/in": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/in/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/industries/accounting-tax": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/alarm-systems-install": {
+   "surface": "industry",
+   "blocks": 10
+  },
+  "/industries/appliance-repair": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/art-classes-studios": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/art-craft-supply-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/auto-body-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/auto-dealers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/auto-repair-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/bags-leather-goods": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/bakeries-retail": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/barbershops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/bars-nightclubs": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/bike-repair-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/bricklaying-services": {
+   "surface": "industry",
+   "blocks": 10
+  },
+  "/industries/brow-lash-studios": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/cabinet-making": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/cafes-coffee-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/campgrounds-rv-parks": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/carpenters-finish-work": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/catering-food-service-contractors": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/chiropractic-clinics": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/cleaning-services": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/clothing-shoe-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/coding-bootcamps-schools": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/coffee-roasters": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/cosmetics-beauty-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/couriers-messengers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/craft-breweries-taprooms": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/custom-apparel-uniforms": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/custom-furniture-makers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/custom-jewelers-mfg": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/dance-studios": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/day-spas": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/daycare-preschool": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/dental-practices": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/doctors-clinics": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/driving-schools": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/dry-cleaning-laundry": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/electricians": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/electronics-appliance-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/electronics-phone-repair": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/employment-services": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/engineering-architecture": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/equipment-rental-leasing": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/event-production-small": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/eyewear-optical-retail": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/flooring-installers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/florist-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/food-trucks": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/funeral-services": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/furniture-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/gambling-amusement": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/game-development-studios": {
+   "surface": "industry",
+   "blocks": 10
+  },
+  "/industries/garden-centers-nurseries": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/gas-stations": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/general-merchandise-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/grocery-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/guest-houses-pensions": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/hairdressers-beauty": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/hardware-stores-local": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/home-decor-gift-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/hostels": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/hotels-lodging": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/hvac-services": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/ice-cream-frozen-dessert-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/independent-art-galleries": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/independent-insurance-brokers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/indie-bookstores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/it-services-hosting": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/jewelry-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/junk-removal-small-moving": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/landscaping-lawn-care": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/language-schools": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/legal-services": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/locksmiths": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/marketing-design-agencies": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/martial-arts-dojos": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/massage-therapy-clinics": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/mental-health-practices-small": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/metal-fabrication-machine-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/motion-picture-sound-recording": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/museums-cultural": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/music-instrument-shops": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/music-schools-private-lessons": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/nail-salons": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/news-periodical-publishing": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/nursing-elderly-care": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/nutritionist-dietician-practices": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/office-business-support": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/optometry-vision-centers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/painters-residential": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/performing-arts": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/personal-training": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pest-control-local": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pet-daycare-boarding": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pet-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pet-training": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pet-walking-sitting": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pharmacies-health-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/photography-studios": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/physical-therapy-clinics": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pizzerias": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/plastering-services": {
+   "surface": "industry",
+   "blocks": 10
+  },
+  "/industries/plumbers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pool-service-maintenance": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/print-shops-offset-digital": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/pubs-taverns": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/real-estate-agencies": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/restaurants": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/roofers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/scenic-sightseeing-transport": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/security-services": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/shoe-repair": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/short-term-rental-management": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/sign-shops-graphics-fab": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/small-leather-goods": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/soap-candle-makers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/software-development": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/specialty-grocers-delis": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/specialty-trades-mixed": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/sporting-goods-specialty": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/sports-fitness": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/stationery-paper-goods": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/tailoring-alterations": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/tanning-salons": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/tattoo-piercing-studios": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/tea-houses-matcha-bars": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/tiling-services": {
+   "surface": "industry",
+   "blocks": 10
+  },
+  "/industries/toy-game-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/travel-agencies": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/tutoring-centers": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/veterinary-pet-care": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/vocational-other-training": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/watch-jewelry-repair": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/wedding-planning-coordination": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/window-washing": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/wine-liquor-stores": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/industries/yoga-pilates-studios": {
+   "surface": "industry",
+   "blocks": 11
+  },
+  "/iq": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/iq/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ir": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ir/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/is": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/is/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/it": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/it/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/it/itc/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc3/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc4/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itc4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf1/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf2/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf3/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf4/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf5/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf5/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itf6/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itg/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itg1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/itg2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/ith/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/ith1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/ith2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/ith3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/ith4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/ith5/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/iti/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/iti1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/iti2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/iti3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/it/iti4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/jm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/jm/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/jo": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/jo/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/jp": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/jp/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ke": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ke/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/kg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/kg/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/kh": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/kh/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ki": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/km": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/km/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/kn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/kr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/kr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/kw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/kw/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/kz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/kz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/la": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/la/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/lb": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/lb/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/lc": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/li": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/lk": {
+   "surface": "country",
+   "blocks": 14
+  },
+  "/lr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/lr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ls": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ls/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/lt": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/lt/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/lt/lt0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/lt/lt01/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/lt/lt02/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/lu": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/lu/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/lv": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/lv/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/lv/lv0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/lv/lv00/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ly": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ly/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ma": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ma/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mc": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/md": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/md/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/me": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/me/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mg/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mh": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mk": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mk/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ml": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ml/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mm/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mn/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mo": {
+   "surface": "country",
+   "blocks": 13
+  },
+  "/mr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mt": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mt/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mu": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mu/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mv": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mw/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mx": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mx/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/my": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/my/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/mz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/mz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/na": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/na/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ne": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ne/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ng": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ng/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ni": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ni/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/nl": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/nl/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/nl/nl11/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl12/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl21/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl22/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl23/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl31/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl32/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl33/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl34/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl41/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl42/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/no": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/no/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/no/no0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/no/no02/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/no/no06/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/no/no07/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/no/no08/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/no/no09/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/no/no0a/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/np": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/np/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/nr": {
+   "surface": "country",
+   "blocks": 13
+  },
+  "/nz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/nz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/om": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/om/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/pa": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/pa/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/pe": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/pe/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/pg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ph": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ph/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/pk": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/pl": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/pl/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/pl/pl2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl21/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl22/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl22/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl4/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl41/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl41/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl42/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl42/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl43/management-consulting": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl43/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl5/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl51/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl52/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl6/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl61/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl62/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl63/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl7/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl71/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl72/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl8/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl81/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl82/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl84/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl9/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl91/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pl/pl92/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ps": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/pt": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/pt/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/pt/pt1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pt/pt11/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pt/pt16/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pt/pt18/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/py": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/py/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/qa": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/qa/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ro": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ro/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ro/ro1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro11/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro12/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro21/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro22/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro31/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro32/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro4/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro41/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro42/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/rs": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/rs/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ru": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ru/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/rw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/rw/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/sa": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sa/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/sb": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sc": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sc/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/sd": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/se": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/se/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/se/se1/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se11/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se12/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se2/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se21/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se22/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se23/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se3/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se31/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se32/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se33/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/sg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sg/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/si": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/si/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/si/si0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/si/si03/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/si/si04/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/sk": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sk/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/sk/sk0/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/sk/sk01/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/sk/sk02/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/sk/sk03/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/sk/sk04/plastics-rubber-products": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/sl": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sl/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/sm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sn/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/so": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/st": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sv": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sv/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/sy": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/sz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/td": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/td/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/tg": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tg/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/th": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/th/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/tj": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tj/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/tl": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tm/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/tn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tn/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/to": {
+   "surface": "country",
+   "blocks": 13
+  },
+  "/tr": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tr/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/tt": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tt/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/tv": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tw/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/tz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/tz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ua": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ua/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/ug": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ug/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/us": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/us/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/us/mississippi/administrative-management-and-general-management-consulting-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/all-other-schools-and-instruction": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/business-support-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/construction-and-mining-except-oil-well-machinery-and-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/crude-petroleum-extraction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/electronics-and-appliance-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/floor-covering-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/general-rental-centers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/hotels-except-casino-hotels-and-motels": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/investigation-guard-and-armored-car-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/lessors-of-miniwarehouses-and-self-storage-units": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/management-of-companies-and-enterprises": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/motion-picture-theaters-except-drive-ins": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/mississippi/new-car-dealers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/new-multifamily-housing-construction-except-for-sale-builders": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/nursing-care-facilities-skilled-nursing-facilities": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/offices-of-lawyers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/other-activities-related-to-real-estate": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/other-clothing-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/other-direct-selling-establishments": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/other-personal-care-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/other-professional-scientific-and-technical-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/pipeline-transportation-of-crude-oil": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/radio-and-television-broadcasting": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/real-estate": {
+   "surface": "cell",
+   "blocks": 16
+  },
+  "/us/mississippi/religious-organizations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/research-and-development-in-the-physical-engineering-and-life-sciences-except-nanotechnology-and-biotechnology": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/mississippi/security-guards-and-patrol-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/supermarkets-and-other-grocery-except-convenience-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/mississippi/support-activities-for-mining": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/support-activities-for-oil-and-gas-operations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/mississippi/wholesale-electronic-markets-and-agents-and-brokers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/all-other-chemical-product-and-preparation-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/all-other-miscellaneous-store-retailers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/all-other-travel-arrangement-and-reservation-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/amusement-and-theme-parks": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/animal-food-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/apparel-piece-goods-and-notions-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/beauty-salons": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/boiler-tank-and-shipping-container-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/breweries": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/business-support-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/chemical-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/child-day-care-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/clothing-accessories-stores": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/missouri/computer-and-office-machine-repair-and-maintenance": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/computer-systems-design-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/cosmetics-beauty-supplies-and-perfume-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/couriers-and-messengers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/custom-computer-programming-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/death-care-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/directory-and-mailing-list-publishers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/electrical-contractors-and-other-wiring-installation-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/facilities-support-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/financial-transactions-processing-reserve-and-clearinghouse-activities": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/forging-and-stamping": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/furniture-stores": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/missouri/general-rental-centers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/hardware-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/household-appliances-and-electrical-and-electronic-goods-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/marinas": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/medical-and-diagnostic-laboratories": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/medical-equipment-and-supplies-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/motion-picture-and-video-production": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/navigational-measuring-electromedical-and-control-instruments-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/nonmetallic-mineral-mining-and-quarrying": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/nonstore-retailers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/nursery-garden-center-and-farm-supply-stores": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/other-activities-related-to-credit-intermediation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/other-consumer-goods-rental": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/other-information-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/other-miscellaneous-store-retailers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/other-residential-care-facilities": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/other-social-advocacy-organizations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/other-spectator-sports": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/other-support-activities-for-road-transportation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/other-wood-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/paper-bag-and-coated-and-treated-paper-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/payroll-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/petroleum-and-petroleum-products-merchant-wholesalers-except-bulk-stations-and-terminals": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/pharmaceutical-and-medicine-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/repair-and-maintenance": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/residential-intellectual-and-developmental-disability-facilities": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/school-and-employee-bus-transportation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/securities-commodity-contracts-and-other-financial-investments-and-related-activities": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/security-guards-and-patrol-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/software-publishers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/special-food-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/missouri/textile-bag-and-canvas-mills": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/transportation-equipment-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/missouri/used-merchandise-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/missouri/video-tape-and-disc-rental": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/montana/all-other-miscellaneous-store-retailers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/all-other-specialty-food-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/animal-slaughtering-and-processing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/continuing-care-retirement-communities-and-assisted-living-facilities-for-the-elderly": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/drycleaning-and-laundry-services-except-coin-operated": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/montana/electrical-apparatus-and-equipment-wiring-supplies-and-related-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/electronic-shopping-and-mail-order-houses": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/fabricated-metal-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/fabricated-structural-metal-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/farm-machinery-and-equipment-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/finfish-fishing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/food-and-beverage-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/hunting-and-trapping": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/legal-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/montana/nondepository-credit-intermediation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/office-administrative-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/offices-of-chiropractors": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/offices-of-physicians": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/other-gambling-industries": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/montana/other-nonmetallic-mineral-mining-and-quarrying": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/other-transit-and-ground-passenger-transportation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/other-wood-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/pharmacies-and-drug-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/process-physical-distribution-and-logistics-consulting-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/montana/residential-property-managers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/montana/roofing-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/montana/shoe-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/small-arms-ordnance-and-ordnance-accessories-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/stone-mining-and-quarrying": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/supermarkets-and-other-grocery-except-convenience-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/montana/support-activities-for-air-transportation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/support-activities-for-rail-transportation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/montana/warehousing-and-storage": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/advertising-public-relations-and-related-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/automobile-and-other-motor-vehicle-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/automotive-mechanical-and-electrical-repair-and-maintenance": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/brick-stone-and-related-construction-material-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/building-material-and-supplies-dealers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/cemeteries-and-crematories": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/clothing-stores": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/nebraska/commercial-screen-printing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/community-food-and-housing-and-emergency-and-other-relief-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/couriers-and-express-delivery-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/data-processing-hosting-and-related-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/emergency-and-other-relief-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/finance-and-insurance": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/flooring-contractors": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/general-line-grocery-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/gift-novelty-and-souvenir-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/hotels-except-casino-hotels-and-motels": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/independent-artists-writers-and-performers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/investigation-guard-and-armored-car-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/lumber-plywood-millwork-and-wood-panel-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/management-scientific-and-technical-consulting-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/motion-picture-and-video-exhibition": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/navigational-measuring-electromedical-and-control-instruments-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/other-basic-organic-chemical-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/other-commercial-and-industrial-machinery-and-equipment-rental-and-leasing": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/other-individual-and-family-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/other-information-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/private-mail-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/professional-scientific-and-technical-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/religious-organizations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/rental-and-leasing-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/sheet-metal-work-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/software-publishers": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/nebraska/specialized-freight-except-used-goods-trucking-long-distance": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/technical-and-trade-schools": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nebraska/theater-companies-and-dinner-theaters": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nebraska/utilities": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/wholesale-trade-agents-and-brokers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nebraska/wired-and-wireless-telecommunications-carriers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/administrative-and-support-and-waste-management-and-remediation-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/all-other-consumer-goods-rental": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/all-other-information-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/all-other-outpatient-care-centers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/architectural-and-structural-metals-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/automotive-glass-replacement-shops": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/automotive-parts-accessories-and-tire-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/automotive-parts-and-accessories-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/beer-wine-and-distilled-alcoholic-beverage-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/book-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/building-inspection-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/business-professional-labor-political-and-similar-organizations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/caterers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/clothing-accessories-stores": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/nevada/commercial-and-industrial-machinery-and-equipment-rental-and-leasing": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/computer-systems-design-and-related-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/credit-unions": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/curtain-and-linen-mills": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/dairy-product-except-dried-or-canned-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/death-care-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/diagnostic-imaging-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/fabricated-structural-metal-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/flooring-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/fruit-and-vegetable-preserving-and-specialty-food-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/general-line-grocery-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/general-medical-and-surgical-hospitals": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/general-warehousing-and-storage": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/grantmaking-and-giving-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/home-health-care-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/hotels-except-casino-hotels-and-motels": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/household-appliances-and-electrical-and-electronic-goods-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/investigation-guard-and-armored-car-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/janitorial-services": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/nevada/jewelry-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/management-of-companies-and-enterprises": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/medical-and-diagnostic-laboratories": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/miscellaneous-intermediation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/motorcycle-boat-and-other-motor-vehicle-dealers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/music-publishers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/navigational-measuring-electromedical-and-control-instruments-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/new-housing-for-sale-builders": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/office-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/other-activities-related-to-credit-intermediation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/other-automotive-mechanical-and-electrical-repair-and-maintenance": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/other-specialty-food-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/outdoor-advertising": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/passenger-car-rental-and-leasing": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/pharmacies-and-drug-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/plastics-materials-and-basic-forms-and-shapes-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/plastics-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/plumbing-and-heating-equipment-and-supplies-hydronics-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/poured-concrete-foundation-and-structure-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/nevada/printing-and-related-support-activities": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/recreational-vehicle-dealers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/shoe-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/nevada/special-needs-transportation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/vocational-rehabilitation-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/nevada/warm-air-heating-and-air-conditioning-equipment-and-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/accounting-tax-preparation-bookkeeping-and-payroll-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/all-other-outpatient-care-centers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/all-other-support-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-hampshire/assisted-living-facilities-for-the-elderly": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-hampshire/brick-stone-and-related-construction-material-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/employment-placement-agencies-and-executive-search-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-hampshire/general-freight-trucking-local": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/hardware-and-plumbing-and-heating-equipment-and-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/lessors-of-other-real-estate-property": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/machinery-equipment-and-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/miscellaneous-nondurable-goods-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/nonmetallic-mineral-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/office-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/offices-of-lawyers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/offices-of-physicians-mental-health-specialists": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/other-miscellaneous-durable-goods-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/personal-and-laundry-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/petroleum-bulk-stations-and-terminals": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/photographic-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/savings-institutions": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/special-food-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-hampshire/special-needs-transportation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-hampshire/traveler-accommodation": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-hampshire/veterinary-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-hampshire/warm-air-heating-and-air-conditioning-equipment-and-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/advertising-material-distribution-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/apparel-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/architectural-engineering-and-related-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/asphalt-paving-mixture-and-block-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/automobile-and-other-motor-vehicle-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/bakeries-and-tortilla-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/beer-wine-and-liquor-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/beverage-and-tobacco-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/bolt-nut-screw-rivet-and-washer-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/building-material-and-supplies-dealers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/cemeteries-and-crematories": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/construction-and-mining-except-oil-well-machinery-and-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/cut-stone-and-stone-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/depository-credit-intermediation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/drugs-and-druggists-sundries-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/electrical-contractors-and-other-wiring-installation-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/engine-turbine-and-power-transmission-equipment-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/facilities-support-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/family-planning-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/fruit-and-vegetable-preserving-and-specialty-food-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/funeral-homes-and-funeral-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/general-freight-trucking-local": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/general-rental-centers": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-jersey/golf-courses-and-country-clubs": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-jersey/grantmaking-and-giving-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/graphic-design-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/home-furnishing-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/household-appliances-electric-housewares-and-consumer-electronics-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/industrial-machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/management-of-companies-and-enterprises": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/navigational-measuring-electromedical-and-control-instruments-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/nonferrous-metal-except-aluminum-production-and-processing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/office-administrative-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/office-supplies-and-stationery-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/offices-of-podiatrists": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/other-amusement-and-recreation-industries": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/other-chemical-and-allied-products-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/other-warehousing-and-storage": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/outdoor-advertising": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/outpatient-care-centers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/payroll-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-jersey/power-and-communication-line-and-related-structures-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/resin-and-synthetic-rubber-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/sales-financing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/sand-gravel-clay-and-ceramic-and-refractory-minerals-mining-and-quarrying": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/savings-institutions": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/securities-and-commodity-contracts-intermediation-and-brokerage": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/semiconductor-and-other-electronic-component-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/soap-cleaning-compound-and-toilet-preparation-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/solid-waste-landfill": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/specialized-freight-trucking": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/telemarketing-bureaus-and-other-contact-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/truck-utility-trailer-and-rv-recreational-vehicle-rental-and-leasing": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-jersey/used-household-and-office-goods-moving": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/used-merchandise-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-jersey/utilities": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-jersey/wired-and-wireless-telecommunications-carriers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/administrative-and-support-and-waste-management-and-remediation-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/all-other-professional-scientific-and-technical-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/arts-entertainment-and-recreation": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/automotive-oil-change-and-lubrication-shops": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/automotive-parts-and-accessories-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/automotive-repair-and-maintenance": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/beer-wine-and-liquor-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/blood-and-organ-banks": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-mexico/building-equipment-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/building-material-and-garden-equipment-and-supplies-dealers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/business-associations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/business-service-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/clothing-and-clothing-accessories-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/computer-systems-design-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/crude-petroleum-extraction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/drilling-oil-and-gas-wells": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/drugs-and-druggists-sundries-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/drywall-and-insulation-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/electronics-stores": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-mexico/food-and-beverage-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/food-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/furniture-and-home-furnishing-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/furniture-stores": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-mexico/general-freight-trucking": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/general-merchandise-stores-including-warehouse-clubs-and-supercenters": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/home-furnishings-stores": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/jewelry-and-silverware-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/meat-markets": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/metalworking-machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/motion-picture-theaters-except-drive-ins": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/musical-groups-and-artists": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/offices-of-other-health-practitioners": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/offices-of-physicians-except-mental-health-specialists": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/offices-of-physicians-mental-health-specialists": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/oil-and-gas-pipeline-and-related-structures-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/other-support-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/other-telecommunications": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/painting-and-wall-covering-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/personal-and-laundry-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/plastics-materials-and-basic-forms-and-shapes-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/portfolio-management": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/security-systems-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/soft-drink-and-ice-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/television-broadcasting": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-mexico/temporary-help-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-mexico/veterinary-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-mexico/women-s-children-s-and-infants-clothing-and-accessories-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/accounting-tax-preparation-bookkeeping-and-payroll-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/advertising-public-relations-and-related-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/all-other-professional-scientific-and-technical-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/brick-stone-and-related-construction-material-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/business-service-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-york/cable-and-other-subscription-programming": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/car-washes": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/computer-and-computer-peripheral-equipment-and-software-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/computer-and-electronic-product-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/construction-and-mining-except-oil-well-machinery-and-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/convenience-stores": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-york/cookie-cracker-and-pasta-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/cutlery-and-handtool-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/direct-title-insurance-carriers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/drinking-places-alcoholic-beverages": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/electric-power-transmission-control-and-distribution": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/electronic-and-precision-equipment-repair-and-maintenance": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/family-planning-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-york/florists": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-york/framing-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/furniture-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/gasoline-stations": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-york/general-medical-and-surgical-hospitals": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/golf-courses-and-country-clubs": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/hardware-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/hunting-and-trapping": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/independent-artists-writers-and-performers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/industrial-building-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/industrial-machinery-and-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/information": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/landscaping-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-york/lessors-of-nonresidential-buildings-except-miniwarehouses": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/meat-and-meat-product-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/media-buying-agencies": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/men-s-and-boys-clothing-and-furnishings-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/museums": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/new-york/musical-groups-and-artists": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/nonferrous-metal-except-copper-and-aluminum-rolling-drawing-and-extruding": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/other-building-material-dealers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/other-heavy-and-civil-engineering-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/other-personal-care-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/outpatient-mental-health-and-substance-abuse-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-york/petroleum-and-coal-products-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/plastics-packaging-materials-and-unlaminated-film-and-sheet-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/plumbing-and-heating-equipment-and-supplies-hydronics-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/portfolio-management": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/radio-and-television-broadcasting-and-wireless-communications-equipment-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/real-estate-property-managers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/religious-organizations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/specialized-design-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/new-york/support-activities-for-agriculture-and-forestry": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/support-activities-for-crop-production": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/support-activities-for-mining": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/tobacco-and-tobacco-product-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/transportation-equipment-and-supplies-except-motor-vehicle-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/travel-arrangement-and-reservation-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/new-york/turned-product-and-screw-nut-and-bolt-manufacturing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/vocational-rehabilitation-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/new-york/women-s-children-s-and-infants-clothing-and-accessories-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/all-other-personal-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/all-other-specialty-trade-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/blood-and-organ-banks": {
+   "surface": "cell",
+   "blocks": 14
+  },
+  "/us/north-carolina/civic-and-social-organizations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/continuing-care-retirement-communities-and-assisted-living-facilities-for-the-elderly": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/credit-intermediation-and-related-activities": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/dance-companies": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/educational-services": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/exterminating-and-pest-control-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/facilities-support-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/finish-carpentry-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/fish-and-seafood-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/graphic-design-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/grocery-and-related-product-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/insurance-carriers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/investigation-and-security-services": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/jewelry-watch-precious-stone-and-precious-metal-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/landscape-architectural-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/lessors-of-nonfinancial-intangible-assets-except-copyrighted-works": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/media-buying-agencies": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/miscellaneous-durable-goods-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/offices-of-optometrists": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/offices-of-real-estate-appraisers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/other-building-finishing-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/other-heavy-and-civil-engineering-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/other-personal-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/painting-and-wall-covering-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/paper-and-paper-product-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/pet-care-except-veterinary-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/photofinishing-laboratories-except-one-hour": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/psychiatric-and-substance-abuse-hospitals": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/real-estate-property-managers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/research-and-development-in-nanotechnology": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/research-and-development-in-the-social-sciences-and-humanities": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/securities-brokerage": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/site-preparation-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-carolina/stone-mining-and-quarrying": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/technical-and-trade-schools": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/telephone-call-centers": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/traveler-accommodation": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-carolina/water-supply-and-irrigation-systems": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/wholesale-electronic-markets-and-agents-and-brokers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/wholesale-trade-agents-and-brokers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-carolina/wine-and-distilled-alcoholic-beverage-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/all-other-amusement-and-recreation-industries": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-dakota/architectural-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-dakota/commercial-banking": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/construction-of-buildings": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/consumer-goods-rental": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-dakota/crude-petroleum-extraction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/direct-life-insurance-carriers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/farm-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/hardware-and-plumbing-and-heating-equipment-and-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/heavy-and-civil-engineering-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/insurance-agencies-and-brokerages": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/labor-unions-and-similar-labor-organizations": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/management-scientific-and-technical-consulting-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-dakota/motor-vehicle-and-motor-vehicle-parts-and-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/nonresidential-building-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/offices-of-physical-occupational-and-speech-therapists-and-audiologists": {
+   "surface": "cell",
+   "blocks": 13
+  },
+  "/us/north-dakota/other-building-equipment-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-dakota/other-grocery-and-related-products-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/other-scientific-and-technical-consulting-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-dakota/petroleum-bulk-stations-and-terminals": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/real-estate-and-rental-and-leasing": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/rental-and-leasing-services": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/north-dakota/water-supply-and-irrigation-systems": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/north-dakota/wired-telecommunications-carriers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/automobile-and-other-motor-vehicle-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/construction-and-mining-except-oil-well-machinery-and-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/drugs-and-druggists-sundries-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/finish-carpentry-contractors": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/ohio/industrial-building-construction": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/industrial-machinery-and-equipment-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/mining-except-oil-and-gas": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/periodical-publishers": {
+   "surface": "cell",
+   "blocks": 15
+  },
+  "/us/ohio/recyclable-material-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/support-activities-for-mining": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/telecommunications": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/us/ohio/toy-and-hobby-goods-and-supplies-merchant-wholesalers": {
+   "surface": "cell",
+   "blocks": 5
+  },
+  "/uy": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/uy/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/uz": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/uz/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/vc": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ve": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ve/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/vn": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/vn/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/vu": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ws": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/xk": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ye": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/ye/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/za": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/za/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/zm": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/zm/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  },
+  "/zw": {
+   "surface": "country",
+   "blocks": 15
+  },
+  "/zw/how-to-open": {
+   "surface": "howto",
+   "blocks": 7
+  }
+ }
+}

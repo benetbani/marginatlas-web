@@ -186,6 +186,21 @@
       "claims": []
     },
     {
+      "name": "floor-census-fresh",
+      "script": "scripts/harness/check_floor_census.mjs",
+      "args": [],
+      "browser": false,
+      "asserts": "THE FLOOR CENSUS IS NOT STALE (milestone 1, M10).",
+      "reads": [
+        "data/cities/city_list_v1.json",
+        "data/seo/floor_census.json",
+        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
+        "scripts/harness/check_model_laws.mjs",
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "loud-seats",
       "script": "scripts/verify_loud_seats.mjs",
       "args": [],
@@ -2198,6 +2213,31 @@
       "asserts": "The industry page's places table links each place to that trade's page there (milestone 1, M5; his interview of 2026-09-26, answer 35; QUEUE ui:industry-page-is-a-dead-end).",
       "reads": [
         "src/lib/spine/industry_places_rows.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "indexable",
+      "script": "tests/seo/indexable.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Which spine pages a search engine may index (milestone 1, M10; his interview of 2026-09-26, answer 6: \"UK pages + every page at its floor; thin pages noindexed until they reach it\").",
+      "reads": [
+        "data/seo/floor_census.json",
+        "scripts/harness/check_model_laws.mjs",
+        "src/lib/seo/indexable.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "depth-notify",
+      "script": "tests/seo/depth_notify.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The thin page's one ask (milestone 1, M9; his interview of 2026-09-26: \"the 'notify me when my place reaches this depth' capture on thinner pages\"): drawn only on a page the floor census counted under",
+      "reads": [
+        "data/seo/floor_census.json",
+        "src/lib/seo/depth_source.ts"
       ],
       "claims": []
     },

@@ -29,6 +29,7 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineHoodBody } from "@/components/spine/hood/hood-view";
 import { buildSpineHoodSeed } from "@/lib/spine/adapt_hood";
 import { hoodCity, spineHoodCities, spineHoodDistrict, spineHoodDistricts, districtPageHref } from "@/lib/spine/hood_scheme";
+import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 43200;
 
@@ -48,6 +49,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${row.name}, ${city.name}: what rent takes | Margin Atlas`,
     description: `Shop rent in ${row.name} against the other districts of ${city.name}, and what the district is like.`,
     alternates: { canonical: districtPageHref(city.slug, row.slug) },
+    /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
+    robots: robotsFor(districtPageHref(city.slug, row.slug)),
   };
 }
 

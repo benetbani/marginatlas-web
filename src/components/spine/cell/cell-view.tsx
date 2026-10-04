@@ -170,6 +170,7 @@ import { buildSpendByIncome } from "@/lib/spine/sections/spend_by_income";
 import { MarketHold } from "@/components/spine/sections/MarketHold";
 import { buildMarketHold, marketForTrade } from "@/lib/spine/sections/market_jobs";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
+import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
 
 const X: any = spineCellSeed;
 
@@ -438,6 +439,8 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
       </div>
       {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
       <SourcesFoot iso2={d.meta?.iso2} />
+      {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
+      {d.meta?.iso2 && d.meta?.geo && d.meta?.industry ? <DepthNotifyFoot path={`/${String(d.meta.iso2).toLowerCase()}/${String(d.meta.geo).toLowerCase()}/${String(d.meta.industry).toLowerCase()}`} /> : null}
     </>
   );
 }

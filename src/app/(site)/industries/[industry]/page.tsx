@@ -96,6 +96,7 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineIndustryBody } from "@/components/spine/industry/industry-view";
 import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
+import { robotsFor } from "@/lib/seo/indexable";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -155,6 +156,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     title,
     description,
     alternates: { canonical },
+    /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
+    robots: robotsFor(canonical),
     // title, description and images are all repeated below rather than
     // inherited. Next resolves metadata per KEY by replacement, not by deep
     // merge, so declaring openGraph at all discards the root layout's

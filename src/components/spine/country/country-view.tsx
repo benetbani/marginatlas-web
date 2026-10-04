@@ -111,6 +111,7 @@ import { buildAgeMix, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildJobMarket } from "@/lib/spine/sections/market_jobs";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
+import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.2's
@@ -1704,6 +1705,8 @@ export function SpineCountryBody({ data }: { data?: any }) {
         </div>
         {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
         <SourcesFoot iso2={iso2 as string} />
+        {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
+        <DepthNotifyFoot path={`/${String(iso2).toLowerCase()}`} />
         <OnThisPage sections={sections} chapters={railChapters} />
       </>
     );
@@ -1843,6 +1846,8 @@ export function SpineCountryBody({ data }: { data?: any }) {
         ))}
       </div>
       <SourcesFoot iso2={iso2 as string} />
+      {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
+      <DepthNotifyFoot path={`/${String(iso2).toLowerCase()}`} />
       <OnThisPage sections={generalSections} chapters={generalChapters} />
     </>
   );

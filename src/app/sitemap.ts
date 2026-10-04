@@ -31,11 +31,14 @@
  */
 import type { MetadataRoute } from "next";
 import { getTopCells, getTopRegionalCells, slugify, regionalCellUrl, withBudget } from "@/lib/cells";
-import { COUNTRIES } from "@/lib/taxonomy";
+import { COUNTRIES, SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getCoverageRows } from "@/lib/coverage/report";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { isPathSuppressed } from "@/lib/quality/thin_pages";
+import { isIndexable } from "@/lib/seo/indexable";
+import { RETIRED } from "@/lib/taxonomy/retired";
+import { spineHoodDistricts } from "@/lib/spine/hood_scheme";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
 import cityListJson from "../../data/cities/city_list_v1.json";
 import cityComparisonsJson from "../../data/cities/city_comparisons_v1.json";
@@ -102,12 +105,24 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/status`, lastModified: new Date(), changeFrequency: "daily", priority: 0.4 },
   ];
 
-  const countryUrls: MetadataRoute.Sitemap = COUNTRIES.map((c) => ({
+  /* THE SPINE PAGES THE RULE ALLOWS (milestone 1, M10; his interview of 2026-09-26, answer 6: UK pages and pages at their floor,
+     src/lib/seo/indexable.ts): a page the robots tag keeps out of the index is never advertised here, and the indexable pages this
+     map never listed (the industries and the how-to pages at their floor) are listed now. */
+  const countryUrls: MetadataRoute.Sitemap = COUNTRIES.filter((c) => isIndexable(`/${c.code.toLowerCase()}`)).map((c) => ({
     url: `${BASE_URL}/${c.code.toLowerCase()}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.7,
   }));
+  const howToUrls: MetadataRoute.Sitemap = COUNTRIES.filter((c) => isIndexable(`/${c.code.toLowerCase()}/how-to-open`)).map((c) => ({
+    url: `${BASE_URL}/${c.code.toLowerCase()}/how-to-open`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+  const industryUrls: MetadataRoute.Sitemap = Object.keys(SLUG_TO_INDUSTRY as Record<string, unknown>)
+    .filter((slug) => !(slug in RETIRED) && isIndexable(`/industries/${slug}`))
+    .map((slug) => ({ url: `${BASE_URL}/industries/${slug}`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 }));
 
   // /[Country]/industries hub per country (~195 URLs).
   // High-value internal-link nexus for the country topical-authority play.
@@ -118,7 +133,7 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
-  return [...staticUrls, ...countryUrls, ...countryHubUrls];
+  return [...staticUrls, ...countryUrls, ...howToUrls, ...industryUrls, ...countryHubUrls];
 }
 
 async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
@@ -135,8 +150,8 @@ async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {
       const path = `/${c.country.toLowerCase()}/${slugify(c.geo_name)}/${slugify(c.industry_description || c.naics_6)}`;
       return { path };
     })
-    // Drop pages flagged as thin / missing-core / broken.
-    .filter(({ path }) => !isPathSuppressed(path))
+    // Drop pages flagged as thin / missing-core / broken, and any the robots tag keeps out of the index (milestone 1, M10).
+    .filter(({ path }) => !isPathSuppressed(path) && isIndexable(path))
     .map(({ path }) => ({
       url: `${BASE_URL}${path}`,
       lastModified: new Date(),
@@ -158,8 +173,8 @@ async function regionalCellsSitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((c) => (c.quality_score ?? 0) >= 40)
     .map((c) => regionalCellUrl(c))
     .filter((u) => u.length > 0)
-    // Same suppression for the international cells.
-    .filter((path) => !isPathSuppressed(path))
+    // Same suppression for the international cells, and the same indexing rule (milestone 1, M10).
+    .filter((path) => !isPathSuppressed(path) && isIndexable(path))
     .map((path) => ({
       url: `${BASE_URL}${path}`,
       lastModified: new Date(),
@@ -304,11 +319,23 @@ async function citiesSitemap(): Promise<MetadataRoute.Sitemap> {
 
   const out: MetadataRoute.Sitemap = [];
   out.push({ url: `${BASE_URL}/cities`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 });
+  /* A city page indexes as a UK page or at its floor (milestone 1, M10); London's districts and trades are UK pages, every live
+     trade drawn on London's trade route, so they are listed. */
   for (const c of cities) {
+    if (!isIndexable(`/cities/${c.slug}`)) continue;
     out.push({ url: `${BASE_URL}/cities/${c.slug}`, lastModified: new Date(), changeFrequency: "weekly", priority: c.tier === 1 ? 0.85 : c.tier === 2 ? 0.75 : 0.6 });
   }
   for (const slug of Object.keys(neighborhoodCities)) {
+    if (!isIndexable(`/cities/${slug}/neighborhoods`)) continue;
     out.push({ url: `${BASE_URL}/cities/${slug}/neighborhoods`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 });
+    for (const d of spineHoodDistricts(slug) ?? []) {
+      const path = `/cities/${slug}/neighborhoods/${d.slug}`;
+      if (isIndexable(path)) out.push({ url: `${BASE_URL}${path}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 });
+    }
+  }
+  for (const slug of Object.keys(SLUG_TO_INDUSTRY as Record<string, unknown>)) {
+    if (slug in RETIRED) continue;
+    out.push({ url: `${BASE_URL}/gb/london/${slug}`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.75 });
   }
   for (const p of pairs) {
     out.push({ url: `${BASE_URL}/compare/cities/${p.left}-vs-${p.right}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.7 });

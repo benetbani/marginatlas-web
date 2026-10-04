@@ -1573,6 +1573,14 @@ export const COPY = {
   /** A London trade's masthead and sales strip from the register and the engine (plan 06, task A5; his rulings of 2026-10-04:
    *  Greater London; break-even leads with the middle owner's keeps as a sole trader beside it, the company's under the plus).
    *  Labels of three words at most; "an estimate" beside engine money (its range covers the band shapes only); no agency names. */
+  /** The thin page's one ask (milestone 1, M9; his words of 2026-09-26: "notify me when my place reaches this depth"). */
+  depthNotify: {
+    label: "Notify me when {place} reaches this depth",
+    placeholder: "Your email",
+    button: "Notify me",
+    sent: "Thanks. We will write when it does.",
+    failed: "That address did not go through. Check it and try again.",
+  },
   londonTrade: {
     /** Where the register holds no row (milestone 1, M8): the cost to open, its words the open card's own; else the UK's survival. */
     openLabel: "Cost to open",

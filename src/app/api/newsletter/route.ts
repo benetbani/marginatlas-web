@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 import { checkRateLimit, clientIp } from "@/lib/rate_limit";
+import { isDepthSource } from "@/lib/seo/depth_source";
 
 /**
  * POST /api/newsletter — capture email signup.
@@ -93,7 +94,9 @@ export async function POST(request: NextRequest) {
     }
 
     const rawSource = typeof body?.source === "string" ? body.source.trim() : "";
-    const source = SOURCES.has(rawSource) ? rawSource : null;
+    /* A thin page's depth tag passes too, only for a path the floor census counted under its floor (milestone 1, M9;
+       src/lib/seo/depth_source.ts): a bounded set, so the column stays bounded. */
+    const source = SOURCES.has(rawSource) || isDepthSource(rawSource) ? rawSource : null;
 
     const insert = (withSource: boolean) => {
       const row: Record<string, unknown> = {

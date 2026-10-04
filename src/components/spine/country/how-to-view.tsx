@@ -23,6 +23,7 @@ import { buildHowToCrumbs } from "@/lib/spine/crumb_rows";
 import { Fig } from "@/components/spine/kit";
 import { Stepper } from "@/components/spine/archetypes/Stepper";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
+import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
 
 /**
  * THE THREE LOUD MOMENTS: none, by design (MODEL.md 8.9, "Loud today: 0 of 3";
@@ -129,6 +130,8 @@ export function HowToBody({ iso2 }: { iso2: string }) {
       </div>
       {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
       <SourcesFoot iso2={iso2} />
+      {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
+      <DepthNotifyFoot path={`/${iso2.toLowerCase()}/how-to-open`} />
     </>
   );
 }

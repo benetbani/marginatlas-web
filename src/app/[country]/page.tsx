@@ -107,6 +107,7 @@ import { SpineShell } from "@/components/spine/shell";
 import { SpineCountryBody } from "@/components/spine/country/country-view";
 import { buildSpineCountrySeed } from "@/lib/spine/adapt_country";
 import { SiteChrome } from "@/components/SiteChrome";
+import { robotsFor } from "@/lib/seo/indexable";
 
 // Keep section-order constant referenced for type checking.
 void COUNTRY_PAGE_SECTIONS;
@@ -146,6 +147,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     title,
     description,
     alternates: { canonical },
+    /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
+    robots: robotsFor(canonical),
     // title, description and images are all repeated below rather than
     // inherited. Next resolves metadata per KEY by replacement, not by deep
     // merge, so declaring openGraph at all discards the root layout's
