@@ -95,7 +95,7 @@ import {
   buildCountryBanking,
   buildCountryPaperwork,
   buildCountryClosing,
-  buildLondonTradeMargins,
+  buildLondonTradeSales,
   type DepthCard,
   type BankingCard,
   type InsuranceCard,
@@ -761,17 +761,17 @@ function PaymentsRing({ iso2, card }: { iso2: string; card: PaymentsCard }) {
   );
 }
 
-/** LONDON'S MARGINS, TRADE BY TRADE, as a bar list with each trade's glyph; each name opens its London page. */
+/** WHAT LONDON'S TRADES TAKE, TRADE BY TRADE (plan 06, task B3b): the register's typical yearly sales as a bar list with each trade's
+ *  glyph; each name opens its London page, whose head prints the same figure. */
 const SHOWN_MARGINS = 7;
-function LondonMarginBars({ margins }: { margins: NonNullable<ReturnType<typeof buildLondonTradeMargins>> }) {
-  const L = COPY.londonMargins;
+function LondonSalesBars({ sales }: { sales: NonNullable<ReturnType<typeof buildLondonTradeSales>> }) {
+  const L = COPY.londonSales;
   /* THE CARD'S ONE FIGURE, THE MIDDLE TRADE (2026-09-25, the model laws' FOCAL on the UK page): the median of every London trade
-     the list holds, the eight drawn and the rest behind the plus, so each bar reads against it; a median of whole percents can
-     fall on a half, printed as it falls, never rounded onto a row's own figure. It carries the unit, so the basis line under the
-     list, "Net profit per $100 of sales.", leaves. */
-  const sorted = margins.rows.map((r) => r.value * 100).sort((a, b) => a - b);
+     the list holds, the seven drawn and the rest behind the plus, so each bar reads against it. With an even count it is the
+     midpoint of the two middle trades, printed in the rows' own notation. */
+  const sorted = sales.rows.map((r) => r.value).sort((a, b) => a - b);
   const middle = sorted.length % 2 ? sorted[(sorted.length - 1) / 2] : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
-  const middleText = `${Number.isInteger(Math.round(middle * 10) / 10) ? Math.round(middle) : (Math.round(middle * 10) / 10).toFixed(1)}%`;
+  const middleText = usd(middle);
   return (
     <Box id="money" className="flex flex-col">
       <Rail icon="owner-keeps" kicker={L.kicker} />
@@ -782,8 +782,8 @@ function LondonMarginBars({ margins }: { margins: NonNullable<ReturnType<typeof 
           The bars share one scale, the list's highest, so the plus's rows read against the same top. */}
       {/* THE MIDDLE DRAWN (goal 2026-09-26, M6): the figure is the middle trade's, so every track carries a tick at it and the key
           under the list names it; a reader sees which trades keep more than the middle without reading a percent. */}
-      <BarList items={margins.rows.slice(0, SHOWN_MARGINS).map((r) => ({ key: r.key, label: r.name, value: r.value, display: `${Math.round(r.value * 100)}%`, href: r.href, icon: r.icon }))} max={margins.worldMax} reference={{ value: middle / 100, label: L.middleKey }} />
-      {margins.rows.length > SHOWN_MARGINS ? <DetailPanel name="money-more" summary={L.more.replace("{n}", String(margins.rows.length - SHOWN_MARGINS))} rows={margins.rows.slice(SHOWN_MARGINS).map((r) => ({ label: r.name, value: `${Math.round(r.value * 100)}%` }))} /> : null}
+      <BarList items={sales.rows.slice(0, SHOWN_MARGINS).map((r) => ({ key: r.key, label: r.name, value: r.value, display: usd(r.value), href: r.href, icon: r.icon }))} max={sales.worldMax} reference={{ value: middle, label: L.middleKey }} />
+      {sales.rows.length > SHOWN_MARGINS ? <DetailPanel name="money-more" summary={L.more.replace("{n}", String(sales.rows.length - SHOWN_MARGINS))} rows={sales.rows.slice(SHOWN_MARGINS).map((r) => ({ label: r.name, value: usd(r.value) }))} /> : null}
     </Box>
   );
 }
@@ -1443,10 +1443,10 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const banking = iso2 ? buildCountryBanking(iso2) : null;
   const paperwork = iso2 ? buildCountryPaperwork(iso2) : null;
   const closing = iso2 ? buildCountryClosing(iso2) : null;
-  const londonMargins = iso2 === "GB" ? buildLondonTradeMargins() : null;
+  const londonSales = iso2 === "GB" ? buildLondonTradeSales() : null;
   const exitData = buildCountryExit(iso2 ?? "");
   const spendData = buildCountrySpend(iso2 ?? "");
-  const rich = !!(employment && insurance && financing && banking && paperwork && londonMargins && costs && hasSetup && locals && cities && exitData && spendData);
+  const rich = !!(employment && insurance && financing && banking && paperwork && londonSales && costs && hasSetup && locals && cities && exitData && spendData);
   /* FOUR OF THE PAGE-AGNOSTIC SECTIONS OF 2026-09-25, SEATED (his "you choose, push forward" of that night), each pair only where
      the country holds both halves, so no card stands alone on a level:
        - who lives here by age beside the job market: the people a shop sells to and hires from. The job market carries the
@@ -1471,7 +1471,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
          01 what it costs to open and to run: registering | the bill; what staff cost | employing people; running costs | insurance;
             the peers table, full width;
          02 borrowing, banking and red tape: borrowing | getting paid; dealing with the state | legal and admin costs;
-         03 what to open, and where: London's margins by trade | time to sell; who lives here by age | the job market; the cities |
+         03 what to open, and where: London's trades by their typical sales (plan 06, task B3b) | time to sell; who lives here by age | the job market; the cities |
             what locals know; what households spend on | dealing with people (the age bars and the spending bar, two wholes cut
             into parts, keep a level between them);
          04 the first years: who is still trading | what holds small firms back (two fifths and three: eight columns and their names
@@ -1491,7 +1491,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
       { id: "paperwork", label: COPY.paperwork.kicker, chapter: "02" },
       { id: "financing", label: COPY.financing.kicker, chapter: "02" },
       { id: "banking", label: COPY.banking.kicker, chapter: "02" },
-      { id: "money", label: COPY.londonMargins.kicker, chapter: "03" },
+      { id: "money", label: COPY.londonSales.kicker, chapter: "03" },
       { id: "exit", label: COPY.countryExit.kicker, chapter: "03" },
       ...(seatPeople ? [{ id: "age-mix", label: COPY.people.age.kicker, chapter: "03" }, { id: "job-market", label: COPY.jobMarket.kicker, chapter: "03" }] : []),
       { id: "cities", label: "The cities", chapter: "03" },
@@ -1655,9 +1655,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
       {
         key: "trades",
         split: "2-1",
-        label: COPY.londonMargins.kicker,
+        label: COPY.londonSales.kicker,
         chapter: { index: "03", heading: COPY.chapters.open },
-        body: [<LondonMarginBars key="money" margins={londonMargins} />, <ExitCard key="exit" exit={exitData} lean />],
+        body: [<LondonSalesBars key="money" sales={londonSales} />, <ExitCard key="exit" exit={exitData} lean />],
       },
       ...(seatPeople && ageMix && jobs
         ? [{ key: "people", split: "1-1" as ZoneSplit, label: COPY.people.age.kicker, body: [<AgeMix key="age" id="age-mix" data={ageMix} />, <JobMarket key="jobs" id="job-market" data={jobs} />] }]

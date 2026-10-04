@@ -888,16 +888,15 @@ export const COPY = {
   ranged: { ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", dieselNote: "at the pump", perLitre: "/L", lending: "Rate on a small-business loan", peers: "Peers" },
   /** What a full-time hire at the average salary costs the employer (the staff card, 2026-09-25). */
   hireCost: { label: "A full-time hire", labelFirst: "A first hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", pension: "pension", ni: "employer NI", rule: "{rate} on pay above {threshold} a year.", niLabel: "Employer NI", niRule: "{rate} above {threshold}, less the {allowance} allowance", pensionLabel: "Pension", pensionRule: "{rate} of pay from {lower} to {upper}", lever: "Pay" },
-  londonMargins: {
-    kicker: "What London's trades keep",
+  /** WHAT LONDON'S TRADES TAKE (country_depth_rows.ts `buildLondonTradeSales`; plan 06, task B3b, 2026-10-04): the register's
+   *  typical yearly sales by trade, the figure each trade page's head prints, in place of the curated file's net margins. */
+  londonSales: {
+    kicker: "What London's trades take",
     more: "{n} more trades",
     /** The key under the bars for the tick at the middle trade (goal 2026-09-26, M6). */
     middleKey: "Middle trade",
-    basis: "Net profit per $100 of sales.",
-    /* Read with the figure: "10.5% of sales kept as profit by the middle trade" (a percent, never "per $100", which is the basis
-       line's own unit and read as a rate on a rate beside a percent). */
-    focalWords: "of sales kept as profit by the middle trade",
-    phoneHead: { trade: "Trade", value: "Keeps" },
+    /* Read with the figure: "$212K typical yearly sales of the middle trade", the trade pages' own label for the median. */
+    focalWords: "typical yearly sales of the middle trade",
     /** A row's label in three words or fewer (the model laws' ROW SENTENCE read three four-word trade names on the UK page,
      *  2026-09-25): the registry's name where it is short enough, this where it is not. The row still opens the trade's page. */
     short: {
@@ -905,6 +904,18 @@ export const COPY = {
       "veterinary-pet-care": "Veterinary care",
       "dry-cleaning-laundry": "Dry cleaners",
       "cafes-coffee-shops": "Cafés",
+    } as Record<string, string>,
+    /** A shared code's row, keyed by its codes joined with "+": the code's own name in plain words, three words at the most, since
+     *  the figure is every business on the code (barbershops and nail salons read one code, 96020). A shared code without a name
+     *  here draws no row. */
+    groups: {
+      "96020": "Hair and beauty",
+      "56302+56301": "Bars and clubs",
+      "93130+93110": "Sports and fitness",
+      "45200": "Motor repair",
+      "55100": "Hotels and guesthouses",
+      "56103": "Takeaway food",
+      "56102": "Cafés, unlicensed restaurants",
     } as Record<string, string>,
   },
   /** The income breakdown (task 11, his most literal instruction, 2026-09-10):

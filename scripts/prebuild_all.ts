@@ -560,6 +560,8 @@ const GATES: Gate[] = [
   { name: "world-range-no-median", script: "tests/spine/world_range_no_median.test.ts" },
   /* London is Greater London on the city page (plan 06, task B3): the sourced visits, the register's counts, no metro row, no slope split. */
   { name: "london-city", script: "tests/spine/london_city.test.ts" },
+  /* The UK page's London trades card prints the register's medians its doors print, not the curated file's margins (plan 06, task B3b). */
+  { name: "london-trade-sales", script: "tests/spine/london_trade_sales.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

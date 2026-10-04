@@ -42,6 +42,12 @@ import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { LONDON_MARKET } from "@/lib/london/market";
 import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
 import { tradeIconFor } from "@/lib/spine/trade_icon";
+import { londonTradeRegister, londonTradeSales } from "@/lib/uk/registers/london_trade";
+import { honestRound } from "@/lib/uk/present/precision";
+import { convertToUsd } from "@/lib/finance/fx";
+
+/** Pounds to dollars at the site's one rate (london_trade_hero.ts does the same before rounding once). */
+const usdOf = (gbp: number): number => convertToUsd("GBP", gbp) ?? Number.NaN;
 
 export type Focal = { figure: string; words: string };
 export type DepthCard = { focal: Focal; cells: KvCell[] ; /** The government's start-up loan as numbers, for the loan lever (2026-09-26). */ loan?: { min: number; max: number; rate: number }; /** The central bank's rate as a number, for the reference mark on the lending track (2026-10-04). */ baseRate?: number | null };
@@ -219,30 +225,45 @@ export function buildCountryClosing(iso2: string): DetailRow[] | null {
 }
 
 /**
- * LONDON'S OWN MARGINS, TRADE BY TRADE, for the United Kingdom's margin card (2026-09-25). The curated London entries
- * (data/london/london_market_v1.json through src/lib/london/market.ts) are the only trade figures the atlas holds for the United
- * Kingdom as its own, and each London trade page prints the same net margin from the same entry, so the card and the page it opens
- * say one thing. Left out: a trade whose slug is not a live trade page (two entries, childcare and full-service salons, key a slug no
- * route serves), restaurants (its London address still serves the July page; QUEUE launch:exemplar-url-serves-the-july-page), and a
- * mixed bag no reader can picture ("Specialty trades (mixed)").
+ * WHAT LONDON'S TRADES TAKE, TRADE BY TRADE, for the United Kingdom's card in `03` (plan 06, task B3b, 2026-10-04).
+ *
+ * UNTIL THAT DAY this card printed each trade's net margin off the curated London file (data/london/london_market_v1.json, its own
+ * words "directional ranges, not exact measurements": barbershops and accountants 22%, dental practices 18%), and said the trade
+ * page it opens printed the same. The truth pass took that money off the trade pages (task A5: they lead with the register), so the
+ * card printed a figure its own doors no longer showed, from a file no reader could check.
+ *
+ * NOW each row is the register's typical (median) yearly sales of the trade's registered businesses in Greater London (his ruling
+ * of 2026-10-04), the figure the trade page's head prints, read once from the band counts and rounded once in dollars
+ * (london_trade.ts, honestRound with the median's own range). The set is the curated file's list of London trades (its place makes
+ * the links; its figures are not read): a trade whose code is approximate or none prints nothing, a shared code prints once, named
+ * as its group (COPY.londonSales.groups, the code's own name in plain words: barbershops and nail salons are one row, "Hair and
+ * beauty"), and a median in an open band (under 50,000 or over 50,000,000 pounds) is no bar. The left-out list went with it:
+ * restaurants serves the rebuilt page since the exemplar branch was retired (QUEUE launch:exemplar-url-serves-the-july-page).
  */
-const LONDON_LEFT_OUT = new Set(["restaurants"]);
-export function buildLondonTradeMargins(): { rows: BarRow[]; worldMax: number } | null {
-  const market = LONDON_MARKET as { city?: string; country_iso2?: string; activities: Record<string, { economics?: { net_margin_pct?: number } }> };
-  const activities = market.activities;
+export function buildLondonTradeSales(): { rows: BarRow[]; worldMax: number } | null {
+  const market = LONDON_MARKET as { city?: string; country_iso2?: string; activities: Record<string, unknown> };
   /* THE PLACE FROM THE DATUM (the chain's no-hardcoded-place, 2026-09-25): each row opens that trade's page in the file's own city
      and country, never a path typed with a city in it; a file that names no place draws no rows. */
   const iso = (market.country_iso2 ?? "").toLowerCase();
   const city = (market.city ?? "").toLowerCase().trim().replace(/\s+/g, "-");
   if (!/^[a-z]{2}$/.test(iso) || !city) return null;
   const rows: BarRow[] = [];
-  for (const [slug, entry] of Object.entries(activities)) {
+  const seen = new Set<string>();
+  for (const slug of Object.keys(market.activities)) {
     const ind = (SLUG_TO_INDUSTRY as Record<string, { id: string; name: string } | undefined>)[slug];
-    const pct = entry?.economics?.net_margin_pct;
-    if (!ind || LONDON_LEFT_OUT.has(slug) || /\(mixed\)/i.test(ind.name) || !isNum(pct) || pct <= 0) continue;
-    rows.push({ key: slug, name: COPY.londonMargins.short[slug] ?? ind.name, href: `/${iso}/${city}/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value: pct / 100 });
+    const reg = londonTradeRegister(slug);
+    const sales = londonTradeSales(slug);
+    if (!ind || !reg || !sales || sales.q50.open !== false) continue;
+    const code = reg.sic.join("+");
+    const name = reg.group ? COPY.londonSales.groups[code] : COPY.londonSales.short[slug] ?? ind.name;
+    if (!name || seen.has(code)) continue;
+    seen.add(code);
+    const r = sales.medianRangeGbp;
+    const value = r ? honestRound(usdOf(sales.q50.gbp), usdOf(r[0]), usdOf(r[1])) : honestRound(usdOf(sales.q50.gbp));
+    if (!isNum(value) || value <= 0) continue;
+    rows.push({ key: slug, name, href: `/${iso}/${city}/${slug}`, lands: "owner-keeps", icon: tradeIconFor(ind.id), value });
   }
   if (rows.length < 3) return null;
-  rows.sort((a, b) => b.value - a.value);
+  rows.sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
   return { rows, worldMax: Math.max(...rows.map((r) => r.value)) };
 }

@@ -1578,6 +1578,17 @@
       "claims": []
     },
     {
+      "name": "london-trade-sales",
+      "script": "tests/spine/london_trade_sales.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The United Kingdom's \"What London's trades take\" card prints the register's figures, the ones its doors print (plan 06, task B3b, 2026-10-04).",
+      "reads": [
+        "src/lib/spine/country_depth_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],
