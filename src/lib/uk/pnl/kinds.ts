@@ -8,11 +8,13 @@
  *   worked out  arithmetic on counted or looked-up figures, the method stated
  *   estimate    our judgement where no register exists, the basis stated
  *
- *   kindOf(f(x1..xn)) = estimate      if any input is an estimate
- *                     = worked out    otherwise, once any arithmetic is done (two or more inputs, or a transformation)
- *                     = kind(x1)      when the figure is one input passed through untouched
+ *   combineKinds([x1..xn]) = estimate      if any input is an estimate
+ *                          = worked out    otherwise, once any arithmetic is done (two or more inputs, or a transformation)
+ *                          = kind(x1)      when the figure is one input passed through untouched (transformed = false)
  *
- * So a figure can never claim more than its weakest input, and arithmetic never launders an estimate into "worked out".
+ * `transformed` defaults to true: a figure computed from one input (a quantile of counted bands) is worked out unless the
+ * caller says it passed through untouched. So a figure can never claim more than its weakest input, and arithmetic never
+ * launders an estimate into "worked out".
  */
 export type Kind = "counted" | "looked up" | "worked out" | "estimate";
 

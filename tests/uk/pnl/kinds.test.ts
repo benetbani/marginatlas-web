@@ -22,6 +22,12 @@ check("kinds: an estimate anywhere makes an estimate", combineKinds(["counted", 
 check("kinds: arithmetic on counted figures is worked out", combineKinds(["counted", "looked up"]) === "worked out");
 check("kinds: one input untouched keeps its kind", combineKinds(["counted"], false) === "counted");
 check("kinds: a figure with no inputs is refused", (() => { try { combineKinds([]); return false; } catch { return true; } })());
+check("kinds: an estimate in any position makes an estimate", combineKinds(["estimate", "counted"]) === "estimate" && combineKinds(["counted", "estimate", "looked up"]) === "estimate");
+check("kinds: an estimate passed through untouched stays an estimate", combineKinds(["estimate"], false) === "estimate" && combineKinds(["estimate"]) === "estimate");
+check("kinds: one input is transformed by default, so a band quantile of counted bands is worked out", combineKinds(["counted"]) === "worked out" && combineKinds(["looked up"], true) === "worked out");
+check("kinds: two counted figures together are worked out, never counted", combineKinds(["counted", "counted"]) === "worked out" && combineKinds(["counted", "counted"], false) === "worked out");
+check("kinds: several inputs flagged untouched are still arithmetic", combineKinds(["counted", "looked up"], false) === "worked out");
+check("kinds: a worked-out or looked-up input passed through keeps its kind", combineKinds(["worked out"], false) === "worked out" && combineKinds(["looked up"], false) === "looked up");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("uk/pnl/kinds: all pass");
