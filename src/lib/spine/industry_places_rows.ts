@@ -124,6 +124,7 @@ import { MAJOR_CITIES } from "@/lib/markets/major_cities";
 import type { CompareColumn, CompareRow } from "@/components/spine/archetypes/CompareTable";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { COPY } from "@/lib/spine/copy";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -210,12 +211,15 @@ export function buildIndustryPlaces(industryId: string | undefined, across: Plac
   }
   const withheld = across.length - own.length;
   const ordered = [...own].sort((a, b) => (b.takeHome as number) - (a.takeHome as number) || a.name.localeCompare(b.name));
+  /* EACH PLACE IS A DOOR (his interview of 2026-09-26, answer 35; milestone 1, M5): the row links to that trade's page in that city,
+     the resolver's own link (`cellUrl`), never assembled here; a column with no link stays a reading. */
   const rows: CompareRow[] = ordered.map((city) => ({
     iso2: city.country.toUpperCase(),
     key: city.slug,
     name: city.name,
     home: false,
     values: { takeHome: Math.round(city.takeHome as number), netMargin: Math.round((city.netMarginFraction as number) * 100) },
+    ...(typeof city.href === "string" && city.href.startsWith("/") ? { href: city.href, lands: SURFACE_ANSWERS.cell } : {}),
   }));
   /* The best-paying city is the top row, and its link is the resolver's own; a column with no link gives no door. */
   const first = ordered[0];

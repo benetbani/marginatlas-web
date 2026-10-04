@@ -2191,6 +2191,17 @@
       "claims": []
     },
     {
+      "name": "places-doors",
+      "script": "tests/spine/places_doors.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The industry page's places table links each place to that trade's page there (milestone 1, M5; his interview of 2026-09-26, answer 35; QUEUE ui:industry-page-is-a-dead-end).",
+      "reads": [
+        "src/lib/spine/industry_places_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "useless-tiles",
       "script": "scripts/audit/find_useless_tiles.ts",
       "args": [],

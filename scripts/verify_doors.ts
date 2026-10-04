@@ -22,7 +22,10 @@
  *       answer from src/lib/spine/door_kinds.ts (`SURFACE_ANSWERS`, one
  *       declaration per surface), never from a render;
  *   (c) a table's rows carry no href, on every CompareTable in the renders
- *       (M23: the compare table is a reading everywhere);
+ *       (M23: the compare table is a reading everywhere), EXCEPT a table that
+ *       declares its rows doors (`data-doors="1"`): the industry page's places
+ *       table since his interview of 2026-09-26, answer 35 (milestone 1, M5),
+ *       whose row links are walked as doors under (a) and (b) like any other;
  *   (d) no two doors of one terminus share a first word (the archetype's own
  *       law, checked again from outside);
  *   (e) every page-level masthead in the renders declares `data-answers`, and
@@ -222,7 +225,7 @@ function landingOf(rawHref: string): Landing {
 /* THE DOORS, read off a render.                                             */
 /* ------------------------------------------------------------------------ */
 
-type DoorClass = "terminus" | "city-card" | "neighbourhood-card" | "list-row" | "trade-row" | "bar-row" | "link";
+type DoorClass = "terminus" | "city-card" | "neighbourhood-card" | "list-row" | "trade-row" | "bar-row" | "link" | "table-row";
 type Walked = { page: string; cls: DoorClass; card: string; key: string; label: string; href: string; lands: string | null; landing: Landing };
 
 const text = (el: Element | null | undefined) => (el?.textContent ?? "").replace(/\u2192/g, "").replace(/\s+/g, " ").trim();
@@ -247,12 +250,13 @@ function doorsOf(page: string, html: string): { doors: Walked[]; termini: Array<
   for (const a of doc.querySelectorAll('[data-archetype="city-cards"] a[data-card]')) push(a, "city-card", a.getAttribute("data-card") ?? "", text(a.querySelector("[data-city-name]")));
   for (const a of doc.querySelectorAll('[data-archetype="card-pager"] a[data-card]')) push(a, "neighbourhood-card", a.getAttribute("data-card") ?? "", text(a.querySelector("span span")));
   for (const a of doc.querySelectorAll('[data-archetype="mark-list"][data-doors="1"] a[data-row]')) push(a, "list-row", a.getAttribute("data-row") ?? "", text(a.querySelector("[data-label]")));
+  for (const a of doc.querySelectorAll('[data-archetype="compare-table"][data-doors="1"] a[data-row]')) push(a, "table-row", a.getAttribute("data-row") ?? "", text(a.querySelector("[data-label]")));
   for (const a of doc.querySelectorAll('[data-form="trade-rows"] a[data-row]')) push(a, "trade-row", a.getAttribute("data-row") ?? "", text(a.querySelector("[data-label]")));
   for (const a of doc.querySelectorAll('[data-archetype="ranked-bars"] a[href]')) push(a, "bar-row", a.getAttribute("data-row") ?? a.closest("[data-row]")?.getAttribute("data-row") ?? "", text(a.querySelector("[data-label]") ?? a));
   /* Every other anchor inside a section card is a link: walked for its route alone. */
   for (const a of doc.querySelectorAll("[data-archetype] a[href], [data-form] a[href]")) if (!seen.has(a)) push(a, "link", "", text(a));
   const termini = [...doc.querySelectorAll('[data-archetype="terminus"]')].map((t) => ({ card: cardOf(t), labels: [...t.querySelectorAll("a[data-door]")].map((a) => text(a)) }));
-  const tableAnchors = [...doc.querySelectorAll('[data-archetype="compare-table"] a[href]')].map((a) => ({ card: cardOf(a), href: a.getAttribute("href") ?? "" }));
+  const tableAnchors = [...doc.querySelectorAll('[data-archetype="compare-table"]:not([data-doors="1"]) a[href]')].map((a) => ({ card: cardOf(a), href: a.getAttribute("href") ?? "" }));
   /* The country's masthead is the hero board since 2026-09-20 (HeroBoard.tsx, his design); it declares its answer and its markers the way the answer card does. */
   const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"], [data-archetype="hero-board"][data-level="page"]')].map((m) => ({ card: `${m.getAttribute("data-archetype")}#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div")) }));
   return { doors, termini, tableAnchors, mastheads };

@@ -684,6 +684,8 @@ const GATES: Gate[] = [
   { name: "retired-paths", script: "tests/routing/retired_paths.test.ts" },
   /* No session recorder on the site, cookie-free counting only behind its switch (milestone 1, M2; his interview of 2026-09-26, answer 7). */
   { name: "no-session-recording", script: "tests/app/no_session_recording.test.ts" },
+  /* The industry page's places table links each place to the trade's page there (milestone 1, M5; his interview of 2026-09-26, answer 35). */
+  { name: "places-doors", script: "tests/spine/places_doors.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

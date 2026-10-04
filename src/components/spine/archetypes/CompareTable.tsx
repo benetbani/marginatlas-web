@@ -89,6 +89,7 @@ import { SortTable, type SortRow } from "@/components/spine/interact/SortTable";
 import { CountryFlag } from "@/components/CountryFlag";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "./copy";
+import type { DoorKind } from "@/lib/spine/door_kinds";
 import { rentMult } from "@/lib/spine/district_rows";
 
 /** THE UNITS: "pct", "usd" and "days" are the country table's figures, each
@@ -119,7 +120,11 @@ import { rentMult } from "@/lib/spine/district_rows";
  *  customers at once), draws no tick. */
 export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "mult" | "per"; best: "min" | "max" | "none" };
 /** `iso2` draws the flag; `key` names the row when two rows share a flag (two cities in one country). */
-export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null> };
+export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null>;
+  /** A row that is a door (his interview of 2026-09-26, answer 35: the industry page's places table links each place to that trade's
+   *  page there; milestone 1, M5): its name links with the list rows' arrow, and `lands` says what the target's masthead answers
+   *  (door_kinds.ts), stamped as `data-lands` for the doors gate. Every other table's rows stay a reading (M23). */
+  href?: string; lands?: DoorKind };
 export type CompareTableProps = {
   id: string;
   kicker: string;
@@ -271,7 +276,13 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
         <TableCell className="px-0 py-0 align-middle">
           <span className="flex min-w-0 items-center gap-3">
             {flags ? <CountryFlag iso2={r.iso2} className="w-7 shrink-0" /> : null}
-            <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+            {r.href ? (
+              <a href={r.href} data-row={r.key ?? r.iso2} data-lands={r.lands} className="tap-y min-w-0 no-underline">
+                <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-[3px] after:ml-1.5 after:text-[length:var(--t-micro)] after:text-[var(--c-muted)] after:no-underline after:content-['→'] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+              </a>
+            ) : (
+              <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+            )}
           </span>
         </TableCell>
         {columns.map((c) => (
@@ -287,7 +298,13 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
       <>
         <span className={`${inline ? "" : "col-span-full "}flex min-w-0 items-center gap-2`}>
           {flags ? <CountryFlag iso2={r.iso2} className="w-6 shrink-0" /> : null}
-          <span data-label className={`text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+          {r.href ? (
+            <a href={r.href} data-row={r.key ?? r.iso2} data-lands={r.lands} className="tap-y no-underline">
+              <span data-label className={`text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-[3px] after:ml-1.5 after:text-[length:var(--t-micro)] after:text-[var(--c-muted)] after:no-underline after:content-['→'] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+            </a>
+          ) : (
+            <span data-label className={`text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+          )}
         </span>
         {columns.map((c) => (
           <span key={c.key} data-col={c.key} className="text-right leading-5 whitespace-nowrap">
@@ -301,7 +318,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
     /* ON A ZONE THE TABLE KEEPS ITS SANCTION (`data-wide-table`, the page's one full-width table, clause 36) and drops the band margin
        the zone's padding replaces. */
     <div {...(inBand ? { className: "h-full" } : zone ? { "data-wide-table": "" } : { "data-wide-table": "", className: "mt-8" })}>
-      <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} className={inBand ? "h-full" : undefined}>
+      <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} data-doors={rows.some((r) => r.href) ? "1" : undefined} className={inBand ? "h-full" : undefined}>
         <Rail icon={icon} kicker={kicker} sample={sample} />
         <div className="[container-type:inline-size]" {...(zone ? { "data-instrument": "table" } : {})}>
           <SortTable
