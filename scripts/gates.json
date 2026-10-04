@@ -1063,6 +1063,17 @@
       "claims": []
     },
     {
+      "name": "css-minifies",
+      "script": "scripts/verify_css_minifies.mjs",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_css_minifies , THE STYLESHEET MUST SURVIVE THE PRODUCTION BUILD'S MINIMIZER.",
+      "reads": [
+        "src/app/globals.css"
+      ],
+      "claims": []
+    },
+    {
       "name": "take-home-identity",
       "script": "scripts/verify_take_home_identity.ts",
       "args": [],

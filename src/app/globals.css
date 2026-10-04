@@ -1168,14 +1168,22 @@
 }
 /* EDGE TO EDGE WITHOUT A CLIP (the code review of 2026-10-04): the spread shadow needed a clip-path to keep it off its neighbours,
    and the clip cut whatever stood out of the zone (a "?" tip near its top opening upward). A border image's outset paints the
-   band's colour 100vmax to either side and none above or below; like the shadow it is ink overflow, so nothing scrolls sideways. */
+   band's colour 100vmax to either side and none above or below; like the shadow it is ink overflow, so nothing scrolls sideways.
+   IN LONGHAND, NEVER THE SHORTHAND'S "fill 0 // 0 100vmax": the production build's CSS minimizer parses as SCSS, where "//" opens
+   a line comment, and the shorthand cost the first deploy of 2026-10-04 ("Missed semicolon"); the dev server never saw it. */
 [data-zone][data-tone="paper"] {
   background: var(--zone-paper);
-  border-image: conic-gradient(var(--zone-paper) 0 0) fill 0 // 0 100vmax;
+  border-image-source: conic-gradient(var(--zone-paper) 0 0);
+  border-image-slice: 0 fill;
+  border-image-width: 0;
+  border-image-outset: 0 100vmax;
 }
 [data-zone][data-tone="tint"] {
   background: var(--zone-tint);
-  border-image: conic-gradient(var(--zone-tint) 0 0) fill 0 // 0 100vmax;
+  border-image-source: conic-gradient(var(--zone-tint) 0 0);
+  border-image-slice: 0 fill;
+  border-image-width: 0;
+  border-image-outset: 0 100vmax;
   /* A SOFT FILL VANISHES ON THE TINT (1.01:1, research R3 pitfall 4), so on a tint zone the open content's soft fills (a
      home row, a disclosure panel, a chip) turn white, one step above the band as they were one step below the card. */
   --c-soft: var(--zone-paper);

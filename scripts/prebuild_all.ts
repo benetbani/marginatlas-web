@@ -396,6 +396,10 @@ const GATES: Gate[] = [
   { name: "retired-claims", script: "scripts/verify_retired_claims.ts" },
   { name: "no-stock-imagery", script: "scripts/verify_no_stock_imagery.ts" },
   { name: "no-cream", script: "scripts/verify_no_cream.ts" },
+  /* THE STYLESHEET THROUGH THE BUILD'S OWN MINIMIZER (2026-10-04): the UK band page passed every gate and its deploy died in
+     `next build` on "Missed semicolon", a `//` inside a value that Next's minimizer reads as an SCSS comment. Tailwind over
+     globals.css, then cssnano-simple over postcss-scss, as css-minimizer-plugin.js does; no browser, no network. */
+  { name: "css-minifies", script: "scripts/verify_css_minifies.mjs" },
   /* THE SHARED COMMENT STRIPPER, TESTED, because every source-scanning gate in
      this list depends on it and it has now been wrong three times.
 
