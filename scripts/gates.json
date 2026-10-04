@@ -1376,6 +1376,17 @@
       "claims": []
     },
     {
+      "name": "uk-pnl-banded",
+      "script": "tests/uk/pnl/banded.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The TypeScript band estimator equals the Python one (registers/uk/estimators/banded.py).",
+      "reads": [
+        "src/lib/uk/pnl/banded.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

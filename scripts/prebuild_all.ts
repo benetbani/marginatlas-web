@@ -529,6 +529,7 @@ const GATES: Gate[] = [
   /* The UK registers' figures (docs/superpowers/plans/2026-10-02-vertical-engine-03-profit-and-loss.md):
      slices of E:/atlas/registers/uk/tables written by export_for_site.py; a hand edit fails here. */
   { name: "uk-registers", script: "scripts/verify_uk_registers.ts" },
+  { name: "uk-pnl-banded", script: "tests/uk/pnl/banded.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },
