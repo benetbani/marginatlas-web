@@ -184,8 +184,9 @@ export function buildCityMarket(slug: string): CityMarketData | null {
   };
 }
 
-/** The register's counts for a city held to a register region: one row a code, the largest first, no focal and no plus. Only
- *  London's region has an accessor today; another region draws no card rather than London's figures. */
+/** The register's counts for a city held to a register region: one row a code, the largest first; the focal is their sum (every
+ *  registered business in the trades drawn, a figure the bars do not print: PART 4), and no plus. Only London's region has an
+ *  accessor today; another region draws no card rather than London's figures. */
 function registerMarket(city: CityRow, iso2: string, geography: string, shardNames: string[]): CityMarketData | null {
   if (geography !== LONDON_GEOGRAPHY) return null;
   const R = COPY.cityMarket.register;
@@ -205,6 +206,8 @@ function registerMarket(city: CityRow, iso2: string, geography: string, shardNam
   }
   if (rows.length < CITY_MARKET_MIN_TRADES) return null;
   rows.sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
+  /* One code a row, so the sum counts no business twice; each count is the register's, rounded to 5 by the statistics office. */
+  const all = rows.reduce((n, r) => n + r.value, 0);
   return {
     form: "register",
     slug: city.slug,
@@ -216,6 +219,6 @@ function registerMarket(city: CityRow, iso2: string, geography: string, shardNam
     foot: null,
     sample: false,
     detail: null,
-    focal: null,
+    focal: { figure: all.toLocaleString("en-US"), tag: "held" },
   };
 }

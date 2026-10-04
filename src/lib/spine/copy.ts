@@ -416,16 +416,18 @@ export const COPY = {
      *  named as the code's group (a shared code is never one trade's). The basis is the trade pages' own foot, so one count reads
      *  the same on both. */
     register: {
-      basis: "Registered businesses in {city}, March 2026.",
+      /** Under the focal (every registered business in the trades drawn, the bars' sum) and over the bars, one line for both. */
+      basis: "Registered businesses in these trades, {city}, March 2026.",
       phoneValue: "Businesses",
       top: "Largest trade",
+      /** Three words at the most (the model laws' ROW SENTENCE), each the code's own group in plain words. */
       names: {
         restaurants: "Restaurants",
-        "cafes-coffee-shops": "Cafes and unlicensed restaurants",
+        "cafes-coffee-shops": "Cafés, unlicensed restaurants",
         "pubs-taverns": "Pubs and bars",
         "hairdressers-beauty": "Hair and beauty",
-        "grocery-stores": "Grocers and convenience stores",
-        "yoga-pilates-studios": "Gyms and fitness studios",
+        "grocery-stores": "Grocery and convenience",
+        "yoga-pilates-studios": "Gyms, fitness studios",
       } as Record<string, string>,
     },
   },

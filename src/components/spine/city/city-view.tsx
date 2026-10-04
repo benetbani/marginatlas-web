@@ -136,6 +136,8 @@ import { Premises } from "./premises";
 import { buildPremisesBento } from "@/lib/spine/premises_bento_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
+import { AgeMix } from "@/components/spine/sections/AgeMix";
+import { buildAgeMix } from "@/lib/spine/sections/people";
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.3's
@@ -903,6 +905,12 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   const hoodsDrawn = !!hoods?.cards;
   const demandBesideSeason = !hoodsDrawn && !!season && demandDrawn;
   const seasonAtFoot = demandBesideSeason ? null : season;
+  /* WHO LIVES HERE, BY AGE, WHERE THE SEASON CANNOT DRAW (plan 06, task B3, 2026-10-04; replace, never cut): London's residents and
+     visitors split was a slope over the metro's residents and went with the truth pass; the people file holds Greater London's own
+     age bands (mid-2025) beside the UK's, so the city's own customers stand in the season's seat. Only where the file holds the
+     city: a city it does not hold would print its country's bar alone, a country's figure on a city's page. */
+  const ageMixAll = slug && typeof d.meta?.iso2 === "string" ? buildAgeMix(d.meta.iso2, slug, "city") : null;
+  const ageMix = ageMixAll && ageMixAll.bars.length === 2 ? ageMixAll : null;
 
   /* THE BAND PAGE (2026-10-04, his "push forward man" after the United Kingdom's band page went live; MODEL.md PART 10): each level
      a zone, the tone by its place, the sections open on it, each chapter's number and title on the first level of the chapter that
@@ -935,7 +943,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
     { key: "earnings", split: "2-1", chapter: "02", label: "What customers earn", body: !calendar && earnings && !earningsOnLiving ? [<Earnings key="earnings" strip={earnings} />] : [] },
     { key: "districts", split: "2-1", stack: "lg", chapter: "02", label: "Where to trade", body: keep([districts ? <WhereToTrade key="districts" d={d} /> : null, trades ? <TradesHere key="trades" d={d} /> : null]) },
     { key: "peers", split: "1-1", chapter: "03", label: "The peers", body: keep([peersDrawn ? <CityPeers key="peers" d={d} zone /> : null, people ? <CharacterPeople key="people" people={people} /> : null]) },
-    { key: "hoods", split: "2-1", stack: "lg", chapter: "03", label: "The neighbourhoods", body: keep([hoodsDrawn ? <Neighbourhoods key="hoods" hoods={hoods} /> : null, seasonAtFoot ? <Season key="season" season={seasonAtFoot} /> : null]) },
+    { key: "hoods", split: "2-1", stack: "lg", chapter: "03", label: "The neighbourhoods", body: keep([hoodsDrawn ? <Neighbourhoods key="hoods" hoods={hoods} /> : null, seasonAtFoot ? <Season key="season" season={seasonAtFoot} /> : ageMix ? <AgeMix key="age" id="age-mix" data={ageMix} /> : null]) },
     { key: "close", split: "wide", label: "Where to next", body: [<CityClose key="close" d={d} zone />] },
   ];
   const cityZones = cityZonesAll.filter((z) => z.body.length > 0);

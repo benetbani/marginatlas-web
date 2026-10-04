@@ -71,17 +71,18 @@ async function main() {
   /* WHO IS ALREADY TRADING */
   const market = buildCityMarket("london");
   check("London's market card is the register's", market?.form === "register");
-  check("no focal total (the modelled 531,000)", market?.focal === null);
+  check("the focal is the register's own total for the trades drawn, never the modelled 531,000", market?.focal?.figure === (market?.rows ?? []).reduce((n, r) => n + r.value, 0).toLocaleString("en-US") && market?.focal?.tag === "held");
   check("no plus of modelled openings and closures", market?.detail === null);
   check("nothing on the card is modelled", market?.sample === false);
   const counts = new Map((market?.rows ?? []).map((r) => [r.key, r.value]));
   const reg = (slug: string) => londonTradeRegister(slug)?.enterprises;
   check(`restaurants: the register's ${reg("restaurants")} London businesses`, counts.get("restaurants") === reg("restaurants") && reg("restaurants") === 7865);
   check(`hair and beauty: every 96020 business, ${reg("hairdressers-beauty")}`, counts.get("hairdressers-beauty") === reg("hairdressers-beauty") && reg("hairdressers-beauty") === 9695);
-  check("each shared code is named as its group, never as one trade", market?.rows.find((r) => r.key === "cafes-coffee-shops")?.name === "Cafes and unlicensed restaurants");
+  check("each shared code is named as its group, never as one trade", market?.rows.find((r) => r.key === "cafes-coffee-shops")?.name === "Cafés, unlicensed restaurants");
+  check("every row's name is three words at the most (the model laws' ROW SENTENCE)", (market?.rows ?? []).every((r) => r.name.split(/\s+/).length <= 3));
   check("six trades, one row a code", market?.rows.length === 6 && new Set(market.rows.map((r) => r.value)).size === 6);
   check("the largest first", (market?.rows ?? []).every((r, i, a) => i === 0 || a[i - 1].value >= r.value));
-  check("the basis says whose counts they are", market?.basis === "Registered businesses in London, March 2026.");
+  check("the basis says whose counts they are", market?.basis === "Registered businesses in these trades, London, March 2026.");
   const manMarket = buildCityMarket("manchester");
   check("Manchester keeps its densities (not held to a region)", manMarket !== null && manMarket.form === "density");
 
