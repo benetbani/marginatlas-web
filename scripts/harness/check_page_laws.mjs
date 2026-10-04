@@ -388,6 +388,93 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
       if (figs === 1 && others === 0) red(idOf(card), "LONE FIGURE", `one figure and nothing beside it: a second reading, a drawing or its details (clause 65)`);
     }
   }
+
+  /* THE ZONES, THE BAND PAGE'S OWN LAWS (2026-10-04, his ruling of that day: "abandon the bento in favor of a more traditional
+     thing where the sections have alternating background colors ... the rendering of the tables ... has a horrible execution";
+     the design in docs/superpowers/specs/2026-10-04-uk-page-reform-design.md, sections 3 to 5). They run only where a page draws
+     zones, at every width, and each reads the thing he saw rather than a class:
+       ZONE TONES    neighbouring zones are not one colour, and every zone is paper (#ffffff) or tint (#f6f6f5).
+       ZONE PAD      a zone's padding is the ladder's: 40 / 48 / 64 at 375 / 768 / 1024 and up; the first zone 24 / 32 / 48.
+       ZONE SPLIT    a zone that declares a pair draws two cells, and no cell stands empty.
+       OPEN SECTION  a section card on a zone stands open (no edge, no fill), and a box that stays on a zone holds something the
+                     reader operates (a control, a link): the card he kept for instruments and doors, nothing else.
+       SPLIT ROW     at 375, a table row's figures stand on one line (the old peer table wrapped five figures under two rows of
+                     heads), and a form's figures stand on its name's first line.
+       HEAD LINES    at 375, a column head of a phone table is two lines at the most.
+     Their blind spots, stated: a row drawn without `data-row` inside a phone table, or a figure cell without `data-col`, is not
+     read by SPLIT ROW; a band painted by something other than a zone is not a zone. */
+  const zones = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
+  if (zones.length) {
+    const PAPER = "rgb(255, 255, 255)", TINT = "rgb(246, 246, 245)";
+    const want = width >= 1024 ? [48, 64] : width >= 768 ? [32, 48] : [24, 40];
+    let prev = null;
+    zones.forEach((z, i) => {
+      const cs = getComputedStyle(z);
+      const zid = z.getAttribute("data-zone-label") || z.getAttribute("aria-label") || z.querySelector("[id]")?.id || `zone ${i + 1}`;
+      const bg = cs.backgroundColor;
+      if (bg !== PAPER && bg !== TINT) red(zid, "ZONE TONES", `a zone painted ${bg}; a zone is paper (${PAPER}) or tint (${TINT})`);
+      if (prev && prev === bg) red(zid, "ZONE TONES", `two neighbouring zones in one colour (${bg}); zones alternate`);
+      prev = bg;
+      const top = Math.round(parseFloat(cs.paddingTop)), bottom = Math.round(parseFloat(cs.paddingBottom));
+      const wantTop = i === 0 ? want[0] : want[1];
+      if (top !== wantTop || bottom !== want[1]) red(zid, "ZONE PAD", `padding ${top} above and ${bottom} below; the ladder asks ${wantTop} and ${want[1]} at ${width}`);
+      const split = z.getAttribute("data-zone");
+      const cells = [...z.querySelectorAll(":scope > [data-zone-level] > [data-zone-cell]")];
+      if (split && split !== "wide" && cells.length !== 2) red(zid, "ZONE SPLIT", `a zone declared ${split} draws ${cells.length} cell(s)`);
+      for (const c of cells) {
+        const r = c.getBoundingClientRect();
+        if (r.height < 8 || !(c.textContent || "").trim()) red(zid, "ZONE SPLIT", `an empty cell in a zone (${Math.round(r.width)} by ${Math.round(r.height)})`);
+      }
+      for (const card of z.querySelectorAll("[data-card]")) {
+        const ccs = getComputedStyle(card);
+        const edged = parseFloat(ccs.borderTopWidth) > 0 || (ccs.backgroundColor !== "rgba(0, 0, 0, 0)" && ccs.backgroundColor !== "transparent");
+        const kept = card.hasAttribute("data-keep-card");
+        /* A card that is itself a link is a door (a city card): it keeps its box by the same ruling, and its control is itself. */
+        const door = card.matches("a[href]");
+        if (!kept && !door && edged) red(idOf(card), "OPEN SECTION", "a section card on a zone still draws its box (an edge or a fill); a section stands open on the band");
+        /* A disclosure's summary is a control (the plus opens in place), and his masthead board is the one card kept as the page's
+           lead object by his design of 2026-09-20 (research R3, 3.7: "it must read as one object beside open content"). */
+        if (kept && card.getAttribute("data-archetype") !== "hero-board" && !card.querySelector("input, select, textarea, button, a[href], summary")) red(idOf(card), "OPEN SECTION", "a card kept on a zone holds no control and no link; a box on the band is for an instrument or a door");
+      }
+      for (const inst of z.querySelectorAll("[data-instrument], [data-lever-card]")) {
+        if (!inst.querySelector("input, select, textarea, button, a[href], summary")) red(idOf(inst.closest("[data-card]") || inst), "OPEN SECTION", "an instrument panel with nothing to operate");
+      }
+    });
+  }
+  /* THE PHONE TABLES ON EVERY PAGE, NOT ONLY ON A BAND PAGE (the code review of 2026-10-04: the tables are shared components, the
+     reform changed their phone form on every page, and inside the zones' block nothing read a card page's tables). */
+  {
+    if (width <= 400) {
+      for (const row of document.querySelectorAll("main [data-phone-table] [data-row]")) {
+        if (!row.getClientRects().length) continue;
+        const tops = [...row.querySelectorAll("[data-col]")].filter((c) => c.getClientRects().length).map((c) => Math.round(c.getBoundingClientRect().top));
+        if (tops.length > 1 && Math.max(...tops) - Math.min(...tops) > 4) red(idOf(row.closest(CARD) || row), "SPLIT ROW", `row "${(row.querySelector("[data-label]")?.textContent || "").trim().slice(0, 24)}": its figures stand on more than one line (tops ${[...new Set(tops)].join(", ")})`);
+      }
+      /* A legal form's readings stand on ONE line: on the name's first line where the name keeps its column, or on a line of their
+         own under the whole name (research R2's pattern f, a table under 330px wide); never level with a name's second line. */
+      for (const row of document.querySelectorAll("main [data-tier-row]")) {
+        if (!row.getClientRects().length) continue;
+        const name = row.querySelector("[data-label]");
+        if (!name) continue;
+        const nr = name.getBoundingClientRect();
+        const cells = [...row.querySelectorAll("[data-col]")].filter((c) => c.getClientRects().length);
+        if (!cells.length) continue;
+        const tops = cells.map((c) => c.getBoundingClientRect().top);
+        const label = (name.textContent || "").trim().slice(0, 24);
+        if (Math.max(...tops) - Math.min(...tops) > 4) { red(idOf(row.closest(CARD) || row), "SPLIT ROW", `form "${label}": its readings stand on more than one line`); continue; }
+        const under = Math.min(...tops) >= nr.bottom - 2;
+        if (!under) for (const c of cells) {
+          if (Math.abs(c.getBoundingClientRect().top - nr.top) > 6) red(idOf(row.closest(CARD) || row), "SPLIT ROW", `form "${label}": its ${c.getAttribute("data-col")} stands off its name's first line`);
+        }
+      }
+      for (const head of document.querySelectorAll("main [data-phone-table] [data-sort-head]")) {
+        if (!head.getClientRects().length) continue;
+        const lh = parseFloat(getComputedStyle(head).lineHeight) || 16;
+        const lines = Math.round(head.getBoundingClientRect().height / lh);
+        if (lines > 2) red(idOf(head.closest(CARD) || head), "HEAD LINES", `the head "${(head.textContent || "").trim().slice(0, 24)}" stands on ${lines} lines at ${width}; two at the most`);
+      }
+    }
+  }
   return { reds, cards: cards.length, contentW: Math.round(contentW) };
 }
 

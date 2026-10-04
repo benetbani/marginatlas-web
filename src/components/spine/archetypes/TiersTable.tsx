@@ -65,9 +65,12 @@ export function TierPanel({ explainer, paperwork }: { explainer?: string; paperw
 const HEAD = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
 /* name | fee | time | dots and the plus, from 480px of table; the widths are the file's own extremes, a $12,000 fee and a
    90-day wait, not the exemplar's. From 480px the last column holds five dots (56px), a gap and the plus (20px): 5.25rem. */
-const GRID = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem_4.75rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem_5.25rem]";
+/* ON A PHONE THE NAME KEEPS ITS COLUMN (2026-10-04, the UK page reform; research R2, 3.2): name | fee 56 | time 60 | dots and the
+   plus 84, 12 apart, leave the name 107px of a 343px table, room for "Joint-Stock" at 16px and a local name in two lines at 12,
+   so each form's fee, time and dots stand on its name's first line in true columns, never on a second line under it. */
+const GRID = "grid grid-cols-[minmax(0,1fr)_3.5rem_3.75rem_5.25rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem_5.25rem]";
 /* name | fee | time, the registering shape with the dots off. */
-const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_4.5rem_4.5rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem]";
+const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_3.5rem_3.75rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem]";
 /* name | a | b, the figures shape: a count and a year's pay ("$44K", "$8,500"). */
 const GRID_FIGURES = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3";
 const DASH = <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>;
@@ -110,8 +113,18 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
      (about the narrowest line's 190px at 12px) every row reserves two lines for it, so the rows stay one height (the harness's
      UNEQUAL) and the long name has its second line. */
   const longTerm = rows.some((t) => (t.local_term && t.local_term !== t.tier ? t.local_term.length : 0) > 36);
+  /* A NAME THAT WRAPS IN THE PHONE'S NAME COLUMN (107px at 16px holds about twelve characters) makes every row keep two name
+     lines there, so the rows stay one height (the harness's UNEQUAL measured 85 against 61 on Argentina's forms); under 340px of
+     table the column is 65px and every name keeps two lines whatever its length (69 against 45 on the sheet's 301px card). */
+  const longName = rows.some((t) => String(t.tier ?? "").length > 12);
+  /* A WORD THAT CANNOT BREAK (2026-10-04): a name holding a word of more than eight letters ("Freelancer", 82px at 16px) cannot
+     wrap inside the 67px name column of a 303px card, and broke inside the word ("Freela / ncer"); such a table stacks its rows
+     under 330px of width. Names that break at a space or a hyphen ("Sole Trader", "Joint-Stock") keep their column down to 300px
+     (the how-to page's 305px card held them in two lines beside their readings), and every table stacks under 300. */
+  const longWord = rows.some((t) => String(t.tier ?? "").split(/[\s-]+/).some((w) => w.length > 8));
+  const stackName = longWord ? "[@container(max-width:329px)]:col-span-full" : "[@container(max-width:299px)]:col-span-full";
+  const stackCell = longWord ? "[@container(max-width:329px)]:[grid-row:3]" : "[@container(max-width:299px)]:[grid-row:3]";
   const grid = dots ? GRID : GRID_NO_DOTS;
-  const span = dots ? "col-span-4" : "col-span-3";
   return (
     /* THE ROW FOLLOWS THE CARD, NOT THE WINDOW (2026-09-26): switched at the window's md, a legal form's name took its own column
        in a card half a 768 window wide and was cut to one letter ("S...", "L...", "J..." on the United Kingdom's page). The table
@@ -141,33 +154,48 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
              tables is quite bad"): the name block reserves two lines, and centring the row put the fee and the time between
              the name and its second line, level with neither. The row aligns on the first baseline, so each figure reads on
              the line of the name it belongs to; the model laws' ROW LINE clause measures it. */
+          /* THE RESERVED LINES STAND UNDER THE ROW, NOT INSIDE IT (2026-10-04, the 768 photo): the name used to reserve its two lines
+             itself, so a one-line "LLC" left 24px between it and its local name, and in the 336px half of a 768 band "Private Limited
+             Company (Ltd)" sat nearer the next form than its own. The row reserves the height now (a two-line name, 4, the local
+             name's lines: 68.5 or 85) and packs its lines at the top, so the local name always hugs its name and every row is still
+             one height (the harness's UNEQUAL). */
+          const reserve = longName
+            ? longTerm ? "[@container(max-width:479px)]:min-h-[5.3125rem]" : "[@container(max-width:479px)]:min-h-[4.28125rem]"
+            : longTerm ? "[@container(max-width:340px)]:min-h-[5.3125rem]" : "[@container(max-width:340px)]:min-h-[4.28125rem]";
           const line = (
-            <span className={`${grid} w-full items-baseline gap-y-1`} data-tier-row={i}>
+            <span className={`${grid} w-full content-start items-baseline gap-y-1 ${reserve}`} data-tier-row={i}>
               {/* THE NAME BLOCK spans the row on a phone and takes the first
                   column from md; it reserves two lines so every row is one
                   height; the chevron rides at its right edge. */}
-              <span className={`${span} flex min-w-0 items-center gap-2 [@container(min-width:480px)]:col-span-1`}>
+              {/* A NARROW TABLE STACKS: THE NAME TAKES THE ROW AND THE READINGS STAND ON ONE LINE UNDER IT (research R2, pattern f; the
+                  German page's 303px card, 2026-10-04): under 330px where a name holds a word that cannot break, under 300 always
+                  (`longWord` above); wider (the band page's 343 at 375, a 768 half's 336) the name keeps its column. Each reading
+                  names its column, so on the line under the name it stands under its own head, never in the first free cell. */}
+              <span className={`flex min-w-0 items-start gap-2 [grid-row:1] ${stackName}`}>
                 <span className="min-w-0 flex-1">
-                  <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{t.tier}</span>
-                  <span className={`block text-[length:var(--t-micro)] text-[var(--c-muted)] ${longTerm ? "line-clamp-2 min-h-[2.6em] leading-[1.3]" : "min-h-[1.3em] truncate leading-snug"}`}>{localTerm ?? " "}</span>
+                  <span data-label className="block break-words text-[length:var(--t-lead)] font-medium leading-6 text-[var(--c-ink)]">{t.tier}</span>
                 </span>
-                <Plus open={isOpen} shown={hasPanel} className="inline-flex [@container(min-width:480px)]:hidden" />
+                {dots ? null : <Plus open={isOpen} shown={hasPanel} className="inline-flex" />}
               </span>
-              {/* On a phone the readings sit on their own row under the heads; a spacer keeps them in their columns. */}
-              <span aria-hidden className="[@container(min-width:480px)]:hidden" />
-              <span className="text-right" data-col="fee">
+              <span className={`col-start-2 text-right [grid-row:1] ${stackCell}`} data-col="fee">
                 {/* A zero fee prints "$0" in this column of figures (COPY.free's note, 2026-09-25). */}
                 {isNum(t.cost_usd) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig> : DASH}
               </span>
-              <span className="text-right" data-col="time">
+              <span className={`col-start-3 text-right [grid-row:1] ${stackCell}`} data-col="time">
                 {isNum(t.days) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.days} {t.days === 1 ? "day" : "days"}</Fig> : DASH}
               </span>
               {dots ? (
-                <span className="flex items-center justify-end gap-2">
+                <span className={`col-start-4 flex items-center justify-end gap-2 [grid-row:1] ${stackCell}`}>
                   {isNum(t.complexity_1_5) ? <Dots n={t.complexity_1_5} /> : null}
-                  <Plus open={isOpen} shown={hasPanel} className="hidden [@container(min-width:480px)]:inline-flex" />
+                  <Plus open={isOpen} shown={hasPanel} className="inline-flex" />
                 </span>
               ) : null}
+              {/* THE LOCAL NAME IS THE ROW'S SECOND LINE (2026-10-04, the UK page reform): under the name in its own column from 480px
+                  of table; on a narrower table across the whole row under the figures, so it wraps over the table's width rather than
+                  the name's 107px (Mexico's "Sociedad de Responsabilidad Limitada (S. de R.L. de C.V.)" ran to six lines there, and
+                  the rows stopped being one height, the harness's UNEQUAL). Never cut; every row reserves the same lines for it (two
+                  where any local name passes 36 characters, one otherwise); 12 on the snug leading, over the readability floor. */}
+              <span className={`col-span-full block break-words text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [grid-row:2] [@container(min-width:480px)]:col-span-1 [@container(min-width:480px)]:col-start-1 ${longTerm ? "min-h-[2.75em]" : "min-h-[1.375em]"}`}>{localTerm ?? " "}</span>
             </span>
           );
           return (

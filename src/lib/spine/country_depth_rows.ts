@@ -44,7 +44,7 @@ import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
 import { tradeIconFor } from "@/lib/spine/trade_icon";
 
 export type Focal = { figure: string; words: string };
-export type DepthCard = { focal: Focal; cells: KvCell[] ; /** The government's start-up loan as numbers, for the loan lever (2026-09-26). */ loan?: { min: number; max: number; rate: number } };
+export type DepthCard = { focal: Focal; cells: KvCell[] ; /** The government's start-up loan as numbers, for the loan lever (2026-09-26). */ loan?: { min: number; max: number; rate: number }; /** The central bank's rate as a number, for the reference mark on the lending track (2026-10-04). */ baseRate?: number | null };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 const conf = (tag: string) => (tag === "held" ? ("measured" as const) : ("modeled" as const));
@@ -158,7 +158,7 @@ export function buildCountryFinancing(iso2: string): DepthCard | null {
     cells.push({ key: `grant-${String(g.name)}`, icon: "grant", label: String(g.name), value: g.value, note: typeof g.who === "string" ? `${F.notes.grantFor} ${g.who.toLowerCase()}` : undefined, confidence: conf(g._tag) });
   }
   if (cells.length < 2) return null;
-  return { focal: { figure: trimPct(sme.value), words: F.focalWords }, cells, loan };
+  return { focal: { figure: trimPct(sme.value), words: F.focalWords }, cells, loan, baseRate: base && base.value > 0 ? base.value : null };
 }
 
 /** GETTING PAID: how customers pay, drawn as a whole; what a card sale costs as the figure; how fast money lands and the account as the cells. */

@@ -468,6 +468,11 @@ function inPage(ctx) {
     for (const band of candidates) {
       if (!band || band === document.body || band === document.documentElement || band.tagName === "MAIN") continue;
       if (band.closest(CHROME)) continue;
+      /* A SECTION ON A ZONE IS JUDGED BY ITS ZONE (2026-10-04, his ruling abandoning the bento): a zone holds one section that
+         takes the column, or two side by side, and each sits in its own cell (`[data-zone-cell]`), so the cell is never a band
+         and a wide zone's one section is the design, not a lone card at two thirds with air beside it. The zones' own law
+         (check_page_laws.mjs, ZONE SPLIT) reads a zone that declares a pair and draws one. */
+      if (band.closest("[data-zone]")) continue;
       if (band.children.length !== 1) continue;
       const child = band.children[0];
       const id = child.id || child.querySelector("[id]")?.id || band.id || "band";
@@ -764,12 +769,24 @@ function inPage(ctx) {
      only for a page with no block marker and no 30px element, where there
      is truly nothing to judge. The two older halves still run over every
      rounded card as before, block or not, so nothing they caught is lost. */
-  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat"]);
+  /* `dated-changes` since 2026-10-04 (the UK page reform): a run of rule changes is a sibling-figure form like a table, each row
+     a date, an item and its two values, no one figure above the others (MODEL.md PART 10). */
+  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat", "dated-changes"]);
   const formOf = (card) => card.getAttribute("data-archetype") || card.querySelector("[data-archetype]")?.getAttribute("data-archetype") || "kit";
   const sizesOf = (card) => [...card.querySelectorAll("*")]
     .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el))
     .map((el) => parseFloat(getComputedStyle(el).fontSize));
   const idOfCard = (card) => card.id || card.getAttribute("data-block") || card.closest(CLUSTER)?.id || card.querySelector("[id]")?.id || "card";
+  /* THE BAND PAGE'S SECTION HEADING (2026-10-04, his ruling of that day abandoning the bento; the design in
+     docs/superpowers/specs/2026-10-04-uk-page-reform-design.md, section 3). An open section stands on its zone with no box, so
+     its title is the section's edge and takes the heading rung, 20 (PART 4: "every heading"). This rule exists so that no FIGURE
+     competes with the focal; a heading is words, and it is the one 20 a band section carries. Inside a zone the title's own size
+     (`[data-rail-title]`) is left out of the "between 16 and 30" reading; every other leaf in the section is still read, so a
+     figure at 20 or 24 still reds. Off a zone nothing changes. Proved by planting a 24px figure in an open section: red. */
+  const headingOfZone = (el) => !!el.closest("[data-zone]") && !!el.closest("[data-rail-title]");
+  const sizesOfBetween = (card) => [...card.querySelectorAll("*")]
+    .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el) && !headingOfZone(el))
+    .map((el) => parseFloat(getComputedStyle(el).fontSize));
   let any30 = false;
   for (const card of cards) {
     if (EVEN_BY_RULING.has(formOf(card))) continue;
@@ -779,7 +796,7 @@ function inPage(ctx) {
     const id = idOfCard(card);
     if (at30 > 1) push(id, "FOCAL", `${at30} figures at 30px in one card`);
     if (at30 >= 1) {
-      const between = sizes.find((s) => s > 16 && s < 30 && Math.abs(s - 30) >= 0.5);
+      const between = sizesOfBetween(card).find((s) => s > 16 && s < 30 && Math.abs(s - 30) >= 0.5);
       if (between != null) push(id, "FOCAL", `a size of ${between}px between 16 and 30 in a card that already has a 30px figure`);
     }
   }

@@ -51,7 +51,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
   const rows = board.rows.slice(0, HERO_BOARD_ROWS_CAP);
   return (
     <Band hero>
-      <Box id={id} data-archetype="hero-board" data-level="page" data-visual="1" data-answers={answers} data-rows={String(rows.length)}>
+      <Box id={id} keep data-archetype="hero-board" data-level="page" data-visual="1" data-answers={answers} data-rows={String(rows.length)}>
         <div className="flex items-center gap-4">
           <CountryFlag iso2={board.iso2} size="board" className="shrink-0" />
           {/* THE NAME STEPS DOWN A RUNG ON A PHONE (the goal's A13, 2026-09-24): at a phone's 327 of content, "Afghanistan" at the 40 ran 11 past the card beside the flag (the page laws, TEXT OUT OF BOX, once the renders measured the width production serves), so under sm it takes the focal rung, 30, and the flag and the name keep one line. */}
@@ -131,7 +131,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
               {board.subtitle ? <p className="max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.subtitle}</p> : null}
             </div>
           )}
-          <div className={`flex flex-col ${board.answer ? "md:col-span-2 lg:col-span-1" : ""}`}>
+          <div data-hero-rows="" className={`flex flex-col ${board.answer ? "md:col-span-2 lg:col-span-1" : ""}`}>
             {/* ONE GRID FOR THE WHOLE BOARD, NOT ONE PER ROW (2026-09-23, his
                 ruling on alignment, measured first). Each row used to be its own
                 grid, so every row sized its own columns and the figures ended at
@@ -192,7 +192,7 @@ function LevelMark({ level }: { level: "high" | "medium" | "low" }) {
 
 function ImageCell({ image, grow = false }: { image: HeroBoardData["image"]; grow?: boolean }) {
   return (
-    <div className={`relative md:min-h-40 ${grow ? "md:flex-1" : ""}`}>
+    <div data-hero-image-cell="" className={`relative md:min-h-40 ${grow ? "md:flex-1" : ""}`}>
       {/* THE PLACEHOLDER IN THE PAGE'S DUOTONE (2026-09-25): the one photograph the repository holds is not the country, and in full
           colour it put a blue sky and green cliffs, the two colours the palette bans, at the top of the page; the city cards on the
           same page already draw it through this recipe. A country's own photograph, when one lands, draws as it is. */}

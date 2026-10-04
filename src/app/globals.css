@@ -1083,6 +1083,13 @@
   background: var(--c-card);
   border-radius: 10px;
 }
+/* THE ONE CARD SURFACE (kit.tsx CARD_SURFACE, rulebook v2 rule 36), as a class since 2026-10-04 so a zone can take an open
+   section's box away (an inline style outranks every stylesheet). The same three declarations, the same values. */
+.spine-card {
+  background: var(--c-card);
+  background-clip: padding-box;
+  box-shadow: 0 1px 1px rgba(43, 28, 22, 0.04), 0 8px 24px -12px rgba(43, 28, 22, 0.1);
+}
 .hov {
   transition: background-color 0.15s ease-out, transform 0.15s ease-out, border-color 0.15s ease-out;
 }
@@ -1105,6 +1112,193 @@
   .cityhov:hover {
     transform: none;
   }
+}
+
+/* ==================== THE ZONES (the band page, 2026-10-04) ====================
+   His words of 2026-10-04: "we should abandon the bento in favor of a more traditional thing where the sections have
+   alternating background colors maybe just by a little bit ... we can keep some cards but not so much bento, not everything
+   inside the bento." A ZONE is one full-width background band holding one level of the page (one or two sections); zones
+   alternate PAPER and TINT down the page. `Band` in kit.tsx still means a level of cards on the pages not yet moved; the new
+   name keeps the two apart (research R3, the naming collision).
+
+   THE TWO SURFACES are tokens the page already holds (research R3, section 3.1): paper is the card white, tint is the page
+   ground, 1.081:1 apart, inside the 1.06 to 1.09 cluster measured on Apple, Notion, Airbnb, Census Reporter and GOV.UK, and
+   under every banned cream's chroma. Every text token clears 4.5:1 on both (the tightest, accent text on tint, 4.79).
+
+   THE BAND CARRIES NO EDGE ON ITS OWN: every pair scores under APCA's floor and forced colours remove backgrounds, so the
+   numbered chapter heading, the padding and the section headings carry the boundary; the forced-colours rule below draws a
+   hairline where the colour disappears.
+
+   FULL BLEED WITHOUT LEAVING THE COLUMN: the zone stays in the 1120 column (its sections keep the column and its splits; full
+   bleed is not full width, the full-width ban counts blocks, not backgrounds) and paints its colour edge to edge with a border
+   image's sideways outset, none above or below, so a zone never paints over its neighbour. An outset makes no scrollable
+   overflow, so nothing scrolls sideways at any width. */
+:root {
+  --zone-paper: var(--c-card);
+  --zone-tint: var(--c-ground);
+}
+[data-zone] {
+  position: relative;
+  padding-block: 40px;
+}
+@media (min-width: 768px) {
+  [data-zone] {
+    padding-block: 48px;
+  }
+}
+@media (min-width: 1024px) {
+  [data-zone] {
+    padding-block: 64px;
+  }
+}
+/* THE PAGE'S TOP EDGE TO THE MASTHEAD IS 64 AT 1024 AND UP (DISTANCES.md 2.3): the site column already opens 16 under the
+   header, so the first zone gives 48 of its own (40 and 48 in all at 375 and 768). */
+[data-zone]:first-child {
+  padding-top: 24px;
+}
+@media (min-width: 768px) {
+  [data-zone]:first-child {
+    padding-top: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  [data-zone]:first-child {
+    padding-top: 48px;
+  }
+}
+/* EDGE TO EDGE WITHOUT A CLIP (the code review of 2026-10-04): the spread shadow needed a clip-path to keep it off its neighbours,
+   and the clip cut whatever stood out of the zone (a "?" tip near its top opening upward). A border image's outset paints the
+   band's colour 100vmax to either side and none above or below; like the shadow it is ink overflow, so nothing scrolls sideways. */
+[data-zone][data-tone="paper"] {
+  background: var(--zone-paper);
+  border-image: conic-gradient(var(--zone-paper) 0 0) fill 0 // 0 100vmax;
+}
+[data-zone][data-tone="tint"] {
+  background: var(--zone-tint);
+  border-image: conic-gradient(var(--zone-tint) 0 0) fill 0 // 0 100vmax;
+  /* A SOFT FILL VANISHES ON THE TINT (1.01:1, research R3 pitfall 4), so on a tint zone the open content's soft fills (a
+     home row, a disclosure panel, a chip) turn white, one step above the band as they were one step below the card. */
+  --c-soft: var(--zone-paper);
+  --c-surface: var(--zone-tint);
+}
+[data-zone][data-tone="tint"] [data-keep-card] {
+  --c-soft: var(--soft-card);
+  --c-surface: var(--c-card);
+}
+@media (forced-colors: active) {
+  [data-zone] + [data-zone] {
+    border-top: 1px solid CanvasText;
+  }
+}
+/* AN OPEN SECTION: a section card drawn inside a zone stands on the band with no box (no border, no fill, no shadow, no
+   radius, no padding); its words, figures and drawings keep every rule they had inside the card. A card that is operated
+   (a lever, a picker, the sortable table) or that is a door keeps its box: it carries `data-keep-card`. */
+/* `.spine-card` names the section boxes (kit.tsx Box) and nothing else: a city card is a link that carries `data-card` too, and
+   the zone's strip took its padding, its radius and its edge (the code review of 2026-10-04); a door keeps its box. */
+[data-zone] .spine-card:not([data-keep-card]) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+/* THE INSTRUMENT KEEPS A BOX (research R3, 3.7: a card earns its place when the reader operates something in it). Inside an
+   open section, the part the reader works (the hire and loan levers, the cover picker, the sortable table) stands in the one
+   card surface: white, the strong edge, radius 12, the July-3 shadow pair; its soft fills are the card's own again. The
+   section's title, figure and drawing stay open above it. 12px of padding on a phone so a table keeps its width, 16 from 768,
+   20 from 1024 (the ordinary card's padding). */
+[data-zone] [data-instrument],
+[data-zone] [data-lever-card] {
+  background: var(--c-card);
+  border: 1px solid var(--c-line-strong);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 1px 1px rgba(43, 28, 22, 0.04), 0 8px 24px -12px rgba(43, 28, 22, 0.1);
+  --c-soft: var(--soft-card);
+  --c-surface: var(--c-card);
+}
+/* ON A PHONE THE SORTABLE TABLE STANDS OPEN (2026-10-04): five figures a line need the whole 343px (research R2: the widest set
+   is 339), and a card's padding and edge would take 26 of them; the arrows on its heads still say it can be pressed. Its soft
+   fill follows the band again, so the home row reads on a tint zone. */
+@media (max-width: 767px) {
+  [data-zone] [data-instrument="table"] {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    --c-soft: inherit;
+    --c-surface: inherit;
+  }
+}
+@media (min-width: 768px) {
+  [data-zone] [data-instrument],
+  [data-zone] [data-lever-card] {
+    padding: 16px;
+  }
+}
+@media (min-width: 1024px) {
+  [data-zone] [data-instrument],
+  [data-zone] [data-lever-card] {
+    padding: 20px;
+  }
+}
+/* THE FIRST PHONE SCREEN CARRIES THE FACTS (2026-10-04; research R1: data references put a median of 8 figures in the first
+   phone screen, the old page 1). On a phone his board stacked the answer, then the placeholder picture, then the six placed
+   figures, so the picture pushed every fact under the fold. On the band page, under 768px, the six figures follow the answer
+   and the picture comes last, at 2:1; every part of his board stays, and from 768 nothing moves. */
+@media (max-width: 767px) {
+  [data-zone] [data-archetype="hero-board"] [data-hero-rows] {
+    order: 2;
+  }
+  [data-zone] [data-archetype="hero-board"] [data-hero-image-cell] {
+    order: 3;
+  }
+  [data-zone] [data-archetype="hero-board"] [data-hero-image] {
+    aspect-ratio: 2 / 1;
+  }
+}
+/* AN OPEN SECTION'S TITLE TAKES THE HEADING RUNG (20, MODEL PART 4: "every heading"). Inside a card the 16 rung was enough
+   because the card's edge said where a section began; on the band the title is that edge, under the chapter's 24. */
+[data-zone] .spine-card:not([data-keep-card]) [data-rail-title] {
+  font-size: var(--t-head);
+  line-height: 28px;
+  letter-spacing: -0.01em;
+}
+/* THE LINE THAT CARRIES A SECTION'S FIGURE IS BODY TEXT (14 on 20, DISTANCES.md section 4: "14 for the sentence that carries
+   it"), not a 12px caption: research R2 and RATIOS.md measured half the old page set at the 12px floor. */
+[data-zone] .spine-card:not([data-keep-card]) [data-focal-words],
+[data-zone] [data-focal="1"] + p {
+  font-size: var(--t-body);
+  line-height: 20px;
+  color: var(--c-ink2);
+}
+/* THE SHARES' ROWS ON A BAND ARE RULED ROWS (2026-10-04, the design review: "grey pill tiles with % chips, a third row style on
+   the page"): on a zone the share bar's list loses its tiles and chips and reads like every other list, a hairline under each row,
+   12 above and below, the share in the row's own ink at the body rung. Off the band page the tiles stand as before. */
+[data-zone] [data-archetype="share-bar"] [data-expect-rows] {
+  row-gap: 0;
+  column-gap: 24px;
+}
+[data-zone] [data-archetype="share-bar"] [data-expect-rows] > [data-row] {
+  background: transparent;
+  border-radius: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--c-border);
+}
+[data-zone] [data-archetype="share-bar"] [data-expect-rows] > [data-row] > span:last-child {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: var(--t-body);
+  color: var(--c-ink);
+}
+/* A ROW IS READ AT 14 (MODEL PART 5, the row's label and figure at the body rung; RATIOS.md's ROW RUNG): the plus's rows were set
+   at the 12px floor, the commonest 12px text on the old page. Only the row's own note stays at 12. */
+[data-zone] [data-detail-row] > dt,
+[data-zone] [data-detail-row] > dt + dd {
+  font-size: var(--t-body);
+  line-height: 20px;
 }
 
 /* ---- atlas-eyebrow — the small tracked uppercase label ------------------- */
@@ -2375,7 +2569,14 @@
      July-3 shadow pair. Retoning it to a cool neutral would have repainted
      every card on eight pages to fix a bookkeeping fault. */
   --c-card: rgba(255, 255, 255, 1);
-  --c-soft: #f6f4f2;
+  /* WHAT A DRAWING STANDS ON (2026-10-04, the band page): a label that masks a grid line behind it, or a ring's hollow, paints
+     this, the card's white by default; a tint zone re-points it at the band so the mask is the band's own grey, and a card kept
+     on the band points it back (the time to sell's "Here" stood in a white box on the grey band at 375). */
+  --c-surface: var(--c-card);
+  /* THE SOFT FILL'S VALUE IN A SLOT OF ITS OWN (2026-10-04): a tint zone re-points --c-soft at white and a card kept on that zone
+     points it back at this slot; reading --c-soft itself there would be a self-reference (verify_no_self_referential_css_vars). */
+  --soft-card: #f6f4f2;
+  --c-soft: var(--soft-card);
   --c-soft2: #efebe8;
   --c-border: #e7e2df;
   --c-line-strong: #d8d0cb;

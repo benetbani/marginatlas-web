@@ -61,6 +61,7 @@ import { countryFigure, loadCountryShard, countryEntityId } from "@/lib/facts/co
 import { queryFacts } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
 import { COPY } from "@/lib/spine/copy";
+import { placementOf } from "@/lib/spine/placement";
 
 export const COUNTRY_EXIT_METRICS = {
   low: "risk_exit.exit.multiple_low",
@@ -82,6 +83,10 @@ export type CountryExitData = {
   climateWord: string | null;
   /** The usual span anywhere, as numbers (the medians of the quick and the slow ends over every shard), or null. */
   usual: { lo: number; hi: number } | null;
+  /** WHERE THE SLOW END STANDS AMONG THE COUNTRIES, in the site's one placement wording (2026-10-04, the UK page reform;
+   *  research R4: the lean card's "quicker than in 182 of 198 countries" was a second wording, which PART 9 clause 37 forbids):
+   *  "Higher than {n} countries in ten." or "Among the lowest tenth.", from placement.ts, or null without the world's scan. */
+  placement: string | null;
   basis: string;
   foot: string;
   tag: FactTag;
@@ -163,6 +168,7 @@ export function buildCountryExit(iso2: string): CountryExitData | null {
     /* The file's word itself, for the lean card's label (2026-09-25). */
     climateWord: climateWord ?? null,
     usual: w ? { lo: w.usualLow, hi: w.usualHigh } : null,
+    placement: w ? placementOf(mHi.value, w.highs, "countries") : null,
     basis: C.basis,
     foot: C.foot,
     tag,

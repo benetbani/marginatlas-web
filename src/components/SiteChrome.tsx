@@ -69,7 +69,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
            the page is gone, carries a thin bottom hairline so the sticky bar
            stays defined as content scrolls beneath it. */}
         <header className={headerClass}>
-          <div className="max-w-content mx-auto px-6 py-5 md:py-6 flex items-center justify-between">
+          {/* UNDER 360px THE BAR TAKES THE PAGE'S 16px GUTTER AND A 12px GAP (2026-10-04): at 320 the lockup, the search and the menu
+              ran 11px past the screen and the whole page scrolled sideways (the UK page reform's phone check; production the same). */}
+          <div className="max-w-content mx-auto px-6 py-5 md:py-6 flex items-center justify-between max-[359px]:px-4">
             <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
               {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. ON A PHONE, 28 AND ONE LINE (2026-10-01, T5):
                   at 40 everywhere the two words wrapped beside the search and the menu at every phone width (the bar 117px tall
@@ -78,7 +80,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <span className="inline-flex md:hidden"><PhoneLockup /></span>
               <span className="hidden md:inline-flex"><LogoWordmark size={40} labeled={false} /></span>
             </a>
-            <div className="flex items-center gap-5 md:gap-6">
+            <div className="flex items-center gap-5 md:gap-6 max-[359px]:gap-3">
               {/* lg, NOT md, and this was a measured defect rather than a
                   preference. The full nav is seven links plus a search and a
                   pricing button; it switched on at md (768) and there is not

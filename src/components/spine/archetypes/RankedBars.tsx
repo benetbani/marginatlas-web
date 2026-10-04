@@ -506,7 +506,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
             const inner = (
               <>
                 <div style={{ height: H + PILL, display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "center" }}>
-                  <div className="relative bg-[var(--c-card)] px-1 text-[length:var(--t-lead)] leading-none" style={{ marginBottom: 6 }}>
+                  <div className="relative bg-[var(--c-surface)] px-1 text-[length:var(--t-lead)] leading-none" style={{ marginBottom: 6 }}>
                     {/* THE PILL'S SLOT IS RESERVED ON EVERY ROW (task 12): the
                         same rounded, padded span renders whether this row
                         leads or not, so the leader's ink fill and white text

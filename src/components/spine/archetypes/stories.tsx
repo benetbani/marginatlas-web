@@ -4,6 +4,10 @@
  * exemplar, the data-poor cases, the extreme names and the self-omit state on
  * one page. Widths are the harness's business.
  */
+import { FactRows } from "@/components/spine/archetypes/FactRows";
+import type { AtlasIconId } from "@/components/brand/icons";
+import { ChangeRun } from "@/components/spine/archetypes/DatedChanges";
+import { buildRuleChanges, listRuleCountries, ruleRows } from "@/lib/spine/sections/country_rules";
 import { Stepper } from "@/components/spine/archetypes/Stepper";
 import { buildHowToSteps } from "@/lib/spine/howto_steps_rows";
 import * as React from "react";
@@ -2525,6 +2529,69 @@ export function ThresholdsStories() {
   );
 }
 
+/** FACT ROWS (FactRows.tsx, 2026-10-04, the UK page reform): a section's facts as ruled rows, the rules the country's file holds
+ *  (country_rules.ts), keyed <iso2>:<topic>: four rows (two lists from 600px), two rows (one list), five rows with a value in words. */
+const FACT_TOPICS: Array<{ topic: string; kicker: string; keys: Array<{ key: string; icon: AtlasIconId }>; why: string }> = [
+  { topic: "employing", kicker: "The rules behind the cost", keys: [{ key: "minimum-wage-21", icon: "min-wage" }, { key: "employment-allowance", icon: "hiring" }, { key: "pension-employer", icon: "wages" }, { key: "pension-total", icon: "wages" }], why: "four rows, two lists from 600px" },
+  { topic: "insurance", kicker: "Insurance", keys: [{ key: "employers-liability-fine", icon: "red-tape" }, { key: "certificate-fine", icon: "filings" }], why: "two rows, one list" },
+  { topic: "filings", kicker: "Legal and admin costs", keys: [{ key: "accounts-deadline", icon: "filings" }, { key: "tax-return-deadline", icon: "filings" }, { key: "corporation-tax-payment", icon: "taxes" }, { key: "vat-return-deadline", icon: "taxes" }, { key: "payroll-report", icon: "wages" }], why: "five rows, a value in words among the figures" },
+];
+export function pickFactRowsInstances(): Instance[] {
+  return listRuleCountries().flatMap((c) => FACT_TOPICS.filter((t) => ruleRows(c, t.topic, t.keys)).map((t) => ({ iso2: `${c}:${t.topic}`, why: t.why })));
+}
+export function FactRowsStories() {
+  return (
+    <div data-stories="fact-rows">
+      {pickFactRowsInstances().map((i) => {
+        const [c, topic] = i.iso2.split(":");
+        const t = FACT_TOPICS.find((x) => x.topic === topic)!;
+        const rows = ruleRows(c, t.topic, t.keys)!;
+        return (
+          <Story kind="fact-rows" key={i.iso2} iso2={i.iso2} why={i.why}>
+            <Box id={`fact-rows-${c.toLowerCase()}-${topic}`}>
+              <Rail icon="filings" kicker={t.kicker} />
+              <FactRows rows={rows} />
+            </Box>
+          </Story>
+        );
+      })}
+    </div>
+  );
+}
+
+/** DATED CHANGES (DatedChanges.tsx `ChangeRun`, 2026-10-04): the rule changes coming and the recent ones, keyed <iso2>:coming and
+ *  <iso2>:made, the second with its plus over the earlier changes. The date the runs split on is the sheet's own day. */
+export function pickChangeRunInstances(): Instance[] {
+  const today = new Date().toISOString().slice(0, 10);
+  return listRuleCountries().flatMap((c) => {
+    const r = buildRuleChanges(c, today);
+    if (!r) return [];
+    return [
+      ...(r.coming.length ? [{ iso2: `${c}:coming`, why: "what is enacted with a date, soonest first" }] : []),
+      ...(r.inForce.length ? [{ iso2: `${c}:made`, why: "what changed, newest first, the rest behind the plus" }] : []),
+    ];
+  });
+}
+export function ChangeRunStories() {
+  const today = new Date().toISOString().slice(0, 10);
+  return (
+    <div data-stories="dated-changes">
+      {pickChangeRunInstances().map((i) => {
+        const [c, run] = i.iso2.split(":");
+        const r = buildRuleChanges(c, today)!;
+        return (
+          <Story kind="dated-changes" key={i.iso2} iso2={i.iso2} why={i.why}>
+            <Box id={`changes-${c.toLowerCase()}-${run}`}>
+              <Rail icon="change" kicker={run === "coming" ? COPY.changes.comingKicker : COPY.changes.madeKicker} />
+              {run === "coming" ? <ChangeRun rows={r.coming} /> : <ChangeRun rows={r.inForce} shown={4} more={COPY.changes.more} />}
+            </Box>
+          </Story>
+        );
+      })}
+    </div>
+  );
+}
+
 /** WHO THE CUSTOMERS ARE (sections/AgeMix.tsx, CustomersCome.tsx, Origin.tsx): each country the people file holds, with its first
  *  city where the section compares the two; keyed <iso2> or <iso2>:<city>. */
 const peopleKey = (iso2: string, city?: string) => (city ? `${iso2}:${city}` : iso2);
@@ -2645,6 +2712,8 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "market-hold": pickMarketHoldInstances(),
     "job-market": pickJobMarketInstances(),
     "thresholds": pickThresholdsInstances(),
+    "fact-rows": pickFactRowsInstances(),
+    "dated-changes": pickChangeRunInstances(),
     "spend-by-income": pickSpendByIncomeInstances(),
     "age-mix": pickAgeMixInstances(),
     "spend-by-age": pickSpendByAgeInstances(),

@@ -687,8 +687,11 @@ export function Band({
 }
 
 
-export function Box({ children, className = "", elevation = "card", density = "default", ...rest }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead" } & React.HTMLAttributes<HTMLDivElement>) {
+export function Box({ children, className = "", elevation = "card", density = "default", keep = false, ...rest }: { children: React.ReactNode; className?: string; elevation?: "card" | "lift"; density?: "dense" | "default" | "lead"; keep?: boolean } & React.HTMLAttributes<HTMLDivElement>) {
   void elevation;
+  /* A CARD THAT STAYS A CARD ON THE BAND PAGE (2026-10-04): inside a zone (globals.css, THE ZONES) a section card stands open
+     on the band, unless the reader operates something in it or it is a door; such a card passes `keep` and stamps
+     `data-keep-card`, and the zone leaves its box alone. Outside a zone the attribute changes nothing. */
   /* rest carries the data attributes a section uses to declare itself: the
      editorial exemption (art direction E1). Declaring is the point, so it has to
      reach the DOM where the gate can read it. */
@@ -715,10 +718,11 @@ export function Box({ children, className = "", elevation = "card", density = "d
          a styling value cannot see the thing it checks the day the styling
          changes. The hook is what they read now, and it is not a style. */
       data-card=""
-      className={`rounded-[12px] border border-[var(--c-line-strong)] ${DENSITY_PAD[density]} ${className}`}
-      style={{
-        ...CARD_SURFACE,
-      }}
+      {...(keep ? { "data-keep-card": "" } : {})}
+      /* THE SURFACE IS A CLASS, NOT AN INLINE STYLE, SINCE 2026-10-04: an inline style outranks every stylesheet, so a zone
+         could not take a section's box away; `.spine-card` (globals.css) carries exactly CARD_SURFACE's three declarations,
+         which stays exported for the two callers that paint it by hand. */
+      className={`spine-card rounded-[12px] border border-[var(--c-line-strong)] ${DENSITY_PAD[density]} ${className}`}
     >
       {children}
     </div>
@@ -1116,7 +1120,7 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss }: { i
   return (
     // mb-2, the slot rung: same written kit fix as Head above (the spacing
     // ladder holds no 12). City finding #4 (2026-08-30), S1.
-    <div className="mb-2">
+    <div className="mb-2" data-rail="">
       <div className="mb-2 flex items-center gap-2">
         {/* THE ICON IS TERRACOTTA ON EVERY CARD (his ruling of 2026-09-19: "the big missed chance is to put it at the icons"); one tile, one tone, site-wide. The accent budget counts text, so the tiles are not accents. */}
         {icon ? <Ico id={icon} tone="terra" /> : null}
@@ -1133,6 +1137,7 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss }: { i
             are the pre-spine serif scale, and a spine heading cannot wear them. */}
         <h3
           data-typography="custom"
+          data-rail-title=""
           className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
         >
           {kicker}

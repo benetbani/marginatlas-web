@@ -92,8 +92,10 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
     >
       <form
         onSubmit={submit}
-        className="mx-auto max-w-6xl px-6 h-14 flex items-center gap-3 sm:gap-5 flex-wrap sm:flex-nowrap"
+        className="mx-auto max-w-6xl px-6 min-h-14 py-3 sm:py-0 flex items-center gap-3 sm:gap-5 flex-wrap sm:flex-nowrap"
       >
+        {/* A HEIGHT THAT GROWS ON A PHONE (2026-10-04, the UK page reform's design review): the bar was 56px tall exactly, and on a
+            phone its line and its field wrap to two rows, so the field and the button hung under the bar, half under the footer. */}
         <p className="font-display italic text-sm sm:text-base flex-1 min-w-0 text-cocoa-700">
           A calm monthly read for people who use Atlas.
         </p>

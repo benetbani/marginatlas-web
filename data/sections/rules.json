@@ -1,0 +1,757 @@
+{
+  "_about": "The standing rules behind the United Kingdom page's figures for a small firm, by topic: what a private limited company files and when, what late filing costs, what employing someone requires, the late payment rules between businesses, the insurance the law requires, bank holidays, business rates and closing a company. Each rule a label of three words or fewer, a value object in the law's own units, an optional note of at most eight words (never a sentence), the page it was read on and the day. A value object carries gbp (pounds), pct (percent), pence (pence in the pound of rateable value), weeks, days, months, years, hours, or day (a day of the month); text only where no figure exists; per names the period of a rate (hour, week, day, year); above \"bank_rate\" makes the pct a margin over the central bank's Bank Rate. Business rates figures are England's. Research: docs/superpowers/research/2026-10-04-uk-page-reform/R6-uk-facts-sourced.md.",
+  "GB": {
+    "currency": "GBP",
+    "checked": "2026-10-04",
+    "filings": [
+      {
+        "key": "confirmation-statement",
+        "label": "Confirmation statement",
+        "value": {
+          "months": 12
+        },
+        "note": "at least one every 12 months",
+        "url": "https://www.gov.uk/guidance/confirmation-statement-guidance",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "confirmation-statement-grace",
+        "label": "Statement grace period",
+        "value": {
+          "days": 14
+        },
+        "note": "after the review period ends",
+        "url": "https://www.gov.uk/guidance/confirmation-statement-guidance",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "confirmation-statement-fee",
+        "label": "Statement fee",
+        "value": {
+          "gbp": 50
+        },
+        "note": "online; £110 on paper",
+        "url": "https://www.gov.uk/guidance/confirmation-statement-guidance",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "accounts-deadline",
+        "label": "Annual accounts due",
+        "value": {
+          "months": 9
+        },
+        "note": "after the year ends",
+        "url": "https://www.gov.uk/government/publications/life-of-a-company-annual-requirements/life-of-a-company-part-1-accounts",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "first-accounts-deadline",
+        "label": "First accounts due",
+        "value": {
+          "months": 21
+        },
+        "note": "after incorporation, if over 12 months",
+        "url": "https://www.gov.uk/government/publications/life-of-a-company-annual-requirements/life-of-a-company-part-1-accounts",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "tax-return-deadline",
+        "label": "Company tax return",
+        "value": {
+          "months": 12
+        },
+        "note": "after the period ends",
+        "url": "https://www.gov.uk/company-tax-returns",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "corporation-tax-payment",
+        "label": "Corporation tax due",
+        "value": {
+          "months": 9,
+          "days": 1
+        },
+        "note": "after the period ends",
+        "url": "https://www.gov.uk/pay-corporation-tax",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "vat-return-period",
+        "label": "VAT return period",
+        "value": {
+          "months": 3
+        },
+        "note": "usual period, if VAT registered",
+        "url": "https://www.gov.uk/vat-returns",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "vat-return-deadline",
+        "label": "VAT return due",
+        "value": {
+          "months": 1,
+          "days": 7
+        },
+        "note": "after the period, with payment",
+        "url": "https://www.gov.uk/vat-returns",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "payroll-report",
+        "label": "Payroll report",
+        "value": {
+          "text": "on or before each payday"
+        },
+        "note": "Full Payment Submission, if you employ",
+        "url": "https://www.gov.uk/running-payroll/reporting-to-hmrc",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "payroll-payment",
+        "label": "Payroll tax due",
+        "value": {
+          "day": 22
+        },
+        "note": "of each month; the 19th by post",
+        "url": "https://www.gov.uk/running-payroll/paying-hmrc",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-accounts-1",
+        "label": "Late accounts",
+        "value": {
+          "gbp": 150
+        },
+        "note": "up to 1 month late",
+        "url": "https://www.gov.uk/annual-accounts/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-accounts-2",
+        "label": "Late accounts",
+        "value": {
+          "gbp": 375
+        },
+        "note": "1 to 3 months late",
+        "url": "https://www.gov.uk/annual-accounts/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-accounts-3",
+        "label": "Late accounts",
+        "value": {
+          "gbp": 750
+        },
+        "note": "3 to 6 months late",
+        "url": "https://www.gov.uk/annual-accounts/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-accounts-4",
+        "label": "Late accounts",
+        "value": {
+          "gbp": 1500
+        },
+        "note": "more than 6 months late",
+        "url": "https://www.gov.uk/annual-accounts/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-accounts-repeat",
+        "label": "Late accounts again",
+        "value": {
+          "text": "penalty doubled"
+        },
+        "note": "late 2 years in a row",
+        "url": "https://www.gov.uk/annual-accounts/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-tax-return-1",
+        "label": "Late tax return",
+        "value": {
+          "gbp": 200
+        },
+        "note": "1 day late",
+        "url": "https://www.gov.uk/company-tax-returns/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-tax-return-2",
+        "label": "Late tax return",
+        "value": {
+          "gbp": 200
+        },
+        "note": "a further penalty at 3 months",
+        "url": "https://www.gov.uk/company-tax-returns/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-tax-return-3",
+        "label": "Late tax return",
+        "value": {
+          "pct": 10
+        },
+        "note": "of unpaid tax, at 6 months",
+        "url": "https://www.gov.uk/company-tax-returns/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-tax-return-4",
+        "label": "Late tax return",
+        "value": {
+          "pct": 10
+        },
+        "note": "a further 10% at 12 months",
+        "url": "https://www.gov.uk/company-tax-returns/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-tax-return-repeat",
+        "label": "Late three times",
+        "value": {
+          "gbp": 1000
+        },
+        "note": "each flat penalty, third late return running",
+        "url": "https://www.gov.uk/company-tax-returns/penalties-for-late-filing",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-tax-interest",
+        "label": "Late tax interest",
+        "value": {
+          "pct": 7.75
+        },
+        "note": "Bank Rate plus 4%, from 9 Jan 2026",
+        "url": "https://www.gov.uk/government/publications/rates-and-allowances-hmrc-interest-rates-for-late-and-early-payments/rates-and-allowances-hmrc-interest-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "statement-not-filed",
+        "label": "Statement not filed",
+        "value": {
+          "gbp": 5000
+        },
+        "note": "maximum fine; company may be struck off",
+        "url": "https://www.gov.uk/guidance/confirmation-statement-guidance",
+        "checked": "2026-10-04"
+      }
+    ],
+    "employing": [
+      {
+        "key": "pension-employer",
+        "label": "Pension, employer",
+        "value": {
+          "pct": 3
+        },
+        "note": "of qualifying earnings",
+        "url": "https://www.gov.uk/workplace-pensions/what-you-your-employer-and-the-government-pay",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "pension-total",
+        "label": "Pension, total",
+        "value": {
+          "pct": 8
+        },
+        "note": "employer and worker",
+        "url": "https://www.gov.uk/workplace-pensions/what-you-your-employer-and-the-government-pay",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "pension-band-lower",
+        "label": "Pension band starts",
+        "value": {
+          "gbp": 6240,
+          "per": "year"
+        },
+        "note": "qualifying earnings, 2026-27",
+        "url": "https://www.thepensionsregulator.gov.uk/en/employers/new-employers/im-an-employer-who-has-to-provide-a-pension/declare-your-compliance/ongoing-duties-for-employers/earnings-thresholds",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "pension-band-upper",
+        "label": "Pension band ends",
+        "value": {
+          "gbp": 50270,
+          "per": "year"
+        },
+        "note": "qualifying earnings, 2026-27",
+        "url": "https://www.thepensionsregulator.gov.uk/en/employers/new-employers/im-an-employer-who-has-to-provide-a-pension/declare-your-compliance/ongoing-duties-for-employers/earnings-thresholds",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "pension-trigger",
+        "label": "Enrolment trigger",
+        "value": {
+          "gbp": 10000,
+          "per": "year"
+        },
+        "note": "earnings that require auto-enrolment, 2026-27",
+        "url": "https://www.thepensionsregulator.gov.uk/en/employers/new-employers/im-an-employer-who-has-to-provide-a-pension/declare-your-compliance/ongoing-duties-for-employers/earnings-thresholds",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "minimum-wage-21",
+        "label": "Minimum wage, 21+",
+        "value": {
+          "gbp": 12.71,
+          "per": "hour"
+        },
+        "note": "since 1 Apr 2026",
+        "url": "https://www.gov.uk/national-minimum-wage-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "minimum-wage-18-20",
+        "label": "Minimum wage, 18-20",
+        "value": {
+          "gbp": 10.85,
+          "per": "hour"
+        },
+        "note": "from 1 Apr 2026",
+        "url": "https://www.gov.uk/national-minimum-wage-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "minimum-wage-under-18",
+        "label": "Under-18 minimum wage",
+        "value": {
+          "gbp": 8,
+          "per": "hour"
+        },
+        "note": "from 1 Apr 2026",
+        "url": "https://www.gov.uk/national-minimum-wage-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "minimum-wage-apprentice",
+        "label": "Apprentice minimum wage",
+        "value": {
+          "gbp": 8,
+          "per": "hour"
+        },
+        "note": "under 19, or in the first year",
+        "url": "https://www.gov.uk/national-minimum-wage-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "maternity-pay-first",
+        "label": "Maternity pay, early",
+        "value": {
+          "pct": 90
+        },
+        "note": "of average weekly earnings, first 6 weeks",
+        "url": "https://www.gov.uk/maternity-pay-leave/pay",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "maternity-pay-weekly",
+        "label": "Maternity pay, weekly",
+        "value": {
+          "gbp": 194.32,
+          "per": "week"
+        },
+        "note": "next 33 weeks, or 90% if lower",
+        "url": "https://www.gov.uk/maternity-pay-leave/pay",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "maternity-pay-length",
+        "label": "Maternity pay length",
+        "value": {
+          "weeks": 39
+        },
+        "url": "https://www.gov.uk/maternity-pay-leave/pay",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "statutory-pay-reclaim",
+        "label": "Statutory pay reclaim",
+        "value": {
+          "pct": 92
+        },
+        "note": "108.5% if Class 1 NI £45,000 or less",
+        "url": "https://www.gov.uk/recover-statutory-payments",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "sick-pay",
+        "label": "Sick pay",
+        "value": {
+          "gbp": 123.25,
+          "per": "week"
+        },
+        "note": "or 80% of earnings if lower",
+        "url": "https://www.gov.uk/statutory-sick-pay/what-youll-get",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "sick-pay-length",
+        "label": "Sick pay length",
+        "value": {
+          "weeks": 28
+        },
+        "note": "paid from the first full day off",
+        "url": "https://www.gov.uk/employers-sick-pay/entitlement",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "holiday",
+        "label": "Paid holiday",
+        "value": {
+          "weeks": 5.6
+        },
+        "note": "28 days for a five-day week",
+        "url": "https://www.gov.uk/holiday-entitlement-rights",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "longest-week",
+        "label": "Longest working week",
+        "value": {
+          "hours": 48
+        },
+        "note": "average over 17 weeks; opt-out allowed",
+        "url": "https://www.gov.uk/maximum-weekly-working-hours",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "notice-under-2-years",
+        "label": "Short-service notice",
+        "value": {
+          "weeks": 1
+        },
+        "note": "1 month to 2 years worked",
+        "url": "https://www.acas.org.uk/notice-periods/notice-when-being-dismissed-or-made-redundant",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "notice-2-to-12-years",
+        "label": "Mid-service notice",
+        "value": {
+          "weeks": 1
+        },
+        "note": "per full year, 2 to 12 years worked",
+        "url": "https://www.acas.org.uk/notice-periods/notice-when-being-dismissed-or-made-redundant",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "notice-12-years",
+        "label": "Long-service notice",
+        "value": {
+          "weeks": 12
+        },
+        "note": "12 years or more worked",
+        "url": "https://www.acas.org.uk/notice-periods/notice-when-being-dismissed-or-made-redundant",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "employer-ni",
+        "label": "Employer NI",
+        "value": {
+          "pct": 15
+        },
+        "note": "on earnings above the threshold",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "employer-ni-threshold",
+        "label": "Employer NI threshold",
+        "value": {
+          "gbp": 5000,
+          "per": "year"
+        },
+        "note": "per employee; £96 a week",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "employment-allowance",
+        "label": "Employment Allowance",
+        "value": {
+          "gbp": 10500,
+          "per": "year"
+        },
+        "note": "off the employer NI bill",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "unfair-dismissal",
+        "label": "Unfair dismissal",
+        "value": {
+          "years": 2
+        },
+        "note": "6 months from 1 Jan 2027",
+        "url": "https://www.acas.org.uk/employment-rights-act-2025",
+        "checked": "2026-10-04"
+      }
+    ],
+    "paying": [
+      {
+        "key": "statutory-interest",
+        "label": "Late payment interest",
+        "value": {
+          "pct": 8,
+          "above": "bank_rate"
+        },
+        "note": "between businesses",
+        "url": "https://www.gov.uk/late-commercial-payments-interest-debt-recovery/charging-interest-commercial-debt",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "recovery-fee-small",
+        "label": "Recovery fee",
+        "value": {
+          "gbp": 40
+        },
+        "note": "debts up to £999.99",
+        "url": "https://www.gov.uk/late-commercial-payments-interest-debt-recovery/claim-debt-recovery-costs",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "recovery-fee-medium",
+        "label": "Recovery fee",
+        "value": {
+          "gbp": 70
+        },
+        "note": "debts £1,000 to £9,999.99",
+        "url": "https://www.gov.uk/late-commercial-payments-interest-debt-recovery/claim-debt-recovery-costs",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "recovery-fee-large",
+        "label": "Recovery fee",
+        "value": {
+          "gbp": 100
+        },
+        "note": "debts £10,000 or more",
+        "url": "https://www.gov.uk/late-commercial-payments-interest-debt-recovery/claim-debt-recovery-costs",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "default-payment-period",
+        "label": "Default payment period",
+        "value": {
+          "days": 30
+        },
+        "note": "if no date is agreed",
+        "url": "https://www.gov.uk/late-commercial-payments-interest-debt-recovery",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "agreed-period-business",
+        "label": "Agreed period limit",
+        "value": {
+          "days": 60
+        },
+        "note": "between businesses; longer only if fair",
+        "url": "https://www.gov.uk/late-commercial-payments-interest-debt-recovery",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "agreed-period-public",
+        "label": "Public sector limit",
+        "value": {
+          "days": 30
+        },
+        "note": "agreed payment date, public authorities",
+        "url": "https://www.gov.uk/late-commercial-payments-interest-debt-recovery",
+        "checked": "2026-10-04"
+      }
+    ],
+    "insurance": [
+      {
+        "key": "employers-liability-cover",
+        "label": "Minimum cover",
+        "value": {
+          "gbp": 5000000
+        },
+        "note": "employers' liability, from the first employee",
+        "url": "https://www.gov.uk/employers-liability-insurance",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "employers-liability-fine",
+        "label": "Uninsured fine",
+        "value": {
+          "gbp": 2500,
+          "per": "day"
+        },
+        "note": "each day not properly insured",
+        "url": "https://www.gov.uk/employers-liability-insurance",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "certificate-fine",
+        "label": "Certificate not shown",
+        "value": {
+          "gbp": 1000
+        },
+        "note": "if not shown on request",
+        "url": "https://www.gov.uk/employers-liability-insurance",
+        "checked": "2026-10-04"
+      }
+    ],
+    "holidays": [
+      {
+        "key": "england-wales",
+        "label": "England and Wales",
+        "value": {
+          "days": 8
+        },
+        "note": "bank holidays in 2026",
+        "url": "https://www.gov.uk/bank-holidays",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "scotland",
+        "label": "Scotland",
+        "value": {
+          "days": 10
+        },
+        "note": "2026, includes one-off holiday on 15 June",
+        "url": "https://www.gov.uk/bank-holidays",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "northern-ireland",
+        "label": "Northern Ireland",
+        "value": {
+          "days": 10
+        },
+        "note": "bank holidays in 2026",
+        "url": "https://www.gov.uk/bank-holidays",
+        "checked": "2026-10-04"
+      }
+    ],
+    "premises": [
+      {
+        "key": "full-relief-limit",
+        "label": "Full relief limit",
+        "value": {
+          "gbp": 12000
+        },
+        "note": "rateable value; no rates on one property",
+        "url": "https://www.gov.uk/business-rates-relief/small-business-rate-relief",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "relief-taper-end",
+        "label": "Relief ends",
+        "value": {
+          "gbp": 15000
+        },
+        "note": "relief tapers from 100% to 0%",
+        "url": "https://www.gov.uk/business-rates-relief/small-business-rate-relief",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "small-multiplier",
+        "label": "Small multiplier",
+        "value": {
+          "pence": 43.2
+        },
+        "note": "rateable value below £51,000, 2026-27",
+        "url": "https://www.gov.uk/calculate-your-business-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "standard-multiplier",
+        "label": "Standard multiplier",
+        "value": {
+          "pence": 48
+        },
+        "note": "£51,000 to £499,999, 2026-27",
+        "url": "https://www.gov.uk/calculate-your-business-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "small-retail-multiplier",
+        "label": "Small retail multiplier",
+        "value": {
+          "pence": 38.2
+        },
+        "note": "retail, hospitality, leisure; below £51,000",
+        "url": "https://www.gov.uk/calculate-your-business-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "standard-retail-multiplier",
+        "label": "Retail multiplier",
+        "value": {
+          "pence": 43
+        },
+        "note": "retail, hospitality, leisure; £51,000 to £499,999",
+        "url": "https://www.gov.uk/calculate-your-business-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "high-value-multiplier",
+        "label": "High-value multiplier",
+        "value": {
+          "pence": 50.8
+        },
+        "note": "rateable value £500,000 or more",
+        "url": "https://www.gov.uk/calculate-your-business-rates",
+        "checked": "2026-10-04"
+      }
+    ],
+    "closing": [
+      {
+        "key": "strike-off-notice",
+        "label": "Strike-off notice",
+        "value": {
+          "months": 2
+        },
+        "note": "after the public notice",
+        "url": "https://www.gov.uk/government/publications/striking-off-or-dissolving-a-limited-company/striking-off-or-dissolving-a-limited-company",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "no-trading-period",
+        "label": "No-trading period",
+        "value": {
+          "months": 3
+        },
+        "note": "before applying",
+        "url": "https://www.gov.uk/strike-off-your-company-from-companies-register",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "strike-off-fee",
+        "label": "Strike-off fee",
+        "value": {
+          "gbp": 13
+        },
+        "note": "online; £18 on paper",
+        "url": "https://www.gov.uk/government/publications/companies-house-fees/companies-house-fees",
+        "checked": "2026-10-04"
+      }
+    ],
+    "financing": [
+      {
+        "key": "start-up-loan-min",
+        "label": "Start-up loan, least",
+        "value": {
+          "gbp": 500
+        },
+        "note": "per person, government-backed",
+        "url": "https://www.startuploans.co.uk/",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "start-up-loan-max",
+        "label": "Start-up loan, most",
+        "value": {
+          "gbp": 25000
+        },
+        "note": "per person, government-backed",
+        "url": "https://www.startuploans.co.uk/",
+        "checked": "2026-10-04"
+      }
+    ]
+  }
+}

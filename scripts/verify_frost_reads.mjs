@@ -76,7 +76,12 @@ const run = async () => {
         (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
       );
       return cards.map((c) => {
-        const s = getComputedStyle(c);
+        /* AN OPEN SECTION ON A ZONE (2026-10-04, his ruling abandoning the bento): the section card stands on its band with no fill
+           of its own by design, so what the reader sees behind its words is the zone's surface, and that surface is what must be
+           opaque. Read the zone's own fill for it; a card kept on a zone (an instrument, a door) is read as itself. */
+        const zone = c.closest("[data-zone]");
+        const open = zone && !c.hasAttribute("data-keep-card");
+        const s = getComputedStyle(open ? zone : c);
         const bg = s.backgroundColor;
         const m = bg.match(/rgba?\(([^)]+)\)/);
         const parts = m ? m[1].split(",").map((x) => parseFloat(x.trim())) : [];

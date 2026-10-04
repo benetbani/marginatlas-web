@@ -120,7 +120,9 @@ function inPage() {
      stands at 16 where the focal would and the finding stays until the data
      lands" (plan step 11) reads against this, and the dispatch is the newer
      word; the model's sentence is the controller's to amend. */
-  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat"]);
+  /* `dated-changes` since 2026-10-04 (the UK page reform): a run of rule changes is a sibling-figure form like a table, each row
+     a date, an item and its two values, no one figure above the others (MODEL.md PART 10). */
+  const EVEN_BY_RULING = new Set(["compare-table", "card-pager", "pay-bars", "terminus", "tiers-table", "blocked-seat", "dated-changes"]);
   const out = [];
   const cards = [...document.querySelectorAll('main [data-card]')].filter((c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'));
   /* A CELL OF A BENTO IS ADDRESSED BY ITS CLUSTER (plan step 32, second
@@ -197,7 +199,11 @@ function inPage() {
     const sizes = [...card.querySelectorAll("*")].filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim()).map((el) => parseFloat(getComputedStyle(el).fontSize)).sort((a, b) => a - b);
     const form = card.getAttribute("data-archetype") || card.querySelector("[data-archetype]")?.getAttribute("data-archetype") || "kit";
     if (sizes.length >= 3 && !EVEN_BY_RULING.has(form)) { const median = sizes[Math.floor(sizes.length / 2)]; const lead = sizes[sizes.length - 1]; if (lead <= median) hierarchy.push({ id, rule: "NO LEAD", detail: `every word in this card is ${median}px, so nothing leads the eye (form: ${form})` }); }
-    const cb = card.getBoundingClientRect(); const chars = (card.textContent || "").replace(/\s+/g, " ").trim().length; const density = chars / (cb.width * cb.height / 100);
+    /* THE WALL COUNTS THE WORDS A READER SEES (2026-10-04): `textContent` also counted the rows folded behind a closed plus, so the
+       recent rule changes, four rows on the page and twenty-eight behind their plus, read 1,503 characters in a 504 by 356 card.
+       A closed disclosure's own summary is seen and counts; what it hides does not (the page laws' hidden-leaf rule). */
+    const seenText = (() => { const parts = []; const walk = document.createTreeWalker(card, NodeFilter.SHOW_TEXT); let t; while ((t = walk.nextNode())) { const el = t.parentElement; if (!el) continue; const d = el.closest("details"); if (d && !d.open) { const sum = d.querySelector(":scope > summary"); if (!sum || !sum.contains(el)) continue; } parts.push(t.textContent || ""); } return parts.join(" "); })();
+    const cb = card.getBoundingClientRect(); const chars = seenText.replace(/\s+/g, " ").trim().length; const density = chars / (cb.width * cb.height / 100);
     if (density > 0.55) hierarchy.push({ id, rule: "WALL", detail: `${chars} characters in a ${Math.round(cb.width)}x${Math.round(cb.height)} card, ${density.toFixed(2)} per pixel of width per 100 of height` });
   }
   return { out, cut, hierarchy, pageScroll: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 };

@@ -42,7 +42,7 @@ function Arrows({ dir }: { dir: Dir | null }) {
   );
 }
 
-export function SortTable({ label, columns, rows, entityHead, wideClass, phoneClass, phoneCols, words }: {
+export function SortTable({ label, columns, rows, entityHead, wideClass, phoneClass, phoneCols, words, nameInline = false }: {
   label: string;
   words: SortWords;
   columns: SortColumn[];
@@ -52,6 +52,9 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
   wideClass: string;
   phoneClass: string;
   phoneCols: string;
+  /** THE NAME ON THE FIGURES' LINE (2026-10-04): a table of three columns or fewer keeps its rows as table rows on a phone, the name
+   *  in the grid's first column (research R2: three figures fit beside a 112px name); four or more put the name on its own line. */
+  nameInline?: boolean;
 }) {
   const [order, setOrder] = React.useState<{ col: string; dir: Dir } | null>(null);
   const [said, setSaid] = React.useState("");
@@ -73,17 +76,51 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
     });
   }, [rows, order]);
   const dirOf = (c: SortColumn): Dir | null => (order && order.col === c.key ? order.dir : null);
+  /* ON A PHONE THE HEAD'S BREAK IS CHOSEN, NOT LEFT TO THE BROWSER (research R2, Q4): the last word and the arrows on the second
+     line, the rest on the first, so a head is two lines at most and its column only as wide as its longer line; left to the
+     grid, a narrow column wrapped "Average salary" to three lines with the arrows alone on the third. */
+  const headWords = (c: SortColumn, phone: boolean, arrows: React.ReactNode) => {
+    const words = c.head.split(" ");
+    if (words.length < 2) return <>{c.head}{arrows}</>;
+    const last = words.pop();
+    if (!phone) {
+      /* THE TABLE FORM BREAKS EVERY HEAD THE SAME WAY UNDER 900px (the design review, 2026-10-04, the 768 photo: three heads wrapped
+         and three did not, each where the browser chose): two lines, the last word with the arrows, in a table narrower than
+         900px; one line from 900, where every head of the five fits its column. */
+      return (
+        <>
+          <span className="block whitespace-nowrap [@container(min-width:900px)]:inline">{words.join(" ")}</span>{" "}
+          <span className="block whitespace-nowrap [@container(min-width:900px)]:inline">{last}{arrows}</span>
+        </>
+      );
+    }
+    return (
+      <>
+        <span className="block whitespace-nowrap">{words.join(" ")}</span>
+        <span className="block whitespace-nowrap">{last}{arrows}</span>
+      </>
+    );
+  };
   const headButton = (c: SortColumn, phone: boolean) => {
     const dir = dirOf(c);
+    /* THE ARROWS RIDE THE HEAD'S LAST LINE (2026-10-04, the UK page reform): a head of three words wraps to two lines on a phone,
+       and two chevrons standing beside the whole block made it 14px wider than its column ("Payroll on" is 58px at 12px,
+       research R2's measurement); inline at the end of the words they wrap with the last word, so the head is as wide as its
+       longest line. */
     return (
       <button
         type="button"
         onClick={() => press(c)}
         data-sort-head={c.key}
-        className={`tap-y inline-flex min-h-6 items-center justify-end gap-1 rounded-sm text-right focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${HEAD} ${dir ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"} ${phone ? "w-full" : ""}`}
+        className={`tap-y min-h-6 rounded-sm text-right leading-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${HEAD} ${dir ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"} ${phone ? "block w-full" : "inline-block"}`}
       >
-        <span>{c.head}</span>
-        <Arrows dir={dir} />
+        {headWords(
+          c,
+          phone,
+          <span className="ml-1 inline-block align-[-2px]">
+            <Arrows dir={dir} />
+          </span>,
+        )}
       </button>
     );
   };
@@ -123,13 +160,24 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
           </TableBody>
         </Table>
       </div>
+      {/* THE PHONE FORM IS ONE GRID (2026-10-04, the UK page reform, his word that day: "on the mobile version the rendering of
+          the tables ... has a horrible execution"). The heads and every row share the grid's columns (each row a subgrid of
+          it), so a figure always stands under its own head whatever the widths: the name on its own line across the row, the
+          figures on ONE line under it (research R2, pattern f). The heads are bottom-aligned on the rule under them, at most two
+          lines. A row is 8 above, the name, 4, the figures, 8 below; the home row's tint reaches 8px past the text each side. */}
       <div className={phoneClass} data-phone-table="1">
-        <div className={`grid ${phoneCols} items-end gap-x-2 border-b border-[var(--c-border)] pb-2`}>
-          {columns.map((c) => (sortable ? <span key={c.key} className="flex justify-end">{headButton(c, true)}</span> : <span key={c.key} className={`text-right ${HEAD} text-[var(--c-muted)]`}>{c.head}</span>))}
-        </div>
-        <div className="divide-y divide-[var(--c-border)]">
-          {shown.map((r) => (
-            <div key={r.key} data-row={r.key} data-home={r.home ? "1" : undefined} className={`py-2 ${r.home ? "bg-[var(--c-soft)]" : ""}`}>
+        {/* EQUAL ROWS BY CONSTRUCTION (PART 5: "auto-rows-fr, or a fixed row height on a table"): the heads' row keeps its own height,
+            every data row takes the tallest one's, so a name that wraps in a narrow column ("Los Angeles" beside three figures on a
+            301px card) never leaves its row the odd height. */}
+        <div className={`grid [grid-template-rows:auto] auto-rows-fr ${phoneCols}`}>
+          <div className="col-span-full grid grid-cols-subgrid items-end border-b border-[var(--c-line-strong)] pb-2">
+            {nameInline ? <span className={`text-left leading-4 ${HEAD} text-[var(--c-muted)]`}>{entityHead}</span> : null}
+            {columns.map((c) => (sortable ? <span key={c.key} className="flex justify-end">{headButton(c, true)}</span> : <span key={c.key} className={`text-right leading-4 ${HEAD} text-[var(--c-muted)]`}>{headWords(c, true, null)}</span>))}
+          </div>
+          {shown.map((r, i) => (
+            /* THE HOME ROW'S TINT REACHES 8px PAST THE TEXT EACH SIDE as a side shadow of the same colour, which paints and takes no
+               room (a pseudo-element bled past the row's box and read as overflow, the archetype harness's BOTCHED MOBILE). */
+            <div key={r.key} data-row={r.key} data-home={r.home ? "1" : undefined} className={`col-span-full grid grid-cols-subgrid items-baseline gap-y-1 py-2 ${i > 0 ? "border-t border-[var(--c-border)]" : ""} ${r.home ? "bg-[var(--c-soft)] shadow-[8px_0_0_var(--c-soft),-8px_0_0_var(--c-soft)]" : ""}`}>
               {r.phone}
             </div>
           ))}

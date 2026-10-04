@@ -1,0 +1,605 @@
+{
+  "_about": "Dated changes to the rules and prices a small firm in the United Kingdom lives under, in force or enacted with a date (no proposals): one row per change, with the value before and the value from its effective date, in the law's own currency and units, the page each was checked on and the day it was checked. A value object carries one figure: gbp (pounds), pct (percent), pence (pence in the pound of rateable value), days, months, years, or day (the day of sickness on which a payment starts); text only where no figure exists. Optional keys: per (the period a rate is paid for: hour, week), over_gbp (the threshold a rate or rule applies above), above (\"bank_rate\": the pct is a margin over the central bank's Bank Rate). url_before is the page that states the before value when it is not the url page; url_law is the enacting instrument where url is guidance. note is at most eight words. Research: docs/superpowers/research/2026-10-04-uk-page-reform/R6-uk-facts-sourced.md.",
+  "GB": {
+    "currency": "GBP",
+    "checked": "2026-10-04",
+    "changes": [
+      {
+        "key": "corporation-tax-main",
+        "item": "Corporation tax",
+        "date": "2023-04-01",
+        "before": {
+          "pct": 19
+        },
+        "from": {
+          "pct": 25,
+          "over_gbp": 250000
+        },
+        "note": "main rate; 19% stays at £50,000 or less",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/rates-and-allowances-corporation-tax/rates-and-allowances-corporation-tax",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "vat-threshold",
+        "item": "VAT threshold",
+        "date": "2024-04-01",
+        "before": {
+          "gbp": 85000
+        },
+        "from": {
+          "gbp": 90000
+        },
+        "note": "taxable turnover; deregistration £83,000 to £88,000",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/vat-increasing-the-registration-and-deregistration-thresholds",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "self-employed-ni",
+        "item": "Self-employed NI",
+        "date": "2024-04-06",
+        "before": {
+          "pct": 9
+        },
+        "from": {
+          "pct": 6
+        },
+        "note": "Class 4, profits £12,570 to £50,270",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/rates-and-allowances-national-insurance-contributions/rates-and-allowances-national-insurance-contributions",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "name-change-fee",
+        "item": "Name change fee",
+        "date": "2024-05-01",
+        "before": {
+          "gbp": 8
+        },
+        "from": {
+          "gbp": 20
+        },
+        "note": "online; unchanged on 1 Feb 2026",
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/uksi/2024/155/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "cgt-basic",
+        "item": "Capital gains, basic",
+        "date": "2024-10-30",
+        "before": {
+          "pct": 10
+        },
+        "from": {
+          "pct": 18
+        },
+        "note": "most assets; residential property was already 18%",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/rates-and-allowances-capital-gains-tax/capital-gains-tax-rates-and-annual-tax-free-allowances",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "cgt-higher",
+        "item": "Capital gains, higher",
+        "date": "2024-10-30",
+        "before": {
+          "pct": 20
+        },
+        "from": {
+          "pct": 24
+        },
+        "note": "most assets; residential property was already 24%",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/rates-and-allowances-capital-gains-tax/capital-gains-tax-rates-and-annual-tax-free-allowances",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "employer-ni",
+        "item": "Employer NI",
+        "date": "2025-04-06",
+        "before": {
+          "pct": 13.8,
+          "over_gbp": 9100
+        },
+        "from": {
+          "pct": 15,
+          "over_gbp": 5000
+        },
+        "note": "per employee, on yearly earnings",
+        "status": "in_force",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026",
+        "url_before": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "employment-allowance",
+        "item": "Employment Allowance",
+        "date": "2025-04-06",
+        "before": {
+          "gbp": 5000
+        },
+        "from": {
+          "gbp": 10500
+        },
+        "note": "a year, off the employer NI bill",
+        "status": "in_force",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026",
+        "url_before": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2024-to-2025",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "business-sale-relief-2025",
+        "item": "Business sale relief",
+        "date": "2025-04-06",
+        "before": {
+          "pct": 10
+        },
+        "from": {
+          "pct": 14
+        },
+        "note": "Business Asset Disposal Relief rate",
+        "status": "in_force",
+        "url": "https://www.gov.uk/business-asset-disposal-relief",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-tax-interest",
+        "item": "Late tax interest",
+        "date": "2025-04-06",
+        "before": {
+          "pct": 2.5,
+          "above": "bank_rate"
+        },
+        "from": {
+          "pct": 4,
+          "above": "bank_rate"
+        },
+        "note": "interest on tax paid late",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/rates-and-allowances-hmrc-interest-rates-for-late-and-early-payments/rates-and-allowances-hmrc-interest-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "micro-entity-limit",
+        "item": "Micro-entity turnover limit",
+        "date": "2025-04-06",
+        "before": {
+          "gbp": 632000
+        },
+        "from": {
+          "gbp": 1000000
+        },
+        "note": "periods from this date; two of three tests",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/life-of-a-company-annual-requirements/life-of-a-company-part-1-accounts",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "small-company-limit",
+        "item": "Small company turnover",
+        "date": "2025-04-06",
+        "before": {
+          "gbp": 10200000
+        },
+        "from": {
+          "gbp": 15000000
+        },
+        "note": "periods from this date; two of three tests",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/publications/life-of-a-company-annual-requirements/life-of-a-company-part-1-accounts",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "director-id",
+        "item": "Director ID check",
+        "date": "2025-11-18",
+        "before": {
+          "text": "not required"
+        },
+        "from": {
+          "text": "required"
+        },
+        "note": "new directors; existing at next annual statement",
+        "status": "in_force",
+        "url": "https://www.gov.uk/government/news/companies-house-confirms-identity-verification-rollout-from-18-november-2025",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "bank-rate",
+        "item": "Bank Rate",
+        "date": "2025-12-18",
+        "before": {
+          "pct": 4
+        },
+        "from": {
+          "pct": 3.75
+        },
+        "note": "held on 17 Sep 2026; next 5 Nov",
+        "status": "in_force",
+        "url": "https://www.bankofengland.co.uk/boeapps/database/Bank-Rate.asp",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "incorporation-fee",
+        "item": "Incorporation fee",
+        "date": "2026-02-01",
+        "before": {
+          "gbp": 50
+        },
+        "from": {
+          "gbp": 100
+        },
+        "note": "online; paper £71 to £124",
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/uksi/2025/1137/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "confirmation-statement-fee",
+        "item": "Confirmation statement fee",
+        "date": "2026-02-01",
+        "before": {
+          "gbp": 34
+        },
+        "from": {
+          "gbp": 50
+        },
+        "note": "online, yearly; paper £62 to £110",
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/uksi/2025/1137/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "strike-off-fee",
+        "item": "Strike-off fee",
+        "date": "2026-02-01",
+        "before": {
+          "gbp": 33
+        },
+        "from": {
+          "gbp": 13
+        },
+        "note": "online; paper £44 to £18",
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/uksi/2025/1137/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "late-company-return",
+        "item": "Late return penalty",
+        "date": "2026-04-01",
+        "before": {
+          "gbp": 100
+        },
+        "from": {
+          "gbp": 200
+        },
+        "note": "company tax returns due from this date",
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/ukpga/2026/11/section/265/enacted",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "minimum-wage-21",
+        "item": "Minimum wage (21+)",
+        "date": "2026-04-01",
+        "before": {
+          "gbp": 12.21,
+          "per": "hour"
+        },
+        "from": {
+          "gbp": 12.71,
+          "per": "hour"
+        },
+        "note": "National Living Wage",
+        "status": "in_force",
+        "url": "https://www.gov.uk/national-minimum-wage-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "minimum-wage-18-20",
+        "item": "Minimum wage (18-20)",
+        "date": "2026-04-01",
+        "before": {
+          "gbp": 10,
+          "per": "hour"
+        },
+        "from": {
+          "gbp": 10.85,
+          "per": "hour"
+        },
+        "status": "in_force",
+        "url": "https://www.gov.uk/national-minimum-wage-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "rates-small-multiplier",
+        "item": "Small multiplier, England",
+        "date": "2026-04-01",
+        "before": {
+          "pence": 49.9
+        },
+        "from": {
+          "pence": 43.2
+        },
+        "note": "England, rateable value below £51,000",
+        "status": "in_force",
+        "url": "https://www.gov.uk/calculate-your-business-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "rates-standard-multiplier",
+        "item": "Standard multiplier, England",
+        "date": "2026-04-01",
+        "before": {
+          "pence": 55.5
+        },
+        "from": {
+          "pence": 48
+        },
+        "note": "England, rateable value £51,000 to £499,999",
+        "status": "in_force",
+        "url": "https://www.gov.uk/calculate-your-business-rates",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "sick-pay-rate",
+        "item": "Sick pay",
+        "date": "2026-04-06",
+        "before": {
+          "gbp": 118.75,
+          "per": "week"
+        },
+        "from": {
+          "gbp": 123.25,
+          "per": "week"
+        },
+        "note": "now capped at 80% of earnings",
+        "status": "in_force",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027",
+        "url_before": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "sick-pay-start",
+        "item": "Sick pay starts",
+        "date": "2026-04-06",
+        "before": {
+          "day": 4
+        },
+        "from": {
+          "day": 1
+        },
+        "note": "day of sickness; earnings floor also removed",
+        "status": "in_force",
+        "url": "https://www.acas.org.uk/employment-rights-act-2025",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "maternity-pay-rate",
+        "item": "Maternity pay",
+        "date": "2026-04-06",
+        "before": {
+          "gbp": 187.18,
+          "per": "week"
+        },
+        "from": {
+          "gbp": 194.32,
+          "per": "week"
+        },
+        "note": "weeks 7 to 39, or 90% if lower",
+        "status": "in_force",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027",
+        "url_before": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "dividend-basic",
+        "item": "Dividend tax, basic",
+        "date": "2026-04-06",
+        "before": {
+          "pct": 8.75
+        },
+        "from": {
+          "pct": 10.75
+        },
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/ukpga/2026/11/section/4/enacted",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "dividend-higher",
+        "item": "Dividend tax, higher",
+        "date": "2026-04-06",
+        "before": {
+          "pct": 33.75
+        },
+        "from": {
+          "pct": 35.75
+        },
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/ukpga/2026/11/section/4/enacted",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "business-sale-relief-2026",
+        "item": "Business sale relief",
+        "date": "2026-04-06",
+        "before": {
+          "pct": 14
+        },
+        "from": {
+          "pct": 18
+        },
+        "note": "Business Asset Disposal Relief rate",
+        "status": "in_force",
+        "url": "https://www.gov.uk/business-asset-disposal-relief",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "start-up-loan-rate",
+        "item": "Start-up loan rate",
+        "date": "2026-04-06",
+        "before": {
+          "pct": 6
+        },
+        "from": {
+          "pct": 7.5
+        },
+        "note": "fixed, a year; loans up to £25,000",
+        "status": "in_force",
+        "url": "https://www.startuploans.co.uk/support-and-guidance/frequently-asked-questions/changes-to-interest-rate-and-eligibility",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "start-up-loan-eligibility",
+        "item": "Start-up loan eligibility",
+        "date": "2026-04-06",
+        "before": {
+          "months": 36
+        },
+        "from": {
+          "months": 60
+        },
+        "note": "months of trading allowed, first loan",
+        "status": "in_force",
+        "url": "https://www.startuploans.co.uk/support-and-guidance/frequently-asked-questions/changes-to-interest-rate-and-eligibility",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "unfair-dismissal-cap-2026",
+        "item": "Unfair dismissal cap",
+        "date": "2026-04-06",
+        "before": {
+          "gbp": 118223
+        },
+        "from": {
+          "gbp": 123543
+        },
+        "note": "compensatory award limit; removed 1 Jan 2027",
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/uksi/2026/310/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "week-pay-cap",
+        "item": "Week's pay cap",
+        "date": "2026-04-06",
+        "before": {
+          "gbp": 719,
+          "per": "week"
+        },
+        "from": {
+          "gbp": 751,
+          "per": "week"
+        },
+        "note": "used for statutory redundancy pay",
+        "status": "in_force",
+        "url": "https://www.legislation.gov.uk/uksi/2026/310/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "digital-tax-records-2026",
+        "item": "Sole-trader digital records",
+        "date": "2026-04-06",
+        "before": {
+          "text": "not required"
+        },
+        "from": {
+          "text": "required",
+          "over_gbp": 50000
+        },
+        "note": "sole traders and landlords, qualifying income",
+        "status": "in_force",
+        "url": "https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax",
+        "url_law": "https://www.legislation.gov.uk/uksi/2026/336/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "tribunal-time-limit",
+        "item": "Tribunal claim limit",
+        "date": "2026-10-01",
+        "before": {
+          "months": 3
+        },
+        "from": {
+          "months": 6
+        },
+        "note": "time to bring an employment claim",
+        "status": "in_force",
+        "url": "https://www.acas.org.uk/employment-rights-act-2025",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "unfair-dismissal-period",
+        "item": "Unfair dismissal",
+        "date": "2027-01-01",
+        "before": {
+          "years": 2
+        },
+        "from": {
+          "months": 6
+        },
+        "note": "service needed before protection starts",
+        "status": "enacted",
+        "url": "https://www.acas.org.uk/employment-rights-act-2025",
+        "url_law": "https://www.legislation.gov.uk/uksi/2026/559/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "unfair-dismissal-cap-2027",
+        "item": "Unfair dismissal cap",
+        "date": "2027-01-01",
+        "before": {
+          "gbp": 123543
+        },
+        "from": {
+          "text": "no limit"
+        },
+        "note": "compensatory award limit removed",
+        "status": "enacted",
+        "url": "https://www.acas.org.uk/employment-rights-act-2025",
+        "url_law": "https://www.legislation.gov.uk/uksi/2026/559/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "digital-tax-records-2027",
+        "item": "Sole-trader digital records",
+        "date": "2027-04-06",
+        "before": {
+          "text": "required",
+          "over_gbp": 50000
+        },
+        "from": {
+          "text": "required",
+          "over_gbp": 30000
+        },
+        "note": "on 2025-26 qualifying income",
+        "status": "enacted",
+        "url": "https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax",
+        "url_law": "https://www.legislation.gov.uk/uksi/2026/336/made",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "digital-tax-records-2028",
+        "item": "Sole-trader digital records",
+        "date": "2028-04-06",
+        "before": {
+          "text": "required",
+          "over_gbp": 30000
+        },
+        "from": {
+          "text": "required",
+          "over_gbp": 20000
+        },
+        "note": "on 2026-27 qualifying income",
+        "status": "enacted",
+        "url": "https://www.gov.uk/guidance/check-if-youre-eligible-for-making-tax-digital-for-income-tax",
+        "url_law": "https://www.legislation.gov.uk/uksi/2026/336/made",
+        "checked": "2026-10-04"
+      }
+    ]
+  }
+}

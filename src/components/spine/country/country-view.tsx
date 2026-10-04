@@ -30,6 +30,7 @@
  */
 import * as React from "react";
 import { Band, Box, Fig, Ico, Movement, Rail, SampleTag, usd } from "@/components/spine/kit";
+import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { CompareTable } from "@/components/spine/archetypes/CompareTable";
@@ -60,7 +61,12 @@ import { HeroBoard } from "@/components/spine/archetypes/HeroBoard";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { BlockedSeat } from "@/components/spine/archetypes/BlockedSeat";
-import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
+import { type KvCell } from "@/components/spine/archetypes/KvGrid";
+import { FactRows, type FactRow } from "@/components/spine/archetypes/FactRows";
+import { ChangeRun } from "@/components/spine/archetypes/DatedChanges";
+import { buildRuleChanges, buildPayments, latestChange, lawValue, nextChange, ruleAmount, ruleNote, ruleRows, ruleValue, type PaymentsCard } from "@/lib/spine/sections/country_rules";
+import { convertToUsd } from "@/lib/finance/fx";
+import type { ChangeRow } from "@/components/spine/archetypes/DatedChanges";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { buildEntryBill, buildEntryBillDetail, type EntryBillData } from "@/lib/spine/entry_bill_rows";
 import { buildHowToSteps, type HowToStepsData } from "@/lib/spine/howto_steps_rows";
@@ -77,7 +83,8 @@ import { LoanLever } from "@/components/spine/interact/LoanLever";
 import { ShareBar } from "@/components/spine/archetypes/ShareBar";
 import { RangePair } from "@/components/spine/charts/RangePair";
 import { countryFigure } from "@/lib/facts/country_shard";
-import { worldRange } from "@/lib/spine/world_stats";
+import { worldRange, worldValues } from "@/lib/spine/world_stats";
+import { peerMarks } from "@/lib/spine/peer_marks";
 import { getCountryProfile } from "@/lib/economic_profile";
 import { usdCents } from "@/components/spine/kit";
 import {
@@ -410,7 +417,7 @@ function Cities({ cards, seat }: { cards: CityCardsData | null; seat: CitiesSeat
   return null;
 }
 
-function Peers({ table }: { table: PeerTable | null }) {
+function Peers({ table, zone = false }: { table: PeerTable | null; zone?: boolean }) {
   /* THE COMPARISON-TABLE ARCHETYPE (the reset of 2026-09-04): rows built
      locally by peer_rows.ts from the same modules the masthead reads, with
      the LLC columns the founder ruled (3 and 4); the desktop table he praised
@@ -430,7 +437,7 @@ function Peers({ table }: { table: PeerTable | null }) {
      seated. A seat holds no figure by its law, so nothing here is at 30. */
   /* The caveat under the peers ("Countries of similar size and market, not neighbours") is not printed since 2026-09-25: a line
      explaining the choice of rows is the disclaimer his copy rulings bar, and the table reads without it. */
-  if (table) return <CompareTable id="peers" kicker={COPY.peers.kicker} icon="benchmark" rows={table.rows} columns={table.columns} />;
+  if (table) return <CompareTable id="peers" kicker={COPY.peers.kicker} icon="benchmark" rows={table.rows} columns={table.columns} zone={zone} />;
   return (
     <div data-wide-table className="mt-8">
       <BlockedSeat id="peers" icon="benchmark" kicker={COPY.blocked.peers.kicker} line={COPY.blocked.peers.line} foot={COPY.blocked.peers.foot} />
@@ -524,7 +531,7 @@ function Money({ money, card }: { money: any; card: MarginCard }) {
  */
 /* THE TWO CHARACTER TABLES AS TWO CARDS (2026-09-25): where the country page seats them on different levels (his clause 64, two
    drawings of one kind keep a level between them), each is drawn by itself; the pair below stays for every other country. */
-function CharacterCard({ iso2, which }: { iso2?: string; which: "state" | "people" }) {
+function CharacterCard({ iso2, which, zone = false }: { iso2?: string; which: "state" | "people"; zone?: boolean }) {
   if (!iso2) return null;
   const t = buildCharacterTables(iso2);
   if (which === "state") {
@@ -532,7 +539,9 @@ function CharacterCard({ iso2, which }: { iso2?: string; which: "state" | "peopl
     return (
       <Box id="character">
         <Rail icon="bank" kicker={COPY.character.state.kicker} sample />
-        <SpectraTable rows={t.state.rows} dot={t.state.dot} foot={t.state.foot} />
+        {/* AT THE BODY RUNG ON THE BAND PAGE (2026-10-04; his rule 34, "text too small", and research R2: a row reads at 14): the
+            trait names and the poles at 14, the poles in ink2. Every other country keeps the micro rung he kept on 2026-08-30. */}
+        <SpectraTable rows={t.state.rows} dot={t.state.dot} foot={t.state.foot} scale={zone ? "body" : "micro"} />
       </Box>
     );
   }
@@ -540,17 +549,20 @@ function CharacterCard({ iso2, which }: { iso2?: string; which: "state" | "peopl
   return (
     <Box id="character-people" data-block="character-people">
       <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
-      <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} />
+      <SpectraTable rows={t.people.rows} dot={t.people.dot} foot={t.people.foot} scale={zone ? "body" : "micro"} />
     </Box>
   );
 }
 
 /** THE CARD'S ONE FIGURE, at the focal rung, with the words that say what it is (PART 4: one figure at 30 a section card). */
-function Focal({ figure, words }: { figure: string; words: string }) {
+function Focal({ figure, words, placement }: { figure: string; words: string; placement?: string | null }) {
   return (
     <div className="mb-4">
       <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{figure}</div>
-      <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words}</p>
+      <p data-focal-words="" className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words}</p>
+      {/* The site's one placement sentence (placement.ts), under the figure's words, where the section's figure stands on a scale
+          of the countries (PART 6, "Higher than {n} countries in ten."). */}
+      {placement ? <p data-placement="" className="mt-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">{placement}</p> : null}
     </div>
   );
 }
@@ -561,18 +573,24 @@ function Focal({ figure, words }: { figure: string; words: string }) {
    range; the ranked lists are bars with the accent's gradient; a whole is a ring, or one bar cut into its parts. ===== */
 
 /** RUNNING COSTS, WHERE THE UNITED KINGDOM STANDS: the business electricity price and diesel on the world's range, the cost of living on the city scale. */
-function RunningCostsRanged({ iso2, costs }: { iso2: string; costs: RunningCostsData }) {
+function RunningCostsRanged({ iso2, costs, rates = null }: { iso2: string; costs: RunningCostsData; rates?: FactRow[] | null }) {
   const profile = getCountryProfile(iso2);
   const rows: WorldRangeRow[] = [];
   const kwh = profile.electricity_usd_per_kwh_commercial;
   const kwhRange = worldRange("electricity_usd_per_kwh_commercial");
-  if (typeof kwh === "number" && kwh > 0 && kwhRange) rows.push({ key: "electricity", icon: "unit-economics", label: COPY.ranged.electricity, value: kwh, display: usdCents(kwh), unit: COPY.ranged.perKwh, range: kwhRange, fmt: usdCents, headless: true });
+  /* THE WORLD AND THE PEERS ON THE TRACK (2026-10-04, the UK page reform): every country's price a hairline (the fill left out,
+     world_stats.ts), the comparison table's four peers as hollow marks named in a key line (peer_marks.ts). */
+  if (typeof kwh === "number" && kwh > 0 && kwhRange) rows.push({ key: "electricity", icon: "unit-economics", label: COPY.ranged.electricity, value: kwh, display: usdCents(kwh), unit: COPY.ranged.perKwh, range: kwhRange, fmt: usdCents, headless: true, hairlines: worldValues("electricity_usd_per_kwh_commercial"), peers: peerMarks(iso2, "electricity_usd_per_kwh_commercial"), peersWord: COPY.ranged.peers });
   const diesel = profile.diesel_usd_per_liter;
   const dieselRange = worldRange("diesel_usd_per_liter");
   /* NO WORLD TRACK FOR DIESEL (2026-09-25): the United Kingdom's pump price is the week of 21 September 2026 (195.5p), the other
      countries' figures are older, and the gap to the next country (26%) is the two dates, not the two countries. */
   void dieselRange;
-  if (typeof diesel === "number" && diesel > 0) rows.push({ key: "diesel", icon: "transit", label: COPY.ranged.diesel, value: diesel, display: usdCents(diesel), unit: COPY.ranged.perLitre, range: null, fmt: usdCents });
+  /* WHERE THE PREMISES RULES STAND UNDER THE TRACK, DIESEL IS THEIR FIRST ROW (2026-10-04): a headed row of its own set its figure
+     beside its label while the rules' figures stood on the right edge under it, two alignments in one section (the phone photo
+     of the running costs); in the ruled list its figure shares their edge. */
+  const dieselRow: FactRow | null = typeof diesel === "number" && diesel > 0 ? { key: "diesel", icon: "transit", label: COPY.ranged.diesel, value: `${usdCents(diesel)}${COPY.ranged.perLitre}`, note: COPY.ranged.dieselNote } : null;
+  if (dieselRow && !(rates && rates.length)) rows.push({ key: "diesel", icon: "transit", label: COPY.ranged.diesel, value: diesel as number, display: usdCents(diesel as number), unit: COPY.ranged.perLitre, range: null, fmt: usdCents });
   const livingSpread = cityScaleSpread();
   return (
     <Box id="running-costs" className="flex flex-col">
@@ -583,7 +601,14 @@ function RunningCostsRanged({ iso2, costs }: { iso2: string; costs: RunningCosts
           the hero, and they set a third drawing in one card beside the electricity's track; now the same track, 1 to 100 over the
           covered cities, the middle half shaded, the median city ticked, the ends never named (his ruling of 2026-09-20). Where the
           cities' spread cannot be read, the blocks stand as before. */}
-      {costs.livingOnCityScale != null && livingSpread ? (
+      {/* THE PREMISES TAX IN PLACE OF THE COST-OF-LIVING SCALE (2026-10-04; research R4 and R5): "41/100" was a scale the site built
+          over its covered cities and read as a score (clause 17); where the country's rules hold its business rates, the relief
+          and the multipliers a small shop pays stand here instead, in the law's own units. */}
+      {rates && rates.length ? (
+        <div className="mt-5 border-t border-[var(--c-border)] pt-1">
+          <FactRows rows={dieselRow ? [dieselRow, ...rates] : rates} />
+        </div>
+      ) : costs.livingOnCityScale != null && livingSpread ? (
         <div className="mt-5 border-t border-[var(--c-border)] pt-4">
           <WorldRangeRows rows={[{ key: "living", icon: "spending-power", label: COPY.runningCosts.rows.living, value: costs.livingOnCityScale, display: String(costs.livingOnCityScale), unit: COPY.runningCosts.units.of100, range: livingSpread, fmt: (v) => String(Math.round(v)), level: costs.levels.living ? COPY.heroBoard.levels[costs.levels.living] : null }]} medianWord={COPY.runningCosts.medianCity} ends={COPY.ranged.ends} />
         </div>
@@ -621,18 +646,31 @@ function InsuranceBars({ card }: { card: InsuranceCard }) {
 }
 
 /** BORROWING: the rate on a new small-business loan as the figure and on the world's range; the central bank's rate, the government's loans and the grants as cells. */
-function FinancingRanged({ iso2, card }: { iso2: string; card: DepthCard }) {
+function FinancingRanged({ iso2, card, cells = null }: { iso2: string; card: DepthCard; cells?: KvCell[] | null }) {
   const profile = getCountryProfile(iso2);
   const rate = profile.bank_lending_rate_pct;
   const range = worldRange("bank_lending_rate_pct");
   const pct = (v: number) => `${Math.round(v * 1000) / 10}%`;
-  const rows: WorldRangeRow[] = typeof rate === "number" && rate > 0 && range ? [{ key: "lending", label: COPY.ranged.lending, value: rate, display: pct(rate), range, fmt: pct }] : [];
+  /* THE CENTRAL BANK'S RATE ON THE TRACK, NOT A ROW UNDER IT (2026-10-04): the rate lenders start from, read against what a small
+     firm pays, is the track's own reference (a triangle above it, named in the key); its row would print the figure twice. */
+  /* The profile holds the lending rate as a share (0.0661) and the shard the central bank's as a percent (3.75): one unit on the
+     track, the share. A rate outside the world's range is not placed (the track would pin it to an end). */
+  const baseShare = typeof card.baseRate === "number" && card.baseRate > 0 ? card.baseRate / 100 : null;
+  const base = baseShare != null && range && baseShare >= range.min && baseShare <= range.max ? baseShare : null;
+  const rows: WorldRangeRow[] = typeof rate === "number" && rate > 0 && range ? [{ key: "lending", label: COPY.ranged.lending, value: rate, display: pct(rate), range, fmt: pct, scale: "log", hairlines: worldValues("bank_lending_rate_pct"), peers: peerMarks(iso2, "bank_lending_rate_pct"), peersWord: COPY.ranged.peers, refs: base != null ? [{ key: "base", label: COPY.financing.cells.base, value: base, display: String(card.cells.find((c) => c.key === "base")?.value ?? "") || undefined }] : null }] : [];
+  /* THE SCHEME'S OWN RANGE IN POUNDS (rules.json, financing): the dollar range is the site's comparison figure, the note says what
+     the scheme itself lends ("£500 to £25,000, 7.5% fixed"). */
+  const loMin = ruleValue(iso2, "financing", "start-up-loan-min");
+  const loMax = ruleValue(iso2, "financing", "start-up-loan-max");
+  const rest = (cells ?? card.cells)
+    .filter((c) => !(base != null && c.key === "base"))
+    .map((c) => (c.key === "startup" && loMin && loMax && card.loan ? { ...c, note: COPY.financing.notes.startupLocal.replace("{min}", loMin).replace("{max}", loMax).replace("{rate}", `${card.loan.rate}%`) } : c));
   return (
     <Box id="financing" className="flex flex-col">
       <Rail icon="raise-money" kicker={COPY.financing.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
       {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} medianWord={COPY.ranged.median} headless ends={COPY.ranged.ends} /></div> : null}
-      <KvGrid cells={card.cells} under across />
+      <FactRows rows={rest} />
       {/* THE LOAN'S MONTHLY COST (goal 2026-09-26, M3): the start-up loan's own amounts, rate and term, the repayment a month. */}
       {card.loan ? <LoanLever min={card.loan.min} max={card.loan.max} rate={card.loan.rate} termMin={COPY.financing.startupTerm.min} termMax={COPY.financing.startupTerm.max} words={COPY.financing.loan} /> : null}
     </Box>
@@ -649,10 +687,106 @@ function BankingRing({ card }: { card: BankingCard }) {
       {/* FROM 600px OF CARD (a tablet, where the card runs the row) the ring and the cells stand side by side, so neither leaves
           the other half of the card empty; narrower, the cells follow the ring. */}
       {/* THE CELLS TAKE THE SPARE HEIGHT (2026-09-26): beside the borrowing card and its loan lever the ring's card stood 144px
-          taller than its content; in one column the cells' row takes what is left and draws ruled rows (KvGrid fill). */}
+          taller than its content; in one column the cells' row takes what is left and draws ruled rows (FactRows). */}
       <div className="grid flex-1 grid-cols-1 grid-rows-[auto_1fr] gap-5 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:grid-rows-none [@container(min-width:600px)]:items-center">
         <DonutStat parts={card.parts} center={`${Math.round(lead.share)}%`} centerWords={COPY.banking.centerWords.replace("{part}", lead.name.toLowerCase())} aria={`${COPY.banking.donut}: ${card.parts.map((p) => `${p.name} ${p.share}%`).join(", ")}`} />
-        <KvGrid cells={[{ key: "fee", icon: "sale-tag", label: COPY.banking.cells.fee, value: card.focal.figure, note: card.focal.words, confidence: "modeled" }, ...card.cells]} under fill />
+        <FactRows rows={[{ key: "fee", icon: "sale-tag", label: COPY.banking.cells.fee, value: card.focal.figure, note: card.focal.words, confidence: "modeled" }, ...card.cells]} />
+      </div>
+    </Box>
+  );
+}
+
+/* ===== THE COUNTRY'S OWN CONTEXT (2026-10-04, the UK page reform; his words that day: "there has to be some context below, there
+   has to be some hot stuff, some gold nuggets ... but we should avoid going and making each section with a line of sentences
+   below"). Each section below reads the sourced files of research R6 through country_rules.ts and prints label and figure rows,
+   never a sentence. ===== */
+
+/** The dated changes a lead set opens with (country_rules.ts): the ones a person opening a small business meets first. */
+/* The changes a person opening a small business meets first; the run shows as many as the coming run holds (levelShown), so the
+   two stand level on a desktop. The start-up loan rate and the rates multipliers wait behind the plus because their sections print
+   them already (the borrowing rows, the running costs rows); the minimum wage leads although the staff rows print £12.71, because
+   the change itself (from £12.21, in April) is the news. */
+const CHANGES_LEAD = ["minimum-wage-21", "sick-pay-start", "incorporation-fee", "employer-ni"];
+const todayIso = () => new Date().toISOString().slice(0, 10);
+/* THE TWO RUNS STAND LEVEL (2026-10-04; his ruling of 2026-09-20, blank space is a fault): side by side from 768, the recent run
+   shows as many rows as the coming run (four at the least, never more than its lead rows), so neither column ends 140px above
+   the other; a rate and its threshold are never cut apart by the plus. */
+function levelShown(rows: ChangeRow[], lead: number, coming: number): number {
+  let n = Math.min(lead, Math.max(4, coming), rows.length);
+  const base = (k: string) => k.replace(/-(rate|threshold)$/, "");
+  if (n > 0 && n < rows.length && base(rows[n].key) === base(rows[n - 1].key)) n += 1;
+  return n;
+}
+
+/** RULE CHANGES COMING and RECENT RULE CHANGES: two sections side by side, each a run of dated changes, a date, the item and its
+ *  two values (DatedChanges.tsx `ChangeRun`). The changes come from the body, built once. */
+function RuleChangesComing({ rows }: { rows: ChangeRow[] }) {
+  if (rows.length === 0) return null;
+  return (
+    <Box id="changes-coming" className="flex flex-col">
+      <Rail icon="change" kicker={COPY.changes.comingKicker} />
+      <ChangeRun rows={rows} />
+    </Box>
+  );
+}
+function RuleChangesMade({ rows, shown }: { rows: ChangeRow[]; shown: number }) {
+  /* `moreOne`: a single hidden change reads "1 more change", never "1 more changes". */
+  if (rows.length === 0) return null;
+  return (
+    <Box id="changes" className="flex flex-col">
+      <Rail icon="freshness" kicker={COPY.changes.madeKicker} />
+      {/* The newest of the lead rows show, as many as the coming run holds (levelShown), the rest wait behind the plus. */}
+      <ChangeRun rows={rows} shown={shown} more={COPY.changes.more} moreOne={COPY.changes.moreOne} />
+    </Box>
+  );
+}
+
+/** INSURANCE, WHAT THE LAW REQUIRES: the minimum cover as the figure, the fines as rows. No premium prints: no insurer or broker
+ *  publishes a typical small-business premium (research R6), so the four prices the seed held left with their sum. */
+function InsuranceRules({ iso2 }: { iso2: string }) {
+  const cover = ruleValue(iso2, "insurance", "employers-liability-cover");
+  const rows = ruleRows(iso2, "insurance", [
+    { key: "employers-liability-fine", icon: "red-tape" },
+    { key: "certificate-fine", icon: "filings" },
+  ]);
+  if (!cover || !rows) return null;
+  return (
+    <Box id="insurance" className="flex flex-col">
+      <Rail icon="safety" kicker={COPY.insurance.kicker} />
+      <Focal figure={cover} words={COPY.rulesRows.insuranceWords} />
+      <FactRows rows={rows} />
+    </Box>
+  );
+}
+
+/** GETTING PAID, FROM THE SOURCED SPLIT: how shoppers pay (a retail survey, by number of payments) as the ring, its largest share at
+ *  the centre; the card readers' fees, their payouts, cash across all payments then and now, and the law on late payment as rows. */
+function PaymentsRing({ iso2, card }: { iso2: string; card: PaymentsCard }) {
+  const P = COPY.rulesRows.payments;
+  const lead = [...card.parts].sort((a, b) => b.share - a.share)[0];
+  /* As the source prints it: a fee of 1.69% is never 1.7% (the readers' price pages print two places). */
+  const pct = (v: number) => `${v}%`;
+  const rows: FactRow[] = [];
+  if (card.feeLow != null && card.feeHigh != null) rows.push({ key: "readers", icon: "sale-tag", label: P.readers, value: card.feeLow === card.feeHigh ? pct(card.feeLow) : `${pct(card.feeLow)} to ${pct(card.feeHigh)}`, note: P.readersNote });
+  if (card.payoutDays != null) rows.push({ key: "payout", icon: "freshness", label: P.payout, value: card.payoutDays === 1 ? P.payoutDay : P.payoutDays.replace("{n}", String(card.payoutDays)), note: card.payoutFast ? P.payoutNote : null });
+  if (card.cash) rows.push({ key: "cash", icon: "currency-stability", label: P.cash, value: pct(card.cash.now), note: P.cashNote.replace("{then}", pct(card.cash.then)).replace("{thenYear}", card.cash.thenYear) });
+  const law = ruleRows(iso2, "paying", [
+    { key: "statutory-interest", icon: "red-tape" },
+    { key: "default-payment-period", icon: "payments" },
+  ], 1);
+  if (law) rows.push(...law);
+  return (
+    <Box id="banking" className="flex flex-col [container-type:inline-size]">
+      <Rail icon="payments" kicker={COPY.banking.kicker} />
+      <div className="grid grid-cols-1 gap-5 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:items-start">
+        {/* THE RING'S BASIS IS ITS CAPTION, ABOVE IT (2026-10-04): at the section's foot, and then under the ring, the ring's "Cash 19%"
+            (shop sales) and the row's "Cash, all payments 8%" still read as one figure twice (the design review); read first, the
+            caption says what the ring counts before the eye reaches a share. */}
+        <div className="min-w-0">
+          <p data-basis="" className="mb-3 text-[length:var(--t-micro)] font-medium leading-4 text-[var(--c-ink2)]">{P.basis.replace("{period}", card.period)}</p>
+          <DonutStat parts={card.parts} center={pct(lead.share)} centerWords={P.centerWords.replace("{part}", lead.name.toLowerCase())} aria={`${COPY.banking.donut}: ${card.parts.map((p) => `${p.name} ${p.share}%`).join(", ")}`} />
+        </div>
+        <FactRows rows={rows} />
       </div>
     </Box>
   );
@@ -798,11 +932,14 @@ function EntryBill({ bill, steps, licences }: { bill: EntryBillData | null; step
     const paid = steps.steps.filter((s) => s.cost && !isFree(s.cost));
     const free = steps.steps.filter((s) => isFree(s.cost));
     const oneFee = paid.length === 1 && paid[0].cost === bill.figure && free.length > 0;
+    /* THE FEE IN THE LAW'S POUNDS BESIDE THE PAGE'S DOLLARS (the design review, 2026-10-04: "Incorporation fee £50 to £100" in the
+       changes and "$133" here read as two fees): where the change file holds the fee in force, the line says what the $133 is. */
+    const localFee = oneFee ? latestChange(bill.iso2, "incorporation-fee", todayIso())?.from ?? null : null;
     return (
       <Box id="entry-bill" data-visual="1" className="flex flex-col">
         <Rail icon="startup-cost" kicker={COPY.entryBill.kicker} />
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{bill.figure}</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{oneFee ? COPY.entryBill.focalWordsOneFee.replace("{n}", String(free.length)) : COPY.entryBill.focalWords}</p>
+        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{oneFee ? (localFee ? COPY.entryBill.focalWordsLocalFee.replace("{fee}", localFee).replace("{n}", String(free.length)) : COPY.entryBill.focalWordsOneFee.replace("{n}", String(free.length))) : COPY.entryBill.focalWords}</p>
         <div className="mt-5 flex-1">
           <Stepper steps={steps.steps} compact />
         </div>
@@ -926,7 +1063,7 @@ function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
  * SECTION is cut here under rule 41, credibility ground: hand-written verdict
  * prose presented as a read is the patronizing class the founder condemned.
  */
-function Hiring({ hiring, iso2, foot = true, hireCost = false }: { hiring: any; iso2?: string; foot?: boolean; hireCost?: boolean }) {
+function Hiring({ hiring, iso2, foot = true, hireCost = false, rules = null }: { hiring: any; iso2?: string; foot?: boolean; hireCost?: boolean; rules?: FactRow[] | null }) {
   const pay = iso2 ? buildPayBars(iso2) : null;
   const addPct = hiring?.payroll_only_multiplier != null && isNum(hiring?.employer_payroll_pct) ? hiring.employer_payroll_pct : undefined;
   const labour = hiring?.labour_force_pct;
@@ -961,6 +1098,9 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false }: { hiring: any; 
       {/* THE EMPLOYER'S SHARE SAID ONCE (2026-09-26, the United Kingdom's staff card): where the hire's cost is drawn below, the
           average bar carries no on-cost piece and no "Employer adds 15%" line, which the hire's own rule line said again. */}
       {pay ? <PayBars rows={pay.rows.map((r) => (r.key === "average" && isNum(addPct) && !hireDrawn ? { ...r, extra: { pct: addPct, label: COPY.pay.employerAdds.replace("{pct}", `${addPct}%`) } } : r))} worldMax={pay.worldMax} withheld={pay.withheld} fmt={usd} /> : null}
+      {/* THE LAW BEHIND THE COST (2026-10-04, the UK page reform): the hourly wage floor in the law's own pounds, the allowance off
+          the employer's bill and the pension minimums, as ruled rows between the bars and the hire's lever (rules.json). */}
+      {rules && rules.length ? <FactRows rows={rules} className="mt-4" /> : null}
       {hireDrawn && pay ? <HireCost iso2={iso2 as string} pay={pay} rate={isNum(addPct) ? addPct : null} /> : null}
       {/* The labour force and the informal share move to the employment card where the page draws it (2026-09-25). */}
       {foot && (isNum(labour) || isNum(informal)) ? (
@@ -991,14 +1131,20 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false }: { hiring: any; 
  * winding one up with debts and what the owner answers for. The cells are the builder's own, split by their keys.
  */
 const CLOSING_KEYS = new Set(["strike", "wind-up", "liability"]);
-function PaperworkCard({ paperwork }: { paperwork: DepthCard }) {
-  /* The heaviest burden first: on an odd count the first cell takes the grid's width (KvGrid's complete rows). */
+/** `words` (2026-10-04): the two views' own words where the country's rules stand in the rows, and their figures in the law's
+ *  currency (the company statement's £50 and the strike-off's £13, where the seed's dollar figure stood over a pound sign in the words). */
+function PaperworkCard({ paperwork, run = null, close = null, words = null }: { paperwork: DepthCard; run?: FactRow[] | null; close?: FactRow[] | null; words?: { run: string; close: string; runFigure?: string | null; closeFigure?: string | null } | null }) {
+  /* The heaviest burden first. */
   const RUN_ORDER = ["hours", "filings", "rename"];
   const rank = (key: string) => { const i = RUN_ORDER.indexOf(key); return i < 0 ? RUN_ORDER.length : i; };
-  const yearly = paperwork.cells.filter((c) => !CLOSING_KEYS.has(c.key)).sort((a, b) => rank(a.key) - rank(b.key));
+  /* THE SOURCED CALENDAR WHERE THE COUNTRY HOLDS ONE (2026-10-04; research R6): the admin hours and the filings count were the
+     layout seed's numbers, never measured (the tax office has not counted the hours since 2015, and there is no fixed count of
+     filings), so where rules.json holds the deadlines and the penalties those rows stand in their place; closing keeps the
+     official strike-off and its notice, and the seed's "6 to 12 months" and the liability word leave. */
+  const yearly = run ?? paperwork.cells.filter((c) => !CLOSING_KEYS.has(c.key)).sort((a, b) => rank(a.key) - rank(b.key));
   const closing = paperwork.cells.filter((c) => CLOSING_KEYS.has(c.key));
   const strike = closing.find((c) => c.key === "strike");
-  const closingRest = closing.filter((c) => c.key !== "strike");
+  const closingRest = close ?? closing.filter((c) => c.key !== "strike");
   const twoViews = yearly.length >= 2 && !!strike && closingRest.length >= 1;
   return (
     <Box id="paperwork" className="flex flex-col">
@@ -1014,11 +1160,11 @@ function PaperworkCard({ paperwork }: { paperwork: DepthCard }) {
               label: COPY.paperwork.views.year,
               panel: (
                 <>
-                  <Focal figure={paperwork.focal.figure} words={paperwork.focal.words} />
+                  <Focal figure={words?.runFigure ?? paperwork.focal.figure} words={words?.run ?? paperwork.focal.words} />
                   {/* THE YEAR'S FACTS STACKED, AS THE CLOSING VIEW'S ARE (2026-09-26): beside the five spectra the card stands 124px
                       taller than its words, and a lone first cell over a pair left that air beside it (a 350 by 132 blank) or at the
                       card's foot; three ruled rows share it in three even pieces. */}
-                  <KvGrid cells={yearly} under fill stack />
+                  <FactRows rows={yearly} />
                 </>
               ),
             },
@@ -1027,9 +1173,9 @@ function PaperworkCard({ paperwork }: { paperwork: DepthCard }) {
               label: COPY.paperwork.views.close,
               panel: (
                 <>
-                  <Focal figure={String(strike!.value)} words={COPY.closing.focalWords} />
+                  <Focal figure={words?.closeFigure ?? String(strike!.value)} words={words?.close ?? COPY.closing.focalWords} />
                   {/* Stacked: two ruled rows share the card's height where one row of two stood in the middle of 300px of air. */}
-                  <KvGrid cells={closingRest} under fill stack />
+                  <FactRows rows={closingRest} />
                 </>
               ),
             },
@@ -1038,7 +1184,7 @@ function PaperworkCard({ paperwork }: { paperwork: DepthCard }) {
       ) : (
         <>
           <Focal figure={paperwork.focal.figure} words={paperwork.focal.words} />
-          <KvGrid cells={paperwork.cells} under fill />
+          <FactRows rows={paperwork.cells} />
         </>
       )}
     </Box>
@@ -1057,6 +1203,35 @@ function HireCost({ iso2, pay, rate }: { iso2: string; pay: NonNullable<ReturnTy
   if (!isNum(avg) || avg <= 0 || rate == null || rate <= 0) return null;
   const threshold = countryFigure(iso2, "employment.employer_ni_threshold_usd")?.value ?? 0;
   const H = COPY.hireCost;
+  /* A FIRST HIRE BY THE COUNTRY'S OWN RULES (2026-10-04): where rules.json holds the employer's yearly allowance and the pension
+     minimum, the lever takes them, in dollars at the site's one pound rate (fx.ts, the rate every UK figure was converted at). */
+  const gbp = (topic: string, key: string) => {
+    const a = ruleAmount(iso2, topic, key)?.gbp;
+    return typeof a === "number" ? convertToUsd("GBP", a) : null;
+  };
+  const allowance = gbp("employing", "employment-allowance");
+  const pRate = ruleAmount(iso2, "employing", "pension-employer")?.pct;
+  const pLower = gbp("employing", "pension-band-lower");
+  const pUpper = gbp("employing", "pension-band-upper");
+  const pTrigger = gbp("employing", "pension-trigger");
+  const pension = typeof pRate === "number" && pLower != null && pUpper != null && pUpper > pLower ? { rate: pRate, lower: pLower, upper: pUpper, trigger: pTrigger ?? 0 } : null;
+  const first = (allowance ?? 0) > 0 || pension != null;
+  /* THE RULES UNDER THE LEVER IN THE LAW'S POUNDS (the design review's first finding: "$6,632 ... is the £5,000 threshold" read
+     as a made-up figure): the lever's own figures stay in the page's dollars, the law it applies is printed as the law states it. */
+  const lb = (topic: string, key: string) => {
+    const a = ruleAmount(iso2, topic, key)?.gbp;
+    return typeof a === "number" ? lawValue({ gbp: a }) : null;
+  };
+  const niGbp = lb("employing", "employer-ni-threshold");
+  const eaGbp = lb("employing", "employment-allowance");
+  const lowGbp = lb("employing", "pension-band-lower");
+  const highGbp = lb("employing", "pension-band-upper");
+  const notes = first
+    ? [
+        ...(niGbp && eaGbp ? [{ label: H.niLabel, text: H.niRule.replace("{rate}", `${rate}%`).replace("{threshold}", niGbp).replace("{allowance}", eaGbp) }] : []),
+        ...(pension && lowGbp && highGbp ? [{ label: H.pensionLabel, text: H.pensionRule.replace("{rate}", `${pension.rate}%`).replace("{lower}", lowGbp).replace("{upper}", highGbp) }] : []),
+      ]
+    : null;
   /* THE PAY IS THE READER'S (goal 2026-09-26, M3): the block the card drew at the average salary is a lever from the minimum
      salary up, its default the average the card prints above; the rule is unchanged (src/components/spine/interact/HireLever.tsx). */
   return (
@@ -1065,7 +1240,10 @@ function HireCost({ iso2, pay, rate }: { iso2: string; pay: NonNullable<ReturnTy
       min={isNum(min) && min > 0 ? min : Math.round(avg / 2)}
       rate={rate}
       threshold={threshold}
-      words={{ label: H.label, unit: H.unit, salary: H.salary, onCost: H.onCost, rule: H.rule, lever: H.lever }}
+      allowance={allowance ?? 0}
+      pension={pension}
+      notes={notes}
+      words={{ label: first ? H.labelFirst : H.label, unit: H.unit, salary: H.salary, onCost: H.onCost, rule: H.rule, lever: H.lever, pension: H.pension, ni: H.ni }}
     />
   );
 }
@@ -1131,7 +1309,9 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
         {/* THE ANSWER IS THE MONTHS (goal 2026-09-26, the sense fix): the figure was the count of countries where selling takes
             longer ("182 of 198"), which a reader had to turn round to read; the months to sell are the answer, the count their
             words, and the plot's own row for here draws its span without printing the months again. */}
-        <Focal figure={`${exitMonthsText(exit.marks[0].value).replace(/ months?$/, "")} to ${exitMonthsText(exit.marks[exit.marks.length - 1].value)}`} words={longer ? C.monthsLean.replace("{rank}", longer.figure) : C.monthsLeanAlone} />
+        {/* ONE PLACEMENT WORDING (2026-10-04): the months' words say what they are, and where the slow end stands among the
+            countries is the site's one sentence ("Among the lowest tenth." for the United Kingdom), never "quicker than in 182". */}
+        <Focal figure={`${exitMonthsText(exit.marks[0].value).replace(/ months?$/, "")} to ${exitMonthsText(exit.marks[exit.marks.length - 1].value)}`} words={exit.placement ? C.monthsLeanAlone : longer ? C.monthsLean.replace("{rank}", longer.figure) : C.monthsLeanAlone} placement={exit.placement} />
         {exit.usual ? (
           <div className="flex flex-1 flex-col">
             <RangePair
@@ -1249,7 +1429,7 @@ export function SpendCard({ spend }: { spend: CountrySpendData | null }) {
  * promise it keeps today), the wrapper keeping data-terminus so the
  * full-width and blueprint gates read the sanction. No doors, no card.
  */
-function Close({ meta, name }: { meta: any; name: string }) {
+function Close({ meta, name, zone = false }: { meta: any; name: string; zone?: boolean }) {
   /* THE EXIT IS ONE CARD (2026-09-20, the loop's composition under his page
      laws): the city door and the trades door, then the compare pill (M21: the
      pill on every page is the compare tool; `19 compare` no longer stands as
@@ -1266,7 +1446,7 @@ function Close({ meta, name }: { meta: any; name: string }) {
   const doors = [...buildCloseDoors(iso2).filter((d) => d.kind !== "pill"), ...buildCompareDoor(name)];
   if (doors.length === 0) return null;
   return (
-    <div data-terminus className="mt-8">
+    <div data-terminus className={zone ? undefined : "mt-8"}>
       <Box id="close">
         <Terminus kicker={COPY.close.kicker} doors={doors} />
       </Box>
@@ -1382,68 +1562,188 @@ export function SpineCountryBody({ data }: { data?: any }) {
       "03": { index: "03", heading: COPY.chapters.open },
       "04": { index: "04", heading: COPY.chapters.firstYears },
     };
+    /* THE BAND PAGE (2026-10-04, his words that day: "abandon the bento in favor of a more traditional thing where the sections
+       have alternating background colors maybe just by a little bit"). Each level of the composition above is one ZONE, a
+       full-width band (src/components/spine/zones.tsx; the colours, the full bleed and the open sections in globals.css, THE
+       ZONES); the zones alternate tint and paper from the masthead down, each chapter's number and title at the top of its
+       first zone. The pairs are the levels of 2026-09-25, chosen by topic, so the reader still meets two related readings side
+       by side from 768px and one under the other, parted by a hairline, on a phone.
+       THE CARDS THAT STAY (research R3, 3.7: a card earns its box when the reader operates something in it or it is a door):
+       his masthead board, the sortable peers table, the hire and loan levers and the city cards. Everything
+       read rather than operated stands open on the band. Only the zones that draw are listed, so the alternation counts the
+       zones the reader sees. */
+    /* THE COUNTRY'S OWN CONTEXT, BUILT ONCE (2026-10-04; research R6's sourced files through country_rules.ts): the dated changes,
+       the law behind the staff, premises, filings and payments figures, the sourced payment split. A piece the files do not hold
+       for a country is null and its section keeps what it drew before. */
+    const today = todayIso();
+    const ruleChanges = iso2 ? buildRuleChanges(iso2, today, CHANGES_LEAD) : null;
+    const hasChanges = !!ruleChanges && ruleChanges.coming.length + ruleChanges.inForce.length >= 3;
+    /* A ZONE OF ONE RUN TAKES THE COLUMN as a wide zone would; the split is the zone's only when both runs draw. */
+    const staffRules = iso2 ? ruleRows(iso2, "employing", [
+      { key: "minimum-wage-21", icon: "min-wage" },
+      { key: "employment-allowance", icon: "hiring" },
+      { key: "pension-employer", icon: "wages" },
+      { key: "pension-total", icon: "wages" },
+    ]) : null;
+    /* The change file's own key for the qualifying period (changes.json "unfair-dismissal-period"; "unfair-dismissal" is the
+       rules file's, and matched nothing there, so the note never named 1 January 2027). */
+    const dismissalNext = iso2 ? nextChange(iso2, "unfair-dismissal-period", today) : null;
+    /* ON THE DAY THE LAW CHANGES THE ROW CHANGES (the code review of 2026-10-04): the page regenerates daily, and from 1 January
+       2027 the change list would read "2 years to 6 months" over a row still printing "2 years". */
+    const dismissalNow = iso2 ? latestChange(iso2, "unfair-dismissal-period", today) : null;
+    /* THE LAW'S FIGURES IN THE LAW'S CURRENCY (2026-10-04): where the rules file holds sick pay and maternity pay, the row prints
+       the pound figure the law sets (the world shard's dollar conversion, "$163", stood beside "£12.71 an hour" in the same
+       zone) and the weekly maternity rate rides the weeks' note. */
+    const sickLaw = iso2 ? ruleValue(iso2, "employing", "sick-pay") : null;
+    const maternityFirst = iso2 ? ruleValue(iso2, "employing", "maternity-pay-first") : null;
+    const maternityWeekly = iso2 ? ruleValue(iso2, "employing", "maternity-pay-weekly") : null;
+    const employmentBase = (seatPeople ? employment.cells.filter((c) => c.key !== "out") : employment.cells).map((c) =>
+      c.key === "dismissal" && (dismissalNext || dismissalNow)
+        ? {
+            ...c,
+            value: dismissalNow ? dismissalNow.from : c.value,
+            note: dismissalNext
+              ? COPY.rulesRows.dismissalNote.replace("{from}", dismissalNext.from).replace("{date}", dismissalNext.dateText)
+              : COPY.rulesRows.dismissalSince.replace("{date}", dismissalNow!.dateText),
+          }
+        : c.key === "sick" && sickLaw
+          ? { ...c, value: sickLaw, note: COPY.rulesRows.sickNote, confidence: "measured" as const }
+          : c.key === "maternity" && maternityFirst && maternityWeekly
+            ? { ...c, note: COPY.rulesRows.maternityNote.replace("{weekly}", maternityWeekly) }
+            : c,
+    );
+    /* THE LAW'S OWN DETAIL UNDER THE EMPLOYER'S DUTIES (rules.json, research R6): the notice an employer gives, the bank holidays
+       and how long sick pay runs, the details a first employer asks about and the old card never held. */
+    const employingMore = iso2 ? ruleRows(iso2, "employing", [
+      { key: "notice-2-to-12-years", icon: "flag", label: "Notice to give", note: COPY.rulesRows.noticeNote },
+      { key: "sick-pay-length", icon: "first-year", label: "Sick pay lasts", note: null },
+    ], 1) : null;
+    /* The year the count is for, from the file's own note ("bank holidays in 2026"): Scotland's 10 in 2026 holds a one-off holiday,
+       so the row names its year rather than a count that goes stale in January. */
+    const holidayYear = iso2 ? (ruleNote(iso2, "holidays", "england-wales") ?? "").match(/20\d\d/)?.[0] ?? null : null;
+    const holidays = iso2 && holidayYear ? ruleRows(iso2, "holidays", [{ key: "england-wales", icon: "seasonality", label: "Bank holidays", note: COPY.rulesRows.holidaysNote.replace("{year}", holidayYear) }], 1) : null;
+    const employmentCells = [...employmentBase, ...(employingMore ?? []), ...(holidays ?? [])];
+    const premisesRules = iso2 ? ruleRows(iso2, "premises", [
+      { key: "full-relief-limit", icon: "commercial-rent", label: "Full rates relief", note: COPY.rulesRows.reliefNote },
+      { key: "small-multiplier", icon: "taxes", label: "Business rates", note: COPY.rulesRows.ratesNote },
+      { key: "small-retail-multiplier", icon: "high-street", label: "Shops and cafés", note: COPY.rulesRows.retailNote },
+    ]) : null;
+    const lateLow = iso2 ? ruleValue(iso2, "filings", "late-accounts-1") : null;
+    const lateHigh = iso2 ? ruleValue(iso2, "filings", "late-accounts-4") : null;
+    const filingRows = iso2 ? ruleRows(iso2, "filings", [
+      { key: "accounts-deadline", icon: "filings" },
+      { key: "tax-return-deadline", icon: "calculator" },
+      { key: "corporation-tax-payment", icon: "taxes" },
+      { key: "vat-return-deadline", icon: "payments" },
+    ]) : null;
+    const runRows: FactRow[] | null = filingRows
+      ? [
+          ...filingRows,
+          ...(lateLow && lateHigh ? [{ key: "late-accounts", icon: "red-tape" as const, label: "Late accounts", value: `${lateLow} to ${lateHigh}`, note: COPY.rulesRows.lateAccountsNote }] : []),
+        ]
+      : null;
+    const closeRows = iso2 ? ruleRows(iso2, "closing", [
+      { key: "strike-off-notice", icon: "closing" },
+      { key: "no-trading-period", icon: "freshness" },
+    ]) : null;
+    const payments = iso2 ? buildPayments(iso2) : null;
+    const financingCells = financing.cells.filter((c) => !c.key.startsWith("grant-"));
+    const zones: Array<{ key: string; split: ZoneSplit; label: string; chapter?: { index: string; heading: string }; body: React.ReactNode[] }> = [
+      { key: "take", split: "wide", label: "The tax burden", body: [<Masthead key="take" name={name} iso2={iso2} hero={d.hero} />] },
+      /* THE HOT STUFF FIRST (his word of 2026-10-04): what changed for a small firm here and what is coming, sourced and dated,
+         right under the answer, before the costs it changes. */
+      ...(hasChanges && ruleChanges
+        ? [{ key: "changes", split: "1-1" as ZoneSplit, label: COPY.changes.kicker, body: [<RuleChangesComing key="coming" rows={ruleChanges.coming} />, <RuleChangesMade key="made" rows={ruleChanges.inForce} shown={levelShown(ruleChanges.inForce, ruleChanges.inForceLead, ruleChanges.coming.length)} />].filter((_, i) => (i === 0 ? ruleChanges.coming.length > 0 : ruleChanges.inForce.length > 0)) }]
+        : []),
+      {
+        key: "setup",
+        split: "3-2",
+        label: COPY.tiers.kicker,
+        chapter: { index: "01", heading: COPY.chapters.costs },
+        body: [<Setup key="setup" setup={d.setup} iso2={iso2} />, <EntryBill key="bill" bill={bill} steps={billSteps} licences={licences} />],
+      },
+      {
+        key: "staff",
+        split: "1-1",
+        label: COPY.pay.kicker,
+        body: [
+          <Hiring key="hiring" hiring={d.hiring} iso2={iso2} foot={false} hireCost rules={staffRules} />,
+          /* WRITTEN OUT, NOT THROUGH A WRAPPER (the chain's census, 2026-09-25): a Box with a literal id and its rows in its own
+             JSX, so the census and the coverage gate both read the block the page draws. */
+          <Box key="employment" id="employment" className="flex flex-col">
+            <Rail icon="staffing-rota" kicker={COPY.employment.kicker} />
+            <Focal figure={employment.focal.figure} words={employment.focal.words} />
+            <FactRows rows={employmentCells} />
+          </Box>,
+        ],
+      },
+      {
+        key: "running",
+        /* THREE FIFTHS FOR THE COSTS (2026-10-04): at 1280 their four rows split into two lists side by side (FactRows from 600px)
+           and the track runs wider, so the costs end level with the insurance beside them instead of 260px below it. */
+        split: "3-2",
+        label: COPY.runningCosts.kicker,
+        body: [
+          <RunningCostsRanged key="running" iso2={iso2 as string} costs={costs} rates={premisesRules} />,
+          ruleValue(iso2 as string, "insurance", "employers-liability-cover") ? <InsuranceRules key="insurance" iso2={iso2 as string} /> : <InsuranceBars key="insurance" card={insurance} />,
+        ],
+      },
+      { key: "peers", split: "wide", label: COPY.peers.kicker, body: [<Peers key="peers" table={peers} zone />] },
+      {
+        key: "state",
+        split: "1-1",
+        label: COPY.character.state.kicker,
+        chapter: { index: "02", heading: COPY.chapters.money },
+        body: [
+          <CharacterCard key="state" iso2={iso2} which="state" zone />,
+          <PaperworkCard key="paperwork" paperwork={paperwork} run={runRows} close={closeRows} words={runRows ? { run: COPY.rulesRows.statementWords, close: COPY.rulesRows.strikeWords, runFigure: ruleValue(iso2 as string, "filings", "confirmation-statement-fee"), closeFigure: ruleValue(iso2 as string, "closing", "strike-off-fee") } : null} />,
+        ],
+      },
+      {
+        key: "money",
+        split: "1-1",
+        label: COPY.financing.kicker,
+        body: [
+          <FinancingRanged key="financing" iso2={iso2 as string} card={financing} cells={financingCells} />,
+          payments ? <PaymentsRing key="banking" iso2={iso2 as string} card={payments} /> : <BankingRing key="banking" card={banking} />,
+        ],
+      },
+      {
+        key: "trades",
+        split: "2-1",
+        label: COPY.londonMargins.kicker,
+        chapter: { index: "03", heading: COPY.chapters.open },
+        body: [<LondonMarginBars key="money" margins={londonMargins} />, <ExitCard key="exit" exit={exitData} lean />],
+      },
+      ...(seatPeople && ageMix && jobs
+        ? [{ key: "people", split: "1-1" as ZoneSplit, label: COPY.people.age.kicker, body: [<AgeMix key="age" id="age-mix" data={ageMix} />, <JobMarket key="jobs" id="job-market" data={jobs} />] }]
+        : []),
+      { key: "cities", split: "2-1", label: COPY.cities.kicker, body: [<Cities key="cities" cards={cities} seat={null} />, <LocalsKnow key="locals" notes={locals} />] },
+      { key: "spend", split: "2-1", label: COPY.countrySpend.kicker, body: [<SpendBar key="spend" spend={spendData} />, <CharacterCard key="people" iso2={iso2} which="people" zone />] },
+      ...(seatFirstYears && survival && obstacles
+        ? [
+            {
+              key: "years",
+              split: "3-2" as ZoneSplit,
+              label: COPY.firstYears.kicker,
+              chapter: { index: "04", heading: COPY.chapters.firstYears },
+              body: [<FirstYears key="years" id="first-years" data={survival} />, <Obstacles key="obstacles" id="obstacles" data={obstacles} />],
+            },
+          ]
+        : []),
+      { key: "close", split: "wide", label: COPY.close.kicker, body: [<Close key="close" meta={d.meta} name={name} zone />] },
+    ];
     return (
       <>
-        <div className="py-2" data-spine-body data-composition="depth">
-          <Masthead name={name} iso2={iso2} hero={d.hero} />
-          <Movement index="01" heading={COPY.chapters.costs} />
-          <Band split="3-2">
-            <Setup setup={d.setup} iso2={iso2} />
-            <EntryBill bill={bill} steps={billSteps} licences={licences} />
-          </Band>
-          <Band split="1-1" stack="lg">
-            <Hiring hiring={d.hiring} iso2={iso2} foot={false} hireCost />
-            {/* WRITTEN OUT, NOT THROUGH A WRAPPER (the chain's census, 2026-09-25): a Box with a literal id and its KvGrid in its own
-                JSX, so the census and the coverage gate both read the block the page draws. */}
-            <Box id="employment" className="flex flex-col">
-              <Rail icon="staffing-rota" kicker={COPY.employment.kicker} />
-              <Focal figure={employment.focal.figure} words={employment.focal.words} />
-              <KvGrid cells={seatPeople ? employment.cells.filter((c) => c.key !== "out") : employment.cells} under fill />
-            </Box>
-          </Band>
-          <Band split="1-1" stack="lg">
-            <RunningCostsRanged iso2={iso2 as string} costs={costs} />
-            <InsuranceBars card={insurance} />
-          </Band>
-          <Peers table={peers} />
-          <Movement index="02" heading={COPY.chapters.money} />
-          {/* RED TAPE FIRST, THEN THE MONEY (2026-09-25): the two cards drawn on the world's range (running costs above, borrowing
-              here) keep a level between them (his clause 64), and the peers table between them is not a level. */}
-          <Band split="1-1" stack="lg">
-            <CharacterCard iso2={iso2} which="state" />
-            <PaperworkCard paperwork={paperwork} />
-          </Band>
-          <Band split="1-1" stack="lg">
-            <FinancingRanged iso2={iso2 as string} card={financing} />
-            <BankingRing card={banking} />
-          </Band>
-          <Movement index="03" heading={COPY.chapters.open} />
-          <Band split="2-1" stack="lg">
-            <LondonMarginBars margins={londonMargins} />
-            <ExitCard exit={exitData} lean />
-          </Band>
-          {seatPeople && ageMix && jobs ? (
-            <Band split="1-1" stack="lg">
-              <AgeMix id="age-mix" data={ageMix} />
-              <JobMarket id="job-market" data={jobs} />
-            </Band>
-          ) : null}
-          <Band split="2-1" stack="lg">
-            <Cities cards={cities} seat={null} />
-            <LocalsKnow notes={locals} />
-          </Band>
-          <Band split="2-1" stack="lg">
-            <SpendBar spend={spendData} />
-            <CharacterCard iso2={iso2} which="people" />
-          </Band>
-          {seatFirstYears ? <Movement index="04" heading={COPY.chapters.firstYears} /> : null}
-          {seatFirstYears && survival && obstacles ? (
-            <Band split="2-3" stack="lg">
-              <FirstYears id="first-years" data={survival} />
-              <Obstacles id="obstacles" data={obstacles} />
-            </Band>
-          ) : null}
-          <Close meta={d.meta} name={name} />
+        {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2: Material, iOS and the NHS hold 16; the site's column holds 24): the
+            zones reach 8px into the column's padding below 768, so a section's content is 343px wide at 375, the width every
+            phone table on the page is laid out for. The bands' colour runs edge to edge either way. */}
+        <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+          {zones.map((z, i) => (
+            <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label} chapter={z.chapter}>
+              {z.body}
+            </Zone>
+          ))}
         </div>
         <OnThisPage sections={sections} chapters={railChapters} />
       </>

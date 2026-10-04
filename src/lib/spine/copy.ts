@@ -494,6 +494,7 @@ export const COPY = {
     focalWords: "limited company, all in",
     /** Where one step is the only one that costs money (the bill is that fee): the line says the rest are free. */
     focalWordsOneFee: "limited company, all in: the other {n} steps are free",
+    focalWordsLocalFee: "limited company, all in: the {fee} online fee, the other {n} steps free",
     licences: { summary: "Licences by trade", noWait: "0 days", noLicence: "No licence needed" },
     detailRows: { form: "The form here", fee: "Government fee", filing: "Filing time", paperwork: "Paperwork" },
     /** The one line: the bill's where it prints, the days' otherwise (entry_bill_rows.ts). */
@@ -783,6 +784,37 @@ export const COPY = {
     cells: { leave: "Paid leave", out: "Unemployed", week: "Longest week", sick: "Sick pay", dismissal: "Unfair dismissal", maternity: "Maternity pay" },
     notes: { leave: "a year, bank holidays included", out: "", week: "opt-out allowed", sick: "a week, from day one", dismissal: "of service before a claim", maternity: "at the statutory rate" },
   },
+  /** THE RULES THAT CHANGED AND THE ONES COMING (2026-10-04, the UK page reform; DatedChanges.tsx, country_rules.ts). */
+  changes: { kicker: "Changes to the rules", comingKicker: "Rule changes coming", madeKicker: "Recent rule changes", more: "{n} more changes", moreOne: "1 more change" },
+  /** THE LAW BEHIND A SECTION'S FIGURE, as ruled rows (2026-10-04; rules.json through country_rules.ts). Labels three words or
+   *  fewer, notes eight or fewer, never a sentence that concludes. */
+  rulesRows: {
+    insuranceWords: "of employers' liability cover at the least, from the first employee",
+    payments: {
+      centerWords: "pay by {part}",
+      readers: "Card readers",
+      readersNote: "in person, no monthly fee",
+      payout: "Card payouts",
+      payoutDay: "Next day",
+      payoutDays: "{n} days",
+      payoutNote: "some readers within minutes",
+      cash: "Cash, all payments",
+      cashNote: "{then} in {thenYear}",
+      basis: "Shop sales by number of payments, {period}",
+    },
+    ratesNote: "per £1 of value, England",
+    reliefNote: "rateable value, one property",
+    retailNote: "below £51,000, England",
+    dismissalNote: "{from} from {date}",
+    dismissalSince: "since {date}",
+    sickNote: "from day one",
+    maternityNote: "{weekly} after week 6",
+    noticeNote: "per year worked, to 12 weeks",
+    holidaysNote: "{year}, England and Wales",
+    lateAccountsNote: "1 to over 6 months late",
+    statementWords: "a year to file the company statement, online",
+    strikeWords: "to close a company with no debts, online",
+  },
   insurance: {
     kicker: "Insurance",
     minCoverWords: "{cover} cover, required once you employ",
@@ -801,7 +833,7 @@ export const COPY = {
     kicker: "Borrowing",
     focalWords: "average rate on a new small-business loan",
     cells: { base: "Central bank rate", startup: "Start-up loans" },
-    notes: { base: "", startup: "{rate} fixed, {min} to {max} years", grantFor: "for" },
+    notes: { base: "", startup: "{rate} fixed, {min} to {max} years", startupLocal: "{min} to {max}, {rate} fixed", grantFor: "for" },
     /** The start-up loan's term, read by the note and the loan lever alike, so the two never disagree. */
     startupTerm: { min: 1, max: 5 },
     /** The loan lever (goal 2026-09-26, M3). */
@@ -836,9 +868,9 @@ export const COPY = {
     focalWords: "to close a company with no debts, online",
   },
   /** The world's range under a figure (charts/WorldRange.tsx, 2026-09-25): the median's word and the rows' labels and units. */
-  ranged: { median: "World median", ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", perLitre: "/L", lending: "Rate on a small-business loan" },
+  ranged: { median: "World median", ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", dieselNote: "at the pump", perLitre: "/L", lending: "Rate on a small-business loan", peers: "Peers" },
   /** What a full-time hire at the average salary costs the employer (the staff card, 2026-09-25). */
-  hireCost: { label: "A full-time hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", rule: "{rate} on pay above {threshold} a year.", lever: "Pay" },
+  hireCost: { label: "A full-time hire", labelFirst: "A first hire", unit: "a year", pay: "pay", salary: "Salary", onCost: "employer's share", pension: "pension", ni: "employer NI", rule: "{rate} on pay above {threshold} a year.", niLabel: "Employer NI", niRule: "{rate} above {threshold}, less the {allowance} allowance", pensionLabel: "Pension", pensionRule: "{rate} of pay from {lower} to {upper}", lever: "Pay" },
   londonMargins: {
     kicker: "What London's trades keep",
     more: "{n} more trades",

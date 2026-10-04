@@ -40,6 +40,8 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
   const area = `${line} L100,100 L0,100 Z`;
   const pts = [{ year: 0, pct: 100 }, ...shown];
   const gid = `${id}-area-fill`;
+  /* A share placed on the regions' strip: 0 at the lowest region, 100 at the highest, held 2 inside each end. */
+  const span = (v: number) => (best && worst && best.pct > worst.pct ? Math.min(98, Math.max(2, ((v - worst.pct) / (best.pct - worst.pct)) * 100)) : 50);
   const W = words;
   return (
     <>
@@ -47,7 +49,8 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
         <div data-focal="1" aria-live="polite" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{Math.round(last.pct)}%</div>
         <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{region ? W.focalIn.replace("{n}", String(maxYear)).replace("{region}", region.inName) : W.focal.replace("{n}", String(maxYear))}</p>
       </div>
-      <div className="mb-3 flex items-center gap-3">
+      {/* 24 under the picker (the design review, 2026-10-04: the first year's "95%" stands above its point and touched the picker). */}
+      <div className="mb-6 flex items-center gap-3">
         <label htmlFor={`${id}-region`} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{W.choose}</label>
         <select
           id={`${id}-region`}
@@ -101,11 +104,13 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
       {best && worst ? (
         <div data-regions className="mt-5 border-t border-[var(--c-border)] pt-3">
           <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{W.regions.replace("{n}", String(maxYear))}</div>
+          {/* THE STRIP IS THE REGIONS' RANGE, END TO END (the design review, 2026-10-04: the 31% and 44% printed at the ends of a 0 to
+              100 track while their bar sat in its middle third): the lowest region at the left end, the highest at the right, the
+              country's year and the chosen region placed between them, so each printed figure stands under its own end. */}
           <div className="relative mt-3 h-2 rounded-full" role="img" aria-label={`${worst.name} ${worst.pct}%, ${best.name} ${best.pct}%`}>
-            <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
-            <span aria-hidden className="absolute inset-y-0 rounded-full bg-[var(--c-line-strong)]" style={{ left: `${worst.pct}%`, width: `${Math.max(1, best.pct - worst.pct)}%` }} />
-            <span aria-hidden data-tick className="absolute -top-1 h-4 w-0.5 rounded-full bg-[var(--c-ink)]" style={{ left: `${Math.min(99, Math.max(0, country[country.length - 1].pct))}%` }} />
-            {region ? <span aria-hidden data-region-dot className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] bg-[var(--terra)]" style={{ left: `${Math.min(99, Math.max(1, last.pct))}%` }} /> : null}
+            <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-line-strong)]" />
+            <span aria-hidden data-tick className="absolute -top-1 h-4 w-0.5 -translate-x-1/2 rounded-full bg-[var(--c-ink)]" style={{ left: `${Math.max(2, Math.min(98, span(country[country.length - 1].pct)))}%` }} />
+            {region ? <span aria-hidden data-region-dot className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-surface)] bg-[var(--terra)]" style={{ left: `${Math.max(2, Math.min(98, span(last.pct)))}%` }} /> : null}
           </div>
           <div className="mt-2 grid grid-cols-2 gap-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">
             <span><span className="fig font-semibold text-[var(--c-ink)]">{Math.round(worst.pct)}%</span> {worst.name}</span>

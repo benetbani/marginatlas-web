@@ -25,7 +25,7 @@ export function RangePair({ spans, max, fmt, ticks, unit, aria, fill = false }: 
       {live.map((s) => (
         <div key={s.key} data-row={s.key} className={fill ? "relative" : undefined}>
           {/* On the plot the words sit on the card's white, so a hairline never runs through a label. */}
-          <div className={`mb-2 flex items-baseline gap-3 ${fill ? "relative w-fit bg-[var(--c-card)] pr-2" : ""}`}>
+          <div className={`mb-2 flex items-baseline gap-3 ${fill ? "relative w-fit bg-[var(--c-surface)] pr-2" : ""}`}>
             <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{s.label}</span>
             {s.quiet ? null : <Fig className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{`${fmt(s.lo)} to ${fmt(s.hi)}`}</Fig>}
             {unit && !s.quiet ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{unit}</span> : null}

@@ -143,6 +143,10 @@ export type CompareTableProps = {
    *  full-width gates read it as an ordinary card. Off, the table is the
    *  page's full-width table under its own `data-wide-table` sanction. */
   inBand?: boolean;
+  /** ON THE BAND PAGE (2026-10-04): the section stands open on its zone (its title at the heading rung beside the others) and
+   *  the sortable table alone keeps a box, because the reader operates it (research R3, 3.7); no full-width wrapper, the
+   *  zone carries the width. */
+  zone?: boolean;
 };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -159,7 +163,26 @@ function fmt(unit: CompareColumn["unit"], v: number, whole = true): string {
   if (unit === "per") return whole ? String(Math.round(v)) : v.toFixed(1);
   return `${v} ${v === 1 ? "day" : "days"}`;
 }
-const PHONE_COLS: Record<number, string> = { 1: "grid-cols-1", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
+/* The phone form's grid, by column count; written out in full so the stylesheet compiler sees every class. */
+const PHONE_GRID: Record<number, string> = {
+  1: "grid-cols-[auto] justify-end",
+  2: "grid-cols-[repeat(2,auto)] justify-between gap-x-3",
+  3: "grid-cols-[repeat(3,auto)] justify-between gap-x-3",
+  4: "grid-cols-[repeat(4,auto)] justify-between gap-x-3",
+  /* Under 340px of table (a 360 phone, the sheet's 301px card) the gap is 8 and the best figure is underlined in place of its
+     tick (renderCell), so five figures still stand on one line: measured 283px at the narrowest. Under 280 (a card page at 320,
+     about 230px) five cannot stand on one line, so they wrap three and two, each under its head, and nothing scrolls sideways
+     (the code review of 2026-10-04 measured the German page 6px over at 320). */
+  5: "grid-cols-[repeat(5,auto)] justify-between gap-x-3 [@container(max-width:339px)]:gap-x-2 [@container(max-width:279px)]:grid-cols-[repeat(3,auto)]",
+  6: "grid-cols-3 gap-x-3",
+};
+/* ON THE BAND PAGE, up to three figures the name keeps the first column (SortTable's nameInline), so the row is a table row; on a
+   card page the name stays over its figures, the card's height its band partner's as before (the city page's peers at 768). */
+const INLINE_GRID: Record<number, string> = {
+  1: "grid-cols-[minmax(0,1fr)_auto] gap-x-4",
+  2: "grid-cols-[minmax(0,1fr)_repeat(2,auto)] gap-x-4",
+  3: "grid-cols-[minmax(0,1fr)_repeat(3,auto)] gap-x-3",
+};
 /* THE TABLE FOLLOWS ITS CARD, NOT THE WINDOW (2026-09-26). Switched at the window's md, the wide form stood in a card half a 768
    window wide and cut every city on London's page to four letters ("Lon...", "Muni...", "Mad..."); a full-width card at 768 still
    gave the name 19% of the width and cut "United Kingdom". The table is its own container now, and the wide form draws from the
@@ -172,11 +195,19 @@ const WIDE_FROM: Record<number, { wide: string; phone: string }> = {
   6: { wide: "hidden [@container(min-width:690px)]:block", phone: "[@container(min-width:690px)]:hidden" },
 };
 
-export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false, inBand = false }: CompareTableProps) {
+export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false, inBand = false, zone = false }: CompareTableProps) {
   /* FIVE COLUMNS TAKE THREE A LINE ON A PHONE (2026-09-25, the country's peers gained the average salary): five figures in 327px
      ran "12 days" past the card; three a line, the heads and every row's figures wrapping the same way, keep each figure under its
      head. */
-  const phoneCols = columns.length >= 5 ? "grid-cols-3 gap-y-1" : PHONE_COLS[Math.min(4, Math.max(1, columns.length))];
+  /* ONE LINE OF FIGURES UNDER THE NAME, UP TO FIVE COLUMNS (2026-10-04, the UK page reform; research R2, pattern f). The phone
+     form is one grid whose rows share its columns: each column as wide as its widest head or figure, the slack shared between
+     them (12px at the least), so five figures stand on one line under five heads at 375 (measured: the widest set, "Payroll on"
+     and a ticked "12 days", needs 339 of the 343 a phone gives). Six columns still fold to three a line. */
+  /* A one-figure table is a table row on every page (its figure alone under each name left a 215 by 414 blank on a phone, the
+     sheet's LONE STAT); two or three figures share the name's line on the band page only. */
+  const inline = columns.length === 1 || (zone && columns.length <= 3);
+  const phoneCols = inline ? INLINE_GRID[Math.max(1, columns.length)] : PHONE_GRID[Math.min(6, Math.max(1, columns.length))];
+
   /* The two-row floor for every caller that states no line; a seated table
      (a `withheld` line) draws from one row, the home row alone (the header). */
   if (rows.length < (withheld ? 1 : 2)) return null;
@@ -190,7 +221,10 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
   /* ONE DECIMAL COUNT PER COLUMN (PART 5): a "per" column prints whole numbers when every value it holds is whole, one decimal otherwise, decided once for the column and never per cell. */
   const wholeOf: Record<string, boolean> = {};
   for (const c of columns) wholeOf[c.key] = rows.map((r) => r.values[c.key]).filter(isNum).every((v) => Number.isInteger(v));
-  const print = (c: CompareColumn, v: number) => fmt(c.unit, v, wholeOf[c.key]);
+  /* ON A PHONE A DAYS COLUMN PRINTS THE COUNT ALONE (2026-10-04, the UK page reform): its head already says days ("Days to trade"),
+     and PART 5 says a unit once, in the head; "12 days" ticked was the widest cell of five on one line at 375 (research R2's
+     measure) and pushed the table past its 343px. The wide form keeps "12 days". */
+  const print = (c: CompareColumn, v: number, phone = false) => (phone && c.unit === "days" && /day/i.test(c.head) ? String(v) : fmt(c.unit, v, wholeOf[c.key]));
   /** Desktop colgroup shares only; the phone form stacks the name above its
    *  own figures and never shares this row, so it needs no share at all. */
   const forms = WIDE_FROM[Math.min(6, Math.max(3, columns.length))];
@@ -207,17 +241,21 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
    *  gap on one, which is what keeps four figures inside 327px on a phone
    *  (a first attempt that always drew the icon, ink or none, reserved the
    *  gap too and overflowed the four-column table before this one). */
-  const renderCell = (c: CompareColumn, v: number | null) => {
+  const renderCell = (c: CompareColumn, v: number | null, phone = false) => {
     const best = isBestVal(c, v);
     const inner = !isNum(v) ? (
       <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>
     ) : best ? (
       <span className="inline-flex items-center gap-1 text-[var(--c-ink)]">
-        <StateMark kind="yes" />
-        <Fig className="text-[length:var(--t-body)] font-semibold">{print(c, v)}</Fig>
+        <span className="inline-flex [@container(max-width:339px)]:hidden">
+          <StateMark kind="yes" />
+        </span>
+        {/* WHERE THE TICK IS HIDDEN THE BEST FIGURE IS UNDERLINED (the code review of 2026-10-04): every figure is set at 600 (the
+            global .fig rule), so without its tick the best one differed by its ink alone, a colour-only mark. */}
+        <Fig className="text-[length:var(--t-body)] font-semibold [@container(max-width:339px)]:underline [@container(max-width:339px)]:decoration-2 [@container(max-width:339px)]:underline-offset-4">{print(c, v, phone)}</Fig>
       </span>
     ) : (
-      <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{print(c, v)}</Fig>
+      <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{print(c, v, phone)}</Fig>
     );
     return <span className="inline-flex min-h-4 items-center justify-end align-middle">{inner}</span>;
   };
@@ -243,27 +281,29 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
         ))}
       </>
     ),
+    /* THE PHONE ROW IS CELLS OF THE TABLE'S ONE GRID (SortTable's phone form): the name across the whole row, then each figure
+       in its own column, so a figure can never drift from the head above it. 14 on 20, tabular, right-aligned. */
     phone: (
       <>
-        <span className="flex items-center gap-3">
+        <span className={`${inline ? "" : "col-span-full "}flex min-w-0 items-center gap-2`}>
           {flags ? <CountryFlag iso2={r.iso2} className="w-6 shrink-0" /> : null}
-          <span data-label className={`text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+          <span data-label className={`text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
         </span>
-        <div className={`mt-1 grid ${phoneCols} gap-x-2`}>
-          {columns.map((c) => (
-            <span key={c.key} data-col={c.key} className="text-right whitespace-nowrap">
-              {renderCell(c, r.values[c.key])}
-            </span>
-          ))}
-        </div>
+        {columns.map((c) => (
+          <span key={c.key} data-col={c.key} className="text-right leading-5 whitespace-nowrap">
+            {renderCell(c, r.values[c.key], true)}
+          </span>
+        ))}
       </>
     ),
   }));
   return (
-    <div {...(inBand ? { className: "h-full" } : { "data-wide-table": "", className: "mt-8" })}>
+    /* ON A ZONE THE TABLE KEEPS ITS SANCTION (`data-wide-table`, the page's one full-width table, clause 36) and drops the band margin
+       the zone's padding replaces. */
+    <div {...(inBand ? { className: "h-full" } : zone ? { "data-wide-table": "" } : { "data-wide-table": "", className: "mt-8" })}>
       <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} className={inBand ? "h-full" : undefined}>
         <Rail icon={icon} kicker={kicker} sample={sample} />
-        <div className="[container-type:inline-size]">
+        <div className="[container-type:inline-size]" {...(zone ? { "data-instrument": "table" } : {})}>
           <SortTable
             label={caveat ?? kicker}
             words={COPY.sort}
@@ -273,6 +313,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
             wideClass={forms.wide}
             phoneClass={forms.phone}
             phoneCols={phoneCols}
+            nameInline={inline}
           />
         </div>
         {/* The stated line for the rows the table does not hold, at the lead rung where those rows would stand (the header's SEATED TABLE). */}

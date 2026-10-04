@@ -1,0 +1,135 @@
+{
+  "_about": "How customers in the United Kingdom pay, and what a small firm pays to take cards and how fast the money arrives, replacing the layout seed's payment mix (card 60, bank transfer 20, cash 12, digital wallet 8), its 1.5% card fee and its '1 to 3 days' payout, none of which was researched. all_payments and consumer_payments: the payments industry body's annual report summary for 2025, by number of payments; counts as printed (millions, or billions where the report prints billions) and shares only where the report prints them. The printed method counts sum to 49,773 million against the printed total of 49,712 million (CHAPS excluded), so no share is computed from the counts here. Mobile wallet payments are counted inside card payments; the report has no separate wallet share of payments. retail: the retail trade body's annual survey of its members' transactions for 2024. card_readers: each provider's own UK pages, read on the day checked; the three in-person fees match data/sections/local_apps.json (read 2025-09-25). Research: docs/superpowers/research/2026-10-04-uk-page-reform/R6-uk-facts-sourced.md.",
+  "GB": {
+    "currency": "GBP",
+    "checked": "2026-10-04",
+    "all_payments": {
+      "period": "2025",
+      "basis": "number of payments, all payers, CHAPS excluded",
+      "total_millions": 49712,
+      "methods": [
+        { "key": "debit-card", "name": "Debit card", "millions": 26610, "pct": 54, "contactless_millions": 16180 },
+        { "key": "credit-card", "name": "Credit / charge / purchasing card", "millions": 5333, "contactless_millions": 3007 },
+        { "key": "remote-banking", "name": "Faster Payments and other remote banking", "millions": 6190 },
+        { "key": "direct-debit", "name": "Direct Debit", "millions": 5090, "pct": 10 },
+        { "key": "cash", "name": "Cash", "millions": 3942, "pct": 8 },
+        { "key": "bacs-credit", "name": "Bacs Direct Credit", "millions": 1835 },
+        { "key": "standing-order", "name": "Standing order", "millions": 551 },
+        { "key": "cheque", "name": "Cheque", "millions": 77, "pct": 0.2 },
+        { "key": "other", "name": "Other", "millions": 145 }
+      ],
+      "groups": [
+        { "key": "cards", "name": "Card payments (debit and credit)", "pct": 64 },
+        { "key": "contactless", "name": "Contactless (cards and mobile wallets)", "pct": 39, "billions": 19.2 }
+      ],
+      "history": [
+        { "key": "cash", "pct_by_year": { "2015": 45, "2020": 17, "2025": 8 } },
+        { "key": "contactless", "pct_by_year": { "2015": 3, "2020": 27, "2025": 39 } }
+      ],
+      "source": {
+        "publisher": "UK Finance, UK Payment Markets 2026, summary (published 19 August 2026)",
+        "url": "https://www.ukfinance.org.uk/system/files/2026-08/PaymentMarketsReport_2026Summary.pdf",
+        "page": "https://www.ukfinance.org.uk/policy-and-guidance/reports/uk-payment-markets-2026"
+      },
+      "verified": "primary",
+      "checked": "2026-10-04"
+    },
+    "consumer_payments": {
+      "period": "2025",
+      "basis": "payments made by consumers, by number",
+      "total_billions": 41.6,
+      "spontaneous_billions": 35.0,
+      "regular_billions": 6.5,
+      "methods": [
+        { "key": "debit-card", "name": "Debit card", "pct": 63 },
+        { "key": "credit-card", "name": "Credit and charge cards", "pct": 12 },
+        { "key": "cash", "name": "Cash", "billions": 3.8 }
+      ],
+      "mobile_wallets": {
+        "monthly_users_pct_of_adults": 58,
+        "registered_users_millions": 37.6
+      },
+      "source": {
+        "publisher": "UK Finance, UK Payment Markets 2026, summary (published 19 August 2026)",
+        "url": "https://www.ukfinance.org.uk/system/files/2026-08/PaymentMarketsReport_2026Summary.pdf"
+      },
+      "verified": "primary",
+      "checked": "2026-10-04"
+    },
+    "retail": {
+      "period": "2024",
+      "basis": "share of retail transactions, by number",
+      "total_billions": 20.4,
+      "methods": [
+        { "key": "debit-card", "name": "Debit card", "pct": 64.0 },
+        { "key": "credit-card", "name": "Credit card", "pct": 12.6 },
+        { "key": "cash", "name": "Cash", "pct": 19.2 }
+      ],
+      "card_fees_paid_billions_gbp": 1.48,
+      "source": {
+        "publisher": "British Retail Consortium, BRC Payments Survey 2025 (press release, 12 December 2025)",
+        "url": "https://brc.org.uk/news-and-events/news/corporate-affairs/2025/ungated/high-interest-rates-push-shoppers-from-credit-to-debit-cards/"
+      },
+      "verified": "primary",
+      "checked": "2026-10-04"
+    },
+    "card_readers": [
+      {
+        "key": "sumup",
+        "name": "SumUp",
+        "plan": "Pay-as-you-go",
+        "fee": { "pct": 1.69 },
+        "monthly": { "gbp": 0 },
+        "note": "in person",
+        "payout": { "days": 1 },
+        "payout_note": "next day to a SumUp Business Account, weekends and holidays included",
+        "url": "https://www.sumup.com/en-gb/pricing/",
+        "payout_url": "https://www.sumup.com/en-gb/business-account/",
+        "matches_local_apps": true,
+        "verified": "primary",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "sumup-plus",
+        "name": "SumUp",
+        "plan": "Payments Plus",
+        "fee": { "pct": 0.99 },
+        "monthly": { "gbp": 19 },
+        "note": "suggested if you take £3,000 or more a month",
+        "url": "https://www.sumup.com/en-gb/pricing/",
+        "verified": "primary",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "square",
+        "name": "Square",
+        "plan": "Free",
+        "fee": { "pct": 1.75 },
+        "monthly": { "gbp": 0 },
+        "note": "in person, UK cards; non-UK cards 1.5% more",
+        "online_fee": { "pct": 1.4, "plus_gbp": 0.25 },
+        "keyed_fee": { "pct": 2.5 },
+        "payout": { "days": 1 },
+        "payout_note": "standard transfer free, as soon as the next day; instant transfer in minutes for a 1.5% fee",
+        "url": "https://squareup.com/gb/en/pricing",
+        "payout_url": "https://squareup.com/gb/en/payments/instant-transfers",
+        "matches_local_apps": true,
+        "verified": "primary",
+        "checked": "2026-10-04"
+      },
+      {
+        "key": "zettle",
+        "name": "Zettle (PayPal Point of Sale)",
+        "fee": { "pct": 1.75 },
+        "monthly": { "gbp": 0 },
+        "note": "card transactions; same rate for major cards and mobile wallets",
+        "payout": { "text": "within minutes" },
+        "payout_note": "typically within minutes to a PayPal Business account; automatic bank transfers with no added fee",
+        "url": "https://www.zettle.com/gb/pricing",
+        "matches_local_apps": true,
+        "verified": "primary",
+        "checked": "2026-10-04"
+      }
+    ]
+  }
+}

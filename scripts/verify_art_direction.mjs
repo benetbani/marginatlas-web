@@ -246,6 +246,11 @@ const collect = () => {
   for (const track of document.querySelectorAll('[role="img"]')) {
     const tb = track.getBoundingClientRect();
     if (tb.width < 120 || tb.height > 200) continue;
+    /* A TRACK THAT DRAWS EVERY COUNTRY IS ITS OWN DOMAIN (2026-10-04, the UK page reform; WorldRange.tsx `hairlines`): the world's
+       values stand on it as hairlines from its lowest to its highest, so its span is the data's by construction, and the peers'
+       hollow marks clustering at one end (four small-business loan rates of 4.3 to 4.5% on a world that reaches 78%) is a reading,
+       not room reserved for values that cannot occur. */
+    if (track.querySelector("[data-track-hairlines]")) continue;
     const marks = [...track.querySelectorAll("*")].filter((e) => {
       if (getComputedStyle(e).position !== "absolute") return false;
       const b = e.getBoundingClientRect();
