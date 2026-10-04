@@ -2595,7 +2595,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     const cheapest = ranked[0], dearest = ranked[ranked.length - 1];
     /* THE RANK, once per city. */
     const rank = buildHoodRank(city);
-    const cityBars = buildCityDistrictBars({ where_to_trade: { list: districts.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult })) } });
+    /* With the city's slug, as the city page's own call and the hub's (milestone 1, M6: the district doors moved onto the hub's rank rows), so the rows' links are compared too. */
+    const cityBars = buildCityDistrictBars({ meta: { slug: city }, where_to_trade: { list: districts.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult })) } });
     if (!rank || !cityBars) reds.push(`hood rank ${city}: builds nothing`);
     else {
       if (JSON.stringify(rank.rows) !== JSON.stringify(cityBars.rows) || rank.basis !== cityBars.basis || rank.phoneHead.value !== cityBars.phoneHead.value) reds.push(`hood rank ${city}: the rows or the words differ from the city district builder's over the same rows`);

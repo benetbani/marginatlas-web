@@ -360,7 +360,10 @@ if (listArg && args.includes("--render")) {
 /* city 16 since the late evening of 2026-09-20 (`17 gates` and `18 market` added from the shard, his "more sections"); 14 for an hour before that: `01 glance` and `02 among-cities` dissolved into the hero board of his design (their figures are its rows), so 8.3 names fourteen blocks; London draws 12 of them, `10 easiest` on ruling 30 (HIS) and `08 demand` on London's placeholder spend (item 23), both named causes. */
 /* hood 6 since 2026-09-24: `04 works`, the drawn blocked seat ("We don't know yet what lifts sales most", the lift figure waiting on item 70), left the neighbourhood pages on the goal of that day, whose NEVER list names "a 'not gathered yet' card on a UK page" (every admitted city is London); 8.8 is six blocks until the lift figure lands, the notes re-seated beside the exit. */
 /* hood 5 since the same evening: `03 compare` left the page on the NEVER list's "print one figure twice" (its fourteen figures are `01 rank`'s and `02 premium`'s); 8.8 is five blocks, take, rank, premium, character and close. */
-const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 5, howto: 7 };
+/* hood 4 since 2026-10-04 (night): `02 premium`, the visitors a year for every resident, is withheld until measured by his
+   interview of 2026-09-26, answer 36 (milestone 1, M6); its district doors moved onto `01 rank`'s rows. 8.8 is four blocks: take,
+   rank, character where the district holds notes, close. */
+const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

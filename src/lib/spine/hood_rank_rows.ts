@@ -37,5 +37,8 @@ export type HoodRankData = CityDistrictBars;
 export function buildHoodRank(citySlug: string): HoodRankData | null {
   const rows = spineHoodDistricts(citySlug);
   if (!rows) return null;
-  return buildCityDistrictBars({ where_to_trade: { list: rows.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult, rent_clipped: d.rent_clipped })) } });
+  /* THE DISTRICT DOORS MOVE ONTO THIS CARD'S ROWS (his interview of 2026-09-26, answer 36; milestone 1, M6): the visitors card that
+     carried them is withheld until measured, so each district's name here links to its page through the shared builder's one
+     resolver (`districtPageTarget`, read off the city's slug, the city card's own idiom). */
+  return buildCityDistrictBars({ meta: { slug: citySlug }, where_to_trade: { list: rows.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult, rent_clipped: d.rent_clipped })) } });
 }

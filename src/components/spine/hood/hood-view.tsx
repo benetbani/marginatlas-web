@@ -76,10 +76,9 @@ import { SpineShell } from "@/components/spine/shell";
 import { COPY } from "@/lib/spine/copy";
 import { buildHoodTake } from "@/lib/spine/hood_take_rows";
 import { buildHoodRank } from "@/lib/spine/hood_rank_rows";
-import { buildHoodPremium } from "@/lib/spine/hood_premium_rows";
 import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
 import { buildHoodCloseDoors } from "@/lib/spine/close_rows";
-import { HoodTake, RankCard, PremiumCard, CharacterCard, HoodClose } from "./blocks";
+import { HoodTake, RankCard, CharacterCard, HoodClose } from "./blocks";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildHoodCrumbs } from "@/lib/spine/crumb_rows";
@@ -111,7 +110,10 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
      district passes through to the three cards it changes. */
   const take = buildHoodTake(slug, focus);
   const rank = buildHoodRank(slug);
-  const premium = buildHoodPremium(slug);
+  /* `02 premium` IS WITHHELD UNTIL MEASURED (his interview of 2026-09-26, answer 36; QUEUE hood:visitor-figures; milestone 1, M6): its
+     "visitors a year for every resident" failed against its own file's notes (the City of London at 22 a resident is about 176,000
+     visitors a year; St Paul's alone logged about 1.5 million in 2024) and nothing measured replaces it yet (DATA-REQUIREMENTS item
+     91). The builder and the card stay for the day a measured count lands; the district doors moved onto `01 rank`'s rows. */
   const character = buildHoodCharacter(slug, focus);
   const doors = buildHoodCloseDoors(slug, focus);
 
@@ -131,7 +133,6 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
         </Zone>
         <Zone split="2-1" stack="lg" label={COPY.hoodChapters.rent} chapter={{ index: "01", heading: COPY.hoodChapters.rent }}>
           {rank ? <RankCard rank={rank} /> : null}
-          {premium ? <PremiumCard premium={premium} /> : null}
         </Zone>
         {character ? (
           <Zone split="2-1" stack="lg" label={COPY.hoodChapters.works} chapter={{ index: "02", heading: COPY.hoodChapters.works }}>
