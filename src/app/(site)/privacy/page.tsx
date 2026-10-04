@@ -1,6 +1,8 @@
 /**
  * Privacy. Written from a survey of what the code actually does, on 2026-07-29:
- * Microsoft Clarity in the root layout, Vercel Speed Insights, Supabase for auth
+ * Microsoft Clarity in the root layout (REMOVED 2026-10-04, milestone 1, M2; the
+ * cookie-free count below takes its place only once switched on, read from the
+ * same flag the layout reads), Vercel Speed Insights, Supabase for auth
  * and for the newsletter_signups table, Stripe checkout and webhook routes, and
  * localStorage for the saved list, comparisons and watch tray.
  *
@@ -9,6 +11,7 @@
  * worth reading.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 
 export const revalidate = 86400;
 
@@ -66,13 +69,14 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <LegalSection heading="What is collected automatically">
-        <p>
-          <b>Session recording and heatmaps.</b> We use Microsoft Clarity to see
-          how pages are actually used, which parts get read and where people get
-          stuck. It records interactions such as scrolling, clicks and mouse
-          movement, and it does this on every page. We use it to find where the
-          site is confusing.
-        </p>
+        {WEB_ANALYTICS_ON ? (
+          <p>
+            <b>Counting visits.</b> Vercel Web Analytics counts which pages are
+            read and where visitors come from. It sets no cookie and keeps no
+            identifier that follows you, so it tells us what is read, not who
+            reads it.
+          </p>
+        ) : null}
         <p>
           <b>Performance.</b> Vercel Speed Insights measures how quickly pages
           load and render for real visitors, so we can tell when we have made
@@ -99,10 +103,9 @@ export default function PrivacyPage() {
           its job requires:
         </p>
         <p>
-          <b>Vercel</b> hosts the site and measures its speed. <b>Supabase</b>{" "}
-          stores accounts, newsletter addresses and corrections. <b>Stripe</b>{" "}
-          takes payments. <b>Microsoft</b> provides Clarity, the session recording
-          described above.
+          <b>Vercel</b> hosts the site{WEB_ANALYTICS_ON ? ", counts visits" : ""} and
+          measures its speed. <b>Supabase</b> stores accounts, newsletter
+          addresses and corrections. <b>Stripe</b> takes payments.
         </p>
         <p>
           We do not pass your information to anyone else, and we do not sell it

@@ -682,6 +682,8 @@ const GATES: Gate[] = [
   { name: "junk-url-rule", script: "tests/routing/junk_url_rule.test.ts" },
   /* A retired trade under a place goes to the nearest live page in one hop (milestone 1, M1; his interview of 2026-09-26, answer 12). */
   { name: "retired-paths", script: "tests/routing/retired_paths.test.ts" },
+  /* No session recorder on the site, cookie-free counting only behind its switch (milestone 1, M2; his interview of 2026-09-26, answer 7). */
+  { name: "no-session-recording", script: "tests/app/no_session_recording.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

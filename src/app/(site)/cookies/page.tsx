@@ -10,6 +10,7 @@
  * carries it.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 
 export const revalidate = 86400;
 
@@ -51,18 +52,14 @@ export default function CookiesPage() {
           <b>Paying.</b> Stripe sets what it needs to run a checkout securely and
           to detect fraud. This only comes into play if you start a payment.
         </p>
-        <p>
-          <b>Understanding how the site is used.</b> Microsoft Clarity records
-          how pages are used, as described on the{" "}
-          <a
-            href="/privacy"
-            className="underline underline-offset-2 hover:text-atlas-600"
-          >
-            privacy page
-          </a>
-          . It sets identifiers so that a single visit reads as one session
-          rather than as a series of unrelated ones.
-        </p>
+        {/* Clarity's session identifiers left with Clarity (2026-10-04, milestone 1, M2); the visit count that may replace
+            it sets nothing, so it is named here only once it runs, as on the privacy page. */}
+        {WEB_ANALYTICS_ON ? (
+          <p>
+            <b>Counting visits.</b> Vercel Web Analytics counts page views without
+            setting anything in your browser.
+          </p>
+        ) : null}
         <p>
           <b>Measuring speed.</b> Vercel Speed Insights measures how fast pages
           load for real visitors.

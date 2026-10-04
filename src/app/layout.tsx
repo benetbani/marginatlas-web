@@ -12,6 +12,7 @@ import type { Metadata } from "next";
 export const preferredRegion = "fra1";
 
 import Script from "next/script";
+import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 import { Geist, Space_Grotesk } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
@@ -194,14 +195,12 @@ export default function RootLayout({
             sits at z -1 so all content paints above it and the imagery only
             shows in the empty margins beside the readable column. */}
         <AtlasGutters />
-        {/* Microsoft Clarity — heatmaps + session recordings, free forever.
-            The src URL is Clarity's loader; it injects the actual tracking
-            script after load. afterInteractive so it never blocks render. */}
-        <Script
-          id="ms-clarity"
-          src="https://www.clarity.ms/tag/wtu315an8b"
-          strategy="afterInteractive"
-        />
+        {/* COOKIE-FREE ANALYTICS ONLY (milestone 1, M2; his interview of 2026-09-26, answer 7): Microsoft Clarity's
+            session recording left on 2026-10-04. Vercel Web Analytics counts page views with no cookie; its script
+            loads only once he has switched it on (src/lib/site/web_analytics.ts), never as a 404 on every page. */}
+        {WEB_ANALYTICS_ON ? (
+          <Script id="vercel-web-analytics" src="/_vercel/insights/script.js" strategy="afterInteractive" />
+        ) : null}
         <Organization />
         {/* The site masthead, <main>, newsletter bar and footer used to sit
            here and therefore wrapped every route. They now live in

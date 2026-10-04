@@ -2176,6 +2176,21 @@
       "claims": []
     },
     {
+      "name": "no-session-recording",
+      "script": "tests/app/no_session_recording.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "No session recording, only cookie-free counting, and only once switched on (milestone 1, M2; his interview of 2026-09-26, answer 7: \"Clarity removed; cookie-free analytics (Vercel Web Analytics or Pla",
+      "reads": [
+        "src/app",
+        "src/app/(site)/cookies/page.tsx",
+        "src/app/(site)/privacy/page.tsx",
+        "src/app/layout.tsx",
+        "src/components"
+      ],
+      "claims": []
+    },
+    {
       "name": "useless-tiles",
       "script": "scripts/audit/find_useless_tiles.ts",
       "args": [],

@@ -1,11 +1,11 @@
 /**
  * Analytics for monetization events.
  *
- * Uses Microsoft Clarity (already loaded site-wide via layout.tsx)
- * as the event sink. Zero new dependencies. Privacy-respecting
- * because Clarity's own data handling is documented + we send only
- * categorical event metadata (entry point, tier), never user
- * inputs or PII.
+ * CLARITY LEFT THE SITE ON 2026-10-04 (milestone 1, M2; his interview of
+ * 2026-09-26, answer 7: cookie-free analytics, no banner), so `fire` finds no
+ * `window.clarity` and sends nothing. The events stay named here for Pro
+ * (milestone 2), where a cookie-free sink is chosen with the paywall; until
+ * then every call is a no-op by the guard below.
  *
  * Events fired:
  *   v34_lock_click       (entry, tier) — any lock primitive clicked
