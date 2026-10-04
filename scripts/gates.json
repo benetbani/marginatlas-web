@@ -2165,6 +2165,17 @@
       "claims": []
     },
     {
+      "name": "retired-paths",
+      "script": "tests/routing/retired_paths.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A retired trade under a place goes to the nearest live page in one hop (milestone 1, M1; his interview of 2026-09-26, answer 12; QUEUE launch:retired-trades-live).",
+      "reads": [
+        "src/lib/taxonomy/retired_paths.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "useless-tiles",
       "script": "scripts/audit/find_useless_tiles.ts",
       "args": [],

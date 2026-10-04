@@ -24,6 +24,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { redirectFor } from "@/lib/taxonomy/retired";
+import { retiredPlaceTarget } from "@/lib/taxonomy/retired_paths";
 import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
@@ -363,6 +364,21 @@ export function middleware(req: NextRequest) {
     }
   }
   // --- end retired activities redirect ---
+
+  // --- Retired activities UNDER A PLACE (milestone 1, M1; his interview of 2026-09-26, answer 12) ---
+  // The block above matches only `/industries/<slug>`, so `/gb/london/banking` answered 200 with a default
+  // page (probed on production 2026-10-04). One hop to the nearest live page (src/lib/taxonomy/retired_paths.ts):
+  // the trade it merged into, in the same place, else the place's own page. Before the rename handler below,
+  // for the same reason as the block above: a legacy slug pointing at a retired one must not take two hops.
+  if (!path.startsWith("/api/") && !path.startsWith("/_next")) {
+    const placeTarget = retiredPlaceTarget(path);
+    if (placeTarget) {
+      const url = req.nextUrl.clone();
+      url.pathname = placeTarget;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+  // --- end retired activities under a place ---
 
   // --- Plan v13 Wave 4b redirect handler ---
   // Match either /us/<geo>/<old-slug> or /industries/<old-slug>.
