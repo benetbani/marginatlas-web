@@ -870,7 +870,10 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
   /* The peers table draws where the seed holds two rows and a column (peer_rows.ts); the band under chapter three is gated on it and the people table together. */
   const peersDrawn = buildCityPeerTable(d) != null;
   const hoods = slug ? buildCityNeighbourhoods(slug) : null;
-  const season = slug ? buildCitySeason(slug) : null;
+  /* THE SEASON DRAWS ONLY WITH ITS CELLS (plan 06, task B3, 2026-10-04): a card of one withheld line is a "not gathered" card, the
+     kind his correction of 2026-09-24 took off the UK pages. London is the one city without its own footfall row. */
+  const seasonBuilt = slug ? buildCitySeason(slug) : null;
+  const season = seasonBuilt && seasonBuilt.cells.length > 0 ? seasonBuilt : null;
   /* `19 calendar` (2026-09-23): the city's own twelve months, held by 252 of 252 and read by nothing before this. */
   const calendar = slug ? buildCityCalendar(slug) : null;
   /* `20 crew` and `21 texture` (2026-09-23 evening): the five roles' pay and the

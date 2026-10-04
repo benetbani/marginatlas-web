@@ -62,6 +62,7 @@ import cityListJson from "../../../data/cities/city_list_v1.json";
 import { cityFigure } from "@/lib/facts/city_shard";
 import type { FactTag } from "@/lib/facts/types";
 import { visitorsM } from "@/lib/spine/mark_list_rows";
+import { cityVisits } from "@/lib/spine/sections/people";
 import { COPY } from "@/lib/spine/copy";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 
@@ -82,6 +83,16 @@ const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g
 
 /** The visitor count is the city's own only where its source note says a tourism body counted it; every other shape of note is the country's figure through a divisor. */
 export const isVisitorsRead = (source: string | undefined): boolean => typeof source === "string" && /national tourism authority/i.test(source) && !/extrapolated/i.test(source);
+
+/** A CITY'S VISITORS A YEAR, ONE FIGURE FOR EVERY CARD (plan 06, task B3): the people file's sourced count where it holds the city
+ *  (London: 20.9M overseas overnight visits in 2024, where the list held 16.0M), else the list's count where a tourism body counted
+ *  it, else null: a divisor of the country's arrivals is no city's figure, and a card prints nothing (a table, a dash). The hero,
+ *  its level set, the glance and the peers table all read this, so one city never prints two counts. */
+export function cityVisitorsM(c: { slug: string; iso2: string; tourist_arrivals_m?: number; sources?: Record<string, string> }): number | null {
+  const sourced = cityVisits(String(c.iso2).toUpperCase(), c.slug);
+  if (sourced) return sourced.millions;
+  return isNum(c.tourist_arrivals_m) && c.tourist_arrivals_m > 0 && isVisitorsRead(c.sources?.tourist_arrivals_m) ? c.tourist_arrivals_m : null;
+}
 
 /** The shard's four tags collapse to the cell's three: held is measured, placeholder stays, the rest are modelled. */
 const cellConfidence = (tag: FactTag): NonNullable<KvCell["confidence"]> => (tag === "held" ? "measured" : tag === "placeholder" ? "placeholder" : "modeled");
@@ -113,13 +124,14 @@ export function buildCityGlance(slug: string): CityGlanceData | null {
   const modelled: string[] = [];
   const missing: string[] = [];
 
-  /* Visitors a year: the city's own count, or withheld with the reason. */
+  /* Visitors a year: the city's own count (the one resolver, `cityVisitorsM`), or withheld with the reason. */
   const arrivals = city.tourist_arrivals_m;
   const visitorsSource = city.sources?.tourist_arrivals_m;
+  const own = cityVisitorsM(city);
   let visitors: number | null = null;
-  if (isNum(arrivals) && arrivals > 0 && isVisitorsRead(visitorsSource)) {
-    visitors = arrivals;
-    cells.push({ key: "visitors", label: COPY.cityGlance.cells.visitors, value: visitorsM(arrivals), confidence: "measured" });
+  if (own != null) {
+    visitors = own;
+    cells.push({ key: "visitors", label: COPY.cityGlance.cells.visitors, value: visitorsM(own), confidence: "measured" });
   } else if (isNum(arrivals) && typeof visitorsSource === "string" && /extrapolated/i.test(visitorsSource)) {
     missing.push(COPY.cityGlance.reasons.visitorsCountry);
   } else {

@@ -1,0 +1,92 @@
+/**
+ * London is Greater London on the city page (plan 06, task B3; his ruling of 2026-10-04: London is Greater London, E12000007,
+ * on every page). The page printed four figures of other places or of no place:
+ *  - "Visitors 16.0M" off the city list, where the repo's sourced count is 20.9M overnight visits in 2024 (people.json);
+ *  - "Per 10,000 residents 371": 531,000 modelled firms over the 14.3M metro, a metro that is not Greater London;
+ *  - "Metro GDP $1T": the same metro, approximate on every row;
+ *  - residents and visitors 84 and 16: a slope over the metro's residents (no sourced split exists);
+ * and "Who is already trading" drew six trades' modelled densities over a modelled total of 531,000 with modelled openings and
+ * closures under the plus, where the register counts Greater London's businesses by code.
+ *
+ * Run: npx tsx tests/spine/london_city.test.ts
+ */
+import { buildCityHeroBoard } from "../../src/lib/spine/city_hero_board";
+import { buildCityMarket } from "../../src/lib/spine/city_market_rows";
+import { buildCitySeason } from "../../src/lib/spine/fact_rows";
+import { cityPeerListRow } from "../../src/lib/spine/city_peer_list";
+import { buildCityPeerTable } from "../../src/lib/spine/peer_rows";
+import { cityVisitorsM } from "../../src/lib/spine/city_glance_rows";
+import { cityRegisterPlace } from "../../src/lib/uk/registers/register_city";
+import { londonTradeRegister } from "../../src/lib/uk/registers/london_trade";
+import { red, redSummary } from "../../scripts/lib/red";
+
+const RULE = "london-city";
+const FILE = "src/lib/spine/city_hero_board.ts";
+const REMEDY = "London's city page prints Greater London's own figures: the sourced visits, the register's counts, and no metro row";
+let failed = 0;
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+
+async function main() {
+  check("London is held to Greater London, E12000007", cityRegisterPlace("GB", "london")?.geography === "E12000007");
+  check("Manchester is not held to a register region", cityRegisterPlace("GB", "manchester") === null);
+
+  /* THE HERO */
+  const hero = buildCityHeroBoard("london");
+  const row = (key: string) => hero?.rows.find((r) => r.key === key);
+  check("London's visitors are the sourced 20.9M (2024), not the list's 16.0M", row("visitors")?.value === "20.9M");
+  check("London's visitors carry a level among the cities", !!row("visitors")?.level);
+  check("London's hero has no density over the metro's residents", row("density") === undefined);
+  check("London's hero has no metro GDP", row("gdp") === undefined);
+  check("London keeps its own rows: the city permits and the cost of living", !!row("permits") && !!row("living"));
+  const man = buildCityHeroBoard("manchester");
+  check("Manchester keeps its density and GDP rows (not held to a region)", !!man?.rows.find((r) => r.key === "density") && !!man?.rows.find((r) => r.key === "gdp"));
+  check("Manchester's visitors are a divisor of the country's, not a row", !man?.rows.find((r) => r.key === "visitors"));
+
+  /* ONE VISITOR FIGURE PER CITY */
+  check("the visitor resolver: London 20.9, read from the people file", cityVisitorsM({ slug: "london", iso2: "GB", tourist_arrivals_m: 16, sources: { tourist_arrivals_m: "UNWTO / national tourism authority" } }) === 20.9);
+  check("the visitor resolver: a divisor of the country's arrivals is no figure", cityVisitorsM({ slug: "munich", iso2: "DE", tourist_arrivals_m: 7, sources: { tourist_arrivals_m: "Extrapolated from country arrivals / tier-2 divisor (3/5/8)" } }) === null);
+
+  /* THE PEERS: the rows the city adapter builds for London's table (adapt_city.ts reads city_peer_list.ts; the adapter itself opens a
+     database client a chain test cannot), drawn by the table's own builder. */
+  const seed = { meta: { iso2: "GB" }, peers: { list: [cityPeerListRow("london", true), cityPeerListRow("paris", false), cityPeerListRow("munich", false), cityPeerListRow("osaka", false)] } };
+  const table = buildCityPeerTable(seed);
+  const home = table?.rows.find((r) => r.home);
+  check("the peers table's London row prints the hero's 20.9M", home?.values.visitors === 20.9);
+  const munich = table?.rows.find((r) => r.key === "munich");
+  const osaka = table?.rows.find((r) => r.key === "osaka");
+  check("a peer whose visitors are a divisor of its country's prints a dash (Munich)", munich !== undefined && munich.values.visitors === null);
+  check("a peer whose visitors are a divisor of its country's prints a dash (Osaka)", osaka !== undefined && osaka.values.visitors === null);
+  check("a peer whose visitors a tourism body counted keeps its count (Paris, 19.0M)", table?.rows.find((r) => r.key === "paris")?.values.visitors === 19);
+
+  /* THE SEASON */
+  const season = buildCitySeason("london");
+  check("London's residents and visitors split draws nothing (no sourced split exists)", season !== null && season.cells.length === 0 && season.figures.resident === null);
+  const manSeason = buildCitySeason("manchester");
+  check("a city with its own footfall row still draws its split (Manchester)", manSeason !== null && manSeason.cells.length === 2);
+
+  /* WHO IS ALREADY TRADING */
+  const market = buildCityMarket("london");
+  check("London's market card is the register's", market?.form === "register");
+  check("no focal total (the modelled 531,000)", market?.focal === null);
+  check("no plus of modelled openings and closures", market?.detail === null);
+  check("nothing on the card is modelled", market?.sample === false);
+  const counts = new Map((market?.rows ?? []).map((r) => [r.key, r.value]));
+  const reg = (slug: string) => londonTradeRegister(slug)?.enterprises;
+  check(`restaurants: the register's ${reg("restaurants")} London businesses`, counts.get("restaurants") === reg("restaurants") && reg("restaurants") === 7865);
+  check(`hair and beauty: every 96020 business, ${reg("hairdressers-beauty")}`, counts.get("hairdressers-beauty") === reg("hairdressers-beauty") && reg("hairdressers-beauty") === 9695);
+  check("each shared code is named as its group, never as one trade", market?.rows.find((r) => r.key === "cafes-coffee-shops")?.name === "Cafes and unlicensed restaurants");
+  check("six trades, one row a code", market?.rows.length === 6 && new Set(market.rows.map((r) => r.value)).size === 6);
+  check("the largest first", (market?.rows ?? []).every((r, i, a) => i === 0 || a[i - 1].value >= r.value));
+  check("the basis says whose counts they are", market?.basis === "Registered businesses in London, March 2026.");
+  const manMarket = buildCityMarket("manchester");
+  check("Manchester keeps its densities (not held to a region)", manMarket !== null && manMarket.form === "density");
+
+  if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+  console.log("spine/london_city: all pass");
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });

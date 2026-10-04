@@ -97,6 +97,7 @@ import {
 } from "@/lib/economics/neighborhood_multipliers";
 import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
+import { cityPeerListRow } from "@/lib/spine/city_peer_list";
 import { COPY } from "@/lib/spine/copy";
 import { inSentence } from "@/lib/spine/place_names";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
@@ -485,7 +486,7 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   /* -- peers (real set + real indices; spend_index OMITTED) --------------- */
   // Each peer's rent_index <- cost_of_living_index (real, London = 75, NOT indexed to
   // 100), median_income_usd <- the one income builder's figure for that city
-  // (the fourth dispatch, 2026-09-18), visitors_m <- tourist_arrivals_m (real).
+  // (the fourth dispatch, 2026-09-18), visitors_m <- the masthead's visitor resolver (plan 06, task B3).
   // spend_index has NO source and is OMITTED (the CityPeers table drops that
   // row). The home city leads the list.
   //
@@ -499,34 +500,14 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
   // and one basis serves the column (PART 5; the caveat says "typical pay").
   // A city whose builder falls back to the country's figure prints a dash
   // here rather than a country's pay in a column of cities' (none today).
-  const cityIncome = (slug: string): number | undefined => {
-    const t = cityTypicalIncome(slug);
-    return t && t.from === "city" ? t.value : undefined;
-  };
-  const homeRow = {
-    name: city.name,
-    // The slug and the country code, carried since run 22 for the peers table's row key and flag.
-    slug: city.slug,
-    iso2: city.iso2,
-    home: true,
-    rent_index: isNum(city.cost_of_living_index) ? Math.round(city.cost_of_living_index) : undefined,
-    median_income_usd: cityIncome(city.slug),
-    visitors_m: isNum(city.tourist_arrivals_m) ? +city.tourist_arrivals_m.toFixed(1) : undefined,
-    // spend_index OMITTED.
-  };
+  /* THE ROWS ARE BUILT IN ONE PURE PLACE (city_peer_list.ts, plan 06, task B3): the typical pay above, and the visitors through the
+     masthead's own resolver, so the home row prints the sourced count the masthead prints (London's 20.9M, 2024) and a peer whose
+     count is a divisor of its country's prints a dash (Munich, Osaka), never the list's 16.0M or 7.0M beside a counted figure. */
+  const homeRow = { ...cityPeerListRow(city.slug, true, city.name)! };
   const peerRows = peers
     .map((p) => {
-      const rec = CITIES_BY_SLUG.get(p.slug);
-      if (!rec) return null;
-      return {
-        name: p.name,
-        slug: p.slug,
-        iso2: p.iso2,
-        home: false,
-        rent_index: isNum(rec.cost_of_living_index) ? Math.round(rec.cost_of_living_index) : undefined,
-        median_income_usd: cityIncome(p.slug),
-        visitors_m: isNum(rec.tourist_arrivals_m) ? +rec.tourist_arrivals_m.toFixed(1) : undefined,
-      };
+      const row = cityPeerListRow(p.slug, false, p.name);
+      return row ? { ...row, iso2: p.iso2 } : null;
     })
     .filter((r): r is NonNullable<typeof r> => r !== null);
   const peersList = [homeRow, ...peerRows];

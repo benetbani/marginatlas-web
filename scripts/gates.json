@@ -1567,6 +1567,17 @@
       "claims": []
     },
     {
+      "name": "london-city",
+      "script": "tests/spine/london_city.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "London is Greater London on the city page (plan 06, task B3; his ruling of 2026-10-04: London is Greater London, E12000007, on every page).",
+      "reads": [
+        "src/lib/spine/city_hero_board.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

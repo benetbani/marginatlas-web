@@ -70,7 +70,6 @@
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { cityFigure, weakerTag, type BankFigure } from "@/lib/facts/city_shard";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
-import { visitorShareSlope } from "@/lib/cities/city_view";
 import type { FactTag, PlaceholderOption } from "@/lib/facts/types";
 import { usd, usdCents } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
@@ -385,7 +384,7 @@ export type CitySeasonData = {
   cells: KvCell[];
   /** The two shares as printed, null where withheld; `from` names the feed the gates count. */
   figures: { resident: number | null; visitor: number | null };
-  from: "shard" | "slope" | null;
+  from: "shard" | null;
   withheld: string | null;
   basis: string | null;
   foot: string | null;
@@ -402,16 +401,14 @@ export type CitySeasonData = {
  * drop carries its own source, year and method, and the 239 differ from the
  * slope on 231 cities, so they are a reading of that city and not a fill;
  * FORMS-HOMES finding 5 named this field as the split's own, unread until
- * today); then, where the shard holds no row, the slope over the city list's
- * `tourist_arrivals_m` and `pop_m` (`visitorShareSlope`, London alone: its
- * shard carries no footfall row, item 23), marked modelled in the foot; and a
- * slope value that is the mechanism's own floor or ceiling is WITHHELD with
- * its line (R11, clause 46: a value at the model's limit is not the city's
- * figure; 153 of the 246 slope values are clamps, which is why the shard
- * comes first), as is a city with no visitor count on file. Counted
- * 2026-09-18 over the 252: 12 measured, 240 modelled (239 shard, London on
- * the slope at 84 and 16), 0 withheld; both withheld lines are reachable by
- * the builder's shape and by no city today. NO CELL AT 30: a pair of siblings
+ * today). WHERE THE SHARD HOLDS NO ROW THE SPLIT IS WITHHELD (plan 06, task
+ * B3, 2026-10-04): until that day the slope over the city list's
+ * `tourist_arrivals_m` and `pop_m` (`visitorShareSlope`, city_view.ts) stood
+ * in, for London alone (its shard carries no footfall row, item 23), at 84
+ * and 16; London is Greater London since his ruling of that day and the slope
+ * read the metro's residents, so the card draws nothing there (city-view.tsx
+ * draws it only with its cells). Counted 2026-09-18 over the 252: 12
+ * measured, 239 modelled off the shard, and London. NO CELL AT 30: a pair of siblings
  * takes the head rung (PART 4, the sibling-figure reading), and FOCAL's zero
  * finding on this card stands as it does on the glance. The pair sums to a
  * hundred by construction on the shard (251 of 251) and by arithmetic on the
@@ -448,17 +445,9 @@ export function buildCitySeason(slug: string): CitySeasonData | null {
     };
   }
 
-  const slope = visitorShareSlope(city.tourist_arrivals_m, city.pop_m);
-  if (!slope) return { ...base, cells: [], figures: { resident: null, visitor: null }, from: null, withheld: C.withheld.noCount, basis: null, foot: null, confidence: "modeled" };
-  if (slope.clamped) return { ...base, cells: [], figures: { resident: null, visitor: null }, from: null, withheld: C.withheld.clamp, basis: null, foot: null, confidence: "modeled" };
-  return {
-    ...base,
-    cells: cellsOf(100 - slope.pct, slope.pct, "modeled"),
-    figures: { resident: 100 - slope.pct, visitor: slope.pct },
-    from: "slope",
-    withheld: null,
-    basis: C.basis,
-    foot: C.footSlope,
-    confidence: "modeled",
-  };
+  /* NO SPLIT WITHOUT THE CITY'S OWN ROW (plan 06, task B3, 2026-10-04): the slope over the list's arrivals and residents served
+     London alone, and London is Greater London since his ruling of that day; the slope read the 14.3M metro's residents against a
+     count of visitors the page no longer prints (16.0M, where the sourced count is 20.9M), times a constant nobody sourced. No
+     sourced split of London's footfall exists, so the card draws nothing there (city-view.tsx draws the card only with its cells). */
+  return { ...base, cells: [], figures: { resident: null, visitor: null }, from: null, withheld: C.withheld.noSplit, basis: null, foot: null, confidence: "modeled" };
 }

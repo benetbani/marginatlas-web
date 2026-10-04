@@ -412,6 +412,22 @@ export const COPY = {
       summary: "The market in figures",
       rows: { all: "All businesses", newYear: "New each year", closeYear: "Close each year", independents: "Independents" },
     },
+    /** A city held to a register region (London, Greater London; plan 06, task B3): the register's counts, one row a code, each
+     *  named as the code's group (a shared code is never one trade's). The basis is the trade pages' own foot, so one count reads
+     *  the same on both. */
+    register: {
+      basis: "Registered businesses in {city}, March 2026.",
+      phoneValue: "Businesses",
+      top: "Largest trade",
+      names: {
+        restaurants: "Restaurants",
+        "cafes-coffee-shops": "Cafes and unlicensed restaurants",
+        "pubs-taverns": "Pubs and bars",
+        "hairdressers-beauty": "Hair and beauty",
+        "grocery-stores": "Grocers and convenience stores",
+        "yoga-pilates-studios": "Gyms and fitness studios",
+      } as Record<string, string>,
+    },
   },
   /** AT A GLANCE (MODEL.md 8.2, `01 glance`; plan step 31, second dispatch,
    *  2026-09-17): the country's own figures, each in its own unit, no rank
@@ -1205,9 +1221,9 @@ export const COPY = {
     unit: "of footfall",
     basis: "Of the year's footfall, the share who live here and the share visiting.",
     footModelled: "",
-    footSlope: "",
     withheld: {
-      clamp: "No reliable split for this city yet.",
+      /** Plan 06, task B3: no city's own footfall row (London; the slope that stood in is gone). The card draws nothing there. */
+      noSplit: "No split of residents and visitors for this city yet.",
       noCount: "No visitor count for this city yet.",
     },
   },

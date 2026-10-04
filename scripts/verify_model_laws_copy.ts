@@ -515,7 +515,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     if (h?.seatLine) heads.push([`buildCityNeighbourhoods(${slug}).seatLine`, h.seatLine]);
   }
   for (const line of Object.values(COPY.citySeason.withheld)) heads.push(["COPY.citySeason.withheld", line]);
-  heads.push(["COPY.citySeason.footModelled", COPY.citySeason.footModelled], ["COPY.citySeason.footSlope", COPY.citySeason.footSlope], ["COPY.cityNeighbourhoods.allLabel", COPY.cityNeighbourhoods.allLabel], ["COPY.blocked.cityNeighbourhoods.foot", COPY.blocked.cityNeighbourhoods.foot], ["COPY.blocked.locals.line", COPY.blocked.locals.line]);
+  heads.push(["COPY.citySeason.footModelled", COPY.citySeason.footModelled], ["COPY.cityNeighbourhoods.allLabel", COPY.cityNeighbourhoods.allLabel], ["COPY.blocked.cityNeighbourhoods.foot", COPY.blocked.cityNeighbourhoods.foot], ["COPY.blocked.locals.line", COPY.blocked.locals.line]);
 
   /* THE COUNTRY'S TWO KvGrid SEATS (MODEL.md 8.2 `01 glance` and `02
      world-seat`, plan step 31's second dispatch, 2026-09-17), pushed composed

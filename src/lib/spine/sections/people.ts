@@ -107,6 +107,13 @@ export function buildOrigin(iso2: string, city?: string, focus: PeopleFocal = "c
   return { figure: pctText(focal.pct), words: COPY.people.origin.focalWords.replace("{place}", focal.name), places, visits };
 }
 
+/** A city's overseas visits a year as published, where the file holds the city (London: 20.9M overnight visits in 2024), or null.
+ *  The one sourced city count; the city list's counts are read only through city_glance_rows.ts `cityVisitorsM` beside it. */
+export function cityVisits(iso2: string, city: string): { millions: number; overnight: boolean } | null {
+  const v = countryOf(iso2)?.cities?.[city]?.visits;
+  return v && typeof v.millions === "number" && Number.isFinite(v.millions) && v.millions > 0 ? { millions: v.millions, overnight: !!v.overnight } : null;
+}
+
 /** The countries the file holds, and each one's cities, for the stories. */
 export function listPeoplePlaces(): Array<{ iso2: string; city?: string }> {
   const out: Array<{ iso2: string; city?: string }> = [];

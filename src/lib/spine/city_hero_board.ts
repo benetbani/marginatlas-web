@@ -20,9 +20,11 @@
  *
  * THE ROWS, each the city's OWN figure with its file and field, at most six
  * (his cap), in this order:
- *  - visitors a year: `tourist_arrivals_m` off data/cities/city_list_v1.json
- *    where the row's note says the count is the city's own (the glance's
- *    rule, `isVisitorsRead`); a country-extrapolated count is not a row;
+ *  - visitors a year: the one resolver (city_glance_rows.ts `cityVisitorsM`):
+ *    the people file's sourced count where it holds the city (London's 20.9M,
+ *    2024), else `tourist_arrivals_m` off data/cities/city_list_v1.json where
+ *    the row's note says a tourism body counted it; a country-extrapolated
+ *    count is not a row;
  *  - city permits, days: `reg.total_local_days` off the city shard;
  *  - businesses per 10,000 residents: `comp.density_per_10k` off the shard;
  *  - metro GDP: `gdp_b` off the city list, approximate on every row (item
@@ -32,6 +34,11 @@
  *    ruling of 2026-09-20).
  * The country's self-employment share, which the old masthead printed under
  * the city's name, is not a row: it is the country's figure (M5).
+ *
+ * A CITY HELD TO A REGISTER REGION (London, Greater London since his ruling of
+ * 2026-10-04; register_city.ts) prints no metro row: the density was 531,000
+ * modelled firms over the 14.3M metro and the GDP the same metro's, approximate,
+ * neither of them Greater London (plan 06, task B3).
  *
  * THE LEVEL CHIP places the figure among the covered cities holding that
  * figure (hero_board.ts `levelOf`: the placement builder's rank read as
@@ -46,7 +53,8 @@
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { cityFigure, loadCityShard } from "@/lib/facts/city_shard";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
-import { isVisitorsRead } from "@/lib/spine/city_glance_rows";
+import { cityVisitorsM } from "@/lib/spine/city_glance_rows";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
 import { levelOf, heroImageFor, LEVEL_SET_FLOOR, type HeroBoardData, type HeroBoardRow } from "@/lib/spine/hero_board";
 import { placementRank } from "@/lib/spine/placement";
@@ -84,13 +92,16 @@ function sweeps() {
   const visitors: number[] = [], days: number[] = [], density: number[] = [], gdp: number[] = [], living: number[] = [], pay: number[] = [];
   for (const c of CITIES) {
     const iso2 = String(c.iso2).toUpperCase();
-    if (isPos(c.tourist_arrivals_m) && isVisitorsRead(c.sources?.tourist_arrivals_m)) visitors.push(c.tourist_arrivals_m);
-    if (isPos(c.gdp_b)) gdp.push(c.gdp_b);
+    const seen = cityVisitorsM(c);
+    if (seen != null) visitors.push(seen);
+    /* A city held to a register region prints no metro row, so its metro figures are no member of the rows' level sets either. */
+    const metro = cityRegisterPlace(iso2, c.slug) === null;
+    if (metro && isPos(c.gdp_b)) gdp.push(c.gdp_b);
     if (isPos(c.cost_of_living_index)) living.push(c.cost_of_living_index);
     if (loadCityShard(iso2, c.slug)) {
       const d = cityFigure(iso2, c.slug, "reg.total_local_days");
       if (d) days.push(d.value);
-      const n = cityFigure(iso2, c.slug, "comp.density_per_10k");
+      const n = metro ? cityFigure(iso2, c.slug, "comp.density_per_10k") : null;
       if (n && n.value > 0) density.push(n.value);
     }
   }
@@ -111,19 +122,22 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
   const C = COPY.cityHeroBoard;
   const rows: HeroBoardRow[] = [];
 
-  if (isPos(city.tourist_arrivals_m) && isVisitorsRead(city.sources?.tourist_arrivals_m)) {
-    rows.push({ key: "visitors", icon: "tourist", label: C.rows.visitors, value: visitorsM(city.tourist_arrivals_m), unit: C.units.aYear, level: levelOf(city.tourist_arrivals_m, s.visitors), confidence: "measured" });
+  const seen = cityVisitorsM(city);
+  if (seen != null) {
+    rows.push({ key: "visitors", icon: "tourist", label: C.rows.visitors, value: visitorsM(seen), unit: C.units.aYear, level: levelOf(seen, s.visitors), confidence: "measured" });
   }
+  /* A city held to a register region prints no metro row (the header). */
+  const metroRows = cityRegisterPlace(iso2, slug) === null;
   const days = cityFigure(iso2, slug, "reg.total_local_days");
   if (days) {
     const v = Math.round(days.value);
     rows.push({ key: "permits", icon: "red-tape", label: C.rows.permits, value: String(v), unit: v === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(days.value, s.days), confidence: days.tag === "held" ? "measured" : "modeled" });
   }
-  const density = cityFigure(iso2, slug, "comp.density_per_10k");
+  const density = metroRows ? cityFigure(iso2, slug, "comp.density_per_10k") : null;
   if (density && density.value > 0) {
     rows.push({ key: "density", icon: "competition", label: C.rows.density, value: Math.round(density.value).toLocaleString("en-US"), unit: C.units.per10k, level: levelOf(density.value, s.density), confidence: density.tag === "held" ? "measured" : "modeled" });
   }
-  if (isPos(city.gdp_b)) {
+  if (metroRows && isPos(city.gdp_b)) {
     rows.push({ key: "gdp", icon: "market-size", label: C.rows.gdp, value: usd(city.gdp_b * 1e9), unit: C.units.aYear, level: levelOf(city.gdp_b, s.gdp), confidence: "modeled" });
   }
   if (isPos(city.cost_of_living_index)) {

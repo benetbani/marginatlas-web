@@ -558,6 +558,8 @@ const GATES: Gate[] = [
   { name: "hero-rows", script: "tests/spine/hero_rows.test.ts" },
   /* No world median on a world track (plan 06, task B2; PART 9 clause 46): 146 of 197 countries interpolated and 52 on one fill made it. */
   { name: "world-range-no-median", script: "tests/spine/world_range_no_median.test.ts" },
+  /* London is Greater London on the city page (plan 06, task B3): the sourced visits, the register's counts, no metro row, no slope split. */
+  { name: "london-city", script: "tests/spine/london_city.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

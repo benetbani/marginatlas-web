@@ -21,8 +21,15 @@
  *    `comp.new_firms_per_yr`, `comp.closure_rate_pct`, `comp.independents_pct`,
  *    each a row where it is on file, the panel drawn from two rows.
  * `comp.density_per_10k` (the city's own total density) is the board's row
- * and prints nowhere here. Every London figure is modelled and the basis
- * says so; a shard with fewer than three trades draws no card.
+ * and prints nowhere here. A shard with fewer than three trades draws no card.
+ *
+ * A CITY HELD TO A REGISTER REGION (London, Greater London since his ruling of
+ * 2026-10-04; register_city.ts) draws the register's counts instead (plan 06,
+ * task B3): each of the shard's trades read through the register's code for it
+ * (london_trade.ts, a shared code named as its group, never as one trade), one
+ * row a code, the businesses registered in the region, the largest first. Its
+ * densities were modelled over the 14.3M metro, its focal total (531,000) and
+ * the plus's openings and closures modelled too: none of them prints there.
  *
  * THE ICON follows the trade's name through one map below, by the words the
  * shards use; a name the map does not know takes the high-street tile, so
@@ -37,6 +44,8 @@ import type { FactTag } from "@/lib/facts/types";
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "@/lib/spine/copy";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { LONDON_GEOGRAPHY, londonTradeRegister } from "@/lib/uk/registers/london_trade";
 
 type CityRow = { slug: string; name: string; iso2: string };
 const CITIES = (cityListJson as { cities: CityRow[] }).cities;
@@ -78,9 +87,25 @@ const TRADE_ICONS: Array<[RegExp, AtlasIconId]> = [
 ];
 export const tradeIconFor = (name: string): AtlasIconId => TRADE_ICONS.find(([re]) => re.test(name))?.[1] ?? "high-street";
 
+/** The register's trade for each of the shard's trade words (the shard's six: "Restaurants", "Cafes & coffee", "Bars & pubs", "Hair &
+ *  beauty", "Convenience & grocery", "Fitness & gyms"), first match wins; a word with no row here draws no register row. Each slug is
+ *  the one whose code is the trade's (trades_sic.json): licensed restaurants 56101, unlicensed restaurants and cafes 56102, public
+ *  houses and bars 56302, hairdressing and other beauty treatment 96020, non-specialised stores with food predominating 47110,
+ *  fitness facilities 93130. The printed name is COPY.cityMarket.register.names[slug], the code's group in plain words. */
+const REGISTER_TRADES: Array<[RegExp, string]> = [
+  [/caf[eé]|coffee/i, "cafes-coffee-shops"],
+  [/restaurant/i, "restaurants"],
+  [/\bbars?\b|pub/i, "pubs-taverns"],
+  [/hair|beauty/i, "hairdressers-beauty"],
+  [/grocer|convenience/i, "grocery-stores"],
+  [/fitness|gym/i, "yoga-pilates-studios"],
+];
+
 export type CityMarketDetailRow = { key: string; label: string; value: string; tag: FactTag };
 
 export type CityMarketData = {
+  /** "density": the shard's businesses per 10,000 residents; "register": the register's businesses in the city's region (a count). */
+  form: "density" | "register";
   slug: string;
   iso2: string;
   name: string;
@@ -116,6 +141,8 @@ export function buildCityMarket(slug: string): CityMarketData | null {
     byKey.set(key, r);
   }
   const trades = [...byKey.values()].filter((r): r is { key: string; name: string; value: number; tag: FactTag } => typeof r.name === "string" && r.name.length > 0 && isNum(r.value));
+  const place = cityRegisterPlace(iso2, slug);
+  if (place) return registerMarket(city, iso2, place.geography, trades.map((t) => t.name));
   if (trades.length < CITY_MARKET_MIN_TRADES) return null;
   trades.sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
   const rows: BarRow[] = trades.map((t) => ({ key: `trade-${t.key}`, name: t.name, value: t.value, icon: tradeIconFor(t.name) }));
@@ -143,6 +170,7 @@ export function buildCityMarket(slug: string): CityMarketData | null {
   const plusRows = focal ? detailRows.filter((r) => r.key !== "all") : detailRows;
   const sample = sampleBars || detailRows.some((r) => r.tag !== "held");
   return {
+    form: "density",
     slug,
     iso2,
     name: city.name,
@@ -153,5 +181,41 @@ export function buildCityMarket(slug: string): CityMarketData | null {
     sample,
     detail: plusRows.length >= 2 ? { summary: D.summary, rows: plusRows } : null,
     focal,
+  };
+}
+
+/** The register's counts for a city held to a register region: one row a code, the largest first, no focal and no plus. Only
+ *  London's region has an accessor today; another region draws no card rather than London's figures. */
+function registerMarket(city: CityRow, iso2: string, geography: string, shardNames: string[]): CityMarketData | null {
+  if (geography !== LONDON_GEOGRAPHY) return null;
+  const R = COPY.cityMarket.register;
+  const seen = new Set<string>();
+  const rows: BarRow[] = [];
+  for (const word of shardNames) {
+    const slug = REGISTER_TRADES.find(([re]) => re.test(word))?.[1];
+    const reg = slug ? londonTradeRegister(slug) : null;
+    const name = slug ? R.names[slug] : undefined;
+    if (!slug || !reg || !name) continue;
+    /* ONE ROW A CODE: two of the shard's words on one code would print one count twice. */
+    const code = reg.sic.join("+");
+    if (seen.has(code)) continue;
+    seen.add(code);
+    /* The tile follows the shard's word ("Cafes & coffee" is a cafe), never the group's ("unlicensed restaurants" would read as a restaurant). */
+    rows.push({ key: slug, name, value: reg.enterprises, icon: tradeIconFor(word) });
+  }
+  if (rows.length < CITY_MARKET_MIN_TRADES) return null;
+  rows.sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
+  return {
+    form: "register",
+    slug: city.slug,
+    iso2,
+    name: city.name,
+    rows,
+    worldMax: rows[0].value,
+    basis: R.basis.replace("{city}", city.name),
+    foot: null,
+    sample: false,
+    detail: null,
+    focal: null,
   };
 }

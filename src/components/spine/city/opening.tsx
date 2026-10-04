@@ -56,9 +56,13 @@ export function GatesCard({ id = "gates", gates }: { id?: string; gates: CityGat
 
 const perTenThousand = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
 
+/* A count of registered businesses, whole and grouped (the register's form of the card, plan 06, task B3). */
+const businesses = (v: number) => Math.round(v).toLocaleString("en-US");
+
 export function MarketCard({ id = "market", market }: { id?: string; market: CityMarketData | null }) {
   if (!market) return null;
   const C = COPY.cityMarket;
+  const register = market.form === "register";
   return (
     <RankedBars
       id={id}
@@ -71,9 +75,9 @@ export function MarketCard({ id = "market", market }: { id?: string; market: Cit
       worldMax={market.worldMax}
       ceiling="set"
       feature="none"
-      topLabel={C.densest}
-      fmt={perTenThousand}
-      phoneHead={{ name: C.phoneHead.trade, value: C.phoneHead.value }}
+      topLabel={register ? C.register.top : C.densest}
+      fmt={register ? businesses : perTenThousand}
+      phoneHead={{ name: C.phoneHead.trade, value: register ? C.register.phoneValue : C.phoneHead.value }}
       detail={market.detail ? <DetailPanel name={`${id}-figures`} summary={market.detail.summary} rows={market.detail.rows.map((r) => ({ label: r.label, value: r.value }))} /> : undefined}
     />
   );

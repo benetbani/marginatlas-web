@@ -50,7 +50,7 @@ import { getFormationRowByTier } from "@/lib/tax/country_rates";
 import { buildPayBars, PAY_RATIO_FLOOR } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
 import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
-import { buildCityGlance, CITY_GLANCE_CELLS, isVisitorsRead } from "@/lib/spine/city_glance_rows";
+import { buildCityGlance, CITY_GLANCE_CELLS, cityVisitorsM } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
 import { buildCityPeopleTable } from "@/lib/spine/character_rows";
@@ -271,7 +271,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
    kickers this dispatch corrected or built sit under PART 7's four words. */
 {
   const seed = { meta: { iso2: "XX" }, peers: { list: [
-    { name: "A", slug: "a", iso2: "XX", home: true, rent_index: 75, median_income_usd: 48756, visitors_m: 16 },
+    { name: "A", slug: "a", iso2: "XX", home: true, rent_index: 75, median_income_usd: 48756, visitors_m: 20.9 },
     { name: "B", slug: "b", iso2: "YY", home: false, rent_index: 75, median_income_usd: 41000, visitors_m: 7 },
     { name: "C", slug: "c", iso2: "ZZ", home: false, rent_index: 73, median_income_usd: 44000, visitors_m: 19 },
     { name: "D", slug: "d", iso2: "WW", home: false, rent_index: 89, median_income_usd: 52000, visitors_m: 5.5 },
@@ -291,7 +291,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     const b = t.rows.find((r) => r.key === "b")!, a = t.rows.find((r) => r.home)!;
     const onScale = costOfLivingOnCityScale(75);
     if (onScale == null || b.values.living !== onScale || a.values.living !== onScale || onScale < 1 || onScale > 100) reds.push(`city peers: a tied index prints ${b.values.living} beside the home row's ${a.values.living} (the scale's figure for 75 is ${onScale})`);
-    if (a.values.income !== 48756 || a.values.visitors !== 16) reds.push("city peers: the home row does not print its own figures");
+    if (a.values.income !== 48756 || a.values.visitors !== 20.9) reds.push("city peers: the home row does not print its own figures");
     for (const r of t.rows) for (const c of t.columns) { const v = r.values[c.key]; if (v != null && v <= 0) reds.push(`city peers: row "${r.name}" prints ${v} under "${c.head}", a zero or a difference where an absolute goes`); }
     for (const txt of [t.caveat, ...t.columns.map((c) => c.head), t.entityHead]) {
       for (const bw of COPY.banned) if (txt.toLowerCase().includes(bw)) reds.push(`city peers: banned word "${bw}" in "${txt}"`);
@@ -505,7 +505,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
    foot always says the placement is not shown. Both builders read the city
    list and the city shard only, no browser, no database. */
 {
-  const cities = (cityListJson as { cities: Array<{ slug: string; tourist_arrivals_m?: number; sources?: Record<string, string> }> }).cities;
+  const cities = (cityListJson as { cities: Array<{ slug: string; iso2: string; tourist_arrivals_m?: number; sources?: Record<string, string> }> }).cities;
   let glances = 0;
   let seats = 0;
   let visitorsDrawn = 0;
@@ -527,7 +527,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if ((missing > 0) !== (g.withheld != null)) reds.push(`city glance ${c.slug}: ${missing} cell(s) missing and the withheld line is ${g.withheld ? "printed" : "absent"}`);
       if (g.withheld && !g.withheld.startsWith(`${missing} of ${CITY_GLANCE_CELLS}`)) reds.push(`city glance ${c.slug}: ${missing} cell(s) missing but the line reads "${g.withheld}"`);
       if (g.cells.some((x) => x.key === "hdi") || !(g.withheld ?? "").includes(COPY.cityGlance.reasons.hdi)) reds.push(`city glance ${c.slug}: the human development index is withheld on every city and the line does not say so`);
-      const visitorsOwn = typeof c.tourist_arrivals_m === "number" && c.tourist_arrivals_m > 0 && isVisitorsRead(c.sources?.tourist_arrivals_m);
+      /* The one resolver (plan 06, task B3): the people file's sourced count first, then the list's counted ones. */
+      const visitorsOwn = cityVisitorsM(c) != null;
       const drawn = g.cells.some((x) => x.key === "visitors");
       if (drawn !== visitorsOwn) reds.push(`city glance ${c.slug}: the visitor cell is ${drawn ? "drawn" : "absent"} and the row's count is ${visitorsOwn ? "the city's own" : "not the city's own"}`);
       if (drawn) visitorsDrawn++;
@@ -794,7 +795,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   };
   const wordsOf = (t: string) => t.split(/\s+/).filter(Boolean).length;
   let ownAll = 0, mixed = 0, countryOnly = 0, feet = 0, nationalFeet = 0;
-  let sHeld = 0, sModelled = 0, sShard = 0, sSlope = 0, sWithheld = 0;
+  let sHeld = 0, sModelled = 0, sShard = 0, sWithheld = 0;
   let curated = 0, seated = 0, cards = 0;
   for (const c of cities) {
     const p = buildCityPeopleTable(c.slug);
@@ -822,10 +823,9 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (!se.basis) reds.push(`city season ${c.slug}: cells with no basis`);
       if (se.basis && wordsOf(se.basis) > 14) reds.push(`city season ${c.slug}: a basis over fourteen words: "${se.basis}"`);
       if ((se.confidence !== "measured") !== (se.foot != null)) reds.push(`city season ${c.slug}: the confidence is ${se.confidence} and the foot is ${se.foot ? "printed" : "absent"}`);
-      if (se.from === "slope" && se.foot !== COPY.citySeason.footSlope) reds.push(`city season ${c.slug}: the slope's shares under the foot "${se.foot}"`);
       if (se.from === "shard" && se.foot != null && se.foot !== COPY.citySeason.footModelled) reds.push(`city season ${c.slug}: the shard's modelled shares under the foot "${se.foot}"`);
       if (se.confidence === "measured") sHeld++; else sModelled++;
-      if (se.from === "shard") sShard++; else if (se.from === "slope") sSlope++; else reds.push(`city season ${c.slug}: cells drawn from no named feed`);
+      if (se.from === "shard") sShard++; else reds.push(`city season ${c.slug}: cells drawn from no named feed`);
     } else {
       sWithheld++;
       if (se.basis || se.foot) reds.push(`city season ${c.slug}: a basis or a foot under a withheld line`);
@@ -867,7 +867,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (wordsOf(COPY.cityNeighbourhoods.kicker) > 4) reds.push(`city neighbourhoods: the opener runs over four words: "${COPY.cityNeighbourhoods.kicker}"`);
   if (wordsOf(COPY.citySeason.kicker) > 4) reds.push(`city season: the opener runs over four words: "${COPY.citySeason.kicker}"`);
   if (COPY.blocked.cityNeighbourhoods.kicker !== COPY.cityNeighbourhoods.kicker) reds.push("city neighbourhoods: the seat's kicker and the pager's differ");
-  console.log(`city turn three: the people table draws six rows on ${ownAll + mixed + countryOnly} cities (${ownAll} all the city's own, ${mixed} mixed, ${countryOnly} the country's; ${feet} with the city's own foot, ${nationalFeet} with the country's, labelled); the season pair prints on ${sHeld + sModelled} (${sHeld} held, ${sModelled} modelled; ${sShard} off the shard, ${sSlope} off the slope) and is withheld on ${sWithheld}; the neighbourhoods pager draws on ${curated} cities (${cards} cards) and the seat on ${seated}`);
+  console.log(`city turn three: the people table draws six rows on ${ownAll + mixed + countryOnly} cities (${ownAll} all the city's own, ${mixed} mixed, ${countryOnly} the country's; ${feet} with the city's own foot, ${nationalFeet} with the country's, labelled); the season pair prints on ${sHeld + sModelled} (${sHeld} held, ${sModelled} modelled; ${sShard} off the shard) and is withheld on ${sWithheld}; the neighbourhoods pager draws on ${curated} cities (${cards} cards) and the seat on ${seated}`);
 }
 
 /* THE BILL TO REGISTER (MODEL.md 8.2 `04 entry-bill`; plan step 31's third
