@@ -112,6 +112,7 @@ import { buildJobMarket } from "@/lib/spine/sections/market_jobs";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
 import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
+import { countryPageTarget } from "@/lib/geo/page_targets";
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.2's
@@ -1421,6 +1422,8 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const name: string | undefined = d.meta?.country_name;
   if (!name) return null;
   const iso2: string | undefined = typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined;
+  /* The page's own address from the resolver the country route checks (geo-link-construction): the notify ask's key. */
+  const ownPath = iso2 ? countryPageTarget(iso2)?.href ?? null : null;
 
   /* WHO IS HOME, ASKED ONCE, FROM THE BUILDERS THE CARDS DRAW FROM. A band is
      drawn when either of its cards exists and not otherwise, and a card that
@@ -1706,7 +1709,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
         {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
         <SourcesFoot iso2={iso2 as string} />
         {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
-        <DepthNotifyFoot path={`/${String(iso2).toLowerCase()}`} />
+        {ownPath ? <DepthNotifyFoot path={ownPath} /> : null}
         <OnThisPage sections={sections} chapters={railChapters} />
       </>
     );
@@ -1847,7 +1850,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
       </div>
       <SourcesFoot iso2={iso2 as string} />
       {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
-      <DepthNotifyFoot path={`/${String(iso2).toLowerCase()}`} />
+      {ownPath ? <DepthNotifyFoot path={ownPath} /> : null}
       <OnThisPage sections={generalSections} chapters={generalChapters} />
     </>
   );

@@ -231,6 +231,26 @@ const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string
      same shape once: on 2026-08-08 it flipped to FAIL because six hand-built geo
      links DISAPPEARED with a deleted file, and the baseline was counting links
      in a file that was gone. Prune the entry when you delete the file. */
+  {
+    file: "src/lib/taxonomy/retired_paths.ts",
+    path: "/*/*",
+    guard: "getRegionsForCountry(iso2, meta.name).some((r) => r.value === geo)",
+    why:
+      "A retired trade's place path sent to its region's page (milestone 1, M1). The two-segment form is " +
+      "returned only after the slug is found in that country's own region list, the list the region route " +
+      "checks, and the country segment only after COUNTRIES. It does not call the resolver because the " +
+      "middleware calls it on the edge, and page_targets.ts drags the neighbourhood scheme's data into that " +
+      "bundle; the check it makes is the resolver's region branch, word for word.",
+  },
+  {
+    file: "src/lib/taxonomy/retired_paths.ts",
+    path: "/*",
+    guard: "COUNTRIES.find((c) => c.code === iso2)",
+    why:
+      "The last fallback of the same redirect: the country's own page, reached only after the segment was " +
+      "found in COUNTRIES (the function returns null before this line otherwise), which is the list the " +
+      "/[country] route gates on.",
+  },
 ];
 
 /* ------------------------------------------------------------------ scanning */

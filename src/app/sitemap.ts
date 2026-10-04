@@ -37,6 +37,7 @@ import { getCoverageRows } from "@/lib/coverage/report";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { isPathSuppressed } from "@/lib/quality/thin_pages";
 import { isIndexable } from "@/lib/seo/indexable";
+import { countryPageTarget } from "@/lib/geo/page_targets";
 import { RETIRED } from "@/lib/taxonomy/retired";
 import { spineHoodDistricts } from "@/lib/spine/hood_scheme";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
@@ -108,7 +109,7 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
   /* THE SPINE PAGES THE RULE ALLOWS (milestone 1, M10; his interview of 2026-09-26, answer 6: UK pages and pages at their floor,
      src/lib/seo/indexable.ts): a page the robots tag keeps out of the index is never advertised here, and the indexable pages this
      map never listed (the industries and the how-to pages at their floor) are listed now. */
-  const countryUrls: MetadataRoute.Sitemap = COUNTRIES.filter((c) => isIndexable(`/${c.code.toLowerCase()}`)).map((c) => ({
+  const countryUrls: MetadataRoute.Sitemap = COUNTRIES.filter((c) => { const href = countryPageTarget(c.code)?.href; return !!href && isIndexable(href); }).map((c) => ({
     url: `${BASE_URL}/${c.code.toLowerCase()}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
