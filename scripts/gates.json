@@ -1477,6 +1477,28 @@
       "claims": []
     },
     {
+      "name": "uk-trade-survival",
+      "script": "tests/uk/registers/survival.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "UK survival by trade group (data/uk/registers/survival.json): the period curve at one, three and five years with its interval, and the 2019 starters' five-year record, for a trade that maps to exactly",
+      "reads": [
+        "src/lib/uk/registers/survival.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "uk-survival-card",
+      "script": "tests/spine/lasts_uk.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "The survival card on a UK trade page reads the UK's own survival (plan 06, task A2): the period figures at one, three and five years, each rounded once through its interval, the 2019 starters beside t",
+      "reads": [
+        "src/lib/spine/lasts_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-present-precision",
       "script": "tests/uk/present/precision.test.ts",
       "args": [],

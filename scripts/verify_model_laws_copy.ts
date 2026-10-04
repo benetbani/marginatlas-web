@@ -783,7 +783,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
       /* The row names are place names (a state, a city), judged here as the ROW SENTENCE loop above judges its list, which has already run. */
       for (const r of p.rows) { const n = r.name.trim().split(/\s+/).filter(Boolean).length; if (n > 3) pushRed("ROW SENTENCE", `buildTradePeers(${name}).rows.${r.key}: "${r.name}" is a label of ${n} words, over three`); }
     }
-    heads.push(["COPY.tradeClears.foot", COPY.tradeClears.foot], ["COPY.tradeLasts.foot", COPY.tradeLasts.foot]);
+    heads.push(["COPY.tradeClears.foot", COPY.tradeClears.foot], ["COPY.tradeLasts.foot", COPY.tradeLasts.foot], ["COPY.tradeLasts.footUk", COPY.tradeLasts.footUk], ["COPY.tradeLasts.working.cohort", COPY.tradeLasts.working.cohort]);
     for (const [key, text] of Object.entries(COPY.tradeLasts.cells)) heads.push([`COPY.tradeLasts.cells.${key}`, text]);
     const engineClears = buildClears({ meta: { industry_id: "restaurants", money_shown: true }, break_even: { share_pct: 75 } });
     if (!engineClears || engineClears.branch !== "engine") pushRed("BANNED CONSTRUCTION", "buildClears(engine): a seed with money shown and the engine's share does not build on the engine branch");
@@ -793,6 +793,9 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
       if (cl) heads.push([`buildClears(${id}).basis`, cl.basis], [`buildClears(${id}).foot`, cl.foot]);
       const l = buildLasts(id);
       if (l) { for (const c of l.cells) heads.push([`buildLasts(${id}).cells.${c.key}`, c.label]); heads.push([`buildLasts(${id}).basis`, l.basis], [`buildLasts(${id}).foot`, l.foot]); }
+      /* The UK branch (plan 06, task A2): its foot names the trade's survival group, composed per trade, so it is swept the same way. */
+      const lu = buildLasts(id, "place", { iso2: "GB", slug: id.replace(/_/g, "-") });
+      if (lu) heads.push([`buildLasts(${id}, GB).foot`, lu.foot]);
       /* THE MIX AND THE MARKET (MODEL.md 8.6 `11 mix`, `12 market`; plan step
          33's fifth dispatch, 2026-09-18): the mix's labels are the shards' own
          channel names (one to nine words a reader meets over a figure, the

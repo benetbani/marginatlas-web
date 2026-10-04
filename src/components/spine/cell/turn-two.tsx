@@ -139,8 +139,8 @@ export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; 
        the slack above and below it, the basis and the foot on the floor, so
        the foot is never a blank (the permits card's composition). */
     <Box id={id} className="flex h-full flex-col">
-      {/* Every shard figure is modelled (R12), so the opener's mark is on, behind his switch. */}
-      <Rail icon="first-year" kicker={W.kicker} sample />
+      {/* A shard's figure is modelled (R12), so the opener's mark is on, behind his switch; a UK page's are the demography's own. */}
+      <Rail icon="first-year" kicker={W.kicker} sample={lasts.confidence !== "measured"} />
       <div className={`flex flex-1 flex-col ${list ? "[container-type:inline-size]" : "justify-center"}`}>
         <WorkedFigure
           label={W.cells.yr5}
@@ -148,6 +148,8 @@ export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; 
           working={[
             { figure: `${lasts.values.yr1}%`, words: W.working.yr1 },
             { figure: `${lasts.values.yr3}%`, words: W.working.yr3 },
+            /* The 2019 starters beside the period figure, once (his ruling of 2026-10-04): the same five years, one cohort's record. */
+            ...(lasts.cohort2019 !== undefined ? [{ figure: `${lasts.cohort2019}%`, words: W.working.cohort }] : []),
           ]}
           list={list}
         />

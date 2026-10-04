@@ -1902,9 +1902,11 @@ export const COPY = {
     kicker: "How many survive",
     cells: { yr5: "After five years", yr1: "After one year", yr3: "After three years" },
     /** The two readings under year five on the worked-figure card (2026-09-24, goal B1), in the working row's lower case, as the customers card writes "a visit". */
-    working: { yr1: "after one year", yr3: "after three years" },
+    working: { yr1: "after one year", yr3: "after three years", cohort: "of the 2019 starters" },
     basis: "",
     foot: "Out of every 100 that open.",
+    /** On a UK page (plan 06, task A2): the period figure's rates and the group it is read for, which is broader than the trade. */
+    footUk: "Out of every 100 that open, at recent rates, across UK {group}.",
     /** The drawn hundred's name for a screen reader, after the count: "50 of every 100 still open after five years". */
     drawn: "of every 100 still open after five years",
   },

@@ -325,7 +325,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      on every trade that holds a shard, so the band holds two children or
      does not draw (the same condition as `03 | 04`). */
   const clears = buildClears(d);
-  const lasts = buildLasts(d.meta?.industry_id);
+  const lasts = buildLasts(d.meta?.industry_id, "place", { iso2: d.meta?.iso2, slug: d.meta?.industry });
   /* `11 mix` (turn-two.tsx): the donut off the shard's channels on every
      trade that holds a shard, seated in the exit beside `13 rivals` since
      2026-09-20 (`10 watch`, the seat that stood beside it, left the page that
@@ -374,7 +374,8 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      band's note), turn two the share, the survival grid and the strip, turn
      three the bento and then the exit's pair. */
   const turnOne = !!(permits && open) || !!((kit || hold) && lines) || !!(split && team) || !!(peers && peers.peers > 0);
-  const turnTwo = !!(clears && lasts);
+  /* Either card holds the level (plan 06, task A2): a UK trade with no single survival group keeps covering the costs, alone. */
+  const turnTwo = !!(clears || lasts);
   const turnThree = !!market;
 
   /* THE BAND PAGE (2026-10-04, his "push forward man" after the United Kingdom's band page went live; MODEL.md PART 10): each level
@@ -407,7 +408,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
     },
     { key: "split", split: "3-2", stack: "lg", chapter: "01", label: "Where the money goes", body: turnOne && split && team ? [<SplitCard key="split" split={split} />, <TeamCard key="team" team={team} />] : [] },
     { key: "peers", split: "wide", chapter: "01", label: COPY.tradePeers.kicker, body: turnOne && peers && peers.peers > 0 ? [<PeersCard key="peers" peers={peers} zone />] : [] },
-    { key: "clears", split: "1-1", chapter: "02", label: COPY.tradeChapters.keep, body: turnTwo && clears && lasts ? [<ClearsCard key="clears" clears={clears} />, <LastsCard key="lasts" lasts={lasts} />] : [] },
+    { key: "clears", split: "1-1", chapter: "02", label: COPY.tradeChapters.keep, body: turnTwo ? keep([clears ? <ClearsCard key="clears" clears={clears} /> : null, lasts ? <LastsCard key="lasts" lasts={lasts} /> : null]) : [] },
     { key: "market", split: "wide", chapter: "03", label: COPY.tradeChapters.trade, body: turnThree ? [<MarketBand key="market" market={market} />] : [] },
     { key: "mix", split: "1-2", stack: mix && rivals ? undefined : "lg", chapter: "03", label: "The mix", body: keep([mix ? <MixCard key="mix" mix={mix} /> : null, rivals ? <RivalsCard key="rivals" rivals={rivals} oneColumn={!!mix} /> : null]) },
     { key: "apps", split: "3-2", stack: "lg", chapter: "03", label: "Paying here", body: apps && spendIncome ? [<LocalApps key="apps" id="apps" data={apps} />, <SpendByIncome key="spend" id="spend-income" data={spendIncome} />] : [] },

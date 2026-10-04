@@ -543,6 +543,9 @@ const GATES: Gate[] = [
   /* A London trade's register figures for the pages (plan 06, task A1): counts, the median and quartiles read once from the
      band counts, the share under 100k, shared codes named and approximate codes refused. */
   { name: "uk-london-trade", script: "tests/uk/registers/london_trade.test.ts" },
+  /* UK survival by trade group, period first and the 2019 starters beside (plan 06, task A2): the accessor and the card's UK branch. */
+  { name: "uk-trade-survival", script: "tests/uk/registers/survival.test.ts" },
+  { name: "uk-survival-card", script: "tests/spine/lasts_uk.test.ts" },
   /* The UK pages' presentation maths (docs/superpowers/plans/2026-10-02-vertical-engine-04-presentation.md):
      a figure prints no finer than it is known; shares add to their whole; ranks tie when intervals overlap. */
   { name: "uk-present-precision", script: "tests/uk/present/precision.test.ts" },

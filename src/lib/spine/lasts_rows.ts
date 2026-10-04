@@ -44,6 +44,8 @@
 import { industryFigure } from "@/lib/facts/industry_shard";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import { COPY } from "@/lib/spine/copy";
+import { tradeSurvivalUk } from "@/lib/uk/registers/survival";
+import { honestRound } from "@/lib/uk/present/precision";
 
 export const LASTS_METRICS = { yr1: "survival.yr1_pct", yr3: "survival.yr3_pct", yr5: "survival.yr5_pct" } as const;
 
@@ -58,15 +60,42 @@ export type LastsData = {
   /** The candidate's focal, named for the day of his click. */
   focal: { key: "yr5"; value: number };
   values: { yr1: number; yr3: number; yr5: number };
+  /** The 2019 starters still trading after five years, as a whole percentage, on a UK page (beside the period figure, once). */
+  cohort2019?: number;
   basis: string;
   foot: string;
-  confidence: "modeled";
+  /** "measured" on a UK page (the business demography's own figures), "modeled" off it (the trade's shard). */
+  confidence: "modeled" | "measured";
 };
 
 const isPct = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v) && v > 0 && v <= 100;
 
-export function buildLasts(industryId: string | undefined, altitude: LastsAltitude = "place"): LastsData | null {
+/* ON A UK PAGE, THE UK'S OWN SURVIVAL (plan 06, task A2; his ruling of 2026-10-04: the period figure first, the 2019 starters
+   beside it once). The business demography's trade group at today's closure rates, each share rounded once through its
+   interval (whole percentages: the intervals are under a point wide); the foot names the group, which is broader than the
+   trade. A UK trade with no single group draws no card: its shard's figure is the trade's anywhere, not the UK's. */
+function buildLastsUk(industryId: string, slug: string | undefined): LastsData | null {
+  const uk = slug ? tradeSurvivalUk(slug) : null;
+  if (!uk) return null;
+  const pct = (t: 1 | 3 | 5) => honestRound(uk.period[t].survival * 100, uk.period[t].lo * 100, uk.period[t].hi * 100);
+  const values = { yr1: pct(1), yr3: pct(3), yr5: pct(5) };
+  const cell = (key: "yr5" | "yr1" | "yr3"): KvCell => ({ key, label: COPY.tradeLasts.cells[key], value: `${values[key]}%`, confidence: "measured" });
+  return {
+    industryId,
+    altitude: "place",
+    cells: [cell("yr5"), cell("yr1"), cell("yr3")],
+    focal: { key: "yr5", value: values.yr5 },
+    values,
+    cohort2019: honestRound(uk.cohort2019Five * 100),
+    basis: "",
+    foot: COPY.tradeLasts.footUk.replace("{group}", uk.groupName),
+    confidence: "measured",
+  };
+}
+
+export function buildLasts(industryId: string | undefined, altitude: LastsAltitude = "place", place?: { iso2?: string; slug?: string }): LastsData | null {
   if (!industryId) return null;
+  if (altitude === "place" && place?.iso2?.toUpperCase() === "GB") return buildLastsUk(industryId, place.slug);
   const yr1 = industryFigure(industryId, LASTS_METRICS.yr1)?.value;
   const yr3 = industryFigure(industryId, LASTS_METRICS.yr3)?.value;
   const yr5 = industryFigure(industryId, LASTS_METRICS.yr5)?.value;
