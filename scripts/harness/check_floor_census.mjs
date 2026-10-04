@@ -12,6 +12,9 @@
  */
 import { readFileSync, existsSync } from "node:fs";
 import { countTopBlocks, floorsFromLaws } from "../lib/block_count.mjs";
+import { preflight } from "./preflight.mjs";
+
+preflight({ name: "check_floor_census" });
 
 const census = JSON.parse(readFileSync("data/seo/floor_census.json", "utf8"));
 const pages = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages;
