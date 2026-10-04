@@ -747,8 +747,10 @@ Across businesses, for sales R: `RV(R) = RV_A x R / A`; `rates(RV(R))` by the la
 step apply to each size; `P(R) = R - vR - sR - RV(R) - rates(RV(R))`, every line rounded first; `K(R)` the take-home after
 tax, a loss kept as a loss. One business in the short run: `F_A = sA + RV_A + rates(RV_A)`, break-even `R* = F_A / (1 - v)`,
 and the share of registered businesses above it `1 - cdf(R*)`. At its own sales the two readings agree,
-`P(A) = (1 - v)A - F_A`, and the test proves it. P is increasing except where the law steps: the sweep from 10k to 1m finds
-the only falls exactly where the scaled rateable value crosses 51,000. The worked example is a London barbershop: the
+`P(A) = (1 - v)A - F_A`, and the test proves it. For the barbershop, P is increasing except where the law steps: the sweep
+from 10k to 1m finds the only falls exactly where the scaled rateable value crosses 51,000. A trade whose scaled premises
+cross the relief taper (rateable values 12,000 to 15,000) loses profit there too, so pages say "the business at" a quartile,
+never "a quarter keep less than" (restaurants: the lower-quartile business keeps more than only 12.5 of 100). The worked example is a London barbershop: the
 average salon's business needs 64,112.98 to break even, 61 of 100 registered businesses take that, and the business at the
 median (78,625.81 of sales, a 34 m2 room that small business relief clears of rates) keeps 25,407.33 after tax.
 
