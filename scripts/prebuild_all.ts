@@ -574,6 +574,10 @@ const GATES: Gate[] = [
   /* The 58 retired blog posts (his ruling of 2026-10-05, PARKED P36.1): none left in content/blog, each redirected by
      next.config.js to a page that lives, no link to one anywhere (data/blog/retired_posts.json). */
   { name: "blog-retired", script: "tests/blog/retired_posts.test.ts" },
+  /* The corrections log (his ruling of 2026-10-05, PARKED P31.1): /corrections lists data/corrections.json, dated, append only,
+     "No corrections yet." while empty, no changelog, no promise of times he did not make; linked from About the figures and the
+     report form. */
+  { name: "corrections-log", script: "tests/trust/corrections_log.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

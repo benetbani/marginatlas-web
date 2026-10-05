@@ -41,6 +41,13 @@ export default async function ReportMistakePage({ searchParams }: { searchParams
           </p>
         ) : null}
         <CorrectionForm cellUrl={path ?? ""} startOpen />
+        <p>
+          Every correction we make is listed on the{" "}
+          <a href="/corrections" className="underline underline-offset-2 hover:text-atlas-600">
+            corrections page
+          </a>
+          .
+        </p>
       </LegalSection>
     </LegalPage>
   );

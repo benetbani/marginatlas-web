@@ -1587,6 +1587,23 @@
       "claims": []
     },
     {
+      "name": "corrections-log",
+      "script": "tests/trust/corrections_log.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE CORRECTIONS PAGE (his ruling of 2026-10-05 on PARKED P31.1, option (a): \"a corrections page from launch day, each correction with its date and 'no corrections yet' as its honest first state, and n",
+      "reads": [
+        "data/corrections.json",
+        "data/corrections.json holds a list of corrections",
+        "src/app/(site)/about-data/changelog",
+        "src/app/(site)/about-data/page.tsx",
+        "src/app/(site)/changelog",
+        "src/app/(site)/corrections/new/page.tsx",
+        "src/app/(site)/corrections/page.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

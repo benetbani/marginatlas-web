@@ -160,6 +160,10 @@ export default function AboutDataPage() {
         <p className="mt-3 text-ink-800">
           The dataset is refreshed regularly. Each benchmark page indicates the recency of the underlying observation.
         </p>
+        <p className="mt-3 text-ink-800">
+          When a figure turns out wrong, we correct it and list it on the{" "}
+          <a href="/corrections" className="underline underline-offset-2">corrections page</a>.
+        </p>
       </section>
 
       <section className="mt-10">
