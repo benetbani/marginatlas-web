@@ -1,5 +1,7 @@
 # Parked: what waits for his word
 
+**RULED 2026-10-05 (evening): he took the recommendation, option (a), on all nineteen** (E:/atlas/rules/FOUNDER-VERDICTS.md). Each entry's "Ruled" line says where it stands.
+
 Each entry: the question, two to four options with the recommendation first and its reason, and what is built either way. The
 executor adds an entry the moment a step meets a decision only he can make, then continues. Step 40 reads them all into
 MORNING-REPORT.md.
@@ -7,6 +9,7 @@ MORNING-REPORT.md.
 ## Carried in from before the night
 
 ### P0.1 Cookie-free visit counting (milestone 1, live but off)
+- **Ruled 2026-10-05:** option (a). your two clicks: Vercel's Analytics enabled and `NEXT_PUBLIC_WEB_ANALYTICS=1` (LAUNCH-SWITCHES rows 10 and 11), then a deploy.
 - **Question:** switch on Vercel Web Analytics?
 - **Options:** (a) Recommended: yes, because it counts visits without a cookie, so the site learns which pages are read and
   needs no consent banner: Vercel, the project, Analytics, Enable; then Settings, Environment Variables,
@@ -14,12 +17,14 @@ MORNING-REPORT.md.
 - **Built either way:** the script loads only behind the switch (milestone 1, M2).
 
 ### P0.2 A named person on the site (QUEUE `cred:founder`)
+- **Ruled 2026-10-05:** option (a). being built: a short /about page with your name; your background, photo, company and contact wait for you.
 - **Question:** may the site name its founder on an about page?
 - **Options:** (a) Recommended: yes, a short about page with his name and why the site exists (credibility earned in the open,
   CREDIBILITY.md); (b) the site stays unsigned.
 - **Built either way:** nothing.
 
 ### P0.3 The data pack (QUEUE `cred:data-pack`)
+- **Ruled 2026-10-05:** option (a). being built: the UK data pack at /data, free and cited.
 - **Question:** publish the UK data pack (`E:/atlas/cache/uk/pack/2026.10/`, 13 files) at `/data`, and is it free?
 - **Options:** (a) Recommended: free and public, cited, as the credibility plan proposes; (b) Pro only; (c) not yet.
 - **Built either way:** nothing.
@@ -27,6 +32,7 @@ MORNING-REPORT.md.
 ## Added during the night
 
 ### P03.1 London's "Rent by district" (step 03, labels audit item 19)
+- **Ruled 2026-10-05:** option (a). stands as built (commit 9f9e1fee): nothing to do until a district rent source exists.
 - **Question:** the seven districts' rents are the engine's multipliers (1.00x to 2.50x, a function of each district's tags).
   The valuation statistics give real shop rent by borough, but only the City of London is a whole borough among the seven
   districts (Covent Garden lies in two boroughs, the South Bank in Lambeth and Southwark), so no district figure can replace
@@ -40,6 +46,7 @@ MORNING-REPORT.md.
   tenths, no hand-anchored cost of living, and "estimate" in each line that needs it (commit 9f9e1fee).
 
 ### P04.1 What UK households spend on (step 04, labels audit item 15)
+- **Ruled 2026-10-05:** option (a). the data track's: the Family Spending tables downloaded and the card's shares replaced, with their source.
 - **Question:** /gb's "What households spend on" prints the shard's shares (39% of food money on eating out, housing and bills
   18%), with no source. The official shares are in the national statistics office's Family Spending workbooks, which are not on
   disk, and the night may not download anything. May the data track fetch them?
@@ -49,6 +56,7 @@ MORNING-REPORT.md.
 - **Built either way:** nothing; the card stands as it was.
 
 ### P06.1 Apply the two account migrations (step 06)
+- **Ruled 2026-10-05:** option (a). launch day, before the switches (LAUNCH-SWITCHES row 2).
 - **Question:** apply `db/migrations/2026-10-05-pro-subscriptions.sql` (the subscriptions table for one Pro tier, and the
   service-role-only lookup of an account by its checkout email) and `db/migrations/2026-06-08-accounts-saved-cells.sql` (saved
   cells, if accounts open at launch) in the Supabase SQL Editor?
@@ -59,6 +67,7 @@ MORNING-REPORT.md.
   Stripe retries rather than losing an event.
 
 ### P09.1 Stripe: the product, the terms URL, and VAT (step 09)
+- **Ruled 2026-10-05:** option (a). launch day: both Stripe prices tax-inclusive (LAUNCH-SWITCHES row 4); the drafts' VAT wording follows.
 - **Question:** three settings only you can make before Pro sells: (1) create the Pro product with two prices, $38 a month and
   $238 a year, then set `STRIPE_PRICE_PRO_MONTHLY` and `STRIPE_PRICE_PRO_ANNUAL` in Vercel; (2) set a terms URL in Stripe's
   checkout settings, then `STRIPE_TERMS_CONSENT=1` (the box asking consent to immediate access, ruling 34; Stripe refuses the box
@@ -71,6 +80,7 @@ MORNING-REPORT.md.
   their switch, off until you turn them on (commit of step 09; LAUNCH-SWITCHES.md lists the order).
 
 ### P11.1 Stripe's customer portal (step 11)
+- **Ruled 2026-10-05:** option (a). launch day (LAUNCH-SWITCHES row 5).
 - **Question:** set the portal in Stripe (Settings, Customer portal): allow cancelling at the end of the period and updating the
   card, return link `https://www.marginatlas.com/account`?
 - **Options:** (a) Recommended: yes, as LAUNCH-SWITCHES.md row 6 says (ruling 34: cancel any time, keep access to the end of the
@@ -79,6 +89,7 @@ MORNING-REPORT.md.
   the portal route, and the welcome page a checkout returns to.
 
 ### P04.2 The UK's peers table
+- **Ruled 2026-10-05:** option (a). the data track's: each peer country's figures from its published rates.
 - **Question:** /gb's "Against the peers" prints the UK's sourced row beside Ireland, France, Germany and the Netherlands, whose
   tax, payroll and registration figures are hand-held constants with no source. Tonight the line says "The peers' figures are
   estimates" (the audit's own remedy). Should the peers' figures be sourced, or the rows withheld?
@@ -88,6 +99,7 @@ MORNING-REPORT.md.
 
 
 ### P20.1 The links a locked page takes from a free reader (step 20)
+- **Ruled 2026-10-05:** option (a). being built: a free row of plain doors in each locked page's free half.
 - **Question:** when the paywall is on, a locked level hides its links too. Measured by the paywall-shape gate on the locked
   renders: London restaurants keeps 6 of its 9 internal links (the four sibling trades in "Other trades to open", inside "The
   mix", are gone: grocery stores, legal services, estate agents, software development), and /gb loses its three city cards
@@ -100,6 +112,7 @@ MORNING-REPORT.md.
   the count per page on every run.
 
 ### P18.1 A build of the night branch (step 18)
+- **Ruled 2026-10-05:** option (a). done: Vercel built the night branch (50e00bcb), live since 2026-10-05.
 - **Question:** step 18 added new route trees under /pro and asked for `npm run build` with at least 3 GB free. From 15:31 to
   17:36 the machine never had 3 GB free (the most seen was about 1.8 GB), so the build was not run tonight, as the step allows
   after two hours of waiting. May it wait for your push?
@@ -110,6 +123,7 @@ MORNING-REPORT.md.
   route-chrome-contract, page-metadata), all green; the typecheck covers the new route files.
 
 ### P30.1 Your approval of the legal drafts (step 30)
+- **Ruled 2026-10-05:** option (a). approved as drafted; the drafts draw once the paywall's switch is on.
 - **Question:** the terms of Pro (with cancelling and refunds at /terms#refunds), privacy and cookies are drafted in plain
   English in `src/lib/legal/pro_legal.ts`, exported for you to read in `E:/atlas/design/loop/build/m2/legal/PRO-LEGAL-DRAFT.md`,
   with the law they follow in `2026-10-05-uk-subscription-law.md` beside it. Do you approve them as they stand?
@@ -127,6 +141,7 @@ MORNING-REPORT.md.
   the plan's prices.
 
 ### P30.2 Your details for the drafts' gaps (step 30)
+- **Ruled 2026-10-05:** option (a). waiting for your details (name or company, its number, the address, the VAT number).
 - **Question:** six gaps in the drafts hold facts only you have, marked `[HIS: ...]`: the VAT wording (with P09.1), your name
   or your company's name and number, the address for legal letters (twice), and the VAT number if registered. What are they?
 - **Options:** (a) Recommended: fill them in `src/lib/legal/pro_legal.ts` before the paywall's switch (or send them and the next
@@ -134,6 +149,7 @@ MORNING-REPORT.md.
 - **Built either way:** nothing is invented: every gap prints as a marked gap, and the launch list's row 7 asks for none left.
 
 ### P30.3 Two Stripe settings the drafts rely on (step 30)
+- **Ruled 2026-10-05:** option (a). launch day (LAUNCH-SWITCHES row 8).
 - **Question:** the terms say Stripe's receipt confirms the checkout's consent, and that a yearly plan gets an email before it
   renews. Will you set both in Stripe (LAUNCH-SWITCHES.md row 8)?
 - **Why it matters:** the 2013 Regulations ask for the consent to be confirmed on a durable medium (regulation 16); without that
@@ -146,6 +162,7 @@ MORNING-REPORT.md.
   available if they are unhappy with your answer.
 
 ### P31.1 A public corrections log and a changelog (step 31; QUEUE cred:about-figures)
+- **Ruled 2026-10-05:** option (a). being built: /about-data/corrections, "No corrections yet" its first state, no changelog.
 - **Question:** the credibility doctrine of 2026-10-02 has the site show a dated corrections page and a changelog of data
   releases, with a promise to answer a report in two working days and fix a figure in five. Both are promises you make in public.
   Do you want them, and from when?
@@ -158,6 +175,7 @@ MORNING-REPORT.md.
   (QUEUE data:uk-register-built-date).
 
 ### P36.1 Which posts the home page's notebook shows (step 36)
+- **Ruled 2026-10-05:** option (a). the 58 retired (website 8619ecd3, each redirected); the ten rewrites next.
 - **Question:** the notebook shows the research's two "keep" posts (the firm against the establishment, the median against the
   average) from `src/lib/home/notebook.ts`. BLOG.md (goal of 2026-10-02) proposes keep 2, rewrite 10 on the UK registers, retire
   58 with a 301 each. Which do you want?
@@ -167,6 +185,7 @@ MORNING-REPORT.md.
 - **Built either way:** the notebook level, each post on its own picture or the UK's photograph, never the old rail's skyline.
 
 ### P36.2 The editorial feed's formats on the home page (step 36)
+- **Ruled 2026-10-05:** option (a). being built: the duel and the ranked list on the new home page, from the feed.
 - **Question:** the feed `E:/atlas/registers/uk/tables/editorial_feed.json` (built 2026-10-04) and the seven formats of
   HOMEPAGE-EDITORIAL.md wait for your word; nothing of them is on the home page tonight. Which first?
 - **Options:** (a) Recommended: two fresh, like-for-like formats first, "the duel" (from the trades that fail most) and the ranked
@@ -177,6 +196,7 @@ MORNING-REPORT.md.
   never the document's figures, which drifted from it.
 
 ### P36.3 The old home page and its components (step 36)
+- **Ruled 2026-10-05:** option (a). with the launch (`NEXT_PUBLIC_HOME_REFORM=1`, LAUNCH-SWITCHES row 10), then the old branch deleted the session after.
 - **Question:** the new home page stands behind NEXT_PUBLIC_HOME_REFORM (off in production); the old one still serves `/` with its
   Specimen, ExampleTiles, CatalogPlates, AudienceBand (which links the Margin Index, a coined index), UpgradeTeaser and the blog
   rail on the Positano photograph. Once you approve the new page, may the old branch and the components only it uses be deleted?
@@ -186,6 +206,7 @@ MORNING-REPORT.md.
 - **Built either way:** the new page, gated and photographed (step 37); the old page untouched.
 
 ### P38.1 City pages one block under their floor (step 38)
+- **Ruled 2026-10-05:** option (a). stands: the 203 city pages stay out of the index until their missing block can be drawn honestly.
 - **Question:** the launch check's item (a) keeps one reason: Frankfurt and Abidjan draw 15 blocks against the city floor of 16.
   They are not alone: the floor census counts 203 of the 245 city pages outside the UK at 15 (the neighbourhood pager draws only
   on the curated cities), so those pages stay out of the index by the floor rule of milestone 1. What do you want for them?

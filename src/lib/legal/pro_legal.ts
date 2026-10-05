@@ -46,7 +46,7 @@ export const PRO_TERMS: LegalDoc = {
       p("Pro opens the rest of every UK chapter, the parts a free reader sees locked, for as long as your plan is paid. It opens as soon as your payment goes through."),
     ] },
     { id: "price", heading: "The price", paragraphs: [
-      p(`Pro costs ${priceLine("month")} or ${priceLine("year")}, charged in US dollars by Stripe, which runs our payments. [HIS: choose one, "The price includes VAT where it is due." or "VAT is added at checkout where it is due."]`),
+      p(`Pro costs ${priceLine("month")} or ${priceLine("year")}, charged in US dollars by Stripe, which runs our payments. The price includes VAT where it is due.`),
     ] },
     { id: "renewal", heading: "Renewal", paragraphs: [
       p("Your plan renews at the end of each month or each year until you cancel. Before a yearly plan renews, we email you the date and the price, so you can cancel first if you want to."),
