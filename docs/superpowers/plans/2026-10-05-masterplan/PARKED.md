@@ -57,6 +57,18 @@ MORNING-REPORT.md.
 - **Built either way:** the migration file (commit of step 06); the webhook (step 08) answers 500 until the table exists, so
   Stripe retries rather than losing an event.
 
+### P09.1 Stripe: the product, the terms URL, and VAT (step 09)
+- **Question:** three settings only you can make before Pro sells: (1) create the Pro product with two prices, $38 a month and
+  $238 a year, then set `STRIPE_PRICE_PRO_MONTHLY` and `STRIPE_PRICE_PRO_ANNUAL` in Vercel; (2) set a terms URL in Stripe's
+  checkout settings, then `STRIPE_TERMS_CONSENT=1` (the box asking consent to immediate access, ruling 34; Stripe refuses the box
+  without the URL); (3) turn on Stripe Tax for your VAT registration, then `STRIPE_AUTOMATIC_TAX=1` (ruling 16). And: do $38 and
+  $238 include VAT for UK buyers?
+- **Options for the VAT question:** (a) Recommended: the prices include VAT (prices shown to consumers in the UK must include it),
+  so set both Stripe prices as tax-inclusive; the page keeps printing $38 and $238. (b) VAT on top for UK buyers: the page would
+  have to say "plus VAT", and Stripe adds it at checkout.
+- **Built either way:** the checkout asks for no account and offers no trial; the consent box and Stripe Tax each wait behind
+  their switch, off until you turn them on (commit of step 09; LAUNCH-SWITCHES.md lists the order).
+
 ### P04.2 The UK's peers table
 - **Question:** /gb's "Against the peers" prints the UK's sourced row beside Ireland, France, Germany and the Netherlands, whose
   tax, payroll and registration figures are hand-held constants with no source. Tonight the line says "The peers' figures are

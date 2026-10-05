@@ -986,6 +986,17 @@
       "claims": []
     },
     {
+      "name": "checkout-params",
+      "script": "tests/monetization/checkout_params.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "CHECKOUT FIRST (milestone 2; rulings 20 and 34): a subscription checkout that needs no account, never a trial, returns to the welcome page with its session, says the renewal plainly, and asks for cons",
+      "reads": [
+        "src/lib/monetization/checkout_params.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],
