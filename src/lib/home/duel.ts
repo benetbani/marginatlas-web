@@ -21,6 +21,7 @@ import type { Provenance } from "@/lib/spine/provenance";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { COPY } from "@/lib/spine/copy";
+import { ukTradePagePath } from "@/lib/home/destination";
 
 export const FRESH_DAYS = 45;
 const ITEM = "fail-most";
@@ -54,7 +55,7 @@ export function buildDuel(today: string = new Date().toISOString().slice(0, 10))
     /* The code's own name, in three words or fewer (his labels rule): a longer one takes its plain name from the copy table. */
     name: COPY.home.duel.names[m.member] ?? m.member,
     value: per100(m.value),
-    href: `/gb/london/${m.trades[0]}`,
+    href: ukTradePagePath(m.trades[0]),
     lands: SURFACE_ANSWERS.cell,
     prov: stamp(m.member),
   }));

@@ -37,6 +37,13 @@ export function liveTradeSlug(trade: string | null | undefined): string | null {
    the place comes from the datum). */
 const UK_TRADE_PAGE_CITIES: ReadonlySet<string> = new Set(["london"]);
 
+/** The UK trade page a UK-wide figure opens (the home page's duel, 2026-10-05): the listed city's, its path built from the set
+ *  above, never typed, so the one rule of which UK trade pages exist lives here. */
+export function ukTradePagePath(slug: string): string {
+  const [city] = UK_TRADE_PAGE_CITIES;
+  return `/gb/${city}/${slug}`;
+}
+
 export function homeDestination({ country, city = "", trade = "" }: { country: string; city?: string | null; trade?: string | null }): string {
   const cc = String(country ?? "").toUpperCase();
   const place = String(city ?? "").toLowerCase();

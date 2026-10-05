@@ -16,7 +16,8 @@ export function FreeDoors({ id, title, doors }: { id: string; title: string; doo
   if (unique.length === 0) return null;
   return (
     <nav data-free-doors={id} aria-labelledby={`free-doors-${id}`}>
-      <h2 id={`free-doors-${id}`} className="text-[length:var(--t-head)] font-semibold leading-7 text-[var(--c-ink)]">
+      {/* The section head's size and weight, as the open sections' own titles take them (zones.tsx), so not a ladder token. */}
+      <h2 id={`free-doors-${id}`} data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-7 text-[var(--c-ink)]">
         {title}
       </h2>
       <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
