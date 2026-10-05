@@ -68,7 +68,8 @@ const fnAt = mw.indexOf("function cityPathUnderCountry(");
 const regionCheck = mw.indexOf("regionSlugsFor(countrySlug, countryName).has(geoSlug)) return null;", fnAt);
 const helperCall = mw.indexOf("return cityPathFor(countrySlug, geoSlug);", fnAt);
 const askAt = mw.indexOf("const cityHref = cityPathUnderCountry(path);");
-const rewriteAt = mw.indexOf("if (isPlaceWeDoNotHold(path)) {", askAt);
+/* The rewrite's condition, read by its first clause: since masterplan step 01 it also asks `edgeNotFound(path)`. */
+const rewriteAt = mw.indexOf("if (isPlaceWeDoNotHold(path)", askAt);
 if (fnAt < 0 || regionCheck < 0 || helperCall < 0 || !(regionCheck < helperCall)) fail(MIDDLEWARE, "cityPathUnderCountry does not check the country's regions before asking the helper", "return null for a region of the country before calling cityPathFor");
 if (askAt < 0 || rewriteAt < 0 || !(askAt < rewriteAt) || mw.indexOf("NextResponse.redirect(url, 308)", askAt) > rewriteAt || mw.indexOf("NextResponse.redirect(url, 308)", askAt) < 0) fail(MIDDLEWARE, "the city redirect does not stand before the not-held rewrite", "ask cityPathUnderCountry and redirect with 308 before `if (isPlaceWeDoNotHold(path))`");
 

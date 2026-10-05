@@ -29,6 +29,7 @@ import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
 import { cityPathFor } from "@/lib/cities/city_path";
+import { edgeNotFound, legacyHoodTarget } from "@/lib/routing/edge_not_found";
 
 /**
  * TRAINING harvesters, blocked at the door with a 451.
@@ -457,7 +458,17 @@ export function middleware(req: NextRequest) {
       url.pathname = cityHref;
       return NextResponse.redirect(url, 308);
     }
-    if (isPlaceWeDoNotHold(path)) {
+    // 3a'. A district under its city's path, the three-part address live pages linked until 2026-08-16
+    // (`/gb/london/west-end`): to the district's page, else its city's hub, in one hop (src/lib/routing/edge_not_found.ts).
+    const hoodHref = legacyHoodTarget(path);
+    if (hoodHref) {
+      const url = req.nextUrl.clone();
+      url.pathname = hoodHref;
+      return NextResponse.redirect(url, 308);
+    }
+    // 3b'. An address that names nothing (masterplan step 01): a word no trade, city, hub or district answers to, judged
+    // by each route's own resolver after every redirect above has had its turn; pinned like a place we do not hold.
+    if (isPlaceWeDoNotHold(path) || edgeNotFound(path)) {
       return NextResponse.rewrite(req.nextUrl, {
         status: 404,
         request: { headers: withPathname(req, path) },

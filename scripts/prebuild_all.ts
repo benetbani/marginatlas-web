@@ -684,6 +684,9 @@ const GATES: Gate[] = [
   { name: "junk-url-rule", script: "tests/routing/junk_url_rule.test.ts" },
   /* A retired trade under a place goes to the nearest live page in one hop (milestone 1, M1; his interview of 2026-09-26, answer 12). */
   { name: "retired-paths", script: "tests/routing/retired_paths.test.ts" },
+  /* An address that names nothing answers 404 at the edge, each shape by its own route's resolver; the old three-part district
+     addresses go to their district's page; nothing the floor census holds is caught (masterplan step 01, 2026-10-05). */
+  { name: "edge-not-found", script: "tests/routing/edge_not_found.test.ts" },
   /* No session recorder on the site, cookie-free counting only behind its switch (milestone 1, M2; his interview of 2026-09-26, answer 7). */
   { name: "no-session-recording", script: "tests/app/no_session_recording.test.ts" },
   /* The industry page's places table links each place to the trade's page there (milestone 1, M5; his interview of 2026-09-26, answer 35). */

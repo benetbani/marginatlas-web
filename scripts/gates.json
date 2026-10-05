@@ -2191,6 +2191,19 @@
       "claims": []
     },
     {
+      "name": "edge-not-found",
+      "script": "tests/routing/edge_not_found.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "An address that names nothing answers 404 at the edge (masterplan step 01, 2026-10-05; QUEUE launch:retired-trades-live).",
+      "reads": [
+        "src/app/[country]/[geo]",
+        "src/lib/routing/edge_not_found.ts",
+        "src/middleware.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-session-recording",
       "script": "tests/app/no_session_recording.test.ts",
       "args": [],
