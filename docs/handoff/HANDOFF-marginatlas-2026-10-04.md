@@ -11,7 +11,7 @@ map is written. Written 2026-10-04, late night; closed and shipped 2026-10-05 af
 **Where things stand.** The masterplan of 2026-10-05 (40 steps, `docs/superpowers/plans/2026-10-05-masterplan/`) ran unattended
 through the night and is finished: every step DONE except 06 (PARKED: the subscriptions migration is his to run). All of it is
 on website branch **`night-2026-10-05`** (its head is the commit "40: the night's proof and the morning pack", on a1117f1d), made from `main` 128c66b6 plus `m1-followups`; branch **`launch-day`** is
-that head plus one commit deleting `NEXT_PUBLIC_SITE_PRIVATE=1` from `.env.production`. **DEPLOYED on his word of 2026-10-05, evening ("Push the night branch and deploy, switches off"): `main` is the night branch at 50e00bcb, live on Vercel with every switch off and proven on production (/gb shows the four Pro sections open and "Report a mistake", no lock; / is still the old home page; /pricing sells one plan; /terms and /privacy keep today's text; an address naming nothing answers 404). The first build, e7a5b4fa, failed on `no-cream` (the deleted world map's ratchet entry at zero) and was never promoted; 50e00bcb fixed it. `launch-day` stays local. Nothing posted.** The design repo's commits are on `p4-seam` (STATE.md's step in flight says the same).
+that head plus one commit deleting `NEXT_PUBLIC_SITE_PRIVATE=1` from `.env.production`. **DEPLOYED on his word of 2026-10-05, evening ("Push the night branch and deploy, switches off"): `main` is the night branch at 50e00bcb, live on Vercel with every switch off and proven on production (/gb shows the four Pro sections open and "Report a mistake", no lock; / is still the old home page; /pricing sells one plan; /terms and /privacy keep today's text; an address naming nothing answers 404). The first build, e7a5b4fa, failed on `no-cream` (the deleted world map's ratchet entry at zero) and was never promoted; 50e00bcb fixed it. `launch-day` stays local. Nothing posted.** **DEPLOYED AGAIN 2026-10-06, about 1am, on his words ("Take your recommendation on all 19 parked questions", then "Push and deploy when it's done"): `main` at 17a2a32c, every switch still off, the nineteen rulings' builds proven on production with curl (/about, /data and its pack, /corrections, the 58 retired posts' redirects, /gb's household card at 32% and the peers called estimates; / still the old home page; /terms and /pricing without the drafts). The proof caught the pack's README.md unreachable (the site lowercases every path), fixed by 17a2a32c. `launch-day` is f6e6ab5a on 17a2a32c, local. The ledger's "After the night" has the whole record.** The design repo's commits are on `p4-seam` (STATE.md's step in flight says the same).
 
 **What was built.** Milestone 2 (Pro): one plan at $38 / $238 (`src/lib/monetization/plan.ts`), checkout with no account and no
 trial, the Stripe webhook on a pure core, the welcome page, the account's plan and the portal, no pop-up anywhere, the paywall
@@ -28,11 +28,12 @@ order, four launch posts drafted in `E:/atlas/design/loop/build/launch/posts/`.
 green alone). Sheets: `photos/m2/MILESTONE-2-SHEET.jpeg`, `photos/night-D/PHASE-D-SHEET.jpeg`, `photos/m3/MILESTONE-3-SHEET.jpeg`
 (under `E:/atlas/design/loop/build/`). The launch checklist subset a, c to i: 7 of 8, the reason real (P38.1).
 
-**Next actions, in order.** (1) His answers to `PARKED.md` (nineteen questions, each with a recommendation; the morning report
-lists them). (2) His word on what to push: the recommendation is the night branch now with every switch off (note: with the
-paywall off the four Pro sections are open to all), the home page switched on with the launch. (3) Launch day by
-`LAUNCH-SWITCHES.md`, then `launch-day`. (4) The first full `npm run build` of the night branch never ran (P18.1): Vercel's on
-his push, or his own run with his apps closed.
+**Next actions, in order.** (1) `PARKED.md` is ruled (option (a) on all nineteen, 2026-10-05 evening), each entry's Ruled line
+says where it stands; still his: P30.2's details for the terms (name or company, its number, the address, the VAT number),
+P36.2b (the ranked list), the author line for the ten blog rewrites (the next build; drafts in
+`E:/atlas/design/loop/build/goal-2026-10-02/drafts/blog/`), whether the pack's two held-back files go public, and the peers'
+sourcing (the data track's, QUEUE data:uk-peers-sourced). (2) Launch day by `LAUNCH-SWITCHES.md`, then `launch-day`. (3) Done:
+the night branch's builds ran on Vercel (P18.1: 50e00bcb, 5b2a2401, 17a2a32c).
 
 **The night's traps (each cost time once).**
 - `scripts/counts.ts` counts TRACKED files: `git add` a new file before `counts --write`, or `counts-fresh` reds.
