@@ -76,6 +76,16 @@ export function isAuthEnabled(): boolean {
 }
 
 /**
+ * THE PAYWALL (milestone 2; masterplan step 10; his interview of 2026-09-26: ruling 18, half of every UK chapter locked; 21, one
+ * launch day; 27, the UK pages only). ON ONLY WITH ACCOUNTS: a locked section while nobody can buy is a page that takes and
+ * offers nothing, so NEXT_PUBLIC_PAYWALL needs NEXT_PUBLIC_AUTH_ENABLED too. Default OFF; he turns both on on launch day
+ * (docs/superpowers/plans/2026-10-05-masterplan/LAUNCH-SWITCHES.md). Gate: paywall-flag.
+ */
+export function isPaywallOn(): boolean {
+  return parseFlag(process.env.NEXT_PUBLIC_PAYWALL, false) && isAuthEnabled();
+}
+
+/**
  * The owner-take-home paywall gate (Milestone 2). Default OFF: every number shows
  * in full, exactly as today. When ON, the static page ships a redacted placeholder
  * for owner take-home and a subscriber's browser reveals the real value via the

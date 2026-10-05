@@ -997,6 +997,17 @@
       "claims": []
     },
     {
+      "name": "paywall-flag",
+      "script": "tests/monetization/paywall_flag.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PAYWALL'S SWITCH, ON ONLY WITH ACCOUNTS (milestone 2; masterplan step 10; his interview of 2026-09-26, rulings 18, 21, 27: half of every UK chapter locked, one launch day, the UK pages only).",
+      "reads": [
+        "src/lib/feature_flags.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],
