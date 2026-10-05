@@ -11,6 +11,7 @@ import {
 } from "@/lib/taxonomy";
 import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
 import { getCitiesForCountryCode, CASCADE_PREFILLS } from "@/lib/home/search_cascade";
+import { homeDestination } from "@/lib/home/destination";
 import { elevation } from "@/lib/design-tokens";
 
 /**
@@ -127,16 +128,10 @@ export function NavigatorForm() {
 
   function submit() {
     try {
-      if (!business) {
-        alert("Pick a business to find the data you're looking for.");
-        return;
-      }
-      const cc = country.toLowerCase();
-      // Submit mechanic unchanged: navigate to /{country}/{geo}/{industry}.
-      // geo precedence: the picked city slug (a resolving geo), else this
-      // country's curated default region, else the country code itself.
-      const geo = city || getDefaultRegionForCountry(country) || cc;
-      const path = `/${cc}/${geo}/${industryToSlug(business)}`;
+      /* WHERE IT LANDS, ONE TESTED FUNCTION (masterplan step 33): a page that exists, UK first (London's trade page, a UK city's
+         own page, the trade's page for anywhere in the UK, /gb alone), today's cell path elsewhere. The business is optional, so
+         no box ever pops up to ask for it (the alert it used was a pop-up his refusals name). */
+      const path = homeDestination({ country, city, trade: business });
       setIsLoading(true);
       router.push(path);
       window.setTimeout(() => setIsLoading(false), 3000);
@@ -234,7 +229,6 @@ export function NavigatorForm() {
           <ComboField
             id="business"
             label="Business"
-            required
             options={businessOptions}
             value={business}
             onChange={setBusiness}
@@ -250,11 +244,11 @@ export function NavigatorForm() {
             <span className="font-semibold uppercase tracking-[0.12em] text-ink-500 mr-1.5">
               Try
             </span>
-            restaurants in Los Angeles
+            restaurants in London
             <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
-            law firms in the UK
+            salons in Manchester
             <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
-            software in San Francisco
+            gyms in Leeds
           </p>
           <div className="flex items-center shrink-0">
             {/* Soft-terracotta submit, the ONE action the card leads to (rule 37). The

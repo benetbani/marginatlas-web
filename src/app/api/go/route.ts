@@ -18,41 +18,18 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { homeDestination } from "@/lib/home/destination";
 
 const SLUG_RE = /^[a-z0-9-]+$/;
 
+/* THE SAME DESTINATION AS THE SCRIPTED FORM (masterplan step 33): src/lib/home/destination.ts answers with or without script, so a
+   no-script search lands on the page the scripted one does. Every param is held to a slug, so none can steer a redirect off the
+   site; the destination answers only with this site's own paths. */
 export function GET(request: NextRequest) {
   const sp = request.nextUrl.searchParams;
-  const country = (sp.get("country") || "").trim().toLowerCase();
-  const region = (sp.get("region") || "").trim().toLowerCase();
-  const subdivision = (sp.get("subdivision") || "").trim().toLowerCase();
-  const industry = (sp.get("industry") || "").trim().toLowerCase();
-
-  // Required: country and industry. Anything missing or invalid -> /random.
-  if (!SLUG_RE.test(country) || !SLUG_RE.test(industry)) {
-    return NextResponse.redirect(new URL("/random", request.url), 302);
-  }
-
-  // targetGeo precedence: subdivision > region > country slug.
-  // Region may be empty or absent on first-load; that's fine, country
-  // is the floor and the country page resolves further.
-  let targetGeo = "";
-  if (subdivision && SLUG_RE.test(subdivision)) {
-    targetGeo = subdivision;
-  } else if (region && SLUG_RE.test(region)) {
-    targetGeo = region;
-  } else {
-    // No region picked. Send to country page so the user can browse,
-    // since we don't have access to the curated-region table from a
-    // pure server route without importing the React component graph.
-    return NextResponse.redirect(
-      new URL(`/${country}`, request.url),
-      302,
-    );
-  }
-
-  return NextResponse.redirect(
-    new URL(`/${country}/${targetGeo}/${industry}`, request.url),
-    302,
-  );
+  const slug = (name: string) => { const v = (sp.get(name) || "").trim().toLowerCase(); return SLUG_RE.test(v) ? v : ""; };
+  const country = slug("country");
+  if (!country) return NextResponse.redirect(new URL("/", request.url), 302);
+  const path = homeDestination({ country, city: slug("subdivision"), trade: slug("industry") });
+  return NextResponse.redirect(new URL(path, request.url), 302);
 }

@@ -46,7 +46,8 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { GlobalSearch } from "@/components/GlobalSearch";
+/* A LINK, NOT A DIALOG (masterplan step 33; his refusals of 2026-09-22: no modal). The header's search opened GlobalSearch, a
+   dialog over the page on a click or ⌘K; it now goes to /search, a page that works without script, and the dialog is gone. */
 
 /** The home page's hero search wrapper, set in src/app/page.tsx. */
 const HOME_ANCHOR_ID = "home-search-anchor";
@@ -72,5 +73,17 @@ export function HeaderSearch() {
   }, [isHome]);
 
   if (isHome && !heroSearchGone) return null;
-  return <GlobalSearch />;
+  return (
+    <a
+      href="/search"
+      className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-paper-350 bg-white px-3 py-1.5 text-sm text-ink-700 transition hover:border-ink-500"
+      aria-label="Search Margin Atlas"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M21 21l-4.35-4.35" />
+      </svg>
+      <span className="hidden sm:inline">Search</span>
+    </a>
+  );
 }

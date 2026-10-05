@@ -1531,6 +1531,22 @@
       "claims": []
     },
     {
+      "name": "home-destination",
+      "script": "tests/home/destination.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHERE A HOME SEARCH LANDS (milestone 3, masterplan step 33; his ruling 11 of 2026-09-26: a place-and-trade search, the UK first).",
+      "reads": [
+        "data/cities/city_list_v1.json",
+        "src/app/api/go/route.ts",
+        "src/components/GlobalSearch.tsx",
+        "src/components/HeaderSearch.tsx",
+        "src/components/NavigatorForm.tsx",
+        "src/lib/home/destination.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "research-drop-schema",
       "script": "tests/ingest/research_drop_schema.test.ts",
       "args": [],
@@ -3184,7 +3200,6 @@
         "src/app/[country]/[geo]/page.tsx",
         "src/app/[country]/page.tsx",
         "src/app/pro/[country]/page.tsx",
-        "src/components/GlobalSearch.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/hood/hood-view.tsx",
         "src/lib/cells/related_links.ts",

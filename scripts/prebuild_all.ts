@@ -562,6 +562,9 @@ const GATES: Gate[] = [
      delete it, and check this list when you add one. */
   { name: "industry-resolution", script: "tests/cells/industry_resolution.test.ts" },
   { name: "search-cascade", script: "tests/home/search_cascade.test.ts" },
+  /* Where a home search lands: only pages that exist, the UK first, never /gb/gb/...; the search page lists pages that exist;
+     no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). */
+  { name: "home-destination", script: "tests/home/destination.test.ts" },
   { name: "research-drop-schema", script: "tests/ingest/research_drop_schema.test.ts" },
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },

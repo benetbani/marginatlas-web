@@ -70,6 +70,8 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "pro",
   "random",
   "saved",
+  /* The site's search, a page where the header's dialog was (masterplan step 33). */
+  "search",
   "signin",
   "status",
   "terms",

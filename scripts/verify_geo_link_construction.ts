@@ -219,11 +219,16 @@ const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string
       "this page is a different matter and is NOT sanctioned.",
   },
   {
-    file: "src/components/GlobalSearch.tsx",
+    file: "src/lib/home/destination.ts",
     path: "/*",
-    guard: "id: c.code",
-    why: "The pushed value is the code field of a COUNTRIES row, carried through the result object built in this file.",
+    guard: "COUNTRIES.some((c) => c.code === cc)",
+    why:
+      "The country page a home search lands on when no trade is picked (masterplan step 33), built only for a code the line " +
+      "above proves a COUNTRIES row, the same membership test countryPageTarget makes; the resolver modules carry server-only " +
+      "data (the city tiers, the database client) that the search form, a client component, cannot ship.",
   },
+  /* REMOVED 2026-10-05 (masterplan step 33): src/components/GlobalSearch.tsx, the header's dialog search, was deleted with its
+     sanction; the header links to /search, whose rows come from src/lib/home/destination.ts. */
   /* REMOVED 2026-08-09: src/app/dev/country/page.tsx was binned as a superseded
      prototype (country2 replaced it). A sanction naming a file that no longer
      exists is a licence nobody revoked, and the next file to land on that path

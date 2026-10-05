@@ -7,6 +7,7 @@ import {
   CITIES_BY_STATE,
   CITY_FRIENDLY_DISPLAY_LABEL,
 } from "@/lib/cities/city_aliases_generated";
+import { UK_CITIES } from "@/lib/home/destination";
 
 export type CascadeCity = { slug: string; label: string };
 
@@ -27,6 +28,10 @@ function prettifySlug(slug: string): string {
  */
 export function getCitiesForCountryCode(iso2: string): CascadeCity[] {
   const cc = iso2.toUpperCase();
+  /* THE UK'S SEVEN (masterplan step 33): the cities with a page of their own, from the city list through the destination's one
+     reader, where the alias tables held four (Birmingham under a "-uk" slug, no Bristol, Glasgow or Leeds). A UK city lands on
+     its own page, or London's trade page (src/lib/home/destination.ts), so its slug is the city page's, not a cell geo. */
+  if (cc === "GB") return UK_CITIES.map((c) => ({ slug: c.slug, label: c.label }));
   const byRegion = CITIES_BY_STATE[cc];
   if (!byRegion) return [];
   const labels = CITY_FRIENDLY_DISPLAY_LABEL[cc] || {};
@@ -60,6 +65,8 @@ export type CascadePrefill = {
  * law, US software). The search_cascade test asserts every entry is valid.
  */
 export const CASCADE_PREFILLS: CascadePrefill[] = [
+  /* UK first (masterplan step 33): the form opens on restaurants in London. */
+  { country: "GB", city: "london",        business: "restaurants" },
   { country: "US", city: "los-angeles",   business: "restaurants" },
   { country: "GB", city: "",              business: "legal_services" },
   { country: "ES", city: "barcelona",     business: "restaurants" },
