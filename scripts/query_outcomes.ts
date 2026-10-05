@@ -47,6 +47,9 @@ export const TABLES: Array<{ name: string; where: string; off?: string }> = [
   { name: "regional_cells", where: "src/lib/cells/*.ts, trusted-local cells" },
   { name: "extrapolated_cells", where: "src/lib/cells/*.ts" },
   { name: "saved_cells", where: "src/app/api/saved-cells", off: "auth is 'Coming soon', the feature is off" },
+  /* The account's other two (masterplan step 38), made by db/migrations/2026-06-08-accounts-saved-cells.sql with saved_cells. */
+  { name: "profiles", where: "db/migrations/2026-06-08-accounts-saved-cells.sql, the account's row", off: "auth is 'Coming soon', the feature is off" },
+  { name: "watchlist", where: "db/migrations/2026-06-08-accounts-saved-cells.sql", off: "auth is 'Coming soon', the feature is off" },
   { name: "subscriptions", where: "src/app/api/stripe/webhook", off: "billing is off" },
   { name: "newsletter_signups", where: "src/app/api/newsletter (migration 2026-08-16-newsletter-source.sql)" },
   { name: "corrections", where: "src/app/api/correction, by REST (migration 2026-08-16-corrections.sql)" },

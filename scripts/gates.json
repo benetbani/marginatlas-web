@@ -3043,8 +3043,12 @@
       "script": "scripts/verify_sample_switch.ts",
       "args": [],
       "browser": false,
-      "asserts": "Prebuild gate, plan step 48 (2026-09-19): THE SAMPLE SWITCH IS A LAUNCH GATE.",
-      "reads": [],
+      "asserts": "Prebuild gate, plan step 48 (2026-09-19), rewritten by masterplan step 38 (2026-10-05) to hold HIS RULING 5 (the interview of 2026-09-26): \"the sample marks stay off; the quiet notes and 'About the fi",
+      "reads": [
+        "src/app/(site)/about-data/page.tsx",
+        "src/components/spine/archetypes/AnswerCard.tsx",
+        "src/components/spine/marks.tsx"
+      ],
       "claims": []
     },
     {

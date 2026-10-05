@@ -73,18 +73,20 @@ Both are recorded in the project's own notes and neither is urgent for how the p
 
 ---
 
-## Launch day: the sample marks come back (plan step 48, 2026-09-19)
+## Launch day: the private line comes off, and nothing is added (plan step 48, 2026-09-19; your ruling 5, masterplan step 38, 2026-10-05)
 
-The modelled-figure marks are hidden today because you are the only reader
-(your 2026-09-11 switch). The site says so in one committed file,
-`.env.production`, which holds `NEXT_PUBLIC_SITE_PRIVATE=1` and nothing
-secret. A gate in the build chain, `sample-switch`, fails any build where the
-marks are off and that line is missing, with the sentence "the site is not
-private and the sample marks are off".
+The sample marks stay off: your ruling 5 of 2026-09-26, "the sample marks
+stay off; the quiet notes and 'About the figures' carry the honesty". The site
+says it is private in one committed file, `.env.production`, which holds
+`NEXT_PUBLIC_SITE_PRIVATE=1` and nothing secret. A gate in the build chain,
+`sample-switch`, holds the ruling: a build with the marks on fails; a private
+build passes; a public build passes only while the honesty stands in the code
+(the half-filled mark beside a masthead's foot line, its label "An estimate",
+and About the figures' "How to read a figure").
 
-**The day the site opens, one commit does both:** delete the
-`NEXT_PUBLIC_SITE_PRIVATE=1` line from `.env.production` and add
-`NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1` in its place. A Vercel variable of the same
-name does the same job if you prefer the dashboard; the gate reads the
-environment first and prints which one it read. Doing one without the other
-turns the gate red, on purpose.
+**The day the site opens, one commit:** delete the `NEXT_PUBLIC_SITE_PRIVATE=1`
+line from `.env.production`. It is ready on the branch `launch-day` (one
+commit on the night branch), to push with the night's work. Never add
+`NEXT_PUBLIC_SHOW_SAMPLE_MARKS`: the gate turns red if the marks come on, on
+purpose. The step this section used to give (the private line off and the
+marks on in one commit) was written before ruling 5 and is withdrawn.

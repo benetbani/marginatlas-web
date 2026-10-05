@@ -1,45 +1,40 @@
 /**
  * scripts/verify_sample_switch.ts
  *
- * Prebuild gate, plan step 48 (2026-09-19): THE SAMPLE SWITCH IS A LAUNCH GATE.
+ * Prebuild gate, plan step 48 (2026-09-19), rewritten by masterplan step 38 (2026-10-05) to hold HIS RULING 5 (the interview of
+ * 2026-09-26): "the sample marks stay off; the quiet notes and 'About the figures' carry the honesty."
  *
- * `areSampleMarksVisible()` (src/lib/feature_flags.ts) defaults to hidden
- * because he is the only reader (his 2026-09-11 switch), and its header says
- * the marks must come back BEFORE anyone else opens the site, or the site
- * asserts modelled figures as measured ones. Nothing noticed the day that
- * flips. This gate does: a build with the marks hidden passes only while the
- * site declares itself private, `NEXT_PUBLIC_SITE_PRIVATE=1`, and fails with
- * the one sentence the plan prescribes otherwise:
+ * WHAT IT HOLDS. `areSampleMarksVisible()` (src/lib/feature_flags.ts) defaults to hidden since his switch of 2026-09-11. The gate
+ * of 2026-09-19 made launch day turn the marks back on; ruling 5 reversed that, so the old launch step (delete the private line,
+ * add `NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1`) would have broken his ruling, and deleting the private line alone failed every build. The
+ * rule now, in this order:
  *
- *     the site is not private and the sample marks are off
+ *   1. the marks ON fail, whatever else holds (ruling 5): "the sample marks are on, and ruling 5 keeps them off";
+ *   2. the site private (`NEXT_PUBLIC_SITE_PRIVATE=1`, today) passes;
+ *   3. the site public passes only while ruling 5's honesty stands in source, the three things that carry it once the word
+ *      "sample" is gone: the half-filled mark beside a masthead's foot line (AnswerCard), the mark's own label "An estimate"
+ *      (marks.tsx), and About the figures' "How to read a figure" (`#reading`, about-data/page.tsx); a public site without one of
+ *      them fails with `SENTENCE` and the missing ones named.
  *
- * WHERE THE TWO FLAGS ARE READ. The process environment first (Vercel's
- * variables, a shell), then `.env.production` (COMMITTED, the one env file
- * git keeps: it holds public flags only, never a secret, and is the versioned
- * statement "this site is private" that launch day flips in one commit), then
- * `.env.local` (a local override, never committed). Next.js loads the same
- * files for `NEXT_PUBLIC_` values at build, so what this gate reads is what
- * the build bakes in. The chain must never need the network or a secret, and
- * this gate reads neither.
+ * Launch day is one line now: `NEXT_PUBLIC_SITE_PRIVATE=1` comes off `.env.production`, and nothing is added
+ * (docs/DEPLOY-PACK-spine-flags.md, "Launch day").
  *
- * THE DEPLOY CHECKLIST LINE (docs/DEPLOY-PACK-spine-flags.md, "Launch day"):
- * the day the site opens, `NEXT_PUBLIC_SITE_PRIVATE` comes off `.env.production`
- * and `NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1` goes in, in the same commit; this gate
- * turns red on any build that does one without the other.
+ * WHERE THE TWO FLAGS ARE READ. The process environment first (Vercel's variables, a shell), then `.env.production` (COMMITTED,
+ * the one env file git keeps: it holds public flags only, never a secret, and is the versioned statement "this site is private"),
+ * then `.env.local` (a local override, never committed). Next.js loads the same files for `NEXT_PUBLIC_` values at build, so what
+ * this gate reads is what the build bakes in. The chain must never need the network or a secret, and this gate reads neither.
  *
- * This measurement cannot distinguish a flag set in Vercel's dashboard from
- * one in the file: it reads the process environment first, which is where
- * Vercel puts its variables, and prints which source it read.
+ * BLIND SPOTS. It cannot distinguish a flag set in Vercel's dashboard from one in the file: it reads the process environment
+ * first, which is where Vercel puts its variables, and prints which source it read. The honesty check reads source text, so it
+ * proves the three pieces are written, not that a page draws them (the harness's renders and the page gates read what is drawn).
  *
- * Planted 2026-09-19: with `.env.production` emptied of the private flag and
- * no environment override the gate printed the sentence and exited 1; restored,
- * it passed. Exit 0 on pass, 1 on the sentence.
+ * PLANTED 2026-10-05 (masterplan step 38), each case once: the marks on through the environment, red; the site public through
+ * the environment (`NEXT_PUBLIC_SITE_PRIVATE=0`) with the three pieces in source, green; the site public with each piece taken out
+ * of a scratch copy read through `--root=<dir>`, red three times, each naming its piece; restored, green.
  *
- * THE READERS ARE EXPORTED (plan step 50, 2026-09-19): the launch checklist
- * (scripts/verify_launch_ready.ts, by hand, never in the chain) reads the two
- * flags through `readFlag` and prints `SENTENCE` when both fail, so there is
- * one parser of the env files and one sentence. `main()` runs only when this
- * file is the entry point.
+ * THE READERS ARE EXPORTED (plan step 50, 2026-09-19): the launch checklist (scripts/verify_launch_ready.ts, by hand, never in the
+ * chain) reads the flags through `readFlag` and judges them through `judge`, so there is one parser of the env files and one rule.
+ * `main()` runs only when this file is the entry point.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -48,8 +43,33 @@ const ROOT = resolve(__dirname, "..");
 
 export type Source = "environment" | ".env.production" | ".env.local" | "unset";
 
-/** The one sentence the plan prescribes (step 48), printed by this gate and by the launch checklist. */
-export const SENTENCE = "the site is not private and the sample marks are off";
+/** The sentence for a public site without ruling 5's honesty, printed by this gate and by the launch checklist. */
+export const SENTENCE = "the site is public and ruling 5's honesty is not all in place";
+/** The sentence for the marks on. */
+export const MARKS_ON = "the sample marks are on, and ruling 5 keeps them off";
+
+/** RULING 5'S HONESTY, IN SOURCE: what carries it once the sample word is gone. Each a file and the text that proves it is there. */
+export const HONESTY: ReadonlyArray<{ file: string; needle: RegExp; what: string }> = [
+  { file: "src/components/spine/archetypes/AnswerCard.tsx", needle: /foot\.modeled \? <AtlasMark id="modeled"/, what: "the half-filled mark beside a masthead's foot line (AnswerCard)" },
+  { file: "src/components/spine/marks.tsx", needle: /modeled: "An estimate"/, what: "the mark's own label, An estimate (marks.tsx)" },
+  { file: "src/app/(site)/about-data/page.tsx", needle: /<h2 id="reading"/, what: "About the figures' How to read a figure, #reading (about-data/page.tsx)" },
+];
+
+/** The pieces of ruling 5's honesty missing under `root` (the repo, or a scratch copy for a plant). */
+export function honestyMissing(root: string = ROOT): string[] {
+  return HONESTY.filter((h) => {
+    const path = resolve(root, h.file);
+    return !existsSync(path) || !h.needle.test(readFileSync(path, "utf8"));
+  }).map((h) => h.what);
+}
+
+/** The rule, in its order: the marks on fail; private passes; public passes only with nothing missing. */
+export function judge(marksOn: boolean, sitePrivate: boolean, missing: string[]): { pass: boolean; why: string } {
+  if (marksOn) return { pass: false, why: MARKS_ON };
+  if (sitePrivate) return { pass: true, why: "the marks are off and the site declares itself private" };
+  if (missing.length) return { pass: false, why: `${SENTENCE}: missing ${missing.join("; ")}` };
+  return { pass: true, why: "the site is public, the marks are off by ruling 5, and its honesty stands (the mark beside the foot line, An estimate, #reading)" };
+}
 
 /** Parse a dotenv file into a map: KEY=VALUE lines, quotes stripped, comments and blanks skipped. */
 function parseEnvFile(path: string): Record<string, string> {
@@ -89,21 +109,23 @@ export function readFlag(name: string): { on: boolean | null; source: Source } {
 }
 
 function main(): number {
+  const rootArg = process.argv.slice(2).find((a) => a.startsWith("--root="));
+  const root = rootArg ? resolve(rootArg.slice("--root=".length)) : ROOT;
   const marks = readFlag("NEXT_PUBLIC_SHOW_SAMPLE_MARKS");
   const priv = readFlag("NEXT_PUBLIC_SITE_PRIVATE");
   const marksOn = marks.on === true; // the flag's default is hidden (feature_flags.ts)
   const sitePrivate = priv.on === true;
-  console.log(`sample-switch: sample marks ${marksOn ? "ON" : "OFF"} (${marks.source}); site private ${sitePrivate ? "YES" : "NO"} (${priv.source})`);
-  if (marksOn) {
-    console.log("sample-switch: PASS (the marks are on; whether the site is private does not matter)");
+  const missing = honestyMissing(root);
+  console.log(`sample-switch: sample marks ${marksOn ? "ON" : "OFF"} (${marks.source}); site private ${sitePrivate ? "YES" : "NO"} (${priv.source}); ruling 5's honesty in source: ${HONESTY.length - missing.length} of ${HONESTY.length}${root !== ROOT ? ` (read under ${root})` : ""}`);
+  const verdict = judge(marksOn, sitePrivate, missing);
+  if (verdict.pass) {
+    console.log(`sample-switch: PASS (${verdict.why})`);
     return 0;
   }
-  if (sitePrivate) {
-    console.log("sample-switch: PASS (the marks are off and the site declares itself private; launch day flips both in one commit, see docs/DEPLOY-PACK-spine-flags.md)");
-    return 0;
-  }
-  console.log(`sample-switch: FAIL: ${SENTENCE}`);
-  console.log("  Remedy: set NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1 (the launch state) or NEXT_PUBLIC_SITE_PRIVATE=1 (the private state) in .env.production; never both off.");
+  console.log(`sample-switch: FAIL: ${verdict.why}`);
+  console.log(marksOn
+    ? "  Remedy: take NEXT_PUBLIC_SHOW_SAMPLE_MARKS off (ruling 5: the marks stay off; the quiet notes and About the figures carry the honesty)."
+    : "  Remedy: put back what is missing (the mark beside AnswerCard's foot line, marks.tsx's An estimate, about-data's #reading), or keep NEXT_PUBLIC_SITE_PRIVATE=1 until it is.");
   return 1;
 }
 

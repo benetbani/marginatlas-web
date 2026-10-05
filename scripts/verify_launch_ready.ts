@@ -39,12 +39,15 @@
  *       with --marker=<string> [--marker-url=/gb]. With no marker the build
  *       is "unverified: no marker", a reason: nothing here claims what
  *       production serves without reading it.
- *   (c) the two database tables present: query_outcomes.ts's own
- *       checkTables(); newsletter_signups and corrections must answer;
- *       saved_cells and subscriptions absent by design are printed as such.
- *   (d) the sample marks on, or the private flag set: verify_sample_switch.ts's
- *       own readFlag() for both flags and areSampleMarksVisible() from
- *       src/lib/feature_flags.ts; the gate's one sentence when both fail.
+ *   (c) the database tables present: query_outcomes.ts's own checkTables();
+ *       newsletter_signups and corrections must answer; the account tables
+ *       (subscriptions, saved_cells, profiles, watchlist) must answer when
+ *       accounts are on (isAuthEnabled()) and are printed as absent by design
+ *       while they are off (masterplan step 38).
+ *   (d) the sample marks off by his ruling 5, and the site private or ruling
+ *       5's honesty in source: verify_sample_switch.ts's own readFlag() and
+ *       judge(), the gate's rule (masterplan step 38); areSampleMarksVisible()
+ *       from src/lib/feature_flags.ts printed beside them.
  *   (e) the a11y report true: scripts/audit/a11y_static_audit.ts run, its
  *       counts compared with the report it wrote (scratchpad/audit/
  *       a11y_static_REPORT.md; the run is trusted, never the file alone).
@@ -94,8 +97,8 @@ import { spawnSync } from "node:child_process";
 import { existsSync, fstatSync, mkdirSync, readFileSync, statSync, writeFileSync, appendFileSync } from "node:fs";
 import { basename, resolve } from "node:path";
 import { preflight } from "./harness/preflight.mjs";
-import { readFlag, SENTENCE } from "./verify_sample_switch";
-import { areSampleMarksVisible } from "../src/lib/feature_flags";
+import { readFlag, judge, honestyMissing, HONESTY } from "./verify_sample_switch";
+import { areSampleMarksVisible, isAuthEnabled } from "../src/lib/feature_flags";
 
 const ROOT = process.cwd();
 const OUT = "scratchpad/launch";
@@ -126,6 +129,10 @@ const SITE = arg("site", "https://marginatlas.com")!;
 const ONLY = arg("only", null);
 /* A copy of the order book for a plant of (g); honoured only in a subset run, so the checklist itself always reads the real file. */
 const REQUIREMENTS_OVERRIDE = ONLY ? arg("requirements", null) : null;
+/* A local render of the home page for (i), honoured only in a subset run (masterplan step 38): the home page on the band page waits
+   behind NEXT_PUBLIC_HOME_REFORM, so its ledger section can be read before launch day off the harness's render; the checklist
+   itself always reads production. */
+const HOME_FILE = ONLY ? arg("home-file", null) : null;
 const TSX = [process.execPath, "node_modules/tsx/dist/cli.mjs"];
 
 /* ------------------------------------------------------------------------ */
@@ -257,7 +264,9 @@ function itemA(): void {
   let decision = "MODEL.md 8.2 not read";
   let optionA = false;
   if (existsSync(MODEL_MD)) {
-    const floorPara = readFileSync(MODEL_MD, "utf8").split(/\r?\n/).find((l) => /^\*\*FLOOR: \d+\.\*\*/.test(l)) ?? "";
+    /* The country's FLOOR paragraph, the one that carries the decision (masterplan step 38): the first `**FLOOR: n.**` line became
+       the trade cell's ("FLOOR: 15.") once the country's opened "FLOOR: 13, AND THE PAGE DRAWS 15", so the decision went unread. */
+    const floorPara = readFileSync(MODEL_MD, "utf8").split(/\r?\n/).find((l) => /^\*\*FLOOR: \d+/.test(l) && /PLAN STEP 49/.test(l)) ?? "";
     const d = floorPara.match(/PLAN STEP 49, DECIDED[^\]]*?OPTION ([A-Z])/);
     if (d) { optionA = d[1] === "A"; decision = `MODEL 8.2's FLOOR bracket: plan step 49 decided option ${d[1]}${optionA ? " (the 90 ship with the cities seat drawn and counted toward the floor)" : " (a country with no covered city is held)"}`; }
     else decision = "MODEL 8.2's FLOOR paragraph carries no plan-step-49 decision";
@@ -278,7 +287,8 @@ function itemA(): void {
     if (!rendered.get(stem)) { below.push(`${name} did not render`); continue; }
     const esc = stem.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const red = laws.text.match(new RegExp(`^\\s*${esc}@[0-9/]+ #page: BLOCK FLOOR: (\\d+) blocks against a floor of (\\d+)`, "m"));
-    const ok = laws.text.match(new RegExp(`^\\s*${esc}: BLOCK FLOOR: (\\d+) blocks against a floor of (\\d+), met`, "m"));
+    /* The met line may carry the checker's parenthesis (check_model_laws.mjs: "(the no-answer trade page's: ...)", masterplan step 38). */
+    const ok = laws.text.match(new RegExp(`^\\s*${esc}: BLOCK FLOOR: (\\d+) blocks against a floor of (\\d+)(?: \\([^)]*\\))?, met`, "m"));
     const none = laws.text.match(new RegExp(`^\\s*${esc}: BLOCK FLOOR: no \\[data-block\\]`, "m"));
     const seat = e.surface === "country" && /<div id="cities"[^>]*data-blocked="1"/.test(readFileSync(`${RENDER_DIR}/${stem}.html`, "utf8"));
     if (red) {
@@ -398,7 +408,11 @@ async function itemC(): Promise<void> {
   try { rows = await q.checkTables(client.db); } catch (e) { record("c", false, `query_outcomes' checkTables threw: ${e instanceof Error ? e.message : String(e)}`); return; }
   writeFileSync(`${OUT}/tables.txt`, rows.map(q.tableLine).join("\n") + "\n");
   for (const r of rows) say(`${stamp()}${q.tableLine(r)}`);
-  const must = ["newsletter_signups", "corrections"];
+  /* The account tables answer once accounts are on (masterplan step 38): Pro writes subscriptions, the account saves cells and a
+     watchlist, the profile row is made with the account (db/migrations/2026-06-08-accounts-saved-cells.sql and
+     2026-10-05-pro-subscriptions.sql); while accounts are off their absence is by design. */
+  const accountsOn = isAuthEnabled();
+  const must = ["newsletter_signups", "corrections", ...(accountsOn ? ["subscriptions", "saved_cells", "profiles", "watchlist"] : [])];
   const byName = new Map(rows.map((r) => [r.name, r]));
   const missingMust = must.filter((n) => byName.get(n)?.state !== "ok");
   const errors = rows.filter((r) => r.state === "error" || r.state === "nocount");
@@ -408,7 +422,8 @@ async function itemC(): Promise<void> {
   const words = [
     must.map((n) => { const r = byName.get(n); return r?.state === "ok" ? `${n} ${fmt(r.count!)} rows` : `${n} ${r ? `${r.state}${r.message ? `: ${r.message}` : ""}` : "not in the list"}`; }).join(", "),
     `the other tables: ${oks.filter((r) => !must.includes(r.name)).map((r) => `${r.name} ${fmt(r.count!)}`).join(", ")}`,
-    offs.length ? `${offs.map((r) => r.name).join(" and ")} absent by design (${offs.map((r) => r.off).join("; ")}), not reasons` : "",
+    offs.length ? `${offs.map((r) => r.name).join(" and ")} absent ${accountsOn ? "with accounts on, reasons" : `by design (${offs.map((r) => r.off).join("; ")}), not reasons`}` : "",
+    `accounts ${accountsOn ? "on (NEXT_PUBLIC_AUTH_ENABLED)" : "off"}`,
     errors.filter((r) => !must.includes(r.name)).length ? `in error: ${errors.filter((r) => !must.includes(r.name)).map((r) => `${r.name} (${r.message ?? r.state})`).join(", ")}` : "",
     `with the ${client.role.split(" (")[0]}`,
   ].filter(Boolean).join("; ");
@@ -425,10 +440,11 @@ function itemD(): void {
   const visible = areSampleMarksVisible();
   const marksOn = marks.on === true;
   const sitePrivate = priv.on === true;
-  const readings = `areSampleMarksVisible() ${visible} in this process; the build's reading: sample marks ${marksOn ? "ON" : "OFF"} (${marks.source}), site private ${sitePrivate ? "YES" : "NO"} (${priv.source})`;
-  if (marksOn) record("d", true, `the sample marks are on; ${readings}`);
-  else if (sitePrivate) record("d", true, `the marks are off and the site declares itself private; launch day flips both in one commit (docs/DEPLOY-PACK-spine-flags.md, the sample-switch gate holds it); ${readings}`);
-  else record("d", false, `${SENTENCE}; ${readings}`);
+  const missing = honestyMissing();
+  const readings = `areSampleMarksVisible() ${visible} in this process; the build's reading: sample marks ${marksOn ? "ON" : "OFF"} (${marks.source}), site private ${sitePrivate ? "YES" : "NO"} (${priv.source}), ruling 5's honesty in source ${HONESTY.length - missing.length} of ${HONESTY.length}`;
+  /* HIS RULING 5 (masterplan step 38): the marks stay off; the gate's own rule, so the checklist and the chain cannot disagree. */
+  const verdict = judge(marksOn, sitePrivate, missing);
+  record("d", verdict.pass, `${verdict.why}${verdict.pass && sitePrivate ? "; launch day deletes the private line and adds nothing (docs/DEPLOY-PACK-spine-flags.md)" : ""}; ${readings}`);
 }
 
 /* ------------------------------------------------------------------------ */
@@ -610,6 +626,7 @@ async function main(): Promise<number> {
   if (wanted("a")) itemA();
   let home: string | null = null;
   if (wanted("b")) home = (await itemB()).home;
+  else if (wanted("i") && HOME_FILE) { home = existsSync(HOME_FILE) ? readFileSync(HOME_FILE, "utf8") : null; say(`${stamp()} (i) reads ${HOME_FILE}${home ? "" : ", which does not exist"}, by hand, not production`); }
   else if (wanted("i")) { const f = await fetchPage("/"); say(f.line); home = f.status === 200 && f.bytes > MIN_PAGE_BYTES ? f.body : null; }
   if (wanted("c")) await itemC();
   if (wanted("e")) itemE();
@@ -621,8 +638,8 @@ async function main(): Promise<number> {
   const titles: Record<string, string> = {
     a: "every page type at its floor on three exemplars",
     b: "the chain green on the last deploy, and production serving it",
-    c: "the two database tables present",
-    d: "the sample marks on, or the private flag set",
+    c: "the database tables present",
+    d: "the sample marks off (ruling 5), the site private or its honesty in place",
     e: "the a11y report true",
     f: "every door landing",
     g: "every launch-blocking data requirement closed or withheld with a line",

@@ -151,10 +151,15 @@ export function isHomeReformEnabled(): boolean {
  * line still flows exactly as before, and `SampleTag` still receives its call,
  * it simply draws nothing. Nothing has to be rediscovered to put the marks back.
  *
- * WHAT TURNS IT BACK ON: set NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1 (in Vercel, or in
- * .env.local for a local check). That must happen BEFORE the site is shown to
- * anyone but him, or the site asserts modelled figures as measured ones, which
- * the honesty rail has forbidden since 2026-07-07.
+ * HIS RULING 5 KEEPS IT OFF (the interview of 2026-09-26: "the sample marks
+ * stay off; the quiet notes and 'About the figures' carry the honesty"). The
+ * honesty a public reader sees is the half-filled mark beside a masthead's foot
+ * line, its label "An estimate" (marks.tsx) and About the figures' "How to read
+ * a figure" (#reading). NEXT_PUBLIC_SHOW_SAMPLE_MARKS=1 stays possible for a
+ * local look only: the sample-switch gate (scripts/verify_sample_switch.ts,
+ * masterplan step 38) fails any build with it on, and passes a public build
+ * only while those three stand in source. Launch day deletes
+ * NEXT_PUBLIC_SITE_PRIVATE=1 from .env.production and adds nothing.
  */
 export function areSampleMarksVisible(): boolean {
   return parseFlag(process.env.NEXT_PUBLIC_SHOW_SAMPLE_MARKS, false);

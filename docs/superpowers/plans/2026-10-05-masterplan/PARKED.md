@@ -179,3 +179,14 @@ MORNING-REPORT.md.
 - **Options:** (a) Recommended: switch NEXT_PUBLIC_HOME_REFORM on with the launch, then delete the old branch in the next session
   after a search for other importers; (b) keep both for a while and compare; (c) keep the old page.
 - **Built either way:** the new page, gated and photographed (step 37); the old page untouched.
+
+### P38.1 City pages one block under their floor (step 38)
+- **Question:** the launch check's item (a) keeps one reason: Frankfurt and Abidjan draw 15 blocks against the city floor of 16.
+  They are not alone: the floor census counts 203 of the 245 city pages outside the UK at 15 (the neighbourhood pager draws only
+  on the curated cities), so those pages stay out of the index by the floor rule of milestone 1. What do you want for them?
+- **Options:** (a) Recommended: launch with the reason standing: the 203 stay out of the index until their missing block can be
+  drawn honestly, and nothing on the pages changes; (b) set the city floor at 15 for a city without curated districts (your word
+  on the floor), so the 203 index and the check passes; (c) draw the neighbourhood pager wherever a city holds districts, then
+  measure again.
+- **Built either way:** the checklist's own faults fixed (it reads the country's floor decision and the trade page's floor line
+  again); the 17 other exemplars at their floor, the home page among them (5 of 5).
