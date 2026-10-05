@@ -5,8 +5,9 @@
  *
  * Keep this file authoritative. Any new jurisdiction that gets first-class
  * treatment in the product (currently HK, MO, PR, TW, PS in addition to the
- * 196 sovereigns) goes here AND in OVERLAY_DOTS in WorldMapPicker.tsx if it
- * is too small to be visible at 110m resolution.
+ * 196 sovereigns) goes here. (The home page's world map, whose overlay dots
+ * drew the ones too small for 110m, was deleted with the old home rebuild,
+ * masterplan step 32; the home map is cut by his ruling of 2026-09-04.)
  */
 export const ISO_NUMERIC_TO_ALPHA2: Record<string, string> = {
   "004":"AF","008":"AL","010":"AQ","012":"DZ","016":"AS","020":"AD","024":"AO",
