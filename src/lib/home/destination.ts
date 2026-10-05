@@ -32,13 +32,18 @@ export function liveTradeSlug(trade: string | null | undefined): string | null {
   return slug in SLUG_TO_INDUSTRY && !(slug in RETIRED) ? slug : null;
 }
 
+/* THE UK CITIES WHOSE TRADE PAGES ARE LISTED (masterplan step 33): the sitemap lists London's alone, so a trade picked in another
+   UK city lands on that city's own page. The path is built from the reader's own pick, never typed (the no-hardcoded-place gate:
+   the place comes from the datum). */
+const UK_TRADE_PAGE_CITIES: ReadonlySet<string> = new Set(["london"]);
+
 export function homeDestination({ country, city = "", trade = "" }: { country: string; city?: string | null; trade?: string | null }): string {
   const cc = String(country ?? "").toUpperCase();
   const place = String(city ?? "").toLowerCase();
   const slug = liveTradeSlug(trade);
   if (cc === "GB") {
     const ukCity = UK_CITIES.find((c) => c.slug === place) ?? null;
-    if (ukCity?.slug === "london" && slug) return `/gb/london/${slug}`;
+    if (ukCity && slug && UK_TRADE_PAGE_CITIES.has(ukCity.slug)) return `/gb/${ukCity.slug}/${slug}`;
     if (ukCity) return `/cities/${ukCity.slug}`;
     if (slug) return `/industries/${slug}`;
     return "/gb";
