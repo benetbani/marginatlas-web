@@ -1644,6 +1644,20 @@
       "claims": []
     },
     {
+      "name": "home-duel",
+      "script": "tests/home/duel.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE DUEL ON THE HOME PAGE (his ruling of 2026-10-05 on PARKED P36.2, option (a): \"the duel\" from the trades that fail most, checked against the 45-day rule before it prints).",
+      "reads": [
+        "data/editorial/editorial_feed.json",
+        "scratchpad/harness/pages/cell-gb-london-restaurants.html",
+        "scratchpad/harness/pages/home-gb.html",
+        "src/lib/home/duel.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

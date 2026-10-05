@@ -1,0 +1,1109 @@
+{
+ "what": "The home page's feed: measured, like-for-like findings from the UK register tables, one question each",
+ "built_by": "E:/atlas/registers/uk/build_editorial.py",
+ "built": "2026-10-05",
+ "rules": [
+  "like for like: one dimension ranked, the other held",
+  "a floor of underlying units per member",
+  "absolutes in one unit",
+  "shared official codes print once under the code's name",
+  "no company named",
+  "title four words or fewer, line twelve or fewer",
+  "money in pounds; the page applies the site's currency rule"
+ ],
+ "items": [
+  {
+   "id": "fail-most",
+   "title": "Which trades fail most",
+   "unit": "insolvencies a year per 1,000 companies",
+   "line": "Insolvencies in a year per 1,000 live companies, UK.",
+   "dimension": "trade",
+   "held": "place: United Kingdom",
+   "floor": "10 insolvencies in the year",
+   "left_out": 31,
+   "period": "notices October 2025 to September 2026; register of May 2026",
+   "source": "company_failures_by_trade.json",
+   "refresh": "monthly (the Gazette)",
+   "top": [
+    {
+     "member": "Restaurants",
+     "sic": [
+      "56101"
+     ],
+     "trades": [
+      "restaurants"
+     ],
+     "shared": false,
+     "value": 28.9,
+     "lo": 27.3,
+     "hi": 30.5,
+     "few_cases": false,
+     "units": 43634,
+     "insolvent": 1259
+    },
+    {
+     "member": "Public houses and bars",
+     "sic": [
+      "56302"
+     ],
+     "trades": [
+      "pubs-taverns"
+     ],
+     "shared": true,
+     "value": 26.0,
+     "lo": 24.3,
+     "hi": 27.8,
+     "few_cases": false,
+     "units": 31956,
+     "insolvent": 830
+    },
+    {
+     "member": "Craft breweries taprooms",
+     "sic": [
+      "11050"
+     ],
+     "trades": [
+      "craft-breweries-taprooms"
+     ],
+     "shared": false,
+     "value": 22.0,
+     "lo": 16.2,
+     "hi": 30.0,
+     "few_cases": false,
+     "units": 1770,
+     "insolvent": 39
+    },
+    {
+     "member": "Metal fabrication machine shops",
+     "sic": [
+      "25110",
+      "25620"
+     ],
+     "trades": [
+      "metal-fabrication-machine-shops"
+     ],
+     "shared": false,
+     "value": 16.4,
+     "lo": 13.7,
+     "hi": 19.6,
+     "few_cases": false,
+     "units": 7018,
+     "insolvent": 115
+    },
+    {
+     "member": "Furniture stores",
+     "sic": [
+      "47599"
+     ],
+     "trades": [
+      "furniture-stores"
+     ],
+     "shared": false,
+     "value": 14.6,
+     "lo": 12.4,
+     "hi": 17.2,
+     "few_cases": false,
+     "units": 9320,
+     "insolvent": 136
+    },
+    {
+     "member": "Employment services",
+     "sic": [
+      "78109",
+      "78200"
+     ],
+     "trades": [
+      "employment-services"
+     ],
+     "shared": false,
+     "value": 14.2,
+     "lo": 13.1,
+     "hi": 15.4,
+     "few_cases": false,
+     "units": 40403,
+     "insolvent": 573
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Physical well-being activities",
+     "sic": [
+      "96040"
+     ],
+     "trades": [
+      "day-spas",
+      "massage-therapy-clinics",
+      "tanning-salons"
+     ],
+     "shared": true,
+     "value": 2.2,
+     "lo": 1.6,
+     "hi": 3.0,
+     "few_cases": false,
+     "units": 16504,
+     "insolvent": 36
+    },
+    {
+     "member": "Doctors & clinics",
+     "sic": [
+      "86210",
+      "86220"
+     ],
+     "trades": [
+      "doctors-clinics"
+     ],
+     "shared": false,
+     "value": 1.8,
+     "lo": 1.4,
+     "hi": 2.1,
+     "few_cases": false,
+     "units": 54686,
+     "insolvent": 96
+    },
+    {
+     "member": "Cultural education",
+     "sic": [
+      "85520"
+     ],
+     "trades": [
+      "music-schools-private-lessons",
+      "dance-studios",
+      "art-classes-studios"
+     ],
+     "shared": true,
+     "value": 1.6,
+     "lo": 1.0,
+     "hi": 2.6,
+     "few_cases": true,
+     "units": 10151,
+     "insolvent": 16
+    },
+    {
+     "member": "Dental practices",
+     "sic": [
+      "86230"
+     ],
+     "trades": [
+      "dental-practices"
+     ],
+     "shared": false,
+     "value": 1.3,
+     "lo": 0.9,
+     "hi": 2.0,
+     "few_cases": true,
+     "units": 18790,
+     "insolvent": 25
+    }
+   ],
+   "duel": {
+    "top": "Restaurants",
+    "bottom": "Dental practices",
+    "pairs_tested": 24,
+    "max_holm_p": 6.40721251356562e-25
+   },
+   "members": 76,
+   "middle": 6.1,
+   "as_of": "2026-09-30",
+   "built": "2026-10-05"
+  },
+  {
+   "id": "last-longest",
+   "title": "Which trades last longest",
+   "unit": "of 100 new firms still trading after five years",
+   "line": "On the closure rates of 2024, still trading after five years.",
+   "dimension": "trade group",
+   "held": "place: United Kingdom",
+   "floor": "1,000 births in the 2019 cohort",
+   "left_out": null,
+   "period": "closure rates of 2024 (cohorts born 2019 to 2023)",
+   "source": "survival_london_and_trades.json",
+   "refresh": "yearly (November)",
+   "top": [
+    {
+     "member": "Medical and dental practice activities",
+     "group": "862",
+     "trades": [
+      "dental-practices",
+      "doctors-clinics"
+     ],
+     "value": 67.4,
+     "lo": 65.6,
+     "hi": 69.2,
+     "one_year": 97.6,
+     "cohort_2019_five_years": 66.4,
+     "units": 2605
+    },
+    {
+     "member": "Legal activities",
+     "group": "691",
+     "trades": [
+      "legal-services"
+     ],
+     "value": 66.7,
+     "lo": 64.6,
+     "hi": 68.7,
+     "one_year": 96.8,
+     "cohort_2019_five_years": 59.8,
+     "units": 2375
+    },
+    {
+     "member": "Other social work activities without accommodation",
+     "group": "889",
+     "trades": [
+      "daycare-preschool"
+     ],
+     "value": 59.8,
+     "lo": 57.6,
+     "hi": 62.1,
+     "one_year": 96.2,
+     "cohort_2019_five_years": 64.0,
+     "units": 1750
+    },
+    {
+     "member": "Accounting, bookkeeping and auditing activities; tax consultancy",
+     "group": "692",
+     "trades": [
+      "accounting-tax"
+     ],
+     "value": 55.2,
+     "lo": 53.5,
+     "hi": 57.0,
+     "one_year": 95.4,
+     "cohort_2019_five_years": 42.9,
+     "units": 4235
+    },
+    {
+     "member": "Other human health activities",
+     "group": "869",
+     "trades": [
+      "chiropractic-clinics",
+      "mental-health-practices-small",
+      "nutritionist-dietician-practices",
+      "physical-therapy-clinics"
+     ],
+     "value": 52.8,
+     "lo": 51.0,
+     "hi": 54.6,
+     "one_year": 96.0,
+     "cohort_2019_five_years": 48.8,
+     "units": 2800
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Restaurants and mobile food service activities",
+     "group": "561",
+     "trades": [
+      "cafes-coffee-shops",
+      "food-trucks",
+      "ice-cream-frozen-dessert-shops",
+      "pizzerias",
+      "restaurants",
+      "tea-houses-matcha-bars"
+     ],
+     "value": 29.3,
+     "lo": 28.7,
+     "hi": 29.9,
+     "one_year": 94.0,
+     "cohort_2019_five_years": 39.1,
+     "units": 18105
+    },
+    {
+     "member": "Event catering and other food service activities",
+     "group": "562",
+     "trades": [
+      "catering-food-service-contractors"
+     ],
+     "value": 15.5,
+     "lo": 14.5,
+     "hi": 16.4,
+     "one_year": 92.4,
+     "cohort_2019_five_years": 21.6,
+     "units": 4030
+    },
+    {
+     "member": "Freight transport by road and removal services",
+     "group": "494",
+     "trades": [
+      "junk-removal-small-moving"
+     ],
+     "value": 14.7,
+     "lo": 14.2,
+     "hi": 15.2,
+     "one_year": 87.3,
+     "cohort_2019_five_years": 20.2,
+     "units": 16510
+    },
+    {
+     "member": "Other postal and courier activities",
+     "group": "532",
+     "trades": [
+      "couriers-messengers"
+     ],
+     "value": 14.4,
+     "lo": 13.8,
+     "hi": 15.0,
+     "one_year": 80.2,
+     "cohort_2019_five_years": 13.7,
+     "units": 10885
+    },
+    {
+     "member": "Office administrative and support activities",
+     "group": "821",
+     "trades": [
+      "office-business-support"
+     ],
+     "value": 8.8,
+     "lo": 7.8,
+     "hi": 9.8,
+     "one_year": 90.3,
+     "cohort_2019_five_years": 11.0,
+     "units": 2810
+    }
+   ],
+   "members": 36,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "restaurants-year-one",
+   "title": "How long restaurants last",
+   "unit": "of 100 still trading",
+   "line": "New restaurants and food stalls, still trading, UK.",
+   "dimension": "horizon",
+   "held": "trade group 561, United Kingdom",
+   "floor": null,
+   "left_out": null,
+   "period": "closure rates of 2024; the 2019 cohort for comparison",
+   "source": "survival_london_and_trades.json",
+   "refresh": "yearly",
+   "answer": {
+    "after_one_year": 94.0,
+    "after_five_years": 29.3,
+    "after_five_years_2019_cohort": 39.1
+   },
+   "definition": "after five years: the chance of closing in 2024 at each age from one to five, applied in turn; the businesses born in 2019 lived through years that closed fewer of them",
+   "built": "2026-10-05"
+  },
+  {
+   "id": "last-where",
+   "title": "Where new firms last",
+   "unit": "of 100 new firms still trading after five years",
+   "line": "On the closure rates of 2024, still trading after five years.",
+   "dimension": "borough",
+   "held": "trade: all trades",
+   "floor": "500 births in the 2019 cohort",
+   "left_out": 0,
+   "not_ranked": [
+    {
+     "member": "City of London",
+     "code": "E09000001",
+     "why": "its register counts head offices and formation addresses, not the shops on its streets"
+    }
+   ],
+   "period": "closure rates of 2024",
+   "source": "survival_london_and_trades.json",
+   "refresh": "yearly (November)",
+   "top": [
+    {
+     "member": "Richmond upon Thames",
+     "code": "E09000027",
+     "value": 44.9,
+     "lo": 42.4,
+     "hi": 47.4,
+     "units": 1795
+    },
+    {
+     "member": "Sutton",
+     "code": "E09000029",
+     "value": 42.6,
+     "lo": 39.7,
+     "hi": 45.6,
+     "units": 1395
+    },
+    {
+     "member": "Wandsworth",
+     "code": "E09000032",
+     "value": 42.4,
+     "lo": 40.3,
+     "hi": 44.4,
+     "units": 2810
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Kingston upon Thames",
+     "code": "E09000021",
+     "value": 34.7,
+     "lo": 32.0,
+     "hi": 37.3,
+     "units": 1250
+    },
+    {
+     "member": "Barking and Dagenham",
+     "code": "E09000002",
+     "value": 32.5,
+     "lo": 30.3,
+     "hi": 34.8,
+     "units": 1605
+    },
+    {
+     "member": "Newham",
+     "code": "E09000025",
+     "value": 29.9,
+     "lo": 28.4,
+     "hi": 31.5,
+     "units": 3220
+    }
+   ],
+   "members": 32,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "open-close",
+   "title": "Where more firms open",
+   "unit": "per 100 trading businesses, 2024",
+   "line": "Businesses born and closed in 2024 per 100 trading.",
+   "dimension": "borough",
+   "held": "trade: all trades",
+   "floor": null,
+   "left_out": null,
+   "not_ranked": [
+    {
+     "member": "City of London",
+     "code": "E09000001",
+     "why": "its register counts head offices and formation addresses, not the shops on its streets"
+    }
+   ],
+   "period": "2024",
+   "source": "survival_london_and_trades.json",
+   "refresh": "yearly",
+   "top": [
+    {
+     "member": "Newham",
+     "code": "E09000025",
+     "born": 17.3,
+     "closed": 12.3,
+     "units": 15605
+    },
+    {
+     "member": "Barking and Dagenham",
+     "code": "E09000002",
+     "born": 17.2,
+     "closed": 12.5,
+     "units": 9370
+    },
+    {
+     "member": "Islington",
+     "code": "E09000019",
+     "born": 15.7,
+     "closed": 11.4,
+     "units": 26145
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Kensington and Chelsea",
+     "code": "E09000020",
+     "born": 11.3,
+     "closed": 10.9,
+     "units": 14260
+    },
+    {
+     "member": "Kingston upon Thames",
+     "code": "E09000021",
+     "born": 10.9,
+     "closed": 10.9,
+     "units": 9325
+    },
+    {
+     "member": "Richmond upon Thames",
+     "code": "E09000027",
+     "born": 9.5,
+     "closed": 10.2,
+     "units": 13545
+    }
+   ],
+   "members": 32,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "youngest",
+   "title": "London's youngest trades",
+   "unit": "of 100 live companies under two years old",
+   "line": "Live London companies incorporated in the last two years.",
+   "dimension": "trade",
+   "held": "place: London",
+   "floor": "500 live companies",
+   "left_out": 35,
+   "period": "register snapshot 2026-05-01",
+   "source": "london_companies_by_district.json",
+   "refresh": "monthly (the register snapshot)",
+   "top": [
+    {
+     "member": "Toy stores",
+     "sic": [
+      "47650"
+     ],
+     "trades": [
+      "toy-game-stores"
+     ],
+     "shared": false,
+     "value": 52,
+     "median_age_years": 1.9,
+     "units": 573
+    },
+    {
+     "member": "Cleaning services",
+     "sic": [
+      "81210",
+      "81229"
+     ],
+     "trades": [
+      "cleaning-services"
+     ],
+     "shared": false,
+     "value": 49,
+     "median_age_years": 2.1,
+     "units": 5625
+    },
+    {
+     "member": "Cosmetics beauty shops",
+     "sic": [
+      "47750"
+     ],
+     "trades": [
+      "cosmetics-beauty-shops"
+     ],
+     "shared": false,
+     "value": 47,
+     "median_age_years": 2.3,
+     "units": 2005
+    },
+    {
+     "member": "Unlicensed restaurants and cafes",
+     "sic": [
+      "56102"
+     ],
+     "trades": [
+      "cafes-coffee-shops",
+      "tea-houses-matcha-bars"
+     ],
+     "shared": true,
+     "value": 47,
+     "median_age_years": 2.2,
+     "units": 9720
+    },
+    {
+     "member": "Window washing",
+     "sic": [
+      "81221"
+     ],
+     "trades": [
+      "window-washing"
+     ],
+     "shared": false,
+     "value": 47,
+     "median_age_years": 2.1,
+     "units": 720
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Office business support",
+     "sic": [
+      "82110",
+      "82990"
+     ],
+     "trades": [
+      "office-business-support"
+     ],
+     "shared": false,
+     "value": 19,
+     "median_age_years": 8.8,
+     "units": 33559
+    },
+    {
+     "member": "Accounting & tax",
+     "sic": [
+      "69201",
+      "69202",
+      "69203"
+     ],
+     "trades": [
+      "accounting-tax"
+     ],
+     "shared": false,
+     "value": 17,
+     "median_age_years": 8.7,
+     "units": 10500
+    },
+    {
+     "member": "News publishing",
+     "sic": [
+      "58130",
+      "58142"
+     ],
+     "trades": [
+      "news-periodical-publishing"
+     ],
+     "shared": false,
+     "value": 15,
+     "median_age_years": 13.0,
+     "units": 776
+    }
+   ],
+   "members": 72,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "shop-metre",
+   "title": "What shop space costs",
+   "unit": "pounds a square metre a year",
+   "line": "The official estimate of a year's shop rent, per square metre.",
+   "dimension": "borough",
+   "held": "premises: shops",
+   "floor": "200 rated shops",
+   "left_out": null,
+   "period": "valuation date 1 April 2021 (the 2023 rating list counted at 31 March 2025)",
+   "source": "london_premises_value_by_borough.json",
+   "refresh": "yearly",
+   "top": [
+    {
+     "member": "Westminster",
+     "code": "E09000033",
+     "value_gbp": 838.0,
+     "units": 5410
+    },
+    {
+     "member": "City of London",
+     "code": "E09000001",
+     "value_gbp": 655.0,
+     "units": 1000
+    },
+    {
+     "member": "Kensington and Chelsea",
+     "code": "E09000020",
+     "value_gbp": 590.0,
+     "units": 2710
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Barking and Dagenham",
+     "code": "E09000002",
+     "value_gbp": 153.0,
+     "units": 1380
+    },
+    {
+     "member": "Sutton",
+     "code": "E09000029",
+     "value_gbp": 152.0,
+     "units": 1610
+    },
+    {
+     "member": "Bexley",
+     "code": "E09000004",
+     "value_gbp": 128.0,
+     "units": 1610
+    }
+   ],
+   "members": 35,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "kitchens-five",
+   "title": "Where kitchens score five",
+   "unit": "of 100 rated restaurants and cafes",
+   "line": "Restaurants, cafes and canteens rated five for hygiene.",
+   "dimension": "borough",
+   "held": "trade: restaurants, cafes, canteens",
+   "floor": "300 rated premises",
+   "left_out": null,
+   "period": "food hygiene ratings, 2026-10-02",
+   "source": "london_food_by_borough.json",
+   "refresh": "monthly",
+   "top": [
+    {
+     "member": "City of London Corporation",
+     "value": 87,
+     "low_share": 3,
+     "units": 858,
+     "awaiting": 48
+    },
+    {
+     "member": "Kensington and Chelsea",
+     "value": 87,
+     "low_share": 1,
+     "units": 924,
+     "awaiting": 57
+    },
+    {
+     "member": "Merton",
+     "value": 84,
+     "low_share": 1,
+     "units": 538,
+     "awaiting": 62
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Newham",
+     "value": 48,
+     "low_share": 12,
+     "units": 618,
+     "awaiting": 36
+    },
+    {
+     "member": "Ealing",
+     "value": 47,
+     "low_share": 19,
+     "units": 880,
+     "awaiting": 70
+    },
+    {
+     "member": "Waltham Forest",
+     "value": 46,
+     "low_share": 11,
+     "units": 573,
+     "awaiting": 19
+    }
+   ],
+   "members": 31,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "kitchens-new",
+   "title": "New kitchens waiting",
+   "unit": "restaurants and cafes awaiting a first inspection",
+   "line": "Registered, not yet inspected: mostly new restaurants and cafes.",
+   "dimension": "borough",
+   "held": "trade: restaurants, cafes, canteens",
+   "floor": "300 rated premises",
+   "left_out": null,
+   "period": "2026-10-02",
+   "source": "london_food_by_borough.json",
+   "refresh": "monthly",
+   "top": [
+    {
+     "member": "Redbridge",
+     "value": 229,
+     "units": 667
+    },
+    {
+     "member": "Camden",
+     "value": 194,
+     "units": 1534
+    },
+    {
+     "member": "Wandsworth",
+     "value": 92,
+     "units": 1160
+    },
+    {
+     "member": "Hackney",
+     "value": 90,
+     "units": 914
+    },
+    {
+     "member": "Lewisham",
+     "value": 80,
+     "units": 555
+    }
+   ],
+   "members": 31,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "saturday",
+   "title": "Where Saturday is busiest",
+   "unit": "entries and exits a day",
+   "line": "Station users on a Saturday and on a weekday, 2025.",
+   "dimension": "station",
+   "held": "mode: all",
+   "floor": "20,000 users a weekday",
+   "left_out": null,
+   "period": "2025",
+   "source": "london_station_footfall.json",
+   "refresh": "yearly",
+   "top": [
+    {
+     "member": "Covent Garden",
+     "saturday": 51112,
+     "weekday": 33655
+    },
+    {
+     "member": "Camden Town",
+     "saturday": 71052,
+     "weekday": 48745
+    },
+    {
+     "member": "Notting Hill Gate",
+     "saturday": 50834,
+     "weekday": 37150
+    },
+    {
+     "member": "North Greenwich",
+     "saturday": 90346,
+     "weekday": 67445
+    },
+    {
+     "member": "Leicester Square",
+     "saturday": 104431,
+     "weekday": 78527
+    }
+   ],
+   "members": 119,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "takings",
+   "title": "Typical takings by trade",
+   "unit": "thousand pounds a year, the middle business",
+   "line": "Median yearly turnover of VAT-registered London businesses.",
+   "dimension": "trade",
+   "held": "place: London",
+   "floor": "500 enterprises, and a median from 50k to 50m",
+   "left_out": 35,
+   "period": "March 2026 register snapshot; turnover is VAT-return turnover for the latest year the register holds",
+   "source": "london_trades_by_borough.json",
+   "refresh": "yearly",
+   "top": [
+    {
+     "member": "Hotels and similar accommodation",
+     "sic": [
+      "55100"
+     ],
+     "trades": [
+      "hotels-lodging",
+      "guest-houses-pensions"
+     ],
+     "shared": true,
+     "value_gbp_k": 787.2,
+     "units": 1920
+    },
+    {
+     "member": "Pharmacies health stores",
+     "sic": [
+      "47730"
+     ],
+     "trades": [
+      "pharmacies-health-stores"
+     ],
+     "shared": false,
+     "value_gbp_k": 781.8,
+     "units": 1395
+    },
+    {
+     "member": "Travel agencies",
+     "sic": [
+      "79110"
+     ],
+     "trades": [
+      "travel-agencies"
+     ],
+     "shared": false,
+     "value_gbp_k": 626.2,
+     "units": 1740
+    },
+    {
+     "member": "Public houses and bars",
+     "sic": [
+      "56302"
+     ],
+     "trades": [
+      "pubs-taverns"
+     ],
+     "shared": true,
+     "value_gbp_k": 417.0,
+     "units": 2355
+    },
+    {
+     "member": "Nursing elderly care",
+     "sic": [
+      "87100",
+      "87300",
+      "88100"
+     ],
+     "trades": [
+      "nursing-elderly-care"
+     ],
+     "shared": false,
+     "value_gbp_k": 392.5,
+     "units": 2260
+    }
+   ],
+   "bottom": [
+    {
+     "member": "Game development studios",
+     "sic": [
+      "58210",
+      "62011"
+     ],
+     "trades": [
+      "game-development-studios"
+     ],
+     "shared": false,
+     "value_gbp_k": 100.0,
+     "units": 790
+    },
+    {
+     "member": "Other human health activities",
+     "sic": [
+      "86900"
+     ],
+     "trades": [
+      "chiropractic-clinics",
+      "physical-therapy-clinics",
+      "mental-health-practices-small",
+      "nutritionist-dietician-practices"
+     ],
+     "shared": true,
+     "value_gbp_k": 95.9,
+     "units": 5775
+    },
+    {
+     "member": "Photography studios",
+     "sic": [
+      "74201",
+      "74209"
+     ],
+     "trades": [
+      "photography-studios"
+     ],
+     "shared": false,
+     "value_gbp_k": 92.2,
+     "units": 2190
+    },
+    {
+     "member": "Hairdressing and other beauty treatment",
+     "sic": [
+      "96020"
+     ],
+     "trades": [
+      "hairdressers-beauty",
+      "barbershops",
+      "nail-salons",
+      "brow-lash-studios"
+     ],
+     "shared": true,
+     "value_gbp_k": 78.6,
+     "units": 9695
+    },
+    {
+     "member": "Physical well-being activities",
+     "sic": [
+      "96040"
+     ],
+     "trades": [
+      "day-spas",
+      "massage-therapy-clinics",
+      "tanning-salons"
+     ],
+     "shared": true,
+     "value_gbp_k": 71.5,
+     "units": 825
+    }
+   ],
+   "members": 70,
+   "built": "2026-10-05"
+  },
+  {
+   "id": "new-companies",
+   "title": "New companies last month",
+   "unit": "companies incorporated in London",
+   "line": "London companies incorporated in 2026-04, by trade.",
+   "dimension": "trade",
+   "held": "place: London",
+   "floor": null,
+   "left_out": null,
+   "period": "2026-04",
+   "source": "formations_by_month.json",
+   "refresh": "monthly (the register snapshot)",
+   "top": [
+    {
+     "member": "Software development",
+     "sic": [
+      "62012"
+     ],
+     "trades": [
+      "software-development"
+     ],
+     "shared": false,
+     "value": 558,
+     "year_before": 288
+    },
+    {
+     "member": "IT services",
+     "sic": [
+      "62020",
+      "63110"
+     ],
+     "trades": [
+      "it-services-hosting"
+     ],
+     "shared": false,
+     "value": 473,
+     "year_before": 426
+    },
+    {
+     "member": "Marketing design agencies",
+     "sic": [
+      "73110",
+      "74100"
+     ],
+     "trades": [
+      "marketing-design-agencies"
+     ],
+     "shared": false,
+     "value": 351,
+     "year_before": 332
+    },
+    {
+     "member": "Office business support",
+     "sic": [
+      "82110",
+      "82990"
+     ],
+     "trades": [
+      "office-business-support"
+     ],
+     "shared": false,
+     "value": 289,
+     "year_before": 325
+    },
+    {
+     "member": "Hairdressing and other beauty treatment",
+     "sic": [
+      "96020"
+     ],
+     "trades": [
+      "hairdressers-beauty",
+      "barbershops",
+      "nail-salons",
+      "brow-lash-studios"
+     ],
+     "shared": true,
+     "value": 284,
+     "year_before": 287
+    },
+    {
+     "member": "Other human health activities",
+     "sic": [
+      "86900"
+     ],
+     "trades": [
+      "chiropractic-clinics",
+      "physical-therapy-clinics",
+      "mental-health-practices-small",
+      "nutritionist-dietician-practices"
+     ],
+     "shared": true,
+     "value": 243,
+     "year_before": 251
+    }
+   ],
+   "members": 92,
+   "built": "2026-10-05"
+  }
+ ]
+}

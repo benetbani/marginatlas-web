@@ -2708,6 +2708,16 @@ export const COPY = {
       rows: { countries: "Countries", cities: "Cities", districts: "Districts", trades: "Trades" },
       notes: { countries: "With figures, of all listed", cities: "Each with its own page", districts: "Inside those cities", trades: "From cafés to machine shops" },
     },
+    /** THE DUEL (his ruling of 2026-10-05 on PARKED P36.2): the line under the set's middle, the top rule, the phone's heads. The
+     *  question itself is the feed's own title. */
+    duel: {
+      words: "of 100 companies insolvent a year, the middle trade, to {month}",
+      topLabel: "Highest here",
+      phoneName: "Trade",
+      phoneValue: "Of 100",
+      /** A row's name where the official code's own runs past three words (his labels rule); the duel's test fails on any other. */
+      names: { "Public houses and bars": "Pubs and bars" } as Record<string, string>,
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
     pro: {
       kicker: "Pro",

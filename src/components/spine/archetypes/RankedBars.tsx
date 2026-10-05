@@ -462,7 +462,9 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
      in a narrow third at 1280, where a `md:` breakpoint would have split a
      347px card into two columns. Only a card with `focal.words` becomes a
      query container, so no card that stood before this change is touched. */
-  const headTwoUp = Boolean(focal?.words);
+  /* AND ONLY WITH SOMETHING TO STAND BESIDE IT (2026-10-05, the home page's duel): a card with a labelled focal and no basis or
+     withheld line drew the two-up grid with its right half empty, 465 by 126 of nothing at 768 (the page filter). */
+  const headTwoUp = Boolean(focal?.words) && Boolean(basis || withheldLine);
   return (
     <Box id={id} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
       <Rail icon={icon} kicker={kicker} sample={tagged} gloss={gloss} />

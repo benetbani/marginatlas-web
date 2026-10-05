@@ -24,6 +24,8 @@ import { CityCards } from "@/components/spine/archetypes/CityCards";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { isPaywallOn } from "@/lib/feature_flags";
 import { ProBand } from "./ProBand";
+import { HomeDuel } from "./HomeDuel";
+import { buildDuel } from "@/lib/home/duel";
 import { HomeNewsletter } from "@/components/home/HomeNewsletter";
 import { buildNotebook, type NotebookCard } from "@/lib/home/notebook";
 import { NavigatorForm } from "@/components/NavigatorForm";
@@ -199,6 +201,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const cities = buildCityCards(data?.iso2 ?? "GB");
   const holds = buildAtlasHolds();
   const notebook = buildNotebook();
+  const duel = buildDuel();
   const zones: Array<{ key: string; split: ZoneSplit; stack?: "lg"; even?: boolean; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, what London's trades take, who is still
@@ -206,6 +209,9 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     ...(answers.length ? [{ key: "answers", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.answersLabel, body: answers.map((a) => <AnswerDoor key={a.key} a={a} />) }] : []),
     /* THE UK'S CITIES AND WHAT THE ATLAS HOLDS, ONE LEVEL (masterplan step 35): the city cards at two thirds, the counts beside. */
     { key: "cities", split: "2-1", label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <AtlasHolds key="atlas" holds={holds} />] },
+    /* THE DUEL (his ruling of 2026-10-05 on PARKED P36.2): which trades fail most, the set's two highest and two lowest on one
+       scale, from the registers' feed, only while it is fresh (the 45-day rule); alone at two thirds (the zones' LONE rule). */
+    ...(duel ? [{ key: "duel", split: "2-1" as ZoneSplit, label: duel.title, body: [<HomeDuel key="duel" duel={duel} />] }] : []),
     /* PRO, SAID ONCE AND QUIETLY (ruling 23), only while the paywall's switch is on: the zone is not listed otherwise, so no band
        stands empty and nothing about Pro prints. */
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
