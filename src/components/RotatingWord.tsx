@@ -76,7 +76,10 @@ export function RotatingWord({
   // both mobile and desktop, keeping the gap proportional.
   return (
     <span className={`relative inline-block align-baseline ${className}`} style={{ paddingLeft: "0.15em", paddingRight: "0.15em" }}>
-      <span className="invisible">{widest}</span>
+      {/* THE SPACER HOLDS NO TEXT (masterplan step 32): the widest word sized the slot as a text node, so a crawler and the page
+          laws both read the h1 as "How much does a restaurant bakery make in Istanbul London?". Its width now comes from the
+          same word drawn by a pseudo-element, which takes the space and is no text anyone reads. */}
+      <span aria-hidden="true" data-w={widest} className="invisible before:content-[attr(data-w)]" />
       <span
         className={`absolute left-1/2 -translate-x-1/2 inline-block transition-all duration-300 ease-out ${transform}`}
       >

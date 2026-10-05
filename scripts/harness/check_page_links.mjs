@@ -50,7 +50,8 @@ const LIST = "scripts/harness/pages.json";
    DAY, when the trail back up landed (Crumbs.tsx): trade 7 to 8, district and
    hub 10 to 11, industry 2 to 3. The city and the how-to did not move, because
    their trail's one link (the country page) was already on them. */
-const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3 };
+/* home 0 since masterplan step 32: the frame holds the search alone; step 37 sets the floor at the finished page's count. */
+const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3, home: 0 };
 
 const surfaceOf = (name) =>
   name.startsWith("country-") ? "country" :
@@ -58,6 +59,7 @@ const surfaceOf = (name) =>
   name.startsWith("cell-") ? "cell" :
   name.startsWith("industry-") ? "industry" :
   name.startsWith("hood-") ? "hood" :
+  name.startsWith("home-") ? "home" :
   name.startsWith("howto-") ? "howto" : "other";
 
 /* THE ROUTES, from src/app: every directory holding a page or a route handler.

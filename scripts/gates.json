@@ -2833,10 +2833,10 @@
       "reads": [
         "src/app/[country]/page.tsx",
         "src/app/dev/spine/page.tsx",
-        "src/components/home/home2-view.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
+        "src/components/spine/home/home-view.tsx",
         "src/components/spine/industry/industry-view.tsx"
       ],
       "claims": []
@@ -2850,10 +2850,10 @@
       "reads": [
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
-        "src/components/home/home2-view.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
+        "src/components/spine/home/home-view.tsx",
         "src/components/spine/industry/industry-view.tsx"
       ],
       "claims": []
@@ -2870,8 +2870,8 @@
         "src/app/dev/spine-hood",
         "src/app/dev/spine-industry",
         "src/app/dev/spine/page.tsx",
-        "src/components/home/home2-view.tsx",
-        "src/components/spine/NeighborhoodExplorer.tsx"
+        "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/home/home-view.tsx"
       ],
       "claims": [
         {
@@ -2936,10 +2936,10 @@
       "reads": [
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
-        "src/components/home/home2-view.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
+        "src/components/spine/home/home-view.tsx",
         "src/components/spine/industry/industry-view.tsx"
       ],
       "claims": []
@@ -2953,10 +2953,10 @@
       "reads": [
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
-        "src/components/home/home2-view.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
+        "src/components/spine/home/home-view.tsx",
         "src/components/spine/industry/industry-view.tsx"
       ],
       "claims": []

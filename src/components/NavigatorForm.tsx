@@ -182,7 +182,7 @@ export function NavigatorForm() {
             Pick a country, a city, and a business.
           </h2>
         </div>
-        <div className="hidden sm:block text-right text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-cocoa-700/70 font-medium leading-tight">
+        <div className="hidden sm:block text-right text-xs uppercase tracking-[0.14em] text-cocoa-700/70 font-medium leading-tight">
           {/* Derived, not typed. This read "105 countries", which matches
               nothing: the picker below offers all of COUNTRIES, and the atlas
               holds 94 with benchmarks. Neither is 105, so it was a figure from
@@ -246,7 +246,7 @@ export function NavigatorForm() {
       {/* Footer bar: sample line + submit. */}
       <div className="rounded-b-2xl border-t border-paper-350 bg-white px-5 md:px-8 py-4 md:py-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <p className="text-[11px] md:text-xs text-cocoa-700/80 leading-relaxed">
+          <p className="text-xs text-cocoa-700/80 leading-relaxed">
             <span className="font-semibold uppercase tracking-[0.12em] text-ink-500 mr-1.5">
               Try
             </span>
@@ -286,7 +286,7 @@ export function NavigatorForm() {
               type="submit"
               disabled={isLoading}
               aria-busy={isLoading}
-              className="px-5 py-2.5 rounded-full border border-atlas-200 bg-atlas-50 hover:bg-atlas-100 text-atlas-700 font-semibold text-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
+              className="min-h-11 px-5 py-2.5 rounded-full border border-atlas-200 bg-atlas-50 hover:bg-atlas-100 text-atlas-700 font-semibold text-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
             >
               {isLoading ? (
                 <>

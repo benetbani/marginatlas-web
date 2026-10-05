@@ -92,7 +92,7 @@ const GROUPS: Group[] = [
     budget: 2,
     files: ["src/components/spine/NeighborhoodExplorer.tsx"],
   },
-  { name: "home", budget: 2, files: ["src/components/home/home2-view.tsx"] },
+  { name: "home", budget: 2, files: ["src/components/spine/home/home-view.tsx"] }, // masterplan step 32, after home2-view
 ];
 
 function isCommentLine(line: string): boolean {

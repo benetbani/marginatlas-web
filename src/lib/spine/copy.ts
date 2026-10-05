@@ -2688,6 +2688,13 @@ export const COPY = {
    *  and icon, the drawing blurred behind, one line, one button; no pop-up"). One button, and one line for every section id a UK
    *  page can lock (the levels after the first of each chapter on /gb, the UK city pages and the London trade pages, read off
    *  their renders of 2026-10-05): what the section answers, in the reader's words, no figure. */
+  /** THE HOME PAGE ON THE BAND PAGE (masterplan steps 32 to 37; his rulings 11 and 23 of 2026-09-26; the h1 he kept on
+   *  2026-08-16, its business and city rotating between the words). */
+  home: {
+    h1: { lead: "How much does a", middle: "make in" },
+    subtitle: "Know if a business works before you risk your money.",
+    searchLabel: "Search",
+  },
   /** THE PAGE FOOT (masterplan step 31; QUEUE close:furniture-lines): the link to the correction page and, where the data holds a
    *  date, the date its figures were checked (src/components/spine/ReportFoot.tsx). */
   pageFoot: {

@@ -18,13 +18,11 @@ import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
 import { CITY_CARD_PLACEHOLDER_IMAGE } from "@/lib/spine/city_cards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 // Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
-// Mirrors src/components/home/home2-view.tsx, which holds the rebuilt body.
+// The flagged branch draws src/components/spine/home/home-view.tsx, the band page (masterplan step 32).
 import { isHomeReformEnabled } from "@/lib/feature_flags";
 import { SiteChrome } from "@/components/SiteChrome";
 import { SpineShell } from "@/components/spine/shell";
-import { Home2View } from "@/components/home/home2-view";
-import { rankPlacesForTrade, slugToIndustry } from "@/lib/scores/recommend";
-import { toMarginIndexBoard, deriveHomeInsight } from "@/lib/scores/margin_index";
+import { SpineHomeBody } from "@/components/spine/home/home-view";
 import type { Metadata } from "next";
 
 /**
@@ -255,42 +253,19 @@ function formatPostDate(iso: string): string {
 }
 
 export default async function HomePage() {
-  // Wave 2 Task 7: gate the rebuilt homepage behind NEXT_PUBLIC_HOME_REFORM (default
-  // OFF, see src/lib/feature_flags.ts). Renders src/components/home/home2-view.tsx's
-  // data-loading exactly (the same Margin Index resolver run , slugToIndustry ->
-  // rankPlacesForTrade -> toMarginIndexBoard , and the same keep-guarded insight
-  // derivation), so the live route never re-derives it differently. The live route
-  // wraps in SpineShell itself (the dev route gets it from its own layout.tsx), the
-  // same pattern src/app/cities/[slug]/page.tsx uses for its spine branch. With the
-  // flag OFF (the default) this whole block is skipped and the untouched body below
-  // renders exactly as it does today.
+  /* THE HOME PAGE ON THE BAND PAGE (milestone 3, masterplan step 32), behind NEXT_PUBLIC_HOME_REFORM (default OFF, see
+     src/lib/feature_flags.ts): the h1 he kept and the search first, then the UK's answers, its cities, what the atlas holds,
+     Pro said once and the notebook, as steps 33 to 36 seat them (src/components/spine/home/home-view.tsx). It replaces the
+     earlier rebuild, whose "Free vs paid" and coined index contradicted his rulings 11 and 17. With the flag OFF (the default)
+     the untouched body below renders exactly as it does today. */
   if (isHomeReformEnabled()) {
-    const ind = slugToIndustry("restaurants");
-    const result = ind ? await rankPlacesForTrade(ind.id, { budgetUsd: null }) : null;
-    const marginIndexBoard = result ? toMarginIndexBoard(result) : null;
-
-    // The one honest headline stat: derived centrally (never fabricated) in
-    // src/lib/scores/margin_index.ts, tested in tests/scores/margin_index.test.ts.
-    const insight = deriveHomeInsight(marginIndexBoard);
-
-    // Real posts only. getAllPosts() already self-guards a missing content dir; the
-    // try/catch is extra defense so a malformed post's frontmatter can never break
-    // the route. Named distinctly from the flag-OFF path's own `blogPosts` below
-    // (different block scope either way; the name just keeps the two paths visibly
-    // separate on the page).
-    let reformBlogPosts: ReturnType<typeof getAllPosts> = [];
-    try {
-      reformBlogPosts = getAllPosts();
-    } catch {
-      reformBlogPosts = [];
-    }
-
     return (
-      <SpineShell>
-        <main className="mx-auto max-w-[1120px] px-4 py-8 md:px-6">
-          <Home2View insight={insight} marginIndexBoard={marginIndexBoard} blogPosts={reformBlogPosts} />
-        </main>
-      </SpineShell>
+      <SiteChrome>
+        <WebSite />
+        <SpineShell>
+          <SpineHomeBody data={{ iso2: "GB" }} />
+        </SpineShell>
+      </SiteChrome>
     );
   }
   // flag OFF: everything below is the current homepage, untouched.

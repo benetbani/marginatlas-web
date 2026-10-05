@@ -67,6 +67,8 @@ export const HARNESS_LIST = "scripts/harness/pages.json";
 /** Harness stem -> the key a gate's baseline was written under before this module. */
 export const BASELINE_KEYS = {
   "country-GB": "country-gb-new",
+  /* The home page on the band page (masterplan step 32) is judged under the key the frozen home render held. */
+  "home-gb": "home",
   "cell-gb-london-restaurants": "cell-london-restaurants",
 };
 
@@ -83,7 +85,8 @@ export const OLD_NAMES = {
 export const RETIRED = ["country-gb", "country-gb-new"];
 
 /** The two legacy pages, frozen. */
-const FROZEN = ["home", "countries-list"];
+/* "home" left this list at masterplan step 32: its fresh render is home-gb, the band page. */
+const FROZEN = ["countries-list"];
 
 /**
  * One entry per render the gates read, with its file's state at the moment of

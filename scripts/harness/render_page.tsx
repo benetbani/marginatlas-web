@@ -9,7 +9,7 @@
      npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs        scripts/harness/render_page.tsx <surface> <slug...>
      ... render_page.tsx --list [scripts/harness/pages.json]   (every page in the list, one process; a page that does not render is a red)
      ... render_page.tsx --locked <surface:slug[:slug...]> ...  (the UK page types drawn locked, masterplan step 20: country:gb, city:london, cell:gb:london:restaurants)
-     surfaces: country <iso2> | city <slug> | cell <country> <geo> <industry> | industry <slug> | hood <city> [<district>]
+     surfaces: country <iso2> | city <slug> | cell <country> <geo> <industry> | industry <slug> | hood <city> [<district>] | home <iso2>
    The hood surface takes a second slug for a DISTRICT PAGE (plan step 35, 2026-09-19):
    the same body in focus (SpineHoodBody's `focus`), the same adapter, so the stem is
    hood-<city>-<district> and every page gate keys it under the hood floor.
@@ -43,6 +43,7 @@ import { SpineIndustryBody } from "../../src/components/spine/industry/industry-
 import { SpineHoodBody } from "../../src/components/spine/hood/hood-view";
 import { SpineShell } from "../../src/components/spine/shell";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
+import { SpineHomeBody } from "../../src/components/spine/home/home-view";
 import { renderCountryRoute } from "../../src/app/[country]/country_spine";
 import { renderCellRoute } from "../../src/app/[country]/[geo]/[industry]/cell_spine";
 import { renderCityRoute } from "../../src/app/(site)/cities/[slug]/city_spine";
@@ -92,6 +93,8 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
     case "industry": C = SpineIndustryBody; data = await buildSpineIndustrySeed(slugs[0]); break;
     case "hood": C = SpineHoodBody; data = await buildSpineHoodSeed(slugs[0]); selfShelled = true; break;
     case "howto": C = HowToBody; data = { iso2: slugs[0].toUpperCase() }; break;
+    /* The home page on the band page (masterplan step 32): its slug is the country it leads with. */
+    case "home": C = SpineHomeBody; data = { iso2: slugs[0].toUpperCase() }; break;
     default: console.error("unknown surface", surface); process.exit(2);
   }
   if (!data) { console.log(`  ${surface} ${slugs.join("/")}: NO DATA (the adapter returned nothing; this instance does not render)`); return null; }

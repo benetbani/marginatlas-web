@@ -34,7 +34,8 @@ import { basename, join } from "node:path";
 import { stripCommentLines } from "./strip_comments";
 
 export const SPINE_ROOT = "src/components/spine";
-export const SPINE_PAGES = ["country", "howto", "city", "hood", "cell", "industry"] as const;
+/* "home" since masterplan step 32 (src/components/spine/home/home-view.tsx, the home page on the band page). */
+export const SPINE_PAGES = ["country", "howto", "city", "hood", "cell", "industry", "home"] as const;
 export type SpinePage = (typeof SPINE_PAGES)[number];
 const SKIP_DIRS = new Set(["archetypes"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx", "motion.tsx"]);

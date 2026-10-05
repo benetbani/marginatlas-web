@@ -270,6 +270,8 @@ function expectedAnswer(surface: string, slugs: string[]): DoorKind | null {
     case "cell": return SURFACE_ANSWERS.cell;
     case "industry": return SURFACE_ANSWERS.industry;
     case "hood": return slugs.length > 1 ? SURFACE_ANSWERS.district : SURFACE_ANSWERS.hood;
+    /* The home page answers no one place (masterplan step 32): its sections are doors to the pages that do. */
+    case "home": return null;
     default: return null;
   }
 }

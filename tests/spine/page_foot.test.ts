@@ -33,6 +33,7 @@ const PAGES: Array<{ file: string; path: string; uk: boolean }> = [
   { file: "industry-restaurants", path: "/industries/restaurants", uk: false },
   { file: "hood-london", path: "/cities/london/neighborhoods", uk: true },
   { file: "hood-london-city-of-london", path: "/cities/london/neighborhoods/city-of-london", uk: true },
+  { file: "home-gb", path: "/", uk: false },
 ];
 const listed = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages.map((p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`);
 check(`the test reads every page the harness lists (${listed.length})`, listed.length === PAGES.length && listed.every((f: string) => PAGES.some((p) => p.file === f)));

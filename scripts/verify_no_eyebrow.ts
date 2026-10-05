@@ -79,7 +79,7 @@ const SURFACE_FILES: string[] = [
   "src/components/spine/industry/industry-view.tsx",
   "src/components/spine/NeighborhoodExplorer.tsx",
   "src/components/spine/NeighborhoodExplorer.tsx",
-  "src/components/home/home2-view.tsx",
+  "src/components/spine/home/home-view.tsx", // the home page on the band page (masterplan step 32), after home2-view
   "src/components/NavigatorForm.tsx",
 ].filter((f) => existsSync(resolve(ROOT, f)));
 

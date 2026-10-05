@@ -54,7 +54,7 @@ const SURFACE_FILES: string[] = [
      same duplicate and it was found there at tick 8; nobody checked the
      siblings. Both are copies of one list. */
   "src/components/spine/NeighborhoodExplorer.tsx",
-  "src/components/home/home2-view.tsx",
+  "src/components/spine/home/home-view.tsx", // the home page on the band page (masterplan step 32), after home2-view
   "src/components/NavigatorForm.tsx",
 ];
 

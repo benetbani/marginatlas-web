@@ -53,7 +53,7 @@ const SURFACE_FILES: string[] = [
   ...tsxIn("src/app/dev/spine-industry"),
   ...tsxIn("src/app/dev/spine-hood"),
   "src/components/spine/NeighborhoodExplorer.tsx",
-  "src/components/home/home2-view.tsx",
+  "src/components/spine/home/home-view.tsx", // the home page on the band page (masterplan step 32), after home2-view
 ];
 
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");

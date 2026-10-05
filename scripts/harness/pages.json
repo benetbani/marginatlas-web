@@ -68,6 +68,13 @@
         "city-of-london"
       ],
       "since": "plan step 35, 2026-09-19: the district page, the hub's spine in focus on one district (8.8, the same floor 7; /cities/london/neighborhoods/city-of-london), rendered through the hood surface's second slug"
+    },
+    {
+      "surface": "home",
+      "slugs": [
+        "gb"
+      ],
+      "since": "masterplan step 32, 2026-10-05: the home page on the band page, behind NEXT_PUBLIC_HOME_REFORM"
     }
   ]
 }
