@@ -403,6 +403,8 @@ const GATES: Gate[] = [
   { name: "plan-status", script: "tests/monetization/plan_status.test.ts" },
   /* One price, written once: no June price, Pro's price typed only in plan.ts, no June tier name (masterplan step 12; ruling 14). */
   { name: "one-price", script: "tests/monetization/one_price.test.ts" },
+  /* Which levels lock: each chapter's first level free, the rest Pro, never a level outside the chapters (masterplan step 14; his ruling 18). */
+  { name: "paywall-levels", script: "tests/monetization/levels.test.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "no-slot-counting", script: "scripts/verify_no_slot_counting.ts" },
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },

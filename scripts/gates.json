@@ -1045,6 +1045,17 @@
       "claims": []
     },
     {
+      "name": "paywall-levels",
+      "script": "tests/monetization/levels.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHICH LEVELS LOCK (milestone 2; his ruling 18: \"each chapter's first level free, the rest Pro\"; 27: UK pages only).",
+      "reads": [
+        "src/lib/monetization/levels.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],
