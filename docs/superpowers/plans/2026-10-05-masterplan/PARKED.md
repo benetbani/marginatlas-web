@@ -97,3 +97,13 @@ MORNING-REPORT.md.
   "The cities" open, so fewer sections lock (7 of 11 levels on /gb would become 6); (c) accept fewer links while the paywall is on.
 - **Built either way:** nothing: the paywall is off until you switch it on, so no reader loses a link today. The gate reports
   the count per page on every run.
+
+### P18.1 A build of the night branch (step 18)
+- **Question:** step 18 added new route trees under /pro and asked for `npm run build` with at least 3 GB free. From 15:31 to
+  17:36 the machine never had 3 GB free (the most seen was about 1.8 GB), so the build was not run tonight, as the step allows
+  after two hours of waiting. May it wait for your push?
+- **Options:** (a) Recommended: yes. Vercel's chain and build run on every push, so a route conflict fails there before
+  anything goes live; or run `npm run build` yourself first with your apps closed. (b) Leave the machine free for a build at
+  the start of the next session, before anything is pushed.
+- **Built either way:** the mirror routes, the middleware rewrite and their gates (pro-route, top-level-segments,
+  route-chrome-contract, page-metadata), all green; the typecheck covers the new route files.
