@@ -15,6 +15,22 @@
       "claims": []
     },
     {
+      "name": "paywall-shape",
+      "script": "scripts/harness/check_paywall.mjs",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PAYWALL'S SHAPE (milestone 2, masterplan step 20; his interview of 2026-09-26: 18, half of every UK chapter behind Pro, each chapter's first level free; 22, a locked section is its title and icon,",
+      "reads": [
+        "scratchpad/harness/pages",
+        "scripts/harness/render_page.tsx",
+        "scripts/tsconfig.harness.json",
+        "src/components/spine/cell/cell-view.tsx",
+        "src/components/spine/city/city-view.tsx",
+        "src/components/spine/country/country-view.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "doors",
       "script": "scripts/verify_doors.ts",
       "args": [],

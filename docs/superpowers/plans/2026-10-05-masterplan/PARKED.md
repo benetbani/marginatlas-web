@@ -85,3 +85,15 @@ MORNING-REPORT.md.
   published rates). (b) Withhold the peers' rows: the card leaves /gb (a table of one row does not draw).
 - **Built either way:** the UK row is the truth pass's sourced figures (commit 172e13bf).
 
+
+### P20.1 The links a locked page takes from a free reader (step 20)
+- **Question:** when the paywall is on, a locked level hides its links too. Measured by the paywall-shape gate on the locked
+  renders: London restaurants keeps 6 of its 9 internal links (the four sibling trades in "Other trades to open", inside "The
+  mix", are gone: grocery stores, legal services, estate agents, software development), and /gb loses its three city cards
+  (Manchester, Birmingham, Leeds) and the cities index link. The trade page's links fall under the harness's floor of 8. How
+  should a free reader still find the next trade and the next city?
+- **Options:** (a) Recommended: a free row of plain doors (names only, no figures) to the other London trades on the trade page,
+  and to the UK's city pages on /gb, in each page's free half, so locking never cuts the site's paths; (b) keep "The mix" and
+  "The cities" open, so fewer sections lock (7 of 11 levels on /gb would become 6); (c) accept fewer links while the paywall is on.
+- **Built either way:** nothing: the paywall is off until you switch it on, so no reader loses a link today. The gate reports
+  the count per page on every run.

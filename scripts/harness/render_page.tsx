@@ -8,6 +8,7 @@
    usage, from E:/atlas/website:
      npx tsx --tsconfig scripts/tsconfig.harness.json --require ./scripts/spikes/stub_next_font.cjs        scripts/harness/render_page.tsx <surface> <slug...>
      ... render_page.tsx --list [scripts/harness/pages.json]   (every page in the list, one process; a page that does not render is a red)
+     ... render_page.tsx --locked <surface:slug[:slug...]> ...  (the UK page types drawn locked, masterplan step 20: country:gb, city:london, cell:gb:london:restaurants)
      surfaces: country <iso2> | city <slug> | cell <country> <geo> <industry> | industry <slug> | hood <city> [<district>]
    The hood surface takes a second slug for a DISTRICT PAGE (plan step 35, 2026-09-19):
    the same body in focus (SpineHoodBody's `focus`), the same adapter, so the stem is
@@ -42,6 +43,9 @@ import { SpineIndustryBody } from "../../src/components/spine/industry/industry-
 import { SpineHoodBody } from "../../src/components/spine/hood/hood-view";
 import { SpineShell } from "../../src/components/spine/shell";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
+import { renderCountryRoute } from "../../src/app/[country]/country_spine";
+import { renderCellRoute } from "../../src/app/[country]/[geo]/[industry]/cell_spine";
+import { renderCityRoute } from "../../src/app/(site)/cities/[slug]/city_spine";
 import { preflight } from "./preflight.mjs";
 
 /* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, free memory printed; a wrong ground stops here with the remedy. */
@@ -119,6 +123,29 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
   return out;
 }
 
+/* THE LOCKED FORM (masterplan step 20; his rulings 18 and 22): a UK page drawn locked, through its route's own renderer (the
+   module the public route and the Pro mirror both call), so the render carries what the route draws, the locked-parts JSON-LD
+   included; the paywall's two switches are set for the render. Written to <surface>-<slugs>-locked.html and never through
+   scripts/harness/pages.json, whose gates would read a locked page's sections as faults: scripts/harness/check_paywall.mjs
+   reads these. */
+async function renderLocked(surface: string, slugs: string[]): Promise<string | null> {
+  process.env.NEXT_PUBLIC_PAYWALL = "1";
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "1";
+  let tree: React.ReactNode;
+  switch (surface) {
+    case "country": tree = await renderCountryRoute(slugs[0], { locked: true }); break;
+    case "city": tree = await renderCityRoute(slugs[0], { locked: true }); break;
+    case "cell": tree = await renderCellRoute(slugs[0], slugs[1], slugs[2], { locked: true }); break;
+    default: console.error(`render_page --locked draws the three UK page types (country, city, cell), not ${surface}`); process.exit(2);
+  }
+  const body = renderToStaticMarkup(React.createElement("main", { className: "relative max-w-content mx-auto px-6 pt-4" }, tree));
+  mkdirSync("scratchpad/harness/pages", { recursive: true });
+  const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}-locked.html`;
+  writeFileSync(out, mapAssets(page(`${surface} ${slugs.join(" ")} locked`, body)), "utf8");
+  console.log(`  ${out}  ${Math.round(body.length / 1024)}KB`);
+  return out;
+}
+
 /* THE LIST (sys:page-filter-list, the build loop's run 12, 2026-09-06): every
    page whose sections have landed on an archetype is in scripts/harness/pages.json,
    and `--list` renders each in this one process, so the npm script stops
@@ -128,6 +155,17 @@ const LIST = "scripts/harness/pages.json";
 type Listed = { surface: string; slugs: string[]; since?: string };
 async function main() {
   const argv = process.argv.slice(2);
+  if (argv[0] === "--locked") {
+    let missing = 0;
+    for (const spec of argv.slice(1)) {
+      const [surface, ...slugs] = spec.split(":");
+      let out: string | null = null;
+      try { out = await renderLocked(surface, slugs); } catch (e: any) { console.log(`  x ${spec}: ${String(e?.message ?? e)}`); }
+      if (!out) { missing++; console.log(`  x NO LOCKED RENDER: ${spec}`); }
+    }
+    console.log(`render_page --locked: ${argv.length - 1 - missing} of ${argv.length - 1} locked page(s) rendered`);
+    process.exit(missing ? 1 : 0);
+  }
   if (argv[0] === "--list") {
     const path = argv[1] ?? LIST;
     const list = JSON.parse(readFileSync(path, "utf8")) as { pages: Listed[] };
@@ -142,7 +180,7 @@ async function main() {
   }
   const [surface, ...slugs] = argv;
   if (!surface || !slugs.length) {
-    console.error("usage: render_page.tsx <surface> <slug...> | --list [pages.json]");
+    console.error("usage: render_page.tsx <surface> <slug...> | --list [pages.json] | --locked <surface:slug[:slug...]> ...");
     process.exit(2);
   }
   const out = await renderOne(surface, slugs);

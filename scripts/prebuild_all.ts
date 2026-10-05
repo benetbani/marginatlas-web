@@ -90,6 +90,12 @@ const GATES: Gate[] = [
      render is React. It needs NEXT_PUBLIC_SUPABASE_URL to start (the client
      is built at import) and says in its output whether it had one. */
   { name: "pages-fresh", script: "scripts/verify_pages_fresh.mjs", phase: "first" },
+  /* THE PAYWALL'S SHAPE (masterplan step 20; his rulings 18 and 22): renders the country page, London and London restaurants
+     LOCKED, through the routes' own renderers, and holds them to the rule: each chapter's first level open, every later
+     level locked, each locked card its title, icon, one plain line and one link to /pricing, no figure, no pop-up, the
+     closed half declared to search engines; the open renders pages-fresh wrote carry no lock. Like pages-fresh, it needs
+     the Supabase URL to render. */
+  { name: "paywall-shape", script: "scripts/harness/check_paywall.mjs" },
   /* THE DOORS LAND WHERE THEY PROMISE (plan step 39, 2026-09-19; MODEL.md
      PART 8's "THE DOORS" paragraphs, M23, the coherence check of 2026-09-16).
      Reads the renders pages-fresh wrote and walks every door on them (the
