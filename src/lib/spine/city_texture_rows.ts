@@ -53,6 +53,7 @@ import type { FactTag } from "@/lib/facts/types";
 import type { SpectraRow } from "@/components/spine/archetypes/SpectraTable";
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { COPY } from "@/lib/spine/copy";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
 
 type CityRow = { slug: string; name: string; iso2: string };
 const BY_SLUG = new Map((cityListJson as { cities: CityRow[] }).cities.map((c) => [c.slug, c]));
@@ -120,7 +121,8 @@ export function buildCityTexture(slug: string): CityTextureData | null {
     slug,
     rows,
     visits: { figure: String(n), label: n === 1 ? COPY.cityTexture.visits.one : COPY.cityTexture.visits.many },
-    basis: COPY.cityTexture.basis,
+    /* A page held to a register region says its one figure is an estimate (masterplan step 03, 2026-10-05; the labels audit's item 24). */
+    basis: cityRegisterPlace(iso2, slug) ? COPY.cityTexture.basisSourcedOnly : COPY.cityTexture.basis,
     tag: live.some((r) => r.tag === "modeled") || visits.tag !== "held" ? "modeled" : "held",
   };
 }

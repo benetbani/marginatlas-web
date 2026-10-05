@@ -54,7 +54,10 @@
  * The cluster's `sample` is true when any printed figure is not held.
  */
 import cityListJson from "../../../data/cities/city_list_v1.json";
+import premisesJson from "../../../data/uk/registers/premises.json";
 import { cityFigure, cityEntityId, loadCityShard, type BankFigure } from "@/lib/facts/city_shard";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { convertToUsd } from "@/lib/finance/fx";
 import { factValue } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
 import { usd } from "@/components/spine/kit";
@@ -75,6 +78,8 @@ export type PremisesBento = {
   slug: string;
   iso2: string;
   name: string;
+  /** The rent cell's opener where it is not the prime rent (a city held to a register region prints the valuation's average). */
+  rentKicker?: string;
   rent: PremisesMetric;
   empty: PremisesCount;
   fitOut: PremisesMetric;
@@ -111,12 +116,55 @@ function metric(fig: BankFigure | null, clause: string, print: (v: number) => st
   return { figure: print(fig.value), basis: basisOf(clause, fig.tag), tag: fig.tag, sample: notHeld(fig.tag), value: fig.value };
 }
 
+type PremisesSlice = { valuation_date: string; rows: Record<string, { categories: Record<string, { rv_per_m2?: number }> }> };
+const PREMISES = premisesJson as unknown as PremisesSlice;
+/** England's code in the register slice (the valuation's own geography). */
+const ENGLAND = "E92000001";
+
+/**
+ * A CITY HELD TO A REGISTER REGION PRINTS A SOURCED FIGURE OR A MARKED ONE (masterplan step 03, 2026-10-05; the labels audit's item 24; London is
+ * Greater London, his ruling of 2026-10-04). Its shard's premises figures are held with no source, and two of them contradict
+ * the country's (a 6-month deposit against the country's 3): so the rent is the official valuation of the region's shops, read
+ * from the register slice (data/uk/registers/premises.json: rateable value a square metre, the valuation office's estimate of
+ * the yearly rent at 1 April 2021, Greater London 322 pounds, at the site's one rate for the pound), an average and so "Shop
+ * rent", not "Prime"; the deposit and the empty shops are withheld with their lines (no source holds either, and the two
+ * deposits disagree); the fit-out prints as the estimate it is, beside its rent-free months, the line saying both are
+ * estimates; the rent's three details and the deposit's lease term, held with no source, do not print.
+ */
+function buildSourcedPremises(city: CityRow, iso2: string, geography: string): PremisesBento {
+  const W = COPY.premisesBento.withheld;
+  const B = COPY.premisesBento.basis;
+  const shops = PREMISES.rows[geography]?.categories?.Shops?.rv_per_m2;
+  const rentUsd = typeof shops === "number" && shops > 0 ? convertToUsd("GBP", shops) : null;
+  const rent: PremisesMetric = rentUsd != null && rentUsd > 0 ? { figure: usd(rentUsd), basis: `${B.rentValued}.`, tag: "held", sample: false, value: Math.round(rentUsd) } : { withheld: W.rent };
+  /* EACH CELL TWO READINGS (clause 65): the rent beside the same valuation for England's shops; the fit-out beside the
+     rent-free months a landlord gives to fit out, both estimates, and the line says so. */
+  const england = PREMISES.rows[ENGLAND]?.categories?.Shops?.rv_per_m2;
+  const englandUsd = typeof england === "number" && england > 0 ? convertToUsd("GBP", england) : null;
+  if ("figure" in rent && englandUsd != null) rent.second = { figure: usd(englandUsd), words: COPY.premisesBento.rentEngland };
+  const fit = cityFigure(iso2, city.slug, "realestate.fit_out_cost_usd_sqm");
+  const fitOut: PremisesMetric = fit ? { figure: usd(fit.value), basis: `${B.fitOutEstimate}.`, tag: "modeled", sample: true, value: fit.value } : { withheld: W.fitOut };
+  const rentFree = factValue(cityEntityId(iso2, city.slug), "realestate.rent_free_months");
+  const D = COPY.premisesBento.detail;
+  if ("figure" in fitOut && rentFree && typeof rentFree.value === "number" && Number.isFinite(rentFree.value) && rentFree.value >= 0) {
+    const m = rentFree.value;
+    fitOut.second = { figure: `${Number.isInteger(m) ? m : m.toFixed(1)} ${m === 1 ? D.units.months.one : D.units.months.many}`, words: D.companions.rentFree };
+  }
+  const deposit: PremisesMetric = { withheld: W.deposit };
+  const empty: PremisesCount = { withheld: W.empty };
+  const printed: FactTag[] = [rent, fitOut].flatMap((c) => ("figure" in c ? [c.tag] : []));
+  const tag = printed.reduce<FactTag>((w, t) => weaker(w, t), "held");
+  return { slug: city.slug, iso2, name: city.name, rentKicker: COPY.premisesBento.kickers.rentValued, rent, empty, fitOut, deposit, withheld: 4 - printed.length, sample: notHeld(tag), tag };
+}
+
 /** Null unless the city is listed and its shard holds facts; then four cells, each a figure or its line. */
 export function buildPremisesBento(slug: string): PremisesBento | null {
   const city = BY_SLUG.get(slug);
   if (!city) return null;
   const iso2 = String(city.iso2).toUpperCase();
   if (!loadCityShard(iso2, slug)) return null;
+  const held = cityRegisterPlace(iso2, slug);
+  if (held) return buildSourcedPremises(city, iso2, held.geography);
   const W = COPY.premisesBento.withheld;
   const B = COPY.premisesBento.basis;
 

@@ -85,7 +85,7 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
     );
   const empty = bento.empty;
   return [
-    { key: "rent", cols: 2, rows: 1, node: metric(bento.rent, "commercial-rent", K.rent, true, "rent") },
+    { key: "rent", cols: 2, rows: 1, node: metric(bento.rent, "commercial-rent", bento.rentKicker ?? K.rent, true, "rent") },
     { key: "deposit", cols: 1, rows: 1, node: metric(bento.deposit, "startup-cost", K.deposit, false, "deposit") },
     {
       key: "empty",

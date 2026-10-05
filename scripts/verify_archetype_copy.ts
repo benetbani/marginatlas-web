@@ -2598,14 +2598,17 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     /* THE RANK, once per city. */
     const rank = buildHoodRank(city);
     /* With the city's slug, as the city page's own call and the hub's (milestone 1, M6: the district doors moved onto the hub's rank rows), so the rows' links are compared too. */
-    const cityBars = buildCityDistrictBars({ meta: { slug: city }, where_to_trade: { list: districts.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult })) } });
+    const cityBars = buildCityDistrictBars({ meta: { slug: city }, where_to_trade: { list: districts.map((d) => ({ name: d.name, slug: d.slug, rent_mult: d.rent_mult, rent_clipped: d.rent_clipped })) } });
     if (!rank || !cityBars) reds.push(`hood rank ${city}: builds nothing`);
     else {
       if (JSON.stringify(rank.rows) !== JSON.stringify(cityBars.rows) || rank.basis !== cityBars.basis || rank.phoneHead.value !== cityBars.phoneHead.value) reds.push(`hood rank ${city}: the rows or the words differ from the city district builder's over the same rows`);
       const clipped = districts.filter((d) => d.rent_clipped).map((d) => d.name);
       if (JSON.stringify(rank.clipped) !== JSON.stringify(clipped)) reds.push(`hood rank ${city}: the clipped list is ${rank.clipped.join(", ")}, the rows say ${clipped.join(", ")}`);
-      if ((clipped.length > 0) !== (rank.clipLine != null)) reds.push(`hood rank ${city}: a clip line ${rank.clipLine ? "with nothing clipped" : "missing with a district on the bound"}`);
-      for (const n of clipped) if (!rank.clipLine!.includes(n)) reds.push(`hood rank ${city}: the clip line does not name ${n}`);
+      /* Where the rents say they are estimates (a page held to a register region; masterplan step 03) the clip rides in the one
+         basis line rather than a second line under it: the clip is said either way, and named. */
+      const clipText = rank.clipLine ?? (/than shown/.test(rank.basis) ? rank.basis : null);
+      if ((clipped.length > 0) !== (clipText != null)) reds.push(`hood rank ${city}: a clip line ${clipText ? "with nothing clipped" : "missing with a district on the bound"}`);
+      for (const n of clipped) if (!clipText!.includes(n)) reds.push(`hood rank ${city}: the clip line does not name ${n}`);
       if (rank.clipLine && wordsOf(rank.clipLine) > 14) reds.push(`hood rank ${city}: the clip line runs ${wordsOf(rank.clipLine)} words`);
       ban(`hood rank ${city}`, [rank.basis, rank.phoneHead.name, rank.phoneHead.value, ...(rank.clipLine ? [rank.clipLine] : [])]);
     }

@@ -374,20 +374,24 @@
       }
     },
     "GB": {
-      "d1_over_d5": 0.6452,
-      "d9_over_d5": 1.92,
+      "d1_over_d5": 0.6145,
+      "d9_over_d5": 1.9699,
       "_meta": {
-        "confidence": "modeled",
-        "source": "Decile ratios of gross earnings, full-time dependent employees, published by the intergovernmental economic research body in its earnings distribution database (dataflow DSD_EARNINGS@DEC_I). Retrieved 2026-08-30 from the public statistical data API. This country's row: D9/D5 1.92, D5/D1 1.55, reference year 2025.",
+        "confidence": "held",
+        "source": "The UK's annual survey of hours and earnings, table 1.7a: full-time gross annual pay, all UK employees, April 2025, provisional, published 23 October 2025. 10th percentile 23,990 pounds, median 39,039, 90th percentile 76,903. Looked up on 2026-09-25 (E:/atlas/design/loop/build/research/2026-09-25-uk-official-figures.md, item 18).",
         "as_of": "2025",
-        "method": "The source publishes dispersion as ratios: D9/D5 (ninth decile over median) and D5/D1 (median over first decile). d9_over_d5 is taken as published; d1_over_d5 is 1 divided by the published D5/D1, recorded to four decimals. Both are then multiplied by this country's own median_wage_full_time_usd in scripts/data/apply_wage_deciles.ts to place the two marks. No distribution shape is assumed anywhere: the ratio is a measured property of that country's own earnings distribution, and the quartile fields in the profile are never read. The dataset's pay-period dimension is coded not-applicable, so the source does not declare whether the underlying earnings are hourly, weekly or annual; for full-time employees the dispersion is close across those bases, but the ratio is transported onto an annual median and that is recorded here rather than hidden."
+        "method": "The survey publishes the percentiles themselves, so both ratios are computed from them: d1_over_d5 = 23,990 / 39,039 and d9_over_d5 = 76,903 / 39,039, to four decimals. The median they multiply, this country's median_wage_full_time_usd, is the same survey's median at the site's one rate for UK figures (51,785), so the two marks land on the survey's own percentiles at that rate. Replaced on 2026-10-05 (masterplan step 03) the transported decile ratios of the earnings distribution database (D5/D1 1.55, D9/D5 1.92, reference year 2025), which put the tenths at 33,412 and 99,427."
       },
       "_raw": {
-        "d9_over_d5_published": 1.92,
-        "d5_over_d1_published": 1.55,
-        "d9_over_d1_published": 2.976,
-        "population": "full-time dependent employees, both sexes",
-        "earnings": "gross earnings, upper decile limits"
+        "p10_gbp": 23990,
+        "median_gbp": 39039,
+        "p90_gbp": 76903,
+        "population": "full-time employees, all UK, gross annual pay",
+        "replaced": {
+          "d9_over_d5_published": 1.92,
+          "d5_over_d1_published": 1.55,
+          "source": "earnings distribution database, dataflow DSD_EARNINGS@DEC_I, reference year 2025"
+        }
       }
     },
     "GR": {

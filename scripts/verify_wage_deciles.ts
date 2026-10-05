@@ -132,7 +132,12 @@ const P10_BELOW_FLOOR: Record<string, number> = {
   AU: 10.3,
   LV: 8.5,
   CA: 5.7,
-  /* GB struck 2026-09-25: its median to ASHE 2025 (the official reading of that day) lifts the bottom tenth above the floor. */
+  /* GB struck 2026-09-25: its median to ASHE 2025 (the official reading of that day) lifts the bottom tenth above the floor.
+     GB BACK 2026-10-05 at 3.2 (masterplan step 03): its tenths are now the survey's own published percentiles, the bottom one
+     23,990 pounds in April 2025, where the transported ratio had put it at 25,188; the floor beside it is April 2026's rate
+     (12.71 pounds an hour, raised 4.1% that April). Two true figures a year apart, under his five percent (C52), so the spread
+     still publishes (wage_deciles.ts); QUEUE data:gb-p10-floor-year. */
+  GB: 3.2,
   IL: 0.8,
 };
 

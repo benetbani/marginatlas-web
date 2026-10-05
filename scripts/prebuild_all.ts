@@ -699,6 +699,9 @@ const GATES: Gate[] = [
   /* No struck method word and no coined score in the literals of src/app and src/components, a ratchet per file (masterplan
      step 02, 2026-10-05; his ruling 11, "no composite, ever"; his copy correction of 2026-09-24). */
   { name: "legacy-method-words", script: "tests/copy/legacy_method_words.test.ts" },
+  /* London's city page prints an official figure, says a figure is an estimate, or withholds it: the shop rent from the
+     valuation slice, the survey's pay tenths, no hand-anchored cost of living, no engine district rents (masterplan step 03). */
+  { name: "london-city-sources", script: "tests/spine/london_city_sources.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

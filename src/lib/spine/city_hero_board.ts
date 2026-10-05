@@ -128,10 +128,14 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
   }
   /* A city held to a register region prints no metro row (the header). */
   const metroRows = cityRegisterPlace(iso2, slug) === null;
+  /* A CITY HELD TO A REGISTER REGION PRINTS A SOURCED FIGURE OR A MARKED ONE (masterplan step 03, 2026-10-05; the labels audit's
+     items 22 and 24). Its permit wait is the shard's longest single gate, held with no source: the label says what it is and
+     the row carries the estimate mark. Its cost of living is a hand-anchored index no source holds: the row does not print. */
+  const sourcedOnly = !metroRows;
   const days = cityFigure(iso2, slug, "reg.total_local_days");
   if (days) {
     const v = Math.round(days.value);
-    rows.push({ key: "permits", icon: "red-tape", label: C.rows.permits, value: String(v), unit: v === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(days.value, s.days), confidence: days.tag === "held" ? "measured" : "modeled" });
+    rows.push({ key: "permits", icon: "red-tape", label: sourcedOnly ? C.rows.permitsLongest : C.rows.permits, value: String(v), unit: v === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(days.value, s.days), confidence: days.tag === "held" && !sourcedOnly ? "measured" : "modeled" });
   }
   const density = metroRows ? cityFigure(iso2, slug, "comp.density_per_10k") : null;
   if (density && density.value > 0) {
@@ -140,7 +144,7 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
   if (metroRows && isPos(city.gdp_b)) {
     rows.push({ key: "gdp", icon: "market-size", label: C.rows.gdp, value: usd(city.gdp_b * 1e9), unit: C.units.aYear, level: levelOf(city.gdp_b, s.gdp), confidence: "modeled" });
   }
-  if (isPos(city.cost_of_living_index)) {
+  if (!sourcedOnly && isPos(city.cost_of_living_index)) {
     const onScale = costOfLivingOnCityScale(city.cost_of_living_index);
     /* No unit after the figure: "of 100" stands on the premises bento's empty-shops cell in the same first screen (the art-direction gate's H4), and the basis under the column says the scale's ends. THE CHIP READS THE SCALE, not the rank: the figure IS a place between the cheapest and the dearest covered city, so its thirds are the chip (48 is "medium"); the rank's thirds said "high" for 48 because most covered cities sit low, and the two beside each other read as a contradiction (the first photograph). */
     const scaleLevel = onScale == null ? null : onScale >= 67 ? "high" : onScale >= 34 ? "medium" : "low";
@@ -171,7 +175,7 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
     answerBasis,
     answerBar,
     subtitle: COPY.cityHero.subtitle.replace("{country}", inSentence(countryName)),
-    levelBasis: C.levelBasis,
+    levelBasis: sourcedOnly ? C.levelBasisNoLiving : C.levelBasis,
     rows,
     image: heroImageFor(iso2),
   };

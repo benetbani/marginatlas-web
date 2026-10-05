@@ -20,6 +20,7 @@ import { getCountryRates } from "@/lib/tax/country_rates";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { COPY } from "@/lib/spine/copy";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 
@@ -140,7 +141,15 @@ export function buildCityPeerTable(seed: any): CityPeerTable | null {
     { key: "income", head: COPY.cityPeers.cols.income, unit: "usd", best: "max" },
     { key: "visitors", head: COPY.cityPeers.cols.visitors, unit: "m", best: "max" },
   ];
-  const columns = all.filter((c) => rows.filter((r) => isNum(r.values[c.key])).length >= 2);
+  /* THE COST OF LIVING PRINTS A DASH ON A PAGE HELD TO A REGISTER REGION (masterplan step 03, 2026-10-05; the labels audit's
+     item 22): every city's index is a hand anchor no source holds, and that page prints a sourced figure or a marked one. PART 9
+     clause 18: the column stands, a dash in each row, explained once in the caveat; the other pages keep the figures, each
+     saying once that its figures are estimates. */
+  const sourcedOnly = cityRegisterPlace(fallbackIso2, String(seed?.meta?.slug ?? "")) !== null;
+  if (sourcedOnly) for (const r of rows) r.values.living = null;
+  /* The dash column stands last there, so each name keeps its first figure beside it (the harness's LABEL GAP). */
+  const ordered = sourcedOnly ? [...all.filter((c) => c.key !== "living"), ...all.filter((c) => c.key === "living")] : all;
+  const columns = ordered.filter((c) => (sourcedOnly && c.key === "living") || rows.filter((r) => isNum(r.values[c.key])).length >= 2);
   if (columns.length === 0) return null;
-  return { rows, columns, caveat: fillWords(COPY.cityPeers.caveat, { city: String(home.name) }), entityHead: COPY.cityPeers.cols.city };
+  return { rows, columns, caveat: fillWords(sourcedOnly ? COPY.cityPeers.caveatNoLiving : COPY.cityPeers.caveat, { city: String(home.name) }), entityHead: COPY.cityPeers.cols.city };
 }

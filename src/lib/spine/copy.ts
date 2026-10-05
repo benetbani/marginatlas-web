@@ -376,9 +376,13 @@ export const COPY = {
     readout: "{month}, of the busiest month",
   },
   cityHeroBoard: {
-    rows: { visitors: "Visitors", permits: "City permits", density: "Per 10,000 residents", gdp: "Metro GDP", living: "Cost of living" },
+    /** `permitsLongest`: the same figure where the page holds only sourced or marked figures (a city held to a register region,
+     *  London): it is the longest single wait among the city's permits, not a total (masterplan step 03, labels audit item 24). */
+    rows: { visitors: "Visitors", permits: "City permits", permitsLongest: "Longest permit wait", density: "Per 10,000 residents", gdp: "Metro GDP", living: "Cost of living" },
     units: { aYear: "a year", per10k: "businesses" },
     levelBasis: "Levels compare cities. Cost of living: cheapest city 1, dearest 100.",
+    /** The level line where the cost of living does not print (a city held to a register region: no source holds the index). */
+    levelBasisNoLiving: "Levels compare cities.",
     /** The answer drawn: the typical pay's place among the covered cities, its two ends named (labels, never a city). */
     pay: { low: "Lowest pay", high: "Highest pay", aria: "Typical pay among the cities we cover" },
   },
@@ -394,6 +398,9 @@ export const COPY = {
     notRequired: "Not required here",
     focalLabel: "All the city's fees",
     basis: "On top of registering the company. The slowest sets your opening date.",
+    /** A page held to a register region: the fees and waits have no source but one, food registration, free and looked up
+     *  (registering a food business with the council, at least 28 days before trading; research 2026-09-25, item 25). */
+    basisSourcedOnly: "Estimates, but food registration is free. The slowest sets your opening date.",
     footModelled: "",
   },
   /** WHO IS ALREADY TRADING HERE (city_market_rows.ts, `18 market`, the same
@@ -1077,9 +1084,17 @@ export const COPY = {
    *  (city:premises, run 13; `COPY.cityPremises`) left with it: it printed a
    *  country average under a city's name. */
   premisesBento: {
-    kickers: { rent: "Prime shop rent", empty: "Shops standing empty", fitOut: "Fit-out cost", deposit: "Deposit up front" },
+    /** `rentValued`: the rent cell's opener where the figure is the official valuation of the region's shops, an average and not a
+     *  prime rent (a city held to a register region, London; masterplan step 03, 2026-10-05; the labels audit's item 24). */
+    kickers: { rent: "Prime shop rent", rentValued: "Shop rent", empty: "Shops standing empty", fitOut: "Fit-out cost", deposit: "Deposit up front" },
+    /** The valued rent's second reading (clause 65): the same valuation for England's shops. */
+    rentEngland: "across England",
     basis: {
       rent: "A square metre of prime shop space, a year",
+      /** The valuation's own date: the rateable value estimates the rent at 1 April 2021. */
+      rentValued: "A square metre of shop space, a year, at 2021 values",
+      /** The fit-out on a page that prints a sourced figure or a marked one: no source holds it or its rent-free months, so the line says both are estimates. */
+      fitOutEstimate: "Estimates: a square metre fitted out, and the rent-free months",
       /** The count prints the shard's rate as read and draws it, a part unit and all (2026-09-26); the line frames it and prints no figure. */
       empty: "Out of every 100 shops",
       fitOut: "To fit out a square metre of shop space",
@@ -1162,6 +1177,8 @@ export const COPY = {
     cells: { rent: "One-bed rent", groceries: "Groceries", transit: "Transit pass", coffee: "A coffee" },
     units: { month: "a month", cup: "a cup" },
     basis: "Prices for one person living here, not for the shop.",
+    /** A page held to a register region: no source holds these prices, so the line says they are estimates. */
+    basisSourcedOnly: "Estimates for one person living here, not for the shop.",
     /** `{what}` is a list of the names below; `{verb}` is "is" or "are". */
     footModelled: "",
     footPlaceholder: "{what} {verb} placeholders until {city} is researched.",
@@ -1193,6 +1210,8 @@ export const COPY = {
     cells: { share: "Rent's share of income", income: "Typical income" },
     units: { year: "a year" },
     basis: "One-bed rent for a year, against a typical income.",
+    /** A page held to a register region: the rent has no source, so the line says it is an estimate. */
+    basisSourcedOnly: "An estimated one-bed rent for a year, against a typical income.",
     footModelled: "",
     footPlaceholder: "{what} {verb} placeholders until {city} is researched.",
     /** The inputs as the foot names them: "The rent and the typical income are modelled." */
@@ -1324,6 +1343,9 @@ export const COPY = {
      *  caveat says "typical pay" and one basis serves the column. */
     /** The living column on the city scale since 2026-09-20 (his ruling: the ends are the cheapest and dearest covered cities, never named). */
     caveat: "Pay and visitors, a year.",
+    /** A page held to a register region: the cost of living column prints a dash in every row (no source holds any city's
+     *  index; PART 9 clause 18, a dash explained once), and this is the once. */
+    caveatNoLiving: "Pay and visitors, a year. No source holds a cost of living.",
   },
   /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13,
    *  reworded and unfeatured task 14, 2026-09-10). Every district's shop rent
@@ -1354,6 +1376,10 @@ export const COPY = {
        and the size of the set it is cheapest OF, the second saying where the
        figures come from. */
     basis: "",
+    /* A PAGE HELD TO A REGISTER REGION (London; masterplan step 03, 2026-10-05, the labels audit's item 19): the rents are the
+       engine's multipliers, a function of each district's tags, so the line says they are estimates. The valuation statistics
+       hold rent by borough, and of the seven districts only the City of London is a whole borough: one figure is no ranking. */
+    basisEstimate: "Estimated rents against {district}.",
     /* THE FAR END OF EVERY TRACK, in the words a person would use for it. It
        read "heaviest in the city", from an internal phrase for a burden ("rent
        load") that no shopkeeper has ever said out loud; and it was measured
@@ -2162,6 +2188,8 @@ export const COPY = {
     head: { name: "The role", value: "A month, gross" },
     week: "hours in the usual week",
     basis: "Five roles a small business hires.",
+    /** A page held to a register region: no source holds the pay by role, so the line says it is estimated. */
+    basisSourcedOnly: "Estimated pay for five roles a small business hires.",
   },
   /** HOW THIS CITY DOES BUSINESS, the city's `21 texture` (city_texture_rows.ts,
    *  2026-09-23). The poles are the shard's own words; these are the SUBJECTS,
@@ -2187,6 +2215,8 @@ export const COPY = {
     /** The card's one figure: how often somebody official walks in, off `reg.inspections_per_yr`. */
     visits: { one: "Official visit a year", many: "Official visits a year" },
     basis: "",
+    /** A page held to a register region: the card's one figure has no source, so the line says so (the reads are drawn as reads). */
+    basisSourcedOnly: "The count of official visits is an estimate.",
   },
   cityCalendar: {
     kicker: "When this city spends",

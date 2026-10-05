@@ -81,6 +81,8 @@
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { COPY } from "@/lib/spine/copy";
 import { districtPageTarget } from "@/lib/geo/page_targets";
+import { hoodCity } from "@/lib/spine/hood_scheme";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -192,6 +194,10 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
       : clippedNames.length === 1
         ? (clippedLow ? COPY.hoodRank.clipOneLow : COPY.hoodRank.clipOne).replace("{district}", clippedNames[0])
         : COPY.hoodRank.clipMany.replace("{districts}", clippedNames.join(" and "));
+  /* ONE SUPPORTING LINE (PART 9): where the rents say they are estimates (a page held to a register region; masterplan step 03)
+     the clip rides in the same line, "Estimated rents against South London. West End may be dearer than shown.", and no second
+     line stands under it. */
+  const estimated = !!citySlug && cityRegisterPlace(String(seed?.meta?.iso2 ?? hoodCity(citySlug)?.iso2 ?? ""), citySlug) !== null;
   /* The lower middle for an even count, said here rather than left to a
      reader to wonder about: with six districts this is the third cheapest.
      With TWO the same expression returns index 0, the cheapest itself, which
@@ -205,14 +211,15 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
     cheapest: String(ascending[0].name),
     dearest: { name: String(dear.name), value: at(dear) },
     middle: mid ? { name: String(mid.name), value: at(mid) } : null,
-    basis: COPY.cityDistricts.basis
-      .replace("{district}", String(ascending[0].name))
-      .replace("{count}", countWord(rows.length)),
+    /* A page held to a register region (London) says the rents are estimates; the hub, over the same rows, says the same. */
+    basis: estimated
+      ? [COPY.cityDistricts.basisEstimate.replace("{district}", String(ascending[0].name)), clipLine].filter(Boolean).join(" ")
+      : COPY.cityDistricts.basis.replace("{district}", String(ascending[0].name)).replace("{count}", countWord(rows.length)),
     phoneHead: {
       name: COPY.cityDistricts.phoneHead.name,
       value: COPY.cityDistricts.phoneHead.value.replace("{district}", String(ascending[0].name)),
     },
     clipped: clippedNames,
-    clipLine,
+    clipLine: estimated ? null : clipLine,
   };
 }

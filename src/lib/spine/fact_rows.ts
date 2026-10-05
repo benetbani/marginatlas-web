@@ -73,6 +73,7 @@ import { cityTypicalIncome } from "@/lib/spine/city_income";
 import type { FactTag, PlaceholderOption } from "@/lib/facts/types";
 import { usd, usdCents } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 
 type CityRow = { slug: string; name: string; iso2: string; tourist_arrivals_m?: number | null; pop_m?: number | null };
@@ -191,7 +192,8 @@ export function buildCityLiving(slug: string): CityLivingData | null {
     cells,
     figures: { rent: rent?.value ?? null, groceries: groceries?.value ?? null, transit: transit?.value ?? null, coffee: coffee?.value ?? null },
     withheld: missing.length ? fill(C.withheld, { n: String(missing.length), reasons: missing.join(", ") }) : null,
-    basis: C.basis,
+    /* A page held to a register region says in its one line that these prices are estimates (masterplan step 03, 2026-10-05; the labels audit's item 24). */
+    basis: cityRegisterPlace(iso2, slug) ? C.basisSourcedOnly : C.basis,
     foot: footOf(modelled, placeholders, city.name),
     confidence: cardConfidence(cells),
   };
@@ -306,7 +308,8 @@ export function buildCityRunway(slug: string): CityRunwayData | null {
     cells,
     figures: { pct, overPct, incomeYr, rentMo: rent?.value ?? null },
     withheld,
-    basis: C.basis,
+    /* A page held to a register region says the rent is an estimate (masterplan step 03, 2026-10-05; the labels audit's item 24). */
+    basis: cityRegisterPlace(iso2, slug) ? C.basisSourcedOnly : C.basis,
     foot: footOf(modelled, placeholders, city.name),
     confidence: cardConfidence(cells),
   };
