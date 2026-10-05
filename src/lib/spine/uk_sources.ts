@@ -84,6 +84,8 @@ export const UK_SOURCES: readonly UkSource[] = [
       { prints: "What one worked hour of a hire costs, all in, and what letting that hire go costs", title: "Rates and thresholds for employers 2026 to 2027, holiday entitlement, redundancy pay and notice, and the Home Office code of practice on right-to-work checks", url: "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" },
       { prints: "The stamp duty on a shop's lease, and VAT on its rent", title: "Stamp Duty Land Tax: leasehold purchases, and VAT notice 742A on opting to tax land and buildings", url: "https://www.gov.uk/guidance/stamp-duty-land-tax-leasehold-purchases" },
       { prints: "What a founder from abroad meets: the company and its address, the identity check, the tax code, the visas that let you run a business, and who cannot be sponsored", title: "Set up a limited company; verify your identity for Companies House; the Innovator Founder, Youth Mobility and Skilled Worker visa pages; the Home Office fees of 8 April 2026", url: "https://www.gov.uk/innovator-founder-visa" },
+      { prints: "What failing costs a sole trader (bankruptcy and its end, the home, a Debt Relief Order) and a director's loan charge", title: "Guide to bankruptcy; how to get a Debt Relief Order; director information hub, duties upon insolvency; HMRC's Company Taxation Manual, CTM61505", url: "https://www.gov.uk/government/publications/guide-to-bankruptcy/guide-to-bankruptcy" },
+      { prints: "What winding up a failed company costs, and how long it takes", title: "Creditors' voluntary liquidation (CVL) research report for the Insolvency Service (17 December 2024)", url: "https://www.gov.uk/government/publications/creditors-voluntary-liquidation-cvl-research-report-for-the-insolvency-service/cvl-research-report-for-the-insolvency-service" },
     ],
   },
   {
@@ -122,6 +124,7 @@ export const UK_SOURCES: readonly UkSource[] = [
     items: [
       { prints: "The acts and statutory instruments behind each dated change", title: "Each instrument as made or enacted", url: "https://www.legislation.gov.uk/" },
       { prints: "The law of a shop's lease: renewal and its notices, signing it away, a refusal's compensation, registering it, the repairs claim", title: "Landlord and Tenant Act 1954, Part II; Land Registration Act 2002; Landlord and Tenant Act 1927, section 18; the contracting-out order of 2003 and the Land Registration fee order of 2024", url: "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56" },
+      { prints: "When a failed company's debts reach its director: wrongful trading, the director ban, a guarantee after the lease is given up", title: "Insolvency Act 1986, sections 178 and 214; Company Directors Disqualification Act 1986, section 6", url: "https://www.legislation.gov.uk/ukpga/1986/45/section/214" },
     ],
   },
   {

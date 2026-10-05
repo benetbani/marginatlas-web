@@ -2647,6 +2647,14 @@ export const COPY = {
     rows: { sentence: "In short", who: "Who is here", price: "Price tier", description: "In brief" },
     foot: "",
   },
+  /** IF IT FAILS (masterplan step 29; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 76): chapter 02's level after borrowing.
+   *  Its figure is the months until a bankrupt sole trader is freed from the debts; its rows what failing costs the owner of a sole
+   *  trade or a company (src/lib/spine/sections/if_it_fails.ts). The strike-off is the paperwork card's and is never printed here. */
+  ifItFails: {
+    kicker: "If it fails",
+    months: "months",
+    words: "Until a bankrupt sole trader is freed from the debts.",
+  },
   /** OPENING FROM ABROAD (masterplan step 27; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 74): chapter 01's level after
    *  registering. Its figure is the Innovator Founder route's fees for three years per person; its rows the walls in the research's
    *  order (src/lib/spine/sections/from_abroad.ts), each its cost or its time where open, its state where not. */
@@ -2687,6 +2695,7 @@ export const COPY = {
       "hire-all-in": "What one worked hour costs, and what letting go costs.",
       "lease-by-law": "What the law says about your shop's lease.",
       "from-abroad": "What stands between a founder from abroad and opening.",
+      "if-it-fails": "What failing costs you, as a sole trader or a director.",
       employment: "The rules you take on with your first employee.",
       "running-costs": "What it costs to keep the doors open.",
       insurance: "The cover the law asks for, and what it costs.",

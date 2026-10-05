@@ -33,6 +33,8 @@ import { Focal } from "./focal";
 import { HireAllIn } from "./HireAllIn";
 import { LeaseByLaw } from "./LeaseByLaw";
 import { FromAbroad } from "./FromAbroad";
+import { IfItFails } from "./IfItFails";
+import { buildIfItFails } from "@/lib/spine/sections/if_it_fails";
 import { buildFromAbroad } from "@/lib/spine/sections/from_abroad";
 import { buildLeaseByLaw } from "@/lib/spine/sections/lease_by_law";
 import { buildHireAllIn } from "@/lib/spine/sections/hire_all_in";
@@ -1499,6 +1501,8 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
     const lease = iso2 === "GB" ? buildLeaseByLaw() : null;
     /* OPENING FROM ABROAD (masterplan step 27): the walls a founder from abroad meets, the UK's alone. */
     const fromAbroad = iso2 === "GB" ? buildFromAbroad() : null;
+    /* IF IT FAILS (masterplan step 29): what failing costs the owner in England and Wales, the UK's alone. */
+    const ifItFails = iso2 === "GB" ? buildIfItFails() : null;
     /* In the order the body draws them, each under the chapter it stands in (the rail heads each run with its chapter). */
     const sections: RailSection[] = [
       { id: "take", label: "The tax burden" },
@@ -1516,6 +1520,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       { id: "paperwork", label: COPY.paperwork.kicker, chapter: "02" },
       { id: "financing", label: COPY.financing.kicker, chapter: "02" },
       { id: "banking", label: COPY.banking.kicker, chapter: "02" },
+      ...(ifItFails ? [{ id: "if-it-fails", label: COPY.ifItFails.kicker, chapter: "02" }] : []),
       { id: "money", label: COPY.londonSales.kicker, chapter: "03" },
       { id: "exit", label: COPY.countryExit.kicker, chapter: "03" },
       ...(seatPeople ? [{ id: "age-mix", label: COPY.people.age.kicker, chapter: "03" }, { id: "job-market", label: COPY.jobMarket.kicker, chapter: "03" }] : []),
@@ -1542,6 +1547,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
           ["peers", "peers", "benchmark", "table"],
           ["financing", "financing", "raise-money", "track"],
           ["banking", "banking", "payments", "rows"],
+          ["fail", "if-it-fails", "vacancy", "rows"],
           ["age", "age-mix", "who-for", "bars"],
           ["jobs", "job-market", "hiring", "rows"],
           ["cities", "cities", "best-areas", "grid"],
@@ -1712,6 +1718,9 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
           payments ? <PaymentsRing key="banking" iso2={iso2 as string} card={payments} /> : <BankingRing key="banking" card={banking} />,
         ],
       },
+      /* IF IT FAILS, ITS OWN LEVEL AFTER BORROWING (masterplan step 29; item 76): alone at two thirds by the zones' LONE rule, its
+         partner in item 76, the collecting card (item 75), not built. */
+      ...(ifItFails ? [{ key: "fail", split: "2-1" as ZoneSplit, label: COPY.ifItFails.kicker, body: [<IfItFails key="fail" data={ifItFails} />] }] : []),
       {
         key: "trades",
         /* TWO THIRDS EVEN WHEN THE EXIT CARD IS WITHHELD (PART 9 clause 59, the zones' LONE rule): a level whose partner
