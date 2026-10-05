@@ -254,6 +254,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                   <li><a href="/about-data#reading" className="hover:text-atlas-500">About the figures</a></li>
                   <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">Where the numbers come from</a></li>
                   <li><a href="/coverage" className="hover:text-atlas-500">Coverage report</a></li>
+                  {/* Who runs this, the corrections log and the free data pack (his rulings of 2026-10-05 on PARKED P0.2, P31.1, P0.3). */}
+                  <li><a href="/about" className="hover:text-atlas-500">Who runs this</a></li>
+                  <li><a href="/corrections" className="hover:text-atlas-500">Corrections</a></li>
+                  <li><a href="/data" className="hover:text-atlas-500">Free data</a></li>
                   <li><a href="/contact" className="hover:text-atlas-500">Contact</a></li>
                 </ul>
               </div>

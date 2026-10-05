@@ -1618,6 +1618,19 @@
       "claims": []
     },
     {
+      "name": "about-page",
+      "script": "tests/trust/about_page.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHO RUNS THIS: /about (his ruling of 2026-10-05 on PARKED P0.2, option (a): \"a short about page with his name and why the site exists\").",
+      "reads": [
+        "src/app/(site)/about/page.tsx",
+        "src/app/sitemap.ts",
+        "src/components/SiteChrome.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

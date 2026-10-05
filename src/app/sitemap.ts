@@ -94,8 +94,9 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     // looking for, whereas this one answers questions people type into a search
     // box, and it is the page carrying the site's FAQPage structured data.
     { url: `${BASE_URL}/faq`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
-    /* The free data pack and the corrections log (his rulings of 2026-10-05 on PARKED P0.3 and P31.1): pages people cite and
-       look for, beside About the figures. */
+    /* Who runs this, the free data pack and the corrections log (his rulings of 2026-10-05 on PARKED P0.2, P0.3 and P31.1):
+       pages people cite and look for, beside About the figures. */
+    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/data`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/corrections`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.5 },

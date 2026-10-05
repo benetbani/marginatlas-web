@@ -37,6 +37,8 @@
 
 /** Static first segments that exist as route folders under src/app. */
 export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
+  /* Who runs this (his ruling of 2026-10-05, PARKED P0.2). */
+  "about",
   "about-data",
   "account",
   "admin",

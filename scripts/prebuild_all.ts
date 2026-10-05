@@ -581,6 +581,9 @@ const GATES: Gate[] = [
   /* The free UK data pack (his ruling of 2026-10-05, PARKED P0.3): src/lib/data_pack.ts, public/data/uk/<version>/ and /data agree;
      the two files the credibility plan's free line holds back stay out and are promised nowhere. */
   { name: "data-pack", script: "tests/trust/data_pack.test.ts" },
+  /* Who runs this (his ruling of 2026-10-05, PARKED P0.2): /about names him and says only what he has given; the footer leads to
+     it, the corrections log and the data pack. */
+  { name: "about-page", script: "tests/trust/about_page.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },
