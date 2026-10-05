@@ -2647,6 +2647,16 @@ export const COPY = {
     rows: { sentence: "In short", who: "Who is here", price: "Price tier", description: "In brief" },
     foot: "",
   },
+  /** ONE HIRE, ALL IN (masterplan step 23; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 77): the staff level's third card.
+   *  Its figure is one worked hour of a minimum-wage hire, all in (src/lib/spine/sections/hire_all_in.ts); its rows what letting
+   *  that hire go costs after one, three and ten years, and the law's amounts the page prints nowhere else. */
+  hireAllIn: {
+    kicker: "An hour, all in",
+    words: "One worked hour at the minimum wage, with the allowance.",
+    parting: { 1: "Parting, 1 year", 3: "Parting, 3 years", 10: "Parting, 10 years" },
+    partingNote: "Redundancy and notice, aged 35",
+    partingNoteNotice: "Notice only, no redundancy yet",
+  },
   /** THE LOCKED SECTION (masterplan step 15; his interview of 2026-09-26: 18, half of every UK chapter behind Pro; 22, "title
    *  and icon, the drawing blurred behind, one line, one button; no pop-up"). One button, and one line for every section id a UK
    *  page can lock (the levels after the first of each chapter on /gb, the UK city pages and the London trade pages, read off
@@ -2654,7 +2664,8 @@ export const COPY = {
   locked: {
     button: "Open with Pro",
     lines: {
-      hiring: "What a first hire costs you, all in.",
+      hiring: "The wage floor, and a first hire's yearly cost.",
+      "hire-all-in": "What one worked hour costs, and what letting go costs.",
       employment: "The rules you take on with your first employee.",
       "running-costs": "What it costs to keep the doors open.",
       insurance: "The cover the law asks for, and what it costs.",

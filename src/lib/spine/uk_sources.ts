@@ -81,6 +81,7 @@ export const UK_SOURCES: readonly UkSource[] = [
     attribution: OGL_LINE,
     items: [
       { prints: "Tax rates, National Insurance, the minimum wage, VAT, business rates, company fees and filing dates, the rules of employing, statutory pay and the insurance the law requires", title: "Guidance pages, each read on the day stated in the file that holds it", url: "https://www.gov.uk/" },
+      { prints: "What one worked hour of a hire costs, all in, and what letting that hire go costs", title: "Rates and thresholds for employers 2026 to 2027, holiday entitlement, redundancy pay and notice, and the Home Office code of practice on right-to-work checks", url: "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" },
     ],
   },
   {

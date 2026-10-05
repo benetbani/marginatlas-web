@@ -28,7 +28,10 @@
  * verify_sample_tags.ts passes on its own logic. The Task 9 `allow-unmarked`
  * exemption that recorded the gap is gone with the gap.
  */
-import * as React from "react";
+import * as React from "react";
+import { Focal } from "./focal";
+import { HireAllIn } from "./HireAllIn";
+import { buildHireAllIn } from "@/lib/spine/sections/hire_all_in";
 import { lockedLevelKeys } from "@/lib/monetization/levels";
 import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { Box, Fig, Ico, Rail, SampleTag, usd } from "@/components/spine/kit";
@@ -528,18 +531,6 @@ function CharacterCard({ iso2, which, zone = false }: { iso2?: string; which: "s
   );
 }
 
-/** THE CARD'S ONE FIGURE, at the focal rung, with the words that say what it is (PART 4: one figure at 30 a section card). */
-function Focal({ figure, words, placement }: { figure: string; words: string; placement?: string | null }) {
-  return (
-    <div className="mb-4">
-      <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{figure}</div>
-      <p data-focal-words="" className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words}</p>
-      {/* The site's one placement sentence (placement.ts), under the figure's words, where the section's figure stands on a scale
-          of the countries (PART 6, "Higher than {n} countries in ten."). */}
-      {placement ? <p data-placement="" className="mt-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">{placement}</p> : null}
-    </div>
-  );
-}
 
 /* ===== THE UNITED KINGDOM'S CARDS ON THE NEW CHARTS (2026-09-25, his message of that day: "the numbers ... with no relation to
    each other", "the gradient is barely used", "the sections look dead"; his shadcn blocks as the pattern: the bullet chart, the
@@ -1498,6 +1489,8 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
          04 the first years: who is still trading | what holds small firms back (two fifths and three: eight columns and their names
             need the wider card).
        What customers earn leaves this page: its three figures were the pay pair printed under a second name (the goal's A12). */
+    /* ONE HIRE, ALL IN (masterplan step 23): the law engine's worked hour and parting bill, the UK's alone. */
+    const hireAllIn = iso2 === "GB" ? buildHireAllIn({ allowance: true }) : null;
     /* In the order the body draws them, each under the chapter it stands in (the rail heads each run with its chapter). */
     const sections: RailSection[] = [
       { id: "take", label: "The tax burden" },
@@ -1505,6 +1498,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       { id: "entry-bill", label: COPY.entryBill.kicker, chapter: "01" },
       { id: "hiring", label: COPY.pay.kicker, chapter: "01" },
       { id: "employment", label: COPY.employment.kicker, chapter: "01" },
+      ...(hireAllIn ? [{ id: "hire-all-in", label: COPY.hireAllIn.kicker, chapter: "01" }] : []),
       { id: "running-costs", label: "Running costs", chapter: "01" },
       { id: "insurance", label: COPY.insurance.kicker, chapter: "01" },
       { id: "peers", label: "Against the peers", chapter: "01" },
@@ -1530,6 +1524,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
         [
           ["hiring", "hiring", "hiring", "bars"],
           ["employment", "employment", "staffing-rota", "rows"],
+          ["hire", "hire-all-in", "min-wage", "rows"],
           ["running", "running-costs", "cost-breakdown", "track"],
           ["insurance", "insurance", "safety", "rows"],
           ["peers", "peers", "benchmark", "table"],
@@ -1652,7 +1647,9 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       },
       {
         key: "staff",
-        split: "1-1",
+        /* ONE HIRE, ALL IN, THE LEVEL'S THIRD CARD (masterplan step 23; item 77's "08 hiring | 08b commits"): the worked hour and
+           the parting bill beside the wage floor and the rules of employing. */
+        split: hireAllIn ? "1-1-1" : "1-1",
         label: COPY.pay.kicker,
         body: [
           <Hiring key="hiring" hiring={d.hiring} iso2={iso2} foot={false} hireCost rules={staffRules} />,
@@ -1663,6 +1660,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
             <Focal figure={employment.focal.figure} words={employment.focal.words} />
             <FactRows rows={employmentCells} />
           </Box>,
+          ...(hireAllIn ? [<HireAllIn key="hire" data={hireAllIn} />] : []),
         ],
       },
       {
