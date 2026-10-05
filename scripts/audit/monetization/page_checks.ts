@@ -11,8 +11,9 @@
  * gate fast and runnable inside the prebuild hook.
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
+import { stripCommentLines } from "../../lib/strip_comments";
 import { GateResult, PageCheckResult, pending } from "./types";
 
 const ROOT = resolve(process.cwd(), "src");
@@ -40,49 +41,89 @@ function phaseAPrimitivesShipped(): boolean {
   );
 }
 
-/** Phase B check: is PaywallModalRoot mounted in the layout? If so,
- * every page inherits the modal as its trust-copy carrier
- * (Methodology + cancel-anytime) by default. */
-function phaseBModalMounted(): boolean {
-  if (
-    !existsSync(resolve(ROOT, "components/monetization/PaywallModalRoot.tsx"))
-  ) {
-    return false;
+/* Gate B (no pop-up; masterplan step 13). Until 2026-10-05 this gate was GREEN only while PaywallModalRoot was mounted in the
+ * layout, and PENDING, which passes, once it was not: a check that passes either way says nothing. Inverted, it proves the
+ * absence his ruling asks for, and names what it found otherwise. It reads every layout under src/app (what wraps a page) and
+ * every monetization component (what a lock is built from), comments stripped. Blind spot: it reads source, not renders, so a
+ * dialog mounted by a component those files import under a plain name is not seen; the copy gates and photographs cover the
+ * pages themselves. */
+const RULING_22 = "his ruling 22 of 2026-09-26: a locked section opens no pop-up";
+
+const POPUP_SIGNS: { sign: string; re: RegExp }[] = [
+  /* A JSX tag follows a space, a bracket or a line start; a type argument (useState<ModalState>) follows a name. */
+  { sign: "a modal or dialog component", re: /(?:^|[^\w.])<(?:[A-Z]\w*)?(?:Modal|Dialog)\w*[\s/>]/m },
+  { sign: 'role="dialog"', re: /role\s*=\s*\{?\s*["'`]dialog["'`]/ },
+  { sign: "aria-modal", re: /aria-modal/ },
+  { sign: "a dialog element", re: /<dialog[\s/>]/ },
+];
+
+function filesUnder(rel: string, keep: (name: string) => boolean): string[] {
+  const abs = resolve(ROOT, rel);
+  if (!existsSync(abs)) return [];
+  const out: string[] = [];
+  for (const name of readdirSync(abs)) {
+    const child = `${rel}/${name}`;
+    if (statSync(resolve(ROOT, child)).isDirectory()) out.push(...filesUnder(child, keep));
+    else if (keep(name)) out.push(child);
   }
-  const layout = readIfExists("app/layout.tsx");
-  if (!layout) return false;
-  return (
-    layout.includes("PaywallModalRoot") &&
-    /<PaywallModalRoot\s*\/?>/.test(layout)
-  );
+  return out;
+}
+
+function popupsMounted(): string[] {
+  const files = [
+    ...filesUnder("app", (name) => name === "layout.tsx"),
+    ...filesUnder("components/monetization", (name) => /\.tsx?$/.test(name)),
+  ];
+  const found: string[] = [];
+  for (const rel of files) {
+    const src = readIfExists(rel);
+    if (!src) continue;
+    const code = stripCommentLines(src.split(/\r?\n/)).join("\n");
+    for (const { sign, re } of POPUP_SIGNS) {
+      if (re.test(code)) found.push(`src/${rel}: ${sign}`);
+    }
+  }
+  return found;
 }
 
 function gateB_default(): GateResult {
-  if (phaseBModalMounted()) {
+  const found = popupsMounted();
+  if (found.length === 0) {
     return {
       status: "GREEN",
-      message:
-        "PaywallModalRoot mounted in layout.tsx; trust copy " +
-        "(Methodology + cancel-anytime) inherited by every page",
+      message: `No modal root or dialog in a layout or a monetization component (${RULING_22})`,
     };
   }
-  return pending("Phase B modal not yet mounted in layout");
+  return {
+    status: "RED",
+    message: `A pop-up is mounted (${RULING_22})`,
+    evidence: found.join("; "),
+  };
 }
 
-/** Gate C (no orphan locks): the v34 primitives in
- * @/components/monetization all wire openPaywall internally — there
- * is no way to mount one without a click handler. So Gate C is
- * GREEN wherever Gate A is GREEN, and PENDING otherwise. */
-function gateC_default(gateA: GateResult): GateResult {
-  if (gateA.status === "GREEN") {
-    return {
-      status: "GREEN",
-      message:
-        "v34 primitives always wire openPaywall internally; " +
-        "no orphan locks possible",
-    };
+/* Gate C (no orphan locks; masterplan step 13). Every lock primitive is a link to the pricing page, so no lock can be mounted
+ * that goes nowhere, and none dispatches an opener: since the pop-up left, an opener has nothing listening for it. */
+const LOCK_PRIMITIVES = ["LockPill", "BlurredOverlay", "TruncatedTease", "RedactedNumber", "GhostBar"];
+
+function locksNotLinked(): string[] {
+  const out: string[] = [];
+  for (const name of LOCK_PRIMITIVES) {
+    const src = readIfExists(`components/monetization/${name}.tsx`);
+    if (!src) continue; // gate A reports a missing primitive
+    const code = stripCommentLines(src.split(/\r?\n/)).join("\n");
+    if (!/href=\{PRICING_HREF\}/.test(code)) out.push(`${name}.tsx: no link to PRICING_HREF`);
+    if (/openPaywall|dispatchEvent/.test(code)) out.push(`${name}.tsx: dispatches an opener`);
   }
-  return pending("Phase C not yet wired");
+  return out;
+}
+
+function gateC_default(gateA: GateResult): GateResult {
+  if (gateA.status !== "GREEN") return pending("Phase C not yet wired");
+  const bad = locksNotLinked();
+  if (bad.length === 0) {
+    return { status: "GREEN", message: "Every lock primitive is a link to /pricing and none opens a pop-up" };
+  }
+  return { status: "RED", message: "A lock primitive goes nowhere", evidence: bad.join("; ") };
 }
 
 /** Gate D (no leaked values): a page that mounts gating primitives
@@ -209,7 +250,7 @@ function stub(pageId: string, pagePattern: string, pageSource: string | null = n
     sourceFile,
     gates: {
       A_lock_primitives: gateA,
-      B_trust_copy: gateB_default(),
+      B_no_popup: gateB_default(),
       C_no_orphan_locks: gateC_default(gateA),
       D_no_leaked_values: gateD_default(pageSource),
       E_four_thing_reveal: gateE_for(pageId, pageSource),

@@ -10,7 +10,10 @@
  *
  * v34 research-locked rules:
  *  - Visual cue is a dotted underline (atlas-300), NOT a padlock.
- *  - The element IS the affordance: clicking opens the paywall.
+ *  - The element IS the affordance: a link to the pricing page (masterplan
+ *    step 13; his ruling 22 of 2026-09-26: a locked section opens no pop-up).
+ *    Inside another link (a ranking row) it is text, since a link inside a
+ *    link is not valid HTML; the row's own link leads on.
  *  - Title attribute provides the gentle hint; aria-label gives
  *    the screen reader the same intent.
  *  - The TRUE value MUST NOT be embedded in any data attribute
@@ -20,7 +23,9 @@
  * Part 2.4.
  */
 
-import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
+import type { PaywallEntryPoint, PaywallTier } from "./events";
+import { trackLockClick } from "./analytics";
+import { PRICING_HREF } from "./paywall_copy";
 
 export type RedactedNumberProps = {
   tier: PaywallTier;
@@ -32,6 +37,8 @@ export type RedactedNumberProps = {
   /** Accessible label describing what is hidden, e.g.
    * "Lower-mid quartile revenue, click to unlock with Basic". */
   ariaLabel: string;
+  /** True when the number sits inside another link: it renders as text. */
+  inLink?: boolean;
 };
 
 export function RedactedNumber({
@@ -39,25 +46,37 @@ export function RedactedNumber({
   entry,
   glyph = "$••,•••",
   ariaLabel,
+  inLink = false,
 }: RedactedNumberProps) {
+  const look = [
+    "inline-flex items-baseline tabular-nums",
+    "font-medium text-ink-700",
+    "border-b border-dotted border-atlas-300",
+  ];
+  if (inLink) {
+    return (
+      <span data-v34-lock="redacted" data-v34-tier={tier} title={ariaLabel} className={look.join(" ")}>
+        <span aria-hidden="true">{glyph}</span>
+        <span className="sr-only">{ariaLabel}</span>
+      </span>
+    );
+  }
   return (
-    <button
-      type="button"
-      onClick={() => openPaywall({ entry, tier })}
+    <a
+      href={PRICING_HREF}
+      onClick={() => trackLockClick(entry, tier)}
       data-v34-lock="redacted"
       data-v34-tier={tier}
       aria-label={ariaLabel}
       title={ariaLabel}
       className={[
-        "inline-flex items-baseline tabular-nums",
-        "font-medium text-ink-700",
-        "border-b border-dotted border-atlas-300",
+        ...look,
         "hover:text-atlas-700 hover:border-atlas-500",
         "transition-colors cursor-pointer",
         "focus:outline-none focus:ring-2 focus:ring-atlas-500 focus:ring-offset-1",
       ].join(" ")}
     >
       {glyph}
-    </button>
+    </a>
   );
 }

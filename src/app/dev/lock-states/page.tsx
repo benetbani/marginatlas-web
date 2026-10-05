@@ -41,9 +41,8 @@ export default async function LockStatesPage({
           v34 lock-state primitives
         </h1>
         <p className="mt-2 text-ink-700">
-          Reference page for the five Phase A primitives. Click any
-          primitive to dispatch <code>atlas:open-paywall</code>; the
-          listener mounts in Phase B.
+          Reference page for the five Phase A primitives. Each one is a
+          link to the pricing page.
         </p>
       </header>
 

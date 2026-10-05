@@ -1,8 +1,8 @@
 {
   "total": {
-    "remCaps": 223,
-    "chCaps": 25,
-    "smPairings": 48
+    "remCaps": 220,
+    "chCaps": 42,
+    "smPairings": 45
   },
   "byFile": {
     "src/app/(site)/about-data/page.tsx": {
@@ -111,12 +111,12 @@
       "smPairings": 0
     },
     "src/app/(site)/extremes/page.tsx": {
-      "remCaps": 10,
+      "remCaps": 9,
       "chCaps": 0,
       "smPairings": 0
     },
     "src/app/(site)/industries/[industry]/across/page.tsx": {
-      "remCaps": 7,
+      "remCaps": 6,
       "chCaps": 0,
       "smPairings": 0
     },
@@ -151,7 +151,7 @@
       "smPairings": 0
     },
     "src/app/(site)/pricing/page.tsx": {
-      "remCaps": 5,
+      "remCaps": 4,
       "chCaps": 0,
       "smPairings": 0
     },
@@ -166,7 +166,7 @@
       "smPairings": 0
     },
     "src/app/(site)/signin/SignInForm.tsx": {
-      "remCaps": 2,
+      "remCaps": 3,
       "chCaps": 0,
       "smPairings": 0
     },
@@ -176,6 +176,11 @@
       "smPairings": 0
     },
     "src/app/(site)/tools/page.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/welcome/page.tsx": {
       "remCaps": 1,
       "chCaps": 0,
       "smPairings": 0
@@ -263,7 +268,7 @@
     "src/components/board/BreakInScore.tsx": {
       "remCaps": 1,
       "chCaps": 0,
-      "smPairings": 1
+      "smPairings": 0
     },
     "src/components/board/FailureCards.tsx": {
       "remCaps": 0,
@@ -330,11 +335,6 @@
       "chCaps": 0,
       "smPairings": 0
     },
-    "src/components/countries/EasiestToBreakIn.tsx": {
-      "remCaps": 0,
-      "chCaps": 1,
-      "smPairings": 0
-    },
     "src/components/decide/FounderDecisionLede.tsx": {
       "remCaps": 1,
       "chCaps": 0,
@@ -395,17 +395,7 @@
       "chCaps": 0,
       "smPairings": 1
     },
-    "src/components/home/StateComparison.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
-      "smPairings": 1
-    },
     "src/components/home/UpgradeTeaser.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
-      "smPairings": 0
-    },
-    "src/components/home/WorldMapSection.tsx": {
       "remCaps": 1,
       "chCaps": 0,
       "smPairings": 0
@@ -505,11 +495,6 @@
       "chCaps": 0,
       "smPairings": 0
     },
-    "src/components/monetization/PaywallModalRoot.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
-      "smPairings": 1
-    },
     "src/components/NeighborhoodOverview.tsx": {
       "remCaps": 6,
       "chCaps": 0,
@@ -540,12 +525,27 @@
       "chCaps": 4,
       "smPairings": 0
     },
+    "src/components/spine/archetypes/HeroBoard.tsx": {
+      "remCaps": 0,
+      "chCaps": 6,
+      "smPairings": 0
+    },
     "src/components/spine/archetypes/IncomeBreakdown.tsx": {
+      "remCaps": 0,
+      "chCaps": 3,
+      "smPairings": 0
+    },
+    "src/components/spine/archetypes/MarkList.tsx": {
       "remCaps": 0,
       "chCaps": 1,
       "smPairings": 0
     },
-    "src/components/spine/archetypes/MarkList.tsx": {
+    "src/components/spine/archetypes/RankedBars.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/spine/archetypes/Ring.tsx": {
       "remCaps": 0,
       "chCaps": 1,
       "smPairings": 0
@@ -555,17 +555,37 @@
       "chCaps": 1,
       "smPairings": 0
     },
-    "src/components/spine/country/country-view.tsx": {
+    "src/components/spine/cell/turn-two.tsx": {
       "remCaps": 0,
-      "chCaps": 1,
+      "chCaps": 2,
       "smPairings": 0
     },
-    "src/components/spine/country/how-to-view.tsx": {
+    "src/components/spine/city/city-view.tsx": {
       "remCaps": 0,
-      "chCaps": 1,
+      "chCaps": 2,
+      "smPairings": 0
+    },
+    "src/components/spine/country/country-view.tsx": {
+      "remCaps": 0,
+      "chCaps": 2,
       "smPairings": 0
     },
     "src/components/spine/forms-v2.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/spine/industry/turn-one.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/spine/interact/DepthNotify.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/components/spine/interact/Marks.tsx": {
       "remCaps": 0,
       "chCaps": 1,
       "smPairings": 0
@@ -574,6 +594,16 @@
       "remCaps": 1,
       "chCaps": 1,
       "smPairings": 1
+    },
+    "src/components/spine/sections/CustomersCome.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
+    },
+    "src/components/spine/sections/Thresholds.tsx": {
+      "remCaps": 0,
+      "chCaps": 1,
+      "smPairings": 0
     },
     "src/components/spine/SpineMap.tsx": {
       "remCaps": 0,

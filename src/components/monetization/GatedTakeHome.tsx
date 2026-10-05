@@ -4,9 +4,9 @@
  *
  * Server-renders ONLY the redacted placeholder (RedactedNumber), so the real
  * value is never in the static HTML. On mount, when auth is on, it asks the
- * entitlement-checked /api/cell-take-home for the real value; a Basic+ subscriber
- * gets a number and we swap it in, everyone else keeps the placeholder (which
- * opens the paywall on click). The true value reaches the browser only for an
+ * entitlement-checked /api/cell-take-home for the real value; a Pro reader
+ * gets a number and we swap it in, everyone else keeps the placeholder (a link
+ * to the pricing page, or text inside a row link). The true value reaches the browser only for an
  * entitled viewer, over an uncached authed request.
  */
 import * as React from "react";
@@ -21,12 +21,15 @@ export function GatedTakeHome({
   industry,
   tier = "pro",
   ariaLabel = "Owner take-home, in Pro",
+  inLink = false,
 }: {
   country: string;
   geo: string;
   industry: string;
   tier?: PaywallTier;
   ariaLabel?: string;
+  /** True inside a row link: the placeholder renders as text (a link inside a link is not valid HTML). */
+  inLink?: boolean;
 }) {
   const [value, setValue] = React.useState<number | null>(null);
 
@@ -59,6 +62,6 @@ export function GatedTakeHome({
     );
   }
   return (
-    <RedactedNumber tier={tier} entry="cell_owner_take_home" ariaLabel={ariaLabel} />
+    <RedactedNumber tier={tier} entry="cell_owner_take_home" ariaLabel={ariaLabel} inLink={inLink} />
   );
 }

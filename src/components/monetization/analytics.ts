@@ -9,10 +9,10 @@
  *
  * Events fired:
  *   v34_lock_click       (entry, tier) — any lock primitive clicked
- *   v34_paywall_open     (entry, tier) — paywall modal opened
- *   v34_paywall_cta      (entry, tier) — modal primary CTA clicked
- *   v34_paywall_dismiss  (entry)       — modal dismissed
  *   v34_email_signup     (source)      — email captured anywhere
+ *
+ * The paywall modal's three events (opened, its call to action, dismissed) left
+ * with the modal on 2026-10-05 (masterplan step 13; his ruling 22: no pop-up).
  *
  * Reference: docs/strategy/2026-05-25-monetization-mega-plan-v34.md
  * Part 6 Phase H + Part 10 (live-experiment variables).
@@ -30,9 +30,6 @@ declare global {
 
 export type V34Event =
   | "v34_lock_click"
-  | "v34_paywall_open"
-  | "v34_paywall_cta"
-  | "v34_paywall_dismiss"
   | "v34_email_signup";
 
 /** Fire a custom Clarity event. No-op when Clarity is not loaded
@@ -58,24 +55,6 @@ export function trackLockClick(
   tier: PaywallTier,
 ): void {
   fire("v34_lock_click", { entry, tier });
-}
-
-export function trackPaywallOpen(
-  entry: PaywallEntryPoint,
-  tier: PaywallTier,
-): void {
-  fire("v34_paywall_open", { entry, tier });
-}
-
-export function trackPaywallCta(
-  entry: PaywallEntryPoint,
-  tier: PaywallTier,
-): void {
-  fire("v34_paywall_cta", { entry, tier });
-}
-
-export function trackPaywallDismiss(entry: PaywallEntryPoint): void {
-  fire("v34_paywall_dismiss", { entry });
 }
 
 export function trackEmailSignup(source: string): void {

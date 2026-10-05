@@ -244,7 +244,7 @@ export function ExitIntentModal({
       />
       <div
         role="dialog"
-        /* NO aria-modal. See PaywallModalRoot.tsx for the full reasoning: the
+        /* NO aria-modal, for the reason the paywall modal gave until it left: the
            attribute promises assistive technology that the rest of the page is
            inert, and nothing here contains focus, so the promise was false. */
         aria-labelledby="atlas-exit-h"

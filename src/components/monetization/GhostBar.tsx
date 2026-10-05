@@ -16,13 +16,16 @@
  *  - The axis labels (rendered by the parent chart) stay visible
  *    so the user can read p10/p50/p90 even when p25/p75 are
  *    ghosted. (Conclusion 1C.8.)
- *  - Click opens the paywall via the standard event.
+ *  - The bar is a link to the pricing page (masterplan step 13; his ruling
+ *    22 of 2026-09-26: a locked section opens no pop-up).
  *
  * Reference: docs/strategy/2026-05-25-monetization-mega-plan-v34.md
  * Part 2.5.
  */
 
-import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
+import type { PaywallEntryPoint, PaywallTier } from "./events";
+import { trackLockClick } from "./analytics";
+import { PRICING_HREF } from "./paywall_copy";
 
 export type GhostBarProps = {
   /** SVG x in user units. */
@@ -48,11 +51,12 @@ export function GhostBar({
   ariaLabel,
 }: GhostBarProps) {
   return (
-    <g
+    <a
+      href={PRICING_HREF}
+      onClick={() => trackLockClick(entry, tier)}
+      aria-label={ariaLabel}
       data-v34-lock="ghost-bar"
       data-v34-tier={tier}
-      onClick={() => openPaywall({ entry, tier })}
-      style={{ cursor: "pointer" }}
     >
       <rect
         x={x}
@@ -68,6 +72,6 @@ export function GhostBar({
       >
         <title>{ariaLabel}</title>
       </rect>
-    </g>
+    </a>
   );
 }

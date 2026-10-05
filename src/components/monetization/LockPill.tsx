@@ -4,7 +4,8 @@
  * LockPill — v34 Phase A primitive #1.
  *
  * Inline indicator that a value or row is gated behind a paid tier.
- * The pill IS the affordance: clicking opens the paywall modal.
+ * The pill IS the affordance: a link to the pricing page (masterplan step 13;
+ * his ruling 22 of 2026-09-26: a locked section opens no pop-up).
  *
  * v34 research-locked rules:
  *  - NO padlock icon. The word "Basic" or "Premium" is the signal.
@@ -20,8 +21,9 @@
  * Part 3.1: exactly the plan's name, "Pro" (one paid tier since masterplan step 12). Nothing else.
  */
 
-import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
-import { TIERS } from "./paywall_copy";
+import type { PaywallEntryPoint, PaywallTier } from "./events";
+import { trackLockClick } from "./analytics";
+import { PRICING_HREF, TIERS } from "./paywall_copy";
 
 export type LockPillProps = {
   tier: PaywallTier;
@@ -37,9 +39,9 @@ export function LockPill({ tier, entry, ariaLabel }: LockPillProps) {
   const classes = "bg-atlas-700/10 text-atlas-800 hover:bg-atlas-700/15";
 
   return (
-    <button
-      type="button"
-      onClick={() => openPaywall({ entry, tier })}
+    <a
+      href={PRICING_HREF}
+      onClick={() => trackLockClick(entry, tier)}
       aria-label={ariaLabel}
       className={[
         "inline-flex items-center h-5 px-2 rounded-full",
@@ -52,6 +54,6 @@ export function LockPill({ tier, entry, ariaLabel }: LockPillProps) {
       data-v34-tier={tier}
     >
       {label}
-    </button>
+    </a>
   );
 }

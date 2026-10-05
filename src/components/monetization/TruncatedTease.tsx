@@ -6,14 +6,16 @@
  * Used at the end of a list where the visible rows have been
  * rendered with real data and the remainder is gated. Renders
  * a single calm row that says "N more X — Basic unlocks the
- * full list" and opens the paywall on click.
+ * full list" and links to the pricing page (masterplan step 13; his ruling 22
+ * of 2026-09-26: a locked section opens no pop-up).
  *
  * Reference: docs/strategy/2026-05-25-monetization-mega-plan-v34.md
  * Part 2.3.
  */
 
-import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
-import { TIERS } from "./paywall_copy";
+import type { PaywallEntryPoint, PaywallTier } from "./events";
+import { trackLockClick } from "./analytics";
+import { PRICING_HREF, TIERS } from "./paywall_copy";
 
 export type TruncatedTeaseProps = {
   count: number;
@@ -36,9 +38,9 @@ export function TruncatedTease({
   const tierLabel = TIERS[tier].name;
 
   return (
-    <button
-      type="button"
-      onClick={() => openPaywall({ entry, tier })}
+    <a
+      href={PRICING_HREF}
+      onClick={() => trackLockClick(entry, tier)}
       data-v34-lock="tease"
       data-v34-tier={tier}
       className={[
@@ -61,6 +63,6 @@ export function TruncatedTease({
       <span className="text-atlas-700 font-semibold whitespace-nowrap">
         {tierLabel} {ctaSuffix} &rarr;
       </span>
-    </button>
+    </a>
   );
 }

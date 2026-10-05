@@ -15,7 +15,8 @@ import { RedactedNumber } from "@/components/monetization/RedactedNumber";
  * reveal's slugs. Server component: it decides at static-render time, so a free
  * viewer's HTML carries only the placeholder. When there is nothing to hide
  * (no take-home) it dashes; when the slugs cannot be parsed it still redacts
- * rather than leak the number.
+ * rather than leak the number. Its rows are links to the cell page, so the
+ * placeholder renders as text (inLink): a link inside a link is not valid HTML.
  */
 export function TakeHomeValue({
   takeHome,
@@ -35,6 +36,7 @@ export function TakeHomeValue({
           industry={industry}
           tier="pro"
           ariaLabel="Owner take-home, in Pro"
+          inLink
         />
       );
     }
@@ -44,6 +46,7 @@ export function TakeHomeValue({
         tier="pro"
         entry="cell_owner_take_home"
         ariaLabel="Owner take-home, in Pro"
+        inLink
       />
     );
   }

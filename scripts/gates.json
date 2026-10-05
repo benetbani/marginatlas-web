@@ -957,9 +957,13 @@
       "reads": [
         "scripts/audit/",
         "scripts/verify_",
+        "src/app/(site)/cookies/",
         "src/app/(site)/pricing/page.tsx",
+        "src/app/(site)/privacy/",
+        "src/app/(site)/refunds/",
+        "src/app/(site)/terms/",
         "src/components/monetization/BlurredOverlay.tsx",
-        "src/components/monetization/PaywallModalRoot.tsx"
+        "src/lib/legal/"
       ],
       "claims": []
     },

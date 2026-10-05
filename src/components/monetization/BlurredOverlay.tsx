@@ -15,7 +15,8 @@
  *  - background overlay = white at 40% — preserves underlying SHAPE,
  *    removes legibility.
  *  - Centered CTA card max 320px width, single paragraph + one
- *    button.
+ *    link to the pricing page (masterplan step 13; his ruling 22 of
+ *    2026-09-26: a locked section opens no pop-up).
  *  - The locked children get aria-hidden="true" on their value
  *    spans (caller must apply via the gated-region rendering).
  *
@@ -24,8 +25,9 @@
  */
 
 import { ReactNode } from "react";
-import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
-import { TIERS } from "./paywall_copy";
+import type { PaywallEntryPoint, PaywallTier } from "./events";
+import { trackLockClick } from "./analytics";
+import { PRICING_HREF, TIERS } from "./paywall_copy";
 
 export type BlurredOverlayProps = {
   tier: PaywallTier;
@@ -77,19 +79,19 @@ export function BlurredOverlay({
               {headline}
             </div>
           ) : null}
-          <button
-            type="button"
-            onClick={() => openPaywall({ entry, tier })}
+          <a
+            href={PRICING_HREF}
+            onClick={() => trackLockClick(entry, tier)}
             className={[
               "inline-flex w-full justify-center items-center",
               "px-4 py-2 rounded-full text-sm font-semibold",
               "transition-colors",
               buttonClasses,
             ].join(" ")}
-            aria-label={`${cta} (opens ${tierLabel} paywall)`}
+            aria-label={`${cta} (${tierLabel} pricing)`}
           >
             {cta}
-          </button>
+          </a>
         </div>
       </div>
     </div>

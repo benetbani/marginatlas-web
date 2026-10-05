@@ -16,7 +16,6 @@ import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 import { Geist, Space_Grotesk } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
-import { PaywallModalRoot } from "@/components/monetization";
 import { AtlasGutters } from "@/components/kit";
 import { isWarmFrameEnabled } from "@/lib/feature_flags";
 
@@ -213,17 +212,14 @@ export default function RootLayout({
            the path here via headers() would make this layout dynamic and
            opt every route out of static rendering.
 
-           What remains below is genuinely global: the gutters, analytics,
-           the Organization schema, and the paywall root. */}
+           What remains below is genuinely global: the gutters, analytics
+           and the Organization schema. The paywall's pop-up root left on
+           2026-10-05 (his ruling 22: a locked section opens no pop-up). */}
         {children}
         {/* Plan v26 C.5 — Vercel Speed Insights: real-user LCP / CLS /
            INP captured per route. Free on Hobby. View in Vercel
            dashboard → Speed Insights. */}
         <SpeedInsights />
-        {/* Plan v34 Phase B — paywall modal mounted once at the layout
-           level. Listens for the atlas:open-paywall custom event from
-           any lock primitive on any page. */}
-        <PaywallModalRoot />
       </body>
     </html>
   );

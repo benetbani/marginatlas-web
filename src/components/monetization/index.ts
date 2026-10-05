@@ -23,33 +23,18 @@ export { QuartileMarkers } from "./QuartileMarkers";
 export { MoreDepthBanner } from "./MoreDepthBanner";
 export type { MoreDepthBannerProps } from "./MoreDepthBanner";
 
-export {
-  trackLockClick,
-  trackPaywallOpen,
-  trackPaywallCta,
-  trackPaywallDismiss,
-  trackEmailSignup,
-} from "./analytics";
+export { trackLockClick, trackEmailSignup } from "./analytics";
 export type { V34Event } from "./analytics";
 
-export {
-  openPaywall,
-  OPEN_PAYWALL_EVENT,
-} from "./events";
-export type {
-  PaywallEntryPoint,
-  PaywallTier,
-  OpenPaywallDetail,
-} from "./events";
+/* The paywall modal, its opener and its own copy left on 2026-10-05 (masterplan step 13; his ruling 22: a locked section
+   opens no pop-up). Every lock is a link to PRICING_HREF. */
+export type { PaywallEntryPoint, PaywallTier } from "./events";
 
-export { PaywallModalRoot } from "./PaywallModalRoot";
 export {
   TIERS,
-  MODAL_HEADLINES,
   CANCEL_ANYTIME_BLOCK,
   METHODOLOGY_LABEL,
   METHODOLOGY_HREF,
-  PRIMARY_CTA,
   PRICING_HREF,
   PRO_OPENS,
 } from "./paywall_copy";

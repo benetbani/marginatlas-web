@@ -43,9 +43,11 @@ function walk(dir: string, acc: string[] = []): string[] {
   return acc;
 }
 
+/* Paths compare with forward slashes (masterplan step 13): every scope below is written "components/monetization", and a
+   Windows path never contained it, so rule 7 never fired on this machine. */
 function loadSources(): SourceFile[] {
   return walk(ROOT).map((path) => ({
-    path,
+    path: path.replace(/\\/g, "/"),
     lines: readFileSync(path, "utf-8").split("\n"),
   }));
 }
@@ -107,19 +109,41 @@ type Pattern = {
   detail: string;
   /** Optional: restrict the rule to files matching this substring. */
   scope?: string;
-  /** Optional: do NOT match against this substring path. */
-  exclude?: string;
+  /** Optional: do NOT match against files under any of these paths. */
+  exclude?: readonly string[];
 };
+
+/* THE LEGAL PAGES (masterplan step 13; his interview of 2026-09-26, ruling 34: cancel any time, and the terms, refunds,
+   privacy and cookies pages that go with selling). The law makes those pages say "refund" and the 14-day cancellation
+   right ("for 14 days"), so the two bans that would read them as sales copy stop at their paths. Everywhere else, a
+   monetization component above all, both bans hold as before. */
+const LEGAL_PATHS: readonly string[] = [
+  "src/app/(site)/terms/",
+  "src/app/(site)/privacy/",
+  "src/app/(site)/cookies/",
+  "src/app/(site)/refunds/",
+  "src/lib/legal/",
+];
 
 const PATTERNS: Pattern[] = [
   // 1. NO trial copy
   {
     ruleId: "no_trial_copy",
     tag: "trial",
-    regex: /\bfree trial\b|\bfor\s+\d+\s*days?\b|\bday\s+trial\b/i,
+    regex: /\bfree trial\b|\bday\s+trial\b/i,
     detail:
       "v34 forbids any trial copy. Free is genuinely free; paid is paid. " +
       "See Part 8 #6 anti-pattern register.",
+  },
+  // 1, its "for N days" half, which the legal pages' 14-day right needs (ruling 34).
+  {
+    ruleId: "no_trial_copy",
+    tag: "trial",
+    regex: /\bfor\s+\d+\s*days?\b/i,
+    detail:
+      "v34 forbids any trial copy. Free is genuinely free; paid is paid. " +
+      "See Part 8 #6 anti-pattern register.",
+    exclude: LEGAL_PATHS,
   },
   // 2. NO money-back copy
   {
@@ -129,6 +153,7 @@ const PATTERNS: Pattern[] = [
     detail:
       "v34 forbids money-back / refund copy. We make the no-refund posture " +
       "explicit instead. See Part 8 #7.",
+    exclude: LEGAL_PATHS,
   },
   // 3. NO contact-sales tier
   {
@@ -173,8 +198,8 @@ const PATTERNS: Pattern[] = [
     tag: "padlock",
     regex: /\bLock(Simple|Closed|Open)?\b|\bPadlock\b/,
     detail:
-      "v34 forbids padlock icons on lock UI. The word Basic / Premium IS the " +
-      "signal. See Part 8 #1.",
+      "v34 forbids padlock icons on lock UI. The plan's name, Pro, IS the " +
+      "signal (one plan since masterplan step 12). See Part 8 #1.",
     scope: "components/monetization",
   },
   // 8. NO generic "Upgrade now" / "Unlock now" CTAs anywhere
@@ -209,7 +234,7 @@ for (const file of sources) {
   }
   for (const p of PATTERNS) {
     if (p.scope && !file.path.includes(p.scope)) continue;
-    if (p.exclude && file.path.includes(p.exclude)) continue;
+    if (p.exclude && p.exclude.some((x) => file.path.includes(x))) continue;
     for (let i = 0; i < file.lines.length; i++) {
       const line = file.lines[i];
       if (isCommentLine(line)) continue;
@@ -298,25 +323,25 @@ function readIfExists(rel: string): string | null {
   }
 }
 
-// 13. trust_signals_capped_at_two — the paywall modal must not import
-// more than two trust-signal helpers from paywall_copy. Operationalised
-// as: the modal references METHODOLOGY_LABEL + CANCEL_ANYTIME_BLOCK and
-// no third 'TRUST_' / 'GUARANTEE_' / 'SEAL_' constant.
-{
-  const modal = readIfExists("components/monetization/PaywallModalRoot.tsx");
-  if (modal) {
-    const trustMatches = modal.match(/\b(GUARANTEE|SEAL|BADGE|TESTIMONIAL)\w*/g);
-    if (trustMatches && trustMatches.length > 0) {
-      record(
-        "trust_signals_capped_at_two",
-        "src/components/monetization/PaywallModalRoot.tsx",
-        0,
+// 13. trust_signals_capped_at_two — no third trust signal beside the
+// Methodology link and the cancel-anytime block: no 'GUARANTEE_' /
+// 'SEAL_' / 'BADGE_' / 'TESTIMONIAL_' constant. Until 2026-10-05 it read
+// the paywall modal; his ruling 22 (a locked section opens no pop-up) took
+// the modal out in masterplan step 13, so it reads every monetization
+// component, where a lock is built, rather than a file that is gone.
+for (const file of sources) {
+  if (!file.path.includes("components/monetization/")) continue;
+  const trustMatches = file.lines.join("\n").match(/\b(GUARANTEE|SEAL|BADGE|TESTIMONIAL)\w*/g);
+  if (trustMatches && trustMatches.length > 0) {
+    record(
+      "trust_signals_capped_at_two",
+      file.path,
+      0,
+      trustMatches.join(", "),
+      "v34 Part 3.5: at most 2 trust signals at a lock. " +
+        "Found extra trust-related constants: " +
         trustMatches.join(", "),
-        "v34 Part 3.5: at most 2 trust signals on the paywall modal. " +
-          "Found extra trust-related constants: " +
-          trustMatches.join(", "),
-      );
-    }
+    );
   }
 }
 
@@ -348,7 +373,7 @@ for (const [ruleId, vs] of byRule) {
   console.error(`\n  Rule: ${ruleId}`);
   console.error(`  ${vs[0].detail}`);
   for (const v of vs) {
-    const rel = v.file.replace(process.cwd(), ".");
+    const rel = v.file.replace(process.cwd().replace(/\\/g, "/"), ".");
     if (v.line > 0) {
       console.error(`    ${rel}:${v.line}: ${v.text}`);
     } else {

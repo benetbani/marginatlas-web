@@ -15,7 +15,7 @@ import { CoverageReport, ALL_GATES, GateName } from "./types";
 
 const GATE_LABEL: Record<GateName, string> = {
   A_lock_primitives: "A. Locks",
-  B_trust_copy: "B. Trust",
+  B_no_popup: "B. No pop-up",
   C_no_orphan_locks: "C. No orphans",
   D_no_leaked_values: "D. No leakage",
   E_four_thing_reveal: "E. 4-thing reveal",

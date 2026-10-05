@@ -5,7 +5,7 @@
  * monetization-mega-plan-v34.md Part 5.4):
  *
  *   [A] lock primitives present
- *   [B] trust copy present
+ *   [B] no pop-up (his ruling 22 of 2026-09-26; masterplan step 13)
  *   [C] no orphan locks (every lock has a defined click handler)
  *   [D] no leaked values (gated numbers don't appear as plain
  *       text in the rendered DOM)
@@ -28,7 +28,7 @@ export type GateStatus = "GREEN" | "RED" | "PENDING";
 
 export type GateName =
   | "A_lock_primitives"
-  | "B_trust_copy"
+  | "B_no_popup"
   | "C_no_orphan_locks"
   | "D_no_leaked_values"
   | "E_four_thing_reveal";
@@ -60,7 +60,7 @@ export type CoverageReport = {
 
 export const ALL_GATES: GateName[] = [
   "A_lock_primitives",
-  "B_trust_copy",
+  "B_no_popup",
   "C_no_orphan_locks",
   "D_no_leaked_values",
   "E_four_thing_reveal",

@@ -1,15 +1,11 @@
 /**
- * Custom DOM events that wire the v34 lock primitives to the
- * paywall modal that ships in Phase B.
+ * The lock primitives' shared names: where a lock sits (PaywallEntryPoint,
+ * which the click analytics reads) and the plan it opens (PaywallTier).
  *
- * Decoupling rationale: the primitives are pure presentation
- * components that work in Storybook and in test pages without
- * the modal root being mounted. The modal root listens for
- * `atlas:open-paywall` on window and renders accordingly.
- *
- * Pre-Phase-B: the listener is not yet mounted; the dispatch is
- * a no-op. Primitives still render the lock CTA. This is correct
- * for the gate: Phase A ships the primitives independently.
+ * Until 2026-10-05 this file also dispatched `atlas:open-paywall`, the window
+ * event the paywall modal listened for. His ruling 22 of 2026-09-26 (a locked
+ * section opens no pop-up) took the modal out in masterplan step 13: every lock
+ * is now a link to the pricing page, so nothing dispatches and nothing listens.
  */
 
 export type PaywallEntryPoint =
@@ -35,24 +31,3 @@ export type PaywallEntryPoint =
 
 /** One paid tier since masterplan step 12 (his ruling 14: one plan, Pro). */
 export type PaywallTier = "pro";
-
-export type OpenPaywallDetail = {
-  entry: PaywallEntryPoint;
-  tier: PaywallTier;
-};
-
-export const OPEN_PAYWALL_EVENT = "atlas:open-paywall";
-
-export function openPaywall(detail: OpenPaywallDetail): void {
-  if (typeof window === "undefined") return;
-  // Fire analytics inside openPaywall so EVERY lock
-  // primitive emits the same event automatically. Importing inline
-  // avoids a circular dep and keeps the analytics layer optional.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  import("./analytics").then((mod) => {
-    mod.trackLockClick(detail.entry, detail.tier);
-  }).catch(() => {
-    // Analytics is non-essential; never throw.
-  });
-  window.dispatchEvent(new CustomEvent(OPEN_PAYWALL_EVENT, { detail }));
-}
