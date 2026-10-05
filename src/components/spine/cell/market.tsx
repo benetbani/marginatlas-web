@@ -98,7 +98,9 @@ export function RivalsCell({ market }: { market: MarketData }) {
      companion; where it does not, the typical leads alone. The churn follows
      either way, so the cell is never one number (clause 65). */
   if (market.here && hasFigure) second.push({ figure: densityText(firms.value), words: R.typicalWords });
-  if ("part" in market.close) second.push({ figure: String(market.close.part), words: R.close });
+  /* On a UK trade page the register's insolvencies stand where the world's closures would (masterplan step 04). */
+  if (market.insolvent) second.push({ figure: String(market.insolvent.per100), words: market.insolvent.words });
+  else if ("part" in market.close) second.push({ figure: String(market.close.part), words: R.close });
   if (!hasFigure) return <BentoMetric icon="competition" kicker={K.firms} withheld={firms.withheld} second={second.length > 0 ? second : undefined} />;
   const lead = market.here ? densityText(market.here.value) : firms.figure;
   return (
@@ -156,7 +158,7 @@ export function DaypartsCell({ market }: { market: MarketData }) {
       <div className="flex flex-1 flex-col justify-center py-2">
         <ShareBar parts={market.dayparts} />
       </div>
-      {COPY.tradeMarket.daypartsBasis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.daypartsBasis}</p> : null}
+      {(market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis) ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis}</p> : null}
     </Box>
   );
 }

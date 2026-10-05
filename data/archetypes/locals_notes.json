@@ -2,24 +2,16 @@
   "_about": "What locals know: notes a newcomer only finds out by trying, written by hand for one country at a time and never templated across countries. A country with no notes shows nothing. Each note is a label of at most seven words over one fact of at most 140 characters; at most five notes a country.",
   "GB": [
     {
-      "label": "Registering is fast, payroll is not",
-      "fact": "Registering online takes an afternoon; setting up payroll takes longer.",
-      "icon": "register-cost"
-    },
-    {
-      "label": "The headline rent is not the rent",
-      "fact": "On a strong high street, rates and service charge can add a third to it.",
-      "icon": "commercial-rent"
-    },
-    {
       "label": "Small premises often pay less",
-      "fact": "Each of the four nations runs its own rate relief for small premises.",
-      "icon": "taxes"
+      "fact": "In England, a shop with a rateable value of £12,000 or less pays no business rates.",
+      "icon": "taxes",
+      "source": "Small Business Rate Relief, England 2026-27: 100% at a rateable value of £12,000 or less (research 2026-09-25, item 22)"
     },
     {
       "label": "The first hire triggers a pension",
-      "fact": "A first employee means pension auto-enrolment: budget for it from the first payslip.",
-      "icon": "hiring"
+      "fact": "A first employee earning over £10,000 a year means pension auto-enrolment: budget for it from the first payslip.",
+      "icon": "hiring",
+      "source": "data/sections/rules.json pension-trigger: earnings that require auto-enrolment, 2026-27, checked 2026-10-04"
     }
   ]
 }

@@ -111,6 +111,11 @@ export type MarketData = {
   dayparts: SharePart[] | null;
   /** THIS CITY'S OWN DENSITY FOR THE TRADE (2026-09-20 night, his "a subsection cannot be only with one number"): the city shard's `comp.by_trade.*.per_10k_residents` on the row whose `trade` is the trade's own name, exactly; null where the city holds no such row, or at the world altitude. The rivals cell prints it beside the trade's typical. */
   here: { value: number; tag: FactTag } | null;
+  /** The dayparts cell's line where the page says whose figure it is (a UK trade page; uk_trade_typical.ts); the copy's otherwise. */
+  daypartsBasis?: string;
+  /** THE UK'S COMPANY INSOLVENCIES FOR THE TRADE IN A YEAR, per 100 live companies (a UK trade page, masterplan step 04): the
+   *  rivals cell's companion in place of the world's closures, a different measure with its own words. */
+  insolvent?: { per100: number; words: string } | null;
 };
 
 /** The city's own row for this trade, by the exact name the shard writes; never a near match (a near match is a fabricated place figure). */

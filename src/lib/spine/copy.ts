@@ -1301,6 +1301,9 @@ export const COPY = {
        in action, the time until the business opens), and the average salary is his plan's fourth column. */
     cols: { country: "Country", tax: "Effective tax", payroll: "Payroll on staff", llcCost: "LLC, all in", llcDays: "Days to register", salary: "Typical salary" },
     caveat: "Countries of similar size and market, not neighbours.",
+    /** The UK's page (masterplan step 04, 2026-10-05; the labels audit's item 17): its own row is sourced, the peers' figures are not, and the
+     *  line says so once (M9: a figure outside the United Kingdom is an estimate, said once). */
+    caveatEstimates: "Similar markets, not neighbours. The peers' figures are estimates.",
   },
   /** A table's heads order its rows (the goal of 2026-09-26, M5; interact/SortTable.tsx): the polite line a screen reader hears
    *  after a press. */
@@ -2043,6 +2046,26 @@ export const COPY = {
    *  would when the shard does not hold it (no shard today, 243 of 243 hold
    *  all four); the count cells' second line is the guard's, for a share
    *  over 100 that is not a count of firms (none on file: 3 to 92, 1 to 30). */
+  /** THE TRADE'S TYPICAL, SAID ONCE ON A UK TRADE PAGE (masterplan step 04, 2026-10-05; the labels audit's item 10). A London
+   *  trade page prints sourced figures or marked ones, and these cards print the trade's figure, not London's, so each card's one
+   *  line says so (never the struck "typical for the trade anywhere"). Read by src/lib/spine/uk_trade_typical.ts. */
+  tradeTypical: {
+    split: "Out of every $100 in sales, the trade's typical.",
+    splitProfile: "Out of every $100 in sales, typical for its sector.",
+    team: "Roles typical for the trade, pay from the UK's median.",
+    clears: "The trade's typical part of each day's sales that pays costs.",
+    clearsEstimate: "Of each day's sales, the part that pays the costs, an estimate.",
+    mix: "Out of every $100 in sales, the trade's typical.",
+    customers: "Spend per visit times visits a year, the trade's typical.",
+    market: {
+      firms: "The trade's typical.",
+      chains: "Out of every 100 firms, the trade's typical.",
+      swing: "The busiest month over the quietest, the trade's typical.",
+      dayparts: "Out of every $100 taken in a week, the trade's typical.",
+    },
+    /** The rivals cell's companion: the UK's company insolvencies for the trade in a year, per 100 live companies. */
+    insolvent: "of 100 UK companies insolvent a year",
+  },
   tradeMarket: {
     kickers: { firms: "Firms per 10,000 people", chains: "Chain-owned", close: "Close in a year", swing: "Busy and quiet months", dayparts: "When the week pays" },
     /** THE RIVALS CELL (2026-09-20 night, clause 65): the trade's typical density at 30 with its companions in one row: this city's own where the city shard names the trade ("here"), and the share that closes each year, so the cell is never one number. The kicker is the firms'. */
@@ -2119,6 +2142,10 @@ export const COPY = {
     /** The file's word for how a step is done, as a reader says it (2026-09-25: "Either" said nothing). */
     how: { either: "Online or in branch", online: "Online", "in person": "In person", paper: "On paper" } as Record<string, string>,
     basis: "Some steps run at the same time, so the total is shorter.",
+    /** Where a step's wait has no source and so no total stands (the UK's bank account: banks publish no common figure; masterplan step 04, 2026-10-05). */
+    basisNoTotal: "Banks publish no common wait for an account, so no total.",
+    /** The card's figure where no total stands: how many steps the list holds (PART 4, one figure at 30). */
+    countLabel: "Steps in all",
     foot: "",
   },
   /** WHEN THIS CITY SPENDS, the city's `19 calendar` (city_calendar_rows.ts, 2026-09-23, brief row Y1): the kicker names the subject, the label names the figure, the basis says what the twelve columns are and what the swing is, and the foot says the figures are the city's own calendar. */

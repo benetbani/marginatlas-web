@@ -55,6 +55,7 @@
  * store keeps every fact it is handed, and loading 198 countries to read two
  * numbers each would carry the whole bank for the sake of four figures.
  */
+import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { countryFigure, loadCountryShard, countryEntityId } from "@/lib/facts/country_shard";
@@ -144,6 +145,10 @@ function word(iso2: string, metric: string): string | null {
 export function buildCountryExit(iso2: string): CountryExitData | null {
   const code = countryEntityId(iso2);
   if (!code) return null;
+  /* NOTHING ON THE UK'S EXIT CARD HAS A SOURCE (masterplan step 04, 2026-10-05; the labels audit's item 18): the months to sell are the
+     shard's research with no source line, the tenth they fall in ranks them against agents' estimates from every other shard,
+     and the buyers' word is the shard's. The UK's page prints a sourced figure, a marked one, or none: none. */
+  if (countryHeldToRegisters(code)) return null;
   const C = COPY.countryExit;
   const mLo = countryFigure(code, COUNTRY_EXIT_METRICS.monthsLow);
   const mHi = countryFigure(code, COUNTRY_EXIT_METRICS.monthsHigh);

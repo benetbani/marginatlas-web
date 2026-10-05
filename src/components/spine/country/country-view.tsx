@@ -1463,7 +1463,9 @@ export function SpineCountryBody({ data }: { data?: any }) {
   const londonSales = iso2 === "GB" ? buildLondonTradeSales() : null;
   const exitData = buildCountryExit(iso2 ?? "");
   const spendData = buildCountrySpend(iso2 ?? "");
-  const rich = !!(employment && insurance && financing && banking && paperwork && londonSales && costs && hasSetup && locals && cities && exitData && spendData);
+  /* The exit card is not a condition of the rich page since masterplan step 04 (2026-10-05): on the UK's page it holds nothing
+     sourced and is withheld (country_exit_rows.ts), and the sales bars then stand their band's width alone. */
+  const rich = !!(employment && insurance && financing && banking && paperwork && londonSales && costs && hasSetup && locals && cities && spendData);
   /* FOUR OF THE PAGE-AGNOSTIC SECTIONS OF 2026-09-25, SEATED (his "you choose, push forward" of that night), each pair only where
      the country holds both halves, so no card stands alone on a level:
        - who lives here by age beside the job market: the people a shop sells to and hires from. The job market carries the
@@ -1671,10 +1673,10 @@ export function SpineCountryBody({ data }: { data?: any }) {
       },
       {
         key: "trades",
-        split: "2-1",
+        split: exitData ? "2-1" : "wide",
         label: COPY.londonSales.kicker,
         chapter: { index: "03", heading: COPY.chapters.open },
-        body: [<LondonSalesBars key="money" sales={londonSales} />, <ExitCard key="exit" exit={exitData} lean />],
+        body: exitData ? [<LondonSalesBars key="money" sales={londonSales} />, <ExitCard key="exit" exit={exitData} lean />] : [<LondonSalesBars key="money" sales={londonSales} />],
       },
       ...(seatPeople && ageMix && jobs
         ? [{ key: "people", split: "1-1" as ZoneSplit, label: COPY.people.age.kicker, body: [<AgeMix key="age" id="age-mix" data={ageMix} />, <JobMarket key="jobs" id="job-market" data={jobs} />] }]

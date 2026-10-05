@@ -11,10 +11,11 @@
  */
 import notesJson from "../../../data/archetypes/locals_notes.json";
 import { ATLAS_ICONS_BY_ID, type AtlasIconId } from "@/components/brand/icons/atlas-icons-data";
+import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 
 /** `icon`: the note's glyph, chosen by hand with the note (2026-09-26, M6); a name the atlas set does not hold is dropped. */
 /** `dots` (2026-09-26): a paperwork level, one to five, drawn as the legal forms table draws it in place of the label's words. */
-export type LocalNote = { label: string; fact: string; icon?: AtlasIconId; dots?: 1 | 2 | 3 | 4 | 5 };
+export type LocalNote = { label: string; fact: string; icon?: AtlasIconId; dots?: 1 | 2 | 3 | 4 | 5; source?: string };
 export type LocalsNotes = { notes: LocalNote[]; confidence: "placeholder"; source: string };
 
 /** At most five notes; a label of at most seven words; a fact of at most 140 characters (H7, one fact each). */
@@ -28,9 +29,13 @@ const NOTES = notesJson as unknown as Record<string, unknown>;
 export function buildLocalsNotes(iso2: string): LocalsNotes | null {
   const raw = NOTES[iso2.toUpperCase()];
   if (!Array.isArray(raw)) return null;
+  /* A NOTE WITH NO SOURCE DOES NOT PRINT ON THE UK'S PAGE (masterplan step 04, 2026-10-05; the labels audit's item 17): each of its notes
+     names the record its claim stands on (`source`), or the line goes. */
+  const sourced = countryHeldToRegisters(iso2);
   const notes: LocalNote[] = raw
     .filter((n): n is LocalNote => !!n && typeof n === "object" && typeof (n as LocalNote).label === "string" && typeof (n as LocalNote).fact === "string")
-    .map((n) => ({ label: n.label.trim(), fact: n.fact.trim(), ...(typeof n.icon === "string" && n.icon in ATLAS_ICONS_BY_ID ? { icon: n.icon } : {}) }))
+    .filter((n) => !sourced || (typeof n.source === "string" && n.source.trim().length > 0))
+    .map((n) => ({ label: n.label.trim(), fact: n.fact.trim(), ...(typeof n.icon === "string" && n.icon in ATLAS_ICONS_BY_ID ? { icon: n.icon } : {}), ...(typeof n.source === "string" && n.source.trim() ? { source: n.source.trim() } : {}) }))
     .filter((n) => n.label.length > 0 && n.fact.length > 0)
     .slice(0, NOTE_CAP);
   if (notes.length === 0) return null;

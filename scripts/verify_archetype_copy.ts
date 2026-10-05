@@ -74,7 +74,7 @@ import { buildCityDistrictBars, rentMult, countWord } from "@/lib/spine/district
 import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { SEAT_LINE_WORDS_CAP } from "@/components/spine/archetypes/BlockedSeat";
-import { buildCityCards, CITY_CARDS_CAP, CITY_CARD_LANDS, CITY_CARD_PLACEHOLDER_IMAGE } from "@/lib/spine/city_cards";
+import { buildCityCards, CITY_CARDS_CAP, CITY_CARD_LANDS, CITY_CARD_PLACEHOLDER_IMAGE, UK_NATION } from "@/lib/spine/city_cards";
 import { normalizePlaceName } from "@/lib/cities/city_pages";
 import { buildCitiesSeat, cutCitiesSeatTables, sayNames, LIVE_CITIES_SEAT_TABLES, PROFILE_REGIONS, CITIES_SEAT_NAMES_CAP } from "@/lib/spine/country_cities_seat";
 import { buildSetupRows } from "@/lib/spine/setup_rows";
@@ -1729,9 +1729,10 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       const want = typical && typical.from === "city" ? typical.value : null;
       if ((k.payUsd ?? null) !== want) reds.push(`${where}: the card "${k.name}" prints ${k.payUsd}, not the city page's answer ${want}`);
       if (want == null) withheldFigure++;
-      /* the region sub-line, from the gate's own join of the draft */
+      /* the region sub-line, from the gate's own join of the draft; a UK city's is its nation, one source and one depth for all
+         seven (masterplan step 04, QUEUE country:cities-region-line) */
       const d = draft.find((x) => x.country.toUpperCase() === iso2 && normalizePlaceName(x.name) === normalizePlaceName(row.name));
-      const dr = d?.region_name?.trim();
+      const dr = iso2 === "GB" ? UK_NATION[row.slug] : d?.region_name?.trim();
       const keep = dr && !(bare(k.name).includes(bare(dr)) || bare(dr).includes(bare(k.name))) ? dr : undefined;
       if ((k.region ?? undefined) !== keep) reds.push(`${where}: the card "${k.name}" carries the region ${JSON.stringify(k.region)} against the draft's ${JSON.stringify(keep)}`);
       if (k.region) withRegion++; else withoutRegion++;

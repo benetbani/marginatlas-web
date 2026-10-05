@@ -2296,6 +2296,18 @@
       "claims": []
     },
     {
+      "name": "uk-pages-sources",
+      "script": "tests/spine/uk_pages_sources.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE LONDON TRADE PAGES AND THE UK'S PAGE PRINT A SOURCED FIGURE, A MARKED ONE, OR NONE (masterplan step 04, 2026-10-05; the labels audit of 2026-10-02, items 10, 17 and 18; QUEUE country:cities-region",
+      "reads": [
+        "src/components/spine/cell/cell-view.tsx",
+        "src/lib/spine"
+      ],
+      "claims": []
+    },
+    {
       "name": "useless-tiles",
       "script": "scripts/audit/find_useless_tiles.ts",
       "args": [],

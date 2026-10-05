@@ -171,6 +171,8 @@ import { MarketHold } from "@/components/spine/sections/MarketHold";
 import { buildMarketHold, marketForTrade } from "@/lib/spine/sections/market_jobs";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
 import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
+import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { sayTradeTypical } from "@/lib/spine/uk_trade_typical";
 
 const X: any = spineCellSeed;
 
@@ -310,13 +312,13 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      band always holds two children; a sector-average cell (industry_id
      `default`, no shard) draws neither and the band does not draw. */
   const permits = buildPermits(d.meta?.industry_id, d.meta?.iso2);
-  const open = buildOpen(d);
+  const openBuilt = buildOpen(d);
   /* `05 split | 06 team` (turn-one.tsx): the split off the seed's one-builder
      net and the trade's lines, the team off the shard's roles and the
      country's median; both on every trade that holds a shard, so the band
      holds two children or does not draw (the same condition as `03 | 04`). */
-  const split = buildSplit(d);
-  const team = buildTeam(d.meta?.industry_id, d.meta?.iso2);
+  const splitBuilt = buildSplit(d);
+  const teamBuilt = buildTeam(d.meta?.industry_id, d.meta?.iso2);
   /* `07 peers` (turn-one.tsx): the table builds on every resolving cell
      (the seed always names its place), with the slate's rows on a United
      States cell and the seated form off it, so the second full width stands
@@ -326,16 +328,16 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      money is shown, else the shard; the survival triple off the shard; both
      on every trade that holds a shard, so the band holds two children or
      does not draw (the same condition as `03 | 04`). */
-  const clears = buildClears(d);
+  const clearsBuilt = buildClears(d);
   const lasts = buildLasts(d.meta?.industry_id, "place", { iso2: d.meta?.iso2, slug: d.meta?.industry });
   /* `11 mix` (turn-two.tsx): the donut off the shard's channels on every
      trade that holds a shard, seated in the exit beside `13 rivals` since
      2026-09-20 (`10 watch`, the seat that stood beside it, left the page that
      day: see the turn-two band's note). `12 market` (market.tsx): the four
      cells off the same shard, the cluster its own band. */
-  const mix = buildMix(d.meta?.industry_id);
+  const mixBuilt = buildMix(d.meta?.industry_id);
   /* The place goes with the id (2026-09-20 night): the rivals cell prints this city's own density beside the trade's typical where the city shard names the trade exactly. */
-  const market = buildMarket(d.meta?.industry_id, "place", { iso2: d.meta?.iso2, slug: d.meta?.geo, tradeName: d.meta?.trade });
+  const marketBuilt = buildMarket(d.meta?.industry_id, "place", { iso2: d.meta?.iso2, slug: d.meta?.geo, tradeName: d.meta?.trade });
   /* `13 rivals` and `14 worth` (exit.tsx): the rivals off the seed's siblings
      on every resolving cell (the list where four or more hold a figure, the
      structure and the line otherwise), the worth off the shard's sale
@@ -349,7 +351,11 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
   const rivals = buildRivals(d);
   const worth = buildWorth(d);
   /* `16 customers` (exit.tsx): one regular customer's year off the shard's spend and visits, on every trade holding either (2026-09-20 night). */
-  const customers = buildTradeCustomers(d.meta?.industry_id);
+  const customersBuilt = buildTradeCustomers(d.meta?.industry_id);
+  /* A PAGE HELD TO A REGISTER REGION (a London trade page; masterplan step 04, the labels audit's item 10): each card printing
+     the trade's figure says so in its one line, the market drops the metro density and takes the UK's insolvencies. */
+  const builtCards = { split: splitBuilt, team: teamBuilt, clears: clearsBuilt, mix: mixBuilt, customers: customersBuilt, open: openBuilt, market: marketBuilt };
+  const { split, team, clears, mix, customers, open, market } = cityRegisterPlace(String(d.meta?.iso2 ?? ""), String(d.meta?.geo ?? "")) ? sayTradeTypical(builtCards, typeof d.meta?.industry === "string" ? d.meta.industry : null) : builtCards;
   /* A5's two seats: the customers card in the exit only where the spread drew (it moved to the opening otherwise), the worth only as its strip. */
   const exitCustomers = spreadDrawn ? customers : null;
   const worthDrawn = worth && worth.state === "strip" ? worth : null;

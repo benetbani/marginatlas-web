@@ -156,6 +156,20 @@ export type CityCard = {
 export type CityCards = { cards: CityCard[]; allHref: string };
 
 const bare = (s: string) => s.toLowerCase().replace(/[^a-z]/g, "");
+/** THE UK CITIES' LINE, ONE SOURCE AND ONE DEPTH (masterplan step 04, 2026-10-05; QUEUE country:cities-region-line). The draft list gave
+ *  London, Manchester and Birmingham "England" and Leeds nothing; the register's own regions are held for London alone. Every
+ *  UK city now says its nation, the country its council belongs to, so London (Greater London, his ruling of 2026-10-04) reads
+ *  as Leeds does. */
+export const UK_NATION: Readonly<Record<string, string>> = {
+  london: "England",
+  manchester: "England",
+  birmingham: "England",
+  leeds: "England",
+  bristol: "England",
+  glasgow: "Scotland",
+  edinburgh: "Scotland",
+};
+
 /** The region, or null when it says the city's name back at the reader. */
 function keepRegion(name: string, region: string | undefined): string | null {
   const r = region?.trim();
@@ -203,17 +217,18 @@ export function buildCityCards(iso2In: string): CityCards | null {
     const pay = typical && typical.from === "city" ? typical.value : null;
     const name = String(c.name).replace(/\s*\([^)]*\)\s*$/, "");
     const photo = cityCardImage(slug);
-    const draft = draftRowFor(iso2, c.name);
+    const draft = iso2 === "GB" ? undefined : draftRowFor(iso2, c.name);
+    const nation = iso2 === "GB" ? UK_NATION[slug] : undefined;
     cards.push({
       id: slug,
       name,
-      sub: draft?.region_name?.trim() || undefined,
+      sub: nation ?? (draft?.region_name?.trim() || undefined),
       /* A REGION THAT REPEATS THE CITY IS NOT A SECOND DETAIL. The draft set
          gives Berlin the region "Berlin", Ho Chi Minh City "Ho Chi Minh",
          Lagos "Lagos State" and Tokyo "Tokyo Metropolis", and a card that
          prints the name and then almost the name again has spent one of its
          two details on nothing. Dropped when either name contains the other. */
-      region: keepRegion(name, draft?.region_name) ?? undefined,
+      region: keepRegion(name, nation ?? draft?.region_name) ?? undefined,
       href,
       lands: CITY_CARD_LANDS,
       image: cityImageSrc(slug),

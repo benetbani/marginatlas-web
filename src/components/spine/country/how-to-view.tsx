@@ -84,12 +84,11 @@ export function HowToBody({ iso2 }: { iso2: string }) {
             {d.steps ? (
               <Box id="steps">
                 <Rail icon="red-tape" kicker={COPY.howToSteps.kicker} />
-                {d.steps.totalDays ? (
-                  <div className="mb-4">
-                    <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{COPY.howToSteps.totalLabel}</div>
-                    <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{d.steps.totalDays}</Fig>
-                  </div>
-                ) : null}
+                {/* Where no total stands (a step's wait has no source; masterplan step 04) the card's one figure is the count of steps. */}
+                <div className="mb-4">
+                  <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{d.steps.totalDays ? COPY.howToSteps.totalLabel : COPY.howToSteps.countLabel}</div>
+                  <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{d.steps.totalDays ?? String(d.steps.count)}</Fig>
+                </div>
                 <Stepper steps={d.steps.steps} />
                 {d.steps.basis ? <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.basis}</p> : null}
                 {d.steps.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.foot}</p> : null}

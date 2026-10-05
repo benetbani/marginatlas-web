@@ -702,6 +702,10 @@ const GATES: Gate[] = [
   /* London's city page prints an official figure, says a figure is an estimate, or withholds it: the shop rent from the
      valuation slice, the survey's pay tenths, no hand-anchored cost of living, no engine district rents (masterplan step 03). */
   { name: "london-city-sources", script: "tests/spine/london_city_sources.test.ts" },
+  /* The London trade pages and the UK's page: the trade's typical said on each world-typical card, the UK's insolvencies for the
+     world's closures, the peers' figures called estimates, sourced locals notes, no bank-account wait, no exit card, every UK
+     city's nation (masterplan step 04). */
+  { name: "uk-pages-sources", script: "tests/spine/uk_pages_sources.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

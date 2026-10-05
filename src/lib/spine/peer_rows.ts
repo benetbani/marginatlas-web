@@ -20,7 +20,7 @@ import { getCountryRates } from "@/lib/tax/country_rates";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { COPY } from "@/lib/spine/copy";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
-import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityRegisterPlace, countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 
@@ -78,7 +78,8 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
     });
   }
   if (rows.length < 2) return null;
-  return { rows, columns: PEER_COLUMNS, caveat: COPY.peers.caveat };
+  /* The UK's own row is sourced (the truth pass); its peers' figures are hand-held constants, so the line says they are estimates (masterplan step 04, 2026-10-05). */
+  return { rows, columns: PEER_COLUMNS, caveat: countryHeldToRegisters(code) ? COPY.peers.caveatEstimates : COPY.peers.caveat };
 }
 
 /** THE CITY'S PEERS TABLE (city:peers, the build loop's run 22, 2026-09-06;

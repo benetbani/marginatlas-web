@@ -57,6 +57,8 @@ export type HowToStepsData = {
   steps: HowToStep[];
   /** The whole registration's days, the shard's own figure, never the sum of the steps. */
   totalDays: string | null;
+  /** How many steps the list holds: the card's figure where no total stands (masterplan step 04). */
+  count: number;
   basis: string;
   foot: string;
   tag: FactTag;
@@ -88,17 +90,26 @@ function readSteps(iso2: string): Array<{ key: string; name?: string; how?: stri
 
 const daysText = (d: number) => `${Math.round(d)} ${Math.round(d) === 1 ? COPY.howToSteps.units.day : COPY.howToSteps.units.days}`;
 
+/** A STEP'S WAIT NO SOURCE HOLDS, by country and the shard's row key (masterplan step 04, 2026-10-05; the labels audit's item 18): the UK's
+ *  business bank account, 21 days in the shard, where each large bank publishes its own figure and no common one exists
+ *  (research 2026-09-25, item 24). The wait prints a dash, and the total it drove (the shard's 21 days start to finish) goes
+ *  with it; the basis says why, once. */
+const UNSOURCED_WAITS: Readonly<Record<string, readonly string[]>> = { GB: ["open_a_business_bank_account"] };
+
 export function buildHowToSteps(iso2: string): HowToStepsData | null {
   const code = countryEntityId(iso2);
   if (!code) return null;
   const rows = readSteps(code);
   if (rows.length === 0) return null;
   const total = queryFacts({ entityId: code, metrics: ["setup.total_days"], rowKey: "" })[0];
+  const unsourced = new Set(UNSOURCED_WAITS[code] ?? []);
+  const withheldWait = rows.some((r) => unsourced.has(r.key));
   const steps: HowToStep[] = rows.map((r, i) => ({
     key: r.key || String(i),
     name: r.name as string,
     how: r.how ? COPY.howToSteps.how[r.how.trim().toLowerCase()] ?? r.how : null,
-    days: isNum(r.days) ? daysText(r.days) : null,
+    /* A wait no source holds prints the dash, explained once in the basis (PART 9 clause 18). */
+    days: unsourced.has(r.key) ? "–" : isNum(r.days) ? daysText(r.days) : null,
     /* "$0" FOR A FREE STEP (2026-09-25): the steps' costs stand in a column of figures on both pages that draw them, and his law is
        "never a word where a number goes" (COPY.free's note); the word "Free" among "$133" read as a label in a figure's seat. */
     cost: isNum(r.cost) ? usd(Math.round(r.cost)) : null,
@@ -107,8 +118,9 @@ export function buildHowToSteps(iso2: string): HowToStepsData | null {
   return {
     iso2: code,
     steps,
-    totalDays: total && isNum(total.value) ? daysText(total.value) : null,
-    basis: COPY.howToSteps.basis,
+    totalDays: !withheldWait && total && isNum(total.value) ? daysText(total.value) : null,
+    count: steps.length,
+    basis: withheldWait ? COPY.howToSteps.basisNoTotal : COPY.howToSteps.basis,
     foot: COPY.howToSteps.foot,
     tag: weakest,
   };

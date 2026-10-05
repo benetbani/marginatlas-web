@@ -18,6 +18,12 @@ const REGISTER_CITY: Readonly<Record<string, RegisterPlace>> = {
   "GB:london": { geography: LONDON_GEOGRAPHY, name: "Greater London" },
 };
 
+/** THE COUNTRY WHOSE PAGE IS HELD TO THE REGISTERS (masterplan step 04, 2026-10-05): the United Kingdom's page prints a sourced figure,
+ *  a marked one, or none, as its London pages do; every other country's page says once that its figures are estimates. */
+export function countryHeldToRegisters(iso2: string | null | undefined): boolean {
+  return String(iso2 ?? "").toUpperCase() === "GB";
+}
+
 /** The register region a city's page is held to, or null for a city whose figures stand as the city list and shard hold them. */
 export function cityRegisterPlace(iso2: string, slug: string): RegisterPlace | null {
   return REGISTER_CITY[`${String(iso2).toUpperCase()}:${slug}`] ?? null;
