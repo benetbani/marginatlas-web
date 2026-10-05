@@ -129,7 +129,9 @@
  * ONE SWITCH); the sample-tags gate reads this group for that name, and the
  * mechanism it names is the one every card here uses.
  */
-import * as React from "react";
+import * as React from "react";
+import { lockedLevelKeys } from "@/lib/monetization/levels";
+import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { spineCellSeed } from "@/lib/spine-seeds";
 import { Box, Rail, usd } from "@/components/spine/kit";
 import { Zone, type ZoneSplit } from "@/components/spine/zones";
@@ -290,7 +292,26 @@ function Suits({ d }: { d: any }) {
 /* The reusable body , accepts `data` (the bundled seed by default, or the real
  * adapter output from the live route). NOT the route's default export, because a
  * Next page component must conform to PageProps and cannot take a custom prop. */
-export function SpineCellBody({ data = X }: { data?: any } = {}) {
+/* WHAT A LOCKED LEVEL OF A TRADE PAGE DRAWS (masterplan step 16; his rulings 18 and 22): each card that can stand at a level Pro
+   opens, by the key the body gives it, with the title and icon its own rail draws and the stand-in nearest its drawing. The split
+   card's open title prints "$100", a figure a locked card never carries, so it takes its level's own name. Two ids mean another
+   section on another page (a trade's peers, its market hold), so their lines are keyed apart. */
+const CELL_LOCKS: Record<string, LockSpec> = {
+  stock: { id: "stock", title: COPY.stock.kicker, icon: "startup-cost", kind: "table" },
+  hold: { id: "market-hold", title: COPY.marketHold.kicker, icon: "competition", kind: "bars" },
+  thresholds: { id: "thresholds", title: COPY.thresholds.kicker, icon: "taxes", kind: "rows" },
+  split: { id: "split", title: "Where the money goes", icon: "cost-breakdown", kind: "bars" },
+  team: { id: "team", title: COPY.tradeTeam.kicker, icon: "wages", kind: "table" },
+  peers: { id: "peers", title: COPY.tradePeers.kicker, icon: "benchmark", kind: "table", lineKey: "trade-peers" },
+  mix: { id: "mix", title: COPY.tradeMix.kicker, icon: "payments", kind: "bars" },
+  rivals: { id: "rivals", title: COPY.tradeRivals.kicker, icon: "subtype", kind: "rows" },
+  apps: { id: "apps", title: COPY.localApps.kicker, icon: "supplier", kind: "grid" },
+  spend: { id: "spend-income", title: COPY.spendByIncome.kicker, icon: "spending-power", kind: "bars" },
+  customers: { id: "customers", title: COPY.tradeCustomers.kicker, icon: "spending-power", kind: "rows" },
+  worth: { id: "worth", title: COPY.tradeWorth.kicker, icon: "sale-tag", kind: "track" },
+};
+
+export function SpineCellBody({ data = X, locked = false }: { data?: any; locked?: boolean } = {}) {
   const d = data;
 
   /* WHO IS HOME, ASKED ONCE (the country view's idiom): each card's presence,
@@ -394,7 +415,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
      the stock or the market's hold beside the thresholds, the split beside the team, the peers table (the whole column); 02 what
      clears beside how long it lasts; 03 the market's cluster, the mix beside the other trades, the apps beside spending by income,
      the customers beside what it is worth; the close. A level whose partner self-omits keeps the kit's two thirds (zones.tsx). */
-  type CellZone = { key: string; split: ZoneSplit; stack?: "lg"; chapter?: "01" | "02" | "03"; label: string; body: React.ReactNode[] };
+  type CellZone = { key: string; split: ZoneSplit; stack?: "lg"; chapter?: "01" | "02" | "03"; outside?: boolean; label: string; body: React.ReactNode[] };
   const CHAPTERS = { "01": COPY.tradeChapters.costs, "02": COPY.tradeChapters.keep, "03": COPY.tradeChapters.trade } as const;
   const keep = (xs: React.ReactNode[]) => xs.filter(Boolean);
   const opening: React.ReactNode[] = spreadDrawn
@@ -404,8 +425,8 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
       : keep([hasSpread ? <Spread key="spread" d={d} /> : null, hasSuits ? <Suits key="suits" d={d} /> : null]);
   const openSplit: ZoneSplit = open ? (openForm(open) === "metric" ? "2-1" : openForm(open) === "list" ? "1-1" : "1-2") : "1-2";
   const cellZonesAll: CellZone[] = [
-    { key: "take", split: "wide", label: "The answer", body: [<Masthead key="take" d={d} />] },
-    { key: "opening", split: "1-2", stack: "lg", label: "Is the money in it", body: opening },
+    { key: "take", split: "wide", label: "The answer", outside: true, body: [<Masthead key="take" d={d} />] },
+    { key: "opening", split: "1-2", stack: "lg", label: "Is the money in it", outside: true, body: opening },
     { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne ? keep([permits ? <PermitsCard key="permits" permits={permits} top={!!open && openForm(open) === "list"} /> : null, open ? <OpenCard key="open" open={open} /> : null]) : [] },
     {
       key: "stock",
@@ -424,9 +445,13 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
     { key: "exit", split: "1-1", stack: exitCustomers && worthDrawn ? undefined : "lg", chapter: "03", label: "The way out", body: keep([exitCustomers ? <CustomersCard key="customers" customers={exitCustomers} /> : null, worthDrawn ? <WorthCard key="worth" worth={worthDrawn} /> : null]) },
     /* THE EXIT ON THE HERO BAND THE BENTO'S CLOSE STOOD ON (`Band hero`, exit.tsx says why): the page's third full width, the
        sanction the full-width gates and the section-bands baseline read on this page. */
-    { key: "close", split: "wide", label: "Where to next", body: doors.length > 0 ? [<div key="close" data-hero="1"><CloseCard doors={doors} /></div>] : [] },
+    { key: "close", split: "wide", label: "Where to next", outside: true, body: doors.length > 0 ? [<div key="close" data-hero="1"><CloseCard doors={doors} /></div>] : [] },
   ];
   const cellZones = cellZonesAll.filter((z) => z.body.length > 0);
+  /* THE LOCK (masterplan step 16; his ruling 18): told the page is locked, each chapter's first level that draws stays open and
+     every later one draws its cards locked; the answer, the opening pair and the close stand outside the chapters. Untold,
+     nothing changes. */
+  const lockedZones = locked ? lockedLevelKeys(cellZones.map((z) => ({ key: z.key, chapter: z.chapter ?? null, outside: z.outside }))) : null;
   /* The chapter's number and title stand on the first level of the chapter that draws. */
   const headed = new Set<string>();
   return (
@@ -438,7 +463,7 @@ export function SpineCellBody({ data = X }: { data?: any } = {}) {
           const chapter = z.chapter && !headed.has(z.chapter) ? (headed.add(z.chapter), { index: z.chapter, heading: CHAPTERS[z.chapter] }) : undefined;
           return (
             <Zone key={z.key} split={z.split} stack={z.stack} label={z.label} chapter={chapter}>
-              {z.body}
+              {lockedZones?.has(z.key) ? lockedBody(z.body, CELL_LOCKS) : z.body}
             </Zone>
           );
         })}

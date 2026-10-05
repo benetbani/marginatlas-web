@@ -85,7 +85,9 @@
  * such timeline here would necessarily invent a representative trade. There is no honest
  * anchor at city altitude, so the block was deleted rather than replaced (2026-07-10).
  */
-import * as React from "react";
+import * as React from "react";
+import { lockedLevelKeys } from "@/lib/monetization/levels";
+import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { spineCitySeed } from "@/lib/spine-seeds";
 /* SampleTag is imported and not called here, as in the country view: every
    modelled figure on this page is marked through the `sample` prop of Rail,
@@ -842,7 +844,27 @@ function CityClose({ d, zone = false }: { d: any; zone?: boolean }) {
  * seed from buildSpineCitySeed. Every section null-guards its own data, so an omitted
  * field renders nothing.
  */
-export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
+/* WHAT A LOCKED LEVEL OF A CITY PAGE DRAWS (masterplan step 16; his rulings 18 and 22): each card that can stand at a level Pro
+   opens, by the key the body gives it, with the title and icon its own rail draws and the stand-in nearest its drawing. */
+const CITY_LOCKS: Record<string, LockSpec> = {
+  gates: { id: "gates", title: COPY.cityGates.kicker, icon: "licence-specific", kind: "rows" },
+  market: { id: "market", title: COPY.cityMarket.kicker, icon: "competition", kind: "bars" },
+  living: { id: "living", title: COPY.cityLiving.kicker, icon: "cost-breakdown", kind: "rows" },
+  runway: { id: "runway", title: COPY.cityRunway.kicker, icon: "commercial-rent", kind: "track" },
+  demand: { id: "demand", title: COPY.cityDemand.kicker, icon: "market-size", kind: "rows" },
+  earnings: { id: "earnings", title: COPY.cityCustomers.kicker, icon: "spread", kind: "track" },
+  season: { id: "season", title: COPY.citySeason.kicker, icon: "seasonality", kind: "bars" },
+  crew: { id: "crew", title: COPY.cityCrew.kicker, icon: "wages", kind: "rows" },
+  texture: { id: "texture", title: COPY.cityTexture.kicker, icon: "honest-take", kind: "table" },
+  calendar: { id: "calendar", title: COPY.cityCalendar.kicker, icon: "seasonality", kind: "bars" },
+  districts: { id: "districts", title: COPY.cityDistricts.kicker, icon: "best-areas", kind: "bars" },
+  trades: { id: "trades", title: COPY.cityTrades.kicker, icon: "high-street", kind: "rows" },
+  people: { id: "character-people", title: COPY.character.people.kicker, icon: "who-for", kind: "table" },
+  hoods: { id: "neighbourhoods", title: COPY.cityNeighbourhoods.kicker, icon: "neighborhood", kind: "rows" },
+  age: { id: "age-mix", title: COPY.people.age.kicker, icon: "who-for", kind: "bars" },
+};
+
+export function SpineCityBody({ data = spineCitySeed, locked = false }: { data?: any; locked?: boolean } = {}) {
   const d = data ?? spineCitySeed;
   const slug: string | undefined = typeof d.meta?.slug === "string" ? d.meta.slug : undefined;
 
@@ -920,12 +942,12 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
      ruling: the premises cluster, the permits beside who trades here, the living level of three where the spend or the strip takes
      the third seat, the crew beside the texture, the calendar beside the strip, the districts beside the trades, the peers beside
      the people, the neighbourhoods beside the season); a level whose partner self-omits keeps the kit's two thirds (zones.tsx). */
-  type CityZone = { key: string; split: ZoneSplit; stack?: "lg"; chapter?: "01" | "02" | "03"; label: string; body: React.ReactNode[] };
+  type CityZone = { key: string; split: ZoneSplit; stack?: "lg"; chapter?: "01" | "02" | "03"; outside?: boolean; label: string; body: React.ReactNode[] };
   const CHAPTERS = { "01": COPY.chapters.costs, "02": COPY.chapters.where, "03": COPY.chapters.place } as const;
   const keep = (xs: React.ReactNode[]) => xs.filter(Boolean);
   const livingThree = !!living && !!runway && demandDrawn && !demandBesideSeason;
   const cityZonesAll: CityZone[] = [
-    { key: "take", split: "wide", label: "The answer", body: [cityBoard ? <HeroBoard key="take" id="city-take" board={cityBoard} answers={SURFACE_ANSWERS.city} /> : <CityHero key="take" d={d} />] },
+    { key: "take", split: "wide", label: "The answer", outside: true, body: [cityBoard ? <HeroBoard key="take" id="city-take" board={cityBoard} answers={SURFACE_ANSWERS.city} /> : <CityHero key="take" d={d} />] },
     { key: "premises", split: "wide", chapter: "01", label: "Premises", body: keep([premises ? <Premises key="premises" bento={premises} /> : null]) },
     { key: "gates", split: "1-1", stack: "lg", chapter: "01", label: "Opening here", body: keep([gates ? <GatesCard key="gates" gates={gates} /> : null, cityMarket ? <MarketCard key="market" market={cityMarket} /> : null]) },
     {
@@ -946,9 +968,12 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
     { key: "districts", split: "2-1", stack: "lg", chapter: "02", label: "Where to trade", body: keep([districts ? <WhereToTrade key="districts" d={d} /> : null, trades ? <TradesHere key="trades" d={d} /> : null]) },
     { key: "peers", split: "1-1", chapter: "03", label: "The peers", body: keep([peersDrawn ? <CityPeers key="peers" d={d} zone /> : null, people ? <CharacterPeople key="people" people={people} /> : null]) },
     { key: "hoods", split: "2-1", stack: "lg", chapter: "03", label: "The neighbourhoods", body: keep([hoodsDrawn ? <Neighbourhoods key="hoods" hoods={hoods} /> : null, seasonAtFoot ? <Season key="season" season={seasonAtFoot} /> : ageMix ? <AgeMix key="age" id="age-mix" data={ageMix} /> : null]) },
-    { key: "close", split: "wide", label: "Where to next", body: [<CityClose key="close" d={d} zone />] },
+    { key: "close", split: "wide", label: "Where to next", outside: true, body: [<CityClose key="close" d={d} zone />] },
   ];
   const cityZones = cityZonesAll.filter((z) => z.body.length > 0);
+  /* THE LOCK (masterplan step 16; his ruling 18): told the page is locked, each chapter's first level that draws stays open and
+     every later one draws its cards locked; the answer and the close stand outside the chapters. Untold, nothing changes. */
+  const lockedZones = locked ? lockedLevelKeys(cityZones.map((z) => ({ key: z.key, chapter: z.chapter ?? null, outside: z.outside }))) : null;
   /* The chapter's number and title stand on the first level of the chapter that draws. */
   const headed = new Set<string>();
   return (
@@ -960,7 +985,7 @@ export function SpineCityBody({ data = spineCitySeed }: { data?: any } = {}) {
           const chapter = z.chapter && !headed.has(z.chapter) ? (headed.add(z.chapter), { index: z.chapter, heading: CHAPTERS[z.chapter] }) : undefined;
           return (
             <Zone key={z.key} split={z.split} stack={z.stack} label={z.label} chapter={chapter}>
-              {z.body}
+              {lockedZones?.has(z.key) ? lockedBody(z.body, CITY_LOCKS) : z.body}
             </Zone>
           );
         })}

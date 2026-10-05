@@ -37,6 +37,23 @@ function StandIn({ kind }: { kind: StandInKind }) {
   );
 }
 
+/** What a view knows about one card it may draw locked (masterplan step 16): the section's id, the title its rail prints, the icon
+ *  its rail draws, the stand-in nearest its drawing, and the copy key of its line when the id means another section elsewhere. */
+export type LockSpec = { id: string; title: string; icon: AtlasIconId; kind: StandInKind; lineKey?: string };
+
+/** A LOCKED LEVEL'S CARDS (masterplan step 16): each card of the level, found by the React key its view gives it, drawn as the
+ *  locked section its view's table names, in the same order inside the same zone. A card the table does not name is not drawn
+ *  at all, never drawn open: the paywall-shape gate (step 20) holds the locked ids to the levels that lock. */
+export function lockedBody(body: React.ReactNode[], table: Record<string, LockSpec>): React.ReactNode[] {
+  const out: React.ReactNode[] = [];
+  for (const el of body) {
+    const key = React.isValidElement(el) && el.key != null ? String(el.key) : null;
+    const spec = key ? table[key] : undefined;
+    if (spec) out.push(<LockedSection key={key} id={spec.id} title={spec.title} icon={spec.icon} kind={spec.kind} lineKey={spec.lineKey} />);
+  }
+  return out;
+}
+
 export function LockedSection({ id, title, icon, kind, lineKey = id }: { id: string; title: string; icon: AtlasIconId; kind: StandInKind; lineKey?: string }) {
   const line = (COPY.locked.lines as Record<string, string>)[lineKey];
   return (

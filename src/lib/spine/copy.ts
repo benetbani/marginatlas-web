@@ -2688,6 +2688,10 @@ export const COPY = {
       "spend-income": "What households spend on this, by income.",
       customers: "What one customer spends with you.",
       worth: "What a business like this sells for.",
+      "market-hold": "How much of the market the biggest chains hold.",
+      "trade-peers": "How this trade does here against other places.",
+      districts: "What rent costs in each part of the city.",
+      trades: "Trades with figures for this city.",
     },
   },
   /** Words that must never appear in an archetype's copy: the corporate register.

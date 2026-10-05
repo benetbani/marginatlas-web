@@ -28,7 +28,9 @@
  * verify_sample_tags.ts passes on its own logic. The Task 9 `allow-unmarked`
  * exemption that recorded the gap is gone with the gap.
  */
-import * as React from "react";
+import * as React from "react";
+import { lockedLevelKeys } from "@/lib/monetization/levels";
+import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { Box, Fig, Ico, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
@@ -1417,7 +1419,7 @@ function Close({ meta, name, zone = false }: { meta: any; name: string; zone?: b
  * The country spine page body. `data` is the seed from buildSpineCountrySeed.
  * Every block on it is optional by design, so read defensively.
  */
-export function SpineCountryBody({ data }: { data?: any }) {
+export function SpineCountryBody({ data, locked = false }: { data?: any; locked?: boolean }) {
   const d = data ?? {};
   const name: string | undefined = d.meta?.country_name;
   if (!name) return null;
@@ -1519,6 +1521,29 @@ export function SpineCountryBody({ data }: { data?: any }) {
       { id: "character-people", label: COPY.character.people.kicker, chapter: "03" },
       ...(seatFirstYears ? [{ id: "first-years", label: COPY.firstYears.kicker, chapter: "04" }, { id: "obstacles", label: COPY.firstYears.obstaclesKicker, chapter: "04" }] : []),
     ];
+    /* WHAT A LOCKED LEVEL DRAWS (masterplan step 16; his rulings 18 and 22): each card of a level Pro opens, by the key the body
+       gives it, as a locked section under its rail list label, with the icon its own rail draws and the stand-in nearest its
+       drawing. Only the cards of levels after a chapter's first are here; the step 20 gate holds the drawn locks to the levels. */
+    const railLabel = (id: string) => sections.find((s) => s.id === id)?.label ?? id;
+    const countryLocks: Record<string, LockSpec> = Object.fromEntries(
+      (
+        [
+          ["hiring", "hiring", "hiring", "bars"],
+          ["employment", "employment", "staffing-rota", "rows"],
+          ["running", "running-costs", "cost-breakdown", "track"],
+          ["insurance", "insurance", "safety", "rows"],
+          ["peers", "peers", "benchmark", "table"],
+          ["financing", "financing", "raise-money", "track"],
+          ["banking", "banking", "payments", "rows"],
+          ["age", "age-mix", "who-for", "bars"],
+          ["jobs", "job-market", "hiring", "rows"],
+          ["cities", "cities", "best-areas", "grid"],
+          ["locals", "locals", "locals-know", "rows"],
+          ["spend", "spend", "spending-power", "bars"],
+          ["people", "character-people", "who-for", "table"],
+        ] as const
+      ).map(([key, id, icon, kind]) => [key, { id, title: railLabel(id), icon, kind }]),
+    );
     const railChapters = {
       "01": { index: "01", heading: COPY.chapters.costs },
       "02": { index: "02", heading: COPY.chapters.money },
@@ -1611,12 +1636,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
     ]) : null;
     const payments = iso2 ? buildPayments(iso2) : null;
     const financingCells = financing.cells.filter((c) => !c.key.startsWith("grant-"));
-    const zones: Array<{ key: string; split: ZoneSplit; label: string; chapter?: { index: string; heading: string }; body: React.ReactNode[] }> = [
-      { key: "take", split: "wide", label: "The tax burden", body: [<Masthead key="take" name={name} iso2={iso2} hero={d.hero} />] },
+    const zones: Array<{ key: string; split: ZoneSplit; label: string; chapter?: { index: string; heading: string }; outside?: boolean; body: React.ReactNode[] }> = [
+      { key: "take", split: "wide", label: "The tax burden", outside: true, body: [<Masthead key="take" name={name} iso2={iso2} hero={d.hero} />] },
       /* THE HOT STUFF FIRST (his word of 2026-10-04): what changed for a small firm here and what is coming, sourced and dated,
          right under the answer, before the costs it changes. */
       ...(hasChanges && ruleChanges
-        ? [{ key: "changes", split: "1-1" as ZoneSplit, label: COPY.changes.kicker, body: [<RuleChangesComing key="coming" rows={ruleChanges.coming} />, <RuleChangesMade key="made" rows={ruleChanges.inForce} shown={levelShown(ruleChanges.inForce, ruleChanges.inForceLead, ruleChanges.coming.length)} />].filter((_, i) => (i === 0 ? ruleChanges.coming.length > 0 : ruleChanges.inForce.length > 0)) }]
+        ? [{ key: "changes", split: "1-1" as ZoneSplit, label: COPY.changes.kicker, outside: true, body: [<RuleChangesComing key="coming" rows={ruleChanges.coming} />, <RuleChangesMade key="made" rows={ruleChanges.inForce} shown={levelShown(ruleChanges.inForce, ruleChanges.inForceLead, ruleChanges.coming.length)} />].filter((_, i) => (i === 0 ? ruleChanges.coming.length > 0 : ruleChanges.inForce.length > 0)) }]
         : []),
       {
         key: "setup",
@@ -1694,8 +1719,12 @@ export function SpineCountryBody({ data }: { data?: any }) {
             },
           ]
         : []),
-      { key: "close", split: "wide", label: COPY.close.kicker, body: [<Close key="close" meta={d.meta} name={name} zone />] },
+      { key: "close", split: "wide", label: COPY.close.kicker, outside: true, body: [<Close key="close" meta={d.meta} name={name} zone />] },
     ];
+    /* THE LOCK (masterplan step 16; his ruling 18): told the page is locked, each chapter's first level stays open and every later
+       level of the chapter draws its cards locked; the answer, the changes and the close stand outside the chapters. Untold, the
+       page is exactly what it was. */
+    const lockedZones = locked ? lockedLevelKeys(zones.map((z) => ({ key: z.key, chapter: z.chapter?.index ?? null, outside: z.outside }))) : null;
     return (
       <>
         {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2: Material, iOS and the NHS hold 16; the site's column holds 24): the
@@ -1704,7 +1733,7 @@ export function SpineCountryBody({ data }: { data?: any }) {
         <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
           {zones.map((z, i) => (
             <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label} chapter={z.chapter}>
-              {z.body}
+              {lockedZones?.has(z.key) ? lockedBody(z.body, countryLocks) : z.body}
             </Zone>
           ))}
         </div>
