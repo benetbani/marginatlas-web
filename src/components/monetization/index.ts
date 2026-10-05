@@ -51,5 +51,6 @@ export {
   METHODOLOGY_HREF,
   PRIMARY_CTA,
   PRICING_HREF,
+  PRO_OPENS,
 } from "./paywall_copy";
 export type { TierSpec } from "./paywall_copy";

@@ -13,6 +13,7 @@
  */
 
 import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
+import { TIERS } from "./paywall_copy";
 
 export type TruncatedTeaseProps = {
   count: number;
@@ -32,7 +33,7 @@ export function TruncatedTease({
   ctaSuffix = "unlocks the full list",
 }: TruncatedTeaseProps) {
   if (count <= 0) return null;
-  const tierLabel = tier === "basic" ? "Basic" : "Premium";
+  const tierLabel = TIERS[tier].name;
 
   return (
     <button

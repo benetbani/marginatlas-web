@@ -18,7 +18,7 @@ src/app/
 ├── layout.tsx                       Root layout (header, footer, fonts)
 ├── globals.css                      Tailwind + design tokens
 ├── page.tsx                         Home (hero, stats, sample cells)
-├── pricing/page.tsx                 4-tier pricing (Free / $38 / $78 / $150+)
+├── pricing/page.tsx                 one plan, Pro (prices from src/lib/monetization/plan.ts)
 ├── methodology/page.tsx             Sources + tier definitions
 ├── sitemap.ts                       Auto-generated from cells_master_global
 └── [country]/[geo]/[industry]/

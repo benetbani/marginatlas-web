@@ -33,17 +33,17 @@ export function TakeHomeValue({
           country={country}
           geo={geo}
           industry={industry}
-          tier="basic"
-          ariaLabel="Owner take-home, unlock with Basic"
+          tier="pro"
+          ariaLabel="Owner take-home, in Pro"
         />
       );
     }
     // No resolvable slugs: never leak the figure, show the bare placeholder.
     return (
       <RedactedNumber
-        tier="basic"
+        tier="pro"
         entry="cell_owner_take_home"
-        ariaLabel="Owner take-home, unlock with Basic"
+        ariaLabel="Owner take-home, in Pro"
       />
     );
   }

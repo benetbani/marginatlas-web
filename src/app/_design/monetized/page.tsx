@@ -57,10 +57,9 @@ export default async function MonetizedPreview({
     notFound();
   }
 
-  const tiers: Array<{ tier: "free" | "basic" | "premium"; ids: GatedFieldId[] }> = [
+  const tiers: Array<{ tier: "free" | "pro"; ids: GatedFieldId[] }> = [
     { tier: "free", ids: [] },
-    { tier: "basic", ids: [] },
-    { tier: "premium", ids: [] },
+    { tier: "pro", ids: [] },
   ];
   (Object.keys(FREE_PAID_MAP) as GatedFieldId[]).forEach((id) => {
     const t = FREE_PAID_MAP[id].required;
@@ -88,11 +87,11 @@ export default async function MonetizedPreview({
             <div className="flex justify-between"><span>Profit kept</span><span className="font-semibold tabular-nums">12%</span></div>
             <div className="flex justify-between text-cocoa-700">
               <span>Inner quartiles (p25, p75) <KeyCue /></span>
-              <span><RedactedNumber tier="basic" entry="cell_distribution_p25_p75" ariaLabel="Inner quartiles, unlock with Basic" /></span>
+              <span><RedactedNumber tier="pro" entry="cell_distribution_p25_p75" ariaLabel="Inner quartiles, in Pro" /></span>
             </div>
             <div className="flex justify-between text-cocoa-700">
               <span>Full cost breakdown <KeyCue /></span>
-              <LockPill tier="basic" entry="cell_peers" ariaLabel="Full cost breakdown, unlock with Basic" />
+              <LockPill tier="pro" entry="cell_peers" ariaLabel="Full cost breakdown, in Pro" />
             </div>
           </div>
         </Panel>
@@ -110,7 +109,7 @@ export default async function MonetizedPreview({
       {/* Fog over a block */}
       <div className="mt-8 grid md:grid-cols-2 gap-5">
         <Panel title="Fog treatment (full cost stack, Basic)">
-          <BlurredOverlay tier="basic" entry="cell_peers" cta="See the full breakdown" headline="Where the money goes, line by line">
+          <BlurredOverlay tier="pro" entry="cell_peers" cta="See the full breakdown" headline="Where the money goes, line by line">
             <div className="space-y-2 text-sm">
               <div className="flex justify-between"><span>Materials</span><span className="tabular-nums">$143K</span></div>
               <div className="flex justify-between"><span>Labor</span><span className="tabular-nums">$96K</span></div>
@@ -126,9 +125,9 @@ export default async function MonetizedPreview({
           </p>
           <svg viewBox="0 0 300 90" className="w-full" role="img" aria-label="Distribution with ghosted inner quartiles">
             <rect x="20" y="50" width="24" height="30" fill={colors.atlas[300]} opacity="0.85" rx="2" />
-            <GhostBar x={80} y={35} width={24} height={45} tier="basic" entry="cell_distribution_p25_p75" ariaLabel="p25, unlock with Basic" />
+            <GhostBar x={80} y={35} width={24} height={45} tier="pro" entry="cell_distribution_p25_p75" ariaLabel="p25, in Pro" />
             <rect x="140" y="20" width="24" height="60" fill={colors.atlas[600]} rx="2" />
-            <GhostBar x={200} y={35} width={24} height={45} tier="basic" entry="cell_distribution_p25_p75" ariaLabel="p75, unlock with Basic" />
+            <GhostBar x={200} y={35} width={24} height={45} tier="pro" entry="cell_distribution_p25_p75" ariaLabel="p75, in Pro" />
             <rect x="260" y="55" width="24" height="25" fill={colors.atlas[300]} opacity="0.85" rx="2" />
             <text x="32" y="88" fontSize="8" textAnchor="middle" fill={colors.ink[700]}>p10</text>
             <text x="152" y="88" fontSize="8" textAnchor="middle" fill={colors.ink[700]}>p50</text>
@@ -139,7 +138,7 @@ export default async function MonetizedPreview({
 
       {/* Banner */}
       <div className="mt-8">
-        <MoreDepthBanner headline="Compare this cell against every state, ranked" entry="compare_side_by_side" tier="basic" />
+        <MoreDepthBanner headline="Compare this cell against every state, ranked" entry="compare_side_by_side" tier="pro" />
       </div>
 
       {/* The full plan */}

@@ -1,62 +1,51 @@
 "use client";
 /**
- * CheckoutButton — the pricing-page CTA that starts a Stripe Checkout (M2).
+ * CheckoutButton: the pricing page's button that starts a Pro checkout (milestone 2; masterplan step 12; ruling 20, checkout
+ * first).
  *
- * Posts { tier, interval } to /api/stripe/checkout and redirects to the returned
- * Checkout URL. The route is dormant until the founder sets STRIPE_SECRET_KEY +
- * the price IDs, so this button is only RENDERED (by PaidCard) once billing is
- * live; until then the pricing page keeps its newsletter CTA. Defensive fallbacks
- * keep it from ever dead-ending: a 401 sends the visitor to sign in, anything
- * else falls back to the newsletter anchor.
+ * Posts { interval } to /api/stripe/checkout and goes to the Checkout URL it returns. No account is needed, so no sign-in branch
+ * exists; any failure says so in one line under the button (no modal, ruling 22). The pricing page renders this only once billing
+ * is live; until then it shows its notify-me link.
  */
 import * as React from "react";
 
 export function CheckoutButton({
-  tier,
-  interval = "month",
+  interval,
   className,
   children,
 }: {
-  tier: "basic" | "premium";
-  interval?: "month" | "year";
+  interval: "month" | "year";
   className?: string;
   children: React.ReactNode;
 }) {
-  const [busy, setBusy] = React.useState(false);
+  const [state, setState] = React.useState<"idle" | "busy" | "failed">("idle");
 
   async function go() {
-    if (busy) return;
-    setBusy(true);
+    if (state === "busy") return;
+    setState("busy");
     try {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ tier, interval }),
+        body: JSON.stringify({ interval }),
       });
-      if (res.ok) {
-        const json = (await res.json()) as { url?: string };
-        if (json?.url) {
-          window.location.assign(json.url);
-          return;
-        }
-      } else if (res.status === 401) {
-        // Not signed in: send them to sign in, then back to pricing.
-        window.location.assign("/signin?next=/pricing");
+      const json = (await res.json().catch(() => ({}))) as { url?: string };
+      if (res.ok && json.url) {
+        window.location.assign(json.url);
         return;
       }
-      // 503 (billing not configured) / 500 / anything else: fall back to the
-      // newsletter signup so the CTA never dead-ends.
-      window.location.hash = "newsletter";
+      setState("failed");
     } catch {
-      window.location.hash = "newsletter";
-    } finally {
-      setBusy(false);
+      setState("failed");
     }
   }
 
   return (
-    <button type="button" onClick={go} disabled={busy} className={className}>
-      {children}
-    </button>
+    <>
+      <button type="button" onClick={go} disabled={state === "busy"} className={className}>
+        {children}
+      </button>
+      {state === "failed" ? <p className="mt-2 text-center text-[13px] text-clay-700">Checkout did not open. Try again.</p> : null}
+    </>
   );
 }

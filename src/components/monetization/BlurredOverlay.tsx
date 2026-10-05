@@ -25,6 +25,7 @@
 
 import { ReactNode } from "react";
 import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
+import { TIERS } from "./paywall_copy";
 
 export type BlurredOverlayProps = {
   tier: PaywallTier;
@@ -43,11 +44,9 @@ export function BlurredOverlay({
   headline,
   children,
 }: BlurredOverlayProps) {
-  const tierLabel = tier === "basic" ? "Basic" : "Premium";
-  const buttonClasses =
-    tier === "basic"
-      ? "bg-atlas-700 text-white hover:bg-atlas-800"
-      : "bg-ink-900 text-white hover:bg-ink-800";
+  /* One paid tier (masterplan step 12): the plan's own name, one colour. */
+  const tierLabel = TIERS[tier].name;
+  const buttonClasses = "bg-atlas-700 text-white hover:bg-atlas-800";
 
   return (
     <div className="relative" data-v34-lock="overlay" data-v34-tier={tier}>

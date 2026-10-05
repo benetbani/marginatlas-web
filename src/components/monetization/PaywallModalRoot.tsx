@@ -26,6 +26,7 @@
  * Part 6 Phase B + Part 3 microcopy + Part 4 tier matrix.
  */
 
+import { priceLine } from "@/lib/monetization/plan";
 import { useEffect, useState, useCallback } from "react";
 import {
   OPEN_PAYWALL_EVENT,
@@ -58,7 +59,7 @@ type ModalState = {
 const INITIAL: ModalState = {
   open: false,
   entry: "generic",
-  highlightedTier: "basic",
+  highlightedTier: "pro",
 };
 
 export function PaywallModalRoot() {
@@ -177,19 +178,9 @@ export function PaywallModalRoot() {
           </button>
         </div>
 
-        {/* Two-tier comparison. Basic on the left (recommended highlight),
-           Premium on the right. */}
-        <div className="px-6 mt-4 grid sm:grid-cols-2 gap-3">
-          <TierCard
-            tier="basic"
-            highlighted={state.highlightedTier === "basic"}
-            entry={state.entry}
-          />
-          <TierCard
-            tier="premium"
-            highlighted={state.highlightedTier === "premium"}
-            entry={state.entry}
-          />
+        {/* One plan since masterplan step 12; this modal leaves the site in step 13 (his ruling 22: no pop-up). */}
+        <div className="px-6 mt-4 grid gap-3">
+          <TierCard tier="pro" highlighted entry={state.entry} />
         </div>
 
         {/* Trust signals — EXACTLY TWO. Methodology + cancel-anytime block.
@@ -237,10 +228,7 @@ function TierCard({
       ? "bg-atlas-50 border-atlas-300"
       : "bg-white border-paper-350",
   ].join(" ");
-  const buttonClasses =
-    tier === "basic"
-      ? "bg-atlas-700 text-white hover:bg-atlas-800"
-      : "bg-ink-900 text-white hover:bg-ink-800";
+  const buttonClasses = "bg-atlas-700 text-white hover:bg-atlas-800";
 
   return (
     <div className={wrapperClasses} data-v34-tier-card={tier}>
@@ -248,18 +236,12 @@ function TierCard({
         <div className="font-display text-lg font-semibold text-ink-900">
           {spec.name}
         </div>
-        <div className="tabular-nums text-sm text-ink-700">
-          <span className="font-semibold text-ink-900">${spec.priceMonthly}</span>
-          /mo
-        </div>
+        <div className="tabular-nums text-sm text-ink-700">{priceLine("month")}</div>
       </div>
       <p className="mt-2 text-sm text-ink-800 leading-relaxed">
         {spec.description}
       </p>
-      <p className="mt-2 text-xs text-ink-700 tabular-nums">
-        or ${spec.priceAnnualPerMonth}/mo billed annually as $
-        {spec.priceAnnualTotal}
-      </p>
+      <p className="mt-2 text-xs text-ink-700 tabular-nums">or {priceLine("year")}</p>
       <a
         href={PRICING_HREF}
         onClick={() => trackPaywallCta(entry, tier)}

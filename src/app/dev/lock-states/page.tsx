@@ -54,12 +54,12 @@ export default async function LockStatesPage({
         </h2>
         <div className="flex gap-3 items-center">
           <LockPill
-            tier="basic"
+            tier="pro"
             entry="cell_distribution_p25_p75"
             ariaLabel="Lower-mid quartile, click to unlock with Basic"
           />
           <LockPill
-            tier="premium"
+            tier="pro"
             entry="export_csv"
             ariaLabel="Export to CSV, click to unlock with Premium"
           />
@@ -72,7 +72,7 @@ export default async function LockStatesPage({
           BlurredOverlay
         </h2>
         <BlurredOverlay
-          tier="basic"
+          tier="pro"
           entry="cell_distribution_p25_p75"
           cta="See the full distribution with Basic"
           headline="The middle quartiles"
@@ -97,7 +97,7 @@ export default async function LockStatesPage({
         <TruncatedTease
           count={87}
           unit="cities"
-          tier="basic"
+          tier="pro"
           entry="industry_truncated_regions"
         />
       </section>
@@ -110,13 +110,13 @@ export default async function LockStatesPage({
         <p className="text-ink-800">
           The lower-mid quartile sits at{" "}
           <RedactedNumber
-            tier="basic"
+            tier="pro"
             entry="cell_distribution_p25_p75"
             ariaLabel="Lower-mid quartile revenue, click to unlock with Basic"
           />{" "}
           and the upper-mid at{" "}
           <RedactedNumber
-            tier="basic"
+            tier="pro"
             entry="cell_distribution_p25_p75"
             ariaLabel="Upper-mid quartile revenue, click to unlock with Basic"
           />
@@ -145,7 +145,7 @@ export default async function LockStatesPage({
             y={60}
             width={60}
             height={60}
-            tier="basic"
+            tier="pro"
             entry="cell_distribution_p25_p75"
             ariaLabel="Lower-mid quartile, click to unlock with Basic"
           />
@@ -154,7 +154,7 @@ export default async function LockStatesPage({
             y={50}
             width={60}
             height={70}
-            tier="basic"
+            tier="pro"
             entry="cell_distribution_p25_p75"
             ariaLabel="Upper-mid quartile, click to unlock with Basic"
           />

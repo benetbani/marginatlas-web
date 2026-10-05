@@ -1019,6 +1019,28 @@
       "claims": []
     },
     {
+      "name": "one-price",
+      "script": "tests/monetization/one_price.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "ONE PRICE, WRITTEN ONCE (milestone 2; masterplan step 12; his interview of 2026-09-26, ruling 14: one plan, Pro, $38 a month or $238 a year).",
+      "reads": [
+        "src/app/(site)/account/",
+        "src/app/(site)/pricing/",
+        "src/app/_design",
+        "src/app/dev",
+        "src/components/account/",
+        "src/components/billing/",
+        "src/components/home/UpgradeTeaser.tsx",
+        "src/components/monetization/",
+        "src/lib/monetization/",
+        "src/lib/monetization/plan.ts",
+        "src/lib/pricing/",
+        "tests/monetization/one_price.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],

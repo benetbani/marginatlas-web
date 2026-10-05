@@ -240,11 +240,15 @@ function readIfExists(rel: string): string | null {
 {
   const pricingPage = readIfExists("app/(site)/pricing/page.tsx");
   const paywallCopy = readIfExists("components/monetization/paywall_copy.ts");
+  /* ONE PLAN, ITS PRICE WRITTEN ONCE (masterplan step 12; his ruling 14, and the one-price gate, which exists because a price
+     typed twice is a price that will disagree): the page prints the yearly total through priceLine("year") from
+     src/lib/monetization/plan.ts, and paywall_copy.ts takes priceAnnualTotal from PRO.yearlyUsd rather than a typed digit. The
+     rule's point stands: the annual total is shown, beside "billed annually". */
   const refersToAnnualTotal =
-    !!pricingPage && pricingPage.includes("priceAnnualTotal");
+    !!pricingPage && (pricingPage.includes("priceAnnualTotal") || pricingPage.includes('priceLine("year")'));
   const mentionsBilledAnnually =
     !!pricingPage && /billed annually/i.test(pricingPage);
-  const hasTier = !!paywallCopy && /priceAnnualTotal:\s*\d+/.test(paywallCopy);
+  const hasTier = !!paywallCopy && /priceAnnualTotal:\s*(?:\d+|PRO\.yearlyUsd)/.test(paywallCopy);
   if (!refersToAnnualTotal || !mentionsBilledAnnually || !hasTier) {
     record(
       "annual_framing_shows_total",

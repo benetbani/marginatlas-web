@@ -1,8 +1,8 @@
 /**
  * PricingFAQ — client island for the /pricing accordion.
  *
- * v34-locked. No trial copy, no money-back, no Pro/Team names, no
- * educational-discount promise (deferred per Part 4.5).
+ * v34-locked. No trial copy, no money-back, no educational-discount
+ * promise (deferred per Part 4.5). One plan, Pro, since masterplan step 12.
  *
  * Reference: docs/strategy/2026-05-25-monetization-mega-plan-v34.md
  * Part 3 (microcopy lexicon) + Part 4 (tier matrix) + Part 8
@@ -12,32 +12,34 @@
 "use client";
 
 import { useState } from "react";
+import { isPaywallOn } from "@/lib/feature_flags";
 import { Plus } from "@phosphor-icons/react/dist/ssr";
 
+/* ONE PLAN'S QUESTIONS (masterplan step 12; his rulings 14, 17, 20, 33, 34). The saved-cell caps and the June tiers went with
+   Basic and Premium; the currency answer follows ruling 33 (dollars everywhere): Stripe charges dollars and a card in another
+   currency is converted by the bank. The free answer follows the paywall's switch, so it says today what is true today. */
 const ITEMS: Array<{ q: string; a: string }> = [
   {
     q: "Can I cancel any time?",
-    a: "Yes. Open your billing page and click Cancel. Your paid features stay active through the end of the current billing cycle. We never auto-renew you onto a longer plan.",
+    a: "Yes. Open your account and choose Manage or cancel. Pro stays open to the end of the period you paid for.",
   },
   {
-    q: "What happens to my saved cells if I downgrade or cancel?",
-    a: "Saved cells stay attached to your account. If you cancel, you can still see the list, you just lose the ability to add new ones past the Free limit until you resubscribe.",
+    q: "What does Pro open?",
+    a: "The second half of every chapter on the UK's pages, and four sections of its own.",
   },
   {
     q: "Why no free trial?", // allow-v34-trial
-    a: "Trials usually mean 'put your card in now and we will charge you in 14 days unless you remember to cancel'. We do not do that. Free is genuinely free, with the median, p10, and p90 visible on every cell. If that is enough, you never need to pay.",
+    a: isPaywallOn()
+      ? "The first half of every UK chapter is free to read, so you can judge the work before you pay."
+      : "Every benchmark is free to read today, so you can judge the work before Pro opens.",
   },
   {
-    q: "What counts as a saved cell?",
-    a: "Any (country, region, industry) page you star. The 25-cell Basic cap is generous on purpose; if you hit it, we hear about it. Premium is uncapped.",
-  },
-  {
-    q: "Can I pay in EUR, GBP, or another currency?",
-    a: "Yes. Atlas bills via Stripe in your local currency where Stripe supports it, at the prevailing wholesale rate, with no surcharge from us.",
+    q: "Which currency do I pay in?",
+    a: "Pro is priced and charged in US dollars. A card in another currency is converted by your bank.",
   },
   {
     q: "Where do the methodology answers live?",
-    a: "Every cell links to its sources, sample size, and coverage tier on the About-the-data page. The same page describes how we standardize across countries.",
+    a: "Every figure is one of four kinds, set out with its sources on the About the figures page.",
   },
 ];
 

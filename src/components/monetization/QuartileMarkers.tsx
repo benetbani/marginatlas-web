@@ -100,9 +100,9 @@ export function QuartileMarkers({ p10, p25, p50, p75, p90 }: Props) {
             <div className="mt-1 font-display text-lg md:text-xl text-ink-900 tabular-nums leading-tight">
               {m.gated ? (
                 <RedactedNumber
-                  tier="basic"
+                  tier="pro"
                   entry="cell_distribution_p25_p75"
-                  ariaLabel={`${m.label} revenue, click to unlock with Basic`}
+                  ariaLabel={`${m.label} revenue, in Pro`}
                 />
               ) : (
                 fmtMoney(m.unlockedValue)

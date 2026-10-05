@@ -33,7 +33,8 @@ export type PaywallEntryPoint =
   | "sector_deep_comparison"
   | "generic";
 
-export type PaywallTier = "basic" | "premium";
+/** One paid tier since masterplan step 12 (his ruling 14: one plan, Pro). */
+export type PaywallTier = "pro";
 
 export type OpenPaywallDetail = {
   entry: PaywallEntryPoint;

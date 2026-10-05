@@ -5,6 +5,7 @@
 
 "use client";
 
+import { priceLine } from "@/lib/monetization/plan";
 import { useState } from "react";
 import Link from "next/link";
 import {
@@ -333,7 +334,7 @@ function Billing({ account }: { account: Account }) {
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="atlas-card-soft p-5">
           <p className="text-[11px] uppercase tracking-[0.16em] font-semibold text-cocoa-700/70">Current plan</p>
-          <p className="font-display mt-1 text-xl font-semibold text-ink-900">Pro · $19/mo</p>
+          <p className="font-display mt-1 text-xl font-semibold text-ink-900">Pro · {priceLine("month")}</p>
           <p className="text-sm mt-1 text-cocoa-700">
             {account.renewsOn ? `Renews ${account.renewsOn}.` : "Renews monthly."} Cancel anytime.
           </p>

@@ -12,6 +12,7 @@
  * promise about your business. That is a stronger position than a blanket
  * disclaimer, and it is what the product actually does.
  */
+import { isPaywallOn } from "@/lib/feature_flags";
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 
 export const revalidate = 86400;
@@ -95,10 +96,11 @@ export default function TermsPage() {
 
       <LegalSection heading="Paying">
         <p>
-          Paid plans are billed through Stripe on the terms shown on the pricing
-          page at the time you subscribe. You can cancel whenever you like and it
-          takes effect at the end of the period you have paid for. Everything
-          that is free today stays free.
+          Pro is billed through Stripe on the terms shown on the pricing page at
+          the time you subscribe. You can cancel whenever you like and it takes
+          effect at the end of the period you have paid for.{" "}
+          {/* Ruling 17 from launch day (the paywall's switch, masterplan step 12); today's promise is true until then. */}
+          {isPaywallOn() ? "Each UK chapter opens free. Pro opens the rest." : "Everything that is free today stays free."}
         </p>
       </LegalSection>
 

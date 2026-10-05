@@ -42,7 +42,7 @@ import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { PhoneLockup } from "@/components/brand/PhoneLockup";
 import { MobileNav } from "@/components/MobileNav";
 import { WatchTray } from "@/components/kit";
-import { isWarmFrameEnabled } from "@/lib/feature_flags";
+import { isWarmFrameEnabled, isPaywallOn } from "@/lib/feature_flags";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   // Warm frame (R6 Phase B): the glass chrome class on the sticky header swaps
@@ -282,7 +282,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             </div>
             <div className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs text-white/70">
               <span>© Tesseract Research · marginatlas.com</span>
-              <span>Covering small businesses worldwide · free to browse</span>
+              {/* Ruling 17 from launch day (the paywall's switch, masterplan step 12). */}
+              <span>Covering small businesses worldwide · {isPaywallOn() ? "each UK chapter opens free" : "free to browse"}</span>
             </div>
           </div>
         </footer>

@@ -19,8 +19,8 @@ export function GatedTakeHome({
   country,
   geo,
   industry,
-  tier = "basic",
-  ariaLabel = "Owner take-home, unlock with Basic",
+  tier = "pro",
+  ariaLabel = "Owner take-home, in Pro",
 }: {
   country: string;
   geo: string;

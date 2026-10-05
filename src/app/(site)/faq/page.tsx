@@ -32,6 +32,7 @@
  * links below are written that way, inside the answer nodes, so the gate does
  * see them. Keep them literal; do not lift them into a lookup table.
  */
+import { isPaywallOn } from "@/lib/feature_flags";
 import * as React from "react";
 
 import { FAQSchema } from "@/components/FAQSchema";
@@ -253,27 +254,38 @@ const FAQS: Faq[] = [
   },
   {
     question: "Is it free, and will it stay free?",
-    answer: [
-      <>
-        Free to read, all of it, with no account and no card. The typical figure
-        for a trade in a place, and the spread from the bottom tenth to the top
-        tenth around it, are there for everybody wherever we hold them.
-      </>,
-      <>
-        There are paid plans. What each one adds, and what it costs, is set out
-        on the{" "}
-        <a href="/pricing" className={linkClass}>
-          pricing page
-        </a>
-        .
-      </>,
-      <>
-        On whether it stays free: the free layer is the argument for this site
-        existing, so we are not going to take a figure you can read today and
-        put it behind a wall. That is a commitment about the reading. It is not
-        a promise that nothing about the site will ever change.
-      </>,
-    ],
+    /* Ruling 17 from launch day (the paywall's switch, masterplan step 12): each UK chapter opens free and Pro opens the rest.
+       Today's answer is true until then. The FAQPage data below is read from these same nodes, so search reads what the page
+       says on the day. */
+    answer: isPaywallOn()
+      ? [
+          <>
+            Each UK chapter opens free. Pro opens the rest. Outside the United
+            Kingdom every figure is free to read, with no account and no card.
+          </>,
+          <>
+            What Pro costs and opens is set out on the{" "}
+            <a href="/pricing" className={linkClass}>
+              pricing page
+            </a>
+            .
+          </>,
+        ]
+      : [
+          <>
+            Free to read, all of it, with no account and no card. The typical figure
+            for a trade in a place, and the spread from the bottom tenth to the top
+            tenth around it, are there for everybody wherever we hold them.
+          </>,
+          <>
+            A paid plan, Pro, is coming. What it opens, and what it costs, is set out
+            on the{" "}
+            <a href="/pricing" className={linkClass}>
+              pricing page
+            </a>
+            .
+          </>,
+        ],
   },
 ];
 

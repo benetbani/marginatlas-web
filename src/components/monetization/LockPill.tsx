@@ -17,10 +17,11 @@
  *    Premium = ink-900/8 / ink-900.
  *
  * Microcopy: from docs/strategy/2026-05-25-monetization-mega-plan-v34.md
- * Part 3.1: exactly "Basic" or "Premium". Nothing else.
+ * Part 3.1: exactly the plan's name, "Pro" (one paid tier since masterplan step 12). Nothing else.
  */
 
 import { openPaywall, PaywallEntryPoint, PaywallTier } from "./events";
+import { TIERS } from "./paywall_copy";
 
 export type LockPillProps = {
   tier: PaywallTier;
@@ -31,11 +32,9 @@ export type LockPillProps = {
 };
 
 export function LockPill({ tier, entry, ariaLabel }: LockPillProps) {
-  const label = tier === "basic" ? "Basic" : "Premium";
-  const classes =
-    tier === "basic"
-      ? "bg-atlas-700/10 text-atlas-800 hover:bg-atlas-700/15"
-      : "bg-ink-900/8 text-ink-900 hover:bg-ink-900/12";
+  /* One paid tier (masterplan step 12): the plan's own name, one colour. */
+  const label = TIERS[tier].name;
+  const classes = "bg-atlas-700/10 text-atlas-800 hover:bg-atlas-700/15";
 
   return (
     <button

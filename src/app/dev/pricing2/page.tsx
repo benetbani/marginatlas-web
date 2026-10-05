@@ -54,7 +54,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-const COLS = ["Free", TIERS.basic.name, TIERS.premium.name] as const;
+const COLS = ["Free", TIERS.pro.name, TIERS.pro.name] as const;
 
 /**
  * A cell in the matrix. A dash, not an empty box: absence is stated.
@@ -165,18 +165,11 @@ export default function PricingProposal() {
           >
             {price("Free", null, null, null, FREE_DESCRIPTION)}
             {price(
-              TIERS.basic.name,
-              TIERS.basic.priceMonthly,
-              TIERS.basic.priceAnnualPerMonth,
-              TIERS.basic.priceAnnualTotal,
-              TIERS.basic.description,
-            )}
-            {price(
-              TIERS.premium.name,
-              TIERS.premium.priceMonthly,
-              TIERS.premium.priceAnnualPerMonth,
-              TIERS.premium.priceAnnualTotal,
-              TIERS.premium.description,
+              TIERS.pro.name,
+              TIERS.pro.priceMonthly,
+              Math.round(TIERS.pro.priceAnnualTotal / 12),
+              TIERS.pro.priceAnnualTotal,
+              TIERS.pro.description,
             )}
           </div>
         </section>

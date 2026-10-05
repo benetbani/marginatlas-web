@@ -22,6 +22,7 @@
 
 import { LockPill } from "./LockPill";
 import type { PaywallEntryPoint, PaywallTier } from "./events";
+import { TIERS } from "./paywall_copy";
 
 export type MoreDepthBannerProps = {
   headline: string;
@@ -31,7 +32,7 @@ export type MoreDepthBannerProps = {
 
 export function MoreDepthBanner({
   headline,
-  tier = "basic",
+  tier = "pro",
   entry,
 }: MoreDepthBannerProps) {
   return (
@@ -43,7 +44,7 @@ export function MoreDepthBanner({
       <LockPill
         tier={tier}
         entry={entry}
-        ariaLabel={`${headline}. Click to learn what ${tier === "basic" ? "Basic" : "Premium"} unlocks.`}
+        ariaLabel={`${headline}. Click to learn what ${TIERS[tier].name} opens.`}
       />
     </div>
   );

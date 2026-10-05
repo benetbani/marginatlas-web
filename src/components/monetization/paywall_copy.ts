@@ -14,6 +14,7 @@
  */
 
 import type { PaywallEntryPoint, PaywallTier } from "./events";
+import { PRO, priceLine } from "@/lib/monetization/plan";
 
 /** Headline shown at the top of the modal. Names the JOB the user
  * is trying to do (not the tier). Per Part 3.3. */
@@ -39,42 +40,36 @@ export const MODAL_HEADLINES: Record<PaywallEntryPoint, string> = {
   generic: "Unlock more depth",
 };
 
-/** Tier metadata. The same object is read by the modal AND the
- * pricing page so the two surfaces never drift. */
+/** THE ONE PLAN (masterplan step 12; his interview of 2026-09-26, ruling 14: one plan, Pro, $38 a month or $238 a year). Every
+ * figure here is read from src/lib/monetization/plan.ts, never typed, so a price printed anywhere is the plan's own (gate
+ * one-price). The June Basic and Premium tiers, and their $37, $77, $372 and $768, are gone. */
 export type TierSpec = {
   id: PaywallTier;
-  name: "Basic" | "Premium";
+  name: typeof PRO.name;
   priceMonthly: number; // USD
-  priceAnnualPerMonth: number; // USD, the annual plan expressed monthly
   priceAnnualTotal: number; // USD, the actual yearly charge
-  description: string; // single paragraph, Part 3.4
+  description: string; // one plain sentence
 };
 
-/** Verbatim from v34 Part 4.1 + Part 3.4. */
 export const TIERS: Record<PaywallTier, TierSpec> = {
-  basic: {
-    id: "basic",
-    name: "Basic",
-    priceMonthly: 37,
-    priceAnnualPerMonth: 31,
-    priceAnnualTotal: 372,
-    description:
-      "Margin Atlas Basic unlocks p25 and p75 across every cell, " +
-      "year-over-year changes, source citations on each cost line, " +
-      "and saved cells (up to 25). $37/mo. Cancel any time.",
-  },
-  premium: {
-    id: "premium",
-    name: "Premium",
-    priceMonthly: 77,
-    priceAnnualPerMonth: 64,
-    priceAnnualTotal: 768,
-    description:
-      "Margin Atlas Premium adds side-by-side comparison, CSV export, " +
-      "email alerts on cell updates, confidence bands, and seasonality. " +
-      "$77/mo. Cancel any time.",
+  pro: {
+    id: "pro",
+    name: PRO.name,
+    priceMonthly: PRO.monthlyUsd,
+    priceAnnualTotal: PRO.yearlyUsd,
+    description: `Pro opens the rest of every UK chapter, ${priceLine("month")} or ${priceLine("year")}.`,
   },
 };
+
+/** WHAT PRO OPENS (ruling 13, Pro sells depth; ruling 18, half of every UK chapter): the list the pricing page and the home
+ * teaser print, one source. The four sections take their own titles as steps 22 to 29 build them. */
+export const PRO_OPENS: readonly string[] = [
+  "the second half of every chapter on UK pages",
+  "the lease, by law",
+  "one hire, all in",
+  "what failing costs",
+  "opening from abroad",
+];
 
 /** Cancel-anytime block. Verbatim from Numbeo (teardown §G). Part 3.6. */
 export const CANCEL_ANYTIME_BLOCK =
@@ -90,8 +85,7 @@ export const DISMISS_LABEL = "Not now";
 
 /** Primary CTA label. Per Part 3.2. */
 export const PRIMARY_CTA: Record<PaywallTier, string> = {
-  basic: "Continue with Basic",
-  premium: "Continue with Premium",
+  pro: "Continue with Pro",
 };
 
 /** Where the primary CTA navigates before Phase D wires Stripe. */
