@@ -1926,6 +1926,19 @@
       "claims": []
     },
     {
+      "name": "if-it-fails",
+      "script": "tests/spine/if_it_fails.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHAT FAILING COSTS (milestone 2, masterplan step 28; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 76): the builder against the law it reads (data/uk/law/if_it_fails.json, from the research of 2",
+      "reads": [
+        "data/sections/rules.json",
+        "data/uk/law/if_it_fails.json",
+        "src/lib/spine/sections/if_it_fails.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-law-loan",
       "script": "tests/uk/law/loan.test.ts",
       "args": [],

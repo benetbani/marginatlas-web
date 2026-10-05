@@ -618,6 +618,9 @@ const GATES: Gate[] = [
   /* Opening from abroad: the walls in the research's order, each stated and sourced, the money its own example's sum, no score
      (masterplan step 26; his ruling 28; DATA-REQUIREMENTS item 74). */
   { name: "from-abroad", script: "tests/spine/from_abroad.test.ts" },
+  /* What failing costs: the discharge, the home, a liquidation's fees and time, the owner's liabilities, each sourced, the
+     research's five examples reproduced, nothing the paperwork card prints (masterplan step 28; his ruling 28; item 76). */
+  { name: "if-it-fails", script: "tests/spine/if_it_fails.test.ts" },
   { name: "uk-law-loan", script: "tests/uk/law/loan.test.ts" },
   /* A placeholder is not a figure (2026-09-23 night): two new builders read one
      each as "modelled" the same evening (London's calendar, printed on

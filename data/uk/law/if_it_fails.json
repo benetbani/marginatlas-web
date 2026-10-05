@@ -1,0 +1,139 @@
+{
+  "what": "What failing costs the owner in England and Wales (masterplan step 28; DATA-REQUIREMENTS item 76), read from the research E:/atlas/design/loop/build/research/2026-10-02-pro-sections-uk-law.md, section 76 (2 October 2026): each field its value, the page it was read on, the sentence quoted (separate sentences joined by a semicolon) and the day. The liquidation sample's year and its median time were read on the report's page on 5 October 2026, the research giving them without a quote. No ease score: item 76's seed index is coined and goes. The solvent close (the strike-off and a solvent liquidation) is held for the research's example A and never printed by this section: /gb's paperwork card prints the strike-off.",
+  "jurisdiction": "England and Wales",
+  "checked": "2026-10-02",
+  "fields": {
+    "sole_trader_liability": {
+      "value": "unlimited",
+      "source_url": "https://www.gov.uk/set-up-business",
+      "quote": "You are personally responsible for all of the debts of the business. This is called ‘unlimited liability’.",
+      "checked": "2026-10-02"
+    },
+    "discharge_months": {
+      "value": 12,
+      "source_url": "https://www.gov.uk/government/publications/guide-to-bankruptcy/guide-to-bankruptcy",
+      "quote": "You will be freed from bankruptcy (discharged) after 12 months.",
+      "checked": "2026-10-02"
+    },
+    "bankruptcy_fee_gbp": {
+      "value": 680,
+      "source_url": "https://www.gov.uk/apply-for-bankruptcy",
+      "quote": "You can only apply for bankruptcy online. It costs £680.",
+      "checked": "2026-10-02"
+    },
+    "home_protected": {
+      "value": { "protected": "no", "years": 3 },
+      "source_url": "https://www.gov.uk/government/publications/guide-to-bankruptcy/guide-to-bankruptcy",
+      "quote": "There’s a 3 year time limit for selling the family home from the date of the bankruptcy order.",
+      "checked": "2026-10-02"
+    },
+    "credit_file_years": {
+      "value": 6,
+      "source_url": "https://www.gov.uk/government/publications/guide-to-bankruptcy/guide-to-bankruptcy",
+      "quote": "Your bankruptcy will stay on your credit file for 6 years after the bankruptcy order is made.",
+      "checked": "2026-10-02"
+    },
+    "debt_relief_order": {
+      "value": { "debts_under_gbp": 50000, "assets_under_gbp": 2000, "vehicle_under_gbp": 4000, "spare_income_under_gbp_month": 75, "fee_gbp": 0 },
+      "source_url": "https://www.gov.uk/guidance/how-to-get-a-debt-relief-order-dro",
+      "quote": "owe less than £50,000 in total; have savings or valuable items worth less than £2,000 in total; own a vehicle worth less than £4,000; do not have much spare income - usually less than £75 per month; You do not need to pay for a DRO – there’s no application fee.",
+      "checked": "2026-10-02"
+    },
+    "individual_voluntary_arrangement": {
+      "value": { "creditors_pct": 75, "years": [5, 6] },
+      "source_url": "https://www.gov.uk/options-for-dealing-with-your-debts/individual-voluntary-arrangements",
+      "quote": "The IVA will start if the creditors holding 75% of your debts agree to it.; You’ll make regular payments over 5 or 6 years",
+      "checked": "2026-10-02"
+    },
+    "director_liability": {
+      "value": "not normally",
+      "source_url": "https://www.gov.uk/guidance/director-information-hub-director-duties-upon-insolvency",
+      "quote": "Directors are not normally personally responsible for company debts. But if the director has been responsible for the company being mismanaged, there are situations where they can become personally liable.",
+      "checked": "2026-10-02"
+    },
+    "wrongful_trading": {
+      "value": { "applies": true, "capped": false },
+      "source_url": "https://www.legislation.gov.uk/ukpga/1986/45/section/214",
+      "quote": "such contribution (if any) to the company’s assets as the court thinks proper; knew or ought to have concluded that there was no reasonable prospect that the company would avoid going into insolvent liquidation",
+      "checked": "2026-10-02"
+    },
+    "disqualification_years_max": {
+      "value": 15,
+      "source_url": "https://www.legislation.gov.uk/ukpga/1986/46/section/6",
+      "quote": "the minimum period of disqualification is 2 years, and the maximum period is 15 years.",
+      "checked": "2026-10-02"
+    },
+    "disqualification_years_min": {
+      "value": 2,
+      "source_url": "https://www.legislation.gov.uk/ukpga/1986/46/section/6",
+      "quote": "the minimum period of disqualification is 2 years, and the maximum period is 15 years.",
+      "checked": "2026-10-02"
+    },
+    "name_reuse_years": {
+      "value": 5,
+      "source_url": "https://www.legislation.gov.uk/ukpga/1986/45/section/216",
+      "quote": "Except with leave of the court ... a person to whom this section applies shall not at any time in the period of 5 years beginning with the day on which the liquidating company went into liquidation",
+      "checked": "2026-10-02"
+    },
+    "liquidation_cost_local": {
+      "value": { "median_fees_gbp": 12937, "median_assets_gbp": 5798, "creditors_paid_nothing_pct": 86 },
+      "source_url": "https://www.gov.uk/government/publications/creditors-voluntary-liquidation-cvl-research-report-for-the-insolvency-service/cvl-research-report-for-the-insolvency-service",
+      "quote": "The median total fees figure for the 2,601 cases was £12,937.; The median value of assets realised is £5,798.; In 86% of cases no payments were made to creditors.",
+      "checked": "2026-10-02"
+    },
+    "liquidation_sample": {
+      "value": { "cases": 2717, "started": 2017 },
+      "source_url": "https://www.gov.uk/government/publications/creditors-voluntary-liquidation-cvl-research-report-for-the-insolvency-service/cvl-research-report-for-the-insolvency-service",
+      "quote": "Analysis has been performed in relation to a randomly sampled dataset of 2,717 completed CVLs which started in 2017.",
+      "checked": "2026-10-05"
+    },
+    "liquidation_months": {
+      "value": { "median_days": 712 },
+      "source_url": "https://www.gov.uk/government/publications/creditors-voluntary-liquidation-cvl-research-report-for-the-insolvency-service/cvl-research-report-for-the-insolvency-service",
+      "quote": "The median length of time it took to complete a CVL was 712 days (or just under 2 years).",
+      "checked": "2026-10-05"
+    },
+    "petition_court_fee_gbp": {
+      "value": 352,
+      "source_url": "https://www.gov.uk/government/publications/fees-in-the-civil-and-family-courts-main-fees-ex50/civil-court-fees-ex50",
+      "quote": "Entering a winding-up petition (companies only) / £352",
+      "checked": "2026-10-02"
+    },
+    "petition_deposit_gbp": {
+      "value": 2600,
+      "source_url": "https://www.legislation.gov.uk/uksi/2016/692/article/2",
+      "quote": "on the presentation of a winding up petition, other than a petition presented under section 124A(2) of the Act, the sum of £2,600",
+      "checked": "2026-10-02"
+    },
+    "official_receiver_fees_gbp": {
+      "value": { "administration": 6000, "general": 7200 },
+      "source_url": "https://www.legislation.gov.uk/uksi/2016/692/schedule/1",
+      "quote": "Winding up by the court other than a winding up on a petition presented under section 124A – official receiver’s administration fee ... £6,000; Official receiver’s general fee ... £7,200",
+      "checked": "2026-10-02"
+    },
+    "guarantee_survives": {
+      "value": true,
+      "source_url": "https://www.legislation.gov.uk/ukpga/1986/45/section/178",
+      "quote": "does not, except so far as is necessary for the purpose of releasing the company from any liability, affect the rights or liabilities of any other person.",
+      "checked": "2026-10-02"
+    },
+    "directors_loan_charge_pct": {
+      "value": { "from_2026": 35.75, "from_2022": 33.75 },
+      "source_url": "https://www.gov.uk/hmrc-internal-manuals/company-taxation-manual/ctm61505",
+      "quote": "For loans made on or after 6 April 2022, the rate was 33.75 per cent and from 6 April 2026 35.75 per cent.",
+      "checked": "2026-10-02"
+    },
+    "strike_off_fee_gbp": {
+      "value": { "online": 13, "paper": 18 },
+      "source_url": "https://www.gov.uk/government/publications/strike-off-a-company-from-the-register-ds01",
+      "quote": "It costs £13 to apply online.; A paper application costs £18",
+      "checked": "2026-10-02"
+    },
+    "solvent_liquidation": {
+      "value": { "remuneration_median_gbp": 2750, "pre_appointment_median_gbp": 1500, "cost_pct_of_assets": 1.8 },
+      "source_url": "https://www.gov.uk/government/publications/members-voluntary-liquidations-a-statistical-review-of-mvl-practice-and-outcomes/members-voluntary-liquidations-a-statistical-review-of-mvl-practice-and-outcomes-research-report-march-2026",
+      "quote": "median IP remuneration paid is £2,750, with an interquartile range of £2,000 to £4,000. Median pre-appointment fee paid are £1,500 with an interquartile range of £995 to £2,500.; The median cost of an MVL is 1.8% of assets realised.",
+      "checked": "2026-10-02"
+    }
+  }
+}
