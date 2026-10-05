@@ -31,7 +31,7 @@ if (lease) {
   const fields = LEASE_LAW.fields as Record<string, { source_url?: string }>;
   check("every row names the law field it reads, and every field carries an https source", lease.rows.length >= 6 && lease.rows.every((r) => { const key = String(r.prov?.src ?? "").split(":")[1]; return !!key && /^https:\/\//.test(fields[key]?.source_url ?? ""); }));
   check("every label is three words at most", lease.rows.every((r) => String(r.label).split(/\s+/).length <= 3));
-  check("every note is one line of twelve words at most, with no semicolon or em dash", lease.rows.every((r) => !r.note || (r.note.split(/\s+/).length <= 12 && !/[;—]/.test(r.note))));
+  check("every note is one line of twelve words at most, with no semicolon or em dash", lease.rows.every((r) => !r.note || (r.note.split(/\s+/).length <= 12 && !/[;\u2014]/.test(r.note))));
 }
 
 // The research's worked example (73.6): 25,000 a year, 10 years, SDLT 579.15; 5 years, none.

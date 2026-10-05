@@ -109,7 +109,7 @@ for (const p of PAGES) {
       const text = (para.textContent ?? "").trim();
       const words = text.split(/\s+/).filter(Boolean).length;
       if (words > 12) fault(p, `${id}: its line runs ${words} words ("${text}"), twelve at most`);
-      if (/[;—]/.test(text)) fault(p, `${id}: its line holds a semicolon or an em dash ("${text}")`);
+      if (/[;\u2014]/.test(text)) fault(p, `${id}: its line holds a semicolon or an em dash ("${text}")`);
       const struck = STRUCK.find((re) => re.test(text));
       if (struck) fault(p, `${id}: its line holds a struck method word ("${text}")`);
     }
