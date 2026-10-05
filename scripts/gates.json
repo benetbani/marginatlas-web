@@ -1067,6 +1067,18 @@
       "claims": []
     },
     {
+      "name": "locked-data",
+      "script": "tests/monetization/locked_data.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE LOCKED PARTS, SAID TO SEARCH ENGINES (milestone 2, masterplan step 19; his interview of 2026-09-26, \"contradictions reconciled\": the closed half carries isAccessibleForFree false, so it is not rea",
+      "reads": [
+        "src/components/spine/LockedSection.tsx",
+        "src/components/spine/ProLockedData.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],

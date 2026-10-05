@@ -11,6 +11,7 @@
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/StructuredData";
 import { SpineShell } from "@/components/spine/shell";
+import { ProLockedData } from "@/components/spine/ProLockedData";
 import { SpineCellBody as SpineCell } from "@/components/spine/cell/cell-view";
 import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
 import { buildCellCrumbs } from "@/lib/spine/crumb_rows";
@@ -28,6 +29,8 @@ export async function renderCellRoute(country: string, geo: string, industry: st
   return (
     <>
       {crumbItems.length > 1 ? <Breadcrumbs items={[{ name: "Home", url: `${origin}/` }, ...crumbItems]} /> : null}
+      {/* A page drawn locked says which parts are Pro to search engines (masterplan step 19). */}
+      {locked ? <ProLockedData /> : null}
       <SpineShell>
         <SpineCell data={spineData} locked={locked} />
       </SpineShell>

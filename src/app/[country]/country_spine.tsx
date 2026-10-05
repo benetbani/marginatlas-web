@@ -8,15 +8,20 @@
  */
 import { notFound } from "next/navigation";
 import { SpineShell } from "@/components/spine/shell";
+import { ProLockedData } from "@/components/spine/ProLockedData";
 import { SpineCountryBody } from "@/components/spine/country/country-view";
 import { buildSpineCountrySeed } from "@/lib/spine/adapt_country";
 
 export async function renderCountryRoute(country: string, { locked }: { locked: boolean }) {
   const spineData = await buildSpineCountrySeed(country);
   if (!spineData) notFound();
+  /* A page drawn locked says which parts are Pro to search engines (masterplan step 19). */
   return (
-    <SpineShell>
-      <SpineCountryBody data={spineData} locked={locked} />
-    </SpineShell>
+    <>
+      {locked ? <ProLockedData /> : null}
+      <SpineShell>
+        <SpineCountryBody data={spineData} locked={locked} />
+      </SpineShell>
+    </>
   );
 }

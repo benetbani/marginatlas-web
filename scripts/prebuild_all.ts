@@ -407,6 +407,8 @@ const GATES: Gate[] = [
   { name: "paywall-levels", script: "tests/monetization/levels.test.ts" },
   /* A signed-in reader of a page that locks goes to the uncached mirror under /pro; nobody else, nowhere else (masterplan step 18). */
   { name: "pro-route", script: "tests/monetization/pro_route.test.ts" },
+  /* A locked UK page says which parts are Pro to search engines, isAccessibleForFree false on .pro-locked (masterplan step 19). */
+  { name: "locked-data", script: "tests/monetization/locked_data.test.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "no-slot-counting", script: "scripts/verify_no_slot_counting.ts" },
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },

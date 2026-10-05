@@ -9,15 +9,20 @@
  */
 import { notFound } from "next/navigation";
 import { SpineShell } from "@/components/spine/shell";
+import { ProLockedData } from "@/components/spine/ProLockedData";
 import { SpineCityBody } from "@/components/spine/city/city-view";
 import { buildSpineCitySeed } from "@/lib/spine/adapt_city";
 
 export async function renderCityRoute(slug: string, { locked }: { locked: boolean }) {
   const spineData = await buildSpineCitySeed(slug);
   if (!spineData) notFound();
+  /* A page drawn locked says which parts are Pro to search engines (masterplan step 19). */
   return (
-    <SpineShell>
-      <SpineCityBody data={spineData} locked={locked} />
-    </SpineShell>
+    <>
+      {locked ? <ProLockedData /> : null}
+      <SpineShell>
+        <SpineCityBody data={spineData} locked={locked} />
+      </SpineShell>
+    </>
   );
 }
