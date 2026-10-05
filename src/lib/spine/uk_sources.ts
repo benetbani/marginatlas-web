@@ -83,6 +83,7 @@ export const UK_SOURCES: readonly UkSource[] = [
       { prints: "Tax rates, National Insurance, the minimum wage, VAT, business rates, company fees and filing dates, the rules of employing, statutory pay and the insurance the law requires", title: "Guidance pages, each read on the day stated in the file that holds it", url: "https://www.gov.uk/" },
       { prints: "What one worked hour of a hire costs, all in, and what letting that hire go costs", title: "Rates and thresholds for employers 2026 to 2027, holiday entitlement, redundancy pay and notice, and the Home Office code of practice on right-to-work checks", url: "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" },
       { prints: "The stamp duty on a shop's lease, and VAT on its rent", title: "Stamp Duty Land Tax: leasehold purchases, and VAT notice 742A on opting to tax land and buildings", url: "https://www.gov.uk/guidance/stamp-duty-land-tax-leasehold-purchases" },
+      { prints: "What a founder from abroad meets: the company and its address, the identity check, the tax code, the visas that let you run a business, and who cannot be sponsored", title: "Set up a limited company; verify your identity for Companies House; the Innovator Founder, Youth Mobility and Skilled Worker visa pages; the Home Office fees of 8 April 2026", url: "https://www.gov.uk/innovator-founder-visa" },
     ],
   },
   {
@@ -170,6 +171,16 @@ export const UK_SOURCES: readonly UkSource[] = [
     attribution: OGL_LINE,
     items: [
       { prints: "How many companies of a trade became insolvent in a year, the UK's", title: "Company insolvency notices, October 2025 to September 2026, matched to the Companies House register of 1 May 2026", url: null },
+    ],
+  },
+  {
+    /* The bank wall of opening from abroad (masterplan step 27): no right to a business account, from the regulator's report. */
+    key: "fca",
+    publisher: "Financial Conduct Authority",
+    names: ["Financial Conduct Authority"],
+    attribution: null,
+    items: [
+      { prints: "Whether a bank must open an account for a business", title: "UK payment accounts: access and closures, update (September 2024)", url: "https://www.fca.org.uk/publication/corporate/uk-payment-accounts-access-closures-update.pdf" },
     ],
   },
   {

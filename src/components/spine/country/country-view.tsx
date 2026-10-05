@@ -32,6 +32,8 @@ import * as React from "react";
 import { Focal } from "./focal";
 import { HireAllIn } from "./HireAllIn";
 import { LeaseByLaw } from "./LeaseByLaw";
+import { FromAbroad } from "./FromAbroad";
+import { buildFromAbroad } from "@/lib/spine/sections/from_abroad";
 import { buildLeaseByLaw } from "@/lib/spine/sections/lease_by_law";
 import { buildHireAllIn } from "@/lib/spine/sections/hire_all_in";
 import { lockedLevelKeys } from "@/lib/monetization/levels";
@@ -1495,11 +1497,14 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
     const hireAllIn = iso2 === "GB" ? buildHireAllIn({ allowance: true }) : null;
     /* THE LEASE, BY LAW (masterplan step 25): the law of a shop's lease in England and Wales, the UK's alone. */
     const lease = iso2 === "GB" ? buildLeaseByLaw() : null;
+    /* OPENING FROM ABROAD (masterplan step 27): the walls a founder from abroad meets, the UK's alone. */
+    const fromAbroad = iso2 === "GB" ? buildFromAbroad() : null;
     /* In the order the body draws them, each under the chapter it stands in (the rail heads each run with its chapter). */
     const sections: RailSection[] = [
       { id: "take", label: "The tax burden" },
       { id: "setup", label: COPY.tiers.kicker, chapter: "01" },
       { id: "entry-bill", label: COPY.entryBill.kicker, chapter: "01" },
+      ...(fromAbroad ? [{ id: "from-abroad", label: COPY.fromAbroad.kicker, chapter: "01" }] : []),
       { id: "hiring", label: COPY.pay.kicker, chapter: "01" },
       { id: "employment", label: COPY.employment.kicker, chapter: "01" },
       ...(hireAllIn ? [{ id: "hire-all-in", label: COPY.hireAllIn.kicker, chapter: "01" }] : []),
@@ -1531,6 +1536,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
           ["employment", "employment", "staffing-rota", "rows"],
           ["hire", "hire-all-in", "min-wage", "rows"],
           ["lease", "lease-by-law", "commercial-rent", "rows"],
+          ["abroad", "from-abroad", "visa-permit", "rows"],
           ["running", "running-costs", "cost-breakdown", "track"],
           ["insurance", "insurance", "safety", "rows"],
           ["peers", "peers", "benchmark", "table"],
@@ -1651,6 +1657,9 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
         chapter: { index: "01", heading: COPY.chapters.costs },
         body: [<Setup key="setup" setup={d.setup} iso2={iso2} />, <EntryBill key="bill" bill={bill} steps={billSteps} licences={licences} />],
       },
+      /* OPENING FROM ABROAD, ITS OWN LEVEL AFTER REGISTERING (masterplan step 27; item 74's twin of the registering card): the
+         walls a founder from abroad meets, alone at two thirds by the zones' LONE rule. */
+      ...(fromAbroad ? [{ key: "abroad", split: "2-1" as ZoneSplit, label: COPY.fromAbroad.kicker, body: [<FromAbroad key="abroad" data={fromAbroad} />] }] : []),
       {
         key: "staff",
         /* ONE HIRE, ALL IN, THE LEVEL'S THIRD CARD (masterplan step 23; item 77's "08 hiring | 08b commits"): the worked hour and

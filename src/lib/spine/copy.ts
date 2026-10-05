@@ -2647,6 +2647,14 @@ export const COPY = {
     rows: { sentence: "In short", who: "Who is here", price: "Price tier", description: "In brief" },
     foot: "",
   },
+  /** OPENING FROM ABROAD (masterplan step 27; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 74): chapter 01's level after
+   *  registering. Its figure is the Innovator Founder route's fees for three years per person; its rows the walls in the research's
+   *  order (src/lib/spine/sections/from_abroad.ts), each its cost or its time where open, its state where not. */
+  fromAbroad: {
+    kicker: "Opening from abroad",
+    words: "Founder visa fees for 3 years, per person, decided in {weeks} weeks.",
+    state: { open: "Open", conditional: "Depends", closed: "Closed" },
+  },
   /** THE LEASE, BY LAW (masterplan step 25; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 73): chapter 01's level after the
    *  running costs. Its figure is the least notice a landlord must give to end a protected lease; its rows the clauses in plain
    *  words and the stamp duty on an 80 square metre London shop's lease (src/lib/spine/sections/lease_by_law.ts). */
@@ -2678,6 +2686,7 @@ export const COPY = {
       hiring: "The wage floor, and a first hire's yearly cost.",
       "hire-all-in": "What one worked hour costs, and what letting go costs.",
       "lease-by-law": "What the law says about your shop's lease.",
+      "from-abroad": "What stands between a founder from abroad and opening.",
       employment: "The rules you take on with your first employee.",
       "running-costs": "What it costs to keep the doors open.",
       insurance: "The cover the law asks for, and what it costs.",
