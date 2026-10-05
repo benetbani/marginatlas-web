@@ -74,10 +74,9 @@ import {
   buildCityView,
   type CityView,
 } from "@/lib/cities/city_view";
-import { isSpineReformEnabledFor } from "@/lib/feature_flags";
-import { SpineShell } from "@/components/spine/shell";
-import { SpineCityBody } from "@/components/spine/city/city-view";
-import { buildSpineCitySeed } from "@/lib/spine/adapt_city";
+import { isPaywallOn, isSpineReformEnabledFor } from "@/lib/feature_flags";
+import { lockablePath } from "@/lib/monetization/pro_route";
+import { renderCityRoute } from "./city_spine";
 import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 43200; // 12 hours
@@ -234,13 +233,9 @@ export default async function CityPage({
   // neighborhood engine), never the illustrative seed. When the adapter finds no city it
   // returns undefined; we notFound() to match the non-spine page. Flag OFF path untouched.
   if (isSpineReformEnabledFor("city")) {
-    const spineData = await buildSpineCitySeed(slug);
-    if (!spineData) notFound();
-    return (
-      <SpineShell>
-        <SpineCityBody data={spineData} />
-      </SpineShell>
-    );
+    /* THE ROUTE DECIDES THE LOCK (masterplan step 17; his rulings 18 and 27): a page that locks (the UK's), with the paywall on.
+       The page is cached for every reader, so it never knows the reader; a Pro reader is sent to the uncached mirror (step 18). */
+    return renderCityRoute(slug, { locked: isPaywallOn() && lockablePath(`/cities/${slug}`) });
   }
 
   const city = CITIES_BY_SLUG.get(slug);

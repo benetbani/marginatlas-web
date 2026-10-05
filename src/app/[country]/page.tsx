@@ -100,10 +100,9 @@ import {
   PEER_GROUPS,
   type PeerFacts,
 } from "@/lib/countries/country_view";
-import { isSpineReformEnabledFor } from "@/lib/feature_flags";
-import { SpineShell } from "@/components/spine/shell";
-import { SpineCountryBody } from "@/components/spine/country/country-view";
-import { buildSpineCountrySeed } from "@/lib/spine/adapt_country";
+import { isPaywallOn, isSpineReformEnabledFor } from "@/lib/feature_flags";
+import { lockablePath } from "@/lib/monetization/pro_route";
+import { renderCountryRoute } from "./country_spine";
 import { SiteChrome } from "@/components/SiteChrome";
 import { robotsFor } from "@/lib/seo/indexable";
 
@@ -379,13 +378,9 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
   // the master switch cannot open it while the body is still a scaffold.
   if (isSpineReformEnabledFor("country")) {
     const { country: spineCountry } = await params;
-    const spineData = await buildSpineCountrySeed(spineCountry);
-    if (!spineData) notFound();
-    return (
-      <SpineShell>
-        <SpineCountryBody data={spineData} />
-      </SpineShell>
-    );
+    /* THE ROUTE DECIDES THE LOCK (masterplan step 17; his rulings 18 and 27): a page that locks (the UK's), with the paywall on.
+       The page is cached for every reader, so it never knows the reader; a Pro reader is sent to the uncached mirror (step 18). */
+    return renderCountryRoute(spineCountry, { locked: isPaywallOn() && lockablePath(`/${spineCountry.toLowerCase()}`) });
   }
 
   const { country } = await params;
