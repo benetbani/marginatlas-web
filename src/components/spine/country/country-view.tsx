@@ -423,8 +423,11 @@ function Peers({ table, zone = false }: { table: PeerTable | null; zone?: boolea
      (R1: the take, the peers, the close) whether the block is drawn or
      seated. A seat holds no figure by its law, so nothing here is at 30. */
   /* The caveat under the peers ("Countries of similar size and market, not neighbours") is not printed since 2026-09-25: a line
-     explaining the choice of rows is the disclaimer his copy rulings bar, and the table reads without it. */
-  if (table) return <CompareTable id="peers" kicker={COPY.peers.kicker} icon="benchmark" rows={table.rows} columns={table.columns} zone={zone} />;
+     explaining the choice of rows is the disclaimer his copy rulings bar, and the table reads without it. ONE LINE IS, ON THE UK'S
+     PAGE (his ruling of 2026-10-05 on PARKED P04.2: the peers kept, called estimates): "The peers' figures are estimates." Built
+     since step 04 of the masterplan and dropped here until this line; the sources test reads it off the render. */
+  const estimates = table?.caveat === COPY.peers.caveatEstimates ? table.caveat : undefined;
+  if (table) return <CompareTable id="peers" kicker={COPY.peers.kicker} icon="benchmark" rows={table.rows} columns={table.columns} caveat={estimates} zone={zone} />;
   return (
     <div data-wide-table className="mt-8">
       <BlockedSeat id="peers" icon="benchmark" kicker={COPY.blocked.peers.kicker} line={COPY.blocked.peers.line} foot={COPY.blocked.peers.foot} />
@@ -798,14 +801,15 @@ function SpendBar({ spend }: { spend: CountrySpendData }) {
   return (
     <Box id="spend" className="flex flex-col">
       <Rail icon="spending-power" kicker={COPY.countrySpend.kicker} />
-      <Focal figure={spend.out.figure} words={COPY.countrySpend.outWords} />
+      <Focal figure={spend.out.figure} words={COPY.countrySpend.outWords} prov={spend.out.prov} />
       {/* ONE HORIZONTAL BAR (2026-09-25, his word that night: "What households spend on could be a horizontal bar rather than that
           monstrosity", the treemap): the seven parts of a household's spending along one bar, eating out and groceries first and
-          alone in colour, so the 39% is read off the bar as eating out's share of the coloured food block. */}
+          alone in colour, so the focal is read off the bar as eating out's share of the coloured food block. Since 2026-10-05 the
+          UK's parts are the survey's own lines, each stamped (PARKED P04.1). */}
       <div className="mt-1 flex flex-1 flex-col">
         {/* THE FOOD MONEY BRACKETED (goal 2026-09-26, M6): the figure is eating out's share of the food money, so the two parts
             that make the food money carry a bracket named "Food". */}
-        <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill bracket={COPY.countrySpend.bracket} />
+        <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value, prov: r.prov }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill bracket={COPY.countrySpend.bracket} />
       </div>
     </Box>
   );

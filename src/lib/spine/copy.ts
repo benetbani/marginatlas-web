@@ -1303,7 +1303,8 @@ export const COPY = {
     caveat: "Countries of similar size and market, not neighbours.",
     /** The UK's page (masterplan step 04, 2026-10-05; the labels audit's item 17): its own row is sourced, the peers' figures are not, and the
      *  line says so once (M9: a figure outside the United Kingdom is an estimate, said once). */
-    caveatEstimates: "Similar markets, not neighbours. The peers' figures are estimates.",
+    /* His ruling of 2026-10-05 on PARKED P04.2: the peers kept, called estimates; the choice of rows is not explained (the copy ruling of 2026-09-25). */
+    caveatEstimates: "The peers' figures are estimates.",
   },
   /** A table's heads order its rows (the goal of 2026-09-26, M5; interact/SortTable.tsx): the polite line a screen reader hears
    *  after a press. */

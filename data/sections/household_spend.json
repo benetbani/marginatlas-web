@@ -1,0 +1,22 @@
+{
+  "_about": "What a UK household spends a week, the official survey's own lines (his ruling of 2026-10-05 on PARKED P04.1, option (a): the data track downloads the Family Spending tables and /gb's household card takes them, with their source). Read 2026-10-05 from Table A1 of the workbook below (all UK households, average weekly expenditure, pounds), saved by the data track to E:/atlas/cache/uk/ons/family_spending/fye2025/. Eating out is catering services (11.1: restaurant and cafe meals, drinks out, takeaways, canteens), never the whole restaurants and hotels group, which holds hotel stays (11.2). Housing and bills is the survey's housing (net), fuel and power (4); mortgage interest and council tax sit in its other items (13), so in everything else, as the survey's own headline counts them. Read by src/lib/spine/country_spend_rows.ts.",
+  "publisher": "Office for National Statistics",
+  "dataset": "Family spending workbook 1: detailed expenditure and trends, financial year ending 2025",
+  "table": "Table A1, Detailed expenditure with full-method standard errors, UK",
+  "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook1detailedexpenditureandtrends",
+  "released": "2026-06-11",
+  "read": "2026-10-05",
+  "period": "April 2024 to March 2025",
+  "unit": "pounds a week, the average UK household",
+  "GB": {
+    "total": 676.60,
+    "lines": {
+      "dining_out": { "code": "11.1", "name": "Catering services", "gbp": 34.60 },
+      "food_drink": { "code": "1", "name": "Food and non-alcoholic drinks", "gbp": 73.70 },
+      "housing_utilities": { "code": "4", "name": "Housing (net), fuel and power", "gbp": 118.40 },
+      "transport": { "code": "7", "name": "Transport", "gbp": 96.40 },
+      "recreation": { "code": "9", "name": "Recreation and culture", "gbp": 82.10 },
+      "household_goods": { "code": "5", "name": "Household goods and services", "gbp": 40.60 }
+    }
+  }
+}

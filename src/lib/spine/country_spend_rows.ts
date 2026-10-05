@@ -39,7 +39,15 @@
  * words. It cannot be read off the drawing (no addition of bars produces it),
  * it is the reading this page's audience actually wants, and it separates
  * countries harder than anything else on the card: 68 in Singapore, 65 in
- * Ireland, 39 in the United Kingdom, 2 in Afghanistan.
+ * Ireland, 2 in Afghanistan.
+ *
+ * THE UNITED KINGDOM READS THE SURVEY ITSELF (his ruling of 2026-10-05 on PARKED
+ * P04.1): data/sections/household_spend.json, the Family Spending survey's Table
+ * A1 for April 2024 to March 2025, each line a share of the week's total, the
+ * leftover everything else. Its shard said 39 here, because it counted the whole
+ * restaurants and hotels group, hotel stays and all, as eating out; the survey's
+ * catering services (meals, drinks out, takeaways, canteens) make it 32. Every
+ * figure of the UK's card is stamped "worked out" with the line it reads.
  *
  * WITHHOLDING, and two countries fall to it: all seven categories, every one of
  * them named in the copy, a sum within a point of a hundred, and a figure above
@@ -67,6 +75,8 @@ import { loadCountryShard, countryEntityId } from "@/lib/facts/country_shard";
 import { queryFacts } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
 import { COPY } from "@/lib/spine/copy";
+import type { Provenance } from "@/lib/spine/provenance";
+import officialSpendJson from "../../../data/sections/household_spend.json";
 
 export const COUNTRY_SPEND_PREFIX = "income.household_spend.*.";
 /** The row pinned last whatever its size; the file's own key for the leftover. */
@@ -77,14 +87,14 @@ export const SPEND_FOOD_OUT = "dining_out";
 /** The track's far end: the whole budget the parts divide. */
 export const SPEND_WHOLE = 100;
 
-export type CountrySpendRow = { key: string; name: string; value: number };
+export type CountrySpendRow = { key: string; name: string; value: number; prov?: Provenance };
 
 export type CountrySpendData = {
   iso2: string;
   /** Seven parts of a hundred, biggest first, the residual last. */
   rows: CountrySpendRow[];
   /** The card's focal: how much of the food money is spent out of the house. */
-  out: { figure: string; value: number };
+  out: { figure: string; value: number; prov?: Provenance };
   basis: string;
   tag: FactTag;
 };
@@ -105,7 +115,41 @@ function reconcile(values: number[], whole: number): number[] {
   return out;
 }
 
+type OfficialLine = { code: string; name: string; gbp: number };
+
+/** A country's card from the survey's own lines, where data/sections/household_spend.json holds them; null elsewhere. */
+function officialSpend(iso2: string): CountrySpendData | null {
+  const key = iso2.toUpperCase();
+  const held = (officialSpendJson as unknown as Record<string, { total?: number; lines?: Record<string, OfficialLine> }>)[key];
+  if (!held || typeof held.total !== "number" || !(held.total > 0) || !held.lines) return null;
+  const total = held.total;
+  const C = COPY.countrySpend;
+  const named = (k: string) => (C.categories as Record<string, string>)[k] ?? null;
+  const parts = Object.entries(held.lines).map(([k, l]) => ({ key: k, pct: (l.gbp / total) * 100, tail: `${l.code} of the total` }));
+  if (parts.some((p) => !named(p.key))) return null;
+  const leftover = 100 - parts.reduce((n, p) => n + p.pct, 0);
+  if (!(leftover >= 0) || !named(SPEND_RESIDUAL)) return null;
+  const inHouse = held.lines[SPEND_FOOD_IN]?.gbp ?? 0;
+  const outHouse = held.lines[SPEND_FOOD_OUT]?.gbp ?? 0;
+  if (!(inHouse > 0) || !(outHouse > 0)) return null;
+  const stamp = (tail: string): Provenance => ({ src: `sections/household_spend.json:${key}:${tail}`, kind: "worked out" });
+  const outShare = Math.round((outHouse / (inHouse + outHouse)) * 100);
+  const all = [...parts, { key: SPEND_RESIDUAL, pct: leftover, tail: "the total less the named lines" }];
+  const ordered = [...all].sort((a, b) => (a.key === SPEND_RESIDUAL ? 1 : b.key === SPEND_RESIDUAL ? -1 : b.pct - a.pct));
+  const shown = reconcile(ordered.map((p) => p.pct), SPEND_WHOLE);
+  return {
+    iso2: countryEntityId(iso2) ?? key,
+    rows: ordered.map((p, i) => ({ key: p.key, name: named(p.key) as string, value: shown[i], prov: stamp(p.tail) })),
+    out: { figure: `${outShare}%`, value: outShare, prov: stamp(`${held.lines[SPEND_FOOD_OUT].code} over ${held.lines[SPEND_FOOD_IN].code} and ${held.lines[SPEND_FOOD_OUT].code}`) },
+    basis: C.basis,
+    tag: "held",
+  };
+}
+
 export function buildCountrySpend(iso2: string): CountrySpendData | null {
+  /* The survey's own lines first, where the site holds them (the United Kingdom since 2026-10-05). */
+  const held = officialSpend(iso2);
+  if (held) return held;
   const code = countryEntityId(iso2);
   if (!code || !loadCountryShard(code)) return null;
   const C = COPY.countrySpend;

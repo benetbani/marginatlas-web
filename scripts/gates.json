@@ -1631,6 +1631,19 @@
       "claims": []
     },
     {
+      "name": "household-spend",
+      "script": "tests/spine/household_spend.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHAT A UK HOUSEHOLD SPENDS, FROM THE SURVEY ITSELF (his ruling of 2026-10-05 on PARKED P04.1, option (a): the data track downloads the Family Spending tables and /gb's household card takes them, with ",
+      "reads": [
+        "data/sections/household_spend.json",
+        "scratchpad/harness/pages/country-GB.html",
+        "src/lib/spine/country_spend_rows.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],
@@ -2620,6 +2633,7 @@
       "browser": false,
       "asserts": "THE LONDON TRADE PAGES AND THE UK'S PAGE PRINT A SOURCED FIGURE, A MARKED ONE, OR NONE (masterplan step 04, 2026-10-05; the labels audit of 2026-10-02, items 10, 17 and 18; QUEUE country:cities-region",
       "reads": [
+        "scratchpad/harness/pages/country-GB.html",
         "src/components/spine/cell/cell-view.tsx",
         "src/lib/spine"
       ],

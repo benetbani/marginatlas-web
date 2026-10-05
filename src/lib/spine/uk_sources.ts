@@ -62,6 +62,8 @@ export const UK_SOURCES: readonly UkSource[] = [
       { prints: "The population by age", title: "Population estimates, mid-2024 and mid-2025", url: "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2024" },
       { prints: "The online share of retail sales", title: "Retail sales, Great Britain: August 2026", url: "https://www.ons.gov.uk/businessindustryandtrade/retailindustry/bulletins/retailsales/latest" },
       { prints: "What households spend each week, by age and by income", title: "Family spending in the UK, April 2024 to March 2025, workbooks 1 and 2", url: "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/bulletins/familyspendingintheuk/april2024tomarch2025" },
+      /* His ruling of 2026-10-05 on PARKED P04.1: /gb's household card from the survey's own lines (data/sections/household_spend.json). */
+      { prints: "What a household's week goes on, and eating out's share of the food money", title: "Family spending workbook 1: detailed expenditure and trends, financial year ending 2025, Table A1", url: "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook1detailedexpenditureandtrends" },
       { prints: "Overseas visits to the UK", title: "Travel trends: 2024", url: "https://www.ons.gov.uk/peoplepopulationandcommunity/leisureandtourism/articles/traveltrends/2024" },
     ],
   },

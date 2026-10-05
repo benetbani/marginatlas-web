@@ -4,7 +4,7 @@
  *
  * Run: npx tsx tests/spine/uk_pages_sources.test.ts
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { sayTradeTypical, ukInsolvencyPer100, type UkTradeCards } from "../../src/lib/spine/uk_trade_typical";
 import { buildPeerTable } from "../../src/lib/spine/peer_rows";
 import { buildLocalsNotes } from "../../src/lib/spine/locals_rows";
@@ -62,6 +62,10 @@ check("the cell view says it on a page held to a register region", /cityRegister
 /* Item 17: the peers' line says their figures are estimates on the UK's page; elsewhere unchanged. */
 check("the UK's peers say their figures are estimates", buildPeerTable("GB")?.caveat === COPY.peers.caveatEstimates);
 check("France's peers keep their line", buildPeerTable("FR")?.caveat === COPY.peers.caveat);
+/* His ruling of 2026-10-05 on PARKED P04.2 (the peers kept, called estimates): the line is drawn on /gb, not only built (from
+   2026-09-25 to 2026-10-05 the view dropped every caveat, so it never printed). Read off the harness's render. */
+const gbRender = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8").replace(/&#x27;/g, "'") : "";
+if (gbRender) check(`/gb's peers card prints "${COPY.peers.caveatEstimates}"`, gbRender.slice(gbRender.indexOf('id="peers"')).includes(COPY.peers.caveatEstimates));
 
 /* Item 17: the UK's locals notes, each with its source. */
 const locals = buildLocalsNotes("GB");

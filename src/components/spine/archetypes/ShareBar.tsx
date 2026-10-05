@@ -42,8 +42,10 @@
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
 import { partTones } from "@/components/spine/charts/part_tones";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
-export type SharePart = { key: string; name: string; share: number };
+/** `prov`, where the part's figure has one (the UK's household card since 2026-10-05): stamped on the printed share. */
+export type SharePart = { key: string; name: string; share: number; prov?: Provenance };
 
 /* The plain form's tones are the shared ramp by rank (charts/part_tones.ts, 2026-09-26); four parts at most, so no tone needs its
    opacity here. */
@@ -63,6 +65,9 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
     : all.slice(0, 4);
   if (live.length < 2) return null;
   const total = live.reduce((s, p) => s + p.share, 0);
+  /* An end part under a tenth of the bar ends square (see the bar below). */
+  const slimFirst = live[0].share / total < 0.1;
+  const slimLast = live[live.length - 1].share / total < 0.1;
   const leader = live.reduce((a, b) => (b.share > a.share ? b : a), live[0]);
   const colourOf = (p: SharePart) => {
     if (led) return p.key === leads[0].key ? "var(--terra)" : p.key === leads[1].key ? "var(--terra-border)" : p.key === residualKey ? "var(--c-soft2)" : "var(--c-line-strong)";
@@ -80,9 +85,12 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
           <span className="absolute bottom-3 whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]" style={{ left: `${((leads[0].share + leads[1].share) / total) * 50}%`, transform: "translateX(-50%)" }}>{bracket}</span>
         </div>
       ) : null}
-      <div className={`flex w-full gap-0.5 overflow-hidden ${tall ? "h-9 rounded-lg" : "h-3 rounded-full"}`} aria-hidden="true">
-        {live.map((p) => (
-          <span key={p.key} data-wedge={p.key} data-part-key={p.key} data-readout-figure={`${Math.round(p.share)}${unit}`} data-readout-words={p.name} className={`block h-full min-w-[3px] ${tall ? "first:rounded-l-lg last:rounded-r-lg" : "first:rounded-l-full last:rounded-r-full"}`} style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
+      {/* A SLIM END ENDS SQUARE (2026-10-05, the page laws' COLUMN ENDS on the UK's household bar once its eating out became the
+          survey's 5%): a part under a tenth of the bar is a slim column at a phone's width, and a rounded end there reads as a pill
+          and hides where it ends. So that end of the bar, its clip and its part alike, takes the 2px corner the month bars use. */}
+      <div className={`flex w-full gap-0.5 overflow-hidden ${tall ? "h-9" : "h-3"} ${slimFirst ? "rounded-l-[2px]" : tall ? "rounded-l-lg" : "rounded-l-full"} ${slimLast ? "rounded-r-[2px]" : tall ? "rounded-r-lg" : "rounded-r-full"}`} aria-hidden="true">
+        {live.map((p, i) => (
+          <span key={p.key} data-wedge={p.key} data-part-key={p.key} data-readout-figure={`${Math.round(p.share)}${unit}`} data-readout-words={p.name} className={`block h-full min-w-[3px] ${i === 0 ? (slimFirst ? "rounded-l-[2px]" : tall ? "rounded-l-lg" : "rounded-l-full") : ""} ${i === live.length - 1 ? (slimLast ? "rounded-r-[2px]" : tall ? "rounded-r-lg" : "rounded-r-full") : ""}`} style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
         ))}
       </div>
       <div className={`mt-3 grid gap-2 ${led ? "[@container(min-width:560px)]:grid-cols-2" : ""} ${fill ? "flex-1 auto-rows-fr" : ""}`} data-expect-rows={live.length}>
@@ -91,7 +99,7 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
           <div key={p.key} data-row={p.key} data-part-key={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2 ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] border border-[var(--c-border)]" style={{ background: colourOf(p) }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
-            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>
+            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]" {...provAttrs(p.prov)}>{Math.round(p.share)}{unit}</span>
           </div>
         ))}
       </div>

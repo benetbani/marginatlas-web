@@ -584,6 +584,9 @@ const GATES: Gate[] = [
   /* Who runs this (his ruling of 2026-10-05, PARKED P0.2): /about names him and says only what he has given; the footer leads to
      it, the corrections log and the data pack. */
   { name: "about-page", script: "tests/trust/about_page.test.ts" },
+  /* What a UK household spends, from the survey itself (his ruling of 2026-10-05, PARKED P04.1): /gb's household card from
+     data/sections/household_spend.json (Table A1), eating out as catering services, every figure stamped. */
+  { name: "household-spend", script: "tests/spine/household_spend.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },
