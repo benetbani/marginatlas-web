@@ -1,5 +1,5 @@
 /**
- * free_paid_map: the single declaration of what a Free, Basic, or Premium
+ * free_paid_map: the single declaration of what a Free or a Pro
  * viewer sees on a cell page.
  *
  * This is DATA, not wiring. It carries no render logic and touches no page, so
@@ -31,13 +31,13 @@ export type GatedFieldId =
   | "editorial_narrative"
   | "activity_character"
   | "coverage_badge"
-  // Basic depth
+  // Pro: the operating depth
   | "cost_stack_full"
   | "net_profit_waterfall"
   | "breakeven_orders"
   | "distribution_inner_quartiles"
   | "across_states_full"
-  // Premium depth
+  // Pro: the power tools
   | "size_band_switch"
   | "multi_year_trend"
   | "peer_multicell_table"
@@ -67,22 +67,22 @@ export const FREE_PAID_MAP: Record<GatedFieldId, GateRule> = {
   activity_character: { required: "free", treatment: "open", note: "How this business makes money. Free." },
   coverage_badge: { required: "free", treatment: "open", note: "Confidence worn openly. Always free." },
 
-  // ----- Basic: the operating depth -----
-  cost_stack_full: { required: "basic", treatment: "fog", note: "Full annual cost decomposition under fog; summary 3 lines stay free." },
-  net_profit_waterfall: { required: "basic", treatment: "fog", note: "Step-by-step take-home waterfall." },
-  breakeven_orders: { required: "basic", treatment: "fog", note: "Orders-per-day to break even panel." },
-  distribution_inner_quartiles: { required: "basic", treatment: "ghost-bar", note: "p25 and p75 ghosted; p10/p50/p90 axis stays readable." },
-  across_states_full: { required: "basic", treatment: "banner", note: "Top rows free, full ranked table behind a calm banner." },
+  // ----- Pro: the operating depth (one paid tier since masterplan step 05; ruling 14) -----
+  cost_stack_full: { required: "pro", treatment: "fog", note: "Full annual cost decomposition under fog; summary 3 lines stay free." },
+  net_profit_waterfall: { required: "pro", treatment: "fog", note: "Step-by-step take-home waterfall." },
+  breakeven_orders: { required: "pro", treatment: "fog", note: "Orders-per-day to break even panel." },
+  distribution_inner_quartiles: { required: "pro", treatment: "ghost-bar", note: "p25 and p75 ghosted; p10/p50/p90 axis stays readable." },
+  across_states_full: { required: "pro", treatment: "banner", note: "Top rows free, full ranked table behind a calm banner." },
 
-  // ----- Premium: power tools -----
-  size_band_switch: { required: "premium", treatment: "redacted", note: "Switch size bands (1-4 .. 100+)." },
-  multi_year_trend: { required: "premium", treatment: "fog", note: "Multi-year series when coverage supports it." },
-  peer_multicell_table: { required: "premium", treatment: "banner", note: "Multi-cell comparison power table." },
-  tax_overlay_detail: { required: "premium", treatment: "fog", note: "Full post-tax overlay detail." },
-  csv_export: { required: "premium", treatment: "redacted", note: "Download / API access." },
+  // ----- Pro: the power tools (the June Premium tier, folded into the one plan) -----
+  size_band_switch: { required: "pro", treatment: "redacted", note: "Switch size bands (1-4 .. 100+)." },
+  multi_year_trend: { required: "pro", treatment: "fog", note: "Multi-year series when coverage supports it." },
+  peer_multicell_table: { required: "pro", treatment: "banner", note: "Multi-cell comparison power table." },
+  tax_overlay_detail: { required: "pro", treatment: "fog", note: "Full post-tax overlay detail." },
+  csv_export: { required: "pro", treatment: "redacted", note: "Download / API access." },
 };
 
-const RANK: Record<ViewerTier, number> = { free: 0, basic: 1, premium: 2 };
+const RANK: Record<ViewerTier, number> = { free: 0, pro: 1 };
 
 /** True when `viewer` may see the real value for `id`. */
 export function canSee(id: GatedFieldId, viewer: ViewerTier): boolean {

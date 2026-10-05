@@ -137,7 +137,7 @@ export async function GET(req: NextRequest) {
   // entitlement is never served to another from the shared cache.
   const historyIsGated = includeHistory && isGatingEnabled() && isAuthEnabled();
   const allowHistory =
-    includeHistory && (!historyIsGated || (await getSessionTier()) === "premium");
+    includeHistory && (!historyIsGated || (await getSessionTier()) === "pro");
 
   if (allowHistory) {
     const variants = await getCellVariants(country, region, industry);

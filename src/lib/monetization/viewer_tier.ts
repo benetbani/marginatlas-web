@@ -3,7 +3,12 @@
  *
  * v34 Phase D stub. Always returns "free" today. Phase D will read
  * the Stripe customer record from the session cookie + db lookup
- * and return "basic" / "premium" accordingly.
+ * and return "pro" accordingly.
+ *
+ * ONE PAID TIER (milestone 2, masterplan step 05; his interview of
+ * 2026-09-26, ruling 14: one plan, Pro, $38 a month or $238 a year).
+ * The June "basic" / "premium" pair is gone; src/lib/monetization/plan.ts
+ * holds the plan and its prices.
  *
  * This file is the SINGLE READ POINT for tier on the server. Cell
  * pages, industry pages, city pages all call this once per request
@@ -16,7 +21,7 @@
  * Part 5.2 (#3 leakage check) + Part 6 Phase D.
  */
 
-export type ViewerTier = "free" | "basic" | "premium";
+export type ViewerTier = "free" | "pro";
 
 /** Phase D stub. Always "free". */
 export function getViewerTier(): ViewerTier {
@@ -30,7 +35,7 @@ export function gateValue<T>(
   required: ViewerTier,
   current: ViewerTier = getViewerTier(),
 ): T | null {
-  const RANK: Record<ViewerTier, number> = { free: 0, basic: 1, premium: 2 };
+  const RANK: Record<ViewerTier, number> = { free: 0, pro: 1 };
   if (RANK[current] >= RANK[required]) return value;
   return null;
 }

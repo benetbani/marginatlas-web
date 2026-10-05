@@ -31,12 +31,14 @@ export async function getSessionTier(): Promise<ViewerTier> {
       .maybeSingle();
     if (!data) return "free";
 
-    const active = data.status === "active" || data.status === "trialing";
+    /* ONE PAID TIER, NO TRIAL (masterplan step 05; his rulings 14 and 20): Pro while Stripe says the plan is paid, or is retrying
+       a failed payment (past_due), the same two statuses the webhook's core grants on (src/lib/monetization/stripe_sync.ts). */
+    const active = data.status === "active" || data.status === "past_due";
     const periodOk =
       !data.current_period_end ||
       new Date(data.current_period_end as string).getTime() > Date.now();
-    if (active && periodOk && (data.tier === "basic" || data.tier === "premium")) {
-      return data.tier as ViewerTier;
+    if (active && periodOk && data.tier === "pro") {
+      return "pro";
     }
     return "free";
   } catch {

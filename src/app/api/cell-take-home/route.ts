@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ value: null });
   }
   const tier = await getSessionTier();
-  if (tier !== "basic" && tier !== "premium") {
+  if (tier !== "pro") {
     return NextResponse.json({ value: null });
   }
 

@@ -964,6 +964,17 @@
       "claims": []
     },
     {
+      "name": "pro-plan",
+      "script": "tests/monetization/pro_plan.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE ONE PRO PLAN (milestone 2; his interview of 2026-09-26, rulings 14, 20, 33): one paid plan at $38 a month or $238 a year, dollars everywhere, the Stripe price ids read by name, a price written one",
+      "reads": [
+        "src/lib/monetization/plan.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],
