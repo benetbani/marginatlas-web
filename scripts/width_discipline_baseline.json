@@ -1,8 +1,8 @@
 {
   "total": {
-    "remCaps": 220,
-    "chCaps": 42,
-    "smPairings": 45
+    "remCaps": 217,
+    "chCaps": 43,
+    "smPairings": 43
   },
   "byFile": {
     "src/app/(site)/about-data/page.tsx": {
@@ -161,6 +161,11 @@
       "smPairings": 0
     },
     "src/app/(site)/saved/SavedClient.tsx": {
+      "remCaps": 1,
+      "chCaps": 0,
+      "smPairings": 0
+    },
+    "src/app/(site)/search/page.tsx": {
       "remCaps": 1,
       "chCaps": 0,
       "smPairings": 0
@@ -355,11 +360,6 @@
       "chCaps": 0,
       "smPairings": 1
     },
-    "src/components/GlobalSearch.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
-      "smPairings": 0
-    },
     "src/components/home/AtlasLedger.tsx": {
       "remCaps": 1,
       "chCaps": 0,
@@ -379,11 +379,6 @@
       "remCaps": 0,
       "chCaps": 0,
       "smPairings": 1
-    },
-    "src/components/home/home2-view.tsx": {
-      "remCaps": 2,
-      "chCaps": 0,
-      "smPairings": 2
     },
     "src/components/home/NeighborhoodCards.tsx": {
       "remCaps": 0,
@@ -575,6 +570,11 @@
       "chCaps": 1,
       "smPairings": 0
     },
+    "src/components/spine/home/home-view.tsx": {
+      "remCaps": 1,
+      "chCaps": 1,
+      "smPairings": 1
+    },
     "src/components/spine/industry/turn-one.tsx": {
       "remCaps": 0,
       "chCaps": 1,
@@ -644,11 +644,6 @@
       "remCaps": 0,
       "chCaps": 2,
       "smPairings": 0
-    },
-    "src/components/WorldMapPicker.tsx": {
-      "remCaps": 2,
-      "chCaps": 0,
-      "smPairings": 1
     },
     "src/lib/ui/typography.ts": {
       "remCaps": 1,
