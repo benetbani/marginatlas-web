@@ -40,6 +40,7 @@ import { buildLeaseByLaw } from "@/lib/spine/sections/lease_by_law";
 import { buildHireAllIn } from "@/lib/spine/sections/hire_all_in";
 import { lockedLevelKeys } from "@/lib/monetization/levels";
 import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
+import { FreeDoors } from "@/components/spine/FreeDoors";
 import { Box, Fig, Ico, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
@@ -1754,13 +1755,18 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
        level of the chapter draws its cards locked; the answer, the changes and the close stand outside the chapters. Untold, the
        page is exactly what it was. */
     const lockedZones = locked ? lockedLevelKeys(zones.map((z) => ({ key: z.key, chapter: z.chapter?.index ?? null, outside: z.outside }))) : null;
+    /* THE FREE DOORS (his ruling of 2026-10-05 on PARKED P20.1): where the cities' level locks, the UK's city pages by name, in a
+       zone of their own after the close, outside the chapters, so a free reader keeps every city the open page links. */
+    const shown: typeof zones = lockedZones?.has("cities") && cities && cities.cards.length > 0
+      ? [...zones, { key: "doors", split: "wide" as ZoneSplit, label: COPY.freeDoors.cities as string, outside: true, body: [<FreeDoors key="doors" id="cities" title={COPY.freeDoors.cities} doors={[...cities.cards.map((c) => ({ name: c.name, href: c.href })), { name: COPY.cities.allLabel, href: cities.allHref }]} />] }]
+      : zones;
     return (
       <>
         {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2: Material, iOS and the NHS hold 16; the site's column holds 24): the
             zones reach 8px into the column's padding below 768, so a section's content is 343px wide at 375, the width every
             phone table on the page is laid out for. The bands' colour runs edge to edge either way. */}
         <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
-          {zones.map((z, i) => (
+          {shown.map((z, i) => (
             <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label} chapter={z.chapter}>
               {lockedZones?.has(z.key) ? lockedBody(z.body, countryLocks) : z.body}
             </Zone>

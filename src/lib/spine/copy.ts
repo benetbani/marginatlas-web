@@ -2721,6 +2721,12 @@ export const COPY = {
     report: "Report a mistake",
     checked: "Checked",
   },
+  /** THE FREE DOORS ON A LOCKED PAGE (his ruling of 2026-10-05 on PARKED P20.1): names only, in the page's free close, so locking
+   *  never cuts the site's paths (src/components/spine/FreeDoors.tsx). `{city}` is the trade page's city. */
+  freeDoors: {
+    cities: "The UK's cities",
+    trades: "Other trades in {city}",
+  },
   locked: {
     button: "Open with Pro",
     lines: {

@@ -131,6 +131,7 @@
  */
 import * as React from "react";
 import { lockedLevelKeys } from "@/lib/monetization/levels";
+import { FreeDoors } from "@/components/spine/FreeDoors";
 import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { spineCellSeed } from "@/lib/spine-seeds";
 import { Box, Rail, usd } from "@/components/spine/kit";
@@ -454,6 +455,13 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
      every later one draws its cards locked; the answer, the opening pair and the close stand outside the chapters. Untold,
      nothing changes. */
   const lockedZones = locked ? lockedLevelKeys(cellZones.map((z) => ({ key: z.key, chapter: z.chapter ?? null, outside: z.outside }))) : null;
+  /* THE FREE DOORS (his ruling of 2026-10-05 on PARKED P20.1): where "The mix" locks, the other trades it names, by name only, in
+     a zone of their own after the close, outside the chapters, so a free reader keeps every trade the open page links. */
+  const rivalDoors = (rivals?.rows ?? []).filter((r) => typeof r.href === "string" && r.href).map((r) => ({ name: String(r.name), href: String(r.href) }));
+  const doorsTitle = COPY.freeDoors.trades.replace("{city}", String(d.meta?.city ?? d.meta?.geo_name ?? "this city"));
+  const shownZones: CellZone[] = lockedZones?.has("mix") && rivalDoors.length > 0
+    ? [...cellZones, { key: "doors", split: "wide", label: doorsTitle, outside: true, body: [<FreeDoors key="doors" id="trades" title={doorsTitle} doors={rivalDoors} />] }]
+    : cellZones;
   /* The chapter's number and title stand on the first level of the chapter that draws. */
   const headed = new Set<string>();
   return (
@@ -461,7 +469,7 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
       {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
       <Crumbs items={buildCellCrumbs(d.meta)} />
       <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
-        {cellZones.map((z) => {
+        {shownZones.map((z) => {
           const chapter = z.chapter && !headed.has(z.chapter) ? (headed.add(z.chapter), { index: z.chapter, heading: CHAPTERS[z.chapter] }) : undefined;
           return (
             <Zone key={z.key} split={z.split} stack={z.stack} label={z.label} chapter={chapter}>

@@ -15,8 +15,10 @@
  *   4. inside a locked section: no figure (.fig), no provenance (data-kind, data-src), no digit;
  *   5. no dialog, no aria-modal and no fixed full-screen overlay anywhere on the page;
  *   6. one JSON-LD script declaring the page not wholly free, whose selector finds the locked sections.
- * And, from step 16: the open renders pages-fresh writes carry no locked section. Reported, never failed: the distinct internal
- * links a free reader loses on each page (PARKED.md, P20.1).
+ * And, from step 16: the open renders pages-fresh writes carry no locked section.
+ *   7. (his ruling of 2026-10-05 on PARKED P20.1: "a free row of plain doors ... so locking never cuts the site's paths") a free
+ *      reader loses no page the open page links: every internal address of the open render is on the locked one, the locked
+ *      levels' links standing as the free doors in the page's close (src/components/spine/FreeDoors.tsx).
  *
  * BLIND SPOT: it reads static markup, so it cannot see a pop-up a script would open after load, nor how a locked card looks;
  * the photographs read the drawn page. It reads three pages, one of each locked type, not every UK page.
@@ -135,7 +137,7 @@ for (const p of PAGES) {
     if (selectors.length === 0 || selectors.some((sel) => doc.querySelectorAll(sel).length === 0)) fault(p, `the declared selector (${selectors.join(", ") || "none"}) finds no locked section`);
   }
 
-  // From step 16: the open render carries no lock. And the links a free reader loses, reported.
+  // From step 16: the open render carries no lock. And rule 7: the links a free reader would lose, none.
   const openFile = `${DIR}/${p.open}.html`;
   if (existsSync(openFile)) {
     const openDoc = new JSDOM(readFileSync(openFile, "utf8").replace(/<style[\s\S]*?<\/style>/g, "")).window.document;
@@ -143,7 +145,8 @@ for (const p of PAGES) {
     const open = internalLinks(openDoc);
     const kept = internalLinks(doc);
     const lost = [...open].filter((h) => !kept.has(h));
-    console.log(`  ${p.stem}: ${locked.length} locked section(s); internal links ${open.size} open, ${kept.size} locked (${lost.length} lost: ${lost.slice(0, 8).join(" ")}${lost.length > 8 ? " ..." : ""})`);
+    console.log(`  ${p.stem}: ${locked.length} locked section(s); internal links ${open.size} open, ${kept.size} locked (${lost.length} lost${lost.length ? `: ${lost.slice(0, 8).join(" ")}${lost.length > 8 ? " ..." : ""}` : ""})`);
+    if (lost.length) fault(p, `a free reader loses ${lost.length} page(s) the open page links (${lost.slice(0, 8).join(" ")}); rule 7, his ruling of 2026-10-05 on P20.1: the locked levels' links stand as free doors in the close`);
   } else {
     console.log(`  ${p.stem}: ${locked.length} locked section(s); no open render at ${openFile} to compare (pages-fresh writes it)`);
   }
