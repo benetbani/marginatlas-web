@@ -17,14 +17,14 @@ MORNING-REPORT.md.
 - **Built either way:** the script loads only behind the switch (milestone 1, M2).
 
 ### P0.2 A named person on the site (QUEUE `cred:founder`)
-- **Ruled 2026-10-05:** option (a). being built: a short /about page with your name; your background, photo, company and contact wait for you.
+- **Ruled 2026-10-05:** option (a). built (website e4e09e01): /about names you, says why the site exists and how a figure is checked, and leads to the contact form; your background, photo, company and number, and the credibility plan's lines on funding, advertising and AI assistance wait for you.
 - **Question:** may the site name its founder on an about page?
 - **Options:** (a) Recommended: yes, a short about page with his name and why the site exists (credibility earned in the open,
   CREDIBILITY.md); (b) the site stays unsigned.
 - **Built either way:** nothing.
 
 ### P0.3 The data pack (QUEUE `cred:data-pack`)
-- **Ruled 2026-10-05:** option (a). being built: the UK data pack at /data, free and cited.
+- **Ruled 2026-10-05:** option (a). built (website 2619b3c3): /data, version 2026.10, eleven files free under CC BY 4.0 with every source's line. Held back by the credibility plan's free line: the companies by postcode district and the monthly series of new companies (say if you want them public too).
 - **Question:** publish the UK data pack (`E:/atlas/cache/uk/pack/2026.10/`, 13 files) at `/data`, and is it free?
 - **Options:** (a) Recommended: free and public, cited, as the credibility plan proposes; (b) Pro only; (c) not yet.
 - **Built either way:** nothing.
@@ -46,7 +46,7 @@ MORNING-REPORT.md.
   tenths, no hand-anchored cost of living, and "estimate" in each line that needs it (commit 9f9e1fee).
 
 ### P04.1 What UK households spend on (step 04, labels audit item 15)
-- **Ruled 2026-10-05:** option (a). the data track's: the Family Spending tables downloaded and the card's shares replaced, with their source.
+- **Ruled 2026-10-05:** option (a). built: the survey's Table A1 (FYE 2025, workbook 1, downloaded from ons.gov.uk, 559 KB) behind /gb's household card, eating out as catering services: 32% of food money (the shard's 39% counted hotel stays), housing and bills 18%, getting around 14%, every figure stamped, the workbook on the sources page.
 - **Question:** /gb's "What households spend on" prints the shard's shares (39% of food money on eating out, housing and bills
   18%), with no source. The official shares are in the national statistics office's Family Spending workbooks, which are not on
   disk, and the night may not download anything. May the data track fetch them?
@@ -89,7 +89,7 @@ MORNING-REPORT.md.
   the portal route, and the welcome page a checkout returns to.
 
 ### P04.2 The UK's peers table
-- **Ruled 2026-10-05:** option (a). the data track's: each peer country's figures from its published rates.
+- **Ruled 2026-10-05:** option (a). half built: the line "The peers' figures are estimates." now prints (it was built at step 04 and never drawn). The sourcing is the data track's (QUEUE data:uk-peers-sourced): most peer fields have no single official figure on the UK row's basis; the brief is design/loop/build/research/2026-10-05-uk-peers-official-rates.md.
 - **Question:** /gb's "Against the peers" prints the UK's sourced row beside Ireland, France, Germany and the Netherlands, whose
   tax, payroll and registration figures are hand-held constants with no source. Tonight the line says "The peers' figures are
   estimates" (the audit's own remedy). Should the peers' figures be sourced, or the rows withheld?
@@ -99,7 +99,7 @@ MORNING-REPORT.md.
 
 
 ### P20.1 The links a locked page takes from a free reader (step 20)
-- **Ruled 2026-10-05:** option (a). being built: a free row of plain doors in each locked page's free half.
+- **Ruled 2026-10-05:** option (a). built (website 53e96993): the locked /gb names the UK's seven city pages and the London trade pages name their sibling trades, in a free zone after the close; the paywall gate's rule 7 holds that a free reader loses no link.
 - **Question:** when the paywall is on, a locked level hides its links too. Measured by the paywall-shape gate on the locked
   renders: London restaurants keeps 6 of its 9 internal links (the four sibling trades in "Other trades to open", inside "The
   mix", are gone: grocery stores, legal services, estate agents, software development), and /gb loses its three city cards
@@ -162,7 +162,7 @@ MORNING-REPORT.md.
   available if they are unhappy with your answer.
 
 ### P31.1 A public corrections log and a changelog (step 31; QUEUE cred:about-figures)
-- **Ruled 2026-10-05:** option (a). being built: /about-data/corrections, "No corrections yet" its first state, no changelog.
+- **Ruled 2026-10-05:** option (a). built (website f71f2cd1): /corrections, "No corrections yet." its first state, no changelog, no promise of answer or fix times (yours to make).
 - **Question:** the credibility doctrine of 2026-10-02 has the site show a dated corrections page and a changelog of data
   releases, with a promise to answer a report in two working days and fix a figure in five. Both are promises you make in public.
   Do you want them, and from when?
@@ -185,7 +185,7 @@ MORNING-REPORT.md.
 - **Built either way:** the notebook level, each post on its own picture or the UK's photograph, never the old rail's skyline.
 
 ### P36.2 The editorial feed's formats on the home page (step 36)
-- **Ruled 2026-10-05:** option (a). being built: the duel and the ranked list on the new home page, from the feed.
+- **Ruled 2026-10-05:** option (a). the duel built ("Which trades fail most", from the feed, behind the home page's switch); the ranked list clashes with the home page's second answer, so it waits as P36.2b.
 - **Question:** the feed `E:/atlas/registers/uk/tables/editorial_feed.json` (built 2026-10-04) and the seven formats of
   HOMEPAGE-EDITORIAL.md wait for your word; nothing of them is on the home page tonight. Which first?
 - **Options:** (a) Recommended: two fresh, like-for-like formats first, "the duel" (from the trades that fail most) and the ranked
@@ -216,3 +216,13 @@ MORNING-REPORT.md.
   measure again.
 - **Built either way:** the checklist's own faults fixed (it reads the country's floor decision and the trade page's floor line
   again); the 17 other exemplars at their floor, the home page among them (5 of 5).
+
+### P36.2b The ranked list's item (found while building P36.2, 2026-10-05 evening)
+- **Question:** the ranked list you chose with the duel is "typical takings by trade" in London, top five and bottom five. The home
+  page's second answer already prints those figures ("What London's trades take": the middle trade $220K, hotels and guesthouses
+  $1.0M), and your page laws allow no figure twice on a page (clause 66). I did not see the clash when I recommended it. Which
+  ranked list?
+- **Options:** (a) Recommended: a place question instead, "Where kitchens score five" (the share of London restaurants and cafes
+  rated five for hygiene, by borough, from the feed, fresh to 2 October 2026): like for like, and a question the home page does not
+  ask yet; (b) the takings list in place of the second answer card; (c) the duel alone for now.
+- **Built either way:** the duel ("Which trades fail most"), from the feed, behind the home page's switch.
