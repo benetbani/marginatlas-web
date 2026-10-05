@@ -251,6 +251,25 @@ const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string
       "found in COUNTRIES (the function returns null before this line otherwise), which is the list the " +
       "/[country] route gates on.",
   },
+  {
+    file: "src/app/pro/[country]/page.tsx",
+    path: "/*",
+    guard: "if (!lockablePath(`/${country}`)) notFound();",
+    why:
+      "The Pro reader's mirror (masterplan step 18): the canonical is this page's own param, the public " +
+      "address the middleware rewrote from. The page answers notFound() unless lockablePath accepts it " +
+      "(the UK's page alone), and the public metadata it reads first notFound()s a code COUNTRIES does " +
+      "not hold, the list the /[country] route gates on.",
+  },
+  {
+    file: "src/lib/monetization/pro_route.ts",
+    path: "/pro*",
+    guard: "if (!paywallOn || !lockablePath(path)) return null;",
+    why:
+      "Not a link: the rewrite target the middleware serves in place of a public address a signed-in reader " +
+      "asked for (masterplan step 18). It is built only from a path lockablePath accepted, the country page, " +
+      "a UK city page or a London trade page, each the route's own address, and is never printed on a page.",
+  },
 ];
 
 /* ------------------------------------------------------------------ scanning */
