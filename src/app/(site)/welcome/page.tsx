@@ -42,13 +42,13 @@ export default async function WelcomePage({ searchParams }: { searchParams: Prom
     <article className="mx-auto max-w-md px-4 py-16 md:py-24">
       {email ? (
         <>
-          <h1 className="mb-3 font-display text-3xl tracking-tight text-ink-900 md:text-4xl">Pro is yours</h1>
+          <h1 className="mb-3 font-display text-3xl tracking-tight text-ink-900">Pro is yours</h1>
           <p className="mb-6 text-base leading-relaxed text-cocoa-700">Sign in with {email} to open it.</p>
           <SignInForm initialEmail={email} embedded />
         </>
       ) : (
         <>
-          <h1 className="mb-3 font-display text-3xl tracking-tight text-ink-900 md:text-4xl">We could not find that checkout.</h1>
+          <h1 className="mb-3 font-display text-3xl tracking-tight text-ink-900">We could not find that checkout.</h1>
           <p className="text-base leading-relaxed text-cocoa-700">
             <Link href="/pricing" className="font-medium text-atlas-700 underline underline-offset-2 hover:text-atlas-900">
               Back to pricing

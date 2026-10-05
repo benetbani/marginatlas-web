@@ -45,7 +45,7 @@ export function CheckoutButton({
       <button type="button" onClick={go} disabled={state === "busy"} className={className}>
         {children}
       </button>
-      {state === "failed" ? <p className="mt-2 text-center text-[13px] text-clay-700">Checkout did not open. Try again.</p> : null}
+      {state === "failed" ? <p className="mt-2 text-center text-xs text-clay-700">Checkout did not open. Try again.</p> : null}
     </>
   );
 }

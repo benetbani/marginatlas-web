@@ -32,7 +32,7 @@ export function ManagePlanButton() {
       >
         Manage or cancel
       </button>
-      {state === "failed" ? <p className="mt-2 text-[13px] text-clay-700">Could not open billing. Try again.</p> : null}
+      {state === "failed" ? <p className="mt-2 text-xs text-clay-700">Could not open billing. Try again.</p> : null}
     </div>
   );
 }
