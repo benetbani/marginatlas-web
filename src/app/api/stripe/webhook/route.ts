@@ -1,51 +1,23 @@
 /**
- * /api/stripe/webhook — sync Stripe subscription status into Supabase (M2).
+ * /api/stripe/webhook: Stripe's events into the subscriptions table (milestone 2).
  *
- * Verifies the Stripe signature, then on subscription create/update/delete writes
- * the user's tier + status into public.subscriptions via the SERVICE-ROLE client
- * (which bypasses RLS; users can never write their own tier). The user is matched
- * by the supabase_user_id we stamp on the subscription metadata at checkout.
+ * Verifies the signature, then hands the event to the pure core (src/lib/monetization/stripe_sync.ts, which says why each
+ * decision is made) with the real clients. Any failure answers 500 so Stripe retries; a success answers 200 with nothing about
+ * the buyer in the body.
  *
- * Dormant until STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET are set (returns 503).
- * The founder registers this endpoint URL in the Stripe dashboard.
- *
- * Env also read: STRIPE_PRICE_BASIC_MONTHLY/ANNUAL, STRIPE_PRICE_PREMIUM_MONTHLY/
- * ANNUAL (to map a price id back to a tier).
+ * Dormant until STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET are set (503). The founder registers this URL in the Stripe dashboard
+ * with the events checkout.session.completed and customer.subscription.created, .updated, .deleted.
  */
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { supabaseAdmin } from "@/lib/supabase";
-
-function priceTier(priceId: string | undefined): "basic" | "premium" | null {
-  if (!priceId) return null;
-  if (
-    priceId === process.env.STRIPE_PRICE_BASIC_MONTHLY ||
-    priceId === process.env.STRIPE_PRICE_BASIC_ANNUAL
-  )
-    return "basic";
-  if (
-    priceId === process.env.STRIPE_PRICE_PREMIUM_MONTHLY ||
-    priceId === process.env.STRIPE_PRICE_PREMIUM_ANNUAL
-  )
-    return "premium";
-  return null;
-}
-
-/** Read the period end from the subscription or its first item (Stripe moved this
- * field onto items in newer API versions). Cast-guarded so it compiles either way. */
-function periodEndISO(sub: Stripe.Subscription): string | null {
-  const top = (sub as unknown as { current_period_end?: number }).current_period_end;
-  const item = sub.items?.data?.[0] as unknown as { current_period_end?: number } | undefined;
-  const ts = top ?? item?.current_period_end;
-  return typeof ts === "number" ? new Date(ts * 1000).toISOString() : null;
-}
+import { handleStripeEvent, type SubLike } from "@/lib/monetization/stripe_sync";
+import { ensureUserForEmail } from "@/lib/monetization/accounts";
 
 export async function POST(request: NextRequest) {
   const secret = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  if (!secret || !webhookSecret) {
-    return NextResponse.json({ error: "not configured" }, { status: 503 });
-  }
+  if (!secret || !webhookSecret) return NextResponse.json({ error: "not configured" }, { status: 503 });
   const sig = request.headers.get("stripe-signature");
   if (!sig) return NextResponse.json({ error: "no signature" }, { status: 400 });
 
@@ -59,39 +31,22 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    if (
-      event.type === "customer.subscription.created" ||
-      event.type === "customer.subscription.updated" ||
-      event.type === "customer.subscription.deleted"
-    ) {
-      const sub = event.data.object as Stripe.Subscription;
-      const userId =
-        (sub.metadata?.supabase_user_id as string | undefined) ?? null;
-      if (userId) {
-        const deleted = event.type === "customer.subscription.deleted";
-        const status = deleted ? "canceled" : sub.status;
-        const entitledTier = priceTier(sub.items.data[0]?.price?.id);
-        const active = status === "active" || status === "trialing";
-        await supabaseAdmin.from("subscriptions").upsert(
-          {
-            user_id: userId,
-            tier: active && entitledTier ? entitledTier : "free",
-            status,
-            stripe_customer_id:
-              typeof sub.customer === "string" ? sub.customer : sub.customer.id,
-            stripe_subscription_id: sub.id,
-            current_period_end: periodEndISO(sub),
-            cancel_at_period_end: sub.cancel_at_period_end,
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "user_id" },
-        );
-      }
-    }
-  } catch {
-    // Swallow + 200 so Stripe does not retry forever on a transient DB error;
-    // the next subscription event will reconcile.
+    await handleStripeEvent(event, {
+      customerEmail: async (id) => {
+        const c = await stripe.customers.retrieve(id);
+        return "deleted" in c && c.deleted ? null : ((c as Stripe.Customer).email ?? null);
+      },
+      ensureUser: ensureUserForEmail,
+      upsert: async (row) => {
+        const { error } = await supabaseAdmin.from("subscriptions").upsert(row, { onConflict: "user_id" });
+        if (error) throw new Error(error.message);
+      },
+      retrieveSubscription: async (id) => (await stripe.subscriptions.retrieve(id)) as unknown as SubLike,
+      now: () => new Date(),
+    });
+    return NextResponse.json({ received: true });
+  } catch (e) {
+    console.error("[stripe webhook] sync failed:", (e as Error).message);
+    return NextResponse.json({ error: "sync failed" }, { status: 500 });
   }
-
-  return NextResponse.json({ received: true });
 }
