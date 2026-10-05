@@ -155,3 +155,27 @@ MORNING-REPORT.md.
   (never indexed), where the site's correction form posts to the corrections table. Nothing public lists the reports. The
   "Checked [date]" line is wired to the register slices' build date, which the export does not write yet, so no page prints it
   (QUEUE data:uk-register-built-date).
+
+### P36.1 Which posts the home page's notebook shows (step 36)
+- **Question:** the notebook shows the research's two "keep" posts (the firm against the establishment, the median against the
+  average) from `src/lib/home/notebook.ts`. BLOG.md (goal of 2026-10-02) proposes keep 2, rewrite 10 on the UK registers, retire
+  58 with a 301 each. Which do you want?
+- **Options:** (a) Recommended: keep the two as the notebook now, rewrite the ten on the registers next, retire the 58 before the
+  site goes public; (b) keep the two and retire the rest now, rewriting later; (c) a different list, named in the module.
+- **Built either way:** the notebook level, each post on its own picture or the UK's photograph, never the old rail's skyline.
+
+### P36.2 The editorial feed's formats on the home page (step 36)
+- **Question:** the feed `E:/atlas/registers/uk/tables/editorial_feed.json` (built 2026-10-04) and the seven formats of
+  HOMEPAGE-EDITORIAL.md wait for your word; nothing of them is on the home page tonight. Which first?
+- **Options:** (a) Recommended: two fresh, like-for-like formats first, "the duel" (from the trades that fail most) and the ranked
+  list, each checked against the 45-day rule before it prints; (b) all seven at once; (c) none until the blog's rewrite lands.
+- **Built either way:** the home page holds the UK's answers, its cities and what the atlas holds; any format later reads the feed,
+  never the document's figures, which drifted from it.
+
+### P36.3 The old home page and its components (step 36)
+- **Question:** the new home page stands behind NEXT_PUBLIC_HOME_REFORM (off in production); the old one still serves `/` with its
+  Specimen, ExampleTiles, CatalogPlates, AudienceBand (which links the Margin Index, a coined index), UpgradeTeaser and the blog
+  rail on the Positano photograph. Once you approve the new page, may the old branch and the components only it uses be deleted?
+- **Options:** (a) Recommended: switch NEXT_PUBLIC_HOME_REFORM on with the launch, then delete the old branch in the next session
+  after a search for other importers; (b) keep both for a while and compare; (c) keep the old page.
+- **Built either way:** the new page, gated and photographed (step 37); the old page untouched.

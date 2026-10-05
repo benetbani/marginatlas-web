@@ -571,6 +571,9 @@ const GATES: Gate[] = [
   /* What the atlas holds, the ledger's counts stamped; Pro said once, only with the paywall's switch on, its prices through the
      plan; the launch check reading the new section (masterplan step 35; his ruling 23). */
   { name: "home-bands", script: "tests/home/home_bands.test.ts" },
+  /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
+     step 36; MODEL.md PART 6). */
+  { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },
   { name: "research-drop-schema", script: "tests/ingest/research_drop_schema.test.ts" },
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },

@@ -2696,6 +2696,8 @@ export const COPY = {
     searchLabel: "Search",
     answersLabel: "The UK's answers",
     citiesLabel: "The UK's cities",
+    /** THE NOTEBOOK AND THE NEWSLETTER (masterplan step 36): the page's furniture after the readings. */
+    notebook: { title: "From the notebook", newsletter: "The newsletter" },
     /** WHAT THE ATLAS HOLDS (masterplan step 35): the ledger module's counts (src/lib/home/atlas_ledger.ts), an open section. */
     atlas: {
       kicker: "What the atlas holds",

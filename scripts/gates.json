@@ -1572,6 +1572,18 @@
       "claims": []
     },
     {
+      "name": "no-terra-hover",
+      "script": "scripts/verify_no_terra_hover.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO TERRACOTTA ON A HOVER (milestone 3, masterplan step 36; MODEL.md PART 6: \"TERRACOTTA NEVER APPEARS on ...",
+      "reads": [
+        "scripts/no_terra_hover_baseline.json",
+        "src/components/spine"
+      ],
+      "claims": []
+    },
+    {
       "name": "research-drop-schema",
       "script": "tests/ingest/research_drop_schema.test.ts",
       "args": [],

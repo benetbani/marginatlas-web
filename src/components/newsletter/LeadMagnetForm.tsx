@@ -93,14 +93,14 @@ export default function LeadMagnetForm({
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@work.com"
           aria-invalid={status === "error"}
-          className={`flex-1 h-11 px-3 rounded-md text-base bg-white text-ink-900 border ${
+          className={`min-w-0 flex-1 h-11 px-3 rounded-md text-base bg-white text-ink-900 border ${
             status === "error" ? "border-atlas-700" : "border-cocoa-700/25"
           }`}
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="h-11 px-5 rounded-md text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-atlas-700 hover:bg-atlas-800 text-white disabled:opacity-70"
+          className="h-11 shrink-0 whitespace-nowrap px-5 rounded-md text-sm font-semibold inline-flex items-center justify-center gap-1.5 bg-atlas-700 hover:bg-atlas-800 text-white disabled:opacity-70"
         >
           {status === "loading" ? (
             <>
@@ -115,7 +115,8 @@ export default function LeadMagnetForm({
           )}
         </button>
       </form>
-      <p className="mt-2 text-xs text-cocoa-700/70">{PRIVACY_LINE}</p>
+      {/* Full cocoa-700, not at 70% (masterplan step 36): on a tinted band the faded line read 4.14 to 1, under the 4.5 floor. */}
+      <p className="mt-2 text-xs text-cocoa-700">{PRIVACY_LINE}</p>
     </>
   );
 }

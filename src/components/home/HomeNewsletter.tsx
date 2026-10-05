@@ -43,8 +43,10 @@ export function HomeNewsletter() {
           opaque white is a hole punched in the photograph. It also brings
           position: relative, which is what keeps a card above the frame's fixed
           layers rather than behind them. */}
-      <div className="atlas-card px-6 py-8 md:px-10 md:py-10">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+      {/* TWO COLUMNS BY ITS OWN WIDTH, NOT THE SCREEN'S (masterplan step 36): on the band page the card stands in two thirds of the
+          column, where the screen's md breakpoint split it into columns too narrow for the form, and the button sat on the list. */}
+      <div className="atlas-card px-6 py-8 md:px-10 md:py-10 [container-type:inline-size]">
+        <div className="grid gap-8 items-center [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-10">
           <div>
             <SectionEyebrow size="md" className="mb-2">Free report</SectionEyebrow>
             <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">

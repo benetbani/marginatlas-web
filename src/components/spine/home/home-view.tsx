@@ -24,6 +24,8 @@ import { CityCards } from "@/components/spine/archetypes/CityCards";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { isPaywallOn } from "@/lib/feature_flags";
 import { ProBand } from "./ProBand";
+import { HomeNewsletter } from "@/components/home/HomeNewsletter";
+import { buildNotebook, type NotebookCard } from "@/lib/home/notebook";
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
@@ -153,6 +155,35 @@ function AtlasHolds({ holds }: { holds: AtlasHoldsData }) {
   );
 }
 
+/* THE NOTEBOOK (masterplan step 36): the posts kept for the home page (src/lib/home/notebook.ts), each a link with its own picture
+   or the UK's photograph, never the old rail's one skyline under every card. Furniture, not a reading: no figure, so it stands
+   outside the section cards, as the newsletter beside it does. */
+const dateText = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+
+function Notebook({ cards }: { cards: NotebookCard[] }) {
+  return (
+    <section data-notebook="" aria-labelledby="notebook-title" className="flex flex-col">
+      <h2 id="notebook-title" data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-snug tracking-tight text-[var(--c-ink)]">
+        {COPY.home.notebook.title}
+      </h2>
+      <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {cards.map((c) => (
+          <li key={c.slug}>
+            <a href={c.href} className="tap-y flex h-full flex-col overflow-hidden rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={c.image.src} alt={c.image.alt} loading="lazy" className="aspect-[16/9] w-full object-cover" />
+              <span className="px-4 pt-3 text-[length:var(--t-body)] font-semibold leading-snug">{c.title}</span>
+              <time dateTime={c.date} className="px-4 pb-4 pt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+                {dateText(c.date)}
+              </time>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function AnswerDoor({ a }: { a: HomeAnswer }) {
   return a.key === "answer" ? <TaxAnswer a={a} /> : a.key === "trades" ? <TradesAnswer a={a} /> : <YearsAnswer a={a} />;
 }
@@ -161,7 +192,8 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const answers = buildHomeAnswers(data?.iso2 ?? "GB");
   const cities = buildCityCards(data?.iso2 ?? "GB");
   const holds = buildAtlasHolds();
-  const zones: Array<{ key: string; split: ZoneSplit; label: string; body: React.ReactNode[] }> = [
+  const notebook = buildNotebook();
+  const zones: Array<{ key: string; split: ZoneSplit; stack?: "lg"; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, what London's trades take, who is still
        trading, each a door to its section of /gb. */
@@ -171,12 +203,16 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     /* PRO, SAID ONCE AND QUIETLY (ruling 23), only while the paywall's switch is on: the zone is not listed otherwise, so no band
        stands empty and nothing about Pro prints. */
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
+    /* THE NOTEBOOK, THEN THE NEWSLETTER (masterplan step 36), each its own level at two thirds (the zones' LONE rule): beside the
+       notebook in a half column the newsletter's form and list overlapped; the newsletter band is unchanged in what it asks. */
+    ...(notebook.length ? [{ key: "notebook", split: "2-1" as ZoneSplit, label: COPY.home.notebook.title, body: [<Notebook key="notebook" cards={notebook} />] }] : []),
+    { key: "newsletter", split: "2-1", label: COPY.home.notebook.newsletter, body: [<HomeNewsletter key="newsletter" />] },
   ];
   return (
     <>
       <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
         {zones.map((z, i) => (
-          <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label}>
+          <Zone key={z.key} tone={zoneTone(i)} split={z.split} stack={z.stack} label={z.label}>
             {z.body}
           </Zone>
         ))}
