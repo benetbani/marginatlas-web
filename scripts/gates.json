@@ -1891,6 +1891,17 @@
       "claims": []
     },
     {
+      "name": "hire-all-in",
+      "script": "tests/spine/hire_all_in.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "ONE HIRE, ALL IN (milestone 2, masterplan step 22; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 77): the builder's figures against the research's worked examples (E:/atlas/design/loop/build/res",
+      "reads": [
+        "src/lib/spine/sections/hire_all_in.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-law-loan",
       "script": "tests/uk/law/loan.test.ts",
       "args": [],
@@ -3108,11 +3119,13 @@
         "src/app/[country]/[geo]/industries/page.tsx",
         "src/app/[country]/[geo]/page.tsx",
         "src/app/[country]/page.tsx",
+        "src/app/pro/[country]/page.tsx",
         "src/components/GlobalSearch.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/hood/hood-view.tsx",
         "src/lib/cells/related_links.ts",
         "src/lib/geo/page_targets.ts",
+        "src/lib/monetization/pro_route.ts",
         "src/lib/taxonomy/retired_paths.ts"
       ],
       "claims": []

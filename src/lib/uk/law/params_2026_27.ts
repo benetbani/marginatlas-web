@@ -122,6 +122,20 @@ export const UK_2026_27 = {
     under18: 8.0,
     apprentice: 8.0,
   },
+  holiday: {
+    /** 5.6 weeks of paid holiday a year (4.0 under reg 13, 1.6 under reg 13A), at most 28 days for a five-day week; paid time, so
+     *  inside the yearly pay. https://www.gov.uk/holiday-entitlement-rights ; https://www.legislation.gov.uk/uksi/1998/1833/regulation/13A
+     *  (masterplan step 22, from the research of 2026-10-02, 77.2) */
+    weeks: 5.6,
+  },
+  rightToWork: {
+    /** the civil penalty for each illegal worker: a starting point of 45,000 for a first breach, 60,000 for a repeat within three
+     *  years (the legal maximum), since 13 February 2024. The Home Office code of practice:
+     *  https://assets.publishing.service.gov.uk/media/6abe1532943e890cb55e5d97/Code_of_practice_on_preventing_illegal_working_-_Right_to_Work_Scheme_for_employers.pdf ;
+     *  SI 2024/82: https://www.legislation.gov.uk/uksi/2024/82/made (masterplan step 22, from the research of 2026-10-02, 77.2) */
+    penaltyFirst: 45_000,
+    penaltyRepeat: 60_000,
+  },
 } as const;
 
 export type UkLaw = typeof UK_2026_27;

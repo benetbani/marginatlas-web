@@ -609,6 +609,9 @@ const GATES: Gate[] = [
   { name: "uk-law-business-rates", script: "tests/uk/law/business_rates.test.ts" },
   { name: "uk-law-lease-tax", script: "tests/uk/law/lease_tax.test.ts" },
   { name: "uk-law-redundancy", script: "tests/uk/law/redundancy.test.ts" },
+  /* One hire, all in: the worked hour and the parting bill from the law engine, against the research's worked examples to the penny
+     (masterplan step 22; his ruling 28; DATA-REQUIREMENTS item 77). */
+  { name: "hire-all-in", script: "tests/spine/hire_all_in.test.ts" },
   { name: "uk-law-loan", script: "tests/uk/law/loan.test.ts" },
   /* A placeholder is not a figure (2026-09-23 night): two new builders read one
      each as "modelled" the same evening (London's calendar, printed on

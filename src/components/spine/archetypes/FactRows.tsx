@@ -18,6 +18,7 @@
  *  - `data-archetype="fact-rows"`, `data-row` and `data-label` on each, so the harness reads its rows like any other.
  */
 import * as React from "react";
+import type { Provenance } from "@/lib/spine/provenance";
 import { Fig, Ico, SampleTag } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 
@@ -28,6 +29,8 @@ export type FactRow = {
   note?: string | null;
   icon?: AtlasIconId;
   confidence?: "measured" | "modeled" | "placeholder";
+  /** Where the row's figure came from (src/lib/spine/provenance.ts), stamped on its figure; a row without one stamps nothing. */
+  prov?: Provenance | null;
 };
 
 /* A DATE NEVER BREAKS OVER TWO LINES (the design review, 2026-10-04: "since 1 / Apr 2026"): a note's "1 Apr 2026" keeps its two
@@ -67,7 +70,7 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
         </span>
       </dt>
       <dd className="text-right [@container(min-width:420px)]:text-left">
-        <Fig className="block pt-1 text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]">{r.value}</Fig>
+        <Fig className="block pt-1 text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]" prov={r.prov}>{r.value}</Fig>
       </dd>
     </div>
   );
