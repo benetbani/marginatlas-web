@@ -8,7 +8,8 @@ MORNING-REPORT.md.
 
 ### P0.1 Cookie-free visit counting (milestone 1, live but off)
 - **Question:** switch on Vercel Web Analytics?
-- **Options:** (a) Recommended: yes: Vercel, the project, Analytics, Enable; then Settings, Environment Variables,
+- **Options:** (a) Recommended: yes, because it counts visits without a cookie, so the site learns which pages are read and
+  needs no consent banner: Vercel, the project, Analytics, Enable; then Settings, Environment Variables,
   `NEXT_PUBLIC_WEB_ANALYTICS` = `1` for Production; the next deploy turns it on. (b) Not yet.
 - **Built either way:** the script loads only behind the switch (milestone 1, M2).
 
@@ -161,14 +162,17 @@ MORNING-REPORT.md.
   average) from `src/lib/home/notebook.ts`. BLOG.md (goal of 2026-10-02) proposes keep 2, rewrite 10 on the UK registers, retire
   58 with a 301 each. Which do you want?
 - **Options:** (a) Recommended: keep the two as the notebook now, rewrite the ten on the registers next, retire the 58 before the
-  site goes public; (b) keep the two and retire the rest now, rewriting later; (c) a different list, named in the module.
+  site goes public, because the two are the only posts the research keeps as they stand; (b) keep the two and retire the rest
+  now, rewriting later; (c) a different list, named in the module.
 - **Built either way:** the notebook level, each post on its own picture or the UK's photograph, never the old rail's skyline.
 
 ### P36.2 The editorial feed's formats on the home page (step 36)
 - **Question:** the feed `E:/atlas/registers/uk/tables/editorial_feed.json` (built 2026-10-04) and the seven formats of
   HOMEPAGE-EDITORIAL.md wait for your word; nothing of them is on the home page tonight. Which first?
 - **Options:** (a) Recommended: two fresh, like-for-like formats first, "the duel" (from the trades that fail most) and the ranked
-  list, each checked against the 45-day rule before it prints; (b) all seven at once; (c) none until the blog's rewrite lands.
+  list, each checked against the 45-day rule before it prints, because both are drawn by forms the site already has (ranked bars
+  and a mark list) and both read monthly or yearly items the feed holds today; (b) all seven at once; (c) none until the blog's
+  rewrite lands.
 - **Built either way:** the home page holds the UK's answers, its cities and what the atlas holds; any format later reads the feed,
   never the document's figures, which drifted from it.
 
@@ -177,7 +181,8 @@ MORNING-REPORT.md.
   Specimen, ExampleTiles, CatalogPlates, AudienceBand (which links the Margin Index, a coined index), UpgradeTeaser and the blog
   rail on the Positano photograph. Once you approve the new page, may the old branch and the components only it uses be deleted?
 - **Options:** (a) Recommended: switch NEXT_PUBLIC_HOME_REFORM on with the launch, then delete the old branch in the next session
-  after a search for other importers; (b) keep both for a while and compare; (c) keep the old page.
+  after a search for other importers, because the old page still links the Margin Index, a coined index your ruling 11 rules
+  out, and two home pages are two to keep true; (b) keep both for a while and compare; (c) keep the old page.
 - **Built either way:** the new page, gated and photographed (step 37); the old page untouched.
 
 ### P38.1 City pages one block under their floor (step 38)

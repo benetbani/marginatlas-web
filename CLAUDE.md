@@ -129,7 +129,9 @@ code puts on the page>`.
 
 ## Latest handoff
 
-- **`docs/handoff/HANDOFF-marginatlas-2026-10-04.md` IS THE CURRENT HANDOFF, READ IT FIRST**
+- **`docs/handoff/HANDOFF-marginatlas-2026-10-04.md` IS THE CURRENT HANDOFF, READ IT FIRST, starting at its section 0**
+  (2026-10-06 morning: the masterplan night, milestones 2 and 3 built behind their switches on branch `night-2026-10-05`,
+  NOT pushed; `docs/superpowers/plans/2026-10-05-masterplan/MORNING-REPORT.md` and `PARKED.md` wait for his word)
   (2026-10-04 night: the truth pass live at 38f81e8a; milestone 1 of his launch interview
   built on branch `milestone-1`, NOT pushed, his yes needed before any push or deploy; the
   Pro code map for milestone 2 at `docs/superpowers/research/2026-10-04-pro-code-map.md`;

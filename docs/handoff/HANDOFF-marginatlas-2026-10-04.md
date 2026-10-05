@@ -6,6 +6,49 @@ green alone), **LIVE since 2026-10-05 at `main` 128c66b6 on his "Push and deploy
 the estimate mark's hover label, fixed on branch `m1-followups` 0e0eba92, NOT pushed); milestone 2 (Pro) is not started, its code
 map is written. Written 2026-10-04, late night; closed and shipped 2026-10-05 after midnight.
 
+## 0. 2026-10-06 MORNING: THE MASTERPLAN NIGHT (READ THIS FIRST; sections 1 to 14 below are the 2026-10-04 state)
+
+**Where things stand.** The masterplan of 2026-10-05 (40 steps, `docs/superpowers/plans/2026-10-05-masterplan/`) ran unattended
+through the night and is finished: every step DONE except 06 (PARKED: the subscriptions migration is his to run). All of it is
+on website branch **`night-2026-10-05`** (its head is the commit "40: the night's proof and the morning pack", on a1117f1d), made from `main` 128c66b6 plus `m1-followups`; branch **`launch-day`** is
+that head plus one commit deleting `NEXT_PUBLIC_SITE_PRIVATE=1` from `.env.production`. **Nothing is pushed, merged into `main`,
+deployed or posted.** The design repo's commits are on `p4-seam` (STATE.md's step in flight says the same).
+
+**What was built.** Milestone 2 (Pro): one plan at $38 / $238 (`src/lib/monetization/plan.ts`), checkout with no account and no
+trial, the Stripe webhook on a pure core, the welcome page, the account's plan and the portal, no pop-up anywhere, the paywall
+(`isPaywallOn()` = `NEXT_PUBLIC_PAYWALL` and accounts together) locking every UK chapter's later levels on /gb, the UK city pages
+and the London trade pages, an uncached `/pro` mirror for Pro readers, the closed half declared to search engines, the four Pro
+sections on /gb (an hour all in, the lease by law, opening from abroad, if it fails), the legal drafts behind the switch, "Report
+a mistake" on every spine page. Milestone 3: the home page on the band page behind `NEXT_PUBLIC_HOME_REFORM` (the hero he kept,
+a search that lands only on pages that exist, the UK's three answers as doors, the cities and what the atlas holds, Pro once,
+the notebook, the newsletter), every harness gate at zero for `home-gb`. Launch: the sample gate holds his ruling 5 (marks stay
+off; a public build passes while the honesty stands in source), the launch checklist's faults fixed, LAUNCH-SWITCHES.md in his
+order, four launch posts drafted in `E:/atlas/design/loop/build/launch/posts/`.
+
+**Proven.** Full chains: 219 of 225 after step 21, 228 of 231 after step 31, 233 of 235 after step 40 (at 04f16d2b) (every red fixed at its source,
+green alone). Sheets: `photos/m2/MILESTONE-2-SHEET.jpeg`, `photos/night-D/PHASE-D-SHEET.jpeg`, `photos/m3/MILESTONE-3-SHEET.jpeg`
+(under `E:/atlas/design/loop/build/`). The launch checklist subset a, c to i: 7 of 8, the reason real (P38.1).
+
+**Next actions, in order.** (1) His answers to `PARKED.md` (nineteen questions, each with a recommendation; the morning report
+lists them). (2) His word on what to push: the recommendation is the night branch now with every switch off (note: with the
+paywall off the four Pro sections are open to all), the home page switched on with the launch. (3) Launch day by
+`LAUNCH-SWITCHES.md`, then `launch-day`. (4) The first full `npm run build` of the night branch never ran (P18.1): Vercel's on
+his push, or his own run with his apps closed.
+
+**The night's traps (each cost time once).**
+- `scripts/counts.ts` counts TRACKED files: `git add` a new file before `counts --write`, or `counts-fresh` reds.
+- The Write tool turns `\u2014`-style escapes into the characters; Python patches build an escape with `chr(92)`. A Python
+  heredoc in Git Bash wrote "\\r\\n" in a regex as CR CR LF: write scripts with the Write tool and build control characters with
+  `chr()`.
+- Zones stack their cells with `items-start`; a level of doors (kept boxes) ends ragged unless the zone is `even` (step 37), and
+  then each card's rows go to its foot (`mt-auto`) so no blank pools under them (CARD FOOT BLANK is 48px).
+- TAP SIZE exempts text fields, so the newsletter's email field ran 23px tall on phones (a `flex-1` basis of zero in a column)
+  and only the photograph caught it. Look at every photograph.
+- UK Business Forums answers scripts with a browser check and Reddit refuses scripts: their rules were not read first-hand, and
+  no check was got round; the posts' README says so.
+- Free memory fell to 26 MB during a browser gate: wait and check again, never close his apps.
+- The launch check's item (i) reads production's home page; `--home-file=<render>` reads a local render in a subset.
+
 > **How to use this document.** Read top to bottom once. Then read the files in section 7 in the given order. Do not start work
 > until you can answer the checklist in section 13. A ready-to-paste re-hydration prompt is in section 14.
 
