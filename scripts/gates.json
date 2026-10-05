@@ -1056,6 +1056,17 @@
       "claims": []
     },
     {
+      "name": "pro-route",
+      "script": "tests/monetization/pro_route.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHERE A SIGNED-IN READER OF A LOCKED UK PAGE GOES (milestone 2, masterplan step 18): a reader holding a session cookie on a page the paywall locks is sent to the uncached mirror under /pro; nobody els",
+      "reads": [
+        "src/lib/monetization/pro_route.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],

@@ -405,6 +405,8 @@ const GATES: Gate[] = [
   { name: "one-price", script: "tests/monetization/one_price.test.ts" },
   /* Which levels lock: each chapter's first level free, the rest Pro, never a level outside the chapters (masterplan step 14; his ruling 18). */
   { name: "paywall-levels", script: "tests/monetization/levels.test.ts" },
+  /* A signed-in reader of a page that locks goes to the uncached mirror under /pro; nobody else, nowhere else (masterplan step 18). */
+  { name: "pro-route", script: "tests/monetization/pro_route.test.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "no-slot-counting", script: "scripts/verify_no_slot_counting.ts" },
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },

@@ -30,6 +30,8 @@ import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
 import { cityPathFor } from "@/lib/cities/city_path";
 import { edgeNotFound, legacyHoodTarget } from "@/lib/routing/edge_not_found";
+import { proRewrite } from "@/lib/monetization/pro_route";
+import { isPaywallOn } from "@/lib/feature_flags";
 
 /**
  * TRAINING harvesters, blocked at the door with a 451.
@@ -473,6 +475,18 @@ export function middleware(req: NextRequest) {
         status: 404,
         request: { headers: withPathname(req, path) },
       });
+    }
+    // 3c. A signed-in reader of a page the paywall locks (masterplan step 18; src/lib/monetization/pro_route.ts): rewritten to
+    // the uncached mirror under /pro, which draws the page open for Pro and locked for anyone else. Below every redirect and
+    // not-found pin, so an address that moves or names nothing never reaches it; above the cache header below, and marked
+    // private, so a reader's own page is never held at the edge. The address bar keeps the public address.
+    const proTarget = proRewrite(path, req.cookies.getAll().map((c) => c.name), isPaywallOn());
+    if (proTarget) {
+      const url = req.nextUrl.clone();
+      url.pathname = proTarget;
+      const proRes = NextResponse.rewrite(url, { request: { headers: withPathname(req, path) } });
+      proRes.headers.set("Cache-Control", "private, no-store");
+      return proRes;
     }
 
     const res = NextResponse.next({ request: { headers: withPathname(req, path) } });
