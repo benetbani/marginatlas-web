@@ -1,0 +1,97 @@
+{
+  "what": "The law of a business lease in England and Wales (masterplan step 24; DATA-REQUIREMENTS item 73), as read on 2 October 2026 by the research E:/atlas/design/loop/build/research/2026-10-02-pro-sections-uk-law.md, section 73: each field its value, the page it was read on, the sentence quoted and the day. A field the research does not answer is absent, not guessed: the break clause's months, the deposit, key money, the rent review, repairs and assignment norms, the guarantee norm and a solicitor's fee (no official source holds them, 73.5 and 73.9), so the lease's 'signed for' total withholds.",
+  "jurisdiction": "England and Wales",
+  "checked": "2026-10-02",
+  "fields": {
+    "renewal_right": {
+      "value": "statutory",
+      "source_url": "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56/section/24",
+      "quote": "A tenancy to which this Part of this Act applies shall not come to an end unless terminated in accordance with the provisions of this Part of this Act",
+      "checked": "2026-10-02"
+    },
+    "landlord_notice_months": {
+      "value": { "min": 6, "max": 12 },
+      "source_url": "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56/section/25",
+      "quote": "not more than twelve nor less than six months before the date of the termination specified therein",
+      "checked": "2026-10-02"
+    },
+    "tenant_request_months": {
+      "value": { "min": 6, "max": 12 },
+      "source_url": "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56/section/26",
+      "quote": "not more than twelve nor less than six months after the making of the request",
+      "checked": "2026-10-02"
+    },
+    "new_tenancy_years_max": {
+      "value": 15,
+      "source_url": "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56/section/33",
+      "quote": "a tenancy for a term not exceeding fifteen years",
+      "checked": "2026-10-02"
+    },
+    "compensation_rateable_value": {
+      "value": { "multiplier": 1, "after_14_years": 2 },
+      "source_url": "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56/section/37",
+      "quote": "twice the rateable value of the holding (s.37(2)(a)); the appropriate multiplier for the purposes of section 37(2) is (a) 1 (SI 1990/363, article 4)",
+      "checked": "2026-10-02"
+    },
+    "contracting_out_notice_days": {
+      "value": 14,
+      "source_url": "https://www.legislation.gov.uk/uksi/2003/3096/made",
+      "quote": "must be served on the tenant not less than 14 days before the tenant enters into the tenancy to which it applies, or (if earlier) becomes contractually bound to do so.",
+      "checked": "2026-10-02"
+    },
+    "short_tenancy_months": {
+      "value": 6,
+      "source_url": "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56/section/43",
+      "quote": "does not apply to a tenancy granted for a term certain not exceeding six months unless",
+      "checked": "2026-10-02"
+    },
+    "registration_over_years": {
+      "value": 7,
+      "source_url": "https://www.legislation.gov.uk/ukpga/2002/9/section/4",
+      "quote": "for a term of years absolute of more than seven years from the date of the grant",
+      "checked": "2026-10-02"
+    },
+    "registration_months": {
+      "value": 2,
+      "source_url": "https://www.legislation.gov.uk/ukpga/2002/9/section/6",
+      "quote": "The period for registration is 2 months beginning with the date on which the relevant event occurs",
+      "checked": "2026-10-02"
+    },
+    "registration_fee_gbp": {
+      "value": { "fee": 45, "rent_up_to": 80000 },
+      "source_url": "https://www.legislation.gov.uk/uksi/2024/931/made",
+      "quote": "Schedule 1, Scale 1, the row 0-80,000 / 20 / 45 / 30 (the third column applies to leases)",
+      "checked": "2026-10-02"
+    },
+    "sdlt_return_days": {
+      "value": 14,
+      "source_url": "https://www.gov.uk/stamp-duty-land-tax",
+      "quote": "Send an SDLT return to HMRC and pay the tax within 14 days of completion.",
+      "checked": "2026-10-02"
+    },
+    "vat_on_rent": {
+      "value": { "rule": "optional", "rate_pct": 20 },
+      "source_url": "https://www.gov.uk/guidance/opting-to-tax-land-and-buildings-notice-742a",
+      "quote": "Supplies of land and buildings, such as freehold sales, leasing or renting, are normally exempt from VAT. Once you have opted to tax all the supplies you make of your interest in the land or buildings will normally be standard-rated",
+      "checked": "2026-10-02"
+    },
+    "dilapidations_cap": {
+      "value": "the fall in the value of the landlord's interest",
+      "source_url": "https://www.legislation.gov.uk/ukpga/Geo5/17-18/36/section/18",
+      "quote": "shall in no case exceed the amount (if any) by which the value of the reversion (whether immediate or not) in the premises is diminished owing to the breach of such covenant or agreement",
+      "checked": "2026-10-02"
+    },
+    "dilapidations_schedule_days": {
+      "value": 56,
+      "source_url": "https://www.justice.gov.uk/courts/procedure-rules/civil/protocol/pre-action-protocol-for-claims-for-damages-in-relation-to-the-physical-state-of-commercial-property-at-termination-of-a-tenancy-the-dilapidations-protocol",
+      "quote": "What is a reasonable time will vary from case to case, but will generally be within 56 days after the termination of the tenancy.",
+      "checked": "2026-10-02"
+    },
+    "rates_payer": {
+      "value": "the occupier",
+      "source_url": "https://www.legislation.gov.uk/ukpga/1988/41/section/43",
+      "quote": "on the day the ratepayer is in occupation of all or part of the hereditament",
+      "checked": "2026-10-02"
+    }
+  }
+}

@@ -612,6 +612,9 @@ const GATES: Gate[] = [
   /* One hire, all in: the worked hour and the parting bill from the law engine, against the research's worked examples to the penny
      (masterplan step 22; his ruling 28; DATA-REQUIREMENTS item 77). */
   { name: "hire-all-in", script: "tests/spine/hire_all_in.test.ts" },
+  /* The lease, by law: the clauses from the research's readings, the stamp duty the law engine's, "signed for" only from parts
+     that are all held (masterplan step 24; his ruling 28; DATA-REQUIREMENTS item 73). */
+  { name: "lease-by-law", script: "tests/spine/lease_by_law.test.ts" },
   { name: "uk-law-loan", script: "tests/uk/law/loan.test.ts" },
   /* A placeholder is not a figure (2026-09-23 night): two new builders read one
      each as "modelled" the same evening (London's calendar, printed on

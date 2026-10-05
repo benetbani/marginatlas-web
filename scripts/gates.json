@@ -1902,6 +1902,18 @@
       "claims": []
     },
     {
+      "name": "lease-by-law",
+      "script": "tests/spine/lease_by_law.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE LEASE, BY LAW (milestone 2, masterplan step 24; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 73): the builder against the law it reads (data/uk/law/lease_law.json, from the research of 2026",
+      "reads": [
+        "data/uk/law/lease_law.json",
+        "src/lib/spine/sections/lease_by_law.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-law-loan",
       "script": "tests/uk/law/loan.test.ts",
       "args": [],
