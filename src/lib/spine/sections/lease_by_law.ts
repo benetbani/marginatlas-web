@@ -37,7 +37,8 @@ export type LeaseByLaw = {
   focal: { months: number; prov: Provenance };
   /** The stated unit's yearly rent at its valuation, the base of the tax; null where the valuation is not held. */
   rentGbp: number | null;
-  tax: Array<{ years: (typeof TAX_YEARS)[number] } & Money>;
+  /** dueDays: the days to pay it, where a tax is due (the law file's sdlt_return_days); null where nothing is due. */
+  tax: Array<{ years: (typeof TAX_YEARS)[number]; dueDays: number | null } & Money>;
   signedFor: (Money & { parts: { toBreak: number; deposit: number; fee: number; tax: number } }) | null;
   rows: FactRow[];
 };
@@ -63,7 +64,14 @@ export function buildLeaseByLaw(law: LeaseLaw = LEASE_LAW, opts: { rentGbp?: num
   const perM2 = londonShopRvPerM2();
   const rentGbp = opts.rentGbp ?? (perM2 != null ? pennies(perM2 * LEASE_UNIT_M2) : null);
   const taxOn = (years: number) => (rentGbp == null ? null : sdltOnLeaseRent(leaseRentNpv(Array(years).fill(rentGbp))));
-  const tax = rentGbp == null ? [] : TAX_YEARS.map((years) => ({ years, ...money(taxOn(years) as number, `uk/law/lease_tax.ts:sdltOnLeaseRent:${LEASE_UNIT_M2} m2 London shop at its valuation:${years} years`) }));
+  const dueDays = num(law, "sdlt_return_days");
+  const tax =
+    rentGbp == null
+      ? []
+      : TAX_YEARS.map((years) => {
+          const gbp = taxOn(years) as number;
+          return { years, dueDays: gbp > 0 ? dueDays : null, ...money(gbp, `uk/law/lease_tax.ts:sdltOnLeaseRent:${LEASE_UNIT_M2} m2 London shop at its valuation:${years} years`) };
+        });
 
   /* SIGNED FOR, ONLY FROM PARTS THAT ARE ALL HELD (item 73's "done means"): one missing part and there is no total. */
   const breakMonths = num(law, "break_first_months");

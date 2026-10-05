@@ -31,6 +31,8 @@
 import * as React from "react";
 import { Focal } from "./focal";
 import { HireAllIn } from "./HireAllIn";
+import { LeaseByLaw } from "./LeaseByLaw";
+import { buildLeaseByLaw } from "@/lib/spine/sections/lease_by_law";
 import { buildHireAllIn } from "@/lib/spine/sections/hire_all_in";
 import { lockedLevelKeys } from "@/lib/monetization/levels";
 import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
@@ -1491,6 +1493,8 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
        What customers earn leaves this page: its three figures were the pay pair printed under a second name (the goal's A12). */
     /* ONE HIRE, ALL IN (masterplan step 23): the law engine's worked hour and parting bill, the UK's alone. */
     const hireAllIn = iso2 === "GB" ? buildHireAllIn({ allowance: true }) : null;
+    /* THE LEASE, BY LAW (masterplan step 25): the law of a shop's lease in England and Wales, the UK's alone. */
+    const lease = iso2 === "GB" ? buildLeaseByLaw() : null;
     /* In the order the body draws them, each under the chapter it stands in (the rail heads each run with its chapter). */
     const sections: RailSection[] = [
       { id: "take", label: "The tax burden" },
@@ -1501,6 +1505,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       ...(hireAllIn ? [{ id: "hire-all-in", label: COPY.hireAllIn.kicker, chapter: "01" }] : []),
       { id: "running-costs", label: "Running costs", chapter: "01" },
       { id: "insurance", label: COPY.insurance.kicker, chapter: "01" },
+      ...(lease ? [{ id: "lease-by-law", label: COPY.leaseByLaw.kicker, chapter: "01" }] : []),
       { id: "peers", label: "Against the peers", chapter: "01" },
       { id: "character", label: COPY.character.state.kicker, chapter: "02" },
       { id: "paperwork", label: COPY.paperwork.kicker, chapter: "02" },
@@ -1525,6 +1530,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
           ["hiring", "hiring", "hiring", "bars"],
           ["employment", "employment", "staffing-rota", "rows"],
           ["hire", "hire-all-in", "min-wage", "rows"],
+          ["lease", "lease-by-law", "commercial-rent", "rows"],
           ["running", "running-costs", "cost-breakdown", "track"],
           ["insurance", "insurance", "safety", "rows"],
           ["peers", "peers", "benchmark", "table"],
@@ -1674,6 +1680,9 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
           ruleValue(iso2 as string, "insurance", "employers-liability-cover") ? <InsuranceRules key="insurance" iso2={iso2 as string} /> : <InsuranceBars key="insurance" card={insurance} />,
         ],
       },
+      /* THE LEASE, BY LAW, ITS OWN LEVEL AFTER THE RUNNING COSTS (masterplan step 25; item 73's twin of the premises card): alone at
+         two thirds, the zones' LONE rule, no partner in the chapter being free to stand beside it. */
+      ...(lease ? [{ key: "lease", split: "2-1" as ZoneSplit, label: COPY.leaseByLaw.kicker, body: [<LeaseByLaw key="lease" data={lease} />] }] : []),
       { key: "peers", split: "wide", label: COPY.peers.kicker, body: [<Peers key="peers" table={peers} zone />] },
       {
         key: "state",

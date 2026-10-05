@@ -26,6 +26,7 @@ if (lease) {
     check(`the stamp duty on ${t.years} years equals the law engine's for the same rent (${t.gbp} against ${expected})`, t.gbp === expected);
   }
   check("the stamp duty is given for 5 and for 10 years", lease.tax.map((t) => t.years).join(",") === "5,10");
+  check("a tax that is due carries its 14 days to pay, from the law file; none due, none", lease.tax.every((t) => (t.gbp > 0 ? t.dueDays === 14 : t.dueDays === null)));
   check("'signed for' withholds: the break clause, the deposit and the solicitor's fee are not held", lease.signedFor === null);
   const fields = LEASE_LAW.fields as Record<string, { source_url?: string }>;
   check("every row names the law field it reads, and every field carries an https source", lease.rows.length >= 6 && lease.rows.every((r) => { const key = String(r.prov?.src ?? "").split(":")[1]; return !!key && /^https:\/\//.test(fields[key]?.source_url ?? ""); }));

@@ -82,6 +82,7 @@ export const UK_SOURCES: readonly UkSource[] = [
     items: [
       { prints: "Tax rates, National Insurance, the minimum wage, VAT, business rates, company fees and filing dates, the rules of employing, statutory pay and the insurance the law requires", title: "Guidance pages, each read on the day stated in the file that holds it", url: "https://www.gov.uk/" },
       { prints: "What one worked hour of a hire costs, all in, and what letting that hire go costs", title: "Rates and thresholds for employers 2026 to 2027, holiday entitlement, redundancy pay and notice, and the Home Office code of practice on right-to-work checks", url: "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027" },
+      { prints: "The stamp duty on a shop's lease, and VAT on its rent", title: "Stamp Duty Land Tax: leasehold purchases, and VAT notice 742A on opting to tax land and buildings", url: "https://www.gov.uk/guidance/stamp-duty-land-tax-leasehold-purchases" },
     ],
   },
   {
@@ -119,6 +120,7 @@ export const UK_SOURCES: readonly UkSource[] = [
     attribution: null,
     items: [
       { prints: "The acts and statutory instruments behind each dated change", title: "Each instrument as made or enacted", url: "https://www.legislation.gov.uk/" },
+      { prints: "The law of a shop's lease: renewal and its notices, signing it away, a refusal's compensation, registering it, the repairs claim", title: "Landlord and Tenant Act 1954, Part II; Land Registration Act 2002; Landlord and Tenant Act 1927, section 18; the contracting-out order of 2003 and the Land Registration fee order of 2024", url: "https://www.legislation.gov.uk/ukpga/Eliz2/2-3/56" },
     ],
   },
   {

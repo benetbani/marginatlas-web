@@ -2647,6 +2647,17 @@ export const COPY = {
     rows: { sentence: "In short", who: "Who is here", price: "Price tier", description: "In brief" },
     foot: "",
   },
+  /** THE LEASE, BY LAW (masterplan step 25; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 73): chapter 01's level after the
+   *  running costs. Its figure is the least notice a landlord must give to end a protected lease; its rows the clauses in plain
+   *  words and the stamp duty on an 80 square metre London shop's lease (src/lib/spine/sections/lease_by_law.ts). */
+  leaseByLaw: {
+    kicker: "The lease, by law",
+    months: "months",
+    words: "The least notice a landlord gives to end a protected lease.",
+    taxLabel: { 5: "5-year lease", 10: "10-year lease" },
+    taxNote: "Stamp duty on an 80 square metre London shop",
+    taxNoteDue: "The same shop, paid within {days}\u00a0days",
+  },
   /** ONE HIRE, ALL IN (masterplan step 23; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 77): the staff level's third card.
    *  Its figure is one worked hour of a minimum-wage hire, all in (src/lib/spine/sections/hire_all_in.ts); its rows what letting
    *  that hire go costs after one, three and ten years, and the law's amounts the page prints nowhere else. */
@@ -2666,6 +2677,7 @@ export const COPY = {
     lines: {
       hiring: "The wage floor, and a first hire's yearly cost.",
       "hire-all-in": "What one worked hour costs, and what letting go costs.",
+      "lease-by-law": "What the law says about your shop's lease.",
       employment: "The rules you take on with your first employee.",
       "running-costs": "What it costs to keep the doors open.",
       insurance: "The cover the law asks for, and what it costs.",
