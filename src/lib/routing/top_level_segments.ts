@@ -54,6 +54,8 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "corrections",
   "countries",
   "coverage",
+  /* The free UK data pack (his ruling of 2026-10-05, PARKED P0.3). */
+  "data",
   "decide",
   "dev",
   "download",

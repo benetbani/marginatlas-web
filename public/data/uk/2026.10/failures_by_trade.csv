@@ -1,0 +1,138 @@
+trade,sic,match,uk_live_companies,uk_insolvent,uk_solvent,uk_insolvent_per_1000,rate_lo,rate_hi,publishable,few_cases,london_insolvent,london_solvent
+craft-breweries-taprooms,11050,exact,1770,39,1,22.0,16.2,30.0,True,False,6,0
+coffee-roasters,10832,exact,1541,2,0,1.3,0.4,4.7,False,False,,
+custom-apparel-uniforms,14120 14190,approx,5256,35,1,6.7,4.8,9.2,True,False,3,0
+small-leather-goods,15120,exact,995,1,4,1.0,0.2,5.7,False,False,,
+custom-furniture-makers,31090,approx,5940,85,4,14.3,11.6,17.7,True,False,9,0
+print-shops-offset-digital,18129,exact,8084,100,9,12.4,10.2,15.0,True,False,15,1
+sign-shops-graphics-fab,32990,approx,16463,193,28,11.7,10.2,13.5,True,False,22,4
+soap-candle-makers,20411,approx,838,1,0,1.2,0.2,6.7,False,False,,
+metal-fabrication-machine-shops,25620 25110,exact,7018,115,22,16.4,13.7,19.6,True,False,5,1
+custom-jewelers-mfg,32120,exact,3365,15,2,4.5,2.7,7.3,True,True,6,1
+specialty-trades-mixed,43999,approx,57725,514,62,8.9,8.2,9.7,True,False,114,6
+plumbers,43220,shared,46500,343,20,7.4,6.6,8.2,True,False,50,2
+electricians,43210,exact,52380,389,27,7.4,6.7,8.2,True,False,61,4
+hvac-services,43220,shared,46500,343,20,7.4,6.6,8.2,True,False,50,2
+painters-residential,43341,exact,15528,83,1,5.3,4.3,6.6,True,False,19,0
+roofers,43910,exact,16391,117,9,7.1,6.0,8.5,True,False,12,0
+carpenters-finish-work,43320,exact,21220,184,9,8.7,7.5,10.0,True,False,30,0
+flooring-installers,43330,shared,10929,96,8,8.8,7.2,10.7,True,False,15,1
+grocery-stores,47110,exact,32104,161,8,5.0,4.3,5.8,True,False,26,1
+specialty-grocers-delis,47290 47210 47220 47230,exact,19117,129,5,6.7,5.7,8.0,True,False,24,0
+wine-liquor-stores,47250,exact,4996,65,5,13.0,10.2,16.5,True,False,17,1
+clothing-shoe-stores,47710 47721,exact,26662,206,11,7.7,6.7,8.9,True,False,36,1
+jewelry-stores,47770,exact,7721,32,9,4.1,2.9,5.8,True,False,9,2
+eyewear-optical-retail,47782,shared,3771,11,2,2.9,1.6,5.2,True,True,3,0
+bags-leather-goods,47722,exact,1534,10,1,6.5,3.5,12.0,True,True,5,0
+electronics-appliance-stores,47430 47540 47410,exact,7860,51,4,6.5,4.9,8.5,True,False,10,1
+furniture-stores,47599,exact,9320,136,10,14.6,12.4,17.2,True,False,30,2
+hardware-stores-local,47520,exact,3208,28,1,8.7,6.0,12.6,True,True,3,0
+garden-centers-nurseries,47760,shared,6878,53,5,7.7,5.9,10.1,True,False,11,0
+home-decor-gift-shops,47789,approx,12375,118,15,9.5,8.0,11.4,True,False,22,1
+pharmacies-health-stores,47730,exact,7250,59,3,8.1,6.3,10.5,True,False,43,0
+cosmetics-beauty-shops,47750,exact,9003,36,4,4.0,2.9,5.5,True,False,11,1
+auto-dealers,45111 45112,exact,34489,235,45,6.8,6.0,7.7,True,False,41,6
+gas-stations,47300,exact,2204,8,8,3.6,1.8,7.1,False,False,,
+general-merchandise-stores,47190,exact,32813,180,9,5.5,4.7,6.3,True,False,44,2
+indie-bookstores,47610,exact,2148,3,1,1.4,0.5,4.1,False,False,,
+toy-game-stores,47650,exact,4173,20,2,4.8,3.1,7.4,True,True,3,0
+pet-stores,47760,shared,6878,53,5,7.7,5.9,10.1,True,False,11,0
+sporting-goods-specialty,47640,exact,8830,62,5,7.0,5.5,9.0,True,False,11,0
+art-craft-supply-shops,47789,approx,12375,118,15,9.5,8.0,11.4,True,False,22,1
+music-instrument-shops,47591,exact,883,3,1,3.4,1.2,9.9,False,False,0,1
+stationery-paper-goods,47620,exact,2131,18,2,8.4,5.3,13.3,True,True,3,0
+florist-shops,47760,shared,6878,53,5,7.7,5.9,10.1,True,False,11,0
+junk-removal-small-moving,49420,approx,6756,45,2,6.7,5.0,8.9,True,False,15,0
+scenic-sightseeing-transport,49390,approx,8492,43,3,5.1,3.8,6.8,True,False,6,0
+couriers-messengers,53202 53201,exact,13109,97,2,7.4,6.1,9.0,True,False,22,1
+restaurants,56101,exact,43634,1259,33,28.9,27.3,30.5,True,False,357,3
+cafes-coffee-shops,56102,shared,40165,491,19,12.2,11.2,13.3,True,False,113,1
+bakeries-retail,47240 10710,exact,10459,71,7,6.8,5.4,8.6,True,False,13,1
+ice-cream-frozen-dessert-shops,56103,approx,69552,667,12,9.6,8.9,10.3,True,False,140,1
+pizzerias,56101 56103,approx,109042,1853,44,17.0,16.2,17.8,True,False,478,4
+food-trucks,56103,shared,69552,667,12,9.6,8.9,10.3,True,False,140,1
+tea-houses-matcha-bars,56102,shared,40165,491,19,12.2,11.2,13.3,True,False,113,1
+bars-nightclubs,56302 56301,shared,33836,868,39,25.7,24.0,27.4,True,False,136,5
+pubs-taverns,56302,shared,31956,830,36,26.0,24.3,27.8,True,False,132,5
+catering-food-service-contractors,56210 56290,exact,48160,398,14,8.3,7.5,9.1,True,False,109,2
+hotels-lodging,55100,shared,17125,159,34,9.3,8.0,10.8,True,False,35,3
+hostels,55202,exact,326,0,0,0.0,0.0,11.6,False,False,,
+short-term-rental-management,55209 68320,approx,118617,222,84,1.9,1.6,2.1,True,False,54,18
+software-development,62012,exact,91298,281,161,3.1,2.7,3.5,True,False,85,60
+game-development-studios,62011 58210,exact,11180,29,17,2.6,1.8,3.7,True,True,8,7
+it-services-hosting,62020 63110,exact,155242,471,618,3.0,2.8,3.3,True,False,145,220
+news-periodical-publishing,58130 58142,exact,3429,22,3,6.4,4.2,9.7,True,True,9,2
+motion-picture-sound-recording,59111 59200,exact,34535,95,21,2.8,2.3,3.4,True,False,40,11
+independent-insurance-brokers,66220,exact,7364,19,19,2.6,1.7,4.0,True,True,6,3
+real-estate-agencies,68310,exact,33109,124,40,3.7,3.1,4.5,True,False,37,6
+equipment-rental-leasing,77390 77299 77320,approx,12463,83,30,6.7,5.4,8.2,True,False,6,2
+legal-services,69102 69109,exact,18867,79,49,4.2,3.4,5.2,True,False,19,12
+accounting-tax,69201 69202 69203,exact,54328,127,89,2.3,2.0,2.8,True,False,36,22
+engineering-architecture,71111 71121 71122 71129,exact,88319,379,177,4.3,3.9,4.7,True,False,65,33
+marketing-design-agencies,73110 74100,exact,88403,358,76,4.0,3.7,4.5,True,False,84,29
+photography-studios,74201 74209,exact,9525,34,5,3.6,2.6,5.0,True,False,6,0
+wedding-planning-coordination,96090,approx,124657,653,156,5.2,4.9,5.7,True,False,155,30
+event-production-small,90020 82302,approx,23520,90,16,3.8,3.1,4.7,True,False,28,5
+employment-services,78109 78200,exact,40403,573,50,14.2,13.1,15.4,True,False,136,5
+office-business-support,82110 82990,exact,195589,1103,578,5.6,5.3,6.0,True,False,295,192
+travel-agencies,79110,exact,13873,42,3,3.0,2.2,4.1,True,False,15,0
+security-services,80100,exact,12731,116,12,9.1,7.6,10.9,True,False,26,1
+cleaning-services,81210 81229,exact,25600,127,3,5.0,4.2,5.9,True,False,27,0
+landscaping-lawn-care,81300,exact,21634,131,19,6.1,5.1,7.2,True,False,19,0
+pest-control-local,81291,exact,1307,7,0,5.4,2.6,11.0,False,False,3,0
+window-washing,81221,exact,4655,15,0,3.2,2.0,5.3,True,True,4,0
+vocational-other-training,85590,shared,56814,137,32,2.4,2.0,2.8,True,False,32,5
+tutoring-centers,85590,shared,56814,137,32,2.4,2.0,2.8,True,False,32,5
+language-schools,85590,shared,56814,137,32,2.4,2.0,2.8,True,False,32,5
+music-schools-private-lessons,85520,shared,10151,16,1,1.6,1.0,2.6,True,True,7,0
+dance-studios,85520,shared,10151,16,1,1.6,1.0,2.6,True,True,7,0
+driving-schools,85530,exact,3845,8,0,2.1,1.1,4.1,False,False,,
+martial-arts-dojos,85510,shared,14636,39,5,2.7,1.9,3.6,True,False,7,1
+coding-bootcamps-schools,85590,shared,56814,137,32,2.4,2.0,2.8,True,False,32,5
+art-classes-studios,85520,shared,10151,16,1,1.6,1.0,2.6,True,True,7,0
+doctors-clinics,86210 86220,exact,54686,96,222,1.8,1.4,2.1,True,False,23,30
+chiropractic-clinics,86900,shared,92670,257,79,2.8,2.5,3.1,True,False,58,12
+physical-therapy-clinics,86900,shared,92670,257,79,2.8,2.5,3.1,True,False,58,12
+optometry-vision-centers,47782,shared,3771,11,2,2.9,1.6,5.2,True,True,3,0
+mental-health-practices-small,86900,shared,92670,257,79,2.8,2.5,3.1,True,False,58,12
+nutritionist-dietician-practices,86900,shared,92670,257,79,2.8,2.5,3.1,True,False,58,12
+dental-practices,86230,exact,18790,25,22,1.3,0.9,2.0,True,True,2,5
+nursing-elderly-care,87300 87100 88100,exact,25119,137,14,5.5,4.6,6.4,True,False,26,1
+daycare-preschool,88910 85100,exact,17425,85,10,4.9,3.9,6.0,True,False,19,1
+veterinary-pet-care,75000,exact,5329,7,4,1.3,0.6,2.7,False,False,1,1
+performing-arts,90010,exact,22437,54,7,2.4,1.8,3.1,True,False,17,3
+sports-fitness,93130 93110,shared,22856,130,12,5.7,4.8,6.7,True,False,32,3
+yoga-pilates-studios,93130,shared,14895,100,3,6.7,5.5,8.2,True,False,26,3
+personal-training,93130 85510,shared,29066,137,7,4.7,4.0,5.6,True,False,32,3
+museums-cultural,91020,exact,1432,3,2,2.1,0.7,6.1,False,False,1,1
+gambling-amusement,92000 93290,exact,22477,149,14,6.6,5.6,7.8,True,False,23,8
+hairdressers-beauty,96020,shared,66524,311,6,4.7,4.2,5.2,True,False,63,1
+barbershops,96020,shared,66524,311,6,4.7,4.2,5.2,True,False,63,1
+nail-salons,96020,shared,66524,311,6,4.7,4.2,5.2,True,False,63,1
+day-spas,96040,shared,16504,36,6,2.2,1.6,3.0,True,False,10,1
+massage-therapy-clinics,96040,shared,16504,36,6,2.2,1.6,3.0,True,False,10,1
+tanning-salons,96040,shared,16504,36,6,2.2,1.6,3.0,True,False,10,1
+brow-lash-studios,96020,shared,66524,311,6,4.7,4.2,5.2,True,False,63,1
+tattoo-piercing-studios,96090,approx,124657,653,156,5.2,4.9,5.7,True,False,155,30
+auto-repair-shops,45200,shared,53743,330,31,6.1,5.5,6.8,True,False,49,1
+auto-body-shops,45200,shared,53743,330,31,6.1,5.5,6.8,True,False,49,1
+bike-repair-shops,95290,approx,1368,2,0,1.5,0.4,5.3,False,False,1,0
+electronics-phone-repair,95120 95210,exact,2783,8,1,2.9,1.5,5.7,False,False,3,0
+locksmiths,95290,approx,1368,2,0,1.5,0.4,5.3,False,False,1,0
+appliance-repair,95220,exact,2143,6,2,2.8,1.3,6.1,False,False,2,0
+dry-cleaning-laundry,96010,exact,4200,42,4,10.0,7.4,13.5,True,False,17,2
+tailoring-alterations,95290,approx,1368,2,0,1.5,0.4,5.3,False,False,1,0
+shoe-repair,95230,exact,362,1,0,2.8,0.5,15.5,False,False,,
+watch-jewelry-repair,95250,exact,1038,4,1,3.9,1.5,9.9,False,False,2,0
+funeral-services,96030,exact,3060,8,3,2.6,1.3,5.2,False,False,2,0
+pet-daycare-boarding,96090,approx,124657,653,156,5.2,4.9,5.7,True,False,155,30
+pet-walking-sitting,96090,approx,124657,653,156,5.2,4.9,5.7,True,False,155,30
+pet-training,96090,approx,124657,653,156,5.2,4.9,5.7,True,False,155,30
+independent-art-galleries,47781,exact,2440,16,0,6.6,4.0,10.6,True,True,7,0
+guest-houses-pensions,55100,shared,17125,159,34,9.3,8.0,10.8,True,False,35,3
+campgrounds-rv-parks,55300,exact,3055,8,5,2.6,1.3,5.2,False,False,2,0
+bricklaying-services,43999,approx,57725,514,62,8.9,8.2,9.7,True,False,114,6
+cabinet-making,31020 43320,exact,23520,227,11,9.7,8.5,11.0,True,False,35,0
+alarm-systems-install,80200,exact,8973,67,8,7.5,5.9,9.5,True,False,16,1
+tiling-services,43330,shared,10929,96,8,8.8,7.2,10.7,True,False,15,1
+plastering-services,43310,exact,8704,52,6,6.0,4.6,7.8,True,False,9,1

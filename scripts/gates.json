@@ -1604,6 +1604,20 @@
       "claims": []
     },
     {
+      "name": "data-pack",
+      "script": "tests/trust/data_pack.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE FREE UK DATA PACK AT /data (his ruling of 2026-10-05 on PARKED P0.3, option (a): \"free and public, cited, as the credibility plan proposes\").",
+      "reads": [
+        "public/data/uk/${PACK_VERSION}",
+        "src/app/(site)/about-data/page.tsx",
+        "src/app/(site)/data/page.tsx",
+        "src/app/sitemap.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

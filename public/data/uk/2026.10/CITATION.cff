@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: If you use these tables, please cite them as below.
+title: Margin Atlas UK register tables
+version: "2026.10"
+date-released: 2026-10-04
+license: CC-BY-4.0
+url: https://www.marginatlas.com/data
+authors:
+  - name: Margin Atlas

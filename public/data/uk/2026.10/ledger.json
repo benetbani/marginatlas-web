@@ -1,0 +1,356 @@
+{
+ "what": "The provenance ledger: one row per kind of figure in the UK register tables",
+ "built_by": "E:/atlas/registers/uk/build_ledger.py",
+ "kinds": {
+  "counted": "taken straight from an official UK register",
+  "worked out": "our arithmetic on register figures, the method stated",
+  "looked up": "a price or a rule read on a named page on a date (not in these tables)",
+  "estimate": "our judgement where no register exists (not in these tables)"
+ },
+ "rows": [
+  {
+   "key": "uk.businesses",
+   "figure": "Businesses and premises per trade and borough",
+   "kind": "counted",
+   "how": null,
+   "table": "london_trades_by_borough.json",
+   "fields": [
+    "enterprises",
+    "local_units",
+    "units_by_staff"
+   ],
+   "source": "ONS UK Business Counts (IDBR) via Nomis: NM_199_1 enterprises by industry and turnover band; NM_141_1 local units by industry and employment band",
+   "licence": "Open Government Licence v3.0",
+   "data_date": "March 2026 register snapshot; turnover is VAT-return turnover for the latest year the register holds",
+   "attribution": "Source: Office for National Statistics licensed under the Open Government Licence v3.0.",
+   "leaves_out": [
+    "registered businesses only: those registered for neither VAT nor PAYE (54% of UK businesses, most sole traders) are absent, so the median is the median of registered businesses and sits above the median of all",
+    "turnover is the enterprise's, counted at its registered address, so an area full of accountants' and formation agents' offices carries other areas' turnover",
+    "counts are rounded to the nearest 5 by the statistics office",
+    "where several trades share one SIC code, or a trade's code is only near it, the figure is the whole code's",
+    "the median is interpolated inside a turnover band on a log scale; neither it nor the quarter and tenth points are printed where an area holds under 40 enterprises (the register's own total)",
+    "the quarter and tenth points of sales are read the same way; one below 50k or above 50m rests on an assumed floor or ceiling, so it prints only as 'under 50k' or 'over 50m'",
+    "the range around the median is the lowest and highest median the true counts could give, each count being off by up to 2 because every whole count is rounded to the nearest 5 (the register is a census: rounding, not sampling, is its error); it does not cover where inside its band the median sits",
+    "a smooth curve fitted to the bands is kept only as a check and never printed: real takings are far from such a curve in most places, London restaurants most of all"
+   ],
+   "refresh": "yearly (March snapshot)",
+   "built_by": "E:/atlas/registers/uk/build_nomis.py"
+  },
+  {
+   "key": "uk.turnover.median",
+   "figure": "The middle business's yearly turnover per trade and borough, with the quarter and tenth points",
+   "kind": "worked out",
+   "how": "read from the official counts by turnover band, on a log scale inside the band; a point below 50,000 pounds or above 50 million prints in words; the range around the middle is the lowest and highest the rounded counts allow; withheld under 40 enterprises",
+   "table": "london_trades_by_borough.json",
+   "fields": [
+    "median_turnover_k",
+    "turnover_quantiles_k",
+    "quantiles_in_open_band",
+    "median_range_k",
+    "turnover_bands_k",
+    "thin"
+   ],
+   "source": "ONS UK Business Counts (IDBR) via Nomis: NM_199_1 enterprises by industry and turnover band; NM_141_1 local units by industry and employment band",
+   "licence": "Open Government Licence v3.0",
+   "data_date": "March 2026 register snapshot; turnover is VAT-return turnover for the latest year the register holds",
+   "attribution": "Source: Office for National Statistics licensed under the Open Government Licence v3.0.",
+   "leaves_out": [
+    "registered businesses only: those registered for neither VAT nor PAYE (54% of UK businesses, most sole traders) are absent, so the median is the median of registered businesses and sits above the median of all",
+    "turnover is the enterprise's, counted at its registered address, so an area full of accountants' and formation agents' offices carries other areas' turnover",
+    "counts are rounded to the nearest 5 by the statistics office",
+    "where several trades share one SIC code, or a trade's code is only near it, the figure is the whole code's",
+    "the median is interpolated inside a turnover band on a log scale; neither it nor the quarter and tenth points are printed where an area holds under 40 enterprises (the register's own total)",
+    "the quarter and tenth points of sales are read the same way; one below 50k or above 50m rests on an assumed floor or ceiling, so it prints only as 'under 50k' or 'over 50m'",
+    "the range around the median is the lowest and highest median the true counts could give, each count being off by up to 2 because every whole count is rounded to the nearest 5 (the register is a census: rounding, not sampling, is its error); it does not cover where inside its band the median sits",
+    "a smooth curve fitted to the bands is kept only as a check and never printed: real takings are far from such a curve in most places, London restaurants most of all"
+   ],
+   "refresh": "yearly",
+   "built_by": "E:/atlas/registers/uk/build_nomis.py"
+  },
+  {
+   "key": "uk.turnover.under100k",
+   "figure": "The share of businesses turning over less than 100,000 pounds",
+   "kind": "worked out",
+   "how": "the businesses in the bands below 100,000 over all businesses",
+   "table": "london_trades_by_borough.json",
+   "fields": [
+    "under_100k_share"
+   ],
+   "source": "ONS UK Business Counts (IDBR) via Nomis: NM_199_1 enterprises by industry and turnover band; NM_141_1 local units by industry and employment band",
+   "licence": "Open Government Licence v3.0",
+   "data_date": "March 2026 register snapshot; turnover is VAT-return turnover for the latest year the register holds",
+   "attribution": "Source: Office for National Statistics licensed under the Open Government Licence v3.0.",
+   "leaves_out": [
+    "registered businesses only: those registered for neither VAT nor PAYE (54% of UK businesses, most sole traders) are absent, so the median is the median of registered businesses and sits above the median of all",
+    "turnover is the enterprise's, counted at its registered address, so an area full of accountants' and formation agents' offices carries other areas' turnover",
+    "counts are rounded to the nearest 5 by the statistics office",
+    "where several trades share one SIC code, or a trade's code is only near it, the figure is the whole code's",
+    "the median is interpolated inside a turnover band on a log scale; neither it nor the quarter and tenth points are printed where an area holds under 40 enterprises (the register's own total)",
+    "the quarter and tenth points of sales are read the same way; one below 50k or above 50m rests on an assumed floor or ceiling, so it prints only as 'under 50k' or 'over 50m'",
+    "the range around the median is the lowest and highest median the true counts could give, each count being off by up to 2 because every whole count is rounded to the nearest 5 (the register is a census: rounding, not sampling, is its error); it does not cover where inside its band the median sits",
+    "a smooth curve fitted to the bands is kept only as a check and never printed: real takings are far from such a curve in most places, London restaurants most of all"
+   ],
+   "refresh": "yearly",
+   "built_by": "E:/atlas/registers/uk/build_nomis.py"
+  },
+  {
+   "key": "uk.food.counts",
+   "figure": "Food businesses, hygiene ratings and new businesses awaiting a first inspection",
+   "kind": "counted",
+   "how": null,
+   "table": "london_food_by_borough.json",
+   "fields": [
+    "count",
+    "rated",
+    "share_0_2",
+    "share_5",
+    "awaiting"
+   ],
+   "source": "Food Standards Agency, food hygiene rating scheme open data (ratings.food.gov.uk/open-data)",
+   "licence": "Open Government Licence v3.0; the data's date must be shown",
+   "data_date": "2026-10-02",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0. Food hygiene ratings data as of 2026-10-02.",
+   "leaves_out": [
+    "food businesses only, as the FSA registers them",
+    "business types are the FSA's and coarse: restaurants, cafes and canteens share one type",
+    "awaiting inspection is mostly new businesses, with some re-registrations"
+   ],
+   "refresh": "monthly (the register updates daily)",
+   "built_by": "E:/atlas/registers/uk/build_fsa.py"
+  },
+  {
+   "key": "uk.companies.live",
+   "figure": "Live companies per trade and postcode district",
+   "kind": "counted",
+   "how": null,
+   "table": "london_companies_by_district.json",
+   "fields": [
+    "companies"
+   ],
+   "source": "Companies House free company data product (BasicCompanyData)",
+   "licence": "Companies House imposes no rules on the use of the public register (UK GDPR applies to people's data; none is kept here)",
+   "data_date": "2026-05-01",
+   "attribution": "Companies House register, snapshot of 2026-05-01.",
+   "leaves_out": [
+    "limited companies and LLPs only: sole traders and partnerships are not on the register",
+    "the address is the registered office, not necessarily where the business trades; mass-registration postcodes are left out",
+    "dormant companies are left out",
+    "a company carrying several SIC codes counts for each of its trades"
+   ],
+   "refresh": "monthly (snapshot)",
+   "built_by": "E:/atlas/registers/uk/build_companies.py"
+  },
+  {
+   "key": "uk.companies.age",
+   "figure": "Company age and the share under two years old",
+   "kind": "worked out",
+   "how": "from each live company's incorporation date at the snapshot date",
+   "table": "london_companies_by_district.json",
+   "fields": [
+    "median_age_years",
+    "share_under_2y",
+    "share_10y_plus"
+   ],
+   "source": "Companies House free company data product (BasicCompanyData)",
+   "licence": "Companies House imposes no rules on the use of the public register (UK GDPR applies to people's data; none is kept here)",
+   "data_date": "2026-05-01",
+   "attribution": "Companies House register, snapshot of 2026-05-01.",
+   "leaves_out": [
+    "limited companies and LLPs only: sole traders and partnerships are not on the register",
+    "the address is the registered office, not necessarily where the business trades; mass-registration postcodes are left out",
+    "dormant companies are left out",
+    "a company carrying several SIC codes counts for each of its trades"
+   ],
+   "refresh": "monthly",
+   "built_by": "E:/atlas/registers/uk/build_companies.py"
+  },
+  {
+   "key": "uk.companies.charge",
+   "figure": "The share of companies with secured borrowing",
+   "kind": "worked out",
+   "how": "companies with a charge outstanding over live companies",
+   "table": "london_companies_by_district.json",
+   "fields": [
+    "share_with_charge"
+   ],
+   "source": "Companies House free company data product (BasicCompanyData)",
+   "licence": "Companies House imposes no rules on the use of the public register (UK GDPR applies to people's data; none is kept here)",
+   "data_date": "2026-05-01",
+   "attribution": "Companies House register, snapshot of 2026-05-01.",
+   "leaves_out": [
+    "limited companies and LLPs only: sole traders and partnerships are not on the register",
+    "the address is the registered office, not necessarily where the business trades; mass-registration postcodes are left out",
+    "dormant companies are left out",
+    "a company carrying several SIC codes counts for each of its trades"
+   ],
+   "refresh": "monthly",
+   "built_by": "E:/atlas/registers/uk/build_companies.py"
+  },
+  {
+   "key": "uk.companies.new",
+   "figure": "New companies a month per trade",
+   "kind": "counted",
+   "how": null,
+   "table": "formations_by_month.json",
+   "fields": [
+    "uk",
+    "london"
+   ],
+   "source": "Companies House free company data product (BasicCompanyData)",
+   "licence": "Companies House imposes no rules on the use of the public register",
+   "data_date": "2026-05-01",
+   "attribution": "Companies House register, snapshot of 2026-05-01.",
+   "leaves_out": [
+    "live companies only: a company dissolved before the snapshot is missing, so older months undercount (the survivor trap)",
+    "limited companies and LLPs only; sole traders are not on the register",
+    "London by registered office; mass-registration postcodes (more than 200 live companies) are left out",
+    "a company carrying several SIC codes counts for each of its trades; trades sharing a code share its count"
+   ],
+   "refresh": "monthly",
+   "built_by": "E:/atlas/registers/uk/build_formations.py"
+  },
+  {
+   "key": "uk.survival",
+   "figure": "How many new businesses are still trading after one to five years",
+   "kind": "worked out",
+   "how": "on the latest year's closure rates: each year's chance of closing, from the newest cohort with both ends of that year, applied in turn, with a 95% interval; the 2019 cohort's own five years beside it; the City of London never ranks",
+   "table": "survival_london_and_trades.json",
+   "fields": [
+    "survival_period",
+    "survival",
+    "births_by_cohort",
+    "ranked"
+   ],
+   "source": "ONS Business Demography, UK: 2024, reference tables (published 20 November 2025)",
+   "licence": "Open Government Licence v3.0",
+   "data_date": "published 20 November 2025: births 2019 to 2023, births and closures in 2024",
+   "attribution": "Source: Office for National Statistics licensed under the Open Government Licence v3.0.",
+   "leaves_out": [
+    "registered businesses only (VAT or PAYE)",
+    "a borough's survival is all trades together; the statistics office publishes no borough-by-trade cut",
+    "a trade's curve is its whole SIC group's, across the UK",
+    "counts are rounded to the nearest 5; percentages are recomputed from them"
+   ],
+   "refresh": "yearly (November)",
+   "built_by": "E:/atlas/registers/uk/build_demography.py"
+  },
+  {
+   "key": "uk.births_deaths",
+   "figure": "Businesses born and closed in a year per borough",
+   "kind": "counted",
+   "how": null,
+   "table": "survival_london_and_trades.json",
+   "fields": [
+    "births_2024",
+    "deaths_2024",
+    "active_2024",
+    "birth_rate_2024",
+    "death_rate_2024"
+   ],
+   "source": "ONS Business Demography, UK: 2024, reference tables (published 20 November 2025)",
+   "licence": "Open Government Licence v3.0",
+   "data_date": "published 20 November 2025: births 2019 to 2023, births and closures in 2024",
+   "attribution": "Source: Office for National Statistics licensed under the Open Government Licence v3.0.",
+   "leaves_out": [
+    "registered businesses only (VAT or PAYE)",
+    "a borough's survival is all trades together; the statistics office publishes no borough-by-trade cut",
+    "a trade's curve is its whole SIC group's, across the UK",
+    "counts are rounded to the nearest 5; percentages are recomputed from them"
+   ],
+   "refresh": "yearly",
+   "built_by": "E:/atlas/registers/uk/build_demography.py"
+  },
+  {
+   "key": "uk.premises.rv_m2",
+   "figure": "The official estimate of a year's rent per square metre, by kind of premises and borough",
+   "kind": "counted",
+   "how": null,
+   "table": "london_premises_value_by_borough.json",
+   "fields": [
+    "rv_per_m2",
+    "count",
+    "floorspace_k_m2"
+   ],
+   "source": "Valuation Office Agency, Non-domestic rating: business floorspace, March 2025 (special category by local authority)",
+   "licence": "Open Government Licence v3.0",
+   "data_date": "1 April 2021 (the 2023 rating list counted at 31 March 2025)",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
+   "leaves_out": [
+    "rateable value estimates rent at the valuation date (April 2021), not today's asking rent",
+    "a category suppressed for a borough ([c]) or not present ([z]) prints nothing",
+    "many premises are valued in a general category: most salons and many cafes are valued as Shops",
+    "pubs and hotels are valued on receipts, not floorspace, and are absent"
+   ],
+   "refresh": "yearly",
+   "built_by": "E:/atlas/registers/uk/build_floorspace.py"
+  },
+  {
+   "key": "uk.footfall",
+   "figure": "Station entries and exits on a weekday, a Saturday and a Sunday",
+   "kind": "counted",
+   "how": null,
+   "table": "london_station_footfall.json",
+   "fields": [
+    "weekday_daily",
+    "saturday_daily",
+    "sunday_daily",
+    "annual"
+   ],
+   "source": "TfL annual station counts 2025 (v08.2, 2026-07-06) and 2024; Powered by TfL Open Data",
+   "licence": "TfL open data terms: commercial use allowed with the credit 'Powered by TfL Open Data'",
+   "data_date": "counts for 2025 (released 6 July 2026) and 2024",
+   "attribution": "Powered by TfL Open Data.",
+   "leaves_out": [
+    "station users only, not passers-by",
+    "not yet tied to postcode districts"
+   ],
+   "refresh": "yearly",
+   "built_by": "E:/atlas/registers/uk/build_tfl.py"
+  },
+  {
+   "key": "uk.footfall.saturday",
+   "figure": "Saturday against a weekday at each station",
+   "kind": "worked out",
+   "how": "Saturday entries and exits over a weekday's, both printed as absolutes",
+   "table": "london_station_footfall.json",
+   "fields": [
+    "saturday_vs_weekday"
+   ],
+   "source": "TfL annual station counts 2025 (v08.2, 2026-07-06) and 2024; Powered by TfL Open Data",
+   "licence": "TfL open data terms: commercial use allowed with the credit 'Powered by TfL Open Data'",
+   "data_date": "counts for 2025 (released 6 July 2026) and 2024",
+   "attribution": "Powered by TfL Open Data.",
+   "leaves_out": [
+    "station users only, not passers-by",
+    "not yet tied to postcode districts"
+   ],
+   "refresh": "yearly",
+   "built_by": "E:/atlas/registers/uk/build_tfl.py"
+  },
+  {
+   "key": "uk.failures",
+   "figure": "Company insolvencies a year per 1,000 live companies, per trade",
+   "kind": "worked out",
+   "how": "insolvency notices over twelve months, matched by company name to the register, over the trade's live companies, with a 95% interval; printed from 10 insolvencies in the year, marked few cases from 10 to 29",
+   "table": "company_failures_by_trade.json",
+   "fields": [
+    "uk_insolvent",
+    "uk_live_companies",
+    "uk_rate"
+   ],
+   "source": "The Gazette company insolvency notices (codes 2441, 2452, 2410 insolvent; 2431 solvent), published 2025-10-01 to 2026-09-30; Companies House register snapshot 2026-05-01",
+   "licence": "Open Government Licence v3.0 (company notices); Companies House register: no restrictions",
+   "data_date": "notices October 2025 to September 2026; register of 1 May 2026",
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
+   "leaves_out": [
+    "limited companies only; sole traders' insolvencies are personal data and are not counted",
+    "the per-1,000 rate divides by live, non-dormant companies of the trade on the May 2026 register",
+    "a notice whose company name does not match the register is left out (the match rate is printed)",
+    "the district is the registered office's",
+    "each rate per 1,000 live companies carries a 95% interval; it prints only where the year holds 10 or more insolvencies, and from 10 to 29 it is marked 'few cases'"
+   ],
+   "refresh": "monthly",
+   "built_by": "E:/atlas/registers/uk/build_gazette.py"
+  }
+ ]
+}

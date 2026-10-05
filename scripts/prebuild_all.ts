@@ -578,6 +578,9 @@ const GATES: Gate[] = [
      "No corrections yet." while empty, no changelog, no promise of times he did not make; linked from About the figures and the
      report form. */
   { name: "corrections-log", script: "tests/trust/corrections_log.test.ts" },
+  /* The free UK data pack (his ruling of 2026-10-05, PARKED P0.3): src/lib/data_pack.ts, public/data/uk/<version>/ and /data agree;
+     the two files the credibility plan's free line holds back stay out and are promised nowhere. */
+  { name: "data-pack", script: "tests/trust/data_pack.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

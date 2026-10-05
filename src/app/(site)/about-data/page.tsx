@@ -171,6 +171,10 @@ export default function AboutDataPage() {
         <p className="mt-3 text-ink-800">
           Atlas may be cited in articles, reports, or presentations. The only request is a link back to the benchmark page being cited.
         </p>
+        <p className="mt-3 text-ink-800">
+          The UK tables behind the pages are free to download, with how to cite them, on the{" "}
+          <a href="/data" className="underline underline-offset-2">data page</a>.
+        </p>
       </section>
     </article>
   );
