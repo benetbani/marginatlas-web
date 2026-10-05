@@ -2671,8 +2671,8 @@ export const COPY = {
     months: "months",
     words: "The least notice a landlord gives to end a protected lease.",
     taxLabel: { 5: "5-year lease", 10: "10-year lease" },
-    taxNote: "Stamp duty on an 80 square metre London shop",
-    taxNoteDue: "The same shop, paid within {days}\u00a0days",
+    taxNote: "Stamp duty, 80 m² London shop",
+    taxNoteDue: "Same shop, due in {days}\u00a0days",
   },
   /** ONE HIRE, ALL IN (masterplan step 23; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 77): the staff level's third card.
    *  Its figure is one worked hour of a minimum-wage hire, all in (src/lib/spine/sections/hire_all_in.ts); its rows what letting

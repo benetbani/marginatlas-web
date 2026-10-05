@@ -60,28 +60,28 @@ export function buildFromAbroad(law: FromAbroadLaw = FROM_ABROAD): FromAbroad | 
 
   const inc = obj<{ fee_gbp: number; hours: number }>(law, "incorporation");
   if (inc && obj(law, "director_residence") === "none")
-    wall({ key: "company", label: "The company", state: "open", fee: gbpText(inc.fee_gbp), time: inc.hours <= 24 ? "1 day" : `${inc.hours} hours`, note: "No residence test for a director", prov: lookedUp("incorporation") });
+    wall({ key: "company", label: "The company", state: "open", fee: gbpText(inc.fee_gbp), time: inc.hours <= 24 ? "1 day" : `${inc.hours} hours`, note: "No residence test", prov: lookedUp("incorporation") });
   if (law.fields.registered_office)
-    wall({ key: "address", label: "A UK address", state: "conditional", fee: null, time: null, note: "A real address, never a PO box", prov: lookedUp("registered_office") });
+    wall({ key: "address", label: "A UK address", state: "conditional", fee: null, time: null, note: "A real address, no PO box", prov: lookedUp("registered_office") });
   const id = obj<{ fee_gbp: number }>(law, "identity_verification");
-  if (id) wall({ key: "identity", label: "Identity check", state: "open", fee: gbpText(id.fee_gbp), time: null, note: "Online, with a passport from anywhere", prov: lookedUp("identity_verification") });
+  if (id) wall({ key: "identity", label: "Identity check", state: "open", fee: gbpText(id.fee_gbp), time: null, note: "Online, any passport", prov: lookedUp("identity_verification") });
   const codeDays = obj<number>(law, "corporation_tax_code_days_abroad");
   if (typeof codeDays === "number")
-    wall({ key: "tax-code", label: "The tax code", state: "open", fee: null, time: `${codeDays} days`, note: "Posted to the company's UK address", prov: lookedUp("corporation_tax_code_days_abroad") });
+    wall({ key: "tax-code", label: "The tax code", state: "open", fee: null, time: `${codeDays} days`, note: "Posted to the UK address", prov: lookedUp("corporation_tax_code_days_abroad") });
   if (law.fields.bank_account)
-    wall({ key: "bank", label: "Bank account", state: "conditional", fee: null, time: null, note: "No right to one, a bank may refuse", prov: lookedUp("bank_account") });
+    wall({ key: "bank", label: "Bank account", state: "conditional", fee: null, time: null, note: "A bank may refuse", prov: lookedUp("bank_account") });
   if (obj(law, "innovator_founder_shop") === "unlikely")
     /* Its fees and its weeks are the card's figure and second figure, printed once there (clause 66). */
-    wall({ key: "founder-visa", label: "Founder visa", state: "conditional", fee: null, time: null, note: "Endorsement is unlikely for an ordinary shop", prov: lookedUp("innovator_founder_shop") });
+    wall({ key: "founder-visa", label: "Founder visa", state: "conditional", fee: null, time: null, note: "Unlikely for an ordinary shop", prov: lookedUp("innovator_founder_shop") });
   const youth = obj<{ fee_gbp: number; months: number; employees: number }>(law, "youth_mobility");
   if (youth) {
     /* EXAMPLE B (74.5): the fee and a surcharge a year for the scheme's two years. */
     const years = youth.months / 12;
-    wall({ key: "youth-mobility", label: "Youth Mobility", state: "conditional", gbp: sumPennies([youth.fee_gbp, surcharge.youth_mobility * years]), fee: null, time: `${youth.months} months`, note: youth.employees === 0 ? "If eligible, with no staff and rented premises" : "If eligible", prov: worked("youth_mobility") });
+    wall({ key: "youth-mobility", label: "Youth Mobility", state: "conditional", gbp: sumPennies([youth.fee_gbp, surcharge.youth_mobility * years]), fee: null, time: `${youth.months} months`, note: youth.employees === 0 ? "If eligible, no staff" : "If eligible", prov: worked("youth_mobility") });
   }
   const trades = obj<{ ineligible: string[] }>(law, "skilled_worker_trades");
   if (trades?.ineligible.length)
-    wall({ key: "hiring", label: "Hiring from abroad", state: "closed", fee: null, time: null, note: "Not for barbers, beauticians or cooks", prov: lookedUp("skilled_worker_trades") });
+    wall({ key: "hiring", label: "Hiring from abroad", state: "closed", fee: null, time: null, note: "Not barbers, salons or cooks", prov: lookedUp("skilled_worker_trades") });
 
   return { focal: { gbp: focalGbp, usd: convertToUsd("GBP", focalGbp), weeks: decision.outside, prov: worked("innovator_founder") }, walls };
 }

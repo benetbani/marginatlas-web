@@ -90,15 +90,15 @@ export function buildLeaseByLaw(law: LeaseLaw = LEASE_LAW, opts: { rentGbp?: num
   const push = (key: string, field: string, label: string, value: string | null, note: string | null) => {
     if (value && f[field]) rows.push({ key, icon: ICON[key], label, value, note, prov: lookedUp(field) });
   };
-  push("renewal", "renewal_right", "Renewal", f.renewal_right?.value === "statutory" ? "By law" : null, "Unless you agree to sign it away first");
+  push("renewal", "renewal_right", "Renewal", f.renewal_right?.value === "statutory" ? "By law" : null, "Unless you sign it away");
   const outDays = num(law, "contracting_out_notice_days");
-  push("signing-away", "contracting_out_notice_days", "Signing it away", outDays != null ? `${outDays} days' warning` : null, "Then a declaration, before you sign");
+  push("signing-away", "contracting_out_notice_days", "Signing it away", outDays != null ? `${outDays} days' warning` : null, "Then a signed declaration");
   const request = f.tenant_request_months?.value as { min?: number; max?: number } | undefined;
-  push("asking", "tenant_request_months", "Asking to renew", request?.min != null && request?.max != null ? `${request.min} to ${request.max} months` : null, "Ahead of the start you ask for");
+  push("asking", "tenant_request_months", "Asking to renew", request?.min != null && request?.max != null ? `${request.min} to ${request.max} months` : null, "Before the date you ask for");
   const newYears = num(law, "new_tenancy_years_max");
-  push("new-lease", "new_tenancy_years_max", "Longest new lease", newYears != null ? `${newYears} years` : null, "If a court sets it, at market rent");
+  push("new-lease", "new_tenancy_years_max", "Longest new lease", newYears != null ? `${newYears} years` : null, "Court-set, at market rent");
   const comp = f.compensation_rateable_value?.value as { multiplier?: number; after_14_years?: number } | undefined;
-  push("refused", "compensation_rateable_value", "Refused renewal", comp?.multiplier != null ? `${comp.multiplier} x rateable value` : null, comp?.after_14_years != null ? `${comp.after_14_years} x after 14 years in the shop` : null);
+  push("refused", "compensation_rateable_value", "Refused renewal", comp?.multiplier != null ? `${comp.multiplier} x rateable value` : null, comp?.after_14_years != null ? `${comp.after_14_years} x after 14 years there` : null);
   const short = num(law, "short_tenancy_months");
   push("short", "short_tenancy_months", "Short leases", short != null ? `${short} months or less` : null, "Outside the Act's protection");
   const regYears = num(law, "registration_over_years");
@@ -106,9 +106,9 @@ export function buildLeaseByLaw(law: LeaseLaw = LEASE_LAW, opts: { rentGbp?: num
   const regFee = f.registration_fee_gbp?.value as { fee?: number; rent_up_to?: number } | undefined;
   push("registering", "registration_over_years", "Registering it", regYears != null ? `Over ${regYears} years` : null, regMonths != null && regFee?.fee != null ? `Within ${regMonths} months, £${regFee.fee}` : null);
   const schedule = num(law, "dilapidations_schedule_days");
-  push("repairs", "dilapidations_cap", "Repairs claim", f.dilapidations_cap ? "Capped" : null, schedule != null ? `At the landlord's loss, claimed within ${schedule} days` : "At the landlord's loss");
+  push("repairs", "dilapidations_cap", "Repairs claim", f.dilapidations_cap ? "Capped" : null, schedule != null ? `At the loss, within ${schedule} days` : "At the landlord's loss");
   const vat = f.vat_on_rent?.value as { rule?: string; rate_pct?: number } | undefined;
-  push("vat", "vat_on_rent", "VAT on rent", vat?.rule === "optional" && vat.rate_pct != null ? `${vat.rate_pct}% if opted` : null, "Exempt unless the landlord opts to tax");
+  push("vat", "vat_on_rent", "VAT on rent", vat?.rule === "optional" && vat.rate_pct != null ? `${vat.rate_pct}% if opted` : null, "Exempt unless opted to tax");
 
   return { focal: { months: notice.min, prov: lookedUp("landlord_notice_months") }, rentGbp, tax, signedFor, rows };
 }
