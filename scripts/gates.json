@@ -1914,6 +1914,18 @@
       "claims": []
     },
     {
+      "name": "from-abroad",
+      "script": "tests/spine/from_abroad.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "OPENING FROM ABROAD (milestone 2, masterplan step 26; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 74): the builder against the law it reads (data/uk/law/opening_from_abroad.json, from the rese",
+      "reads": [
+        "data/uk/law/opening_from_abroad.json",
+        "src/lib/spine/sections/from_abroad.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-law-loan",
       "script": "tests/uk/law/loan.test.ts",
       "args": [],

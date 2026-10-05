@@ -1,0 +1,97 @@
+{
+  "what": "Opening a shop in the UK from abroad (masterplan step 26; DATA-REQUIREMENTS item 74), as read on 2 October 2026 by the research E:/atlas/design/loop/build/research/2026-10-02-pro-sections-uk-law.md, section 74: each field its value, the page it was read on, the sentence quoted and the day; the Home Office fees are those of 8 April 2026, unchanged on 8 October 2026 (74.3). No difficulty score: item 74's seed index is coined and goes. What the research could not verify is absent: an agent's price for a registered office, a bank's terms for a non-resident (74.7).",
+  "jurisdiction": "United Kingdom (company law: England and Wales)",
+  "checked": "2026-10-02",
+  "fields": {
+    "director_residence": {
+      "value": "none",
+      "source_url": "https://www.gov.uk/limited-company-formation/appoint-directors-and-company-secretaries",
+      "quote": "Directors do not have to live in the UK but companies must have a UK registered office address.",
+      "checked": "2026-10-02"
+    },
+    "incorporation": {
+      "value": { "fee_gbp": 100, "hours": 24 },
+      "source_url": "https://www.gov.uk/limited-company-formation/register-your-company",
+      "quote": "It costs £100 and can be paid by debit or credit card. Your company is usually registered within 24 hours.",
+      "checked": "2026-10-02"
+    },
+    "registered_office": {
+      "value": "a physical UK address, never a Royal Mail PO Box",
+      "source_url": "https://www.gov.uk/limited-company-formation/company-address",
+      "quote": "The address you register must be: a physical address in the UK; You can no longer use a Royal Mail PO Box as your registered office address.",
+      "checked": "2026-10-02"
+    },
+    "identity_verification": {
+      "value": { "fee_gbp": 0 },
+      "source_url": "https://www.gov.uk/guidance/verify-your-identity-for-companies-house",
+      "quote": "You can verify yourself online with GOV.UK One Login if you have one of the following types of photo ID: biometric passport from any country; This service uses GOV.UK One Login to verify your identity. It is free of charge.",
+      "checked": "2026-10-02"
+    },
+    "corporation_tax_code_days_abroad": {
+      "value": 21,
+      "source_url": "https://www.gov.uk/limited-company-formation/register-your-company",
+      "quote": "HMRC will send you: your Corporation Tax activation code within 10 days (21 days if you live abroad)",
+      "checked": "2026-10-02"
+    },
+    "bank_account": {
+      "value": "no right to one",
+      "source_url": "https://www.fca.org.uk/publication/corporate/uk-payment-accounts-access-closures-update.pdf",
+      "quote": "Firms generally have broad commercial discretion to choose who they do business with, including who they accept, or retain, as a customer.",
+      "checked": "2026-10-02"
+    },
+    "visa_free": {
+      "value": ["Irish citizens", "settled or pre-settled status", "indefinite leave to remain"],
+      "source_url": "https://www.gov.uk/government/publications/common-travel-area-guidance/common-travel-area-guidance",
+      "quote": "If you are a British or Irish citizen, you can work in either country, including on a self-employed basis, without needing any permission from the authorities.",
+      "checked": "2026-10-02"
+    },
+    "innovator_founder": {
+      "value": { "fee_outside_gbp": 1357, "fee_inside_gbp": 1693, "endorsement_gbp": 1000, "contact_meeting_gbp": 500, "contact_meetings_min": 2, "funds_gbp": 1270, "funds_days": 28, "years": 3 },
+      "source_url": "https://www.gov.uk/innovator-founder-visa",
+      "quote": "It costs £1,357 per person if you apply outside the UK. You'll need to pay £1,000 to get an endorsement from an approved endorsing body. you'll also have to pay £500 each time you meet with your endorsing body. You need to meet at least twice during your stay in the UK. You can stay for 3 years",
+      "checked": "2026-10-02"
+    },
+    "innovator_founder_shop": {
+      "value": "unlikely",
+      "source_url": "https://www.gov.uk/government/publications/scale-up-and-innovator-founder-visa-endorsing-bodies-guidance/innovator-founder-and-scale-up-visas-guidance-for-endorsing-bodies-accessible",
+      "quote": "Generic businesses with an only incidental innovation proposition, for example a taxi or cleaning company “with an app”.",
+      "checked": "2026-10-02"
+    },
+    "health_surcharge_gbp_year": {
+      "value": { "standard": 1035, "youth_mobility": 776 },
+      "source_url": "https://www.gov.uk/healthcare-immigration-application/how-much-pay",
+      "quote": "£1,035 per year for all other visa and immigration applications, for example £3,105 for a 3-year visa",
+      "checked": "2026-10-02"
+    },
+    "decision_weeks": {
+      "value": { "outside": 3, "inside": 8 },
+      "source_url": "https://www.gov.uk/innovator-founder-visa",
+      "quote": "3 weeks, if you’re outside the UK",
+      "checked": "2026-10-02"
+    },
+    "youth_mobility": {
+      "value": { "fee_gbp": 340, "savings_gbp": 2530, "months": 24, "equipment_max_gbp": 5000, "employees": 0 },
+      "source_url": "https://www.gov.uk/youth-mobility",
+      "quote": "be self-employed and set up a company - as long as your premises are rented, your equipment is not worth more than £5,000 and you do not have any employees; The application fee is £340.; have £2,530 in savings",
+      "checked": "2026-10-02"
+    },
+    "skilled_worker_trades": {
+      "value": { "ineligible": ["barbers", "beauticians", "cooks"] },
+      "source_url": "https://www.gov.uk/government/publications/skilled-worker-visa-eligible-occupations/skilled-worker-visa-eligible-occupations-and-codes",
+      "quote": "6221 / Hairdressers and barbers / Barbers Hairdressers ... / Ineligible; 6222 / Beauticians and related occupations / ... Nail technicians ... / Ineligible",
+      "checked": "2026-10-02"
+    },
+    "sponsor_licence_small_gbp": {
+      "value": 611,
+      "source_url": "https://www.gov.uk/government/publications/visa-regulations-revised-table/home-office-immigration-and-nationality-fees-8-april-2026",
+      "quote": "Worker sponsor licence (small sponsor) / £574 / £611",
+      "checked": "2026-10-02"
+    },
+    "vat_threshold_gbp": {
+      "value": 90000,
+      "source_url": "https://www.gov.uk/register-for-vat",
+      "quote": "your total taxable turnover for the last 12 months goes over £90,000 (the VAT threshold)",
+      "checked": "2026-10-02"
+    }
+  }
+}
