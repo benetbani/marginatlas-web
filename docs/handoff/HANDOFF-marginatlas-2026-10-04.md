@@ -11,8 +11,7 @@ map is written. Written 2026-10-04, late night; closed and shipped 2026-10-05 af
 **Where things stand.** The masterplan of 2026-10-05 (40 steps, `docs/superpowers/plans/2026-10-05-masterplan/`) ran unattended
 through the night and is finished: every step DONE except 06 (PARKED: the subscriptions migration is his to run). All of it is
 on website branch **`night-2026-10-05`** (its head is the commit "40: the night's proof and the morning pack", on a1117f1d), made from `main` 128c66b6 plus `m1-followups`; branch **`launch-day`** is
-that head plus one commit deleting `NEXT_PUBLIC_SITE_PRIVATE=1` from `.env.production`. **Nothing is pushed, merged into `main`,
-deployed or posted.** The design repo's commits are on `p4-seam` (STATE.md's step in flight says the same).
+that head plus one commit deleting `NEXT_PUBLIC_SITE_PRIVATE=1` from `.env.production`. **DEPLOYED on his word of 2026-10-05, evening ("Push the night branch and deploy, switches off"): `main` is the night branch at 50e00bcb, live on Vercel with every switch off and proven on production (/gb shows the four Pro sections open and "Report a mistake", no lock; / is still the old home page; /pricing sells one plan; /terms and /privacy keep today's text; an address naming nothing answers 404). The first build, e7a5b4fa, failed on `no-cream` (the deleted world map's ratchet entry at zero) and was never promoted; 50e00bcb fixed it. `launch-day` stays local. Nothing posted.** The design repo's commits are on `p4-seam` (STATE.md's step in flight says the same).
 
 **What was built.** Milestone 2 (Pro): one plan at $38 / $238 (`src/lib/monetization/plan.ts`), checkout with no account and no
 trial, the Stripe webhook on a pure core, the welcome page, the account's plan and the portal, no pop-up anywhere, the paywall
