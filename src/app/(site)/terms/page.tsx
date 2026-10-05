@@ -46,11 +46,9 @@ export default function TermsPage() {
 
       <LegalSection heading="What the figures are, and what they are not">
         <p>
-          Most numbers here are <b>modelled</b>. They are built from published
-          records using arithmetic we show on the page, and every figure carries
-          a tier saying how solid it is: measured means it comes from a published
-          record, built means we computed it from published records, thin means
-          nobody publishes it and we have said so.
+          Many numbers here are <b>estimates</b>, built from published records.
+          Where it matters, the line under a figure says whether it was counted,
+          worked out, looked up or estimated.
         </p>
         <p>
           <b>A model of a typical business is not a forecast of yours.</b> Two

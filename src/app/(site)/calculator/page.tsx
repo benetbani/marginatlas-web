@@ -114,8 +114,7 @@ export default function CalculatorPage() {
           does not collect or store the revenue you enter: the comparison is
           computed in your browser from the bottom-10%, typical, and top-10%
           values for this industry and place. Break-even and take-home are
-          modelled from the cost structure of the trade, so treat them as a
-          directional read, not your books.
+          estimates from the trade&apos;s cost structure, not your books.
         </p>
       </ContentColumn>
     </PageShell>

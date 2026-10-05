@@ -203,11 +203,14 @@ export function RangeStrip({
   const x1 = xp(p90);
   const segW = (x1 - x0) / 7;
 
+  /* "Estimated", the word milestone 1 (M11) gave the struck "modelled" (masterplan step 02, 2026-10-05). The parentheses
+     are the fix of the same day: `ariaLabel ?? isModelled ? a : b` reads as `(ariaLabel ?? isModelled) ? a : b`, so a
+     caller's own label was never spoken and every labelled strip said the modelled sentence. */
   const ariaText: string =
     ariaLabel ??
-    isModelled
-      ? `Modelled range from ${format(p10)} to ${format(p90)}, typical ${format(p50)}.`
-      : `Spread from ${format(p10)} at the bottom tenth to ${format(p90)} at the top tenth, typical ${format(p50)}.`;
+    (isModelled
+      ? `Estimated range from ${format(p10)} to ${format(p90)}, typical ${format(p50)}.`
+      : `Spread from ${format(p10)} at the bottom tenth to ${format(p90)} at the top tenth, typical ${format(p50)}.`);
 
   // Where a value sits along the plotted track, as a percent of the band, so the
   // mobile HTML markers land at the same spot the SVG accents do. Clamped a touch

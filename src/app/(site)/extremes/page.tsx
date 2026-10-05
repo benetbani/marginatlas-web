@@ -33,7 +33,6 @@ import { LensFilter, type LensEntry } from "@/components/extremes/LensFilter";
 import {
   loadExtremes,
   type ExtremeLeaderboard,
-  type BreakInLeaderboard,
   type DensityLeaderboard,
   type StartupLeaderboard,
 } from "@/lib/extremes/leaderboards";
@@ -103,9 +102,7 @@ function LeaderboardSection({ board }: { board: ExtremeLeaderboard }) {
         ))}
       </div>
       <p className="mt-3 text-[11px] leading-relaxed text-cocoa-500">
-        Owner take-home is after tax, for a typical single-site operator in each
-        state. Same currency, same method, so the states sit side by side
-        honestly. Modeled from local business demography. Directional.
+        Estimated after-tax take-home for one owner, same currency in every state.
       </p>
     </section>
   );
@@ -217,68 +214,7 @@ function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
         ))}
       </div>
       <p className="mt-3 text-[11px] leading-relaxed text-cocoa-500">
-        Cost to open is the typical one-time capital to get the doors open: the
-        fit-out, kit, deposits, and working capital before the first customer.
-        Modeled from the trade and adjusted for how expensive the place is.
-        Directional.
-      </p>
-    </section>
-  );
-}
-
-/**
- * One break-in-rating leaderboard: the same warm framing and cream card as the
- * boards above, but the ranked figure is the single break-in rating (0-100,
- * higher = easier to break in), with the band word as the row texture. Each row
- * links to the full cell. The rating rests on a real local take-home and modeled
- * entry costs, which the note states plainly.
- */
-function BreakInLeaderboardSection({ board }: { board: BreakInLeaderboard }) {
-  return (
-    /* ONE CARD PER BOARD. The heading trio, the ranked rows and the note
-       were three loose objects on the page separated by a border-t rule,
-       and only the middle one had a surface. AtlasFrame paints a fixed
-       photograph behind every route with no centre plate, so the eyebrow,
-       the h2 and the note were dark type straight on a picture while the
-       rows sat on an opaque hand-rolled plate. The board is one card now,
-       which is both the legibility fix and the divider: cards separate
-       themselves, so the rule goes. */
-    <section className="atlas-card p-5 md:p-6">
-      <SectionEyebrow size="md" className="mb-2">
-        {board.eyebrow}
-      </SectionEyebrow>
-      <h2 className="font-display text-2xl font-semibold tracking-tight text-balance text-ink-900 md:text-3xl">
-        {board.title}
-      </h2>
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
-        {board.intro}
-      </p>
-
-      {/* The inner hand-rolled plate is gone: the section above IS the
-          card now, and an inline boxShadow beats the class anyway, so a
-          second elevation here would have pinned this surface to a level
-          nothing else on the site uses. */}
-      <div className="mt-5">
-        <div className="mb-2 flex items-baseline justify-end">
-          <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-cocoa-500">
-            {board.valueCaption}
-          </span>
-        </div>
-        {board.rows.map((row, i) => (
-          <RankRow
-            key={row.href}
-            rank={i + 1}
-            label={row.name}
-            href={row.href}
-            value={String(row.score)}
-            texture={row.band}
-          />
-        ))}
-      </div>
-      <p className="mt-3 text-[11px] leading-relaxed text-cocoa-500">
-        The break-in rating is one number from 0 to 100, higher meaning easier to
-        break in and win: fast to earn back, quick to open, and room to stand out.
-        Based on real local earnings and modeled entry costs. Directional.
+        Estimated one-time cost to open, adjusted for the place&apos;s prices.
       </p>
     </section>
   );
@@ -325,17 +261,15 @@ function LensBlock({
 }
 
 export default async function ExtremesPage() {
-  const { leaderboards, breakInBoards, densityBoards, startupBoards } =
-    await loadExtremes();
+  /* The break-in boards (easiest and hardest by the 0..100 rating) left this page on 2026-10-05: a composite, which his
+     ruling 11 forbids ("no composite, ever"; masterplan step 02). loadExtremes still builds them; nothing prints them. */
+  const { leaderboards, densityBoards, startupBoards } = await loadExtremes();
 
   // The hub is data-gated like every other surface: if too few leaderboards
   // resolve cleanly (a wide Supabase outage), render the hero and an honest
   // note rather than a thin or broken page. In normal operation all of them
   // resolve.
   const hasEnough = leaderboards.length >= MIN_BOARDS;
-  // The break-in pair is shown only when BOTH the easiest and hardest boards
-  // resolved cleanly, so the headline-rating block never appears one-sided.
-  const hasBreakIn = breakInBoards.length >= 2;
   // The density pair is shown only when BOTH the crowded and still-room boards
   // resolved cleanly, so the "room to enter" block never appears one-sided.
   const hasDensity = densityBoards.length >= 2;
@@ -345,7 +279,7 @@ export default async function ExtremesPage() {
   const hasStartup = startupBoards.length >= 2;
 
   // Assemble the lens blocks in the founder's reading order, COST-TO-OPEN
-  // first, then take-home, break-in, and crowding. Each lens is included only
+  // first, then take-home and crowding. Each lens is included only
   // when it resolved (the same self-omit the blocks already carried), so the
   // filter offers exactly the lenses a reader can reach. The blocks are
   // server-rendered here and handed to the client filter as children, so the
@@ -412,25 +346,6 @@ export default async function ExtremesPage() {
         >
           {leaderboards.map((board) => (
             <LeaderboardSection key={board.key} board={board} />
-          ))}
-        </LensBlock>
-      ),
-    });
-  }
-  if (hasBreakIn) {
-    // Break-in lens: the single headline score made browsable (easiest to break
-    // into / hardest), the one number the cell mastheads carry.
-    lenses.push({
-      key: "break-in",
-      label: "Break-in",
-      node: (
-        <LensBlock
-          eyebrow="How hard it is to break in"
-          title="The break-in rating"
-          intro="One number for the whole question a would-be owner actually asks: how easy is it to break in and win here? It rewards a fast payback above all, then a quick open and room to stand out. Here is where that door swings widest, and where it barely opens at all."
-        >
-          {breakInBoards.map((board) => (
-            <BreakInLeaderboardSection key={board.key} board={board} />
           ))}
         </LensBlock>
       ),

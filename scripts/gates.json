@@ -2267,6 +2267,23 @@
       "claims": []
     },
     {
+      "name": "legacy-method-words",
+      "script": "tests/copy/legacy_method_words.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO STRUCK METHOD WORD AND NO COINED SCORE IN THE COPY OF ANY LIVE PAGE (masterplan step 02, 2026-10-05).",
+      "reads": [
+        "scripts/copy/legacy_method_words_baseline.json",
+        "scripts/harness/check_copy_plain.mjs",
+        "src/app",
+        "src/app/_design",
+        "src/app/dev",
+        "src/components",
+        "tests/copy/legacy_method_words.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "useless-tiles",
       "script": "scripts/audit/find_useless_tiles.ts",
       "args": [],

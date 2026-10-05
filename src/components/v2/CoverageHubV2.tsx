@@ -40,7 +40,7 @@ const TIER_META: Record<Tier, { title: string; explainer: string; dot: string }>
     dot: colors.tier.starter,
   },
   modeled: {
-    title: "Modeled",
+    title: "Estimated",
     explainer:
       "Extrapolated from peer-country measurement. Useful for ballparking, not for committee.",
     dot: colors.tier.modeled,

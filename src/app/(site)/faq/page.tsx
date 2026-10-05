@@ -22,8 +22,8 @@
  * here would be that defect in a machine-readable place, which is worse: search
  * engines penalise it and answer engines quote it.
  *
- * WHAT THIS PAGE DELIBERATELY DOES NOT DO. It does not restate the coverage
- * tier definitions at the length /about-data gives them, or re-explain the
+ * WHAT THIS PAGE DELIBERATELY DOES NOT DO. It does not restate the four kinds
+ * of figure at the length /about-data gives them, or re-explain the
  * headline-ratio method. Both are linked. A second, shorter telling of a
  * definition is how a definition drifts.
  *
@@ -120,34 +120,32 @@ const FAQS: Faq[] = [
     ],
   },
   {
-    question: "What do measured, regional, estimated and modeled mean?",
+    question: "What do counted, worked out, looked up and estimated mean?",
     answer: [
       <>
         Four words for how a figure was built. They describe the route a number
         came down, not how sure anyone is about its exact digits.
       </>,
       <>
-        <b>Measured.</b> Direct measurement of firms in that place and that
-        activity.
+        <b>Counted.</b> Taken straight from an official register or table.
       </>,
       <>
-        <b>Regional.</b> A broader benchmark applied to that place.
+        <b>Worked out.</b> Our arithmetic on official figures.
       </>,
       <>
-        <b>Estimated.</b> Built from country indicators and activity averages.
+        <b>Looked up.</b> A rule, a price or a published count read on a named
+        page on a stated day.
       </>,
       <>
-        <b>Modeled.</b> No observation for that place and trade, so the figure
-        is what we would expect on average.
+        <b>Estimated.</b> Our judgement where no register holds the figure.
       </>,
       <>
-        You meet these words through the &ldquo;How we know this&rdquo; link
-        beside a figure, which goes to the one that applies to what you are
-        looking at, and they travel with a download.{" "}
+        Where it matters, the line under a figure says which, and an estimate
+        carries a small half-filled circle.{" "}
         <a href="/about-data" className={linkClass}>
-          About the data
+          About the figures
         </a>{" "}
-        carries the fuller version of each, with the inputs named.
+        carries each with a figure you will meet.
       </>,
       <>
         What the word is not is a verdict on the number. It says which route a
@@ -195,9 +193,9 @@ const FAQS: Faq[] = [
       </>,
       <>
         The line between those two runs through the words above. A figure taken
-        from firms counted in that place carries further than one produced by a
-        country-level model, and the &ldquo;How we know this&rdquo; link beside
-        a figure is how you tell which one you are holding. Neither is a
+        from firms counted in that place carries further than an estimate built
+        from country-level figures, and the line under a figure is how you tell
+        which one you are holding. Neither is a
         guarantee. If a number looks wrong to you, it may well be wrong, and
         what you know about your own trade beats anything printed on this site.
       </>,
@@ -217,10 +215,9 @@ const FAQS: Faq[] = [
       </>,
       <>
         Where a place is thin, a page can still exist and still print numbers,
-        built from a broader benchmark or from a model rather than from
-        businesses counted on that street. That is what the four words above are
-        for. Check the &ldquo;How we know this&rdquo; link before you lean on
-        anything.
+        built from a broader benchmark or estimated rather than counted on that
+        street. That is what the four words above are for. Read the line under a
+        figure before you lean on it.
       </>,
       <>
         If you looked for a place or a trade and did not find it, the{" "}

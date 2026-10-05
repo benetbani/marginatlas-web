@@ -37,9 +37,6 @@ import {
   resolveToMeasuredIndustry,
 } from "@/lib/taxonomy";
 import { buildAcrossCities, type CityColumn, type AcrossMetric } from "@/lib/markets/across_cities";
-import type { BreakInBand } from "@/lib/scores/break_in_rating";
-import { breakInWord } from "@/lib/scores/band_labels";
-import { bandPillTone } from "@/lib/scores/band_tone";
 import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
@@ -102,28 +99,9 @@ function metricDisplay(metric: AcrossMetric, c: CityColumn): string {
   }
 }
 
-/** A finite, positive real, matching the data builder's guard. */
-function isPos(n: number | null | undefined): n is number {
-  return typeof n === "number" && Number.isFinite(n) && n > 0;
-}
-
-/** Compact USD for inline editorial prose, mirroring the board's money grain. */
-function moneyWord(n: number): string {
-  const abs = Math.abs(n);
-  const sign = n < 0 ? "-" : "";
-  if (abs >= 1_000_000) {
-    const v = Math.round((abs / 1_000_000) * 10) / 10;
-    return `${sign}$${Number.isInteger(v) ? v : v.toFixed(1)}M`;
-  }
-  if (abs >= 1_000) return `${sign}$${Math.round(abs / 1_000)}K`;
-  return `${sign}$${Math.round(abs).toLocaleString("en-US")}`;
-}
-
-// The one-word band label lives in @/lib/scores/band_labels (imported as
-// breakInWord) and the badge tone in @/lib/scores/band_tone (bandPillTone);
-// these columns are business break-in scores. This file used to carry its own
-// copy of the tone switch, as four siblings did, which is how the same score
-// could have rendered two colours on two pages.
+/* THE BREAK-IN RATING LEFT THIS PAGE on 2026-10-05 (his ruling 11, "no composite, ever"; masterplan step 02): the lead read
+   that named the place with the highest 0..100 score, its badge, and the table's rating row. The data builder still carries
+   the score on each column; nothing here prints it. */
 
 /**
  * The cost-to-open page href for a city column. The column href is the cell page
@@ -191,62 +169,6 @@ export default async function AcrossCitiesPage({
   const { cities, metrics, bestByMetric } = data;
   const leader = cities[0]; // richest typical revenue, sorted first
 
-  // The break-in ranking read: the single place that is easiest to break into by
-  // the headline break-in rating (the SAME 0..100 score on the masthead and the
-  // extremes board). Higher is easier. Only places that carry a real score enter
-  // the running; ties keep the slate's revenue order. Null when no place is
-  // scored, so the read self-omits rather than naming a place without a number.
-  const scoredCities = cities.filter(
-    (c): c is CityColumn & { breakInScore: number; breakInBand: BreakInBand } =>
-      c.breakInScore != null && c.breakInBand != null,
-  );
-  const easiestBreakIn =
-    scoredCities.length > 0
-      ? scoredCities.reduce((best, c) =>
-          c.breakInScore > best.breakInScore ? c : best,
-        )
-      : null;
-
-  // The lead read names ONE place to break into: the place with the HIGHEST
-  // break-in score, the exact same winner the table rings as easiest. Pointing
-  // the call-out at this column keeps the headline, the badge, and the table's
-  // ring in agreement, so the page never says one city is easiest while showing
-  // a Brutal badge on it. The column carries a real score and band by
-  // construction (scoredCities filtered for both), so the badge always prints a
-  // defensible number.
-  const easiest = easiestBreakIn; // the scored-cities winner the table rings
-
-  // The warm reason: the single leg that most makes this place easy to break
-  // into, read off what the column already carries. Room to grow (the thinnest
-  // competitor count per resident) leads when held; otherwise a forgiving
-  // break-even floor (more margin for a slow start). Both are direction-true
-  // restatements of figures the table shows, never a new claim.
-  const easiestHasRoom = easiest != null && isPos(easiest.densityPer10k);
-
-  // The honest catch: the first decisive row where this place is NOT the leader,
-  // named with whoever leads it, so the call to action never oversells. Mirrors
-  // the pickBreakIn catch order (headline size, then profitability, then staying
-  // power), reading the SAME bestByMetric the table marks. The reward leg
-  // (take-home) and the ease leg the reason leans on are skipped, since leading
-  // those is the point, not a catch.
-  const easiestIdx = easiest != null ? cities.indexOf(easiest) : -1;
-  const catchSkip = new Set<string>([
-    "take_home",
-    easiestHasRoom ? "density" : "breakeven",
-  ]);
-  let easiestCatch: { label: string; leaderName: string } | null = null;
-  if (easiestIdx >= 0) {
-    for (const key of ["revenue", "net_margin", "survival", "breakeven", "density"]) {
-      if (catchSkip.has(key)) continue;
-      const leaderIdx = bestByMetric[key];
-      if (leaderIdx == null || leaderIdx === easiestIdx) continue;
-      const metric = metrics.find((m) => m.key === key);
-      if (!metric) continue;
-      easiestCatch = { label: metric.label, leaderName: cities[leaderIdx].name };
-      break;
-    }
-  }
-
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-10">
       {/* Breadcrumb */}
@@ -278,75 +200,6 @@ export default async function AcrossCitiesPage({
         </p>
       </header>
 
-      {/* Where to break in: the single lead read the buyer came for. ONE place,
-          the one with the HIGHEST break-in score, the exact city the table rings
-          as easiest, shown with that same score + band badge. So the headline,
-          the badge, and the table's ring all name and rate the same place: no
-          contradiction between "easiest" copy and a Brutal badge. The warm reason
-          and the honest catch ride below; the heading links to that place's full
-          cell page and a quiet line links to its cost-to-open read. Self-omits
-          when no city is scored. */}
-      {easiest ? (
-        <section className="mt-8 rounded-lg border border-atlas-300/60 bg-atlas-50/60 p-5 md:p-6">
-          <SectionEyebrow size="md" className="mb-2">
-            Where to break in
-          </SectionEyebrow>
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
-            <h2 className={T_H3}>
-              <Link href={easiest.href} className="text-atlas-700 hover:text-atlas-900">
-                {easiest.name}
-              </Link>{" "}
-              is the easiest place to break into
-            </h2>
-            <span className="flex shrink-0 items-baseline gap-1.5">
-              <span className="text-[11px] font-medium uppercase tracking-wide text-cocoa-500">
-                Break-in rating
-              </span>
-              <span
-                className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
-                  easiest.breakInBand,
-                )}`}
-              >
-                <span className="tabular-nums">{easiest.breakInScore}</span>
-                <span>{breakInWord(easiest.breakInBand)}</span>
-              </span>
-            </span>
-          </div>
-          <p className="mt-2 max-w-2xl text-base leading-relaxed text-ink-900">
-            Across these cities, {easiest.name} carries the highest break-in score
-            for a {lower} business
-            {isPos(easiest.takeHome) ? (
-              <>
-                , pairing room to open one with an owner take-home of about{" "}
-                <span className="font-semibold tabular-nums">
-                  {moneyWord(easiest.takeHome)}
-                </span>{" "}
-                a year
-              </>
-            ) : null}
-            .{" "}
-            {easiestHasRoom
-              ? `It carries one of the thinner competitor counts per resident here, so a new operator is not fighting a saturated market on day one.`
-              : `Its break-even sits among the most forgiving here, so a new operator has more margin for a slow start.`}
-            {easiestCatch ? (
-              <>
-                {" "}
-                The catch: it is not the strongest on every measure.{" "}
-                {easiestCatch.leaderName} leads on{" "}
-                {easiestCatch.label.toLowerCase()}, so read the row that matters
-                most to you before you commit.
-              </>
-            ) : null}
-          </p>
-          <Link
-            href={openingHref(easiest)}
-            className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-atlas-700 hover:text-atlas-900"
-          >
-            See the cost to open one in {easiest.name} &rarr;
-          </Link>
-        </section>
-      ) : null}
-
       {/* The side-by-side comparison. Cities as columns, decisive rows as rows.
           The board's format helpers and dash, so it reads in the same language
           as every cell page. On mobile the table scrolls horizontally; the
@@ -356,10 +209,8 @@ export default async function AcrossCitiesPage({
         <h2 className={T_H2}>The same business in each city</h2>
         <p className="mt-2 max-w-2xl text-base leading-relaxed text-cocoa-700/85">
           Revenue is a typical firm&apos;s yearly sales, not what an owner keeps.
-          Owner take-home is after tax, for a single-site operator. The break-in
-          rating is one 0 to 100 score for how easy it is to open and win here,
-          higher being easier. The strongest city in each row is set in heavier,
-          deeper type, and the easiest place to break into is ringed.
+          Owner take-home is after tax, for a single-site operator. The strongest
+          city in each row is set in heavier, deeper type.
         </p>
 
         <div className="mt-6 overflow-x-auto">
@@ -379,8 +230,7 @@ export default async function AcrossCitiesPage({
                         {c.name}
                       </span>
                     </Link>
-                    {/* Quiet cross-link to this place's cost-to-open read, where
-                        the break-in rating is broken down in full. */}
+                    {/* Quiet cross-link to this place's cost-to-open read. */}
                     <Link
                       href={openingHref(c)}
                       className="mt-0.5 block text-[11px] font-medium text-cocoa-500 transition-colors hover:text-atlas-700"
@@ -428,45 +278,6 @@ export default async function AcrossCitiesPage({
                 );
               })}
 
-              {/* Break-in rating: the single headline score per place, the SAME
-                  0..100 number the cell masthead and the extremes board show
-                  (higher = easier to break in and win). A band-toned badge per
-                  city; a quiet dash where a place carries no defensible score, so
-                  the row never prints a wrong number. The easiest place is ringed,
-                  the row's parallel to the heavier best-place cue above. */}
-              <tr className="border-b border-parchment/50">
-                <td className="sticky left-0 z-10 bg-white py-2.5 pr-4 align-top text-cocoa-500">
-                  Break-in rating
-                  <span className="mt-0.5 block text-[11px] text-cocoa-500">
-                    higher is easier
-                  </span>
-                </td>
-                {cities.map((c) => {
-                  const scored =
-                    c.breakInScore != null && c.breakInBand != null;
-                  const isEasiest =
-                    scored &&
-                    easiestBreakIn != null &&
-                    c.href === easiestBreakIn.href;
-                  return (
-                    <td key={c.href} className="px-3 py-2.5 align-top">
-                      {scored ? (
-                        <span
-                          className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${bandPillTone(
-                            c.breakInBand as BreakInBand,
-                          )} ${isEasiest ? "ring-1 ring-atlas-300" : ""}`}
-                        >
-                          <span className="tabular-nums">{c.breakInScore}</span>
-                          <span>{breakInWord(c.breakInBand as BreakInBand)}</span>
-                        </span>
-                      ) : (
-                        <span className="text-cocoa-500">{MISSING}</span>
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-
               {/* Revenue spread: one quiet bar per city, bottom tenth to top
                   tenth with the typical firm marked. Self-omits per city when
                   the range is absent. */}
@@ -510,10 +321,8 @@ export default async function AcrossCitiesPage({
         </div>
 
         <p className="mt-4 max-w-2xl text-[11px] leading-relaxed text-cocoa-500">
-          Owner take-home, margins, and survival are modeled from local business
-          demography and are directional. The same activity reads differently
-          once local rent, wages, tax, and competition land on it. Open any city
-          for its full revenue, cost stack, and survival read.
+          Owner take-home, margins and survival are estimates. Open any city for
+          its full read.
         </p>
       </section>
 

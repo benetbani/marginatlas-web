@@ -70,7 +70,7 @@ const TRACKS: Track[] = [
     family: "C",
     title: "Reading the numbers without fooling yourself",
     blurb:
-      "A benchmark is only useful if you know what it can and cannot claim. This track is the skeptic's toolkit: what a median really says, why the same trade looks different across cities, how to read the percentile spread, and what the confidence label on every figure is warning you about. Short, plain, and built to stop a tidy number from leading you somewhere expensive.",
+      "A benchmark is only useful if you know what it can and cannot claim. This track is the skeptic's toolkit: what a median really says, why the same trade looks different across cities, how to read the percentile spread, and what the line under a figure is telling you. Short, plain, and built to stop a tidy number from leading you somewhere expensive.",
     signalLabel: null,
   },
 ];

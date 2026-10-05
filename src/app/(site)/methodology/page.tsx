@@ -7,10 +7,17 @@
  * product feature, not a disclaimer", Section 9 confidence labels).
  *
  * It explains plainly how a number is built (official where it exists,
- * triangulated where it does not, modeled where needed), what the four
- * confidence tiers mean, the honest limits of false precision, and the blunt
- * line that these are decision benchmarks, not your books and not financial,
- * tax, or legal advice.
+ * triangulated where it does not, estimated where needed), how a page marks a
+ * figure, the honest limits of false precision, and the blunt line that these
+ * are decision benchmarks, not your books and not financial, tax, or legal
+ * advice.
+ *
+ * WHAT A PAGE MARKS, said as the pages print it (masterplan step 02,
+ * 2026-10-05). This page promised "a confidence label on every figure", a
+ * "coverage chip" and four tiers, and a "How we know this" link beside every
+ * headline number; the rebuilt pages print none of them. It now says what they
+ * print: the four kinds (/about-data#reading), the line under a figure, and a
+ * small half-filled circle on an estimate. No new promise is written.
  *
  * Server component, no client JS. All colour and type from tokens. The deep
  * reference page (/about-data) keeps its own anchors and is linked from here;
@@ -26,55 +33,9 @@ export const revalidate = 86400;
 export const metadata = {
   title: "Methodology | Margin Atlas",
   description:
-    "How Margin Atlas builds its small-business numbers: official data where it exists, triangulated where it does not, modeled where needed, and a confidence label on every figure.",
+    "How Margin Atlas builds its small-business numbers: official data where it exists, triangulated where it does not, and an estimate where no record holds the figure.",
   alternates: { canonical: "/methodology" },
 };
-
-type Tier = {
-  id: string;
-  name: string;
-  dot: string;
-  rail: string;
-  blurb: string;
-};
-
-// The four-tier coverage vocabulary is the one canonical confidence scale used
-// across the product (chips, badges, the "How we know this" annex). Tier colour
-// rides the shared tier tokens, warmest for the strongest reading.
-const TIERS: Tier[] = [
-  {
-    id: "measured",
-    name: "Measured",
-    dot: "bg-tier-deep",
-    rail: "border-l-tier-deep",
-    blurb:
-      "Built from a direct reading of the firms in this place and trade. This is the strongest tier: the figure is close to what the middle business actually earns, employs, and pays.",
-  },
-  {
-    id: "regional",
-    name: "Regional",
-    dot: "bg-tier-good",
-    rail: "border-l-tier-good",
-    blurb:
-      "A broader regional or national reading applied down to this place. The direction is dependable; the precision loosens the smaller and more specific the slice gets.",
-  },
-  {
-    id: "estimated",
-    name: "Estimated",
-    dot: "bg-tier-starter",
-    rail: "border-l-tier-starter",
-    blurb:
-      "Inferred from country-level economic signals, such as income per head, governance, and urbanisation, blended with global patterns for the trade. Read it as orientation, not a precise figure.",
-  },
-  {
-    id: "modeled",
-    name: "Modeled",
-    dot: "bg-tier-modeled",
-    rail: "border-l-tier-modeled",
-    blurb:
-      "A transparent model output: global patterns for the trade scaled by what the local economy looks like. There is no direct observation behind this cell, so it shows what we would expect on average, in a range.",
-  },
-];
 
 export default function MethodologyPage() {
   return (
@@ -91,14 +52,13 @@ export default function MethodologyPage() {
           <p>
             Margin Atlas compares how a small business performs in a specific
             place: revenue, headcount, wages, and the gap between the smallest
-            and largest firms in a trade. Some of that is measured directly.
-            Some of it has to be triangulated. Some of it is modeled. We would
-            rather tell you which is which than dress every figure up as fact.
+            and largest firms in a trade. Some of that is counted from official
+            records. Some of it has to be triangulated. Some of it is an
+            estimate. We would rather tell you which is which than dress every
+            figure up as fact.
           </p>
           <p className="text-ink-900">
-            So every number on the site carries a confidence label. That label
-            is the product, not the fine print. It tells you how hard you can
-            lean on a figure before you put your own money behind it.
+            So where it matters, the line under a figure says which kind it is.
           </p>
         </div>
       </header>
@@ -144,73 +104,34 @@ export default function MethodologyPage() {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide text-atlas-700">
-              Modeled, where needed
+              Estimated, where needed
             </h3>
             <p className="mt-2 text-base leading-relaxed text-graphite">
-              For the thinnest slices, we fall back to a transparent model:
-              global patterns for the trade, scaled by country-level signals
-              like income per head, governance quality, and urbanisation. It is
-              an honest expectation of where a typical firm would land, and it is
-              labelled as such so nobody mistakes it for a measurement.
+              For the thinnest slices, we estimate: global patterns for the
+              trade, scaled by country-level signals like income per head,
+              governance quality, and urbanisation. It is an honest expectation
+              of where a typical firm would land, and the page says it is an
+              estimate so nobody mistakes it for a count.
             </p>
           </div>
         </div>
       </section>
 
-      {/* The confidence tiers: the centrepiece. Confidence-as-feature. */}
+      {/* How a page marks a figure: what the pages print, nothing more (masterplan step 02). */}
       <section className="mt-14">
         <h2 className="font-serif text-2xl text-ink-900 sm:text-3xl">
-          What the confidence labels mean
+          How a page marks a figure
         </h2>
         <p className="mt-4 text-base leading-relaxed text-graphite">
-          Every page shows a coverage chip beside the headline number. Four
-          tiers, one vocabulary across the whole site. Read the tier first, then
-          the figure: it tells you how much weight the number can take.
-        </p>
-
-        <div className="mt-7 space-y-3">
-          {TIERS.map((t) => (
-            <div
-              key={t.id}
-              id={t.id}
-              className={`scroll-mt-24 rounded-r-lg border-l-4 bg-white px-5 py-4 ${t.rail}`}
-            >
-              <div className="mb-1 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700">
-                <span className={`h-2 w-2 rounded-full ${t.dot}`} />
-                {t.name}
-              </div>
-              <p className="text-sm leading-relaxed text-ink-800">{t.blurb}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* "each benchmark carries a five-star quality rating" stood at the
-            front of this sentence, and no benchmark does. The rating was
-            deleted from the product deliberately, for the reason recorded in
-            the cell page's own source: the 10/10 score and the stars "exposed
-            engineering provenance the founder explicitly said never to
-            display."
-
-            It was the second copy of that claim. /about-data taught the same
-            scale, and this paragraph sent readers there for "the fuller
-            breakdown of ratings", so the two pages propped each other up: the
-            cross-reference made the claim look sourced. Removing it from one
-            page only would have left the other pointing at a section that no
-            longer exists.
-
-            The rest of the sentence is exact and stays. "How we know this" is
-            HowWeKnowThis's real default label. */}
-        <p className="mt-6 text-base leading-relaxed text-graphite">
-          Alongside the tier, a quiet{" "}
-          <span className="font-medium text-ink-900">How we know this</span> link
-          sits next to the headline number so the route and method are one click
-          away. The fuller breakdown of the definitions and the words we
-          use lives on the{" "}
+          A figure is one of four kinds: counted, worked out, looked up or
+          estimated. Where it matters, the line under it says which, and an
+          estimate carries a small half-filled circle beside that line. The four
+          kinds, each with a figure you will meet, are set out on{" "}
           <Link
-            href="/about-data"
+            href="/about-data#reading"
             className="font-medium text-atlas-700 underline decoration-atlas-300 underline-offset-2 hover:text-atlas-900 hover:decoration-atlas-700"
           >
-            about-the-data reference
+            About the figures
           </Link>
           .
         </p>
@@ -284,9 +205,9 @@ export default function MethodologyPage() {
               href="/about-data"
               className="font-medium text-atlas-700 underline decoration-atlas-300 underline-offset-2 hover:text-atlas-900 hover:decoration-atlas-700"
             >
-              About the data
+              About the figures
             </Link>{": "}
-            the long-form reference for ratings, tax overlay, glossary, and sources.
+            the four kinds of figure, and the sources.
           </li>
           <li>
             <Link

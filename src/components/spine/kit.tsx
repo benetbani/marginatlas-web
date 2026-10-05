@@ -430,7 +430,7 @@ export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: n
   const mid = Math.max(2, Math.min(98, ((p50 - p10) / span) * 100));
   const aria =
     basis === "modelled"
-      ? `Modelled range from ${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}.`
+      ? `Estimated range from ${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}.`
       : `Spread from ${fmt(p10)} at the bottom tenth to ${fmt(p90)} at the top tenth, typical ${fmt(p50)}.`;
   return (
     <div data-idea="I1">

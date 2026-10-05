@@ -35,7 +35,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getTopIndustriesForCountry, getCellBySlug, withBudget, slugify } from "@/lib/cells";
+import { getTopIndustriesForCountry, slugify } from "@/lib/cells";
 import { getCitiesForCountry } from "@/lib/cities";
 import { COUNTRIES, industryToSlug } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -52,8 +52,6 @@ import { getCountryProfile } from "@/lib/economic_profile";
 import { getBrainGdpPerCapitaByIso2, getBrainPopulationByIso2 } from "@/lib/external/brain_data";
 import { getSmbRegime, getVatRow } from "@/lib/tax/smb_effective_rates";
 import { getCountryRates, getTypicalFormationCostUsd } from "@/lib/tax/country_rates";
-import { buildEasiestToBreakIn, type PlaceActivityCell } from "@/lib/scores/country_board";
-import { EasiestToBreakIn } from "@/components/countries/EasiestToBreakIn";
 import { StickySectionNav, FreshnessStamp, FlagIt, AddToWatch } from "@/components/kit";
 import {
   Scorecard,
@@ -488,32 +486,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
     meta.quality ?? null,
   );
 
-  // "The easiest businesses to break into here" panel: ranks this country's own
-  // activities by break-in rating, resolving the same destination cell each
-  // business links to (a bounded, budgeted set of reads). Self-omits a thin
-  // ranking. Preserved exactly from the prior page (data-sanity guard intact).
-  const resolvedActivities: PlaceActivityCell[] = await Promise.all(
-    topIndustries.map(async (ind) => ({
-      industryId: ind.industry_id,
-      industryName: ind.industry_name,
-      cell: await withBudget(
-        getCellBySlug(iso2.toLowerCase(), placeGeo, industryToSlug(ind.industry_id), {
-          sizeBand: null,
-          year: null,
-        }),
-        null,
-        4_000,
-        `easiest-break-in:${iso2}/${placeGeo}/${ind.industry_id}`,
-      ),
-    })),
-  );
-  const easiestBreakIn = buildEasiestToBreakIn({
-    iso2,
-    geo: placeGeo,
-    activities: resolvedActivities,
-    econ: { avgMonthlySalary: snapshot.avgMonthlySalary },
-  });
-  const hasBreakIn = easiestBreakIn.length > 0;
 
   // Regions-and-cities: each region a heading, its cities clickable. Cities
   // render as UNIFORM, equal-weight cards (no good-vs-bad ranking).
@@ -929,7 +901,8 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
       }))
     : null;
 
-  const nav = countryViewNav(view, true, hasBreakIn, hasCities, licenceItems != null);
+  /* No break-in anchor: the 0..100 break-in ranking left the page on 2026-10-05 (his ruling 11, "no composite, ever"). */
+  const nav = countryViewNav(view, true, false, hasCities, licenceItems != null);
 
   return (
     <div className="xl:flex xl:gap-16">
@@ -1320,22 +1293,6 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
             ) : null}
           </EngravedSection>
 
-          {/* The easiest businesses to break into here (ranks ACTIVITIES). The
-              component owns its own header, so this is the site card and
-              nothing else. Was the same flat cream hand-roll EngravedSection
-              carried; converged for the same reason. */}
-          {hasBreakIn ? (
-            <section
-              id="break-in"
-              className="atlas-card px-5 py-5 md:px-7 md:py-6"
-            >
-              <EasiestToBreakIn
-                rows={easiestBreakIn}
-                placeName={meta.name}
-                showScores={easiestBreakIn.some((r) => r.openingHref != null)}
-              />
-            </section>
-          ) : null}
 
           {/* 16. Character. Carries the required "character" id. From the
               country signature, rendered in the engraved CharacterPanel. */}

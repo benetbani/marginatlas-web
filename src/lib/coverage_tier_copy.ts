@@ -89,10 +89,11 @@ export const COVERAGE_TIER_COPY = {
     // On a card this sentence sits directly beneath a printed figure, so "no
     // observation for this cell" on its own reads as a flat contradiction of
     // the number above it. All three forms therefore keep the part that says
-    // what the number IS, not only what it is not.
-    short: "Modeled: no observation here, this is what we would expect",
-    long: "no observation for this cell; what we would expect on average",
-    across: "Modeled: no observation in these places, this is what we would expect",
+    // what the number IS, not only what it is not. "An estimate" leads, the word milestone 1 (M11) gave the struck
+    // "Modeled" (masterplan step 02, 2026-10-05); the share cards print `short` and `across` under a figure.
+    short: "An estimate: no observation here, this is what we would expect",
+    long: "no observation for this cell, what we would expect on average",
+    across: "An estimate: no observation in these places, this is what we would expect",
   },
   // `satisfies` rather than a type annotation: the object keeps its literal
   // types for callers, and adding a fifth tier to CoverageTier fails the build

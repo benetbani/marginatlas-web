@@ -33,7 +33,6 @@ import { OpeningHero } from "@/components/open/OpeningHero";
 import { OpeningChecklist } from "@/components/open/OpeningChecklist";
 import { OpeningPayback } from "@/components/open/OpeningPayback";
 import { OpeningComparisons } from "@/components/open/OpeningComparisons";
-import { BreakInWhy } from "@/components/board/BreakInScore";
 import { SiteChrome } from "@/components/SiteChrome";
 
 export const revalidate = 86400;
@@ -105,10 +104,7 @@ export async function generateMetadata({
   const lower = page.businessName.toLowerCase();
   const title = `What it costs to open a ${lower} in ${page.placeName}`;
   const total = fmtUSD(page.totalToOpenUsd);
-  const score = page.breakIn
-    ? `break-in rating ${page.breakIn.score}/100`
-    : "with a clear read on the entry cost";
-  const desc = `Capital, permits, time, and first hires to open a ${lower} in ${page.placeName}: about ${total} to open, ${score}.`;
+  const desc = `Capital, permits, time, and first hires to open a ${lower} in ${page.placeName}: about ${total} to open.`;
   const canonical = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}/opening`;
   const ogPath = `/og/cell?country=${encodeURIComponent(
     country,
@@ -156,18 +152,8 @@ async function OpeningRoutePageBody({
     <div className="relative mx-auto max-w-3xl pb-16">
       <OpeningHero page={page} />
       <OpeningPayback page={page} />
-      {/* The driver breakdown for the score the hero prints. It was reachable
-          only through the cell board's "What it takes to open" section, and when
-          that section was deleted on 2026-08-18 for being computed and read by
-          nobody, this went with it: from then until now the 0-100 rating showed
-          on this page and on the cell masthead with no breakdown anywhere on the
-          site. It belongs here rather than back on the cell page, because this is
-          the surface that prints the raw number with nothing but a band word
-          beside it, this page IS the section it used to sit in, and the cell page
-          already gives the same score a scale, a band and a hint sentence in the
-          honest-take block. showPayback={false}: <OpeningPayback> directly above
-          carries that sentence already, with the take-home attached. */}
-      <BreakInWhy rating={page.breakIn} showPayback={false} />
+      {/* The 0-100 break-in rating's breakdown stood here, three sub-scores as bars, until 2026-10-05: its only content
+          was the composite, which his ruling 11 forbids ("no composite, ever"; masterplan step 02). */}
       <OpeningChecklist page={page} />
       <OpeningComparisons page={page} />
     </div>

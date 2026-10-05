@@ -129,7 +129,7 @@ export const ATLAS_SPOTS: AtlasSpotDef[] = [
   {
     id: "calculator",
     title: "The calculator",
-    caption: "Run your own scenario, the model in your hands.",
+    caption: "Run your own scenario, with your own figures.",
     vb: "0 0 230 190",
     body: "<rect x=\"44\" y=\"84\" width=\"94\" height=\"96\" rx=\"11\" fill=\"#463726\" fill-opacity=\"0.16\" stroke=\"none\" transform=\"translate(4 4)\"/> <path d=\"M132 84 C156 54 156 46 182 44 q16 -1 16 9 l0 30\" fill=\"#463726\" fill-opacity=\"0.12\" stroke=\"none\"/> <rect x=\"44\" y=\"84\" width=\"94\" height=\"96\" rx=\"11\"/> <rect x=\"58\" y=\"98\" width=\"66\" height=\"20\" rx=\"2\"/> <g class=\"thin\"> <circle cx=\"66\" cy=\"136\" r=\"3.5\"/><circle cx=\"83\" cy=\"136\" r=\"3.5\"/><circle cx=\"100\" cy=\"136\" r=\"3.5\"/><circle cx=\"117\" cy=\"136\" r=\"3.5\"/> <circle cx=\"66\" cy=\"154\" r=\"3.5\"/><circle cx=\"83\" cy=\"154\" r=\"3.5\"/><circle cx=\"100\" cy=\"154\" r=\"3.5\"/> <circle cx=\"66\" cy=\"170\" r=\"3.5\"/><circle cx=\"83\" cy=\"170\" r=\"3.5\"/> </g> <circle cx=\"117\" cy=\"162\" r=\"5.5\" fill=\"#e62200\" fill-opacity=\"0.85\" stroke=\"none\"/> <path d=\"M132 84 C156 54 156 46 182 44 q16 -1 16 9\"/> <path class=\"thin\" d=\"M150 70 C168 52 168 50 190 50\"/> <path class=\"thin\" d=\"M168 56 h22 M168 64 h16\" stroke=\"#e62200\"/>",
   },

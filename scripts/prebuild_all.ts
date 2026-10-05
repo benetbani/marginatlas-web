@@ -696,6 +696,9 @@ const GATES: Gate[] = [
   { name: "indexable", script: "tests/seo/indexable.test.ts" },
   { name: "depth-notify", script: "tests/seo/depth_notify.test.ts" },
   { name: "copy-no-method-words", script: "tests/spine/copy_no_method_words.test.ts" },
+  /* No struck method word and no coined score in the literals of src/app and src/components, a ratchet per file (masterplan
+     step 02, 2026-10-05; his ruling 11, "no composite, ever"; his copy correction of 2026-09-24). */
+  { name: "legacy-method-words", script: "tests/copy/legacy_method_words.test.ts" },
   { name: "useless-tiles", script: "scripts/audit/find_useless_tiles.ts" },
   { name: "typography", script: "scripts/verify_typography_consistency.ts" },
   { name: "signature-quality", script: "scripts/verify_signature_quality.ts" },

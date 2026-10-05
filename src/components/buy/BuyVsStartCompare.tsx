@@ -88,7 +88,7 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
             <Row
               label="Cash needed"
               value={fmtUSD(page.start.cashNeededUsd)}
-              note="capital plus permits to open, modeled"
+              note="capital plus permits to open, estimated"
             />
             <Row
               label="Time to cash flow"
@@ -115,7 +115,7 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
             <Row
               label="Cash needed"
               value={fmtUSD(page.buy.cashNeededUsd)}
-              note={`about ${page.buy.multiple}x owner earnings, modeled sale price`}
+              note={`about ${page.buy.multiple}x owner earnings, an estimate`}
             />
             <Row
               label="Time to cash flow"
@@ -131,10 +131,9 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
         </div>
       </div>
 
-      {/* One quiet honesty note: the buy side is modeled. */}
+      {/* One quiet line: the buy side is an estimate (the struck "modeled" said plainly, masterplan step 02). */}
       <p className="mt-3 text-[11px] text-cocoa-500">
-        The sale price is a modeled earnings multiple, not a real listing.
-        Directional, and a starting point for what a real deal might cost.
+        The sale price is an estimate from earnings, not a real listing.
       </p>
     </section>
   );

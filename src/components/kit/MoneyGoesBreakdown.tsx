@@ -294,8 +294,7 @@ export function MoneyGoesBreakdown({
         ))}
       </dl>
       <p className="mt-3 text-[11px] text-cocoa-700">
-        Read as dollars out of every $100 a typical firm takes in. Modeled from
-        the cost structure; the local market shifts the exact split.
+        Dollars of every $100 a typical firm takes in, an estimate.
       </p>
     </section>
   );

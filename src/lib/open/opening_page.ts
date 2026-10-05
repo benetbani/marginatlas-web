@@ -477,22 +477,11 @@ async function resolveOtherBusinessesHere(cell: Cell): Promise<OtherBusinessHere
 /* ----------------------------------------------------------------------------
  * verdict
  * ------------------------------------------------------------------------- */
-const BAND_VERDICT: Record<BreakInBand, string> = {
-  forgiving:
-    "One of the friendlier rooms to enter: low to get into and quick to earn back, if you can stand out.",
-  manageable:
-    "A fair price of entry and a payback you can plan around, doable on a real budget with eyes open.",
-  demanding:
-    "Earning it back takes a while and the build is real, so come in funded and patient.",
-  brutal:
-    "Heavy to open and a long road back to profit, a hard room to break into without deep pockets.",
-};
-
-function buildVerdict(breakIn: BreakInRating | null): string {
-  if (breakIn?.headline) return breakIn.headline;
-  if (breakIn?.band) return BAND_VERDICT[breakIn.band];
-  // No defensible rating (no take-home or no capital): a quiet, honest line that
-  // names the entry cost as the read without overselling.
+/* THE VERDICT NO LONGER SPEAKS THE RATING (masterplan step 02, 2026-10-05). It was the break-in rating's headline, else its
+   band in words ("One of the friendlier rooms to enter"): the 0..100 composite said in a sentence, which his ruling 11 of
+   2026-09-26 forbids ("no composite, ever"). Every page now carries the line it carried when no rating held: what the
+   figures below are. */
+function buildVerdict(): string {
   return "The numbers below are what it takes to open here, the cost, the calendar, and the first crew.";
 }
 
@@ -620,6 +609,6 @@ export async function buildOpeningPage(
     takeHomeUsd: isNum(th.resolvedTakeHome) ? Math.round(th.resolvedTakeHome) : null,
     breakIn: breakInRating,
     comparisons: { sameBusinessElsewhere, otherBusinessesHere },
-    verdict: buildVerdict(breakInRating),
+    verdict: buildVerdict(),
   };
 }

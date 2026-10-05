@@ -53,7 +53,9 @@ export const TIER_LABEL: Record<Tier, string> = {
   deep: "Measured",
   good: "Regional",
   starter: "Thin",
-  modeled: "Modeled",
+  /* "Estimated", the word milestone 1 (M11) gave the struck "Modeled" (masterplan step 02, 2026-10-05); the label prints
+     beside the [sub] pages' masthead figure. */
+  modeled: "Estimated",
 };
 
 const dotVariants = cva("inline-block rounded-full shrink-0", {

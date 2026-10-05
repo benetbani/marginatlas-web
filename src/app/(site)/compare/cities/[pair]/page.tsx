@@ -244,9 +244,9 @@ export default async function ComparisonPage({
             { label: "Metro population", aVal: `${a.pop_m.toFixed(1)}M`, bVal: `${b.pop_m.toFixed(1)}M` },
             { label: "Metro GDP", aVal: `$${a.gdp_b.toFixed(0)}B`, bVal: `$${b.gdp_b.toFixed(0)}B` },
             { label: "GDP per resident", aVal: fmt(aGdpPc), bVal: fmt(bGdpPc) },
-            { label: "Typical pay, modeled", aVal: fmt(aCb.payroll_per_employee_usd), bVal: fmt(bCb.payroll_per_employee_usd) },
-            { label: "Cost tier vs global", aVal: `${aCb.revenue_multiplier.toFixed(2)}x`, bVal: `${bCb.revenue_multiplier.toFixed(2)}x` },
-            { label: "Wealth z-score", aVal: `${a.wealth_z >= 0 ? "+" : ""}${a.wealth_z.toFixed(1)}`, bVal: `${b.wealth_z >= 0 ? "+" : ""}${b.wealth_z.toFixed(1)}` },
+            { label: "Typical pay, estimated", aVal: fmt(aCb.payroll_per_employee_usd), bVal: fmt(bCb.payroll_per_employee_usd) },
+            /* "Cost tier vs global" (a revenue multiplier, 1.23x) and "Wealth z-score" (+1.2) left on 2026-10-05: two coined
+               indexes of the estimating machinery, which his ruling 11 keeps off a page (masterplan step 02). */
           ].map((row) => (
             <div key={row.label} className="col-span-2 grid grid-cols-[1fr,auto,1fr] items-center gap-2 md:gap-6 py-3 border-b border-parchment last:border-0">
               <div className="text-right font-display text-lg md:text-2xl font-medium text-ink-900 tabular-nums">
@@ -268,11 +268,8 @@ export default async function ComparisonPage({
             Ten activities, side by side
           </h2>
           <p className="text-sm text-cocoa-700/80 mb-6 max-w-2xl">
-            A modeled revenue estimate per firm, scaled from each country&apos;s
-            cost level and each city&apos;s wealth, not a direct measurement.
-            Figures are in US dollars and are not adjusted for local prices, so
-            read the pattern across activities rather than the exact totals or a
-            head-to-head winner.
+            An estimate of yearly sales per firm, in US dollars, not adjusted
+            for local prices.
           </p>
           <div className="space-y-2">
             {industryEstimates.map((ind) => {

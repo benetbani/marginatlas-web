@@ -9,15 +9,20 @@
  * Drop inline next to a stat block:
  *   <span className="tabular-nums">$1.2M</span> <HowWeKnowThis anchor="estimated" />
  *
- * The link points at /about-data#<anchor>; anchors live on that page
- * (measured / regional / estimated / modeled).
+ * The link points at /about-data#<anchor>. The four tier anchors (measured /
+ * regional / estimated / modeled) left that page on 2026-10-05 with the tiers
+ * themselves (masterplan step 02), so a tier lands on "How to read a figure"
+ * (#reading), the four kinds the pages print; any other anchor is kept.
  *
  * Server component. Zero client cost.
  */
 import Link from "next/link";
 
+/** The tier anchors /about-data no longer carries; each lands on the four kinds. */
+const TIER_ANCHORS: ReadonlySet<string> = new Set(["measured", "regional", "estimated", "modeled"]);
+
 export type HowWeKnowThisProps = {
-  /** Anchor on /about-data — usually one of: measured | regional | estimated | modeled */
+  /** Anchor on /about-data. A retired tier name (measured, regional, estimated, modeled) lands on #reading. */
   anchor?: string;
   /** Optional override label. Default is "How we know this". */
   label?: string;
@@ -30,9 +35,10 @@ export function HowWeKnowThis({
   label = "How we know this",
   className,
 }: HowWeKnowThisProps) {
+  const target = TIER_ANCHORS.has(anchor) ? "reading" : anchor;
   return (
     <Link
-      href={`/about-data#${anchor}`}
+      href={`/about-data#${target}`}
       className={[
         "inline-block text-[11px] leading-none",
         "text-ink-700 hover:text-atlas-700",

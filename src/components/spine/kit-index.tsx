@@ -154,8 +154,10 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
   return (
     <Tag
       href={d.href}
-      className="hovrow group relative -mx-2 block rounded-lg px-2 py-2 sm:grid sm:grid-cols-[1.5fr_1.4fr_repeat(var(--n),minmax(0,1fr))] sm:items-center sm:gap-3"
-      style={{ ["--n" as any]: d.support.length, ...(d.home ? { background: "#fff4f1" } : {}) }}
+      /* With no signals the row is two columns: `repeat(0, ...)` is invalid CSS and would drop the whole template (the
+         Margin Index lost its composite columns on 2026-10-05, masterplan step 02). */
+      className={`hovrow group relative -mx-2 block rounded-lg px-2 py-2 sm:grid ${signals.length ? "sm:grid-cols-[1.5fr_1.4fr_repeat(var(--n),minmax(0,1fr))]" : "sm:grid-cols-[1.5fr_1.4fr]"} sm:items-center sm:gap-3`}
+      style={{ ["--n" as any]: signals.length, ...(d.home ? { background: "#fff4f1" } : {}) }}
     >
       {/* rulebook v1 §G3 (founder 2026-07-11): the terracotta top-edge-on-hover is deleted ,
           no orange motif may appear only on hover; the quiet .hovrow background wash stays */}
@@ -166,8 +168,8 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
       </div>
       {/* focal (full width on mobile, its own column on sm+) */}
       <div className="mt-3 sm:mt-0">{focal}</div>
-      {/* support , a 2-up footer on mobile, right-aligned columns on sm+ */}
-      <div className="mt-3 grid grid-cols-2 gap-2 sm:contents sm:mt-0">
+      {/* support , a 2-up footer on mobile, right-aligned columns on sm+; nothing at all without signals */}
+      {signals.length ? <div className="mt-3 grid grid-cols-2 gap-2 sm:contents sm:mt-0">
         {signals.map((s) => {
           const sv = d.support.find((x) => x.key === s.key);
           return (
@@ -178,14 +180,14 @@ export function DecisionRow({ d, signals }: { d: DecisionDatum; signals: SignalD
             </div>
           );
         })}
-      </div>
+      </div> : null}
     </Tag>
   );
 }
 /** the header row that labels a DecisionRow list (desktop only). Pair with SortHeader for click-sort. */
 export function DecisionRowHeader({ signals, sort, onSort }: { signals: SignalDef[]; sort?: SortState; onSort?: (key: string) => void }) {
   return (
-    <div className="hidden grid-cols-[1.5fr_1.4fr_repeat(var(--n),minmax(0,1fr))] items-end gap-3 border-b border-[var(--c-border)] px-2 pb-2 sm:grid" style={{ ["--n" as any]: signals.length }}>
+    <div className={`hidden ${signals.length ? "grid-cols-[1.5fr_1.4fr_repeat(var(--n),minmax(0,1fr))]" : "grid-cols-[1.5fr_1.4fr]"} items-end gap-3 border-b border-[var(--c-border)] px-2 pb-2 sm:grid`} style={{ ["--n" as any]: signals.length }}>
       <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--c-muted)]">Place</span>
       <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wide text-[var(--terra-text)]">Margin kept</span>
       {signals.map((s) =>

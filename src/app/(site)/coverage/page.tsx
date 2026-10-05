@@ -28,7 +28,7 @@ export const revalidate = 21600;
 export const metadata: Metadata = {
   title: "Coverage: where Margin Atlas reaches",
   description:
-    "Every country Margin Atlas covers, grouped by how deep the numbers go, from neighborhood-level measurement to modeled estimates.",
+    "Every country Margin Atlas covers, grouped by how deep the numbers go, from neighborhood-level counts to estimates.",
   alternates: { canonical: "/coverage" },
 };
 

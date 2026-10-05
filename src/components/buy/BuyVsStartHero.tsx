@@ -50,7 +50,7 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
             {fmtUSD(page.buy.cashNeededUsd)}
           </div>
           <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-            To buy one, modeled
+            To buy, estimated
           </div>
         </div>
       </div>

@@ -438,9 +438,8 @@ export default function CitiesHub() {
               should be hard to read, so it gets a ground of its own. */}
           <div className="atlas-card mt-6 px-4 py-3">
             <p className="max-w-2xl text-xs leading-relaxed text-cocoa-700">
-              Metro economy and salary figures are modeled to stay consistent
-              across cities, so they read as comparisons rather than audited
-              accounts. Open a city for the fuller picture.
+              Metro economy and salary figures are estimates, made alike for
+              every city. Open a city for the fuller picture.
             </p>
           </div>
         </section>

@@ -48,7 +48,7 @@ export async function generateMetadata({
 const TIER_DESCRIPTIONS: Record<string, string> = {
   P: "Primary: direct measurement",
   S: "Secondary: official aggregation",
-  M: "Modeled: derived from primary inputs",
+  M: "Estimated: derived from primary inputs",
   T: "Tabulated: published table consumed as-is",
   X: "Extrapolated: proxy + scaling factor",
 };
@@ -111,8 +111,8 @@ export default async function PerCountryCoverage({
           </p>
           <p className="mt-3 text-ink-700">
             When it has been, this page will show how many benchmarks are held,
-            across how many trades and regions, and how much of that is measured
-            rather than modelled. The country page below carries whatever is
+            across how many trades and regions, and how much of that is counted
+            rather than estimated. The country page below carries whatever is
             already known.
           </p>
         </div>

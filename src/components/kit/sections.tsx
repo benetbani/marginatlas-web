@@ -446,7 +446,7 @@ export function RealisticFirstYear({
         <div className={hasText(headline) ? "mt-5" : ""}>
           <TimelineRibbon
             milestones={stops}
-            caption="A modeled path, not a promise. Most owners reach break-even later than they hope."
+            caption="An estimated path, not a promise. Most owners reach break-even later than they hope."
           />
         </div>
       ) : items.length > 0 ? (

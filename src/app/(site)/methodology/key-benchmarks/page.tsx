@@ -97,7 +97,7 @@ export default function KeyBenchmarksMethodologyPage() {
         everything else. Utilities, marketing, insurance, equipment,
         vehicle and regulatory costs sit inside that last line rather
         than each getting a row of their own, because at cell level the
-        split between them is modelled rather than counted, and four
+        split between them is estimated rather than counted, and four
         lines we can stand behind read better than nine we cannot. A
         line under half a percent is dropped rather than printed, and a
         cell whose cost shape does not resolve shows no breakdown at
@@ -122,7 +122,7 @@ export default function KeyBenchmarksMethodologyPage() {
         is a flag worth understanding. Operators above the range are
         likely paying for something a peer is not; below it, you may
         be cutting where others are not. Margin Atlas calls out the
-        biggest deviation but does not score operators good or bad on
+        biggest deviation but does not grade operators good or bad on
         any single line.
       </p>
 

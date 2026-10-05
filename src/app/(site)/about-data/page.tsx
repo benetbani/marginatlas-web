@@ -99,97 +99,16 @@ export default function AboutDataPage() {
       </section>
 
       <section className="mt-10">
-        {/* The footer has linked to #quality on every page since it was
-            written, and this heading never carried the id, so the link landed
-            silently at the top. Four sibling anchors were dead the same way. */}
+        {/* HOW QUALITY IS SHOWN, said as the pages print it (masterplan step 02, 2026-10-05). This section taught a "coverage
+            chip" and four tiers, Measured, Regional, Estimated and Modeled, and promised a "How we know this" link beside every
+            headline number: the rebuilt pages print none of the three. What they print is the four kinds above, the line under
+            a figure, and a small half-filled circle on an estimate (AnswerCard's foot). The id stays: it was the footer's
+            anchor once, and a link to it must land here. The links that named a tier (HowWeKnowThis) now land on #reading. */}
         <h2 id="quality" className="text-xl font-semibold text-ink-900">How quality is shown</h2>
-        {/* THIS SECTION TAUGHT A RATING THE PRODUCT DELETED ON PURPOSE. It
-            opened "Every benchmark shows a 5-star quality rating" and listed
-            four star grades. No benchmark shows one. The cell page records why
-            in its own source: "Data Quality section removed. The 10/10
-            confidence score and ★★★★★ rating exposed engineering provenance the
-            founder explicitly said never to display."
-
-            So the one page a reader opens to learn how to read the numbers was
-            teaching a banned scale, immediately above the section describing
-            the real one ("Four tiers, one vocabulary").
-
-            The heading keeps its id. SiteChrome links /about-data#quality from
-            the footer of every page, and that anchor was already dead once
-            before, which is what the comment above records.
-
-            The link label is corrected too: it reads "How we know this", which
-            is HowWeKnowThis's default, not "How this figure was built". */}
         <p className="mt-3 text-ink-800">
-          A benchmark does not carry a grade. It carries a coverage word, and
-          the four words below are the whole vocabulary. Where coverage is thin
-          there is no word at all, only the neutral meter, so nothing reads as a
-          verdict the measurement cannot support.
+          A figure carries no grade. Where it matters, the line under it says which of the four kinds above it is,
+          and an estimate carries a small half-filled circle beside that line.
         </p>
-        <p className="mt-3 text-sm text-ink-700">
-          Beside the headline number on every benchmark page there is a quiet
-          &ldquo;How we know this&rdquo; link, so the source and the method are
-          one click away.
-        </p>
-      </section>
-
-      <section className="mt-10">
-        <h2 className="text-xl font-semibold text-ink-900">Coverage tiers</h2>
-        {/* "Every page in Atlas shows a coverage chip" was true of one page.
-            CoverageBadge is mounted by src/app/[country]/[geo]/[industry] and
-            nowhere else, so the country, city, industry and neighborhood pages
-            never showed one. "Four tiers, one vocabulary" is still right, and
-            is the more useful half; it was the reach that was overstated. */}
-        <p className="mt-3 text-ink-800">
-          A benchmark page shows a coverage chip next to its headline number.
-          Four tiers, one vocabulary:
-        </p>
-
-        <div id="measured" className="mt-6 border-l-4 border-l-tier-deep bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
-            <span className="w-2 h-2 rounded-full bg-tier-deep" />
-            Measured
-          </div>
-          <p className="text-ink-800 text-sm leading-relaxed">
-            Direct measurement of the firms in this geography and industry.
-            Highest confidence; the number is what the average firm actually earns.
-          </p>
-        </div>
-
-        <div id="regional" className="mt-3 border-l-4 border-l-tier-good bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
-            <span className="w-2 h-2 rounded-full bg-tier-good" />
-            Regional
-          </div>
-          <p className="text-ink-800 text-sm leading-relaxed">
-            A broader regional or national benchmark applied to this geography.
-            Strong directional signal; precision drops the smaller the cell.
-          </p>
-        </div>
-
-        <div id="estimated" className="mt-3 border-l-4 border-l-tier-starter bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-atlas-700 mb-1">
-            <span className="w-2 h-2 rounded-full bg-tier-starter" />
-            Estimated
-          </div>
-          <p className="text-ink-800 text-sm leading-relaxed">
-            Estimated from country-level economic indicators (GDP per capita,
-            governance index, urbanization) combined with global industry
-            averages. Useful as orientation; not a precise reading.
-          </p>
-        </div>
-
-        <div id="modeled" className="mt-3 border-l-4 border-l-tier-modeled bg-white px-5 py-4 rounded-r-lg scroll-mt-24">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-cocoa-700 mb-1">
-            <span className="w-2 h-2 rounded-full bg-tier-modeled" />
-            Modeled
-          </div>
-          <p className="text-ink-800 text-sm leading-relaxed">
-            A transparent model output combining global industry averages
-            with country-level scaling factors. No underlying observation
-            for this cell; the number is what the model expects on average.
-          </p>
-        </div>
       </section>
 
       <section className="mt-10">
