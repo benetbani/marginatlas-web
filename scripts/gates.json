@@ -1008,6 +1008,17 @@
       "claims": []
     },
     {
+      "name": "plan-status",
+      "script": "tests/monetization/plan_status.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE ACCOUNT'S PLAN, IN WORDS (milestone 2; masterplan step 11; his interview of 2026-09-26, ruling 34: cancel any time, access to the end of the paid period).",
+      "reads": [
+        "src/components/monetization/PlanStatus.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],

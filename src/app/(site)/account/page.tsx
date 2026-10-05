@@ -14,6 +14,7 @@ import { isAuthEnabled } from "@/lib/feature_flags";
 import { getSessionUser } from "@/lib/auth/session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { AccountPreview } from "./AccountPreview";
+import { PlanStatus } from "@/components/monetization/PlanStatus";
 
 /**
  * A private surface, so it says so rather than competing for a search result.
@@ -87,6 +88,9 @@ export default async function AccountPage() {
           </button>
         </form>
       </div>
+
+      {/* The plan, above the saved cells (masterplan step 11): Free or Pro, the date that matters, the way to cancel. */}
+      <PlanStatus userId={user.id} />
 
       <section className="mt-10">
         <h2 className="font-display text-xl font-semibold text-ink-900">Your saved cells</h2>

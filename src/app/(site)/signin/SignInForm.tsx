@@ -17,9 +17,11 @@ import * as React from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { isAuthEnabled } from "@/lib/feature_flags";
 
-export function SignInForm() {
+/** `initialEmail` fills the field (the welcome page's checkout email, masterplan step 11); `embedded` draws the form alone,
+ *  without the page's heading, inside a page that has its own. Both optional: /signin is unchanged. */
+export function SignInForm({ initialEmail = "", embedded = false }: { initialEmail?: string; embedded?: boolean } = {}) {
   const [next, setNext] = React.useState("/account");
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState(initialEmail);
   const [status, setStatus] = React.useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
@@ -65,17 +67,22 @@ export function SignInForm() {
     }
   }
 
+  const Wrap = embedded ? "div" : "article";
   return (
-    <article className="mx-auto max-w-md px-4 py-16 md:py-24">
-      <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700">
-        Sign in
-      </div>
-      <h1 className="mb-3 font-display text-3xl tracking-tight text-ink-900 md:text-4xl">
-        Sign in to Margin Atlas
-      </h1>
-      <p className="mb-6 text-base leading-relaxed text-cocoa-700">
-        Enter your email and we will send you a sign-in link. No password.
-      </p>
+    <Wrap className={embedded ? "max-w-md" : "mx-auto max-w-md px-4 py-16 md:py-24"}>
+      {embedded ? null : (
+        <>
+          <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-atlas-700">
+            Sign in
+          </div>
+          <h1 className="mb-3 font-display text-3xl tracking-tight text-ink-900 md:text-4xl">
+            Sign in to Margin Atlas
+          </h1>
+          <p className="mb-6 text-base leading-relaxed text-cocoa-700">
+            Enter your email and we will send you a sign-in link. No password.
+          </p>
+        </>
+      )}
       {status === "sent" ? (
         /* Terracotta since 2026-08-17, matching CorrectionForm and /contact.
            This one only ever carried the hue on its border and fill, its type
@@ -110,6 +117,6 @@ export function SignInForm() {
           ) : null}
         </form>
       )}
-    </article>
+    </Wrap>
   );
 }

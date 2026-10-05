@@ -71,6 +71,7 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "status",
   "terms",
   "tools",
+  "welcome",
   "world",
   "you",
 ]);

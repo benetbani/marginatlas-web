@@ -69,6 +69,14 @@ MORNING-REPORT.md.
 - **Built either way:** the checkout asks for no account and offers no trial; the consent box and Stripe Tax each wait behind
   their switch, off until you turn them on (commit of step 09; LAUNCH-SWITCHES.md lists the order).
 
+### P11.1 Stripe's customer portal (step 11)
+- **Question:** set the portal in Stripe (Settings, Customer portal): allow cancelling at the end of the period and updating the
+  card, return link `https://www.marginatlas.com/account`?
+- **Options:** (a) Recommended: yes, as LAUNCH-SWITCHES.md row 6 says (ruling 34: cancel any time, keep access to the end of the
+  period paid for). (b) Cancel at once instead: against ruling 34.
+- **Built either way:** the account page's plan (Free, or Pro with its renewal or end date) and its "Manage or cancel" button,
+  the portal route, and the welcome page a checkout returns to.
+
 ### P04.2 The UK's peers table
 - **Question:** /gb's "Against the peers" prints the UK's sourced row beside Ireland, France, Germany and the Netherlands, whose
   tax, payroll and registration figures are hand-held constants with no source. Tonight the line says "The peers' figures are

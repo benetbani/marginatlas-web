@@ -399,6 +399,8 @@ const GATES: Gate[] = [
   { name: "checkout-params", script: "tests/monetization/checkout_params.test.ts" },
   /* The paywall's switch is on only with accounts (masterplan step 10; his rulings 18, 21, 27). */
   { name: "paywall-flag", script: "tests/monetization/paywall_flag.test.ts" },
+  /* The account's plan in words: Free, or Pro with its renewal or end date, or a failed payment (masterplan step 11; ruling 34). */
+  { name: "plan-status", script: "tests/monetization/plan_status.test.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "no-slot-counting", script: "scripts/verify_no_slot_counting.ts" },
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },
