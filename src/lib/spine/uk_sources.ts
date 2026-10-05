@@ -159,6 +159,17 @@ export const UK_SOURCES: readonly UkSource[] = [
     ],
   },
   {
+    /* The insolvency slice the London trade pages read since masterplan step 04 (data/uk/registers/failures.json; the register
+       ledger's row uk.failures names the licence and the attribution line). */
+    key: "gazette",
+    publisher: "The Gazette",
+    names: ["The Gazette"],
+    attribution: OGL_LINE,
+    items: [
+      { prints: "How many companies of a trade became insolvent in a year, the UK's", title: "Company insolvency notices, October 2025 to September 2026, matched to the Companies House register of 1 May 2026", url: null },
+    ],
+  },
+  {
     key: "worldpanel",
     publisher: "Worldpanel by Numerator",
     names: ["Worldpanel by Numerator"],
@@ -210,6 +221,7 @@ export const UK_REGISTER_SOURCE: Readonly<Record<string, string>> = {
   "turnover.json": "ons",
   "survival.json": "ons",
   "premises.json": "voa",
+  "failures.json": "gazette",
 };
 
 /** The foot of every UK page: the licence sentence and the one link (his ruling of 2026-10-04 on R-002). */
