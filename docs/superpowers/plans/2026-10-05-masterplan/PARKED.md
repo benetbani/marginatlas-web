@@ -38,3 +38,20 @@ MORNING-REPORT.md.
 - **Built either way:** London's other cards print the valuation's shop rent ($427, England $219 beside it), the survey's pay
   tenths, no hand-anchored cost of living, and "estimate" in each line that needs it (commit 9f9e1fee).
 
+### P04.1 What UK households spend on (step 04, labels audit item 15)
+- **Question:** /gb's "What households spend on" prints the shard's shares (39% of food money on eating out, housing and bills
+  18%), with no source. The official shares are in the national statistics office's Family Spending workbooks, which are not on
+  disk, and the night may not download anything. May the data track fetch them?
+- **Options:** (a) Recommended: yes, the data track downloads the Family Spending tables (the same series as
+  `data/sections/spend_by_income.json`) and the card takes them, with their source line. (b) Withhold the card on /gb until
+  then. (c) Leave it as it stands.
+- **Built either way:** nothing; the card stands as it was.
+
+### P04.2 The UK's peers table
+- **Question:** /gb's "Against the peers" prints the UK's sourced row beside Ireland, France, Germany and the Netherlands, whose
+  tax, payroll and registration figures are hand-held constants with no source. Tonight the line says "The peers' figures are
+  estimates" (the audit's own remedy). Should the peers' figures be sourced, or the rows withheld?
+- **Options:** (a) Recommended: keep them, called estimates (built), and source them on the data track (each country's
+  published rates). (b) Withhold the peers' rows: the card leaves /gb (a table of one row does not draw).
+- **Built either way:** the UK row is the truth pass's sourced figures (commit 172e13bf).
+
