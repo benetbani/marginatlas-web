@@ -1547,6 +1547,19 @@
       "claims": []
     },
     {
+      "name": "home-answers",
+      "script": "tests/home/home_answers.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE UK'S HEADLINE ANSWERS ON THE HOME PAGE (milestone 3, masterplan step 34; his ruling 11 of 2026-09-26: \"a place-and-trade search, then the UK's headline answers\").",
+      "reads": [
+        "scratchpad/harness/pages/country-GB.html",
+        "scratchpad/harness/pages/home-gb.html",
+        "src/lib/spine/home_answers.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "research-drop-schema",
       "script": "tests/ingest/research_drop_schema.test.ts",
       "args": [],
@@ -3204,6 +3217,7 @@
         "src/components/spine/hood/hood-view.tsx",
         "src/lib/cells/related_links.ts",
         "src/lib/geo/page_targets.ts",
+        "src/lib/home/destination.ts",
         "src/lib/monetization/pro_route.ts",
         "src/lib/taxonomy/retired_paths.ts"
       ],

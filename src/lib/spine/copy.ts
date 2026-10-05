@@ -2694,6 +2694,7 @@ export const COPY = {
     h1: { lead: "How much does a", middle: "make in" },
     subtitle: "Know if a business works before you risk your money.",
     searchLabel: "Search",
+    answersLabel: "The UK's answers",
   },
   /** THE PAGE FOOT (masterplan step 31; QUEUE close:furniture-lines): the link to the correction page and, where the data holds a
    *  date, the date its figures were checked (src/components/spine/ReportFoot.tsx). */

@@ -565,6 +565,9 @@ const GATES: Gate[] = [
   /* Where a home search lands: only pages that exist, the UK first, never /gb/gb/...; the search page lists pages that exist;
      no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). */
   { name: "home-destination", script: "tests/home/destination.test.ts" },
+  /* The UK's headline answers on the home page: the figure /gb prints, from the same builder, under the same name, stamped,
+     a door to its section; the page's one 40 (masterplan step 34; his ruling 11). Reads the /gb and home renders. */
+  { name: "home-answers", script: "tests/home/home_answers.test.ts" },
   { name: "research-drop-schema", script: "tests/ingest/research_drop_schema.test.ts" },
   { name: "facts-store", script: "tests/facts/store.test.ts" },
   { name: "facts-shard", script: "tests/facts/shard.test.ts" },

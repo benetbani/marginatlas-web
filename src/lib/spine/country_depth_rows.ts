@@ -241,6 +241,14 @@ export function buildCountryClosing(iso2: string): DetailRow[] | null {
  * beauty"), and a median in an open band (under 50,000 or over 50,000,000 pounds) is no bar. The left-out list went with it:
  * restaurants serves the rebuilt page since the exemplar branch was retired (QUEUE launch:exemplar-url-serves-the-july-page).
  */
+/** THE MIDDLE TRADE (2026-09-25, the model laws' FOCAL on the UK page): the median of every London trade the list holds; with an
+ *  even count the midpoint of the two middle trades. One function, so /gb's card and the home page's answer (masterplan step 34)
+ *  print one number for one thing. */
+export function londonMiddleSales(sales: { rows: BarRow[] }): number {
+  const sorted = sales.rows.map((r) => r.value).sort((a, b) => a - b);
+  return sorted.length % 2 ? sorted[(sorted.length - 1) / 2] : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
+}
+
 export function buildLondonTradeSales(): { rows: BarRow[]; worldMax: number } | null {
   const market = LONDON_MARKET as { city?: string; country_iso2?: string; activities: Record<string, unknown> };
   /* THE PLACE FROM THE DATUM (the chain's no-hardcoded-place, 2026-09-25): each row opens that trade's page in the file's own city

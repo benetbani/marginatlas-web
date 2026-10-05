@@ -107,6 +107,7 @@ import {
   buildCountryPaperwork,
   buildCountryClosing,
   buildLondonTradeSales,
+  londonMiddleSales,
   type DepthCard,
   type BankingCard,
   type InsuranceCard,
@@ -773,8 +774,7 @@ function LondonSalesBars({ sales }: { sales: NonNullable<ReturnType<typeof build
   /* THE CARD'S ONE FIGURE, THE MIDDLE TRADE (2026-09-25, the model laws' FOCAL on the UK page): the median of every London trade
      the list holds, the seven drawn and the rest behind the plus, so each bar reads against it. With an even count it is the
      midpoint of the two middle trades, printed in the rows' own notation. */
-  const sorted = sales.rows.map((r) => r.value).sort((a, b) => a - b);
-  const middle = sorted.length % 2 ? sorted[(sorted.length - 1) / 2] : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
+  const middle = londonMiddleSales(sales);
   const middleText = usd(middle);
   return (
     <Box id="money" className="flex flex-col">
