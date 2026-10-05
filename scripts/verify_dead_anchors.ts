@@ -37,6 +37,7 @@
  */
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { resolve, relative } from "node:path";
+import { PRO_LEGAL } from "../src/lib/legal/pro_legal";
 
 const APP = resolve(process.cwd(), "src/app");
 const SRC = resolve(process.cwd(), "src");
@@ -63,11 +64,17 @@ function pageFileFor(urlPath: string): string | null {
   return candidates.find((c) => existsSync(c)) ?? null;
 }
 
-/** Ids a file defines literally. Template-built ids are invisible here. */
+/* A LEGAL PAGE DRAWN FROM ITS DRAFT (masterplan step 30): `<LegalDraft doc={PRO_TERMS} />` draws the sections of a document
+   in src/lib/legal/pro_legal.ts, each at its block's id, so the page defines those ids as surely as if they were written in it
+   (the pricing page's /terms#refunds lands on one). Read from the module itself, never from a list kept here. */
+const DRAFT_IDS: Record<string, string[]> = Object.fromEntries(PRO_LEGAL.map((d) => [`PRO_${d.key.toUpperCase()}`, d.blocks.map((b) => b.id)]));
+
+/** Ids a file defines literally, and the ids of a legal draft it draws. Template-built ids are invisible here. */
 function idsIn(file: string): { ids: Set<string>; dynamic: boolean } {
   const src = readFileSync(file, "utf8");
   const ids = new Set<string>();
   for (const m of src.matchAll(/\bid=["']([A-Za-z][\w-]*)["']/g)) ids.add(m[1]);
+  for (const m of src.matchAll(/<LegalDraft\s+doc=\{(PRO_[A-Z]+)\}/g)) for (const id of DRAFT_IDS[m[1]] ?? []) ids.add(id);
   // `id={`ch-${n}`}` or `id={anchor}` , generated, so we cannot judge this page.
   const dynamic = /\bid=\{/.test(src);
   return { ids, dynamic };

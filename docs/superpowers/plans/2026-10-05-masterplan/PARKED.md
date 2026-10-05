@@ -107,3 +107,39 @@ MORNING-REPORT.md.
   the start of the next session, before anything is pushed.
 - **Built either way:** the mirror routes, the middleware rewrite and their gates (pro-route, top-level-segments,
   route-chrome-contract, page-metadata), all green; the typecheck covers the new route files.
+
+### P30.1 Your approval of the legal drafts (step 30)
+- **Question:** the terms of Pro (with cancelling and refunds at /terms#refunds), privacy and cookies are drafted in plain
+  English in `src/lib/legal/pro_legal.ts`, exported for you to read in `E:/atlas/design/loop/build/m2/legal/PRO-LEGAL-DRAFT.md`,
+  with the law they follow in `2026-10-05-uk-subscription-law.md` beside it. Do you approve them as they stand?
+- **What you are approving, besides the law's parts:** (1) Pro read as digital content, so a reader who ticks the checkout's
+  box loses the 14-day right once access begins (the 2013 Regulations, regulation 37, and your ruling 34); a reader who did not
+  tick it gets a full refund within 14 days. If a lawyer reads Pro as a service instead, a consenting reader could still cancel
+  inside the 14 days and pay for the days used, and one paragraph would change. (2) An email before a yearly plan renews. (3)
+  At least 30 days' notice of a new price, with the right to cancel first. (4) Liability limited to what a reader paid in the
+  12 months before a claim, never below what consumer law keeps. (5) The 2024 Act's subscription rules (reminders, a renewal
+  cooling-off period) are expected in spring 2027 and are not in the drafts.
+- **Options:** (a) Recommended: approve as drafted (standard UK subscription terms, and the stricter side wherever the law was
+  unclear); (b) approve after a lawyer's review of point (1); (c) send changes, and the module and the export change together.
+- **Built either way:** the three pages draw the drafts only when the paywall's switch is on (LAUNCH-SWITCHES.md row 7 comes
+  before it); until then they keep their current text. The gate pro-legal holds the drafts to the checkout's consent line and
+  the plan's prices.
+
+### P30.2 Your details for the drafts' gaps (step 30)
+- **Question:** six gaps in the drafts hold facts only you have, marked `[HIS: ...]`: the VAT wording (with P09.1), your name
+  or your company's name and number, the address for legal letters (twice), and the VAT number if registered. What are they?
+- **Options:** (a) Recommended: fill them in `src/lib/legal/pro_legal.ts` before the paywall's switch (or send them and the next
+  session fills them); the test prints how many gaps remain. (b) Trade under a company first, then fill them with its details.
+- **Built either way:** nothing is invented: every gap prints as a marked gap, and the launch list's row 7 asks for none left.
+
+### P30.3 Two Stripe settings the drafts rely on (step 30)
+- **Question:** the terms say Stripe's receipt confirms the checkout's consent, and that a yearly plan gets an email before it
+  renews. Will you set both in Stripe (LAUNCH-SWITCHES.md row 8)?
+- **Why it matters:** the 2013 Regulations ask for the consent to be confirmed on a durable medium (regulation 16); without that
+  confirmation a reader who ticked the box can still cancel and bears no cost (regulation 37). The renewal email is good practice
+  now and becomes law with the 2024 Act's subscription rules.
+- **Options:** (a) Recommended: both, as row 8 says; (b) drop the renewal email from the terms (the module's renewal paragraph)
+  and set only the receipt line.
+- **Built either way:** the drafts, behind the paywall's switch. Also for you, from the same reading: when you answer a
+  customer's complaint, the 2024 Act (section 308(3), in force since 6 April 2026) asks you to say whether a dispute scheme is
+  available if they are unhappy with your answer.

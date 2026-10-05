@@ -10,6 +10,9 @@
  * carries it.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { LegalDraft } from "@/components/LegalDraft";
+import { isPaywallOn } from "@/lib/feature_flags";
+import { PRO_COOKIES } from "@/lib/legal/pro_legal";
 import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 
 export const revalidate = 86400;
@@ -22,6 +25,8 @@ export const metadata = {
 };
 
 export default function CookiesPage() {
+  /* From launch day, the draft that names the sign-in cookie (masterplan step 30); the visit count behind the same switch. */
+  if (isPaywallOn()) return <LegalDraft doc={PRO_COOKIES} webAnalytics={WEB_ANALYTICS_ON} />;
   return (
     <>
     <LegalPage

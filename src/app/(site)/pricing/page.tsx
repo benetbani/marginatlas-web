@@ -91,6 +91,14 @@ export default function PricingPage() {
           </ul>
 
           <p className="mt-8 max-w-3xl text-sm text-ink-700 leading-relaxed">{CANCEL_ANYTIME_BLOCK}</p>
+          {/* From launch day, the terms' cancelling section (masterplan step 30), which exists only once the switch is on. */}
+          {isPaywallOn() ? (
+            <p className="mt-2 text-sm">
+              <a href="/terms#refunds" className="text-atlas-700 hover:text-atlas-900 font-medium">
+                How cancelling works
+              </a>
+            </p>
+          ) : null}
           <p className="mt-2 text-sm text-ink-700">Prices in US dollars.</p>
         </div>
       </section>

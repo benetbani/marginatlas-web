@@ -729,10 +729,12 @@
         "src/app/(site)/faq",
         "src/app/(site)/privacy",
         "src/app/(site)/terms",
+        "src/components/LegalDraft.tsx",
         "src/components/LegalPage.tsx",
         "src/components/spine2",
         "src/lib/cells",
         "src/lib/cells/cell_view.ts",
+        "src/lib/legal",
         "src/lib/seo"
       ],
       "claims": []
@@ -1057,6 +1059,17 @@
         "src/lib/monetization/plan.ts",
         "src/lib/pricing/",
         "tests/monetization/one_price.test.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "pro-legal",
+      "script": "tests/legal/pro_legal.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE TERMS OF PRO, DRAFTED FOR HIS APPROVAL (milestone 2, masterplan step 30; his interview of 2026-09-26, ruling 34): the drafts in src/lib/legal/pro_legal.ts are one source for the three legal pages ",
+      "reads": [
+        "src/lib/legal/pro_legal.ts"
       ],
       "claims": []
     },

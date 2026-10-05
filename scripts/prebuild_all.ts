@@ -409,6 +409,9 @@ const GATES: Gate[] = [
   { name: "plan-status", script: "tests/monetization/plan_status.test.ts" },
   /* One price, written once: no June price, Pro's price typed only in plan.ts, no June tier name (masterplan step 12; ruling 14). */
   { name: "one-price", script: "tests/monetization/one_price.test.ts" },
+  /* The terms of Pro, cancelling and refunds, privacy and cookies: one source of drafts, the consent line word for word, gaps for
+     him marked, drawn only with the paywall's switch on (masterplan step 30; ruling 34). */
+  { name: "pro-legal", script: "tests/legal/pro_legal.test.ts" },
   /* Which levels lock: each chapter's first level free, the rest Pro, never a level outside the chapters (masterplan step 14; his ruling 18). */
   { name: "paywall-levels", script: "tests/monetization/levels.test.ts" },
   /* A signed-in reader of a page that locks goes to the uncached mirror under /pro; nobody else, nowhere else (masterplan step 18). */

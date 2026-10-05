@@ -104,16 +104,19 @@ export function LegalPage({
   );
 }
 
-/** A titled block. Keeps heading scale and spacing identical across the set. */
+/** A titled block. Keeps heading scale and spacing identical across the set. `id` is its anchor (the terms' #refunds, linked
+ *  from the pricing page, masterplan step 30). */
 export function LegalSection({
   heading,
+  id,
   children,
 }: {
   heading: string;
+  id?: string;
   children: React.ReactNode;
 }) {
   return (
-    <section>
+    <section id={id}>
       <h2 className="text-xl font-semibold tracking-tight text-ink-900">{heading}</h2>
       <div className="mt-3 space-y-3">{children}</div>
     </section>

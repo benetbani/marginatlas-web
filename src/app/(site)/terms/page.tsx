@@ -14,6 +14,8 @@
  */
 import { isPaywallOn } from "@/lib/feature_flags";
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { LegalDraft } from "@/components/LegalDraft";
+import { PRO_TERMS } from "@/lib/legal/pro_legal";
 
 export const revalidate = 86400;
 
@@ -25,6 +27,9 @@ export const metadata = {
 };
 
 export default function TermsPage() {
+  /* FROM LAUNCH DAY, THE TERMS OF PRO (masterplan step 30; his ruling 34): with the paywall's switch on, the draft he approves
+     (src/lib/legal/pro_legal.ts); until then, the text below. */
+  if (isPaywallOn()) return <LegalDraft doc={PRO_TERMS} />;
   return (
     <>
     <LegalPage

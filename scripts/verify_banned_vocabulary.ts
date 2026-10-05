@@ -59,6 +59,9 @@ const SCOPE = [
   "src/app/(site)/terms",
   "src/app/(site)/cookies",
   "src/components/LegalPage.tsx",
+  /* Added 2026-10-05 (masterplan step 30): from launch day the three pages draw their words from these drafts. */
+  "src/lib/legal",
+  "src/components/LegalDraft.tsx",
   /* Added 2026-08-01 with the questions page. Same argument as the three
      above, and one more: its prose is copied verbatim into FAQPage structured
      data, so a banned word here does not just reach a reader, it reaches an

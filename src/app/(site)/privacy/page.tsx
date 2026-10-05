@@ -11,6 +11,9 @@
  * worth reading.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
+import { LegalDraft } from "@/components/LegalDraft";
+import { isPaywallOn } from "@/lib/feature_flags";
+import { PRO_PRIVACY } from "@/lib/legal/pro_legal";
 import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 
 export const revalidate = 86400;
@@ -23,6 +26,9 @@ export const metadata = {
 };
 
 export default function PrivacyPage() {
+  /* From launch day, the draft that adds accounts, the plan and payments (masterplan step 30); the visit count behind the same
+     switch as below. */
+  if (isPaywallOn()) return <LegalDraft doc={PRO_PRIVACY} webAnalytics={WEB_ANALYTICS_ON} />;
   return (
     <>
     {/* This page used to opt out of the site-wide place photograph (the
