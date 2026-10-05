@@ -50,6 +50,8 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "compare",
   "contact",
   "cookies",
+  /* The correction page every spine page's foot links to (masterplan step 31). */
+  "corrections",
   "countries",
   "coverage",
   "decide",

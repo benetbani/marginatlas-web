@@ -83,6 +83,8 @@ import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildHoodCrumbs } from "@/lib/spine/crumb_rows";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
+import { ReportFoot } from "@/components/spine/ReportFoot";
+import { checkedDateFor } from "@/lib/spine/checked";
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.8's
@@ -147,6 +149,8 @@ export function SpineHoodBody({ data = spineHoodSeed, focus = null }: { data?: a
       </div>
       {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
       <SourcesFoot iso2={d?.meta?.iso2} />
+      {/* REPORT A MISTAKE, AND CHECKED WHERE A DATE IS HELD (masterplan step 31): the hub's or the district's own path. */}
+      <ReportFoot path={slug ? `/cities/${slug}/neighborhoods${focus ? `/${focus}` : ""}` : null} checked={checkedDateFor(d?.meta?.iso2)} />
     </SpineShell>
   );
 }

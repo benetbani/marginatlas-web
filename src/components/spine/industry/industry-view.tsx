@@ -152,6 +152,7 @@ import { COPY } from "@/lib/spine/copy";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildIndustryCrumbs } from "@/lib/spine/crumb_rows";
+import { ReportFoot } from "@/components/spine/ReportFoot";
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md 8.7's
@@ -179,7 +180,7 @@ export const LOUD_SEATS = [
  * seed from buildSpineIndustrySeed. Every card builds off the taxonomy id the seed
  * carries (and the slate it resolved), so an omitted field renders nothing.
  */
-export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } = {}) {
+export function SpineIndustryBody({ data = spineIndustrySeed, path = null }: { data?: any; path?: string | null } = {}) {
   const d = data ?? spineIndustrySeed;
 
   /* WHO IS HOME, ASKED ONCE (the trade view's idiom): the three opening
@@ -299,6 +300,8 @@ export function SpineIndustryBody({ data = spineIndustrySeed }: { data?: any } =
           </Zone>
         ) : null}
       </div>
+      {/* REPORT A MISTAKE (masterplan step 31): the route's own path, else the trade's; no date is held for a trade's world page. */}
+      <ReportFoot path={path ?? (industryId ? `/industries/${industryId}` : null)} />
     </>
   );
 }

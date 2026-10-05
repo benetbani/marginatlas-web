@@ -143,3 +143,15 @@ MORNING-REPORT.md.
 - **Built either way:** the drafts, behind the paywall's switch. Also for you, from the same reading: when you answer a
   customer's complaint, the 2024 Act (section 308(3), in force since 6 April 2026) asks you to say whether a dispute scheme is
   available if they are unhappy with your answer.
+
+### P31.1 A public corrections log and a changelog (step 31; QUEUE cred:about-figures)
+- **Question:** the credibility doctrine of 2026-10-02 has the site show a dated corrections page and a changelog of data
+  releases, with a promise to answer a report in two working days and fix a figure in five. Both are promises you make in public.
+  Do you want them, and from when?
+- **Options:** (a) Recommended: a corrections page from launch day, each correction with its date and "no corrections yet" as
+  its honest first state, and no changelog until there is a data release to list; (b) both from launch day; (c) neither yet,
+  only the report link and the form.
+- **Built either way:** "Report a mistake" on the foot of every spine page, carrying the page's own path to /corrections/new
+  (never indexed), where the site's correction form posts to the corrections table. Nothing public lists the reports. The
+  "Checked [date]" line is wired to the register slices' build date, which the export does not write yet, so no page prints it
+  (QUEUE data:uk-register-built-date).

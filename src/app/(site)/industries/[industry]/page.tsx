@@ -191,7 +191,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
     if (!spineData) notFound();
     return (
       <SpineShell>
-        <SpineIndustryBody data={spineData} />
+        <SpineIndustryBody data={spineData} path={`/industries/${industry.toLowerCase()}`} />
       </SpineShell>
     );
   }

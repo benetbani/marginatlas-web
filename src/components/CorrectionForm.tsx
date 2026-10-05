@@ -9,12 +9,14 @@ import { useState } from "react";
 
 type Props = {
   cellUrl: string;
+  /** Open on arrival, on the page that exists to hold it (/corrections/new, masterplan step 31). */
+  startOpen?: boolean;
 };
 
 type State = "idle" | "open" | "sending" | "done" | "error";
 
-export function CorrectionForm({ cellUrl }: Props) {
-  const [state, setState] = useState<State>("idle");
+export function CorrectionForm({ cellUrl, startOpen = false }: Props) {
+  const [state, setState] = useState<State>(startOpen ? "open" : "idle");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [err, setErr] = useState("");
