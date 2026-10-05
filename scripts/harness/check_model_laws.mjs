@@ -363,7 +363,10 @@ if (listArg && args.includes("--render")) {
 /* hood 4 since 2026-10-04 (night): `02 premium`, the visitors a year for every resident, is withheld until measured by his
    interview of 2026-09-26, answer 36 (milestone 1, M6); its district doors moved onto `01 rank`'s rows. 8.8 is four blocks: take,
    rank, character where the district holds notes, close. */
-const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7 };
+/* home 5 since masterplan step 37 (2026-10-05): the home page on the band page holds the UK's three answers, its cities and what the
+   atlas holds; the hero is the page's question and its search, a band and not a section, and the notebook and the newsletter are
+   furniture; the Pro band adds a sixth only with the paywall's switch on. */
+const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

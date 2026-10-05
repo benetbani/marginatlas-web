@@ -33,7 +33,7 @@ export type HomeAnswer = {
   figure: string;
   words: string;
   prov: Provenance;
-  rows?: Array<{ key: string; label: string; value: string; icon?: AtlasIconId; prov: Provenance | null }>;
+  rows?: Array<{ key: string; label: string; value: string; note?: string; icon?: AtlasIconId; prov: Provenance | null }>;
   /** A share of a whole, drawn (his law of 2026-09-19): the tax burden's own bar from /gb's masthead. `value` is out of 100. */
   bar?: { value: number; part?: string; rest?: string; aria: string };
 };
@@ -46,7 +46,17 @@ export function buildHomeAnswers(iso2 = "GB"): HomeAnswer[] {
   const board = buildHeroBoard("GB");
   if (board.answer?.prov && board.answerBasis) {
     const bar = board.answerBar ? { value: board.answerBar.value, part: board.answerBar.part, rest: board.answerBar.rest, aria: board.answerBar.aria } : undefined;
-    out.push({ key: "answer", id: "answer", href: "/gb#take", lands, kicker: board.answer.label, icon: "taxes", figure: board.answer.value, words: board.answerBasis, prov: board.answer.prov, ...(bar ? { bar } : {}) });
+    /* ITS ROWS (masterplan step 37): the first two of the masthead's other taxes, as /gb's plus prints them, read from the country's
+       shard; they give the card the readings that let the three doors end level (MODEL PART 10.5). Corporation tax says whose it is,
+       the answer's basis being a sole trader; VAT keeps the masthead's own threshold note. */
+    const rows = (board.taxes ?? []).slice(0, 2).map((r) => ({
+      key: r.key,
+      label: r.label,
+      value: r.value,
+      note: r.key === "corporation_tax" || r.key === "company_tax" ? COPY.home.answerNotes.companyOnly : r.note,
+      prov: { src: `facts/country/GB.json:tax_detail:${r.key}`, kind: "looked up" } as Provenance,
+    }));
+    out.push({ key: "answer", id: "answer", href: "/gb#take", lands, kicker: board.answer.label, icon: "taxes", figure: board.answer.value, words: board.answerBasis, prov: board.answer.prov, ...(bar ? { bar } : {}), ...(rows.length === 2 ? { rows } : {}) });
   }
 
   const sales = buildLondonTradeSales();

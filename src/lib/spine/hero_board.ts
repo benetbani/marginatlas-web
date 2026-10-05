@@ -99,8 +99,9 @@ export type HeroBoardData = {
   rows: HeroBoardRow[];
   /** THE TAXES BEHIND THE RATE, behind the answer column's plus (his clause 58, parts behind a click; 2026-09-25): the rates a small
    *  business meets besides the one on profit, as the country's shard lists them (the UK's four national taxes) or, where it lists none,
-   *  the two every profile holds (sales tax and the rate on company profit). Two rows at least or none. */
-  taxes?: DetailRow[] | null;
+   *  the two every profile holds (sales tax and the rate on company profit). Two rows at least or none. Each row keeps the
+   *  shard's own key (`vat`, `corporation_tax`; `sales_tax` and `company_tax` from the profile), which the home page's answer reads. */
+  taxes?: Array<DetailRow & { key: string }> | null;
   /** The line under the column saying what the chips are among. Absent, the country's (`COPY.heroBoard.levelBasis`). */
   levelBasis?: string;
   image: { src: string; alt: string; placeholder: boolean };
@@ -222,9 +223,9 @@ function hireEase(iso2: string): string | null {
 }
 
 /** THE TAXES BEHIND THE RATE (see `taxes` on the type): the shard's national taxes where it lists them, else the profile's two rates. */
-function heroTaxes(iso2: string): DetailRow[] | null {
+function heroTaxes(iso2: string): Array<DetailRow & { key: string }> | null {
   const code = countryEntityId(iso2);
-  const rows: DetailRow[] = [];
+  const rows: Array<DetailRow & { key: string }> = [];
   if (code && loadCountryShard(code)) {
     const items = queryFacts({ entityId: code }).filter((f) => f.metric.startsWith("tax_detail.groups.*.items.*.") && f.tag !== "placeholder");
     const byKey = new Map<string, { name?: string; value?: string }>();
@@ -241,15 +242,15 @@ function heroTaxes(iso2: string): DetailRow[] | null {
     for (const [key, r] of byKey) {
       if (!r.name || !r.value || !/%$/.test(r.value.trim()) || key === "business_rates") continue;
       const note = key === "vat" && threshold && isPos(threshold.value) ? COPY.heroBoard.taxNotes.vatFrom.replace("{amount}", usd(threshold.value)) : undefined;
-      rows.push({ label: r.name, value: r.value.trim(), note });
+      rows.push({ key, label: r.name, value: r.value.trim(), note });
     }
   }
   if (rows.length < 2) {
     rows.length = 0;
     const profile = getCountryProfile(iso2);
     if (profile.iso2.toUpperCase() === iso2.toUpperCase()) {
-      if (isPos(profile.vat_gst_standard_pct)) rows.push({ label: COPY.heroBoard.taxNotes.salesTax, value: `${Math.round(profile.vat_gst_standard_pct * 1000) / 10}%` });
-      if (isPos(profile.corporate_income_tax_combined_pct)) rows.push({ label: COPY.heroBoard.taxNotes.companyTax, value: `${Math.round(profile.corporate_income_tax_combined_pct * 1000) / 10}%` });
+      if (isPos(profile.vat_gst_standard_pct)) rows.push({ key: "sales_tax", label: COPY.heroBoard.taxNotes.salesTax, value: `${Math.round(profile.vat_gst_standard_pct * 1000) / 10}%` });
+      if (isPos(profile.corporate_income_tax_combined_pct)) rows.push({ key: "company_tax", label: COPY.heroBoard.taxNotes.companyTax, value: `${Math.round(profile.corporate_income_tax_combined_pct * 1000) / 10}%` });
     }
   }
   return rows.length >= 2 ? rows : null;

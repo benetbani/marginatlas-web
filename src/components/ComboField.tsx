@@ -218,7 +218,7 @@ export function ComboField({
           }}
           placeholder={placeholder}
           disabled={disabled}
-          className="flex-1 bg-transparent outline-none text-sm font-medium text-ink-900 placeholder:text-cocoa-700/40 placeholder:font-normal"
+          className="min-w-0 flex-1 bg-transparent outline-none text-sm font-medium text-ink-900 placeholder:text-cocoa-700/40 placeholder:font-normal"
         />
         {/* CitiesFix2 sec 3: brand chevron (vermillion atlas-700 SVG)
             replaces the generic unicode glyph. Same affordance, on-brand. */}

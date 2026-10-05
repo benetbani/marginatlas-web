@@ -35,23 +35,25 @@ import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 /**
  * THE THREE LOUD MOMENTS (MODEL.md PART 6; the masterplan's step 32: the UK's answer at 40, the search's button, the Pro band's
- * button), each checked at step 37. The answer is lit since step 34; the search's button is drawn in the hero's own red
- * (atlas-700, not the accent token) until step 37 weighs it, and the Pro band draws only with the paywall's switch on. Literals
- * only, read from source (src/lib/spine/loud_seats.ts says why).
+ * button), weighed at step 37: the answer is lit (step 34); the search's button keeps the brand red his ruling of 2026-08-09
+ * chose over the orange the accent token is, and the Pro band is quiet by ruling 23, so neither is an accent. One loud moment.
+ * Literals only, read from source (src/lib/spine/loud_seats.ts says why).
  */
 export const LOUD_SEATS = [
   { seat: 1, card: "00 answer", figure: "the UK's total effective tax burden on a sole trader's profit, at 40", state: "LIT", condition: "masterplan step 34: the same figure /gb's masthead prints (buildHeroBoard), `--terra-text` at 40, the page's only 40" },
-  { seat: 2, card: "00 search", figure: "the search's button", state: "HELD EMPTY", condition: "the button keeps the live hero's atlas-700, which is not the accent token; masterplan step 37 decides whether it takes the accent" },
-  { seat: 3, card: "pro", figure: "the Pro band's button", state: "HELD EMPTY", condition: "ruling 23: drawn only while the paywall's switch is on (masterplan step 35); off in today's production" },
+  { seat: 2, card: "00 search", figure: "the search's button", state: "NO HONEST CANDIDATE", condition: "masterplan step 37: the button keeps the brand red, atlas-700, which his ruling of 2026-08-09 set against the orange that stood there; the accent token is that orange, so the button cannot be lit in it" },
+  { seat: 3, card: "pro", figure: "the Pro band's button", state: "NO HONEST CANDIDATE", condition: "masterplan step 37, ruling 23: a quiet band, drawn only while the paywall's switch is on, its button in ink and never the accent" },
 ] as const satisfies readonly LoudSeat[];
 
 /** The hero he kept: the visitor's own question, its business and its city rotating, then the search. Left-aligned, as every
- *  band page's text is (the page laws' ALIGNMENT): the words he ruled on are kept, the centring was the old page's. */
+ *  band page's text is (the page laws' ALIGNMENT): the words he ruled on are kept, the centring was the old page's. Not a section
+ *  card (masterplan step 37): the page's question and a form, no figure, so it stands as the hero band itself, as the country
+ *  page's masthead stands on its own band. */
 function HomeSearch() {
   const C = COPY.home;
   return (
     <div data-hero="1">
-      <Box id="search" className="flex flex-col">
+      <section id="search" className="flex flex-col">
         <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[var(--c-ink)] leading-[1.08]">
           {C.h1.lead}{" "}
           <span className="text-atlas-700">
@@ -68,7 +70,7 @@ function HomeSearch() {
         <div id="home-search-anchor" className="relative z-30 mt-5 w-full">
           <NavigatorForm />
         </div>
-      </Box>
+      </section>
     </div>
   );
 }
@@ -77,7 +79,9 @@ function HomeSearch() {
    (src/lib/spine/home_answers.ts), stamped with where the figure came from, the whole card the link (it keeps its box: a door).
    The tax burden takes the page's one 40 in the accent and the masthead's own bar; the trades and the years their 30 in ink and
    rows, /gb's first three trades and its curve's years before the last (clause 65: a figure is never alone; clause 64: one
-   drawing on the level). Each card written out with its own id and archetypes, so the census and the coverage gate read it. */
+   drawing on the level); the answer's rows are the masthead's first two other taxes (step 37). The three end level: the zone
+   stretches them (`even`) and each card's rows stand at its foot. Each card written out with its own id and archetypes, so the
+   census and the coverage gate read it. */
 const DOOR = "tap-y flex h-full flex-col text-[var(--c-ink)] no-underline";
 
 function TaxAnswer({ a }: { a: HomeAnswer }) {
@@ -92,10 +96,12 @@ function TaxAnswer({ a }: { a: HomeAnswer }) {
           <p data-focal-words="" className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{a.words}</p>
         </div>
         {a.bar ? (
-          <div data-answer-bar className="max-w-[28ch]">
+          <div data-answer-bar className="mb-4 max-w-[28ch]">
             <SegmentBar bare label={a.bar.aria} value={a.bar.value} figure={a.figure} unit="" part={a.bar.part} rest={a.bar.rest} />
           </div>
         ) : null}
+        {/* The masthead's two other taxes (masterplan step 37), at the card's foot like the other doors' rows. */}
+        <FactRows className="mt-auto" rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, note: r.note, prov: r.prov }))} />
       </a>
     </Box>
   );
@@ -107,7 +113,7 @@ function TradesAnswer({ a }: { a: HomeAnswer }) {
       <a href={a.href} data-lands={a.lands} className={DOOR}>
         <Rail icon={a.icon} kicker={a.kicker} />
         <Focal figure={a.figure} words={a.words} prov={a.prov} />
-        <FactRows rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, icon: r.icon, prov: r.prov }))} />
+        <FactRows className="mt-auto" rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, icon: r.icon, prov: r.prov }))} />
       </a>
     </Box>
   );
@@ -119,7 +125,7 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
       <a href={a.href} data-lands={a.lands} className={DOOR}>
         <Rail icon={a.icon} kicker={a.kicker} />
         <Focal figure={a.figure} words={a.words} prov={a.prov} />
-        <FactRows rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, prov: r.prov }))} />
+        <FactRows className="mt-auto" rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, prov: r.prov }))} />
       </a>
     </Box>
   );
@@ -193,11 +199,11 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const cities = buildCityCards(data?.iso2 ?? "GB");
   const holds = buildAtlasHolds();
   const notebook = buildNotebook();
-  const zones: Array<{ key: string; split: ZoneSplit; stack?: "lg"; label: string; body: React.ReactNode[] }> = [
+  const zones: Array<{ key: string; split: ZoneSplit; stack?: "lg"; even?: boolean; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, what London's trades take, who is still
        trading, each a door to its section of /gb. */
-    ...(answers.length ? [{ key: "answers", split: "1-1-1" as ZoneSplit, label: COPY.home.answersLabel, body: answers.map((a) => <AnswerDoor key={a.key} a={a} />) }] : []),
+    ...(answers.length ? [{ key: "answers", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.answersLabel, body: answers.map((a) => <AnswerDoor key={a.key} a={a} />) }] : []),
     /* THE UK'S CITIES AND WHAT THE ATLAS HOLDS, ONE LEVEL (masterplan step 35): the city cards at two thirds, the counts beside. */
     { key: "cities", split: "2-1", label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <AtlasHolds key="atlas" holds={holds} />] },
     /* PRO, SAID ONCE AND QUIETLY (ruling 23), only while the paywall's switch is on: the zone is not listed otherwise, so no band
@@ -212,7 +218,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     <>
       <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
         {zones.map((z, i) => (
-          <Zone key={z.key} tone={zoneTone(i)} split={z.split} stack={z.stack} label={z.label}>
+          <Zone key={z.key} tone={zoneTone(i)} split={z.split} stack={z.stack} even={z.even} label={z.label}>
             {z.body}
           </Zone>
         ))}

@@ -2695,6 +2695,8 @@ export const COPY = {
     subtitle: "Know if a business works before you risk your money.",
     searchLabel: "Search",
     answersLabel: "The UK's answers",
+    /** The answer's two other taxes (masterplan step 37): the answer's basis is a sole trader, so corporation tax says whose it is. */
+    answerNotes: { companyOnly: "if you form a company" },
     citiesLabel: "The UK's cities",
     /** THE NOTEBOOK AND THE NEWSLETTER (masterplan step 36): the page's furniture after the readings. */
     notebook: { title: "From the notebook", newsletter: "The newsletter" },

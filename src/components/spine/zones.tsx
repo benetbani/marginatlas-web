@@ -58,6 +58,11 @@ const SIDE_LG = "lg:gap-x-16 lg:[&>*+*]:border-t-0 lg:[&>*+*]:pt-0";
    thirds"; PART 9 clause 59, the width follows the information): a section whose partner self-omits stands in the left two thirds,
    and a lean one (`data-lean`, one figure) in the left third, the band's colour running on beside it. */
 const LONE = "grid grid-cols-1 lg:grid-cols-[2fr_1fr] [&:has(>[data-zone-cell]>[data-lean])]:lg:grid-cols-[1fr_2fr]";
+/* A LEVEL OF DOORS ENDS LEVEL (`even`, masterplan step 37; PART 10.5, "chosen so the two columns end level"; ruling 7 of 2026-09-04,
+   cards in one row share one height): where every section of a level keeps its box (the home page's three answers, each a door),
+   the boxes stand side by side from 768, so each is stretched to the row's height there. The level asks it; a box's own readings
+   stand at its foot (`mt-auto`), so the height a short card is given opens above them and never pools under them. */
+const EVEN = "md:items-stretch [&>[data-zone-cell]>*]:md:h-full";
 
 /** A chapter's opener: its number and its title, at the top of the chapter's first zone. No eyebrow, no icon, no accent. */
 export function ChapterHead({ index, heading }: { index: string; heading: string }) {
@@ -81,7 +86,7 @@ export function ChapterHead({ index, heading }: { index: string; heading: string
  * until 1024. A zone with no children draws nothing; a child that RENDERS nothing is still a child here (React cannot see that
  * from outside), so the page passes only sections it knows will draw: an empty cell is the page laws' ZONE SPLIT red.
  */
-export function Zone({ tone, split = "1-1", stack, chapter, label, children }: { tone?: ZoneTone; split?: ZoneSplit; stack?: "lg"; chapter?: { index: string; heading: string }; label?: string; children: React.ReactNode }) {
+export function Zone({ tone, split = "1-1", stack, even, chapter, label, children }: { tone?: ZoneTone; split?: ZoneSplit; stack?: "lg"; even?: boolean; chapter?: { index: string; heading: string }; label?: string; children: React.ReactNode }) {
   const kids = React.Children.toArray(children).filter(Boolean);
   if (kids.length === 0) return null;
   /* A level of three that draws two (a how-to page whose country has no forms to explain) is a pair of halves, never a third
@@ -97,7 +102,8 @@ export function Zone({ tone, split = "1-1", stack, chapter, label, children }: {
       {chapter ? <ChapterHead index={chapter.index} heading={chapter.heading} /> : null}
       <div
         data-zone-level=""
-        className={pair && s ? `${STACKED} ${stack === "lg" ? `${SIDE_LG} ${SPLIT_LG[s]}` : `${SIDE_MD} ${SPLIT[s]}`}` : lone ? LONE : "grid grid-cols-1"}
+        {...(even && pair ? { "data-zone-even": "" } : {})}
+        className={pair && s ? `${STACKED} ${stack === "lg" ? `${SIDE_LG} ${SPLIT_LG[s]}` : `${SIDE_MD} ${SPLIT[s]}`}${even ? ` ${EVEN}` : ""}` : lone ? LONE : "grid grid-cols-1"}
       >
         {/* EACH SECTION IN ITS OWN CELL: the hairline between two stacked sections belongs to the level, not to the section, so the
             zone's rule that takes a section's box away (border 0) can never take the level's hairline with it. */}

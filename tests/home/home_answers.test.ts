@@ -28,6 +28,11 @@ const by = (k: string) => answers.find((a) => a.key === k);
 const board = buildHeroBoard("GB");
 const a = by("answer");
 check(`the UK's answer is the masthead's: "${board.answer?.label}" ${board.answer?.value}, ${board.answerBasis}`, !!a && a.kicker === board.answer?.label && a.figure === board.answer?.value && a.words === board.answerBasis && a.prov?.src === board.answer?.prov?.src);
+/* Its rows (masterplan step 37): the masthead's first two other taxes, the same names and rates as /gb's plus, so the three doors
+   end level (MODEL PART 10.5); corporation tax says it is a company's, since the answer's basis is a sole trader. */
+const others = (board.taxes ?? []).slice(0, 2);
+check(`the UK's answer carries the masthead's first two other taxes (${others.map((r) => `${r.label} ${r.value}`).join(", ")}), each stamped`, !!a && others.length === 2 && JSON.stringify(a.rows?.map((r) => [r.label, r.value])) === JSON.stringify(others.map((r) => [r.label, r.value])) && (a.rows ?? []).every((r) => !!r.prov?.src && !!r.prov?.kind));
+check("corporation tax says it is a company's; VAT keeps the masthead's threshold", !!a && a.rows?.find((r) => r.key === "corporation_tax")?.note === COPY.home.answerNotes.companyOnly && !!others.find((r) => r.key === "vat")?.note && a.rows?.find((r) => r.key === "vat")?.note === others.find((r) => r.key === "vat")?.note);
 const sales = buildLondonTradeSales();
 const t = by("trades");
 check(`what London's trades take is /gb's middle trade, ${sales ? usd(londonMiddleSales(sales)) : "none"}`, !!t && !!sales && t.figure === usd(londonMiddleSales(sales)) && t.kicker === COPY.londonSales.kicker && t.words === COPY.londonSales.focalWords);
@@ -49,6 +54,11 @@ for (const x of answers) {
   check(`the home page's ${x.key} prints ${x.figure}, stamped, behind a door to ${x.href}`, home.includes(`id="${x.id}"`) && text(card).includes(`|${x.figure}|`) && new RegExp(`data-src="${x.prov.src.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`).test(card) && card.includes(`href="${x.href}"`) && /data-lands="[a-z-]+"/.test(card));
 }
 check("the home page holds one 40, the UK's answer", (home.match(/data-hero-figure/g) ?? []).length === 1);
+const answerCard = home.slice(home.indexOf('id="answer"'), home.indexOf('id="trades"'));
+check(`the answer's card prints the two other taxes (${others.map((r) => r.value).join(", ")})`, others.length === 2 && others.every((r) => text(answerCard).includes(`|${r.value}|`)));
+const ia = home.indexOf('id="answer"');
+const zs = home.lastIndexOf("<section data-zone", ia);
+check("the answers' level ends level: its three doors stretch to one height (MODEL PART 10.5)", ia > 0 && zs >= 0 && /data-zone-even/.test(home.slice(zs, ia)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/home_answers: all pass");

@@ -16,10 +16,6 @@
     {
       "section": "src/components/spine/LockedSection.tsx#id",
       "reason": "the locked section (masterplan step 15; his rulings 18 and 22): it stands in for a UK section that is on an archetype when open, and draws no figure of its own (its rail, a blurred stand-in, one line, one button), so no archetype holds it"
-    },
-    {
-      "section": "src/components/spine/home/home-view.tsx#search",
-      "reason": "the home page's hero (masterplan step 32; his h1 of 2026-08-16, kept as it was): his question and the search form the reader operates; no archetype draws a form, and the section prints no figure"
     }
   ]
 }

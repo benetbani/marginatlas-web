@@ -85,6 +85,7 @@ export default function LeadMagnetForm({
     <>
       <form onSubmit={submit} className="mt-7 flex flex-col sm:flex-row gap-2 max-w-md">
         <label className="sr-only" htmlFor="atlas-lead-magnet-email">Email address</label>
+        {/* Grows only in the row (masterplan step 37): in the phone's column a flex-1 basis of zero took the field's height to 23px. */}
         <input
           id="atlas-lead-magnet-email"
           type="email"
@@ -93,7 +94,7 @@ export default function LeadMagnetForm({
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@work.com"
           aria-invalid={status === "error"}
-          className={`min-w-0 flex-1 h-11 px-3 rounded-md text-base bg-white text-ink-900 border ${
+          className={`min-w-0 sm:flex-1 h-11 px-3 rounded-md text-base bg-white text-ink-900 border ${
             status === "error" ? "border-atlas-700" : "border-cocoa-700/25"
           }`}
         />

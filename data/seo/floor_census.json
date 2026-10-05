@@ -1,13 +1,14 @@
 {
  "why": "The floor census (milestone 1, M10; his interview of 2026-09-26, answer 6): each spine page outside the United Kingdom with its block count, read by src/lib/seo/indexable.ts. A page indexes when its count meets its type's floor (`floors`, the model laws' FLOOR_BY_SURFACE); UK pages index by his rule and are not counted. Written by scripts/seo/floor_census.tsx; never edited by hand.",
- "generated_at": "2026-10-04T21:34:17.025Z",
+ "generated_at": "2026-10-05T18:58:27.407Z",
  "floors": {
   "country": 13,
   "city": 16,
   "cell": 15,
   "industry": 11,
   "hood": 4,
-  "howto": 7
+  "howto": 7,
+  "home": 5
  },
  "pages": {
   "/ad": {
@@ -4128,7 +4129,7 @@
   },
   "/us/mississippi/real-estate": {
    "surface": "cell",
-   "blocks": 16
+   "blocks": 15
   },
   "/us/mississippi/religious-organizations": {
    "surface": "cell",

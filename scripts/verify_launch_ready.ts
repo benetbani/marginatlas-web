@@ -152,6 +152,7 @@ const EXEMPLARS: Exemplar[] = [
   { surface: "howto", slugs: ["GB"], why: "the harness's page: the authored locals" },
   { surface: "howto", slugs: ["DE"], why: "forms on file, no authored locals" },
   { surface: "howto", slugs: ["IN"], why: "forms on file, no authored locals" },
+  { surface: "home", slugs: ["gb"], why: "the home page on the band page (masterplan step 37), served at / once NEXT_PUBLIC_HOME_REFORM is on" },
 ];
 const stemOf = (p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`;
 const nameOf = (p: { surface: string; slugs: string[] }) => `${p.surface} ${p.slugs.join("/")}`;
@@ -166,6 +167,7 @@ function productionPath(p: { surface: string; slugs: string[] }): string {
     case "cell": return `/${s[0]}/${s[1]}/${s[2]}`;
     case "industry": return `/industries/${s[0]}`;
     case "hood": return s[1] ? `/cities/${s[0]}/neighborhoods/${s[1]}` : `/cities/${s[0]}/neighborhoods`;
+    case "home": return "/";
     default: return `/${s.join("/")}`;
   }
 }
@@ -232,7 +234,9 @@ function itemA(): void {
   const floors: Record<string, number> = {};
   if (m) for (const pair of m[1].matchAll(/(\w+):\s*(\d+)/g)) floors[pair[1]] = Number(pair[2]);
   const surfaces = Object.keys(floors);
-  const missing = surfaces.filter((s) => EXEMPLARS.filter((e) => e.surface === s).length < 3);
+  /* The home page is one page (masterplan step 37): its surface asks one exemplar, every other three. */
+  const needOf = (s: string) => (s === "home" ? 1 : 3);
+  const missing = surfaces.filter((s) => EXEMPLARS.filter((e) => e.surface === s).length < needOf(s));
   if (!surfaces.length || missing.length) {
     record("a", false, `the exemplar list does not cover every surface of ${LAWS}'s FLOOR_BY_SURFACE (${surfaces.join(", ") || "none read"}): ${missing.length ? `${missing.join(", ")} without three exemplars` : "the floors could not be read off the file"}`);
     return;
