@@ -268,8 +268,8 @@ export default async function ComparisonPage({
             Ten activities, side by side
           </h2>
           <p className="text-sm text-cocoa-700/80 mb-6 max-w-2xl">
-            An estimate of yearly sales per firm, in US dollars, not adjusted
-            for local prices.
+            An estimate of yearly sales per firm, in US dollars,
+            not adjusted for local prices.
           </p>
           <div className="space-y-2">
             {industryEstimates.map((ind) => {
