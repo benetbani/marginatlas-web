@@ -19,7 +19,11 @@ import { Focal } from "@/components/spine/country/focal";
 import { FactRows } from "@/components/spine/archetypes/FactRows";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { provAttrs } from "@/lib/spine/provenance";
-import { buildHomeAnswers, type HomeAnswer } from "@/lib/spine/home_answers";
+import { buildHomeAnswers, buildAtlasHolds, type HomeAnswer, type AtlasHolds as AtlasHoldsData } from "@/lib/spine/home_answers";
+import { CityCards } from "@/components/spine/archetypes/CityCards";
+import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
+import { isPaywallOn } from "@/lib/feature_flags";
+import { ProBand } from "./ProBand";
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
@@ -119,17 +123,54 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
   );
 }
 
+/* THE UK'S CITIES (masterplan step 35): the city cards /gb draws (buildCityCards, his field look with the city's photograph),
+   each a door to its city page. */
+function HomeCities({ cards }: { cards: CityCardsData }) {
+  return (
+    <Box id="cities" className="flex h-full flex-col">
+      <Rail icon="best-areas" kicker={COPY.cities.kicker} />
+      <CityCards
+        fill
+        cards={cards.cards}
+        allHref={cards.allHref}
+        allLabel={COPY.cities.allLabel}
+        basis={COPY.cityCards.plain.basis}
+        prevLabel={COPY.cities.prev}
+        nextLabel={COPY.cities.next}
+      />
+    </Box>
+  );
+}
+
+/* WHAT THE ATLAS HOLDS (masterplan step 35): an open section, the benchmarks at 30 and the counts as rows, every one stamped. */
+function AtlasHolds({ holds }: { holds: AtlasHoldsData }) {
+  return (
+    <Box id="atlas" className="flex flex-col">
+      <Rail icon="benchmark" kicker={COPY.home.atlas.kicker} />
+      <Focal figure={holds.focal.figure} words={holds.focal.words} prov={holds.focal.prov} />
+      <FactRows rows={holds.rows.map((r) => ({ key: r.key, label: r.label, value: r.value, note: r.note, prov: r.prov }))} />
+    </Box>
+  );
+}
+
 function AnswerDoor({ a }: { a: HomeAnswer }) {
   return a.key === "answer" ? <TaxAnswer a={a} /> : a.key === "trades" ? <TradesAnswer a={a} /> : <YearsAnswer a={a} />;
 }
 
 export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null } = {}) {
   const answers = buildHomeAnswers(data?.iso2 ?? "GB");
+  const cities = buildCityCards(data?.iso2 ?? "GB");
+  const holds = buildAtlasHolds();
   const zones: Array<{ key: string; split: ZoneSplit; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, what London's trades take, who is still
        trading, each a door to its section of /gb. */
     ...(answers.length ? [{ key: "answers", split: "1-1-1" as ZoneSplit, label: COPY.home.answersLabel, body: answers.map((a) => <AnswerDoor key={a.key} a={a} />) }] : []),
+    /* THE UK'S CITIES AND WHAT THE ATLAS HOLDS, ONE LEVEL (masterplan step 35): the city cards at two thirds, the counts beside. */
+    { key: "cities", split: "2-1", label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <AtlasHolds key="atlas" holds={holds} />] },
+    /* PRO, SAID ONCE AND QUIETLY (ruling 23), only while the paywall's switch is on: the zone is not listed otherwise, so no band
+       stands empty and nothing about Pro prints. */
+    ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
   ];
   return (
     <>

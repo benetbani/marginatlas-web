@@ -48,6 +48,7 @@
  * every card holding the same figure), and a look that cannot draw then draws
  * nothing rather than an empty track, which would read as zero.
  */
+import type { Provenance } from "@/lib/spine/provenance";
 import { getCitiesForCountry, type CityEntry } from "@/lib/cities";
 import { cityRouteServes, coveredCities, normalizePlaceName } from "@/lib/cities/city_pages";
 import { cityImageSrc } from "@/lib/cities/city_images";
@@ -148,6 +149,9 @@ export type CityCard = {
   photo: { src: string; placeholder: boolean };
   /** What an average customer there earns in a year, gross, USD. */
   payUsd?: number;
+  /** Where that pay came from (masterplan step 35): the city's own typical pay, its shard's monthly median times twelve, worked
+   *  out where the shard holds the figure and an estimate where it is modelled; stamped on the card's figure. */
+  payProv?: Provenance;
   /** 0 to 1, ordinal: where that pay sits between the lowest and highest here. */
   payShare?: number;
   /** 0 to 1, zero-based: that pay as a part of the highest pay here. */
@@ -215,6 +219,7 @@ export function buildCityCards(iso2In: string): CityCards | null {
        typical only (a country's figure under a city's name is not the city's). */
     const typical = cityTypicalIncome(slug);
     const pay = typical && typical.from === "city" ? typical.value : null;
+    const payProv: Provenance | undefined = pay != null && typical ? { src: typical.field, kind: typical.tag === "held" ? "worked out" : "estimate" } : undefined;
     const name = String(c.name).replace(/\s*\([^)]*\)\s*$/, "");
     const photo = cityCardImage(slug);
     const draft = iso2 === "GB" ? undefined : draftRowFor(iso2, c.name);
@@ -234,6 +239,7 @@ export function buildCityCards(iso2In: string): CityCards | null {
       image: cityImageSrc(slug),
       photo,
       payUsd: pay ?? undefined,
+      ...(payProv ? { payProv } : {}),
       // filled below, once the whole set is known
     });
   }

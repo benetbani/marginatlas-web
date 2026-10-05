@@ -2695,6 +2695,21 @@ export const COPY = {
     subtitle: "Know if a business works before you risk your money.",
     searchLabel: "Search",
     answersLabel: "The UK's answers",
+    citiesLabel: "The UK's cities",
+    /** WHAT THE ATLAS HOLDS (masterplan step 35): the ledger module's counts (src/lib/home/atlas_ledger.ts), an open section. */
+    atlas: {
+      kicker: "What the atlas holds",
+      words: "figures for one trade in one place",
+      rows: { countries: "Countries", cities: "Cities", districts: "Districts", trades: "Trades" },
+      notes: { countries: "With figures, of all listed", cities: "Each with its own page", districts: "Inside those cities", trades: "From cafés to machine shops" },
+    },
+    /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
+    pro: {
+      kicker: "Pro",
+      words: "The second half of every UK chapter, and four Pro sections.",
+      yearLabel: "By the year",
+      button: "See what Pro opens",
+    },
   },
   /** THE PAGE FOOT (masterplan step 31; QUEUE close:furniture-lines): the link to the correction page and, where the data holds a
    *  date, the date its figures were checked (src/components/spine/ReportFoot.tsx). */

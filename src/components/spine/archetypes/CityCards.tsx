@@ -84,6 +84,7 @@
  * nothing: an empty track reads as zero, and zero is not what "not held" means.
  */
 import * as React from "react";
+import { provAttrs } from "@/lib/spine/provenance";
 import type { CityCard } from "@/lib/spine/city_cards";
 
 /* FOUR A PAGE, the card pager's own arithmetic, kept: the cities card is the
@@ -313,7 +314,7 @@ function Card({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => st
               spine shell owns; `font-serif` names the same family off the
               variable the root layout owns, so the figure reads in one face on
               the page AND in the harness sheet, which mounts no shell. */}
-          <span className="fig font-serif tabular-figures text-[length:var(--t-body)] leading-none text-[var(--c-ink)]">
+          <span className="fig font-serif tabular-figures text-[length:var(--t-body)] leading-none text-[var(--c-ink)]" {...provAttrs(card.payProv)}>
             {typeof card.payUsd === "number" ? fmt(card.payUsd) : ""}
           </span>
           <span aria-hidden className="shrink-0 text-[length:var(--t-body)] leading-none text-[var(--c-ink)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
@@ -356,7 +357,7 @@ function Row({ card, fmt }: { card: CityCard; fmt: (v: number) => string }) {
         <span data-city-name className="block text-[length:var(--t-head)] font-semibold leading-[1.15] tracking-tight text-[var(--c-ink)]" style={{ overflowWrap: "normal" }}>{card.name}</span>
         {card.region ? <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}
       </span>
-      <span className="fig font-serif tabular-figures relative text-[length:var(--t-body)] leading-none text-[var(--c-ink)]">
+      <span className="fig font-serif tabular-figures relative text-[length:var(--t-body)] leading-none text-[var(--c-ink)]" {...provAttrs(card.payProv)}>
         {typeof card.payUsd === "number" ? fmt(card.payUsd) : ""}
       </span>
       <span aria-hidden />
