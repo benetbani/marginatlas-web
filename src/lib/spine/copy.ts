@@ -2647,6 +2647,49 @@ export const COPY = {
     rows: { sentence: "In short", who: "Who is here", price: "Price tier", description: "In brief" },
     foot: "",
   },
+  /** THE LOCKED SECTION (masterplan step 15; his interview of 2026-09-26: 18, half of every UK chapter behind Pro; 22, "title
+   *  and icon, the drawing blurred behind, one line, one button; no pop-up"). One button, and one line for every section id a UK
+   *  page can lock (the levels after the first of each chapter on /gb, the UK city pages and the London trade pages, read off
+   *  their renders of 2026-10-05): what the section answers, in the reader's words, no figure. */
+  locked: {
+    button: "Open with Pro",
+    lines: {
+      hiring: "What a first hire costs you, all in.",
+      employment: "The rules you take on with your first employee.",
+      "running-costs": "What it costs to keep the doors open.",
+      insurance: "The cover the law asks for, and what it costs.",
+      peers: "How the UK compares with countries like it.",
+      financing: "What borrowing costs a small firm here.",
+      banking: "How customers pay you, and what each payment costs.",
+      "age-mix": "Who lives here, by age.",
+      "job-market": "How hard it is to find staff here.",
+      cities: "The UK's cities, side by side.",
+      locals: "Things worth knowing before you open here.",
+      spend: "What households here spend their money on.",
+      "character-people": "How people here like to do business.",
+      gates: "The permits this city asks for before you open.",
+      market: "Who already trades here, and how crowded it is.",
+      living: "What it costs your staff to live here.",
+      runway: "How rent here compares with what people earn.",
+      earnings: "What your customers here earn.",
+      demand: "What residents here spend in a year.",
+      crew: "What staff cost in this city.",
+      texture: "What doing business here is like, day to day.",
+      calendar: "When this city spends, month by month.",
+      season: "When residents and visitors spend through the year.",
+      neighbourhoods: "The city's neighbourhoods, one by one.",
+      split: "Where your sales money goes, cost by cost.",
+      team: "What staff cost in this trade.",
+      stock: "The kit you need to open.",
+      thresholds: "The tax and pay lines you cross as you grow.",
+      mix: "Where this trade's sales come from.",
+      rivals: "Other trades you could open instead.",
+      apps: "The apps shops here use to sell and get paid.",
+      "spend-income": "What households spend on this, by income.",
+      customers: "What one customer spends with you.",
+      worth: "What a business like this sells for.",
+    },
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

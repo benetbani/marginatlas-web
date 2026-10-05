@@ -12,6 +12,10 @@
     {
       "section": "src/components/spine/city/city-view.tsx#trades",
       "reason": "not yet on an archetype; a build loop queue row"
+    },
+    {
+      "section": "src/components/spine/LockedSection.tsx#id",
+      "reason": "the locked section (masterplan step 15; his rulings 18 and 22): it stands in for a UK section that is on an archetype when open, and draws no figure of its own (its rail, a blurred stand-in, one line, one button), so no archetype holds it"
     }
   ]
 }

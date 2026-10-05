@@ -83,6 +83,7 @@ import { Thresholds } from "@/components/spine/sections/Thresholds";
 import { AgeMix } from "@/components/spine/sections/AgeMix";
 import { CustomersCome } from "@/components/spine/sections/CustomersCome";
 import { Origin } from "@/components/spine/sections/Origin";
+import { LockedSection, type StandInKind } from "@/components/spine/LockedSection";
 import { buildAgeMix, buildCustomersCome, buildOrigin, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildThresholds, listThresholdCountries } from "@/lib/spine/sections/thresholds";
 import { buildSurvival, buildObstacles, listSurvivalCountries } from "@/lib/spine/sections/first_years";
@@ -2674,6 +2675,30 @@ export function OriginStories() {
   );
 }
 
+/** THE LOCKED SECTION (masterplan step 15; src/components/spine/LockedSection.tsx): one story for each stand-in drawing, each on a
+ *  section a UK page locks (its title, its icon and its line), under an id of its own so the sheet holds each id once. */
+const LOCKED_STORIES: Array<{ kind: StandInKind; id: string; title: string; icon: AtlasIconId; why: string }> = [
+  { kind: "bars", id: "hiring", title: "What staff cost", icon: "hiring", why: "bars, for ranked and pay bars: what staff cost on /gb" },
+  { kind: "track", id: "running-costs", title: "Running costs", icon: "cost-breakdown", why: "track, for tracks and ranges: running costs on /gb" },
+  { kind: "rows", id: "employment", title: "Employing people", icon: "staffing-rota", why: "rows, for fact rows and key-value grids: employing people on /gb" },
+  { kind: "grid", id: "gates", title: "The city's own permits", icon: "licence-specific", why: "grid, for unit grids: a UK city's permits" },
+  { kind: "table", id: "peers", title: "Against the peers", icon: "benchmark", why: "table, for tables and spectra: the peers on /gb" },
+];
+export function pickLockedSectionInstances(): Instance[] {
+  return LOCKED_STORIES.map((s) => ({ iso2: s.kind, why: s.why }));
+}
+export function LockedSectionStories() {
+  return (
+    <div data-stories="locked-section">
+      {LOCKED_STORIES.map((s) => (
+        <Story kind="locked-section" key={s.kind} iso2={s.kind} why={s.why}>
+          <LockedSection id={`locked-${s.id}`} lineKey={s.id} title={s.title} icon={s.icon} kind={s.kind} />
+        </Story>
+      ))}
+    </div>
+  );
+}
+
 export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHeroInstance[] = [], industryPlaces: IndustryPlacesInstance[] = []): Record<string, Instance[]> {
   const cityStrips = pickCityStripInstances();
   const cityCloses = pickCityCloseInstances(cityHero);
@@ -2719,6 +2744,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "spend-by-age": pickSpendByAgeInstances(),
     "customers-come": pickCustomersComeInstances(),
     "origin": pickOriginInstances(),
+    "locked-section": pickLockedSectionInstances(),
   };
 }
 

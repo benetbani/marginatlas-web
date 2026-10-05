@@ -34,7 +34,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|countries|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { FactRowsStories, ChangeRunStories, StockTiersStories, SurvivalCurveStories, ObstaclesStories, SpendByIncomeStories, SpendByAgeStories, LocalAppsStories, MarketHoldStories, JobMarketStories, ThresholdsStories, AgeMixStories, CustomersComeStories, OriginStories, AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, StepperStories, SegmentBarStories, MonthBarsStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
+import { FactRowsStories, ChangeRunStories, StockTiersStories, SurvivalCurveStories, ObstaclesStories, SpendByIncomeStories, SpendByAgeStories, LocalAppsStories, MarketHoldStories, JobMarketStories, ThresholdsStories, AgeMixStories, CustomersComeStories, OriginStories, LockedSectionStories, AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, StepperStories, SegmentBarStories, MonthBarsStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
 import { CELL_INSTANCES, loadCellHeroInstances, type CellHeroInstance } from "../../src/lib/spine/trade_hero_facts";
@@ -166,6 +166,8 @@ const SHEET: Entry[] = [
   { kind: "age-mix", city: "none", render: () => <AgeMixStories /> },
   { kind: "customers-come", city: "none", render: () => <CustomersComeStories /> },
   { kind: "origin", city: "none", render: () => <OriginStories /> },
+  /* THE LOCKED SECTION (masterplan step 15; his rulings 18 and 22): one story for each stand-in drawing a locked card shows. */
+  { kind: "locked-section", city: "none", render: () => <LockedSectionStories /> },
   /* "city-verdict" left the sheet on plan step 32 (2026-09-18): MODEL.md 8.3 dissolves the rent verdict into the masthead's answer. */
 ];
 function shell(body: string): string {
