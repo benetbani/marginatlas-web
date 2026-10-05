@@ -1698,7 +1698,9 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       },
       {
         key: "trades",
-        split: exitData ? "2-1" : "wide",
+        /* TWO THIRDS EVEN WHEN THE EXIT CARD IS WITHHELD (PART 9 clause 59, the zones' LONE rule): a level whose partner
+           self-omits keeps two thirds, its band running on beside it; full width is the hero's alone (section-bands). */
+        split: "2-1",
         label: COPY.londonSales.kicker,
         chapter: { index: "03", heading: COPY.chapters.open },
         body: exitData ? [<LondonSalesBars key="money" sales={londonSales} />, <ExitCard key="exit" exit={exitData} lean />] : [<LondonSalesBars key="money" sales={londonSales} />],
