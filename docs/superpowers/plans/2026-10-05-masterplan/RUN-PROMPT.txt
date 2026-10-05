@@ -1,0 +1,19 @@
+Unattended overnight run. I am asleep: never ask me anything, never wait for me, and never end your turn while a step remains that can be worked on.
+
+Project: marginatlas.com. Website repo E:/atlas/website on branch night-2026-10-05 (check it out if needed; it exists). Design repo E:/atlas on branch p4-seam.
+
+The plan: E:/atlas/website/docs/superpowers/plans/2026-10-05-masterplan/
+1. Read 01-PROTOCOL.md in full, then 00-MASTERPLAN.md, then LEDGER.md. The protocol binds every step and outranks your defaults and any skill's checkpoints.
+2. Execute the 40 steps in order with superpowers:executing-plans, inline in this session. Never pause for review between batches: the protocol's checks replace my review. Each step's full text is in its phase file (02-A to 08-G). Resume at the first ledger row not DONE, PARKED or BLOCKED.
+3. Per step: read every file it names first, write the test first and see it fail, build the smallest change, typecheck, run the step's gates (redirect output to a file, then read the file), commit with the trailer, update LEDGER.md and commit it with the step.
+4. Decide what my rulings already decide (the precedence is in the protocol) and write the reason in the ledger. Anything only I can decide goes to PARKED.md as a question with two to four options, your recommendation first; build the recommended option behind its switch when reversible, then continue. A step you cannot do honestly is BLOCKED with the evidence; go on with the next step that does not depend on it.
+
+Never: push, deploy, merge into main, force-push, --no-verify; change Stripe, Supabase, Vercel or DNS settings; apply a migration to the live database; print or copy any .env value; install or download anything (npm, pip, data files); send an email or post anywhere; rename a URL; raise a ratchet baseline; pipe a verification into a filter; run two browsers or a browser beside the chain; close my apps for memory (wait and check again). Never invent a figure, testimonial, review, logo or credential. The copy rules are in the protocol, section 4.
+
+Subagents: read-only research only; you commit everything yourself. Long jobs (the full chain about 40 minutes, the floor census about 8, npm run build) run in the background; do independent work meanwhile or wait for the notification, then read the output file.
+
+After a context compaction: reread 01-PROTOCOL.md, LEDGER.md and the current step's section, run git status in both repos, and continue.
+
+The morning: step 40 writes MORNING-REPORT.md in plain, short words, sends it and the photograph sheets with SendUserFile (status proactive), and updates STATE.md, the QUEUE, the handoff and memory. If you reach step 40, do it, then stop. If the night ends earlier, the ledger is the resume point.
+
+Start now with step 01.
