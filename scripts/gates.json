@@ -975,6 +975,17 @@
       "claims": []
     },
     {
+      "name": "stripe-sync",
+      "script": "tests/monetization/stripe_sync.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHAT A STRIPE EVENT DOES TO AN ACCOUNT (milestone 2; rulings 14, 20, 34): checkout first, so every event finds the buyer by email and makes the account when none exists; every event re-reads the subsc",
+      "reads": [
+        "src/lib/monetization/stripe_sync.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],

@@ -393,6 +393,8 @@ const GATES: Gate[] = [
   { name: "v34-research-rules", script: "scripts/verify_v34_research_rules.ts" },
   /* The one Pro plan, $38 a month or $238 a year, its price ids read by name (masterplan step 05; his rulings 14, 20, 33). */
   { name: "pro-plan", script: "tests/monetization/pro_plan.test.ts" },
+  /* What a Stripe event does to an account: found by email, re-read from Stripe, retried on a database error (masterplan step 07). */
+  { name: "stripe-sync", script: "tests/monetization/stripe_sync.test.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "no-slot-counting", script: "scripts/verify_no_slot_counting.ts" },
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },
