@@ -571,6 +571,9 @@ const GATES: Gate[] = [
   /* What the atlas holds, the ledger's counts stamped; Pro said once, only with the paywall's switch on, its prices through the
      plan; the launch check reading the new section (masterplan step 35; his ruling 23). */
   { name: "home-bands", script: "tests/home/home_bands.test.ts" },
+  /* The 58 retired blog posts (his ruling of 2026-10-05, PARKED P36.1): none left in content/blog, each redirected by
+     next.config.js to a page that lives, no link to one anywhere (data/blog/retired_posts.json). */
+  { name: "blog-retired", script: "tests/blog/retired_posts.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

@@ -1572,6 +1572,21 @@
       "claims": []
     },
     {
+      "name": "blog-retired",
+      "script": "tests/blog/retired_posts.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE 58 RETIRED BLOG POSTS (his ruling of 2026-10-05 on PARKED P36.1, option (a): keep 2, rewrite 10, retire 58 before the site goes public, each with a permanent redirect to its country page or the ne",
+      "reads": [
+        "content/blog",
+        "content/blog holds the two kept and the ten to rewrite, and nothing else (${onDisk.length} files)",
+        "data/blog/retired_posts.json",
+        "src/app",
+        "src/app/(site)"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

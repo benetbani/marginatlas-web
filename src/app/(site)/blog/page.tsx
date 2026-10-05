@@ -1,6 +1,10 @@
 /**
  * Blog index - /blog.
  *
+ * SINCE 2026-10-05 THE INDEX HOLDS TWELVE POSTS (his ruling on PARKED P36.1): the two kept and the ten to rewrite on the UK
+ * registers. The other 58 are retired, each redirecting to its country page or the nearest live page
+ * (data/blog/retired_posts.json, the gate blog-retired), so the counts of seventy below are the page's history.
+ *
  * WHAT WAS WRONG, MEASURED 2026-08-18. The page was 32,114 rendered pixels at
  * 375x812, about 40 screens, and 11,821 at 1280. It is the same shape the
  * founder rejected on /cities in his own words: "it's just a big list of cities
@@ -115,80 +119,21 @@ const SUBJECTS = [
 
 type SubjectId = (typeof SUBJECTS)[number]["id"];
 
+/* THE TWELVE POSTS LEFT (his ruling of 2026-10-05, PARKED P36.1): the two kept and the ten to rewrite on the UK
+   registers; the 58 retired redirect to their country page or the nearest live page (data/blog/retired_posts.json). */
 const SUBJECT_OF_POST: Record<string, SubjectId> = {
-  "argentina-overview": "countries",
-  "australia-overview": "countries",
-  "baltic-tech-rise": "countries",
-  "brazil-overview": "countries",
-  "canada-overview": "countries",
-  "france-overview": "countries",
-  "germany-mittelstand-overview": "countries",
-  "greek-tourism-recovery": "countries",
-  "italy-family-firms": "countries",
-  "japan-overview": "countries",
-  "netherlands-overview": "countries",
-  "nordics-software-economy": "countries",
-  "norway-overview": "countries",
-  "poland-overview": "countries",
-  "polish-construction-boom": "countries",
-  "singapore-overview": "countries",
-  "spain-overview": "countries",
-  "switzerland-overview": "countries",
-  "uk-overview": "countries",
-  "us-margins-since-2018": "countries",
-  "us-small-business-overview": "countries",
-
-  "australian-vs-canadian-economy": "compared",
-  "emerging-bric-services": "compared",
-  "germany-vs-france-manufacturing": "compared",
-  "italy-vs-spain-tourism": "compared",
-  "japan-restaurants-density": "compared",
-  "small-business-size-us-vs-germany": "compared",
-  "us-vs-uk-small-business": "compared",
-
-  "global-construction-overview": "industries",
-  "global-finance-services": "industries",
   "global-hairdressers": "industries",
-  "global-healthcare-economics": "industries",
-  "global-manufacturing-overview": "industries",
-  "global-professional-services": "industries",
-  "global-real-estate": "industries",
   "global-restaurants-overview": "industries",
   "global-retail-shifts": "industries",
-  "global-software-deep-dive": "industries",
-  "global-transportation-logistics": "industries",
-
-  "french-bakeries-profitability": "close-ups",
-  "hairdressers-same-everywhere": "close-ups",
-  "pharmacy-revenue-payroll-margin": "close-ups",
-  "solo-plumbing-business": "close-ups",
-  "typical-us-restaurant-earnings": "close-ups",
-  "worlds-smallest-hotel-markets": "close-ups",
 
   "difference-between-firm-and-establishment": "reading",
-  "how-medians-work": "reading",
   "how-to-benchmark-your-business": "reading",
-  "how-to-read-a-cell-page": "reading",
   "industry-classification-different-meanings": "reading",
-  "industry-classification-tour": "reading",
-  "industry-classifications-decoded": "reading",
   "median-vs-average": "reading",
-  "nace-vs-naics": "reading",
   "size-band-statistics-matter": "reading",
-  "us-employer-vs-nonemployer": "reading",
-  "us-state-fips-codes": "reading",
-  "why-friendly-medians": "reading",
 
-  "building-from-9-agencies": "method",
-  "countries-with-worse-data": "method",
-  "data-sources-tour": "method",
-  "estimating-distributions-from-totals": "method",
   "hidden-economy-solo-proprietors": "method",
-  "how-many-cells-do-you-have": "method",
-  "how-we-built-the-taxonomy": "method",
   "reading-eurostat-sbs": "method",
-  "shape-transfer-explained": "method",
-  "v2-coming": "method",
   "what-we-omit": "method",
   "when-we-extrapolate": "method",
 };

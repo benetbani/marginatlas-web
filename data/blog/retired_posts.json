@@ -1,0 +1,353 @@
+{
+  "why": "The 58 blog posts retired by his ruling of 2026-10-05 (PARKED P36.1, option (a): keep 2, rewrite 10, retire 58 before the site goes public), each with a permanent redirect to its country page or the nearest live page, from the verdicts of design/loop/build/research/2026-10-02-content-and-credibility.md (Part 2). The files stay in git history. Read by next.config.js (the redirects) and tests/blog/retired_posts.test.ts (the gate blog-retired).",
+  "posts": {
+    "argentina-overview": {
+      "to": "/ar",
+      "topic": "Argentina overview",
+      "why": "five unsourced bullets; generic; 301 /ar",
+      "chosen_by": "the research table's destination"
+    },
+    "australia-overview": {
+      "to": "/au",
+      "topic": "Australia overview",
+      "why": "unsourced; names ABS; 301 /au",
+      "chosen_by": "the research table's destination"
+    },
+    "australian-vs-canadian-economy": {
+      "to": "/au",
+      "topic": "Australia vs Canada",
+      "why": "unsourced medians; a pairing nobody asked for; 301 /au",
+      "chosen_by": "the research table's destination"
+    },
+    "baltic-tech-rise": {
+      "to": "/world",
+      "topic": "Baltic software",
+      "why": "software, out of scope; unsourced counts; 301 /world",
+      "chosen_by": "the research table's destination"
+    },
+    "brazil-overview": {
+      "to": "/br",
+      "topic": "Brazil overview",
+      "why": "names IBGE and CEMPRE; informal count a guess; 301 /br",
+      "chosen_by": "the research table's destination"
+    },
+    "building-from-9-agencies": {
+      "to": "/about-data",
+      "topic": "the build",
+      "why": "names nine agencies, APIs, file formats; internal log (\"v1.15\"); goes to About the figures",
+      "chosen_by": "the research table's destination (About the figures)"
+    },
+    "canada-overview": {
+      "to": "/ca",
+      "topic": "Canada overview",
+      "why": "unsourced; 301 /ca",
+      "chosen_by": "the research table's destination"
+    },
+    "countries-with-worse-data": {
+      "to": "/about-data",
+      "topic": "poor-data countries",
+      "why": "names eight agencies and calls their portals broken (unverifiable); 301 /about-data",
+      "chosen_by": "the research table's destination"
+    },
+    "data-sources-tour": {
+      "to": "/about-data",
+      "topic": "where data comes from",
+      "why": "list of 11 bodies, no figure, date or link; replaced by About the figures",
+      "chosen_by": "the research table's destination (About the figures)"
+    },
+    "emerging-bric-services": {
+      "to": "/world",
+      "topic": "BRIC services",
+      "why": "dated frame; unsourced; says three of four need \"deeper investment\"; 301 /world",
+      "chosen_by": "the research table's destination"
+    },
+    "estimating-distributions-from-totals": {
+      "to": "/about-data",
+      "topic": "shape transfer 1",
+      "why": "method of the US-anchored global model; Estimated badge (off); names Census and Eurostat; duplicate",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "france-overview": {
+      "to": "/fr",
+      "topic": "France overview",
+      "why": "unsourced (\"29.5 million legal units\"); 301 /fr",
+      "chosen_by": "the research table's destination"
+    },
+    "french-bakeries-profitability": {
+      "to": "/fr",
+      "topic": "French bakeries",
+      "why": "cites \"Eurostat sbs_sc_sca_r2\"; profit claim has no working; en dashes",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "germany-mittelstand-overview": {
+      "to": "/de",
+      "topic": "Germany overview",
+      "why": "unsourced shares; 301 /de",
+      "chosen_by": "the research table's destination"
+    },
+    "germany-vs-france-manufacturing": {
+      "to": "/de",
+      "topic": "manufacturing DE v FR",
+      "why": "out of scope; precise-looking medians, no source",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-construction-overview": {
+      "to": "/industries",
+      "topic": "construction",
+      "why": "out of scope; unsourced; NACE and NAICS codes in body",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-finance-services": {
+      "to": "/industries",
+      "topic": "finance and insurance",
+      "why": "out of scope; \"70% of global activity\" unsourced",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-healthcare-economics": {
+      "to": "/industries",
+      "topic": "healthcare",
+      "why": "out of scope; \"US $1.8M\" unsourced",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-manufacturing-overview": {
+      "to": "/industries",
+      "topic": "manufacturing",
+      "why": "out of scope; \"28,000 cells\" is internal jargon",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-professional-services": {
+      "to": "/industries",
+      "topic": "professional services",
+      "why": "out of scope; unsourced",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-real-estate": {
+      "to": "/industries",
+      "topic": "estate agencies",
+      "why": "out of scope; unsourced US contractor claims",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-software-deep-dive": {
+      "to": "/industries",
+      "topic": "software",
+      "why": "out of scope",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "global-transportation-logistics": {
+      "to": "/industries",
+      "topic": "transport and taxis",
+      "why": "out of scope; \"UK taxi firms -42%\" unsourced",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "greek-tourism-recovery": {
+      "to": "/gr",
+      "topic": "Greek tourism",
+      "why": "unsourced hotel figures; 301 /gr",
+      "chosen_by": "the research table's destination"
+    },
+    "hairdressers-same-everywhere": {
+      "to": "/industries/hairdressers-beauty",
+      "topic": "hairdressers again",
+      "why": "duplicates global-hairdressers; \"UK 85k\" unsourced; en dashes; merge into the UK story",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "how-many-cells-do-you-have": {
+      "to": "/about-data",
+      "topic": "cell counts",
+      "why": "counts stale; claims a star rating on every cell (deleted)",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "how-medians-work": {
+      "to": "/blog/median-vs-average",
+      "topic": "what a median is",
+      "why": "duplicate of median-vs-average; 301 to it",
+      "chosen_by": "the research table's destination (the post it duplicates)"
+    },
+    "how-to-read-a-cell-page": {
+      "to": "/about-data",
+      "topic": "how-to",
+      "why": "describes a page that no longer exists; replace with \"how to read a trade page\"",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "how-we-built-the-taxonomy": {
+      "to": "/industries",
+      "topic": "the 80-trade taxonomy",
+      "why": "site has 138 live trades; names e-Stat",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "industry-classification-tour": {
+      "to": "/blog/industry-classification-different-meanings",
+      "topic": "list of standards",
+      "why": "duplicate; 301 to the rewrite",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "industry-classifications-decoded": {
+      "to": "/blog/industry-classification-different-meanings",
+      "topic": "list of standards",
+      "why": "duplicate",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "italy-family-firms": {
+      "to": "/it",
+      "topic": "Italy",
+      "why": "\"85% family-owned\" unsourced; 301 /it",
+      "chosen_by": "the research table's destination"
+    },
+    "italy-vs-spain-tourism": {
+      "to": "/it",
+      "topic": "Italy v Spain",
+      "why": "unsourced hotel figures",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "japan-overview": {
+      "to": "/jp",
+      "topic": "Japan",
+      "why": "unsourced; 301 /jp",
+      "chosen_by": "the research table's destination"
+    },
+    "japan-restaurants-density": {
+      "to": "/jp",
+      "topic": "Tokyo vs New York",
+      "why": "unsourced; London ratio contradicted (see 2); idea survives as \"restaurants per resident by borough\"",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "nace-vs-naics": {
+      "to": "/blog/industry-classification-different-meanings",
+      "topic": "two code systems",
+      "why": "duplicate; neither code used in the UK",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "netherlands-overview": {
+      "to": "/nl",
+      "topic": "Netherlands",
+      "why": "shortest post; unsourced; 301 /nl",
+      "chosen_by": "the research table's destination"
+    },
+    "nordics-software-economy": {
+      "to": "/world",
+      "topic": "Nordic software",
+      "why": "software; emoji flags break the flag rule; unsourced",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "norway-overview": {
+      "to": "/no",
+      "topic": "Norway",
+      "why": "\"highest median wage in the world\" unsourced; 301 /no",
+      "chosen_by": "the research table's destination"
+    },
+    "pharmacy-revenue-payroll-margin": {
+      "to": "/industries",
+      "topic": "pharmacies",
+      "why": "out of scope; payroll shares unsourced",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "poland-overview": {
+      "to": "/pl",
+      "topic": "Poland",
+      "why": "unsourced; 301 /pl",
+      "chosen_by": "the research table's destination"
+    },
+    "polish-construction-boom": {
+      "to": "/pl",
+      "topic": "Polish construction",
+      "why": "out of scope; names GUS",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "shape-transfer-explained": {
+      "to": "/about-data",
+      "topic": "shape transfer 2",
+      "why": "duplicate; shows internal field names and a formula",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "singapore-overview": {
+      "to": "/sg",
+      "topic": "Singapore",
+      "why": "unsourced; 301 /sg",
+      "chosen_by": "the research table's destination"
+    },
+    "small-business-size-us-vs-germany": {
+      "to": "/us",
+      "topic": "what \"small\" means",
+      "why": "names the SBA; irrelevant to a UK owner",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "solo-plumbing-business": {
+      "to": "/industries",
+      "topic": "solo plumber",
+      "why": "out of scope; take-home unsourced; opinion; en dashes",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "spain-overview": {
+      "to": "/es",
+      "topic": "Spain",
+      "why": "unsourced; 301 /es",
+      "chosen_by": "the research table's destination"
+    },
+    "switzerland-overview": {
+      "to": "/ch",
+      "topic": "Switzerland",
+      "why": "unsourced; 301 /ch",
+      "chosen_by": "the research table's destination"
+    },
+    "typical-us-restaurant-earnings": {
+      "to": "/us",
+      "topic": "US restaurants",
+      "why": "US waits for its floor; names the Census Bureau and a code; \"600k typical\" untraceable; revisit later",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "uk-overview": {
+      "to": "/gb",
+      "topic": "UK overview",
+      "why": "unsourced, self-contradicting (see 4); names ONS; 301 /gb",
+      "chosen_by": "the research table's destination"
+    },
+    "us-employer-vs-nonemployer": {
+      "to": "/us",
+      "topic": "US employer firms",
+      "why": "US-specific; UK version is the hidden-economy rewrite",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "us-margins-since-2018": {
+      "to": "/us",
+      "topic": "US margins",
+      "why": "title says margins, body says revenue per firm; untraceable",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "us-small-business-overview": {
+      "to": "/us",
+      "topic": "US overview",
+      "why": "\"33M businesses\" unsourced; 301 /us",
+      "chosen_by": "the research table's destination"
+    },
+    "us-state-fips-codes": {
+      "to": "/us",
+      "topic": "FIPS codes",
+      "why": "trivia",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "us-vs-uk-small-business": {
+      "to": "/gb",
+      "topic": "US vs UK",
+      "why": "contradicts uk-overview; currency-converted medians; names ONS and SUSB",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "v2-coming": {
+      "to": "/about-data",
+      "topic": "roadmap",
+      "why": "promises \"free\", API, 25 to 30 pipelines; a promise the site cannot keep",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "why-friendly-medians": {
+      "to": "/about-data",
+      "topic": "why we say \"typical\"",
+      "why": "internal rationale; lists NAICS; the copy gate enforces the labels now",
+      "chosen_by": "the nearest live page (the table names none)"
+    },
+    "worlds-smallest-hotel-markets": {
+      "to": "/industries",
+      "topic": "hotels ranked",
+      "why": "hotels out of scope; unsourced ranking",
+      "chosen_by": "the nearest live page (the table names none)"
+    }
+  }
+}

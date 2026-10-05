@@ -109,6 +109,14 @@ const nextConfig = {
         destination: "/cities/:slug",
         permanent: true,
       },
+      // THE 58 RETIRED BLOG POSTS (his ruling of 2026-10-05, PARKED P36.1): each
+      // to its country page or the nearest live page, from data/blog/retired_posts.json
+      // (the gate blog-retired holds the list, the files and these redirects together).
+      ...Object.entries(require("./data/blog/retired_posts.json").posts).map(([slug, post]) => ({
+        source: `/blog/${slug}`,
+        destination: post.to,
+        permanent: true,
+      })),
     ];
   },
 
