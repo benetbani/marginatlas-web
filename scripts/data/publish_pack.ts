@@ -20,8 +20,10 @@ const OUT = `public/data/uk/${version}`;
 if (!existsSync(SRC)) { console.error(`publish_pack: no pack at ${SRC}`); process.exit(2); }
 mkdirSync(OUT, { recursive: true });
 
+/* Every published name in lowercase (the pack builds README.md and CITATION.cff): the site's canonical rule sends a path with a
+   capital to its lowercase form, so a capital in a file's name is an address no reader reaches (src/lib/data_pack.ts). */
 const files = readdirSync(SRC).filter((f) => !PACK_HELD_BACK.includes(f));
-for (const f of files) if (f !== "README.md") copyFileSync(join(SRC, f), join(OUT, f));
+for (const f of files) if (f !== "README.md") copyFileSync(join(SRC, f), join(OUT, f.toLowerCase()));
 
 /* The README as built, its file list cut to what is published, and one line saying what is not. */
 const readme = readFileSync(join(SRC, "README.md"), "utf8");
@@ -29,5 +31,5 @@ const nl = readme.includes("\r\n") ? "\r\n" : "\n";
 const kept = readme.split(nl).filter((line) => !PACK_HELD_BACK.some((h) => line.startsWith(`- \`${h}\``)));
 const at = kept.findIndex((l) => l.startsWith("## Sources and licences"));
 const note = [`Not in this free pack: ${PACK_HELD_BACK.map((h) => `\`${h}\``).join(" and ")} (postcode districts and monthly history).`, ""];
-writeFileSync(join(OUT, "README.md"), [...kept.slice(0, at), ...note, ...kept.slice(at)].join(nl));
+writeFileSync(join(OUT, "readme.md"), [...kept.slice(0, at), ...note, ...kept.slice(at)].join(nl));
 console.log(`publish_pack: ${files.length} files to ${OUT} (held back: ${PACK_HELD_BACK.join(", ")})`);

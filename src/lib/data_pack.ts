@@ -15,7 +15,9 @@ export const PACK_HELD_BACK: readonly string[] = ["companies_by_district.csv", "
 
 export type PackFile = { file: string; title: string; holds: string };
 
-/** The published files, tables first, then the files that explain them. */
+/** The published files, tables first, then the files that explain them. Every name in lowercase: the site's canonical rule
+ *  (src/middleware.ts, CC.12) sends any path with a capital to its lowercase form, so a file named README.md answered as a
+ *  page not found on production (2026-10-06, the deploy's proof); published lowercase, both spellings reach the file. */
 export const PACK_FILES: readonly PackFile[] = [
   { file: "trades_by_borough.csv", title: "Trades by borough", holds: "Businesses, premises and the middle business's yearly turnover, per trade and London borough." },
   { file: "failures_by_trade.csv", title: "Failures by trade", holds: "Company insolvencies a year per 1,000 live companies, per trade, UK and London." },
@@ -26,8 +28,8 @@ export const PACK_FILES: readonly PackFile[] = [
   { file: "station_footfall.csv", title: "Station footfall", holds: "Entries and exits at London stations on a weekday, a Saturday and a Sunday." },
   { file: "trades_sic.json", title: "Trades and codes", holds: "The site's trades mapped to UK SIC 2007 codes, each match exact, shared or near." },
   { file: "ledger.json", title: "The ledger", holds: "Every kind of figure: how it is made, its source, its date, its licence line and what it leaves out." },
-  { file: "README.md", title: "Read me", holds: "What each table is, where it comes from and what it cannot see, with every attribution line." },
-  { file: "CITATION.cff", title: "How to cite", holds: "The citation for this version, in the Citation File Format." },
+  { file: "readme.md", title: "Read me", holds: "What each table is, where it comes from and what it cannot see, with every attribution line." },
+  { file: "citation.cff", title: "How to cite", holds: "The citation for this version, in the Citation File Format." },
 ];
 
 /** A file's address on the site. */

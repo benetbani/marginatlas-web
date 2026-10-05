@@ -30,11 +30,15 @@ const listed = PACK_FILES.map((f) => f.file);
 check(`every listed file is published (${listed.filter((f) => !published.includes(f)).join(", ") || "all"})`, listed.every((f) => published.includes(f)));
 check(`nothing published is unlisted (${published.filter((f) => !listed.includes(f)).join(", ") || "none"})`, published.every((f) => listed.includes(f)));
 check(`the held-back files are not published (${PACK_HELD_BACK.join(", ")})`, !PACK_HELD_BACK.some((f) => published.includes(f)));
+/* The site's canonical rule (src/middleware.ts, CC.12) sends a path with a capital to its lowercase form, so a capital in a
+   published name is a file no reader reaches: README.md answered as a page not found on production on 2026-10-06. */
+const capitals = [...published, ...listed].filter((f) => f !== f.toLowerCase());
+check(`every published name is lowercase (${capitals.join(", ") || "all"})`, capitals.length === 0);
 
-const readme = existsSync(`${DIR}/README.md`) ? readFileSync(`${DIR}/README.md`, "utf8") : "";
+const readme = existsSync(`${DIR}/readme.md`) ? readFileSync(`${DIR}/readme.md`, "utf8") : "";
 check("the README offers our tables under CC BY 4.0", /CC BY 4\.0/.test(readme));
 check("the README's file list names no held-back file as published", !PACK_HELD_BACK.some((h) => readme.includes(`- \`${h}\`:`)));
-const cff = existsSync(`${DIR}/CITATION.cff`) ? readFileSync(`${DIR}/CITATION.cff`, "utf8") : "";
+const cff = existsSync(`${DIR}/citation.cff`) ? readFileSync(`${DIR}/citation.cff`, "utf8") : "";
 check("the citation names this version and points at /data", cff.includes(`version: "${PACK_VERSION}"`) && cff.includes("marginatlas.com/data"));
 
 check("/data is a known top-level address", TOP_LEVEL_SEGMENTS.has("data"));
