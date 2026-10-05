@@ -1,4 +1,5 @@
 -- db/migrations/2026-06-09-subscriptions.sql
+-- SUPERSEDED 2026-10-05 by 2026-10-05-pro-subscriptions.sql (one Pro tier); never applied, do not apply.
 -- Milestone 2: the entitlement layer. One subscription row per user records their
 -- current paid tier and the Stripe linkage. DO NOT run automatically; the founder
 -- applies it in the Supabase SQL Editor alongside the Stripe setup. Additive and

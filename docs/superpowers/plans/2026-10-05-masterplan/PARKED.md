@@ -47,6 +47,16 @@ MORNING-REPORT.md.
   then. (c) Leave it as it stands.
 - **Built either way:** nothing; the card stands as it was.
 
+### P06.1 Apply the two account migrations (step 06)
+- **Question:** apply `db/migrations/2026-10-05-pro-subscriptions.sql` (the subscriptions table for one Pro tier, and the
+  service-role-only lookup of an account by its checkout email) and `db/migrations/2026-06-08-accounts-saved-cells.sql` (saved
+  cells, if accounts open at launch) in the Supabase SQL Editor?
+- **Options:** (a) Recommended: apply both on launch day, before the switches (LAUNCH-SWITCHES.md, step 10): the webhook writes
+  nothing until then, and the June subscriptions file is marked superseded and must not be applied. (b) Apply now, ahead of
+  launch: harmless (additive, idempotent, nothing reads it while billing is off). (c) Not yet.
+- **Built either way:** the migration file (commit of step 06); the webhook (step 08) answers 500 until the table exists, so
+  Stripe retries rather than losing an event.
+
 ### P04.2 The UK's peers table
 - **Question:** /gb's "Against the peers" prints the UK's sourced row beside Ireland, France, Germany and the Netherlands, whose
   tax, payroll and registration figures are hand-held constants with no source. Tonight the line says "The peers' figures are
