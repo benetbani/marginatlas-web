@@ -140,7 +140,7 @@ import { COPY } from "@/lib/spine/copy";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
 import { ReportFoot } from "@/components/spine/ReportFoot";
-import { checkedDateFor } from "@/lib/spine/checked";
+import { checkedDateForCity } from "@/lib/spine/checked";
 import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
 import { AgeMix } from "@/components/spine/sections/AgeMix";
 import { buildAgeMix } from "@/lib/spine/sections/people";
@@ -995,7 +995,7 @@ export function SpineCityBody({ data = spineCitySeed, locked = false }: { data?:
       {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
       <SourcesFoot iso2={d.meta?.iso2} />
       {/* REPORT A MISTAKE, AND CHECKED WHERE A DATE IS HELD (masterplan step 31): the page's own path to the correction page. */}
-      <ReportFoot path={slug ? `/cities/${slug}` : null} checked={checkedDateFor(d.meta?.iso2)} />
+      <ReportFoot path={slug ? `/cities/${slug}` : null} checked={checkedDateForCity(d.meta?.iso2, slug)} />
       {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
       {slug ? <DepthNotifyFoot path={`/cities/${slug}`} /> : null}
     </>

@@ -193,10 +193,17 @@
       "browser": false,
       "asserts": "THE PAGE FOOT: REPORT A MISTAKE, AND CHECKED ONLY WHERE A DATE IS HELD (milestone 2, masterplan step 31; QUEUE close:furniture-lines; the credibility doctrine of 2026-10-02: the page foot holds \"Repor",
       "reads": [
+        "data/uk/registers/manifest.json",
         "scratchpad/harness/pages/${p.file}.html",
         "scripts/harness/pages.json",
         "src/app/(site)/corrections/new/page.tsx",
-        "src/components/spine/ReportFoot.tsx"
+        "src/components/spine/ReportFoot.tsx",
+        "src/components/spine/cell/cell-view.tsx",
+        "src/components/spine/city/city-view.tsx",
+        "src/components/spine/country/country-view.tsx",
+        "src/components/spine/country/how-to-view.tsx",
+        "src/components/spine/hood/hood-view.tsx",
+        "src/lib/spine/checked.ts"
       ],
       "claims": []
     },
