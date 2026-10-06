@@ -52,7 +52,9 @@ export const LOUD_SEATS = [
 /** The hero he kept: the visitor's own question, its business and its city rotating, then the search. Left-aligned, as every
  *  band page's text is (the page laws' ALIGNMENT): the words he ruled on are kept, the centring was the old page's. Not a section
  *  card (masterplan step 37): the page's question and a form, no figure, so it stands as the hero band itself, as the country
- *  page's masthead stands on its own band. */
+ *  page's masthead stands on its own band. THE QUESTION IS ASKED ONCE (his instruction of 2026-10-07, "reform home drastically"):
+ *  the h1 asks it, so the picker draws no heading of its own and no subtitle stands between them; the picker's "Try" line is the
+ *  zone's one supporting line. */
 function HomeSearch() {
   const C = COPY.home;
   return (
@@ -69,10 +71,9 @@ function HomeSearch() {
           </span>
           ?
         </h1>
-        <p className="mt-3 max-w-2xl text-[length:var(--t-lead)] text-[var(--c-muted)]">{C.subtitle}</p>
         {/* The id the header's search reads: while this card is on screen the header keeps its own search hidden. */}
         <div id="home-search-anchor" className="relative z-30 mt-5 w-full">
-          <NavigatorForm />
+          <NavigatorForm showHeading={false} />
         </div>
       </section>
     </div>

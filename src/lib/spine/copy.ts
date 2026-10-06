@@ -2693,7 +2693,6 @@ export const COPY = {
    *  2026-08-16, its business and city rotating between the words). */
   home: {
     h1: { lead: "How much does a", middle: "make in" },
-    subtitle: "Know if a business works before you risk your money.",
     searchLabel: "Search",
     answersLabel: "The UK's answers",
     /** The answer's two other taxes (masterplan step 37): the answer's basis is a sole trader, so corporation tax says whose it is. */

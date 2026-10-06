@@ -50,7 +50,9 @@ function readClientGate(): Gate {
   };
 }
 
-export function NavigatorForm() {
+/** `showHeading={false}` drops the card's own heading where the page's h1 already asks the question (the rebuilt home, his
+ *  instruction of 2026-10-07: "reform home drastically"); the live home keeps it. */
+export function NavigatorForm({ showHeading = true }: { showHeading?: boolean } = {}) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   /* THE PRE-FILL NO LONGER ROTATES, and the reason is the same ruling that
@@ -171,14 +173,16 @@ export function NavigatorForm() {
           hand-rolled caps eyebrow above the title (rule 11). The title now inherits the
           shell font (Geist on the spine page) instead of font-display (Newsreader serif),
           which is off the locked Geist + Space Grotesk system (rule 38). */}
-      <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-paper-350">
-        <div>
-          <h2 data-typography="custom" className="font-semibold text-lg md:text-xl text-ink-900 leading-tight">
-            Pick a country, a city, and a business.
-          </h2>
+      {showHeading ? (
+        <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-paper-350">
+          <div>
+            <h2 data-typography="custom" className="font-semibold text-lg md:text-xl text-ink-900 leading-tight">
+              Pick a country, a city, and a business.
+            </h2>
+          </div>
+          {/* No count here: his ruling of 2026-10-07, the number overstated what the atlas holds. */}
         </div>
-        {/* No count here: his ruling of 2026-10-07, the number overstated what the atlas holds. */}
-      </div>
+      ) : null}
 
       {/* Three-field cascade: Country, then City, then Business. */}
       <div className="px-5 md:px-8 py-6 md:py-8">
