@@ -109,6 +109,13 @@ const nextConfig = {
         destination: "/cities/:slug",
         permanent: true,
       },
+      // THE BENCHMARKS PDF THAT NEVER EXISTED (the checkup of 2026-10-06, finding 5): /download/2026-benchmarks collected emails for
+      // a PDF nobody was writing; the free UK data pack at /data is the download that does exist.
+      {
+        source: "/download/2026-benchmarks",
+        destination: "/data",
+        permanent: true,
+      },
       // THE 58 RETIRED BLOG POSTS (his ruling of 2026-10-05, PARKED P36.1): each
       // to its country page or the nearest live page, from data/blog/retired_posts.json
       // (the gate blog-retired holds the list, the files and these redirects together).

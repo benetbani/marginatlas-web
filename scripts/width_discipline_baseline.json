@@ -1,6 +1,6 @@
 {
   "total": {
-    "remCaps": 217,
+    "remCaps": 214,
     "chCaps": 43,
     "smPairings": 43
   },
@@ -102,11 +102,6 @@
     },
     "src/app/(site)/decide/[activity]/[city]/page.tsx": {
       "remCaps": 5,
-      "chCaps": 0,
-      "smPairings": 0
-    },
-    "src/app/(site)/download/2026-benchmarks/page.tsx": {
-      "remCaps": 3,
       "chCaps": 0,
       "smPairings": 0
     },
@@ -495,11 +490,6 @@
       "chCaps": 0,
       "smPairings": 1
     },
-    "src/components/newsletter/LeadMagnetForm.tsx": {
-      "remCaps": 1,
-      "chCaps": 0,
-      "smPairings": 0
-    },
     "src/components/newsletter/NewsletterSignupVariants.tsx": {
       "remCaps": 2,
       "chCaps": 0,
@@ -581,7 +571,7 @@
       "smPairings": 0
     },
     "src/components/spine/interact/DepthNotify.tsx": {
-      "remCaps": 1,
+      "remCaps": 2,
       "chCaps": 0,
       "smPairings": 0
     },

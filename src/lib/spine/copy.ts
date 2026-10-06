@@ -2702,7 +2702,21 @@ export const COPY = {
     /** The level of the duel and the ranked list (P36.2 and P36.2b), both from the registers' feed. */
     registersLabel: "From the registers",
     /** THE NOTEBOOK AND THE NEWSLETTER (masterplan step 36): the page's furniture after the readings. */
-    notebook: { title: "From the notebook", newsletter: "The newsletter" },
+    notebook: { title: "From the notebook", newsletter: "Your city" },
+    /** THE HOME PAGE'S ASK (his interview of 2026-09-26: "notify me when my place reaches this depth"; the checkup of 2026-10-06,
+     *  finding 5): in place of a free report nobody is writing, a city to wait for (src/lib/home/depth_places.ts). */
+    notify: {
+      eyebrow: "Your city",
+      title: "Notify me when my city reaches this depth",
+      line: "We write when your city's page holds what London's does.",
+      label: "Your email",
+      choose: "City",
+      pick: "Choose a city",
+      placeholder: "you@example.com",
+      button: "Notify me",
+      sent: "Thanks. We will write when it does.",
+      failed: "Choose a city and check the address, then try again.",
+    },
     /** WHAT THE ATLAS HOLDS (masterplan step 35): the ledger module's counts (src/lib/home/atlas_ledger.ts), an open section. */
     atlas: {
       kicker: "What the atlas holds",
