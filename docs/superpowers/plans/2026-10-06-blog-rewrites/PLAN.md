@@ -50,4 +50,18 @@ Two pieces, both already ruled option (a) on 2026-10-05:
 
 ## Ledger
 
-(appended as each task lands)
+- **2026-10-06 morning: tasks 1 to 6 built and verified, NOT pushed** (his word is needed: the evening's deploy approval does not
+  carry over). Website ddf63ce9 (P36.2b: "Where kitchens score five" beside the duel, two and two after three and three left a
+  113px blank under the duel's chart at 1280) and 19db813f (P36.1: the gate blog-content and its ten plants, the eight rewrites,
+  the two light edits, the two method notes moved to About the figures, the index by category, the foot, Article markup and the
+  sitemap); registers repo 1e136a9 (the feed's kitchens item with its middle and its data's end, his word in FOUNDER-VERDICTS.md,
+  the photographs in design/loop/build/photos/blog-2026-10-06/).
+- **Proof.** Full chain 242 of 244; the two reds came from moving the agency list (cell-lattice parsed it out of the old file;
+  counts-fresh's gates.json is generated from the gate scripts), fixed, and green with their neighbours, 13 of 13. Ten posts
+  pass blog-content, 106 figures recomputed from the pack; the plants red. The harness at zero on home-gb with the new level.
+  Every post read against the pack and against fresh renders of the pages it describes (cafes, barbershops, pizzerias,
+  restaurants, the London city page); one false line removed (the London trade pages print no borough figures).
+- **Found by the writers, for the data track** (not acted on): station_footfall.csv's Shenfield row (6,388 on a weekday, 210 on a
+  Saturday) looks wrong; the published ledger.json's middle-turnover "how" uses the word "withheld"; the pack's CSV carries no
+  column for the middle figure's rounding range (data/uk/registers/turnover.json holds it), so a borough figure's roughness can
+  only be said in words; the ledger gives the 54% no date or source of its own.

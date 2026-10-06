@@ -175,7 +175,10 @@ MORNING-REPORT.md.
   (QUEUE data:uk-register-built-date).
 
 ### P36.1 Which posts the home page's notebook shows (step 36)
-- **Ruled 2026-10-05:** option (a). the 58 retired (website 8619ecd3, each redirected); the ten rewrites next.
+- **Ruled 2026-10-05:** option (a). the 58 retired (website 8619ecd3, each redirected); the ten rewritten 2026-10-06 under his
+  "push forward" (docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md): eight in place on the free data pack, every figure
+  recomputed by the gate blog-content; two method notes moved onto About the figures (#leave-out, #estimates), their slugs
+  redirected; the byline "Margin Atlas" with "Drafted with AI assistance." until you have read a post (then your name).
 - **Question:** the notebook shows the research's two "keep" posts (the firm against the establishment, the median against the
   average) from `src/lib/home/notebook.ts`. BLOG.md (goal of 2026-10-02) proposes keep 2, rewrite 10 on the UK registers, retire
   58 with a 301 each. Which do you want?
@@ -218,6 +221,10 @@ MORNING-REPORT.md.
   again); the 17 other exemplars at their floor, the home page among them (5 of 5).
 
 ### P36.2b The ranked list's item (found while building P36.2, 2026-10-05 evening)
+- **Taken 2026-10-06 under his "push forward":** option (a). built: "Where kitchens score five" beside the duel in one level
+  ("From the registers"), the boroughs' three highest and three lowest, the middle borough (69 of 100) as its figure, from the
+  feed (`middle` and `as_of` added to its item by registers/uk/build_editorial.py), fresh to 16 November 2026 by the 45-day rule;
+  behind the home page's switch; the gate home-kitchens.
 - **Question:** the ranked list you chose with the duel is "typical takings by trade" in London, top five and bottom five. The home
   page's second answer already prints those figures ("What London's trades take": the middle trade $220K, hotels and guesthouses
   $1.0M), and your page laws allow no figure twice on a page (clause 66). I did not see the clash when I recommended it. Which
