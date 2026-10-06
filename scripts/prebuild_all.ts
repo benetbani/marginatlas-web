@@ -804,6 +804,8 @@ const GATES: Gate[] = [
   { name: "legacy-method-words", script: "tests/copy/legacy_method_words.test.ts" },
   /* /extremes draws every lens as a section, no chip row (QUEUE ui:extremes-chips; his refusals of 2026-09-22). */
   { name: "no-lens-chips", script: "tests/trust/no_lens_chips.test.ts" },
+  /* His rulings of 2026-10-07: /countries folds by continent (North America and Europe open), a country is its flag and its name, the home picker prints no count. */
+  { name: "countries-disclosure", script: "tests/trust/countries_disclosure.test.ts" },
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
   { name: "no-place-words", script: "tests/copy/no_place_words.test.ts" },

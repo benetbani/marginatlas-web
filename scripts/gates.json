@@ -2810,6 +2810,18 @@
       "claims": []
     },
     {
+      "name": "countries-disclosure",
+      "script": "tests/trust/countries_disclosure.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "/COUNTRIES OPENS BY CONTINENT, A COUNTRY IS ITS FLAG AND ITS NAME, THE PICKER PRINTS NO COUNT (his rulings of 2026-10-07).",
+      "reads": [
+        "src/app/(site)/countries/page.tsx",
+        "src/components/NavigatorForm.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-place-words",
       "script": "tests/copy/no_place_words.test.ts",
       "args": [],
