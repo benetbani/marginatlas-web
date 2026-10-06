@@ -63,9 +63,14 @@ Every task was reviewed on its own (spec and quality), every Important finding f
 whole branch said ready with fixes, and the fixes are in. Full `tsc --noEmit` clean at the head. The gate chain, run here
 the way Vercel runs it: 236 of 254 gates pass; the 18 browser gates could not start (the missing Chromium above); the 3
 cell-lattice checks are deferred, as on Vercel's last build. The Next build and the postbuild guard were not run here (the
-chain step stopped the runner, and this machine has about 1 GB free). Vercel runs all of it on the push: its last production
-build passed 252 of 252 gates, built, and held the middleware at 253 KB of the guard's 900 KB. A failed build there leaves
-the live site as it is.
+chain step stopped the runner, and this machine has about 1 GB free). Vercel runs the chain, the build and the guard on the
+push: its last production build reported 252 of 252 gates, built, and held the middleware at 253 KB of the guard's 900 KB.
+A failed build there leaves the live site as it is.
+
+**Correction (2026-10-07).** Vercel's "252 of 252" counts the 18 browser gates as passes, but they skip there: they run
+only where the design repo is present (`scripts/lib/local_only.mjs`, `requireBrowser`), which is this machine. So since
+Playwright's Chromium went missing here, no browser gate (page laws, copy laws, loud seats, archetypes, readability and the
+rest) has measured anything, this deploy and the next one included. Restoring Chromium is the only way to measure them.
 
 ## Next
 
