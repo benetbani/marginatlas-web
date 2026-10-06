@@ -27,15 +27,15 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const MAX_EMAIL_LEN = 254; // RFC 5321 §4.5.3.1.3
 
 /**
- * The four forms that post here, and the only values `source` may take.
+ * The forms that post here, and the only values `source` may take.
  *
- * All four have been sending one since they were written, and the doc comment
+ * Every form here has sent one since it was written, and the doc comment
  * above has described the body as `{ email, source }` the whole time. The
  * insert read only `email`, so the field arrived and was dropped.
  *
- * That is not a tidiness problem. /download/2026-benchmarks takes an address in
- * exchange for a PDF that does not exist yet and promises to send it when it
- * does; those people landed in the same undifferentiated table as everyone who
+ * That is not a tidiness problem. /download/2026-benchmarks took an address in
+ * exchange for a PDF that did not exist and promised to send it when it
+ * did; those people landed in the same undifferentiated table as everyone who
  * ticked the footer box, and there was no way to keep that promise to exactly
  * the people it was made to.
  *
@@ -44,8 +44,14 @@ const MAX_EMAIL_LEN = 254; // RFC 5321 §4.5.3.1.3
  * POST is a column that will eventually hold whatever somebody feels like
  * putting in it. An unrecognised source is recorded as NULL, which is the same
  * thing the pre-2026-08-16 rows say: not recorded.
+ *
+ * Two forms left on 2026-10-06 and their tags with them: the exit-intent pop-up
+ * ("exit_intent"), which nothing mounted, and the benchmarks PDF offer
+ * ("lead_magnet_2026"), whose page became a redirect to /data in the checkup's
+ * B1. The rows already tagged keep their tag; the home page's ask posts a
+ * city's depth tag, admitted below.
  */
-const SOURCES = new Set(["footer", "inline", "exit_intent", "lead_magnet_2026"]);
+const SOURCES = new Set(["footer", "inline"]);
 
 /**
  * True when Postgres is telling us the `source` column does not exist.
