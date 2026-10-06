@@ -41,7 +41,8 @@ function fileExists(path: string): boolean {
 // 5. Required files
 const REQUIRED_FILES = [
   "src/lib/types/deepening.ts",
-  "src/lib/page-layout/section-registry.ts",
+  /* src/lib/page-layout/section-registry.ts removed 2026-10-06 (the checkup's reachability walk: no route, reader or gate
+     imported it); its entry goes in the same change, as the note below asks. */
   "src/lib/taxonomy/sub_industries_seed.ts",
   /* SubIndustryPicker.tsx and AnnualCostStack.tsx were removed 2026-08-21.
      Both were required BY THIS LIST and imported by NOTHING: the render graph

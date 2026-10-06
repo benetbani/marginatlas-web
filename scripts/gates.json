@@ -963,7 +963,6 @@
       "asserts": "Prebuild gate: deepening framework integrity (Plan v32 Sprint G, Phase 0f).",
       "reads": [
         "src/components/sections/SetupCostBlock.tsx",
-        "src/lib/page-layout/section-registry.ts",
         "src/lib/taxonomy/sub_industries_seed.ts",
         "src/lib/types/deepening.ts"
       ],
@@ -1255,8 +1254,7 @@
         "src/app/dev/spine-industry/layout.tsx",
         "src/app/dev/spine/layout.tsx",
         "src/components/CityHero.tsx",
-        "src/lib/images/city_heroes.ts",
-        "src/lib/images/country_heroes.ts"
+        "src/lib/images/city_heroes.ts"
       ],
       "claims": []
     },
