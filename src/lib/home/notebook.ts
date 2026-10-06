@@ -1,29 +1,27 @@
 /**
  * src/lib/home/notebook.ts
  *
- * THE NOTEBOOK ON THE HOME PAGE (milestone 3, masterplan step 36): which posts the home page shows, and each one's picture. The
- * research's two "keep" posts (E:/atlas/design/loop/build/goal-2026-10-02/BLOG.md: keep 2, rewrite 10, retire 58, for his word):
- * the firm against the establishment, and the median against the average, until he rules on the rest (PARKED P36.1). A post's
- * picture is its own `image:` where its file names one, else the UK's photograph from the country images manifest; never the
- * Positano skyline the old rail drew under every card.
+ * THE NOTEBOOK ON THE HOME PAGE: which posts the home page shows (milestone 3, masterplan step 36; since the checkup of
+ * 2026-10-06, the newest post of each category, four at most). It showed the research's two kept explainers, each on the UK's
+ * one photograph, until his ruling on PARKED P36.1 and the ten rewrites on the free data pack (2026-10-06) gave the blog posts
+ * with figures; now it shows the newest post of each category in the blog's own order (src/lib/blog.ts BLOG_CATEGORIES), so
+ * four posts make four different reads, two by two. Text first: the category, the title, the date; no picture, since one
+ * photograph repeated under every card said nothing about any of them (the blog index dropped its covers for the same reason).
  */
-import { getAllPosts } from "@/lib/blog";
-import countryImagesJson from "../../../data/cities/country_images_manifest.json";
+import { BLOG_CATEGORIES, getAllPosts } from "@/lib/blog";
 
-export const NOTEBOOK_SLUGS = ["difference-between-firm-and-establishment", "median-vs-average"] as const;
+export const NOTEBOOK_SIZE = 4;
 
-export type NotebookCard = { slug: string; href: string; title: string; date: string; image: { src: string; alt: string } };
+export type NotebookCard = { slug: string; href: string; title: string; date: string; category: string };
 
 export function buildNotebook(): NotebookCard[] {
-  const uk = (countryImagesJson as { countries: Record<string, { file: string; alt?: string }> }).countries.gb;
-  const posts = getAllPosts();
+  const posts = getAllPosts(); // newest first, posts of one day by slug
   const out: NotebookCard[] = [];
-  for (const slug of NOTEBOOK_SLUGS) {
-    const p = posts.find((x) => x.slug === slug);
+  for (const category of BLOG_CATEGORIES) {
+    const p = posts.find((x) => x.category === category);
     if (!p) continue;
-    const image = p.image.kind === "url" ? { src: p.image.src, alt: p.image.alt } : uk ? { src: uk.file, alt: uk.alt ?? "" } : null;
-    if (!image) continue;
-    out.push({ slug, href: `/blog/${slug}`, title: p.title, date: p.date, image });
+    out.push({ slug: p.slug, href: `/blog/${p.slug}`, title: p.title, date: p.date, category });
+    if (out.length === NOTEBOOK_SIZE) break;
   }
   return out;
 }

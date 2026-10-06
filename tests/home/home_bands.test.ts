@@ -13,8 +13,8 @@ import { buildAtlasHolds } from "../../src/lib/spine/home_answers";
 import { getAtlasLedger } from "../../src/lib/home/atlas_ledger";
 import { ProBand } from "../../src/components/spine/home/ProBand";
 import { priceLine } from "../../src/lib/monetization/plan";
-import { buildNotebook, NOTEBOOK_SLUGS } from "../../src/lib/home/notebook";
-import { CITY_CARD_PLACEHOLDER_IMAGE } from "../../src/lib/spine/city_cards";
+import { buildNotebook, NOTEBOOK_SIZE } from "../../src/lib/home/notebook";
+import { BLOG_CATEGORIES, getAllPosts } from "../../src/lib/blog";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-bands";
@@ -39,10 +39,12 @@ set(false);
 check("nothing about Pro prints while the switch is off", off === "");
 check(`with the switch on: the line, both prices through the plan (${priceLine("month")}, ${priceLine("year")}), one button to /pricing`, on.includes(priceLine("month")) && on.includes(priceLine("year")) && (on.match(/href="\/pricing"/g) ?? []).length === 1 && (on.match(/<a /g) ?? []).length === 1);
 
-/* The notebook (masterplan step 36): the two kept posts, each on its own picture or the UK's, never the old rail's skyline. */
+/* The notebook (masterplan step 36; since the checkup of 2026-10-06 the newest post of each category, four at most, text first). */
 const notebook = buildNotebook();
-check(`the notebook shows the two kept posts (${notebook.map((c) => c.slug).join(", ")})`, JSON.stringify(notebook.map((c) => c.slug)) === JSON.stringify([...NOTEBOOK_SLUGS]));
-check("each on its own picture or the UK's photograph, never the old rail's skyline", notebook.every((c) => !!c.image.src && c.image.src !== CITY_CARD_PLACEHOLDER_IMAGE && !/positano/i.test(c.image.src)));
+const posts = getAllPosts();
+const want = BLOG_CATEGORIES.map((c) => posts.find((p) => p.category === c)).filter((p): p is NonNullable<typeof p> => !!p).slice(0, NOTEBOOK_SIZE);
+check(`the notebook shows the newest post of each category, four at most (${notebook.map((c) => c.slug).join(", ")})`, JSON.stringify(notebook.map((c) => c.slug)) === JSON.stringify(want.map((p) => p.slug)) && notebook.length === Math.min(NOTEBOOK_SIZE, want.length));
+check("each card a different category, each a published post", new Set(notebook.map((c) => c.category)).size === notebook.length && notebook.every((c) => posts.some((p) => p.slug === c.slug)));
 
 const launch = readFileSync("scripts/verify_launch_ready.ts", "utf8");
 check("the launch check's item (i) reads the new section's stamped counts as well as the old band", /atlas_ledger\\\.ts:/.test(launch) && /What the atlas holds/.test(launch));

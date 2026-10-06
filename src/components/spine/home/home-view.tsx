@@ -176,14 +176,15 @@ function Notebook({ cards }: { cards: NotebookCard[] }) {
       <h2 id="notebook-title" data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-snug tracking-tight text-[var(--c-ink)]">
         {COPY.home.notebook.title}
       </h2>
+      {/* TEXT FIRST (the checkup of 2026-10-06): the category, the title, the date, the date at the card's foot so a shorter title
+          leaves its air in the middle, never under the last line (the page laws' CARD FOOT BLANK). */}
       <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {cards.map((c) => (
           <li key={c.slug}>
-            <a href={c.href} className="tap-y flex h-full flex-col overflow-hidden rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={c.image.src} alt={c.image.alt} loading="lazy" className="aspect-[16/9] w-full object-cover" />
-              <span className="px-4 pt-3 text-[length:var(--t-body)] font-semibold leading-snug">{c.title}</span>
-              <time dateTime={c.date} className="px-4 pb-4 pt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+            <a href={c.href} className="tap-y flex h-full flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-4 text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
+              <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{c.category.charAt(0).toUpperCase() + c.category.slice(1)}</span>
+              <span className="mt-1 text-[length:var(--t-body)] font-semibold leading-snug">{c.title}</span>
+              <time dateTime={c.date} className="mt-auto pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">
                 {dateText(c.date)}
               </time>
             </a>
