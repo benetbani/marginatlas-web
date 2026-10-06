@@ -2,9 +2,9 @@
  * THE PAGE FOOT: REPORT A MISTAKE, AND CHECKED ONLY WHERE A DATE IS HELD (milestone 2, masterplan step 31; QUEUE
  * close:furniture-lines; the credibility doctrine of 2026-10-02: the page foot holds "Report a mistake" and "Checked [date]").
  * Read off the harness renders pages-fresh writes: every spine page type holds one "Report a mistake" link to the correction
- * page with its own path; a page the register slices back (the UK's country-level pages; London, its trades, its districts)
- * holds a "Checked" line equal to the slices' build date, which the manifest must hold (the export writes it since
- * 2026-10-06); no other page holds the line, the other UK cities' included (their figures are the shard's), and never
+ * page with its own path; a page the register slices back (the UK's country page; London, its trades, its districts) holds a
+ * "Checked" line equal to the slices' build date, which the manifest must hold (the export writes it since 2026-10-06); no
+ * other page holds the line, the UK how-to and the other UK cities' included (their figures are the shard's), and never
  * today's date standing in for a check. The correction page holds the site's one correction form, open, its path filled in,
  * and is never indexed.
  *
@@ -25,17 +25,17 @@ let failed = 0;
 const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file, detail: label, remedy }); };
 
 /* Each harness page, its own path, and whether it is a UK page. */
-const PAGES: Array<{ file: string; path: string; uk: boolean }> = [
-  { file: "country-GB", path: "/gb", uk: true },
-  { file: "country-AF", path: "/af", uk: false },
-  { file: "howto-GB", path: "/gb/how-to-open", uk: true },
-  { file: "city-london", path: "/cities/london", uk: true },
-  { file: "cell-gb-london-restaurants", path: "/gb/london/restaurants", uk: true },
-  { file: "cell-gb-london-barbershops", path: "/gb/london/barbershops", uk: true },
-  { file: "industry-restaurants", path: "/industries/restaurants", uk: false },
-  { file: "hood-london", path: "/cities/london/neighborhoods", uk: true },
-  { file: "hood-london-city-of-london", path: "/cities/london/neighborhoods/city-of-london", uk: true },
-  { file: "home-gb", path: "/", uk: false },
+const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
+  { file: "country-GB", path: "/gb", dated: true },
+  { file: "country-AF", path: "/af", dated: false },
+  { file: "howto-GB", path: "/gb/how-to-open", dated: false },
+  { file: "city-london", path: "/cities/london", dated: true },
+  { file: "cell-gb-london-restaurants", path: "/gb/london/restaurants", dated: true },
+  { file: "cell-gb-london-barbershops", path: "/gb/london/barbershops", dated: true },
+  { file: "industry-restaurants", path: "/industries/restaurants", dated: false },
+  { file: "hood-london", path: "/cities/london/neighborhoods", dated: true },
+  { file: "hood-london-city-of-london", path: "/cities/london/neighborhoods/city-of-london", dated: true },
+  { file: "home-gb", path: "/", dated: false },
 ];
 const listed = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages.map((p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`);
 check(`the test reads every page the harness lists (${listed.length})`, listed.length === PAGES.length && listed.every((f: string) => PAGES.some((p) => p.file === f)));
@@ -50,7 +50,7 @@ check(
 
 /* The date only where the slices back the figures: London's pages, never the other UK cities' (their figures are the shard's). */
 const CHECKED = "src/lib/spine/checked.ts";
-const SCOPE = "print the date only where the register slices back the figures: checkedDateForCountry on country-level pages, checkedDateForCity with the city's slug on city, trade and district pages";
+const SCOPE = "print the date only where the register slices back the figures: checkedDateForCountry on the country page, checkedDateForCity with the city's slug on city, trade and district pages, none on the how-to";
 check("London's city-level pages carry the date", checkedDateForCity("GB", "london") === REGISTER_BUILT, CHECKED, SCOPE);
 check(
   "the other UK cities' pages carry none (Manchester, Birmingham, Leeds, Glasgow, Edinburgh, Bristol)",
@@ -59,16 +59,17 @@ check(
   SCOPE,
 );
 check("no other country's page carries one", checkedDateForCountry("DE") === null && checkedDateForCity("DE", "berlin") === null && checkedDateForCountry(null) === null, CHECKED, SCOPE);
-for (const [file, cityLevel] of [
-  ["src/components/spine/city/city-view.tsx", true],
-  ["src/components/spine/cell/cell-view.tsx", true],
-  ["src/components/spine/hood/hood-view.tsx", true],
-  ["src/components/spine/country/country-view.tsx", false],
-  ["src/components/spine/country/how-to-view.tsx", false],
+for (const [file, kind] of [
+  ["src/components/spine/city/city-view.tsx", "city"],
+  ["src/components/spine/cell/cell-view.tsx", "city"],
+  ["src/components/spine/hood/hood-view.tsx", "city"],
+  ["src/components/spine/country/country-view.tsx", "country"],
+  ["src/components/spine/country/how-to-view.tsx", "none"],
 ] as const) {
   const src = readFileSync(file, "utf8");
-  const ok = cityLevel ? src.includes("checkedDateForCity(") && !src.includes("checkedDateForCountry(") : src.includes("checkedDateForCountry(") && !src.includes("checkedDateForCity(");
-  check(`${file.split("/").pop()} asks the ${cityLevel ? "city" : "country"} date for its foot`, ok, file, SCOPE);
+  const asks = { city: src.includes("checkedDateForCity("), country: src.includes("checkedDateForCountry(") };
+  const ok = kind === "none" ? !asks.city && !asks.country : kind === "city" ? asks.city && !asks.country : asks.country && !asks.city;
+  check(`${file.split("/").pop()} ${kind === "none" ? "asks no date (its steps, days and fees are the shard's)" : `asks the ${kind} date for its foot`}`, ok, file, SCOPE);
 }
 for (const p of PAGES) {
   const at = `scratchpad/harness/pages/${p.file}.html`;
@@ -77,7 +78,7 @@ for (const p of PAGES) {
   const links = [...h.matchAll(/<a[^>]*data-report="1"[^>]*href="([^"]+)"|<a[^>]*href="([^"]+)"[^>]*data-report="1"/g)].map((m) => (m[1] ?? m[2]).replace(/&amp;/g, "&"));
   check(`${p.file}: one "Report a mistake" link, to the correction page with ${p.path} (${links.join(" ") || "none"})`, links.length === 1 && links[0] === reportHref(p.path));
   const lines = (h.match(/data-checked="1"/g) ?? []).length;
-  check(`${p.file}: ${p.uk && built ? "one checked line, the register's build date" : "no checked line"}`, p.uk && built ? lines === 1 && new RegExp(`datetime="${built}"`, "i").test(h) : lines === 0);
+  check(`${p.file}: ${p.dated && built ? "one checked line, the register's build date" : "no checked line"}`, p.dated && built ? lines === 1 && new RegExp(`datetime="${built}"`, "i").test(h) : lines === 0);
 }
 
 /* The component itself, both ways, and the correction page's link held to a path on this site. */
