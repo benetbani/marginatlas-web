@@ -46,8 +46,10 @@ const page = () => { const r = NextResponse.next(); r.headers.set("Cache-Control
   check("a photograph's address is a file", isFileRequest("/cities/london.jpeg"));
   check("a data-pack file is a file", isFileRequest("/data/uk/2026.10/readme.md"));
   check("a page and an API route are not files", !isFileRequest("/gb") && !isFileRequest("/gb/london/restaurants") && !isFileRequest("/api/cell-lookup"));
-  const src = readFileSync("src/lib/supabase/middleware_session.ts", "utf8");
-  check("the file guard stands before the client is made", src.indexOf("isFileRequest(req.nextUrl.pathname)") > -1 && src.indexOf("isFileRequest(req.nextUrl.pathname)") < src.indexOf("createServerClient("));
+  /* Read from the source, since no offline request can tell a skipped refresh from one that found no session. */
+  const src = readFileSync(FILE, "utf8");
+  const guard = src.indexOf("if (isFileRequest(req.nextUrl.pathname)) return res;");
+  check("the file guard returns the response before the client is made", guard > -1 && guard < src.indexOf("createServerClient("));
 
   for (const [k, v] of [["NEXT_PUBLIC_AUTH_ENABLED", saved.auth], ["NEXT_PUBLIC_SUPABASE_URL", saved.url], ["NEXT_PUBLIC_SUPABASE_ANON_KEY", saved.anon]] as const) {
     if (v === undefined) delete process.env[k]; else process.env[k] = v;
