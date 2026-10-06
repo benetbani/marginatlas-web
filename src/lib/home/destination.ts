@@ -19,6 +19,7 @@ import { COUNTRIES, industryToSlug, SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
 import { RETIRED } from "@/lib/taxonomy/retired";
 import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
 import { UK_CITY_PAGES } from "@/lib/home/uk_cities_generated";
+import { hasOwn } from "@/lib/own";
 
 /** The UK's cities with a page of their own, by name: the city list's, through a generated module small enough for the
  *  search form to carry (scripts/cities/build_uk_cities.ts; the test holds it to the list). */
@@ -28,8 +29,9 @@ export const UK_CITIES: ReadonlyArray<{ slug: string; label: string }> = UK_CITY
 export function liveTradeSlug(trade: string | null | undefined): string | null {
   const t = String(trade ?? "").trim();
   if (!t) return null;
-  const slug = t in SLUG_TO_INDUSTRY ? t : industryToSlug(t);
-  return slug in SLUG_TO_INDUSTRY && !(slug in RETIRED) ? slug : null;
+  /* Own entries only (src/lib/own.ts): `"constructor" in SLUG_TO_INDUSTRY` is true of every plain object. */
+  const slug = hasOwn(SLUG_TO_INDUSTRY, t) ? t : industryToSlug(t);
+  return hasOwn(SLUG_TO_INDUSTRY, slug) && !hasOwn(RETIRED, slug) ? slug : null;
 }
 
 /* THE UK CITIES WHOSE TRADE PAGES ARE LISTED (masterplan step 33): the sitemap lists London's alone, so a trade picked in another

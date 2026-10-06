@@ -21,6 +21,7 @@
  * 308 rather than 301, matching the retired-sector precedent already in
  * src/middleware.ts. Both are permanent and both pass equity.
  */
+import { own } from "../own";
 
 export interface RetiredEntry {
   /** Why it went, in words a human can audit. */
@@ -504,7 +505,8 @@ export const RETIRED: Record<string, RetiredEntry> = {
   },
 };
 
-/** The redirect target for a retired slug, or null if the slug is still live. */
+/** The redirect target for a retired slug, or null if the slug is still live. Its own entries only (src/lib/own.ts): a slug that
+ *  names a built-in ("constructor", "__proto__") is retired from nothing. */
 export function redirectFor(slug: string): string | null {
-  return RETIRED[slug]?.redirectTo ?? null;
+  return own(RETIRED, slug)?.redirectTo ?? null;
 }

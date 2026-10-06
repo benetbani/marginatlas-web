@@ -2712,7 +2712,10 @@
         "public/",
         "src/app/[country]/[geo]",
         "src/app/api",
+        "src/lib/cells/industry_resolution.ts",
         "src/lib/routing/edge_not_found.ts",
+        "src/lib/taxonomy.ts",
+        "src/lib/taxonomy/retired.ts",
         "src/middleware.ts"
       ],
       "claims": []

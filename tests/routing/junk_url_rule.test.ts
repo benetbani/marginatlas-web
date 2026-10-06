@@ -86,9 +86,14 @@ let caller = 0;
  *  where else it sends the reader. Each request comes from its own address, so the 60-a-minute rate limit never answers instead. */
 function verdict(address: string): string {
   caller++;
-  const res = middleware(new NextRequest(`${ORIGIN}${address}`, {
-    headers: { host: "www.marginatlas.com", "user-agent": UA, "accept-language": "en-GB", "x-real-ip": `10.8.${caller >> 8}.${caller & 255}` },
-  }));
+  let res: ReturnType<typeof middleware>;
+  try {
+    res = middleware(new NextRequest(`${ORIGIN}${address}`, {
+      headers: { host: "www.marginatlas.com", "user-agent": UA, "accept-language": "en-GB", "x-real-ip": `10.8.${caller >> 8}.${caller & 255}` },
+    }));
+  } catch (e) {
+    return `throws (${e instanceof Error ? e.message : String(e)})`;
+  }
   if (res.status === 200 && res.headers.get("x-middleware-next") === "1") return "passes";
   if (res.status === 404) return "pinned to 404";
   const to = res.headers.get("location") ?? res.headers.get("x-middleware-rewrite");
@@ -115,6 +120,26 @@ const PINNED: ReadonlyArray<readonly [string, string]> = [
   ["/de/bayern", "a country we hold and no region of it: the site's Bavaria is /de/bavaria, and the region page calls notFound() on bayern"],
 ];
 for (const [p, why] of PINNED) expectVerdict(p, "pinned to 404", why, PIN_REMEDY);
+
+/* A WORD THAT NAMES A BUILT-IN NAMES NOTHING (2026-10-06). The edge's tables are plain objects, and a plain object answers for
+   the names every object inherits: on production `/gb/london/constructor` answered 308 to `/gb/london/function%20Object()%20%7B%20
+   [native%20code]%20%7D`, the rename table's "entry" printed as text, and `/gb/london/__proto__` 308 to `/gb/london/[object%20Object]`;
+   `/cities/constructor/neighborhoods/central` threw inside the middleware. Each now answers as any made-up word in its shape does. */
+const PROTO_REMEDY = `look a word up in a table keyed by the address with own() (src/lib/own.ts), never table[word]: a plain object answers "constructor" and "__proto__" with a built-in${OR_CORRECT}`;
+const BUILT_IN = "names an Object.prototype member and nothing on the site, so it is a made-up word like any other";
+const PROTO_PINNED = [
+  "/gb/london/constructor", "/gb/london/__proto__", "/gb/london/hasownproperty", "/gb/london/tostring", "/gb/london/valueof",
+  "/constructor", "/__proto__", "/gb/constructor", "/gb/__proto__", "/fr/paris/constructor",
+  "/industries/constructor", "/industries/__proto__", "/industries/constructor/across",
+  "/cities/constructor", "/cities/__proto__", "/cities/constructor/neighborhoods", "/cities/constructor/neighborhoods/central",
+  "/cities/london/neighborhoods/constructor",
+];
+for (const p of PROTO_PINNED) expectVerdict(p, "pinned to 404", BUILT_IN, PROTO_REMEDY);
+/* An uppercase letter is canonicalised first, as for any word, and the lowercase address is then judged above. */
+expectVerdict("/gb/london/toString", "answers 308 to /gb/london/tostring", "an uppercase address goes to its lowercase form first, as any address does", PROTO_REMEDY);
+/* A United States word is the database's and never judged at the edge (src/lib/routing/edge_not_found.ts), so it passes as
+   /us/california/zz does; what it must never do is move to a built-in's text. */
+expectVerdict("/us/california/constructor", "passes", "a United States word passes to its route as any made-up one does, never to a built-in's text", PROTO_REMEDY);
 
 /* PASSES: every shape the site serves goes on to its route untouched. */
 const PASSES: ReadonlyArray<readonly [string, string]> = [

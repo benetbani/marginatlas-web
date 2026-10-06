@@ -36,6 +36,16 @@ check("barbershops: the code's median 78,625.81 pounds", bs !== null && bs.media
 check("pizzerias only approximate their codes: no register figures", londonTradeRegister("pizzerias") === null && londonTradeSales("pizzerias") === null);
 check("an unknown trade has no register row", londonTradeRegister("no-such-trade") === null);
 
+/* A word that names a built-in names no trade (2026-10-06): `TURNOVER.trades["constructor"]` was the Object function, and
+   londonTradeRegister("constructor") threw a TypeError on every page that asked (trade head, hero, city market, country depth,
+   Checked). Every Object.prototype member, as written and lowercased. */
+const PROTO_KEYS = [...new Set(Object.getOwnPropertyNames(Object.prototype).flatMap((k) => [k, k.toLowerCase()]))];
+const protoAnswers = (k: string): string => {
+  try { return `${londonTradeRegister(k) === null && londonTradeSales(k) === null}`; } catch (e) { return `throws ${e instanceof Error ? e.message : e}`; }
+};
+const protoWrong = PROTO_KEYS.filter((k) => protoAnswers(k) !== "true").map((k) => `${k} (${protoAnswers(k).slice(0, 60)})`);
+check(`no register row for any of ${PROTO_KEYS.length} Object.prototype names, read as own entries with own() (src/lib/own.ts)${protoWrong.length ? `: ${protoWrong.slice(0, 4).join(", ")}` : ""}`, protoWrong.length === 0);
+
 /* Every shared code the slice holds has a plain group name, so no page prints a shared figure as the trade's own. */
 type T = { trades: Record<string, { sic: string[]; match: string }> };
 const missing = Object.entries((turnoverJson as unknown as T).trades)

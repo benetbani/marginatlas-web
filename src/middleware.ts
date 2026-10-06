@@ -27,6 +27,7 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { redirectFor } from "@/lib/taxonomy/retired";
 import { retiredPlaceTarget } from "@/lib/taxonomy/retired_paths";
 import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
+import { own } from "@/lib/own";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
 import { cityPathFor } from "@/lib/cities/city_path";
@@ -411,7 +412,8 @@ export function routeRequest(req: NextRequest): NextResponse {
     const segments = path.split("/").filter(Boolean);
     if (segments.length > 0) {
       const last = segments[segments.length - 1];
-      const target = TAXONOMY_REDIRECTS[last];
+      /* Its own entries only (src/lib/own.ts): `/gb/london/constructor` read the Object function here and moved to its text. */
+      const target = own(TAXONOMY_REDIRECTS, last);
       if (target && target !== last) {
         segments[segments.length - 1] = target;
         const url = req.nextUrl.clone();

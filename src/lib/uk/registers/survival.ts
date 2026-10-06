@@ -12,6 +12,7 @@
  * with laundries and funerals) and the page must say whose figure it prints.
  */
 import survivalJson from "../../../../data/uk/registers/survival.json";
+import { own } from "../../own";
 
 type Point = { year: number; cohort: number; hazard: number; survival: number; lo: number; hi: number };
 type Group = { name: string; births_2019: number; cohort_2019_five_years: number; period: Point[] };
@@ -84,7 +85,7 @@ export type TradeSurvivalUk = {
 };
 
 export function tradeSurvivalUk(slug: string): TradeSurvivalUk | null {
-  const groups = SURVIVAL.trade_groups[slug];
+  const groups = own(SURVIVAL.trade_groups, slug);
   if (!groups || groups.length !== 1) return null;
   const group = groups[0];
   const g = SURVIVAL.groups[group];

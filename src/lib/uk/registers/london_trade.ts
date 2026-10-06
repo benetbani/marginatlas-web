@@ -18,6 +18,7 @@
  */
 import turnoverJson from "../../../../data/uk/registers/turnover.json";
 import { bandCdf, bandQuantile } from "../pnl/banded";
+import { own } from "../../own";
 
 type Row = {
   enterprises: number;
@@ -88,9 +89,11 @@ export type LondonTradeSales = {
 /** Pounds from the slice's thousands, to the penny (280.659 x 1000 is 280,659, not 280,658.99999999997). */
 const gbp = (k: number) => Math.round(k * 1000 * 100) / 100;
 
+/** The slice's own entries only (src/lib/own.ts): `TURNOVER.trades["constructor"]` is the Object function, and reading its
+ *  geography threw a TypeError on every page that asked (2026-10-06). */
 function londonRow(slug: string): { trade: TurnoverFile["trades"][string]; row: Row } | null {
-  const trade = TURNOVER.trades[slug];
-  const row = trade?.by_geography[LONDON_GEOGRAPHY];
+  const trade = own(TURNOVER.trades, slug);
+  const row = own(trade?.by_geography, LONDON_GEOGRAPHY);
   return trade && row ? { trade, row } : null;
 }
 

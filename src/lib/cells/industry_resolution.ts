@@ -24,6 +24,8 @@ import {
   resolveToMeasuredIndustry,
   type Industry,
 } from "../taxonomy";
+/* Its tables are read for their own entries (src/lib/own.ts): `LEGACY_SLUG_TO_DB_ID["constructor"]` is the Object function. */
+import { own } from "../own";
 
 /**
  * Legacy data-table industry_ids that are NOT in the current taxonomy,
@@ -103,8 +105,8 @@ export function industryQueryCandidates(industrySlug: string): string[] {
      /gb/london/metal-products-mfg printed "fabricated metal manufacturing" on
      production. Such a slug now resolves through the taxonomy below like any
      other word, which answers a live trade or nothing. */
-  const legacyDirect = LEGACY_SLUG_TO_DB_ID[norm];
-  const legacyLive = legacyDirect ? liveIndustryFor(LEGACY_DB_TO_TAXONOMY[legacyDirect]) : null;
+  const legacyDirect = own(LEGACY_SLUG_TO_DB_ID, norm);
+  const legacyLive = legacyDirect ? liveIndustryFor(own(LEGACY_DB_TO_TAXONOMY, legacyDirect)) : null;
   if (legacyDirect && legacyLive) {
     push(legacyDirect);
     push(legacyLive.id);
@@ -114,7 +116,7 @@ export function industryQueryCandidates(industrySlug: string): string[] {
   const raw = slugToIndustry(industrySlug);
   if (raw) {
     push(raw.id); // EXACT id first - the core fix.
-    for (const legacy of TAXONOMY_TO_LEGACY_DB[raw.id] ?? []) push(legacy);
+    for (const legacy of own(TAXONOMY_TO_LEGACY_DB, raw.id) ?? []) push(legacy);
     const parent = resolveToMeasuredIndustry(raw);
     push(parent?.id); // parent fallback, last.
   }
@@ -133,11 +135,11 @@ export function resolveDisplayIndustry(industrySlug: string): Industry | null {
   // match to an unrelated industry via slugToIndustry (wood_products_mfg), so
   // the curated crosswalk target must win before the fuzzy fallback runs.
   const norm = normalizeSlug(industrySlug);
-  const legacyDirect = LEGACY_SLUG_TO_DB_ID[norm];
+  const legacyDirect = own(LEGACY_SLUG_TO_DB_ID, norm);
   if (legacyDirect) {
     /* A live activity only (the goal's A6, 2026-09-24): a retired crosswalk
        target falls through to the taxonomy, which never names a retired one. */
-    const live = liveIndustryFor(LEGACY_DB_TO_TAXONOMY[legacyDirect]);
+    const live = liveIndustryFor(own(LEGACY_DB_TO_TAXONOMY, legacyDirect));
     if (live) return live;
   }
   return slugToIndustry(industrySlug);

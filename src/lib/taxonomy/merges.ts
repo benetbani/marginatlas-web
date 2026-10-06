@@ -32,6 +32,7 @@
  * survivor's page. scripts/gen_retired.ts folds this map into
  * src/lib/taxonomy/retired.ts so there is one redirect table, not two.
  */
+import { hasOwn, own } from "../own";
 
 /** Merged activity id, mapped to the id that survives. */
 export const MERGES: Record<string, string> = {
@@ -167,12 +168,13 @@ export const MERGES: Record<string, string> = {
   private_libraries_archives: "museums_cultural",
 };
 
-/** The surviving id for an activity, or the id itself when it survives. */
+/** The surviving id for an activity, or the id itself when it survives. Its own entries only (src/lib/own.ts): "constructor"
+ *  survives as itself, never as the Object function. */
 export function survivorOf(id: string): string {
-  return MERGES[id] ?? id;
+  return own(MERGES, id) ?? id;
 }
 
 /** True when this activity was merged away. */
 export function isMerged(id: string): boolean {
-  return id in MERGES;
+  return hasOwn(MERGES, id);
 }

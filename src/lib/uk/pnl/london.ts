@@ -14,6 +14,7 @@ import turnoverJson from "../../../../data/uk/registers/turnover.json";
 import premisesJson from "../../../../data/uk/registers/premises.json";
 import { buildInputs, type PremisesRow } from "./inputs";
 import { RECIPES } from "./recipes";
+import { own } from "../../own";
 import { summarise, type Form, type PnlInputs, type PnlSummary } from "./model";
 import { shapeRanges, type PnlRanges } from "./ranges";
 
@@ -28,17 +29,18 @@ export const MIN_PREMISES = 100;
 /** Why a trade's London money is withheld, or null when it can be built. The data's limits are checked before the
  *  recipe, so a trade without one still says what else it lacks. */
 export function londonWithholding(slug: string): string | null {
-  const london = TURNOVER.trades[slug]?.by_geography[LONDON];
+  /* The slices' own entries only (src/lib/own.ts): `TURNOVER.trades["constructor"]` is the Object function, whose geography threw. */
+  const london = own(own(TURNOVER.trades, slug)?.by_geography, LONDON);
   const bands = london?.turnover_bands_k;
   if (!london || !bands || bands.every((c) => c === 0)) return "no London turnover bands for the trade's code";
   if (london.thin) return `${london.enterprises} businesses in London on the register, under the 40 its figures need`;
-  const category = PREMISES.trade_category[slug];
+  const category = own(PREMISES.trade_category, slug);
   if (!category) return "no kind of premises for the trade";
   if (GENERIC_PREMISES.has(category)) return `its premises are valued as ${category.toLowerCase()}, an average over unlike occupiers`;
   const row = PREMISES.rows[LONDON]?.categories[category];
   if (!row || !row.rv_per_m2 || !row.count || !row.floorspace_k_m2) return `no London valuation row for ${category.toLowerCase()}`;
   if (row.count < MIN_PREMISES) return `${row.count} ${category.toLowerCase()} premises in London, too few for the valuation's rounding`;
-  if (!RECIPES[slug]) return "no recipe";
+  if (!own(RECIPES, slug)) return "no recipe";
   return null;
 }
 

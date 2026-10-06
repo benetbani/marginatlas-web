@@ -17,7 +17,9 @@ import { renderHoodSlugs, HOOD_SLUGS_FILE } from "../../scripts/gen_hood_slugs";
 import { renderServedFiles, SERVED_FILES_FILE } from "../../scripts/gen_served_files";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { TAXONOMY_REDIRECTS } from "../../src/lib/taxonomy/legacy_redirects";
-import { COUNTRIES, INDUSTRY_SLUG_ALIASES, SLUG_TO_INDUSTRY, liveIndustryFor } from "../../src/lib/taxonomy";
+import { COUNTRIES, INDUSTRY_SLUG_ALIASES, SLUG_TO_INDUSTRY, liveIndustryFor, resolveIndustryIdExact, slugToIndustry } from "../../src/lib/taxonomy";
+import { redirectFor } from "../../src/lib/taxonomy/retired";
+import { industryQueryCandidates, resolveDisplayIndustry } from "../../src/lib/cells/industry_resolution";
 import { getRegionsForCountry } from "../../src/lib/regions/regions-by-country";
 import { PACK_FILES, packHref } from "../../src/lib/data_pack";
 import { getAllPosts } from "../../src/lib/blog";
@@ -247,6 +249,30 @@ const apiFolders = (dir: string): string[] =>
   readdirSync(dir, { withFileTypes: true }).filter((e) => e.isDirectory()).flatMap((e) => [`${dir}/${e.name}`, ...apiFolders(`${dir}/${e.name}`)]);
 const apiDotted = apiFolders("src/app/api").filter((d) => /\[|\./.test(d.slice("src/app/api".length)));
 check(`every API route is a static folder with no dot in its name${apiDotted.length ? `: ${apiDotted.join(", ")}` : ""}`, apiDotted.length === 0, MW);
+
+/* A WORD THAT NAMES A BUILT-IN NAMES NOTHING (2026-10-06): every lookup the edge asks reads a plain object, which answers
+   "constructor" with the Object function and "__proto__" with Object.prototype unless it is asked for its own entries
+   (src/lib/own.ts). Every Object.prototype member, as written and lowercased (the canonical form a request reaches). */
+const PROTO_KEYS = [...new Set(Object.getOwnPropertyNames(Object.prototype).flatMap((k) => [k, k.toLowerCase()]))];
+const quietly = <T>(f: () => T): T | "throws" => { try { return f(); } catch { return "throws"; } };
+const protoWrong = (f: (k: string) => unknown, want: unknown) =>
+  PROTO_KEYS.filter((k) => quietly(() => f(k)) !== want).map((k) => `${k} (${String(quietly(() => f(k))).slice(0, 40)})`);
+const PROTO_REMEDY = "read a table keyed by a word from the address with own() (src/lib/own.ts), never table[word]";
+const protoCheck = (label: string, wrong: string[], file: string) => {
+  if (wrong.length === 0) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file, detail: `${label}: ${wrong.slice(0, 6).join(", ")}`, remedy: PROTO_REMEDY });
+};
+protoCheck(`slugToIndustry names no trade for any of ${PROTO_KEYS.length} Object.prototype names`, protoWrong(slugToIndustry, null), "src/lib/taxonomy.ts");
+protoCheck("resolveIndustryIdExact names no id for any Object.prototype name", protoWrong(resolveIndustryIdExact, null), "src/lib/taxonomy.ts");
+protoCheck("resolveDisplayIndustry names no trade for any Object.prototype name", protoWrong(resolveDisplayIndustry, null), "src/lib/cells/industry_resolution.ts");
+protoCheck("industryQueryCandidates queries nothing for any Object.prototype name", protoWrong((k) => industryQueryCandidates(k).length, 0), "src/lib/cells/industry_resolution.ts");
+protoCheck("redirectFor redirects no Object.prototype name", protoWrong(redirectFor, null), "src/lib/taxonomy/retired.ts");
+protoCheck("a three-part London address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/gb/london/${k.toLowerCase()}`), true), FILE);
+protoCheck("an activity address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/industries/${k.toLowerCase()}`), true), FILE);
+protoCheck("a hub address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/cities/${k.toLowerCase()}/neighborhoods`), true), FILE);
+protoCheck("a district address under an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/cities/${k.toLowerCase()}/neighborhoods/central`), true), FILE);
+protoCheck("no old district address is an Object.prototype name", protoWrong((k) => legacyHoodTarget(`/gb/${k.toLowerCase()}/central`), null), FILE);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("routing/edge_not_found: all pass");

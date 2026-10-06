@@ -10,6 +10,9 @@ import { isInScope } from "./taxonomy/scope_rules";
 import { RETIRED } from "./taxonomy/retired";
 import { isMerged, survivorOf } from "./taxonomy/merges";
 import { TAXONOMY_REDIRECTS } from "./taxonomy/legacy_redirects";
+/* Every table below is a plain object read with a word from the address, so it is read for its own entries: a plain object
+   answers "constructor" with the Object function (2026-10-06, src/lib/own.ts). */
+import { own } from "./own";
 
 export type Sector = {
   id: string;
@@ -158,7 +161,7 @@ function stripDiacritics(s: string): string {
 
 /** Build URL slug from an industry id or name. */
 export function industryToSlug(industryId: string): string {
-  const ind = INDUSTRY_BY_ID[industryId];
+  const ind = own(INDUSTRY_BY_ID, industryId);
   const name = ind ? ind.name : industryId;
   return stripDiacritics(name)
     .toLowerCase()
@@ -192,7 +195,7 @@ export const SLUG_TO_INDUSTRY: Record<string, Industry> = (() => {
 export function liveIndustryFor(id: string | null | undefined): Industry | null {
   if (!id) return null;
   const survivorId = survivorOf(id);
-  const survivor = SLUG_TO_INDUSTRY[industryToSlug(survivorId)];
+  const survivor = own(SLUG_TO_INDUSTRY, industryToSlug(survivorId));
   return survivor && survivor.id === survivorId ? survivor : null;
 }
 
@@ -214,7 +217,7 @@ export function liveIndustryFor(id: string | null | undefined): Industry | null 
  * every sentence keep the full name. Gate: trade-row-names.
  */
 export function tradeRowName(idOrSlug: string | null | undefined, name: string): string {
-  const ind = idOrSlug ? INDUSTRY_BY_ID[idOrSlug] ?? SLUG_TO_INDUSTRY[idOrSlug] : undefined;
+  const ind = idOrSlug ? own(INDUSTRY_BY_ID, idOrSlug) ?? own(SLUG_TO_INDUSTRY, idOrSlug) : undefined;
   return ind?.short_name ?? name;
 }
 
@@ -506,7 +509,8 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
   if (!norm) return null;
 
   // 1. Canonical slug exact match
-  if (SLUG_TO_INDUSTRY[norm]) return SLUG_TO_INDUSTRY[norm];
+  const exact = own(SLUG_TO_INDUSTRY, norm);
+  if (exact) return exact;
 
   /* 1a. A RETIRED SLUG RESOLVES TO NOTHING, before any other step reads it
      (moved up from after the aliases, the goal's A6, 2026-09-24: the id
@@ -523,7 +527,7 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
      something that looks like an answer and is not. The activity is retired, so
      the honest answer is that we do not hold it. The middleware redirects the
      URL; callers get null and self-omit. */
-  if (RETIRED[norm]) return null;
+  if (own(RETIRED, norm)) return null;
 
   /* 1b. AN ID IS EXACT TOO, as written or hyphenated (craft_beer_mfg,
      craft-beer-mfg), the way resolveIndustryIdExact below reads one; a merged
@@ -531,15 +535,15 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
      2026-09-24). Ids reached this function only through the fuzzy step, which
      found six live ones by luck, missed the rest once it required every word,
      and sent specialty_grocery to Specialty trades. */
-  const byId = INDUSTRY_BY_ID[norm.replace(/-/g, "_")];
+  const byId = own(INDUSTRY_BY_ID, norm.replace(/-/g, "_"));
   if (byId) return liveIndustryFor(byId.id);
 
   /* 1c. A RENAMED SLUG IS THE PAGE ITS URL NOW LANDS ON: the middleware
      answers it with a 308 to the target (src/lib/taxonomy/legacy_redirects.ts),
      so the resolver names the same activity or, for a target the 2026-08-21
      ruling retired, nothing. One hop only; a target is a canonical slug. */
-  const moved = TAXONOMY_REDIRECTS[norm];
-  if (moved && moved !== norm) return SLUG_TO_INDUSTRY[moved] ?? null;
+  const moved = own(TAXONOMY_REDIRECTS, norm);
+  if (moved && moved !== norm) return own(SLUG_TO_INDUSTRY, moved) ?? null;
 
   /* 2. Alias map exact match, and only ever to a LIVE activity (the goal's A6, 2026-09-24).
      This returned INDUSTRY_BY_ID[aliasId], which holds all 243 activities, the
@@ -548,7 +552,7 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
      the one the ruling named. An alias hit now answers the live activity, a
      merged one's survivor, or nothing; it never falls to the fuzzy step
      below, for the reason 2b gives. */
-  const aliasId = INDUSTRY_SLUG_ALIASES[norm];
+  const aliasId = own(INDUSTRY_SLUG_ALIASES, norm);
   const aliasLive = aliasId ? liveIndustryFor(aliasId) : null;
   if (aliasLive) return aliasLive;
 
@@ -559,7 +563,7 @@ export function slugToIndustry(slug: string | null | undefined): Industry | null
      carry the rest; the every-word rule below cannot see a plural the name
      does not carry, so the phrases the taxonomy itself lists are read
      exactly instead. */
-  const byPhrase = PHRASE_TO_INDUSTRY[norm];
+  const byPhrase = own(PHRASE_TO_INDUSTRY, norm);
   if (byPhrase) return byPhrase;
 
   /* An alias to an activity this atlas does not cover stops here: a live
@@ -591,17 +595,18 @@ export function resolveIndustryIdExact(input: string | null | undefined): string
   if (!input) return null;
   const raw = String(input).trim();
   if (!raw) return null;
-  if (INDUSTRY_BY_ID[raw]) return raw;
+  if (own(INDUSTRY_BY_ID, raw)) return raw;
   const norm = stripDiacritics(raw)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
   if (!norm) return null;
-  if (SLUG_TO_INDUSTRY[norm]) return SLUG_TO_INDUSTRY[norm].id;
-  const aliasId = INDUSTRY_SLUG_ALIASES[norm];
-  if (aliasId && INDUSTRY_BY_ID[aliasId]) return aliasId;
+  const exact = own(SLUG_TO_INDUSTRY, norm);
+  if (exact) return exact.id;
+  const aliasId = own(INDUSTRY_SLUG_ALIASES, norm);
+  if (aliasId && own(INDUSTRY_BY_ID, aliasId)) return aliasId;
   const asId = norm.replace(/-/g, "_");
-  if (INDUSTRY_BY_ID[asId]) return asId;
+  if (own(INDUSTRY_BY_ID, asId)) return asId;
   return null;
 }
 
@@ -629,10 +634,9 @@ export const LEGACY_SECTOR_ALIAS: Record<string, string> = (() => {
 /** Resolve a sector slug (possibly legacy) to its canonical Sector. */
 export function resolveSector(slug: string): Sector | null {
   if (!slug) return null;
-  if (SECTOR_BY_ID[slug]) return SECTOR_BY_ID[slug];
-  const aliased = LEGACY_SECTOR_ALIAS[slug];
-  if (aliased && SECTOR_BY_ID[aliased]) return SECTOR_BY_ID[aliased];
-  return null;
+  const sector = own(SECTOR_BY_ID, slug);
+  if (sector) return sector;
+  return own(SECTOR_BY_ID, own(LEGACY_SECTOR_ALIAS, slug)) ?? null;
 }
 
 /** Audience helpers — Plan v3.0 §L + §P. */

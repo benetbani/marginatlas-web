@@ -50,6 +50,7 @@ import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "@/lib/routing/hood_slug
 import { SERVED_FILES } from "@/lib/routing/served_files";
 import { namesFile } from "@/lib/routing/names_file";
 import { cityPathFor } from "@/lib/cities/city_path";
+import { own } from "@/lib/own";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 
 /** The static folders of src/app/[country]/[geo], each a real page at `/{country}/{place}/{name}`; the step's test reads
@@ -61,9 +62,11 @@ const HELD_COUNTRIES = new Set(COUNTRIES.map((c) => c.code.toLowerCase()));
 const DATABASE_WORDS = new Set(["us"]);
 const LISTED_CITIES = new Set(Object.values(CITY_SLUGS_BY_COUNTRY).flat());
 
-/** A redirect earlier in the middleware owns the word: a retired trade, or one renamed to another slug. */
+/** A redirect earlier in the middleware owns the word: a retired trade, or one renamed to another slug. Every table here is read
+ *  for its own entries (src/lib/own.ts), so a word that names a built-in ("constructor", "__proto__") names nothing. */
 function ownedByRedirect(word: string): boolean {
-  return redirectFor(word) !== null || (TAXONOMY_REDIRECTS[word] !== undefined && TAXONOMY_REDIRECTS[word] !== word);
+  const renamed = own(TAXONOMY_REDIRECTS, word);
+  return redirectFor(word) !== null || (renamed !== undefined && renamed !== word);
 }
 
 function parts(path: string): string[] | null {
@@ -87,8 +90,8 @@ export function legacyHoodTarget(path: string): string | null {
   const [country, city, word] = segs;
   if (!HELD_COUNTRIES.has(country) || TOP_LEVEL_SEGMENTS.has(country)) return null;
   if (resolveDisplayIndustry(word) || ownedByRedirect(word)) return null;
-  if (!cityPathFor(country, city) || !(NEIGHBORHOOD_SLUGS[city] ?? []).includes(word)) return null;
-  if (isSpineReformEnabledFor("hood") && (HOOD_DISTRICT_SLUGS[city] ?? []).includes(word)) return `/cities/${city}/neighborhoods/${word}`;
+  if (!cityPathFor(country, city) || !(own(NEIGHBORHOOD_SLUGS, city) ?? []).includes(word)) return null;
+  if (isSpineReformEnabledFor("hood") && (own(HOOD_DISTRICT_SLUGS, city) ?? []).includes(word)) return `/cities/${city}/neighborhoods/${word}`;
   return `/cities/${city}/neighborhoods`;
 }
 
@@ -113,8 +116,8 @@ export function edgeNotFound(path: string): boolean {
   if (first === "cities" && segs.length >= 2 && segs.length <= 4) {
     if (segs.length === 2) return !LISTED_CITIES.has(second);
     if (third !== "neighborhoods") return false;
-    if (segs.length === 3) return NEIGHBORHOOD_SLUGS[second] === undefined;
-    return !(isSpineReformEnabledFor("hood") && (HOOD_DISTRICT_SLUGS[second] ?? []).includes(fourth));
+    if (segs.length === 3) return own(NEIGHBORHOOD_SLUGS, second) === undefined;
+    return !(isSpineReformEnabledFor("hood") && (own(HOOD_DISTRICT_SLUGS, second) ?? []).includes(fourth));
   }
 
   if (segs.length === 3 && HELD_COUNTRIES.has(first) && !TOP_LEVEL_SEGMENTS.has(first) && !DATABASE_WORDS.has(first)) {

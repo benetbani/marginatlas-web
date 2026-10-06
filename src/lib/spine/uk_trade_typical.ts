@@ -17,6 +17,7 @@
  */
 import failuresJson from "../../../data/uk/registers/failures.json";
 import { COPY } from "@/lib/spine/copy";
+import { own } from "@/lib/own";
 import type { SplitData } from "@/lib/spine/split_rows";
 import type { TeamData } from "@/lib/spine/team_rows";
 import type { ClearsData } from "@/lib/spine/clears_rows";
@@ -31,7 +32,7 @@ const FAILURES = failuresJson as unknown as FailuresFile;
 /** The UK's company insolvencies for the trade in a year, per 100 live companies to one decimal, or null where the register's
  *  rate is not publishable (too few cases) or the trade is not in the slice. The slice's rate is per 1,000. */
 export function ukInsolvencyPer100(tradeSlug: string | null | undefined): number | null {
-  const r = tradeSlug ? FAILURES.trades[tradeSlug]?.uk_rate : undefined;
+  const r = own(FAILURES.trades, tradeSlug)?.uk_rate;
   if (!r || r.publishable !== true || typeof r.value !== "number" || !Number.isFinite(r.value) || r.value < 0) return null;
   return Math.round(r.value) / 10;
 }
