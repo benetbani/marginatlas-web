@@ -120,7 +120,7 @@ six spine pages first (`pages-fresh`) and the browser gates, the archetype
 harness, the page filter and the model-laws list all read those live
 renders; nothing in the chain reads a frozen snapshot of a spine page any
 more. Run the same list locally before a push with `npm run verify:deploy`
-(serial, to `scratchpad/deploy/chain.txt`; `--build` adds the Next build) and
+(serial, to `scratchpad/deploy/chain.txt`; `--build` adds the Next build and the postbuild guard, as `npm run build` runs them; `--print-steps` lists the steps) and
 watch the deploy land with `npm run deploy:watch -- --marker=<a string the new
 code puts on the page>`.
 

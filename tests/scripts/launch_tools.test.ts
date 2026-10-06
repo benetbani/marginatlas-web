@@ -1,5 +1,5 @@
 /**
- * THE LAUNCH TOOLS SAY WHAT THE CHECKLIST SAYS (2026-10-06). LAUNCH-SWITCHES row 13 passes --marker-url to deploy:watch,
+ * THE LAUNCH TOOLS SAY WHAT THE CHECKLIST SAYS (2026-10-06). LAUNCH-SWITCHES row 13 passed --marker-url to deploy:watch,
  * which read only --url; the watcher would have polled /gb for a line only the home page prints. And Git Bash rewrites a
  * bare "/" into a Windows folder ("C:/Program Files/Git/") before node sees it, which the watcher fetched as an unknown
  * scheme for the whole of its deadline. verify:deploy --build runs the steps npm run build runs, in its order. And
@@ -30,6 +30,8 @@ const d = watchArgs(["--marker=x", "--url=C:/Program Files/Git/"]);
 check("a path Git Bash rewrote is refused with the remedy", typeof d.error === "string" && d.error.includes("MSYS_NO_PATHCONV"), JSON.stringify(d));
 const e = watchArgs(["--marker=x", "--minutes=3"]);
 check("--minutes is read", e.minutes === 3, JSON.stringify(e));
+const nan = watchArgs(["--marker=x", "--minutes=abc"]);
+check("a --minutes that is no number is refused with the remedy, not watched forever", typeof nan.error === "string" && nan.error.includes("--minutes=15"), JSON.stringify(nan));
 check("--marker is read", watchArgs(["--marker=if you form a company"]).marker === "if you form a company");
 
 const withBuild = spawnSync(process.execPath, ["scripts/verify_deploy.mjs", "--build", "--print-steps"], { encoding: "utf8" });

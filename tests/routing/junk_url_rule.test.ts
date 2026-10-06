@@ -21,7 +21,10 @@
  * was written for.
  *
  * THE INSTRUMENT IS THE MIDDLEWARE ITSELF (2026-10-06). Each verdict is the
- * real middleware's, asked with a browser's request the way
+ * real routing's (routeRequest, which the exported middleware wraps with the
+ * session refresh: that touches cookies and cache headers only, never a status;
+ * next.config.js's redirects run before it and are not asked), asked with a
+ * browser's request the way
  * tests/routing/metadata_routes.test.ts asks it, so every rule it runs gets its
  * say: the dot rule, the first-segment rule, the two-letter rule, a country's
  * static children and regions, the edge's not-found rule

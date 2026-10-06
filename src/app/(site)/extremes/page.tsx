@@ -279,8 +279,8 @@ export default async function ExtremesPage() {
   // one-sided either.
   const hasStartup = startupBoards.length >= 2;
 
-  // Assemble the lens blocks in the founder's reading order, COST-TO-OPEN
-  // first, then take-home and crowding. Each lens is included only
+  // Assemble the lens blocks in the founder's reading order: the catalog
+  // first, then cost-to-open, take-home and crowding. Each lens is included only
   // when it resolved (the same self-omit the blocks already carried), so the
   // page draws exactly the lenses a reader can reach, every one a section.
   const lenses: LensEntry[] = [];
