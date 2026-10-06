@@ -130,7 +130,8 @@ code puts on the page>`.
 ## Latest handoff
 
 - **`docs/handoff/HANDOFF-marginatlas-2026-10-04.md` IS THE CURRENT HANDOFF, READ IT FIRST, starting at its section 0**
-  (2026-10-06: the masterplan night, milestones 2 and 3 built behind their switches on branch `night-2026-10-05`, and his
+  (2026-10-06 day: his deep goal built on branch `goal-2026-10-06`, NOT pushed; production `main` bd78bb1c; section 0)
+  (2026-10-06 morning, section 0b: the masterplan night, milestones 2 and 3 built behind their switches on branch `night-2026-10-05`, and his
   nineteen PARKED rulings built; DEPLOYED with every switch off, `main` at 17a2a32c; launch day follows
   `docs/superpowers/plans/2026-10-05-masterplan/LAUNCH-SWITCHES.md`)
   (2026-10-04 night: the truth pass live at 38f81e8a; milestone 1 of his launch interview

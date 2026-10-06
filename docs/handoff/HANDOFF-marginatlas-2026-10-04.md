@@ -6,7 +6,56 @@ green alone), **LIVE since 2026-10-05 at `main` 128c66b6 on his "Push and deploy
 the estimate mark's hover label, fixed on branch `m1-followups` 0e0eba92, NOT pushed); milestone 2 (Pro) is not started, its code
 map is written. Written 2026-10-04, late night; closed and shipped 2026-10-05 after midnight.
 
-## 0. 2026-10-06 MORNING: THE MASTERPLAN NIGHT (READ THIS FIRST; sections 1 to 14 below are the 2026-10-04 state)
+## 0. 2026-10-06 DAY: THE DEEP GOAL (READ THIS FIRST; section 0b below is the masterplan night, sections 1 to 14 the 2026-10-04 state)
+
+**Where things stand.** Production is `main` bd78bb1c (deployed about 5:30am on his "Do this", every switch off). His goal of
+the same morning (verbatim in `rules/FOUNDER-VERDICTS.md`, "The deep goal": deeper backend and SaaS functions, planning,
+debugging, the architecture checked, obsolete files removed, the structure solidified, unfinished tasks and cleanups, a better
+home page, a very high standard) is built on website branch **`goal-2026-10-06`**, local and NOT pushed: 30 commits on
+bd78bb1c (6b947592 to 3006edf5, then the records), under the day's checkup (`docs/checkup/2026-10-06.md`: ten findings ranked, its ledger and
+the deltas after the changes) and its plan (`docs/superpowers/plans/2026-10-06-goal/PLAN.md`, batches A to D, its ledger the
+full record, a line per commit). Full chain at 9a9c1085: 252 of 252 in 1,122.7 s; D2c after it, its gate green. **His word is needed before any push or deploy.**
+
+**What changed, a line a batch.**
+- A, the SaaS layer: one account and one governing subscription per Stripe customer (webhook and checkout), Sentry and a
+  record per event, a dry-run reconcile (`npm run billing:reconcile`); the public data API and the CSV leave out what the
+  paywall locks; a rate limit on every API route; the session refreshed by the middleware and /signin saying when a link
+  fails; the forms keep no IP or user agent; row level security written into the migration files as live already enforces it.
+- B, the home page and its promises: the ask is his ruled "notify me when my city reaches this depth" (a city to choose, its
+  own tag), not a PDF that did not exist (its address redirects to /data); the notebook shows each category's newest post,
+  text first; the trades answer ends without a hole; /account hides an empty saved list.
+- C, the structure: the typecheck reads 3,402 files, not 6,725 (no scratch folders, per-icon imports); routes 121 to 101 (the
+  unlisted /dev explorations archived under the tag `archive/dev-2026-10-06`); unreachable files 12 to 1; one carrier for
+  the counts; the page-laws ratchet locked.
+- D, unfinished rows and faults found on the way: no page sums a district up in a word or two (QUEUE
+  city:invented-words-elsewhere closed; gate `no-place-words`); the district overview nothing could reach, deleted; twelve
+  trades' honesty line ("Estimates for a typical new" was live) and every "a"/"an" by sound ("Where to open a restaurants"
+  was live); the exit-intent pop-up deleted; the v34 coverage gate's ten stubs given rules; two stale records corrected.
+
+**His, at launch.** LAUNCH-SWITCHES row 2 now names four migration files in order (the two of 2026-10-06 added); row 3 holds
+custom SMTP and the cross-device sign-in choice. The prepared branch `launch-day` (7ad5ccc2) sits on the old main: rebuild it
+on the new `main` after this branch deploys (one commit deleting the private line from `.env.production`, adding nothing).
+
+**Owner decisions found, none acted on** (the checkup's report names each with its reason): generating the presence manifest
+(about 26,000 production lookups, and it would unpublish synthesized pages); the 15 dependencies nothing imports (removing them
+rewrites the lockfile, an install); 98 GB of worktrees and the parent repo's missing remote and 12,477 loose objects (his
+machine, his backup); a one-process runner for the static gates; /saved, which nothing writes; the hero's rotating-word gaps
+(his design); cross-device magic links; what past_due means for Pro; P30.2's details; no email is ever sent, so the depth
+notices and the privacy page's "a link in every email" wait on a sender he chooses.
+
+**The day's traps.**
+- The chain runs no typecheck, and `next build` does. Run `tsc --noEmit` after every restore or late fix in a batch, not only
+  before it: C4 restored a route after its typecheck, and the tree failed `tsc` for eight commits (caught before any push).
+- A Python patch through a Bash heredoc: `\b` arrived as a backspace inside a regex, and `\s` with a warning. Use the Edit tool
+  for anything with a backslash, or build it with `chr(92)`; scan touched files for control characters before a commit.
+- Deleting a page means three hand lists: its segment in `src/lib/routing/top_level_segments.ts`, the junk-URL test's
+  "spared" list, and any gate naming the file (the B+C chain's one red).
+- The type-ladder and width writers write whatever they count: run the check first, write only after it passes.
+- `git stash push -- <paths>` refuses deleted paths: unstage the deletions, then `git stash push --keep-index`.
+- The in-memory rate limiter answers a script's sixty-first request with 429: a probe that drives `routeRequest` varies
+  `x-real-ip` per request.
+
+## 0b. 2026-10-06 MORNING: THE MASTERPLAN NIGHT (sections 1 to 14 below are the 2026-10-04 state)
 
 **Where things stand.** The masterplan of 2026-10-05 (40 steps, `docs/superpowers/plans/2026-10-05-masterplan/`) ran unattended
 through the night and is finished: every step DONE except 06 (PARKED: the subscriptions migration is his to run). All of it is
