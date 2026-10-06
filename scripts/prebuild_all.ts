@@ -574,6 +574,9 @@ const GATES: Gate[] = [
   /* The 58 retired blog posts (his ruling of 2026-10-05, PARKED P36.1): none left in content/blog, each redirected by
      next.config.js to a page that lives, no link to one anywhere (data/blog/retired_posts.json). */
   { name: "blog-retired", script: "tests/blog/retired_posts.test.ts" },
+  /* Every table a migration creates has row level security, in its own file or a later one (the checkup of 2026-10-06, finding 1:
+     three files never enabled it; the live database had it on; db/migrations/2026-10-06-rls-everywhere.sql made the files match). */
+  { name: "migrations-rls", script: "tests/db/migrations_rls.test.ts" },
   /* The blog's figures (P36.1's rewrites, 2026-10-06): every figure a post prints recomputed from the free data pack, every digit
      covered, no agency named, every link a page that lives, the foot's data the figures' own; and its plants, each rule watched red
      on a broken post (docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4). */

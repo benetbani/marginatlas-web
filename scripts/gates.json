@@ -1589,6 +1589,19 @@
       "claims": []
     },
     {
+      "name": "migrations-rls",
+      "script": "tests/db/migrations_rls.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "EVERY TABLE A MIGRATION CREATES HAS ROW LEVEL SECURITY (the checkup of 2026-10-06, finding 1).",
+      "reads": [
+        "db/migrations",
+        "db/migrations_rls: all pass",
+        "tests/db/migrations_rls.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "blog-content",
       "script": "tests/blog/blog_content.test.ts",
       "args": [],
