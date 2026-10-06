@@ -138,7 +138,7 @@ const e = watchArgs(["--marker=x", "--minutes=3"]);
 check("--minutes is read", e.minutes === 3, JSON.stringify(e));
 check("--marker is read", watchArgs(["--marker=if you form a company"]).marker === "if you form a company");
 
-if (failed > 0) { console.error(`scripts/launch_tools: ${failed} failure(s)`); process.exit(1); }
+if (failed > 0) { console.error(`scripts/launch_tools: ${failed} failure(s). Remedy: make each FAIL line above pass in the file it names (scripts/lib/watch_args.mjs for the flags), then run npx tsx tests/scripts/launch_tools.test.ts`); process.exit(1); }
 console.log("scripts/launch_tools: all pass");
 ```
 
@@ -238,8 +238,8 @@ In `scripts/prebuild_all.ts`, below `{ name: "build-compare", script: "tests/scr
 ```
 
 Run: `git add scripts/lib/watch_args.mjs tests/scripts/launch_tools.test.ts && npx tsx scripts/counts.ts --write`
-Run: `npx tsx scripts/prebuild_all.ts --concurrency=1 --no-bail --only=launch-tools,counts-fresh,single-gate-chain`
-Expected: `Passed: 3`, `Failed: 0`.
+Run: `npx tsx scripts/prebuild_all.ts --concurrency=1 --no-bail --only=launch-tools,counts-fresh,single-gate-chain,gate-reds-ratchet`
+Expected: `Passed: 4`, `Failed: 0` (gate-reds-ratchet holds every new gate's failure text to a remedy phrase such as `Remedy:`).
 
 ```bash
 git add scripts/lib/watch_args.mjs scripts/deploy_watch.mjs scripts/verify_launch_ready.ts tests/scripts/launch_tools.test.ts scripts/prebuild_all.ts scripts/gates.json CLAUDE.md
@@ -972,7 +972,7 @@ const page = readFileSync("src/app/(site)/extremes/page.tsx", "utf8");
 check("the page mounts no LensFilter", !/LensFilter/.test(page));
 check("the chip component is gone", !existsSync("src/components/extremes/LensFilter.tsx"));
 check("every lens is drawn as a section with its anchor", /lenses\.map\(\(l\) => \(\s*<section key=\{l\.key\} id=\{l\.key\}/.test(page));
-if (failed > 0) { console.error(`trust/no_lens_chips: ${failed} failure(s)`); process.exit(1); }
+if (failed > 0) { console.error(`trust/no_lens_chips: ${failed} failure(s). Remedy: draw every lens as a section in src/app/(site)/extremes/page.tsx and delete src/components/extremes/LensFilter.tsx, then run npx tsx tests/trust/no_lens_chips.test.ts`); process.exit(1); }
 console.log("trust/no_lens_chips: all pass");
 ```
 
@@ -1045,7 +1045,7 @@ In `scripts/prebuild_all.ts`, below `{ name: "legacy-method-words", script: "tes
 ```
 
 Run: `git add tests/trust/no_lens_chips.test.ts && npx tsx scripts/counts.ts --write`
-Run: `npx tsx scripts/prebuild_all.ts --concurrency=1 --no-bail --only=no-lens-chips,type-ladder,width-discipline,render-graph,counts-fresh,layering`
+Run: `npx tsx scripts/prebuild_all.ts --concurrency=1 --no-bail --only=no-lens-chips,type-ladder,width-discipline,render-graph,counts-fresh,layering,gate-reds-ratchet`
 Expected: `Failed: 0`.
 
 ```bash
