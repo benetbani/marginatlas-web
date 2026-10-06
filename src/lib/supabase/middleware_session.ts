@@ -7,8 +7,9 @@
  * happened to refresh it. Supabase's server-side guide puts this call in the middleware; here it is, applied to whatever
  * response the middleware already decided on.
  *
- * Three guards, each for a reason:
+ * Four guards, each for a reason:
  *  - auth off (today, until launch day): nothing runs;
+ *  - a file (a photograph, a flag, a font, a pack file): nothing runs; no file needs a session;
  *  - no session cookie on the request: nothing runs, so an anonymous reader or a crawler costs no call;
  *  - a redirect: left as it is.
  * A response that receives a refreshed cookie is marked `private, no-store`: the middleware marks the UK pages publicly cacheable,
@@ -23,8 +24,16 @@ import type { NextRequest, NextResponse } from "next/server";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { isSessionCookie } from "@/lib/monetization/pro_route";
 
+/** A request for a file (its last path part has an extension: a photograph, a flag, a font, a pack file, a sitemap shard). It
+ *  never needs a session, and since the matcher may send every address through the middleware, refreshing on one would
+ *  call Supabase for each image a signed-in reader's page loads. */
+export function isFileRequest(pathname: string): boolean {
+  return /\.[A-Za-z0-9]{1,10}$/.test(pathname.split("/").pop() ?? "");
+}
+
 export async function refreshSessionOn(req: NextRequest, res: NextResponse): Promise<NextResponse> {
   if (!isAuthEnabled()) return res;
+  if (isFileRequest(req.nextUrl.pathname)) return res;
   if (res.status >= 300 && res.status < 400) return res;
   if (!req.cookies.getAll().some((c) => isSessionCookie(c.name))) return res;
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
