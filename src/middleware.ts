@@ -540,7 +540,8 @@ export function routeRequest(req: NextRequest): NextResponse {
 }
 
 /* THE SESSION REFRESH, AFTER THE ROUTE IS DECIDED (the checkup of 2026-10-06, finding 4; src/lib/supabase/middleware_session.ts):
-   a no-op while auth is off and for any request without a session cookie. Kept as a wrapper so the routing above is unchanged. */
+   a no-op while auth is off, for a file (a photograph, a flag, a font) and for any request without a session cookie. Kept as a
+   wrapper so the routing above is unchanged. */
 export async function middleware(req: NextRequest): Promise<NextResponse> {
   return refreshSessionOn(req, routeRequest(req));
 }
