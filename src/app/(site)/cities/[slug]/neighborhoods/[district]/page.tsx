@@ -46,7 +46,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
      down: the district, the city, what the page answers. Built from the
      RESOLVED slugs, so the canonical is the page this route rendered. */
   return {
-    title: `${row.name}, ${city.name}: what rent takes | Margin Atlas`,
+    /* "Estimated rents", as the hub's rank line and the page's own take say (QUEUE uk:district-pages-rent; P03.1 stands: no
+       district rent source yet). The title said "what rent takes", a claim of measurement the page does not make. */
+    title: `${row.name}, ${city.name}: estimated shop rents | Margin Atlas`,
     description: `Shop rent in ${row.name} against the other districts of ${city.name}, and what the district is like.`,
     alternates: { canonical: districtPageHref(city.slug, row.slug) },
     /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
