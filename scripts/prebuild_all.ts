@@ -580,6 +580,9 @@ const GATES: Gate[] = [
   /* Every table a migration creates has row level security, in its own file or a later one (the checkup of 2026-10-06, finding 1:
      three files never enabled it; the live database had it on; db/migrations/2026-10-06-rls-everywhere.sql made the files match). */
   { name: "migrations-rls", script: "tests/db/migrations_rls.test.ts" },
+  /* Every API route has a rate limit or says why it has none; the forms store what the reader gave and nothing more (the checkup
+     of 2026-10-06: six routes answered any number of requests, and two forms stored IP addresses nothing read). */
+  { name: "forms-minimal", script: "tests/trust/forms_store_nothing_more.test.ts" },
   /* The blog's figures (P36.1's rewrites, 2026-10-06): every figure a post prints recomputed from the free data pack, every digit
      covered, no agency named, every link a page that lives, the foot's data the figures' own; and its plants, each rule watched red
      on a broken post (docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4). */

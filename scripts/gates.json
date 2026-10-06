@@ -1615,6 +1615,20 @@
       "claims": []
     },
     {
+      "name": "forms-minimal",
+      "script": "tests/trust/forms_store_nothing_more.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE FORMS STORE WHAT THE READER GAVE AND NOTHING MORE (the checkup of 2026-10-06): the privacy page says the site holds \"what you gave us and nothing more\", and the contact and correction forms stored",
+      "reads": [
+        "src/app/(site)/privacy/page.tsx",
+        "src/app/api/contact/route.ts",
+        "src/app/api/correction/route.ts",
+        "src/app/api/newsletter/route.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "blog-content",
       "script": "tests/blog/blog_content.test.ts",
       "args": [],

@@ -75,8 +75,8 @@ export async function POST(req: NextRequest) {
           cell_url: cellUrl || null,
           message,
           email: email || null,
-          ip: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || null,
-          user_agent: req.headers.get("user-agent") || null,
+          /* NO IP ADDRESS AND NO USER AGENT ARE STORED (the checkup of 2026-10-06): the privacy page says the site holds "what you
+             gave us and nothing more", and nothing ever read the two columns; the rate limit reads the address in memory only. */
         }),
       });
       if (!r.ok && r.status !== 404) {
