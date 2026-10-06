@@ -9,8 +9,9 @@
  *   - the standalone CLI: `npx tsx scripts/audit/monetization/run_coverage.ts`
  *   - the prebuild gate: scripts/verify_monetization_coverage.ts
  *
- * Phase 0Q: every gate returns PENDING; exit is always 0.
+ * Phase 0Q: every gate returned PENDING; exit was always 0.
  * Phase A onward: gates flip to GREEN / RED based on source-tree state.
+ * Since 2026-10-06 no check is a stub, and the prebuild gate fails on a PENDING too.
  */
 
 import { mkdirSync, writeFileSync } from "node:fs";

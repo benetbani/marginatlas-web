@@ -15,6 +15,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { stripCommentLines } from "../../lib/strip_comments";
 import { GateResult, PageCheckResult, pending } from "./types";
+import { lockablePath } from "../../../src/lib/monetization/pro_route";
 
 const ROOT = resolve(process.cwd(), "src");
 
@@ -239,8 +240,30 @@ function gateA_default(
         "surface; locks here would be wrong)",
     };
   }
-  return pending("Phase C has not yet wired this page");
+  /* THE LOCK AS IT IS BUILT NOW (2026-10-06). v34's Phase C, inline locks on each page, never came: milestone 2 (masterplan
+     steps 17 and 18; his rulings 18 and 27) has the ROUTE decide its lock, and lockablePath (src/lib/monetization/pro_route.ts)
+     admits UK pages only. Until today this answered "Phase C has not yet wired this page" for the city page, the calculator
+     and compare, a pending that passed forever. Now: an address lockablePath never admits locks nothing, by his ruling 27; one
+     it admits must be decided by its route, which asks lockablePath itself, or it is red. */
+  const sample = pageId ? LOCK_SAMPLE[pageId] : undefined;
+  if (sample !== undefined) {
+    if (!lockablePath(sample)) {
+      return { status: "GREEN", message: `No locks: ${sample} is not a page that locks (his ruling 27, UK pages only; lockablePath)` };
+    }
+    if (pageSource && /\blockablePath\s*\(/.test(pageSource)) {
+      return { status: "GREEN", message: `The route decides its lock (masterplan step 17): ${sample} asks lockablePath` };
+    }
+    return { status: "RED", message: `${sample} can lock (lockablePath admits it) but its route never asks lockablePath` };
+  }
+  return pending("no rule for this page's locks");
 }
+
+/** One address per page type the lock rule is read against (2026-10-06): a UK one where the type has UK pages. */
+const LOCK_SAMPLE: Record<string, string> = {
+  city: "/cities/london",
+  calculator: "/calculator",
+  compare: "/compare",
+};
 
 function stub(pageId: string, pagePattern: string, pageSource: string | null = null, sourceFile?: string): PageCheckResult {
   const gateA = gateA_default(pageSource, pageId);
@@ -287,7 +310,9 @@ export function checkCity(): PageCheckResult {
 }
 
 export function checkWorld(): PageCheckResult {
-  const rel = "app/(site)/world/page.tsx";
+  /* The page lives at src/app/world/page.tsx; this read app/(site)/world until 2026-10-06, so gate D answered "Page not found
+     on disk", a pending that passed, about a page it never opened. */
+  const rel = "app/world/page.tsx";
   return stub("world", "/world", readIfExists(rel), `src/${rel}`);
 }
 
@@ -316,10 +341,8 @@ export function checkBlog(): PageCheckResult {
   return stub("blog", "/blog/{slug}", readIfExists(rel), `src/${rel}`);
 }
 
-export function checkSector(): PageCheckResult {
-  const rel = "app/sectors/[sector]/page.tsx";
-  return stub("sector", "/sectors/{sector}", readIfExists(rel), `src/${rel}`);
-}
+/* checkSector is gone (2026-10-06): browse-by-sector was retired, the middleware sends /sectors and /sectors/<id> to
+   /industries (308), and src/app/sectors no longer exists, so the check read nothing and reported pending. */
 
 export const ALL_CHECKS = [
   checkHome,
@@ -332,5 +355,4 @@ export const ALL_CHECKS = [
   checkPricing,
   checkAboutData,
   checkBlog,
-  checkSector,
 ];

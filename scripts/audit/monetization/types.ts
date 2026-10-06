@@ -18,10 +18,12 @@
  * Status semantics:
  *   - GREEN  = the page passes the gate
  *   - RED    = the page fails the gate (hard block)
- *   - PENDING = the gate is not yet wired (no-op stub; not a fail)
+ *   - PENDING = the gate cannot judge the page (the prebuild gate fails
+ *               on it since 2026-10-06; it was a passing stub in Phase 0Q)
  *
- * Phase 0Q ships every gate as PENDING. As Phases A through E
- * land, each gate flips to GREEN / RED.
+ * Phase 0Q shipped every gate as PENDING. As Phases A through E
+ * landed, each gate flipped to GREEN / RED; the last ten stubs were
+ * given rules on 2026-10-06.
  */
 
 export type GateStatus = "GREEN" | "RED" | "PENDING";
