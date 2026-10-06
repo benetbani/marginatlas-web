@@ -2822,6 +2822,20 @@
       "claims": []
     },
     {
+      "name": "hero-still",
+      "script": "tests/trust/hero_still.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE HERO HOLDS STILL (his ruling of 2026-10-07: scrolling the home's hero, it \"keeps moving upwards in an unnatural way\").",
+      "reads": [
+        "src/app/globals.css",
+        "src/app/page.tsx",
+        "src/components/RotatingWord.tsx",
+        "src/components/spine/home/home-view.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-place-words",
       "script": "tests/copy/no_place_words.test.ts",
       "args": [],

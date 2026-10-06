@@ -306,16 +306,14 @@
     font-feature-settings: "kern" on, "liga" on, "calt" on;
   }
 
-  /* Hero entry animation — gentle fade + slight upward slide. Respects
+  /* Hero entry: a fade only (his ruling of 2026-10-07, the hero must not move upwards; the 8px rise is gone). Respects
      prefers-reduced-motion. (Track BB.8) */
   @keyframes hero-rise {
     from {
       opacity: 0;
-      transform: translateY(8px);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
     }
   }
   @media (prefers-reduced-motion: no-preference) {

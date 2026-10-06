@@ -390,18 +390,12 @@ export default async function HomePage() {
             <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-ink-900 leading-[1.08] text-balance">
               How much does a{" "}
               <span className="text-atlas-700">
-                <RotatingWord
-                  words={HERO_BUSINESSES as unknown as string[]}
-                  interval={2000}
-                />
+                <RotatingWord words={HERO_BUSINESSES as unknown as string[]} />
               </span>{" "}
               make in{" "}
               <span className="text-atlas-700">
-                <RotatingWord
-                  words={HERO_CITIES as unknown as string[]}
-                  interval={2000}
-                  offset={1000}
-                />
+                {/* Both words change together (his ruling of 2026-10-07): offset by a second, something moved every second. */}
+                <RotatingWord words={HERO_CITIES as unknown as string[]} />
               </span>
               ?
             </h1>

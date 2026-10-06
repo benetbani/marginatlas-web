@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 
 /**
- * Slot-machine-style rotating word.
- * Drops the current word down + fades it out, then rises the next word
- * from below + fades it in. Tailwind transitions only — no animation lib.
+ * A word that changes in place: the current word fades out and the next fades in, at the same spot (2026-10-07: no slide).
+ * Tailwind transitions only, no animation library.
  */
 type Props = {
   words: string[];
@@ -18,7 +17,7 @@ type Props = {
 
 export function RotatingWord({
   words,
-  interval = 2000,
+  interval = 3500,
   offset = 0,
   className = "",
 }: Props) {
@@ -58,10 +57,9 @@ export function RotatingWord({
     };
   }, [words.length, interval, offset]);
 
-  const transform =
-    phase === "in"
-      ? "translate-y-0 opacity-100"
-      : "translate-y-2 opacity-0";
+  /* THE WORD CHANGES IN PLACE (his ruling of 2026-10-07: the hero "keeps moving upwards in an unnatural way"). It slid down
+     and rose from below every two seconds in each of the hero's two slots; it now only fades, so nothing in the headline moves. */
+  const transform = phase === "in" ? "opacity-100" : "opacity-0";
 
   // CitiesFix2 sec 2: pick the widest candidate word once and use it as
   // the spacer so the static prefix and suffix never move horizontally
