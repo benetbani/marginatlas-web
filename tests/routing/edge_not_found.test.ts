@@ -231,5 +231,20 @@ check("a photograph on the bare domain is served there, not redirected, as befor
 check("Next's own files never reach the middleware: /_next/static, /_next/image", !reaches("/_next/static/chunks/main.js") && !reaches("/_next/image"), MW);
 check("a page still reaches it: /gb/london", reaches("/gb/london"), MW);
 
+/* THE PREFIXES THE RATE LIMIT SKIPS (2026-10-06). Its block holds every 404 below it, so its skip of /api/, /_next and /static
+   skipped those too: /api/x.y, /api/x.php, /_next/x.y and /static/x.y fell to the country route and drew its soft 404 at 200
+   on production. A file the site does not serve answers 404 there too; an API route answers as it did. */
+for (const p of ["/api/x.y", "/api/x.php", "/_next/x.y", "/static/x.y"]) {
+  check(`a made-up file under a prefix the rate limit skips answers 404: ${p}`, pinned(p), MW);
+}
+for (const p of ["/api/cell-lookup", "/api/export-csv", "/api/stripe/webhook"]) {
+  check(`an API route passes as it did: ${p}`, passed(p), MW);
+}
+/* The premise there: no API route takes a dotted part, every one a static folder with no dot in its name. */
+const apiFolders = (dir: string): string[] =>
+  readdirSync(dir, { withFileTypes: true }).filter((e) => e.isDirectory()).flatMap((e) => [`${dir}/${e.name}`, ...apiFolders(`${dir}/${e.name}`)]);
+const apiDotted = apiFolders("src/app/api").filter((d) => /\[|\./.test(d.slice("src/app/api".length)));
+check(`every API route is a static folder with no dot in its name${apiDotted.length ? `: ${apiDotted.join(", ")}` : ""}`, apiDotted.length === 0, MW);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("routing/edge_not_found: all pass");

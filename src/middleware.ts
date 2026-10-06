@@ -29,7 +29,7 @@ import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
 import { cityPathFor } from "@/lib/cities/city_path";
-import { edgeNotFound, legacyHoodTarget } from "@/lib/routing/edge_not_found";
+import { edgeNotFound, fileNotServed, legacyHoodTarget } from "@/lib/routing/edge_not_found";
 import { SERVED_FILES } from "@/lib/routing/served_files";
 import { proRewrite } from "@/lib/monetization/pro_route";
 import { isPaywallOn } from "@/lib/feature_flags";
@@ -447,6 +447,14 @@ export function middleware(req: NextRequest) {
   const isCellPage = /^\/[a-z]{2,3}\/[^/]+\/[^/]+$/i.test(path);
   if ((path.startsWith("/api/") || isCellPage) && looksLikeBareScraper(req)) {
     return new NextResponse("Forbidden", { status: 403 });
+  }
+
+  // 2b. A file the site does not serve, under a prefix the rate limit below skips. That block holds every 404 pin, so its skip
+  // of /_next, /static and /api/ skipped those too, and /api/x.y, /_next/x.y and /static/x.y fell to the country route and
+  // drew its soft 404 at 200 (2026-10-06). Only the file rule here: no API route takes a dotted part, Next's own files never
+  // reach the middleware (the matcher) and nothing is served from /static.
+  if ((path.startsWith("/_next") || path.startsWith("/static") || path.startsWith("/api/")) && fileNotServed(path)) {
+    return NextResponse.rewrite(req.nextUrl, { status: 404, request: { headers: withPathname(req, path) } });
   }
 
   // 3. Soft rate limit on page navigation (skip _next + api assets)

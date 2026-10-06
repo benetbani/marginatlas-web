@@ -2544,6 +2544,7 @@
       "reads": [
         "public/",
         "src/app/[country]/[geo]",
+        "src/app/api",
         "src/lib/routing/edge_not_found.ts",
         "src/middleware.ts"
       ],
