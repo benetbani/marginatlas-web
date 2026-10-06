@@ -18,6 +18,9 @@ import { Box, Rail } from "@/components/spine/kit";
 import { Focal } from "@/components/spine/country/focal";
 import { FactRows } from "@/components/spine/archetypes/FactRows";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
+import { Ring } from "@/components/spine/archetypes/Ring";
+import { WorldRangeRows } from "@/components/spine/charts/WorldRange";
+import { usd } from "@/lib/spine/money";
 import { provAttrs } from "@/lib/spine/provenance";
 import { buildHomeAnswers, buildAtlasHolds, type HomeAnswer, type AtlasHolds as AtlasHoldsData } from "@/lib/spine/home_answers";
 import { CityCards } from "@/components/spine/archetypes/CityCards";
@@ -82,11 +85,12 @@ function HomeSearch() {
 
 /* THE UK'S ANSWERS, EACH A DOOR TO ITS SECTION OF /gb (masterplan step 34): the section's name and figure as /gb prints them
    (src/lib/spine/home_answers.ts), stamped with where the figure came from, the whole card the link (it keeps its box: a door).
-   The tax burden takes the page's one 40 in the accent and the masthead's own bar; the trades and the years their 30 in ink and
-   rows, /gb's first three trades and its curve's years before the last (clause 65: a figure is never alone; clause 64: one
-   drawing on the level); the answer's rows are the masthead's first two other taxes (step 37). The three end level: the zone
-   stretches them (`even`) and each card's rows stand at its foot. Each card written out with its own id and archetypes, so the
-   census and the coverage gate read it. */
+   ONE NAME, ONE FIGURE, ONE LINE A CARD (his instruction of 2026-10-07, "reform home drastically"): the rows went, and what
+   stands beside each figure is its drawing, which says it again without a word (clause 65, a figure is never alone): the tax
+   burden's 40 in the accent over the masthead's own bar, the middle trade's 30 on the range of London's trades, the share still
+   trading as a ring with its figure inside. The three end level: the zone stretches them (`even`) and each drawing stands at its
+   card's foot, so the height a shorter card is given opens above the drawing and never pools under it. Each card written out
+   with its own id and archetypes, so the census and the coverage gate read it. */
 const DOOR = "tap-y flex h-full flex-col text-[var(--c-ink)] no-underline";
 
 function TaxAnswer({ a }: { a: HomeAnswer }) {
@@ -101,12 +105,10 @@ function TaxAnswer({ a }: { a: HomeAnswer }) {
           <p data-focal-words="" className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{a.words}</p>
         </div>
         {a.bar ? (
-          <div data-answer-bar className="mb-4 max-w-[28ch]">
+          <div data-answer-bar className="mt-auto max-w-[28ch]">
             <SegmentBar bare label={a.bar.aria} value={a.bar.value} figure={a.figure} unit="" part={a.bar.part} rest={a.bar.rest} />
           </div>
         ) : null}
-        {/* The masthead's two other taxes (masterplan step 37), at the card's foot like the other doors' rows. */}
-        <FactRows className="mt-auto" rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, note: r.note, prov: r.prov }))} />
       </a>
     </Box>
   );
@@ -118,7 +120,11 @@ function TradesAnswer({ a }: { a: HomeAnswer }) {
       <a href={a.href} data-lands={a.lands} className={DOOR}>
         <Rail icon={a.icon} kicker={a.kicker} />
         <Focal figure={a.figure} words={a.words} prov={a.prov} />
-        <FactRows className="mt-auto" rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, icon: r.icon, prov: r.prov }))} />
+        {a.range ? (
+          <div className="mt-auto">
+            <WorldRangeRows headless rows={[{ key: "trades", label: a.kicker, display: a.figure, value: a.range.range.median, range: a.range.range, fmt: usd, hairlines: a.range.values, among: COPY.home.tradesAmong }]} />
+          </div>
+        ) : null}
       </a>
     </Box>
   );
@@ -129,8 +135,13 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
     <Box id="years" keep className="flex flex-col">
       <a href={a.href} data-lands={a.lands} className={DOOR}>
         <Rail icon={a.icon} kicker={a.kicker} />
-        <Focal figure={a.figure} words={a.words} prov={a.prov} />
-        <FactRows className="mt-auto" rows={(a.rows ?? []).map((r) => ({ key: r.key, label: r.label, value: r.value, prov: r.prov }))} />
+        {a.ring != null ? (
+          <div className="mt-auto">
+            <Ring value={a.ring} figure={a.figure} caption={a.words} prov={a.prov} />
+          </div>
+        ) : (
+          <Focal figure={a.figure} words={a.words} prov={a.prov} />
+        )}
       </a>
     </Box>
   );

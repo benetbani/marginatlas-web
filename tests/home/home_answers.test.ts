@@ -2,7 +2,9 @@
  * THE UK'S HEADLINE ANSWERS ON THE HOME PAGE (milestone 3, masterplan step 34; his ruling 11 of 2026-09-26: "a place-and-trade
  * search, then the UK's headline answers"). Each answer is the same figure, under the same name, in the same unit, as the /gb
  * section it opens, read from the same builder and checked against /gb's own render; each carries where it came from; each
- * section is a door to that section of /gb; the answer is the page's one 40.
+ * section is a door to that section of /gb; the answer is the page's one 40. Since his instruction of 2026-10-07 ("reform home
+ * drastically"): one name, one figure, one line a card, no rows, and each figure drawn (the masthead's bar, the range of
+ * London's trades, a ring), so no card is a lone figure (clause 65).
  *
  * Run: npx tsx tests/home/home_answers.test.ts
  */
@@ -28,18 +30,16 @@ const by = (k: string) => answers.find((a) => a.key === k);
 const board = buildHeroBoard("GB");
 const a = by("answer");
 check(`the UK's answer is the masthead's: "${board.answer?.label}" ${board.answer?.value}, ${board.answerBasis}`, !!a && a.kicker === board.answer?.label && a.figure === board.answer?.value && a.words === board.answerBasis && a.prov?.src === board.answer?.prov?.src);
-/* Its rows (masterplan step 37): the masthead's first two other taxes, the same names and rates as /gb's plus, so the three doors
-   end level (MODEL PART 10.5); corporation tax says it is a company's, since the answer's basis is a sole trader. */
-const others = (board.taxes ?? []).slice(0, 2);
-check(`the UK's answer carries the masthead's first two other taxes (${others.map((r) => `${r.label} ${r.value}`).join(", ")}), each stamped`, !!a && others.length === 2 && JSON.stringify(a.rows?.map((r) => [r.label, r.value])) === JSON.stringify(others.map((r) => [r.label, r.value])) && (a.rows ?? []).every((r) => !!r.prov?.src && !!r.prov?.kind));
-check("corporation tax says it is a company's; VAT keeps the masthead's threshold", !!a && a.rows?.find((r) => r.key === "corporation_tax")?.note === COPY.home.answerNotes.companyOnly && !!others.find((r) => r.key === "vat")?.note && a.rows?.find((r) => r.key === "vat")?.note === others.find((r) => r.key === "vat")?.note);
+check("the UK's answer is drawn with the masthead's own bar", !!a && !!a.bar && !!board.answerBar && a.bar.value === board.answerBar.value && a.bar.part === board.answerBar.part && a.bar.rest === board.answerBar.rest);
 const sales = buildLondonTradeSales();
 const t = by("trades");
 check(`what London's trades take is /gb's middle trade, ${sales ? usd(londonMiddleSales(sales)) : "none"}`, !!t && !!sales && t.figure === usd(londonMiddleSales(sales)) && t.kicker === COPY.londonSales.kicker && t.words === COPY.londonSales.focalWords);
-check("its four rows are /gb's first four, the same names, values and sources", !!t && !!sales && JSON.stringify(t.rows?.map((r) => [r.label, r.value, r.prov?.src])) === JSON.stringify(sales.rows.slice(0, 4).map((r) => [r.name, usd(r.value), r.prov?.src])));
+const sorted = sales ? sales.rows.map((r) => r.value).sort((x, z) => x - z) : [];
+check(`it is drawn on the range of /gb's ${sorted.length} London trades, their lowest to their highest, every trade a hairline, the marker at the middle`, !!t?.range && !!sales && t.range.range.min === sorted[0] && t.range.range.max === sorted[sorted.length - 1] && t.range.range.median === londonMiddleSales(sales) && t.range.range.count === sorted.length && JSON.stringify(t.range.values) === JSON.stringify(sorted) && t.range.range.p25 <= t.range.range.median && t.range.range.median <= t.range.range.p75);
 const surv = buildSurvival("GB");
 const y = by("years");
 check(`who is still trading is /gb's, ${surv ? `${Math.round(surv.last.pct)}% after ${surv.last.year} years` : "none"}`, !!y && !!surv && y.figure === `${Math.round(surv.last.pct)}%` && y.kicker === COPY.firstYears.kicker && y.words === COPY.firstYears.focalWords.replace("{n}", String(surv.last.year)));
+check("its share is drawn as a ring, the cohort's own last point", !!y && !!surv && y.ring === surv.last.pct);
 check("every answer says where its figure came from", answers.every((x) => !!x.prov?.src && !!x.prov?.kind));
 check("each is a door to its section of /gb (#take, #money, #first-years)", JSON.stringify(answers.map((x) => x.href)) === JSON.stringify(["/gb#take", "/gb#money", "/gb#first-years"]));
 
@@ -54,8 +54,11 @@ for (const x of answers) {
   check(`the home page's ${x.key} prints ${x.figure}, stamped, behind a door to ${x.href}`, home.includes(`id="${x.id}"`) && text(card).includes(`|${x.figure}|`) && new RegExp(`data-src="${x.prov.src.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`).test(card) && card.includes(`href="${x.href}"`) && /data-lands="[a-z-]+"/.test(card));
 }
 check("the home page holds one 40, the UK's answer", (home.match(/data-hero-figure/g) ?? []).length === 1);
-const answerCard = home.slice(home.indexOf('id="answer"'), home.indexOf('id="trades"'));
-check(`the answer's card prints the two other taxes (${others.map((r) => r.value).join(", ")})`, others.length === 2 && others.every((r) => text(answerCard).includes(`|${r.value}|`)));
+/* One figure a card and its drawing (his instruction of 2026-10-07; clause 65): no rows, a drawing in each. */
+const cardOf = (id: string, next: string | null) => home.slice(home.indexOf(`id="${id}"`), next ? home.indexOf(`id="${next}"`) : home.indexOf(`id="${id}"`) + 6000);
+const cardsHtml = [cardOf("answer", "trades"), cardOf("trades", "years"), cardOf("years", null)];
+check("no answer card prints rows (FactRows), and each holds a drawing", cardsHtml.every((c) => !/data-archetype="fact-rows"/.test(c) && /data-visual="1"/.test(c)));
+check("the answer's bar, the trades' range and the years' ring are drawn", /data-archetype="segment-bar"/.test(cardsHtml[0]) && /data-archetype="world-range"/.test(cardsHtml[1]) && /data-archetype="ring"/.test(cardsHtml[2]));
 const ia = home.indexOf('id="answer"');
 const zs = home.lastIndexOf("<section data-zone", ia);
 check("the answers' level ends level: its three doors stretch to one height (MODEL PART 10.5)", ia > 0 && zs >= 0 && /data-zone-even/.test(home.slice(zs, ia)));

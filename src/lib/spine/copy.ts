@@ -2695,8 +2695,8 @@ export const COPY = {
     h1: { lead: "How much does a", middle: "make in" },
     searchLabel: "Search",
     answersLabel: "The UK's answers",
-    /** The answer's two other taxes (masterplan step 37): the answer's basis is a sole trader, so corporation tax says whose it is. */
-    answerNotes: { companyOnly: "if you form a company" },
+    /** The set the middle trade's track is drawn on, for its spoken label only (src/lib/spine/home_answers.ts, `range`). */
+    tradesAmong: "London's trades",
     citiesLabel: "The UK's cities",
     /** The level of the duel and the ranked list (P36.2 and P36.2b), both from the registers' feed. */
     registersLabel: "From the registers",

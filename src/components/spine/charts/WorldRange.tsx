@@ -45,6 +45,8 @@ export type WorldRangeRow = {
    *  under the small-business loan rate), a small ink triangle above the track at its value, named in the key line with its
    *  figure. Above the track, so it never sits on a peer's ring or the country's dot. */
   refs?: Array<{ key: string; label: string; value: number; /** As the source states it ("3.75%": a rate set in quarter points is never "3.8%"). */ display?: string }> | null;
+  /** What the range is the range of, for the track's spoken label, where it is not the world (the home page's "London's trades"). */
+  among?: string;
 };
 
 /** A LOG TRACK'S SCALE MARKS (2026-10-04, the design review: "the scale is logarithmic but only 1.3% and 78% are labelled, so
@@ -119,7 +121,7 @@ function Track({ r, range, scale, headless, ends }: { r: WorldRangeRow; range: W
   const high = ends && own === r.fmt(range.max) ? ends.highest : r.fmt(range.max);
   return (
           <>
-            <div className={`relative ${r.refs && r.refs.length ? "mt-4" : headless ? "mt-1" : "mt-3"} h-3`} role="img" aria-label={`${r.label}: ${r.display}${r.unit ? ` ${r.unit}` : ""}; the world from ${r.fmt(range.min)} to ${r.fmt(range.max)}${r.peers && r.peers.length ? `; ${r.peers.map((p) => `${p.name} ${r.fmt(p.value)}`).join(", ")}` : ""}${r.refs && r.refs.length ? `; ${r.refs.map((x) => `${x.label} ${x.display ?? r.fmt(x.value)}`).join(", ")}` : ""}`}>
+            <div className={`relative ${r.refs && r.refs.length ? "mt-4" : headless ? "mt-1" : "mt-3"} h-3`} role="img" aria-label={`${r.label}: ${r.display}${r.unit ? ` ${r.unit}` : ""}; ${r.among ?? "the world"} from ${r.fmt(range.min)} to ${r.fmt(range.max)}${r.peers && r.peers.length ? `; ${r.peers.map((p) => `${p.name} ${r.fmt(p.value)}`).join(", ")}` : ""}${r.refs && r.refs.length ? `; ${r.refs.map((x) => `${x.label} ${x.display ?? r.fmt(x.value)}`).join(", ")}` : ""}`}>
               <span aria-hidden className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--c-soft2)]" />
               <span aria-hidden data-track-band className="absolute top-1/2 h-2 -translate-y-1/2 rounded-full bg-[var(--c-border)]" style={{ left: `${a}%`, width: `${Math.max(1, b - a)}%` }} />
               {/* THE COUNTRIES THE RANGE WAS COUNTED FROM, one hairline each, in one drawing (a mark per country would be 197 nodes):

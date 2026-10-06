@@ -23,8 +23,10 @@
  * a hundred, a share under a quarter) and the page laws.
  */
 import * as React from "react";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
-export function Ring({ value, figure, caption, accent = false }: { value: number; figure: string; caption?: string; accent?: boolean }) {
+/** `prov` stamps the figure inside the ring with where it came from (plan 06, task B5), as every other figure is stamped. */
+export function Ring({ value, figure, caption, accent = false, prov }: { value: number; figure: string; caption?: string; accent?: boolean; prov?: Provenance | null }) {
   if (!Number.isFinite(value) || value <= 0) return null;
   const share = Math.min(1, value / 100);
   const r = 44, c = 2 * Math.PI * r;
@@ -37,7 +39,7 @@ export function Ring({ value, figure, caption, accent = false }: { value: number
           <circle r={r} cx="60" cy="60" fill="none" stroke="var(--terra)" strokeWidth="14" strokeDasharray={`${len} ${c - len}`} strokeDashoffset={c / 4} strokeLinecap={share >= 1 ? "butt" : "round"} data-sweep />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{figure}</span>
+          <span className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</span>
         </div>
       </div>
       {caption ? <div data-mark-label className="mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{caption}</div> : null}
