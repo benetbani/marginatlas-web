@@ -25,7 +25,8 @@ let failed = 0;
 const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
 
 const answers = buildHomeAnswers("GB");
-check(`three answers, in the page's order (${answers.map((a) => a.key).join(", ")})`, JSON.stringify(answers.map((a) => a.key)) === JSON.stringify(["answer", "trades", "years"]));
+/* The trades last (2026-10-07): from 768 to 1023 the third card takes the whole row, and only the trades' range fills it. */
+check(`three answers, in the page's order (${answers.map((a) => a.key).join(", ")})`, JSON.stringify(answers.map((a) => a.key)) === JSON.stringify(["answer", "years", "trades"]));
 const by = (k: string) => answers.find((a) => a.key === k);
 
 const board = buildHeroBoard("GB");
@@ -45,7 +46,7 @@ const y = by("years");
 check(`who is still trading is /gb's, ${surv ? `${Math.round(surv.last.pct)}% after ${surv.last.year} years` : "none"}`, !!y && !!surv && y.figure === `${Math.round(surv.last.pct)}%` && y.kicker === COPY.firstYears.kicker && y.words === COPY.home.lines.years.replace("{n}", String(surv.last.year)));
 check("its share is drawn as a ring, the cohort's own last point", !!y && !!surv && y.ring === surv.last.pct);
 check("every answer says where its figure came from", answers.every((x) => !!x.prov?.src && !!x.prov?.kind));
-check("each is a door to its section of /gb (#take, #money, #first-years)", JSON.stringify(answers.map((x) => x.href)) === JSON.stringify(["/gb#take", "/gb#money", "/gb#first-years"]));
+check("each is a door to its section of /gb (#take, #first-years, #money)", JSON.stringify(answers.map((x) => x.href)) === JSON.stringify(["/gb#take", "/gb#first-years", "/gb#money"]));
 
 /* Against the renders: /gb prints the same figures, and the home page prints them stamped, as doors, with one 40. */
 const text = (h: string) => h.replace(/<[^>]+>/g, "|").replace(/\|+/g, "|");
@@ -60,9 +61,10 @@ for (const x of answers) {
 check("the home page holds one 40, the UK's answer", (home.match(/data-hero-figure/g) ?? []).length === 1);
 /* One figure a card and its drawing (his instruction of 2026-10-07; clause 65): no rows, a drawing in each. */
 const cardOf = (id: string, next: string | null) => home.slice(home.indexOf(`id="${id}"`), next ? home.indexOf(`id="${next}"`) : home.indexOf(`id="${id}"`) + 6000);
-const cardsHtml = [cardOf("answer", "trades"), cardOf("trades", "years"), cardOf("years", null)];
+const cardsHtml = [cardOf("answer", "years"), cardOf("years", "trades"), cardOf("trades", null)];
+check("the render draws the three in that order", home.indexOf('id="answer"') < home.indexOf('id="years"') && home.indexOf('id="years"') < home.indexOf('id="trades"'));
 check("no answer card prints rows (FactRows), and each holds a drawing", cardsHtml.every((c) => !/data-archetype="fact-rows"/.test(c) && /data-visual="1"/.test(c)));
-check("the answer's bar, the trades' range and the years' ring are drawn", /data-archetype="segment-bar"/.test(cardsHtml[0]) && /data-archetype="world-range"/.test(cardsHtml[1]) && /data-archetype="ring"/.test(cardsHtml[2]));
+check("the answer's bar, the years' ring and the trades' range are drawn", /data-archetype="segment-bar"/.test(cardsHtml[0]) && /data-archetype="ring"/.test(cardsHtml[1]) && /data-archetype="world-range"/.test(cardsHtml[2]));
 const ia = home.indexOf('id="answer"');
 const zs = home.lastIndexOf("<section data-zone", ia);
 check("the answers' level ends level: its three doors stretch to one height (MODEL PART 10.5)", ia > 0 && zs >= 0 && /data-zone-even/.test(home.slice(zs, ia)));

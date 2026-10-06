@@ -197,8 +197,9 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const kitchens = buildKitchens();
   const zones: Array<{ key: string; split: ZoneSplit; stack?: "lg"; even?: boolean; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
-    /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, what London's trades take, who is still
-       trading, each a door to its section of /gb. */
+    /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, who is still trading, what London's
+       trades take (last, since 2026-10-07: from 768 to 1023 the third takes the whole row, and only the trades' range fills it),
+       each a door to its section of /gb. */
     ...(answers.length ? [{ key: "answers", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.answersLabel, body: answers.map((a) => <AnswerDoor key={a.key} a={a} />) }] : []),
     /* THE UK'S CITIES, THE WHOLE LEVEL (his instruction of 2026-10-07): the still row of every UK city page, nothing beside it. */
     ...(cities ? [{ key: "cities", split: "wide" as ZoneSplit, label: COPY.home.citiesLabel, body: [<HomeCities key="cities" cards={cities} />] }] : []),

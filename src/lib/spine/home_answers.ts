@@ -6,9 +6,12 @@
  * same unit, as the section of /gb it opens, read from the same builder /gb reads, never a second number for the same thing:
  *
  *   the UK's answer           buildHeroBoard: the total effective tax burden on a sole trader's profit, the page's one 40
- *   what London's trades take buildLondonTradeSales, londonMiddleSales: the middle trade's typical yearly sales, and /gb's first
- *                             four trades
  *   who is still trading      buildSurvival: the share of new firms still trading after the cohort's last year
+ *   what London's trades take buildLondonTradeSales, londonMiddleSales: the middle trade's typical yearly sales
+ *
+ * IN THAT ORDER, THE TRADES LAST (2026-10-07): from 768 to 1023 the level of three stands two and one, the third across the whole
+ * row (zones.tsx, "1-1-1"), and of the three only the trades' card fills a row that wide (its range runs the card's width); the
+ * ring, centred, would leave two blank sides wider than the page filter's hole.
  *
  * Each carries where its figure came from, and the href of the /gb section it summarises (the doors gate reads `lands`).
  *
@@ -106,7 +109,8 @@ export function buildHomeAnswers(iso2 = "GB"): HomeAnswer[] {
       ring: survival.last.pct,
     });
   }
-  return out;
+  const ORDER: HomeAnswer["key"][] = ["answer", "years", "trades"];
+  return ORDER.map((k) => out.find((a) => a.key === k)).filter((a): a is HomeAnswer => !!a);
 }
 
 /* WHAT THE ATLAS HOLDS LEFT THE HOME PAGE (his instruction of 2026-10-07, "reform home drastically"): its counts (252 cities,
