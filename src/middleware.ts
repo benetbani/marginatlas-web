@@ -31,6 +31,7 @@ import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
 import { cityPathFor } from "@/lib/cities/city_path";
 import { edgeNotFound, legacyHoodTarget } from "@/lib/routing/edge_not_found";
+import { SERVED_FILES } from "@/lib/routing/served_files";
 import { proRewrite } from "@/lib/monetization/pro_route";
 import { isPaywallOn } from "@/lib/feature_flags";
 
@@ -218,8 +219,9 @@ function isPlaceWeDoNotHold(path: string): boolean {
      the URLs the site does NOT declare. They are in no sitemap and no route
      manifest, so a check built from declared URLs could never have seen them.
 
-     The matcher in the config at the bottom already excludes png/jpg/svg/webp/
-     gif/ico/woff2/woff, which is why /spine/_skyline.jpeg answers 200 while
+     The matcher in the config at the bottom then excluded png/jpg/svg/webp/
+     gif/ico/woff2/woff (until 2026-10-06; a real one now passes at the
+     middleware's first line), which is why /spine/_skyline.jpeg answered 200 while
      this answered 404. Extensions it does not list, .json here but equally
      .txt, .csv, .xml, .pdf, all fall through to this function. Testing for a
      dot in the last segment closes the class rather than the instance.
@@ -304,6 +306,10 @@ function clientIp(req: NextRequest): string {
   );
 }
 
+/** What the matcher skipped until 2026-10-06, by ending or by name. A real file among these still passes untouched (the first
+ *  lines of the middleware); a made-up one now goes on to the 404 for a file the site does not serve. */
+const ONCE_SKIPPED = /(?:^\/(?:favicon\.ico|robots\.txt|sitemap\.xml)$|\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)$)/;
+
 // --- Plan v13 Wave 4b: split-industry redirects (auto-generated) ---
 /* MOVED to src/lib/taxonomy/legacy_redirects.ts, unchanged, so that
    scripts/gen_retired.ts can read it and collapse redirect chains. See that
@@ -315,6 +321,12 @@ function clientIp(req: NextRequest): string {
 export function routeRequest(req: NextRequest): NextResponse {
   const ua = req.headers.get("user-agent") || "";
   const path = req.nextUrl.pathname;
+
+  // -2. A real image, icon, font or robots.txt passes untouched, first, exactly as when the matcher skipped it by its ending or
+  // name (until 2026-10-06): never redirected, counted against the rate limit or refused to a crawler. The matcher now lets
+  // every such address in, because skipping by ending also skipped the made-up ones: /favicon.ico and /gb/london/x.png drew a
+  // page at 200, the second a synthesized London page.
+  if (ONCE_SKIPPED.test(path) && SERVED_FILES.has(path)) return NextResponse.next();
 
   // -1. Apex → www canonical (Phase F server-side fallback).
   // Primary apex-to-www handling lives in Vercel DNS / project settings,
@@ -591,8 +603,8 @@ function withPathname(req: NextRequest, path: string): Headers {
 }
 
 export const config = {
-  // Run on everything except static assets + favicons + Next internals.
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)).*)",
-  ],
+  // Run on everything except Next's own built files and its image optimizer. Until 2026-10-06 this also skipped every address
+  // ending like an image, an icon or a font, and favicon.ico, robots.txt and sitemap.xml by name, so a made-up one never reached
+  // the 404 for a file the site does not serve; a real one now passes untouched at the middleware's first line (ONCE_SKIPPED).
+  matcher: ["/((?!_next/static|_next/image).*)"],
 };
