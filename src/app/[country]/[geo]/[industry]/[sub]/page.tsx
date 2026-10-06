@@ -33,6 +33,7 @@ import {
   slugToIndustry,
   resolveToMeasuredIndustry,
   tradeNounFor,
+  withArticle,
 } from "@/lib/taxonomy";
 import {
   getNeighborhood,
@@ -486,7 +487,7 @@ async function NeighborhoodCellPageBody({
                     "runs about" is wrong once the value is bounded.
                     Note: `2026-08-08-seo-lattice.md` measurement, FOUND.md item. */}
                 <p className="font-display text-lg font-medium leading-snug text-balance text-ink-900 md:text-xl">
-                  A {tradeNoun} in {nb.name} runs{" "}
+                  {withArticle(tradeNoun, { capital: true })} in {nb.name} runs{" "}
                   {fwMult.clipped ? "at least" : "about"}{" "}
                   {/* THE GREEN IS GONE, 2026-08-17. This read
                       `fwPct > 0 ? "text-moss-700" : "text-atlas-700"`, so every

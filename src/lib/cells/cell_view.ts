@@ -24,6 +24,7 @@ import type { LondonEntry } from "@/lib/scores/cell_board";
 import type { NumberFormatSpec } from "@/components/kit/numberFormat";
 import { CELL_SECTIONS } from "@/lib/page-sections";
 import { isKeepCredible } from "@/lib/finance/keep_credibility";
+import { withArticle } from "@/lib/taxonomy";
 
 /* ----------------------------- output shape ----------------------------- */
 
@@ -269,8 +270,8 @@ export function buildCellView(rawInput: CellViewInput): CellView {
 
   const title =
     moneyShown && isNum(ownerTakeHome)
-      ? `A ${placeName} ${tradeNoun} clears about ${usd(ownerTakeHome)} for its owner in a normal year.`
-      : `What a ${tradeNoun} in ${placeName} really earns.`;
+      ? `${withArticle(placeName, { capital: true })} ${tradeNoun} clears about ${usd(ownerTakeHome)} for its owner in a normal year.`
+      : `What ${withArticle(tradeNoun)} in ${placeName} really earns.`;
 
   // Spread: the cell's measured percentiles, only when money shows.
   /* THE INVENTED LONDON BAND IS GONE (plan 06, task A5, 2026-10-04): it was the typical revenue times 0.5, 0.72, 1.35 and 1.8,
@@ -566,8 +567,8 @@ function buildHonestTake(
     const thin = isNum(netMarginPct) && netMarginPct <= 8;
     const verdict =
       thin && (rentHigh || laborHigh)
-        ? `The headline revenue is real, but a ${placeName} ${tradeNoun} is a wages-and-rent business, not a high-margin one.`
-        : `A ${placeName} ${tradeNoun} can pay its owner well, but only with the costs held tight.`;
+        ? `The headline revenue is real, but ${withArticle(placeName)} ${tradeNoun} is a wages-and-rent business, not a high-margin one.`
+        : `${withArticle(placeName, { capital: true })} ${tradeNoun} can pay its owner well, but only with the costs held tight.`;
     const points: string[] = [];
     if (rentHigh) points.push("Rent in London takes a bigger bite here than almost anywhere else in the country.");
     if (laborHigh) points.push("Skilled staff are hard to keep and the wage floor keeps rising.");
@@ -589,8 +590,8 @@ function buildHonestTake(
   const thin = isNum(netMarginPct) && netMarginPct <= 8;
   return {
     verdict: thin
-      ? `A ${tradeNoun} in ${placeName} runs on a thin margin, so cost discipline is the whole game.`
-      : `A ${tradeNoun} in ${placeName} can pay its owner a real wage when it is run tightly.`,
+      ? `${withArticle(tradeNoun, { capital: true })} in ${placeName} runs on a thin margin, so cost discipline is the whole game.`
+      : `${withArticle(tradeNoun, { capital: true })} in ${placeName} can pay its owner a real wage when it is run tightly.`,
     points: [],
     body: null,
     breakInScore,

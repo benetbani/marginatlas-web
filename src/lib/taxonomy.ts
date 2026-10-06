@@ -1138,6 +1138,28 @@ const NOUN_BY_NAME: Map<string, string> = new Map(
   ALL_INDUSTRIES.filter((i) => i.noun).flatMap((i) => [[String(i.name).trim().toLowerCase(), String(i.noun)] as const, ...(i.short_name ? [[String(i.short_name).trim().toLowerCase(), String(i.noun)] as const] : [])]),
 );
 
+/**
+ * "a" or "an" before a phrase, by the sound of its first word (2026-10-06): sentences put an article before a generated noun or
+ * a place name ("A {tradeNoun} in {place}", "Where to open a {noun}"), and a fixed "a" printed "a electrician" and would print
+ * "A Amsterdam". An initialism is read letter by letter ("an IT services firm", "a UK address"); a silent h takes "an" ("an
+ * hour"); a vowel sounded "you" or "won" takes "a" ("a university", "a euro", "a one-stop shop").
+ */
+export function indefiniteArticle(phrase: string): "a" | "an" {
+  const w = String(phrase || "").trim().split(/\s+/)[0] ?? "";
+  if (!w) return "a";
+  if (/^[A-Z]{2,}\b/.test(w)) return /^[AEFHILMNORSX]/.test(w) ? "an" : "a";
+  const l = w.toLowerCase();
+  if (/^(hour|honest|honou?r|heir)/.test(l)) return "an";
+  if (/^(uni|use|usa|usu|uti|utr|uta|ukr|uga|ufo|eu|ewe|one|once|ur[aeiou])/.test(l)) return "a";
+  return /^[aeiou]/.test(l) ? "an" : "a";
+}
+
+/** The same article with its phrase, capitalised when it opens a sentence: "An electrician", "a news publisher". */
+export function withArticle(phrase: string, opts: { capital?: boolean } = {}): string {
+  const a = indefiniteArticle(phrase);
+  return `${opts.capital ? (a === "an" ? "An" : "A") : a} ${phrase}`;
+}
+
 export function tradeNounFor(name: string): string {
   const own = NOUN_BY_NAME.get(String(name || "").trim().toLowerCase());
   if (own) return own;

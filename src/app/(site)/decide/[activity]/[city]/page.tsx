@@ -36,6 +36,8 @@ import {
   industryToSlug,
   INDUSTRIES,
   isExcludedFromDiscovery,
+  tradeNounFor,
+  withArticle,
 } from "@/lib/taxonomy";
 import { CountryFlag } from "@/components/CountryFlag";
 import {
@@ -136,8 +138,10 @@ export async function generateMetadata({
   // route inherited the root layout's `canonical: "/"`.
   const canonical = `/decide/${activity.toLowerCase()}/${cityRow.slug}`;
   return {
-    title: `Where to open a ${ind.name.toLowerCase()} in ${cityRow.name} | Margin Atlas`,
-    description: `Top neighborhoods ranked by expected net margin for a ${ind.name.toLowerCase()} in ${cityRow.name}.`,
+    /* The trade as a business with its article ("Where to open a restaurant", "an electrician"); the plural name with a fixed
+       "a" read "Where to open a restaurants in London" on every one of these pages until 2026-10-06. */
+    title: `Where to open ${withArticle(tradeNounFor(ind.name) || ind.name.toLowerCase())} in ${cityRow.name} | Margin Atlas`,
+    description: `Top neighborhoods ranked by expected net margin for ${withArticle(tradeNounFor(ind.name) || ind.name.toLowerCase())} in ${cityRow.name}.`,
     alternates: { canonical },
   };
 }
@@ -159,6 +163,8 @@ export default async function DecideWizard({
 }) {
   const { activity, city } = await params;
   const rawInd = slugToIndustry(activity);
+  /* `ind` rolls up to the nearest trade with measured data (cafes to restaurants) for every DATA lookup; the headline names
+     `rawInd`, the trade the reader asked for, as the title above already did (the district trade page's rule of 2026-08-08). */
   const ind = resolveToMeasuredIndustry(rawInd) || rawInd;
   if (!ind) notFound();
 
@@ -246,7 +252,7 @@ export default async function DecideWizard({
         Decision wizard
       </div>
       <h1 className="font-display text-3xl md:text-5xl font-medium tracking-tight text-ink-900 mb-3 leading-tight">
-        Where to open a {ind.name.toLowerCase()} in {cityRow.name}
+        Where to open {withArticle(tradeNounFor((rawInd ?? ind).name) || (rawInd ?? ind).name.toLowerCase())} in {cityRow.name}
       </h1>
       <p className="text-base md:text-lg text-cocoa-700/80 mb-6 max-w-2xl leading-relaxed">
         Every neighborhood in {cityRow.name} ranked by expected NET

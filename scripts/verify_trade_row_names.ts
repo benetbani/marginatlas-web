@@ -35,7 +35,7 @@
  */
 import { readFileSync } from "node:fs";
 import { red } from "./lib/red";
-import { INDUSTRIES, ALL_INDUSTRIES, INDUSTRY_BY_ID, SLUG_TO_INDUSTRY, industryToSlug, tradeRowName, tradeNounFor } from "../src/lib/taxonomy";
+import { INDUSTRIES, ALL_INDUSTRIES, INDUSTRY_BY_ID, SLUG_TO_INDUSTRY, industryToSlug, tradeRowName, tradeNounFor, indefiniteArticle } from "../src/lib/taxonomy";
 import { buildBenchmark } from "../src/lib/spine/benchmark_rows";
 import { marginCardFromSnapshot, snapshotCountries } from "../src/lib/spine/margin_rows";
 
@@ -145,6 +145,18 @@ for (const [id, name] of nounSubjects) {
   if (!noun) fail(`${id} ("${name}") has no noun for "a typical ..."`, "give the trade a `noun` in industries.json");
   else if (ACTIVITY.test(noun)) fail(`${id} ("${name}") reads "a typical ${noun}", an activity and not a business`, "give the trade a `noun` in industries.json: the business as a count noun (\"law firm\", \"tiler\")");
   else if (NOT_A_BUSINESS.test(noun)) fail(`${id} ("${name}") reads "a typical ${noun}", a word the singulariser broke or a thing that is not a business`, "give the trade a `noun` in industries.json: the business as a count noun (\"news publisher\", \"gym\")");
+}
+
+/* 7c. THE ARTICLE BY SOUND (2026-10-06): the sentences that put an article before a trade noun or a place read it from
+   indefiniteArticle(), never a fixed "a" ("Where to open a restaurants", "a electrician"). Its cases, fixed. */
+const ARTICLES: Array<[string, "a" | "an"]> = [
+  ["electrician", "an"], ["restaurant", "a"], ["IT services firm", "an"], ["HVAC firm", "an"], ["UK address", "a"],
+  ["hour", "an"], ["university", "a"], ["euro", "a"], ["one-stop shop", "a"], ["Amsterdam", "an"], ["Utrecht", "a"],
+  ["umbrella", "an"], ["news publisher", "a"], ["optometry practice", "an"],
+];
+for (const [phrase, want] of ARTICLES) {
+  const got = indefiniteArticle(phrase);
+  if (got !== want) fail(`indefiniteArticle("${phrase}") is "${got}", not "${want}"`, "mend indefiniteArticle in src/lib/taxonomy.ts");
 }
 
 if (reds.length) {
