@@ -1122,6 +1122,19 @@
       "claims": []
     },
     {
+      "name": "api-redaction",
+      "script": "tests/monetization/api_redaction.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PUBLIC DATA LEAVES OUT WHAT THE PAGES LOCK (the checkup of 2026-10-06, finding 3): while the paywall is on, a UK cell's rent share, payroll share and wage per employee (the London trade page's loc",
+      "reads": [
+        "src/app/api/cell-lookup/route.ts",
+        "src/app/api/export-csv/route.ts",
+        "src/lib/monetization/api_redaction.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],

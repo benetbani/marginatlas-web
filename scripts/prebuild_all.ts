@@ -421,6 +421,9 @@ const GATES: Gate[] = [
   { name: "pro-route", script: "tests/monetization/pro_route.test.ts" },
   /* A locked UK page says which parts are Pro to search engines, isAccessibleForFree false on .pro-locked (masterplan step 19). */
   { name: "locked-data", script: "tests/monetization/locked_data.test.ts" },
+  /* The public data leaves out what the UK pages lock while the paywall is on: /api/cell-lookup and the cell CSV pass every row
+     through redactForPaywall (the checkup of 2026-10-06, finding 3). */
+  { name: "api-redaction", script: "tests/monetization/api_redaction.test.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "no-slot-counting", script: "scripts/verify_no_slot_counting.ts" },
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },

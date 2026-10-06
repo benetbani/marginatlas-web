@@ -31,7 +31,8 @@ import {
 } from "@/lib/extrapolations/fill_missing";
 import { getLondonEntry } from "@/lib/scores/cell_board";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
-import { isGatingEnabled } from "@/lib/feature_flags";
+import { isGatingEnabled, isPaywallOn } from "@/lib/feature_flags";
+import { redactForPaywall } from "@/lib/monetization/api_redaction";
 
 // Cache for 1 day on Vercel's edge cache
 export const revalidate = 86400;
@@ -316,5 +317,7 @@ export async function GET(req: NextRequest) {
   // Suppress unused-import warning by referencing getTopCells in a no-op path.
   void getTopCells;
 
-  return NextResponse.json({ cell: compact }, { headers: CACHE_HEADERS });
+  /* The figures a UK page locks stay off this public, edge-cached response while the paywall is on (the checkup of 2026-10-06,
+     finding 3; src/lib/monetization/api_redaction.ts). */
+  return NextResponse.json({ cell: redactForPaywall(compact, { paywallOn: isPaywallOn(), country: cell.country }) }, { headers: CACHE_HEADERS });
 }

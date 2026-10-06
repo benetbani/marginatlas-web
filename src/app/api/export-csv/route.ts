@@ -25,7 +25,8 @@ import { deriveCoverageTier } from "@/components/CoverageIndicator";
 // cannot drift. They already did once, on the card's `estimated` gloss.
 import { COVERAGE_TIER_COPY } from "@/lib/coverage_tier_copy";
 import { getSessionTier } from "@/lib/monetization/entitlement";
-import { isGatingEnabled, isAuthEnabled } from "@/lib/feature_flags";
+import { isGatingEnabled, isAuthEnabled, isPaywallOn } from "@/lib/feature_flags";
+import { redactForPaywall } from "@/lib/monetization/api_redaction";
 
 // Slug shape — same as /api/go. Anything that doesn't match returns
 // 400 fast so a malformed param can't burn a Supabase round-trip.
@@ -118,7 +119,10 @@ export async function GET(req: NextRequest) {
   }
 
   type FetchedCell = NonNullable<typeof cell>;
-  function row(c: FetchedCell) {
+  function row(cell: FetchedCell) {
+    /* The wage per employee is a figure a UK page locks: off this public CSV for a UK cell while the paywall is on (the checkup
+       of 2026-10-06, finding 3; src/lib/monetization/api_redaction.ts). */
+    const c = redactForPaywall(cell, { paywallOn: isPaywallOn(), country: cell.country });
     return [
       c.country, c.geo_name || "", c.industry_name || industry, c.year, c.size_band || "",
       deriveCoverageTier(c),
