@@ -32,7 +32,7 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import type { ReactNode } from "react";
 
 /** One lens block, resolved on the server: its key (the anchor), its name and the block itself. */
-type LensEntry = { key: "catalog" | "cost" | "take-home" | "break-in" | "crowding"; label: string; node: ReactNode };
+type LensEntry = { key: "catalog" | "cost" | "take-home" | "crowding"; label: string; node: ReactNode };
 import {
   loadExtremes,
   type ExtremeLeaderboard,
@@ -226,10 +226,8 @@ function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
 /**
  * One lens block: the labelled wrapper that introduces a way of looking at the
  * data (its eyebrow, title, and intro) and then renders the ranked pair beneath
- * it. Every lens block shares this shape so the four reads sit as equals and the
- * filter can show or hide any one of them as a single unit. The leading
- * `border-t` is dropped (`first:border-t-0`) so a block reads cleanly whether it
- * is shown alone under the filter or stacked with the others under "All".
+ * it. Every lens block shares this shape so the four reads sit as equals, each
+ * in its own section, stacked in the founder's reading order.
  */
 function LensBlock({
   eyebrow,
@@ -284,9 +282,7 @@ export default async function ExtremesPage() {
   // Assemble the lens blocks in the founder's reading order, COST-TO-OPEN
   // first, then take-home and crowding. Each lens is included only
   // when it resolved (the same self-omit the blocks already carried), so the
-  // filter offers exactly the lenses a reader can reach. The blocks are
-  // server-rendered here and handed to the client filter as children, so the
-  // page degrades to every block visible when JavaScript does not run.
+  // page draws exactly the lenses a reader can reach, every one a section.
   const lenses: LensEntry[] = [];
   if (hasStartup) {
   /* THE CATALOG LENS, added 2026-08-09, and it is the destination the home page
@@ -399,11 +395,12 @@ export default async function ExtremesPage() {
       </header>
 
       {/* EVERY LENS AS A SECTION, IN ORDER, NO CHIP ROW (QUEUE ui:extremes-chips; his refusals of 2026-09-22 name filter
-         chips). The server resolved every block already; the chips only hid all but one. Each section keeps its anchor. */}
+         chips). The server resolved every block already; the chips only hid all but one. Each section carries its lens key
+         as an anchor, held clear of the sticky masthead as the site's other anchors are (scroll-mt). */}
       {lenses.length > 0 ? (
         <div className="space-y-12 md:space-y-16">
           {lenses.map((l) => (
-            <section key={l.key} id={l.key} aria-label={l.label}>
+            <section key={l.key} id={l.key} aria-label={l.label} className="scroll-mt-32 lg:scroll-mt-24">
               {l.node}
             </section>
           ))}
