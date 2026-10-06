@@ -15,7 +15,7 @@ ice cream shop in West End", "a typical news publisher" and "a typical gym", /gb
 /account). The first build, 56dd5b10, failed after `next build` on the postbuild edge-size guard: the Stripe webhook (a Node
 function) read as "edge" because @sentry/core holds the word EdgeRuntime, 1,028.4 KB against the 1 MB Edge cap; production
 stayed on bd78bb1c; 50ecd9e5 makes the guard read Next's middleware-manifest.json and measure gzipped (three fixtures).
-`launch-day` is 09bff036 on 50ecd9e5, local.** Before that: production was `main` bd78bb1c (deployed about 5:30am on his "Do this", every switch off). His goal of
+`launch-day` is one commit on the local `main`, rebuilt after the deploy (`git log -2 launch-day`), not pushed.** Before that: production was `main` bd78bb1c (deployed about 5:30am on his "Do this", every switch off). His goal of
 the same morning (verbatim in `rules/FOUNDER-VERDICTS.md`, "The deep goal": deeper backend and SaaS functions, planning,
 debugging, the architecture checked, obsolete files removed, the structure solidified, unfinished tasks and cleanups, a better
 home page, a very high standard) was built on website branch **`goal-2026-10-06`**: 30 commits on
@@ -40,8 +40,8 @@ full record, a line per commit). Full chain at 9a9c1085: 252 of 252 in 1,122.7 s
   was live); the exit-intent pop-up deleted; the v34 coverage gate's ten stubs given rules; two stale records corrected.
 
 **His, at launch.** LAUNCH-SWITCHES row 2 now names four migration files in order (the two of 2026-10-06 added); row 3 holds
-custom SMTP and the cross-device sign-in choice. The prepared branch `launch-day` is 09bff036, one commit on the live
-`main` 50ecd9e5 deleting the private line from `.env.production` and adding nothing (rebuilt after the deploy; the sample
+custom SMTP and the cross-device sign-in choice. The prepared branch `launch-day` is one commit on the local `main` (the
+live 50ecd9e5 plus records only) deleting the private line from `.env.production` and adding nothing (rebuilt after the deploy; the sample
 gate passes it as a public site). Rebuild it again if `main` moves before launch day.
 
 **Owner decisions found, none acted on** (the checkup's report names each with its reason): generating the presence manifest
