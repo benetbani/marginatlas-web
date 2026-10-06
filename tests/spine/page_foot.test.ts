@@ -39,7 +39,7 @@ const listed = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pa
 check(`the test reads every page the harness lists (${listed.length})`, listed.length === PAGES.length && listed.every((f: string) => PAGES.some((p) => p.file === f)));
 
 const built = checkedDateFor("GB");
-check(`the UK's checked date is the manifest's build date or nothing (${REGISTER_BUILT ?? "none held"})`, built === (REGISTER_BUILT ?? null));
+check(`the register slices carry the day their export ran (${REGISTER_BUILT ?? "none held"}), and the UK's checked date is it`, REGISTER_BUILT !== null && built === REGISTER_BUILT);
 for (const p of PAGES) {
   const at = `scratchpad/harness/pages/${p.file}.html`;
   if (!existsSync(at)) { check(`${p.file}: rendered`, false); continue; }
