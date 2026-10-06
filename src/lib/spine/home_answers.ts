@@ -15,9 +15,11 @@
  * ONE NAME, ONE FIGURE, ONE LINE A CARD, AND ITS DRAWING (his instruction of 2026-10-07, "reform home drastically", the home's
  * words cut by half; clause 65, a figure is never alone). The rows each card carried (two other taxes, four trades, four years)
  * left; what stands beside the figure is a drawing of it, which costs no words: the tax burden's own bar from /gb's masthead,
- * the middle trade's sales on the range of London's trades (every trade a hairline), the share still trading as a ring.
+ * the middle trade's sales on the range of London's trades (every trade a hairline), the share still trading as a ring. The tax
+ * burden's and the years' lines are the short forms of /gb's (COPY.home.lines), the same facts in fewer words.
  */
 import { buildHeroBoard } from "@/lib/spine/hero_board";
+import { ukTaxOnProfit } from "@/lib/spine/uk_tax_on_profit";
 import { buildLondonTradeSales, londonMiddleSales } from "@/lib/spine/country_depth_rows";
 import { buildSurvival } from "@/lib/spine/sections/first_years";
 import { usd } from "@/lib/spine/money";
@@ -60,9 +62,11 @@ export function buildHomeAnswers(iso2 = "GB"): HomeAnswer[] {
   const out: HomeAnswer[] = [];
 
   const board = buildHeroBoard("GB");
-  if (board.answer?.prov && board.answerBasis) {
+  /* The profit the masthead's basis names, from the one function the masthead reads (uk_tax_on_profit.ts), in the short line. */
+  const uk = ukTaxOnProfit();
+  if (board.answer?.prov && board.answerBasis && uk) {
     const bar = board.answerBar ? { value: board.answerBar.value, part: board.answerBar.part, rest: board.answerBar.rest, aria: board.answerBar.aria } : undefined;
-    out.push({ key: "answer", id: "answer", href: "/gb#take", lands, kicker: board.answer.label, icon: "taxes", figure: board.answer.value, words: board.answerBasis, prov: board.answer.prov, ...(bar ? { bar } : {}) });
+    out.push({ key: "answer", id: "answer", href: "/gb#take", lands, kicker: board.answer.label, icon: "taxes", figure: board.answer.value, words: COPY.home.lines.answer.replace("{profit}", usd(uk.profitUsd)), prov: board.answer.prov, ...(bar ? { bar } : {}) });
   }
 
   const sales = buildLondonTradeSales();
@@ -88,7 +92,7 @@ export function buildHomeAnswers(iso2 = "GB"): HomeAnswer[] {
   const survival = buildSurvival("GB");
   if (survival) {
     const figure = `${Math.round(survival.last.pct)}%`;
-    const words = COPY.firstYears.focalWords.replace("{n}", String(survival.last.year));
+    const words = COPY.home.lines.years.replace("{n}", String(survival.last.year));
     out.push({
       key: "years",
       id: "years",

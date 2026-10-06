@@ -2695,6 +2695,10 @@ export const COPY = {
     h1: { lead: "How much does a", middle: "make in" },
     searchLabel: "Search",
     answersLabel: "The UK's answers",
+    /** THE ANSWERS' SHORT LINES (his instruction of 2026-10-07: one short line a card). The same facts /gb's masthead and curve state
+     *  at length ("on $52K of profit, a sole trader under Self Assessment"; "of new firms still trading after 5 years"), said in
+     *  the fewest words beside the card's name; the trades keep /gb's own line, already short. */
+    lines: { answer: "of a sole trader's {profit} profit", years: "of new firms, after {n} years" },
     /** The set the middle trade's track is drawn on, for its spoken label only (src/lib/spine/home_answers.ts, `range`). */
     tradesAmong: "London's trades",
     citiesLabel: "The UK's cities",

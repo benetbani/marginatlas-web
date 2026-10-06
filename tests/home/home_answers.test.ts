@@ -11,6 +11,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { buildHomeAnswers } from "../../src/lib/spine/home_answers";
 import { buildHeroBoard } from "../../src/lib/spine/hero_board";
+import { ukTaxOnProfit } from "../../src/lib/spine/uk_tax_on_profit";
 import { buildLondonTradeSales, londonMiddleSales } from "../../src/lib/spine/country_depth_rows";
 import { buildSurvival } from "../../src/lib/spine/sections/first_years";
 import { usd } from "../../src/lib/spine/money";
@@ -29,7 +30,10 @@ const by = (k: string) => answers.find((a) => a.key === k);
 
 const board = buildHeroBoard("GB");
 const a = by("answer");
-check(`the UK's answer is the masthead's: "${board.answer?.label}" ${board.answer?.value}, ${board.answerBasis}`, !!a && a.kicker === board.answer?.label && a.figure === board.answer?.value && a.words === board.answerBasis && a.prov?.src === board.answer?.prov?.src);
+check(`the UK's answer is the masthead's: "${board.answer?.label}" ${board.answer?.value}`, !!a && a.kicker === board.answer?.label && a.figure === board.answer?.value && a.prov?.src === board.answer?.prov?.src);
+/* Its line is the short form of the masthead's basis (his instruction of 2026-10-07): the same profit, from the same function. */
+const uk = ukTaxOnProfit();
+check(`its line names the profit the masthead's basis names ("${a?.words}" beside "${board.answerBasis}")`, !!a && !!uk && a.words === COPY.home.lines.answer.replace("{profit}", usd(uk.profitUsd)) && !!board.answerBasis?.includes(usd(uk.profitUsd)));
 check("the UK's answer is drawn with the masthead's own bar", !!a && !!a.bar && !!board.answerBar && a.bar.value === board.answerBar.value && a.bar.part === board.answerBar.part && a.bar.rest === board.answerBar.rest);
 const sales = buildLondonTradeSales();
 const t = by("trades");
@@ -38,7 +42,7 @@ const sorted = sales ? sales.rows.map((r) => r.value).sort((x, z) => x - z) : []
 check(`it is drawn on the range of /gb's ${sorted.length} London trades, their lowest to their highest, every trade a hairline, the marker at the middle`, !!t?.range && !!sales && t.range.range.min === sorted[0] && t.range.range.max === sorted[sorted.length - 1] && t.range.range.median === londonMiddleSales(sales) && t.range.range.count === sorted.length && JSON.stringify(t.range.values) === JSON.stringify(sorted) && t.range.range.p25 <= t.range.range.median && t.range.range.median <= t.range.range.p75);
 const surv = buildSurvival("GB");
 const y = by("years");
-check(`who is still trading is /gb's, ${surv ? `${Math.round(surv.last.pct)}% after ${surv.last.year} years` : "none"}`, !!y && !!surv && y.figure === `${Math.round(surv.last.pct)}%` && y.kicker === COPY.firstYears.kicker && y.words === COPY.firstYears.focalWords.replace("{n}", String(surv.last.year)));
+check(`who is still trading is /gb's, ${surv ? `${Math.round(surv.last.pct)}% after ${surv.last.year} years` : "none"}`, !!y && !!surv && y.figure === `${Math.round(surv.last.pct)}%` && y.kicker === COPY.firstYears.kicker && y.words === COPY.home.lines.years.replace("{n}", String(surv.last.year)));
 check("its share is drawn as a ring, the cohort's own last point", !!y && !!surv && y.ring === surv.last.pct);
 check("every answer says where its figure came from", answers.every((x) => !!x.prov?.src && !!x.prov?.kind));
 check("each is a door to its section of /gb (#take, #money, #first-years)", JSON.stringify(answers.map((x) => x.href)) === JSON.stringify(["/gb#take", "/gb#money", "/gb#first-years"]));
