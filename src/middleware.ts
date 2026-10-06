@@ -20,6 +20,7 @@
  * accidental tool loops get caught.
  */
 
+import { refreshSessionOn } from "@/lib/supabase/middleware_session";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { COUNTRIES } from "@/lib/taxonomy";
@@ -303,7 +304,9 @@ function clientIp(req: NextRequest): string {
    file's header for why that matters. */
 // --- end Plan v13 Wave 4b ---
 
-export function middleware(req: NextRequest) {
+/* The request's route, decided synchronously; the exported `middleware` below adds the session refresh to whatever it returns.
+   Exported so a test can ask for the routing decision without awaiting (tests/routing/metadata_routes.test.ts). */
+export function routeRequest(req: NextRequest): NextResponse {
   const ua = req.headers.get("user-agent") || "";
   const path = req.nextUrl.pathname;
 
@@ -507,6 +510,12 @@ export function middleware(req: NextRequest) {
   }
 
   return NextResponse.next({ request: { headers: withPathname(req, path) } });
+}
+
+/* THE SESSION REFRESH, AFTER THE ROUTE IS DECIDED (the checkup of 2026-10-06, finding 4; src/lib/supabase/middleware_session.ts):
+   a no-op while auth is off and for any request without a session cookie. Kept as a wrapper so the routing above is unchanged. */
+export async function middleware(req: NextRequest): Promise<NextResponse> {
+  return refreshSessionOn(req, routeRequest(req));
 }
 
 // Paths the edge should cache for 6h with 24h stale. Excludes

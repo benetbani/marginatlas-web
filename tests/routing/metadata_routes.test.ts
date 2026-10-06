@@ -18,7 +18,9 @@
  *      npx tsx tests/routing/metadata_routes.test.ts --live
  */
 import { NextRequest } from "next/server";
-import { middleware } from "../../src/middleware";
+/* The middleware's routing decision (since the checkup of 2026-10-06 the exported `middleware` is async: it adds a session refresh
+   that is a no-op with auth off and no session cookie, as here), asked synchronously. */
+import { routeRequest as middleware } from "../../src/middleware";
 import { METADATA_IMAGE_NAMES, metadataAddress, metadataRoutes, requestedAddress } from "../../scripts/lib/metadata_routes.mjs";
 import { red, redSummary } from "../../scripts/lib/red";
 

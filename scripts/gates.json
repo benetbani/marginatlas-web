@@ -1643,6 +1643,18 @@
       "claims": []
     },
     {
+      "name": "session-refresh",
+      "script": "tests/auth/session_refresh.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SESSION REFRESH'S GUARDS (the checkup of 2026-10-06, finding 4; src/lib/supabase/middleware_session.ts).",
+      "reads": [
+        "src/lib/supabase/middleware_session.ts",
+        "src/middleware.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "blog-content",
       "script": "tests/blog/blog_content.test.ts",
       "args": [],

@@ -584,6 +584,9 @@ const GATES: Gate[] = [
      of 2026-10-06: six routes answered any number of requests, and two forms stored IP addresses nothing read). */
   { name: "api-route-limits", script: "tests/api/route_limits.test.ts" },
   { name: "forms-minimal", script: "tests/trust/forms_store_nothing_more.test.ts" },
+  /* The session refresh the middleware now adds touches nothing with auth off, without a session cookie, on a redirect, or
+     without the project's address (the checkup of 2026-10-06, finding 4). */
+  { name: "session-refresh", script: "tests/auth/session_refresh.test.ts" },
   /* The blog's figures (P36.1's rewrites, 2026-10-06): every figure a post prints recomputed from the free data pack, every digit
      covered, no agency named, every link a page that lives, the foot's data the figures' own; and its plants, each rule watched red
      on a broken post (docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4). */

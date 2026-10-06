@@ -25,10 +25,15 @@ export function SignInForm({ initialEmail = "", embedded = false }: { initialEma
   const [status, setStatus] = React.useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
+  /* THE CALLBACK'S FAILURE, SAID (the checkup of 2026-10-06): /auth/callback sends a link that would not open back here with
+     ?error=1, and the page said nothing, so the reader saw the same empty form and no reason. */
+  const [linkFailed, setLinkFailed] = React.useState(false);
 
   React.useEffect(() => {
-    const n = new URLSearchParams(window.location.search).get("next");
+    const params = new URLSearchParams(window.location.search);
+    const n = params.get("next");
     if (n && n.startsWith("/")) setNext(n);
+    if (params.get("error")) setLinkFailed(true);
   }, []);
 
   if (!isAuthEnabled()) {
@@ -94,6 +99,12 @@ export function SignInForm({ initialEmail = "", embedded = false }: { initialEma
         </div>
       ) : (
         <form onSubmit={onSubmit} className="flex flex-col gap-3">
+          {linkFailed && status === "idle" ? (
+            <p className="text-[13px] text-clay-700">
+              That sign-in link did not work. It may have expired, or been opened in a different browser from the one that asked
+              for it. Ask for a new one below.
+            </p>
+          ) : null}
           <input
             type="email"
             required

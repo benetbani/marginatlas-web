@@ -24,6 +24,11 @@ export function lockablePath(path: string): boolean {
 /** A Supabase session cookie, whole or in chunks (`sb-<project>-auth-token`, `.0`, `.1`); its code-verifier sibling is not one. */
 const AUTH_COOKIE = /^sb-[a-z0-9]+-auth-token(\.\d+)?$/;
 
+/** Whether a cookie name is a Supabase session cookie (the middleware's session refresh reads the same rule). */
+export function isSessionCookie(name: string): boolean {
+  return AUTH_COOKIE.test(name);
+}
+
 /** WHERE A SIGNED-IN READER OF A LOCKED UK PAGE GOES (masterplan step 18): `/pro<path>` when the paywall is on, the page locks
  *  and the request carries a session cookie; null otherwise. The mirror asks the account and draws the page open for Pro and
  *  locked for anyone else; a crawler never holds the cookie, so it never reaches the mirror. */
