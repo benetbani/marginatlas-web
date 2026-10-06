@@ -21,7 +21,6 @@ import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 import {
   getNeighborhoodMultiplier,
   hasNeighborhoodIntensity,
-  tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineHoodBody } from "@/components/spine/hood/hood-view";
@@ -172,9 +171,8 @@ export default async function NeighborhoodHub({
           Every neighborhood in {city.name}
         </h1>
         <p className="mt-3 max-w-2xl text-base md:text-lg text-cocoa-700/80">
-          {scheme.neighborhoods.length} sub-areas, each with its own
-          character, anomaly tags, and revenue adjustment for a small
-          business opening here vs the city baseline.
+          {scheme.neighborhoods.length} sub-areas, each with its revenue
+          adjustment for a small business opening here vs the city baseline.
         </p>
       </div>
 
@@ -215,9 +213,9 @@ export default async function NeighborhoodHub({
                252 cities.
 
                So the card is what it always should have been. It IS the
-               district's detail, not a door to it: name, character,
-               multiplier breakdown, trades, streets. Nothing is lost but a
-               404. */
+               district's detail, not a door to it: name, multiplier
+               breakdown, trades, streets (its one-word class left on
+               2026-10-06). Nothing is lost but a 404. */
             <div
               key={n.slug}
               id={n.slug}
@@ -238,22 +236,8 @@ export default async function NeighborhoodHub({
                     <h2 className="font-display text-xl md:text-2xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
                       {n.name}
                     </h2>
-                    <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-paper-100 border border-parchment rounded-full px-2 py-0.5">
-                      {n.character.replace(/-/g, " ")}
-                    </span>
-                    {/* Anomaly tags from the new framework. */}
-                    {hasIntensity &&
-                      mult.appliedTags
-                        .filter((t) => t !== "residential_only")
-                        .slice(0, 3)
-                        .map((t) => (
-                          <span
-                            key={t}
-                            className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5"
-                          >
-                            {tagLabel(t)}
-                          </span>
-                        ))}
+                    {/* The one-word class and the engine's tags stood here as chips until 2026-10-06: the district summed
+                        up in a word or two, which his ruling of 2026-09-07 bars. Nothing stands in their place. */}
                     {flavor && (
                       <span className="text-[10px] uppercase tracking-wide font-semibold text-cocoa-700/60 bg-paper-100 border border-parchment rounded-full px-2 py-0.5">
                         walks {flavor.walkability}

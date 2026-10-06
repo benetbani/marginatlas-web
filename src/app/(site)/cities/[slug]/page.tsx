@@ -47,8 +47,6 @@ import {
 import { CityDistrictPicker, type DistrictSummary } from "@/components/cities/CityDistrictPicker";
 import {
   getNeighborhoodMultiplier,
-  hasNeighborhoodIntensity,
-  tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { getNeighborhoodFlavor } from "@/lib/cities/neighborhood_flavor";
 import {
@@ -272,16 +270,12 @@ export default async function CityPage({
       return {
         slug: n.slug,
         name: n.name,
-        character: n.character,
         blurb: flavor?.character_paragraph ?? n.description ?? null,
         pct: Math.round((mult.final - 1) * 100),
         clipped: mult.clipped,
         commuter: mult.commuter,
         tourism: mult.tourism,
         tags: mult.tags,
-        tagLabels: hasNeighborhoodIntensity(city.slug, n.slug)
-          ? mult.appliedTags.filter((t) => t !== "residential_only").map(tagLabel)
-          : [],
         /* Fifth and last copy of the same broken URL. This one feeds
            CityDistrictPicker's "Everything in {district}" link, which is the
            most prominent of the lot. /{country}/{city}/{district} is the TRADE
@@ -846,9 +840,8 @@ export default async function CityPage({
                           <div className="text-sm font-medium leading-tight text-ink-900 group-hover:text-atlas-700">
                             {n.name}
                           </div>
-                          <div className="mt-1 text-[11px] capitalize text-cocoa-500">
-                            {n.character.replace(/-/g, " ")}
-                          </div>
+                          {/* The one-word class ("tourist core") sat under the name until 2026-10-06; his ruling of
+                              2026-09-07 bars summing a district up in a word or two. */}
                           {streets.length > 0 ? (
                             <div className="mt-2 text-[11px] leading-snug text-cocoa-700">
                               {streets.join(", ")}

@@ -982,23 +982,6 @@ export function getNeighborhoodNetMargin(
   };
 }
 
-/** Human-readable label for a tag, suitable for chips. */
-export function tagLabel(tag: NeighborhoodTag): string {
-  const labels: Record<NeighborhoodTag, string> = {
-    financial_cbd: "Financial CBD",
-    tourist_zone: "Tourist zone",
-    luxury_district: "Luxury district",
-    free_economic_zone: "Free zone",
-    university_district: "University district",
-    industrial_park: "Industrial park",
-    tech_corridor: "Tech corridor",
-    embassy_quarter: "Embassy quarter",
-    medical_cluster: "Medical cluster",
-    transit_hub: "Transit hub",
-    gentrifying_edge: "Gentrifying",
-    nightlife_zone: "Nightlife",
-    religious_pilgrimage: "Pilgrimage",
-    residential_only: "Residential",
-  };
-  return labels[tag];
-}
+/* NO LABEL PER TAG. tagLabel() turned each tag into a chip's one or two words ("Gentrifying", "Financial CBD") and fed
+   them to six pages until 2026-10-06; his ruling of 2026-09-07 bars summing a district up in a word or two, and nothing
+   replaces them. The tags steer the engine above and never reach a page as words (tests/copy/no_place_words.test.ts). */

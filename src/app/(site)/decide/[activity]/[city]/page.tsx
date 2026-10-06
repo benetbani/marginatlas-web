@@ -4,8 +4,10 @@
  * Founder's "where should I open my pharmacy / pet shop" question made
  * concrete. Given an activity + a city, iterates through every
  * neighborhood with curated intensity data, ranks them by NET MARGIN
- * (revenue uplift minus rent drag), and surfaces the top 3 with a
- * rationale derived from the tag set.
+ * (revenue uplift minus rent drag), and surfaces the top 3 with their
+ * figures. (Until 2026-10-06 each carried a stock sentence per tag and the
+ * tags as chips: the district summed up in a word, which his ruling of
+ * 2026-09-07 bars. Nothing replaced them.)
  *
  * 2026-05-26 upgrade:
  *   - Ranks by net margin, not revenue. Times Square revenue uplift is
@@ -39,8 +41,6 @@ import { CountryFlag } from "@/components/CountryFlag";
 import {
   getNeighborhoodNetMargin,
   hasNeighborhoodIntensity,
-  tagLabel,
-  type NeighborhoodTag,
 } from "@/lib/economics/neighborhood_multipliers";
 import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import DecideActivitySelector from "@/components/DecideActivitySelector";
@@ -140,65 +140,6 @@ export async function generateMetadata({
     description: `Top neighborhoods ranked by expected net margin for a ${ind.name.toLowerCase()} in ${cityRow.name}.`,
     alternates: { canonical },
   };
-}
-
-/**
- * Activity-aware rationale from the tag set.
- */
-function rationaleFor(
-  activityId: string,
-  tags: NeighborhoodTag[],
-): string {
-  const active = tags.filter((t) => t !== "residential_only");
-  if (active.length === 0) {
-    return "Baseline residential market. Low rent, steady local demand.";
-  }
-  const primary = active[0];
-
-  const isResidentialActivity = [
-    "pet_stores",
-    "pet_daycare",
-    "pet_walking_sitting",
-    "residential_cleaning",
-    "childcare_daycare",
-    "daycare_preschool",
-    "dental_practices",
-    "auto_repair_shops",
-    "veterinary_pet_care",
-  ].includes(activityId);
-
-  if (isResidentialActivity) {
-    if (active.includes("luxury_district")) {
-      return "Premium pricing absorbs the rent. Wealthy local customers spend more on the category.";
-    }
-    if (active.includes("gentrifying_edge")) {
-      return "Residential market growing, manageable rent, recurring local customer base.";
-    }
-    if (
-      active.includes("financial_cbd") ||
-      active.includes("tourist_zone") ||
-      active.includes("transit_hub")
-    ) {
-      return "Wrong audience: pure commuter / tourist zone, no recurring residents. Rent kills the margin.";
-    }
-  }
-
-  const byTag: Partial<Record<NeighborhoodTag, string>> = {
-    financial_cbd: "Strong daytime worker base. B2B services + lunch trade dominate. Rent high but revenue follows.",
-    tourist_zone: "Visitor footfall is real, but rent often eats the revenue uplift. Works only for impulse + premium.",
-    luxury_district: "Premium pricing on the category absorbs the highest rent in the city.",
-    free_economic_zone: "Special tax + customs regime attracts foreign business and premium retail.",
-    university_district: "Student + faculty demand; price-sensitive on staples, lower rent than the CBD.",
-    industrial_park: "Daytime worker demand; cheap rent; limited residential.",
-    tech_corridor: "Young high-earner residents + offices; rent climbing but tolerated.",
-    embassy_quarter: "Expat customer base + premium pricing tolerated.",
-    medical_cluster: "Hospital workers + patient flow; pharmacy and quick food dominate.",
-    transit_hub: "Massive footfall but rent extreme. Convenience and quick formats only.",
-    gentrifying_edge: "Rising local incomes + lower rent than established zones. Sweet spot for first-movers.",
-    nightlife_zone: "Bar + late-night food economy. Rent moderate; weekend peaks.",
-    religious_pilgrimage: "Pilgrim-driven demand; religious goods and modest categories.",
-  };
-  return byTag[primary] || "Mixed local economy.";
 }
 
 // Build the activity selector options once at module load. Discovery-excluded
@@ -361,7 +302,6 @@ export default async function DecideWizard({
                 const revPct = Math.round((b.revenueMultiplier - 1) * 100);
                 const rentPct = Math.round((b.rentMultiplier - 1) * 100);
                 const { color, tone } = marginLadder(b.neighborhoodNetMargin);
-                const rationale = rationaleFor(ind.id, b.appliedTags);
                 return (
                   <Link
                     key={r.neighborhood.slug}
@@ -388,23 +328,9 @@ export default async function DecideWizard({
                     <h3 className="font-display text-lg font-semibold text-ink-900 leading-tight">
                       {r.neighborhood.name}
                     </h3>
-                    <p className="text-xs text-cocoa-700/80 leading-relaxed flex-1">
-                      {rationale}
-                    </p>
-                    <div className="flex flex-wrap gap-1 pt-1">
-                      {b.appliedTags
-                        .filter((t) => t !== "residential_only")
-                        .slice(0, 3)
-                        .map((t) => (
-                          <span
-                            key={t}
-                            className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5"
-                          >
-                            {tagLabel(t)}
-                          </span>
-                        ))}
-                    </div>
-                    <div className="text-[10px] text-cocoa-700/55 tabular-nums pt-1 border-t border-[rgba(76,39,18,0.06)]">
+                    {/* The district's name and its figures, nothing that sums it up: a stock sentence per tag and the tags as
+                        chips stood here until 2026-10-06 (his ruling of 2026-09-07). The figures keep the card's foot. */}
+                    <div className="mt-auto text-[10px] text-cocoa-700/55 tabular-nums pt-1 border-t border-[rgba(76,39,18,0.06)]">
                       {/* "at least" when the multiplier is the model's 3.0
                           ceiling rather than a reading, the same convention
                           CityDistrictPicker, DivergingBars and the
@@ -435,9 +361,6 @@ export default async function DecideWizard({
                   <tr className="border-b border-[rgba(76,39,18,0.10)]">
                     <th scope="col" className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Neighborhood
-                    </th>
-                    <th scope="col" className="text-left px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
-                      Tags
                     </th>
                     <th scope="col" className="text-right px-4 py-3 text-[11px] uppercase tracking-wide font-semibold text-cocoa-700/85">
                       Revenue
@@ -471,21 +394,6 @@ export default async function DecideWizard({
                               heuristic estimate
                             </div>
                           )}
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex flex-wrap gap-1">
-                            {b.appliedTags
-                              .filter((t) => t !== "residential_only")
-                              .slice(0, 3)
-                              .map((t) => (
-                                <span
-                                  key={t}
-                                  className="text-[10px] uppercase tracking-wide font-semibold text-atlas-700 bg-atlas-50 border border-atlas-200 rounded-full px-2 py-0.5"
-                                >
-                                  {tagLabel(t)}
-                                </span>
-                              ))}
-                          </div>
                         </td>
                         <td className="px-4 py-3 text-right tabular-nums text-ink-800">
                           {/* Same clip qualifier as the cards above. */}

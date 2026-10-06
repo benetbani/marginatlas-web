@@ -41,7 +41,6 @@ import {
 import {
   getNeighborhoodMultiplier,
   hasNeighborhoodIntensity,
-  tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { countryPagePath, resolveGeoPage } from "@/lib/cells/related_links";
@@ -521,18 +520,8 @@ async function NeighborhoodCellPageBody({
                   </span>{" "}
                   on revenue against the rest of the city.
                 </p>
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {fwMult.appliedTags
-                    .filter((t) => t !== "residential_only")
-                    .map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-parchment bg-white px-2.5 py-0.5 text-[11px] font-medium text-cocoa-700"
-                      >
-                        {tagLabel(t)}
-                      </span>
-                    ))}
-                </div>
+                {/* The engine's tags printed here as chips ("Gentrifying", "Nightlife") until 2026-10-06: the district
+                    summed up in a word or two, which his ruling of 2026-09-07 bars. Nothing stands in their place. */}
               </div>
               <dl className="flex shrink-0 gap-x-7 gap-y-3">
                 <div>

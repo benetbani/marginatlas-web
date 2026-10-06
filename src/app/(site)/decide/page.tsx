@@ -38,7 +38,6 @@ import neighborhoodsJson from "../../../../data/cities/neighborhoods_v1.json";
 import {
   getNeighborhoodNetMargin,
   hasNeighborhoodIntensity,
-  type NeighborhoodTag,
 } from "@/lib/economics/neighborhood_multipliers";
 import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import {
@@ -204,35 +203,6 @@ const CITIES_BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 // median of the sourced rows, marked, not a 0.08 typed here.
 const baselineRentShareFor = (activityId: string): number => rentOccupancyShareFor(activityId).share;
 
-// One short, true clause keyed off the winning neighborhood's leading tag. It
-// names WHY this corner keeps the most, in plain language, never a number this
-// module invents (the only number rendered is the resolved net margin).
-function bestCornerWhy(tags: NeighborhoodTag[]): string {
-  const active = tags.filter((t) => t !== "residential_only");
-  if (active.includes("financial_cbd")) {
-    return "the business core wins outright: the work follows the offices, and the rent is earned back";
-  }
-  if (active.includes("luxury_district")) {
-    return "the premium quarter carries it, where pricing power absorbs the steepest rent in the city";
-  }
-  if (active.includes("tourist_zone")) {
-    return "the visitor quarter takes it, where the footfall lifts revenue faster than the rent climbs";
-  }
-  if (active.includes("tech_corridor")) {
-    return "the tech corridor edges ahead: high-earning demand against rent that has not fully caught up";
-  }
-  if (active.includes("gentrifying_edge")) {
-    return "the rising edge clears the centre, where demand is climbing but the rent has not chased it yet";
-  }
-  if (active.includes("nightlife_zone")) {
-    return "the late-night quarter takes it on the evening trade, at a rent the centre cannot match";
-  }
-  if (active.includes("university_district")) {
-    return "the student quarter holds it: steady local demand at a far gentler rent than the core";
-  }
-  return "the quieter address keeps the most, where the rent never outruns the revenue";
-}
-
 type WorkedExample = {
   activity: string;
   city: string;
@@ -240,7 +210,6 @@ type WorkedExample = {
   cityName: string;
   neighborhood: string;
   marginPct: string;
-  why: string;
 };
 
 // Resolve every candidate through the live ranking path; keep only the clean,
@@ -295,7 +264,6 @@ const WORKED_EXAMPLES: WorkedExample[] = WORKED_EXAMPLE_CANDIDATES.map(
       cityName: cityRow.name,
       neighborhood: top.n.name,
       marginPct: (top.breakdown.neighborhoodNetMargin * 100).toFixed(1),
-      why: bestCornerWhy(top.breakdown.appliedTags),
     };
   },
 ).filter((e): e is WorkedExample => e != null);
@@ -414,7 +382,9 @@ export default function DecideLanding() {
                   {q.label}
                 </h3>
                 <p className="flex-1 text-sm leading-relaxed text-graphite">
-                  Best corner: {q.neighborhood}, where {q.why}.
+                  {/* The corner's name, never a clause that sums it up ("the business core wins outright"): a stock
+                      clause per tag stood here until 2026-10-06 (his ruling of 2026-09-07). */}
+                  Best corner: {q.neighborhood}
                 </p>
                 <div className="pt-1 text-[11px] font-medium text-atlas-700">
                   Open the ranking &rarr;

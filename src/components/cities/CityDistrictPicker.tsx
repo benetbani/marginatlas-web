@@ -30,8 +30,6 @@ import { BeatCard } from "@/components/kit/editorial";
 export type DistrictSummary = {
   slug: string;
   name: string;
-  /** "financial-cbd" etc, rendered with the dashes removed. */
-  character: string;
   /** One paragraph. Falls back to the scheme description, then to nothing. */
   blurb: string | null;
   /** Revenue against the city baseline, already rounded, as a percentage. */
@@ -41,8 +39,6 @@ export type DistrictSummary = {
   commuter: number;
   tourism: number;
   tags: number;
-  /** Human tag labels, already resolved and filtered. */
-  tagLabels: string[];
   /** Deep link to the district's own page. */
   href: string;
 };
@@ -117,17 +113,8 @@ export function CityDistrictPicker({
           <h3 className="font-display text-lg font-semibold tracking-tight text-ink-900">
             {open.name}
           </h3>
-          <span className="rounded-full border border-parchment px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-cocoa-700">
-            {open.character.replace(/-/g, " ")}
-          </span>
-          {open.tagLabels.slice(0, 3).map((t) => (
-            <span
-              key={t}
-              className="rounded-full border border-atlas-200 bg-atlas-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-atlas-700"
-            >
-              {t}
-            </span>
-          ))}
+          {/* Its one-word class and the engine's tags stood beside the name as chips until 2026-10-06 (his ruling of
+              2026-09-07: never a district summed up in a word or two). */}
         </div>
 
         {open.blurb ? (

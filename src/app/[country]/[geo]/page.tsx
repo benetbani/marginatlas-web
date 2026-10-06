@@ -284,9 +284,10 @@ async function RegionLandingPageBody({
             <h2 className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900">
               Neighborhoods of {regionLabel}
             </h2>
-            {/* The list of characters this dropped, "financial district,
-                affluent residential, tourist core, industrial", is printed on
-                every card below it as the card's own eyebrow. */}
+            {/* No district summed up in a word: this line once listed the
+                classes ("financial district, affluent residential, tourist
+                core, industrial") and each card printed its own as an eyebrow
+                until 2026-10-06 (his ruling of 2026-09-07). */}
             <p className="mt-2 text-sm text-cocoa-700/80 max-w-2xl">
               City-level numbers, adjusted for each local economy.
             </p>
@@ -297,10 +298,7 @@ async function RegionLandingPageBody({
                   href={`/${country.toLowerCase()}/${geo.toLowerCase()}/${nb.slug}/restaurants`}
                   className="group block rounded-2xl border border-parchment hover:border-atlas-500 bg-white p-5 transition-colors"
                 >
-                  <div className="text-xs uppercase tracking-wide text-cocoa-700/60 font-semibold">
-                    {nb.character.replace(/-/g, " ")}
-                  </div>
-                  <div className="mt-1.5 font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
+                  <div className="font-display text-lg md:text-xl font-medium tracking-tight text-ink-900 group-hover:text-atlas-700 transition-colors">
                     {nb.name}
                   </div>
                   {nb.description && (

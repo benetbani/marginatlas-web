@@ -93,7 +93,6 @@ import { buildCityView, type CityView } from "@/lib/cities/city_view";
 import {
   getNeighborhoodMultiplier,
   getNeighborhoodNetMargin,
-  tagLabel,
 } from "@/lib/economics/neighborhood_multipliers";
 import { rentOccupancyShareFor } from "@/lib/qa/industry_baselines";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
@@ -434,12 +433,11 @@ export async function buildSpineCitySeed(slug: string): Promise<any> {
         baseNetMargin,
         baseRentShare,
       );
-      const primaryTag = mult.appliedTags[0];
-      const character = primaryTag ? tagLabel(primaryTag) : "Residential";
+      /* No `character` on the row: it carried tagLabel(primaryTag), the district summed up in a word ("Gentrifying"),
+         which no card had printed since task 13 and his ruling of 2026-09-07 bars (QUEUE city:invented-words-elsewhere). */
       return {
         name: dist.name,
         slug: dist.slug,
-        character,
         /* rev_vs_city_pct: the revenue multiplier vs the city baseline as a
            percent. THIS WAS EXACTLY 0 IN EVERY ROW until 2026-09-17: the slug
            went in hyphenated, the engine's tables are keyed with underscores,
