@@ -11,7 +11,7 @@
  *
  * usage, from E:/atlas/website:
  *   npm run verify:deploy            the chain, serial, to scratchpad/deploy/chain.txt
- *   npm run verify:deploy -- --build the chain, then `next build` to scratchpad/deploy/build.txt
+ *   npm run verify:deploy -- --build the chain, then next build, then postbuild, each to scratchpad/deploy/
  *
  * It refuses under the chain's memory floor (preflight, exit 2) rather than
  * dying in a browser gate and calling it a failure. A green run is named in
@@ -20,20 +20,36 @@
  * different machine.
  */
 import { spawnSync } from "node:child_process";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { preflight, CHAIN_FLOOR_MB } from "./harness/preflight.mjs";
 
-preflight({ browser: false, name: "verify_deploy", floor: CHAIN_FLOOR_MB });
-
 const build = process.argv.includes("--build");
+const printSteps = process.argv.includes("--print-steps");
+const pkg = JSON.parse(readFileSync("package.json", "utf8"));
+const TSX = [process.execPath, "node_modules/tsx/dist/cli.mjs"];
+
+/* WHAT VERCEL RUNS IS `npm run build`, AND NPM RUNS ITS PRE AND POST HOOKS (2026-10-06): prebuild (the chain), build
+   (next build), postbuild (the edge-size guard). This runner skipped postbuild, so a local --build passed where Vercel's
+   failed on the guard (56dd5b10). The postbuild step is read from package.json, so a new hook is mirrored with no edit. */
+const steps = [
+  { name: "the gate chain, serial", cmd: [...TSX, "scripts/prebuild_all.ts", "--concurrency=1", "--no-bail"], file: "chain.txt" },
+  ...(build ? [{ name: "next build", cmd: [process.execPath, "node_modules/next/dist/bin/next", "build"], file: "build.txt" }] : []),
+  ...(build && pkg.scripts?.postbuild ? [{ name: "postbuild", cmd: ["npm", "run", "postbuild"], file: "postbuild.txt", shell: true }] : []),
+];
+if (printSteps) {
+  for (const s of steps) console.log(`${s.name}: ${s.cmd.join(" ")}`);
+  process.exit(0);
+}
+
+preflight({ browser: false, name: "verify_deploy", floor: CHAIN_FLOOR_MB });
 const out = resolve("scratchpad/deploy");
 mkdirSync(out, { recursive: true });
 
-function step(name, cmd, file) {
+function step(name, cmd, file, shell = false) {
   const t0 = Date.now();
   console.log(`verify:deploy: ${name} ...`);
-  const r = spawnSync(cmd[0], cmd.slice(1), { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const r = spawnSync(cmd[0], cmd.slice(1), { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, shell });
   const text = `$ ${cmd.join(" ")}\n\n${r.stdout ?? ""}${r.stderr ?? ""}`;
   writeFileSync(file, text);
   const secs = ((Date.now() - t0) / 1000).toFixed(0);
@@ -44,9 +60,12 @@ function step(name, cmd, file) {
   return r.status ?? 1;
 }
 
-const TSX = [process.execPath, "node_modules/tsx/dist/cli.mjs"];
-const chain = step("the gate chain, serial", [...TSX, "scripts/prebuild_all.ts", "--concurrency=1", "--no-bail"], resolve(out, "chain.txt"));
-if (chain !== 0) { console.log("verify:deploy: the chain is red; Vercel would fail this push. Read scratchpad/deploy/chain.txt from its === Failures === block."); process.exit(chain); }
-if (!build) { console.log("verify:deploy: chain green. The Next build was not run (add --build; it is minutes and a spare gigabyte)."); process.exit(0); }
-const nb = step("next build", [process.execPath, "node_modules/next/dist/bin/next", "build"], resolve(out, "build.txt"));
-process.exit(nb);
+for (const s of steps) {
+  const code = step(s.name, s.cmd, resolve(out, s.file), s.shell === true);
+  if (code !== 0) {
+    console.log(`verify:deploy: ${s.name} failed; Vercel would fail this push. Read scratchpad/deploy/${s.file}.`);
+    process.exit(code);
+  }
+}
+if (!build) console.log("verify:deploy: chain green. The Next build was not run (add --build; it is minutes and a spare gigabyte).");
+process.exit(0);

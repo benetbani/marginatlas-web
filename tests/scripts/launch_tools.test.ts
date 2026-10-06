@@ -4,6 +4,7 @@
  * bare "/" into a Windows folder ("C:/Program Files/Git/") before node sees it, which the watcher fetched as an unknown
  * scheme for the whole of its deadline. Run: npx tsx tests/scripts/launch_tools.test.ts
  */
+import { spawnSync } from "node:child_process";
 import { watchArgs } from "../../scripts/lib/watch_args.mjs";
 
 let failed = 0;
@@ -23,6 +24,15 @@ check("a path Git Bash rewrote is refused with the remedy", typeof d.error === "
 const e = watchArgs(["--marker=x", "--minutes=3"]);
 check("--minutes is read", e.minutes === 3, JSON.stringify(e));
 check("--marker is read", watchArgs(["--marker=if you form a company"]).marker === "if you form a company");
+
+const withBuild = spawnSync(process.execPath, ["scripts/verify_deploy.mjs", "--build", "--print-steps"], { encoding: "utf8" });
+check(
+  "verify:deploy --build lists the chain, next build, then postbuild, as npm run build runs them",
+  withBuild.status === 0 && /^the gate chain/m.test(withBuild.stdout) && /^next build/m.test(withBuild.stdout) && /^postbuild: npm run postbuild/m.test(withBuild.stdout),
+  (withBuild.stdout + withBuild.stderr).slice(0, 300),
+);
+const chainOnly = spawnSync(process.execPath, ["scripts/verify_deploy.mjs", "--print-steps"], { encoding: "utf8" });
+check("verify:deploy without --build lists the chain alone", chainOnly.status === 0 && !/next build|postbuild/.test(chainOnly.stdout), chainOnly.stdout.slice(0, 300));
 
 if (failed > 0) { console.error(`scripts/launch_tools: ${failed} failure(s). Remedy: make each FAIL line above pass in the file it names (scripts/lib/watch_args.mjs for the flags), then run npx tsx tests/scripts/launch_tools.test.ts`); process.exit(1); }
 console.log("scripts/launch_tools: all pass");
