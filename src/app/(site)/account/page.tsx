@@ -92,11 +92,11 @@ export default async function AccountPage() {
       {/* The plan, above the saved cells (masterplan step 11): Free or Pro, the date that matters, the way to cancel. */}
       <PlanStatus userId={user.id} />
 
+      {/* THE SAVED CELLS, ONLY WHEN THERE ARE ANY (the checkup of 2026-10-06): no page carries a control that saves a cell to the
+          account, so "Star any cell to save it here" pointed at a star that does not exist. The list stays for the day one does. */}
+      {saved.length === 0 ? null : (
       <section className="mt-10">
         <h2 className="font-display text-xl font-semibold text-ink-900">Your saved cells</h2>
-        {saved.length === 0 ? (
-          <p className="mt-3 text-sm text-cocoa-700">Star any cell to save it here.</p>
-        ) : (
           <ul className="mt-5 divide-y divide-parchment border-y border-parchment">
             {saved.map((c) => (
               <li key={`${c.country}/${c.geo}/${c.industry}`}>
@@ -114,8 +114,8 @@ export default async function AccountPage() {
               </li>
             ))}
           </ul>
-        )}
       </section>
+      )}
     </article>
   );
 }
