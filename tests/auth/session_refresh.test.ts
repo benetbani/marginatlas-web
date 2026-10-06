@@ -46,6 +46,8 @@ const page = () => { const r = NextResponse.next(); r.headers.set("Cache-Control
   check("a photograph's address is a file", isFileRequest("/cities/london.jpeg"));
   check("a data-pack file is a file", isFileRequest("/data/uk/2026.10/readme.md"));
   check("a page and an API route are not files", !isFileRequest("/gb") && !isFileRequest("/gb/london/restaurants") && !isFileRequest("/api/cell-lookup"));
+  check("a made-up file the edge answers with a 404 is a file here too (one definition, src/lib/routing/names_file.ts)", isFileRequest("/gb/london/x.y-z") && isFileRequest("/zz/x.") && isFileRequest("/data/uk/2026.10/NOTHING.ABCDEFGHIJKL"));
+  check("only the last part decides", !isFileRequest("/data/uk/2026.10/summary"));
   /* Read from the source, since no offline request can tell a skipped refresh from one that found no session. */
   const src = readFileSync(FILE, "utf8");
   const guard = src.indexOf("if (isFileRequest(req.nextUrl.pathname)) return res;");

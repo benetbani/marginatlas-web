@@ -48,6 +48,7 @@ import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 import { CITY_SLUGS_BY_COUNTRY } from "@/lib/routing/city_paths_generated";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "@/lib/routing/hood_slugs";
 import { SERVED_FILES } from "@/lib/routing/served_files";
+import { namesFile } from "@/lib/routing/names_file";
 import { cityPathFor } from "@/lib/cities/city_path";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 
@@ -89,11 +90,6 @@ export function legacyHoodTarget(path: string): string | null {
   if (!cityPathFor(country, city) || !(NEIGHBORHOOD_SLUGS[city] ?? []).includes(word)) return null;
   if (isSpineReformEnabledFor("hood") && (HOOD_DISTRICT_SLUGS[city] ?? []).includes(word)) return `/cities/${city}/neighborhoods/${word}`;
   return `/cities/${city}/neighborhoods`;
-}
-
-/** The last part of the address has a dot in it: the address names a file, not a page. */
-function namesFile(path: string): boolean {
-  return (String(path ?? "").split("/").filter(Boolean).pop() ?? "").includes(".");
 }
 
 /** A FILE ONLY IF IT IS ONE (2026-10-06): the address names a file and the site serves no such file. The address exactly as the

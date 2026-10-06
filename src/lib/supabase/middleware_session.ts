@@ -23,12 +23,14 @@ import { createServerClient } from "@supabase/ssr";
 import type { NextRequest, NextResponse } from "next/server";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { isSessionCookie } from "@/lib/monetization/pro_route";
+import { namesFile } from "@/lib/routing/names_file";
 
-/** A request for a file (its last path part has an extension: a photograph, a flag, a font, a pack file, a sitemap shard). It
- *  never needs a session, and since the matcher may send every address through the middleware, refreshing on one would
- *  call Supabase for each image a signed-in reader's page loads. */
+/** A request for a file (its last path part has a dot: a photograph, a flag, a font, a pack file, a sitemap shard, or a made-up
+ *  file the edge answers with a 404). It never needs a session, and since the matcher sends every address through the
+ *  middleware, refreshing on one would call Supabase for each image a signed-in reader's page loads. The edge's file rule reads
+ *  the same definition (src/lib/routing/names_file.ts). */
 export function isFileRequest(pathname: string): boolean {
-  return /\.[A-Za-z0-9]{1,10}$/.test(pathname.split("/").pop() ?? "");
+  return namesFile(pathname);
 }
 
 export async function refreshSessionOn(req: NextRequest, res: NextResponse): Promise<NextResponse> {
