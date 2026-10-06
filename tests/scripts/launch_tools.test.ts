@@ -4,20 +4,20 @@
  * bare "/" into a Windows folder ("C:/Program Files/Git/") before node sees it, which the watcher fetched as an unknown
  * scheme for the whole of its deadline. verify:deploy --build runs the steps npm run build runs, in its order. And
  * launch:branch (row 12) rebuilds launch-day as one commit on main that takes the private line out of .env.production and
- * changes nothing else, whatever the file's endings, proven on a throwaway repository with git's system and global config
- * shut out. Run: npx tsx tests/scripts/launch_tools.test.ts
+ * changes nothing else, whatever the file's endings or mode, proven on a throwaway repository with git's system and
+ * global config, ignore and attributes files shut out. Run: npx tsx tests/scripts/launch_tools.test.ts
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync as wf } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { watchArgs } from "../../scripts/lib/watch_args.mjs";
-import { gitEnv, rebuildLaunchBranch, withoutPrivateLine } from "../../scripts/launch_branch.mjs";
+import { LAUNCH_INDEX, gitEnv, rebuildLaunchBranch, refusalLine, withoutPrivateLine } from "../../scripts/launch_branch.mjs";
 
 let failed = 0;
 function check(name: string, ok: boolean, detail = "") {
   if (!ok) failed++;
-  console.log(`${ok ? "PASS" : "FAIL"}  ${name}${detail ? ` :: ${detail}` : ""}`);
+  console.log(`${ok ? "PASS" : "FAIL"}  ${name}${!ok && detail ? ` :: ${detail.trim()}` : ""}`);
 }
 
 const a = watchArgs(["--marker=x", "--url=/"]);
@@ -46,17 +46,22 @@ check(
 );
 
 const refusal = (fn: () => unknown) => {
-  try { fn(); return ""; } catch (err) { return err instanceof Error ? err.message : String(err); }
+  try { fn(); return ""; } catch (err) { return refusalLine(err); }
 };
-check("a file without the private line is refused", refusal(() => withoutPrivateLine("A=1\nB=2\n")) !== "");
-check("a file with the private line twice is refused", refusal(() => withoutPrivateLine("NEXT_PUBLIC_SITE_PRIVATE=1\nNEXT_PUBLIC_SITE_PRIVATE=0\n")) !== "");
+const none = refusal(() => withoutPrivateLine("A=1\nB=2\n"));
+check("a file without the private line is refused", none.includes("found 0"), none);
+const twice = refusal(() => withoutPrivateLine("NEXT_PUBLIC_SITE_PRIVATE=1\nNEXT_PUBLIC_SITE_PRIVATE=0\n"));
+check("a file with the private line twice is refused", twice.includes("found 2"), twice);
 
 /* launch:branch on a throwaway repository: no system config (Git for Windows sets core.autocrlf=true there), an empty
-   global config, and no repository variables inherited from a hook, so the bytes written are the bytes committed. */
+   global config, ignore and attributes file, and no repository variables inherited from a hook, so the bytes written
+   are the bytes committed. */
 const root = mkdtempSync(join(tmpdir(), "launch-branch-"));
 const repo = join(root, "repo");
-const isolated = { GIT_CONFIG_NOSYSTEM: "1", GIT_CONFIG_GLOBAL: join(root, "empty.gitconfig") };
+const empty = join(root, "empty");
+const isolated = { GIT_CONFIG_NOSYSTEM: "1", GIT_CONFIG_GLOBAL: empty };
 const saved = Object.fromEntries(Object.keys(isolated).map((key) => [key, process.env[key]]));
+const cliPath = resolve("scripts/launch_branch.mjs");
 const gitIn = (args: string[]) => execFileSync("git", args, { cwd: repo, env: gitEnv(), encoding: "buffer", stdio: ["pipe", "pipe", "pipe"] });
 const g = (...args: string[]) => gitIn(args).toString("utf8").trim();
 const blobOf = (rev: string) => gitIn(["cat-file", "blob", `${rev}:.env.production`]).toString("latin1");
@@ -65,16 +70,19 @@ const commitEnv = (bytes: string, message: string) => {
   g("add", "-A");
   g("commit", "-q", "-m", message);
 };
+const cli = () => spawnSync(process.execPath, [cliPath], { cwd: repo, env: gitEnv(), encoding: "utf8" });
 const launchDay = () => g("rev-parse", "launch-day");
-const indexGone = () => !existsSync(join(repo, ".git", "launch-branch.index"));
+const indexGone = () => !existsSync(join(repo, ".git", LAUNCH_INDEX));
 const oneLineOut = () => g("diff", "--numstat", "main", "launch-day") === "0\t1\t.env.production";
 try {
   Object.assign(process.env, isolated);
-  wf(isolated.GIT_CONFIG_GLOBAL, "");
+  wf(empty, "");
   mkdirSync(repo);
   g("init", "-q", "-b", "main");
   g("config", "user.email", "test@example.com");
   g("config", "user.name", "Test");
+  g("config", "core.excludesFile", empty);
+  g("config", "core.attributesFile", empty);
   wf(join(repo, "a.txt"), "one\n");
   commitEnv("# public flags only\nNEXT_PUBLIC_SITE_PRIVATE=1\n", "base");
   const first = rebuildLaunchBranch({ cwd: repo });
@@ -86,6 +94,16 @@ try {
   g("commit", "-q", "-am", "main moves");
   const second = rebuildLaunchBranch({ cwd: repo });
   check("rebuilt after main moves, it sits on the new main", g("rev-parse", "launch-day~1") === g("rev-parse", "main") && second.commit !== first.commit);
+  g("update-index", "--chmod=+x", ".env.production");
+  g("commit", "-q", "-m", "the env file marked executable");
+  rebuildLaunchBranch({ cwd: repo });
+  check("the file's mode is read from main, not assumed", g("ls-tree", "launch-day", "--", ".env.production").startsWith("100755 ") && oneLineOut());
+  const good = cli();
+  check(
+    "the command, on a good file, prints its two lines and exits 0",
+    good.status === 0 && good.stderr === "" && /^launch-day: [0-9a-f]{8}, one commit on main [0-9a-f]{8} that deletes the private line and adds nothing\nPush it on launch day/.test(good.stdout) && oneLineOut(),
+    `${good.status} ${good.stderr.slice(0, 200)}`,
+  );
 
   commitEnv("# public flags only\r\nA=1\nNEXT_PUBLIC_SITE_PRIVATE=1", "the private line last, with no newline");
   rebuildLaunchBranch({ cwd: repo });
@@ -99,17 +117,21 @@ try {
   const binary = refusal(() => rebuildLaunchBranch({ cwd: repo }));
   check("a change git cannot count as one deleted line is refused, the branch unmoved", binary.includes("diff-tree --numstat") && launchDay() === before && indexGone(), binary);
   commitEnv("A=1\nB=2\n", "no private line");
-  const cli = spawnSync(process.execPath, [resolve("scripts/launch_branch.mjs")], { cwd: repo, env: gitEnv(), encoding: "utf8" });
+  const refused = cli();
   check(
     "the command refuses a file without the private line in one line, exit 1, the branch unmoved",
-    cli.status === 1 && cli.stdout === "" && /^launch:branch: expected exactly one [^\n]*\n$/.test(cli.stderr) && launchDay() === before && indexGone(),
-    `${cli.status} ${cli.stderr.slice(0, 200)}`,
+    refused.status === 1 && refused.stdout === "" && /^launch:branch: expected exactly one [^\n]*\n$/.test(refused.stderr) && launchDay() === before && indexGone(),
+    `${refused.status} ${refused.stderr.slice(0, 200)}`,
   );
+  g("rm", "-q", ".env.production");
+  g("commit", "-q", "-m", "no env file");
+  const missing = refusal(() => rebuildLaunchBranch({ cwd: repo }));
+  check("a main without the env file is refused, the branch unmoved", missing.includes("missing from main") && launchDay() === before, missing);
   g("checkout", "-q", "launch-day");
   const checkedOut = refusal(() => rebuildLaunchBranch({ cwd: repo }));
   check("never rebuilt while a worktree has it checked out", checkedOut.includes("checked out") && launchDay() === before, checkedOut);
 } catch (err) {
-  check("the launch-branch checks ran to the end", false, (err instanceof Error ? err.message : String(err)).split("\n")[0]);
+  check("the launch-branch checks ran to the end", false, refusalLine(err));
 } finally {
   for (const [key, value] of Object.entries(saved)) {
     if (value === undefined) delete process.env[key];

@@ -6,11 +6,12 @@
  *
  * WHAT IT PROVES BEFORE THE BRANCH MOVES (the task review of 2026-10-06): the env file's bytes pass through as they are
  * (latin1 in, latin1 out, so a stray non-UTF-8 byte survives) and every other line keeps its own ending (a last line with
- * no newline, a file of mixed endings); the rebuilt tree must be exactly one deleted line of .env.production away from the
- * base, read back with `git diff-tree --numstat`, or the branch is not moved; the temporary index is removed on every
- * path; and the branch is never rebuilt while a worktree has it checked out. Git runs with inherited repository variables
- * cleared (a hook's GIT_INDEX_FILE would otherwise send the temporary index's writes to the real one) and its stderr
- * captured, so the command prints its two lines, or one line naming the refusal.
+ * no newline, a file of mixed endings); the file's mode is read from the base; the rebuilt tree must be exactly one
+ * deleted line of .env.production away from the base, read back with `git diff-tree --numstat`, or the branch is not
+ * moved; the temporary index is removed on every path; and the branch is never rebuilt while a worktree has it checked
+ * out. Git runs with inherited repository and config variables cleared (inside a hook, an inherited GIT_DIR or
+ * GIT_OBJECT_DIRECTORY would send the objects and the ref to another repository) and its stderr captured, so the command
+ * prints its two lines, or one line naming the refusal and git's own reason.
  *
  * usage, from E:/atlas/website: npm run launch:branch    (then, on his word: git push origin launch-day:main)
  */
@@ -20,10 +21,15 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 export const PRIVATE_KEY = "NEXT_PUBLIC_SITE_PRIVATE=";
+/** The temporary index, inside the git directory; removed before and after every rebuild. */
+export const LAUNCH_INDEX = "launch-branch.index";
 const ENV_FILE = ".env.production";
-const INHERITED = ["GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR", "GIT_NAMESPACE"];
+const INHERITED = [
+  "GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR",
+  "GIT_NAMESPACE", "GIT_CONFIG_PARAMETERS", "GIT_CONFIG_COUNT",
+];
 
-/** The environment git runs in: the caller's, without inherited repository variables, plus `extra`. */
+/** The environment git runs in: the caller's, without inherited repository and config variables, plus `extra`. */
 export function gitEnv(extra = {}) {
   const env = { ...process.env };
   for (const key of INHERITED) delete env[key];
@@ -53,7 +59,7 @@ export function rebuildLaunchBranch({ cwd = process.cwd(), base = "main", branch
   if (mode !== "100644" && mode !== "100755") throw new Error(`${ENV_FILE} is missing from ${base} or is not a regular file`);
   const source = run(cwd, ["cat-file", "blob", `${baseSha}:${ENV_FILE}`], { encoding: "buffer" }).toString("latin1");
   const blob = git(["hash-object", "-w", "--stdin"], { input: Buffer.from(withoutPrivateLine(source), "latin1") });
-  const index = resolve(cwd, git(["rev-parse", "--git-dir"]), "launch-branch.index");
+  const index = resolve(cwd, git(["rev-parse", "--git-dir"]), LAUNCH_INDEX);
   const env = gitEnv({ GIT_INDEX_FILE: index });
   let tree;
   try {
@@ -80,13 +86,20 @@ export function rebuildLaunchBranch({ cwd = process.cwd(), base = "main", branch
   return { base: baseSha, commit };
 }
 
+/** One line for a refusal: the error's first line, and git's own first line when git said something. */
+export function refusalLine(err) {
+  const first = (text) => String(text ?? "").trim().split("\n")[0];
+  const said = first(err?.stderr);
+  return `${first(err instanceof Error ? err.message : err)}${said ? ` (git: ${said})` : ""}`;
+}
+
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   try {
     const { base, commit } = rebuildLaunchBranch();
     console.log(`launch-day: ${commit.slice(0, 8)}, one commit on main ${base.slice(0, 8)} that deletes the private line and adds nothing`);
     console.log("Push it on launch day, after his review: git push origin launch-day:main");
   } catch (err) {
-    console.error(`launch:branch: ${err instanceof Error ? err.message.split("\n")[0] : String(err)}. The branch was not moved.`);
+    console.error(`launch:branch: ${refusalLine(err)}. The branch was not moved.`);
     process.exitCode = 1;
   }
 }
