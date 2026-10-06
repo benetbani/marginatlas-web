@@ -11,7 +11,7 @@ const check = (name: string, ok: boolean) => { if (!ok) failed++; console.log(`$
 const word = readFileSync("src/components/RotatingWord.tsx", "utf8");
 const css = readFileSync("src/app/globals.css", "utf8");
 const homes = ["src/app/page.tsx", "src/components/spine/home/home-view.tsx"].map((f) => readFileSync(f, "utf8"));
-check("the rotating word does not slide (no translate-y in its phases)", !/translate-y-\d/.test(word));
+check("the rotating word does not slide (no translate-y in its phases)", !/translate-y-|translateY/.test(word));
 check("the hero's two words change together (no offset)", homes.every((src) => !/<RotatingWord[^>]*\boffset=/.test(src)));
 const rise = /@keyframes hero-rise\s*\{([\s\S]*?)\n  \}/.exec(css)?.[1] ?? "";
 check("the h1 entrance is a fade, not a rise", rise.length > 0 && !/translate/.test(rise));

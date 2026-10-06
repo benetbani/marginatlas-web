@@ -58,7 +58,7 @@ const FALLBACK_CONTINENT: Record<string, string> = {
   SS: "Africa", SD: "Africa", TZ: "Africa", TG: "Africa", UG: "Africa",
   ZM: "Africa", ZW: "Africa",
   // Asia
-  AF: "Asia", BD: "Asia", BT: "Asia", BN: "Asia", KH: "Asia", TL: "Asia",
+  AF: "Asia", BD: "Asia", BT: "Asia", BN: "Asia", KH: "Asia", TL: "Asia", MO: "Asia",
   KZ: "Asia", KG: "Asia", LA: "Asia", MV: "Asia", MN: "Asia", MM: "Asia",
   NP: "Asia", KP: "Asia", PK: "Asia", LK: "Asia", TJ: "Asia", TM: "Asia",
   UZ: "Asia",
@@ -175,7 +175,7 @@ export default function CountriesHub() {
                   default. The native marker is hidden and a chevron turns
                   when the card is open. The group is named because each
                   country tile below has its own `group` for its hover. */}
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 group-open/continent:mb-4 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 group-open/continent:mb-4 [&::-webkit-details-marker]:hidden">
                 <h2 className="font-display text-xl md:text-2xl font-semibold tracking-tight text-ink-900">
                   {continent}
                 </h2>
@@ -191,7 +191,7 @@ export default function CountriesHub() {
                     strokeWidth={1.75}
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="h-5 w-5 shrink-0 text-ink-500 transition-transform group-open/continent:rotate-180"
+                    className="h-5 w-5 shrink-0 text-ink-500 transition-transform motion-reduce:transition-none group-open/continent:rotate-180"
                   >
                     <path d="M5 8l5 5 5-5" />
                   </svg>
