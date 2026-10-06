@@ -36,7 +36,7 @@ check("corporation tax says it is a company's; VAT keeps the masthead's threshol
 const sales = buildLondonTradeSales();
 const t = by("trades");
 check(`what London's trades take is /gb's middle trade, ${sales ? usd(londonMiddleSales(sales)) : "none"}`, !!t && !!sales && t.figure === usd(londonMiddleSales(sales)) && t.kicker === COPY.londonSales.kicker && t.words === COPY.londonSales.focalWords);
-check("its three rows are /gb's first three, the same names, values and sources", !!t && !!sales && JSON.stringify(t.rows?.map((r) => [r.label, r.value, r.prov?.src])) === JSON.stringify(sales.rows.slice(0, 3).map((r) => [r.name, usd(r.value), r.prov?.src])));
+check("its four rows are /gb's first four, the same names, values and sources", !!t && !!sales && JSON.stringify(t.rows?.map((r) => [r.label, r.value, r.prov?.src])) === JSON.stringify(sales.rows.slice(0, 4).map((r) => [r.name, usd(r.value), r.prov?.src])));
 const surv = buildSurvival("GB");
 const y = by("years");
 check(`who is still trading is /gb's, ${surv ? `${Math.round(surv.last.pct)}% after ${surv.last.year} years` : "none"}`, !!y && !!surv && y.figure === `${Math.round(surv.last.pct)}%` && y.kicker === COPY.firstYears.kicker && y.words === COPY.firstYears.focalWords.replace("{n}", String(surv.last.year)));
