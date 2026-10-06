@@ -221,7 +221,13 @@ function isPlaceWeDoNotHold(path: string): boolean {
      gif/ico/woff2/woff, which is why /spine/_skyline.jpeg answers 200 while
      this answered 404. Extensions it does not list, .json here but equally
      .txt, .csv, .xml, .pdf, all fall through to this function. Testing for a
-     dot in the last segment closes the class rather than the instance. */
+     dot in the last segment closes the class rather than the instance.
+
+     And opened another, closed 2026-10-06: the dot let EVERY dotted address
+     through, a made-up one too, so /data/uk/2026.10/nothing.csv and /zz/x.txt
+     drew a page at 200. A file is still not a place here; edgeNotFound judges
+     it as a file instead, against the files the site serves
+     (src/lib/routing/served_files.ts, generated from public/ and src/app). */
   if (segments[segments.length - 1].includes(".")) return false;
 
   const [countrySlug, geoSlug] = segments;
@@ -469,7 +475,8 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(url, 308);
     }
     // 3b'. An address that names nothing (masterplan step 01): a word no trade, city, hub or district answers to, judged
-    // by each route's own resolver after every redirect above has had its turn; pinned like a place we do not hold.
+    // by each route's own resolver after every redirect above has had its turn; pinned like a place we do not hold. And a
+    // file the site does not serve (2026-10-06): a dotted last part that is no file under public/ and none a route writes.
     if (isPlaceWeDoNotHold(path) || edgeNotFound(path)) {
       return NextResponse.rewrite(req.nextUrl, {
         status: 404,

@@ -2542,6 +2542,7 @@
       "browser": false,
       "asserts": "An address that names nothing answers 404 at the edge (masterplan step 01, 2026-10-05; QUEUE launch:retired-trades-live).",
       "reads": [
+        "public/",
         "src/app/[country]/[geo]",
         "src/lib/routing/edge_not_found.ts",
         "src/middleware.ts"

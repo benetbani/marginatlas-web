@@ -3,16 +3,27 @@
  * `/gb/london/<any word>` rendered a synthesized "Small business" page at 200, canonical to itself and indexable, and
  * `/industries/<word>` and `/cities/<word>` called notFound() inside a streamed page, so the 200 was on the wire first.
  * The edge now judges the four shapes it can judge from small tables, each by the resolver its own route runs.
+ * And since 2026-10-06 a fifth: an address whose last part has a dot names a file, and answers 404 unless the site serves that
+ * file (src/lib/routing/served_files.ts); a dot alone used to pass any address through, so `/data/uk/2026.10/nothing.csv` drew a
+ * page at 200.
  *
  * Run: npx tsx tests/routing/edge_not_found.test.ts
  */
 import { readdirSync, readFileSync } from "node:fs";
+import { NextRequest } from "next/server";
 import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN } from "../../src/lib/routing/edge_not_found";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "../../src/lib/routing/hood_slugs";
 import { renderHoodSlugs, HOOD_SLUGS_FILE } from "../../scripts/gen_hood_slugs";
+import { renderServedFiles, SERVED_FILES_FILE } from "../../scripts/gen_served_files";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { TAXONOMY_REDIRECTS } from "../../src/lib/taxonomy/legacy_redirects";
-import { INDUSTRY_SLUG_ALIASES, SLUG_TO_INDUSTRY, liveIndustryFor } from "../../src/lib/taxonomy";
+import { COUNTRIES, INDUSTRY_SLUG_ALIASES, SLUG_TO_INDUSTRY, liveIndustryFor } from "../../src/lib/taxonomy";
+import { getRegionsForCountry } from "../../src/lib/regions/regions-by-country";
+import { PACK_FILES, packHref } from "../../src/lib/data_pack";
+import { getAllPosts } from "../../src/lib/blog";
+import { LEARN_ARTICLES } from "../../src/lib/learn/articles";
+import robots from "../../src/app/robots";
+import { middleware } from "../../src/middleware";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 import cityListJson from "../../data/cities/city_list_v1.json";
@@ -96,9 +107,66 @@ const census = Object.keys((floorCensus as { pages: Record<string, unknown> }).p
 const censusCaught = census.filter(nf);
 check(`every page the floor census holds (${census.length})${censusCaught.length ? `: ${censusCaught.slice(0, 5).join(", ")}` : ""}`, censusCaught.length === 0);
 
+/* A FILE ONLY IF IT IS ONE (2026-10-06). A dot in the last part used to pass an address through untouched, to spare the files
+   under public/, so a made-up file reached a page route and answered 200 (production, 2026-10-06): "Page not found" at
+   /gb/london/restaurants/x.y and /data/uk/2026.10/nothing.csv, a region page titled "x.txt" at /zz/x.txt, and a whole synthesized
+   London page, indexable, at /gb/london/x.y. Now a dotted address passes only when the site serves that file. */
+check("a made-up file under a trade: /gb/london/restaurants/x.y", nf("/gb/london/restaurants/x.y") === true);
+check("a made-up file beside the data pack: /data/uk/2026.10/nothing.csv", nf("/data/uk/2026.10/nothing.csv") === true);
+check("a made-up file under a place the site does not hold: /zz/x.txt", nf("/zz/x.txt") === true);
+check("a made-up file under a city, which drew a synthesized London page: /gb/london/x.y", nf("/gb/london/x.y") === true);
+check("a made-up file under a United States state is judged too: /us/california/x.y", nf("/us/california/x.y") === true);
+check("a made-up file at the root: /x.y", nf("/x.y") === true);
+check("a scanner's guess: /wp-login.php", nf("/wp-login.php") === true);
+check("the data pack's folder is no page: /data/uk/2026.10", nf("/data/uk/2026.10") === true);
+check("a shard the sitemap does not make: /sitemap/99.xml", nf("/sitemap/99.xml") === true);
+check("a made-up file with a photograph's ending: /zz/x.png", nf("/zz/x.png") === true);
+check("a real file of the data pack: /data/uk/2026.10/ledger.json", nf("/data/uk/2026.10/ledger.json") === false);
+check("the data pack's read-me: /data/uk/2026.10/readme.md", nf("/data/uk/2026.10/readme.md") === false);
+check("a real photograph: /spine/_skyline.jpeg", nf("/spine/_skyline.jpeg") === false);
+check("robots.txt, which src/app/robots.ts writes", nf("/robots.txt") === false);
+check("a shard the sitemap makes: /sitemap/0.xml", nf("/sitemap/0.xml") === false);
+check("the platform's own address is Vercel's: /_vercel/speed-insights/script.js (served while Speed Insights is on)", nf("/_vercel/speed-insights/script.js") === false);
+check("the analytics script is Vercel's once his switch is on: /_vercel/insights/script.js", nf("/_vercel/insights/script.js") === false);
+
+/* Every file the site serves answers as it did: each file under public/ by a walk of this test's own, not the table's; every file
+   the data pack lists, at the address /data links; every sitemap robots.txt declares. */
+const walk = (dir: string): string[] =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(`${dir}${e.name}/`) : [`${dir}${e.name}`]));
+const onDisk = walk("public/").map((f) => f.slice("public".length));
+const filesCaught = onDisk.filter(nf);
+check(`every file under public/ (${onDisk.length})${filesCaught.length ? `: ${filesCaught.slice(0, 5).join(", ")}` : ""}`, onDisk.length > 0 && filesCaught.length === 0);
+const packCaught = PACK_FILES.map((f) => packHref(f.file)).filter(nf);
+check(`every file of the data pack, at its link on /data (${PACK_FILES.length})${packCaught.length ? `: ${packCaught.join(", ")}` : ""}`, packCaught.length === 0);
+const shards = [robots().sitemap ?? []].flat().map((u) => new URL(String(u)).pathname);
+const shardsCaught = shards.filter(nf);
+check(`every sitemap robots.txt declares (${shards.length})${shardsCaught.length ? `: ${shardsCaught.join(", ")}` : ""}`, shards.length > 0 && shardsCaught.length === 0);
+
+/* The rule's premise: no page takes a dotted last part, so a dotted address that is no file names nothing. Every slug a page
+   route resolves, read from that route's own source (2026-10-06: none of 2,056 declared addresses holds a dot). */
+const slugSources: Array<[string, string[]]> = [
+  ["country", COUNTRIES.map((c) => c.code.toLowerCase())],
+  ["region of a held country", COUNTRIES.flatMap((c) => getRegionsForCountry(c.code, c.name).map((r) => r.value))],
+  ["listed city", cities.map((c) => c.slug)],
+  ["trade or alias", [...Object.keys(SLUG_TO_INDUSTRY as Record<string, unknown>), ...Object.keys(INDUSTRY_SLUG_ALIASES)]],
+  ["neighbourhood or district", [...Object.values(NEIGHBORHOOD_SLUGS).flat(), ...Object.values(HOOD_DISTRICT_SLUGS).flat()]],
+  ["blog post", getAllPosts().map((p) => p.slug)],
+  ["learn article", LEARN_ARTICLES.map((a) => a.slug)],
+];
+for (const [label, slugs] of slugSources) {
+  const dotted = slugs.filter((s) => s.includes("."));
+  check(`no ${label} slug holds a dot (${slugs.length})${dotted.length ? `: ${dotted.slice(0, 5).join(", ")}` : ""}`, slugs.length > 0 && dotted.length === 0);
+}
+
 /* The tables cannot drift. */
 /* Line endings aside: git on Windows may check the file out with CRLF. */
 check(`${HOOD_SLUGS_FILE} equals a fresh generation (npx tsx scripts/gen_hood_slugs.ts)`, readFileSync(HOOD_SLUGS_FILE, "utf8").replace(/\r\n/g, "\n") === renderHoodSlugs(), HOOD_SLUGS_FILE);
+/* A route the generator cannot place throws there, naming the file; caught here so it reads as a red, not a stack. */
+let servedFresh: string | null = null;
+try { servedFresh = renderServedFiles(); } catch (e) { check(`the generator places every dotted route of src/app: ${(e as Error).message}`, false, SERVED_FILES_FILE); }
+if (servedFresh !== null) {
+  check(`${SERVED_FILES_FILE} equals a fresh generation (npx tsx scripts/gen_served_files.ts)`, readFileSync(SERVED_FILES_FILE, "utf8").replace(/\r\n/g, "\n") === servedFresh, SERVED_FILES_FILE);
+}
 const geoChildren = readdirSync("src/app/[country]/[geo]", { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith("[")).map((d) => d.name).sort();
 check(`GEO_STATIC_CHILDREN is the static folders of src/app/[country]/[geo] (${geoChildren.join(", ")})`, JSON.stringify([...GEO_STATIC_CHILDREN].sort()) === JSON.stringify(geoChildren));
 
@@ -114,6 +182,25 @@ const edgeAt = at("edgeNotFound(path)");
 check("the middleware asks legacyHoodTarget after the retired and renamed redirects", hoodAt > 0 && hoodAt > retiredAt && hoodAt > renameAt, MW);
 check("the middleware asks edgeNotFound beside isPlaceWeDoNotHold, after every redirect", edgeAt > 0 && placeAt > 0 && edgeAt > hoodAt && Math.abs(edgeAt - placeAt) < 200, MW);
 check("the 404 for an address for nothing is pinned by a rewrite onto itself", /isPlaceWeDoNotHold\(path\)\s*\|\|\s*edgeNotFound\(path\)\)\s*\{\s*return NextResponse\.rewrite\(req\.nextUrl, \{\s*status: 404/.test(mw), MW);
+
+/* And the middleware itself, driven with requests: a pinned address comes back 404 with a rewrite onto itself (on Vercel the
+   site's not-found page, as /zz and /gb/atlantis answer); a passed one comes back as next(). Each request from an address of
+   its own, so the rate limit never trips here. */
+const SITE = "https://www.marginatlas.com";
+const BROWSER = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
+let client = 0;
+const send = (path: string, ua = BROWSER) =>
+  middleware(new NextRequest(`${SITE}${path}`, { headers: { "user-agent": ua, "accept-language": "en-GB", "x-real-ip": `10.0.${client >> 8}.${client++ & 255}` } }));
+const pinned = (path: string) => { const r = send(path); return r.status === 404 && r.headers.get("x-middleware-rewrite") === `${SITE}${path}`; };
+const passed = (path: string) => { const r = send(path); return r.status === 200 && r.headers.get("x-middleware-next") === "1" && !r.headers.get("x-middleware-rewrite"); };
+for (const p of ["/gb/london/restaurants/x.y", "/data/uk/2026.10/nothing.csv", "/zz/x.txt", "/gb/london/x.y", "/x.y", "/sitemap/99.xml"]) {
+  check(`the middleware answers 404 for a made-up file: ${p}`, pinned(p), MW);
+}
+for (const p of ["/data/uk/2026.10/ledger.json", "/data/uk/2026.10/readme.md", "/geo/countries-110m.json", "/sitemap/0.xml", "/_vercel/speed-insights/script.js"]) {
+  check(`the middleware passes a file the site serves: ${p}`, passed(p), MW);
+}
+check("a training crawler is still refused a file of the data pack, as before (451)", send("/data/uk/2026.10/ledger.json", "GPTBot/1.1").status === 451, MW);
+check("a place the site does not hold still answers 404: /gb/atlantis", pinned("/gb/atlantis"), MW);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("routing/edge_not_found: all pass");
