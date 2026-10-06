@@ -23,7 +23,9 @@ import { PACK_FILES, packHref } from "../../src/lib/data_pack";
 import { getAllPosts } from "../../src/lib/blog";
 import { LEARN_ARTICLES } from "../../src/lib/learn/articles";
 import robots from "../../src/app/robots";
-import { middleware, config } from "../../src/middleware";
+/* routeRequest, not middleware: since A7 (2026-10-06) `middleware` is async (the session refresh wraps the routing), and this
+   test reads the routing decision itself, as tests/routing/metadata_routes.test.ts does. */
+import { routeRequest as middleware, config } from "../../src/middleware";
 /* Next's own matcher compiler, the one `next build` runs on config.matcher; exported at runtime, left out of Next's types. */
 import * as nextStaticInfo from "next/dist/build/analysis/get-page-static-info";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
