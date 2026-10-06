@@ -23,7 +23,9 @@ import { PACK_FILES, packHref } from "../../src/lib/data_pack";
 import { getAllPosts } from "../../src/lib/blog";
 import { LEARN_ARTICLES } from "../../src/lib/learn/articles";
 import robots from "../../src/app/robots";
-import { middleware } from "../../src/middleware";
+import { middleware, config } from "../../src/middleware";
+/* Next's own matcher compiler, the one `next build` runs on config.matcher; exported at runtime, left out of Next's types. */
+import * as nextStaticInfo from "next/dist/build/analysis/get-page-static-info";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 import cityListJson from "../../data/cities/city_list_v1.json";
@@ -201,6 +203,33 @@ for (const p of ["/data/uk/2026.10/ledger.json", "/data/uk/2026.10/readme.md", "
 }
 check("a training crawler is still refused a file of the data pack, as before (451)", send("/data/uk/2026.10/ledger.json", "GPTBot/1.1").status === 451, MW);
 check("a place the site does not hold still answers 404: /gb/atlantis", pinned("/gb/atlantis"), MW);
+
+/* THE MATCHER (2026-10-06). It skipped every address ending like an image, an icon or a font, and favicon.ico, robots.txt and
+   sitemap.xml by name, so a made-up one never reached the rule above: /favicon.ico, /apple-touch-icon.png and /zz/x.png drew the
+   country route's soft 404 and /gb/london/x.png a synthesized London page, indexable, all at 200 (production, 2026-10-06).
+   Compiled here by Next's own compiler, so "reaches the middleware" is what the build decides. */
+const { getMiddlewareMatchers } = nextStaticInfo as unknown as {
+  getMiddlewareMatchers: (matcher: unknown, nextConfig: object) => Array<{ regexp: string }>;
+};
+const matchers = getMiddlewareMatchers(config.matcher, {});
+const reaches = (path: string) => matchers.some((m) => new RegExp(m.regexp).test(path));
+for (const p of ["/zz/x.png", "/gb/london/x.png", "/favicon.ico", "/apple-touch-icon.png", "/sitemap.xml", "/robots.txt/x", "/zz/x.woff2"]) {
+  check(`a made-up file the matcher used to skip reaches the middleware and answers 404: ${p}`, reaches(p) && pinned(p), MW);
+}
+/* A real file the matcher used to skip passes untouched, first, as when the middleware never ran on it: no redirect, no count
+   against the rate limit, no request headers, no refusal to a crawler. */
+const untouched = (path: string, ua = BROWSER, host = "www.marginatlas.com") => {
+  const r = middleware(new NextRequest(`https://${host}${path}`, { headers: { "user-agent": ua, host } }));
+  return r.status === 200 && r.headers.get("x-middleware-next") === "1" && !r.headers.get("x-middleware-override-headers") && !r.headers.get("x-ratelimit-limit");
+};
+const onceSkipped = [...onDisk.filter((p) => /\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)$/.test(p)), "/robots.txt"];
+const touched = onceSkipped.filter((p) => !(reaches(p) && untouched(p)));
+check(`every real image and robots.txt reaches the middleware and passes untouched (${onceSkipped.length})${touched.length ? `: ${touched.slice(0, 5).join(", ")}` : ""}`, onceSkipped.length > 1 && touched.length === 0, MW);
+check("a training crawler still reads robots.txt, which was never refused it", untouched("/robots.txt", "GPTBot/1.1"), MW);
+check("a training crawler still fetches a photograph, as before", untouched("/spine/_skyline.jpeg", "GPTBot/1.1"), MW);
+check("a photograph on the bare domain is served there, not redirected, as before", untouched("/spine/_skyline.jpeg", BROWSER, "marginatlas.com"), MW);
+check("Next's own files never reach the middleware: /_next/static, /_next/image", !reaches("/_next/static/chunks/main.js") && !reaches("/_next/image"), MW);
+check("a page still reaches it: /gb/london", reaches("/gb/london"), MW);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("routing/edge_not_found: all pass");
