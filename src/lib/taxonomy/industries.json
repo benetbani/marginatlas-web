@@ -1232,6 +1232,7 @@
     {
       "id": "specialty_trades",
       "name": "Specialty trades (mixed)",
+      "noun": "specialty contractor",
       "short_name": "Specialty trades",
       "audience": "smb_core",
       "examples": [
@@ -1757,6 +1758,7 @@
     {
       "id": "bags_leather_retail",
       "name": "Bags & leather goods",
+      "noun": "leather goods shop",
       "short_name": "Leather goods",
       "audience": "smb_core",
       "parent_id": "clothing_stores",
@@ -1810,6 +1812,7 @@
     {
       "id": "electronics_appliance_stores",
       "name": "Electronics & appliance stores",
+      "noun": "electronics shop",
       "short_name": "Electronics stores",
       "audience": "smb_friendly",
       "examples": [
@@ -1983,6 +1986,7 @@
     {
       "id": "cosmetics_shops",
       "name": "Cosmetics & beauty shops",
+      "noun": "cosmetics shop",
       "short_name": "Cosmetics shops",
       "audience": "smb_core",
       "parent_id": "health_beauty_stores",
@@ -3066,6 +3070,7 @@
     {
       "id": "news_periodical_publishing",
       "name": "News & periodical publishing",
+      "noun": "news publisher",
       "short_name": "News publishing",
       "audience": "smb_friendly",
       "examples": [
@@ -4154,6 +4159,7 @@
     {
       "id": "art_classes",
       "name": "Art classes & studios",
+      "noun": "art studio",
       "short_name": "Art classes",
       "audience": "smb_core",
       "parent_id": "vocational_training",
@@ -4173,6 +4179,7 @@
     {
       "id": "doctors_clinics",
       "name": "Doctors & clinics",
+      "noun": "medical practice",
       "audience": "smb_core",
       "examples": [
         "general practice",
@@ -4234,6 +4241,7 @@
     {
       "id": "optometry",
       "name": "Optometry / vision centers",
+      "noun": "optometry practice",
       "short_name": "Optometry",
       "audience": "smb_core",
       "parent_id": "doctors_clinics",
@@ -4274,6 +4282,7 @@
       "id": "nutritionist",
       "solo_professional": true,
       "name": "Nutritionist / dietician practices",
+      "noun": "nutrition practice",
       "short_name": "Nutritionists",
       "audience": "smb_core",
       "parent_id": "doctors_clinics",
@@ -4454,6 +4463,7 @@
     {
       "id": "performing_arts",
       "name": "Performing arts",
+      "noun": "performing arts company",
       "audience": "smb_core",
       "examples": [
         "theatre",
@@ -4484,6 +4494,7 @@
     {
       "id": "sports_fitness",
       "name": "Sports & fitness",
+      "noun": "gym",
       "audience": "smb_core",
       "examples": [
         "gyms",
@@ -4867,6 +4878,7 @@
     {
       "id": "electronics_repair",
       "name": "Electronics & phone repair",
+      "noun": "electronics repair shop",
       "short_name": "Electronics repair",
       "audience": "smb_core",
       "parent_id": "auto_repair_shops",

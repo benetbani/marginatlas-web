@@ -130,6 +130,10 @@ for (const ind of INDUSTRIES) if (ind.short_name != null && industryToSlug(ind.i
    noun that ends in a business word and still reads oddly, which is the copy's to catch. Every live trade, and the parent trades
    a live slug renders (residential construction under the four construction trades). */
 const ACTIVITY = /\b(services?|repair|care|training|development|management|making|washing|planning|coordination|production|support|sitting|boarding|install|construction|retail|leasing|recording|transport|moving|amusement|tax|architecture|laundry|alterations?|uniforms?|goods?|hosting|control|lawn|maintenance|preschool)$/i;
+/* 7b. A NOUN THE SINGULARISER BROKE (2026-10-06): the head rule strips one "s" from a word that only exists plural or names a
+   product, and the line read "Estimates for a typical new" (news publishing), "a typical sport", "a typical electronic", "a
+   typical bag", "a typical art class" on twelve live trades until each carried `noun`. The last word is tested against those. */
+const NOT_A_BUSINESS = /\b(new|electronic|cosmetic|sport|art|good|clothe|bag|class|trade|doctor)$|\s\/\s/i;
 const nounSubjects = new Map<string, string>();
 for (const ind of INDUSTRIES) nounSubjects.set(ind.id, ind.name);
 const parent = INDUSTRY_BY_ID["residential_construction"];
@@ -140,6 +144,7 @@ for (const [id, name] of nounSubjects) {
   nouns++;
   if (!noun) fail(`${id} ("${name}") has no noun for "a typical ..."`, "give the trade a `noun` in industries.json");
   else if (ACTIVITY.test(noun)) fail(`${id} ("${name}") reads "a typical ${noun}", an activity and not a business`, "give the trade a `noun` in industries.json: the business as a count noun (\"law firm\", \"tiler\")");
+  else if (NOT_A_BUSINESS.test(noun)) fail(`${id} ("${name}") reads "a typical ${noun}", a word the singulariser broke or a thing that is not a business`, "give the trade a `noun` in industries.json: the business as a count noun (\"news publisher\", \"gym\")");
 }
 
 if (reds.length) {

@@ -1120,6 +1120,11 @@ export function searchIndustries(query: string, sectorFilter?: string): Industry
  * question, and since 2026-09-24 it has an answer: a trade whose name is an
  * activity carries its business as a count noun (`noun` in industries.json,
  * "accountancy practice"), read before any of this.
+ *
+ * A head that only exists plural breaks the other way: "News & periodical
+ * publishing" gave "a typical new", and electronics, cosmetics and sports did
+ * the same, on live pages until 2026-10-06. Those trades carry `noun` too, and
+ * the trade-row-names gate's check 7b names the breakage.
  */
 function singularise(s: string): string {
   if (/[^aeiou]ies$/.test(s)) return s.replace(/ies$/, "y");
