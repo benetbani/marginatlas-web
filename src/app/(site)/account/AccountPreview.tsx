@@ -8,10 +8,15 @@
 import { priceLine } from "@/lib/monetization/plan";
 import { useState } from "react";
 import Link from "next/link";
-import {
-  BookmarkSimple, Sparkle, Clock, Bell, CreditCard, Gear, Trash, ForkKnife,
-} from "@phosphor-icons/react/dist/ssr";
-import type { Icon as PhIcon } from "@phosphor-icons/react";
+import { BookmarkSimple } from "@phosphor-icons/react/dist/ssr/BookmarkSimple";
+import { Sparkle } from "@phosphor-icons/react/dist/ssr/Sparkle";
+import { Clock } from "@phosphor-icons/react/dist/ssr/Clock";
+import { Bell } from "@phosphor-icons/react/dist/ssr/Bell";
+import { CreditCard } from "@phosphor-icons/react/dist/ssr/CreditCard";
+import { Gear } from "@phosphor-icons/react/dist/ssr/Gear";
+import { Trash } from "@phosphor-icons/react/dist/ssr/Trash";
+import { ForkKnife } from "@phosphor-icons/react/dist/ssr/ForkKnife";
+import type { Icon as PhIcon } from "@phosphor-icons/react/dist/lib/types";
 import OnboardingChecklist from "@/components/billing/OnboardingChecklist";
 
 export type Tier = "free" | "pro" | "team";

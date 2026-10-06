@@ -25,7 +25,7 @@
  * Design system Phase 3, 2026-05-27.
  */
 import * as React from "react";
-import { Info } from "@phosphor-icons/react/dist/ssr";
+import { Info } from "@phosphor-icons/react/dist/ssr/Info";
 
 import { cn } from "@/lib/utils";
 import {

@@ -11,7 +11,7 @@
  * No em-dashes. On-brand paper / parchment / ink / atlas.
  */
 import { notFound } from "next/navigation";
-import { Key } from "@phosphor-icons/react/dist/ssr";
+import { Key } from "@phosphor-icons/react/dist/ssr/Key";
 import { colors } from "@/lib/design-tokens";
 import { timingSafeEqualString } from "@/lib/rate_limit";
 import {

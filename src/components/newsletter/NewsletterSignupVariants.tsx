@@ -21,9 +21,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  X, ArrowRight, CheckCircle, EnvelopeOpen, CircleNotch,
-} from "@phosphor-icons/react/dist/ssr";
+import { X } from "@phosphor-icons/react/dist/ssr/X";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
+import { CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
+import { EnvelopeOpen } from "@phosphor-icons/react/dist/ssr/EnvelopeOpen";
+import { CircleNotch } from "@phosphor-icons/react/dist/ssr/CircleNotch";
 
 /* "Unsubscribe with one click" was not true and could not be. One-click
    unsubscribe means a link in an email, and this project has no email provider

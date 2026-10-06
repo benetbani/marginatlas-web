@@ -27,7 +27,8 @@
  */
 import * as React from "react";
 
-import { Check, Minus } from "@phosphor-icons/react/dist/ssr";
+import { Check } from "@phosphor-icons/react/dist/ssr/Check";
+import { Minus } from "@phosphor-icons/react/dist/ssr/Minus";
 
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";

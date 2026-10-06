@@ -23,9 +23,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  CheckCircle, Circle, CaretRight, X,
-} from "@phosphor-icons/react/dist/ssr";
+import { CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
+import { Circle } from "@phosphor-icons/react/dist/ssr/Circle";
+import { CaretRight } from "@phosphor-icons/react/dist/ssr/CaretRight";
+import { X } from "@phosphor-icons/react/dist/ssr/X";
 
 const STEPS: Array<{ id: StepId; label: string; href: string }> = [
   { id: "industries",  label: "Pick the 3 industries you care about most",   href: "/onboarding/industries" },

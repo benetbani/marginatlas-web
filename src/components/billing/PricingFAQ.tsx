@@ -13,7 +13,7 @@
 
 import { useState } from "react";
 import { isPaywallOn } from "@/lib/feature_flags";
-import { Plus } from "@phosphor-icons/react/dist/ssr";
+import { Plus } from "@phosphor-icons/react/dist/ssr/Plus";
 
 /* ONE PLAN'S QUESTIONS (masterplan step 12; his rulings 14, 17, 20, 33, 34). The saved-cell caps and the June tiers went with
    Basic and Premium; the currency answer follows ruling 33 (dollars everywhere): Stripe charges dollars and a card in another

@@ -20,14 +20,12 @@
  */
 import { notFound } from "next/navigation";
 import { timingSafeEqualString } from "@/lib/rate_limit";
-import {
-  Compass,
-  Hourglass,
-  WarningCircle,
-  Sparkle,
-  Buildings,
-  ChartLine,
-} from "@phosphor-icons/react/dist/ssr";
+import { Compass } from "@phosphor-icons/react/dist/ssr/Compass";
+import { Hourglass } from "@phosphor-icons/react/dist/ssr/Hourglass";
+import { WarningCircle } from "@phosphor-icons/react/dist/ssr/WarningCircle";
+import { Sparkle } from "@phosphor-icons/react/dist/ssr/Sparkle";
+import { Buildings } from "@phosphor-icons/react/dist/ssr/Buildings";
+import { ChartLine } from "@phosphor-icons/react/dist/ssr/ChartLine";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

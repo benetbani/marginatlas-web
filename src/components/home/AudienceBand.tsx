@@ -50,7 +50,10 @@
  * position:relative, so they sit above the AtlasFrame photograph rather than
  * sinking behind its fixed z-index:0 layers.
  */
-import { ChartLineUp, Megaphone, Briefcase, Storefront } from "@phosphor-icons/react/dist/ssr";
+import { ChartLineUp } from "@phosphor-icons/react/dist/ssr/ChartLineUp";
+import { Megaphone } from "@phosphor-icons/react/dist/ssr/Megaphone";
+import { Briefcase } from "@phosphor-icons/react/dist/ssr/Briefcase";
+import { Storefront } from "@phosphor-icons/react/dist/ssr/Storefront";
 import { AtlasSpot } from "@/components/brand/spots";
 
 const AUDIENCES: {

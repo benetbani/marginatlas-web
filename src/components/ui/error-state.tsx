@@ -29,7 +29,8 @@
  */
 import * as React from "react";
 import Link from "next/link";
-import { WarningCircle, ArrowClockwise } from "@phosphor-icons/react/dist/ssr";
+import { WarningCircle } from "@phosphor-icons/react/dist/ssr/WarningCircle";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/ssr/ArrowClockwise";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";

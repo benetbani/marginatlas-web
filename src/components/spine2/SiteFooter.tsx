@@ -40,12 +40,10 @@
  */
 import * as React from "react";
 
-import {
-  ButterflyIcon,
-  LinkedinLogoIcon,
-  RssSimpleIcon,
-  XLogoIcon,
-} from "@phosphor-icons/react/dist/ssr";
+import { ButterflyIcon } from "@phosphor-icons/react/dist/ssr/Butterfly";
+import { LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr/LinkedinLogo";
+import { RssSimpleIcon } from "@phosphor-icons/react/dist/ssr/RssSimple";
+import { XLogoIcon } from "@phosphor-icons/react/dist/ssr/XLogo";
 
 import { countryPageTarget } from "@/lib/geo/page_targets";
 
