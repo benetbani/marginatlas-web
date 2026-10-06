@@ -69,6 +69,7 @@
     "verify:deploy": "node scripts/verify_deploy.mjs",
     "deploy:watch": "node scripts/deploy_watch.mjs",
     "launch:check": "npx tsx scripts/verify_launch_ready.ts",
+    "launch:branch": "node scripts/launch_branch.mjs",
     "verify:quick": "node scripts/verify_quick.mjs",
     "harness": "node scripts/harness/harness.mjs",
     "status": "node scripts/status.mjs",
