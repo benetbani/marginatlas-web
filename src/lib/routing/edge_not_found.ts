@@ -96,11 +96,16 @@ function namesFile(path: string): boolean {
   return (String(path ?? "").split("/").filter(Boolean).pop() ?? "").includes(".");
 }
 
+/** A FILE ONLY IF IT IS ONE (2026-10-06): the address names a file and the site serves no such file. The address exactly as the
+ *  middleware has it, canonical by then: Vercel's files are case-sensitive, so `/cities/README.txt` is listed and its lowercase
+ *  address, the only one a request reaches, is not. The middleware also asks this alone under the prefixes its rate limit skips. */
+export function fileNotServed(path: string): boolean {
+  return namesFile(path) && !SERVED_FILES.has(path) && !path.startsWith("/_vercel/");
+}
+
 /** True only for an address its own route would render as nothing (the rule above); the middleware pins it to 404. */
 export function edgeNotFound(path: string): boolean {
-  /* A FILE ONLY IF IT IS ONE (2026-10-06). The address exactly as the middleware has it, canonical by then: Vercel's files are
-     case-sensitive, so `/cities/README.txt` is listed and its lowercase address, the only one a request reaches, is not. */
-  if (namesFile(path)) return !SERVED_FILES.has(path) && !path.startsWith("/_vercel/");
+  if (namesFile(path)) return fileNotServed(path);
   const segs = parts(path);
   if (!segs) return false;
   const [first, second, third, fourth] = segs;
