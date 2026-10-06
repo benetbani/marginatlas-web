@@ -18,6 +18,11 @@
  *  - `/cities/{slug}`: the city list holds no such city (the generated slug table `cityPathFor` reads).
  *  - `/cities/{slug}/neighborhoods[/{district}]`: no hub (`hasHoodScheme`), or no admitted district (`spineHoodDistrict`,
  *    while the neighbourhood spine is on), read from the generated table src/lib/routing/hood_slugs.ts.
+ *  - Any address whose last part has a dot names a file (2026-10-06), at any depth: it names nothing unless the site serves that
+ *    file, a file under public/ or one a route of src/app writes (`/robots.txt`, `/sitemap/0.xml`), read from the generated table
+ *    src/lib/routing/served_files.ts; the platform's own addresses under `/_vercel/` are Vercel's. No page takes a dotted part
+ *    (no country, region, city, trade, district, post or article slug holds a dot; the test reds when one does), so a dotted
+ *    address that is no file could only ever have drawn a page's not-found, or worse, a synthesized page at 200.
  * Everything else is left alone: one- and two-part paths are isPlaceWeDoNotHold's, four-part trade paths are their routes'.
  *
  * WHAT IT CANNOT SEE, said once. A place segment is not judged (`/us/us-06-037/restaurants` is a county the database
@@ -25,9 +30,15 @@
  * the US state lookup's last step matches the word against the census descriptions by the database's own text
  * (getCellBySlugRaw in src/lib/cells.ts), and the US shard declares 469 such pages
  * (`/us/mississippi/business-support-services`, floor census of 2026-10-05), so a word the taxonomy does not hold may
- * still name a real row there. No other country's lookup reads a word the taxonomy cannot. Pure, and small enough for the edge: the
- * taxonomy module the middleware already imports, two small crosswalks and two generated slug tables; never
- * src/lib/spine/hood_scheme.ts, which pulls the neighbourhood data in.
+ * still name a real row there. No other country's lookup reads a word the taxonomy cannot. A dotted United States word IS judged,
+ * as a file: that lookup's last step (`ilike` on the word, hyphens as wildcards) could match a description with a dot in it, but
+ * no published address holds a dot, so such a match could only be a second address for a page the site already publishes. Pure,
+ * and small enough for the edge: the taxonomy module the middleware already imports, two small crosswalks and three generated
+ * tables; never src/lib/spine/hood_scheme.ts, which pulls the neighbourhood data in.
+ *
+ * Next strips an RSC request's `.rsc` ending before the middleware sees the path (normalizeRscURL in
+ * next/dist/server/web/adapter.js), so a page's payload is judged as its page. The `.segments/` prefetch addresses of Next's client
+ * segment cache would not be: that cache is experimental in Next 15 and off here (next.config.js turns nothing experimental on).
  */
 import { COUNTRIES, slugToIndustry } from "@/lib/taxonomy";
 import { resolveDisplayIndustry } from "@/lib/cells/industry_resolution";
@@ -36,6 +47,7 @@ import { TAXONOMY_REDIRECTS } from "@/lib/taxonomy/legacy_redirects";
 import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 import { CITY_SLUGS_BY_COUNTRY } from "@/lib/routing/city_paths_generated";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "@/lib/routing/hood_slugs";
+import { SERVED_FILES } from "@/lib/routing/served_files";
 import { cityPathFor } from "@/lib/cities/city_path";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 
@@ -79,8 +91,16 @@ export function legacyHoodTarget(path: string): string | null {
   return `/cities/${city}/neighborhoods`;
 }
 
+/** The last part of the address has a dot in it: the address names a file, not a page. */
+function namesFile(path: string): boolean {
+  return (String(path ?? "").split("/").filter(Boolean).pop() ?? "").includes(".");
+}
+
 /** True only for an address its own route would render as nothing (the rule above); the middleware pins it to 404. */
 export function edgeNotFound(path: string): boolean {
+  /* A FILE ONLY IF IT IS ONE (2026-10-06). The address exactly as the middleware has it, canonical by then: Vercel's files are
+     case-sensitive, so `/cities/README.txt` is listed and its lowercase address, the only one a request reaches, is not. */
+  if (namesFile(path)) return !SERVED_FILES.has(path) && !path.startsWith("/_vercel/");
   const segs = parts(path);
   if (!segs) return false;
   const [first, second, third, fourth] = segs;
