@@ -1607,7 +1607,7 @@
       "script": "tests/home/home_bands.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "THE HOME PAGE'S CITIES, WHAT THE ATLAS HOLDS, AND PRO SAID ONCE (milestone 3, masterplan step 35; his ruling 23 of 2026-09-26: \"a quiet band after the search and the UK answers: what Pro opens, the pr",
+      "asserts": "THE HOME PAGE'S PRO SAID ONCE, ITS NOTEBOOK, AND THE LAUNCH CHECK'S COUNTS (milestone 3, masterplan steps 35 and 36; his ruling 23 of 2026-09-26: \"a quiet band after the search and the UK answers: wha",
       "reads": [
         "scripts/verify_launch_ready.ts",
         "src/components/spine/home/home-view.tsx"
@@ -2831,6 +2831,20 @@
         "src/app/globals.css",
         "src/app/page.tsx",
         "src/components/RotatingWord.tsx",
+        "src/components/spine/home/home-view.tsx"
+      ],
+      "claims": []
+    },
+    {
+      "name": "home-shape",
+      "script": "tests/trust/home_shape.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE REBUILT HOME'S SHAPE (his instruction of 2026-10-07: \"reform home drastically\"; he called the live home \"catastrophically bad\").",
+      "reads": [
+        "scratchpad/harness/pages/home-gb.html",
+        "src/app/page.tsx",
+        "src/components/NavigatorForm.tsx",
         "src/components/spine/home/home-view.tsx"
       ],
       "claims": []
