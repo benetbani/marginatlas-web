@@ -11,6 +11,7 @@
  * uses (estimateNetProfit + resolveOwnerTakeHome over the cell's revenue and
  * per-firm payroll), so the revealed number matches the board.
  */
+import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionTier } from "@/lib/monetization/entitlement";
 import { isGatingEnabled, isAuthEnabled } from "@/lib/feature_flags";
@@ -63,6 +64,8 @@ function cellTakeHome(cell: Cell, annualIncome: number | null): number | null {
 }
 
 export async function GET(request: NextRequest) {
+  const limited = tooMany(request, "cell-take-home", 60);
+  if (limited) return limited;
   // Gate closed unless gating + auth are on AND the viewer is a paying subscriber.
   if (!isGatingEnabled() || !isAuthEnabled()) {
     return NextResponse.json({ value: null });

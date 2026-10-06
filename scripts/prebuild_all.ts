@@ -582,6 +582,7 @@ const GATES: Gate[] = [
   { name: "migrations-rls", script: "tests/db/migrations_rls.test.ts" },
   /* Every API route has a rate limit or says why it has none; the forms store what the reader gave and nothing more (the checkup
      of 2026-10-06: six routes answered any number of requests, and two forms stored IP addresses nothing read). */
+  { name: "api-route-limits", script: "tests/api/route_limits.test.ts" },
   { name: "forms-minimal", script: "tests/trust/forms_store_nothing_more.test.ts" },
   /* The blog's figures (P36.1's rewrites, 2026-10-06): every figure a post prints recomputed from the free data pack, every digit
      covered, no agency named, every link a page that lives, the foot's data the figures' own; and its plants, each rule watched red

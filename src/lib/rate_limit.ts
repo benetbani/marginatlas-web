@@ -25,7 +25,7 @@
  *   const r = checkRateLimit("newsletter", ip, { limit: 10, windowMs: 60_000 });
  *   if (!r.allowed) return new NextResponse("Too many requests", { status: 429 });
  */
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 type Bucket = { count: number; windowStart: number };
 type RouteState = Map<string, Bucket>;
@@ -96,4 +96,14 @@ export function timingSafeEqualString(a: string, b: string): boolean {
     diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
   }
   return diff === 0;
+}
+
+/**
+ * A 429 for a request over its route's limit, or null to carry on: one line at the top of a handler (the checkup of 2026-10-06,
+ * finding 9's survey: checkout, the portal, the lookups, the take-home reveal and saved cells had no limit of their own). Per
+ * instance and in memory, like every limit here: it stops one script from one address, not a distributed one.
+ */
+export function tooMany(req: NextRequest, key: string, limit: number, windowMs = 60_000): NextResponse | null {
+  const r = checkRateLimit(key, clientIp(req), { limit, windowMs });
+  return r.allowed ? null : new NextResponse("Too many requests", { status: 429, headers: { "Retry-After": String(Math.ceil(windowMs / 1000)) } });
 }

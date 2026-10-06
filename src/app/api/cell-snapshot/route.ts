@@ -9,6 +9,7 @@
  * the tiles ship with real numbers and no client-side flash.
  */
 
+import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";
 import { getCellBySlug } from "@/lib/cells";
 
@@ -20,6 +21,8 @@ const CACHE_HEADERS = {
 };
 
 export async function GET(req: NextRequest) {
+  const limited = tooMany(req, "cell-snapshot", 120);
+  if (limited) return limited;
   const url = new URL(req.url);
   const country = (url.searchParams.get("country") || "").toLowerCase();
   const geo = (url.searchParams.get("geo") || "").toLowerCase();

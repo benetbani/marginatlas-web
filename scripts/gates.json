@@ -1615,6 +1615,20 @@
       "claims": []
     },
     {
+      "name": "api-route-limits",
+      "script": "tests/api/route_limits.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "EVERY API ROUTE HAS A RATE LIMIT, OR SAYS WHY IT HAS NONE (the checkup of 2026-10-06): checkout, the billing portal, the lookups, the take-home reveal and saved cells answered any number of requests f",
+      "reads": [
+        "src/app/api",
+        "src/app/api/go/route.ts",
+        "src/app/api/popular-cell-snapshot/route.ts",
+        "src/app/api/stripe/webhook/route.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "forms-minimal",
       "script": "tests/trust/forms_store_nothing_more.test.ts",
       "args": [],

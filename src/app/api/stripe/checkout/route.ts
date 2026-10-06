@@ -9,6 +9,7 @@
  * plan is managed, instead of buying a second subscription; one whose account holds a Stripe customer checks out as it. A lookup
  * that fails does not stop a purchase: the checkout goes ahead as before.
  */
+import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getSessionUser } from "@/lib/auth/session";
@@ -19,6 +20,8 @@ import { isProRow } from "@/lib/monetization/pro_row";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
+  const limited = tooMany(request, "stripe-checkout", 10);
+  if (limited) return limited;
   const secret = process.env.STRIPE_SECRET_KEY;
   if (!isAuthEnabled() || !secret) return NextResponse.json({ error: "billing not configured" }, { status: 503 });
 

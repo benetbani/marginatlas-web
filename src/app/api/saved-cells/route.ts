@@ -10,6 +10,7 @@
  * Saved cells are a FREE feature, so the only limit is a generous abuse cap.
  * Inert when auth is disabled (GET returns empty, writes 404). Fail-soft.
  */
+import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/auth/session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -22,7 +23,9 @@ function isGoodKey(v: unknown): v is string {
   return typeof v === "string" && v.length > 0 && v.length <= 120;
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const limited = tooMany(request, "saved-cells", 60);
+  if (limited) return limited;
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ saved: [] });
   try {
@@ -39,6 +42,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const limited = tooMany(request, "saved-cells", 60);
+  if (limited) return limited;
   if (!isAuthEnabled()) return NextResponse.json({ error: "disabled" }, { status: 404 });
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
@@ -80,6 +85,8 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const limited = tooMany(request, "saved-cells", 60);
+  if (limited) return limited;
   if (!isAuthEnabled()) return NextResponse.json({ error: "disabled" }, { status: 404 });
   const user = await getSessionUser();
   if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });

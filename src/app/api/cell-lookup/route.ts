@@ -17,6 +17,7 @@
  * grid shows an honest dash rather than an invented number.
  */
 
+import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";
 import { getCellBySlug, getTopCells, slugify } from "@/lib/cells";
 import { industryToSlug, INDUSTRY_BY_ID } from "@/lib/taxonomy";
@@ -109,6 +110,8 @@ function textOrNull(s: string | null | undefined): string | null {
 }
 
 export async function GET(req: NextRequest) {
+  const limited = tooMany(req, "cell-lookup", 120);
+  if (limited) return limited;
   const url = new URL(req.url);
   const country = (url.searchParams.get("country") || "").toUpperCase();
   const industryId = url.searchParams.get("industry") || "";

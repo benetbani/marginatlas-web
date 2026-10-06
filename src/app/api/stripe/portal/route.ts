@@ -6,6 +6,7 @@
  * Stripe customer. The portal's own settings (cancel at the period's end, card updates, the return link) are his, in the Stripe
  * dashboard (LAUNCH-SWITCHES.md, row 6).
  */
+import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { isAuthEnabled } from "@/lib/feature_flags";
@@ -13,6 +14,8 @@ import { getSessionUser } from "@/lib/auth/session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
+  const limited = tooMany(request, "stripe-portal", 10);
+  if (limited) return limited;
   const secret = process.env.STRIPE_SECRET_KEY;
   if (!isAuthEnabled() || !secret) return NextResponse.json({ error: "billing not configured" }, { status: 503 });
   const user = await getSessionUser();
