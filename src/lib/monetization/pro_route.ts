@@ -2,7 +2,7 @@
  * src/lib/monetization/pro_route.ts
  *
  * WHICH UK PAGES LOCK, BY ADDRESS (milestone 2, masterplan steps 17 and 18; his interview of 2026-09-26: 18, half of every UK chapter
- * behind Pro; 27, UK pages only). The pages that lock anything: the country page, a UK city page, a London trade page. The
+ * behind Pro; 27, UK pages only). The pages that lock anything: the country page, a UK city page, a UK place's trade page. The
  * district pages lock nothing (each of their chapters is one level), the how-to page has no chapters, and these three are the UK
  * pages the sitemap lists. `/gb/london/industries` is a static page of its own, never a trade. Each page type counts only while
  * its spine page is on, the one body that draws locks. The public routes ask it whether to draw their locks; the middleware asks
@@ -15,7 +15,10 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 
 export function lockablePath(path: string): boolean {
   if (path === "/gb") return isSpineReformEnabledFor("country");
-  const trade = /^\/gb\/london\/([a-z0-9-]+)$/.exec(path)?.[1];
+  /* Every UK place's trade page, not London's alone (his ruling D2, docs/superpowers/plans/2026-10-06-whats-left/PLAN.md):
+     /gb/manchester/restaurants rendered open while London's locked. The city and district redirects run before this in
+     routeRequest, so a district never reaches it. */
+  const trade = /^\/gb\/[a-z0-9-]+\/([a-z0-9-]+)$/.exec(path)?.[1];
   if (trade) return !GEO_STATIC_CHILDREN.has(trade) && isSpineReformEnabledFor("cell");
   const city = /^\/cities\/([a-z0-9-]+)$/.exec(path)?.[1];
   return !!city && cityPathFor("GB", city) !== null && isSpineReformEnabledFor("city");

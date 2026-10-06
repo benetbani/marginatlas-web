@@ -25,6 +25,10 @@ check("the paywall off, no mirror", proRewrite("/gb", session, false) === null);
 check("the how-to page has no chapters, so it does not", proRewrite("/gb/how-to-open", session, true) === null);
 check("/gb/london/industries is a static page, not a trade", proRewrite("/gb/london/industries", session, true) === null);
 check("another country's page does not", proRewrite("/fr", session, true) === null);
+check("a UK trade page outside London goes to its mirror (D2)", proRewrite("/gb/manchester/restaurants", session, true) === "/pro/gb/manchester/restaurants");
+check("the UK aggregate's trade page too (D2)", proRewrite("/gb/gb/restaurants", session, true) === "/pro/gb/gb/restaurants");
+check("a UK place's static child is not a trade", proRewrite("/gb/manchester/industries", session, true) === null);
+check("a trade page in another country does not", proRewrite("/us/new-york/restaurants", session, true) === null);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("monetization/pro_route: all pass");
