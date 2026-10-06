@@ -1658,6 +1658,19 @@
       "claims": []
     },
     {
+      "name": "home-kitchens",
+      "script": "tests/home/kitchens.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE RANKED LIST ON THE HOME PAGE (his ruling of 2026-10-05 on PARKED P36.2b, option (a): \"Where kitchens score five\", the share of London restaurants and cafes rated five for hygiene, by borough, from",
+      "reads": [
+        "data/editorial/editorial_feed.json",
+        "scratchpad/harness/pages/home-gb.html",
+        "src/lib/home/kitchens.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

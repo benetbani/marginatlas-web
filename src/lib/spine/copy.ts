@@ -2699,6 +2699,8 @@ export const COPY = {
     /** The answer's two other taxes (masterplan step 37): the answer's basis is a sole trader, so corporation tax says whose it is. */
     answerNotes: { companyOnly: "if you form a company" },
     citiesLabel: "The UK's cities",
+    /** The level of the duel and the ranked list (P36.2 and P36.2b), both from the registers' feed. */
+    registersLabel: "From the registers",
     /** THE NOTEBOOK AND THE NEWSLETTER (masterplan step 36): the page's furniture after the readings. */
     notebook: { title: "From the notebook", newsletter: "The newsletter" },
     /** WHAT THE ATLAS HOLDS (masterplan step 35): the ledger module's counts (src/lib/home/atlas_ledger.ts), an open section. */
@@ -2717,6 +2719,18 @@ export const COPY = {
       phoneValue: "Of 100",
       /** A row's name where the official code's own runs past three words (his labels rule); the duel's test fails on any other. */
       names: { "Public houses and bars": "Pubs and bars" } as Record<string, string>,
+    },
+    /** THE RANKED LIST BESIDE THE DUEL (his ruling of 2026-10-05 on PARKED P36.2b, option (a): "Where kitchens score five"). The
+     *  title is the feed's; the figure is the set's middle borough, its label carrying the ratings' month as the duel's words carry
+     *  its month; {n} is the set's size. The line keeps to twelve words (the copy gate); what is counted is said by the title and
+     *  the column head. */
+    kitchens: {
+      headline: "The middle borough, {month}",
+      basis: "Two highest and two lowest of {n} boroughs.",
+      headName: "Borough",
+      headValue: "Rated five, of 100",
+      /** A member's plain name where the ratings' own runs long or official. */
+      names: { "City of London Corporation": "City of London" } as Record<string, string>,
     },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
     pro: {

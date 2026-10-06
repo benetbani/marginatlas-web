@@ -1,7 +1,7 @@
 {
  "what": "The home page's feed: measured, like-for-like findings from the UK register tables, one question each",
  "built_by": "E:/atlas/registers/uk/build_editorial.py",
- "built": "2026-10-05",
+ "built": "2026-10-06",
  "rules": [
   "like for like: one dimension ranked, the other held",
   "a floor of underlying units per member",
@@ -204,7 +204,7 @@
    "members": 76,
    "middle": 6.1,
    "as_of": "2026-09-30",
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "last-longest",
@@ -362,7 +362,7 @@
     }
    ],
    "members": 36,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "restaurants-year-one",
@@ -382,7 +382,7 @@
     "after_five_years_2019_cohort": 39.1
    },
    "definition": "after five years: the chance of closing in 2024 at each age from one to five, applied in turn; the businesses born in 2019 lived through years that closed fewer of them",
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "last-where",
@@ -456,7 +456,7 @@
     }
    ],
    "members": 32,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "open-close",
@@ -524,7 +524,7 @@
     }
    ],
    "members": 32,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "youngest",
@@ -653,7 +653,7 @@
     }
    ],
    "members": 72,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "shop-metre",
@@ -708,7 +708,7 @@
     }
    ],
    "members": 35,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "kitchens-five",
@@ -769,7 +769,9 @@
     }
    ],
    "members": 31,
-   "built": "2026-10-05"
+   "middle": 69,
+   "as_of": "2026-10-02",
+   "built": "2026-10-06"
   },
   {
    "id": "kitchens-new",
@@ -811,7 +813,7 @@
     }
    ],
    "members": 31,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "saturday",
@@ -853,7 +855,7 @@
     }
    ],
    "members": 119,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "takings",
@@ -1005,7 +1007,7 @@
     }
    ],
    "members": 70,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   },
   {
    "id": "new-companies",
@@ -1103,7 +1105,7 @@
     }
    ],
    "members": 92,
-   "built": "2026-10-05"
+   "built": "2026-10-06"
   }
  ]
 }
