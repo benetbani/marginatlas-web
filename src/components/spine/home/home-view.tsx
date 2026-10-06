@@ -160,28 +160,21 @@ function HomeCities({ cards }: { cards: CityCardsData }) {
   );
 }
 
-/* THE NOTEBOOK (masterplan step 36): the posts kept for the home page (src/lib/home/notebook.ts), each a link with its own picture
-   or the UK's photograph, never the old rail's one skyline under every card. Furniture, not a reading: no figure, so it stands
-   outside the section cards, as the newsletter beside it does. */
-const dateText = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
-
+/* THE NOTEBOOK (masterplan step 36): the posts kept for the home page (src/lib/home/notebook.ts), the newest of each category,
+   each a link. Furniture, not a reading: no figure, so it stands outside the section cards. EACH POST IS ITS TITLE (his
+   instruction of 2026-10-07, the home's words cut by half): the category over it was a second label (the eyebrow his rulebook
+   bans) and the four dates were one date said four times; the post itself carries both. */
 function Notebook({ cards }: { cards: NotebookCard[] }) {
   return (
     <section data-notebook="" aria-labelledby="notebook-title" className="flex flex-col">
       <h2 id="notebook-title" data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-snug tracking-tight text-[var(--c-ink)]">
         {COPY.home.notebook.title}
       </h2>
-      {/* TEXT FIRST (the checkup of 2026-10-06): the category, the title, the date, the date at the card's foot so a shorter title
-          leaves its air in the middle, never under the last line (the page laws' CARD FOOT BLANK). */}
       <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         {cards.map((c) => (
           <li key={c.slug}>
             <a href={c.href} className="tap-y flex h-full flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-4 text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
-              <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{c.category.charAt(0).toUpperCase() + c.category.slice(1)}</span>
-              <span className="mt-1 text-[length:var(--t-body)] font-semibold leading-snug">{c.title}</span>
-              <time dateTime={c.date} className="mt-auto pt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">
-                {dateText(c.date)}
-              </time>
+              <span className="text-[length:var(--t-body)] font-semibold leading-snug">{c.title}</span>
             </a>
           </li>
         ))}
