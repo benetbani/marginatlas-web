@@ -2525,6 +2525,22 @@
       "claims": []
     },
     {
+      "name": "metadata-routes",
+      "script": "tests/routing/metadata_routes.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Every metadata route src/app serves passes the edge middleware untouched, never its pinned 404 (2026-10-06).",
+      "reads": [
+        "scripts/lib/metadata_routes.mjs",
+        "src/app/icon.tsx",
+        "src/app/robots.ts",
+        "src/app/sitemap.ts",
+        "src/lib/routing/top_level_segments.ts",
+        "src/middleware.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "retired-paths",
       "script": "tests/routing/retired_paths.test.ts",
       "args": [],

@@ -3,9 +3,11 @@
  *
  * Every first URL segment a real route can occupy, other than the country
  * wildcard, and (since 2026-09-19) every static child folder of the country
- * wildcard. GENERATED from src/app by scripts/verify_top_level_segments.mjs,
- * which fails the build if either list and the filesystem disagree. Do not
- * hand edit: add a route folder and run the gate.
+ * wildcard; since 2026-10-06 a metadata route FILE served at a dotless address
+ * counts as a folder does (src/app/icon.tsx serves at /icon). GENERATED from
+ * src/app by scripts/verify_top_level_segments.mjs, which fails the build if
+ * either list and the filesystem disagree. Do not hand edit: add a route
+ * folder or metadata file and run the gate.
  *
  * WHAT IT IS FOR, and it closes a hole the middleware documented but could not
  * close itself.
@@ -35,7 +37,7 @@
  * list is consulted BEFORE the two-letter country test rather than after.
  */
 
-/** Static first segments that exist as route folders under src/app. */
+/** Static first segments that exist under src/app: route folders, and metadata route files served at a dotless address. */
 export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   /* Who runs this (his ruling of 2026-10-05, PARKED P0.2). */
   "about",
@@ -64,6 +66,9 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "embed",
   "extremes",
   "faq",
+  /* The site icon: src/app/icon.tsx is a metadata route FILE, served at /icon and linked from every page's head. Pinned
+     to 404 with its own PNG as the body until the gate read files as well as folders (2026-10-06). */
+  "icon",
   "industries",
   "learn",
   "margin-index",
@@ -87,7 +92,7 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
 
 /**
  * Static second segments that exist as route folders under src/app/[country]
- * (its non-wildcard children). The middleware's two-segment rule judges the
+ * (its non-wildcard children), or as its metadata route files' dotless addresses. The middleware's two-segment rule judges the
  * second segment of a known country's path against that country's region
  * list, so a static child that is not in this set is pinned to 404 while its
  * page renders: /gb/how-to-open answered 404 with the whole how-to page in

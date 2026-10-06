@@ -755,6 +755,10 @@ const GATES: Gate[] = [
      real page, so the gate fails in BOTH directions. */
   { name: "top-level-segments", script: "scripts/verify_top_level_segments.mjs" },
   { name: "junk-url-rule", script: "tests/routing/junk_url_rule.test.ts" },
+  /* And the third, a FILE (2026-10-06): src/app/icon.tsx serves at /icon, the list above was walked from folders, and the
+     site icon answered 404 with its PNG as the body. Every metadata route's address, Next's own, goes through the real
+     middleware and must pass it untouched; /zz and /definitely-not-a-route-xyz must stay pinned. */
+  { name: "metadata-routes", script: "tests/routing/metadata_routes.test.ts" },
   /* A retired trade under a place goes to the nearest live page in one hop (milestone 1, M1; his interview of 2026-09-26, answer 12). */
   { name: "retired-paths", script: "tests/routing/retired_paths.test.ts" },
   /* An address that names nothing answers 404 at the edge, each shape by its own route's resolver; the old three-part district
