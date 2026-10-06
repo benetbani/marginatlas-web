@@ -4,11 +4,13 @@
  * THE "CHECKED" DATE A PAGE MAY PRINT (milestone 2, masterplan step 31; the credibility doctrine of 2026-10-02: the page foot
  * holds "Checked [date]"). Only a date the data holds, never today's standing in for a check, and only on a page whose figures
  * that data backs. The register slices under data/uk/registers back the UK's country page (it draws London's register margins
- * and sales) and the pages of a UK city the registers hold (today London, Greater London: the city, its trades, its districts);
+ * and sales) and the pages of a UK city the registers hold (today London, Greater London: the city page, and the trade pages of
+ * the trades the registers match exactly or through a shared code);
  * their date is the slices' build date, the manifest's `built`, which E:/atlas/registers/uk/export_for_site.py writes at
  * export: the day the export ran, since 2026-10-06 (QUEUE data:uk-register-built-date). The UK how-to page's steps, days and
- * fees and the other UK cities' figures (the city list's and the shard's, QUEUE uk:cities-sourced-or-marked) are dated by no
- * export, so those pages print no line; nor does any other country's page.
+ * fees, London's district rents (estimates from each district's character, the seed), the London trades the registers do not
+ * match, and the other UK cities' figures (the city list's and the shard's, QUEUE uk:cities-sourced-or-marked) are dated by
+ * no export, so those pages print no line; nor does any other country's page.
  *
  * WHAT THE DATE CANNOT SAY: an export on a later day moves it even when no slice changed, so "Checked" is the day the slices
  * were last cut from the register tables and fingerprinted, not a new reading of the sources (each table's own date stays in
@@ -16,6 +18,7 @@
  */
 import manifest from "../../../data/uk/registers/manifest.json";
 import { cityRegisterPlace, countryHeldToRegisters } from "@/lib/uk/registers/register_city";
+import { LONDON_GEOGRAPHY, londonTradeRegister } from "@/lib/uk/registers/london_trade";
 
 /** A real calendar day: the pattern alone let "2026-13-45" through to an "Invalid Date" foot. */
 function realDay(value: unknown): string | null {
@@ -31,8 +34,20 @@ export function checkedDateForCountry(iso2: string | null | undefined): string |
   return countryHeldToRegisters(iso2) ? REGISTER_BUILT : null;
 }
 
-/** A city-level page (the city, its trades, its districts): only a city the registers hold prints the slices' date. */
+/** A city page: only a city the registers hold prints the slices' date (its district pages ask none). */
 export function checkedDateForCity(iso2: string | null | undefined, citySlug: string | null | undefined): string | null {
   if (!iso2 || !citySlug) return null;
   return cityRegisterPlace(String(iso2), String(citySlug).toLowerCase()) ? REGISTER_BUILT : null;
+}
+
+/** A trade page in a city: only where the registers hold the city and the trade itself (an exact or shared match), so the
+ *  page's counts and sales are the slices'. London's lookup is the only one there is; a register city added later needs its own. */
+export function checkedDateForTrade(
+  iso2: string | null | undefined,
+  citySlug: string | null | undefined,
+  tradeSlug: string | null | undefined,
+): string | null {
+  if (!iso2 || !citySlug || !tradeSlug) return null;
+  if (cityRegisterPlace(String(iso2), String(citySlug).toLowerCase())?.geography !== LONDON_GEOGRAPHY) return null;
+  return londonTradeRegister(String(tradeSlug).toLowerCase()) ? REGISTER_BUILT : null;
 }

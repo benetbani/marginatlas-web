@@ -2,11 +2,12 @@
  * THE PAGE FOOT: REPORT A MISTAKE, AND CHECKED ONLY WHERE A DATE IS HELD (milestone 2, masterplan step 31; QUEUE
  * close:furniture-lines; the credibility doctrine of 2026-10-02: the page foot holds "Report a mistake" and "Checked [date]").
  * Read off the harness renders pages-fresh writes: every spine page type holds one "Report a mistake" link to the correction
- * page with its own path; a page the register slices back (the UK's country page; London, its trades, its districts) holds a
- * "Checked" line equal to the slices' build date, which the manifest must hold (the export writes it since 2026-10-06); no
- * other page holds the line, the UK how-to and the other UK cities' included (their figures are the shard's), and never
- * today's date standing in for a check. The correction page holds the site's one correction form, open, its path filled in,
- * and is never indexed.
+ * page with its own path; a page the register slices back (the UK's country page; London's city page; the London trade pages
+ * of the trades the registers match) holds a "Checked" line equal to the slices' build date, which the manifest must hold
+ * (the export writes it since 2026-10-06); no other page holds the line, the UK how-to, London's district pages, the London
+ * trades the registers do not match and the other UK cities' included (no export dates their figures), and never today's
+ * date standing in for a check. The correction page holds the site's one correction form, open, its path filled in, and is
+ * never indexed.
  *
  * Run: npx tsx tests/spine/page_foot.test.ts
  */
@@ -14,7 +15,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { existsSync, readFileSync } from "node:fs";
 import { ReportFoot } from "../../src/components/spine/ReportFoot";
-import { checkedDateForCity, checkedDateForCountry, REGISTER_BUILT } from "../../src/lib/spine/checked";
+import { checkedDateForCity, checkedDateForCountry, checkedDateForTrade, REGISTER_BUILT } from "../../src/lib/spine/checked";
 import { reportHref } from "../../src/lib/spine/report";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -24,7 +25,7 @@ const REMEDY = "draw ReportFoot under every spine page with the page's own path,
 let failed = 0;
 const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file, detail: label, remedy }); };
 
-/* Each harness page, its own path, and whether it is a UK page. */
+/* Each harness page, its own path, and whether it carries the checked date. */
 const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
   { file: "country-GB", path: "/gb", dated: true },
   { file: "country-AF", path: "/af", dated: false },
@@ -33,8 +34,8 @@ const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
   { file: "cell-gb-london-restaurants", path: "/gb/london/restaurants", dated: true },
   { file: "cell-gb-london-barbershops", path: "/gb/london/barbershops", dated: true },
   { file: "industry-restaurants", path: "/industries/restaurants", dated: false },
-  { file: "hood-london", path: "/cities/london/neighborhoods", dated: true },
-  { file: "hood-london-city-of-london", path: "/cities/london/neighborhoods/city-of-london", dated: true },
+  { file: "hood-london", path: "/cities/london/neighborhoods", dated: false },
+  { file: "hood-london-city-of-london", path: "/cities/london/neighborhoods/city-of-london", dated: false },
   { file: "home-gb", path: "/", dated: false },
 ];
 const listed = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages.map((p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`);
@@ -48,28 +49,31 @@ check(
   "run python E:/atlas/registers/uk/export_for_site.py, which writes the day it ran into the manifest's built; never edit the manifest by hand",
 );
 
-/* The date only where the slices back the figures: London's pages, never the other UK cities' (their figures are the shard's). */
+/* The date only where the slices back the figures: London's city page and its matched trades, never the other UK cities'. */
 const CHECKED = "src/lib/spine/checked.ts";
-const SCOPE = "print the date only where the register slices back the figures: checkedDateForCountry on the country page, checkedDateForCity with the city's slug on city, trade and district pages, none on the how-to";
-check("London's city-level pages carry the date", checkedDateForCity("GB", "london") === REGISTER_BUILT, CHECKED, SCOPE);
+const SCOPE = "print the date only where the register slices back the figures: checkedDateForCountry on the country page, checkedDateForCity on a city page, checkedDateForTrade on a trade page, none on the how-to or the district pages";
+const OTHER_UK = ["manchester", "birmingham", "leeds", "glasgow", "edinburgh", "bristol"];
+check("London's city page carries the date", checkedDateForCity("GB", "london") === REGISTER_BUILT, CHECKED, SCOPE);
+check("a London trade the registers match carries it (restaurants, barbershops)", checkedDateForTrade("GB", "london", "restaurants") === REGISTER_BUILT && checkedDateForTrade("GB", "london", "barbershops") === REGISTER_BUILT, CHECKED, SCOPE);
+check("a London trade the registers do not match carries none (locksmiths, bike repair)", checkedDateForTrade("GB", "london", "locksmiths") === null && checkedDateForTrade("GB", "london", "bike-repair-shops") === null, CHECKED, SCOPE);
 check(
   "the other UK cities' pages carry none (Manchester, Birmingham, Leeds, Glasgow, Edinburgh, Bristol)",
-  ["manchester", "birmingham", "leeds", "glasgow", "edinburgh", "bristol"].every((city) => checkedDateForCity("GB", city) === null),
+  OTHER_UK.every((city) => checkedDateForCity("GB", city) === null && checkedDateForTrade("GB", city, "restaurants") === null),
   CHECKED,
   SCOPE,
 );
-check("no other country's page carries one", checkedDateForCountry("DE") === null && checkedDateForCity("DE", "berlin") === null && checkedDateForCountry(null) === null, CHECKED, SCOPE);
+check("no other country's page carries one", checkedDateForCountry("DE") === null && checkedDateForCity("DE", "berlin") === null && checkedDateForTrade("DE", "berlin", "restaurants") === null && checkedDateForCountry(null) === null, CHECKED, SCOPE);
 for (const [file, kind] of [
   ["src/components/spine/city/city-view.tsx", "city"],
-  ["src/components/spine/cell/cell-view.tsx", "city"],
-  ["src/components/spine/hood/hood-view.tsx", "city"],
+  ["src/components/spine/cell/cell-view.tsx", "trade"],
+  ["src/components/spine/hood/hood-view.tsx", "none"],
   ["src/components/spine/country/country-view.tsx", "country"],
   ["src/components/spine/country/how-to-view.tsx", "none"],
 ] as const) {
   const src = readFileSync(file, "utf8");
-  const asks = { city: src.includes("checkedDateForCity("), country: src.includes("checkedDateForCountry(") };
-  const ok = kind === "none" ? !asks.city && !asks.country : kind === "city" ? asks.city && !asks.country : asks.country && !asks.city;
-  check(`${file.split("/").pop()} ${kind === "none" ? "asks no date (its steps, days and fees are the shard's)" : `asks the ${kind} date for its foot`}`, ok, file, SCOPE);
+  const asks = { city: src.includes("checkedDateForCity("), country: src.includes("checkedDateForCountry("), trade: src.includes("checkedDateForTrade(") };
+  const ok = (["city", "country", "trade"] as const).every((k) => asks[k] === (k === kind));
+  check(`${file.split("/").pop()} ${kind === "none" ? "asks no date (no export dates its figures)" : `asks the ${kind} date for its foot`}`, ok, file, SCOPE);
 }
 for (const p of PAGES) {
   const at = `scratchpad/harness/pages/${p.file}.html`;
