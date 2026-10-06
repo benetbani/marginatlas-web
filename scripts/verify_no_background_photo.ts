@@ -40,6 +40,17 @@
  * its job: a photograph in live code needs his words beside it, and here they
  * are.
  *
+ * A THIRD EXCEPTION SINCE 2026-10-06: THE EDGE'S LIST OF THE FILES THE SITE
+ * SERVES. `src/lib/routing/served_files.ts` names every file under public/, these
+ * photographs among them, so the middleware can tell a real file from an address
+ * that only looks like one and answer 404 for the second (a made-up
+ * /data/uk/2026.10/nothing.csv drew a page at 200). Its first preview build
+ * failed here, and asked whether to allow the list by name or to move it to JSON
+ * out of this scan's sight, he chose "Allow the list by name" (2026-10-06). It
+ * paints nothing: scripts/gen_served_files.ts writes it from the disk and the
+ * edge-not-found gate reds when it differs from a fresh generation, so it can
+ * only ever name a file that exists, never choose one to show.
+ *
  * ONE EXCEPTION, AND ONLY ONE, SINCE 2026-09-11: THE CITY CARD. The founder
  * reversed himself for that card and stated the scope in the same breath: "the
  * cities should have their placeholder image ... just keep a placeholder image,
@@ -102,7 +113,7 @@ const PAINTING = /background|backgroundImage|url\(|src=|DEFAULT_BG/;
    from the repo root with forward slashes, the same form `relative()` produces
    for the report lines below. Adding a path here is a design decision about what
    the site paints, so it needs his words beside it, as this one has. */
-const ALLOWED_TO_NAME_A_PHOTOGRAPH = new Set(["src/lib/spine/city_cards.ts", "src/lib/spine/hero_board.ts"]);
+const ALLOWED_TO_NAME_A_PHOTOGRAPH = new Set(["src/lib/spine/city_cards.ts", "src/lib/spine/hero_board.ts", "src/lib/routing/served_files.ts"]);
 
 const files = globSync("src/**/*.{ts,tsx,css}", { cwd: ROOT }).map((f) => join(ROOT, f));
 
@@ -125,7 +136,7 @@ for (const file of files) {
   });
 }
 
-console.log(`no background photo: ${files.length} source file(s) scanned, ${exempt} exempt (the city card's placeholder, his ruling of 2026-09-11; the country hero's placeholder, his design of 2026-09-20), ${reds.length} red(s)`);
+console.log(`no background photo: ${files.length} source file(s) scanned, ${exempt} exempt (the city card's placeholder, his ruling of 2026-09-11; the country hero's placeholder, his design of 2026-09-20; the edge's list of served files, which paints nothing, his answer of 2026-10-06), ${reds.length} red(s)`);
 for (const r of reds) console.log(`  ${r}`);
 if (reds.length) {
   console.log("");
