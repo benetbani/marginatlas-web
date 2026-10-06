@@ -8,7 +8,7 @@
  *
  * THE INSTRUMENT. Each file's address is Next's own (scripts/lib/metadata_routes.mjs), and the verdict is the real
  * middleware's, called with a browser's request, so every rule it has is asked (the place rule, the edge not-found rule,
- * every redirect), not a copy of one: junk_url_rule's `wouldBe404` copies the first-segment rule alone, and calls /og spared
+ * every redirect), not a copy of one: junk_url_rule's `wouldBe404` copied the first-segment rule alone, and called /og spared
  * while the middleware pins it (rightly: /og holds children only). WHAT IT CANNOT SEE: the matcher in the middleware's
  * config, since a path the matcher skips never reaches the middleware (this asks the middleware anyway, so it is stricter
  * than production, never looser), and whatever the platform does after the middleware answers. `--live` asks production

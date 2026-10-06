@@ -2659,7 +2659,12 @@
       "args": [],
       "browser": false,
       "asserts": "The junk-URL rule, tested against every URL the site declares (2026-08-09).",
-      "reads": [],
+      "reads": [
+        "src/app/og",
+        "src/app/sitemap.ts",
+        "src/middleware.ts",
+        "tests/routing/junk_url_rule.test.ts"
+      ],
       "claims": []
     },
     {
