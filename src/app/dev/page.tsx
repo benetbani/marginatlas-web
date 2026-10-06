@@ -48,25 +48,21 @@ const CURRENT: Route[] = [
 ];
 
 /** Previous generations. Kept for the decisions in them, not as the bar. */
+/* Nine entries whose routes were deleted long ago (cell-v2, spine2, home, home2, country, compare, pricing, cell, cell-reform) left
+   the list on 2026-10-06 (the checkup): a workbench row that answers 404 records no decision. Unlisted explorations went with them,
+   kept under the tag archive/dev-2026-10-06. */
 const EARLIER: Route[] = [
-  { slug: "cell-v2", what: "Cell page, London restaurants" },
   { slug: "spine", what: "The original spine prototype" },
   { slug: "spine-cell", what: "Spine, cell" },
   { slug: "spine-city", what: "Spine, city" },
   { slug: "spine-hood", what: "Spine, neighbourhood" },
   { slug: "spine-industry", what: "Spine, industry" },
   { slug: "spine-kit", what: "Spine component showcase" },
-  { slug: "spine2", what: "Spine 2 prototype" },
   { slug: "kit", what: "Atlas page kit catalog" },
   { slug: "charts", what: "Chart primitives" },
   { slug: "brand-glyphs", what: "Glyph set preview" },
   { slug: "font-showcase", what: "Display face showcase" },
-  { slug: "home", what: "Home, earlier" },
-  { slug: "home2", what: "Home, earlier still" },
   { slug: "cities", what: "Cities index, earlier" },
-  { slug: "country", what: "Country, earlier" },
-  { slug: "compare", what: "Compare, earlier" },
-  { slug: "pricing", what: "Pricing, earlier" },
   { slug: "decide", what: "The recommender, earlier" },
   { slug: "decide-v2", what: "The recommender, second attempt" },
   { slug: "calculator", what: "Calculator" },
@@ -78,8 +74,6 @@ const EARLIER: Route[] = [
   { slug: "index-extremes", what: "Extremes index, earlier" },
   { slug: "distribution-states", what: "Distribution component states" },
   { slug: "lock-states", what: "Paywall lock states" },
-  { slug: "cell", what: "Cell, earlier" },
-  { slug: "cell-reform", what: "Cell reform prototype" },
   { slug: "v0", what: "First sketch" },
 ];
 
