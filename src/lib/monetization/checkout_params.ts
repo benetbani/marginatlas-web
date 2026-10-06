@@ -15,13 +15,16 @@ export const CONSENT_LINE = "I ask for access to start now, so my 14-day right t
 
 type Env = Record<string, string | undefined>;
 
-export function checkoutParams(a: { priceId: string; origin: string; email: string | null; userId: string | null; env: Env }): Stripe.Checkout.SessionCreateParams {
+/* A RETURNING CUSTOMER IS REUSED (the checkup of 2026-10-06, finding 2): a reader whose account already holds a Stripe customer
+   checks out as that customer, so their subscriptions stay on one customer and the webhook finds one account. Stripe takes
+   `customer` or `customer_email`, never both; the customer carries its own email. */
+export function checkoutParams(a: { priceId: string; origin: string; email: string | null; userId: string | null; customerId?: string | null; env: Env }): Stripe.Checkout.SessionCreateParams {
   const consent = a.env.STRIPE_TERMS_CONSENT === "1";
   const tax = a.env.STRIPE_AUTOMATIC_TAX === "1";
   return {
     mode: "subscription",
     line_items: [{ price: a.priceId, quantity: 1 }],
-    ...(a.email ? { customer_email: a.email } : {}),
+    ...(a.customerId ? { customer: a.customerId } : a.email ? { customer_email: a.email } : {}),
     ...(a.userId ? { client_reference_id: a.userId } : {}),
     success_url: `${a.origin}/welcome?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${a.origin}/pricing`,

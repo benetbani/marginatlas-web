@@ -1015,7 +1015,7 @@
       "script": "tests/monetization/stripe_sync.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "WHAT A STRIPE EVENT DOES TO AN ACCOUNT (milestone 2; rulings 14, 20, 34): checkout first, so every event finds the buyer by email and makes the account when none exists; every event re-reads the subsc",
+      "asserts": "WHAT A STRIPE EVENT DOES TO AN ACCOUNT (milestone 2; rulings 14, 20, 34; the checkup of 2026-10-06, finding 2): checkout first, so an event finds the buyer (the account the checkout names, the account",
       "reads": [
         "src/lib/monetization/stripe_sync.ts"
       ],

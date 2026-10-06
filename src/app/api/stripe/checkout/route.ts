@@ -4,6 +4,10 @@
  * POST { interval: "month" | "year" } -> { url }. No account needed: a signed-in buyer's email is carried, anyone else gives
  * theirs to Stripe, and the webhook makes the account from it. Dormant (503) until auth is on and STRIPE_SECRET_KEY and the two
  * Pro price ids (STRIPE_PRICE_PRO_MONTHLY, STRIPE_PRICE_PRO_ANNUAL) are set. The parameters are src/lib/monetization/checkout_params.ts.
+ *
+ * A SIGNED-IN READER IS LOOKED UP FIRST (the checkup of 2026-10-06, finding 2): one already on Pro is sent to /account, where the
+ * plan is managed, instead of buying a second subscription; one whose account holds a Stripe customer checks out as it. A lookup
+ * that fails does not stop a purchase: the checkout goes ahead as before.
  */
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
@@ -11,6 +15,8 @@ import { getSessionUser } from "@/lib/auth/session";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { proPriceId, type BillingInterval } from "@/lib/monetization/plan";
 import { checkoutParams } from "@/lib/monetization/checkout_params";
+import { isProRow } from "@/lib/monetization/pro_row";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
   const secret = process.env.STRIPE_SECRET_KEY;
@@ -27,11 +33,26 @@ export async function POST(request: NextRequest) {
   if (!priceId) return NextResponse.json({ error: "price not configured" }, { status: 503 });
 
   const user = await getSessionUser();
+  let customerId: string | null = null;
+  if (user) {
+    try {
+      const supabase = await createSupabaseServerClient();
+      const { data } = await supabase
+        .from("subscriptions")
+        .select("tier, status, current_period_end, stripe_customer_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (isProRow(data)) return NextResponse.json({ url: "/account" });
+      customerId = typeof data?.stripe_customer_id === "string" && data.stripe_customer_id ? data.stripe_customer_id : null;
+    } catch {
+      // the lookup failed: the checkout goes ahead as a new customer
+    }
+  }
   try {
     const stripe = new Stripe(secret);
     const { origin } = new URL(request.url);
     const session = await stripe.checkout.sessions.create(
-      checkoutParams({ priceId, origin, email: user?.email ?? null, userId: user?.id ?? null, env: process.env }),
+      checkoutParams({ priceId, origin, email: user?.email ?? null, userId: user?.id ?? null, customerId, env: process.env }),
     );
     return NextResponse.json({ url: session.url });
   } catch {

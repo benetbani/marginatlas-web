@@ -1,11 +1,13 @@
 /**
- * WHAT A STRIPE EVENT DOES TO AN ACCOUNT (milestone 2; rulings 14, 20, 34): checkout first, so every event finds the buyer by
- * email and makes the account when none exists; every event re-reads the subscription from Stripe, so an event arriving late
+ * WHAT A STRIPE EVENT DOES TO AN ACCOUNT (milestone 2; rulings 14, 20, 34; the checkup of 2026-10-06, finding 2): checkout first,
+ * so an event finds the buyer (the account the checkout names, the account holding the customer, then by email, made when none
+ * exists) and writes the customer's governing subscription, so an old cancelled one never downgrades a paying reader; every event re-reads the subscription from Stripe, so an event arriving late
  * cannot re-grant a cancelled plan; a database error rejects, so the route answers 500 and Stripe retries.
  *
  * Run: npx tsx tests/monetization/stripe_sync.test.ts
  */
-import { handleStripeEvent, rowFromSubscription, type SubLike, type SubscriptionRow } from "../../src/lib/monetization/stripe_sync";
+import { governingSubscription, handleStripeEvent, rowFromSubscription, type SubLike, type SubscriptionRow } from "../../src/lib/monetization/stripe_sync";
+import { isProRow } from "../../src/lib/monetization/pro_row";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "stripe-sync";
@@ -58,6 +60,40 @@ async function main() {
 
   const oneTime = await handleStripeEvent({ type: "checkout.session.completed", data: { object: { id: "cs_2", mode: "payment", customer: null, customer_email: "x@y.z", subscription: null } } }, deps(sub("active")));
   check("a checkout that is not a subscription is ignored", !oneTime.handled);
+
+  /* THE CHECKUP OF 2026-10-06 (finding 2): many subscriptions per customer, one row per account, and a changed email. */
+  const s = (id: string, status: string, end: number, created = 0, price = "price_m"): SubLike => ({ id, status, customer: "cus_1", cancel_at_period_end: false, created, items: { data: [{ price: { id: price }, current_period_end: end }] } });
+  const oldCancelled = s("sub_old", "canceled", 1790000000, 100);
+  const livePro = s("sub_live", "active", 1793836800, 200);
+  check("the governing subscription is the entitled Pro one, whatever came newer", governingSubscription([oldCancelled, livePro], env)?.id === "sub_live" && governingSubscription([livePro, s("sub_new", "canceled", 1799999999, 300)], env)?.id === "sub_live");
+  check("among entitled ones, the latest period end governs", governingSubscription([s("a", "active", 1793000000), s("b", "past_due", 1794000000)], env)?.id === "b");
+  check("with none entitled, the newest governs (period end, then created)", governingSubscription([s("a", "canceled", 1790000000, 1), s("b", "incomplete_expired", 1790000000, 2)], env)?.id === "b");
+  check("a subscription on a price that is not Pro's never governs over a Pro one", governingSubscription([s("x", "active", 1799999999, 9, "price_old"), s("p", "active", 1793000000)], env)?.id === "p");
+
+  writes.length = 0; made.length = 0;
+  const many = { ...deps(oldCancelled), userForCustomer: async () => "u-existing", listSubscriptions: async () => [oldCancelled, livePro] };
+  await handleStripeEvent({ type: "customer.subscription.deleted", data: { object: oldCancelled } }, many);
+  check("an event for an old cancelled subscription leaves a paying reader on Pro", writes[0]?.tier === "pro" && writes[0]?.stripe_subscription_id === "sub_live" && writes[0]?.user_id === "u-existing");
+  check("and finds the account by the customer, making none", made.length === 0);
+
+  writes.length = 0; made.length = 0;
+  const renamed = { ...deps(livePro, { email: "new.address@example.com" }), userForCustomer: async () => "u-original", listSubscriptions: async () => [livePro] };
+  await handleStripeEvent({ type: "customer.subscription.updated", data: { object: livePro } }, renamed);
+  check("a buyer who changed their email at Stripe stays one account", writes[0]?.user_id === "u-original" && made.length === 0);
+
+  writes.length = 0; made.length = 0;
+  await handleStripeEvent({ type: "checkout.session.completed", data: { object: { id: "cs_3", mode: "subscription", customer: "cus_1", customer_email: "typed@example.com", client_reference_id: "u-signed-in", subscription: "sub_live" } } }, deps(livePro));
+  check("a signed-in buyer's checkout writes to the account it names", writes[0]?.user_id === "u-signed-in" && made.length === 0);
+
+  writes.length = 0; made.length = 0;
+  const unknown = { ...deps(livePro, { email: null }), userForCustomer: async () => null, listSubscriptions: async () => [livePro] };
+  const none = await handleStripeEvent({ type: "customer.subscription.updated", data: { object: livePro } }, unknown);
+  check("no account holds the customer and Stripe holds no email: nothing written, the reason said", !none.handled && writes.length === 0 && !!none.skipped);
+
+  /* The one Pro rule the session's tier and checkout's guard both read (src/lib/monetization/pro_row.ts). */
+  const at = new Date("2026-10-06T00:00:00Z");
+  check("a row is Pro while active or past_due on pro, in its paid period", isProRow({ tier: "pro", status: "active", current_period_end: "2026-11-01T00:00:00Z" }, at) && isProRow({ tier: "pro", status: "past_due", current_period_end: null }, at));
+  check("a row is not Pro once its period has ended, when cancelled, or on free", !isProRow({ tier: "pro", status: "active", current_period_end: "2026-10-01T00:00:00Z" }, at) && !isProRow({ tier: "pro", status: "canceled" }, at) && !isProRow({ tier: "free", status: "active" }, at) && !isProRow(null, at));
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("monetization/stripe_sync: all pass");

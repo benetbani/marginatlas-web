@@ -32,5 +32,9 @@ check("his consent switch asks for the terms and immediate access", switched.con
 check("his tax switch turns on Stripe Tax and requires the address it needs", switched.automatic_tax?.enabled === true && switched.billing_address_collection === "required");
 for (const line of [RENEWAL_LINE, CONSENT_LINE]) check(`plain copy, no em dash or semicolon: "${line}"`, !/[\u2014;]/.test(line));
 
+/* The checkup of 2026-10-06 (finding 2): a returning customer checks out as that customer, never as a second one. */
+const returning = checkoutParams({ priceId: "price_m", origin: "https://www.marginatlas.com", email: "a@b.c", userId: "u1", customerId: "cus_9", env: {} });
+check("a returning customer is reused, its email not sent beside it (Stripe takes one)", returning.customer === "cus_9" && !("customer_email" in returning) && returning.client_reference_id === "u1");
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("monetization/checkout_params: all pass");

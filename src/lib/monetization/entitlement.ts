@@ -17,7 +17,7 @@ import { isAuthEnabled } from "@/lib/feature_flags";
 import { getSessionUser } from "@/lib/auth/session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { ViewerTier } from "@/lib/monetization/viewer_tier";
-import { ENTITLED_STATUSES } from "@/lib/monetization/stripe_sync";
+import { isProRow } from "@/lib/monetization/pro_row";
 
 export async function getSessionTier(): Promise<ViewerTier> {
   if (!isAuthEnabled()) return "free";
@@ -30,18 +30,7 @@ export async function getSessionTier(): Promise<ViewerTier> {
       .select("tier, status, current_period_end")
       .eq("user_id", user.id)
       .maybeSingle();
-    if (!data) return "free";
-
-    /* ONE PAID TIER, NO TRIAL (masterplan step 05; his rulings 14 and 20): Pro while Stripe says the plan is paid, or is retrying
-       a failed payment (past_due): the webhook's core's own two statuses, read from it (src/lib/monetization/stripe_sync.ts). */
-    const active = ENTITLED_STATUSES.has(String(data.status));
-    const periodOk =
-      !data.current_period_end ||
-      new Date(data.current_period_end as string).getTime() > Date.now();
-    if (active && periodOk && data.tier === "pro") {
-      return "pro";
-    }
-    return "free";
+    return isProRow(data) ? "pro" : "free";
   } catch {
     return "free";
   }
