@@ -155,16 +155,22 @@ export function CityCards({
   prevLabel = "Previous",
   nextLabel = "More",
   fill = false,
+  still = false,
 }: {
   cards: CityCard[];
   allHref: string;
-  allLabel: string;
+  /** The link to every covered city under the row; none is drawn without it (the home's still row holds every UK city page). */
+  allLabel?: string;
   /** One line, said once for the whole row: what the figure is, and nothing else. */
   basis: string;
   prevLabel?: string;
   nextLabel?: string;
   /** The cards grow into the height the level lends the card that holds them (2026-09-24), instead of a blank under the link. */
   fill?: boolean;
+  /** THE STILL ROW (his instruction of 2026-10-07, "reform home drastically"; his refusal of carousels and pagination,
+   *  2026-09-22): every card at once, no pager. The cards wrap and each line's cards share its width (`flex-1` on a 9rem basis),
+   *  so a short last line widens its cards instead of leaving a card's width empty beside them; from 1280 they stand in one row. */
+  still?: boolean;
 }) {
   const [page, setPage] = React.useState(0);
   /* BELOW FOUR, THE ROW FORM (the threshold measured 2026-09-19, QUEUE
@@ -184,9 +190,10 @@ export function CityCards({
   const rows = cards.length < PER_PAGE;
   const pays = cards.map((c) => c.payUsd).filter((v): v is number => typeof v === "number");
   const fmt = moneyFor(pays);
-  const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
+  const pages = still ? 1 : Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
-  const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
+  const slice = still ? cards : cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
+  const tall = still ? "flex flex-wrap items-stretch gap-2 xl:flex-nowrap [&>*]:grow [&>*]:basis-36" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]";
   const btn =
     "tap flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
@@ -211,13 +218,15 @@ export function CityCards({
           model's own full-width row instead: same content, same name size,
           same figure, the arrow at the right edge, and no hole. */}
       {/* `fill`: the grid takes the height the card is lent and its rows share it (`auto-rows-fr`), so the cards grow instead of a blank under the link. */}
-      <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]"} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
+      <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : tall} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
         {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
       </div>
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p>
-      <div className="mt-2 text-right">
-        <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
-      </div>
+      {allLabel ? (
+        <div className="mt-2 text-right">
+          <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
+        </div>
+      ) : null}
     </div>
   );
 }

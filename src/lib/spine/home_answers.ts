@@ -26,7 +26,6 @@ import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
 import type { Provenance } from "@/lib/spine/provenance";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { WorldRange } from "@/lib/spine/world_stats";
-import { getAtlasLedger } from "@/lib/home/atlas_ledger";
 
 export type HomeAnswer = {
   key: "answer" | "trades" | "years";
@@ -106,28 +105,7 @@ export function buildHomeAnswers(iso2 = "GB"): HomeAnswer[] {
   return out;
 }
 
-/**
- * WHAT THE ATLAS HOLDS (masterplan step 35; milestone 3, the criticised "What the atlas can see" replaced): the ledger module's own
- * counts (src/lib/home/atlas_ledger.ts, computed from the sources the pages are built from, never typed), the benchmarks at the
- * focal rung and the rest as rows, each stamped as counted with the ledger key it reads. The launch check's item (i) reads these
- * stamps on the served page.
- */
-export type AtlasHolds = {
-  focal: { figure: string; words: string; prov: Provenance };
-  rows: Array<{ key: string; label: string; value: string; note: string; prov: Provenance }>;
-};
-
-export function buildAtlasHolds(): AtlasHolds {
-  const l = getAtlasLedger();
-  const H = COPY.home.atlas;
-  const counted = (key: string): Provenance => ({ src: `lib/home/atlas_ledger.ts:${key}`, kind: "counted" });
-  return {
-    focal: { figure: l.benchmarks.toLocaleString("en-US"), words: H.words, prov: counted("benchmarks") },
-    rows: [
-      { key: "countries", label: H.rows.countries, value: `${l.countriesMeasured} of ${l.countriesTotal}`, note: H.notes.countries, prov: counted("countries") },
-      { key: "cities", label: H.rows.cities, value: String(l.cities), note: H.notes.cities, prov: counted("cities") },
-      { key: "districts", label: H.rows.districts, value: l.districts.toLocaleString("en-US"), note: H.notes.districts, prov: counted("districts") },
-      { key: "trades", label: H.rows.trades, value: String(l.trades), note: H.notes.trades, prov: counted("trades") },
-    ],
-  };
-}
+/* WHAT THE ATLAS HOLDS LEFT THE HOME PAGE (his instruction of 2026-10-07, "reform home drastically"): its counts (252 cities,
+   1,266 districts, 94 countries of 195) took in the city pages outside the UK, which are not indexed, so the page claimed more
+   than a visitor can reach. The ledger module (src/lib/home/atlas_ledger.ts) stays: the live home's band and the launch check
+   read it. */

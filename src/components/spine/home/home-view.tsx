@@ -16,13 +16,12 @@ import * as React from "react";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { Box, Rail } from "@/components/spine/kit";
 import { Focal } from "@/components/spine/country/focal";
-import { FactRows } from "@/components/spine/archetypes/FactRows";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { Ring } from "@/components/spine/archetypes/Ring";
 import { WorldRangeRows } from "@/components/spine/charts/WorldRange";
 import { usd } from "@/lib/spine/money";
 import { provAttrs } from "@/lib/spine/provenance";
-import { buildHomeAnswers, buildAtlasHolds, type HomeAnswer, type AtlasHolds as AtlasHoldsData } from "@/lib/spine/home_answers";
+import { buildHomeAnswers, type HomeAnswer } from "@/lib/spine/home_answers";
 import { CityCards } from "@/components/spine/archetypes/CityCards";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { isPaywallOn } from "@/lib/feature_flags";
@@ -147,32 +146,16 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
   );
 }
 
-/* THE UK'S CITIES (masterplan step 35): the city cards /gb draws (buildCityCards, his field look with the city's photograph),
-   each a door to its city page. */
+/* THE UK'S CITIES, STILL (masterplan step 35; his instruction of 2026-10-07, "reform home drastically"; his refusal of carousels
+   and pagination, 2026-09-22): every UK city the covered list gives a page (buildCityCards, his field look with the city's
+   photograph), at once and in one row from 1280, each its name and the figure its own page opens with, a door to that page. No
+   pager, no region line, no link to the world's list: the row is the UK's cities, all of them. The counts beside it left with
+   it (benchmarks, countries, cities, districts, trades): the cities count took in the non-UK city pages, which are not indexed. */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
-    <Box id="cities" className="flex h-full flex-col">
-      <Rail icon="best-areas" kicker={COPY.cities.kicker} />
-      <CityCards
-        fill
-        cards={cards.cards}
-        allHref={cards.allHref}
-        allLabel={COPY.cities.allLabel}
-        basis={COPY.cityCards.plain.basis}
-        prevLabel={COPY.cities.prev}
-        nextLabel={COPY.cities.next}
-      />
-    </Box>
-  );
-}
-
-/* WHAT THE ATLAS HOLDS (masterplan step 35): an open section, the benchmarks at 30 and the counts as rows, every one stamped. */
-function AtlasHolds({ holds }: { holds: AtlasHoldsData }) {
-  return (
-    <Box id="atlas" className="flex flex-col">
-      <Rail icon="benchmark" kicker={COPY.home.atlas.kicker} />
-      <Focal figure={holds.focal.figure} words={holds.focal.words} prov={holds.focal.prov} />
-      <FactRows rows={holds.rows.map((r) => ({ key: r.key, label: r.label, value: r.value, note: r.note, prov: r.prov }))} />
+    <Box id="cities" className="flex flex-col">
+      <Rail icon="best-areas" kicker={COPY.home.citiesLabel} />
+      <CityCards still cards={cards.cards.map((c) => ({ ...c, region: undefined }))} allHref={cards.allHref} basis={COPY.cityCards.plain.basis} />
     </Box>
   );
 }
@@ -214,7 +197,6 @@ function AnswerDoor({ a }: { a: HomeAnswer }) {
 export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null } = {}) {
   const answers = buildHomeAnswers(data?.iso2 ?? "GB");
   const cities = buildCityCards(data?.iso2 ?? "GB");
-  const holds = buildAtlasHolds();
   const notebook = buildNotebook();
   const duel = buildDuel();
   const kitchens = buildKitchens();
@@ -223,8 +205,8 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, what London's trades take, who is still
        trading, each a door to its section of /gb. */
     ...(answers.length ? [{ key: "answers", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.answersLabel, body: answers.map((a) => <AnswerDoor key={a.key} a={a} />) }] : []),
-    /* THE UK'S CITIES AND WHAT THE ATLAS HOLDS, ONE LEVEL (masterplan step 35): the city cards at two thirds, the counts beside. */
-    { key: "cities", split: "2-1", label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <AtlasHolds key="atlas" holds={holds} />] },
+    /* THE UK'S CITIES, THE WHOLE LEVEL (his instruction of 2026-10-07): the still row of every UK city page, nothing beside it. */
+    ...(cities ? [{ key: "cities", split: "wide" as ZoneSplit, label: COPY.home.citiesLabel, body: [<HomeCities key="cities" cards={cities} />] }] : []),
     /* THE DUEL AND THE RANKED LIST, SIDE BY SIDE (his rulings of 2026-10-05 on PARKED P36.2 and P36.2b; HOMEPAGE-EDITORIAL.md's
        order 3): which trades fail most, the set's two highest and two lowest on one scale, and where kitchens score five, the
        boroughs' three highest and three lowest, each from the registers' feed and each only while it is fresh (the 45-day rule).

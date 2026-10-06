@@ -582,19 +582,15 @@ async function itemI(home: string | null): Promise<void> {
   const printed: Record<string, { figure: number; note: string }> = {};
   for (const mm of band.matchAll(/>([\d,]+)<\/div><div[^>]*>(Benchmarks|Countries|Cities|Trades)<\/div><div[^>]*>([^<]*)<\/div>/g)) printed[mm[2]] = { figure: num(mm[1]), note: mm[3].trim() };
   const need = ["Benchmarks", "Countries", "Cities", "Trades"];
-  /* THE HOME PAGE ON THE BAND PAGE (masterplan step 35): its "What the atlas holds" stamps every count with the ledger key it reads
-     (src/lib/spine/home_answers.ts, buildAtlasHolds), so where the old band's markup is absent the same counts are read off the
-     stamps, and the comparisons below run unchanged. */
-  if (need.some((n) => !printed[n])) {
-    const stamped: Record<string, string> = {};
-    for (const mm of home.matchAll(/data-src="lib\/home\/atlas_ledger\.ts:(\w+)"[^>]*>([^<]+)</g)) stamped[mm[1]] = mm[2].trim();
-    const cm = (stamped.countries ?? "").match(/([\d,]+) of ([\d,]+)/);
-    if (stamped.benchmarks && cm && stamped.cities && stamped.districts && stamped.trades) {
-      printed.Benchmarks = { figure: num(stamped.benchmarks), note: "" };
-      printed.Countries = { figure: num(cm[1]), note: `of ${cm[2]}` };
-      printed.Cities = { figure: num(stamped.cities), note: `${stamped.districts} districts` };
-      printed.Trades = { figure: num(stamped.trades), note: "" };
-    }
+  /* THE REBUILT HOME PRINTS NO COUNTS (his instruction of 2026-10-07, "reform home drastically"): the counts section it carried
+     (masterplan step 35, each count stamped with the ledger key it read) left it, because its cities count took in the city pages
+     outside the UK, which are not indexed. So where the page served is the rebuilt home (the band page's zones) and it prints no
+     count at all, nothing on it can disagree with the ledger, and the item says so; a stamped count found on it is still a red,
+     since no section of the rebuilt home prints one now. The live home's band is read as before. */
+  if (need.some((n) => !printed[n]) && at === -1 && /data-composition="zones"/.test(home)) {
+    const stamped = /data-src="lib\/home\/atlas_ledger\.ts:/.test(home);
+    record("i", !stamped, stamped ? `the rebuilt home prints a count stamped from the ledger module, and no section of it prints one since 2026-10-07; ${moduleWords}` : `the home page as served is the rebuilt home, which prints no counts (2026-10-07: they took in the city pages outside the UK); ${moduleWords}; ${indexWords}`);
+    return;
   }
   if (need.some((n) => !printed[n])) { record("i", false, `the home page as served carries no readable ledger band ("What the atlas holds" ${at === -1 ? "absent" : "present, the figures unread"}); ${moduleWords}; ${indexWords}`); return; }
   const total = num(printed.Countries.note.match(/of ([\d,]+)/)?.[1] ?? "0");

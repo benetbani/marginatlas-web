@@ -2716,13 +2716,6 @@ export const COPY = {
       sent: "Thanks. We will write when it does.",
       failed: "Choose a city and check the address, then try again.",
     },
-    /** WHAT THE ATLAS HOLDS (masterplan step 35): the ledger module's counts (src/lib/home/atlas_ledger.ts), an open section. */
-    atlas: {
-      kicker: "What the atlas holds",
-      words: "figures for one trade in one place",
-      rows: { countries: "Countries", cities: "Cities", districts: "Districts", trades: "Trades" },
-      notes: { countries: "With figures, of all listed", cities: "Each with its own page", districts: "Inside those cities", trades: "From cafés to machine shops" },
-    },
     /** THE DUEL (his ruling of 2026-10-05 on PARKED P36.2): the line under the set's middle, the top rule, the phone's heads. The
      *  question itself is the feed's own title. */
     duel: {
