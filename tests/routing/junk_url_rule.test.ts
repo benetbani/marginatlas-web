@@ -49,7 +49,9 @@
  */
 import { readdirSync } from "node:fs";
 import { NextRequest } from "next/server";
-import { middleware } from "../../src/middleware";
+/* routeRequest, not middleware: since A7 (2026-10-06) `middleware` is async (the session refresh wraps the routing), and this
+   test reads the routing decision itself, as tests/routing/metadata_routes.test.ts does. */
+import { routeRequest as middleware } from "../../src/middleware";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "junk-url-rule";
@@ -89,14 +91,15 @@ function verdict(address: string): string {
   const to = res.headers.get("location") ?? res.headers.get("x-middleware-rewrite");
   return `answers ${res.status}${to ? ` to ${to.startsWith(ORIGIN) ? to.slice(ORIGIN.length) : to}` : ""}`;
 }
-/* /download left with its page (the checkup of 2026-10-06, finding 5). Its one address, /download/2026-benchmarks, is
-   answered by next.config.js's redirect to /data, which runs before the middleware; anything else under it is junk. */
-check("caught: /download", wouldBe404("/download"));
 
 function expectVerdict(path: string, want: string, why: string, remedy: string) {
   const v = verdict(path);
   check(`${path} ${v}${v === want ? "" : `, expected "${want}"`}: ${why}`, v === want, MW, remedy);
 }
+
+/* /download left with its page (the checkup of 2026-10-06, finding 5). Its one address, /download/2026-benchmarks, is
+   answered by next.config.js's redirect to /data, which runs before the middleware; anything else under it is junk. */
+expectVerdict("/download", "pinned to 404", "the /download page left in the checkup's B1", "keep download out of src/lib/routing/top_level_segments.ts; its one redirect lives in next.config.js");
 
 /* PINNED: an address for nothing, rewritten onto itself with the status pinned to 404. */
 const NO_PLACE = "neither a country we hold nor a route folder, so it could only have matched [country]";
