@@ -4,7 +4,7 @@
  * as "not yet".
  *
  * usage, from E:/atlas/website:
- *   npm run deploy:watch -- --marker='data-archetype="city-cards"' [--url=/gb] [--minutes=15]
+ *   npm run deploy:watch -- --marker='data-archetype="city-cards"' [--url=/gb | --marker-url=/gb] [--minutes=15]
  *
  * The marker is a string the pushed code puts on the page and the previous
  * deploy did not (an archetype attribute, a new id, a new sentence). Each
@@ -19,11 +19,11 @@
  * into it; this one takes the marker, follows the www redirect itself, and
  * runs on node's TLS, which does not trip this machine's revocation check.
  */
-const argv = process.argv.slice(2);
-const arg = (k, d) => { const a = argv.find((x) => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : d; };
-const marker = arg("marker", null);
-const url = new URL(arg("url", "/gb"), "https://marginatlas.com").href;
-const minutes = Number(arg("minutes", "15"));
+import { watchArgs } from "./lib/watch_args.mjs";
+
+const parsed = watchArgs(process.argv.slice(2));
+if (parsed.error) { console.error(`deploy_watch: ${parsed.error}`); process.exit(2); }
+const { marker, url, minutes } = parsed;
 if (!marker) { console.error("deploy_watch: --marker=<string the new deploy puts on the page> is required"); process.exit(2); }
 
 const deadline = Date.now() + minutes * 60_000;

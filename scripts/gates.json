@@ -1404,6 +1404,18 @@
       "claims": []
     },
     {
+      "name": "launch-tools",
+      "script": "tests/scripts/launch_tools.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE LAUNCH TOOLS SAY WHAT THE CHECKLIST SAYS (2026-10-06).",
+      "reads": [
+        "scripts/launch_tools: ${failed} failure(s)",
+        "scripts/launch_tools: all pass"
+      ],
+      "claims": []
+    },
+    {
       "name": "scope-rules",
       "script": "tests/taxonomy/scope_rules.test.ts",
       "args": [],

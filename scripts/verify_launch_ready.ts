@@ -97,6 +97,7 @@ import { spawnSync } from "node:child_process";
 import { existsSync, fstatSync, mkdirSync, readFileSync, statSync, writeFileSync, appendFileSync } from "node:fs";
 import { basename, resolve } from "node:path";
 import { preflight } from "./harness/preflight.mjs";
+import { shellMangled } from "./lib/watch_args.mjs";
 import { readFlag, judge, honestyMissing, HONESTY } from "./verify_sample_switch";
 import { areSampleMarksVisible, isAuthEnabled } from "../src/lib/feature_flags";
 
@@ -125,6 +126,10 @@ const argv = process.argv.slice(2);
 const arg = (k: string, d: string | null): string | null => { const a = argv.find((x) => x.startsWith(`--${k}=`)); return a ? a.slice(k.length + 3) : d; };
 const MARKER = arg("marker", null);
 const MARKER_URL = arg("marker-url", "/gb")!;
+if (shellMangled(MARKER_URL)) {
+  console.error(`launch:check: the address arrived as "${MARKER_URL}": Git Bash turned "/" into a folder. Run it from PowerShell, or prefix it with MSYS_NO_PATHCONV=1`);
+  process.exit(2);
+}
 const SITE = arg("site", "https://marginatlas.com")!;
 const ONLY = arg("only", null);
 /* A copy of the order book for a plant of (g); honoured only in a subset run, so the checklist itself always reads the real file. */

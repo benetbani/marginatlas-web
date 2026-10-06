@@ -536,6 +536,8 @@ const GATES: Gate[] = [
   { name: "gate-reds-ratchet", script: "scripts/audit_gate_reds.mjs" },
   { name: "strip-comments", script: "tests/lib/strip_comments.test.ts" },
   { name: "build-compare", script: "tests/scripts/build_compare.test.ts" },
+  /* The launch tools read the flags the launch checklist passes, and refuse an address the shell rewrote (2026-10-06). */
+  { name: "launch-tools", script: "tests/scripts/launch_tools.test.ts" },
   { name: "scope-rules", script: "tests/taxonomy/scope_rules.test.ts" },
   { name: "retired-activities", script: "tests/taxonomy/retired.test.ts" },
   { name: "activity-merges", script: "tests/taxonomy/merges.test.ts" },
