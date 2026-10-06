@@ -1410,7 +1410,7 @@
       "browser": false,
       "asserts": "THE LAUNCH TOOLS SAY WHAT THE CHECKLIST SAYS (2026-10-06).",
       "reads": [
-        "scripts/launch_tools: ${failed} failure(s)",
+        "scripts/launch_tools: ${failed} failure(s). Remedy: make each FAIL line above pass in the file it names (scripts/lib/watch_args.mjs for the flags), then run npx tsx tests/scripts/launch_tools.test.ts",
         "scripts/launch_tools: all pass"
       ],
       "claims": []

@@ -24,5 +24,5 @@ const e = watchArgs(["--marker=x", "--minutes=3"]);
 check("--minutes is read", e.minutes === 3, JSON.stringify(e));
 check("--marker is read", watchArgs(["--marker=if you form a company"]).marker === "if you form a company");
 
-if (failed > 0) { console.error(`scripts/launch_tools: ${failed} failure(s)`); process.exit(1); }
+if (failed > 0) { console.error(`scripts/launch_tools: ${failed} failure(s). Remedy: make each FAIL line above pass in the file it names (scripts/lib/watch_args.mjs for the flags), then run npx tsx tests/scripts/launch_tools.test.ts`); process.exit(1); }
 console.log("scripts/launch_tools: all pass");
