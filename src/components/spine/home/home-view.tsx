@@ -4,11 +4,14 @@
  * search and the UK answers: what Pro opens, the price, one button"; milestone 3, the two criticised sections replaced and the page
  * built to the UK page's standard; 2026-08-16, the hero's h1, "it was just perfect"; 2026-10-04, the band page).
  *
- * The frame, in the order the page reads: the h1 he kept, with its rotating words, and the search (step 33 makes it land on pages
- * that exist, UK first); then the UK's answers (step 34), the UK's cities and what the atlas holds (step 35), Pro said once and
- * quietly while the paywall's switch is on (step 35), the notebook and the newsletter (step 36). Each level is a zone
- * (src/components/spine/zones.tsx); a level that has nothing to draw is not listed, so no band stands empty. No chapters: a home
- * page is not a reading in chapters. One 40 on the page, at the UK's answer (PART 4), when step 34 seats it.
+ * The frame, in the order the page reads, since his instruction of 2026-10-07 ("reform home drastically"; he called the live home
+ * "catastrophically bad"): the h1 he kept, with its rotating words, and the search with no heading of its own (step 33 makes it
+ * land on pages that exist, UK first); the UK's three answers, one name, one figure and one line each (step 34); the UK's city
+ * pages, still, every one at once (step 35); the duel and the kitchens list from the registers (P36.2, P36.2b); Pro said once and
+ * quietly while the paywall's switch is on (step 35); the notebook (step 36). Gone that day: the counts of what the atlas holds,
+ * the cities' pager and the newsletter band (the footer's bar asks). tests/trust/home_shape.test.ts holds the order. Each level
+ * is a zone (src/components/spine/zones.tsx); a level that has nothing to draw is not listed, so no band stands empty. No
+ * chapters: a home page is not a reading in chapters. One 40 on the page, at the UK's answer (PART 4).
  *
  * Drawn by the root route's flagged branch (`isHomeReformEnabled()`), the harness surface `home` (page `home-gb`).
  */
