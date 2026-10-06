@@ -117,6 +117,13 @@ const nextConfig = {
         destination: post.to,
         permanent: true,
       })),
+      // THE TWO METHOD NOTES MOVED ONTO ABOUT THE FIGURES (P36.1, the rewrites of 2026-10-06): each slug to its section there,
+      // from data/blog/moved_posts.json (the gate blog-retired holds them with the 58).
+      ...Object.entries(require("./data/blog/moved_posts.json").posts).map(([slug, post]) => ({
+        source: `/blog/${slug}`,
+        destination: post.to,
+        permanent: true,
+      })),
     ];
   },
 

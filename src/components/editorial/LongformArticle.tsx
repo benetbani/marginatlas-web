@@ -31,11 +31,16 @@ export interface LongformArticleProps {
   title: string;
   deck?: string;
   publishDate: string;
+  /** The day the text last changed, printed beside the publication day when it differs. */
+  updatedDate?: string;
   author: string;
   readMinutes: number;
   cover?: React.ReactNode;
   coverCaption?: string;
   bodyHtml: string;
+  /** The post's own foot (the rewritten posts, 2026-10-06): the pages its figures live on, its data, its method and its
+   *  sources line, set between the body and the further reading. */
+  foot?: React.ReactNode;
   related?: LongformRelated[];
 }
 
@@ -139,6 +144,9 @@ const LF_CSS = `
   margin: 12px auto 0; max-width: 36em; text-wrap: pretty;
 }
 .lf-body ul, .lf-body ol { font-size: 18px; line-height: 1.7; color: var(--lf-ink); padding-left: 1.4em; margin: 1.2em 0; }
+.lf-body ul { list-style: disc; }
+.lf-body ol { list-style: decimal; }
+.lf-body li::marker { color: var(--lf-cocoa); }
 .lf-body li { margin: 0.4em 0; }
 .lf-body a {
   color: var(--lf-ink); text-decoration: underline; text-decoration-color: var(--lf-line);
@@ -146,6 +154,13 @@ const LF_CSS = `
 }
 .lf-body a:hover { text-decoration-color: var(--lf-accent); }
 .lf-body strong { font-weight: 600; }
+.lf-notes { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--lf-line); font-size: 15px; line-height: 1.6; color: var(--lf-cocoa); }
+.lf-notes dl { margin: 0; display: grid; gap: 14px; }
+.lf-notes dt { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lf-cocoa); }
+.lf-notes dd { margin: 4px 0 0; color: var(--lf-ink); }
+.lf-notes a { color: var(--lf-ink); text-decoration: underline; text-decoration-color: var(--lf-line); text-underline-offset: 3px; }
+.lf-notes a:hover { text-decoration-color: var(--lf-accent); }
+.lf-notes p { margin: 16px 0 0; font-size: 13px; }
 .lf-footer { margin-top: 72px; padding-top: 32px; border-top: 1px solid var(--lf-line); }
 .lf-related-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lf-cocoa); }
 .lf-related-list { list-style: none; padding: 0; margin: 16px 0 0; }
@@ -165,11 +180,13 @@ export default function LongformArticle({
   title,
   deck,
   publishDate,
+  updatedDate,
   author,
   readMinutes,
   cover,
   coverCaption,
   bodyHtml,
+  foot,
   related,
 }: LongformArticleProps) {
   return (
@@ -188,7 +205,8 @@ export default function LongformArticle({
               {author}
             </span>
             <span className="lf-byline-meta">
-              {publishDate} &middot; {readMinutes} min read
+              {publishDate}
+              {updatedDate ? <> &middot; updated {updatedDate}</> : null} &middot; {readMinutes} min read
             </span>
           </div>
           <hr className="lf-rule" />
@@ -202,6 +220,8 @@ export default function LongformArticle({
         )}
 
         <div className="lf-body" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+
+        {foot ? <aside className="lf-notes" aria-label="About this note">{foot}</aside> : null}
 
         {related && related.length > 0 && (
           <footer className="lf-footer">

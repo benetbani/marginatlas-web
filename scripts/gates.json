@@ -448,8 +448,8 @@
       "reads": [
         "data/cells",
         "data/countries",
-        "scripts/verify_cell_data.mjs",
-        "scripts/verify_no_source_agencies.ts"
+        "scripts/lib/agency_tokens.ts",
+        "scripts/verify_cell_data.mjs"
       ],
       "claims": []
     },
@@ -1579,10 +1579,46 @@
       "asserts": "THE 58 RETIRED BLOG POSTS (his ruling of 2026-10-05 on PARKED P36.1, option (a): keep 2, rewrite 10, retire 58 before the site goes public, each with a permanent redirect to its country page or the ne",
       "reads": [
         "content/blog",
-        "content/blog holds the two kept and the ten to rewrite, and nothing else (${onDisk.length} files)",
+        "content/blog holds the two kept and the eight rewritten, and nothing else (${onDisk.length} files)",
+        "data/blog/moved_posts.json",
         "data/blog/retired_posts.json",
         "src/app",
-        "src/app/(site)"
+        "src/app/(site)",
+        "src/app/(site)/about-data/page.tsx"
+      ],
+      "claims": []
+    },
+    {
+      "name": "blog-content",
+      "script": "tests/blog/blog_content.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE BLOG'S FIGURES (P36.1, the rewrites of 2026-10-06; docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4).",
+      "reads": [
+        "content/blog",
+        "public/data/uk/${PACK_VERSION}",
+        "src/app",
+        "src/app/(site)",
+        "src/app/(site)/about-data/page.tsx",
+        "tests/blog/blog_content.test.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "blog-content-plants",
+      "script": "tests/blog/blog_content.test.ts",
+      "args": [
+        "--plant"
+      ],
+      "browser": false,
+      "asserts": "THE BLOG'S FIGURES (P36.1, the rewrites of 2026-10-06; docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4).",
+      "reads": [
+        "content/blog",
+        "public/data/uk/${PACK_VERSION}",
+        "src/app",
+        "src/app/(site)",
+        "src/app/(site)/about-data/page.tsx",
+        "tests/blog/blog_content.test.ts"
       ],
       "claims": []
     },
@@ -1938,6 +1974,7 @@
       "reads": [
         "data/sections",
         "data/uk/registers/manifest.json",
+        "scripts/lib/agency_tokens.ts",
         "scripts/verify_no_source_agencies.ts",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",

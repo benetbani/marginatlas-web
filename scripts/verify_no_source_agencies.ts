@@ -12,40 +12,11 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { stripCommentLines } from "./lib/strip_comments";
+import { AGENCY_TOKENS } from "./lib/agency_tokens";
 
 const ROOT = resolve(process.cwd(), "src");
 
-const AGENCY_TOKENS = [
-  "Eurostat",
-  "Destatis",
-  "INSEE",
-  "ISTAT",
-  "e-Stat",
-  "IBGE",
-  "INEGI",
-  "OECD",
-  "ONS NOMIS",
-  "StatCan",
-  "US Census",
-  "Census Bureau",
-  "World Bank",
-  /* THE UNITED KINGDOM'S PUBLISHERS (plan 06, task B4; his ruling of 2026-10-04 on R-002: "One sources page"): named once, on
-     About the figures, from src/lib/spine/uk_sources.ts (allowed below), and nowhere a reader meets them on a card, a heading or a
-     title. Not listed, on purpose: an institution a reader deals with rather than a source of figures (the central bank whose
-     rate the page states, Companies House where a company is registered, the tax office a return goes to, the start-up loan a
-     founder applies for). */
-  "Office for National Statistics",
-  "Valuation Office",
-  "Nomis",
-  "VisitBritain",
-  "Worldpanel",
-  "Kantar",
-  "UK Finance",
-  "British Retail Consortium",
-  "Department for Transport",
-  "Department for Business and Trade",
-  "Department for Energy Security",
-];
+/* The names live in scripts/lib/agency_tokens.ts (2026-10-06), shared with the blog's gate. */
 
 // Files allowed to mention agencies (mapping tables, ingest scripts, etc.)
 const ALLOWLIST = new Set([

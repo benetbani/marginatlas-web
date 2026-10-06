@@ -1,9 +1,10 @@
 /**
  * Blog index - /blog.
  *
- * SINCE 2026-10-05 THE INDEX HOLDS TWELVE POSTS (his ruling on PARKED P36.1): the two kept and the ten to rewrite on the UK
- * registers. The other 58 are retired, each redirecting to its country page or the nearest live page
- * (data/blog/retired_posts.json, the gate blog-retired), so the counts of seventy below are the page's history.
+ * SINCE 2026-10-05 THE INDEX HOLDS THE POSTS HIS RULING ON PARKED P36.1 KEPT: the two kept and the seven rewritten on the UK
+ * registers (2026-10-06), grouped by the category each names. The 58 retired redirect to their country page or the nearest
+ * live page (data/blog/retired_posts.json, the gate blog-retired), and three method notes moved onto About the figures
+ * (data/blog/moved_posts.json), so the counts of seventy below are the page's history.
  *
  * WHAT WAS WRONG, MEASURED 2026-08-18. The page was 32,114 rendered pixels at
  * 375x812, about 40 screens, and 11,821 at 1280. It is the same shape the
@@ -40,11 +41,10 @@
  * The featured post keeps its cover because at one instance there is nothing to
  * collide with.
  *
- * It invents nothing. Every title, date and excerpt is the real thing the blog
- * library loads from content/blog. The subject of a post is the one thing the
- * frontmatter does not carry, so SUBJECT_OF_POST below assigns each slug by
- * hand; anything it does not name falls into a final bucket and is still
- * reachable, so a new post can never vanish from this page.
+ * It invents nothing. Every title, date, excerpt and category is the real thing
+ * the blog library loads from content/blog; a post that names no category
+ * falls into a final bucket and is still reachable, so a new post can never
+ * vanish from this page.
  *
  * URL, metadata canonical, and revalidate are unchanged. Every /blog/{slug}
  * link is unchanged.
@@ -55,7 +55,7 @@
  * itself; the two bare sections carry `relative` explicitly.
  */
 import Link from "next/link";
-import { getAllPosts, type BlogPost } from "@/lib/blog";
+import { BLOG_CATEGORIES, getAllPosts, type BlogPost } from "@/lib/blog";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { BlogCover } from "@/components/blog/BlogCover";
 
@@ -85,103 +85,23 @@ function formatShortDate(date: string): string {
   });
 }
 
-/* THE SUBJECTS, and why they are a hand-written table rather than a pattern.
-   The frontmatter carries title, date, excerpt and author and nothing else, so
-   there is no tag to group on. A pattern match on the slug looks tempting and
-   is wrong in both directions: `-overview` is a country read in
-   `france-overview` and a sector read in `global-construction-overview`, and
-   `us-small-business-overview` is a country while `global-software-deep-dive`
-   is not. Every slug is therefore placed by reading what the post is, and a
-   slug this table does not name lands in the fallback rather than being
-   guessed at. */
-/* HEADINGS ONLY, NO BLURBS, and the six that were written here were cut by
-   applying the charter's own section 4 test rather than by taste: "a paragraph
-   under a heading that repeats the heading goes entirely." Each of the six was
-   restated either by its own heading ("One trade, worldwide" over "A sector
-   across every country that publishes it") or, worse, by the rows immediately
-   beneath it: "a bakery, a pharmacy, a plumber" sat directly above the bakery
-   post, the pharmacy post and the plumber post. Six blurbs, 70 words, 240px at
-   375 and no information. /cities' region cards carry a name and a count and
-   nothing else, so this is the cohesive shape as well as the shorter one. */
-const SUBJECTS = [
-  { id: "countries", title: "One country at a time" },
-  { id: "compared", title: "Places compared" },
-  { id: "industries", title: "One trade, worldwide" },
-  { id: "close-ups", title: "Inside one business" },
-  { id: "reading", title: "Reading the numbers" },
-  { id: "method", title: "How it was built, and what is missing" },
-  /* THE FALLBACK, and it is load-bearing rather than defensive. A post added to
-     content/blog tomorrow is not in the table above, and a page that silently
-     omitted it would be dropping a URL to keep a number tidy. It renders only
-     when it holds something, so today it does not render at all. */
-  { id: "more", title: "More notes" },
-] as const;
-
-type SubjectId = (typeof SUBJECTS)[number]["id"];
-
-/* THE TWELVE POSTS LEFT (his ruling of 2026-10-05, PARKED P36.1): the two kept and the ten to rewrite on the UK
-   registers; the 58 retired redirect to their country page or the nearest live page (data/blog/retired_posts.json). */
-const SUBJECT_OF_POST: Record<string, SubjectId> = {
-  "global-hairdressers": "industries",
-  "global-restaurants-overview": "industries",
-  "global-retail-shifts": "industries",
-
-  "difference-between-firm-and-establishment": "reading",
-  "how-to-benchmark-your-business": "reading",
-  "industry-classification-different-meanings": "reading",
-  "median-vs-average": "reading",
-  "size-band-statistics-matter": "reading",
-
-  "hidden-economy-solo-proprietors": "method",
-  "reading-eurostat-sbs": "method",
-  "what-we-omit": "method",
-  "when-we-extrapolate": "method",
-};
-
+/* THE INDEX BY CATEGORY (P36.1, the rewrites of 2026-10-06; BLOG.md: "The blog, with different categories of articles"). Each
+   post names its category in its frontmatter (src/lib/blog.ts, held by the gate blog-content), so the hand-written table that
+   placed each slug by reading it is gone, and its subjects with it (they sorted seventy posts that no longer stand). The
+   categories come in BLOG.md's order, each heading the reader's question in a plain label; a post without one still lands, under
+   "More notes", so a URL never drops off the page. Within a group the order is the library's own, newest first, as before. */
 type SubjectGroup = {
-  id: SubjectId;
+  id: string;
   title: string;
   posts: BlogPost[];
 };
 
-/**
- * Partition the corpus into the subject cards. Every post lands in exactly one
- * group and no post is dropped: an unnamed slug goes to "more".
- *
- * WITHIN A GROUP THE ORDER IS THE LIBRARY'S OWN, newest first, and this reverses
- * an alphabetical sort written earlier in the same tick. The argument for
- * alphabetical was /cities, whose index was sorted by metro economy and read as
- * "indistinguishable from no order at all to a reader looking for Rome". That
- * precedent does not transfer, and the rendered page is what showed it: a city
- * entry is a NAME, so A-to-Z puts Rome under R, while a post entry is a
- * HEADLINE, so A-to-Z sorts on whatever word the headline opens with.
- *
- * Counted rather than eyeballed: 52 of the 70 titles begin with a generic word,
- * and the commonest openers are "Why" 8, "The" 7, "How" 6, "What" 4. Seen at
- * 1280, alphabetical filed Germany under T, for "The German Mittelstand", and
- * put three unrelated posts together under S because each opens "Small business
- * in". A reader looking for Germany was no better served than by no order, and
- * the date column beside it read 11, 12, 13, 14, 5, 13, 13, 11, 6 down the page.
- *
- * Newest first is the order getAllPosts already returns, so nothing is sorted
- * here at all and the page cannot disagree with the library. It also makes the
- * date column monotonic, which is the one scannable structure this corpus can
- * actually support: the subject card did the work of finding the right 21 posts,
- * and inside it the reader is looking at what is new.
- */
+const capital = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 function groupPosts(posts: BlogPost[]): SubjectGroup[] {
-  const byId = new Map<SubjectId, BlogPost[]>();
-  for (const post of posts) {
-    const id = SUBJECT_OF_POST[post.slug] ?? "more";
-    const bucket = byId.get(id) ?? [];
-    bucket.push(post);
-    byId.set(id, bucket);
-  }
-  return SUBJECTS.map((s) => ({
-    id: s.id,
-    title: s.title,
-    posts: byId.get(s.id) ?? [],
-  })).filter((g) => g.posts.length > 0);
+  const groups: SubjectGroup[] = BLOG_CATEGORIES.map((c) => ({ id: c, title: capital(c), posts: posts.filter((p) => p.category === c) }));
+  groups.push({ id: "more", title: "More notes", posts: posts.filter((p) => !p.category) });
+  return groups.filter((g) => g.posts.length > 0);
 }
 
 /** One hero figure: the number set large, its label quiet underneath. Same
@@ -345,7 +265,7 @@ export default function BlogIndex() {
                     {group.title}
                   </h3>
                   <span className="shrink-0 text-xs uppercase tracking-wide text-cocoa-500 tabular-nums">
-                    {group.posts.length} notes
+                    {group.posts.length} {group.posts.length === 1 ? "note" : "notes"}
                   </span>
                 </div>
                 {/* CSS COLUMNS, NOT A GRID, and the difference is what keeps

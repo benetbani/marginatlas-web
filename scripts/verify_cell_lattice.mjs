@@ -87,7 +87,9 @@ function tokensFrom(path, label) {
   return [...m[1].matchAll(/["']([^"']+)["']/g)].map((x) => x[1]);
 }
 const AGENCY_TOKENS = [...new Set([
-  ...tokensFrom(resolve(ROOT, "scripts/verify_no_source_agencies.ts"), "site list"),
+  /* The site's list lives in scripts/lib/agency_tokens.ts since 2026-10-06 (moved out of verify_no_source_agencies.ts, unchanged,
+     so the blog's gate reads the same names). */
+  ...tokensFrom(resolve(ROOT, "scripts/lib/agency_tokens.ts"), "site list"),
   ...tokensFrom(resolve(ROOT, "scripts/verify_cell_data.mjs"), "cell list"),
 ])];
 if (AGENCY_TOKENS.length < 10) {

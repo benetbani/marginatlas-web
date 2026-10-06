@@ -112,6 +112,60 @@ export default function AboutDataPage() {
       </section>
 
       <section className="mt-10">
+        {/* WHEN WE ESTIMATE (P36.1, the rewrites of 2026-10-06): the old post "When we extrapolate and when we don't" moved here, as
+            BLOG.md says, its tiers and badges gone with the pages that printed them; /blog/when-we-extrapolate lands on this id
+            (data/blog/moved_posts.json). */}
+        <h2 id="estimates" className="scroll-mt-24 text-xl font-semibold text-ink-900">When we estimate</h2>
+        <ul className="mt-4 space-y-3 text-ink-800">
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>In the United Kingdom,</strong> only where no register holds the figure: the sales a London business needs to break even, or the cost to open at London prices. The line under the figure says it is an estimate.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Outside the United Kingdom,</strong> most figures are estimates from national statistics and a trade&rsquo;s typical shape, and each page says so once.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>With no fair basis,</strong> the page leaves the figure out rather than guess.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section className="mt-10">
+        {/* WHAT THE FIGURES LEAVE OUT (P36.1, the rewrites of 2026-10-06): the old post "What we won't show" moved here, as BLOG.md
+            says, rewritten from the data pack's own ledger (public/data/uk/2026.10/ledger.json, each row's leaves_out), so it says
+            what the UK tables leave out in their own terms; /blog/what-we-omit lands on this id (data/blog/moved_posts.json). */}
+        <h2 id="leave-out" className="scroll-mt-24 text-xl font-semibold text-ink-900">What the figures leave out</h2>
+        <ul className="mt-4 space-y-3 text-ink-800">
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Unregistered businesses.</strong> The counts, takings and survival figures hold businesses registered for VAT or PAYE. The 54% of UK businesses on neither register, most of them sole traders, are not in them, so the middle business&rsquo;s takings sit above the middle of all businesses. <a href="/blog/hidden-economy-solo-proprietors" className="underline underline-offset-2">Who the counts leave out</a>.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Sole traders, where the register is of companies.</strong> Failures count limited companies; company ages and new companies count limited companies and limited liability partnerships. A sole trader&rsquo;s insolvency is personal and is not counted.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Where a business trades.</strong> A business is counted at its registered address, which is not always where it trades.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Small numbers.</strong> Counts are rounded to the nearest 5. The middle business&rsquo;s takings are not printed where an area holds under 40 businesses, and a failure rate only where the year holds 10 or more insolvencies.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Shared codes.</strong> Where several trades share one industry code, a figure is the whole code&rsquo;s: barbers, hairdressers, and nail, brow and lash studios share one.</span>
+          </li>
+          <li className="flex gap-3">
+            <span className="text-atlas-500 shrink-0">·</span>
+            <span><strong>Rent.</strong> The official rent estimate is of April 2021, not today&rsquo;s asking rents. Pubs and hotels are valued on their takings and have none.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section className="mt-10">
         <h2 className="text-xl font-semibold text-ink-900">Business formation data</h2>
         <p className="mt-3 text-ink-800">
           Setup cost and days-to-start figures cover 152 countries. Numbers

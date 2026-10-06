@@ -6,12 +6,49 @@ import html from "remark-html";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "blog");
 
+/* THE CATEGORIES (BLOG.md, the goal of 2026-10-02, workstream 5, his words: "The blog, with different categories of articles"),
+   in the order the index shows them, each the reader's question in a plain label. The eighth, owners' numbers, opens only when
+   the first owners' group passes its publication rule, so it is not listed. Every post names one (the gate blog-content). */
+export const BLOG_CATEGORIES = [
+  "monthly report",
+  "survival and failure",
+  "counts and turnover",
+  "premises, rent and rates",
+  "rules and changes",
+  "places",
+  "how we know",
+] as const;
+export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
+export const isBlogCategory = (v: unknown): v is BlogCategory => (BLOG_CATEGORIES as readonly unknown[]).includes(v);
+
+/* THE FOOT'S TWO TRUE LINES (CREDIBILITY.md: "Text is drafted with AI assistance and checked by [name]"). He has not read the
+   rewrites, so no line says he checked them; his name goes on a post he has read. The second line is the gate blog-content,
+   which recomputes every figure of a post from the data pack on every build, the deploy's included. */
+export const BLOG_AI_LINE = "Drafted with AI assistance.";
+export const BLOG_CHECKED_LINE = "Every figure here is checked against the data pack each time the site is published.";
+
+/** A plain link a post's foot prints: the pages its figures live on, or the method it follows. */
+export type BlogLink = { label: string; href: string };
+
 export type BlogPost = {
   slug: string;
   title: string;
   date: string;
   excerpt: string;
   author?: string;
+  /* THE REWRITTEN POSTS' FIELDS (P36.1, 2026-10-06; docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md). Optional here, so a
+     post without them still loads; the gate blog-content holds every post in content/blog to them. */
+  category?: BlogCategory;
+  /** The day a post's text last changed, when it is not its publication day. */
+  updated?: string;
+  /** The pages the post's figures live on (the foot's "Figures behind this"). */
+  behind?: BlogLink[];
+  /** The data pack's files the figures come from (the foot's "Data"). */
+  data?: string[];
+  /** Where the method is explained (the foot's "Method"), an anchor on About the figures. */
+  method?: BlogLink;
+  /** The post was drafted with AI assistance (CREDIBILITY.md's line; the foot says so). */
+  ai?: boolean;
   bodyHtml?: string;
   /** Cover image. Required by site convention (founder 2026-05-26).
    *  When the frontmatter omits `image:`, a deterministic gradient
@@ -116,6 +153,30 @@ function imageFromFrontmatter(slug: string, data: Record<string, unknown>): Blog
   return gradientFor(slug);
 }
 
+const links = (v: unknown): BlogLink[] | undefined =>
+  Array.isArray(v)
+    ? v.filter((l): l is BlogLink => !!l && typeof (l as BlogLink).label === "string" && typeof (l as BlogLink).href === "string")
+    : undefined;
+
+/** A post's frontmatter as the site reads it, one parser for the index and the page. */
+function postMeta(slug: string, data: Record<string, unknown>): BlogPost {
+  const method = links([data.method])?.[0];
+  return {
+    slug,
+    title: (data.title as string) || slug,
+    date: (data.date as string) || "2026-01-01",
+    excerpt: (data.excerpt as string) || "",
+    author: (data.author as string) || "Margin Atlas team",
+    category: isBlogCategory(data.category) ? data.category : undefined,
+    updated: typeof data.updated === "string" && data.updated !== data.date ? data.updated : undefined,
+    behind: links(data.behind),
+    data: Array.isArray(data.data) ? data.data.filter((f): f is string => typeof f === "string") : undefined,
+    method,
+    ai: data.ai === true,
+    image: imageFromFrontmatter(slug, data),
+  };
+}
+
 export function getAllPosts(): BlogPost[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
   const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".md"));
@@ -123,17 +184,10 @@ export function getAllPosts(): BlogPost[] {
     const slug = file.replace(/\.md$/, "");
     const raw = fs.readFileSync(path.join(CONTENT_DIR, file), "utf-8");
     const { data } = matter(raw);
-    return {
-      slug,
-      title: (data.title as string) || slug,
-      date: (data.date as string) || "2026-01-01",
-      excerpt: (data.excerpt as string) || "",
-      author: (data.author as string) || "Margin Atlas team",
-      image: imageFromFrontmatter(slug, data),
-    } as BlogPost;
+    return postMeta(slug, data);
   });
-  // newest first
-  posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // newest first; posts of one day by slug, so the order (and the index's featured post) never depends on the sort's internals
+  posts.sort((a, b) => (a.date === b.date ? a.slug.localeCompare(b.slug) : a.date < b.date ? 1 : -1));
   return posts;
 }
 
@@ -143,13 +197,5 @@ export async function getPost(slug: string): Promise<BlogPost | null> {
   const raw = fs.readFileSync(file, "utf-8");
   const { data, content } = matter(raw);
   const processed = await remark().use(html).process(content);
-  return {
-    slug,
-    title: (data.title as string) || slug,
-    date: (data.date as string) || "2026-01-01",
-    excerpt: (data.excerpt as string) || "",
-    author: (data.author as string) || "Margin Atlas team",
-    bodyHtml: processed.toString(),
-    image: imageFromFrontmatter(slug, data),
-  };
+  return { ...postMeta(slug, data), bodyHtml: processed.toString() };
 }

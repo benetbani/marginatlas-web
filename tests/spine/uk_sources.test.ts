@@ -75,8 +75,10 @@ async function thePage() {
 
   /* THE GATE THAT KEEPS THE NAMES HERE */
   const gate = readFileSync("scripts/verify_no_source_agencies.ts", "utf8");
+  /* The names live in scripts/lib/agency_tokens.ts since 2026-10-06, shared with the blog's gate; the allowlist stays in the gate. */
+  const names = readFileSync("scripts/lib/agency_tokens.ts", "utf8");
   check("the source-agencies gate allows the one module", gate.includes(`"${FILE}"`));
-  check("the source-agencies gate watches the UK publishers' names", ["Office for National Statistics", "Valuation Office", "VisitBritain"].every((t) => gate.includes(`"${t}"`)));
+  check("the source-agencies gate watches the UK publishers' names", ["Office for National Statistics", "Valuation Office", "VisitBritain"].every((t) => names.includes(`"${t}"`)));
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("spine/uk_sources: all pass");

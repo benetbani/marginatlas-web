@@ -40,6 +40,7 @@ import { isIndexable } from "@/lib/seo/indexable";
 import { countryPageTarget } from "@/lib/geo/page_targets";
 import { RETIRED } from "@/lib/taxonomy/retired";
 import { spineHoodDistricts } from "@/lib/spine/hood_scheme";
+import { getAllPosts } from "@/lib/blog";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
 import cityListJson from "../../data/cities/city_list_v1.json";
 import cityComparisonsJson from "../../data/cities/city_comparisons_v1.json";
@@ -139,7 +140,13 @@ async function staticAndContainersSitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
-  return [...staticUrls, ...countryUrls, ...howToUrls, ...industryUrls, ...countryHubUrls];
+  /* THE POSTS (P36.1, the rewrites of 2026-10-06; BLOG.md: "a sitemap entry only for a post that passes"): every post in
+     content/blog, since the gate blog-content holds each to its figures before any build, dated by its last change. */
+  const postUrls: MetadataRoute.Sitemap = getAllPosts()
+    /* No isIndexable here: it answers for spine pages (the floor census), and a post is not one; a post's page sets no robots. */
+    .map((p) => ({ url: `${BASE_URL}/blog/${p.slug}`, lastModified: new Date(p.updated ?? p.date), changeFrequency: "monthly" as const, priority: 0.5 }));
+
+  return [...staticUrls, ...countryUrls, ...howToUrls, ...industryUrls, ...countryHubUrls, ...postUrls];
 }
 
 async function usCellsSitemap(): Promise<MetadataRoute.Sitemap> {

@@ -2,6 +2,10 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPost } from "@/lib/blog";
 import LongformArticle from "@/components/editorial/LongformArticle";
 import { BlogCover } from "@/components/blog/BlogCover";
+import { PostFoot } from "@/components/blog/PostFoot";
+
+const SITE = "https://www.marginatlas.com";
+const longDate = (d: string) => new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -36,15 +40,27 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
   // Reading time from the rendered body (about 200 words per minute).
   const words = (post.bodyHtml || "").replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
   const readMinutes = Math.max(1, Math.round(words / 200));
-  const publishDate = new Date(post.date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  const related = getAllPosts()
-    .filter((p) => p.slug !== slug)
+  const publishDate = longDate(post.date);
+  /* Further reading: the post's own category first (P36.1, 2026-10-06), then the newest of the rest. */
+  const others = getAllPosts().filter((p) => p.slug !== slug);
+  const related = [...others.filter((p) => post.category && p.category === post.category), ...others.filter((p) => !post.category || p.category !== post.category)]
     .slice(0, 4)
     .map((p) => ({ slug: p.slug, title: p.title, subtitle: p.excerpt }));
+
+  /* THE ARTICLE'S MARKUP (CREDIBILITY.md, item 9: Article dates in structured data), only what the page itself prints: the
+     title, the line under it, the two dates and the byline. A byline of the site's own name is the organisation. */
+  const byline = post.author || "Margin Atlas";
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt || undefined,
+    datePublished: post.date,
+    dateModified: post.updated ?? post.date,
+    author: byline === "Margin Atlas" ? { "@type": "Organization", name: byline, url: `${SITE}/about` } : { "@type": "Person", name: byline },
+    publisher: { "@type": "Organization", name: "Margin Atlas", url: SITE },
+    mainEntityOfPage: `${SITE}/blog/${post.slug}`,
+  };
 
   /* THE SHARED COVER, not a fourth copy of it. This file carried its own
      inline version, url branch and gradient branch, including the giant initial
@@ -59,14 +75,18 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
       <nav className="text-sm text-ink-700/70 mb-2">
         <a href="/blog" className="hover:text-atlas-600">Back to all posts</a>
       </nav>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd).replace(/</g, "\\u003c") }} />
       <LongformArticle
+        seriesLabel={post.category ?? "Margin Atlas"}
         title={post.title}
         deck={post.excerpt}
         publishDate={publishDate}
-        author={post.author || "Margin Atlas"}
+        updatedDate={post.updated ? longDate(post.updated) : undefined}
+        author={byline}
         readMinutes={readMinutes}
         cover={cover}
         bodyHtml={post.bodyHtml || ""}
+        foot={<PostFoot post={post} />}
         related={related}
       />
     </div>

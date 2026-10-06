@@ -574,6 +574,11 @@ const GATES: Gate[] = [
   /* The 58 retired blog posts (his ruling of 2026-10-05, PARKED P36.1): none left in content/blog, each redirected by
      next.config.js to a page that lives, no link to one anywhere (data/blog/retired_posts.json). */
   { name: "blog-retired", script: "tests/blog/retired_posts.test.ts" },
+  /* The blog's figures (P36.1's rewrites, 2026-10-06): every figure a post prints recomputed from the free data pack, every digit
+     covered, no agency named, every link a page that lives, the foot's data the figures' own; and its plants, each rule watched red
+     on a broken post (docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4). */
+  { name: "blog-content", script: "tests/blog/blog_content.test.ts" },
+  { name: "blog-content-plants", script: "tests/blog/blog_content.test.ts", args: ["--plant"] },
   /* The corrections log (his ruling of 2026-10-05, PARKED P31.1): /corrections lists data/corrections.json, dated, append only,
      "No corrections yet." while empty, no changelog, no promise of times he did not make; linked from About the figures and the
      report form. */

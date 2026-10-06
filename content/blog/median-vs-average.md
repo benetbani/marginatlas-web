@@ -1,14 +1,28 @@
 ---
 title: "Why the median is more honest than the average"
 date: "2026-05-01"
-excerpt: "An average is dragged around by outliers. A median is what the middle firm actually does. Why we put the median front and centre."
-author: "Margin Atlas team"
+updated: "2026-10-06"
+excerpt: "An average is dragged around by outliers. A median is what the middle business actually does."
+author: "Margin Atlas"
+category: "how we know"
+ai: true
+figures:
+  - { text: "$200K", kind: example }
+  - { text: "$800K", kind: example }
+  - { text: "$50M", kind: example }
+  - { text: "$5M", kind: example }
+  - { text: "$500K", kind: example }
+method: { label: "How to read a figure", href: "/about-data#reading" }
 ---
 
-Take 11 hypothetical software firms in a region. Ten of them make between $200k and $800k a year. The eleventh is a unicorn making $50 million.
+Take eleven imaginary software firms in one town. Ten of them make between $200K and $800K a year, about $500K each on average. The eleventh is a unicorn making $50M.
 
-The **average** of those 11 firms is **$5 million**. Useless.
+The **average** of those eleven firms is about **$5M**. No firm in the town makes anything like it.
 
-The **median** is **$500k**. That's what the middle firm actually does.
+The **median** is about **$500K**. That is what the middle firm actually does.
 
-Margin Atlas defaults to median (and the surrounding distribution) for every cell, because that's what describes the *typical* business, the one a reader is probably trying to benchmark against. We never lead with averages.
+## Why the site prints the middle
+
+A figure is only useful if it describes the business a reader is comparing themselves with. One outlier moves the average a long way and the median hardly at all, so the average describes nobody.
+
+That is why the site's UK pages print the middle business's takings, not the average: the business with as many registered businesses above it as below it.

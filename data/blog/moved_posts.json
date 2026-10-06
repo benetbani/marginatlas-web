@@ -1,0 +1,7 @@
+{
+  "why": "Two method notes of the twelve posts his ruling of 2026-10-05 kept (PARKED P36.1, option (a)) carry no figure of their own; BLOG.md moves them into About the figures, and each slug redirects permanently to its section there (docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D1). The files stay in git history. Read by next.config.js (the redirects) and tests/blog/retired_posts.test.ts (the gate blog-retired).",
+  "posts": {
+    "what-we-omit": { "to": "/about-data#leave-out", "topic": "What the figures leave out", "why": "a method note; its claims described an old pipeline; now the section built from the data pack's ledger" },
+    "when-we-extrapolate": { "to": "/about-data#estimates", "topic": "When we estimate", "why": "a method note; its claims (tiers, badges) described pages that no longer print them; now the section beside the four kinds" }
+  }
+}
