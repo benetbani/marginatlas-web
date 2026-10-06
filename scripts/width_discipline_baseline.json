@@ -1,6 +1,6 @@
 {
   "total": {
-    "remCaps": 206,
+    "remCaps": 205,
     "chCaps": 43,
     "smPairings": 42
   },
@@ -556,7 +556,7 @@
       "smPairings": 0
     },
     "src/components/spine/home/home-view.tsx": {
-      "remCaps": 1,
+      "remCaps": 0,
       "chCaps": 1,
       "smPairings": 1
     },
