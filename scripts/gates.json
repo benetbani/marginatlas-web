@@ -2791,6 +2791,18 @@
       "claims": []
     },
     {
+      "name": "no-lens-chips",
+      "script": "tests/trust/no_lens_chips.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO FILTER CHIPS ON /extremes (QUEUE ui:extremes-chips; his refusals of 2026-09-22 name filter chips).",
+      "reads": [
+        "src/app/(site)/extremes/page.tsx",
+        "src/components/extremes/LensFilter.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-place-words",
       "script": "tests/copy/no_place_words.test.ts",
       "args": [],

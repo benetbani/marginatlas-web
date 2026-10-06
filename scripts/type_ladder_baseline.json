@@ -1,5 +1,5 @@
 {
-  "total": 855,
+  "total": 854,
   "files": {
     "src/app/(site)/about-data/page.tsx": 2,
     "src/app/(site)/account/AccountPreview.tsx": 11,
@@ -95,7 +95,6 @@
     "src/components/DistributionVisual.tsx": 6,
     "src/components/editorial/LongformArticle.tsx": 12,
     "src/components/extremes/CatalogCollections.tsx": 4,
-    "src/components/extremes/LensFilter.tsx": 1,
     "src/components/geo/GeoViabilityLede.tsx": 2,
     "src/components/home/AudienceBand.tsx": 2,
     "src/components/home/CatalogPlates.tsx": 1,

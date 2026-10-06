@@ -802,6 +802,8 @@ const GATES: Gate[] = [
   /* No struck method word and no coined score in the literals of src/app and src/components, a ratchet per file (masterplan
      step 02, 2026-10-05; his ruling 11, "no composite, ever"; his copy correction of 2026-09-24). */
   { name: "legacy-method-words", script: "tests/copy/legacy_method_words.test.ts" },
+  /* /extremes draws every lens as a section, no chip row (QUEUE ui:extremes-chips; his refusals of 2026-09-22). */
+  { name: "no-lens-chips", script: "tests/trust/no_lens_chips.test.ts" },
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
   { name: "no-place-words", script: "tests/copy/no_place_words.test.ts" },

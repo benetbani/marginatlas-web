@@ -29,7 +29,10 @@ import { RankRow } from "@/components/board/RankRow";
 import { fmtUSD, fmtNum } from "@/components/board/format";
 import { CatalogCollections } from "@/components/extremes/CatalogCollections";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
-import { LensFilter, type LensEntry } from "@/components/extremes/LensFilter";
+import type { ReactNode } from "react";
+
+/** One lens block, resolved on the server: its key (the anchor), its name and the block itself. */
+type LensEntry = { key: "catalog" | "cost" | "take-home" | "break-in" | "crowding"; label: string; node: ReactNode };
 import {
   loadExtremes,
   type ExtremeLeaderboard,
@@ -395,12 +398,16 @@ export default async function ExtremesPage() {
         </div>
       </header>
 
-      {/* The lens blocks, led by cost-to-open, behind a client-side filter. The
-         filter is presentational only: the server renders every resolved block
-         and the client component shows the chosen lens or all of them. With no
-         JavaScript the chips are inert and every block stays visible. */}
+      {/* EVERY LENS AS A SECTION, IN ORDER, NO CHIP ROW (QUEUE ui:extremes-chips; his refusals of 2026-09-22 name filter
+         chips). The server resolved every block already; the chips only hid all but one. Each section keeps its anchor. */}
       {lenses.length > 0 ? (
-        <LensFilter lenses={lenses} />
+        <div className="space-y-12 md:space-y-16">
+          {lenses.map((l) => (
+            <section key={l.key} id={l.key} aria-label={l.label}>
+              {l.node}
+            </section>
+          ))}
+        </div>
       ) : (
         <p className="atlas-card px-5 py-6 md:px-7 md:py-7 max-w-2xl text-sm leading-relaxed text-cocoa-700">
           The leaderboards are refreshing right now. Check back in a moment, or
