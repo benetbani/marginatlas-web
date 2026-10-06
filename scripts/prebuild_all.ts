@@ -424,6 +424,9 @@ const GATES: Gate[] = [
   /* The public data leaves out what the UK pages lock while the paywall is on: /api/cell-lookup and the cell CSV pass every row
      through redactForPaywall (the checkup of 2026-10-06, finding 3). */
   { name: "api-redaction", script: "tests/monetization/api_redaction.test.ts" },
+  /* The billing reconcile's comparison (scripts/billing/reconcile.ts, his to run after launch): field by field, the update time
+     never counting, a period end as an instant (the checkup of 2026-10-06, finding 2). */
+  { name: "billing-reconcile", script: "tests/monetization/reconcile.test.ts" },
   { name: "no-internal-notes", script: "scripts/verify_no_internal_notes.ts" },
   { name: "no-slot-counting", script: "scripts/verify_no_slot_counting.ts" },
   { name: "page-has-h1", script: "scripts/verify_page_has_h1.ts" },

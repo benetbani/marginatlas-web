@@ -1135,6 +1135,17 @@
       "claims": []
     },
     {
+      "name": "billing-reconcile",
+      "script": "tests/monetization/reconcile.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE BILLING RECONCILE'S COMPARISON (the checkup of 2026-10-06, finding 2; scripts/billing/reconcile.ts): a stored row and the row Stripe implies agree or differ field by field, the update time never c",
+      "reads": [
+        "scripts/billing/reconcile.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-internal-notes",
       "script": "scripts/verify_no_internal_notes.ts",
       "args": [],
