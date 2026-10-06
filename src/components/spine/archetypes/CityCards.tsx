@@ -169,7 +169,9 @@ export function CityCards({
   fill?: boolean;
   /** THE STILL ROW (his instruction of 2026-10-07, "reform home drastically"; his refusal of carousels and pagination,
    *  2026-09-22): every card at once, no pager. The cards wrap and each line's cards share its width (`flex-1` on a 9rem basis),
-   *  so a short last line widens its cards instead of leaving a card's width empty beside them; from 1280 they stand in one row. */
+   *  so a short last line widens its cards instead of leaving a card's width empty beside them; from 1024 they stand in one row
+   *  (seven at 976px of content are 132 wide, 108 inside the padding; "Birmingham" at the name's 20 is estimated near that,
+   *  not measured, and at 1280 there are 122 inside). */
   still?: boolean;
 }) {
   const [page, setPage] = React.useState(0);
@@ -193,7 +195,7 @@ export function CityCards({
   const pages = still ? 1 : Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
   const slice = still ? cards : cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
-  const tall = still ? "flex flex-wrap items-stretch gap-2 xl:flex-nowrap [&>*]:grow [&>*]:basis-36" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]";
+  const tall = still ? "flex flex-wrap items-stretch gap-2 lg:flex-nowrap [&>*]:grow [&>*]:basis-36" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]";
   const btn =
     "tap flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
