@@ -2717,24 +2717,24 @@ export const COPY = {
       failed: "Choose a city and check the address, then try again.",
     },
     /** THE DUEL (his ruling of 2026-10-05 on PARKED P36.2): the line under the set's middle, the top rule, the phone's heads. The
-     *  question itself is the feed's own title. */
+     *  question itself is the feed's own title. ONE LINE, AND NO MONTH IN IT (his instruction of 2026-10-07, the home's words cut by
+     *  half): the item prints only while fresh (the 45-day rule), so the month told the reader less than its words cost. */
     duel: {
-      words: "of 100 companies insolvent a year, the middle trade, to {month}",
-      topLabel: "Highest here",
+      words: "of 100 firms a year, the middle trade",
+      topLabel: "Highest",
       phoneName: "Trade",
       phoneValue: "Of 100",
       /** A row's name where the official code's own runs past three words (his labels rule); the duel's test fails on any other. */
       names: { "Public houses and bars": "Pubs and bars" } as Record<string, string>,
     },
     /** THE RANKED LIST BESIDE THE DUEL (his ruling of 2026-10-05 on PARKED P36.2b, option (a): "Where kitchens score five"). The
-     *  title is the feed's; the figure is the set's middle borough, its label carrying the ratings' month as the duel's words carry
-     *  its month; {n} is the set's size. The line keeps to twelve words (the copy gate); what is counted is said by the title and
-     *  the column head. */
+     *  title is the feed's; the figure is the set's middle borough, its label the card's one line (his instruction of 2026-10-07:
+     *  one heading and one line; the basis under it left, and the month with the duel's); what is counted is said by the title
+     *  and the column head, "of 100" as the duel's phone head says it. */
     kitchens: {
-      headline: "The middle borough, {month}",
-      basis: "Two highest and two lowest of {n} boroughs.",
+      headline: "The middle borough",
       headName: "Borough",
-      headValue: "Rated five, of 100",
+      headValue: "Of 100",
       /** A member's plain name where the ratings' own runs long or official. */
       names: { "City of London Corporation": "City of London" } as Record<string, string>,
     },

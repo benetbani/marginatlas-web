@@ -2,19 +2,13 @@
  * THE DUEL ON THE HOME PAGE (his ruling of 2026-10-05 on PARKED P36.2, option (a); HOMEPAGE-EDITORIAL.md, format 2): the question,
  * the set's two highest and two lowest on one scale, and the set's middle as the card's figure, from src/lib/home/duel.ts (the
  * registers' feed, never a typed number). The site's ranked bars: no member featured, the far end the set's own highest, every bar
- * a door to its trade's London page, every figure stamped. Drawn only while the feed's item is fresh (the 45-day rule).
+ * a door to its trade's London page, every figure stamped. Drawn only while the feed's item is fresh (the 45-day rule), which is why
+ * its one line carries no month (his instruction of 2026-10-07, the home's words cut by half).
  */
 import * as React from "react";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { COPY } from "@/lib/spine/copy";
 import type { Duel } from "@/lib/home/duel";
-
-const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-/** "2026-09-30" reads "September 2026". */
-const monthOf = (iso: string) => {
-  const [y, m] = iso.split("-").map(Number);
-  return `${MONTHS[m - 1]} ${y}`;
-};
 
 export function HomeDuel({ duel }: { duel: Duel }) {
   const C = COPY.home.duel;
@@ -31,7 +25,7 @@ export function HomeDuel({ duel }: { duel: Duel }) {
       fmt={(v) => v.toFixed(1)}
       phoneHead={{ name: C.phoneName, value: C.phoneValue }}
       feature="none"
-      focal={{ figure: duel.middle.figure, words: C.words.replace("{month}", monthOf(duel.asOf)), prov: duel.middle.prov }}
+      focal={{ figure: duel.middle.figure, words: C.words, prov: duel.middle.prov }}
     />
   );
 }
