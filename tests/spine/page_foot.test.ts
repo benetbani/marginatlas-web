@@ -2,8 +2,9 @@
  * THE PAGE FOOT: REPORT A MISTAKE, AND CHECKED ONLY WHERE A DATE IS HELD (milestone 2, masterplan step 31; QUEUE
  * close:furniture-lines; the credibility doctrine of 2026-10-02: the page foot holds "Report a mistake" and "Checked [date]").
  * Read off the harness renders pages-fresh writes: every spine page type holds one "Report a mistake" link to the correction
- * page with its own path; a UK page holds a "Checked" line equal to the register slices' build date when the manifest holds
- * one, and no page holds the line when none is held (never today's date standing in for a check). The correction page holds
+ * page with its own path; a UK page holds a "Checked" line equal to the register slices' build date, which the manifest must
+ * hold (the export writes it since 2026-10-06), and no other page holds the line (never today's date standing in for a
+ * check). The correction page holds
  * the site's one correction form, open, its path filled in, and is never indexed.
  *
  * Run: npx tsx tests/spine/page_foot.test.ts
