@@ -122,7 +122,7 @@ Full list in `package.json` → `prebuild`.
   is deferred because those functions share private helpers that
   need an `_internal.ts` module first. `cells.ts` stays as a thin
   re-export so 32+ external imports don't break.
-- **14 grandfathered layering violations** in the layering gate's
+- **13 grandfathered layering violations** (14 until 2026-10-06) in the layering gate's
   allowlist (`scripts/verify_layering.ts`). Each is a page or
   component that imports `data/*.json` directly. Migration is a
   separate cleanup wave.

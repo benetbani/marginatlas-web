@@ -87,15 +87,6 @@ export const INDUSTRY_SECTIONS: PageSection[] = [
   { id: "related-links", label: "Go deeper", heading: "Into the places and businesses" },
 ];
 
-/** NEIGHBOURHOOD body. Section 1 (hero) lives in the header. */
-export const NEIGHBOURHOOD_SECTIONS: PageSection[] = [
-  { id: "thrives", label: "What thrives here", heading: "What thrives here, and why" },
-  { id: "who", label: "Who shops here", heading: "Who lives and shops here" },
-  { id: "operating-cost", label: "Cost to operate", heading: "How pricey it is to operate here" },
-  { id: "adjacent", label: "Versus next door", heading: "How this area compares to the ones beside it" },
-  { id: "businesses-here", label: "The businesses here", heading: "The businesses of this district" },
-];
-
 /** LEARN body. Section 1 (question + answer) lives at the top. */
 export const LEARN_SECTIONS: PageSection[] = [
   { id: "pnl", label: "A worked example", heading: "Where the money goes, on a sample year" },
@@ -117,7 +108,6 @@ export const PAGE_SECTION_MANIFESTS: Record<string, PageSection[]> = {
   country: COUNTRY_SECTIONS,
   city: CITY_SECTIONS,
   industry: INDUSTRY_SECTIONS,
-  neighbourhood: NEIGHBOURHOOD_SECTIONS,
   learn: LEARN_SECTIONS,
   compare: COMPARE_SECTIONS,
 };

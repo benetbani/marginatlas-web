@@ -80,8 +80,9 @@ each slug resolves.
 ### nbhd_economics  (-> data/economics/neighborhood_economics_v1.json, a LIVE target)
 LIVE as of 2026-06-08 (no longer held): promote merges the staged `neighborhoods`
 map into `data/economics/neighborhood_economics_v1.json` under `.neighborhoods`, keyed
-`${citySlug}.${neighborhoodSlug}`. The neighborhood page (NeighborhoodOverview) reads
-it via `getNeighborhoodEconomics` and renders the prime-streets section. For each
+`${citySlug}.${neighborhoodSlug}`. The older city page's district cards read it via
+`getNeighborhoodEconomics` for the streets under each card (the neighbourhood overview that
+rendered a prime-streets section was deleted on 2026-10-06, unreachable). For each
 neighborhood in the city's scheme, research/extrapolate the micro-market profile
 designed 2026-06-08: prime commercial streets (`name`, `sells`), the street's rent
 level vs the city (`rent_vs_city`, a multiplier near 1.0), the average consumer spend

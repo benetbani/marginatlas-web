@@ -437,7 +437,7 @@ export function CalculatorForm({ countries, industries }: Props) {
                             lines down which is already clay-700. Same broken
                             pair as the three success panels, and the same fix:
                             terracotta, which is what the converted
-                            NeighborhoodOverview.multColor and the decide
+                            NeighborhoodOverview.multColor (deleted 2026-10-06) and the decide
                             page's marginLadder now use for above-par. The
                             figure prints its own money value, so the sign was
                             never carried by the colour. */}

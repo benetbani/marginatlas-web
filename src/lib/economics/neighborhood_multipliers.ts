@@ -219,8 +219,8 @@ const ACTIVITY_TOURISM_BETA: Record<string, number> = {
   real_estate_agencies: -0.1,
   print_shops: 0.0,
   dry_cleaning_laundry: 0.1,
-  /* Explicit zero, not an omission. software_development is one of the twelve
-     activities NeighborhoodOverview shows on every neighbourhood page, and it
+  /* Explicit zero, not an omission. software_development was one of the twelve
+     activities the neighbourhood overview showed on every district until 2026-10-06, and it
      was the only one of them absent from this table, so its tourism multiplier
      came out of `?? 0` instead of out of a decision.
 

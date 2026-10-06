@@ -11,7 +11,7 @@
  * the neighborhood page can read it during the server render.
  *
  * Mirrors the neighborhood_flavor loader shape: returns null when the pair has
- * no entry, so the caller (NeighborhoodOverview) can silently omit the section.
+ * no entry, so a caller (the older city page's district cards) can silently omit the streets.
  */
 import economicsJson from "../../../data/economics/neighborhood_economics_v1.json";
 

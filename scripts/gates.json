@@ -1196,7 +1196,6 @@
       "browser": false,
       "asserts": "verify_industry_refs , a hardcoded trade must be the trade you meant.",
       "reads": [
-        "src/components/NeighborhoodOverview.tsx",
         "src/lib/learn/articles.ts"
       ],
       "claims": []
@@ -3046,7 +3045,6 @@
         "src/app/(site)/decide/page.tsx",
         "src/app/sitemap.ts",
         "src/components",
-        "src/components/NeighborhoodOverview.tsx",
         "src/components/cities/BusinessFormationCosts.tsx",
         "src/components/cities/CitySignaturePanel.tsx",
         "src/components/countries/CountrySignaturePanel.tsx",
@@ -3100,7 +3098,6 @@
         "src/app/(site)/industries/[industry]/page.tsx",
         "src/app/(site)/learn/[slug]/page.tsx",
         "src/app/[country]/page.tsx",
-        "src/components/NeighborhoodOverview.tsx",
         "src/components/cells/CellDecisionStack.tsx"
       ],
       "claims": []

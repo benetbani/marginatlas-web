@@ -50,10 +50,6 @@ const ALLOWLIST = new Set([
   "src/components/cities/CitySignaturePanel.tsx",
   "src/components/countries/CountrySignaturePanel.tsx",
   "src/components/home/TopCitiesMosaic.tsx",
-  // Carries the data imports that were previously in the deleted
-  // src/app/[country]/[city]/[neighborhood]/page.tsx (route conflict
-  // fix, 2026-05-27). Same JSON files, same violation class.
-  "src/components/NeighborhoodOverview.tsx",
 ]);
 
 /**

@@ -219,7 +219,7 @@ export function CompareToMeClient() {
                         that no token file here defines, which is why the
                         palette gate had no word for either until 443a938e.
                         Now the same above/below-par pair the converted
-                        NeighborhoodOverview.multColor and the decide page's
+                        NeighborhoodOverview.multColor (deleted 2026-10-06) and the decide page's
                         marginLadder use: terracotta for at-or-above, clay,
                         which design-tokens names the destructive colour, for
                         below. Nothing is lost with the hue, because the figure

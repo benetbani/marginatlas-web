@@ -105,10 +105,6 @@ import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 // Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
 import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
-import {
-  NeighborhoodOverview,
-  findNeighborhoodContext,
-} from "@/components/NeighborhoodOverview";
 import { isPaywallOn, isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { lockablePath } from "@/lib/monetization/pro_route";
 import { renderCellRoute } from "./cell_spine";
@@ -320,22 +316,12 @@ async function CellPageBody({
 
   const { country, geo, industry } = await params;
 
-  // Neighborhood-overview dispatch.
-  //
-  // The URL /[country]/[geo]/[industry] is also the home of the
-  // neighborhood-landing page (e.g. /us/los-angeles/santa-monica).
-  // Next.js App Router refuses to have two different param names at
-  // the same depth, so a single route file handles both shapes and
-  // dispatches based on a fast in-memory lookup.
-  //
-  // If (country, geo, industry) matches a known (country, city,
-  // neighborhood) triple in neighborhoods_v1.json, render the
-  // overview UI and skip the cell-page DB chain entirely. Otherwise
-  // fall through to the normal cell lookup below.
-  const nbCtx = findNeighborhoodContext(country, geo, industry);
-  if (nbCtx) {
-    return <NeighborhoodOverview country={country} city={nbCtx.city} nb={nbCtx.nb} />;
-  }
+  /* NO DISTRICT LANDS HERE. This route rendered a neighbourhood overview when the third segment named a district
+     (/us/los-angeles/santa-monica) until 2026-10-06, and nothing reached it: the middleware sends every one of the 1,266
+     district addresses to the district's page or its city's hub before routing (legacyHoodTarget in
+     src/lib/routing/edge_not_found.ts; measured 1,266 of 1,266), and with the spine on the branch above returns first.
+     The overview and its view model are deleted, with the one-word district classes and the stock sentence per tag they
+     printed (his ruling of 2026-09-07). */
   // Server renders the default cell (no
   // size/year filter). The DimensionSwitcher (client component) reads
   // searchParams via useSearchParams and triggers a client-side data
