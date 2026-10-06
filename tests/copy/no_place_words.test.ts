@@ -15,12 +15,14 @@
  *   4. a district's class a property read `.character` (the one-word class of data/cities/neighborhoods_v1.json) only where
  *                         code uses it: a call's argument, an index, a comparison, a test, or a step to a deeper property
  *                         (`COPY.character.people`). Anywhere it would become words (a JSX child or attribute, a template, a
- *                         string method, an object's field, a return) is red.
+ *                         string method, an object's field, a return) is red, and so is the argument of a call named
+ *                         for words (labelFor, formatClass).
  * The checker proves itself first on fixtures of each wire, failing and passing, so a parse that stops seeing a wire fails.
  *
  * ITS BLIND SPOT, said once: it reads the source, not the page. A class renamed before it reaches the page (`const kind =
- * n.character` is red, but data copied into a new field upstream of src/ is not seen), or words typed as literals per
- * district, are not wires it names. A district's words come only from authored, sourced notes per district (DATA-REQUIREMENTS
+ * n.character` is red, but data copied into a new field upstream of src/ is not seen), a class taken out by destructuring
+ * (`const { character } = nb`: without types the parse cannot tell it from the hood page's card of authored notes, a prop of
+ * the same name, so it is not read), or words typed as literals per district, are not wires it names. A district's words come only from authored, sourced notes per district (DATA-REQUIREMENTS
  * item 6, its addendum), never from a tag or a class; this gate writes none.
  *
  * Run: npx tsx tests/copy/no_place_words.test.ts [--list]
@@ -38,6 +40,9 @@ let failed = 0;
 
 type Hit = { file: string; line: number; wire: string; text: string };
 
+/* A call whose name says it turns its argument into words. */
+const TEXT_CALLEE = /label|format|title|capitali[sz]e|human|pretty|display|words?/i;
+
 /* String methods: reading the class through one of these still makes words of it. */
 const STRING_METHODS = new Set(["replace", "replaceAll", "toLowerCase", "toUpperCase", "toLocaleLowerCase", "toLocaleUpperCase", "trim", "trimStart", "trimEnd", "slice", "substring", "substr", "split", "concat", "padStart", "padEnd", "charAt", "at", "normalize", "repeat"]);
 
@@ -54,8 +59,13 @@ function classUsedAsCode(access: ts.PropertyAccessExpression): boolean {
   const p = node.parent;
   if (!p) return true;
   if (ts.isPropertyAccessExpression(p) && p.expression === node) return !STRING_METHODS.has(p.name.text);
-  if (ts.isElementAccessExpression(p)) return p.argumentExpression === node || !(p.expression === node);
-  if (ts.isCallExpression(p)) return p.arguments.includes(node as ts.Expression);
+  if (ts.isElementAccessExpression(p)) return p.argumentExpression === node;
+  if (ts.isCallExpression(p)) {
+    if (!p.arguments.includes(node as ts.Expression)) return false;
+    /* An argument steers code, unless the call's own name says it makes words of it (labelFor, formatClass, toTitle). */
+    const callee = ts.isPropertyAccessExpression(p.expression) ? p.expression.name.text : ts.isIdentifier(p.expression) ? p.expression.text : "";
+    return !TEXT_CALLEE.test(callee);
+  }
   if (ts.isBinaryExpression(p)) {
     const k = p.operatorToken.kind;
     if ([ts.SyntaxKind.EqualsEqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsEqualsToken, ts.SyntaxKind.EqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsToken, ts.SyntaxKind.InKeyword].includes(k)) return true;
@@ -147,6 +157,7 @@ const FIXTURES: Array<{ name: string; tsx: boolean; code: string; wires: string[
   { name: "attribute", tsx: true, code: `const C = ({ nb }: any) => <Band breakIn={nb.character} />;`, wires: ["a district's class"] },
   { name: "carried on a row", tsx: false, code: `const row = { name: n.name, character: n.character };`, wires: ["a district's class"] },
   { name: "template", tsx: false, code: "const s = `${n.name}, ${n.character}`;", wires: ["a district's class"] },
+  { name: "a formatter's argument", tsx: false, code: `const t = labelFor(n.character); const u = formatClass(nb.character);`, wires: ["a district's class", "a district's class"] },
   { name: "steers the engine", tsx: false, code: `const cell = applyNeighborhoodMultiplier(cityCell, ind.id, nb.character);`, wires: [] },
   { name: "an index", tsx: false, code: `const h = CHARACTER_HEADLINE[n.character] || null;`, wires: [] },
   { name: "a comparison and a test", tsx: false, code: `if (n.character === "tourist") {} const k = n.character ? 1 : 0; const z = !n.character;`, wires: [] },
