@@ -2700,10 +2700,11 @@ export const COPY = {
     citiesLabel: "The UK's cities",
     /** The level of the duel and the ranked list (P36.2 and P36.2b), both from the registers' feed. */
     registersLabel: "From the registers",
-    /** THE NOTEBOOK AND THE NEWSLETTER (masterplan step 36): the page's furniture after the readings. */
-    notebook: { title: "From the notebook", newsletter: "Your city" },
+    /** THE NOTEBOOK (masterplan step 36): the page's furniture after the readings. */
+    notebook: { title: "From the notebook" },
     /** THE HOME PAGE'S ASK (his interview of 2026-09-26: "notify me when my place reaches this depth"; the checkup of 2026-10-06,
-     *  finding 5): in place of a free report nobody is writing, a city to wait for (src/lib/home/depth_places.ts). */
+     *  finding 5): in place of a free report nobody is writing, a city to wait for (src/lib/home/depth_places.ts). Drawn by the live
+     *  home only since 2026-10-07: the rebuilt home leaves the asking to the footer's bar. */
     notify: {
       eyebrow: "Your city",
       title: "Notify me when my city reaches this depth",

@@ -30,7 +30,6 @@ import { HomeDuel } from "./HomeDuel";
 import { buildDuel } from "@/lib/home/duel";
 import { HomeKitchens } from "./HomeKitchens";
 import { buildKitchens } from "@/lib/home/kitchens";
-import { HomeNewsletter } from "@/components/home/HomeNewsletter";
 import { buildNotebook, type NotebookCard } from "@/lib/home/notebook";
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { RotatingWord } from "@/components/RotatingWord";
@@ -216,10 +215,10 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     /* PRO, SAID ONCE AND QUIETLY (ruling 23), only while the paywall's switch is on: the zone is not listed otherwise, so no band
        stands empty and nothing about Pro prints. */
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
-    /* THE NOTEBOOK, THEN THE NEWSLETTER (masterplan step 36), each its own level at two thirds (the zones' LONE rule): beside the
-       notebook in a half column the newsletter's form and list overlapped; the newsletter band is unchanged in what it asks. */
+    /* THE NOTEBOOK, THE LAST LEVEL (masterplan step 36), at two thirds (the zones' LONE rule). NO NEWSLETTER BAND AFTER IT (his
+       instruction of 2026-10-07): the footer's newsletter bar asks once on every page, and the home's own ask right above it was
+       the same plea twice in a row. */
     ...(notebook.length ? [{ key: "notebook", split: "2-1" as ZoneSplit, label: COPY.home.notebook.title, body: [<Notebook key="notebook" cards={notebook} />] }] : []),
-    { key: "newsletter", split: "2-1", label: COPY.home.notebook.newsletter, body: [<HomeNewsletter key="newsletter" />] },
   ];
   return (
     <>
