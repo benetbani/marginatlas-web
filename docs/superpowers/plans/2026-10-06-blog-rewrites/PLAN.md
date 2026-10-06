@@ -61,6 +61,8 @@ Two pieces, both already ruled option (a) on 2026-10-05:
   pass blog-content, 106 figures recomputed from the pack; the plants red. The harness at zero on home-gb with the new level.
   Every post read against the pack and against fresh renders of the pages it describes (cafes, barbershops, pizzerias,
   restaurants, the London city page); one false line removed (the London trade pages print no borough figures).
+- **Deployed 2026-10-06 about 5:30am on his word ("Do this")**: rebased onto 12fa8f2f, `main` at bd78bb1c, proven on production
+  (the masterplan ledger's After the night has the probe).
 - **Found by the writers, for the data track** (not acted on): station_footfall.csv's Shenfield row (6,388 on a weekday, 210 on a
   Saturday) looks wrong; the published ledger.json's middle-turnover "how" uses the word "withheld"; the pack's CSV carries no
   column for the middle figure's rounding range (data/uk/registers/turnover.json holds it), so a borough figure's roughness can
