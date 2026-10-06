@@ -8,13 +8,20 @@ map is written. Written 2026-10-04, late night; closed and shipped 2026-10-05 af
 
 ## 0. 2026-10-06 DAY: THE DEEP GOAL (READ THIS FIRST; section 0b below is the masterplan night, sections 1 to 14 the 2026-10-04 state)
 
-**Where things stand.** Production is `main` bd78bb1c (deployed about 5:30am on his "Do this", every switch off). His goal of
+**DEPLOYED 2026-10-06, about 3:40pm, on his word ("Deploy it now", his answer to the /go question): `main` 50ecd9e5 live, every
+switch still off, proven on production 23 of 23 (scratchpad/_prod_proof_goal.sh: the home page's ask, /download/2026-benchmarks
+to /data, "Where to open a restaurant" and "an electrician", no district word on the recommender or New York's cards, "An
+ice cream shop in West End", "a typical news publisher" and "a typical gym", /gb, /cities/london, /icon, the sitemap,
+/account). The first build, 56dd5b10, failed after `next build` on the postbuild edge-size guard: the Stripe webhook (a Node
+function) read as "edge" because @sentry/core holds the word EdgeRuntime, 1,028.4 KB against the 1 MB Edge cap; production
+stayed on bd78bb1c; 50ecd9e5 makes the guard read Next's middleware-manifest.json and measure gzipped (three fixtures).
+`launch-day` is 09bff036 on 50ecd9e5, local.** Before that: production was `main` bd78bb1c (deployed about 5:30am on his "Do this", every switch off). His goal of
 the same morning (verbatim in `rules/FOUNDER-VERDICTS.md`, "The deep goal": deeper backend and SaaS functions, planning,
 debugging, the architecture checked, obsolete files removed, the structure solidified, unfinished tasks and cleanups, a better
-home page, a very high standard) is built on website branch **`goal-2026-10-06`**, local and NOT pushed: 30 commits on
-bd78bb1c (6b947592 to 3006edf5, then the records), under the day's checkup (`docs/checkup/2026-10-06.md`: ten findings ranked, its ledger and
+home page, a very high standard) was built on website branch **`goal-2026-10-06`**: 30 commits on
+bd78bb1c (6b947592 to 3006edf5, then the records, then the deploy fix 50ecd9e5), under the day's checkup (`docs/checkup/2026-10-06.md`: ten findings ranked, its ledger and
 the deltas after the changes) and its plan (`docs/superpowers/plans/2026-10-06-goal/PLAN.md`, batches A to D, its ledger the
-full record, a line per commit). Full chain at 9a9c1085: 252 of 252 in 1,122.7 s; D2c after it, its gate green. **His word is needed before any push or deploy.**
+full record, a line per commit). Full chain at 9a9c1085: 252 of 252 in 1,122.7 s; D2c after it, its gate green. **Live now; the next push or deploy needs his word again.**
 
 **What changed, a line a batch.**
 - A, the SaaS layer: one account and one governing subscription per Stripe customer (webhook and checkout), Sentry and a
@@ -33,8 +40,9 @@ full record, a line per commit). Full chain at 9a9c1085: 252 of 252 in 1,122.7 s
   was live); the exit-intent pop-up deleted; the v34 coverage gate's ten stubs given rules; two stale records corrected.
 
 **His, at launch.** LAUNCH-SWITCHES row 2 now names four migration files in order (the two of 2026-10-06 added); row 3 holds
-custom SMTP and the cross-device sign-in choice. The prepared branch `launch-day` (7ad5ccc2) sits on the old main: rebuild it
-on the new `main` after this branch deploys (one commit deleting the private line from `.env.production`, adding nothing).
+custom SMTP and the cross-device sign-in choice. The prepared branch `launch-day` is 09bff036, one commit on the live
+`main` 50ecd9e5 deleting the private line from `.env.production` and adding nothing (rebuilt after the deploy; the sample
+gate passes it as a public site). Rebuild it again if `main` moves before launch day.
 
 **Owner decisions found, none acted on** (the checkup's report names each with its reason): generating the presence manifest
 (about 26,000 production lookups, and it would unpublish synthesized pages); the 15 dependencies nothing imports (removing them
@@ -54,6 +62,10 @@ notices and the privacy page's "a link in every email" wait on a sender he choos
 - `git stash push -- <paths>` refuses deleted paths: unstage the deletions, then `git stash push --keep-index`.
 - The in-memory rate limiter answers a script's sixty-first request with 429: a probe that drives `routeRequest` varies
   `x-real-ip` per request.
+- The npm postbuild guard (`scripts/verify_edge_function_sizes.ts`) runs only after `next build`, so only on Vercel; no local
+  run sees it. A failed Vercel build's log is readable here: the Vercel CLI is installed globally and logged in, `vercel
+  inspect <deployment id> --logs` (the id is in the commit's GitHub status). Node's `fetch` cannot reach production from this
+  machine ("fetch failed"), so `deploy:watch` cannot either: watch with curl and a browser user agent.
 
 ## 0b. 2026-10-06 MORNING: THE MASTERPLAN NIGHT (sections 1 to 14 below are the 2026-10-04 state)
 

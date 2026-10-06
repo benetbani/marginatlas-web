@@ -101,3 +101,7 @@ Each commit message carries its hypothesis, its before and after, and the gates 
 **The end.** Full chain on 9a9c1085: 252 of 252, 1,122.7 s, nothing died on memory (three lattice checks deferred by
 their data, as in every run today). D2c after it: its gate and counts-fresh green. The typecheck reads 3,361 files. Deltas
 in `docs/checkup/2026-10-06.md`, "After the changes".
+
+**Deployed** on his word ("Deploy it now"), 2026-10-06 about 3:40pm: `main` 50ecd9e5, proven on production 23 of 23. The
+first build (56dd5b10) failed on the postbuild edge-size guard, which read the Sentry-carrying Node webhook as an edge
+function; 50ecd9e5 fixes the guard. `launch-day` 09bff036 on 50ecd9e5.
