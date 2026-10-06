@@ -48,6 +48,9 @@ const check = (label: string, ok: boolean, detail = "") => {
 for (const p of ["/zz/qq", "/definitely-not-a-route-xyz", "/nonsense/thing", "/qq"]) {
   check(`caught: ${p}`, wouldBe404(p));
 }
+/* /download left with its page (the checkup of 2026-10-06, finding 5). Its one address, /download/2026-benchmarks, is
+   answered by next.config.js's redirect to /data, which runs before the middleware; anything else under it is junk. */
+check("caught: /download", wouldBe404("/download"));
 
 /* Must NOT be caught. Every shape the site actually serves. */
 const spared = [
@@ -58,7 +61,7 @@ const spared = [
   "/og", // two letters, not a country, and a real route: the reason the list is checked first
   "/decide", "/extremes", "/tools", "/random", "/margin-index", "/methodology",
   "/privacy", "/terms", "/cookies", "/contact", "/signin", "/account", "/saved",
-  "/check", "/calculator", "/download", "/embed", "/industries", "/countries", "/admin", "/dev",
+  "/check", "/calculator", "/embed", "/industries", "/countries", "/admin", "/dev",
 ];
 for (const p of spared) check(`spared: ${p}`, !wouldBe404(p));
 

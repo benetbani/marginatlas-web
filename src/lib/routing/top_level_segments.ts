@@ -62,7 +62,6 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "data",
   "decide",
   "dev",
-  "download",
   "embed",
   "extremes",
   "faq",
