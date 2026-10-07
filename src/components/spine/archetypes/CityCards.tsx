@@ -376,14 +376,19 @@ function PayTrack({ part }: { part?: number }) {
  *  model's own row geometry (PART 5): the name, the figure in the very next
  *  column, a third column absorbing every pixel of leftover width, and the
  *  arrow at the right edge. Never `justify-between` across a wide card, which
- *  is the fault that puts a label at one end and its figure at the other. */
+ *  is the fault that puts a label at one end and its figure at the other.
+ *
+ *  A ROW IS A TAP 44 TALL (`min-h-11`, 2026-10-07, the page laws' TAP SIZE at 375): a row with no region line is the name's one
+ *  line and the card's padding, 41 with its border, three under the floor. The height is the row's own and not the `.tap-y`
+ *  utility's invisible box, because this link clips its overflow (the photograph's crop needs it), and a box drawn outside a
+ *  clipped link is not a target a thumb can hit. The tall form is untouched. */
 function Row({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => string; index?: number }) {
   return (
     <a
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className="group relative grid h-full items-center gap-3 overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto]"
+      className="group relative grid h-full min-h-11 items-center gap-3 overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto]"
     >
       <Photo card={card} index={index} />
       <span className="relative min-w-0">
