@@ -121,9 +121,12 @@ function TradesAnswer({ a }: { a: HomeAnswer }) {
       <a href={a.href} data-lands={a.lands} className={DOOR}>
         <Rail icon={a.icon} kicker={a.kicker} />
         <Focal figure={a.figure} words={a.words} prov={a.prov} />
+        {/* ONE FIGURE ON THE CARD: the middle trade's, at 30 above. The range's two ends ($104K and $1.0M) stood unlabelled beside the
+            drawing and read as two more figures, so they are not drawn (`showEnds={false}`); the drawing, the dot among the
+            trades, is the card's second reading. */}
         {a.range ? (
           <div className="mt-auto">
-            <WorldRangeRows headless rows={[{ key: "trades", label: a.kicker, display: a.figure, value: a.range.range.median, range: a.range.range, fmt: usd, hairlines: a.range.values, among: COPY.home.tradesAmong }]} />
+            <WorldRangeRows headless showEnds={false} rows={[{ key: "trades", label: a.kicker, display: a.figure, value: a.range.range.median, range: a.range.range, fmt: usd, hairlines: a.range.values, among: COPY.home.tradesAmong }]} />
           </div>
         ) : null}
       </a>

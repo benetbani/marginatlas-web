@@ -83,7 +83,12 @@ function pos(v: number, r: WorldRange, scale: "linear" | "log"): number {
  *  prints the same, so the card's figure is never printed twice (the figure at 30 above, again at the track's end). */
 export type RangeEnds = { lowest: string; highest: string };
 
-export function WorldRangeRows({ rows, headless = false, ends }: { rows: WorldRangeRow[]; headless?: boolean; ends?: RangeEnds }) {
+/** `showEnds` (2026-10-07, the home's trades card): false draws the track and its marks without the line of the range's two ends
+ *  (and, on a log track, its scale labels, which are the ends' companions), for a card that prints one figure and lets the drawing
+ *  be its second reading with no figure beside it (the card's `$220K`, never `$104K` and `$1.0M` unlabelled around it). The track's
+ *  spoken label still names the range. Default true, so every other use is unchanged. It is not `ends`, which is the words an end
+ *  prints in place of a figure the card already says. */
+export function WorldRangeRows({ rows, headless = false, ends, showEnds = true }: { rows: WorldRangeRow[]; headless?: boolean; ends?: RangeEnds; showEnds?: boolean }) {
   const live = rows.filter((r) => r && Number.isFinite(r.value));
   if (live.length === 0) return null;
   return (
@@ -104,7 +109,7 @@ export function WorldRangeRows({ rows, headless = false, ends }: { rows: WorldRa
                 <span data-level={r.level} className="ml-auto rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{r.level}</span>
               ) : null}
             </div>}
-            {range ? <Track r={r} range={range} scale={scale} headless={headless || !!r.headless} ends={ends} /> : null}
+            {range ? <Track r={r} range={range} scale={scale} headless={headless || !!r.headless} ends={ends} showEnds={showEnds} /> : null}
           </div>
         );
       })}
@@ -112,7 +117,7 @@ export function WorldRangeRows({ rows, headless = false, ends }: { rows: WorldRa
   );
 }
 
-function Track({ r, range, scale, headless, ends }: { r: WorldRangeRow; range: WorldRange; scale: "linear" | "log"; headless: boolean; ends?: RangeEnds }) {
+function Track({ r, range, scale, headless, ends, showEnds }: { r: WorldRangeRow; range: WorldRange; scale: "linear" | "log"; headless: boolean; ends?: RangeEnds; showEnds: boolean }) {
   const at = pos(r.value, range, scale);
   const a = pos(range.p25, range, scale);
   const b = pos(range.p75, range, scale);
@@ -146,22 +151,24 @@ function Track({ r, range, scale, headless, ends }: { r: WorldRangeRow; range: W
                   world's highest or lowest hung half off the card's edge (the United Kingdom's electricity is the world's dearest). */}
               <span aria-hidden data-mark="value" className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] shadow-subtle" style={{ left: `${Math.max(2, Math.min(98, at))}%`, background: "var(--terra)" }} />
             </div>
-            {scale === "log" ? (
+            {showEnds && scale === "log" ? (
               <div aria-hidden className="relative h-1.5">
                 {logTicks(range).map((v) => (
                   <span key={v} data-scale-tick className="absolute top-0 h-1.5 w-px bg-[var(--c-line-strong)]" style={{ left: `${Math.max(12, Math.min(88, pos(v, range, scale)))}%` }} />
                 ))}
               </div>
             ) : null}
-            <div className={`relative ${scale === "log" ? "mt-0.5" : "mt-2"} h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]`}>
-              <span data-end="low" className="absolute left-0 tabular-nums">{low}</span>
-              {scale === "log"
-                ? logTicks(range).map((v) => (
-                    <span key={v} data-scale-label className="absolute -translate-x-1/2 tabular-nums" style={{ left: `${Math.max(12, Math.min(88, pos(v, range, scale)))}%` }}>{r.fmt(v)}</span>
-                  ))
-                : null}
-              <span data-end="high" className="absolute right-0 tabular-nums">{high}</span>
-            </div>
+            {showEnds ? (
+              <div className={`relative ${scale === "log" ? "mt-0.5" : "mt-2"} h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]`}>
+                <span data-end="low" className="absolute left-0 tabular-nums">{low}</span>
+                {scale === "log"
+                  ? logTicks(range).map((v) => (
+                      <span key={v} data-scale-label className="absolute -translate-x-1/2 tabular-nums" style={{ left: `${Math.max(12, Math.min(88, pos(v, range, scale)))}%` }}>{r.fmt(v)}</span>
+                    ))
+                  : null}
+                <span data-end="high" className="absolute right-0 tabular-nums">{high}</span>
+              </div>
+            ) : null}
             {/* THE PEERS NAMED ONCE, in the order their marks stand, each with its figure: a key, not a sentence (no comparison word, no
                 difference, no rank; clause 15). On a phone it wraps under itself; the marks above stay unlabelled. A key is part of
                 the drawing, so it is drawn as the site's other keys are (the survival strip's, the job market's), not as a line of
