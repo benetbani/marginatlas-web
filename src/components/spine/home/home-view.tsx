@@ -182,14 +182,17 @@ function HomeCities({ cards }: { cards: CityCardsData }) {
    instruction of 2026-10-07, the home's words cut by half): the category over it was a second label (the eyebrow his rulebook
    bans) and the four dates were one date said four times; the post itself carries both. ONE COLUMN, AN 8 APART, since 2026-10-07:
    it stands in a half beside the UK's cities (the level below), whose rows are one under another an 8 apart, so the two lists run
-   down their halves in step. */
+   down their halves in step, and FILLS ITS HALF: the level ends level (`even`, the zones' rule; his rulings that blank space is a
+   fault and that cards in a row share a height), so the section takes the height the cities' rows give the pair, the list takes
+   what is left under the title (`flex-1`), and the four posts share it in equal rows (`md:auto-rows-fr`), each title at its card's
+   top. Stacked under 768 there is no pair to match and the posts keep their own heights. */
 function Notebook({ cards }: { cards: NotebookCard[] }) {
   return (
     <section data-notebook="" aria-labelledby="notebook-title" className="flex flex-col">
       <h2 id="notebook-title" data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-snug tracking-tight text-[var(--c-ink)]">
         {COPY.home.notebook.title}
       </h2>
-      <ul className="mt-4 grid grid-cols-1 gap-2">
+      <ul className="mt-4 grid flex-1 grid-cols-1 gap-2 md:auto-rows-fr">
         {cards.map((c) => (
           <li key={c.slug}>
             <a href={c.href} className="tap-y flex h-full flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-4 text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
@@ -247,6 +250,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
       ? [{
           key: "cities",
           split: "1-1" as ZoneSplit,
+          even: !!(cities && notebook.length),
           label: cities ? COPY.home.citiesLabel : COPY.home.notebook.title,
           body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), ...(notebook.length ? [<Notebook key="notebook" cards={notebook} />] : [])],
         }]

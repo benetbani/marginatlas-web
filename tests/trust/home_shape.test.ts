@@ -33,6 +33,7 @@ check("Pro, where it is listed, stands after the registers and before the last l
 /* THE LAST LEVEL IS A PAIR, NOT A FULL WIDTH (section-bands: no section but the hero spans the page, and the home's baseline is 0). */
 const last = /key: "cities",\s*split: "([^"]+)"[\s\S]*?body: (\[[^\n]*\])/.exec(body);
 check(`the last level is two halves, the cities' section then the notebook's, and is not a wide zone (read: split ${last?.[1] ?? "none"})`, !!last && last[1] === "1-1" && last[2].indexOf("<HomeCities") !== -1 && last[2].indexOf("<Notebook") > last[2].indexOf("<HomeCities"));
+check("the last level ends level (`even` while both draw) and the notebook's list fills its half in equal rows, so no blank stands under the posts", /key: "cities",[\s\S]*?even: !!\(cities && notebook\.length\)/.test(body) && /<ul className="[^"]*\bflex-1\b[^"]*\bmd:auto-rows-fr\b[^"]*">/.test(view));
 
 /* NO NEWSLETTER BAND. */
 check("the rebuilt home draws no HomeNewsletter", !/HomeNewsletter/.test(view));
