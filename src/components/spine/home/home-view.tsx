@@ -177,10 +177,13 @@ function Notebook({ cards }: { cards: NotebookCard[] }) {
       <h2 id="notebook-title" data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-snug tracking-tight text-[var(--c-ink)]">
         {COPY.home.notebook.title}
       </h2>
-      <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {/* EACH CARD HUGS ITS TITLE (`items-start`, no `h-full`): with the date gone the title is all a card holds, and a card stretched
+          to its row's taller neighbour would leave a blank under a short title (the page laws' CARD FOOT BLANK). The title sits at
+          the top; the row's cards end where their own titles end. */}
+      <ul className="mt-4 grid grid-cols-1 items-start gap-4 sm:grid-cols-2">
         {cards.map((c) => (
           <li key={c.slug}>
-            <a href={c.href} className="tap-y flex h-full flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-4 text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
+            <a href={c.href} className="tap-y flex flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-4 text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
               <span className="text-[length:var(--t-body)] font-semibold leading-snug">{c.title}</span>
             </a>
           </li>
