@@ -35,9 +35,14 @@ check("the rebuilt home draws no HomeNewsletter", !/HomeNewsletter/.test(view));
 const cities = /function HomeCities[\s\S]*?\n\}/.exec(view)?.[0] ?? "";
 check("the cities zone draws CityCards `still`, with no pager labels and no carousel", /<CityCards\s+still\b/.test(cities) && !/prevLabel|nextLabel|CardPager|[Cc]arousel/.test(cities));
 const gb = buildCityCards("GB");
-const still = gb ? renderToStaticMarkup(React.createElement(CityCards, { still: true, cards: gb.cards, allHref: gb.allHref, basis: "basis" })) : "";
-const drawn = (still.match(/data-card="/g) ?? []).length;
+const still = gb ? renderToStaticMarkup(React.createElement(CityCards, { still: true, cards: gb.cards, basis: "basis" })) : "";
+/* The still row writes each city in both of its forms (the row form below 1024, the tall card from it; the width picks one), so a
+   city is counted once, by its id, and each form is held to every city. */
+const form = (name: "row" | "tall") => new Set([...(new RegExp(`data-still="${name}"[\\s\\S]*?(?=data-still="|<p class=)`).exec(still)?.[0] ?? "").matchAll(/data-card="([^"]+)"/g)].map((m) => m[1]));
+const drawn = form("tall").size;
 check(`the still row draws every UK city page at once (${drawn} of ${gb?.cards.length ?? 0}) and no button`, !!gb && gb.cards.length > 0 && drawn === gb.cards.length && !/<button/.test(still));
+check(`the still row's row form, drawn below 1024, holds every city too (${form("row").size} of ${gb?.cards.length ?? 0}), hidden from 1024`, !!gb && form("row").size === gb.cards.length && /data-still="row"[^>]*\blg:hidden\b/.test(still) && /data-still="tall"[^>]*\bhidden\b[^>]*\blg:flex\b/.test(still) && !/lg:flex-nowrap|flex-wrap/.test(still));
+check("the still row draws no link to the world's list, so CityCards asks for no allHref", !/CityCards[^]*?allHref/.test(cities) && /allHref\?: string/.test(readFileSync("src/components/spine/archetypes/CityCards.tsx", "utf8")));
 
 /* NO "WHAT THE ATLAS HOLDS" COUNTS. */
 check("no counts zone (no AtlasHolds, buildAtlasHolds, ledger counts or COPY.home.atlas)", !/AtlasHolds|buildAtlasHolds|atlas_ledger|getAtlasLedger|What the atlas holds|COPY\.home\.atlas\b/.test(view));

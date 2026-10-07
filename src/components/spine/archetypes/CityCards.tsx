@@ -158,8 +158,9 @@ export function CityCards({
   still = false,
 }: {
   cards: CityCard[];
-  allHref: string;
-  /** The link to every covered city under the row; none is drawn without it (the home's still row holds every UK city page). */
+  /** Where the link to every covered city goes; only read with `allLabel` (the home's still row holds every UK city page and draws no link). */
+  allHref?: string;
+  /** The link to every covered city under the row; none is drawn without it and without `allHref`. */
   allLabel?: string;
   /** One line, said once for the whole row: what the figure is, and nothing else. */
   basis: string;
@@ -168,10 +169,11 @@ export function CityCards({
   /** The cards grow into the height the level lends the card that holds them (2026-09-24), instead of a blank under the link. */
   fill?: boolean;
   /** THE STILL ROW (his instruction of 2026-10-07, "reform home drastically"; his refusal of carousels and pagination,
-   *  2026-09-22): every card at once, no pager. The cards wrap and each line's cards share its width (`flex-1` on a 9rem basis),
-   *  so a short last line widens its cards instead of leaving a card's width empty beside them; from 1024 they stand in one row
-   *  (seven at 976px of content are 132 wide, 108 inside the padding; "Birmingham" at the name's 20 is estimated near that,
-   *  not measured, and at 1280 there are 122 inside). */
+   *  2026-09-22): every card at once, no pager. FROM 1024 (`lg`) the tall cards stand in ONE row of equal widths; BELOW IT the
+   *  rows draw this archetype's own full-width ROW form, one under another, because a wrapping row of tall cards leaves its
+   *  last line's lone card (a country's seventh, an odd one out) to stretch wider than tall, which the NOT TALL law (height over
+   *  width 1.15 at the least) bars, and a row is the form that law exempts. Both forms are in the markup and the width picks one
+   *  (as RankedBars writes its bars, its table and its phone list); each city is a link in each. The cards keep `fill` off. */
   still?: boolean;
 }) {
   const [page, setPage] = React.useState(0);
@@ -195,7 +197,10 @@ export function CityCards({
   const pages = still ? 1 : Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
   const slice = still ? cards : cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
-  const tall = still ? "flex flex-wrap items-stretch gap-2 lg:flex-nowrap [&>*]:grow [&>*]:basis-36" : "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]";
+  const tall = "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]";
+  /* THE STILL ROW'S TWO FORMS (see `still`): the row form below `lg`, the single tall row from it. Fewer than four cities take the
+     row form at every width, as any set does (`rows`). */
+  const stillForm = still && !rows;
   const btn =
     "tap flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
@@ -220,11 +225,28 @@ export function CityCards({
           model's own full-width row instead: same content, same name size,
           same figure, the arrow at the right edge, and no hole. */}
       {/* `fill`: the grid takes the height the card is lent and its rows share it (`auto-rows-fr`), so the cards grow instead of a blank under the link. */}
-      <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : tall} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
-        {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
-      </div>
+      {stillForm ? (
+        <>
+          {/* BELOW 1024: THE ROW FORM, seven rows one under another at the width of the card. A row is exempt from the tall law, and a
+              row has no last line to stretch. */}
+          <div data-still="row" className="grid grid-cols-1 items-stretch gap-2 lg:hidden">
+            {slice.map((c, i) => <Row key={c.id} card={c} fmt={fmt} index={i} />)}
+          </div>
+          {/* FROM 1024: ONE ROW OF SEVEN TALL CARDS, equal widths (`flex-1` on a zero basis, `min-w-0` so a long name cannot widen its
+              own card). `snug`: the card's side padding drops from 12 to 8 at this width only, because seven cards in the 976px
+              the row has at 1024 are 132 wide, 106 inside the border and the 12px padding, and "Birmingham" at the name's 20 is
+              estimated at about 107 (not measured: no browser here); at 8 the name has 114 and the name's own rung is untouched. */}
+          <div data-still="tall" className="hidden items-stretch gap-2 lg:flex [&>*]:min-w-0 [&>*]:flex-1">
+            {slice.map((c, i) => <Card key={c.id} card={c} fmt={fmt} index={i} snug />)}
+          </div>
+        </>
+      ) : (
+        <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : tall} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
+          {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
+        </div>
+      )}
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p>
-      {allLabel ? (
+      {allLabel && allHref ? (
         <div className="mt-2 text-right">
           <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
         </div>
@@ -298,13 +320,13 @@ function Photo({ card, index = 0 }: { card: CityCard; index?: number }) {
 /* On a terracotta field every line goes to `--c-ink`: `--c-muted` reads about 3.3 to 1 on the deepest step, under the floor this
    repo holds, and the hierarchy is carried by size (20 over 12), never by greying a line out. The card wears a TRANSPARENT
    border rather than none, so the hover has an edge to colour without moving anything. */
-function Card({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => string; index?: number }) {
+function Card({ card, fmt, index = 0, snug = false }: { card: CityCard; fmt: (v: number) => string; index?: number; snug?: boolean }) {
   return (
     <a
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className="group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)]"
+      className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] border border-transparent py-2 transition-colors hover:border-[var(--c-ink2)] ${snug ? "px-3 lg:px-2" : "px-3"}`}
     >
       <Photo card={card} index={index} />
       <span className="relative flex h-full flex-col">
@@ -355,7 +377,7 @@ function PayTrack({ part }: { part?: number }) {
  *  column, a third column absorbing every pixel of leftover width, and the
  *  arrow at the right edge. Never `justify-between` across a wide card, which
  *  is the fault that puts a label at one end and its figure at the other. */
-function Row({ card, fmt }: { card: CityCard; fmt: (v: number) => string }) {
+function Row({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => string; index?: number }) {
   return (
     <a
       href={card.href}
@@ -363,7 +385,7 @@ function Row({ card, fmt }: { card: CityCard; fmt: (v: number) => string }) {
       data-lands={card.lands}
       className="group relative grid h-full items-center gap-3 overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)] [grid-template-columns:minmax(0,22ch)_auto_1fr_auto]"
     >
-      <Photo card={card} />
+      <Photo card={card} index={index} />
       <span className="relative min-w-0">
         <span data-city-name className="block text-[length:var(--t-head)] font-semibold leading-[1.15] tracking-tight text-[var(--c-ink)]" style={{ overflowWrap: "normal" }}>{card.name}</span>
         {card.region ? <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}

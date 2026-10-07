@@ -153,14 +153,16 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
 
 /* THE UK'S CITIES, STILL (masterplan step 35; his instruction of 2026-10-07, "reform home drastically"; his refusal of carousels
    and pagination, 2026-09-22): every UK city the covered list gives a page (buildCityCards, his field look with the city's
-   photograph), at once and in one row from 1280, each its name and the figure its own page opens with, a door to that page. No
-   pager, no region line, no link to the world's list: the row is the UK's cities, all of them. The counts beside it left with
-   it (benchmarks, countries, cities, districts, trades): the cities count took in the non-UK city pages, which are not indexed. */
+   photograph), at once: in ONE row of tall cards from 1024, and below that one under another in the archetype's own row form (a
+   wrapping row of tall cards stretches its last line's lone card below the tall law's ratio), each its name and the figure its
+   own page opens with, a door to that page. No pager, no region line, no link to the world's list (so no `allHref`): the row is
+   the UK's cities, all of them. The counts beside it left with it (benchmarks, countries, cities, districts, trades): the
+   cities count took in the non-UK city pages, which are not indexed. */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
     <Box id="cities" className="flex flex-col">
       <Rail icon="best-areas" kicker={COPY.home.citiesLabel} />
-      <CityCards still cards={cards.cards.map((c) => ({ ...c, region: undefined }))} allHref={cards.allHref} basis={COPY.cityCards.plain.basis} />
+      <CityCards still cards={cards.cards.map((c) => ({ ...c, region: undefined }))} basis={COPY.cityCards.plain.basis} />
     </Box>
   );
 }
