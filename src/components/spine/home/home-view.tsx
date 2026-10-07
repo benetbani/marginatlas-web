@@ -6,10 +6,12 @@
  *
  * The frame, in the order the page reads, since his instruction of 2026-10-07 ("reform home drastically"; he called the live home
  * "catastrophically bad"): the h1 he kept, with its rotating words, and the search with no heading of its own (step 33 makes it
- * land on pages that exist, UK first); the UK's three answers, one name, one figure and one line each (step 34); the UK's city
- * pages, still, every one at once (step 35); the duel and the kitchens list from the registers (P36.2, P36.2b); Pro said once and
- * quietly while the paywall's switch is on (step 35); the notebook (step 36). Gone that day: the counts of what the atlas holds,
- * the cities' pager and the newsletter band (the footer's bar asks). tests/trust/home_shape.test.ts holds the order. Each level
+ * land on pages that exist, UK first); the UK's three answers, one name, one figure and one line each (step 34); the duel and the
+ * kitchens list from the registers (P36.2, P36.2b); Pro said once and quietly while the paywall's switch is on (step 35); and the
+ * last level, two halves: the UK's city pages, still, every one at once (step 35), beside the notebook (step 36). The cities stood
+ * third and alone across the level until the visual gates' finding of 2026-10-07 (HomeCities says why). Gone that day: the counts
+ * of what the atlas holds, the cities' pager and the newsletter band (the footer's bar asks). tests/trust/home_shape.test.ts holds
+ * the order. Each level
  * is a zone (src/components/spine/zones.tsx); a level that has nothing to draw is not listed, so no band stands empty. No
  * chapters: a home page is not a reading in chapters. One 40 on the page, at the UK's answer (PART 4).
  *
@@ -153,16 +155,24 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
 
 /* THE UK'S CITIES, STILL (masterplan step 35; his instruction of 2026-10-07, "reform home drastically"; his refusal of carousels
    and pagination, 2026-09-22): every UK city the covered list gives a page (buildCityCards, his field look with the city's
-   photograph), at once: in ONE row of tall cards from 1024, and below that one under another in the archetype's own row form (a
-   wrapping row of tall cards stretches its last line's lone card below the tall law's ratio), each its name and the figure its
-   own page opens with, a door to that page. No pager, no region line, no link to the world's list (so no `allHref`): the row is
-   the UK's cities, all of them. The counts beside it left with it (benchmarks, countries, cities, districts, trades): the
-   cities count took in the non-UK city pages, which are not indexed. */
+   photograph), at once, each its name and the figure its own page opens with, a door to that page. No pager, no region line, no
+   link to the world's list (so no `allHref`): the list is the UK's cities, all of them. The counts beside it left with it
+   (benchmarks, countries, cities, districts, trades): the cities count took in the non-UK city pages, which are not indexed.
+
+   IN A HALF, ONE ROW EACH (`stack`; the visual gates' finding of 2026-10-07 at e0180d6d, section-bands `home` 0 to 1). The section
+   first stood alone across the whole level, a row of seven tall cards, and the section-bands gate bars that: its header,
+   "for every subsection that stretches left to right full width, I think we should ban it except hero section" (the founder,
+   2026-08-25), and the page has one hero, the search, declared with data-hero. The gate recognises no wide form, so marking this
+   row a hero would have been a way round the rule and not a declaration under it, and the baseline may only come down. The
+   other way is the founder's own pattern (two-up bands, "never one lone section per horizontal band", 2026-06-18): the section
+   stands in a half, beside the notebook (below), and a half cannot hold a row of seven tall cards (132 a card is the least that
+   holds "Birmingham" at the name's rung, and a half is 504 at the widest), so it takes the archetype's own row form, which the
+   tall law exempts, at every width. */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
     <Box id="cities" className="flex flex-col">
       <Rail icon="best-areas" kicker={COPY.home.citiesLabel} />
-      <CityCards still cards={cards.cards.map((c) => ({ ...c, region: undefined }))} basis={COPY.cityCards.plain.basis} />
+      <CityCards still stack cards={cards.cards.map((c) => ({ ...c, region: undefined }))} basis={COPY.cityCards.plain.basis} />
     </Box>
   );
 }
@@ -170,14 +180,16 @@ function HomeCities({ cards }: { cards: CityCardsData }) {
 /* THE NOTEBOOK (masterplan step 36): the posts kept for the home page (src/lib/home/notebook.ts), the newest of each category,
    each a link. Furniture, not a reading: no figure, so it stands outside the section cards. EACH POST IS ITS TITLE (his
    instruction of 2026-10-07, the home's words cut by half): the category over it was a second label (the eyebrow his rulebook
-   bans) and the four dates were one date said four times; the post itself carries both. */
+   bans) and the four dates were one date said four times; the post itself carries both. ONE COLUMN, AN 8 APART, since 2026-10-07:
+   it stands in a half beside the UK's cities (the level below), whose rows are one under another an 8 apart, so the two lists run
+   down their halves in step. */
 function Notebook({ cards }: { cards: NotebookCard[] }) {
   return (
     <section data-notebook="" aria-labelledby="notebook-title" className="flex flex-col">
       <h2 id="notebook-title" data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-snug tracking-tight text-[var(--c-ink)]">
         {COPY.home.notebook.title}
       </h2>
-      <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <ul className="mt-4 grid grid-cols-1 gap-2">
         {cards.map((c) => (
           <li key={c.slug}>
             <a href={c.href} className="tap-y flex h-full flex-col rounded-[12px] border border-[var(--c-border)] bg-[var(--c-card)] px-4 py-4 text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)]">
@@ -206,8 +218,6 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
        trades take (last, since 2026-10-07: from 768 to 1023 the third takes the whole row, and only the trades' range fills it),
        each a door to its section of /gb. */
     ...(answers.length ? [{ key: "answers", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.answersLabel, body: answers.map((a) => <AnswerDoor key={a.key} a={a} />) }] : []),
-    /* THE UK'S CITIES, THE WHOLE LEVEL (his instruction of 2026-10-07): the still row of every UK city page, nothing beside it. */
-    ...(cities ? [{ key: "cities", split: "wide" as ZoneSplit, label: COPY.home.citiesLabel, body: [<HomeCities key="cities" cards={cities} />] }] : []),
     /* THE DUEL AND THE RANKED LIST, SIDE BY SIDE (his rulings of 2026-10-05 on PARKED P36.2 and P36.2b; HOMEPAGE-EDITORIAL.md's
        order 3): which trades fail most, the set's two highest and two lowest on one scale, and where kitchens score five, the
        boroughs' three highest and three lowest, each from the registers' feed and each only while it is fresh (the 45-day rule).
@@ -224,10 +234,23 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     /* PRO, SAID ONCE AND QUIETLY (ruling 23), only while the paywall's switch is on: the zone is not listed otherwise, so no band
        stands empty and nothing about Pro prints. */
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
-    /* THE NOTEBOOK, THE LAST LEVEL (masterplan step 36), at two thirds (the zones' LONE rule). NO NEWSLETTER BAND AFTER IT (his
-       instruction of 2026-10-07): the footer's newsletter bar asks once on every page, and the home's own ask right above it was
-       the same plea twice in a row. */
-    ...(notebook.length ? [{ key: "notebook", split: "2-1" as ZoneSplit, label: COPY.home.notebook.title, body: [<Notebook key="notebook" cards={notebook} />] }] : []),
+    /* THE LAST LEVEL: THE UK'S CITIES BESIDE THE NOTEBOOK, two halves (the visual gates' finding of 2026-10-07, section-bands `home`
+       0 to 1; HomeCities says why). The cities stood alone across the level as the page's third zone, after the answers; a full
+       width that is not the hero is what that gate bars, and the two lone sections of the page (these two, the notebook at two
+       thirds) pair into the one band the founder's pattern asks for. The pair is read through the zones' own rules, so a level
+       with one of the two to draw is a lone section at two thirds (the LONE rule, the notebook's place until now) and a level with
+       neither is not listed. The notebook is still the last level (masterplan step 36), and Pro, where it draws, still stands
+       after the registers and before it. NO NEWSLETTER BAND AFTER IT (his instruction of 2026-10-07): the footer's newsletter bar
+       asks once on every page, and the home's own ask right above it was the same plea twice in a row. The zone is named by its
+       first section, as the registers' lone item is (it is a data attribute the checks read, not a word the page prints). */
+    ...(cities || notebook.length
+      ? [{
+          key: "cities",
+          split: "1-1" as ZoneSplit,
+          label: cities ? COPY.home.citiesLabel : COPY.home.notebook.title,
+          body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), ...(notebook.length ? [<Notebook key="notebook" cards={notebook} />] : [])],
+        }]
+      : []),
   ];
   return (
     <>

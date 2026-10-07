@@ -156,6 +156,7 @@ export function CityCards({
   nextLabel = "More",
   fill = false,
   still = false,
+  stack = false,
 }: {
   cards: CityCard[];
   /** Where the link to every covered city goes; only read with `allLabel` (the home's still row holds every UK city page and draws no link). */
@@ -175,6 +176,13 @@ export function CityCards({
    *  width 1.15 at the least) bars, and a row is the form that law exempts. Both forms are in the markup and the width picks one
    *  (as RankedBars writes its bars, its table and its phone list); each city is a link in each. The cards keep `fill` off. */
   still?: boolean;
+  /** THE ROW FORM AT EVERY WIDTH, for a card that stands in a half or a third of a level (2026-10-07). A row of seven tall cards
+   *  needs the whole 976px of a desktop column (132 a card, 114 inside the padding, for "Birmingham" at the name's rung), and the
+   *  section-bands gate bars a full-width section that is not the hero (the founder, 2026-08-25: "for every subsection that
+   *  stretches left to right full width, I think we should ban it except hero section"), so the home's cities stand in a half
+   *  beside the notebook and take the form that fits a half: every city a row, one under another, a gap of 8 between. Read only
+   *  with `still` (the pager's forms are unchanged). */
+  stack?: boolean;
 }) {
   const [page, setPage] = React.useState(0);
   /* BELOW FOUR, THE ROW FORM (the threshold measured 2026-09-19, QUEUE
@@ -191,7 +199,7 @@ export function CityCards({
      the names. So the set that cannot fill the row takes the row form, which
      is what the paragraph below already reasons for one and two; the number
      is the row's own track count, not a guess. */
-  const rows = cards.length < PER_PAGE;
+  const rows = cards.length < PER_PAGE || (still && stack);
   const pays = cards.map((c) => c.payUsd).filter((v): v is number => typeof v === "number");
   const fmt = moneyFor(pays);
   const pages = still ? 1 : Math.max(1, Math.ceil(cards.length / PER_PAGE));
@@ -241,8 +249,8 @@ export function CityCards({
           </div>
         </>
       ) : (
-        <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : tall} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
-          {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
+        <div className={`${rows ? `grid grid-cols-1 items-stretch auto-rows-fr${still && stack ? " gap-2" : ""}` : tall} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
+          {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} index={still && stack ? i : 0} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
         </div>
       )}
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p>
