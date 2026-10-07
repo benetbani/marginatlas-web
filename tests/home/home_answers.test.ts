@@ -65,6 +65,11 @@ const cardsHtml = [cardOf("answer", "years"), cardOf("years", "trades"), cardOf(
 check("the render draws the three in that order", home.indexOf('id="answer"') < home.indexOf('id="years"') && home.indexOf('id="years"') < home.indexOf('id="trades"'));
 check("no answer card prints rows (FactRows), and each holds a drawing", cardsHtml.every((c) => !/data-archetype="fact-rows"/.test(c) && /data-visual="1"/.test(c)));
 check("the answer's bar, the years' ring and the trades' range are drawn", /data-archetype="segment-bar"/.test(cardsHtml[0]) && /data-archetype="ring"/.test(cardsHtml[1]) && /data-archetype="world-range"/.test(cardsHtml[2]));
+/* One figure on the trades card (the review of 2026-10-07): the middle trade's, never the range's two ends beside it unlabelled. The
+   drawing stays; its ends line is not drawn (WorldRangeRows `showEnds={false}`). */
+const tradesCard = cardsHtml[2].slice(0, cardsHtml[2].indexOf("</a>"));
+const moneyOnTrades = text(tradesCard).match(/\$[0-9][0-9.,]*[KMB]?/g) ?? [];
+check(`the trades card prints one money figure (${moneyOnTrades.join(", ") || "none"}) and no end of the range`, moneyOnTrades.length === 1 && !!t && moneyOnTrades[0] === t.figure && !/data-end=/.test(tradesCard) && /data-archetype="world-range"/.test(tradesCard));
 const ia = home.indexOf('id="answer"');
 const zs = home.lastIndexOf("<section data-zone", ia);
 check("the answers' level ends level: its three doors stretch to one height (MODEL PART 10.5)", ia > 0 && zs >= 0 && /data-zone-even/.test(home.slice(zs, ia)));
