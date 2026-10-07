@@ -74,7 +74,7 @@
       "slugs": [
         "gb"
       ],
-      "since": "masterplan step 32, 2026-10-05: the home page on the band page, behind NEXT_PUBLIC_HOME_REFORM"
+      "since": "masterplan step 32, 2026-10-05: the home page on the band page; the default of / since 2026-10-07 (NEXT_PUBLIC_HOME_REFORM=0 turns it off)"
     }
   ]
 }

@@ -130,11 +130,14 @@ export function isMarginIndexEnabled(): boolean {
 }
 
 /**
- * The home page reform (/). Default OFF so live homepage stays the old surface
- * until the founder flips NEXT_PUBLIC_HOME_REFORM after eyeballing the dev route.
+ * The home page reform (/). Default ON since 2026-10-07: his ruling "Measure, then go live", after the visual gates passed on
+ * the rebuilt home (the page laws, the section bands, the page filter, the empty-space check and the rest, run in a browser).
+ * The rebuilt home (src/components/spine/home/home-view.tsx) is what / draws; NEXT_PUBLIC_HOME_REFORM=0 (or off, false, no)
+ * turns it off and brings back the earlier home, whose body stays in src/app/page.tsx for that. Before this date the default
+ * was OFF and the variable was a launch-day switch (LAUNCH-SWITCHES row 10 asked him to set it to 1; it no longer does).
  */
 export function isHomeReformEnabled(): boolean {
-  return parseFlag(process.env.NEXT_PUBLIC_HOME_REFORM, false);
+  return parseFlag(process.env.NEXT_PUBLIC_HOME_REFORM, true);
 }
 
 /**

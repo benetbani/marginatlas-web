@@ -17,7 +17,7 @@ import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
 import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
 import { CITY_CARD_PLACEHOLDER_IMAGE } from "@/lib/spine/city_cards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
-// Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default OFF).
+// Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default ON since 2026-10-07; =0 turns it off).
 // The flagged branch draws src/components/spine/home/home-view.tsx, the band page (masterplan step 32).
 import { isHomeReformEnabled } from "@/lib/feature_flags";
 import { SiteChrome } from "@/components/SiteChrome";
@@ -253,11 +253,12 @@ function formatPostDate(iso: string): string {
 }
 
 export default async function HomePage() {
-  /* THE HOME PAGE ON THE BAND PAGE (milestone 3, masterplan step 32), behind NEXT_PUBLIC_HOME_REFORM (default OFF, see
-     src/lib/feature_flags.ts): the h1 he kept and the search first, then the UK's answers, its cities, what the atlas holds,
-     Pro said once and the notebook, as steps 33 to 36 seat them (src/components/spine/home/home-view.tsx). It replaces the
-     earlier rebuild, whose "Free vs paid" and coined index contradicted his rulings 11 and 17. With the flag OFF (the default)
-     the untouched body below renders exactly as it does today. */
+  /* THE HOME PAGE ON THE BAND PAGE (milestone 3, masterplan step 32), behind NEXT_PUBLIC_HOME_REFORM (default ON since
+     2026-10-07, his ruling "Measure, then go live"; =0 turns it off, see src/lib/feature_flags.ts): the h1 he kept and the
+     search first, then the UK's answers, the duel and the kitchens list, Pro while its switch is on, and the cities beside the
+     notebook, as src/components/spine/home/home-view.tsx seats them. It replaces the earlier rebuild, whose "Free vs paid" and
+     coined index contradicted his rulings 11 and 17. With the flag OFF (NEXT_PUBLIC_HOME_REFORM=0) the earlier body below
+     renders exactly as it did before 2026-10-07. */
   if (isHomeReformEnabled()) {
     return (
       <SiteChrome>
@@ -268,7 +269,7 @@ export default async function HomePage() {
       </SiteChrome>
     );
   }
-  // flag OFF: everything below is the current homepage, untouched.
+  // flag OFF (NEXT_PUBLIC_HOME_REFORM=0): everything below is the earlier homepage, untouched.
 
   const { posts: blogPosts } = loadBlogRail();
   // Neighborhood cards resolved from the real flavor data. A candidate with no

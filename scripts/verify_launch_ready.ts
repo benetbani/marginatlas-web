@@ -134,9 +134,10 @@ const SITE = arg("site", "https://marginatlas.com")!;
 const ONLY = arg("only", null);
 /* A copy of the order book for a plant of (g); honoured only in a subset run, so the checklist itself always reads the real file. */
 const REQUIREMENTS_OVERRIDE = ONLY ? arg("requirements", null) : null;
-/* A local render of the home page for (i), honoured only in a subset run (masterplan step 38): the home page on the band page waits
-   behind NEXT_PUBLIC_HOME_REFORM, so its ledger section can be read before launch day off the harness's render; the checklist
-   itself always reads production. */
+/* A local render of the home page for (i), honoured only in a subset run (masterplan step 38): the home page on the band page is
+   the code's default since 2026-10-07 (NEXT_PUBLIC_HOME_REFORM=0 turns it off), but production serves it only once that code is
+   deployed, so its ledger section can be read before the deploy off the harness's render; the checklist itself always reads
+   production. */
 const HOME_FILE = ONLY ? arg("home-file", null) : null;
 const TSX = [process.execPath, "node_modules/tsx/dist/cli.mjs"];
 
@@ -164,7 +165,7 @@ const EXEMPLARS: Exemplar[] = [
   { surface: "howto", slugs: ["GB"], why: "the harness's page: the authored locals" },
   { surface: "howto", slugs: ["DE"], why: "forms on file, no authored locals" },
   { surface: "howto", slugs: ["IN"], why: "forms on file, no authored locals" },
-  { surface: "home", slugs: ["gb"], why: "the home page on the band page (masterplan step 37), served at / once NEXT_PUBLIC_HOME_REFORM is on" },
+  { surface: "home", slugs: ["gb"], why: "the home page on the band page (masterplan step 37), served at / since 2026-10-07 unless NEXT_PUBLIC_HOME_REFORM=0" },
 ];
 const stemOf = (p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`;
 const nameOf = (p: { surface: string; slugs: string[] }) => `${p.surface} ${p.slugs.join("/")}`;

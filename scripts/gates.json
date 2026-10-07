@@ -2467,7 +2467,7 @@
       "script": "tests/scores/wave2_flags.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "The Wave 2 page flags default OFF so live / and (a would-be) /margin-index stay the old surfaces until the founder flips them after the dev-route eyeball.",
+      "asserts": "The margin-index flag defaults OFF so (a would-be) /margin-index stays the old surface until the founder flips it after the dev-route eyeball.",
       "reads": [],
       "claims": []
     },
