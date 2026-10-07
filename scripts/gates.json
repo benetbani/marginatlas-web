@@ -2845,6 +2845,7 @@
         "scratchpad/harness/pages/home-gb.html",
         "src/app/page.tsx",
         "src/components/NavigatorForm.tsx",
+        "src/components/spine/archetypes/CityCards.tsx",
         "src/components/spine/home/home-view.tsx"
       ],
       "claims": []
