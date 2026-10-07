@@ -2725,7 +2725,7 @@ export const COPY = {
      *  question itself is the feed's own title. ONE LINE, AND NO MONTH IN IT (his instruction of 2026-10-07, the home's words cut by
      *  half): the item prints only while fresh (the 45-day rule), so the month told the reader less than its words cost. */
     duel: {
-      words: "of 100 firms a year, the middle trade",
+      words: "of 100 companies insolvent a year, the middle trade",
       topLabel: "Highest",
       phoneName: "Trade",
       phoneValue: "Of 100",
