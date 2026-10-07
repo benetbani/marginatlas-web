@@ -32,7 +32,9 @@ const cache = new Map<string, WorldRange | null>();
 const valuesCache = new Map<string, number[]>();
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-function quantile(sorted: number[], q: number): number {
+/** The set's quantile of a list sorted lowest first, interpolated between its neighbours. Exported so a range of another set (the
+ *  home page's London trades, home_answers.ts) is cut by this rule and not by a copy of it. */
+export function quantile(sorted: number[], q: number): number {
   const pos = (sorted.length - 1) * q;
   const lo = Math.floor(pos);
   const hi = Math.ceil(pos);

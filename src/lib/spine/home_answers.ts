@@ -30,7 +30,7 @@ import { COPY } from "@/lib/spine/copy";
 import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
 import type { Provenance } from "@/lib/spine/provenance";
 import type { AtlasIconId } from "@/components/brand/icons";
-import type { WorldRange } from "@/lib/spine/world_stats";
+import { quantile, type WorldRange } from "@/lib/spine/world_stats";
 
 export type HomeAnswer = {
   key: "answer" | "trades" | "years";
@@ -50,14 +50,6 @@ export type HomeAnswer = {
   /** The share still trading, out of 100, drawn as a ring with the figure inside it. */
   ring?: number;
 };
-
-/** The set's quantile, interpolated (world_stats.ts's rule), for the middle half of London's trades. */
-function quantile(sorted: number[], q: number): number {
-  const at = (sorted.length - 1) * q;
-  const lo = Math.floor(at);
-  const hi = Math.ceil(at);
-  return sorted[lo] + (sorted[hi] - sorted[lo]) * (at - lo);
-}
 
 export function buildHomeAnswers(iso2 = "GB"): HomeAnswer[] {
   if (iso2.toUpperCase() !== "GB") return [];
