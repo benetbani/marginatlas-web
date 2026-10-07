@@ -28,7 +28,7 @@ type Member = { member: string; value: number; units?: number };
 type FeedItem = { id: string; title: string; refresh: string; as_of?: string; members: number; middle?: number; top: Member[]; bottom: Member[] };
 
 export type KitchensRow = { key: string; name: string; value: number; prov: Provenance };
-export type Kitchens = { title: string; middle: { value: number; prov: Provenance }; count: number; rows: KitchensRow[]; asOf: string };
+export type Kitchens = { title: string; middle: { value: number; prov: Provenance }; count: number; rows: KitchensRow[] };
 
 /** The list, or null when the feed holds no fresh item, no middle or too few members at either end. */
 export function buildKitchens(today: string = new Date().toISOString().slice(0, 10)): Kitchens | null {
@@ -42,5 +42,5 @@ export function buildKitchens(today: string = new Date().toISOString().slice(0, 
     value: m.value,
     prov: stamp(m.member),
   }));
-  return { title: item.title, middle: { value: item.middle, prov: stamp(`the middle of ${item.members} boroughs`) }, count: item.members, rows, asOf: item.as_of as string };
+  return { title: item.title, middle: { value: item.middle, prov: stamp(`the middle of ${item.members} boroughs`) }, count: item.members, rows };
 }

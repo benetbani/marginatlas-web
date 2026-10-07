@@ -30,7 +30,7 @@ type Member = { member: string; trades: string[]; value: number };
 type FeedItem = { id: string; title: string; line: string; refresh: string; as_of?: string; members: number; middle?: number; top: Member[]; bottom: Member[] };
 
 export type DuelRow = { key: string; name: string; value: number; href: string; lands: DoorKind; prov: Provenance };
-export type Duel = { title: string; middle: { value: number; figure: string; prov: Provenance }; count: number; rows: DuelRow[]; asOf: string };
+export type Duel = { title: string; middle: { value: number; figure: string; prov: Provenance }; count: number; rows: DuelRow[] };
 
 /** Whether an item may print on `today` (an ISO date): a yearly item always; a monthly item for 45 days from its data's end. */
 export function isFresh(item: { refresh: string; as_of?: string }, today: string): boolean {
@@ -60,5 +60,5 @@ export function buildDuel(today: string = new Date().toISOString().slice(0, 10))
     prov: stamp(m.member),
   }));
   const middle = per100(item.middle);
-  return { title: item.title, middle: { value: middle, figure: middle.toFixed(1), prov: stamp(`the middle of ${item.members} trades`) }, count: item.members, rows, asOf: item.as_of as string };
+  return { title: item.title, middle: { value: middle, figure: middle.toFixed(1), prov: stamp(`the middle of ${item.members} trades`) }, count: item.members, rows };
 }
