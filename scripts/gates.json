@@ -1831,6 +1831,18 @@
       "claims": []
     },
     {
+      "name": "home-us-restaurants",
+      "script": "tests/home/us_restaurants.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHERE US RESTAURANTS GREW AND SHRANK (plan 2026-10-08, home sections, section 3; his idea of 2026-10-08, \"US biggest winners and losers ranking of top 5 cities bottom 5\").",
+      "reads": [
+        "data/cities/city_list_v1.json",
+        "data/home/us_restaurants.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

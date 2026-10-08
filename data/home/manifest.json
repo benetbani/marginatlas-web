@@ -41,6 +41,40 @@
      "title": "Labor force, total (SL.TLF.TOTL.IN): the list's floor"
     }
    ]
+  },
+  "us_restaurants.json": {
+   "built": "2026-10-08",
+   "rows": 45,
+   "sha256": "145312a0dbdade1eaa8ffc4d9b74c957f40536bef8af1f0f382333df6b74943a",
+   "sources": [
+    {
+     "bytes": 26134342,
+     "key": "qcew_from",
+     "path": "E:/atlas/us/bls/qcew/parsed/qcew_cells_2019.parquet",
+     "prints": true,
+     "publisher": "bls",
+     "sha256": "56d3861fdca904d713417fd03db02590c9e1585844ea1cc1d85bf2e6ed821c78",
+     "title": "Quarterly Census of Employment and Wages, 2019 annual averages, private establishments, parsed"
+    },
+    {
+     "bytes": 26908630,
+     "key": "qcew_to",
+     "path": "E:/atlas/us/bls/qcew/parsed/qcew_cells_2023.parquet",
+     "prints": true,
+     "publisher": "bls",
+     "sha256": "38c306bf1544c14221b379bdc93c3089d93f0a26757e94b7bfad6ba3b0a5525f",
+     "title": "Quarterly Census of Employment and Wages, 2023 annual averages, private establishments, parsed"
+    },
+    {
+     "bytes": 44074187,
+     "key": "metro_titles",
+     "path": "E:/atlas/us/susb/2021/msa_3digitnaics_2021.txt",
+     "prints": false,
+     "publisher": null,
+     "sha256": "9cfadbbde4001b4ace7bba02683a76302b2bb6eb9e769b9b8562ae2e7522bbad",
+     "title": "Statistics of US Businesses 2021, metro areas: each code's published name, read to check the codes"
+    }
+   ]
   }
  },
  "what": "Slices of files on disk outside this repo, the figures the home page's sections print; do not edit by hand"

@@ -225,9 +225,86 @@ def new_companies() -> None:
     ])
 
 
+# ---- section 3: where US restaurants grew and shrank -----------------------------------------------------------------------------
+
+QCEW_DIR = "E:/atlas/us/bls/qcew/parsed"
+SUSB = "E:/atlas/us/susb/2021/msa_3digitnaics_2021.txt"
+TRADE = ("722511", "Full-service restaurants")
+# THE US CITIES WITH A PAGE, each by its metro's code in the employment census ("C" and the first four digits of its CBSA). Each is
+# checked against the metro's published title (SUSB's MSADSCR) before anything is written.
+METROS = {
+    "atlanta": "C1206", "austin": "C1242", "baltimore": "C1258", "boston": "C1446", "buffalo": "C1538",
+    "charlotte": "C1674", "chicago": "C1698", "cincinnati": "C1714", "cleveland": "C1746", "columbus": "C1814",
+    "dallas": "C1910", "denver": "C1974", "detroit": "C1982", "honolulu": "C4652", "houston": "C2642",
+    "indianapolis": "C2690", "kansas-city": "C2814", "las-vegas": "C2982", "los-angeles": "C3108", "louisville": "C3114",
+    "memphis": "C3282", "miami": "C3310", "milwaukee": "C3334", "minneapolis": "C3346", "nashville": "C3498",
+    "new-orleans": "C3538", "new-york": "C3562", "oklahoma-city": "C3642", "orlando": "C3674", "philadelphia": "C3798",
+    "phoenix": "C3806", "pittsburgh": "C3830", "portland": "C3890", "raleigh": "C3958", "richmond": "C4006",
+    "sacramento": "C4090", "salt-lake-city": "C4162", "san-antonio": "C4170", "san-diego": "C4174", "san-francisco": "C4186",
+    "san-jose": "C4194", "seattle": "C4266", "st-louis": "C4118", "tampa": "C4530", "washington-dc": "C4790",
+}
+
+
+def us_restaurants() -> None:
+    """Full-service restaurants with staff (private establishments, NAICS 722511) in each US metro the site has a city page for, in
+    the first and the last year the parsed files hold. A row the publisher marks "N" withholds employment and wages, never its
+    count of establishments, so the count is kept and the mark recorded."""
+    import pyarrow.parquet as pq
+
+    us = cities_of("US")
+    if [c["slug"] for c in us] != sorted(METROS):
+        refuse(f"the city list's US cities are not the metros this export reads ({len(us)} against {len(METROS)})")
+    titles: dict[str, str] = {}
+    with Path(SUSB).open(encoding="latin-1", newline="") as f:
+        for row in csv.reader(f):
+            # One row a CBSA (its total, all sizes); a CBSA's code ends in 0, so "C" and its first four digits name it alone.
+            if len(row) > 9 and row[1] == "--" and row[2] == "01" and row[0].endswith("0"):
+                key = "C" + row[0][:4]
+                if key in titles and titles[key] != row[9]:
+                    refuse(f"{key} names two metros in the titles file")
+                titles[key] = row[9]
+    years = sorted(int(p.stem.rsplit("_", 1)[1]) for p in Path(QCEW_DIR).glob("qcew_cells_*.parquet"))
+    if len(years) < 2:
+        refuse(f"{QCEW_DIR} holds fewer than two years")
+    first, last = years[0], years[-1]
+    wanted = set(METROS.values())
+    counts: dict[int, dict[str, tuple[int, str | None]]] = {}
+    for y in (first, last):
+        pf = pq.ParquetFile(f"{QCEW_DIR}/qcew_cells_{y}.parquet")
+        got: dict[str, tuple[int, str | None]] = {}
+        for g in range(pf.metadata.num_row_groups):
+            t = pf.read_row_group(g, columns=["area_fips", "naics", "own_code", "estabs", "disclosure_code"]).to_pydict()
+            for a, n, o, e, dc in zip(t["area_fips"], t["naics"], t["own_code"], t["estabs"], t["disclosure_code"]):
+                if n == TRADE[0] and o == "5" and a in wanted:
+                    if a in got:
+                        refuse(f"{a} holds two rows of {TRADE[0]} in {y}")
+                    got[a] = (e, dc)
+        counts[y] = got
+    metros = []
+    for c in us:
+        a = METROS[c["slug"]]
+        t = titles.get(a)
+        city = c["name"].split(",")[0].strip()
+        if not t or not t.endswith("Metro Area") or city.lower() not in t.lower():
+            refuse(f"{a} is {t!r}, not a metro area named for {c['name']}")
+        f0, f1 = counts[first].get(a), counts[last].get(a)
+        if not f0 or not f1 or not f0[0] or not f1[0]:
+            refuse(f"{a} ({c['name']}) holds no count in {first} or {last}")
+        metros.append({"slug": c["slug"], "name": c["name"], "area": a, "title": t, "y_from": int(f0[0]), "y_to": int(f1[0]), "codes": [f0[1], f1[1]]})
+    if len({m["area"] for m in metros}) != len(metros):
+        refuse("two cities share one metro")
+    obj = {"trade": {"naics": TRADE[0], "title": TRADE[1]}, "ownership": "private", "from": first, "to": last, "metros": metros}
+    write("us_restaurants.json", obj, len(metros), [
+        source("qcew_from", f"{QCEW_DIR}/qcew_cells_{first}.parquet", "bls", f"Quarterly Census of Employment and Wages, {first} annual averages, private establishments, parsed"),
+        source("qcew_to", f"{QCEW_DIR}/qcew_cells_{last}.parquet", "bls", f"Quarterly Census of Employment and Wages, {last} annual averages, private establishments, parsed"),
+        source("metro_titles", SUSB, None, "Statistics of US Businesses 2021, metro areas: each code's published name, read to check the codes", prints=False),
+    ])
+
+
 EXPORTS = {
     "city_survival": city_survival,
     "new_companies": new_companies,
+    "us_restaurants": us_restaurants,
 }
 
 

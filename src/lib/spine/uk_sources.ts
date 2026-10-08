@@ -248,6 +248,15 @@ export const WORLD_SOURCES: readonly UkSource[] = [
       { prints: "New limited companies per 1,000 people of working age, in Latin America and in Africa, on the home page", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
     ],
   },
+  {
+    key: "bls",
+    publisher: "US Bureau of Labor Statistics",
+    names: ["Bureau of Labor Statistics"],
+    attribution: null,
+    items: [
+      { prints: "Full-service restaurants in the US metro areas the site has city pages for, in two years, on the home page", title: "Quarterly Census of Employment and Wages, annual averages, private establishments, industry 722511", url: "https://www.bls.gov/cew/" },
+    ],
+  },
 ];
 
 /** The register slices the UK pages read (data/uk/registers/manifest.json), each to its publisher's entry. */

@@ -1,0 +1,551 @@
+{
+ "from": 2019,
+ "metros": [
+  {
+   "area": "C1206",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Atlanta",
+   "slug": "atlanta",
+   "title": "Atlanta-Sandy Springs-Roswell, GA Metro Area",
+   "y_from": 4451,
+   "y_to": 5179
+  },
+  {
+   "area": "C1242",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Austin",
+   "slug": "austin",
+   "title": "Austin-Round Rock, TX Metro Area",
+   "y_from": 1556,
+   "y_to": 1675
+  },
+  {
+   "area": "C1258",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Baltimore",
+   "slug": "baltimore",
+   "title": "Baltimore-Columbia-Towson, MD Metro Area",
+   "y_from": 1605,
+   "y_to": 1694
+  },
+  {
+   "area": "C1446",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Boston",
+   "slug": "boston",
+   "title": "Boston-Cambridge-Newton, MA-NH Metro Area",
+   "y_from": 4301,
+   "y_to": 4294
+  },
+  {
+   "area": "C1538",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Buffalo",
+   "slug": "buffalo",
+   "title": "Buffalo-Cheektowaga-Niagara Falls, NY Metro Area",
+   "y_from": 939,
+   "y_to": 886
+  },
+  {
+   "area": "C1674",
+   "codes": [
+    null,
+    "N"
+   ],
+   "name": "Charlotte",
+   "slug": "charlotte",
+   "title": "Charlotte-Concord-Gastonia, NC-SC Metro Area",
+   "y_from": 1994,
+   "y_to": 2384
+  },
+  {
+   "area": "C1698",
+   "codes": [
+    "N",
+    "N"
+   ],
+   "name": "Chicago",
+   "slug": "chicago",
+   "title": "Chicago-Naperville-Elgin, IL-IN-WI Metro Area",
+   "y_from": 7202,
+   "y_to": 7362
+  },
+  {
+   "area": "C1714",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Cincinnati",
+   "slug": "cincinnati",
+   "title": "Cincinnati, OH-KY-IN Metro Area",
+   "y_from": 1592,
+   "y_to": 1667
+  },
+  {
+   "area": "C1746",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Cleveland",
+   "slug": "cleveland",
+   "title": "Cleveland-Elyria, OH Metro Area",
+   "y_from": 1527,
+   "y_to": 1502
+  },
+  {
+   "area": "C1814",
+   "codes": [
+    "N",
+    "N"
+   ],
+   "name": "Columbus",
+   "slug": "columbus",
+   "title": "Columbus, OH Metro Area",
+   "y_from": 1351,
+   "y_to": 1440
+  },
+  {
+   "area": "C1910",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Dallas",
+   "slug": "dallas",
+   "title": "Dallas-Fort Worth-Arlington, TX Metro Area",
+   "y_from": 5234,
+   "y_to": 5712
+  },
+  {
+   "area": "C1974",
+   "codes": [
+    "N",
+    "N"
+   ],
+   "name": "Denver",
+   "slug": "denver",
+   "title": "Denver-Aurora-Lakewood, CO Metro Area",
+   "y_from": 2275,
+   "y_to": 2398
+  },
+  {
+   "area": "C1982",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Detroit",
+   "slug": "detroit",
+   "title": "Detroit-Warren-Dearborn, MI Metro Area",
+   "y_from": 2950,
+   "y_to": 3413
+  },
+  {
+   "area": "C4652",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Honolulu",
+   "slug": "honolulu",
+   "title": "Urban Honolulu, HI Metro Area",
+   "y_from": 892,
+   "y_to": 978
+  },
+  {
+   "area": "C2642",
+   "codes": [
+    "N",
+    "N"
+   ],
+   "name": "Houston",
+   "slug": "houston",
+   "title": "Houston-The Woodlands-Sugar Land, TX Metro Area",
+   "y_from": 4512,
+   "y_to": 5027
+  },
+  {
+   "area": "C2690",
+   "codes": [
+    null,
+    "N"
+   ],
+   "name": "Indianapolis",
+   "slug": "indianapolis",
+   "title": "Indianapolis-Carmel-Anderson, IN Metro Area",
+   "y_from": 1463,
+   "y_to": 1550
+  },
+  {
+   "area": "C2814",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Kansas City",
+   "slug": "kansas-city",
+   "title": "Kansas City, MO-KS Metro Area",
+   "y_from": 1491,
+   "y_to": 1522
+  },
+  {
+   "area": "C2982",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Las Vegas",
+   "slug": "las-vegas",
+   "title": "Las Vegas-Henderson-Paradise, NV Metro Area",
+   "y_from": 1588,
+   "y_to": 1773
+  },
+  {
+   "area": "C3108",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Los Angeles",
+   "slug": "los-angeles",
+   "title": "Los Angeles-Long Beach-Anaheim, CA Metro Area",
+   "y_from": 11146,
+   "y_to": 10975
+  },
+  {
+   "area": "C3114",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Louisville",
+   "slug": "louisville",
+   "title": "Louisville/Jefferson County, KY-IN Metro Area",
+   "y_from": 907,
+   "y_to": 1002
+  },
+  {
+   "area": "C3282",
+   "codes": [
+    "N",
+    null
+   ],
+   "name": "Memphis",
+   "slug": "memphis",
+   "title": "Memphis, TN-MS-AR Metro Area",
+   "y_from": 805,
+   "y_to": 891
+  },
+  {
+   "area": "C3310",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Miami",
+   "slug": "miami",
+   "title": "Miami-Fort Lauderdale-West Palm Beach, FL Metro Area",
+   "y_from": 5584,
+   "y_to": 6050
+  },
+  {
+   "area": "C3334",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Milwaukee",
+   "slug": "milwaukee",
+   "title": "Milwaukee-Waukesha-West Allis, WI Metro Area",
+   "y_from": 1063,
+   "y_to": 1060
+  },
+  {
+   "area": "C3346",
+   "codes": [
+    null,
+    "N"
+   ],
+   "name": "Minneapolis",
+   "slug": "minneapolis",
+   "title": "Minneapolis-St. Paul-Bloomington, MN-WI Metro Area",
+   "y_from": 2287,
+   "y_to": 2475
+  },
+  {
+   "area": "C3498",
+   "codes": [
+    null,
+    "N"
+   ],
+   "name": "Nashville",
+   "slug": "nashville",
+   "title": "Nashville-Davidson--Murfreesboro--Franklin, TN Metro Area",
+   "y_from": 1526,
+   "y_to": 1774
+  },
+  {
+   "area": "C3538",
+   "codes": [
+    "N",
+    null
+   ],
+   "name": "New Orleans",
+   "slug": "new-orleans",
+   "title": "New Orleans-Metairie, LA Metro Area",
+   "y_from": 1404,
+   "y_to": 1570
+  },
+  {
+   "area": "C3562",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "New York",
+   "slug": "new-york",
+   "title": "New York-Newark-Jersey City, NY-NJ-PA Metro Area",
+   "y_from": 19730,
+   "y_to": 19927
+  },
+  {
+   "area": "C3642",
+   "codes": [
+    "N",
+    "N"
+   ],
+   "name": "Oklahoma City",
+   "slug": "oklahoma-city",
+   "title": "Oklahoma City, OK Metro Area",
+   "y_from": 1179,
+   "y_to": 1274
+  },
+  {
+   "area": "C3674",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Orlando",
+   "slug": "orlando",
+   "title": "Orlando-Kissimmee-Sanford, FL Metro Area",
+   "y_from": 2158,
+   "y_to": 2482
+  },
+  {
+   "area": "C3798",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Philadelphia",
+   "slug": "philadelphia",
+   "title": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD Metro Area",
+   "y_from": 4146,
+   "y_to": 4262
+  },
+  {
+   "area": "C3806",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Phoenix",
+   "slug": "phoenix",
+   "title": "Phoenix-Mesa-Scottsdale, AZ Metro Area",
+   "y_from": 2435,
+   "y_to": 2828
+  },
+  {
+   "area": "C3830",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Pittsburgh",
+   "slug": "pittsburgh",
+   "title": "Pittsburgh, PA Metro Area",
+   "y_from": 1776,
+   "y_to": 1714
+  },
+  {
+   "area": "C3890",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Portland",
+   "slug": "portland",
+   "title": "Portland-Vancouver-Hillsboro, OR-WA Metro Area",
+   "y_from": 2438,
+   "y_to": 2504
+  },
+  {
+   "area": "C3958",
+   "codes": [
+    "N",
+    null
+   ],
+   "name": "Raleigh",
+   "slug": "raleigh",
+   "title": "Raleigh, NC Metro Area",
+   "y_from": 1038,
+   "y_to": 1264
+  },
+  {
+   "area": "C4006",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Richmond",
+   "slug": "richmond",
+   "title": "Richmond, VA Metro Area",
+   "y_from": 1057,
+   "y_to": 1116
+  },
+  {
+   "area": "C4090",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Sacramento",
+   "slug": "sacramento",
+   "title": "Sacramento--Roseville--Arden-Arcade, CA Metro Area",
+   "y_from": 1640,
+   "y_to": 1728
+  },
+  {
+   "area": "C4162",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Salt Lake City",
+   "slug": "salt-lake-city",
+   "title": "Salt Lake City, UT Metro Area",
+   "y_from": 719,
+   "y_to": 763
+  },
+  {
+   "area": "C4170",
+   "codes": [
+    "N",
+    null
+   ],
+   "name": "San Antonio",
+   "slug": "san-antonio",
+   "title": "San Antonio-New Braunfels, TX Metro Area",
+   "y_from": 1653,
+   "y_to": 1757
+  },
+  {
+   "area": "C4174",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "San Diego",
+   "slug": "san-diego",
+   "title": "San Diego-Carlsbad, CA Metro Area",
+   "y_from": 2613,
+   "y_to": 2592
+  },
+  {
+   "area": "C4186",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "San Francisco",
+   "slug": "san-francisco",
+   "title": "San Francisco-Oakland-Hayward, CA Metro Area",
+   "y_from": 5189,
+   "y_to": 4919
+  },
+  {
+   "area": "C4194",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "San Jose",
+   "slug": "san-jose",
+   "title": "San Jose-Sunnyvale-Santa Clara, CA Metro Area",
+   "y_from": 1738,
+   "y_to": 1698
+  },
+  {
+   "area": "C4266",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Seattle",
+   "slug": "seattle",
+   "title": "Seattle-Tacoma-Bellevue, WA Metro Area",
+   "y_from": 3712,
+   "y_to": 3837
+  },
+  {
+   "area": "C4118",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "St. Louis",
+   "slug": "st-louis",
+   "title": "St. Louis, MO-IL Metro Area",
+   "y_from": 2030,
+   "y_to": 1989
+  },
+  {
+   "area": "C4530",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Tampa",
+   "slug": "tampa",
+   "title": "Tampa-St. Petersburg-Clearwater, FL Metro Area",
+   "y_from": 2511,
+   "y_to": 2641
+  },
+  {
+   "area": "C4790",
+   "codes": [
+    null,
+    "N"
+   ],
+   "name": "Washington, D.C.",
+   "slug": "washington-dc",
+   "title": "Washington-Arlington-Alexandria, DC-VA-MD-WV Metro Area",
+   "y_from": 4554,
+   "y_to": 4941
+  }
+ ],
+ "ownership": "private",
+ "to": 2023,
+ "trade": {
+  "naics": "722511",
+  "title": "Full-service restaurants"
+ }
+}
