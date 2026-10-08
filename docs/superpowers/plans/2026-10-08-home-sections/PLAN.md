@@ -77,8 +77,9 @@ with the Write tool (every test holds regex backslashes).
   A row marked "N" withholds employment and wages, never the establishments: all 1,869,191 N rows of 2023 carry a count and zero
   employment and pay (Raleigh 2019, Charlotte and Nashville 2023 are N rows). 35 metros grew, 10 shrank. By restaurants added:
   Atlanta 4,451 to 5,179 (728), Houston 4,512 to 5,027 (515), Dallas 5,234 to 5,712 (478), Miami 5,584 to 6,050 (466), Detroit
-  2,950 to 3,413 (463); by restaurants lost: San Francisco 5,189 to 4,919 (270), Los Angeles 11,146 to 10,975 (171), Pittsburgh 1,776
-  to 1,714 (62), Buffalo 939 to 886 (53), St. Louis 2,030 to 1,989 (41).
+  2,950 to 3,413 (463; held out of the ranking, decision 12, so Phoenix 2,435 to 2,828 (393) is the fifth); by restaurants lost: San
+  Francisco 5,189 to 4,919 (270), Los Angeles 11,146 to 10,975 (171), Pittsburgh 1,776 to 1,714 (62), Buffalo 939 to 886 (53), St.
+  Louis 2,030 to 1,989 (41).
 - **Section 4's sources:** `E:/atlas/registers/uk/tables/company_failures_by_trade.json` `match`: 31,926 notices, 31,376 company
   names, 30,510 names matched, 1,137 notices unmatched; its `source` string is `data/uk/registers/failures.json`'s. Nothing in the
   website repo holds those counts, so section 4 needs an export too. In the repo: 111 live trades have London takings read from the
@@ -127,6 +128,15 @@ shrink.
     would be the first of its kind): the home render's gates hold it; a QUEUE row asks for the story.
 11. **Zone order:** search, answers, registers, (Pro), the UK's cities `[firms last | cities]`, beyond the UK
     `[new companies | US restaurants]`, the method `[how figures are made | notebook]`: two levels more than today, every one a pair.
+12. **Detroit is held out of section 3** (2026-10-08, under his "decide, push forward"): its gain of 463 sits on a Michigan-wide step
+    in the count of every kind of business, not in its restaurants. Measured by the Task 4 review and re-read from the QCEW annual
+    files' own all-industry rows (private establishments), 2026-10-08: Michigan 264,942 (2021) to 315,870 (2023), +19.2%, rank 5 of 51
+    (median +11.5%); 2023 alone +9.8%, rank 2 of 51 (Ohio, Indiana and Wisconsin +1.0% to +2.6%); its jobs +6.2%, so establishments
+    per 100 jobs +12.3%, rank 2 (median +4.8%); every two-digit sector but retail rose more than 8%, food and lodging being 5.7% of
+    the net change (7.3% of the base); and the Detroit metro's restaurants track its whole count, +14.4% against +12.6% (2021 to
+    2023). A member is featured only with a reason, and a gain that is the count's step is not one: Detroit stays in the slice with
+    its counts, in `held_out` with its reason, recorded and never printed, as section 1 holds out Birmingham. **Phoenix (2,435 to
+    2,828, +393) is the fifth gainer**, and the section ranks 44 metros.
 
 ---
 
@@ -993,12 +1003,15 @@ Create `tests/home/us_restaurants.test.ts`:
  * census's parsed files by scripts/data/home/export_home.py).
  *
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
- * manifest's row count is its content's; one metro a US city page and under the city's own name; each metro's code a metro area
- * whose published title names the city, no two cities on one code; each metro's state, typed beside its code in the export's METROS
- * table, one of the states its title names, so a metro of the same name in another state (Columbus in Georgia or in Indiana, for
- * Columbus in Ohio) does not pass for the city's, and, where the titles file is on this machine, each title the file's own, read
- * again; whole counts in both years; the mark a row may carry withholds employment and pay and never the count (every row keeps its
- * count); five or more metros grew and five or more shrank, so both ends of the ranking stand.
+ * manifest's row count is its content's, the metros ranked and the metros held out together; every US city with a page is ranked or
+ * held out with its reason (the export's HELD_OUT map; plan decision 12, Detroit today), never both and never neither, and under the
+ * city's own name; each metro's code a metro area whose published title names the city, no two cities on one code; each metro's
+ * state, typed beside its code in the export's METROS table, one of the states its title names, so a metro of the same name in
+ * another state (Columbus in Georgia or in Indiana, for Columbus in Ohio) does not pass for the city's, and, where the titles file
+ * is on this machine, each title the file's own, read again; whole counts in both years; the mark a row may carry withholds
+ * employment and pay and never the count (every row keeps its count). Every one of these holds for a metro held out as for one
+ * ranked, so a held-out metro's counts stay the publisher's. Five or more ranked metros grew and five or more shrank, so both ends
+ * of the ranking stand.
  *
  * Run: npx tsx tests/home/us_restaurants.test.ts
  */
@@ -1015,8 +1028,13 @@ const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string
 /* A metro's code and its state are typed in the export's METROS table, so that table is where a finding about either is put right. */
 const AT_METROS = { remedy: "put the city's own metro code and state beside it in the METROS table of scripts/data/home/export_home.py, then re-run python -P scripts/data/home/export_home.py us_restaurants" };
 
+/* A metro is held out of the ranking, and the reason given, in the export's HELD_OUT map, so that map is where a finding about either is put right. */
+const AT_HELD = { remedy: "give the metro its reason in the HELD_OUT map of scripts/data/home/export_home.py (or take it out of the map), then re-run python -P scripts/data/home/export_home.py us_restaurants" };
+
 type Metro = { slug: string; name: string; area: string; state: string; title: string; y_from: number; y_to: number; codes: Array<string | null> };
-type Export = { trade: { naics: string; title: string }; ownership: string; from: number; to: number; metros: Metro[] };
+/** A metro the export holds out of the ranking: its row as any metro's, and the reason, recorded and never printed. */
+type HeldOut = Metro & { why: string };
+type Export = { trade: { naics: string; title: string }; ownership: string; from: number; to: number; metros: Metro[]; held_out: HeldOut[] };
 
 /** The states a metro's title names, read as the export reads them: the text after the last comma and before " Metro Area",
  *  split on "-" ("Columbus, GA-AL Metro Area" names GA and AL). */
@@ -1032,26 +1050,35 @@ const metroTitles = (path: string): Map<string, string> => {
 const held = holdHomeExport("us_restaurants.json", check);
 const d = (held?.data ?? null) as Export | null;
 if (held && d) {
-  check(`the manifest's rows are the slice's: one a metro (${held.entry.rows} against ${d.metros.length})`, held.entry.rows === d.metros.length);
+  /* THE RANKED AND THE HELD OUT. A metro the export holds out (its HELD_OUT map gives the reason) keeps its counts in the slice and is
+     never ranked. Every per-metro check below runs over both lists, so a held-out metro's counts, code, title and state are the
+     publisher's as any ranked metro's are. */
+  const out = Array.isArray(d.held_out) ? d.held_out : [];
+  const all: Metro[] = [...d.metros, ...out];
+  check(`the slice lists the metros it holds out, an empty list if none (${Array.isArray(d.held_out) ? `${out.length} held out` : "no list"})`, Array.isArray(d.held_out));
+  check(`the manifest's rows are the slice's: one a metro, ranked or held out (${held.entry.rows} against ${d.metros.length} and ${out.length})`, held.entry.rows === all.length);
   const us = (JSON.parse(readFileSync("data/cities/city_list_v1.json", "utf8")) as { cities: Array<{ slug: string; name: string; iso2: string }> }).cities.filter((c) => c.iso2.toUpperCase() === "US");
-  check(`one metro a US city page (${d.metros.length} of ${us.length})`, JSON.stringify(d.metros.map((m) => m.slug).sort()) === JSON.stringify(us.map((c) => c.slug).sort()));
-  check("each metro under its city's own name", d.metros.every((m) => us.find((c) => c.slug === m.slug)?.name === m.name));
-  check("each code is a metro area whose title names the city, and no two cities share one", d.metros.every((m) => /^C\d{4}$/.test(m.area) && / Metro Area$/.test(m.title) && m.title.toLowerCase().includes(m.name.split(",")[0].trim().toLowerCase())) && new Set(d.metros.map((m) => m.area)).size === d.metros.length);
-  const inState = d.metros.filter((m) => statesOf(m.title).includes(m.state)).length;
-  check(`each metro's state is one of its title's states, so a metro of the same name in another state is not the city's (${inState} of ${d.metros.length})`, inState === d.metros.length, AT_METROS);
+  const ranked = d.metros.map((m) => m.slug), heldOut = out.map((m) => m.slug);
+  check(`every US city with a page is ranked or held out, never both (${us.length} pages; ${ranked.length} ranked; held out ${heldOut.join(", ") || "none"})`, JSON.stringify([...ranked, ...heldOut].sort()) === JSON.stringify(us.map((c) => c.slug).sort()) && !ranked.some((s) => heldOut.includes(s)));
+  check(`every metro held out carries its reason (${out.map((h) => `${h.slug}: ${h.why}`).join("; ") || "none held out"})`, out.every((h) => typeof h.why === "string" && h.why.trim().length > 0), AT_HELD);
+  check("each metro under its city's own name", all.every((m) => us.find((c) => c.slug === m.slug)?.name === m.name));
+  check("each code is a metro area whose title names the city, and no two cities share one", all.every((m) => /^C\d{4}$/.test(m.area) && / Metro Area$/.test(m.title) && m.title.toLowerCase().includes(m.name.split(",")[0].trim().toLowerCase())) && new Set(all.map((m) => m.area)).size === all.length);
+  const inState = all.filter((m) => statesOf(m.title).includes(m.state)).length;
+  check(`each metro's state is one of its title's states, so a metro of the same name in another state is not the city's (${inState} of ${all.length})`, inState === all.length, AT_METROS);
   check(`one trade held, private establishments (${d.trade.naics}, ${d.trade.title}, ${d.ownership})`, d.trade.naics === "722511" && d.ownership === "private");
-  check(`whole counts in both years, ${d.from} and ${d.to}`, d.from < d.to && d.metros.every((m) => Number.isInteger(m.y_from) && Number.isInteger(m.y_to) && m.y_from > 0 && m.y_to > 0));
-  const marked = d.metros.filter((m) => m.codes.includes("N")).length;
-  check(`a row may carry the mark N and every row keeps its whole count (${marked} rows marked)`, d.metros.every((m) => m.codes.length === 2 && m.codes.every((c) => c === null || c === "N") && Number.isInteger(m.y_from) && m.y_from > 0 && Number.isInteger(m.y_to) && m.y_to > 0));
+  check(`whole counts in both years, ${d.from} and ${d.to}`, d.from < d.to && all.every((m) => Number.isInteger(m.y_from) && Number.isInteger(m.y_to) && m.y_from > 0 && m.y_to > 0));
+  const marked = all.filter((m) => m.codes.includes("N")).length;
+  check(`a row may carry the mark N and every row keeps its whole count (${marked} rows marked)`, all.every((m) => m.codes.length === 2 && m.codes.every((c) => c === null || c === "N") && Number.isInteger(m.y_from) && m.y_from > 0 && Number.isInteger(m.y_to) && m.y_to > 0));
+  /* The ranking's two ends are drawn from the metros ranked, so these two counts are theirs alone. */
   const grew = d.metros.filter((m) => m.y_to > m.y_from).length, shrank = d.metros.filter((m) => m.y_to < m.y_from).length;
-  check(`five or more grew and five or more shrank (${grew} and ${shrank})`, grew >= 5 && shrank >= 5);
+  check(`five or more ranked metros grew and five or more shrank (${grew} and ${shrank})`, grew >= 5 && shrank >= 5);
 
   /* THE TITLES, READ AGAIN, where the file is on this machine. A machine without it is deferred by the holder, and its key ends the last line. */
   const titlesFile = held.entry.sources.find((s) => s.key === "metro_titles");
   check("the manifest names the titles file the codes were checked against (metro_titles)", !!titlesFile);
   if (titlesFile && existsSync(titlesFile.path)) {
     const titles = metroTitles(titlesFile.path);
-    const wrong = d.metros.filter((m) => titles.get(m.area) !== m.title || !statesOf(titles.get(m.area) ?? "").includes(m.state)).map((m) => m.slug);
+    const wrong = all.filter((m) => titles.get(m.area) !== m.title || !statesOf(titles.get(m.area) ?? "").includes(m.state)).map((m) => m.slug);
     check(`each metro's title is the titles file's for its code, read again here, and names the metro's state${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0, AT_METROS);
   }
 }
@@ -1060,7 +1087,7 @@ if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exi
 console.log(homePassLine("home/us_restaurants", held));
 ```
 
-Each city's state is typed beside its metro code in the export (Step 3's `METROS`) and carried in the slice: the title a code resolves to must name the city and hold that state, so a metro of the same name in another state (Columbus in Georgia or Indiana for Columbus in Ohio, Charlottesville for Charlotte, Cleveland in Tennessee, Portland in Maine, Augusta-Richmond County for Richmond) is refused by the export and reds in the gate. Where the metro titles file is on the machine the gate also reads it again and holds every row's title to the file's own for its code (the holder defers its key otherwise); its red names the `METROS` table and the remedy. The mark's check says what it sees: a row may carry the mark N, and every row keeps its whole count.
+Each city's state is typed beside its metro code in the export (Step 3's `METROS`) and carried in the slice: the title a code resolves to must name the city and hold that state, so a metro of the same name in another state (Columbus in Georgia or Indiana for Columbus in Ohio, Charlottesville for Charlotte, Cleveland in Tennessee, Portland in Maine, Augusta-Richmond County for Richmond) is refused by the export and reds in the gate. Where the metro titles file is on the machine the gate also reads it again and holds every row's title to the file's own for its code (the holder defers its key otherwise); its red names the `METROS` table and the remedy. The mark's check says what it sees: a row may carry the mark N, and every row keeps its whole count. A metro the export holds out of the ranking (Step 3's `HELD_OUT`, decision 12: Detroit) sits in the slice's `held_out` with its reason, and the manifest's rows count both lists: the gate holds the ranked and the held out together to the US city pages, never both and never neither, every held-out metro to a non-empty reason, and runs every per-metro check above over both lists, so a held-out metro's counts stay the publisher's; only the two counts of metros that grew and shrank are the ranked's alone.
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t04.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t04.txt`
 Expected: `data/home/us_restaurants.json is exported and in the manifest` red, `exit 1`.
@@ -1119,6 +1146,16 @@ METROS: dict[str, tuple[str, str]] = {
     "sacramento": ("C4090", "CA"), "salt-lake-city": ("C4162", "UT"), "san-antonio": ("C4170", "TX"), "san-diego": ("C4174", "CA"), "san-francisco": ("C4186", "CA"),
     "san-jose": ("C4194", "CA"), "seattle": ("C4266", "WA"), "st-louis": ("C4118", "MO"), "tampa": ("C4530", "FL"), "washington-dc": ("C4790", "DC"),
 }
+# THE METROS HELD OUT OF THE RANKING, each with its reason (plan 2026-10-08, home sections, decision 12). A held-out metro keeps its
+# counts in the slice, in `held_out` with its reason, and is never ranked: recorded and never printed, as section 1 holds out
+# Birmingham. A member is featured only with a reason, and a gain that is the count's own step is not one. Detroit: the Task 4 review
+# measured (2026-10-08, from the QCEW files on this machine; the plan's decision 12 carries the figures) that Michigan's count of
+# every kind of business steps up in 2022 and 2023, in nearly every sector and far ahead of its jobs, and that the Detroit metro's
+# full-service restaurants follow that whole count, so its gain rides on the step. Each key must be one of the US cities with a
+# page; the export refuses otherwise.
+HELD_OUT: dict[str, str] = {
+    "detroit": "Michigan's count of every kind of business jumps in 2022 and 2023, far ahead of its jobs",
+}
 
 
 def title_states(title: str) -> list[str]:
@@ -1134,12 +1171,17 @@ def us_restaurants() -> None:
     the first and the last year the parsed files hold. A row the publisher marks "N" withholds employment and wages, never its
     count of establishments, so the count is kept and the mark recorded. Each city's metro is its code and its state, both typed in
     METROS; the title the code resolves to must name the city and hold the state, so a code that lands on a metro of the same name
-    in another state is refused."""
+    in another state is refused. A metro named in HELD_OUT moves out of `metros` into `held_out`, with every field its row carries
+    and its reason, so its counts stay in the slice and it is never ranked; the manifest's rows count both lists, and a HELD_OUT key
+    that is not one of the cities is refused."""
     import pyarrow.parquet as pq
 
     us = cities_of("US")
     if [c["slug"] for c in us] != sorted(METROS):
         refuse(f"the city list's US cities are not the metros this export reads ({len(us)} against {len(METROS)})")
+    unknown = sorted(set(HELD_OUT) - {c["slug"] for c in us})
+    if unknown:
+        refuse(f"HELD_OUT names {', '.join(repr(k) for k in unknown)}, not among the {len(us)} US cities with a page: correct the key in HELD_OUT in scripts/data/home/export_home.py, or take it out")
     titles: dict[str, str] = {}
     with Path(SUSB).open(encoding="latin-1", newline="") as f:
         for row in csv.reader(f):
@@ -1182,8 +1224,11 @@ def us_restaurants() -> None:
         metros.append({"slug": c["slug"], "name": c["name"], "area": a, "state": state, "title": t, "y_from": int(f0[0]), "y_to": int(f1[0]), "codes": [f0[1], f1[1]]})
     if len({m["area"] for m in metros}) != len(metros):
         refuse("two cities share one metro")
-    obj = {"trade": {"naics": TRADE[0], "title": TRADE[1]}, "ownership": "private", "from": first, "to": last, "metros": metros}
-    write("us_restaurants.json", obj, len(metros), [
+    # A metro held out leaves the ranking with every field its row carries, and its reason beside them; the rows count both lists.
+    ranked = [m for m in metros if m["slug"] not in HELD_OUT]
+    held_out = [{**m, "why": HELD_OUT[m["slug"]]} for m in metros if m["slug"] in HELD_OUT]
+    obj = {"trade": {"naics": TRADE[0], "title": TRADE[1]}, "ownership": "private", "from": first, "to": last, "metros": ranked, "held_out": held_out}
+    write("us_restaurants.json", obj, len(ranked) + len(held_out), [
         source("qcew_from", f"{QCEW_DIR}/qcew_cells_{first}.parquet", "bls", f"Quarterly Census of Employment and Wages, {first} annual averages, private establishments, parsed"),
         source("qcew_to", f"{QCEW_DIR}/qcew_cells_{last}.parquet", "bls", f"Quarterly Census of Employment and Wages, {last} annual averages, private establishments, parsed"),
         source("metro_titles", SUSB, None, "Statistics of US Businesses 2021, metro areas: each code's published name, read to check the codes", prints=False),
@@ -1199,7 +1244,7 @@ and add `    "us_restaurants": us_restaurants,` as the last entry of `EXPORTS`.
 Run: `python -P scripts/data/home/export_home.py us_restaurants > scratchpad/home-sections/x04.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/x04.txt`
 Expected: `us_restaurants.json: 45 rows, <twelve hex>`, `exit 0` (it reads the two parquet files a row group at a time; a minute or two).
 Run: `node -e "const d=require('./data/home/us_restaurants.json');const c=m=>m.y_to-m.y_from;const g=d.metros.filter(m=>c(m)>0).sort((a,b)=>c(b)-c(a)),s=d.metros.filter(m=>c(m)<0).sort((a,b)=>c(a)-c(b));console.log(d.from,d.to,g.length,s.length);console.log(g.slice(0,5).map(m=>m.slug+':'+m.y_from+'>'+m.y_to).join(' '));console.log(s.slice(0,5).map(m=>m.slug+':'+m.y_from+'>'+m.y_to).join(' '))" > scratchpad/home-sections/x04b.txt 2>&1`
-Expected: `2019 2023 35 10`; `atlanta:4451>5179 houston:4512>5027 dallas:5234>5712 miami:5584>6050 detroit:2950>3413`; `san-francisco:5189>4919 los-angeles:11146>10975 pittsburgh:1776>1714 buffalo:939>886 st-louis:2030>1989`.
+Expected: `2019 2023 34 10`; `atlanta:4451>5179 houston:4512>5027 dallas:5234>5712 miami:5584>6050 phoenix:2435>2828`; `san-francisco:5189>4919 los-angeles:11146>10975 pittsburgh:1776>1714 buffalo:939>886 st-louis:2030>1989` (`metros` holds the 44 ranked; Detroit, 2950>3413, sits in `held_out`: decision 12).
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t04.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t04.txt`
 Expected: `home/us_restaurants: all pass` (the three sources hashed again), `exit 0`.
 
@@ -2167,9 +2212,10 @@ above ` * Run: npx tsx tests/home/us_restaurants.test.ts` add:
 
 ```ts
  * Holds the builder (src/lib/home/us_restaurants.ts): the five metros that added most, most first, and the five that lost most,
- * most first, ranked by the count added or lost so the order can be read off the two printed counts; two counts a row as the slice
- * holds them, never a percent; the lead the single metro that added most, its count added the card's figure; every figure stamped;
- * the lead's line twelve words at most.
+ * most first, ranked by the count added or lost so the order can be read off the two printed counts; the metros ranked are those
+ * with a city page less any the export holds out with its reason (the slice's `metros`, not its `held_out`), and no metro held out
+ * is drawn; two counts a row as the slice holds them, never a percent; the lead the single metro that added most, its count added
+ * the card's figure; every figure stamped; the lead's line twelve words at most.
  *
 ```
 
@@ -2186,6 +2232,7 @@ if (built && d) {
   const count = (n: number) => n.toLocaleString("en-US");
   check(`the ${US_ENDS} that added most, most first (${built.added.map((r) => `${r.name} ${r.a} to ${r.b}`).join("; ")})`, JSON.stringify(built.added.map((r) => r.key)) === JSON.stringify(added.slice(0, US_ENDS).map((m) => m.slug)));
   check(`the ${US_ENDS} that lost most, most first (${built.lost.map((r) => `${r.name} ${r.a} to ${r.b}`).join("; ")})`, JSON.stringify(built.lost.map((r) => r.key)) === JSON.stringify(lost.slice(0, US_ENDS).map((m) => m.slug)));
+  check("no metro held out is drawn", !([...built.added, ...built.lost].some((r) => d.held_out.some((h) => h.slug === r.key))));
   check("two counts a row as the slice holds them, and never a percent", [...built.added, ...built.lost].every((r) => { const m = d.metros.find((x) => x.slug === r.key); return !!m && r.from === m.y_from && r.to === m.y_to && r.a === count(m.y_from) && r.b === count(m.y_to) && !/%/.test(r.a + r.b); }));
   check(`the lead added most, alone at the top: ${built.lead.figure} (${built.lead.key})`, built.lead.key === added[0].slug && built.lead.figure === count(change(added[0])) && change(added[0]) > change(added[1]));
   check("every figure says where it came from", [...built.added, ...built.lost].every((r) => r.aProv.src === `home/us_restaurants.json:${r.key}:${d.from}` && r.bProv.src === `home/us_restaurants.json:${r.key}:${d.to}` && r.aProv.kind === "counted" && r.bProv.kind === "counted") && built.lead.prov.src.startsWith(`home/us_restaurants.json:${built.lead.key}:`) && built.lead.prov.kind === "worked out");
@@ -2223,12 +2270,13 @@ Create `src/lib/home/us_restaurants.ts`:
  * src/lib/home/us_restaurants.ts
  *
  * WHERE US RESTAURANTS GREW AND SHRANK (plan 2026-10-08, home sections, section 3; his idea of 2026-10-08, "US biggest winners and
- * losers ranking of top 5 cities bottom 5"). One trade held (full-service restaurants, private establishments), the 45 US metros
- * the site has city pages for, two counts a metro (the first and the last year on disk), from data/home/us_restaurants.json (never
- * typed). Ranked by the restaurants a metro added or lost, so the order can be read off the two printed counts; never a percent and
- * never a composite (PART 9 clause 15; his ruling 11). The five that added most and the five that lost most; the metro that added
- * most leads, its count added the section's figure and one of the home's three loud moments (it leads a measured ranking), and a
- * tie at the top features nobody and the section is not drawn.
+ * losers ranking of top 5 cities bottom 5"). One trade held (full-service restaurants, private establishments), the US metros the
+ * site has city pages for, less any the export holds out with its reason (Detroit today: plan decision 12; the slice's `held_out`,
+ * recorded and never drawn), so the metros ranked are the slice's `metros`; two counts a metro (the first and the last year on
+ * disk), from data/home/us_restaurants.json (never typed). Ranked by the restaurants a metro added or lost, so the order can be
+ * read off the two printed counts; never a percent and never a composite (PART 9 clause 15; his ruling 11). The five that added
+ * most and the five that lost most; the metro that added most leads, its count added the section's figure and one of the home's
+ * three loud moments (it leads a measured ranking), and a tie at the top features nobody and the section is not drawn.
  */
 import usJson from "../../../data/home/us_restaurants.json";
 import type { Provenance } from "@/lib/spine/provenance";
@@ -2275,9 +2323,10 @@ export function buildUsRestaurants(): UsRestaurants | null {
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t11.txt`
 Expected: `the 5 that added most, most first (Atlanta 4,451 to 5,179; Houston 4,512 to 5,027; Dallas 5,234 to 5,712; Miami 5,584 to
-6,050; Detroit 2,950 to 3,413)`, `the 5 that lost most, most first (San Francisco 5,189 to 4,919; Los Angeles 11,146 to 10,975;
-Pittsburgh 1,776 to 1,714; Buffalo 939 to 886; St. Louis 2,030 to 1,989)`, `... alone at the top: 728 (atlanta)`, `("Full-service
-restaurants added since 2019, most of 45 metros: Atlanta")`, `home/us_restaurants: all pass`, `exit 0`.
+6,050; Phoenix 2,435 to 2,828)`, `the 5 that lost most, most first (San Francisco 5,189 to 4,919; Los Angeles 11,146 to 10,975;
+Pittsburgh 1,776 to 1,714; Buffalo 939 to 886; St. Louis 2,030 to 1,989)`, `no metro held out is drawn`, `... alone at the top: 728
+(atlanta)`, `("Full-service restaurants added since 2019, most of 44 metros: Atlanta")`, `home/us_restaurants: all pass`, `exit 0`
+(Detroit, held out in decision 12, is in neither list).
 Run: `node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write > scratchpad/home-sections/c11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/c11.txt` → `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=1 --no-bail --only=home-us-restaurants,copy-no-method-words,model-laws-copy,archetype-copy,no-em-dashes,no-source-agencies,layering,counts-fresh > scratchpad/home-sections/g11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/g11.txt`
 Expected: `Passed: 8`, `Failed: 0`.
@@ -2936,7 +2985,7 @@ import { buildHowMade } from "@/lib/home/how_made";
 export const LOUD_SEATS = [
   { seat: 1, card: "00 answer", figure: "the UK's total effective tax burden on a sole trader's profit, at 40", state: "LIT", condition: "masterplan step 34: the same figure /gb's masthead prints (buildHeroBoard), `--terra-text` at 40, the page's only 40" },
   { seat: 2, card: "firms-last", id: "firms-last", figure: "of 100 firms born in the cohort, those still trading five years on, in the UK city that leads, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 1: the city leads a measured ranking of the UK's cities (buildFirmsLast; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
-  { seat: 3, card: "us-restaurants", id: "us-restaurants", figure: "the full-service restaurants the leading US metro added since the first year on disk, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 45 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
+  { seat: 3, card: "us-restaurants", id: "us-restaurants", figure: "the full-service restaurants the leading US metro added since the first year on disk, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
 ] as const satisfies readonly LoudSeat[];
 ```
 
@@ -3167,7 +3216,7 @@ Tasks 1 to 15):
 |---|---|---|---|---|
 | home:firms-last | SECTION | where new firms last, the UK's cities (his "Midtier city opportunities", the UK's part) | the 2019 cohort's five-year survival per UK city with a page, from the business demography tables through website scripts/data/home/export_home.py; Birmingham held out on the publisher's star, its reason in the slice, never printed; the lead city in the accent; gate home-firms-last | DONE, built on whats-left <first>..<last> (plan website docs/superpowers/plans/2026-10-08-home-sections/PLAN.md); NOT pushed, his word for the deploy |
 | home:new-companies | SECTION | where new companies open, Latin America and Africa (his "LATAM Gems", "Best of Africa", "Rising stars" folded in) | one measure (new limited companies per 1,000 of working age), one year worked out from the series, each region ranked within itself, a labour-force floor with its reason, five a region drawn with flag and name and the rest behind the plus, the UK's own figure for scale; gate home-new-companies | DONE, built on whats-left <first>..<last>; NOT pushed |
-| home:us-restaurants | SECTION | where US restaurants grew and shrank (his "US biggest winners and losers") | one trade (full-service restaurants), 45 metros, the first and the last year on disk, the five that added most and the five that lost most by the count, two counts a row, never a percent, the leader's count added in the accent; gate home-us-restaurants | DONE, built on whats-left <first>..<last>; NOT pushed |
+| home:us-restaurants | SECTION | where US restaurants grew and shrank (his "US biggest winners and losers") | one trade (full-service restaurants), 45 metros read and 44 ranked (Detroit held out with its reason), the first and the last year on disk, the five that added most and the five that lost most by the count, two counts a row, never a percent, the leader's count added in the accent; gate home-us-restaurants | DONE, built on whats-left <first>..<last>; NOT pushed |
 | home:how-made | SECTION | how figures are made (his "deep techniques", "archival capability", "global coverage", merged) | the notices read and their match rate, the London trade pages read from the band counts, the indexable country pages with the home's one estimates line, a door to About the figures; quiet; gate home-how-made | DONE, built on whats-left <first>..<last>; NOT pushed |
 | home:hotels | SECTION | hotels in six cities (his idea of 2026-10-08) | London's hotel boroughs from the register slice the site holds now (turnover.json hotels-lodging, under "hotels and similar accommodation"); the six US metros with published 2022 hotel receipts after one export from the 2022 economic census, sector 72; never London against the US on one scale | TODO (NEXT: the home's next round, M) |
 | home:tax-burdens | DATA | high tax burdens in global cities: New York, London, Los Angeles | a US sole-trader engine (federal brackets, self-employment tax, New York's and California's brackets, New York City's resident tax and unincorporated business tax), so every row is worked out on one basis as the UK's is | DATA (not built: only the UK's figure is worked out from the law; New York and Los Angeles would print the same typed rate) |
