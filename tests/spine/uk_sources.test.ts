@@ -19,10 +19,10 @@ const RULE = "uk-sources";
 const FILE = "src/lib/spine/uk_sources.ts";
 const REMEDY = "name every UK source the records hold in uk_sources.ts, with its attribution line only where the records name its licence, and keep the foot on every UK page";
 let failed = 0;
-const check = (label: string, ok: boolean) => {
+const check = (label: string, ok: boolean, remedy: string = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
   failed++;
-  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+  red({ rule: RULE, file: FILE, detail: label, remedy });
 };
 
 /* EVERY PUBLISHER THE SECTION FILES NAME */
@@ -64,7 +64,7 @@ check("the statistics office's entry says the home prints its cities' survival, 
    entry says it in words and the words are held to the slice's own figure. */
 const floor = (JSON.parse(readFileSync("data/home/new_companies.json", "utf8")) as { floor: { at_least: number } }).floor.at_least;
 const newCompanies = WORLD_SOURCES.flatMap((s) => s.items).find((i) => i.title.includes("IC.BUS.NDNS.ZS"));
-check(`the new companies' entry says the slice's floor in words (${floor})`, floor === 1000000 && newCompanies !== undefined && newCompanies.prints.includes("under one million"));
+check(`the new companies' entry says the slice's floor in words (${floor})`, floor === 1000000 && newCompanies !== undefined && newCompanies.prints.includes("under one million"), "say the slice's floor (data/home/new_companies.json floor.at_least) in the new companies entry's words in uk_sources.ts, and change this pin with it");
 
 /* THE FOOT */
 const gb = renderToStaticMarkup(React.createElement(SourcesFoot, { iso2: "GB" }));
