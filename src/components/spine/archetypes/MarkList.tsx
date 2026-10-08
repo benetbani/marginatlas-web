@@ -123,6 +123,7 @@ import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import { CompanionRow, type Companion } from "./BentoBand";
 import type { Provenance } from "@/lib/spine/provenance";
+import { DetailPanel, type DetailRow } from "./DetailPanel";
 
 /** PART 9 rule 22's floor, the model's and not this file's: "a ranked
  *  comparison with fewer than four members". Under four the card draws
@@ -151,6 +152,11 @@ export type MarkRow = {
   /** Where the figure came from (plan 06, task B5), stamped on the row's figure. */
   prov?: Provenance;
 };
+
+/** A GROUP OF THE GROUPED FORM (plan 2026-10-08, home sections, section 2): its name (the head over its rows, where the one-set form
+ *  says what a row is), its rows, and the rest of its set behind the founder's plus (DetailPanel, closed on arrival, rows of a name
+ *  and a figure). */
+export type MarkGroup = { key: string; name: string; rows: MarkRow[]; rest?: { summary: string; rows: DetailRow[] } | null };
 
 export type MarkListProps = {
   id: string;
@@ -186,6 +192,9 @@ export type MarkListProps = {
    *  other half of a wage bill and belongs to this card rather than to one of
    *  its own. */
   foot?: { items: Companion[]; line?: string | null } | null;
+  /** THE GROUPED FORM (plan 2026-10-08, home sections, section 2; GroupedMarkList below says why): one measure over sets never
+   *  ranked together, each a short ranked list under its own head, in one card under one headline. With it `rows` is not read. */
+  groups?: MarkGroup[] | null;
 };
 
 /* THE MARK COLUMN, and why it is a constant. See clause 5 of the header: one
@@ -231,7 +240,9 @@ function geometry(figChars: number, marks: boolean, doors: boolean): React.CSSPr
   return { gridTemplateColumns: cols.join(" ") };
 }
 
-export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows, fmt, withheld = 0, withheldLine = null, oneColumn = false, foot = null }: MarkListProps) {
+export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows, fmt, withheld = 0, withheldLine = null, oneColumn = false, foot = null, groups = null }: MarkListProps) {
+  /* THE GROUPED FORM has its own body (below), so nothing after this line changes for a one-set card. */
+  if (groups) return <GroupedMarkList id={id} kicker={kicker} icon={icon} tagged={tagged} headline={headline} basis={basis} head={head} groups={groups} fmt={fmt} />;
   /* The component repeats the builder's floor rather than trusting every
      future caller to honour it, the same guard IncomeBreakdown.tsx keeps. */
   if (rows.length < MARK_LIST_FLOOR || !Number.isFinite(headline.value)) return null;
@@ -382,6 +393,80 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           {foot.line ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
         </div>
       ) : null}
+    </Box>
+  );
+}
+
+/**
+ * THE GROUPED FORM (plan 2026-10-08, home sections, section 2: Latin America's countries and Africa's on one measure, his ideas
+ * "LATAM Gems" and "Best of Africa"). One measure over two or more sets a reader must never see ranked together, so each set is its
+ * own short ranked list under its own head, in one card under one headline, as the one-set form draws one. The law, the one-set
+ * form's where it can be:
+ *  - THE FLOOR, EVERY GROUP: a group under four rows (MARK_LIST_FLOOR) draws nothing, and then the whole card draws nothing, so a
+ *    reader is never shown one set ranked and the other dropped in silence.
+ *  - ONE GEOMETRY FOR THE CARD: the figure column is the widest figure any group draws, so every figure in every list shares one right
+ *    edge (the page laws' ALIGNMENT); the mark column only where a row carries a mark, the arrow column only where a row is a door.
+ *  - THE GROUPS ONE UNDER ANOTHER AT EVERY WIDTH: the card stands in a half of a level (504px at 1280), where two lists side by side
+ *    would leave each country's name about 120px.
+ *  - A ROW IS THE ONE-SET FORM'S ROW (the same cells and classes), 44 tall at the least, so a door is a tap at 375.
+ *  - THE REST OF A GROUP BEHIND THE FOUNDER'S PLUS (DetailPanel, closed on arrival; his clause 58, parts behind a click), each row
+ *    a name and its figure, stamped where it came from.
+ *  - THE HEADLINE IS WHAT THE GROUPS ARE READ AGAINST: the one-set form's middle of its set; here what its label names (the home
+ *    passes the UK's own figure on the same measure). Ink at 30, never the accent.
+ */
+function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, groups, fmt }: Pick<MarkListProps, "id" | "kicker" | "icon" | "tagged" | "headline" | "basis" | "head" | "fmt"> & { groups: MarkGroup[] }) {
+  if (groups.length === 0 || groups.some((g) => g.rows.length < MARK_LIST_FLOOR) || !Number.isFinite(headline.value)) return null;
+  const all = groups.flatMap((g) => g.rows);
+  const marks = all.some((r) => r.mark != null);
+  const doors = all.some((r) => typeof r.href === "string" && r.href.length > 0);
+  const GEO = geometry(Math.max(1, ...all.map((r) => fmt(r.value).length)), marks, doors);
+  const rowCls = `${ROW} min-h-11 items-center border-t border-[var(--c-border)]`;
+  const cells = (r: MarkRow) => (
+    <>
+      {marks ? (
+        <span className="flex min-w-0 items-center">
+          {r.mark != null ? <span data-mark className="inline-flex items-center">{r.mark}</span> : null}
+        </span>
+      ) : null}
+      <span data-label className={NAME_CLS}>{r.name}</span>
+      <Fig className="py-0.5 text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" prov={r.prov}>{fmt(r.value)}</Fig>
+      {doors ? <span aria-hidden="true" className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.href ? <>&#8594;</> : null}</span> : null}
+    </>
+  );
+  return (
+    <Box id={id} data-archetype="mark-list" data-idea="I11" data-form="groups" data-groups={groups.length} data-rows={all.length} data-marks={marks ? "1" : "0"} data-doors={doors ? "1" : "0"} data-withheld={0}>
+      <Rail icon={icon} kicker={kicker} sample={tagged} />
+      <div data-answer="1">
+        <div className={HEAD_CLS}>{headline.label}</div>
+        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]" prov={headline.prov}>{fmt(headline.value)}</Fig>
+      </div>
+      {basis ? <p className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+      {groups.map((g) => (
+        <div key={g.key} data-group={g.key} className="mt-4">
+          <div className="grid" data-expect-rows={g.rows.length} data-columns="1">
+            <div className={`${ROW} items-baseline pb-2`} style={GEO}>
+              {marks ? <span aria-hidden="true" /> : null}
+              <div className="col-span-2 flex items-baseline justify-between gap-x-3">
+                <span className={HEAD_CLS}>{g.name}</span>
+                <span className={HEAD_CLS}>{head.value}</span>
+              </div>
+              {doors ? <span aria-hidden="true" /> : null}
+            </div>
+            {g.rows.map((r) =>
+              r.href ? (
+                <a key={r.key} href={r.href} className={`${rowCls} no-underline transition-colors hover:bg-[var(--c-soft)]`} style={GEO} data-row={r.key} data-value={r.value} data-lands={r.lands}>
+                  {cells(r)}
+                </a>
+              ) : (
+                <div key={r.key} className={rowCls} style={GEO} data-row={r.key} data-value={r.value}>
+                  {cells(r)}
+                </div>
+              ),
+            )}
+          </div>
+          {g.rest ? <DetailPanel name={`${id}-${g.key}`} summary={g.rest.summary} rows={g.rest.rows} /> : null}
+        </div>
+      ))}
     </Box>
   );
 }
