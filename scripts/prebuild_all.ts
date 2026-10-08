@@ -4,7 +4,8 @@
  * THE GATE CHAIN. Vercel runs it through npm's prebuild hook before every
  * build; locally it is `npm run prebuild` (parallel, --no-bail) or
  * `npm run verify:deploy` (serial, to a file). One process spawns every gate
- * in the GATES array below as its own `npx tsx` subprocess through a worker
+ * in the GATES array below as its own node subprocess running tsx's CLI
+ * (`npx tsx` only where that file is missing; see TSX_CLI) through a worker
  * pool (`--concurrency=<n>`, default 4: 6 hit Windows resource limits and
  * segfaulted gates on a loaded machine) and aggregates the exit codes.
  * Architecture-audit strategy E (2026-05-27): serial wall-clock was the SUM
@@ -48,7 +49,7 @@
  * Run: npx tsx scripts/prebuild_all.ts
  */
 import { spawn, spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import os from "node:os";
 
@@ -1206,19 +1207,23 @@ function classify(exitCode: number, output: string): Kind {
 }
 const tail20 = (s: string) => s.split("\n").slice(-20).join("\n");
 
+/* EACH GATE IN ITS OWN NODE, NOT THROUGH npx (the checkup of 2026-10-08). Every gate was spawned as `npx tsx` through a shell:
+   on this machine one quick gate took 2.6 to 4.3 s that way and 0.6 to 1.1 s as `node <tsx's cli> <script>`, three runs each,
+   so most of the 215 gates under 3 s were paying npx's start, not doing their work. tsx's CLI under the running node is the
+   same tsx the npx route resolved (verify_deploy.mjs already starts the runner this way); no gate needs node_modules/.bin on
+   its PATH (they spawn git, npx, npm, node and Windows tools by name). Where the CLI is not at its path, npx as before. */
+const TSX_CLI = path.join(process.cwd(), "node_modules", "tsx", "dist", "cli.mjs");
+const DIRECT = existsSync(TSX_CLI);
+
 function runGate(gate: Gate): Promise<GateResult> {
   return new Promise((resolve) => {
     const started = Date.now();
-    const args = ["tsx", gate.script, ...(gate.args ?? [])];
-    // shell: true is required on Windows to spawn `npx` (which
-    // resolves to `npx.cmd`); Node 22+ refuses to spawn .cmd files
-    // directly with EINVAL. The DEP0190 deprecation warning this
-    // triggers is acceptable here because every arg is a hardcoded
-    // literal from the GATES array: no caller-controlled input.
-    const child = spawn("npx", args, {
-      shell: process.platform === "win32",
-      env: process.env,
-    });
+    const gateArgs = [gate.script, ...(gate.args ?? [])];
+    // The npx fallback needs shell: true on Windows (`npx` is `npx.cmd`, and Node 22+ refuses to spawn .cmd files directly
+    // with EINVAL); every arg is a literal from the GATES array, so the shell sees no caller-controlled input.
+    const child = DIRECT
+      ? spawn(process.execPath, [TSX_CLI, ...gateArgs], { env: process.env })
+      : spawn("npx", ["tsx", ...gateArgs], { shell: process.platform === "win32", env: process.env });
     const stdoutBuf: string[] = [];
     const stderrBuf: string[] = [];
     let timedOut = false;
