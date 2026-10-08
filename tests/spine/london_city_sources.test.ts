@@ -202,5 +202,12 @@ for (const slug of SIX) {
 check("Paris's three lines are unchanged", buildCityDemand("paris")?.basis === COPY.cityDemand.basis && buildCitySeason("paris")?.foot === null && buildCityCalendar("paris")?.basis === COPY.cityCalendar.basis);
 check("London draws none of the three", buildCityDemand("london")?.figure === null && (buildCitySeason("london")?.cells.length ?? 0) === 0 && buildCityCalendar("london") === null);
 
+/* THE DISTRICT RENTS (plan 2026-10-08): the engine's multipliers on any UK city say they are estimates; a lettered fixture, since no
+   other UK city draws the card today. A city outside the UK keeps its line. */
+const ukBars = buildCityDistrictBars({ meta: { iso2: "GB", slug: "manchester" }, where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.8 }, { name: "A", slug: "a", rent_mult: 1 }] } });
+check(`a UK city's district card says its rents are estimates ("${ukBars?.basis}")`, ukBars?.basis === COPY.cityDistricts.basisEstimate.replace("{district}", "A"));
+const deBars = buildCityDistrictBars({ meta: { iso2: "DE", slug: "berlin" }, where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.8 }, { name: "A", slug: "a", rent_mult: 1 }] } });
+check("a city outside the UK keeps its line", !!deBars && !/estimate/i.test(deBars.basis));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");

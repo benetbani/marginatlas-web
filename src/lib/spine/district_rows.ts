@@ -82,7 +82,7 @@ import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { COPY } from "@/lib/spine/copy";
 import { districtPageTarget } from "@/lib/geo/page_targets";
 import { hoodCity } from "@/lib/spine/hood_scheme";
-import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityHeldToSources } from "@/lib/uk/registers/register_city";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -194,10 +194,10 @@ export function buildCityDistrictBars(seed: any): CityDistrictBars | null {
       : clippedNames.length === 1
         ? (clippedLow ? COPY.hoodRank.clipOneLow : COPY.hoodRank.clipOne).replace("{district}", clippedNames[0])
         : COPY.hoodRank.clipMany.replace("{districts}", clippedNames.join(" and "));
-  /* ONE SUPPORTING LINE (PART 9): where the rents say they are estimates (a page held to a register region; masterplan step 03)
-     the clip rides in the same line, "Estimated rents against South London. West End may be dearer than shown.", and no second
-     line stands under it. */
-  const estimated = !!citySlug && cityRegisterPlace(String(seed?.meta?.iso2 ?? hoodCity(citySlug)?.iso2 ?? ""), citySlug) !== null;
+  /* ONE SUPPORTING LINE (PART 9): where the rents say they are estimates (a UK city's page: London since masterplan step 03, every
+     UK city since plan 2026-10-08) the clip rides in the same line, "Estimated rents against South London. West End may be dearer
+     than shown.", and no second line stands under it. */
+  const estimated = !!citySlug && cityHeldToSources(String(seed?.meta?.iso2 ?? hoodCity(citySlug)?.iso2 ?? ""), citySlug);
   /* The lower middle for an even count, said here rather than left to a
      reader to wonder about: with six districts this is the third cheapest.
      With TWO the same expression returns index 0, the cheapest itself, which
