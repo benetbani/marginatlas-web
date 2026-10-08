@@ -17,6 +17,8 @@
  * Every finding goes through the gate's `check(label, ok, at?)`. `at` is optional and says where a finding is and what to do about
  * it when that is not the gate's own file and remedy: the manifest, a stray or a missing file, the sources page, the line ends.
  * A gate that passes none (or whose check takes two arguments) keeps its own file and remedy for every finding.
+ * An entry whose sources are missing or damaged is such a finding, and the gate is handed an empty list of sources (so
+ * `held.entry.sources` is always a list): it reds on its own lookup of a source and ends on its summary, never on a stack.
  *
  * What it cannot see: a hand edit that also rewrites manifest.json (nothing signs the manifest, as with the register slices), and
  * whether the export read its source rightly (the export's refusals and each gate's own checks hold that).
@@ -37,7 +39,9 @@ export type HomeEntry = { sha256: string; rows: number; built: string; sources: 
 export type HomeAt = { file?: string; remedy?: string };
 /** The gate's `check`: a PASS line, or a red with the gate's rule, and `at` or else the gate's file and remedy. */
 export type HomeCheck = (label: string, ok: boolean, at?: HomeAt) => void;
-/** A slice held: its parsed body, its manifest entry, and the keys of the sources this machine does not hold (their hashes were not read again). */
+/** A slice held: its parsed body, its manifest entry and the keys of the sources this machine does not hold (their hashes were not
+ *  read again). The entry's `sources` is always a list: the manifest's own when every source in it is whole, else empty, after the
+ *  red that says so. */
 export type HomeHeld = { data: unknown; entry: HomeEntry; deferred: string[] };
 
 const sha = (b: Buffer | string) => createHash("sha256").update(b).digest("hex");
@@ -97,14 +101,17 @@ export function holdHomeExport(name: string, check: HomeCheck): HomeHeld | null 
   const crlf = !same && sha(raw.toString("utf8").replace(/\r\n/g, "\n")) === want;
   check(`${name} is the export's, byte for byte (${now.slice(0, 12)}, the manifest's ${want.slice(0, 12)})${crlf ? ": its line ends were rewritten to CRLF" : ""}`, same, crlf ? { file, remedy: "check out data/home/*.json with LF: .gitattributes pins it" } : undefined);
   check(`${name} says the day it was exported (${entry.built})`, /^\d{4}-\d{2}-\d{2}$/.test(typeof entry.built === "string" ? entry.built : ""));
-  const sources = Array.isArray(entry.sources) ? entry.sources : [];
-  const named = sources.length > 0 && sources.every((s) => !!s && typeof s.key === "string" && typeof s.path === "string" && typeof s.sha256 === "string");
-  check(`${name} names the sources it was exported from (${named ? sources.map((s) => s.key).join(", ") : "none"})`, named);
+  const listedSources = Array.isArray(entry.sources) ? entry.sources : [];
+  const named = listedSources.length > 0 && listedSources.every((s) => !!s && typeof s.key === "string" && typeof s.path === "string" && typeof s.sha256 === "string");
+  check(`${name} names the sources it was exported from (${named ? listedSources.map((s) => s.key).join(", ") : "none"})`, named);
+  /* That red is given. From here the gates are handed the whole list or an empty one, never a damaged one: a gate looks a source up
+     by its key (held.entry.sources.find), and must end on its own red summary, not on a TypeError. */
+  const sources = named ? listedSources : [];
 
   /* THE SOURCES: the publisher of each a figure prints from is on the sources page; each is hashed again where this machine holds it. */
   const keys = new Set([...UK_SOURCES, ...WORLD_SOURCES].map((s) => s.key));
   const deferred: string[] = [];
-  for (const s of named ? sources : []) {
+  for (const s of sources) {
     if (s.prints) check(`${name}: the source a figure prints from names its publisher on the sources page (${s.key}: ${s.publisher})`, !!s.publisher && keys.has(s.publisher), { file: HOME_SOURCES_PAGE, remedy: "add the source to WORLD_SOURCES or fix the key in export_home.py" });
     if (existsSync(s.path)) check(`${name}: on this machine its source ${s.key} is the file it was exported from`, hashOf(s.path) === s.sha256);
     else {
@@ -119,7 +126,7 @@ export function holdHomeExport(name: string, check: HomeCheck): HomeHeld | null 
     check(`${file} cannot be read as JSON`, false);
     return null;
   }
-  return { data, entry, deferred };
+  return { data, entry: { ...entry, sources }, deferred };
 }
 
 /** A gate's last line. When `held` deferred any source it says so as "N deferred (<keys>: source not on this machine)", the form the runner counts. */
