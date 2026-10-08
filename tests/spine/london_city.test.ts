@@ -16,7 +16,7 @@ import { buildCitySeason } from "../../src/lib/spine/fact_rows";
 import { cityPeerListRow } from "../../src/lib/spine/city_peer_list";
 import { buildCityPeerTable } from "../../src/lib/spine/peer_rows";
 import { cityVisitorsM } from "../../src/lib/spine/city_glance_rows";
-import { cityRegisterPlace } from "../../src/lib/uk/registers/register_city";
+import { cityHeldToSources, cityRegisterPlace, UK_CITY_SLUGS } from "../../src/lib/uk/registers/register_city";
 import { londonTradeRegister } from "../../src/lib/uk/registers/london_trade";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -33,6 +33,19 @@ const check = (label: string, ok: boolean) => {
 async function main() {
   check("London is held to Greater London, E12000007", cityRegisterPlace("GB", "london")?.geography === "E12000007");
   check("Manchester is not held to a register region", cityRegisterPlace("GB", "manchester") === null);
+
+  /* THE TWO PREDICATES (plan 2026-10-08, uk:cities-sourced-or-marked). cityRegisterPlace says which figures a page reads (London
+     alone: Greater London's registers); cityHeldToSources says whether its lines say which figures are estimates (every UK city
+     with a page, as countryHeldToRegisters holds the country's page). */
+  check(`the UK's cities with a page are the seven (${UK_CITY_SLUGS.join(", ")})`, UK_CITY_SLUGS.join(",") === "birmingham,bristol,edinburgh,glasgow,leeds,london,manchester");
+  for (const slug of UK_CITY_SLUGS) check(`${slug}'s page is held to sources`, cityHeldToSources("GB", slug));
+  check("the country's code is read in either case", cityHeldToSources("gb", "manchester"));
+  check("only London is held to a register region", UK_CITY_SLUGS.filter((s) => cityRegisterPlace("GB", s) !== null).join(",") === "london");
+  check("a city outside the UK is not held to sources (Paris)", !cityHeldToSources("FR", "paris"));
+  check("a UK city's slug under another country's code is not (Manchester as US)", !cityHeldToSources("US", "manchester"));
+  check("a UK address that is no city page is not (the UK aggregate, a London district)", !cityHeldToSources("GB", "gb") && !cityHeldToSources("GB", "west-end"));
+  check("a word that names a built-in names no city", !cityHeldToSources("GB", "constructor") && !cityHeldToSources("GB", "__proto__"));
+  check("no slug, no city; no country, no city", !cityHeldToSources("GB", "") && !cityHeldToSources("GB", null) && !cityHeldToSources(null, "london"));
 
   /* THE HERO */
   const hero = buildCityHeroBoard("london");
