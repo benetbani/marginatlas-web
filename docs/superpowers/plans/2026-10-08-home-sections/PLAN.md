@@ -119,7 +119,7 @@ moments; the type ladder and width ratchets only shrink.
 7. **Shared forms gain small optional props:** MarkList a grouped form (`groups`), TiersTable figure rows and DetailPanel rows a
    `prov` each (the home's provenance baseline is 0), Focal an `accent`; each proven byte-identical where it is not passed. Section
    1's bars and the UK cities' rows both `fill` their level (`even`); the world level is not `even` (open sections, each its height).
-8. **Section 4 shows the match rate and prints no count of countries:** its focal is the 31,926 company notices (insolvencies and
+8. **Section 4 shows the match rate and prints no count of countries:** its focal is the 31,926 liquidation and administration notices (insolvencies and
    solvent liquidations alike); its first row "Names matched, 30,510 of 31,376", so the technique's honesty is on the card; its
    second row "London trade pages, 111 of 138"; then its door to About the figures. **Amended 2026-10-08, before Tasks 12 to 17 were
    built:** the draft's last row "Country pages, 195", with the line "Outside the UK, these pages print estimates.", is gone. On
@@ -1546,8 +1546,8 @@ and, in the same item, `title: "Company insolvency notices, October 2025 to Sept
 (the notices are winding-up orders, creditors' and members' voluntary liquidations, and administrations; members' voluntary liquidations
 are solvent). In the World Bank entry, replace
 `prints: "New limited companies per 1,000 people of working age, in Latin America and in Africa, on the home page"` with
-`prints: "New limited companies per 1,000 people of working age, in Latin America and the Caribbean and in Africa, on the home page, leaving out countries with a labour force under one million"`
-(the region's own name, as the list draws it; and the floor in words, which the floor check reads and holds to the slice's figure).
+`prints: "New limited companies per 1,000 people of working age, in Latin America and the Caribbean and in Africa, on the home page, leaving out countries with a labour force under one million, and those with no figure for the year"`
+(the region's own name, as the list draws it; the floor in words, which the floor check reads and holds to the slice's figure; and the countries with no figure for the year, which the list also leaves out).
 
 - [ ] **Step 3: Print the world list**
 
@@ -1973,6 +1973,9 @@ with:
  *    a name and its figure, stamped where it came from.
  *  - THE HEADLINE IS WHAT THE GROUPS ARE READ AGAINST: the one-set form's middle of its set; here what its label names (the home
  *    passes the UK's own figure on the same measure). Ink at 30, never the accent.
+ *  - NOTHING LEFT OUT BY THE CARD (`data-withheld` is 0): the card leaves no member out itself and has no withheld line. Who is a
+ *    member at all (the home's labour-force floor, a figure for the year) is the builder's, said on the card's one line and on
+ *    About the figures.
  */
 function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, groups, fmt }: Pick<MarkListShared, "id" | "kicker" | "icon" | "tagged" | "headline" | "basis" | "head" | "fmt"> & { groups: MarkGroup[] }) {
   if (groups.length === 0 || groups.some((g) => g.rows.length < MARK_LIST_FLOOR) || !Number.isFinite(headline.value)) return null;
@@ -2252,7 +2255,7 @@ In `src/lib/spine/copy.ts`, above the `PRO, QUIETLY` comment line, add:
     newCompanies: {
       kicker: "Where new companies open",
       headline: "The UK, for scale",
-      basis: "New limited companies per 1,000 people of working age, {year}.",
+      basis: "New limited companies per 1,000 people of working age, {year}, where published.",
       headName: "Country",
       headValue: "Per 1,000",
       regions: { latam: "Latin America and the Caribbean", africa: "Africa" },
@@ -2419,7 +2422,7 @@ In `src/lib/spine/copy.ts`, above the `PRO, QUIETLY` comment line, add:
      *  narrower trade named, the metro last so a long name still fits twelve words), the two tables' heads. */
     usRestaurants: {
       kicker: "US restaurants since {from}",
-      words: "Full-service restaurants added since {from}, most of {n} metros: {city}",
+      words: "Full-service restaurants added since {from}, most among {n} metros: {city}",
       added: "Most added",
       lost: "Most lost",
     },
@@ -2496,7 +2499,7 @@ Expected: `the 5 that added most, most first (Atlanta 4,451 to 5,179; Houston 4,
 6,050; Phoenix 2,435 to 2,828)`, `the 5 that lost most, most first (San Francisco 5,189 to 4,919; Los Angeles 11,146 to 10,975;
 Pittsburgh 1,776 to 1,714; Buffalo 939 to 886; St. Louis 2,030 to 1,989)`, `no tie at either cut (added: last drawn 393 against first left
 out 390; lost: last drawn -41 against first left out -40)`, `no metro held out is drawn`, `the export holds out exactly the metros plan
-decision 12 names (detroit)`, `... alone at the top: 728 (atlanta)`, `("Full-service restaurants added since 2019, most of 44 metros:
+decision 12 names (detroit)`, `... alone at the top: 728 (atlanta)`, `("Full-service restaurants added since 2019, most among 44 metros:
 Atlanta")`, `home/us_restaurants: all pass`, `exit 0` (Detroit, held out in decision 12, is in neither list).
 Run: `node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write > scratchpad/home-sections/c11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/c11.txt` → `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=1 --no-bail --only=home-us-restaurants,copy-no-method-words,model-laws-copy,archetype-copy,no-em-dashes,no-source-agencies,layering,counts-fresh > scratchpad/home-sections/g11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/g11.txt`
@@ -2595,7 +2598,7 @@ In `src/lib/spine/copy.ts`, above the `PRO, QUIETLY` comment line, add:
      *  line that the pages print estimates (his ruling of 2026-10-07: the home's 195 counter is wrong). */
     howMade: {
       kicker: "How figures are made",
-      words: "Company notices in a year, matched by name to the company register",
+      words: "Liquidation and administration notices in a year, matched by name",
       matched: { label: "Names matched", note: "Company names in the notices, found in the register" },
       trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
       link: "About the figures",
@@ -2719,7 +2722,7 @@ if (built) {
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)), DRAWN_AT);
   check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey), DRAWN_AT);
-  /* A width is value / 100 * 100 in floats (43.29999999999999 for a share of 43.3, 9% of the shares at one decimal), so a drawn place is
+  /* A width is value / 100 * 100 in floats (30.099999999999998 for a share of 30.1, 9% of the shares at one decimal), so a drawn place is
      read at the shares' own resolution, one decimal, and never as the exact string. */
   const tenth = (n: number) => Math.round(n * 10) / 10;
   const widths = [...html.matchAll(/data-bar="true"[^>]*style="width:([\d.]+)%/g)].map((m) => Number(m[1]));
@@ -3259,7 +3262,7 @@ import { buildHowMade } from "@/lib/home/how_made";
 export const LOUD_SEATS = [
   { seat: 1, card: "00 answer", figure: "the UK's total effective tax burden on a sole trader's profit, at 40", state: "LIT", condition: "masterplan step 34: the same figure /gb's masthead prints (buildHeroBoard), `--terra-text` at 40, the page's only 40" },
   { seat: 2, card: "firms-last", id: "firms-last", figure: "of 100 firms born in the cohort, those still trading five years on, in the UK city that leads, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 1: the city leads a measured ranking of the UK's cities (buildFirmsLast; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
-  { seat: 3, card: "us-restaurants", id: "us-restaurants", figure: "the full-service restaurants the leading US metro added since the first year on disk, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
+  { seat: 3, card: "us-restaurants", id: "us-restaurants", figure: "the full-service restaurants the leading US metro added since the first year counted, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
 ] as const satisfies readonly LoudSeat[];
 ```
 
