@@ -92,5 +92,19 @@ check(`London's district card says its rents are estimates ("${bars?.basis}")`, 
 const hubBars = buildCityDistrictBars({ meta: { slug: "london" }, where_to_trade: { list: [{ name: "South London", slug: "south-london", rent_mult: 1 }, { name: "West End", slug: "west-end", rent_mult: 2.5 }] } });
 check("the hub, over the same rows without a country, says the same", !!hubBars && hubBars.basis === bars?.basis);
 
+/* THE SIX OTHER UK CITIES (plan 2026-10-08, uk:cities-sourced-or-marked): held to sources and to no register region, each keeps its
+   shard's figures and says in each card's one line that they are estimates; nothing with an honest estimate line is withheld. */
+const SIX = ["manchester", "birmingham", "leeds", "glasgow", "edinburgh", "bristol"] as const;
+const PB = COPY.premisesBento.basis;
+for (const slug of SIX) {
+  const p = buildPremisesBento(slug);
+  check(`${slug}'s premises keep all four cells (${p?.withheld} withheld)`, !!p && p.withheld === 0);
+  check(`${slug}'s prime rent and its details say they are estimates ("${p && "figure" in p.rent ? p.rent.basis : "none"}")`, !!p && !p.rentKicker && "figure" in p.rent && p.rent.basis === `${PB.rentEstimate}.` && (p.rent.detail?.rows.length ?? 0) >= 2);
+  check(`${slug}'s deposit and its lease say they are estimates`, !!p && "figure" in p.deposit && p.deposit.basis === `${PB.depositEstimate}.` && !!p.deposit.second);
+  check(`${slug}'s empty shops say they are an estimate`, !!p && "part" in p.empty && p.empty.basis === `${PB.emptyEstimate}.`);
+  check(`${slug}'s fit-out and its rent-free months say they are estimates (London's line)`, !!p && "figure" in p.fitOut && p.fitOut.basis === `${PB.fitOutEstimate}.` && !!p.fitOut.second);
+}
+check("Paris's premises lines are unchanged", !!parisPrem && "figure" in parisPrem.rent && parisPrem.rent.basis === `${PB.rent}.`);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");

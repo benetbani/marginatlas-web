@@ -56,7 +56,7 @@
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import premisesJson from "../../../data/uk/registers/premises.json";
 import { cityFigure, cityEntityId, loadCityShard, type BankFigure } from "@/lib/facts/city_shard";
-import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityHeldToSources, cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import { convertToUsd } from "@/lib/finance/fx";
 import { factValue } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
@@ -165,11 +165,16 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
   if (!loadCityShard(iso2, slug)) return null;
   const held = cityRegisterPlace(iso2, slug);
   if (held) return buildSourcedPremises(city, iso2, held.geography);
+  /* A UK CITY HELD TO SOURCES AND TO NO REGISTER REGION (the six; plan 2026-10-08, uk:cities-sourced-or-marked) keeps its shard's
+     four readings, their details and companions, each cell's one line saying they are estimates: no register on disk holds a
+     city's own rent, deposit, empty shops or fit-out outside Greater London (the valuation slice holds Greater London and
+     England). Its deposit is marked, not withheld as London's is: no UK page prints the country file's three months beside it. */
+  const marked = cityHeldToSources(iso2, slug);
   const W = COPY.premisesBento.withheld;
   const B = COPY.premisesBento.basis;
 
-  const rent = metric(cityFigure(iso2, slug, "realestate.rent_prime_usd_sqm_yr"), B.rent, usd, W.rent);
-  const fitOut = metric(cityFigure(iso2, slug, "realestate.fit_out_cost_usd_sqm"), B.fitOut, usd, W.fitOut);
+  const rent = metric(cityFigure(iso2, slug, "realestate.rent_prime_usd_sqm_yr"), marked ? B.rentEstimate : B.rent, usd, W.rent);
+  const fitOut = metric(cityFigure(iso2, slug, "realestate.fit_out_cost_usd_sqm"), marked ? B.fitOutEstimate : B.fitOut, usd, W.fitOut);
   /* THE DETAILS BEHIND THE RENT AND THE DEPOSIT (his plus; MODEL PART 9 clause
      60, 2026-09-20 evening): the shard's own neighbouring fields, each a row
      where it is on file, the panel drawn from two rows (DetailPanel's floor).
@@ -207,7 +212,7 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
   if ("figure" in rent && rentRows.length >= 2) rent.detail = { summary: D.rent.summary, rows: rentRows };
   const deposit = metric(
     cityFigure(iso2, slug, "realestate.deposit_months"),
-    B.deposit,
+    marked ? B.depositEstimate : B.deposit,
     (v) => `${Math.round(v)} ${Math.round(v) === 1 ? COPY.premisesBento.months.one : COPY.premisesBento.months.many}`,
     W.deposit,
   );
@@ -226,7 +231,7 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
     /* THE RATE AS IT IS (2026-09-26, the London review): the card prints 1.5 over one unit and half of the next, where a rounded
        "2 of 100" stood over a line saying "1.5 in every 100 shops"; the line now frames the count and prints no figure. */
     const part = Math.round(vacancy.value * 10) / 10;
-    empty = { part, whole: 100, rate: vacancy.value, basis: basisOf(B.empty, vacancy.tag), tag: vacancy.tag, sample: notHeld(vacancy.tag) };
+    empty = { part, whole: 100, rate: vacancy.value, basis: basisOf(marked ? B.emptyEstimate : B.empty, vacancy.tag), tag: vacancy.tag, sample: notHeld(vacancy.tag) };
   }
 
   const printed: FactTag[] = [];

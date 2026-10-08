@@ -1095,6 +1095,11 @@ export const COPY = {
       rentValued: "A square metre of shop space, a year, at 2021 values",
       /** The fit-out on a page that prints a sourced figure or a marked one: no source holds it or its rent-free months, so the line says both are estimates. */
       fitOutEstimate: "Estimates: a square metre fitted out, and the rent-free months",
+      /** The six UK cities held to sources and to no register region (plan 2026-10-08, uk:cities-sourced-or-marked): the shard's
+       *  figures, each cell's one line saying they are estimates; "Estimates" covers the cell's details and its companion. */
+      rentEstimate: "Estimates: a square metre of prime shop space, a year",
+      depositEstimate: "Estimates: months of rent held as the deposit, and the lease term",
+      emptyEstimate: "Out of every 100 shops, an estimate",
       /** The count prints the shard's rate as read and draws it, a part unit and all (2026-09-26); the line frames it and prints no figure. */
       empty: "Out of every 100 shops",
       fitOut: "To fit out a square metre of shop space",
