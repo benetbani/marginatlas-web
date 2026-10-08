@@ -180,11 +180,21 @@ check(`GEO_STATIC_CHILDREN is the static folders of src/app/[country]/[geo] (${g
 const MW = "src/middleware.ts";
 const mw = stripCommentLines(readFileSync(MW, "utf8").split("\n")).join("\n");
 const at = (s: string) => mw.indexOf(s);
-const retiredAt = at("retiredPlaceTarget(path)");
-const renameAt = at("TAXONOMY_REDIRECTS[last]");
-const hoodAt = at("legacyHoodTarget(path)");
-const placeAt = at("isPlaceWeDoNotHold(path)");
-const edgeAt = at("edgeNotFound(path)");
+/* EVERY ANCHOR MUST BE FOUND (2026-10-08). An anchor that matches nothing reads -1, and each ordering check below asks whether
+   a position comes after it, which -1 satisfies for any real position: the rename step's anchor read `TAXONOMY_REDIRECTS[last]`
+   until 7395d11d made the step `own(TAXONOMY_REDIRECTS, last)`, so the check on the renamed redirects could not fail. A stale
+   anchor is now a red of its own, naming the text. */
+const ANCHORS = {
+  retired: "retiredPlaceTarget(path)",
+  rename: "own(TAXONOMY_REDIRECTS, last)",
+  hood: "legacyHoodTarget(path)",
+  place: "isPlaceWeDoNotHold(path)",
+  edge: "edgeNotFound(path)",
+} as const;
+const anchorAt = Object.fromEntries(Object.entries(ANCHORS).map(([name, text]) => [name, at(text)])) as Record<keyof typeof ANCHORS, number>;
+const lostAnchors = Object.entries(ANCHORS).filter(([name]) => !(anchorAt[name as keyof typeof ANCHORS] > 0)).map(([, text]) => text);
+check(`the middleware holds the text its order checks anchor on (${Object.keys(ANCHORS).length} anchors)${lostAnchors.length ? `: not found: ${lostAnchors.join(", ")}` : ""}`, lostAnchors.length === 0, MW);
+const { retired: retiredAt, rename: renameAt, hood: hoodAt, place: placeAt, edge: edgeAt } = anchorAt;
 check("the middleware asks legacyHoodTarget after the retired and renamed redirects", hoodAt > 0 && hoodAt > retiredAt && hoodAt > renameAt, MW);
 check("the middleware asks edgeNotFound beside isPlaceWeDoNotHold, after every redirect", edgeAt > 0 && placeAt > 0 && edgeAt > hoodAt && Math.abs(edgeAt - placeAt) < 200, MW);
 check("the 404 for an address for nothing is pinned by a rewrite onto itself", /isPlaceWeDoNotHold\(path\)\s*\|\|\s*edgeNotFound\(path\)\)\s*\{\s*return NextResponse\.rewrite\(req\.nextUrl, \{\s*status: 404/.test(mw), MW);
