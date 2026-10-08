@@ -20,7 +20,7 @@ import { getCountryRates } from "@/lib/tax/country_rates";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { COPY } from "@/lib/spine/copy";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
-import { cityRegisterPlace, countryHeldToRegisters } from "@/lib/uk/registers/register_city";
+import { cityHeldToSources, cityRegisterPlace, countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 
@@ -145,12 +145,18 @@ export function buildCityPeerTable(seed: any): CityPeerTable | null {
   /* THE COST OF LIVING PRINTS A DASH ON A PAGE HELD TO A REGISTER REGION (masterplan step 03, 2026-10-05; the labels audit's
      item 22): every city's index is a hand anchor no source holds, and that page prints a sourced figure or a marked one. PART 9
      clause 18: the column stands, a dash in each row, explained once in the caveat; the other pages keep the figures, each
-     saying once that its figures are estimates. */
-  const sourcedOnly = cityRegisterPlace(fallbackIso2, String(seed?.meta?.slug ?? "")) !== null;
+     saying once that its figures are estimates. A UK CITY HELD TO NO REGISTER REGION (the six; plan 2026-10-08,
+     uk:cities-sourced-or-marked) keeps every figure and says once which are estimates: the cost of living on every row and the
+     pay of the cities abroad (a UK row's pay is the earnings survey's, the answer's own; the visitors are counted). */
+  const homeSlug = String(seed?.meta?.slug ?? "");
+  const sourcedOnly = cityRegisterPlace(fallbackIso2, homeSlug) !== null;
+  const marked = !sourcedOnly && cityHeldToSources(fallbackIso2, homeSlug);
   if (sourcedOnly) for (const r of rows) r.values.living = null;
   /* The dash column stands last there, so each name keeps its first figure beside it (the harness's LABEL GAP). */
   const ordered = sourcedOnly ? [...all.filter((c) => c.key !== "living"), ...all.filter((c) => c.key === "living")] : all;
   const columns = ordered.filter((c) => (sourcedOnly && c.key === "living") || rows.filter((r) => isNum(r.values[c.key])).length >= 2);
   if (columns.length === 0) return null;
-  return { rows, columns, caveat: fillWords(sourcedOnly ? COPY.cityPeers.caveatNoLiving : COPY.cityPeers.caveat, { city: String(home.name) }), entityHead: COPY.cityPeers.cols.city };
+  /* The caveat names the visitors only where their column draws: four of the six hold too few counted peers to draw it. */
+  const caveat = sourcedOnly ? COPY.cityPeers.caveatNoLiving : marked ? (columns.some((c) => c.key === "visitors") ? COPY.cityPeers.caveatEstimates : COPY.cityPeers.caveatEstimatesNoVisitors) : COPY.cityPeers.caveat;
+  return { rows, columns, caveat: fillWords(caveat, { city: String(home.name) }), entityHead: COPY.cityPeers.cols.city };
 }

@@ -20,6 +20,8 @@ import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 import premisesJson from "../../data/uk/registers/premises.json";
 import { readFileSync } from "node:fs";
+import { cityPeerListRow } from "../../src/lib/spine/city_peer_list";
+import { getCityPeerSet } from "../../src/lib/cities/comparable_cities";
 import { cityTypicalIncome } from "../../src/lib/spine/city_income";
 
 const RULE = "london-city-sources";
@@ -154,6 +156,23 @@ check("Paris's board is unchanged", paris?.levelBasis === COPY.cityHeroBoard.lev
 /* THE TEXTURE (plan 2026-10-08): the count of official visits is the shard's; London's line word for word. */
 for (const slug of SIX) check(`${slug}'s texture card says its visit count is an estimate`, buildCityTexture(slug)?.basis === COPY.cityTexture.basisSourcedOnly);
 check("Paris's texture line is unchanged", buildCityTexture("paris")?.basis === COPY.cityTexture.basis);
+
+/* THE PEERS (plan 2026-10-08): the six keep every figure, the cost of living included, and the caveat says once which are
+   estimates: the cost of living on every row and the pay of the cities abroad. A UK row's pay is the survey's (the answer's own),
+   the visitors counted. The rows are built as the city adapter builds them: city_peer_list.ts over the pure peer set (the
+   adapter itself opens a database client a chain test cannot). */
+const peerSeedOf = (slug: string) => {
+  const home = cityPeerListRow(slug, true);
+  const rest = getCityPeerSet(slug, 6).slice(0, 6).map((p) => { const r = cityPeerListRow(p.slug, false, p.name); return r ? { ...r, iso2: p.iso2 } : null; }).filter((r) => r !== null);
+  return { meta: { iso2: "GB", slug }, peers: { list: [home, ...rest] } };
+};
+for (const slug of SIX) {
+  const t = buildCityPeerTable(peerSeedOf(slug));
+  const visitors = !!t && t.columns.some((c) => c.key === "visitors");
+  check(`${slug}'s peers keep every city's cost of living (${t?.rows.map((r) => r.values.living).join(", ")})`, !!t && t.rows.every((r) => typeof r.values.living === "number") && t.columns[0]?.key === "living");
+  check(`${slug}'s peers say which figures are estimates ("${t?.caveat}")`, !!t && t.caveat === (visitors ? COPY.cityPeers.caveatEstimates : COPY.cityPeers.caveatEstimatesNoVisitors));
+  check(`${slug}'s UK rows print the survey's pay, the answer's own`, !!t && t.rows.filter((r) => r.iso2 === "GB").every((r) => r.values.income === cityTypicalIncome(r.key ?? "")?.value));
+}
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");

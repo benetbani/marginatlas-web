@@ -1360,6 +1360,11 @@ export const COPY = {
     /** A page held to a register region: the cost of living column prints a dash in every row (no source holds any city's
      *  index; PART 9 clause 18, a dash explained once), and this is the once. */
     caveatNoLiving: "Pay and visitors, a year. No source holds a cost of living.",
+    /** A UK city held to no register region (the six; plan 2026-10-08, uk:cities-sourced-or-marked): every figure kept, the line
+     *  saying once which are estimates, the cost of living and the pay of the cities abroad; the visitors named only where their
+     *  column draws. */
+    caveatEstimates: "Pay and visitors, a year. Estimates: cost of living, and pay abroad.",
+    caveatEstimatesNoVisitors: "Pay, a year. Estimates: cost of living, and pay abroad.",
   },
   /** THE CITY'S DISTRICT RANKING (city:districts, run 25, rebased task 13,
    *  reworded and unfeatured task 14, 2026-09-10). Every district's shop rent
