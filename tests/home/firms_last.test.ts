@@ -19,6 +19,7 @@
  */
 import { readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
+import { buildSurvival } from "../../src/lib/spine/sections/first_years";
 import { buildFirmsLast } from "../../src/lib/home/firms_last";
 import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -49,9 +50,10 @@ if (held && d) {
   check(`every share is its two counts' (${all.map((a) => `${a.code} ${a.survived}/${a.births}=${a.pct}`).join("; ")})`, all.every((a) => Number.isInteger(a.births) && Number.isInteger(a.survived) && a.births > 0 && a.survived >= 0 && a.survived <= a.births && a.pct === share(a.survived, a.births)));
   check(`each city is read under its own name in the table (${[...d.cities, ...d.held_out].map((c) => `${c.name}: ${c.name_in_table}`).join("; ")})`, [...d.cities, ...d.held_out].every((c) => c.name_in_table.toLowerCase().includes(c.name.toLowerCase())));
   check(`the shares are of the cohort's fifth year (${d.cohort} to ${d.year}, ${d.table}, published ${d.published})`, d.year - d.cohort === 5 && d.table === "Table 5.1a" && d.published.length > 0);
-  const ring = (JSON.parse(readFileSync("data/sections/survival.json", "utf8")) as { GB: { curve: { cohort: number; points: Array<{ year: number; pct: number }> } } }).GB.curve;
-  const ringFive = ring.points.find((p) => p.year === 5)?.pct;
-  check(`the UK's share is the home's ring's (${d.uk.pct} against ${ringFive}, the ${ring.cohort} cohort)`, ring.cohort === d.cohort && ringFive === d.uk.pct);
+  /* The ring prints the GB curve's LAST point (home_answers.ts reads buildSurvival("GB").last) and the slice reads the cohort's fifth
+     year, so the two are one figure only while the curve's last point is its fifth year. */
+  const ring = buildSurvival("GB");
+  check(`the UK's share is the home's ring's: the slice's fifth year is ${d.uk.pct} (the ${d.cohort} cohort), the ring prints the curve's last point, year ${ring?.last.year}, ${ring?.last.pct} (the ${ring?.cohort} cohort)`, !!ring && ring.last.year === 5 && ring.cohort === d.cohort && ring.last.pct === d.uk.pct);
   const london = d.cities.find((c) => c.slug === "london");
   const slice = (JSON.parse(readFileSync("data/uk/registers/survival.json", "utf8")) as { areas: Record<string, { births_2019: number; cohort_2019_five_years: number }> }).areas[london?.code ?? ""];
   check(`London's row is the register slice's (${london?.births} births, ${london?.pct} of 100, against ${slice?.births_2019} and ${slice?.cohort_2019_five_years})`, !!london && !!slice && london.births === slice.births_2019 && Math.abs(london.pct / 100 - slice.cohort_2019_five_years) < 0.0005);

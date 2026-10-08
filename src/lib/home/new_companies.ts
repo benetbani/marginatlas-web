@@ -28,7 +28,7 @@ export type NewCompanies = { year: number; uk: { value: number; prov: Provenance
 
 /** One decimal, half up, as every rate on the site prints. */
 const one = (v: number) => Math.round(v * 10) / 10;
-/** A rate as the site prints it: one decimal, half up; under 0.1 two decimals, so a small rate never prints as nought. */
+/** A rate as the site prints it: one decimal, half up; under 0.1 two decimals, so a rate of 0.005 or more never prints as nought. */
 export const rateDisplay = (v: number) => (v < 0.1 ? (Math.round(v * 100) / 100).toFixed(2) : one(v).toFixed(1));
 
 export function buildNewCompanies(): NewCompanies | null {

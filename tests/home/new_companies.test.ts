@@ -21,6 +21,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { COUNTRIES } from "../../src/lib/taxonomy";
+import { iso2ToName } from "../../src/lib/countries";
 import { buildNewCompanies, NEW_COMPANIES_SHOWN, rateDisplay } from "../../src/lib/home/new_companies";
 import { SURFACE_ANSWERS } from "../../src/lib/spine/door_kinds";
 import { COPY } from "../../src/lib/spine/copy";
@@ -31,6 +32,17 @@ const FILE = "data/home/new_companies.json";
 const REMEDY = "re-run python -P scripts/data/home/export_home.py new_companies, never edit data/home by hand; then draw section 2 from the slice only";
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
+
+/** A source table read as JSON. One that is cut off or damaged is a red of its own, with its path and the remedy, and null: the
+ *  checks that need the table are skipped, so the gate ends on its summary and never on a SyntaxError stack. */
+function readTable<T>(name: string, path: string): T | null {
+  try {
+    return JSON.parse(readFileSync(path, "utf8")) as T;
+  } catch {
+    check(`the ${name} table reads as JSON`, false, { file: path, remedy: "restore the source file, then re-run the export" });
+    return null;
+  }
+}
 
 type Member = { iso2: string; value: number | null; labour_force: number | null; shown: boolean };
 type Export = { year: number; measure: string; last_updated: string; floor: { measure: string; year: number; at_least: number; why: string }; uk: { iso2: string; value: number }; regions: Array<{ key: string; rule: string; members: Member[] }> };
@@ -79,27 +91,31 @@ if (d && held) {
   check("the manifest names the two series the figures were read from (density, labour_force)", !!density && !!labour);
   if (density && labour && existsSync(density.path) && existsSync(labour.path)) {
     type Row = { country: { id: string }; date: string; value: number | null; indicator?: { id?: string } };
-    const table = (path: string) => {
+    const table = (name: string, path: string) => {
+      const rows = readTable<[unknown, Row[]]>(name, path);
+      if (!rows) return null;
       const by = new Map<string, number>();
       const ids = new Set<string>();
-      for (const r of (JSON.parse(readFileSync(path, "utf8")) as [unknown, Row[]])[1]) {
+      for (const r of rows[1]) {
         ids.add(r.indicator?.id ?? "none");
         if (r.value !== null && r.value !== undefined) by.set(`${r.country.id}:${r.date}`, r.value);
       }
       return { by, id: [...ids].sort().join(", ") };
     };
-    const densTable = table(density.path), lfTable = table(labour.path);
-    const dens = densTable.by, lf = lfTable.by;
-    check(`each series names the indicator the slice says it is (${densTable.id} for ${d.measure}; ${lfTable.id} for ${d.floor.measure})`, densTable.id === d.measure && lfTable.id === d.floor.measure);
-    const all = d.regions.flatMap((r) => r.members);
-    const wrong = all.filter((m) => (dens.get(`${m.iso2}:${d.year}`) ?? null) !== m.value || (lf.get(`${m.iso2}:${d.year}`) ?? null) !== m.labour_force).map((m) => m.iso2);
-    check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0);
-    const gb = dens.get(`GB:${d.year}`);
-    check(`the UK's ${d.year} figure is the source's, read again here (${d.uk.value} against ${gb ?? "none"})`, gb === d.uk.value);
-    const years = [...new Set([...dens.keys()].map((k) => k.split(":")[1]))].sort().reverse();
-    const shows = (iso2: string, y: string) => dens.has(`${iso2}:${y}`) && (lf.get(`${iso2}:${y}`) ?? 0) >= d.floor.at_least;
-    const latest = years.find((y) => REGIONS.every((key) => (d.regions.find((r) => r.key === key)?.members ?? []).filter((m) => shows(m.iso2, y)).length >= 5) && dens.has(`GB:${y}`));
-    check(`the year is the latest in which both regions show five and the UK has a figure (${latest})`, latest === String(d.year));
+    const densTable = table("density", density.path), lfTable = table("labour_force", labour.path);
+    if (densTable && lfTable) {
+      const dens = densTable.by, lf = lfTable.by;
+      check(`each series names the indicator the slice says it is (${densTable.id} for ${d.measure}; ${lfTable.id} for ${d.floor.measure})`, densTable.id === d.measure && lfTable.id === d.floor.measure);
+      const all = d.regions.flatMap((r) => r.members);
+      const wrong = all.filter((m) => (dens.get(`${m.iso2}:${d.year}`) ?? null) !== m.value || (lf.get(`${m.iso2}:${d.year}`) ?? null) !== m.labour_force).map((m) => m.iso2);
+      check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0);
+      const gb = dens.get(`GB:${d.year}`);
+      check(`the UK's ${d.year} figure is the source's, read again here (${d.uk.value} against ${gb ?? "none"})`, gb === d.uk.value);
+      const years = [...new Set([...dens.keys()].map((k) => k.split(":")[1]))].sort().reverse();
+      const shows = (iso2: string, y: string) => dens.has(`${iso2}:${y}`) && (lf.get(`${iso2}:${y}`) ?? 0) >= d.floor.at_least;
+      const latest = years.find((y) => REGIONS.every((key) => (d.regions.find((r) => r.key === key)?.members ?? []).filter((m) => shows(m.iso2, y)).length >= 5) && dens.has(`GB:${y}`));
+      check(`the year is the latest in which both regions show five and the UK has a figure (${latest})`, latest === String(d.year));
+    }
   }
 }
 
@@ -108,11 +124,12 @@ const built = buildNewCompanies();
 check("section 2 builds", !!built);
 if (built && d) {
   const one = (v: number) => Math.round(v * 10) / 10;
+  check("a small rate prints in two decimals, never nought", rateDisplay(0.0245092032058038) === "0.02" && rateDisplay(0.113132873298748) === "0.1" && rateDisplay(10.8180967387068) === "10.8");
   check("Latin America first, then Africa, never ranked together", JSON.stringify(built.groups.map((g) => g.key)) === JSON.stringify(["latam", "africa"]));
   for (const g of built.groups) {
     const want = (d.regions.find((r) => r.key === g.key)?.members ?? []).filter((m) => m.shown && typeof m.value === "number").sort((a, b) => (b.value as number) - (a.value as number) || a.iso2.localeCompare(b.iso2));
     check(`${g.name}: its ${NEW_COMPANIES_SHOWN} highest, in order (${g.rows.map((r) => `${r.name} ${r.value.toFixed(1)}`).join(", ")})`, g.rows.length === NEW_COMPANIES_SHOWN && g.rows.every((r, i) => r.iso2 === want[i].iso2 && r.value === one(want[i].value as number)));
-    check(`${g.name}: the rest behind the plus, in order ("${g.more}")`, g.rest.length === want.length - NEW_COMPANIES_SHOWN && g.rest.every((r, i) => r.value === rateDisplay(want[i + NEW_COMPANIES_SHOWN].value as number)) && g.more === COPY.home.newCompanies.more.replace("{n}", String(g.rest.length)).replace("{region}", g.name));
+    check(`${g.name}: the rest behind the plus, in order ("${g.more}")`, g.rest.length === want.length - NEW_COMPANIES_SHOWN && g.rest.every((r, i) => r.value === rateDisplay(want[i + NEW_COMPANIES_SHOWN].value as number)) && g.rest.every((r, i) => r.label === iso2ToName(want[i + NEW_COMPANIES_SHOWN].iso2)) && g.more === COPY.home.newCompanies.more.replace("{n}", String(g.rest.length)).replace("{region}", g.name));
     check(`${g.name}: no rate prints as nought`, [...g.rows.map((r) => r.value.toFixed(1)), ...g.rest.map((r) => r.value)].every((s) => Number(s) > 0));
     check(`${g.name}: every row opens its country's page and promises what that page answers`, g.rows.every((r) => r.href === `/${r.iso2.toLowerCase()}` && r.lands === SURFACE_ANSWERS.country));
     check(`${g.name}: every figure says where it came from`, [...g.rows.map((r) => r.prov), ...g.rest.map((r) => r.prov)].every((p) => p.src.startsWith("home/new_companies.json:") && p.kind === "looked up"));

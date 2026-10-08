@@ -35,6 +35,17 @@ const REMEDY = "re-run python -P scripts/data/home/export_home.py method, never 
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
+/** A source table read as JSON. One that is cut off or damaged is a red of its own, with its path and the remedy, and null: the
+ *  checks that need the table are skipped, so the gate ends on its summary and never on a SyntaxError stack. */
+function readTable<T>(name: string, path: string): T | null {
+  try {
+    return JSON.parse(readFileSync(path, "utf8")) as T;
+  } catch {
+    check(`the ${name} table reads as JSON`, false, { file: path, remedy: "restore the source file, then re-run the export" });
+    return null;
+  }
+}
+
 type Export = { notices: number; names: number; matched_names: number; unmatched_notices: number; source: string };
 
 const held = holdHomeExport("method.json", check);
@@ -49,9 +60,11 @@ if (held && d) {
   const src = held.entry.sources.find((s) => s.key === "failures");
   check("the manifest names the failures table the counts were read from (failures)", !!src);
   if (src && existsSync(src.path)) {
-    const table = JSON.parse(readFileSync(src.path, "utf8")) as { match?: Record<string, unknown>; source?: unknown };
-    const differs = [...(["notices", "names", "matched_names", "unmatched_notices"] as const).filter((k) => table.match?.[k] !== d[k]), ...(table.source !== d.source ? ["source"] : [])];
-    check(`the four counts and the source line are the table's own, read again here${differs.length ? `: differs on ${differs.join(", ")}` : ""}`, differs.length === 0);
+    const table = readTable<{ match?: Record<string, unknown>; source?: unknown }>("failures", src.path);
+    if (table) {
+      const differs = [...(["notices", "names", "matched_names", "unmatched_notices"] as const).filter((k) => table.match?.[k] !== d[k]), ...(table.source !== d.source ? ["source"] : [])];
+      check(`the four counts and the source line are the table's own, read again here${differs.length ? `: differs on ${differs.join(", ")}` : ""}`, differs.length === 0);
+    }
   }
 }
 
