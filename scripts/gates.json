@@ -1804,6 +1804,20 @@
       "claims": []
     },
     {
+      "name": "home-firms-last",
+      "script": "tests/home/firms_last.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "WHERE NEW FIRMS LAST, THE UK'S CITIES (plan 2026-10-08, home sections, section 1; his idea of 2026-10-08, \"Midtier city opportunities Leeds, Austin, Lublin, Malaga\", built for the UK's cities, where t",
+      "reads": [
+        "data/cities/city_list_v1.json",
+        "data/home/city_survival.json",
+        "data/sections/survival.json",
+        "data/uk/registers/survival.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

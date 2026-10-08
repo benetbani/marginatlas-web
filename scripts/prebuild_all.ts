@@ -616,6 +616,10 @@ const GATES: Gate[] = [
   /* The ranked list beside it (his ruling of 2026-10-05, PARKED P36.2b): where kitchens score five, the boroughs' three highest and
      three lowest from the feed, the middle borough as the figure, fresh by the 45-day rule from the ratings' own date. */
   { name: "home-kitchens", script: "tests/home/kitchens.test.ts" },
+  /* The home's new sections (plan 2026-10-08, home sections; his section ideas of that day): each held to its slice in data/home
+     (scripts/data/home/export_home.py: the hash, the sources, the arithmetic) and, from its builder's task on, its builder and its
+     drawing. Section 1, where new firms last: the UK cities' 2019 cohort after five years, Birmingham held out. */
+  { name: "home-firms-last", script: "tests/home/firms_last.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },
