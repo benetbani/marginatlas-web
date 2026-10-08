@@ -1843,6 +1843,18 @@
       "claims": []
     },
     {
+      "name": "home-how-made",
+      "script": "tests/home/how_made.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4; his ideas of 2026-10-08, \"the deep techniques used to derive data\", \"unmatched archival capability\" and \"the global coverage\", merged a",
+      "reads": [
+        "data/home/method.json",
+        "data/uk/registers/failures.json"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-terra-hover",
       "script": "scripts/verify_no_terra_hover.ts",
       "args": [],

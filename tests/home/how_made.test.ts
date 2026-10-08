@@ -1,0 +1,37 @@
+/**
+ * HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4; his ideas of 2026-10-08, "the deep techniques used to derive
+ * data", "unmatched archival capability" and "the global coverage", merged as the audit found them honest). Each technique shown
+ * by a figure it produced, counts only of pages a visitor can reach, and the home's one line that outside the UK the pages print
+ * estimates. The notices count comes from data/home/method.json (the registers' failures table, by
+ * scripts/data/home/export_home.py); the other counts are worked out from this repo's files.
+ *
+ * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
+ * manifest's row count is its content's (one); its counts nest (names matched within names, names within notices, the unmatched
+ * notices within the notices); and it is the year of notices the failure rates the duel prints were read from (the register
+ * slice's own source line).
+ *
+ * Run: npx tsx tests/home/how_made.test.ts
+ */
+import { readFileSync } from "node:fs";
+import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
+import { red, redSummary } from "../../scripts/lib/red";
+
+const RULE = "home-how-made";
+const FILE = "data/home/method.json";
+const REMEDY = "re-run python -P scripts/data/home/export_home.py method, never edit data/home by hand; then draw section 4 from the slice and the repo's own counts";
+let failed = 0;
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
+
+type Export = { notices: number; names: number; matched_names: number; unmatched_notices: number; source: string };
+
+const held = holdHomeExport("method.json", check);
+const d = (held?.data ?? null) as Export | null;
+if (held && d) {
+  check(`the manifest's rows are the slice's: one (${held.entry.rows})`, held.entry.rows === 1);
+  check(`the counts nest: ${d.matched_names} names matched of ${d.names} names in ${d.notices} notices, ${d.unmatched_notices} notices unmatched`, [d.notices, d.names, d.matched_names, d.unmatched_notices].every((n) => Number.isInteger(n) && n >= 0) && d.notices > 0 && d.matched_names <= d.names && d.names <= d.notices && d.unmatched_notices <= d.notices);
+  const failures = JSON.parse(readFileSync("data/uk/registers/failures.json", "utf8")) as { source: string };
+  check("the notices are the year the failure rates were read from (the register slice's own source line)", d.source === failures.source);
+}
+
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log(homePassLine("home/how_made", held));

@@ -17,6 +17,22 @@
     }
    ]
   },
+  "method.json": {
+   "built": "2026-10-08",
+   "rows": 1,
+   "sha256": "967f0a69a47cb748891edcb15cb9fa3d6bbf76d70e07ca65845a92bdb5cd34fc",
+   "sources": [
+    {
+     "bytes": 291164,
+     "key": "failures",
+     "path": "E:/atlas/registers/uk/tables/company_failures_by_trade.json",
+     "prints": true,
+     "publisher": "gazette",
+     "sha256": "cfd647b1a5a20040c3f2949c21fce1917b08165fdb576ad944efcd7e7d6ed2c5",
+     "title": "The registers' failures table: a year of company insolvency notices, matched by name to the company register"
+    }
+   ]
+  },
   "new_companies.json": {
    "built": "2026-10-08",
    "rows": 87,

@@ -624,6 +624,8 @@ const GATES: Gate[] = [
   { name: "home-new-companies", script: "tests/home/new_companies.test.ts" },
   /* Section 3, where US restaurants grew and shrank: one trade, 45 metros, two years, two counts a row. */
   { name: "home-us-restaurants", script: "tests/home/us_restaurants.test.ts" },
+  /* Section 4, how figures are made: a technique a figure, counts of pages a visitor can reach, the one estimates line. */
+  { name: "home-how-made", script: "tests/home/how_made.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

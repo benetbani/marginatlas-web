@@ -352,10 +352,32 @@ def us_restaurants() -> None:
     ])
 
 
+# ---- section 4: how figures are made ---------------------------------------------------------------------------------------------
+
+FAILURES = "E:/atlas/registers/uk/tables/company_failures_by_trade.json"
+
+
+def method() -> None:
+    """The year of insolvency notices the failure rates were read from: how many notices, how many company names they held, how
+    many of those the register matched by name, how many notices matched nothing (the registers' failures table, its `match`)."""
+    t = json.loads(Path(FAILURES).read_text(encoding="utf-8"))
+    m = t.get("match") or {}
+    keys = ("notices", "names", "matched_names", "unmatched_notices")
+    if not all(isinstance(m.get(k), int) and m[k] >= 0 for k in keys):
+        refuse("the failures table holds no whole match counts; rebuild it with registers/uk/build_gazette.py")
+    if not (m["matched_names"] <= m["names"] <= m["notices"]) or m["unmatched_notices"] > m["notices"]:
+        refuse("the failures table's match counts do not nest")
+    obj = {**{k: m[k] for k in keys}, "source": t["source"]}
+    write("method.json", obj, 1, [
+        source("failures", FAILURES, "gazette", "The registers' failures table: a year of company insolvency notices, matched by name to the company register"),
+    ])
+
+
 EXPORTS = {
     "city_survival": city_survival,
     "new_companies": new_companies,
     "us_restaurants": us_restaurants,
+    "method": method,
 }
 
 
