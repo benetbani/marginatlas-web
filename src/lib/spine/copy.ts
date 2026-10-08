@@ -2775,6 +2775,14 @@ export const COPY = {
       /** A member's plain name where the ratings' own runs long or official. */
       names: { "City of London Corporation": "City of London" } as Record<string, string>,
     },
+    /** WHERE NEW FIRMS LAST (plan 2026-10-08, home sections, section 1): the title, the lead city's one line (it leads a measured
+     *  ranking, the reason his featuring rule asks for), the key of the bars' tick at the UK's share, the bars' spoken unit. */
+    firmsLast: {
+      kicker: "Where new firms last",
+      words: "{city}, of 100 firms born in {cohort} still trading in {year}",
+      ukKey: "The UK",
+      aria: " of 100 still trading",
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
     pro: {
       kicker: "Pro",

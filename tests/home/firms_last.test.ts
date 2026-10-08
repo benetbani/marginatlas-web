@@ -11,10 +11,16 @@
  * (data/sections/survival.json) and London's the one London's pages read (data/uk/registers/survival.json); the shares are of the
  * cohort's fifth year.
  *
+ * Holds the builder (src/lib/home/firms_last.ts): the cities highest first; the lead the single highest (a tie features nobody);
+ * no held-out city drawn; every row a door to its own city page; every figure stamped from the slice; the UK's tick the slice's;
+ * the lead's line twelve words at most with the cohort and its fifth year in it.
+ *
  * Run: npx tsx tests/home/firms_last.test.ts
  */
 import { readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
+import { buildFirmsLast } from "../../src/lib/home/firms_last";
+import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-firms-last";
@@ -49,6 +55,22 @@ if (held && d) {
   const london = d.cities.find((c) => c.slug === "london");
   const slice = (JSON.parse(readFileSync("data/uk/registers/survival.json", "utf8")) as { areas: Record<string, { births_2019: number; cohort_2019_five_years: number }> }).areas[london?.code ?? ""];
   check(`London's row is the register slice's (${london?.births} births, ${london?.pct} of 100, against ${slice?.births_2019} and ${slice?.cohort_2019_five_years})`, !!london && !!slice && london.births === slice.births_2019 && Math.abs(london.pct / 100 - slice.cohort_2019_five_years) < 0.0005);
+}
+
+/* THE BUILDER (plan Task 9). */
+const built = buildFirmsLast();
+check("section 1 builds", !!built);
+if (built && d) {
+  const want = [...d.cities].sort((a, b) => b.pct - a.pct || a.name.localeCompare(b.name));
+  check(`the cities run highest first (${built.rows.map((r) => `${r.name} ${r.display}`).join(", ")})`, JSON.stringify(built.rows.map((r) => r.key)) === JSON.stringify(want.map((c) => c.slug)) && built.rows.every((r, i) => r.value === want[i].pct && r.display === want[i].pct.toFixed(1)));
+  check(`the lead is the single highest, ${built.lead.figure} (${built.lead.key})`, built.lead.key === want[0].slug && built.lead.figure === want[0].pct.toFixed(1) && want[0].pct > want[1].pct);
+  check("no city held out is drawn", !built.rows.some((r) => d.held_out.some((h) => h.slug === r.key)));
+  check("every row opens its own city page", built.rows.every((r) => r.href === `/cities/${r.key}`));
+  check("every figure says where it came from", [built.lead.prov, ...built.rows.map((r) => r.prov)].every((p) => p.src.startsWith("home/city_survival.json:") && p.kind === "worked out"));
+  check(`the UK's tick is the slice's UK share (${built.uk.value}), keyed "${built.uk.label}"`, built.uk.value === d.uk.pct && built.uk.label === COPY.home.firmsLast.ukKey);
+  const words = built.lead.words.split(/\s+/).filter(Boolean).length;
+  check(`the lead's line is twelve words at most, no semicolon, the cohort and its fifth year in it ("${built.lead.words}")`, words <= 12 && !built.lead.words.includes(";") && built.lead.words.includes(String(d.cohort)) && built.lead.words.includes(String(d.year)) && built.lead.words.startsWith(want[0].name));
+  check(`the title is four words at most ("${COPY.home.firmsLast.kicker}")`, COPY.home.firmsLast.kicker.split(/\s+/).length <= 4);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
