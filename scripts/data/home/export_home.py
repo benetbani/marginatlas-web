@@ -13,10 +13,10 @@ page's "Checked" date (his ruling: Checked is the export's day) for figures nobo
 
 Every figure is read from its source as published (a count, a published rate) or worked out here from what was read (a share of
 100 from two counts, half up to one decimal, in Decimal); none is typed. What is typed is identifiers (an area's code, a metro's
-code), each checked against its own source's name for it before anything is written, and the rule a list is cut by (a floor),
-written into the file with its reason. A refusal says what is wrong and writes nothing. What it writes is read line by line by the
-build's internal-notes gate (scripts/verify_no_internal_notes.ts), so a note is the publisher's own words and nothing in the files
-speaks of this machine's files or of running anything.
+code and the state its city stands in), each checked against its own source's name for it before anything is written, and the rule
+a list is cut by (a floor), written into the file with its reason. A refusal says what is wrong and writes nothing. What it writes
+is read line by line by the build's internal-notes gate (scripts/verify_no_internal_notes.ts), so a note is the publisher's own
+words and nothing in the files speaks of this machine's files or of running anything.
 
 By hand, never in the chain (it reads the parent repo), from the website root, with the Python that holds openpyxl and pyarrow:
   python -P scripts/data/home/export_home.py city_survival     section 1: of 100 firms born in a year, still trading five years on
@@ -281,25 +281,37 @@ def new_companies() -> None:
 QCEW_DIR = "E:/atlas/us/bls/qcew/parsed"
 SUSB = "E:/atlas/us/susb/2021/msa_3digitnaics_2021.txt"
 TRADE = ("722511", "Full-service restaurants")
-# THE US CITIES WITH A PAGE, each by its metro's code in the employment census ("C" and the first four digits of its CBSA). Each is
-# checked against the metro's published title (SUSB's MSADSCR) before anything is written.
-METROS = {
-    "atlanta": "C1206", "austin": "C1242", "baltimore": "C1258", "boston": "C1446", "buffalo": "C1538",
-    "charlotte": "C1674", "chicago": "C1698", "cincinnati": "C1714", "cleveland": "C1746", "columbus": "C1814",
-    "dallas": "C1910", "denver": "C1974", "detroit": "C1982", "honolulu": "C4652", "houston": "C2642",
-    "indianapolis": "C2690", "kansas-city": "C2814", "las-vegas": "C2982", "los-angeles": "C3108", "louisville": "C3114",
-    "memphis": "C3282", "miami": "C3310", "milwaukee": "C3334", "minneapolis": "C3346", "nashville": "C3498",
-    "new-orleans": "C3538", "new-york": "C3562", "oklahoma-city": "C3642", "orlando": "C3674", "philadelphia": "C3798",
-    "phoenix": "C3806", "pittsburgh": "C3830", "portland": "C3890", "raleigh": "C3958", "richmond": "C4006",
-    "sacramento": "C4090", "salt-lake-city": "C4162", "san-antonio": "C4170", "san-diego": "C4174", "san-francisco": "C4186",
-    "san-jose": "C4194", "seattle": "C4266", "st-louis": "C4118", "tampa": "C4530", "washington-dc": "C4790",
+# THE US CITIES WITH A PAGE, each by its metro's code in the employment census ("C" and the first four digits of its CBSA) and the
+# state its page stands in (the first state of the metro's title, the principal city's own). Each is checked against the metro's
+# published title (SUSB's MSADSCR) before anything is written: the title must name the city and the state must be one of the title's
+# states, so a metro of the same name in another state (Columbus GA-AL or Columbus IN beside Columbus OH) is refused, not taken.
+METROS: dict[str, tuple[str, str]] = {
+    "atlanta": ("C1206", "GA"), "austin": ("C1242", "TX"), "baltimore": ("C1258", "MD"), "boston": ("C1446", "MA"), "buffalo": ("C1538", "NY"),
+    "charlotte": ("C1674", "NC"), "chicago": ("C1698", "IL"), "cincinnati": ("C1714", "OH"), "cleveland": ("C1746", "OH"), "columbus": ("C1814", "OH"),
+    "dallas": ("C1910", "TX"), "denver": ("C1974", "CO"), "detroit": ("C1982", "MI"), "honolulu": ("C4652", "HI"), "houston": ("C2642", "TX"),
+    "indianapolis": ("C2690", "IN"), "kansas-city": ("C2814", "MO"), "las-vegas": ("C2982", "NV"), "los-angeles": ("C3108", "CA"), "louisville": ("C3114", "KY"),
+    "memphis": ("C3282", "TN"), "miami": ("C3310", "FL"), "milwaukee": ("C3334", "WI"), "minneapolis": ("C3346", "MN"), "nashville": ("C3498", "TN"),
+    "new-orleans": ("C3538", "LA"), "new-york": ("C3562", "NY"), "oklahoma-city": ("C3642", "OK"), "orlando": ("C3674", "FL"), "philadelphia": ("C3798", "PA"),
+    "phoenix": ("C3806", "AZ"), "pittsburgh": ("C3830", "PA"), "portland": ("C3890", "OR"), "raleigh": ("C3958", "NC"), "richmond": ("C4006", "VA"),
+    "sacramento": ("C4090", "CA"), "salt-lake-city": ("C4162", "UT"), "san-antonio": ("C4170", "TX"), "san-diego": ("C4174", "CA"), "san-francisco": ("C4186", "CA"),
+    "san-jose": ("C4194", "CA"), "seattle": ("C4266", "WA"), "st-louis": ("C4118", "MO"), "tampa": ("C4530", "FL"), "washington-dc": ("C4790", "DC"),
 }
+
+
+def title_states(title: str) -> list[str]:
+    """The states a metro's published title names: the text after its last comma and before " Metro Area", split on "-"
+    ("Columbus, GA-AL Metro Area" names GA and AL). A title with no comma names none."""
+    if "," not in title:
+        return []
+    return [s for s in title.rsplit(",", 1)[1].strip().removesuffix(" Metro Area").split("-") if s]
 
 
 def us_restaurants() -> None:
     """Full-service restaurants with staff (private establishments, NAICS 722511) in each US metro the site has a city page for, in
     the first and the last year the parsed files hold. A row the publisher marks "N" withholds employment and wages, never its
-    count of establishments, so the count is kept and the mark recorded."""
+    count of establishments, so the count is kept and the mark recorded. Each city's metro is its code and its state, both typed in
+    METROS; the title the code resolves to must name the city and hold the state, so a code that lands on a metro of the same name
+    in another state is refused."""
     import pyarrow.parquet as pq
 
     us = cities_of("US")
@@ -318,7 +330,7 @@ def us_restaurants() -> None:
     if len(years) < 2:
         refuse(f"{QCEW_DIR} holds fewer than two years")
     first, last = years[0], years[-1]
-    wanted = set(METROS.values())
+    wanted = {code for code, _ in METROS.values()}
     counts: dict[int, dict[str, tuple[int, str | None]]] = {}
     for y in (first, last):
         pf = pq.ParquetFile(f"{QCEW_DIR}/qcew_cells_{y}.parquet")
@@ -333,15 +345,18 @@ def us_restaurants() -> None:
         counts[y] = got
     metros = []
     for c in us:
-        a = METROS[c["slug"]]
+        a, state = METROS[c["slug"]]
         t = titles.get(a)
         city = c["name"].split(",")[0].strip()
         if not t or not t.endswith("Metro Area") or city.lower() not in t.lower():
             refuse(f"{a} is {t!r}, not a metro area named for {c['name']}")
+        states = title_states(t)
+        if state not in states:
+            refuse(f"{c['name']} ({a}) is {t!r}, which names {'-'.join(states) or 'no state'}, not {state}: put the city's own metro code and state beside it in METROS")
         f0, f1 = counts[first].get(a), counts[last].get(a)
         if not f0 or not f1 or not f0[0] or not f1[0]:
             refuse(f"{a} ({c['name']}) holds no count in {first} or {last}")
-        metros.append({"slug": c["slug"], "name": c["name"], "area": a, "title": t, "y_from": int(f0[0]), "y_to": int(f1[0]), "codes": [f0[1], f1[1]]})
+        metros.append({"slug": c["slug"], "name": c["name"], "area": a, "state": state, "title": t, "y_from": int(f0[0]), "y_to": int(f1[0]), "codes": [f0[1], f1[1]]})
     if len({m["area"] for m in metros}) != len(metros):
         refuse("two cities share one metro")
     obj = {"trade": {"naics": TRADE[0], "title": TRADE[1]}, "ownership": "private", "from": first, "to": last, "metros": metros}
