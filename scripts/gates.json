@@ -2749,6 +2749,26 @@
       "claims": []
     },
     {
+      "name": "own-lookups",
+      "script": "tests/trust/own_lookups.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A TABLE KEYED BY A WORD FROM THE ADDRESS IS READ FOR ITS OWN ENTRIES (2026-10-08; CLAUDE.md working-method rule 4: a ratified rule becomes a gate in the same session).",
+      "reads": [
+        "src/app/(site)/compare/CompareClient.tsx",
+        "src/app/[country]/[geo]/[industry]/page.tsx",
+        "src/app/api/",
+        "src/app/api/cell-lookup/route.ts",
+        "src/lib/cells/geo.ts",
+        "src/lib/own.ts",
+        "src/lib/routing/",
+        "src/lib/taxonomy.ts",
+        "src/middleware.ts",
+        "tests/trust/own_lookups.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-session-recording",
       "script": "tests/app/no_session_recording.test.ts",
       "args": [],

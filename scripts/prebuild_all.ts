@@ -794,6 +794,8 @@ const GATES: Gate[] = [
   { name: "place-word-keys", script: "tests/routing/place_word_keys.test.ts" },
   /* The same for the words a request sends: /api/cell-lookup?industry=constructor fails the validity guard, and the presence threshold reads a country or activity word that names a built-in as an unknown one. */
   { name: "request-word-keys", script: "tests/routing/request_word_keys.test.ts" },
+  /* And the text gate that keeps it so: no table keyed by a word from the address is read as TABLE[key] anywhere in src/ (INDUSTRY_BY_ID on the request-facing paths); read it with own(TABLE, key). */
+  { name: "own-lookups", script: "tests/trust/own_lookups.test.ts" },
   /* No session recorder on the site, cookie-free counting only behind its switch (milestone 1, M2; his interview of 2026-09-26, answer 7). */
   { name: "no-session-recording", script: "tests/app/no_session_recording.test.ts" },
   /* The industry page's places table links each place to the trade's page there (milestone 1, M5; his interview of 2026-09-26, answer 35). */
