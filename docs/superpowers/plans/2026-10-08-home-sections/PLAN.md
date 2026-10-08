@@ -143,7 +143,12 @@ moments; the type ladder and width ratchets only shrink.
     the net change (7.3% of the base); and the Detroit metro's restaurants track its whole count, +14.4% against +12.6% (2021 to
     2023). A member is featured only with a reason, and a gain that is the count's step is not one: Detroit stays in the slice with
     its counts, in `held_out` with its reason, recorded and never printed, as section 1 holds out Birmingham. **Phoenix (2,435 to
-    2,828, +393) is the fifth gainer**, and the section ranks 44 metros.
+    2,828, +393) is the fifth gainer**, and the section ranks 44 metros. **The drawn gainers stay** (the same review, from the QCEW
+    files on this machine): Atlanta's restaurants gained 199, 309 and 377 in 2020 to 2022 and lost 157 in 2023 while its whole count
+    rose every year; Georgia's 2022 jump (+12.9%, rank 1 of 51) is unclassified accounts (sector 99, +71.4%), and without them Georgia
+    rose +5.0% (rank 29) and the Atlanta metro shows no jump year; Phoenix's whole count climbs steadily (+5.1%, +8.5%, +9.9%, +7.2% a
+    year) with its restaurants at about half that pace; Texas and Florida show no step. Without sector 99 Michigan's 2023 rise is
+    +10.1%, rank 1 of 51, so Detroit's hold-out stands.
 
 ---
 
@@ -615,6 +620,7 @@ Create `tests/home/firms_last.test.ts`:
  */
 import { readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
+import { buildSurvival } from "../../src/lib/spine/sections/first_years";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-firms-last";
@@ -643,9 +649,10 @@ if (held && d) {
   check(`every share is its two counts' (${all.map((a) => `${a.code} ${a.survived}/${a.births}=${a.pct}`).join("; ")})`, all.every((a) => Number.isInteger(a.births) && Number.isInteger(a.survived) && a.births > 0 && a.survived >= 0 && a.survived <= a.births && a.pct === share(a.survived, a.births)));
   check(`each city is read under its own name in the table (${[...d.cities, ...d.held_out].map((c) => `${c.name}: ${c.name_in_table}`).join("; ")})`, [...d.cities, ...d.held_out].every((c) => c.name_in_table.toLowerCase().includes(c.name.toLowerCase())));
   check(`the shares are of the cohort's fifth year (${d.cohort} to ${d.year}, ${d.table}, published ${d.published})`, d.year - d.cohort === 5 && d.table === "Table 5.1a" && d.published.length > 0);
-  const ring = (JSON.parse(readFileSync("data/sections/survival.json", "utf8")) as { GB: { curve: { cohort: number; points: Array<{ year: number; pct: number }> } } }).GB.curve;
-  const ringFive = ring.points.find((p) => p.year === 5)?.pct;
-  check(`the UK's share is the home's ring's (${d.uk.pct} against ${ringFive}, the ${ring.cohort} cohort)`, ring.cohort === d.cohort && ringFive === d.uk.pct);
+  /* The ring prints the GB curve's LAST point (home_answers.ts reads buildSurvival("GB").last) and the slice reads the cohort's fifth
+     year, so the two are one figure only while the curve's last point is its fifth year. */
+  const ring = buildSurvival("GB");
+  check(`the UK's share is the home's ring's: the slice's fifth year is ${d.uk.pct} (the ${d.cohort} cohort), the ring prints the curve's last point, year ${ring?.last.year}, ${ring?.last.pct} (the ${ring?.cohort} cohort)`, !!ring && ring.last.year === 5 && ring.cohort === d.cohort && ring.last.pct === d.uk.pct);
   const london = d.cities.find((c) => c.slug === "london");
   const slice = (JSON.parse(readFileSync("data/uk/registers/survival.json", "utf8")) as { areas: Record<string, { births_2019: number; cohort_2019_five_years: number }> }).areas[london?.code ?? ""];
   check(`London's row is the register slice's (${london?.births} births, ${london?.pct} of 100, against ${slice?.births_2019} and ${slice?.cohort_2019_five_years})`, !!london && !!slice && london.births === slice.births_2019 && Math.abs(london.pct / 100 - slice.cohort_2019_five_years) < 0.0005);
@@ -654,6 +661,10 @@ if (held && d) {
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/firms_last", held));
 ```
+
+The tie to the home's ring reads what the ring prints: `buildSurvival("GB").last`, the curve's last point (src/lib/spine/home_answers.ts), which must be
+the fifth year the slice reads. A sixth year on the curve moves the ring and reds the gate, and the red names both sides (the slice's share and the
+ring's year and share).
 
 - [ ] **Step 4: Run it, then plant a hand edit and watch it red**
 
@@ -735,6 +746,17 @@ const REMEDY = "re-run python -P scripts/data/home/export_home.py new_companies,
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
+/** A source table read as JSON. One that is cut off or damaged is a red of its own, with its path and the remedy, and null: the
+ *  checks that need the table are skipped, so the gate ends on its summary and never on a SyntaxError stack. */
+function readTable<T>(name: string, path: string): T | null {
+  try {
+    return JSON.parse(readFileSync(path, "utf8")) as T;
+  } catch {
+    check(`the ${name} table reads as JSON`, false, { file: path, remedy: "restore the source file, then re-run the export" });
+    return null;
+  }
+}
+
 type Member = { iso2: string; value: number | null; labour_force: number | null; shown: boolean };
 type Export = { year: number; measure: string; last_updated: string; floor: { measure: string; year: number; at_least: number; why: string }; uk: { iso2: string; value: number }; regions: Array<{ key: string; rule: string; members: Member[] }> };
 const REGIONS = ["latam", "africa"] as const;
@@ -782,33 +804,41 @@ if (d && held) {
   check("the manifest names the two series the figures were read from (density, labour_force)", !!density && !!labour);
   if (density && labour && existsSync(density.path) && existsSync(labour.path)) {
     type Row = { country: { id: string }; date: string; value: number | null; indicator?: { id?: string } };
-    const table = (path: string) => {
+    const table = (name: string, path: string) => {
+      const rows = readTable<[unknown, Row[]]>(name, path);
+      if (!rows) return null;
       const by = new Map<string, number>();
       const ids = new Set<string>();
-      for (const r of (JSON.parse(readFileSync(path, "utf8")) as [unknown, Row[]])[1]) {
+      for (const r of rows[1]) {
         ids.add(r.indicator?.id ?? "none");
         if (r.value !== null && r.value !== undefined) by.set(`${r.country.id}:${r.date}`, r.value);
       }
       return { by, id: [...ids].sort().join(", ") };
     };
-    const densTable = table(density.path), lfTable = table(labour.path);
-    const dens = densTable.by, lf = lfTable.by;
-    check(`each series names the indicator the slice says it is (${densTable.id} for ${d.measure}; ${lfTable.id} for ${d.floor.measure})`, densTable.id === d.measure && lfTable.id === d.floor.measure);
-    const all = d.regions.flatMap((r) => r.members);
-    const wrong = all.filter((m) => (dens.get(`${m.iso2}:${d.year}`) ?? null) !== m.value || (lf.get(`${m.iso2}:${d.year}`) ?? null) !== m.labour_force).map((m) => m.iso2);
-    check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0);
-    const gb = dens.get(`GB:${d.year}`);
-    check(`the UK's ${d.year} figure is the source's, read again here (${d.uk.value} against ${gb ?? "none"})`, gb === d.uk.value);
-    const years = [...new Set([...dens.keys()].map((k) => k.split(":")[1]))].sort().reverse();
-    const shows = (iso2: string, y: string) => dens.has(`${iso2}:${y}`) && (lf.get(`${iso2}:${y}`) ?? 0) >= d.floor.at_least;
-    const latest = years.find((y) => REGIONS.every((key) => (d.regions.find((r) => r.key === key)?.members ?? []).filter((m) => shows(m.iso2, y)).length >= 5) && dens.has(`GB:${y}`));
-    check(`the year is the latest in which both regions show five and the UK has a figure (${latest})`, latest === String(d.year));
+    const densTable = table("density", density.path), lfTable = table("labour_force", labour.path);
+    if (densTable && lfTable) {
+      const dens = densTable.by, lf = lfTable.by;
+      check(`each series names the indicator the slice says it is (${densTable.id} for ${d.measure}; ${lfTable.id} for ${d.floor.measure})`, densTable.id === d.measure && lfTable.id === d.floor.measure);
+      const all = d.regions.flatMap((r) => r.members);
+      const wrong = all.filter((m) => (dens.get(`${m.iso2}:${d.year}`) ?? null) !== m.value || (lf.get(`${m.iso2}:${d.year}`) ?? null) !== m.labour_force).map((m) => m.iso2);
+      check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0);
+      const gb = dens.get(`GB:${d.year}`);
+      check(`the UK's ${d.year} figure is the source's, read again here (${d.uk.value} against ${gb ?? "none"})`, gb === d.uk.value);
+      const years = [...new Set([...dens.keys()].map((k) => k.split(":")[1]))].sort().reverse();
+      const shows = (iso2: string, y: string) => dens.has(`${iso2}:${y}`) && (lf.get(`${iso2}:${y}`) ?? 0) >= d.floor.at_least;
+      const latest = years.find((y) => REGIONS.every((key) => (d.regions.find((r) => r.key === key)?.members ?? []).filter((m) => shows(m.iso2, y)).length >= 5) && dens.has(`GB:${y}`));
+      check(`the year is the latest in which both regions show five and the UK has a figure (${latest})`, latest === String(d.year));
+    }
   }
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/new_companies", held));
 ```
+
+A series file that is cut off or damaged is a red of its own (`the density table reads as JSON`, `the labour_force table reads as JSON`, each naming
+the file and the remedy: restore the source file, then re-run the export), never a SyntaxError stack, and the checks that read the series again are
+skipped.
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/new_companies.test.ts > scratchpad/home-sections/t03.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t03.txt`
 Expected: `data/home/new_companies.json is exported and in the manifest` red, `exit 1`.
@@ -1260,7 +1290,8 @@ Expected: `home/us_restaurants: all pass` (the three sources hashed again), `exi
 In `scripts/prebuild_all.ts`, below `  { name: "home-new-companies", script: "tests/home/new_companies.test.ts" },` add:
 
 ```ts
-  /* Section 3, where US restaurants grew and shrank: one trade, 45 metros, two years, two counts a row. */
+  /* Section 3, where US restaurants grew and shrank: one trade, 45 read, 44 ranked (Detroit held out, plan decision 12), two years,
+     two counts a row. */
   { name: "home-us-restaurants", script: "tests/home/us_restaurants.test.ts" },
 ```
 
@@ -1315,6 +1346,17 @@ const REMEDY = "re-run python -P scripts/data/home/export_home.py method, never 
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
+/** A source table read as JSON. One that is cut off or damaged is a red of its own, with its path and the remedy, and null: the
+ *  checks that need the table are skipped, so the gate ends on its summary and never on a SyntaxError stack. */
+function readTable<T>(name: string, path: string): T | null {
+  try {
+    return JSON.parse(readFileSync(path, "utf8")) as T;
+  } catch {
+    check(`the ${name} table reads as JSON`, false, { file: path, remedy: "restore the source file, then re-run the export" });
+    return null;
+  }
+}
+
 type Export = { notices: number; names: number; matched_names: number; unmatched_notices: number; source: string };
 
 const held = holdHomeExport("method.json", check);
@@ -1329,9 +1371,11 @@ if (held && d) {
   const src = held.entry.sources.find((s) => s.key === "failures");
   check("the manifest names the failures table the counts were read from (failures)", !!src);
   if (src && existsSync(src.path)) {
-    const table = JSON.parse(readFileSync(src.path, "utf8")) as { match?: Record<string, unknown>; source?: unknown };
-    const differs = [...(["notices", "names", "matched_names", "unmatched_notices"] as const).filter((k) => table.match?.[k] !== d[k]), ...(table.source !== d.source ? ["source"] : [])];
-    check(`the four counts and the source line are the table's own, read again here${differs.length ? `: differs on ${differs.join(", ")}` : ""}`, differs.length === 0);
+    const table = readTable<{ match?: Record<string, unknown>; source?: unknown }>("failures", src.path);
+    if (table) {
+      const differs = [...(["notices", "names", "matched_names", "unmatched_notices"] as const).filter((k) => table.match?.[k] !== d[k]), ...(table.source !== d.source ? ["source"] : [])];
+      check(`the four counts and the source line are the table's own, read again here${differs.length ? `: differs on ${differs.join(", ")}` : ""}`, differs.length === 0);
+    }
   }
 }
 
@@ -1339,7 +1383,7 @@ if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exi
 console.log(homePassLine("home/how_made", held));
 ```
 
-The gate follows the holder's contract (Task 2, fixed after its review): `check` takes an optional third argument `{ file, remedy }`, which the holder passes for its own findings (the manifest, a stray or a missing slice, the sources page, CRLF line ends); the rows check reads the manifest's `rows` against the slice; and the last line comes from `homePassLine`, which ends `home/how_made: all pass, 1 deferred (failures: source not on this machine)` where the failures table is not on the machine (a build server), the form the chain's runner counts as a deferred check. Nothing prints after it. Where the failures table is on the machine, the gate reads its `match` block and `source` line again and holds the slice's four counts and its source line to them (so a slice signed again with a count changed reds, naming the count); where it is not, the holder defers the key. The tie to the register slice's own source line passes its own file (`data/uk/registers/failures.json`) and remedy: re-run the register export first, then this one, so both read one table. The notices are company notices, not all insolvencies (members' voluntary liquidations are solvent), and the words say so.
+The gate follows the holder's contract (Task 2, fixed after its review): `check` takes an optional third argument `{ file, remedy }`, which the holder passes for its own findings (the manifest, a stray or a missing slice, the sources page, CRLF line ends); the rows check reads the manifest's `rows` against the slice; and the last line comes from `homePassLine`, which ends `home/how_made: all pass, 1 deferred (failures: source not on this machine)` where the failures table is not on the machine (a build server), the form the chain's runner counts as a deferred check. Nothing prints after it. Where the failures table is on the machine, the gate reads its `match` block and `source` line again and holds the slice's four counts and its source line to them (so a slice signed again with a count changed reds, naming the count); where it is not, the holder defers the key. The tie to the register slice's own source line passes its own file (`data/uk/registers/failures.json`) and remedy: re-run the register export first, then this one, so both read one table. The notices are company notices, not all insolvencies (members' voluntary liquidations are solvent), and the words say so. A failures table that is cut off or damaged is a red of its own (`the failures table reads as JSON`, naming the file and the remedy: restore the source file, then re-run the export), never a SyntaxError stack, and the check that needs it is skipped.
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t05.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t05.txt`
 Expected: `data/home/method.json is exported and in the manifest` red, `exit 1`.
@@ -1389,7 +1433,8 @@ Expected: `home/how_made: all pass` (the failures table is on this machine, so n
 In `scripts/prebuild_all.ts`, below `  { name: "home-us-restaurants", script: "tests/home/us_restaurants.test.ts" },` add:
 
 ```ts
-  /* Section 4, how figures are made: a technique a figure, counts of pages a visitor can reach, the one estimates line. */
+  /* Section 4, how figures are made: a technique a figure, the notices and their match rate, the London trade pages read from the
+     band counts. */
   { name: "home-how-made", script: "tests/home/how_made.test.ts" },
 ```
 
@@ -1409,13 +1454,33 @@ git commit -m "Section 4's slice: the year of insolvency notices behind the fail
 ## Task 6: About the figures names the home's sources
 
 **Files:**
-- Modify: `src/lib/spine/uk_sources.ts` (two UK items' `prints`)
+- Modify: `src/lib/spine/uk_sources.ts` (the statistics office's and the notices' items, the World Bank's `prints`)
 - Modify: `src/app/(site)/about-data/page.tsx`
 - Modify: `tests/spine/uk_sources.test.ts`; generated `scripts/gates.json`
 
 - [ ] **Step 1: Write the failing checks**
 
-In `tests/spine/uk_sources.test.ts`, replace:
+In `tests/spine/uk_sources.test.ts`, replace (a finding may carry its own remedy; the file's `REMEDY` is the default):
+
+```ts
+const check = (label: string, ok: boolean) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
+```
+
+with:
+
+```ts
+const check = (label: string, ok: boolean, remedy: string = REMEDY) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy });
+};
+```
+
+replace:
 
 ```ts
 import { UK_SOURCES, UK_REGISTER_SOURCE, UK_SOURCES_FOOT, OGL_LINE, ONS_LINE } from "../../src/lib/spine/uk_sources";
@@ -1442,6 +1507,13 @@ check(`the world list names the home's two sources (${WORLD_SOURCES.map((s) => s
 check("no world source prints an attribution line its record does not name", WORLD_SOURCES.every((s) => s.attribution === null));
 check("one key an entry across both lists", new Set([...UK_SOURCES, ...WORLD_SOURCES].map((s) => s.key)).size === UK_SOURCES.length + WORLD_SOURCES.length);
 check("the statistics office's entry says the home prints its cities' survival, and the notices' entry the notices read", UK_SOURCES.some((s) => s.key === "ons" && s.items.some((i) => /by city/.test(i.prints))) && UK_SOURCES.some((s) => s.key === "gazette" && s.items.some((i) => /notices/.test(i.prints))));
+
+/* THE NEW COMPANIES' FLOOR, IN WORDS (the review of the new companies' slice): the list leaves out countries with a labour force
+   under the slice's floor (data/home/new_companies.json, floor.at_least), and a reader must be able to find that here, so the
+   entry says it in words and the words are held to the slice's own figure. */
+const floor = (JSON.parse(readFileSync("data/home/new_companies.json", "utf8")) as { floor: { at_least: number } }).floor.at_least;
+const newCompanies = WORLD_SOURCES.flatMap((s) => s.items).find((i) => i.title.includes("IC.BUS.NDNS.ZS"));
+check(`the new companies' entry says the slice's floor in words (${floor})`, floor === 1000000 && newCompanies !== undefined && newCompanies.prints.includes("under one million"), "say the slice's floor (data/home/new_companies.json floor.at_least) in the new companies entry's words in uk_sources.ts, and change this pin with it");
 ```
 
 and below:
@@ -1458,14 +1530,23 @@ add:
 ```
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/spine/uk_sources.test.ts > scratchpad/home-sections/t06.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t06.txt`
-Expected: 2 red lines (the ONS and Gazette items; the world sources on the page), `exit 1`.
+Expected: 3 red lines (the ONS and Gazette items; the new companies' floor in words; the world sources on the page), `exit 1`. The floor check
+carries its own remedy: it says the slice's floor in the new companies entry's words in `uk_sources.ts`, and the pin changes with it.
 
-- [ ] **Step 2: The two UK items say what the home prints**
+- [ ] **Step 2: The entries say what the home prints**
 
 In `src/lib/spine/uk_sources.ts`, replace `prints: "How many businesses last one, three and five years, by trade group and by region"` with
-`prints: "How many businesses last one, three and five years, by trade group, by region and by city"`, and replace
+`prints: "How many businesses last one, three and five years, by trade group and by region, and after five years by city"` (the home
+prints only the five-year share by city), and replace
 `prints: "How many companies of a trade became insolvent in a year, the UK's"` with
-`prints: "How many companies of a trade became insolvent in a year, the UK's, and how many notices were read for it"`.
+`prints: "How many companies of a trade became insolvent in a year, the UK's, and how many notices, insolvent and solvent, were read for it"`,
+and, in the same item, `title: "Company insolvency notices, October 2025 to September 2026, matched to the Companies House register of 1 May 2026"` with
+`title: "Notices of liquidations and administrations, October 2025 to September 2026, matched to the Companies House register of 1 May 2026"`
+(the notices are winding-up orders, creditors' and members' voluntary liquidations, and administrations; members' voluntary liquidations
+are solvent). In the World Bank entry, replace
+`prints: "New limited companies per 1,000 people of working age, in Latin America and in Africa, on the home page"` with
+`prints: "New limited companies per 1,000 people of working age, in Latin America and the Caribbean and in Africa, on the home page, leaving out countries with a labour force under one million"`
+(the region's own name, as the list draws it; and the floor in words, which the floor check reads and holds to the slice's figure).
 
 - [ ] **Step 3: Print the world list**
 
@@ -1637,17 +1718,20 @@ export function Focal({ figure, words, placement, prov, accent = false }: { figu
 - [ ] **Step 3: TiersTable's figures stamped**
 
 In `src/components/spine/archetypes/TiersTable.tsx`, below `import { COPY } from "./copy";` add
-`import type { Provenance } from "@/lib/spine/provenance";`, replace:
+`import type { Provenance } from "@/lib/spine/provenance";`, replace (the type already has a doc comment of its own; the new text joins it, one
+comment and never a second stacked under the first):
 
 ```ts
+/** A row of the figures shape: the name block's two lines and the two figures as printed (null prints an en dash). */
 export type TiersFigureRow = { key: string; name: string; sub?: string | null; a: string | null; b: string | null };
 ```
 
 with:
 
 ```ts
-/** `aProv`, `bProv` (plan 2026-10-08, home sections): where each figure came from, stamped on it (the provenance ratchet); a row
- *  that passes none stamps nothing, as before. */
+/** A row of the figures shape: the name block's two lines and the two figures as printed (null prints an en dash). `aProv`, `bProv`
+ *  (plan 2026-10-08, home sections): where each figure came from, stamped on it (the provenance ratchet); a row that passes none
+ *  stamps nothing, as before. */
 export type TiersFigureRow = { key: string; name: string; sub?: string | null; a: string | null; b: string | null; aProv?: Provenance | null; bProv?: Provenance | null };
 ```
 
@@ -1659,16 +1743,22 @@ replace `{r.a != null ? <Fig className="text-[length:var(--t-body)] text-[var(--
 - [ ] **Step 4: DetailPanel's rows stamped**
 
 In `src/components/spine/archetypes/DetailPanel.tsx`, below `import { Fig, InlineDisclosure } from "@/components/spine/kit";` add
-`import type { Provenance } from "@/lib/spine/provenance";`, replace:
+`import type { Provenance } from "@/lib/spine/provenance";`, replace (the file's long header comment is the type's doc comment; the new text joins its
+end, one comment and never a second stacked under it):
 
 ```ts
+ *    way to reach a touch target and needs no more than that.)
+ */
 export type DetailRow = { label: string; value: string; note?: string };
 ```
 
 with:
 
 ```ts
-/** `prov` (plan 2026-10-08, home sections): where the row's figure came from, stamped on it; a row with none stamps nothing. */
+ *    way to reach a touch target and needs no more than that.)
+ *
+ * `prov` (plan 2026-10-08, home sections): where the row's figure came from, stamped on it; a row with none stamps nothing.
+ */
 export type DetailRow = { label: string; value: string; note?: string; prov?: Provenance | null };
 ```
 
@@ -1698,8 +1788,8 @@ holds that: MarkList draws one set, CompareTable and RankedBars one set each (an
 cards, two titles and two 30s. So MarkList gains `groups`, its own body, leaving the one-set body untouched.
 
 **Files:**
-- Modify: `src/components/spine/archetypes/MarkList.tsx:125` (import), above `:155` (a type), `:188` (a prop), `:234` (the early
-  return), and the file's end (the grouped body)
+- Modify: `src/components/spine/archetypes/MarkList.tsx:125` (import), above `:155` (a type), `:161` (the props type, now a part both
+  forms take and two forms), `:234` (the early return), and the file's end (the grouped body)
 - Create (never committed): `scratchpad/home-sections/identity8.ts`
 
 - [ ] **Step 1: Record the one-set markup before**
@@ -1762,21 +1852,66 @@ export type MarkGroup = { key: string; name: string; rows: MarkRow[]; rest?: { s
 
 ```
 
-Replace:
+Replace the whole of `MarkListProps`, from `export type MarkListProps = {` to its closing `};` (each prop's doc comment moves with it, word for
+word), with the part both forms take and the two forms. The grouped form refuses the one-set form's `withheld`, `withheldLine`, `oneColumn` and `foot`
+at the type level, since its body reads none of them, and `rows` stays required in both (a grouped card is passed an empty list):
 
 ```ts
-  foot?: { items: Companion[]; line?: string | null } | null;
+/** What both forms of the card take. */
+type MarkListShared = {
+  id: string;
+  kicker: string;
+  icon?: AtlasIconId;
+  tagged?: boolean;
+  /** The set's own figure and the words over it. Formatted with the same `fmt`
+   *  as every row, so the card cannot hold two notations for one quantity. */
+  headline: { label: string; value: number; prov?: Provenance };
+  basis: string;
+  /** The two column heads. The unit is said HERE, once, and nowhere else
+   *  (PART 5: "THE UNIT. Said once, in the column head"). */
+  head: { name: string; value: string };
+  rows: MarkRow[];
+  fmt: (v: number) => string;
 };
-```
 
-with:
-
-```ts
-  foot?: { items: Companion[]; line?: string | null } | null;
-  /** THE GROUPED FORM (plan 2026-10-08, home sections, section 2; GroupedMarkList below says why): one measure over sets never
-   *  ranked together, each a short ranked list under its own head, in one card under one headline. With it `rows` is not read. */
-  groups?: MarkGroup[] | null;
-};
+export type MarkListProps = MarkListShared &
+  (
+    | {
+        /** How many members of the set hold no figure. Declared even when zero: the
+         *  harness reads it against the presence of the line below. */
+        withheld?: number;
+        withheldLine?: string | null;
+        /** THE COMPOSER'S WORD THAT THE WIDE SEAT OPENS NO HOLE (2026-09-20): the
+         *  two-column form below exists for a wide card beside a SHORTER partner
+         *  (PART 5's clause is about the hole a tall one-column list opens beside
+         *  it). Beside a TALLER partner the one-column list is the fit, and two
+         *  columns would leave the list's own card short: the trade page's `13
+         *  rivals` at 693 stands 397 in one column beside the donut's 409, and 308
+         *  in two columns with 100 of air under it. The caller says which partner
+         *  it has; the component cannot see the band. */
+        oneColumn?: boolean;
+        /** THE FOOT, PART 7's fourth part, where earned (2026-09-23, the city's `20
+         *  crew`): companion figures at 16 under a hairline after the list, drawn by
+         *  the same `CompanionRow` RankedBars' foot uses, so the two list cards' feet
+         *  are one markup. The crew card's is the week's usual hours, which is the
+         *  other half of a wage bill and belongs to this card rather than to one of
+         *  its own. */
+        foot?: { items: Companion[]; line?: string | null } | null;
+        /** The one-set form: no groups. */
+        groups?: null;
+      }
+    | {
+        /** THE GROUPED FORM (plan 2026-10-08, home sections, section 2; GroupedMarkList below says why): one measure over sets never
+         *  ranked together, each a short ranked list under its own head, in one card under one headline. Its body does not read `rows`
+         *  (still required: pass an empty list), `withheld`, `withheldLine`, `oneColumn` or `foot`, so those last four are refused at
+         *  the type level; and `head.name` gives way to each group's name (only `head.value` is read). */
+        groups: MarkGroup[];
+        withheld?: never;
+        withheldLine?: never;
+        oneColumn?: never;
+        foot?: never;
+      }
+  );
 ```
 
 Replace:
@@ -1822,7 +1957,7 @@ with:
 
 /**
  * THE GROUPED FORM (plan 2026-10-08, home sections, section 2: Latin America's countries and Africa's on one measure, his ideas
- * "LATAM Gems" and "Best of Africa"). One measure over two or more sets a reader must never see ranked together, so each set is its
+ * "LATAM Gems" and "Best of Africa"). One measure over one or more sets a reader must never see ranked together, so each set is its
  * own short ranked list under its own head, in one card under one headline, as the one-set form draws one. The law, the one-set
  * form's where it can be:
  *  - THE FLOOR, EVERY GROUP: a group under four rows (MARK_LIST_FLOOR) draws nothing, and then the whole card draws nothing, so a
@@ -1831,13 +1966,14 @@ with:
  *    edge (the page laws' ALIGNMENT); the mark column only where a row carries a mark, the arrow column only where a row is a door.
  *  - THE GROUPS ONE UNDER ANOTHER AT EVERY WIDTH: the card stands in a half of a level (504px at 1280), where two lists side by side
  *    would leave each country's name about 120px.
- *  - A ROW IS THE ONE-SET FORM'S ROW (the same cells and classes), 44 tall at the least, so a door is a tap at 375.
+ *  - A ROW IS THE ONE-SET FORM'S ROW (the same cells and classes), 44 tall at the least, so a door is a tap at 375. A change to the
+ *    one-set form's row cells is mirrored here.
  *  - THE REST OF A GROUP BEHIND THE FOUNDER'S PLUS (DetailPanel, closed on arrival; his clause 58, parts behind a click), each row
  *    a name and its figure, stamped where it came from.
  *  - THE HEADLINE IS WHAT THE GROUPS ARE READ AGAINST: the one-set form's middle of its set; here what its label names (the home
  *    passes the UK's own figure on the same measure). Ink at 30, never the accent.
  */
-function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, groups, fmt }: Pick<MarkListProps, "id" | "kicker" | "icon" | "tagged" | "headline" | "basis" | "head" | "fmt"> & { groups: MarkGroup[] }) {
+function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, groups, fmt }: Pick<MarkListShared, "id" | "kicker" | "icon" | "tagged" | "headline" | "basis" | "head" | "fmt"> & { groups: MarkGroup[] }) {
   if (groups.length === 0 || groups.some((g) => g.rows.length < MARK_LIST_FLOOR) || !Number.isFinite(headline.value)) return null;
   const all = groups.flatMap((g) => g.rows);
   const marks = all.some((r) => r.mark != null);
@@ -2061,7 +2197,8 @@ git commit -m "buildFirmsLast: the UK's cities highest first from the slice, the
 In `tests/home/new_companies.test.ts`, above `import { red, redSummary } from "../../scripts/lib/red";` add:
 
 ```ts
-import { buildNewCompanies, NEW_COMPANIES_SHOWN } from "../../src/lib/home/new_companies";
+import { iso2ToName } from "../../src/lib/countries";
+import { buildNewCompanies, NEW_COMPANIES_SHOWN, rateDisplay } from "../../src/lib/home/new_companies";
 import { SURFACE_ANSWERS } from "../../src/lib/spine/door_kinds";
 import { COPY } from "../../src/lib/spine/copy";
 ```
@@ -2083,11 +2220,13 @@ const built = buildNewCompanies();
 check("section 2 builds", !!built);
 if (built && d) {
   const one = (v: number) => Math.round(v * 10) / 10;
+  check("a small rate prints in two decimals, never nought", rateDisplay(0.0245092032058038) === "0.02" && rateDisplay(0.113132873298748) === "0.1" && rateDisplay(10.8180967387068) === "10.8");
   check("Latin America first, then Africa, never ranked together", JSON.stringify(built.groups.map((g) => g.key)) === JSON.stringify(["latam", "africa"]));
   for (const g of built.groups) {
     const want = (d.regions.find((r) => r.key === g.key)?.members ?? []).filter((m) => m.shown && typeof m.value === "number").sort((a, b) => (b.value as number) - (a.value as number) || a.iso2.localeCompare(b.iso2));
     check(`${g.name}: its ${NEW_COMPANIES_SHOWN} highest, in order (${g.rows.map((r) => `${r.name} ${r.value.toFixed(1)}`).join(", ")})`, g.rows.length === NEW_COMPANIES_SHOWN && g.rows.every((r, i) => r.iso2 === want[i].iso2 && r.value === one(want[i].value as number)));
-    check(`${g.name}: the rest behind the plus, in order ("${g.more}")`, g.rest.length === want.length - NEW_COMPANIES_SHOWN && g.rest.every((r, i) => r.value === one(want[i + NEW_COMPANIES_SHOWN].value as number).toFixed(1)) && g.more === COPY.home.newCompanies.more.replace("{n}", String(g.rest.length)).replace("{region}", g.name));
+    check(`${g.name}: the rest behind the plus, in order ("${g.more}")`, g.rest.length === want.length - NEW_COMPANIES_SHOWN && g.rest.every((r, i) => r.value === rateDisplay(want[i + NEW_COMPANIES_SHOWN].value as number)) && g.rest.every((r, i) => r.label === iso2ToName(want[i + NEW_COMPANIES_SHOWN].iso2)) && g.more === COPY.home.newCompanies.more.replace("{n}", String(g.rest.length)).replace("{region}", g.name));
+    check(`${g.name}: no rate prints as nought`, [...g.rows.map((r) => r.value.toFixed(1)), ...g.rest.map((r) => r.value)].every((s) => Number(s) > 0));
     check(`${g.name}: every row opens its country's page and promises what that page answers`, g.rows.every((r) => r.href === `/${r.iso2.toLowerCase()}` && r.lands === SURFACE_ANSWERS.country));
     check(`${g.name}: every figure says where it came from`, [...g.rows.map((r) => r.prov), ...g.rest.map((r) => r.prov)].every((p) => p.src.startsWith("home/new_companies.json:") && p.kind === "looked up"));
   }
@@ -2115,7 +2254,7 @@ In `src/lib/spine/copy.ts`, above the `PRO, QUIETLY` comment line, add:
       basis: "New limited companies per 1,000 people of working age, {year}.",
       headName: "Country",
       headValue: "Per 1,000",
-      regions: { latam: "Latin America", africa: "Africa" },
+      regions: { latam: "Latin America and the Caribbean", africa: "Africa" },
       more: "{n} more in {region}",
     },
 ```
@@ -2155,6 +2294,8 @@ export type NewCompanies = { year: number; uk: { value: number; prov: Provenance
 
 /** One decimal, half up, as every rate on the site prints. */
 const one = (v: number) => Math.round(v * 10) / 10;
+/** A rate as the site prints it: one decimal, half up; under 0.1 two decimals, so a rate of 0.005 or more never prints as nought. */
+export const rateDisplay = (v: number) => (v < 0.1 ? (Math.round(v * 100) / 100).toFixed(2) : one(v).toFixed(1));
 
 export function buildNewCompanies(): NewCompanies | null {
   const d = ncJson as unknown as Export;
@@ -2173,7 +2314,8 @@ export function buildNewCompanies(): NewCompanies | null {
       key,
       name,
       rows: rows.slice(0, NEW_COMPANIES_SHOWN),
-      rest: rows.slice(NEW_COMPANIES_SHOWN).map((r) => ({ label: r.name, value: r.value.toFixed(1), prov: r.prov })),
+      /* The rest print from the full figure through rateDisplay, never from the rounded rows. */
+      rest: shown.slice(NEW_COMPANIES_SHOWN).map((m) => ({ label: iso2ToName(m.iso2), value: rateDisplay(m.value), prov: stamp(m.iso2) })),
       more: C.more.replace("{n}", String(rows.length - NEW_COMPANIES_SHOWN)).replace("{region}", name),
     });
   }
@@ -2181,12 +2323,18 @@ export function buildNewCompanies(): NewCompanies | null {
 }
 ```
 
+The rest behind the plus is ordered on each country's full figure, never on the rounded one, and printed through `rateDisplay` (one decimal, half
+up; under 0.1 two decimals, so a rate of 0.005 or more never prints as nought: Liberia's 0.0245 prints 0.02 and Madagascar's 0.113 prints 0.1). The
+gate holds the rest's names in order as well as its printed figures, because countries that print one figure (Colombia and Jamaica 2.3; Ghana,
+Senegal and Angola 1.3; Egypt and Somalia 0.3) would flip under a sort on the rounded figure and still print the same column; and `rateDisplay`
+has a check of its own on literal values, so it is not its own oracle.
+
 - [ ] **Step 4: Run the test and the gates**
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/new_companies.test.ts > scratchpad/home-sections/t10.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t10.txt`
-Expected: `Latin America: its 5 highest, in order (Chile 10.8, Costa Rica 5.8, Brazil 5.1, Peru 4.7, Panama 4.5)`, `Africa: its 5
-highest, in order (South Africa 11.1, Botswana 8.7, Morocco 2.6, Tunisia 1.7, Zambia 1.6)`, `("6 more in Latin America")`, `("15 more
-in Africa")`, `the card's figure is the UK's own, 18.6`, `home/new_companies: all pass`, `exit 0`.
+Expected: `a small rate prints in two decimals, never nought`, `Latin America and the Caribbean: its 5 highest, in order (Chile 10.8, Costa Rica 5.8, Brazil 5.1, Peru 4.7,
+Panama 4.5)`, `Africa: its 5 highest, in order (South Africa 11.1, Botswana 8.7, Morocco 2.6, Tunisia 1.7, Zambia 1.6)`, `("6 more in Latin America and
+the Caribbean")`, `("15 more in Africa")`, `the card's figure is the UK's own, 18.6`, `home/new_companies: all pass`, `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write > scratchpad/home-sections/c10.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/c10.txt` → `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=1 --no-bail --only=home-new-companies,copy-no-method-words,model-laws-copy,archetype-copy,no-em-dashes,no-source-agencies,layering,counts-fresh > scratchpad/home-sections/g10.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/g10.txt`
 Expected: `Passed: 8`, `Failed: 0`.
@@ -2240,7 +2388,14 @@ if (built && d) {
   const count = (n: number) => n.toLocaleString("en-US");
   check(`the ${US_ENDS} that added most, most first (${built.added.map((r) => `${r.name} ${r.a} to ${r.b}`).join("; ")})`, JSON.stringify(built.added.map((r) => r.key)) === JSON.stringify(added.slice(0, US_ENDS).map((m) => m.slug)));
   check(`the ${US_ENDS} that lost most, most first (${built.lost.map((r) => `${r.name} ${r.a} to ${r.b}`).join("; ")})`, JSON.stringify(built.lost.map((r) => r.key)) === JSON.stringify(lost.slice(0, US_ENDS).map((m) => m.slug)));
-  check("no metro held out is drawn", !([...built.added, ...built.lost].some((r) => d.held_out.some((h) => h.slug === r.key))));
+  /* A TIE AT EITHER CUT. The ranking is by the count added or lost, so a metro tied with the last one drawn would be drawn or left out by its name, and the alphabet would choose who the section shows. A list with nothing past the cut has no cut to tie at. */
+  const tied = (list: Metro[]) => list.length > US_ENDS && change(list[US_ENDS - 1]) === change(list[US_ENDS]);
+  const atCut = (list: Metro[]) => (list.length > US_ENDS ? `last drawn ${count(change(list[US_ENDS - 1]))} against first left out ${count(change(list[US_ENDS]))}` : "none left out");
+  check(`no tie at either cut (added: ${atCut(added)}; lost: ${atCut(lost)})`, !tied(added) && !tied(lost), { file: "data/home/us_restaurants.json", remedy: "a tie at a cut draws one metro over another for its name: decide in the plan which ends the list, then change the builder and this check together" });
+  const out = Array.isArray(d.held_out) ? d.held_out : [];
+  check("no metro held out is drawn", !([...built.added, ...built.lost].some((r) => out.some((h) => h.slug === r.key))));
+  /* THE DECISION ITSELF (plan decision 12). The check above reads the held-out list as the slice gives it, so an emptied HELD_OUT map in the export would put Detroit back into the ranking with every other check green; this pin names the metros the export holds out. */
+  check(`the export holds out exactly the metros plan decision 12 names (${out.map((h) => h.slug).join(", ") || "none"})`, JSON.stringify(out.map((h) => h.slug)) === JSON.stringify(["detroit"]), { remedy: "plan decision 12 holds Detroit out: restore it in the HELD_OUT map of scripts/data/home/export_home.py, then re-run python -P scripts/data/home/export_home.py us_restaurants, or change the decision in the plan and this pin together" });
   check("two counts a row as the slice holds them, and never a percent", [...built.added, ...built.lost].every((r) => { const m = d.metros.find((x) => x.slug === r.key); return !!m && r.from === m.y_from && r.to === m.y_to && r.a === count(m.y_from) && r.b === count(m.y_to) && !/%/.test(r.a + r.b); }));
   check(`the lead added most, alone at the top: ${built.lead.figure} (${built.lead.key})`, built.lead.key === added[0].slug && built.lead.figure === count(change(added[0])) && change(added[0]) > change(added[1]));
   check("every figure says where it came from", [...built.added, ...built.lost].every((r) => r.aProv.src === `home/us_restaurants.json:${r.key}:${d.from}` && r.bProv.src === `home/us_restaurants.json:${r.key}:${d.to}` && r.aProv.kind === "counted" && r.bProv.kind === "counted") && built.lead.prov.src.startsWith(`home/us_restaurants.json:${built.lead.key}:`) && built.lead.prov.kind === "worked out");
@@ -2327,14 +2482,21 @@ export function buildUsRestaurants(): UsRestaurants | null {
 }
 ```
 
+Two checks of the gate guard what the builder cannot see. A tie at either cut (the fifth and the sixth metro with one count) would draw one metro
+over another for its name, so the gate names the two counts at each cut and reds on a tie (today Phoenix 393 against Charlotte 390, St. Louis -41
+against San Jose -40). And the list of metros the export holds out is pinned to the one decision 12 names (Detroit), read through a guard so a
+slice that lost the list ends on its summary, never a TypeError, and a pin that finds nothing held out prints `none`; its remedy names the map in
+the export and the command that re-runs it.
+
 - [ ] **Step 4: Run the test and the gates**
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t11.txt`
 Expected: `the 5 that added most, most first (Atlanta 4,451 to 5,179; Houston 4,512 to 5,027; Dallas 5,234 to 5,712; Miami 5,584 to
 6,050; Phoenix 2,435 to 2,828)`, `the 5 that lost most, most first (San Francisco 5,189 to 4,919; Los Angeles 11,146 to 10,975;
-Pittsburgh 1,776 to 1,714; Buffalo 939 to 886; St. Louis 2,030 to 1,989)`, `no metro held out is drawn`, `... alone at the top: 728
-(atlanta)`, `("Full-service restaurants added since 2019, most of 44 metros: Atlanta")`, `home/us_restaurants: all pass`, `exit 0`
-(Detroit, held out in decision 12, is in neither list).
+Pittsburgh 1,776 to 1,714; Buffalo 939 to 886; St. Louis 2,030 to 1,989)`, `no tie at either cut (added: last drawn 393 against first left
+out 390; lost: last drawn -41 against first left out -40)`, `no metro held out is drawn`, `the export holds out exactly the metros plan
+decision 12 names (detroit)`, `... alone at the top: 728 (atlanta)`, `("Full-service restaurants added since 2019, most of 44 metros:
+Atlanta")`, `home/us_restaurants: all pass`, `exit 0` (Detroit, held out in decision 12, is in neither list).
 Run: `node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write > scratchpad/home-sections/c11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/c11.txt` → `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=1 --no-bail --only=home-us-restaurants,copy-no-method-words,model-laws-copy,archetype-copy,no-em-dashes,no-source-agencies,layering,counts-fresh > scratchpad/home-sections/g11.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/g11.txt`
 Expected: `Passed: 8`, `Failed: 0`.
