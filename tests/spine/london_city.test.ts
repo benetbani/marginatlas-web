@@ -26,6 +26,9 @@ const REMEDY = "London's city page prints Greater London's own figures: the sour
 /* The two predicates live in register_city.ts, so a red on one of them points there and not at the London hero. */
 const PREDICATE_FILE = "src/lib/uk/registers/register_city.ts";
 const PREDICATE_REMEDY = "every UK city with a page is held to sources in cityHeldToSources, only London in cityRegisterPlace; a new UK city needs both decided";
+/* The case checks are about how a caller's spelling is read, not about which cities are held: a red on one of them says what the two
+   predicates do with case. */
+const CASE_REMEDY = "cityHeldToSources lowercases the slug and cityRegisterPlace does not: pass the canonical lowercase slug; cityHeldToSources also reads the country's code in either case and looks the slug up in a Set, so a built-in word names no city";
 let failed = 0;
 let firstRemedy = REMEDY;
 const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
@@ -44,16 +47,17 @@ async function main() {
      with a page, as countryHeldToRegisters holds the country's page). */
   check(`the UK's cities with a page are the seven (${UK_CITY_SLUGS.join(", ")})`, UK_CITY_SLUGS.join(",") === "birmingham,bristol,edinburgh,glasgow,leeds,london,manchester", PREDICATE_FILE, PREDICATE_REMEDY);
   for (const slug of UK_CITY_SLUGS) check(`${slug}'s page is held to sources`, cityHeldToSources("GB", slug), PREDICATE_FILE, PREDICATE_REMEDY);
-  check("the country's code is read in either case", cityHeldToSources("gb", "manchester"), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("the country's code is read in either case", cityHeldToSources("gb", "manchester"), PREDICATE_FILE, CASE_REMEDY);
   check("only London is held to a register region", UK_CITY_SLUGS.filter((s) => cityRegisterPlace("GB", s) !== null).join(",") === "london", PREDICATE_FILE, PREDICATE_REMEDY);
   check("a city outside the UK is not held to sources (Paris)", !cityHeldToSources("FR", "paris"), PREDICATE_FILE, PREDICATE_REMEDY);
   check("a UK city's slug under another country's code is not (Manchester as US)", !cityHeldToSources("US", "manchester"), PREDICATE_FILE, PREDICATE_REMEDY);
   check("a UK address that is no city page is not (the UK aggregate, a London district)", !cityHeldToSources("GB", "gb") && !cityHeldToSources("GB", "west-end"), PREDICATE_FILE, PREDICATE_REMEDY);
-  check("a word that names a built-in names no city", !cityHeldToSources("GB", "constructor") && !cityHeldToSources("GB", "__proto__"), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("a word that names a built-in names no city", !cityHeldToSources("GB", "constructor") && !cityHeldToSources("GB", "__proto__"), PREDICATE_FILE, CASE_REMEDY);
   check("no slug, no city; no country, no city", !cityHeldToSources("GB", "") && !cityHeldToSources("GB", null) && !cityHeldToSources(null, "london"), PREDICATE_FILE, PREDICATE_REMEDY);
-  /* The two predicates differ on a slug in capitals: cityHeldToSources lowercases it, cityRegisterPlace does not (London in capitals
-     is no register region), so a caller passes the canonical lowercase slug to both. */
-  check("cityHeldToSources reads a slug in capitals (Manchester), cityRegisterPlace does not (London): callers pass the canonical slug", cityHeldToSources("GB", "Manchester") && cityRegisterPlace("GB", "London") === null, PREDICATE_FILE, PREDICATE_REMEDY);
+  /* The two predicates differ on a slug in capitals: cityHeldToSources lowercases it, cityRegisterPlace does not, so a caller passes
+     the canonical lowercase slug to both (the cell view lowercases the place slug once). Only the first is pinned: that London in
+     capitals is no register region is an incidental flaw, not a contract. */
+  check("cityHeldToSources reads a slug in capitals (Manchester): callers pass the canonical slug", cityHeldToSources("GB", "Manchester"), PREDICATE_FILE, CASE_REMEDY);
 
   /* THE HERO */
   const hero = buildCityHeroBoard("london");
