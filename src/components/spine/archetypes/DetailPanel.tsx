@@ -49,8 +49,9 @@ import type { Provenance } from "@/lib/spine/provenance";
  *    is now fixed at the source, in `check_archetypes.mjs`, the way the
  *    terminus door's own line count already did it. Padding is the ordinary
  *    way to reach a touch target and needs no more than that.)
+ *
+ * `prov` (plan 2026-10-08, home sections): where the row's figure came from, stamped on it; a row with none stamps nothing.
  */
-/** `prov` (plan 2026-10-08, home sections): where the row's figure came from, stamped on it; a row with none stamps nothing. */
 export type DetailRow = { label: string; value: string; note?: string; prov?: Provenance | null };
 
 /**

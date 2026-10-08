@@ -158,7 +158,8 @@ export type MarkRow = {
  *  and a figure). */
 export type MarkGroup = { key: string; name: string; rows: MarkRow[]; rest?: { summary: string; rows: DetailRow[] } | null };
 
-export type MarkListProps = {
+/** What both forms of the card take. */
+type MarkListShared = {
   id: string;
   kicker: string;
   icon?: AtlasIconId;
@@ -172,30 +173,46 @@ export type MarkListProps = {
   head: { name: string; value: string };
   rows: MarkRow[];
   fmt: (v: number) => string;
-  /** How many members of the set hold no figure. Declared even when zero: the
-   *  harness reads it against the presence of the line below. */
-  withheld?: number;
-  withheldLine?: string | null;
-  /** THE COMPOSER'S WORD THAT THE WIDE SEAT OPENS NO HOLE (2026-09-20): the
-   *  two-column form below exists for a wide card beside a SHORTER partner
-   *  (PART 5's clause is about the hole a tall one-column list opens beside
-   *  it). Beside a TALLER partner the one-column list is the fit, and two
-   *  columns would leave the list's own card short: the trade page's `13
-   *  rivals` at 693 stands 397 in one column beside the donut's 409, and 308
-   *  in two columns with 100 of air under it. The caller says which partner
-   *  it has; the component cannot see the band. */
-  oneColumn?: boolean;
-  /** THE FOOT, PART 7's fourth part, where earned (2026-09-23, the city's `20
-   *  crew`): companion figures at 16 under a hairline after the list, drawn by
-   *  the same `CompanionRow` RankedBars' foot uses, so the two list cards' feet
-   *  are one markup. The crew card's is the week's usual hours, which is the
-   *  other half of a wage bill and belongs to this card rather than to one of
-   *  its own. */
-  foot?: { items: Companion[]; line?: string | null } | null;
-  /** THE GROUPED FORM (plan 2026-10-08, home sections, section 2; GroupedMarkList below says why): one measure over sets never
-   *  ranked together, each a short ranked list under its own head, in one card under one headline. With it `rows` is not read. */
-  groups?: MarkGroup[] | null;
 };
+
+export type MarkListProps = MarkListShared &
+  (
+    | {
+        /** How many members of the set hold no figure. Declared even when zero: the
+         *  harness reads it against the presence of the line below. */
+        withheld?: number;
+        withheldLine?: string | null;
+        /** THE COMPOSER'S WORD THAT THE WIDE SEAT OPENS NO HOLE (2026-09-20): the
+         *  two-column form below exists for a wide card beside a SHORTER partner
+         *  (PART 5's clause is about the hole a tall one-column list opens beside
+         *  it). Beside a TALLER partner the one-column list is the fit, and two
+         *  columns would leave the list's own card short: the trade page's `13
+         *  rivals` at 693 stands 397 in one column beside the donut's 409, and 308
+         *  in two columns with 100 of air under it. The caller says which partner
+         *  it has; the component cannot see the band. */
+        oneColumn?: boolean;
+        /** THE FOOT, PART 7's fourth part, where earned (2026-09-23, the city's `20
+         *  crew`): companion figures at 16 under a hairline after the list, drawn by
+         *  the same `CompanionRow` RankedBars' foot uses, so the two list cards' feet
+         *  are one markup. The crew card's is the week's usual hours, which is the
+         *  other half of a wage bill and belongs to this card rather than to one of
+         *  its own. */
+        foot?: { items: Companion[]; line?: string | null } | null;
+        /** The one-set form: no groups. */
+        groups?: null;
+      }
+    | {
+        /** THE GROUPED FORM (plan 2026-10-08, home sections, section 2; GroupedMarkList below says why): one measure over sets never
+         *  ranked together, each a short ranked list under its own head, in one card under one headline. Its body does not read `rows`
+         *  (still required: pass an empty list), `withheld`, `withheldLine`, `oneColumn` or `foot`, so those last four are refused at
+         *  the type level; and `head.name` gives way to each group's name (only `head.value` is read). */
+        groups: MarkGroup[];
+        withheld?: never;
+        withheldLine?: never;
+        oneColumn?: never;
+        foot?: never;
+      }
+  );
 
 /* THE MARK COLUMN, and why it is a constant. See clause 5 of the header: one
    column shared by every row is what lands every name at one left edge, and
@@ -399,7 +416,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
 
 /**
  * THE GROUPED FORM (plan 2026-10-08, home sections, section 2: Latin America's countries and Africa's on one measure, his ideas
- * "LATAM Gems" and "Best of Africa"). One measure over two or more sets a reader must never see ranked together, so each set is its
+ * "LATAM Gems" and "Best of Africa"). One measure over one or more sets a reader must never see ranked together, so each set is its
  * own short ranked list under its own head, in one card under one headline, as the one-set form draws one. The law, the one-set
  * form's where it can be:
  *  - THE FLOOR, EVERY GROUP: a group under four rows (MARK_LIST_FLOOR) draws nothing, and then the whole card draws nothing, so a
@@ -408,13 +425,14 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
  *    edge (the page laws' ALIGNMENT); the mark column only where a row carries a mark, the arrow column only where a row is a door.
  *  - THE GROUPS ONE UNDER ANOTHER AT EVERY WIDTH: the card stands in a half of a level (504px at 1280), where two lists side by side
  *    would leave each country's name about 120px.
- *  - A ROW IS THE ONE-SET FORM'S ROW (the same cells and classes), 44 tall at the least, so a door is a tap at 375.
+ *  - A ROW IS THE ONE-SET FORM'S ROW (the same cells and classes), 44 tall at the least, so a door is a tap at 375. A change to the
+ *    one-set form's row cells is mirrored here.
  *  - THE REST OF A GROUP BEHIND THE FOUNDER'S PLUS (DetailPanel, closed on arrival; his clause 58, parts behind a click), each row
  *    a name and its figure, stamped where it came from.
  *  - THE HEADLINE IS WHAT THE GROUPS ARE READ AGAINST: the one-set form's middle of its set; here what its label names (the home
  *    passes the UK's own figure on the same measure). Ink at 30, never the accent.
  */
-function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, groups, fmt }: Pick<MarkListProps, "id" | "kicker" | "icon" | "tagged" | "headline" | "basis" | "head" | "fmt"> & { groups: MarkGroup[] }) {
+function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, groups, fmt }: Pick<MarkListShared, "id" | "kicker" | "icon" | "tagged" | "headline" | "basis" | "head" | "fmt"> & { groups: MarkGroup[] }) {
   if (groups.length === 0 || groups.some((g) => g.rows.length < MARK_LIST_FLOOR) || !Number.isFinite(headline.value)) return null;
   const all = groups.flatMap((g) => g.rows);
   const marks = all.some((r) => r.mark != null);

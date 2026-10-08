@@ -46,9 +46,9 @@ import { COPY } from "./copy";
 import type { Provenance } from "@/lib/spine/provenance";
 
 export type TierRow = { tier: string; local_term?: string; cost_usd?: number; days?: number; complexity_1_5?: number };
-/** A row of the figures shape: the name block's two lines and the two figures as printed (null prints an en dash). */
-/** `aProv`, `bProv` (plan 2026-10-08, home sections): where each figure came from, stamped on it (the provenance ratchet); a row
- *  that passes none stamps nothing, as before. */
+/** A row of the figures shape: the name block's two lines and the two figures as printed (null prints an en dash). `aProv`, `bProv`
+ *  (plan 2026-10-08, home sections): where each figure came from, stamped on it (the provenance ratchet); a row that passes none
+ *  stamps nothing, as before. */
 export type TiersFigureRow = { key: string; name: string; sub?: string | null; a: string | null; b: string | null; aProv?: Provenance | null; bProv?: Provenance | null };
 export type TiersHeads = { name?: string; a: string; b: string };
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
