@@ -622,9 +622,11 @@ const GATES: Gate[] = [
   { name: "home-firms-last", script: "tests/home/firms_last.test.ts" },
   /* Section 2, where new companies open: Latin America and Africa, one year, each region within itself, the labour-force floor. */
   { name: "home-new-companies", script: "tests/home/new_companies.test.ts" },
-  /* Section 3, where US restaurants grew and shrank: one trade, 45 metros, two years, two counts a row. */
+  /* Section 3, where US restaurants grew and shrank: one trade, 45 read, 44 ranked (Detroit held out, plan decision 12), two years,
+     two counts a row. */
   { name: "home-us-restaurants", script: "tests/home/us_restaurants.test.ts" },
-  /* Section 4, how figures are made: a technique a figure, counts of pages a visitor can reach, the one estimates line. */
+  /* Section 4, how figures are made: a technique a figure, the notices and their match rate, the London trade pages read from the
+     band counts. */
   { name: "home-how-made", script: "tests/home/how_made.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */

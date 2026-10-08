@@ -1812,7 +1812,6 @@
       "reads": [
         "data/cities/city_list_v1.json",
         "data/home/city_survival.json",
-        "data/sections/survival.json",
         "data/uk/registers/survival.json"
       ],
       "claims": []
