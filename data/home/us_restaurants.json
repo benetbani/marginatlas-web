@@ -1,5 +1,21 @@
 {
  "from": 2019,
+ "held_out": [
+  {
+   "area": "C1982",
+   "codes": [
+    null,
+    null
+   ],
+   "name": "Detroit",
+   "slug": "detroit",
+   "state": "MI",
+   "title": "Detroit-Warren-Dearborn, MI Metro Area",
+   "why": "Michigan's count of every kind of business jumps in 2022 and 2023, far ahead of its jobs",
+   "y_from": 2950,
+   "y_to": 3413
+  }
+ ],
  "metros": [
   {
    "area": "C1206",
@@ -156,19 +172,6 @@
    "title": "Denver-Aurora-Lakewood, CO Metro Area",
    "y_from": 2275,
    "y_to": 2398
-  },
-  {
-   "area": "C1982",
-   "codes": [
-    null,
-    null
-   ],
-   "name": "Detroit",
-   "slug": "detroit",
-   "state": "MI",
-   "title": "Detroit-Warren-Dearborn, MI Metro Area",
-   "y_from": 2950,
-   "y_to": 3413
   },
   {
    "area": "C4652",

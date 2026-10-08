@@ -296,6 +296,16 @@ METROS: dict[str, tuple[str, str]] = {
     "sacramento": ("C4090", "CA"), "salt-lake-city": ("C4162", "UT"), "san-antonio": ("C4170", "TX"), "san-diego": ("C4174", "CA"), "san-francisco": ("C4186", "CA"),
     "san-jose": ("C4194", "CA"), "seattle": ("C4266", "WA"), "st-louis": ("C4118", "MO"), "tampa": ("C4530", "FL"), "washington-dc": ("C4790", "DC"),
 }
+# THE METROS HELD OUT OF THE RANKING, each with its reason (plan 2026-10-08, home sections, decision 12). A held-out metro keeps its
+# counts in the slice, in `held_out` with its reason, and is never ranked: recorded and never printed, as section 1 holds out
+# Birmingham. A member is featured only with a reason, and a gain that is the count's own step is not one. Detroit: the Task 4 review
+# measured (2026-10-08, from the QCEW files on this machine; the plan's decision 12 carries the figures) that Michigan's count of
+# every kind of business steps up in 2022 and 2023, in nearly every sector and far ahead of its jobs, and that the Detroit metro's
+# full-service restaurants follow that whole count, so its gain rides on the step. Each key must be one of the US cities with a
+# page; the export refuses otherwise.
+HELD_OUT: dict[str, str] = {
+    "detroit": "Michigan's count of every kind of business jumps in 2022 and 2023, far ahead of its jobs",
+}
 
 
 def title_states(title: str) -> list[str]:
@@ -311,12 +321,17 @@ def us_restaurants() -> None:
     the first and the last year the parsed files hold. A row the publisher marks "N" withholds employment and wages, never its
     count of establishments, so the count is kept and the mark recorded. Each city's metro is its code and its state, both typed in
     METROS; the title the code resolves to must name the city and hold the state, so a code that lands on a metro of the same name
-    in another state is refused."""
+    in another state is refused. A metro named in HELD_OUT moves out of `metros` into `held_out`, with every field its row carries
+    and its reason, so its counts stay in the slice and it is never ranked; the manifest's rows count both lists, and a HELD_OUT key
+    that is not one of the cities is refused."""
     import pyarrow.parquet as pq
 
     us = cities_of("US")
     if [c["slug"] for c in us] != sorted(METROS):
         refuse(f"the city list's US cities are not the metros this export reads ({len(us)} against {len(METROS)})")
+    unknown = sorted(set(HELD_OUT) - {c["slug"] for c in us})
+    if unknown:
+        refuse(f"HELD_OUT names {', '.join(repr(k) for k in unknown)}, not among the {len(us)} US cities with a page: correct the key in HELD_OUT in scripts/data/home/export_home.py, or take it out")
     titles: dict[str, str] = {}
     with Path(SUSB).open(encoding="latin-1", newline="") as f:
         for row in csv.reader(f):
@@ -359,8 +374,11 @@ def us_restaurants() -> None:
         metros.append({"slug": c["slug"], "name": c["name"], "area": a, "state": state, "title": t, "y_from": int(f0[0]), "y_to": int(f1[0]), "codes": [f0[1], f1[1]]})
     if len({m["area"] for m in metros}) != len(metros):
         refuse("two cities share one metro")
-    obj = {"trade": {"naics": TRADE[0], "title": TRADE[1]}, "ownership": "private", "from": first, "to": last, "metros": metros}
-    write("us_restaurants.json", obj, len(metros), [
+    # A metro held out leaves the ranking with every field its row carries, and its reason beside them; the rows count both lists.
+    ranked = [m for m in metros if m["slug"] not in HELD_OUT]
+    held_out = [{**m, "why": HELD_OUT[m["slug"]]} for m in metros if m["slug"] in HELD_OUT]
+    obj = {"trade": {"naics": TRADE[0], "title": TRADE[1]}, "ownership": "private", "from": first, "to": last, "metros": ranked, "held_out": held_out}
+    write("us_restaurants.json", obj, len(ranked) + len(held_out), [
         source("qcew_from", f"{QCEW_DIR}/qcew_cells_{first}.parquet", "bls", f"Quarterly Census of Employment and Wages, {first} annual averages, private establishments, parsed"),
         source("qcew_to", f"{QCEW_DIR}/qcew_cells_{last}.parquet", "bls", f"Quarterly Census of Employment and Wages, {last} annual averages, private establishments, parsed"),
         source("metro_titles", SUSB, None, "Statistics of US Businesses 2021, metro areas: each code's published name, read to check the codes", prints=False),
