@@ -1,9 +1,10 @@
 /**
  * HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4; his ideas of 2026-10-08, "the deep techniques used to derive
  * data", "unmatched archival capability" and "the global coverage", merged as the audit found them honest). Each technique shown
- * by a figure it produced, counts only of pages a visitor can reach, and the home's one line that outside the UK the pages print
- * estimates. The notices count comes from data/home/method.json (the registers' failures table, by
- * scripts/data/home/export_home.py); the other counts are worked out from this repo's files.
+ * by a figure it produced, in two rows: the names matched and the London trade pages. No row counts countries and the home prints
+ * no estimates line, so the global coverage is not built (his ruling of 2026-10-07: the home's 195 counter is wrong). The notices
+ * and names counts come from data/home/method.json (the registers' failures table, by scripts/data/home/export_home.py); the
+ * trade pages are counted from this repo's files.
  *
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
  * manifest's row count is its content's (one); its counts nest (names matched within names, names within notices, the unmatched

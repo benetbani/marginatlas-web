@@ -83,8 +83,9 @@ with the Write tool (every test holds regex backslashes).
 - **Section 4's sources:** `E:/atlas/registers/uk/tables/company_failures_by_trade.json` `match`: 31,926 notices, 31,376 company
   names, 30,510 names matched, 1,137 notices unmatched; its `source` string is `data/uk/registers/failures.json`'s. Nothing in the
   website repo holds those counts, so section 4 needs an export too. In the repo: 111 live trades have London takings read from the
-  band counts (`londonTradeSales(slug).q50.open === false`; 90 codes; the UK page's money card ranks 16 of them, one a code); all
-  195 country pages are indexable (`isIndexable`: the 194 outside the UK at their floor in `data/seo/floor_census.json`, and `/gb`).
+  band counts (`londonTradeSales(slug).q50.open === false`; 90 codes; the UK page's money card ranks 16 of them, one a code). The
+  draft's third row, the country pages a visitor can reach (195), is gone: the owner called the home's 195 counter wrong on
+  2026-10-07, and the home prints no count of countries (decision 8).
 - **The forms:** BarList (`src/components/spine/charts/BarList.tsx`) takes `mark`, `fill`, `reference`, `look="plain"`; MarkList
   draws one set; TiersTable's figures shape draws a name and two figures but stamps no provenance; DetailPanel's rows stamp none;
   Focal draws ink only; CityCards takes `fill`. `archetype-coverage` needs an archetype tag inside every `<Box` of a home file.
@@ -95,10 +96,10 @@ Exactly four sections, the audit's top four, in two-up levels; section 1 paired 
 level, section 4 with the notebook; Birmingham held out, its reason recorded, not printed; Latin America and Africa in one section,
 no tabs or chips (native `<details>` allowed); one trade, 2019 against 2023, top five and bottom five, two numbers a row, never a
 percent or a composite; section 4 quiet, each technique shown by a figure it produced, counts only of pages a visitor can reach,
-the home's one line that figures outside the UK are estimates; data only from files on disk, exported by a script with a manifest
-and a gate; sources named on About the figures, never in the home's copy; one heading and at most one line a section, twelve
-words, no semicolon, no "modelled", "withheld", "on file", no em dash; three loud moments; the type ladder and width ratchets only
-shrink.
+no count of countries and no line that figures outside the UK are estimates (amended 2026-10-08, decision 8); data only from files
+on disk, exported by a script with a manifest and a gate; sources named on About the figures, never in the home's copy; one
+heading and at most one line a section, twelve words, no semicolon, no "modelled", "withheld", "on file", no em dash; three loud
+moments; the type ladder and width ratchets only shrink.
 
 ## Decisions taken here beyond the brief
 
@@ -118,10 +119,16 @@ shrink.
 7. **Shared forms gain small optional props:** MarkList a grouped form (`groups`), TiersTable figure rows and DetailPanel rows a
    `prov` each (the home's provenance baseline is 0), Focal an `accent`; each proven byte-identical where it is not passed. Section
    1's bars and the UK cities' rows both `fill` their level (`even`); the world level is not `even` (open sections, each its height).
-8. **Section 4 shows the match rate:** its focal is the 31,926 company notices (insolvencies and solvent liquidations alike); its
-   first row "Names matched, 30,510 of 31,376", so the technique's honesty is on the card; its last row "Country pages, 195" carries
-   the line "Outside the UK, these pages print estimates." (worded for the pages, so it never reads as a claim on sections 2 and 3,
-   which are published or counted).
+8. **Section 4 shows the match rate and prints no count of countries:** its focal is the 31,926 company notices (insolvencies and
+   solvent liquidations alike); its first row "Names matched, 30,510 of 31,376", so the technique's honesty is on the card; its
+   second row "London trade pages, 111"; then its door to About the figures. **Amended 2026-10-08, before Tasks 12 to 17 were
+   built:** the draft's last row "Country pages, 195", with the line "Outside the UK, these pages print estimates.", is gone. On
+   2026-10-07 the owner called the home's "195 COUNTRIES" counter wrong (`E:/atlas/rules/FOUNDER-VERDICTS.md`, "Countries, the
+   still hero, the home reformed and switched on": "the picker's count is wrong"), and that night's fix took every count off the
+   home (`tests/trust/home_shape.test.ts` holds "no counts"); printing 195 again, whatever its note, brings back the number he
+   rejected. The estimates line goes with the row: no figure the home prints is an estimate (the UK answers and registers are
+   official or counted; sections 1 to 3 are published or counted), and each country page says so on itself. His idea "Section
+   for the global coverage" is not built (Out of scope, named).
 9. **The sources page gains a second list,** `WORLD_SOURCES` in `src/lib/spine/uk_sources.ts` (the one module allowed to name a
    source), printed on About the figures under the UK's: the World Bank and the US Bureau of Labor Statistics.
 10. **The grouped MarkList has no story on the archetype sheet** (the sheet's instances are keyed off builders; a fixture story
@@ -1285,9 +1292,10 @@ Create `tests/home/how_made.test.ts`:
 /**
  * HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4; his ideas of 2026-10-08, "the deep techniques used to derive
  * data", "unmatched archival capability" and "the global coverage", merged as the audit found them honest). Each technique shown
- * by a figure it produced, counts only of pages a visitor can reach, and the home's one line that outside the UK the pages print
- * estimates. The notices count comes from data/home/method.json (the registers' failures table, by
- * scripts/data/home/export_home.py); the other counts are worked out from this repo's files.
+ * by a figure it produced, in two rows: the names matched and the London trade pages. No row counts countries and the home prints
+ * no estimates line, so the global coverage is not built (his ruling of 2026-10-07: the home's 195 counter is wrong). The notices
+ * and names counts come from data/home/method.json (the registers' failures table, by scripts/data/home/export_home.py); the
+ * trade pages are counted from this repo's files.
  *
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
  * manifest's row count is its content's (one); its counts nest (names matched within names, names within notices, the unmatched
@@ -2356,8 +2364,7 @@ import turnoverJson from "../../data/uk/registers/turnover.json";
 import { buildHowMade } from "../../src/lib/home/how_made";
 import { londonTradeSales } from "../../src/lib/uk/registers/london_trade";
 import { buildLondonTradeSales } from "../../src/lib/spine/country_depth_rows";
-import { COUNTRIES, SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
-import { isUkPage } from "../../src/lib/seo/indexable";
+import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { COPY } from "../../src/lib/spine/copy";
 ```
 
@@ -2366,8 +2373,8 @@ above ` * Run: npx tsx tests/home/how_made.test.ts` add:
 ```ts
  * Holds the builder (src/lib/home/how_made.ts): the focal is the slice's notices; the names matched are the slice's, of its names;
  * the London trade pages read from the band counts are counted from the register slice, at least the trades the UK page's money
- * card ranks; the country pages are the indexable ones, worked out again from the floor census; the last row carries the home's one
- * line that outside the UK the pages print estimates; every figure stamped; the focal's line twelve words at most.
+ * card ranks; no row counts countries and the copy holds no countries row (his ruling of 2026-10-07: the home's 195 counter is
+ * wrong); every figure stamped; the focal's line twelve words at most.
  *
 ```
 
@@ -2384,11 +2391,7 @@ if (built && d) {
   check(`the names matched are the slice's, of its names (${row("matched")?.value})`, row("matched")?.value === `${n(d.matched_names)} of ${n(d.names)}`);
   const trades = Object.keys((turnoverJson as { trades: Record<string, unknown> }).trades).filter((s) => Object.hasOwn(SLUG_TO_INDUSTRY, s) && londonTradeSales(s)?.q50.open === false).length;
   check(`the London trade pages read from the band counts are counted (${row("trades")?.value}; the UK page's money card ranks ${buildLondonTradeSales()?.rows.length} of them, one a code)`, row("trades")?.value === n(trades) && trades >= (buildLondonTradeSales()?.rows.length ?? Number.POSITIVE_INFINITY));
-  const census = JSON.parse(readFileSync("data/seo/floor_census.json", "utf8")) as { floors: Record<string, number>; pages: Record<string, { surface: string; blocks: number }> };
-  const atFloor = Object.values(census.pages).filter((e) => e.surface === "country" && e.blocks >= census.floors.country).length;
-  const uk = COUNTRIES.filter((c) => isUkPage(`/${c.code.toLowerCase()}`)).length;
-  check(`the country pages are the indexable ones (${row("countries")?.value}: ${atFloor} at their floor and ${uk} of the UK)`, row("countries")?.value === n(atFloor + uk));
-  check(`the last row carries the home's one estimates line ("${row("countries")?.note}")`, built.rows[built.rows.length - 1]?.key === "countries" && row("countries")?.note === COPY.home.howMade.countries.note && /Outside the UK/.test(row("countries")?.note ?? "") && /estimates/.test(row("countries")?.note ?? ""));
+  check("no row counts countries (his ruling of 2026-10-07: the home's 195 counter is wrong)", !built.rows.some((r) => /countr/i.test(r.label)) && !Object.keys(COPY.home.howMade).includes("countries"));
   check("every figure says where it came from", built.rows.every((r) => r.prov.src.length > 0 && r.prov.kind === "counted"));
   check("the door goes to About the figures", built.link.href === "/about-data" && built.link.label === COPY.home.howMade.link);
   const words = built.notices.words.split(/\s+/).filter(Boolean).length;
@@ -2406,14 +2409,13 @@ In `src/lib/spine/copy.ts`, above the `PRO, QUIETLY` comment line, add:
 
 ```ts
     /** HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4): the title, the focal's one line (the notices and the
-     *  technique), each row's label (three words at most) and note, and the door to About the figures. The countries' note is the
-     *  home's one line that outside the UK the pages print estimates (his copy ruling: say how the numbers are made once a page). */
+     *  technique), each row's label (three words at most) and note, and the door to About the figures. No countries row and no
+     *  line that the pages print estimates (his ruling of 2026-10-07: the home's 195 counter is wrong). */
     howMade: {
       kicker: "How figures are made",
       words: "Company notices in a year, matched by name to the company register",
       matched: { label: "Names matched", note: "Company names in the notices, found in the register" },
       trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
-      countries: { label: "Country pages", note: "Outside the UK, these pages print estimates." },
       link: "About the figures",
     },
 ```
@@ -2430,23 +2432,22 @@ Create `src/lib/home/how_made.ts`:
  * data", "unmatched archival capability" and "the global coverage", merged as the audit found them honest). Each technique shown by
  * a figure it produced: a year of company notices matched by name to the company register (the focal, and the names matched of
  * the names they held, so the match rate is on the card), and London's trades' takings read from the official counts by turnover
- * band (the trade pages that print one); then the country pages a visitor can reach (every one indexable), with the home's one
- * line that outside the UK the pages print estimates. Counts of distinct records and of reachable pages only, never cells or slots
- * (src/lib/coverage/report.ts says why). Quiet: no accent. The notices from data/home/method.json; the rest worked out from this
- * repo's own files, never typed.
+ * band (the trade pages that print one). No count of countries and no line that the pages print estimates: his ruling of
+ * 2026-10-07 is that the home's 195 counter is wrong, so the global coverage is not built. Counts of distinct records and of
+ * reachable pages only, never cells or slots (src/lib/coverage/report.ts says why). Quiet: no accent. The notices from
+ * data/home/method.json; the rest worked out from this repo's own files, never typed.
  */
 import methodJson from "../../../data/home/method.json";
 import turnoverJson from "../../../data/uk/registers/turnover.json";
 import { londonTradeSales } from "@/lib/uk/registers/london_trade";
-import { COUNTRIES, SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
-import { isIndexable } from "@/lib/seo/indexable";
+import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
 import { hasOwn } from "@/lib/own";
 import type { Provenance } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
 
 type Export = { notices: number; names: number; matched_names: number };
 
-export type HowMadeRow = { key: "matched" | "trades" | "countries"; label: string; value: string; note: string; prov: Provenance };
+export type HowMadeRow = { key: "matched" | "trades"; label: string; value: string; note: string; prov: Provenance };
 export type HowMade = { notices: { figure: string; words: string; prov: Provenance }; rows: HowMadeRow[]; link: { href: string; label: string } };
 
 const n = (v: number) => v.toLocaleString("en-US");
@@ -2456,16 +2457,13 @@ export function buildHowMade(): HowMade | null {
   if (![m.notices, m.names, m.matched_names].every((v) => Number.isInteger(v) && v > 0)) return null;
   /* A London trade page prints takings read from the band counts where its register median falls in a closed band. */
   const trades = Object.keys((turnoverJson as { trades: Record<string, unknown> }).trades).filter((s) => hasOwn(SLUG_TO_INDUSTRY, s) && londonTradeSales(s)?.q50.open === false).length;
-  /* Every country page a search engine may index: the UK's, and the others counted at their floor (src/lib/seo/indexable.ts). */
-  const countries = COUNTRIES.filter((c) => isIndexable(`/${c.code.toLowerCase()}`)).length;
-  if (trades === 0 || countries === 0) return null;
+  if (trades === 0) return null;
   const C = COPY.home.howMade;
   return {
     notices: { figure: n(m.notices), words: C.words, prov: { src: "home/method.json:notices", kind: "counted" } },
     rows: [
       { key: "matched", label: C.matched.label, value: `${n(m.matched_names)} of ${n(m.names)}`, note: C.matched.note, prov: { src: "home/method.json:matched_names of names", kind: "counted" } },
       { key: "trades", label: C.trades.label, value: n(trades), note: C.trades.note, prov: { src: "uk/registers/turnover.json:London trades with takings read from the band counts", kind: "counted" } },
-      { key: "countries", label: C.countries.label, value: n(countries), note: C.countries.note, prov: { src: "seo/floor_census.json:country pages a search engine may index", kind: "counted" } },
     ],
     link: { href: "/about-data", label: C.link },
   };
@@ -2476,7 +2474,7 @@ export function buildHowMade(): HowMade | null {
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t12.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t12.txt`
 Expected: `the focal is the slice's notices, 31,926`, `(30,510 of 31,376)`, `(111; the UK page's money card ranks 16 of them, one a
-code)`, `(195: 194 at their floor and 1 of the UK)`, `home/how_made: all pass`, `exit 0`.
+code)`, `no row counts countries (his ruling of 2026-10-07: the home's 195 counter is wrong)`, `home/how_made: all pass`, `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write > scratchpad/home-sections/c12.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/c12.txt` → `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=1 --no-bail --only=home-how-made,copy-no-method-words,model-laws-copy,archetype-copy,no-em-dashes,no-source-agencies,layering,counts-fresh > scratchpad/home-sections/g12.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/g12.txt`
 Expected: `Passed: 8`, `Failed: 0`.
@@ -2485,7 +2483,7 @@ Expected: `Passed: 8`, `Failed: 0`.
 
 ```bash
 git add src/lib/home/how_made.ts src/lib/spine/copy.ts tests/home/how_made.test.ts scripts/gates.json
-git commit -m "buildHowMade: the notices and their match rate, the London trade pages read from the bands, the indexable country pages with the home's one estimates line (plan 2026-10-08, home sections, section 4)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+git commit -m "buildHowMade: the notices and their match rate, the London trade pages read from the bands, no count of countries (plan 2026-10-08, home sections, section 4)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -2701,8 +2699,8 @@ import { HomeHowMade } from "../../src/components/spine/home/HomeHowMade";
 and above `if (failed > 0) {` add:
 
 ```ts
-/* THE DRAWING (plan Task 14): quiet (no accent), the focal and three ruled rows, the estimates line printed once, every figure
-   stamped, one supporting line, the door to About the figures. */
+/* THE DRAWING (plan Task 14): quiet (no accent), the focal and two ruled rows, no count of countries and no estimates line, every
+   figure stamped, one supporting line, the door to About the figures. */
 if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeHowMade, { how: built }));
   const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
@@ -2710,7 +2708,7 @@ if (built) {
   check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html));
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === 1 + built.rows.length && figs.every((f) => /data-src="/.test(f) && /data-kind="counted"/.test(f)));
-  check("the estimates line is printed once", text.split(COPY.home.howMade.countries.note).length === 2);
+  check("no count of countries and no estimates line", !/Country pages/.test(text) && !/Outside the UK, these pages print estimates/.test(text));
   check("one supporting line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.notices.words));
   check("the door to About the figures", html.includes(`href="${built.link.href}"`) && html.includes(built.link.label) && /tap-y/.test(html));
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
@@ -2765,10 +2763,10 @@ Create `src/components/spine/home/HomeHowMade.tsx`:
 ```tsx
 /**
  * HOW FIGURES ARE MADE ON THE HOME PAGE (plan 2026-10-08, home sections, section 4): the notices read, at 30 in ink (quiet: no
- * accent), with the technique in its one line, then three ruled rows (FactRows): the names matched of the names the notices held,
- * the London trade pages whose takings are read from the band counts, the country pages, the last carrying the home's one line that
- * outside the UK the pages print estimates; then one door to About the figures, where every source is named. It stands beside the
- * notebook. Every figure from src/lib/home/how_made.ts, stamped.
+ * accent), with the technique in its one line, then two ruled rows (FactRows): the names matched of the names the notices held,
+ * and the London trade pages whose takings are read from the band counts; no count of countries and no estimates line (his ruling
+ * of 2026-10-07: the home's 195 counter is wrong); then one door to About the figures, where every source is named. It stands
+ * beside the notebook. Every figure from src/lib/home/how_made.ts, stamped.
  */
 import * as React from "react";
 import { Box, Rail } from "@/components/spine/kit";
@@ -2796,7 +2794,7 @@ export function HomeHowMade({ how }: { how: HowMade }) {
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t14a.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t14a.txt`
 Expected: `one figure in the accent, the lead's (1)`, `every figure says where it came from (21)`, `home/us_restaurants: all pass`, `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t14b.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t14b.txt`
-Expected: `every figure says where it came from (4)`, `home/how_made: all pass`, `exit 0`.
+Expected: `every figure says where it came from (3)`, `home/how_made: all pass`, `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write > scratchpad/home-sections/c14.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/c14.txt` → `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=1 --no-bail --only=home-us-restaurants,home-how-made,archetype-coverage,no-terra-hover,legacy-method-words,no-hardcoded-place,no-hardcoded-hex,type-ladder,width-discipline,distance-ladder,one-display,layering,counts-fresh > scratchpad/home-sections/g14.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/g14.txt`
 Expected: `Passed: 13`, `Failed: 0`.
@@ -2805,7 +2803,7 @@ Expected: `Passed: 13`, `Failed: 0`.
 
 ```bash
 git add src/components/spine/home/HomeUsRestaurants.tsx src/components/spine/home/HomeHowMade.tsx tests/home/us_restaurants.test.ts tests/home/how_made.test.ts scripts/gates.json
-git commit -m "Sections 3 and 4 drawn: the leading metro's count added in the accent over two tables of two counts; the notices, the match rate, the trade pages, the country pages and the one estimates line (plan 2026-10-08, home sections)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+git commit -m "Sections 3 and 4 drawn: the leading metro's count added in the accent over two tables of two counts; the notices, the match rate and the trade pages, no count of countries (plan 2026-10-08, home sections)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
 ---
@@ -3081,9 +3079,10 @@ with:
         }]
       : []),
     /* THE LAST LEVEL: HOW FIGURES ARE MADE BESIDE THE NOTEBOOK (section 4; masterplan step 36, the notebook last). The page's one
-       place to say how its figures are made, and that outside the UK the pages print estimates; quiet, no accent. It ends level
-       while both draw (`even`): the notebook's posts share the height in equal rows, as they did beside the cities. NO NEWSLETTER
-       BAND AFTER IT (his instruction of 2026-10-07): the footer's newsletter bar asks once on every page. */
+       place to say how its figures are made; quiet, no accent, no count of countries (his ruling of 2026-10-07: the home's 195
+       counter is wrong). It ends level while both draw (`even`): the notebook's posts share the height in equal rows, as they did
+       beside the cities. NO NEWSLETTER BAND AFTER IT (his instruction of 2026-10-07): the footer's newsletter bar asks once on every
+       page. */
     ...(howMade || notebook.length
       ? [{
           key: "method",
@@ -3139,8 +3138,8 @@ git commit -m "The home wired: three pairs after the registers (firms last | cit
 
 - [ ] **Step 1: The render is the wired home's**
 
-Run: `node -e "const s=require('fs').readFileSync('scratchpad/harness/pages/home-gb.html','utf8');for(const t of ['id=\"firms-last\"','id=\"new-companies\"','id=\"us-restaurants\"','id=\"how-made\"','data-form=\"groups\"','Outside the UK, these pages print estimates.'])console.log(s.includes(t)?'PRINTS':'ABSENT',t)" > scratchpad/home-sections/r16.txt 2>&1`
-Expected: six `PRINTS` lines. (If an `ABSENT` shows, render again: `bash scratchpad/reform/render_some.sh "home gb"`.)
+Run: `node -e "const s=require('fs').readFileSync('scratchpad/harness/pages/home-gb.html','utf8');for(const t of ['id=\"firms-last\"','id=\"new-companies\"','id=\"us-restaurants\"','id=\"how-made\"','data-form=\"groups\"'])console.log(s.includes(t)?'PRINTS':'ABSENT',t)" > scratchpad/home-sections/r16.txt 2>&1`
+Expected: five `PRINTS` lines. (If an `ABSENT` shows, render again: `bash scratchpad/reform/render_some.sh "home gb"`.)
 
 - [ ] **Step 2: The seven named browser gates on the home, one at a time**
 
@@ -3217,7 +3216,7 @@ Tasks 1 to 15):
 | home:firms-last | SECTION | where new firms last, the UK's cities (his "Midtier city opportunities", the UK's part) | the 2019 cohort's five-year survival per UK city with a page, from the business demography tables through website scripts/data/home/export_home.py; Birmingham held out on the publisher's star, its reason in the slice, never printed; the lead city in the accent; gate home-firms-last | DONE, built on whats-left <first>..<last> (plan website docs/superpowers/plans/2026-10-08-home-sections/PLAN.md); NOT pushed, his word for the deploy |
 | home:new-companies | SECTION | where new companies open, Latin America and Africa (his "LATAM Gems", "Best of Africa", "Rising stars" folded in) | one measure (new limited companies per 1,000 of working age), one year worked out from the series, each region ranked within itself, a labour-force floor with its reason, five a region drawn with flag and name and the rest behind the plus, the UK's own figure for scale; gate home-new-companies | DONE, built on whats-left <first>..<last>; NOT pushed |
 | home:us-restaurants | SECTION | where US restaurants grew and shrank (his "US biggest winners and losers") | one trade (full-service restaurants), 45 metros read and 44 ranked (Detroit held out with its reason), the first and the last year on disk, the five that added most and the five that lost most by the count, two counts a row, never a percent, the leader's count added in the accent; gate home-us-restaurants | DONE, built on whats-left <first>..<last>; NOT pushed |
-| home:how-made | SECTION | how figures are made (his "deep techniques", "archival capability", "global coverage", merged) | the notices read and their match rate, the London trade pages read from the band counts, the indexable country pages with the home's one estimates line, a door to About the figures; quiet; gate home-how-made | DONE, built on whats-left <first>..<last>; NOT pushed |
+| home:how-made | SECTION | how figures are made (his "deep techniques" and "archival capability", merged) | the notices read and their match rate, the London trade pages read from the band counts, a door to About the figures; no count of countries and no estimates line; global coverage: not built (his 2026-10-07 ruling on the 195 counter); quiet; gate home-how-made | DONE, built on whats-left <first>..<last>; NOT pushed |
 | home:hotels | SECTION | hotels in six cities (his idea of 2026-10-08) | London's hotel boroughs from the register slice the site holds now (turnover.json hotels-lodging, under "hotels and similar accommodation"); the six US metros with published 2022 hotel receipts after one export from the 2022 economic census, sector 72; never London against the US on one scale | TODO (NEXT: the home's next round, M) |
 | home:tax-burdens | DATA | high tax burdens in global cities: New York, London, Los Angeles | a US sole-trader engine (federal brackets, self-employment tax, New York's and California's brackets, New York City's resident tax and unincorporated business tax), so every row is worked out on one basis as the UK's is | DATA (not built: only the UK's figure is worked out from the law; New York and Los Angeles would print the same typed rate) |
 | home:rising-stars | RULING | rising stars countries | none as worded | CUT (the site's growth field is a fill; the risers in the new-company series are registration hubs and series breaks; "star" is a verdict; its honest part is home:new-companies) |
@@ -3256,6 +3255,9 @@ typecheck, the render at `scratchpad/harness/pages/home-gb.html`, and that nothi
   the pair is two statistics in two currencies and repeats the duel, the kitchens and the trades answer.
 - **Cash flow masters:** no cash measure on the site; the filed accounts on disk give none for micro-entities.
 - **"Unmatched archival capability" as worded:** a claim no figure proves; its honest half is section 4's notices.
+- **Section for the global coverage:** not built. The owner called the home's 195 counter wrong on 2026-10-07 (`FOUNDER-VERDICTS.md`,
+  "the picker's count is wrong"), and that night's fix took every count off the home; printing 195 again, whatever its note,
+  brings back the number he rejected. Section 4 prints no count of countries and no estimates line (decision 8).
 - **"Context dependent":** not a measure.
 - **Austin, Lublin, Malaga:** no city page or current city source for the two European cities; Austin only on section 3's measure.
 - **The economy's real growth beside section 2** (the audit's suggestion for "rising stars"): a second figure on a quiet card; not

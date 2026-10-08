@@ -167,6 +167,8 @@ Europe first) applies to any list of countries it shows.
 
 **Verdict: BUILD WITH WORDING CHANGE**, as one line or one small card inside idea 1's section.
 
+**Not built (2026-10-08):** the owner called the home's 195 counter wrong on 2026-10-07; the home prints no count of countries.
+
 ### 4. High tax burdens in global cities: NYC, London, LA
 
 **What backs it:** the UK only. `src/lib/spine/uk_tax_on_profit.ts` works out income tax and Class 4 national insurance on the
