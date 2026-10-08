@@ -44,7 +44,7 @@ import type { FactTag } from "@/lib/facts/types";
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "@/lib/spine/copy";
-import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityHeldToSources, cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import { LONDON_GEOGRAPHY, londonTradeRegister } from "@/lib/uk/registers/london_trade";
 import { registerSrc, type Provenance } from "@/lib/spine/provenance";
 
@@ -170,6 +170,9 @@ export function buildCityMarket(slug: string): CityMarketData | null {
   const focal = allFig && allFig.value > 0 ? { figure: whole(allFig.value), tag: allFig.tag } : null;
   const plusRows = focal ? detailRows.filter((r) => r.key !== "all") : detailRows;
   const sample = sampleBars || detailRows.some((r) => r.tag !== "held");
+  /* A UK CITY HELD TO NO REGISTER REGION (the six; plan 2026-10-08, uk:cities-sourced-or-marked): its densities, its count of
+     every business and the plus are the shard's, held with no source, so the one line says they are estimates. */
+  const marked = cityHeldToSources(iso2, slug);
   return {
     form: "density",
     slug,
@@ -177,7 +180,9 @@ export function buildCityMarket(slug: string): CityMarketData | null {
     name: city.name,
     rows,
     worldMax: trades[0].value,
-    basis: C.basis,
+    /* THE ONE LINE IS THE BUILDER'S IN BOTH FORMS (plan 2026-10-08; the card chose the focal's line itself until then): the
+       count's words where the count stands at 30, the bars' otherwise, each its estimate form on the six. */
+    basis: focal ? (marked ? C.basisWithFocalEstimate : C.basisWithFocal) : marked ? C.basisEstimate : C.basis,
     foot: sample ? C.footModelled : null,
     sample,
     detail: plusRows.length >= 2 ? { summary: D.summary, rows: plusRows } : null,

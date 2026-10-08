@@ -20,6 +20,7 @@ import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 import premisesJson from "../../data/uk/registers/premises.json";
 import { readFileSync } from "node:fs";
+import { buildCityMarket } from "../../src/lib/spine/city_market_rows";
 import { cityPeerListRow } from "../../src/lib/spine/city_peer_list";
 import { getCityPeerSet } from "../../src/lib/cities/comparable_cities";
 import { cityTypicalIncome } from "../../src/lib/spine/city_income";
@@ -173,6 +174,19 @@ for (const slug of SIX) {
   check(`${slug}'s peers say which figures are estimates ("${t?.caveat}")`, !!t && t.caveat === (visitors ? COPY.cityPeers.caveatEstimates : COPY.cityPeers.caveatEstimatesNoVisitors));
   check(`${slug}'s UK rows print the survey's pay, the answer's own`, !!t && t.rows.filter((r) => r.iso2 === "GB").every((r) => r.values.income === cityTypicalIncome(r.key ?? "")?.value));
 }
+
+/* WHO IS ALREADY TRADING (plan 2026-10-08): the shard's densities, count and plus, the one line saying they are estimates; the line
+   is the builder's in both forms, and the card prints it as handed. */
+for (const slug of SIX) {
+  const m = buildCityMarket(slug);
+  check(`${slug}'s market keeps the shard's densities, its count and its plus`, m?.form === "density" && !!m.focal && !!m.detail);
+  check(`${slug}'s market says its figures are estimates ("${m?.basis}")`, m?.basis === COPY.cityMarket.basisWithFocalEstimate);
+}
+const parisMarket = buildCityMarket("paris");
+check(`Paris's market line is unchanged ("${parisMarket?.basis}")`, parisMarket?.basis === (parisMarket?.focal ? COPY.cityMarket.basisWithFocal : COPY.cityMarket.basis));
+check("London's market keeps the register's line", buildCityMarket("london")?.basis === COPY.cityMarket.register.basis.replace("{city}", "London"));
+const openingSrc = readFileSync("src/components/spine/city/opening.tsx", "utf8");
+check("the market card prints the line its builder hands it", !/basisWithFocal/.test(openingSrc) && /basis=\{`\$\{market\.basis\}/.test(openingSrc));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");

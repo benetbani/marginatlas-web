@@ -416,6 +416,10 @@ export const COPY = {
     /** The focal's words when the count of every business stands at 30 above the bars; the bars' own basis otherwise. */
     basisWithFocal: "Businesses trading in the city.",
     basis: "Businesses for every 10,000 residents, by trade.",
+    /** The six UK cities held to no register region (plan 2026-10-08, uk:cities-sourced-or-marked): the same two lines, each
+     *  saying the figures are estimates. */
+    basisWithFocalEstimate: "Estimates of the businesses trading in the city.",
+    basisEstimate: "Estimated businesses for every 10,000 residents, by trade.",
     footModelled: "",
     phoneHead: { trade: "Trade", value: "Per 10,000" },
     /** The ceiling's name at the far end of every track (the districts card's "Dearest district"). */

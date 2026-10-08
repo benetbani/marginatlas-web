@@ -2922,6 +2922,7 @@
       "asserts": "LONDON'S CITY PAGE PRINTS A SOURCED FIGURE OR A MARKED ONE (masterplan step 03, 2026-10-05; the labels audit of 2026-10-02, items 19, 22, 23 and 24).",
       "reads": [
         "data/economics/wage_deciles_v1.json",
+        "src/components/spine/city/opening.tsx",
         "src/lib/spine"
       ],
       "claims": []
