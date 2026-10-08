@@ -21,6 +21,7 @@ import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";
 import { getCellBySlug, getTopCells, slugify } from "@/lib/cells";
 import { industryToSlug, INDUSTRY_BY_ID } from "@/lib/taxonomy";
+import { hasOwn } from "@/lib/own";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
@@ -117,7 +118,9 @@ export async function GET(req: NextRequest) {
   const industryId = url.searchParams.get("industry") || "";
   const region = (url.searchParams.get("region") || "").toLowerCase();
 
-  if (!country || !industryId || !INDUSTRY_BY_ID[industryId]) {
+  /* ?industry= is a word from the request: an id the taxonomy holds as its own entry (src/lib/own.ts), so "constructor" is no
+     id (`INDUSTRY_BY_ID["constructor"]` is the Object function, which passed this guard and resolved a trade that is not there). */
+  if (!country || !industryId || !hasOwn(INDUSTRY_BY_ID, industryId)) {
     return NextResponse.json(
       { cell: null, reason: "missing or invalid country/industry" },
       { headers: CACHE_HEADERS },

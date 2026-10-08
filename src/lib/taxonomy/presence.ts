@@ -52,6 +52,7 @@
  * whose queries time out. `scripts/gen_presence_manifest.ts` is the generator.
  */
 import manifestJson from "./presence_manifest.json";
+import { own } from "../own";
 
 /**
  * What the atlas holds for one country crossed with one trade.
@@ -104,12 +105,15 @@ export function presenceOf(country: string, activity: string): Presence {
      manifest is generated, and it is deliberately the same as no change. */
   if (!isManifestUsable()) return "measured";
 
-  const forCountry = MANIFEST.countries[country.toLowerCase()];
+  /* The manifest's own entries only (src/lib/own.ts): a country word that names a built-in ("constructor") is an unknown
+     country, which the line below publishes; read as MANIFEST.countries[word] it was the Object function, a country the
+     manifest "holds" nothing for, and hid. */
+  const forCountry = own(MANIFEST.countries, country.toLowerCase());
   /* An unknown COUNTRY is a gap in the manifest, not a statement about the
      country. Publish. */
   if (!forCountry) return "measured";
 
-  const held = forCountry[activity];
+  const held = own(forCountry, activity);
   /* An unknown PAIR inside a known country IS meaningful: the generator walks
      every activity for every country it lists, so a missing pair means the
      query ran and found nothing. */

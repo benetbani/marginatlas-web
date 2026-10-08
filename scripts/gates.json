@@ -2736,6 +2736,19 @@
       "claims": []
     },
     {
+      "name": "request-word-keys",
+      "script": "tests/routing/request_word_keys.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A WORD FROM THE REQUEST THAT NAMES A BUILT-IN NAMES NOTHING, IN TWO MORE READERS (2026-10-08).",
+      "reads": [
+        "src/app/api/cell-lookup/route.ts",
+        "src/lib/taxonomy/presence.ts",
+        "tests/routing/request_word_keys.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-session-recording",
       "script": "tests/app/no_session_recording.test.ts",
       "args": [],
