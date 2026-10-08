@@ -16,6 +16,31 @@
      "title": "Business demography, UK: 2024, reference tables, Table 5.1a: the 2019 births and their survival"
     }
    ]
+  },
+  "new_companies.json": {
+   "built": "2026-10-08",
+   "rows": 86,
+   "sha256": "ae48d688efd73f577d67a621341b08f5fd860eb03819b2f9b955ad19e10901fc",
+   "sources": [
+    {
+     "bytes": 4453287,
+     "key": "density",
+     "path": "E:/atlas/macro/global-aggregates/wb-business-density.json",
+     "prints": true,
+     "publisher": "worldbank",
+     "sha256": "14f68734465a04f0c409832002ffd2b7e39e288496b4fd2311a37904532f1781",
+     "title": "New business density (IC.BUS.NDNS.ZS): new limited companies registered per 1,000 people aged 15 to 64"
+    },
+    {
+     "bytes": 3567909,
+     "key": "labour_force",
+     "path": "E:/atlas/macro/global-aggregates/wb-labor-force-total.json",
+     "prints": false,
+     "publisher": "worldbank",
+     "sha256": "eb12269c7bd4abab2ac0277a3b0742d14d0b9f514100de8d8bba29c8da02ff83",
+     "title": "Labor force, total (SL.TLF.TOTL.IN): the list's floor"
+    }
+   ]
   }
  },
  "what": "Slices of files on disk outside this repo, the figures the home page's sections print; do not edit by hand"

@@ -620,6 +620,8 @@ const GATES: Gate[] = [
      (scripts/data/home/export_home.py: the hash, the sources, the arithmetic) and, from its builder's task on, its builder and its
      drawing. Section 1, where new firms last: the UK cities' 2019 cohort after five years, Birmingham held out. */
   { name: "home-firms-last", script: "tests/home/firms_last.test.ts" },
+  /* Section 2, where new companies open: Latin America and Africa, one year, each region within itself, the labour-force floor. */
+  { name: "home-new-companies", script: "tests/home/new_companies.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

@@ -1,0 +1,539 @@
+{
+ "floor": {
+  "at_least": 1000000,
+  "measure": "SL.TLF.TOTL.IN",
+  "why": "a labour force of a million or more keeps out the smallest economies, where a few hundred registrations move the rate and registries for companies run from abroad sit",
+  "year": 2022
+ },
+ "last_updated": "2026-04-08",
+ "measure": "IC.BUS.NDNS.ZS",
+ "regions": [
+  {
+   "key": "latam",
+   "members": [
+    {
+     "iso2": "AG",
+     "labour_force": null,
+     "shown": false,
+     "value": 4.1706817634305
+    },
+    {
+     "iso2": "AR",
+     "labour_force": 21566906,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "BB",
+     "labour_force": 151781,
+     "shown": false,
+     "value": 5.46436468787209
+    },
+    {
+     "iso2": "BO",
+     "labour_force": 6569575,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "BR",
+     "labour_force": 106610573,
+     "shown": true,
+     "value": 5.10297342678039
+    },
+    {
+     "iso2": "BS",
+     "labour_force": 239500,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "BZ",
+     "labour_force": 170023,
+     "shown": false,
+     "value": 4.12506703693092
+    },
+    {
+     "iso2": "CL",
+     "labour_force": 9670728,
+     "shown": true,
+     "value": 10.8180967387068
+    },
+    {
+     "iso2": "CO",
+     "labour_force": 25828593,
+     "shown": true,
+     "value": 2.26470967456442
+    },
+    {
+     "iso2": "CR",
+     "labour_force": 2504874,
+     "shown": true,
+     "value": 5.80110381298134
+    },
+    {
+     "iso2": "CU",
+     "labour_force": 5005156,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "DM",
+     "labour_force": null,
+     "shown": false,
+     "value": 3.29892105875961
+    },
+    {
+     "iso2": "DO",
+     "labour_force": 5169749,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "EC",
+     "labour_force": 8739737,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "GD",
+     "labour_force": null,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "GT",
+     "labour_force": 7234412,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "GY",
+     "labour_force": 313338,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "HN",
+     "labour_force": 4209927,
+     "shown": true,
+     "value": 0.480202003320362
+    },
+    {
+     "iso2": "HT",
+     "labour_force": 5073825,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "JM",
+     "labour_force": 1544707,
+     "shown": true,
+     "value": 2.34358583225023
+    },
+    {
+     "iso2": "KN",
+     "labour_force": null,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "LC",
+     "labour_force": 101159,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "MX",
+     "labour_force": 58544385,
+     "shown": true,
+     "value": 0.878541441393643
+    },
+    {
+     "iso2": "NI",
+     "labour_force": 3108200,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "PA",
+     "labour_force": 2169258,
+     "shown": true,
+     "value": 4.5465775052433
+    },
+    {
+     "iso2": "PE",
+     "labour_force": 18756175,
+     "shown": true,
+     "value": 4.68875474491179
+    },
+    {
+     "iso2": "PR",
+     "labour_force": 1180357,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "PY",
+     "labour_force": 3391301,
+     "shown": true,
+     "value": 0.698347199495881
+    },
+    {
+     "iso2": "SR",
+     "labour_force": 245451,
+     "shown": false,
+     "value": 2.7965514887309
+    },
+    {
+     "iso2": "SV",
+     "labour_force": 2806629,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "TT",
+     "labour_force": 651121,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "UY",
+     "labour_force": 1733922,
+     "shown": true,
+     "value": 3.13035730978014
+    },
+    {
+     "iso2": "VC",
+     "labour_force": 53833,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "VE",
+     "labour_force": 10509662,
+     "shown": false,
+     "value": null
+    }
+   ],
+   "rule": "the profile's world_bank_region is Latin America & Caribbean"
+  },
+  {
+   "key": "africa",
+   "members": [
+    {
+     "iso2": "AO",
+     "labour_force": 14812783,
+     "shown": true,
+     "value": 1.25203659774529
+    },
+    {
+     "iso2": "BF",
+     "labour_force": 9286105,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "BI",
+     "labour_force": 5691432,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "BJ",
+     "labour_force": 6074872,
+     "shown": true,
+     "value": 0.763956635842757
+    },
+    {
+     "iso2": "BW",
+     "labour_force": 1065472,
+     "shown": true,
+     "value": 8.67933058456055
+    },
+    {
+     "iso2": "CD",
+     "labour_force": 35515220,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "CF",
+     "labour_force": 1901019,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "CG",
+     "labour_force": 2408846,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "CI",
+     "labour_force": 11906614,
+     "shown": true,
+     "value": 1.20473298986865
+    },
+    {
+     "iso2": "CM",
+     "labour_force": 10499324,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "CV",
+     "labour_force": 216497,
+     "shown": false,
+     "value": 18.4988998451634
+    },
+    {
+     "iso2": "DJ",
+     "labour_force": 252945,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "DZ",
+     "labour_force": 13145205,
+     "shown": true,
+     "value": 0.631898804803393
+    },
+    {
+     "iso2": "EG",
+     "labour_force": 32394044,
+     "shown": true,
+     "value": 0.268782199147986
+    },
+    {
+     "iso2": "ET",
+     "labour_force": 51764455,
+     "shown": true,
+     "value": 0.486113574580312
+    },
+    {
+     "iso2": "GA",
+     "labour_force": 792686,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "GH",
+     "labour_force": 12434883,
+     "shown": true,
+     "value": 1.32294368573998
+    },
+    {
+     "iso2": "GM",
+     "labour_force": 738066,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "GN",
+     "labour_force": 4337819,
+     "shown": true,
+     "value": 0.657746734528262
+    },
+    {
+     "iso2": "GQ",
+     "labour_force": 687104,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "GW",
+     "labour_force": 823140,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "KE",
+     "labour_force": 22679572,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "KM",
+     "labour_force": 288181,
+     "shown": false,
+     "value": 0.702290835415346
+    },
+    {
+     "iso2": "LR",
+     "labour_force": 2452391,
+     "shown": true,
+     "value": 0.0245092032058038
+    },
+    {
+     "iso2": "LS",
+     "labour_force": 850547,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "MA",
+     "labour_force": 12170356,
+     "shown": true,
+     "value": 2.56943893586891
+    },
+    {
+     "iso2": "MG",
+     "labour_force": 15639635,
+     "shown": true,
+     "value": 0.113132873298748
+    },
+    {
+     "iso2": "ML",
+     "labour_force": 8260725,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "MR",
+     "labour_force": 1130709,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "MU",
+     "labour_force": 592892,
+     "shown": false,
+     "value": 9.58973281914014
+    },
+    {
+     "iso2": "MW",
+     "labour_force": 7532800,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "MZ",
+     "labour_force": 14168284,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "NA",
+     "labour_force": 1064363,
+     "shown": true,
+     "value": 0.751226688680063
+    },
+    {
+     "iso2": "NE",
+     "labour_force": 10614399,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "NG",
+     "labour_force": 105269418,
+     "shown": true,
+     "value": 1.1609764880243
+    },
+    {
+     "iso2": "RW",
+     "labour_force": 5079189,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "SC",
+     "labour_force": null,
+     "shown": false,
+     "value": 1.93350487737509
+    },
+    {
+     "iso2": "SD",
+     "labour_force": 10949089,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "SL",
+     "labour_force": 2710522,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "SN",
+     "labour_force": 5578418,
+     "shown": true,
+     "value": 1.29804877891181
+    },
+    {
+     "iso2": "SO",
+     "labour_force": 3211325,
+     "shown": true,
+     "value": 0.305240677186617
+    },
+    {
+     "iso2": "ST",
+     "labour_force": 32567,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "SZ",
+     "labour_force": 406038,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "TD",
+     "labour_force": 5803315,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "TG",
+     "labour_force": 3148313,
+     "shown": true,
+     "value": 1.077781164945
+    },
+    {
+     "iso2": "TN",
+     "labour_force": 4232595,
+     "shown": true,
+     "value": 1.66601119353947
+    },
+    {
+     "iso2": "TZ",
+     "labour_force": 30944597,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "UG",
+     "labour_force": 21087767,
+     "shown": false,
+     "value": null
+    },
+    {
+     "iso2": "ZA",
+     "labour_force": 24587967,
+     "shown": true,
+     "value": 11.0539475908349
+    },
+    {
+     "iso2": "ZM",
+     "labour_force": 6905885,
+     "shown": true,
+     "value": 1.56010714058333
+    },
+    {
+     "iso2": "ZW",
+     "labour_force": 6118687,
+     "shown": false,
+     "value": null
+    }
+   ],
+   "rule": "the profile's continent is Africa, or MENA with the country's cities in Africa"
+  }
+ ],
+ "uk": {
+  "iso2": "GB",
+  "value": 18.6238787652561
+ },
+ "year": 2022
+}

@@ -155,8 +155,79 @@ def city_survival() -> None:
     ])
 
 
+# ---- section 2: where new companies open -----------------------------------------------------------------------------------------
+
+DENSITY = "E:/atlas/macro/global-aggregates/wb-business-density.json"
+LABOUR = "E:/atlas/macro/global-aggregates/wb-labor-force-total.json"
+# THE FLOOR: a labour force of a million or more in the same year. It keeps out the smallest economies, where a few hundred
+# registrations move the rate and registries for companies run from abroad sit (Cape Verde, Mauritius, Barbados on 2022's figures).
+FLOOR = 1_000_000
+SHOWN_AT_LEAST = 5
+
+
+def series(path: str) -> tuple[dict, dict]:
+    meta, rows = json.loads(Path(path).read_text(encoding="utf-8"))
+    by: dict[str, dict[str, float]] = {}
+    for r in rows:
+        if r.get("value") is not None:
+            by.setdefault(r["country"]["id"], {})[r["date"]] = r["value"]
+    return meta, by
+
+
+def new_companies() -> None:
+    """New limited companies registered in a year per 1,000 people aged 15 to 64, each country of Latin America and of Africa (by
+    the country profile in this repo), the UK's beside them for scale. The year is the latest in which both regions show five
+    countries over the floor and the UK has a figure: worked out, never typed."""
+    meta, density = series(DENSITY)
+    _, labour = series(LABOUR)
+    profile = json.loads(PROFILE.read_text(encoding="utf-8"))["countries"]
+    city_continent: dict[str, str] = {}
+    for c in json.loads(CITY_LIST.read_text(encoding="utf-8"))["cities"]:
+        city_continent.setdefault(str(c["iso2"]).upper(), c["continent"])
+
+    def region_of(iso2: str, p: dict) -> str | None:
+        if p.get("world_bank_region") == "Latin America & Caribbean":
+            return "latam"
+        if p.get("continent") == "Africa" or (p.get("continent") == "MENA" and city_continent.get(iso2) == "Africa"):
+            return "africa"
+        return None
+
+    members: dict[str, list[str]] = {"latam": [], "africa": []}
+    for iso2, p in profile.items():
+        r = region_of(iso2, p)
+        if r:
+            members[r].append(iso2)
+
+    def shown(iso2: str, year: str) -> bool:
+        return density.get(iso2, {}).get(year) is not None and (labour.get(iso2, {}).get(year) or 0) >= FLOOR
+
+    years = sorted({y for v in density.values() for y in v}, reverse=True)
+    year = next((y for y in years if all(sum(shown(i, y) for i in members[k]) >= SHOWN_AT_LEAST for k in members) and density.get("GB", {}).get(y) is not None), None)
+    if year is None:
+        refuse("no year in which both regions show five countries over the floor and the UK has a figure")
+    regions = []
+    for key, rule in (("latam", "the profile's world_bank_region is Latin America & Caribbean"), ("africa", "the profile's continent is Africa, or MENA with the country's cities in Africa")):
+        regions.append({"key": key, "rule": rule, "members": [
+            {"iso2": i, "value": density.get(i, {}).get(year), "labour_force": labour.get(i, {}).get(year), "shown": shown(i, year)}
+            for i in sorted(members[key])
+        ]})
+    obj = {
+        "year": int(year),
+        "measure": "IC.BUS.NDNS.ZS",
+        "last_updated": meta.get("lastupdated"),
+        "floor": {"measure": "SL.TLF.TOTL.IN", "year": int(year), "at_least": FLOOR, "why": "a labour force of a million or more keeps out the smallest economies, where a few hundred registrations move the rate and registries for companies run from abroad sit"},
+        "uk": {"iso2": "GB", "value": density["GB"][year]},
+        "regions": regions,
+    }
+    write("new_companies.json", obj, sum(len(r["members"]) for r in regions) + 1, [
+        source("density", DENSITY, "worldbank", "New business density (IC.BUS.NDNS.ZS): new limited companies registered per 1,000 people aged 15 to 64"),
+        source("labour_force", LABOUR, "worldbank", "Labor force, total (SL.TLF.TOTL.IN): the list's floor", prints=False),
+    ])
+
+
 EXPORTS = {
     "city_survival": city_survival,
+    "new_companies": new_companies,
 }
 
 

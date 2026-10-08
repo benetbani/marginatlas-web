@@ -238,7 +238,17 @@ export const UK_SOURCES: readonly UkSource[] = [
 /** THE HOME PAGE'S SOURCES OUTSIDE THE UNITED KINGDOM (plan 2026-10-08, home sections 2 and 3): named here, the one module allowed
  *  to name a source, and printed on About the figures under the UK's list. An attribution line prints only where the record names
  *  the licence (the rule above); each section's export names its entry by `key` (data/home/manifest.json), and its gate holds it. */
-export const WORLD_SOURCES: readonly UkSource[] = [];
+export const WORLD_SOURCES: readonly UkSource[] = [
+  {
+    key: "worldbank",
+    publisher: "World Bank",
+    names: ["World Bank"],
+    attribution: null,
+    items: [
+      { prints: "New limited companies per 1,000 people of working age, in Latin America and in Africa, on the home page", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
+    ],
+  },
+];
 
 /** The register slices the UK pages read (data/uk/registers/manifest.json), each to its publisher's entry. */
 export const UK_REGISTER_SOURCE: Readonly<Record<string, string>> = {
