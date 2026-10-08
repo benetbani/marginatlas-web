@@ -53,6 +53,15 @@ check("the market drops the metro density", said.market?.here === null);
 check(`the market's insolvencies are the register's: ${said.market?.insolvent?.per100} of 100 for restaurants`, said.market?.insolvent?.per100 === 2.9 && said.market?.insolvent?.words === T.insolvent);
 check("the market cells say the trade's typical", !!said.market && "figure" in said.market.firms && said.market.firms.basis === T.market.firms && "part" in said.market.chains && said.market.chains.basis === T.market.chains && said.market.daypartsBasis === T.market.dayparts);
 check("an unknown trade has no insolvency figure", ukInsolvencyPer100("zz-no-such-trade") === null);
+/* Every other UK city's trade page (plan 2026-10-08, uk:cities-sourced-or-marked): the same lines; the city's own density stays,
+   its line saying it is an estimate (its city page prints the same figure as one). London's still leaves. */
+const kept = sayTradeTypical(fixture, "restaurants", { keepHere: true });
+check(`a UK city's trade page keeps the city's own density (${kept.market?.here?.value})`, kept.market?.here?.value === 9.1);
+check(`and says it is an estimate: "${kept.market?.hereBasis}"`, kept.market?.hereBasis === T.market.firmsHere);
+check("its other cards say the trade's typical as London's do", kept.split?.basis === T.split && kept.team?.basis === T.team && kept.mix?.foot === T.mix && kept.customers?.basis === T.customers && kept.clears?.basis === T.clears && kept.market?.insolvent?.per100 === 2.9);
+check("London's drops the density and carries no density line", said.market?.here === null && said.market?.hereBasis === undefined);
+const rivalsSrc = readFileSync("src/components/spine/cell/market.tsx", "utf8");
+check("the rivals cell prints the line the page hands it", /market\.here \? market\.hereBasis \?\? R\.basisHere : firms\.basis/.test(rivalsSrc));
 for (const w of Object.values(T).flatMap((v) => (typeof v === "string" ? [v] : Object.values(v)))) {
   check(`"${w}" runs twelve words or fewer and never says "anywhere"`, w.split(/\s+/).length <= 12 && !/anywhere/i.test(w));
 }

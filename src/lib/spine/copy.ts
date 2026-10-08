@@ -2086,6 +2086,8 @@ export const COPY = {
       chains: "Out of every 100 firms, the trade's typical.",
       swing: "The busiest month over the quietest, the trade's typical.",
       dayparts: "Out of every $100 taken in a week, the trade's typical.",
+      /** The city's own density on a UK trade page outside London (plan 2026-10-08): the shard's figure, beside the trade's typical. */
+      firmsHere: "Estimated here, beside the trade's typical.",
     },
     /** The rivals cell's companion: the UK's company insolvencies for the trade in a year, per 100 live companies. */
     insolvent: "of 100 UK companies insolvent a year",

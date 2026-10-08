@@ -13,7 +13,11 @@
  * register does hold, a different measure with its own words: the UK's company insolvencies for the trade in a year, over its
  * live companies (data/uk/registers/failures.json; the notices of 2025-10-01 to 2026-09-30 over the register of 2026-05-01).
  *
- * Pure over the built cards; the cell view calls it on a page held to a register region and nowhere else.
+ * EVERY OTHER UK CITY'S TRADE PAGE (plan 2026-10-08, uk:cities-sourced-or-marked) takes the same lines with `keepHere`: its city's
+ * own density stays, its line saying it is an estimate, since the city page prints the same figure as one and only London's
+ * density stood over the wrong place.
+ *
+ * Pure over the built cards; the cell view calls it on a UK city's trade page and nowhere else.
  */
 import failuresJson from "../../../data/uk/registers/failures.json";
 import { COPY } from "@/lib/spine/copy";
@@ -47,8 +51,9 @@ export type UkTradeCards = {
   market: MarketData | null;
 };
 
-/** The same cards, each world-typical line saying so; the market without the metro density and with the UK's insolvencies. */
-export function sayTradeTypical(cards: UkTradeCards, tradeSlug: string | null | undefined): UkTradeCards {
+/** The same cards, each world-typical line saying so; the market with the UK's insolvencies, and without the city's own density
+ *  unless `keepHere` (a UK city held to no register region), where the density stays and its line says it is an estimate. */
+export function sayTradeTypical(cards: UkTradeCards, tradeSlug: string | null | undefined, opts: { keepHere?: boolean } = {}): UkTradeCards {
   const T = COPY.tradeTypical;
   const { split, team, clears, mix, customers, open, market } = cards;
   const insolvent = ukInsolvencyPer100(tradeSlug);
@@ -66,7 +71,8 @@ export function sayTradeTypical(cards: UkTradeCards, tradeSlug: string | null | 
     market: market
       ? {
           ...market,
-          here: null,
+          here: opts.keepHere ? market.here : null,
+          hereBasis: opts.keepHere && market.here ? T.market.firmsHere : undefined,
           firms: "figure" in market.firms ? { ...market.firms, basis: T.market.firms } : market.firms,
           chains: "part" in market.chains ? { ...market.chains, basis: T.market.chains } : market.chains,
           swing: "figure" in market.swing ? { ...market.swing, basis: T.market.swing } : market.swing,

@@ -2938,6 +2938,7 @@
       "reads": [
         "scratchpad/harness/pages/country-GB.html",
         "src/components/spine/cell/cell-view.tsx",
+        "src/components/spine/cell/market.tsx",
         "src/lib/spine"
       ],
       "claims": []

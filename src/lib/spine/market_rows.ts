@@ -111,6 +111,9 @@ export type MarketData = {
   dayparts: SharePart[] | null;
   /** THIS CITY'S OWN DENSITY FOR THE TRADE (2026-09-20 night, his "a subsection cannot be only with one number"): the city shard's `comp.by_trade.*.per_10k_residents` on the row whose `trade` is the trade's own name, exactly; null where the city holds no such row, or at the world altitude. The rivals cell prints it beside the trade's typical. */
   here: { value: number; tag: FactTag } | null;
+  /** The rivals cell's line where the city's own density leads on a UK trade page outside London (uk_trade_typical.ts; plan
+   *  2026-10-08): it says the density is an estimate. The copy's `basisHere` otherwise. */
+  hereBasis?: string;
   /** The dayparts cell's line where the page says whose figure it is (a UK trade page; uk_trade_typical.ts); the copy's otherwise. */
   daypartsBasis?: string;
   /** THE UK'S COMPANY INSOLVENCIES FOR THE TRADE IN A YEAR, per 100 live companies (a UK trade page, masterplan step 04): the

@@ -108,7 +108,7 @@ export function RivalsCell({ market }: { market: MarketData }) {
       icon="competition"
       kicker={K.firms}
       figure={lead}
-      basis={market.here ? R.basisHere : firms.basis}
+      basis={market.here ? market.hereBasis ?? R.basisHere : firms.basis}
       sample
       accent={false}
       second={second.length > 0 ? second : undefined}
