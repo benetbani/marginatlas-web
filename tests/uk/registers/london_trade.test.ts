@@ -12,11 +12,15 @@ import { red, redSummary } from "../../../scripts/lib/red";
 const RULE = "uk-london-trade";
 const FILE = "src/lib/uk/registers/london_trade.ts";
 const REMEDY = "fix london_trade.ts; a shared code without a plain name in SHARED_GROUP gets one written there from its official name, never guessed from the trade";
+/* The prototype-key check below fails for another reason with another remedy: a table keyed by the trade word, read as table[word]. */
+const PROTO_REMEDY = "read a table keyed by the trade word with own(table, key) from src/lib/own.ts (london_trade.ts, and pnl/london.ts, survival.ts, spine/uk_trade_typical.ts), never table[word]";
 let failed = 0;
-const check = (label: string, ok: boolean) => {
+const remedies = new Set<string>();
+const check = (label: string, ok: boolean, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
   failed++;
-  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+  remedies.add(remedy);
+  red({ rule: RULE, file: FILE, detail: label, remedy });
 };
 
 const r = londonTradeRegister("restaurants");
@@ -44,7 +48,7 @@ const protoAnswers = (k: string): string => {
   try { return `${londonTradeRegister(k) === null && londonTradeSales(k) === null}`; } catch (e) { return `throws ${e instanceof Error ? e.message : e}`; }
 };
 const protoWrong = PROTO_KEYS.filter((k) => protoAnswers(k) !== "true").map((k) => `${k} (${protoAnswers(k).slice(0, 60)})`);
-check(`no register row for any of ${PROTO_KEYS.length} Object.prototype names, read as own entries with own() (src/lib/own.ts)${protoWrong.length ? `: ${protoWrong.slice(0, 4).join(", ")}` : ""}`, protoWrong.length === 0);
+check(`no register row for any of ${PROTO_KEYS.length} Object.prototype names, read as own entries with own() (src/lib/own.ts)${protoWrong.length ? `: ${protoWrong.slice(0, 4).join(", ")}` : ""}`, protoWrong.length === 0, PROTO_REMEDY);
 
 /* Every shared code the slice holds has a plain group name, so no page prints a shared figure as the trade's own. */
 type T = { trades: Record<string, { sic: string[]; match: string }> };
@@ -53,5 +57,5 @@ const missing = Object.entries((turnoverJson as unknown as T).trades)
   .map(([slug, t]) => `${slug} (${t.sic.join("+")})`);
 check(`every shared code has its group's name${missing.length ? `: missing ${missing.join(", ")}` : ""}`, missing.length === 0);
 
-if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+if (failed > 0) { redSummary(RULE, failed, [...remedies].join(" | "), "checks failed"); process.exit(1); }
 console.log("uk/registers/london_trade: all pass");
