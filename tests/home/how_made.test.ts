@@ -13,19 +13,22 @@
  * again.
  *
  * Holds the builder (src/lib/home/how_made.ts): the focal is the slice's notices; the names matched are the slice's, of its names;
- * the London trade pages read from the band counts are counted from the register slice, at least the trades the UK page's money
- * card ranks; no row counts countries and the copy holds no countries row (his ruling of 2026-10-07: the home's 195 counter is
- * wrong); every figure stamped; the focal's line twelve words at most.
+ * the London trade pages are counted as their pages print them, never as the builder reads them: the trades whose page prints a
+ * takings figure (tradeHeadFigure, which the page, its description and its share card read), of the London trade pages served
+ * (the taxonomy's trade slugs that are not retired, the sitemap's list), at least the trades the UK page's money card ranks; no
+ * row counts countries and the copy holds no countries row (his ruling of 2026-10-07: the home's 195 counter is wrong); every
+ * figure stamped; the focal's line twelve words at most; the copy's checks name the copy.
  *
  * Run: npx tsx tests/home/how_made.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
-import turnoverJson from "../../data/uk/registers/turnover.json";
 import { buildHowMade } from "../../src/lib/home/how_made";
 import { londonTradeSales } from "../../src/lib/uk/registers/london_trade";
+import { tradeHeadFigure } from "../../src/lib/spine/trade_head";
 import { buildLondonTradeSales } from "../../src/lib/spine/country_depth_rows";
 import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
+import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -69,6 +72,8 @@ if (held && d) {
 }
 
 /* THE BUILDER (plan Task 12). */
+const COPY_FILE = "src/lib/spine/copy.ts";
+const TRADES_AT = { file: "src/lib/home/how_made.ts", remedy: "count the London trade pages that print a takings figure (tradeHeadFigure) out of the pages served, the taxonomy's trade slugs that are not retired, the sitemap's list" };
 const built = buildHowMade();
 check("section 4 builds", !!built);
 if (built && d) {
@@ -76,14 +81,24 @@ if (built && d) {
   check(`the focal is the slice's notices, ${built.notices.figure}`, built.notices.figure === n(d.notices) && built.notices.prov.src === "home/method.json:notices" && built.notices.prov.kind === "counted");
   const row = (key: string) => built.rows.find((r) => r.key === key);
   check(`the names matched are the slice's, of its names (${row("matched")?.value})`, row("matched")?.value === `${n(d.matched_names)} of ${n(d.names)}`);
-  const trades = Object.keys((turnoverJson as { trades: Record<string, unknown> }).trades).filter((s) => Object.hasOwn(SLUG_TO_INDUSTRY, s) && londonTradeSales(s)?.q50.open === false).length;
-  check(`the London trade pages read from the band counts are counted (${row("trades")?.value}; the UK page's money card ranks ${buildLondonTradeSales()?.rows.length} of them, one a code)`, row("trades")?.value === n(trades) && trades >= (buildLondonTradeSales()?.rows.length ?? Number.POSITIVE_INFINITY));
-  check("no row counts countries (his ruling of 2026-10-07: the home's 195 counter is wrong)", !built.rows.some((r) => /countr/i.test(r.label)) && !Object.keys(COPY.home.howMade).includes("countries"));
+  /* THE TRADE PAGES, HELD TO THE PAGES AND NOT TO THE BUILDER'S OWN PREDICATE. A London trade page prints a takings figure where its
+     head gives a dollar one (tradeHeadFigure: the page, its description and its share card read it; a trade whose median falls in
+     an open band prints an edge in words and gives none). The pages served are the sitemap's London list, every trade slug of the
+     taxonomy that is not retired (src/app/sitemap.ts, src/lib/home/destination.ts). A gate cannot read that list from the sitemap:
+     its module builds the database client on load and so needs the database address, which a gate never has. So the sitemap's
+     rule is restated here from the taxonomy, as the routing gates restate it (tests/routing/edge_not_found.test.ts). */
+  const served = Object.keys(SLUG_TO_INDUSTRY).filter((s) => !Object.hasOwn(RETIRED, s));
+  const printing = served.filter((s) => tradeHeadFigure({ isLondon: true, slug: s })?.usd != null);
+  const closed = served.filter((s) => londonTradeSales(s)?.q50.open === false);
+  const apart = [...closed.filter((s) => !printing.includes(s)), ...printing.filter((s) => !closed.includes(s))];
+  check(`the trades whose median falls in a closed band are exactly the pages that print a takings figure (${printing.length} of the ${served.length} served)${apart.length ? `; apart on ${apart.join(", ")}` : ""}`, apart.length === 0, TRADES_AT);
+  check(`the London trade pages are counted as they print (${row("trades")?.value}; the UK page's money card ranks ${buildLondonTradeSales()?.rows.length} of them, one a code)`, row("trades")?.value === `${n(printing.length)} of ${n(served.length)}` && printing.length >= (buildLondonTradeSales()?.rows.length ?? Number.POSITIVE_INFINITY), TRADES_AT);
+  check("no row counts countries (his ruling of 2026-10-07: the home's 195 counter is wrong)", !built.rows.some((r) => /countr/i.test(r.label)) && !Object.keys(COPY.home.howMade).includes("countries"), { file: COPY_FILE, remedy: "take the countries row and its words out of COPY.home.howMade; the home prints no count of countries (his ruling of 2026-10-07)" });
   check("every figure says where it came from", built.rows.every((r) => r.prov.src.length > 0 && r.prov.kind === "counted"));
   check("the door goes to About the figures", built.link.href === "/about-data" && built.link.label === COPY.home.howMade.link);
   const words = built.notices.words.split(/\s+/).filter(Boolean).length;
-  check(`the focal's line is twelve words at most, no semicolon ("${built.notices.words}")`, words <= 12 && !built.notices.words.includes(";"));
-  check(`the title is four words at most, and every row's label three ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3));
+  check(`the focal's line is twelve words at most, no semicolon ("${built.notices.words}")`, words <= 12 && !built.notices.words.includes(";"), { file: COPY_FILE, remedy: "cut COPY.home.howMade.words to twelve words at most and no semicolon, the card's one supporting line" });
+  check(`the title is four words at most, and every row's label three ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3), { file: COPY_FILE, remedy: "cut COPY.home.howMade.kicker to four words at most and each row's label (COPY.home.howMade.matched.label, COPY.home.howMade.trades.label) to three" });
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

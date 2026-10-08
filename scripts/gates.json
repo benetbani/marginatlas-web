@@ -1849,7 +1849,9 @@
       "asserts": "HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4; his ideas of 2026-10-08, \"the deep techniques used to derive data\", \"unmatched archival capability\" and \"the global coverage\", merged a",
       "reads": [
         "data/home/method.json",
-        "data/uk/registers/failures.json"
+        "data/uk/registers/failures.json",
+        "src/lib/home/how_made.ts",
+        "src/lib/spine/copy.ts"
       ],
       "claims": []
     },
