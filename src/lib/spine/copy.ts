@@ -2734,6 +2734,8 @@ export const COPY = {
     /** The set the middle trade's track is drawn on, for its spoken label only (src/lib/spine/home_answers.ts, `range`). */
     tradesAmong: "London's trades",
     citiesLabel: "The UK's cities",
+    /** The level of sections 2 and 3 (plan 2026-10-08, home sections): a data attribute the checks read, not a word the page prints. */
+    worldLabel: "Beyond the UK",
     /** The level of the duel and the ranked list (P36.2 and P36.2b), both from the registers' feed. */
     registersLabel: "From the registers",
     /** THE NOTEBOOK (masterplan step 36): the page's furniture after the readings. */

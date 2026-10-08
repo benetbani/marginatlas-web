@@ -2946,12 +2946,13 @@
       "script": "tests/trust/home_shape.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "THE REBUILT HOME'S SHAPE (his instruction of 2026-10-07: \"reform home drastically\"; he called the live home \"catastrophically bad\").",
+      "asserts": "THE REBUILT HOME'S SHAPE (his instruction of 2026-10-07: \"reform home drastically\"; he called the live home \"catastrophically bad\"; his section ideas of 2026-10-08, plan docs/superpowers/plans/2026-10",
       "reads": [
         "scratchpad/harness/pages/home-gb.html",
         "src/app/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/spine/archetypes/CityCards.tsx",
+        "src/components/spine/home/HomeFirmsLast.tsx",
         "src/components/spine/home/home-view.tsx"
       ],
       "claims": []

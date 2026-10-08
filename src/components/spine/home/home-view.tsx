@@ -7,8 +7,10 @@
  * The frame, in the order the page reads, since his instruction of 2026-10-07 ("reform home drastically"; he called the live home
  * "catastrophically bad"): the h1 he kept, with its rotating words, and the search with no heading of its own (step 33 makes it
  * land on pages that exist, UK first); the UK's three answers, one name, one figure and one line each (step 34); the duel and the
- * kitchens list from the registers (P36.2, P36.2b); Pro said once and quietly while the paywall's switch is on (step 35); and the
- * last level, two halves: the UK's city pages, still, every one at once (step 35), beside the notebook (step 36). The cities stood
+ * kitchens list from the registers (P36.2, P36.2b); Pro said once and quietly while the paywall's switch is on (step 35); then,
+ * since his section ideas of 2026-10-08 (plan docs/superpowers/plans/2026-10-08-home-sections/PLAN.md), three levels of two
+ * halves: where new firms last beside the UK's city pages, still, every one at once (step 35); where new companies open beside
+ * where US restaurants grew and shrank; and how figures are made beside the notebook (step 36), last. The cities stood
  * third and alone across the level until the visual gates' finding of 2026-10-07 (HomeCities says why). Gone that day: the counts
  * of what the atlas holds, the cities' pager and the newsletter band (the footer's bar asks). tests/trust/home_shape.test.ts holds
  * the order. Each level
@@ -36,6 +38,14 @@ import { buildDuel } from "@/lib/home/duel";
 import { HomeKitchens } from "./HomeKitchens";
 import { buildKitchens } from "@/lib/home/kitchens";
 import { buildNotebook, type NotebookCard } from "@/lib/home/notebook";
+import { HomeFirmsLast } from "./HomeFirmsLast";
+import { buildFirmsLast } from "@/lib/home/firms_last";
+import { HomeNewCompanies } from "./HomeNewCompanies";
+import { buildNewCompanies } from "@/lib/home/new_companies";
+import { HomeUsRestaurants } from "./HomeUsRestaurants";
+import { buildUsRestaurants } from "@/lib/home/us_restaurants";
+import { HomeHowMade } from "./HomeHowMade";
+import { buildHowMade } from "@/lib/home/how_made";
 import { NavigatorForm } from "@/components/NavigatorForm";
 import { RotatingWord } from "@/components/RotatingWord";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
@@ -44,15 +54,17 @@ import { ReportFoot } from "@/components/spine/ReportFoot";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 /**
- * THE THREE LOUD MOMENTS (MODEL.md PART 6; the masterplan's step 32: the UK's answer at 40, the search's button, the Pro band's
- * button), weighed at step 37: the answer is lit (step 34); the search's button keeps the brand red his ruling of 2026-08-09
- * chose over the orange the accent token is, and the Pro band is quiet by ruling 23, so neither is an accent. One loud moment.
- * Literals only, read from source (src/lib/spine/loud_seats.ts says why).
+ * THE THREE LOUD MOMENTS (MODEL.md PART 6; masterplan step 32, and plan 2026-10-08, home sections): the UK's answer at 40 (step
+ * 34), and two figures that each lead a measured ranking, the reason his featuring rule asks for: the UK city whose new firms last
+ * longest, and the US metro that added the most full-service restaurants, each at 30 in the accent (Focal's `accent`). Quiet cards
+ * stand between them (the years, the trades, the duel, the kitchens; the city rows, the new companies), PART 6's two at the least.
+ * The search's button keeps the brand red his ruling of 2026-08-09 chose over the accent's orange, and the Pro band is quiet by
+ * ruling 23 (masterplan step 37): neither is a seat any more. Literals only, read from source (src/lib/spine/loud_seats.ts says why).
  */
 export const LOUD_SEATS = [
   { seat: 1, card: "00 answer", figure: "the UK's total effective tax burden on a sole trader's profit, at 40", state: "LIT", condition: "masterplan step 34: the same figure /gb's masthead prints (buildHeroBoard), `--terra-text` at 40, the page's only 40" },
-  { seat: 2, card: "00 search", figure: "the search's button", state: "NO HONEST CANDIDATE", condition: "masterplan step 37: the button keeps the brand red, atlas-700, which his ruling of 2026-08-09 set against the orange that stood there; the accent token is that orange, so the button cannot be lit in it" },
-  { seat: 3, card: "pro", figure: "the Pro band's button", state: "NO HONEST CANDIDATE", condition: "masterplan step 37, ruling 23: a quiet band, drawn only while the paywall's switch is on, its button in ink and never the accent" },
+  { seat: 2, card: "firms-last", id: "firms-last", figure: "of 100 firms born in the cohort, those still trading five years on, in the UK city that leads, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 1: the city leads a measured ranking of the UK's cities (buildFirmsLast; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
+  { seat: 3, card: "us-restaurants", id: "us-restaurants", figure: "the full-service restaurants the leading US metro added since the first year on disk, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
 ] as const satisfies readonly LoudSeat[];
 
 /** The hero he kept: the visitor's own question, its business and its city rotating, then the search. Left-aligned, as every
@@ -167,12 +179,13 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
    other way is the founder's own pattern (two-up bands, "never one lone section per horizontal band", 2026-06-18): the section
    stands in a half, beside the notebook (below), and a half cannot hold a row of seven tall cards (132 a card is the least that
    holds "Birmingham" at the name's rung, and a half is 504 at the widest), so it takes the archetype's own row form, which the
-   tall law exempts, at every width. */
+   tall law exempts, at every width. BESIDE WHERE NEW FIRMS LAST since plan 2026-10-08 (the notebook moved to the last level),
+   the rows share the height the pair is given (`fill`), as the bars beside them do, so neither half stands a blank foot. */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
     <Box id="cities" className="flex flex-col">
       <Rail icon="best-areas" kicker={COPY.home.citiesLabel} />
-      <CityCards still stack cards={cards.cards.map((c) => ({ ...c, region: undefined }))} basis={COPY.cityCards.plain.basis} />
+      <CityCards still stack fill cards={cards.cards.map((c) => ({ ...c, region: undefined }))} basis={COPY.cityCards.plain.basis} />
     </Box>
   );
 }
@@ -181,9 +194,9 @@ function HomeCities({ cards }: { cards: CityCardsData }) {
    each a link. Furniture, not a reading: no figure, so it stands outside the section cards. EACH POST IS ITS TITLE (his
    instruction of 2026-10-07, the home's words cut by half): the category over it was a second label (the eyebrow his rulebook
    bans) and the four dates were one date said four times; the post itself carries both. ONE COLUMN, AN 8 APART, since 2026-10-07:
-   it stands in a half beside the UK's cities (the level below), whose rows are one under another an 8 apart, so the two lists run
-   down their halves in step, and FILLS ITS HALF: the level ends level (`even`, the zones' rule; his rulings that blank space is a
-   fault and that cards in a row share a height), so the section takes the height the cities' rows give the pair, the list takes
+   it stands in a half beside how figures are made (since plan 2026-10-08; beside the UK's cities until then), and FILLS ITS HALF:
+   the level ends level (`even`, the zones' rule; his rulings that blank space is a fault and that cards in a row share a
+   height), so the section takes the height the pair is given, the list takes
    what is left under the title (`flex-1`), and the four posts share it in equal rows (`md:auto-rows-fr`), each title at its card's
    top. Stacked under 768 there is no pair to match and the posts keep their own heights. */
 function Notebook({ cards }: { cards: NotebookCard[] }) {
@@ -215,6 +228,10 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const notebook = buildNotebook();
   const duel = buildDuel();
   const kitchens = buildKitchens();
+  const last = buildFirmsLast();
+  const newCompanies = buildNewCompanies();
+  const usRestaurants = buildUsRestaurants();
+  const howMade = buildHowMade();
   const zones: Array<{ key: string; split: ZoneSplit; stack?: "lg"; even?: boolean; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     /* THE UK'S ANSWERS, A LEVEL OF THREE (PART 10.5; masterplan step 34): the tax burden, who is still trading, what London's
@@ -237,22 +254,47 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     /* PRO, SAID ONCE AND QUIETLY (ruling 23), only while the paywall's switch is on: the zone is not listed otherwise, so no band
        stands empty and nothing about Pro prints. */
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
-    /* THE LAST LEVEL: THE UK'S CITIES BESIDE THE NOTEBOOK, two halves (the visual gates' finding of 2026-10-07, section-bands `home`
-       0 to 1; HomeCities says why). The cities stood alone across the level as the page's third zone, after the answers; a full
-       width that is not the hero is what that gate bars, and the two lone sections of the page (these two, the notebook at two
-       thirds) pair into the one band the founder's pattern asks for. The pair is read through the zones' own rules, so a level
-       with one of the two to draw is a lone section at two thirds (the LONE rule, the notebook's place until now) and a level with
-       neither is not listed. The notebook is still the last level (masterplan step 36), and Pro, where it draws, still stands
-       after the registers and before it. NO NEWSLETTER BAND AFTER IT (his instruction of 2026-10-07): the footer's newsletter bar
-       asks once on every page, and the home's own ask right above it was the same plea twice in a row. The zone is named by its
-       first section, as the registers' lone item is (it is a data attribute the checks read, not a word the page prints). */
-    ...(cities || notebook.length
+    /* THREE LEVELS OF TWO HALVES (plan 2026-10-08, home sections: his section ideas of that day, the audit's top four; his pattern,
+       "never one lone section per horizontal band", 2026-06-18; the section-bands gate bars a full width that is not the hero, and
+       the home's baseline is 0). Each is read through the zones' own rules: a level with one of its two to draw is a lone section at
+       two thirds (the LONE rule), a level with neither is not listed. Pro, where it draws, still stands after the registers and
+       before the first of them. A zone is named by its first section (a data attribute the checks read, not a word the page prints).
+
+       THE UK'S CITIES, AND WHERE THEIR NEW FIRMS LAST (section 1; HomeCities says why the cities stand in a half): the 2019 cohort's
+       five-year survival per UK city, its lead one of the page's three loud moments, beside the UK's city pages held still. It ends
+       level while both draw (`even`): the bars and the city rows each fill the height the taller gives the pair (`fill`). */
+    ...(last || cities
       ? [{
           key: "cities",
           split: "1-1" as ZoneSplit,
-          even: !!(cities && notebook.length),
-          label: cities ? COPY.home.citiesLabel : COPY.home.notebook.title,
-          body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), ...(notebook.length ? [<Notebook key="notebook" cards={notebook} />] : [])],
+          even: !!(last && cities),
+          label: COPY.home.citiesLabel,
+          body: [...(last ? [<HomeFirmsLast key="firms-last" last={last} />] : []), ...(cities ? [<HomeCities key="cities" cards={cities} />] : [])],
+        }]
+      : []),
+    /* BEYOND THE UK (sections 2 and 3): where new companies open in Latin America and Africa, beside where US restaurants grew and
+       shrank; each a published or counted figure, never the site's estimates. Open sections, each its own height (not `even`: a
+       stretched list or table would stand a blank at its foot). */
+    ...(newCompanies || usRestaurants
+      ? [{
+          key: "world",
+          split: "1-1" as ZoneSplit,
+          label: COPY.home.worldLabel,
+          body: [...(newCompanies ? [<HomeNewCompanies key="new-companies" nc={newCompanies} />] : []), ...(usRestaurants ? [<HomeUsRestaurants key="us-restaurants" us={usRestaurants} />] : [])],
+        }]
+      : []),
+    /* THE LAST LEVEL: HOW FIGURES ARE MADE BESIDE THE NOTEBOOK (section 4; masterplan step 36, the notebook last). The page's one
+       place to say how its figures are made; quiet, no accent, no count of countries (his ruling of 2026-10-07: the home's 195
+       counter is wrong). It ends level while both draw (`even`): the notebook's posts share the height in equal rows, as they did
+       beside the cities. NO NEWSLETTER BAND AFTER IT (his instruction of 2026-10-07): the footer's newsletter bar asks once on every
+       page. */
+    ...(howMade || notebook.length
+      ? [{
+          key: "method",
+          split: "1-1" as ZoneSplit,
+          even: !!(howMade && notebook.length),
+          label: howMade ? COPY.home.howMade.kicker : COPY.home.notebook.title,
+          body: [...(howMade ? [<HomeHowMade key="how-made" how={howMade} />] : []), ...(notebook.length ? [<Notebook key="notebook" cards={notebook} />] : [])],
         }]
       : []),
   ];
