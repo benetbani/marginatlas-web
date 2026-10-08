@@ -22,6 +22,9 @@ import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { buildSurvival } from "../../src/lib/spine/sections/first_years";
 import { buildFirmsLast } from "../../src/lib/home/firms_last";
 import { COPY } from "../../src/lib/spine/copy";
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { HomeFirmsLast } from "../../src/components/spine/home/HomeFirmsLast";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-firms-last";
@@ -73,6 +76,21 @@ if (built && d) {
   const words = built.lead.words.split(/\s+/).filter(Boolean).length;
   check(`the lead's line is twelve words at most, no semicolon, the cohort and its fifth year in it ("${built.lead.words}")`, words <= 12 && !built.lead.words.includes(";") && built.lead.words.includes(String(d.cohort)) && built.lead.words.includes(String(d.year)) && built.lead.words.startsWith(want[0].name));
   check(`the title is four words at most ("${COPY.home.firmsLast.kicker}")`, COPY.home.firmsLast.kicker.split(/\s+/).length <= 4);
+}
+
+/* THE DRAWING (plan Task 13): the bars, plain and filling the half, the lead's bar marked and its figure the card's one accent, the
+   UK's tick keyed once, every figure stamped, the title the copy gate's. */
+if (built) {
+  const html = renderToStaticMarkup(React.createElement(HomeFirmsLast, { last: built }));
+  check("the section is a box with its id and its bars (plain, filling its half, the lead's bar marked)", /id="firms-last"/.test(html) && /data-archetype="bar-list"/.test(html) && /data-look="plain"/.test(html) && /data-marked="1"/.test(html) && /flex-1/.test(html));
+  const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
+  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure.replace(".", "\\.")}<`).test(html));
+  const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
+  check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)));
+  check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey));
+  const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
+  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.firmsLast.kicker && title.split(/\s+/).length <= 4);
+  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words));
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
