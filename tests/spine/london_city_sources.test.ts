@@ -151,5 +151,9 @@ for (const slug of SIX) {
 check(`London's line says its permit wait is an estimate ("${hero?.levelBasis}")`, hero?.levelBasis === COPY.cityHeroBoard.levelBasisNoLiving && /permit wait is an estimate/i.test(hero?.levelBasis ?? ""));
 check("Paris's board is unchanged", paris?.levelBasis === COPY.cityHeroBoard.levelBasis && paris?.rows.find((r) => r.key === "permits")?.label === COPY.cityHeroBoard.rows.permits);
 
+/* THE TEXTURE (plan 2026-10-08): the count of official visits is the shard's; London's line word for word. */
+for (const slug of SIX) check(`${slug}'s texture card says its visit count is an estimate`, buildCityTexture(slug)?.basis === COPY.cityTexture.basisSourcedOnly);
+check("Paris's texture line is unchanged", buildCityTexture("paris")?.basis === COPY.cityTexture.basis);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");
