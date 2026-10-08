@@ -15,10 +15,18 @@
  * ranked, so a held-out metro's counts stay the publisher's. Five or more ranked metros grew and five or more shrank, so both ends
  * of the ranking stand.
  *
+ * Holds the builder (src/lib/home/us_restaurants.ts): the five metros that added most, most first, and the five that lost most,
+ * most first, ranked by the count added or lost so the order can be read off the two printed counts; the metros ranked are those
+ * with a city page less any the export holds out with its reason (the slice's `metros`, not its `held_out`), and no metro held out
+ * is drawn; two counts a row as the slice holds them, never a percent; the lead the single metro that added most, its count added
+ * the card's figure; every figure stamped; the lead's line twelve words at most.
+ *
  * Run: npx tsx tests/home/us_restaurants.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
+import { buildUsRestaurants, US_ENDS } from "../../src/lib/home/us_restaurants";
+import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-us-restaurants";
@@ -83,6 +91,28 @@ if (held && d) {
     const wrong = all.filter((m) => titles.get(m.area) !== m.title || !statesOf(titles.get(m.area) ?? "").includes(m.state)).map((m) => m.slug);
     check(`each metro's title is the titles file's for its code, read again here, and names the metro's state${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0, AT_METROS);
   }
+}
+
+/* THE BUILDER (plan Task 11). */
+const built = buildUsRestaurants();
+check("section 3 builds", !!built);
+if (built && d) {
+  const change = (m: Metro) => m.y_to - m.y_from;
+  const added = d.metros.filter((m) => change(m) > 0).sort((a, b) => change(b) - change(a) || a.name.localeCompare(b.name));
+  const lost = d.metros.filter((m) => change(m) < 0).sort((a, b) => change(a) - change(b) || a.name.localeCompare(b.name));
+  const count = (n: number) => n.toLocaleString("en-US");
+  check(`the ${US_ENDS} that added most, most first (${built.added.map((r) => `${r.name} ${r.a} to ${r.b}`).join("; ")})`, JSON.stringify(built.added.map((r) => r.key)) === JSON.stringify(added.slice(0, US_ENDS).map((m) => m.slug)));
+  check(`the ${US_ENDS} that lost most, most first (${built.lost.map((r) => `${r.name} ${r.a} to ${r.b}`).join("; ")})`, JSON.stringify(built.lost.map((r) => r.key)) === JSON.stringify(lost.slice(0, US_ENDS).map((m) => m.slug)));
+  check("no metro held out is drawn", !([...built.added, ...built.lost].some((r) => d.held_out.some((h) => h.slug === r.key))));
+  /* THE DECISION ITSELF (plan decision 12). The check above reads the held-out list as the slice gives it, so an emptied HELD_OUT map in the export would put Detroit back into the ranking with every other check green; this pin names the metros the export holds out. */
+  check(`the export holds out exactly the metros plan decision 12 names (${d.held_out.map((h) => h.slug).join(", ")})`, JSON.stringify(d.held_out.map((h) => h.slug)) === JSON.stringify(["detroit"]), { remedy: "plan decision 12 holds Detroit out: restore it in export_home.py's HELD_OUT map and re-run us_restaurants, or change the decision in the plan and this pin together" });
+  check("two counts a row as the slice holds them, and never a percent", [...built.added, ...built.lost].every((r) => { const m = d.metros.find((x) => x.slug === r.key); return !!m && r.from === m.y_from && r.to === m.y_to && r.a === count(m.y_from) && r.b === count(m.y_to) && !/%/.test(r.a + r.b); }));
+  check(`the lead added most, alone at the top: ${built.lead.figure} (${built.lead.key})`, built.lead.key === added[0].slug && built.lead.figure === count(change(added[0])) && change(added[0]) > change(added[1]));
+  check("every figure says where it came from", [...built.added, ...built.lost].every((r) => r.aProv.src === `home/us_restaurants.json:${r.key}:${d.from}` && r.bProv.src === `home/us_restaurants.json:${r.key}:${d.to}` && r.aProv.kind === "counted" && r.bProv.kind === "counted") && built.lead.prov.src.startsWith(`home/us_restaurants.json:${built.lead.key}:`) && built.lead.prov.kind === "worked out");
+  const words = built.lead.words.split(/\s+/).filter(Boolean).length;
+  check(`the lead's line is twelve words at most, no semicolon ("${built.lead.words}")`, words <= 12 && !built.lead.words.includes(";") && built.lead.words.endsWith(added[0].name));
+  const title = COPY.home.usRestaurants.kicker.replace("{from}", String(d.from));
+  check(`the title is four words at most ("${title}")`, title.split(/\s+/).length <= 4);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

@@ -2795,6 +2795,14 @@ export const COPY = {
       regions: { latam: "Latin America and the Caribbean", africa: "Africa" },
       more: "{n} more in {region}",
     },
+    /** WHERE US RESTAURANTS GREW AND SHRANK (plan 2026-10-08, home sections, section 3): the title, the lead's one line (the
+     *  narrower trade named, the metro last so a long name still fits twelve words), the two tables' heads. */
+    usRestaurants: {
+      kicker: "US restaurants since {from}",
+      words: "Full-service restaurants added since {from}, most of {n} metros: {city}",
+      added: "Most added",
+      lost: "Most lost",
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
     pro: {
       kicker: "Pro",
