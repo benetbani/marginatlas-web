@@ -1,7 +1,7 @@
 /**
  * THE REBUILT HOME'S SHAPE (his instruction of 2026-10-07: "reform home drastically"; he called the live home "catastrophically
- * bad"; his section ideas of 2026-10-08, plan docs/superpowers/plans/2026-10-08-home-sections/PLAN.md). In this order and nothing
- * else: the search (the h1 asks the question, so the picker draws no heading of its own), the UK's three answers, the duel and the
+ * bad"). His section ideas of 2026-10-08 are built in plan docs/superpowers/plans/2026-10-08-home-sections/PLAN.md. In this order and
+ * nothing else: the search (the h1 asks the question, so the picker draws no heading of its own), the UK's three answers, the duel and the
  * kitchens list from the registers, Pro only while the paywall is on, then three levels of two halves each: where new firms last
  * beside the UK's city pages held still (his refusal of carousels and pagination, 2026-09-22), where new companies open beside
  * where US restaurants grew and shrank, and how figures are made beside the notebook, last. Every level but the search is a pair:
@@ -21,7 +21,7 @@ import { buildCityCards } from "../../src/lib/spine/city_cards";
 
 let failed = 0;
 let deferred = 0;
-const check = (name: string, ok: boolean) => { if (!ok) failed++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}`); };
+const check = (name: string, ok: boolean, remedy?: string) => { if (!ok) failed++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}`); if (!ok && remedy) console.log(`      Remedy: ${remedy}`); };
 const view = readFileSync("src/components/spine/home/home-view.tsx", "utf8");
 const live = readFileSync("src/app/page.tsx", "utf8");
 const picker = readFileSync("src/components/NavigatorForm.tsx", "utf8");
@@ -71,6 +71,12 @@ check("no counts zone (no AtlasHolds, buildAtlasHolds, ledger counts or COPY.hom
 /* THE THREE LOUD MOMENTS: the UK's answer, and the leads of sections 1 and 3, each declared LIT with its card's id. */
 const seats = /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(view)?.[0] ?? "";
 check("three loud moments declared LIT: the UK's answer, where new firms last, the US restaurants", (seats.match(/state: "LIT"/g) ?? []).length === 3 && /card: "00 answer"/.test(seats) && /id: "firms-last"/.test(seats) && /id: "us-restaurants"/.test(seats));
+/* SEAT 3 TYPES THE SIZE OF ITS RANKING ("a measured ranking of 44 by restaurants added", a literal read from source, as the seats' own
+   comment says), so that number is held to the metros the slice ranks. */
+const seat3At = seats.indexOf("seat: 3");
+const said = /ranking of (\d+)/.exec(seat3At >= 0 ? seats.slice(seat3At) : "")?.[1];
+const ranked = (JSON.parse(readFileSync("data/home/us_restaurants.json", "utf8")) as { metros: unknown[] }).metros.length;
+check(`seat 3's condition says a ranking of ${said ?? "(no number found)"} and the slice ranks ${ranked} metros`, said !== undefined && Number(said) === ranked, "make the number in seat 3's condition (LOUD_SEATS in src/components/spine/home/home-view.tsx) the metros ranked in data/home/us_restaurants.json (its metros.length), or re-export that slice if the slice is the stale one");
 
 /* THE PICKER'S HEADING: off on the rebuilt home, on (the default) on the live home. */
 check("the rebuilt home renders the picker without its heading", /<NavigatorForm showHeading=\{false\} \/>/.test(view));

@@ -174,14 +174,16 @@ export function CityCards({
    *  rows draw this archetype's own full-width ROW form, one under another, because a wrapping row of tall cards leaves its
    *  last line's lone card (a country's seventh, an odd one out) to stretch wider than tall, which the NOT TALL law (height over
    *  width 1.15 at the least) bars, and a row is the form that law exempts. Both forms are in the markup and the width picks one
-   *  (as RankedBars writes its bars, its table and its phone list); each city is a link in each. The cards keep `fill` off. */
+   *  (as RankedBars writes its bars, its table and its phone list); each city is a link in each. This two-form row keeps `fill` off
+   *  (each form stands its own height); with `stack` the rows take it. */
   still?: boolean;
   /** THE ROW FORM AT EVERY WIDTH, for a card that stands in a half or a third of a level (2026-10-07). A row of seven tall cards
    *  needs the whole 976px of a desktop column (132 a card, 114 inside the padding, for "Birmingham" at the name's rung), and the
    *  section-bands gate bars a full-width section that is not the hero (the founder, 2026-08-25: "for every subsection that
    *  stretches left to right full width, I think we should ban it except hero section"), so the home's cities stand in a half
-   *  beside the notebook and take the form that fits a half: every city a row, one under another, a gap of 8 between. Read only
-   *  with `still` (the pager's forms are unchanged). */
+   *  beside where new firms last (beside the notebook until plan 2026-10-08) and take the form that fits a half: every city a row,
+   *  one under another, a gap of 8 between, sharing the height the half is given when `fill` is on. Read only with `still` (the
+   *  pager's forms are unchanged). */
   stack?: boolean;
 }) {
   const [page, setPage] = React.useState(0);
@@ -232,7 +234,8 @@ export function CityCards({
           track (measured above). So a set of one, two or three draws the
           model's own full-width row instead: same content, same name size,
           same figure, the arrow at the right edge, and no hole. */}
-      {/* `fill`: the grid takes the height the card is lent and its rows share it (`auto-rows-fr`), so the cards grow instead of a blank under the link. */}
+      {/* `fill`: the grid takes the height the card is lent (`flex-1`) and its rows share it (`auto-rows-fr`, which the rows form carries
+          already and the tall grid is given here), so the cards grow instead of a blank under the link. */}
       {stillForm ? (
         <>
           {/* BELOW 1024: THE ROW FORM, seven rows one under another at the width of the card. A row is exempt from the tall law, and a
@@ -249,7 +252,7 @@ export function CityCards({
           </div>
         </>
       ) : (
-        <div className={`${rows ? `grid grid-cols-1 items-stretch auto-rows-fr${still && stack ? " gap-2" : ""}` : tall} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
+        <div className={`${rows ? `grid grid-cols-1 items-stretch auto-rows-fr${still && stack ? " gap-2" : ""}` : tall} ${fill ? `flex-1${rows ? "" : " auto-rows-fr"}` : ""}`}>
           {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} index={still && stack ? i : 0} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
         </div>
       )}

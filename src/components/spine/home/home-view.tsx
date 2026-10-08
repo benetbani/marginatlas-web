@@ -177,10 +177,11 @@ function YearsAnswer({ a }: { a: HomeAnswer }) {
    2026-08-25), and the page has one hero, the search, declared with data-hero. The gate recognises no wide form, so marking this
    row a hero would have been a way round the rule and not a declaration under it, and the baseline may only come down. The
    other way is the founder's own pattern (two-up bands, "never one lone section per horizontal band", 2026-06-18): the section
-   stands in a half, beside the notebook (below), and a half cannot hold a row of seven tall cards (132 a card is the least that
-   holds "Birmingham" at the name's rung, and a half is 504 at the widest), so it takes the archetype's own row form, which the
-   tall law exempts, at every width. BESIDE WHERE NEW FIRMS LAST since plan 2026-10-08 (the notebook moved to the last level),
-   the rows share the height the pair is given (`fill`), as the bars beside them do, so neither half stands a blank foot. */
+   stands in a half, beside where new firms last (it stood beside the notebook until plan 2026-10-08 moved the notebook to the last
+   level), and a half cannot hold a row of seven tall cards (132 a card is the least that holds "Birmingham" at the name's rung,
+   and a half is 504 at the widest), so it takes the archetype's own row form, which the tall law exempts, at every width. Since
+   plan 2026-10-08 the rows share the height the pair is given (`fill`), as the bars beside them do, so neither half stands a blank
+   foot. */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
     <Box id="cities" className="flex flex-col">
@@ -258,7 +259,8 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
        "never one lone section per horizontal band", 2026-06-18; the section-bands gate bars a full width that is not the hero, and
        the home's baseline is 0). Each is read through the zones' own rules: a level with one of its two to draw is a lone section at
        two thirds (the LONE rule), a level with neither is not listed. Pro, where it draws, still stands after the registers and
-       before the first of them. A zone is named by its first section (a data attribute the checks read, not a word the page prints).
+       before the first of them. The cities and world levels carry fixed level names (COPY.home.citiesLabel, COPY.home.worldLabel) and
+       the last level is named by its first section (a data attribute the checks read, not a word the page prints).
 
        THE UK'S CITIES, AND WHERE THEIR NEW FIRMS LAST (section 1; HomeCities says why the cities stand in a half): the 2019 cohort's
        five-year survival per UK city, its lead one of the page's three loud moments, beside the UK's city pages held still. It ends

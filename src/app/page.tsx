@@ -255,10 +255,11 @@ function formatPostDate(iso: string): string {
 export default async function HomePage() {
   /* THE HOME PAGE ON THE BAND PAGE (milestone 3, masterplan step 32), behind NEXT_PUBLIC_HOME_REFORM (default ON since
      2026-10-07, his ruling "Measure, then go live"; =0 turns it off, see src/lib/feature_flags.ts): the h1 he kept and the
-     search first, then the UK's answers, the duel and the kitchens list, Pro while its switch is on, and the cities beside the
-     notebook, as src/components/spine/home/home-view.tsx seats them. It replaces the earlier rebuild, whose "Free vs paid" and
-     coined index contradicted his rulings 11 and 17. With the flag OFF (NEXT_PUBLIC_HOME_REFORM=0) the earlier body below
-     renders exactly as it did before 2026-10-07. */
+     search first, then the UK's answers, the duel and the kitchens list, Pro while its switch is on, and three pairs of halves
+     (where new firms last beside the UK's city pages, where new companies open beside where US restaurants grew and shrank, and
+     how figures are made beside the notebook), as src/components/spine/home/home-view.tsx seats them. It replaces the earlier
+     rebuild, whose "Free vs paid" and coined index contradicted his rulings 11 and 17. With the flag OFF
+     (NEXT_PUBLIC_HOME_REFORM=0) the earlier body below renders exactly as it did before 2026-10-07. */
   if (isHomeReformEnabled()) {
     return (
       <SiteChrome>
