@@ -4,7 +4,7 @@
   "city_survival.json": {
    "built": "2026-10-08",
    "rows": 8,
-   "sha256": "9502592cab64abc40ff6d76737a24a1be4f7a80ac48c9c40449de582b5838ab8",
+   "sha256": "351223fb292ece45440df47ff902f9e62b20d018392c876114f2366b197c6cb1",
    "sources": [
     {
      "bytes": 926112,
@@ -77,5 +77,5 @@
    ]
   }
  },
- "what": "Slices of files on disk outside this repo, the figures the home page's sections print; do not edit by hand"
+ "what": "Slices of files outside this repo, the figures the home page's sections print; do not edit by hand"
 }

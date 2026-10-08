@@ -65,11 +65,11 @@
    "pct": 29.7,
    "slug": "birmingham",
    "survived": 2205,
-   "why": "the publisher stars this area: over 500 businesses at one postcode, so its births are not like the other cities'"
+   "why": "the publisher stars this area: more than 500 businesses at a single postcode"
   }
  ],
  "published": "20th November 2025",
- "star_note": "Please note that district which have been identified as having more than 500 businesses at a single postcode contain an * within the datasets for reference.",
+ "star_note": "Please note that district which have been identified as having more than 500 businesses at a single postcode contain an * within the datasets for reference. However, please be mindful there are geography areas which are up to 500 but not identified within this workbook or the accompanying registrations paper. The paper linked in the statistical bulletin explains the issue in detail and provides an additional dataset for reference.",
  "table": "Table 5.1a",
  "uk": {
   "births": 363825,

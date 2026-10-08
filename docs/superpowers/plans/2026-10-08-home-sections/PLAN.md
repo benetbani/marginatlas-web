@@ -208,7 +208,9 @@ page's "Checked" date (his ruling: Checked is the export's day) for figures nobo
 Every figure is read from its source as published (a count, a published rate) or worked out here from what was read (a share of
 100 from two counts, half up to one decimal, in Decimal); none is typed. What is typed is identifiers (an area's code, a metro's
 code), each checked against its own source's name for it before anything is written, and the rule a list is cut by (a floor),
-written into the file with its reason. A refusal says what is wrong and writes nothing.
+written into the file with its reason. A refusal says what is wrong and writes nothing. What it writes is read line by line by the
+build's internal-notes gate (scripts/verify_no_internal_notes.ts), so a note is the publisher's own words and nothing in the files
+speaks of this machine's files or of running anything.
 
 By hand, never in the chain (it reads the parent repo), from the website root, with the Python that holds openpyxl and pyarrow:
   python -P scripts/data/home/export_home.py city_survival     section 1: of 100 firms born in a year, still trading five years on
@@ -222,6 +224,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import re
 import sys
 from datetime import date
 from decimal import ROUND_HALF_UP, Decimal
@@ -267,11 +270,10 @@ def cities_of(iso2: str) -> list[dict]:
 def write(name: str, obj: dict, rows: int, sources: list[dict]) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     text = json.dumps(obj, indent=1, ensure_ascii=False, sort_keys=True) + "\n"
-    manifest = json.loads(MANIFEST.read_text(encoding="utf-8")) if MANIFEST.exists() else {
-        "what": "Slices of files on disk outside this repo, the figures the home page's sections print; do not edit by hand",
-        "built_by": "scripts/data/home/export_home.py",
-        "files": {},
-    }
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8")) if MANIFEST.exists() else {"files": {}}
+    # The two lines that say what the file is are set on every write, so a change of wording reaches a manifest that already exists.
+    manifest["what"] = "Slices of files outside this repo, the figures the home page's sections print; do not edit by hand"
+    manifest["built_by"] = "scripts/data/home/export_home.py"
     manifest["files"][name] = {"sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "rows": rows, "built": date.today().isoformat(), "sources": sources}
     (OUT / name).write_text(text, encoding="utf-8", newline="\n")
     MANIFEST.write_text(json.dumps(manifest, indent=1, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
@@ -296,8 +298,9 @@ UK_AREA = "K02000001"
 
 def city_survival() -> None:
     """Of 100 firms born in the table's cohort, how many still traded five years on, per UK city with a page (Table 5.1a). The
-    table's five-year percentage is a formula, so the share is worked out from its two counts. An area the publisher stars (over
-    500 businesses at one postcode) is held out with that reason, recorded and never printed."""
+    table's five-year percentage is a formula, so the share is worked out from its two counts. An area the publisher stars is held
+    out with the publisher's own reason, recorded and never printed. The publisher's note on stars is kept whole, for it goes on to
+    say that areas with up to 500 such businesses are not identified."""
     import openpyxl
 
     cities = cities_of("GB")
@@ -319,10 +322,31 @@ def city_survival() -> None:
     def lines(sheet: str) -> list[str]:
         return [" ".join(str(v) for v in r if v is not None) for r in wb[sheet].iter_rows(values_only=True)]
 
-    star = next((t for t in lines("Notes") if "500 businesses at a single postcode" in t), None)
+    def note_of(sheet: str, phrase: str) -> tuple[str, str] | None:
+        """The numbered note of `sheet` with `phrase` in a row of its description: that row, and the note whole, every row from its
+        number to the next number as the publisher wrote it (spaces tidied) and joined by a space. Nothing of it is typed here but
+        the phrase it is found by."""
+        entries = []
+        for r in wb[sheet].iter_rows(values_only=True):
+            cells = [*r, None, None]
+            entries.append((cells[0], " ".join(str(cells[1]).split()) if cells[1] is not None else ""))
+        hit = next((i for i, (num, text) in enumerate(entries) if num is None and phrase in text), None)
+        if hit is None:
+            return None
+        top, end = hit, hit + 1
+        while top > 0 and entries[top][0] is None:
+            top -= 1
+        while end < len(entries) and entries[end][0] is None:
+            end += 1
+        if entries[top][0] is None:
+            return None
+        return entries[hit][1], " ".join(text for _, text in entries[top + 1 : end] if text)
+
+    star = note_of("Notes", "500 businesses at a single postcode")
+    reason = re.search(r"more than \d+ businesses at a single postcode", star[0]) if star else None
     published = next((t.split(":", 1)[1].strip() for t in lines("Cover") if t.startswith("Date published")), None)
-    if not star or not published:
-        refuse("the workbook's note on starred areas, or its date of publication, is not where the 2024 release put them")
+    if not star or not reason or not published:
+        refuse("the workbook's note on starred areas, or its date of publication, is not where or as the 2024 release put them")
 
     def area(code: str) -> dict:
         r = rows.get(code)
@@ -340,10 +364,10 @@ def city_survival() -> None:
             refuse(f"{a['code']} reads {a['name_in_table']!r} in the table, not {c['name']!r}")
         row = {"slug": c["slug"], "name": c["name"], **a}
         if a["name_in_table"].endswith("*"):
-            held.append({**row, "why": "the publisher stars this area: over 500 businesses at one postcode, so its births are not like the other cities'"})
+            held.append({**row, "why": f"the publisher stars this area: {reason.group(0)}"})
         else:
             drawn.append(row)
-    obj = {"cohort": cohort, "year": cohort + 5, "table": "Table 5.1a", "published": published, "star_note": star, "uk": area(UK_AREA), "cities": drawn, "held_out": held}
+    obj = {"cohort": cohort, "year": cohort + 5, "table": "Table 5.1a", "published": published, "star_note": star[1], "uk": area(UK_AREA), "cities": drawn, "held_out": held}
     write("city_survival.json", obj, len(drawn) + len(held) + 1, [
         source("demography", DEMOGRAPHY, "ons", "Business demography, UK: 2024, reference tables, Table 5.1a: the 2019 births and their survival"),
     ])
