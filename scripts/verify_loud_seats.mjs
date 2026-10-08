@@ -63,7 +63,7 @@
  * typical in the accent, re-rendered: "a lit figure not declared ...
  * #customers"). Unplanted the same hour.
  *
- * Usage: npx tsx scripts/verify_loud_seats.mjs
+ * Usage: npx tsx scripts/verify_loud_seats.mjs [--list=<a list shaped as scripts/harness/pages.json>]
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -106,7 +106,10 @@ if (reds.length) {
 /* A BUILD SERVER HAS NO BROWSER: skip loudly there, as every browser gate does. */
 await requireBrowser(RULE, "whether every render's accent figures are the seats its view declares LIT (MODEL.md PART 8's seat tables)");
 
-const ENTRIES = pageRenders({ kinds: ["fresh"] });
+/* THE LIST, AS ITS SIBLINGS TAKE IT (plan 2026-10-08, uk:cities-sourced-or-marked): the chain's own by default; --list=<file>, a list
+   shaped as scripts/harness/pages.json, measures renders the chain does not draw (the six other UK city pages), by hand only. */
+const LIST_ARG = process.argv.slice(2).find((a) => a.startsWith("--list="));
+const ENTRIES = pageRenders({ kinds: ["fresh"], ...(LIST_ARG ? { list: LIST_ARG.slice("--list=".length) } : {}) });
 say(`  ${describeRenders(ENTRIES, RULE)}`);
 const PRESENT = ENTRIES.filter((e) => e.exists);
 const MISSING = ENTRIES.filter((e) => !e.exists);

@@ -92,15 +92,17 @@ const FROZEN = ["countries-list"];
  * One entry per render the gates read, with its file's state at the moment of
  * the call: `exists`, `mtime` (a Date, or null), `bytes`.
  *
- * @param {{ kinds?: Array<"fresh" | "frozen"> }} [opts]  which kinds to return; both by default
+ * @param {{ kinds?: Array<"fresh" | "frozen">, list?: string }} [opts]  which kinds to return (both by default), and the harness
+ *   list the fresh ones come from (scripts/harness/pages.json by default; a list of the same shape names renders the chain does not
+ *   draw, for a gate run by hand)
  * @returns {Array<{ name: string, key: string, kind: "fresh" | "frozen", path: string,
  *   surface?: string, slugs?: string[], date?: string, exists: boolean, mtime: Date | null, bytes: number }>}
  */
-export function pageRenders({ kinds = ["fresh", "frozen"] } = {}) {
+export function pageRenders({ kinds = ["fresh", "frozen"], list = HARNESS_LIST } = {}) {
   const out = [];
   if (kinds.includes("fresh")) {
-    const list = JSON.parse(readFileSync(HARNESS_LIST, "utf8")).pages;
-    for (const p of list) {
+    const pages = JSON.parse(readFileSync(list, "utf8")).pages;
+    for (const p of pages) {
       const name = `${p.surface}-${p.slugs.join("-")}`;
       out.push(withFileState({ name, key: BASELINE_KEYS[name] ?? name, kind: "fresh", path: `${FRESH_DIR}/${name}.html`, surface: p.surface, slugs: p.slugs }));
     }
