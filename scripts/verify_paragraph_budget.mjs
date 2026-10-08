@@ -128,7 +128,7 @@ function walk(dir, out = []) {
  */
 function proseWords(inner) {
   const t = inner
-    .replace(/\{[^{}]*\}/g, "  ")
+    .replace(/\{[^{}]*\}/g, " \u0001 ")
     .replace(/<[^>]+>/g, " ")
     .replace(/&[a-z#0-9]+;/gi, " ")
     .replace(/\s+/g, " ")

@@ -239,7 +239,7 @@ function firstSentence(header: string): string | null {
   while (lines.length > 0 && (lines[0] === "" || FURNITURE.test(lines[0]))) lines.shift();
   const text = lines
     .join(" ")
-    .replace(/[ --]/g, "")
+    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, "")
     .replace(/\s+/g, " ")
     .trim();
   if (!text) return null;
@@ -356,7 +356,7 @@ function declaredClaims(header: string | null): Claim[] {
 function dedupeClaims(claims: Claim[]): Claim[] {
   const seen = new Set<string>();
   return claims.filter((c) => {
-    const key = `${c.kind} ${c.string}`;
+    const key = `${c.kind}\u0000${c.string}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;

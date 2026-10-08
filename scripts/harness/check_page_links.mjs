@@ -154,7 +154,7 @@ for (const f of files) {
       const steps = Number(/data-crumbs="(\d+)"/.exec(crumbNav[0])?.[1] || 0);
       if (steps < 2) bad.push([`(trail of ${steps})`, "a trail of fewer than two steps"]);
       const tail = crumbNav[1].slice(crumbNav[1].lastIndexOf("</a>") + 4);
-      if (!tail.trim() || /<a/.test(tail)) bad.push(["(trail)", "the last step of the trail is a link; the last step is the page"]);
+      if (!tail.trim() || /<a\b/.test(tail)) bad.push(["(trail)", "the last step of the trail is a link; the last step is the page"]);
     }
   }
   const floor = LINK_FLOOR[surface];
