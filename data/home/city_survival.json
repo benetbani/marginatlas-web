@@ -1,0 +1,82 @@
+{
+ "cities": [
+  {
+   "births": 2725,
+   "code": "E06000023",
+   "name": "Bristol",
+   "name_in_table": "Bristol City of",
+   "pct": 38.9,
+   "slug": "bristol",
+   "survived": 1060
+  },
+  {
+   "births": 2590,
+   "code": "S12000036",
+   "name": "Edinburgh",
+   "name_in_table": "City of Edinburgh",
+   "pct": 39.6,
+   "slug": "edinburgh",
+   "survived": 1025
+  },
+  {
+   "births": 3275,
+   "code": "S12000049",
+   "name": "Glasgow",
+   "name_in_table": "Glasgow City",
+   "pct": 40.2,
+   "slug": "glasgow",
+   "survived": 1315
+  },
+  {
+   "births": 3890,
+   "code": "E08000035",
+   "name": "Leeds",
+   "name_in_table": "Leeds",
+   "pct": 41.8,
+   "slug": "leeds",
+   "survived": 1625
+  },
+  {
+   "births": 88550,
+   "code": "E12000007",
+   "name": "London",
+   "name_in_table": "LONDON",
+   "pct": 38.2,
+   "slug": "london",
+   "survived": 33785
+  },
+  {
+   "births": 4380,
+   "code": "E08000003",
+   "name": "Manchester",
+   "name_in_table": "Manchester",
+   "pct": 33.9,
+   "slug": "manchester",
+   "survived": 1485
+  }
+ ],
+ "cohort": 2019,
+ "held_out": [
+  {
+   "births": 7430,
+   "code": "E08000025",
+   "name": "Birmingham",
+   "name_in_table": "Birmingham*",
+   "pct": 29.7,
+   "slug": "birmingham",
+   "survived": 2205,
+   "why": "the publisher stars this area: over 500 businesses at one postcode, so its births are not like the other cities'"
+  }
+ ],
+ "published": "20th November 2025",
+ "star_note": "Please note that district which have been identified as having more than 500 businesses at a single postcode contain an * within the datasets for reference.",
+ "table": "Table 5.1a",
+ "uk": {
+  "births": 363825,
+  "code": "K02000001",
+  "name_in_table": "UNITED KINGDOM",
+  "pct": 38.4,
+  "survived": 139845
+ },
+ "year": 2024
+}

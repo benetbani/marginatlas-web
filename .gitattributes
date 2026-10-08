@@ -31,3 +31,8 @@ src/components/spine2/glyphs.ts text eol=lf
 # machine while the deploy passed.
 
 data/uk/registers/*.json        text eol=lf
+
+# The home page's slices are the fourth (plan 2026-10-08, home sections): the home gates hash data/home/*.json against the
+# manifest scripts/data/home/export_home.py writes in LF.
+
+data/home/*.json                text eol=lf

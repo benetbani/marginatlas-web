@@ -1,0 +1,22 @@
+{
+ "built_by": "scripts/data/home/export_home.py",
+ "files": {
+  "city_survival.json": {
+   "built": "2026-10-08",
+   "rows": 8,
+   "sha256": "9502592cab64abc40ff6d76737a24a1be4f7a80ac48c9c40449de582b5838ab8",
+   "sources": [
+    {
+     "bytes": 926112,
+     "key": "demography",
+     "path": "E:/atlas/cache/uk/ons_demography/2026-10-02/businessdemographyexceltables2024.xlsx",
+     "prints": true,
+     "publisher": "ons",
+     "sha256": "d0687054646be98c0b7ba0f476888111523cc7ead380e07ecf609f0c5e2cde37",
+     "title": "Business demography, UK: 2024, reference tables, Table 5.1a: the 2019 births and their survival"
+    }
+   ]
+  }
+ },
+ "what": "Slices of files on disk outside this repo, the figures the home page's sections print; do not edit by hand"
+}
