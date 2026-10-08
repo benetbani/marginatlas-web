@@ -247,6 +247,7 @@
         "scratchpad/harness",
         "scratchpad/harness/loud_seats.txt",
         "scripts/lib/loud_seats.ts",
+        "scripts/verify_loud_seats.mjs",
         "src/components/spine",
         "src/lib/spine/loud_seats.ts"
       ],

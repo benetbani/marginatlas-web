@@ -63,14 +63,20 @@
  * typical in the accent, re-rendered: "a lit figure not declared ...
  * #customers"). Unplanted the same hour.
  *
- * Usage: npx tsx scripts/verify_loud_seats.mjs [--list=<a list shaped as scripts/harness/pages.json>]
+ * Usage: npx tsx scripts/verify_loud_seats.mjs [--list[=<a list shaped as scripts/harness/pages.json>]]
+ *
+ * THE ARGUMENTS (plan 2026-10-08, uk:cities-sourced-or-marked): none, or a bare `--list`, reads the chain's own list,
+ * scripts/harness/pages.json, as its siblings read it. `--list=<file>` reads a list of the same shape, to measure renders the chain
+ * does not draw (the six other UK city pages), by hand only; those renders are drawn by scripts/harness/render_page.tsx --list
+ * <file>, which verify_pages_fresh.mjs does for no list but the chain's own. A list that cannot be read, or that names no page, is a
+ * red (exit 1); any other argument is a usage red (exit 2), never a silent run of the chain's list.
  */
 import { mkdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 import { requireBrowser } from "./lib/local_only.mjs";
-import { pageRenders, describeRenders, missingLine } from "./lib/page_renders.mjs";
+import { pageRenders, describeRenders, missingLine, HARNESS_LIST } from "./lib/page_renders.mjs";
 import { red, redSummary } from "./lib/red.mjs";
 import { accentWalk } from "./lib/accent_walk.mjs";
 import { readLoudSeats, litCount, loudCardId, LOUD_STATES as READER_STATES } from "./lib/loud_seats.ts";
@@ -80,6 +86,20 @@ const RULE = "loud-seats";
 const WIDTH = 1280;
 const OUT = "scratchpad/harness/loud_seats.txt";
 const MODULE = "src/lib/spine/loud_seats.ts";
+const SELF = "scripts/verify_loud_seats.mjs";
+const LIST_SHAPE = "a json file with a pages array of surface and slugs, shaped as scripts/harness/pages.json";
+
+/* THE ARGUMENTS (plan 2026-10-08, uk:cities-sourced-or-marked): none or a bare --list (the chain's own list), or --list=<file> (a list
+   of the same shape, by hand). Anything else is a usage red and exit 2, never a silent run of the chain's list. */
+const ARGS = process.argv.slice(2);
+const LIST_ARGS = ARGS.filter((a) => a === "--list" || a.startsWith("--list="));
+const STRAY_ARGS = ARGS.filter((a) => !LIST_ARGS.includes(a));
+const LIST_FILE = LIST_ARGS.length === 1 && LIST_ARGS[0].startsWith("--list=") ? LIST_ARGS[0].slice("--list=".length) : null;
+const USAGE_FAULT = STRAY_ARGS.length > 0 ? `unknown argument ${STRAY_ARGS.map((a) => JSON.stringify(a)).join(", ")}` : LIST_ARGS.length > 1 ? "more than one --list" : LIST_FILE !== null && LIST_FILE.trim() === "" ? "--list= names no file" : null;
+if (USAGE_FAULT) {
+  red({ rule: RULE, file: SELF, detail: `usage: ${USAGE_FAULT}`, remedy: `run with no argument or a bare --list for the chain's list, or --list=<${LIST_SHAPE}>` });
+  process.exit(2);
+}
 
 const reds = [];
 const lines = [];
@@ -107,13 +127,29 @@ if (reds.length) {
 await requireBrowser(RULE, "whether every render's accent figures are the seats its view declares LIT (MODEL.md PART 8's seat tables)");
 
 /* THE LIST, AS ITS SIBLINGS TAKE IT (plan 2026-10-08, uk:cities-sourced-or-marked): the chain's own by default; --list=<file>, a list
-   shaped as scripts/harness/pages.json, measures renders the chain does not draw (the six other UK city pages), by hand only. */
-const LIST_ARG = process.argv.slice(2).find((a) => a.startsWith("--list="));
-const ENTRIES = pageRenders({ kinds: ["fresh"], ...(LIST_ARG ? { list: LIST_ARG.slice("--list=".length) } : {}) });
+   shaped as scripts/harness/pages.json, measures renders the chain does not draw (the six other UK city pages), by hand only. A list
+   that cannot be read, or that names no page, is a red: not a stack trace, and not a green over nothing. */
+const LIST_PATH = LIST_FILE ?? HARNESS_LIST;
+let ENTRIES;
+try {
+  ENTRIES = pageRenders({ kinds: ["fresh"], ...(LIST_FILE ? { list: LIST_FILE } : {}) });
+} catch (e) {
+  red({ rule: RULE, file: LIST_PATH, detail: `the page list could not be read (${String(e?.message ?? e).split("\n")[0]})`, remedy: `pass --list=<${LIST_SHAPE}>` });
+  process.exit(1);
+}
+if (ENTRIES.length === 0) {
+  red({ rule: RULE, file: LIST_PATH, detail: "the page list names no page, so no seats were measured", remedy: `pass --list=<${LIST_SHAPE}>` });
+  process.exit(1);
+}
 say(`  ${describeRenders(ENTRIES, RULE)}`);
 const PRESENT = ENTRIES.filter((e) => e.exists);
 const MISSING = ENTRIES.filter((e) => !e.exists);
-for (const m of MISSING) { say(missingLine(RULE, m)); reds.push({ file: m.path, detail: `no fresh render of ${m.name}, so its seats were not measured`, remedy: "run npx tsx scripts/verify_pages_fresh.mjs and fix what it names" }); }
+/* The chain's list is drawn by the pages-fresh gate; a list handed in by hand is drawn by the harness renderer on that list, which
+   pages-fresh does not read, so the pages-fresh line and remedy are the chain's alone. */
+for (const m of MISSING) {
+  if (!LIST_FILE) say(missingLine(RULE, m));
+  reds.push({ file: m.path, detail: `no fresh render of ${m.name}, so its seats were not measured`, remedy: LIST_FILE ? `draw the list with scripts/harness/render_page.tsx --list ${LIST_FILE}` : "run npx tsx scripts/verify_pages_fresh.mjs and fix what it names" });
+}
 
 const browser = await chromium.launch();
 let measuredTotal = 0, litTotal = 0, withheldTotal = 0;
