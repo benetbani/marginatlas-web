@@ -11,7 +11,8 @@
  */
 import ncJson from "../../../data/home/new_companies.json";
 import { iso2ToName } from "@/lib/countries";
-import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
+import type { DoorKind } from "@/lib/spine/door_kinds";
+import { countryPageTarget } from "@/lib/geo/page_targets";
 import type { Provenance } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
 
@@ -42,15 +43,23 @@ export function buildNewCompanies(): NewCompanies | null {
       .filter((m): m is Member & { value: number } => m.shown && typeof m.value === "number" && Number.isFinite(m.value))
       .sort((a, b) => b.value - a.value || a.iso2.localeCompare(b.iso2));
     if (shown.length < NEW_COMPANIES_SHOWN) return null;
-    const rows = shown.map((m) => ({ key: m.iso2.toLowerCase(), iso2: m.iso2, name: iso2ToName(m.iso2), value: one(m.value), href: `/${m.iso2.toLowerCase()}`, lands: SURFACE_ANSWERS.country, prov: stamp(m.iso2) }));
+    /* Each drawn country is a door to its page through the resolver (src/lib/geo/page_targets.ts, the same COUNTRIES check the
+       /[country] route makes), never a path assembled from the dataset's code (the geo-link-construction gate): a drawn country
+       with no page draws no section, and the section's gate says so. */
+    const rows: NewCompaniesRow[] = [];
+    for (const m of shown.slice(0, NEW_COMPANIES_SHOWN)) {
+      const page = countryPageTarget(m.iso2);
+      if (!page) return null;
+      rows.push({ key: m.iso2.toLowerCase(), iso2: m.iso2, name: iso2ToName(m.iso2), value: one(m.value), href: page.href, lands: page.answers, prov: stamp(m.iso2) });
+    }
     const name = C.regions[key];
     groups.push({
       key,
       name,
-      rows: rows.slice(0, NEW_COMPANIES_SHOWN),
+      rows,
       /* The rest print from the full figure through rateDisplay, never from the rounded rows. */
       rest: shown.slice(NEW_COMPANIES_SHOWN).map((m) => ({ label: iso2ToName(m.iso2), value: rateDisplay(m.value), prov: stamp(m.iso2) })),
-      more: C.more.replace("{n}", String(rows.length - NEW_COMPANIES_SHOWN)).replace("{region}", name),
+      more: C.more.replace("{n}", String(shown.length - NEW_COMPANIES_SHOWN)).replace("{region}", name),
     });
   }
   return { year: d.year, uk: { value: one(d.uk.value), prov: stamp("GB") }, groups };
