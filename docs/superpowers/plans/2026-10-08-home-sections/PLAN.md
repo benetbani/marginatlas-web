@@ -117,9 +117,10 @@ shrink.
 7. **Shared forms gain small optional props:** MarkList a grouped form (`groups`), TiersTable figure rows and DetailPanel rows a
    `prov` each (the home's provenance baseline is 0), Focal an `accent`; each proven byte-identical where it is not passed. Section
    1's bars and the UK cities' rows both `fill` their level (`even`); the world level is not `even` (open sections, each its height).
-8. **Section 4 shows the match rate:** its focal is the 31,926 notices; its first row "Names matched, 30,510 of 31,376", so the
-   technique's honesty is on the card; its last row "Country pages, 195" carries the line "Outside the UK, these pages print
-   estimates." (worded for the pages, so it never reads as a claim on sections 2 and 3, which are published or counted).
+8. **Section 4 shows the match rate:** its focal is the 31,926 company notices (insolvencies and solvent liquidations alike); its
+   first row "Names matched, 30,510 of 31,376", so the technique's honesty is on the card; its last row "Country pages, 195" carries
+   the line "Outside the UK, these pages print estimates." (worded for the pages, so it never reads as a claim on sections 2 and 3,
+   which are published or counted).
 9. **The sources page gains a second list,** `WORLD_SOURCES` in `src/lib/spine/uk_sources.ts` (the one module allowed to name a
    source), printed on About the figures under the UK's: the World Bank and the US Bureau of Labor Statistics.
 10. **The grouped MarkList has no story on the archetype sheet** (the sheet's instances are keyed off builders; a fixture story
@@ -208,16 +209,16 @@ page's "Checked" date (his ruling: Checked is the export's day) for figures nobo
 
 Every figure is read from its source as published (a count, a published rate) or worked out here from what was read (a share of
 100 from two counts, half up to one decimal, in Decimal); none is typed. What is typed is identifiers (an area's code, a metro's
-code), each checked against its own source's name for it before anything is written, and the rule a list is cut by (a floor),
-written into the file with its reason. A refusal says what is wrong and writes nothing. What it writes is read line by line by the
-build's internal-notes gate (scripts/verify_no_internal_notes.ts), so a note is the publisher's own words and nothing in the files
-speaks of this machine's files or of running anything.
+code and the state its city stands in), each checked against its own source's name for it before anything is written, and the rule
+a list is cut by (a floor), written into the file with its reason. A refusal says what is wrong and writes nothing. What it writes
+is read line by line by the build's internal-notes gate (scripts/verify_no_internal_notes.ts), so a note is the publisher's own
+words and nothing in the files speaks of this machine's files or of running anything.
 
 By hand, never in the chain (it reads the parent repo), from the website root, with the Python that holds openpyxl and pyarrow:
   python -P scripts/data/home/export_home.py city_survival     section 1: of 100 firms born in a year, still trading five years on
   python -P scripts/data/home/export_home.py new_companies     section 2: new limited companies per 1,000 people of working age
   python -P scripts/data/home/export_home.py us_restaurants    section 3: full-service restaurants in 45 US metros, two years
-  python -P scripts/data/home/export_home.py method            section 4: the insolvency notices the failure rates were read from
+  python -P scripts/data/home/export_home.py method            section 4: the year of company notices the failure rates were read from
 (each joins with its task; with no argument, every one this file holds runs.)
 """
 from __future__ import annotations
@@ -456,6 +457,8 @@ Create `scripts/lib/home_export.ts`:
  * Every finding goes through the gate's `check(label, ok, at?)`. `at` is optional and says where a finding is and what to do about
  * it when that is not the gate's own file and remedy: the manifest, a stray or a missing file, the sources page, the line ends.
  * A gate that passes none (or whose check takes two arguments) keeps its own file and remedy for every finding.
+ * An entry whose sources are missing or damaged is such a finding, and the gate is handed an empty list of sources (so
+ * `held.entry.sources` is always a list): it reds on its own lookup of a source and ends on its summary, never on a stack.
  *
  * What it cannot see: a hand edit that also rewrites manifest.json (nothing signs the manifest, as with the register slices), and
  * whether the export read its source rightly (the export's refusals and each gate's own checks hold that).
@@ -476,7 +479,9 @@ export type HomeEntry = { sha256: string; rows: number; built: string; sources: 
 export type HomeAt = { file?: string; remedy?: string };
 /** The gate's `check`: a PASS line, or a red with the gate's rule, and `at` or else the gate's file and remedy. */
 export type HomeCheck = (label: string, ok: boolean, at?: HomeAt) => void;
-/** A slice held: its parsed body, its manifest entry, and the keys of the sources this machine does not hold (their hashes were not read again). */
+/** A slice held: its parsed body, its manifest entry and the keys of the sources this machine does not hold (their hashes were not
+ *  read again). The entry's `sources` is always a list: the manifest's own when every source in it is whole, else empty, after the
+ *  red that says so. */
 export type HomeHeld = { data: unknown; entry: HomeEntry; deferred: string[] };
 
 const sha = (b: Buffer | string) => createHash("sha256").update(b).digest("hex");
@@ -536,14 +541,17 @@ export function holdHomeExport(name: string, check: HomeCheck): HomeHeld | null 
   const crlf = !same && sha(raw.toString("utf8").replace(/\r\n/g, "\n")) === want;
   check(`${name} is the export's, byte for byte (${now.slice(0, 12)}, the manifest's ${want.slice(0, 12)})${crlf ? ": its line ends were rewritten to CRLF" : ""}`, same, crlf ? { file, remedy: "check out data/home/*.json with LF: .gitattributes pins it" } : undefined);
   check(`${name} says the day it was exported (${entry.built})`, /^\d{4}-\d{2}-\d{2}$/.test(typeof entry.built === "string" ? entry.built : ""));
-  const sources = Array.isArray(entry.sources) ? entry.sources : [];
-  const named = sources.length > 0 && sources.every((s) => !!s && typeof s.key === "string" && typeof s.path === "string" && typeof s.sha256 === "string");
-  check(`${name} names the sources it was exported from (${named ? sources.map((s) => s.key).join(", ") : "none"})`, named);
+  const listedSources = Array.isArray(entry.sources) ? entry.sources : [];
+  const named = listedSources.length > 0 && listedSources.every((s) => !!s && typeof s.key === "string" && typeof s.path === "string" && typeof s.sha256 === "string");
+  check(`${name} names the sources it was exported from (${named ? listedSources.map((s) => s.key).join(", ") : "none"})`, named);
+  /* That red is given. From here the gates are handed the whole list or an empty one, never a damaged one: a gate looks a source up
+     by its key (held.entry.sources.find), and must end on its own red summary, not on a TypeError. */
+  const sources = named ? listedSources : [];
 
   /* THE SOURCES: the publisher of each a figure prints from is on the sources page; each is hashed again where this machine holds it. */
   const keys = new Set([...UK_SOURCES, ...WORLD_SOURCES].map((s) => s.key));
   const deferred: string[] = [];
-  for (const s of named ? sources : []) {
+  for (const s of sources) {
     if (s.prints) check(`${name}: the source a figure prints from names its publisher on the sources page (${s.key}: ${s.publisher})`, !!s.publisher && keys.has(s.publisher), { file: HOME_SOURCES_PAGE, remedy: "add the source to WORLD_SOURCES or fix the key in export_home.py" });
     if (existsSync(s.path)) check(`${name}: on this machine its source ${s.key} is the file it was exported from`, hashOf(s.path) === s.sha256);
     else {
@@ -558,7 +566,7 @@ export function holdHomeExport(name: string, check: HomeCheck): HomeHeld | null 
     check(`${file} cannot be read as JSON`, false);
     return null;
   }
-  return { data, entry, deferred };
+  return { data, entry: { ...entry, sources }, deferred };
 }
 
 /** A gate's last line. When `held` deferred any source it says so as "N deferred (<keys>: source not on this machine)", the form the runner counts. */
@@ -986,13 +994,15 @@ Create `tests/home/us_restaurants.test.ts`:
  *
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
  * manifest's row count is its content's; one metro a US city page and under the city's own name; each metro's code a metro area
- * whose published title names the city, no two cities on one code; whole counts in both years; the mark a row may carry withholds
- * employment and pay and never the count (every row keeps its count); five or more metros grew and five or more shrank, so both
- * ends of the ranking stand.
+ * whose published title names the city, no two cities on one code; each metro's state, typed beside its code in the export's METROS
+ * table, one of the states its title names, so a metro of the same name in another state (Columbus in Georgia or in Indiana, for
+ * Columbus in Ohio) does not pass for the city's, and, where the titles file is on this machine, each title the file's own, read
+ * again; whole counts in both years; the mark a row may carry withholds employment and pay and never the count (every row keeps its
+ * count); five or more metros grew and five or more shrank, so both ends of the ranking stand.
  *
  * Run: npx tsx tests/home/us_restaurants.test.ts
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -1002,8 +1012,22 @@ const REMEDY = "re-run python -P scripts/data/home/export_home.py us_restaurants
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
-type Metro = { slug: string; name: string; area: string; title: string; y_from: number; y_to: number; codes: Array<string | null> };
+/* A metro's code and its state are typed in the export's METROS table, so that table is where a finding about either is put right. */
+const AT_METROS = { remedy: "put the city's own metro code and state beside it in the METROS table of scripts/data/home/export_home.py, then re-run python -P scripts/data/home/export_home.py us_restaurants" };
+
+type Metro = { slug: string; name: string; area: string; state: string; title: string; y_from: number; y_to: number; codes: Array<string | null> };
 type Export = { trade: { naics: string; title: string }; ownership: string; from: number; to: number; metros: Metro[] };
+
+/** The states a metro's title names, read as the export reads them: the text after the last comma and before " Metro Area",
+ *  split on "-" ("Columbus, GA-AL Metro Area" names GA and AL). */
+const statesOf = (title: string): string[] => (title.includes(",") ? title.slice(title.lastIndexOf(",") + 1).replace(/ Metro Area$/, "").trim().split("-").filter((s) => s !== "") : []);
+/** The titles file's metro areas: its one total row a CBSA (industry "--", enterprise size "01"), keyed as the export keys them
+ *  ("C" and the first four digits of the code). The title is the tenth field, quoted when it holds a comma. */
+const metroTitles = (path: string): Map<string, string> => {
+  const by = new Map<string, string>();
+  for (const m of readFileSync(path).toString("latin1").matchAll(/^(\d{4})0,--,01,(?:[^,\n]*,){6}(?:"([^"\n]*)"|([^,\n]*)),/gm)) by.set(`C${m[1]}`, m[2] ?? m[3]);
+  return by;
+};
 
 const held = holdHomeExport("us_restaurants.json", check);
 const d = (held?.data ?? null) as Export | null;
@@ -1013,16 +1037,30 @@ if (held && d) {
   check(`one metro a US city page (${d.metros.length} of ${us.length})`, JSON.stringify(d.metros.map((m) => m.slug).sort()) === JSON.stringify(us.map((c) => c.slug).sort()));
   check("each metro under its city's own name", d.metros.every((m) => us.find((c) => c.slug === m.slug)?.name === m.name));
   check("each code is a metro area whose title names the city, and no two cities share one", d.metros.every((m) => /^C\d{4}$/.test(m.area) && / Metro Area$/.test(m.title) && m.title.toLowerCase().includes(m.name.split(",")[0].trim().toLowerCase())) && new Set(d.metros.map((m) => m.area)).size === d.metros.length);
+  const inState = d.metros.filter((m) => statesOf(m.title).includes(m.state)).length;
+  check(`each metro's state is one of its title's states, so a metro of the same name in another state is not the city's (${inState} of ${d.metros.length})`, inState === d.metros.length, AT_METROS);
   check(`one trade held, private establishments (${d.trade.naics}, ${d.trade.title}, ${d.ownership})`, d.trade.naics === "722511" && d.ownership === "private");
   check(`whole counts in both years, ${d.from} and ${d.to}`, d.from < d.to && d.metros.every((m) => Number.isInteger(m.y_from) && Number.isInteger(m.y_to) && m.y_from > 0 && m.y_to > 0));
-  check(`a row's mark withholds employment and pay, never the count (${d.metros.filter((m) => m.codes.includes("N")).length} rows marked, each with its count)`, d.metros.every((m) => m.codes.length === 2 && m.codes.every((c) => c === null || c === "N")));
+  const marked = d.metros.filter((m) => m.codes.includes("N")).length;
+  check(`a row may carry the mark N and every row keeps its whole count (${marked} rows marked)`, d.metros.every((m) => m.codes.length === 2 && m.codes.every((c) => c === null || c === "N") && Number.isInteger(m.y_from) && m.y_from > 0 && Number.isInteger(m.y_to) && m.y_to > 0));
   const grew = d.metros.filter((m) => m.y_to > m.y_from).length, shrank = d.metros.filter((m) => m.y_to < m.y_from).length;
   check(`five or more grew and five or more shrank (${grew} and ${shrank})`, grew >= 5 && shrank >= 5);
+
+  /* THE TITLES, READ AGAIN, where the file is on this machine. A machine without it is deferred by the holder, and its key ends the last line. */
+  const titlesFile = held.entry.sources.find((s) => s.key === "metro_titles");
+  check("the manifest names the titles file the codes were checked against (metro_titles)", !!titlesFile);
+  if (titlesFile && existsSync(titlesFile.path)) {
+    const titles = metroTitles(titlesFile.path);
+    const wrong = d.metros.filter((m) => titles.get(m.area) !== m.title || !statesOf(titles.get(m.area) ?? "").includes(m.state)).map((m) => m.slug);
+    check(`each metro's title is the titles file's for its code, read again here, and names the metro's state${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0, AT_METROS);
+  }
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/us_restaurants", held));
 ```
+
+Each city's state is typed beside its metro code in the export (Step 3's `METROS`) and carried in the slice: the title a code resolves to must name the city and hold that state, so a metro of the same name in another state (Columbus in Georgia or Indiana for Columbus in Ohio, Charlottesville for Charlotte, Cleveland in Tennessee, Portland in Maine, Augusta-Richmond County for Richmond) is refused by the export and reds in the gate. Where the metro titles file is on the machine the gate also reads it again and holds every row's title to the file's own for its code (the holder defers its key otherwise); its red names the `METROS` table and the remedy. The mark's check says what it sees: a row may carry the mark N, and every row keeps its whole count.
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t04.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t04.txt`
 Expected: `data/home/us_restaurants.json is exported and in the manifest` red, `exit 1`.
@@ -1066,25 +1104,37 @@ In `scripts/data/home/export_home.py`, above `EXPORTS = {`, add:
 QCEW_DIR = "E:/atlas/us/bls/qcew/parsed"
 SUSB = "E:/atlas/us/susb/2021/msa_3digitnaics_2021.txt"
 TRADE = ("722511", "Full-service restaurants")
-# THE US CITIES WITH A PAGE, each by its metro's code in the employment census ("C" and the first four digits of its CBSA). Each is
-# checked against the metro's published title (SUSB's MSADSCR) before anything is written.
-METROS = {
-    "atlanta": "C1206", "austin": "C1242", "baltimore": "C1258", "boston": "C1446", "buffalo": "C1538",
-    "charlotte": "C1674", "chicago": "C1698", "cincinnati": "C1714", "cleveland": "C1746", "columbus": "C1814",
-    "dallas": "C1910", "denver": "C1974", "detroit": "C1982", "honolulu": "C4652", "houston": "C2642",
-    "indianapolis": "C2690", "kansas-city": "C2814", "las-vegas": "C2982", "los-angeles": "C3108", "louisville": "C3114",
-    "memphis": "C3282", "miami": "C3310", "milwaukee": "C3334", "minneapolis": "C3346", "nashville": "C3498",
-    "new-orleans": "C3538", "new-york": "C3562", "oklahoma-city": "C3642", "orlando": "C3674", "philadelphia": "C3798",
-    "phoenix": "C3806", "pittsburgh": "C3830", "portland": "C3890", "raleigh": "C3958", "richmond": "C4006",
-    "sacramento": "C4090", "salt-lake-city": "C4162", "san-antonio": "C4170", "san-diego": "C4174", "san-francisco": "C4186",
-    "san-jose": "C4194", "seattle": "C4266", "st-louis": "C4118", "tampa": "C4530", "washington-dc": "C4790",
+# THE US CITIES WITH A PAGE, each by its metro's code in the employment census ("C" and the first four digits of its CBSA) and the
+# state its page stands in (the first state of the metro's title, the principal city's own). Each is checked against the metro's
+# published title (SUSB's MSADSCR) before anything is written: the title must name the city and the state must be one of the title's
+# states, so a metro of the same name in another state (Columbus GA-AL or Columbus IN beside Columbus OH) is refused, not taken.
+METROS: dict[str, tuple[str, str]] = {
+    "atlanta": ("C1206", "GA"), "austin": ("C1242", "TX"), "baltimore": ("C1258", "MD"), "boston": ("C1446", "MA"), "buffalo": ("C1538", "NY"),
+    "charlotte": ("C1674", "NC"), "chicago": ("C1698", "IL"), "cincinnati": ("C1714", "OH"), "cleveland": ("C1746", "OH"), "columbus": ("C1814", "OH"),
+    "dallas": ("C1910", "TX"), "denver": ("C1974", "CO"), "detroit": ("C1982", "MI"), "honolulu": ("C4652", "HI"), "houston": ("C2642", "TX"),
+    "indianapolis": ("C2690", "IN"), "kansas-city": ("C2814", "MO"), "las-vegas": ("C2982", "NV"), "los-angeles": ("C3108", "CA"), "louisville": ("C3114", "KY"),
+    "memphis": ("C3282", "TN"), "miami": ("C3310", "FL"), "milwaukee": ("C3334", "WI"), "minneapolis": ("C3346", "MN"), "nashville": ("C3498", "TN"),
+    "new-orleans": ("C3538", "LA"), "new-york": ("C3562", "NY"), "oklahoma-city": ("C3642", "OK"), "orlando": ("C3674", "FL"), "philadelphia": ("C3798", "PA"),
+    "phoenix": ("C3806", "AZ"), "pittsburgh": ("C3830", "PA"), "portland": ("C3890", "OR"), "raleigh": ("C3958", "NC"), "richmond": ("C4006", "VA"),
+    "sacramento": ("C4090", "CA"), "salt-lake-city": ("C4162", "UT"), "san-antonio": ("C4170", "TX"), "san-diego": ("C4174", "CA"), "san-francisco": ("C4186", "CA"),
+    "san-jose": ("C4194", "CA"), "seattle": ("C4266", "WA"), "st-louis": ("C4118", "MO"), "tampa": ("C4530", "FL"), "washington-dc": ("C4790", "DC"),
 }
+
+
+def title_states(title: str) -> list[str]:
+    """The states a metro's published title names: the text after its last comma and before " Metro Area", split on "-"
+    ("Columbus, GA-AL Metro Area" names GA and AL). A title with no comma names none."""
+    if "," not in title:
+        return []
+    return [s for s in title.rsplit(",", 1)[1].strip().removesuffix(" Metro Area").split("-") if s]
 
 
 def us_restaurants() -> None:
     """Full-service restaurants with staff (private establishments, NAICS 722511) in each US metro the site has a city page for, in
     the first and the last year the parsed files hold. A row the publisher marks "N" withholds employment and wages, never its
-    count of establishments, so the count is kept and the mark recorded."""
+    count of establishments, so the count is kept and the mark recorded. Each city's metro is its code and its state, both typed in
+    METROS; the title the code resolves to must name the city and hold the state, so a code that lands on a metro of the same name
+    in another state is refused."""
     import pyarrow.parquet as pq
 
     us = cities_of("US")
@@ -1103,7 +1153,7 @@ def us_restaurants() -> None:
     if len(years) < 2:
         refuse(f"{QCEW_DIR} holds fewer than two years")
     first, last = years[0], years[-1]
-    wanted = set(METROS.values())
+    wanted = {code for code, _ in METROS.values()}
     counts: dict[int, dict[str, tuple[int, str | None]]] = {}
     for y in (first, last):
         pf = pq.ParquetFile(f"{QCEW_DIR}/qcew_cells_{y}.parquet")
@@ -1118,15 +1168,18 @@ def us_restaurants() -> None:
         counts[y] = got
     metros = []
     for c in us:
-        a = METROS[c["slug"]]
+        a, state = METROS[c["slug"]]
         t = titles.get(a)
         city = c["name"].split(",")[0].strip()
         if not t or not t.endswith("Metro Area") or city.lower() not in t.lower():
             refuse(f"{a} is {t!r}, not a metro area named for {c['name']}")
+        states = title_states(t)
+        if state not in states:
+            refuse(f"{c['name']} ({a}) is {t!r}, which names {'-'.join(states) or 'no state'}, not {state}: put the city's own metro code and state beside it in METROS")
         f0, f1 = counts[first].get(a), counts[last].get(a)
         if not f0 or not f1 or not f0[0] or not f1[0]:
             refuse(f"{a} ({c['name']}) holds no count in {first} or {last}")
-        metros.append({"slug": c["slug"], "name": c["name"], "area": a, "title": t, "y_from": int(f0[0]), "y_to": int(f1[0]), "codes": [f0[1], f1[1]]})
+        metros.append({"slug": c["slug"], "name": c["name"], "area": a, "state": state, "title": t, "y_from": int(f0[0]), "y_to": int(f1[0]), "codes": [f0[1], f1[1]]})
     if len({m["area"] for m in metros}) != len(metros):
         refuse("two cities share one metro")
     obj = {"trade": {"naics": TRADE[0], "title": TRADE[1]}, "ownership": "private", "from": first, "to": last, "metros": metros}
@@ -1193,12 +1246,13 @@ Create `tests/home/how_made.test.ts`:
  *
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
  * manifest's row count is its content's (one); its counts nest (names matched within names, names within notices, the unmatched
- * notices within the notices); and it is the year of notices the failure rates the duel prints were read from (the register
- * slice's own source line).
+ * notices within the notices); its source line is the register slice's own (data/uk/registers/failures.json), so the two name one
+ * year of notices; and, where the failures table is on this machine, its four counts and its source line are the table's own, read
+ * again.
  *
  * Run: npx tsx tests/home/how_made.test.ts
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -1216,14 +1270,23 @@ if (held && d) {
   check(`the manifest's rows are the slice's: one (${held.entry.rows})`, held.entry.rows === 1);
   check(`the counts nest: ${d.matched_names} names matched of ${d.names} names in ${d.notices} notices, ${d.unmatched_notices} notices unmatched`, [d.notices, d.names, d.matched_names, d.unmatched_notices].every((n) => Number.isInteger(n) && n >= 0) && d.notices > 0 && d.matched_names <= d.names && d.names <= d.notices && d.unmatched_notices <= d.notices);
   const failures = JSON.parse(readFileSync("data/uk/registers/failures.json", "utf8")) as { source: string };
-  check("the notices are the year the failure rates were read from (the register slice's own source line)", d.source === failures.source);
+  check("the notices are the year the failure rates were read from (the register slice's own source line)", d.source === failures.source, { file: "data/uk/registers/failures.json", remedy: "re-run registers/uk/export_for_site.py, then python -P scripts/data/home/export_home.py method, so both read one table" });
+
+  /* THE TABLE, READ AGAIN, where it is on this machine. A machine without it is deferred by the holder, and its key ends the last line. */
+  const src = held.entry.sources.find((s) => s.key === "failures");
+  check("the manifest names the failures table the counts were read from (failures)", !!src);
+  if (src && existsSync(src.path)) {
+    const table = JSON.parse(readFileSync(src.path, "utf8")) as { match?: Record<string, unknown>; source?: unknown };
+    const differs = [...(["notices", "names", "matched_names", "unmatched_notices"] as const).filter((k) => table.match?.[k] !== d[k]), ...(table.source !== d.source ? ["source"] : [])];
+    check(`the four counts and the source line are the table's own, read again here${differs.length ? `: differs on ${differs.join(", ")}` : ""}`, differs.length === 0);
+  }
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/how_made", held));
 ```
 
-The gate follows the holder's contract (Task 2, fixed after its review): `check` takes an optional third argument `{ file, remedy }`, which the holder passes for its own findings (the manifest, a stray or a missing slice, the sources page, CRLF line ends); the rows check reads the manifest's `rows` against the slice; and the last line comes from `homePassLine`, which ends `home/how_made: all pass, 1 deferred (failures: source not on this machine)` where the failures table is not on the machine (a build server), the form the chain's runner counts as a deferred check. Nothing prints after it.
+The gate follows the holder's contract (Task 2, fixed after its review): `check` takes an optional third argument `{ file, remedy }`, which the holder passes for its own findings (the manifest, a stray or a missing slice, the sources page, CRLF line ends); the rows check reads the manifest's `rows` against the slice; and the last line comes from `homePassLine`, which ends `home/how_made: all pass, 1 deferred (failures: source not on this machine)` where the failures table is not on the machine (a build server), the form the chain's runner counts as a deferred check. Nothing prints after it. Where the failures table is on the machine, the gate reads its `match` block and `source` line again and holds the slice's four counts and its source line to them (so a slice signed again with a count changed reds, naming the count); where it is not, the holder defers the key. The tie to the register slice's own source line passes its own file (`data/uk/registers/failures.json`) and remedy: re-run the register export first, then this one, so both read one table. The notices are company notices, not all insolvencies (members' voluntary liquidations are solvent), and the words say so.
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t05.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t05.txt`
 Expected: `data/home/method.json is exported and in the manifest` red, `exit 1`.
@@ -1239,8 +1302,9 @@ FAILURES = "E:/atlas/registers/uk/tables/company_failures_by_trade.json"
 
 
 def method() -> None:
-    """The year of insolvency notices the failure rates were read from: how many notices, how many company names they held, how
-    many of those the register matched by name, how many notices matched nothing (the registers' failures table, its `match`)."""
+    """The year of company notices the failure rates were read from: how many notices, how many different company names, how many
+    of those the register matched by name, how many notices matched nothing (the registers' failures table, its `match`). They
+    are company notices, not all insolvencies: a members' voluntary liquidation, a solvent company closed by its owners, is one."""
     t = json.loads(Path(FAILURES).read_text(encoding="utf-8"))
     m = t.get("match") or {}
     keys = ("notices", "names", "matched_names", "unmatched_notices")
@@ -1250,7 +1314,7 @@ def method() -> None:
         refuse("the failures table's match counts do not nest")
     obj = {**{k: m[k] for k in keys}, "source": t["source"]}
     write("method.json", obj, 1, [
-        source("failures", FAILURES, "gazette", "The registers' failures table: a year of company insolvency notices, matched by name to the company register"),
+        source("failures", FAILURES, "gazette", "The registers' failures table: a year of company notices, matched by name to the company register"),
     ])
 
 
@@ -2297,7 +2361,7 @@ In `src/lib/spine/copy.ts`, above the `PRO, QUIETLY` comment line, add:
      *  home's one line that outside the UK the pages print estimates (his copy ruling: say how the numbers are made once a page). */
     howMade: {
       kicker: "How figures are made",
-      words: "Insolvency notices in a year, matched by name to the company register",
+      words: "Company notices in a year, matched by name to the company register",
       matched: { label: "Names matched", note: "Company names in the notices, found in the register" },
       trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
       countries: { label: "Country pages", note: "Outside the UK, these pages print estimates." },
@@ -2315,7 +2379,7 @@ Create `src/lib/home/how_made.ts`:
  *
  * HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4; his ideas of 2026-10-08, "the deep techniques used to derive
  * data", "unmatched archival capability" and "the global coverage", merged as the audit found them honest). Each technique shown by
- * a figure it produced: a year of insolvency notices matched by name to the company register (the focal, and the names matched of
+ * a figure it produced: a year of company notices matched by name to the company register (the focal, and the names matched of
  * the names they held, so the match rate is on the card), and London's trades' takings read from the official counts by turnover
  * band (the trade pages that print one); then the country pages a visitor can reach (every one indexable), with the home's one
  * line that outside the UK the pages print estimates. Counts of distinct records and of reachable pages only, never cells or slots
