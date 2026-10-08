@@ -2783,6 +2783,18 @@ export const COPY = {
       ukKey: "The UK",
       aria: " of 100 still trading",
     },
+    /** WHERE NEW COMPANIES OPEN (plan 2026-10-08, home sections, section 2): the title, the yardstick's label (the UK's own figure,
+     *  for scale; it ranks nothing), the one line (the measure said once: limited companies, per 1,000 of working age, the year),
+     *  the value column's head, each region's name and its plus. */
+    newCompanies: {
+      kicker: "Where new companies open",
+      headline: "The UK, for scale",
+      basis: "New limited companies per 1,000 people of working age, {year}.",
+      headName: "Country",
+      headValue: "Per 1,000",
+      regions: { latam: "Latin America and the Caribbean", africa: "Africa" },
+      more: "{n} more in {region}",
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
     pro: {
       kicker: "Pro",

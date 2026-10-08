@@ -12,11 +12,18 @@
  * a country page; and, where the series is on this machine, each names the indicator the slice says it is, every figure, the UK's
  * among them, is the source's, read again, and the year is the latest in which both regions show five.
  *
+ * Holds the builder (src/lib/home/new_companies.ts): Latin America then Africa, never ranked together; each region's five highest
+ * in order, one decimal, the rest behind the plus in order; every row a door to its country's page promising what that page
+ * answers; every figure stamped; the card's figure the UK's own; the one line twelve words at most.
+ *
  * Run: npx tsx tests/home/new_companies.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { COUNTRIES } from "../../src/lib/taxonomy";
+import { buildNewCompanies, NEW_COMPANIES_SHOWN, rateDisplay } from "../../src/lib/home/new_companies";
+import { SURFACE_ANSWERS } from "../../src/lib/spine/door_kinds";
+import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-new-companies";
@@ -94,6 +101,26 @@ if (d && held) {
     const latest = years.find((y) => REGIONS.every((key) => (d.regions.find((r) => r.key === key)?.members ?? []).filter((m) => shows(m.iso2, y)).length >= 5) && dens.has(`GB:${y}`));
     check(`the year is the latest in which both regions show five and the UK has a figure (${latest})`, latest === String(d.year));
   }
+}
+
+/* THE BUILDER (plan Task 10). */
+const built = buildNewCompanies();
+check("section 2 builds", !!built);
+if (built && d) {
+  const one = (v: number) => Math.round(v * 10) / 10;
+  check("Latin America first, then Africa, never ranked together", JSON.stringify(built.groups.map((g) => g.key)) === JSON.stringify(["latam", "africa"]));
+  for (const g of built.groups) {
+    const want = (d.regions.find((r) => r.key === g.key)?.members ?? []).filter((m) => m.shown && typeof m.value === "number").sort((a, b) => (b.value as number) - (a.value as number) || a.iso2.localeCompare(b.iso2));
+    check(`${g.name}: its ${NEW_COMPANIES_SHOWN} highest, in order (${g.rows.map((r) => `${r.name} ${r.value.toFixed(1)}`).join(", ")})`, g.rows.length === NEW_COMPANIES_SHOWN && g.rows.every((r, i) => r.iso2 === want[i].iso2 && r.value === one(want[i].value as number)));
+    check(`${g.name}: the rest behind the plus, in order ("${g.more}")`, g.rest.length === want.length - NEW_COMPANIES_SHOWN && g.rest.every((r, i) => r.value === rateDisplay(want[i + NEW_COMPANIES_SHOWN].value as number)) && g.more === COPY.home.newCompanies.more.replace("{n}", String(g.rest.length)).replace("{region}", g.name));
+    check(`${g.name}: no rate prints as nought`, [...g.rows.map((r) => r.value.toFixed(1)), ...g.rest.map((r) => r.value)].every((s) => Number(s) > 0));
+    check(`${g.name}: every row opens its country's page and promises what that page answers`, g.rows.every((r) => r.href === `/${r.iso2.toLowerCase()}` && r.lands === SURFACE_ANSWERS.country));
+    check(`${g.name}: every figure says where it came from`, [...g.rows.map((r) => r.prov), ...g.rest.map((r) => r.prov)].every((p) => p.src.startsWith("home/new_companies.json:") && p.kind === "looked up"));
+  }
+  check(`the card's figure is the UK's own, ${built.uk.value}`, built.uk.value === one(d.uk.value) && built.uk.prov.src === "home/new_companies.json:GB");
+  const line = COPY.home.newCompanies.basis.replace("{year}", String(built.year));
+  check(`the one line is twelve words at most, no semicolon ("${line}")`, line.split(/\s+/).length <= 12 && !line.includes(";") && built.year === d.year);
+  check(`the title is four words at most ("${COPY.home.newCompanies.kicker}")`, COPY.home.newCompanies.kicker.split(/\s+/).length <= 4);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
