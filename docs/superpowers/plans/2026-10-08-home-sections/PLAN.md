@@ -442,12 +442,19 @@ Create `scripts/lib/home_export.ts`:
  * data/home/ holds slices of files on disk outside this repo, written by scripts/data/home/export_home.py with a manifest of each
  * file's SHA-256, its rows, the day it ran and every source it read (path, bytes, SHA-256, the publisher's key on the sources page,
  * whether a figure prints from it). Each section's gate (tests/home/<section>.test.ts) holds its file here:
- *   - the manifest hashes every .json in data/home and names none that is missing, so a file nothing hashes cannot sit there;
+ *   - the manifest is readable JSON that lists files, hashes every .json in data/home and names none that is missing, so a file
+ *     nothing hashes cannot sit there;
  *   - the file is the export's byte for byte, so a figure edited by hand fails the chain (a CRLF checkout is named as such);
  *   - every source a figure prints from names its publisher's entry in src/lib/spine/uk_sources.ts (UK_SOURCES or WORLD_SOURCES);
  *   - on the machine that holds the sources, each is hashed again, so a source changed since the export fails until it runs again.
- * It reads this repo, and a source only where it exists (existsSync), which a build server never has: there the line says the
- * source was not read again, never that it passed.
+ * It reads this repo, and a source only where it exists (existsSync), which a build server never has. A source it could not hash
+ * again is DEFERRED, never passed: the holder returns its key (`deferred`), and the gate ends on homePassLine(), whose last line
+ * reads "<gate>: all pass, N deferred (<keys>: source not on this machine)". The chain's runner counts that "N deferred" off the
+ * last twenty lines a gate prints (scripts/prebuild_all.ts), so the skip shows in its summary, and nothing may print after it.
+ *
+ * Every finding goes through the gate's `check(label, ok, at?)`. `at` is optional and says where a finding is and what to do about
+ * it when that is not the gate's own file and remedy: the manifest, a stray or a missing file, the sources page, the line ends.
+ * A gate that passes none (or whose check takes two arguments) keeps its own file and remedy for every finding.
  *
  * What it cannot see: a hand edit that also rewrites manifest.json (nothing signs the manifest, as with the register slices), and
  * whether the export read its source rightly (the export's refusals and each gate's own checks hold that).
@@ -459,41 +466,104 @@ import { UK_SOURCES, WORLD_SOURCES } from "../../src/lib/spine/uk_sources";
 export const HOME_DIR = "data/home";
 export const HOME_MANIFEST = `${HOME_DIR}/manifest.json`;
 export const HOME_EXPORT = "python -P scripts/data/home/export_home.py";
+/** The module that names every publisher; a source's `publisher` is a key in it. */
+export const HOME_SOURCES_PAGE = "src/lib/spine/uk_sources.ts";
 
 export type HomeSource = { key: string; path: string; bytes: number; sha256: string; publisher: string | null; title: string; prints: boolean };
 export type HomeEntry = { sha256: string; rows: number; built: string; sources: HomeSource[] };
+/** Where a finding is and what to do about it, when that is not the gate's own file and remedy. */
+export type HomeAt = { file?: string; remedy?: string };
+/** The gate's `check`: a PASS line, or a red with the gate's rule, and `at` or else the gate's file and remedy. */
+export type HomeCheck = (label: string, ok: boolean, at?: HomeAt) => void;
+/** A slice held: its parsed body, its manifest entry, and the keys of the sources this machine does not hold (their hashes were not read again). */
+export type HomeHeld = { data: unknown; entry: HomeEntry; deferred: string[] };
 
 const sha = (b: Buffer | string) => createHash("sha256").update(b).digest("hex");
+/** A file's SHA-256, or null where it cannot be read as a file. */
+const hashOf = (path: string): string | null => {
+  try {
+    return sha(readFileSync(path));
+  } catch {
+    return null;
+  }
+};
 
-/** The slice `name` held to the manifest and its sources, each finding through `check`; its parsed body and its manifest entry. */
-export function holdHomeExport(name: string, check: (label: string, ok: boolean) => void): { data: unknown; entry: HomeEntry } | null {
-  if (!existsSync(HOME_MANIFEST)) {
-    check(`${HOME_MANIFEST} exists (run ${HOME_EXPORT})`, false);
+/** The slice `name` held to the manifest and its sources, each finding through `check`; its parsed body, its manifest entry and the keys it deferred. */
+export function holdHomeExport(name: string, check: HomeCheck): HomeHeld | null {
+  /* THE MANIFEST: there, JSON, and listing files. A missing, cut-off or emptied one is a red with its remedy, never a stack. */
+  const manifestAt: HomeAt = { file: HOME_MANIFEST, remedy: `git checkout -- ${HOME_MANIFEST}, or re-run ${HOME_EXPORT}` };
+  let files: Record<string, HomeEntry> | null = null;
+  let damage = "is missing";
+  if (existsSync(HOME_MANIFEST)) {
+    try {
+      const m = JSON.parse(readFileSync(HOME_MANIFEST, "utf8")) as { files?: unknown } | null;
+      if (m && typeof m.files === "object" && m.files !== null && !Array.isArray(m.files)) files = m.files as Record<string, HomeEntry>;
+      else damage = "holds no list of files";
+    } catch {
+      damage = "cannot be read as JSON";
+    }
+  }
+  if (!files) {
+    check(`${HOME_MANIFEST} ${damage}`, false, manifestAt);
     return null;
   }
-  const manifest = JSON.parse(readFileSync(HOME_MANIFEST, "utf8")) as { files: Record<string, HomeEntry> };
-  const listed = Object.keys(manifest.files).sort();
+  const listed = Object.keys(files).sort();
   const onDisk = readdirSync(HOME_DIR).filter((f) => f.endsWith(".json") && f !== "manifest.json").sort();
-  check(`the manifest hashes every file in ${HOME_DIR} and names none that is missing (listed ${listed.join(", ") || "none"}; on disk ${onDisk.join(", ") || "none"})`, JSON.stringify(listed) === JSON.stringify(onDisk));
-  const entry = manifest.files[name];
+  const unlisted = onDisk.filter((f) => !listed.includes(f));
+  const lacking = listed.filter((f) => !onDisk.includes(f));
+  if (unlisted.length === 0 && lacking.length === 0) check(`the manifest hashes every file in ${HOME_DIR} and names none that is missing (listed ${listed.join(", ") || "none"}; on disk ${onDisk.join(", ") || "none"})`, true);
+  for (const f of unlisted) check(`${HOME_DIR}/${f} sits in ${HOME_DIR} and the manifest does not list it`, false, { file: `${HOME_DIR}/${f}`, remedy: "delete it, or add it to the export" });
+  for (const f of lacking) check(`the manifest lists ${f} and ${HOME_DIR} does not hold it`, false, { file: `${HOME_DIR}/${f}`, remedy: `re-run ${HOME_EXPORT} ${f.replace(/\.json$/, "")}` });
+
+  /* THE SLICE: listed, there, readable, and the export's byte for byte. */
+  const entry = files[name];
   const file = `${HOME_DIR}/${name}`;
-  if (!entry || !existsSync(file)) {
-    check(`${file} is exported and in the manifest (run ${HOME_EXPORT})`, false);
+  if (!entry || typeof entry !== "object" || !existsSync(file)) {
+    check(`${file} is exported and in the manifest`, false);
     return null;
   }
-  const raw = readFileSync(file);
-  const now = sha(raw);
-  const crlf = now !== entry.sha256 && sha(raw.toString("utf8").replace(/\r\n/g, "\n")) === entry.sha256;
-  check(`${name} is the export's, byte for byte (${now.slice(0, 12)}, the manifest's ${entry.sha256.slice(0, 12)})${crlf ? ": its line ends were rewritten to CRLF; keep data/home/*.json eol=lf in .gitattributes" : ""}`, now === entry.sha256);
-  check(`${name} says the day it was exported (${entry.built})`, /^\d{4}-\d{2}-\d{2}$/.test(entry.built ?? ""));
-  check(`${name} names the sources it was exported from (${(entry.sources ?? []).map((s) => s.key).join(", ") || "none"})`, Array.isArray(entry.sources) && entry.sources.length > 0);
-  const keys = new Set([...UK_SOURCES, ...WORLD_SOURCES].map((s) => s.key));
-  for (const s of entry.sources ?? []) {
-    if (s.prints) check(`${name}: the source a figure prints from names its publisher on the sources page (${s.key}: ${s.publisher})`, !!s.publisher && keys.has(s.publisher));
-    if (existsSync(s.path)) check(`${name}: on this machine its source ${s.key} is the file it was exported from`, sha(readFileSync(s.path)) === s.sha256);
-    else console.log(`NOTE  ${name}: its source ${s.key} is not on this machine, so its hash was not read again here`);
+  let raw: Buffer;
+  try {
+    raw = readFileSync(file);
+  } catch {
+    check(`${file} cannot be read as a file`, false);
+    return null;
   }
-  return { data: JSON.parse(raw.toString("utf8")), entry };
+  const now = sha(raw);
+  const want = typeof entry.sha256 === "string" ? entry.sha256 : "";
+  const same = now === want;
+  const crlf = !same && sha(raw.toString("utf8").replace(/\r\n/g, "\n")) === want;
+  check(`${name} is the export's, byte for byte (${now.slice(0, 12)}, the manifest's ${want.slice(0, 12)})${crlf ? ": its line ends were rewritten to CRLF" : ""}`, same, crlf ? { file, remedy: "check out data/home/*.json with LF: .gitattributes pins it" } : undefined);
+  check(`${name} says the day it was exported (${entry.built})`, /^\d{4}-\d{2}-\d{2}$/.test(typeof entry.built === "string" ? entry.built : ""));
+  const sources = Array.isArray(entry.sources) ? entry.sources : [];
+  const named = sources.length > 0 && sources.every((s) => !!s && typeof s.key === "string" && typeof s.path === "string" && typeof s.sha256 === "string");
+  check(`${name} names the sources it was exported from (${named ? sources.map((s) => s.key).join(", ") : "none"})`, named);
+
+  /* THE SOURCES: the publisher of each a figure prints from is on the sources page; each is hashed again where this machine holds it. */
+  const keys = new Set([...UK_SOURCES, ...WORLD_SOURCES].map((s) => s.key));
+  const deferred: string[] = [];
+  for (const s of named ? sources : []) {
+    if (s.prints) check(`${name}: the source a figure prints from names its publisher on the sources page (${s.key}: ${s.publisher})`, !!s.publisher && keys.has(s.publisher), { file: HOME_SOURCES_PAGE, remedy: "add the source to WORLD_SOURCES or fix the key in export_home.py" });
+    if (existsSync(s.path)) check(`${name}: on this machine its source ${s.key} is the file it was exported from`, hashOf(s.path) === s.sha256);
+    else {
+      deferred.push(s.key);
+      console.log(`DEFER ${name}: its source ${s.key} is not on this machine, so its hash was not read again here`);
+    }
+  }
+  let data: unknown;
+  try {
+    data = JSON.parse(raw.toString("utf8"));
+  } catch {
+    check(`${file} cannot be read as JSON`, false);
+    return null;
+  }
+  return { data, entry, deferred };
+}
+
+/** A gate's last line. When `held` deferred any source it says so as "N deferred (<keys>: source not on this machine)", the form the runner counts. */
+export function homePassLine(gate: string, held: HomeHeld | null): string {
+  const keys = held?.deferred ?? [];
+  return keys.length > 0 ? `${gate}: all pass, ${keys.length} deferred (${keys.join(", ")}: source not on this machine)` : `${gate}: all pass`;
 }
 ```
 
@@ -508,23 +578,24 @@ Create `tests/home/firms_last.test.ts`:
  * table's cohort, how many still traded five years on, per UK city with a page (data/home/city_survival.json, from the business
  * demography tables by scripts/data/home/export_home.py).
  *
- * Holds the slice: it is its source's (scripts/lib/home_export.ts); every UK city with a page is read by its own area code and is
- * drawn or held out with the publisher's reason (a star: over 500 businesses at one postcode), never both and never neither; every
- * share is its two counts' (half up, one decimal, in whole numbers), so none can be typed; the UK's share is the one the home's ring
- * prints (data/sections/survival.json) and London's the one London's pages read (data/uk/registers/survival.json); the shares are of
- * the cohort's fifth year.
+ * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
+ * manifest's row count is its content's; every UK city with a page is read by its own area code and is drawn or held out with the
+ * publisher's reason (a star: over 500 businesses at one postcode), never both and never neither; every share is its two counts'
+ * (half up, one decimal, in whole numbers), so none can be typed; the UK's share is the one the home's ring prints
+ * (data/sections/survival.json) and London's the one London's pages read (data/uk/registers/survival.json); the shares are of the
+ * cohort's fifth year.
  *
  * Run: npx tsx tests/home/firms_last.test.ts
  */
 import { readFileSync } from "node:fs";
-import { holdHomeExport } from "../../scripts/lib/home_export";
+import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-firms-last";
 const FILE = "data/home/city_survival.json";
 const REMEDY = "re-run python -P scripts/data/home/export_home.py city_survival, never edit data/home by hand; then draw section 1 from the slice only";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 type Area = { code: string; name_in_table: string; births: number; survived: number; pct: number };
 type City = Area & { slug: string; name: string };
@@ -532,7 +603,8 @@ type Export = { cohort: number; year: number; table: string; published: string; 
 
 const held = holdHomeExport("city_survival.json", check);
 const d = (held?.data ?? null) as Export | null;
-if (d) {
+if (held && d) {
+  check(`the manifest's rows are the slice's: the UK, ${d.cities.length} drawn and ${d.held_out.length} held out (${held.entry.rows})`, held.entry.rows === 1 + d.cities.length + d.held_out.length);
   /* Of 100, half up to one decimal, in whole numbers so no float can tip a half (the export's Decimal). */
   const share = (survived: number, births: number) => Math.floor((2000 * survived + births) / (2 * births)) / 10;
   const uk = (JSON.parse(readFileSync("data/cities/city_list_v1.json", "utf8")) as { cities: Array<{ slug: string; iso2: string }> }).cities.filter((c) => c.iso2.toUpperCase() === "GB").map((c) => c.slug).sort();
@@ -554,13 +626,13 @@ if (d) {
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log("home/firms_last: all pass");
+console.log(homePassLine("home/firms_last", held));
 ```
 
 - [ ] **Step 4: Run it, then plant a hand edit and watch it red**
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/firms_last.test.ts > scratchpad/home-sections/t02.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t02.txt`
-Expected: every line PASS (the source's hash among them: the workbook is on this machine), `home/firms_last: all pass`, `exit 0`.
+Expected: every line PASS (the source's hash among them: the workbook is on this machine), `home/firms_last: all pass`, `exit 0`. Where the workbook is not on the machine (a build server) the holder prints a `DEFER` line for it and the gate ends `home/firms_last: all pass, 1 deferred (demography: source not on this machine)`; the chain's runner counts that "N deferred" and reports it in its summary, so a skipped hash is never read as a pass. The holder's own findings (the manifest missing, cut off or listing no files; a file in data/home it does not list; a slice it lists that data/home lacks; a publisher the sources page lacks; CRLF line ends) name their own file and remedy through `check`'s third argument, never the gate's.
 Run: `node -e "const f=require('fs'),p='data/home/city_survival.json';f.writeFileSync(p,f.readFileSync(p,'utf8').replace('\"pct\": 41.8','\"pct\": 41.9'))"`
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/firms_last.test.ts > scratchpad/home-sections/t02plant.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t02plant.txt`
 Expected: red lines for `city_survival.json is the export's, byte for byte` and `every share is its two counts'`, `exit 1`.
@@ -616,16 +688,17 @@ Create `tests/home/new_companies.test.ts`:
  * registered in a year per 1,000 people of working age, one year, each region ranked within itself (data/home/new_companies.json,
  * from the new-business series by scripts/data/home/export_home.py).
  *
- * Holds the slice: it is its source's (scripts/lib/home_export.ts); each region's members are the ones the in-repo files give it (the
- * country profile's world_bank_region for Latin America; its continent, or a MENA country whose cities stand in Africa, for
- * Africa); a member shows only with a figure for the year and a labour force over the floor, which carries its reason; five or more
- * show in each region; the UK's own figure is there; every member shown has a country page; and, where the series is on this
- * machine, every figure is the source's, read again, and the year is the latest in which both regions show five.
+ * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
+ * manifest's row count is its content's; each region's members are the ones the in-repo files give it (the country profile's
+ * world_bank_region for Latin America; its continent, or a MENA country whose cities stand in Africa, for Africa); a member shows
+ * only with a figure for the year and a labour force over the floor, which carries its reason; five or more show in each region;
+ * the UK's own figure is there; every member shown has a country page; and, where the series is on this machine, every figure,
+ * the UK's among them, is the source's, read again, and the year is the latest in which both regions show five.
  *
  * Run: npx tsx tests/home/new_companies.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
-import { holdHomeExport } from "../../scripts/lib/home_export";
+import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { COUNTRIES } from "../../src/lib/taxonomy";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -633,7 +706,7 @@ const RULE = "home-new-companies";
 const FILE = "data/home/new_companies.json";
 const REMEDY = "re-run python -P scripts/data/home/export_home.py new_companies, never edit data/home by hand; then draw section 2 from the slice only";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 type Member = { iso2: string; value: number | null; labour_force: number | null; shown: boolean };
 type Export = { year: number; measure: string; last_updated: string; floor: { measure: string; year: number; at_least: number; why: string }; uk: { iso2: string; value: number }; regions: Array<{ key: string; rule: string; members: Member[] }> };
@@ -642,6 +715,8 @@ const REGIONS = ["latam", "africa"] as const;
 const held = holdHomeExport("new_companies.json", check);
 const d = (held?.data ?? null) as Export | null;
 if (d && held) {
+  const counted = d.regions.reduce((n, r) => n + r.members.length, 0);
+  check(`the manifest's rows are the slice's: the UK and ${counted} members (${held.entry.rows})`, held.entry.rows === 1 + counted);
   const profile = (JSON.parse(readFileSync("data/economic_indicators/country_profile_v2.json", "utf8")) as { countries: Record<string, { continent?: string; world_bank_region?: string }> }).countries;
   const cityContinent = new Map<string, string>();
   for (const c of (JSON.parse(readFileSync("data/cities/city_list_v1.json", "utf8")) as { cities: Array<{ iso2: string; continent: string }> }).cities) {
@@ -664,9 +739,10 @@ if (d && held) {
   const codes = new Set(COUNTRIES.map((c) => c.code));
   check("every member shown has a country page", d.regions.every((r) => r.members.filter((m) => m.shown).every((m) => codes.has(m.iso2))));
 
-  /* THE SOURCE, READ AGAIN, where it is on this machine. */
+  /* THE SOURCE, READ AGAIN, where it is on this machine. A series that is not is deferred by the holder, and its key ends the last line. */
   const density = held.entry.sources.find((s) => s.key === "density");
   const labour = held.entry.sources.find((s) => s.key === "labour_force");
+  check("the manifest names the two series the figures were read from (density, labour_force)", !!density && !!labour);
   if (density && labour && existsSync(density.path) && existsSync(labour.path)) {
     type Row = { country: { id: string }; date: string; value: number | null };
     const table = (path: string) => {
@@ -677,16 +753,18 @@ if (d && held) {
     const dens = table(density.path), lf = table(labour.path);
     const all = d.regions.flatMap((r) => r.members);
     const wrong = all.filter((m) => (dens.get(`${m.iso2}:${d.year}`) ?? null) !== m.value || (lf.get(`${m.iso2}:${d.year}`) ?? null) !== m.labour_force).map((m) => m.iso2);
-    check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0 && dens.get(`GB:${d.year}`) === d.uk.value);
+    check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0);
+    const gb = dens.get(`GB:${d.year}`);
+    check(`the UK's ${d.year} figure is the source's, read again here (${d.uk.value} against ${gb ?? "none"})`, gb === d.uk.value);
     const years = [...new Set([...dens.keys()].map((k) => k.split(":")[1]))].sort().reverse();
     const shows = (iso2: string, y: string) => dens.has(`${iso2}:${y}`) && (lf.get(`${iso2}:${y}`) ?? 0) >= d.floor.at_least;
     const latest = years.find((y) => REGIONS.every((key) => (d.regions.find((r) => r.key === key)?.members ?? []).filter((m) => shows(m.iso2, y)).length >= 5) && dens.has(`GB:${y}`));
     check(`the year is the latest in which both regions show five and the UK has a figure (${latest})`, latest === String(d.year));
-  } else console.log("NOTE  the new-business series is not on this machine; its figures were not read again here");
+  }
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log("home/new_companies: all pass");
+console.log(homePassLine("home/new_companies", held));
 ```
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/new_companies.test.ts > scratchpad/home-sections/t03.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t03.txt`
@@ -861,29 +939,31 @@ Create `tests/home/us_restaurants.test.ts`:
  * site has a city page for, its count in the first and the last year on disk (data/home/us_restaurants.json, from the employment
  * census's parsed files by scripts/data/home/export_home.py).
  *
- * Holds the slice: it is its source's (scripts/lib/home_export.ts); one metro a US city page and under the city's own name; each
- * metro's code a metro area whose published title names the city, no two cities on one code; whole counts in both years; the mark a
- * row may carry withholds employment and pay and never the count (every row keeps its count); five or more metros grew and five or
- * more shrank, so both ends of the ranking stand.
+ * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
+ * manifest's row count is its content's; one metro a US city page and under the city's own name; each metro's code a metro area
+ * whose published title names the city, no two cities on one code; whole counts in both years; the mark a row may carry withholds
+ * employment and pay and never the count (every row keeps its count); five or more metros grew and five or more shrank, so both
+ * ends of the ranking stand.
  *
  * Run: npx tsx tests/home/us_restaurants.test.ts
  */
 import { readFileSync } from "node:fs";
-import { holdHomeExport } from "../../scripts/lib/home_export";
+import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-us-restaurants";
 const FILE = "data/home/us_restaurants.json";
 const REMEDY = "re-run python -P scripts/data/home/export_home.py us_restaurants, never edit data/home by hand; then draw section 3 from the slice only";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 type Metro = { slug: string; name: string; area: string; title: string; y_from: number; y_to: number; codes: Array<string | null> };
 type Export = { trade: { naics: string; title: string }; ownership: string; from: number; to: number; metros: Metro[] };
 
 const held = holdHomeExport("us_restaurants.json", check);
 const d = (held?.data ?? null) as Export | null;
-if (d) {
+if (held && d) {
+  check(`the manifest's rows are the slice's: one a metro (${held.entry.rows} against ${d.metros.length})`, held.entry.rows === d.metros.length);
   const us = (JSON.parse(readFileSync("data/cities/city_list_v1.json", "utf8")) as { cities: Array<{ slug: string; name: string; iso2: string }> }).cities.filter((c) => c.iso2.toUpperCase() === "US");
   check(`one metro a US city page (${d.metros.length} of ${us.length})`, JSON.stringify(d.metros.map((m) => m.slug).sort()) === JSON.stringify(us.map((c) => c.slug).sort()));
   check("each metro under its city's own name", d.metros.every((m) => us.find((c) => c.slug === m.slug)?.name === m.name));
@@ -896,7 +976,7 @@ if (d) {
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log("home/us_restaurants: all pass");
+console.log(homePassLine("home/us_restaurants", held));
 ```
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t04.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t04.txt`
@@ -1066,35 +1146,39 @@ Create `tests/home/how_made.test.ts`:
  * estimates. The notices count comes from data/home/method.json (the registers' failures table, by
  * scripts/data/home/export_home.py); the other counts are worked out from this repo's files.
  *
- * Holds the slice: it is its source's (scripts/lib/home_export.ts); its counts nest (names matched within names, names within
- * notices, the unmatched notices within the notices); and it is the year of notices the failure rates the duel prints were read
- * from (the register slice's own source line).
+ * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
+ * manifest's row count is its content's (one); its counts nest (names matched within names, names within notices, the unmatched
+ * notices within the notices); and it is the year of notices the failure rates the duel prints were read from (the register
+ * slice's own source line).
  *
  * Run: npx tsx tests/home/how_made.test.ts
  */
 import { readFileSync } from "node:fs";
-import { holdHomeExport } from "../../scripts/lib/home_export";
+import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-how-made";
 const FILE = "data/home/method.json";
 const REMEDY = "re-run python -P scripts/data/home/export_home.py method, never edit data/home by hand; then draw section 4 from the slice and the repo's own counts";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 type Export = { notices: number; names: number; matched_names: number; unmatched_notices: number; source: string };
 
 const held = holdHomeExport("method.json", check);
 const d = (held?.data ?? null) as Export | null;
-if (d) {
+if (held && d) {
+  check(`the manifest's rows are the slice's: one (${held.entry.rows})`, held.entry.rows === 1);
   check(`the counts nest: ${d.matched_names} names matched of ${d.names} names in ${d.notices} notices, ${d.unmatched_notices} notices unmatched`, [d.notices, d.names, d.matched_names, d.unmatched_notices].every((n) => Number.isInteger(n) && n >= 0) && d.notices > 0 && d.matched_names <= d.names && d.names <= d.notices && d.unmatched_notices <= d.notices);
   const failures = JSON.parse(readFileSync("data/uk/registers/failures.json", "utf8")) as { source: string };
   check("the notices are the year the failure rates were read from (the register slice's own source line)", d.source === failures.source);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log("home/how_made: all pass");
+console.log(homePassLine("home/how_made", held));
 ```
+
+The gate follows the holder's contract (Task 2, fixed after its review): `check` takes an optional third argument `{ file, remedy }`, which the holder passes for its own findings (the manifest, a stray or a missing slice, the sources page, CRLF line ends); the rows check reads the manifest's `rows` against the slice; and the last line comes from `homePassLine`, which ends `home/how_made: all pass, 1 deferred (failures: source not on this machine)` where the failures table is not on the machine (a build server), the form the chain's runner counts as a deferred check. Nothing prints after it.
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t05.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t05.txt`
 Expected: `data/home/method.json is exported and in the manifest` red, `exit 1`.
@@ -1136,7 +1220,7 @@ Expected: `method.json: 1 rows, <twelve hex>`, `exit 0`.
 Run: `node -e "const d=require('./data/home/method.json');console.log(d.notices,d.names,d.matched_names,d.unmatched_notices)" > scratchpad/home-sections/x05b.txt 2>&1`
 Expected: `31926 31376 30510 1137`.
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t05.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t05.txt`
-Expected: `home/how_made: all pass`, `exit 0`.
+Expected: `home/how_made: all pass` (the failures table is on this machine, so nothing is deferred), `exit 0`.
 
 - [ ] **Step 4: Register and regenerate**
 

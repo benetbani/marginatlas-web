@@ -4,23 +4,24 @@
  * table's cohort, how many still traded five years on, per UK city with a page (data/home/city_survival.json, from the business
  * demography tables by scripts/data/home/export_home.py).
  *
- * Holds the slice: it is its source's (scripts/lib/home_export.ts); every UK city with a page is read by its own area code and is
- * drawn or held out with the publisher's reason (a star: over 500 businesses at one postcode), never both and never neither; every
- * share is its two counts' (half up, one decimal, in whole numbers), so none can be typed; the UK's share is the one the home's ring
- * prints (data/sections/survival.json) and London's the one London's pages read (data/uk/registers/survival.json); the shares are of
- * the cohort's fifth year.
+ * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
+ * manifest's row count is its content's; every UK city with a page is read by its own area code and is drawn or held out with the
+ * publisher's reason (a star: over 500 businesses at one postcode), never both and never neither; every share is its two counts'
+ * (half up, one decimal, in whole numbers), so none can be typed; the UK's share is the one the home's ring prints
+ * (data/sections/survival.json) and London's the one London's pages read (data/uk/registers/survival.json); the shares are of the
+ * cohort's fifth year.
  *
  * Run: npx tsx tests/home/firms_last.test.ts
  */
 import { readFileSync } from "node:fs";
-import { holdHomeExport } from "../../scripts/lib/home_export";
+import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-firms-last";
 const FILE = "data/home/city_survival.json";
 const REMEDY = "re-run python -P scripts/data/home/export_home.py city_survival, never edit data/home by hand; then draw section 1 from the slice only";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 type Area = { code: string; name_in_table: string; births: number; survived: number; pct: number };
 type City = Area & { slug: string; name: string };
@@ -28,7 +29,8 @@ type Export = { cohort: number; year: number; table: string; published: string; 
 
 const held = holdHomeExport("city_survival.json", check);
 const d = (held?.data ?? null) as Export | null;
-if (d) {
+if (held && d) {
+  check(`the manifest's rows are the slice's: the UK, ${d.cities.length} drawn and ${d.held_out.length} held out (${held.entry.rows})`, held.entry.rows === 1 + d.cities.length + d.held_out.length);
   /* Of 100, half up to one decimal, in whole numbers so no float can tip a half (the export's Decimal). */
   const share = (survived: number, births: number) => Math.floor((2000 * survived + births) / (2 * births)) / 10;
   const uk = (JSON.parse(readFileSync("data/cities/city_list_v1.json", "utf8")) as { cities: Array<{ slug: string; iso2: string }> }).cities.filter((c) => c.iso2.toUpperCase() === "GB").map((c) => c.slug).sort();
@@ -50,4 +52,4 @@ if (d) {
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log("home/firms_last: all pass");
+console.log(homePassLine("home/firms_last", held));
