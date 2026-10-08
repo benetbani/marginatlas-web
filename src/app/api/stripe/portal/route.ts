@@ -4,7 +4,7 @@
  *
  * POST -> { url }. 503 until accounts are on and STRIPE_SECRET_KEY is set; 401 signed out; 404 when the reader's own row holds no
  * Stripe customer. The portal's own settings (cancel at the period's end, card updates, the return link) are his, in the Stripe
- * dashboard (LAUNCH-SWITCHES.md, row 6).
+ * dashboard (LAUNCH-SWITCHES.md, row 5).
  */
 import { tooMany } from "@/lib/rate_limit";
 import { NextRequest, NextResponse } from "next/server";

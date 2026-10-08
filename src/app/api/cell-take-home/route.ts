@@ -2,7 +2,9 @@
  * /api/cell-take-home — the entitlement-checked reveal of owner take-home (M2).
  *
  * Returns { value } ONLY when gating is on, auth is on, and the signed-in viewer
- * is Basic or Premium (getSessionTier). For everyone else it returns { value:
+ * is Pro (getSessionTier; one paid tier since masterplan step 05, ruling 14).
+ * Gating is NEXT_PUBLIC_GATING_ENABLED, which no launch row sets: the UK pages'
+ * paywall is isPaywallOn, a separate switch. For everyone else it returns { value:
  * null }, so the real figure never reaches a non-subscriber. NEVER cached (per
  * user): force-dynamic + private/no-store. The client island swaps the redacted
  * placeholder for this value when it is non-null.

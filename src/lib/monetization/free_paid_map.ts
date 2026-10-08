@@ -16,6 +16,16 @@
  * Statista / Glassdoor style, so the reader sees that more exists.
  *
  * Reference: docs/strategy/2026-05-25-monetization-mega-plan-v34.md
+ *
+ * WHERE IT STANDS (the checkup of 2026-10-08): the follow-up above was never
+ * wired. The paywall that was built (masterplan steps 15 to 18) locks whole
+ * levels of the UK pages, not fields of a cell page: src/lib/monetization/
+ * levels.ts decides which, behind isPaywallOn. This map is read only by the
+ * private design catalogue (src/app/_design/monetized, a folder Next never
+ * routes); canSee and treatmentFor have no caller. What Pro opens is
+ * declared in three places that share no list: this map (cell-page fields),
+ * levels.ts (the UK pages' levels) and api_redaction.ts (three fields the
+ * public API leaves out while the paywall is on).
  */
 
 import type { ViewerTier } from "./viewer_tier";
