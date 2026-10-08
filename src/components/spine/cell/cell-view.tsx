@@ -381,7 +381,9 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
      UK CITY'S TRADE PAGE (plan 2026-10-08, uk:cities-sourced-or-marked) says the same and keeps the city's own density, marked an
      estimate: its city page prints that figure as an estimate. */
   const builtCards = { split: splitBuilt, team: teamBuilt, clears: clearsBuilt, mix: mixBuilt, customers: customersBuilt, open: openBuilt, market: marketBuilt };
-  const placeIso2 = String(d.meta?.iso2 ?? ""), placeGeo = String(d.meta?.geo ?? "");
+  /* The place slug is lowercased once, here, for both predicates: cityHeldToSources lowercases its own and cityRegisterPlace does not,
+     so a slug in capitals would read as a UK city held to sources while London's register region read it as no region at all. */
+  const placeIso2 = String(d.meta?.iso2 ?? ""), placeGeo = String(d.meta?.geo ?? "").toLowerCase();
   const tradeSlug = typeof d.meta?.industry === "string" ? d.meta.industry : null;
   const { split, team, clears, mix, customers, open, market } = cityRegisterPlace(placeIso2, placeGeo) ? sayTradeTypical(builtCards, tradeSlug) : cityHeldToSources(placeIso2, placeGeo) ? sayTradeTypical(builtCards, tradeSlug, { keepHere: true }) : builtCards;
   /* A5's two seats: the customers card in the exit only where the spread drew (it moved to the opening otherwise), the worth only as its strip. */

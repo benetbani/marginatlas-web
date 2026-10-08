@@ -2088,6 +2088,10 @@ export const COPY = {
       dayparts: "Out of every $100 taken in a week, the trade's typical.",
       /** The city's own density on a UK trade page outside London (plan 2026-10-08): the shard's figure, beside the trade's typical. */
       firmsHere: "Estimated here, beside the trade's typical.",
+      /** The words of the companion that carries the trade's typical beside that density: the foot above already says "beside the
+       *  trade's typical", so the companion names it in those words and not "the trade anywhere" (tradeMarket.rivals.typicalWords,
+       *  which every page outside the UK ships), which would name one figure twice. */
+      firmsHereTypical: "the trade's typical",
     },
     /** The rivals cell's companion: the UK's company insolvencies for the trade in a year, per 100 live companies. */
     insolvent: "of 100 UK companies insolvent a year",

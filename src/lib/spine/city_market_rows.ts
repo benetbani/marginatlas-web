@@ -57,6 +57,11 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 /** The fewest trades a ranking draws (a bar chart of two is a comparison, not a ranking). */
 export const CITY_MARKET_MIN_TRADES = 3;
 
+/** A density as the city page's bars print it: whole where whole, else one decimal ("8", "13.9"). The card's own `fmt`
+ *  (city/opening.tsx), and the rounding a UK city's trade page keeps its own density to (uk_trade_typical.ts, `keepHere`), so the
+ *  two pages print one figure: the shard's 13.95 reads 13.9 on both. */
+export const perTenThousand = (v: number): string => (Number.isInteger(v) ? String(v) : v.toFixed(1));
+
 /** The trade's icon by the words the shards use for it; the high-street tile for the rest. */
 /* FIRST MATCH WINS, so the specific words stand first (2026-09-25, with the ten
    new trade glyphs). Two wrong pictures came out of the old order: "bar"

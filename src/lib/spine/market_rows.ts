@@ -114,6 +114,10 @@ export type MarketData = {
   /** The rivals cell's line where the city's own density leads on a UK trade page outside London (uk_trade_typical.ts; plan
    *  2026-10-08): it says the density is an estimate. The copy's `basisHere` otherwise. */
   hereBasis?: string;
+  /** The words of the rivals cell's companion that carries the trade's typical, where the city's own density leads on that UK
+   *  trade page (uk_trade_typical.ts; plan 2026-10-08): "the trade's typical", the line above's own words, since the copy's
+   *  `typicalWords` ("the trade anywhere") would name the figure a second way. The copy's otherwise. */
+  hereTypicalWords?: string;
   /** The dayparts cell's line where the page says whose figure it is (a UK trade page; uk_trade_typical.ts); the copy's otherwise. */
   daypartsBasis?: string;
   /** THE UK'S COMPANY INSOLVENCIES FOR THE TRADE IN A YEAR, per 100 live companies (a UK trade page, masterplan step 04): the

@@ -30,7 +30,7 @@ import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { usd } from "@/components/spine/kit";
 import type { CityGatesData } from "@/lib/spine/city_gates_rows";
-import type { CityMarketData } from "@/lib/spine/city_market_rows";
+import { perTenThousand, type CityMarketData } from "@/lib/spine/city_market_rows";
 import { COPY } from "@/lib/spine/copy";
 
 export function GatesCard({ id = "gates", gates }: { id?: string; gates: CityGatesData | null }) {
@@ -53,8 +53,6 @@ export function GatesCard({ id = "gates", gates }: { id?: string; gates: CityGat
     </Box>
   );
 }
-
-const perTenThousand = (v: number) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
 
 /* A count of registered businesses, whole and grouped (the register's form of the card, plan 06, task B3). */
 const businesses = (v: number) => Math.round(v).toLocaleString("en-US");

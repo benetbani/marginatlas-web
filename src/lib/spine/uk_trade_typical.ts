@@ -13,9 +13,11 @@
  * register does hold, a different measure with its own words: the UK's company insolvencies for the trade in a year, over its
  * live companies (data/uk/registers/failures.json; the notices of 2025-10-01 to 2026-09-30 over the register of 2026-05-01).
  *
- * EVERY OTHER UK CITY'S TRADE PAGE (plan 2026-10-08, uk:cities-sourced-or-marked) takes the same lines with `keepHere`: its city's
- * own density stays, its line saying it is an estimate, since the city page prints the same figure as one and only London's
- * density stood over the wrong place.
+ * EVERY OTHER UK CITY'S TRADE PAGE (plan 2026-10-08, uk:cities-sourced-or-marked) takes the same lines with `keepHere`: the cell
+ * view calls this on every UK city's trade page, London's without it and the six's with it. Their city's own density stays, since
+ * only London's stood over the wrong place. It is the city page's own figure, rounded as it prints there (perTenThousand, one
+ * decimal), so the two pages print one figure; its line says it is an estimate, and the companion beside it names the trade's
+ * typical in the line's own words and not "the trade anywhere", which would name that figure twice.
  *
  * Pure over the built cards; the cell view calls it on a UK city's trade page and nowhere else.
  */
@@ -29,6 +31,7 @@ import type { MixData } from "@/lib/spine/mix_rows";
 import type { TradeCustomersData } from "@/lib/spine/trade_customers_rows";
 import type { OpenData } from "@/lib/spine/open_rows";
 import type { MarketData } from "@/lib/spine/market_rows";
+import { perTenThousand } from "@/lib/spine/city_market_rows";
 
 type FailuresFile = { source: string; trades: Record<string, { uk_rate?: { value?: number; publishable?: boolean } }> };
 const FAILURES = failuresJson as unknown as FailuresFile;
@@ -57,6 +60,9 @@ export function sayTradeTypical(cards: UkTradeCards, tradeSlug: string | null | 
   const T = COPY.tradeTypical;
   const { split, team, clears, mix, customers, open, market } = cards;
   const insolvent = ukInsolvencyPer100(tradeSlug);
+  /* The density a UK city's trade page keeps is the city page's figure, rounded as that page prints it: the shard's 13.95 is 13.9
+     on both, never 13.95 on the one. Whole stays whole, a decimal rounds to one. */
+  const keptHere = opts.keepHere && market?.here ? { ...market.here, value: Number(perTenThousand(market.here.value)) } : null;
   return {
     split: split && split.state === "drawn" ? { ...split, basis: split.feed === "profile" ? T.splitProfile : T.split } : split,
     team: team ? { ...team, basis: T.team } : team,
@@ -71,8 +77,9 @@ export function sayTradeTypical(cards: UkTradeCards, tradeSlug: string | null | 
     market: market
       ? {
           ...market,
-          here: opts.keepHere ? market.here : null,
-          hereBasis: opts.keepHere && market.here ? T.market.firmsHere : undefined,
+          here: keptHere,
+          hereBasis: keptHere ? T.market.firmsHere : undefined,
+          hereTypicalWords: keptHere ? T.market.firmsHereTypical : undefined,
           firms: "figure" in market.firms ? { ...market.firms, basis: T.market.firms } : market.firms,
           chains: "part" in market.chains ? { ...market.chains, basis: T.market.chains } : market.chains,
           swing: "figure" in market.swing ? { ...market.swing, basis: T.market.swing } : market.swing,

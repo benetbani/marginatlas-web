@@ -97,7 +97,7 @@ export function RivalsCell({ market }: { market: MarketData }) {
   /* THIS CITY'S OWN LEADS WHERE IT EXISTS and the trade's typical becomes the
      companion; where it does not, the typical leads alone. The churn follows
      either way, so the cell is never one number (clause 65). */
-  if (market.here && hasFigure) second.push({ figure: densityText(firms.value), words: R.typicalWords });
+  if (market.here && hasFigure) second.push({ figure: densityText(firms.value), words: market.hereTypicalWords ?? R.typicalWords });
   /* On a UK trade page the register's insolvencies stand where the world's closures would (masterplan step 04). */
   if (market.insolvent) second.push({ figure: String(market.insolvent.per100), words: market.insolvent.words });
   else if ("part" in market.close) second.push({ figure: String(market.close.part), words: R.close });
