@@ -64,7 +64,7 @@ import type { LoudSeat } from "@/lib/spine/loud_seats";
 export const LOUD_SEATS = [
   { seat: 1, card: "00 answer", figure: "the UK's total effective tax burden on a sole trader's profit, at 40", state: "LIT", condition: "masterplan step 34: the same figure /gb's masthead prints (buildHeroBoard), `--terra-text` at 40, the page's only 40" },
   { seat: 2, card: "firms-last", id: "firms-last", figure: "of 100 firms born in the cohort, those still trading five years on, in the UK city that leads, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 1: the city leads a measured ranking of the UK's cities (buildFirmsLast; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
-  { seat: 3, card: "us-restaurants", id: "us-restaurants", figure: "the full-service restaurants the leading US metro added since the first year on disk, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
+  { seat: 3, card: "us-restaurants", id: "us-restaurants", figure: "the full-service restaurants the leading US metro added since the first year counted, at 30", state: "LIT", condition: "plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent" },
 ] as const satisfies readonly LoudSeat[];
 
 /** The hero he kept: the visitor's own question, its business and its city rotating, then the search. Left-aligned, as every

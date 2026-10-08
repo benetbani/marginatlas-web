@@ -206,6 +206,6 @@ Loud today: 3 of 3, as `LOUD_SEATS` in home-view.tsx declares (a LIT seat is unl
 |---|---|---|---|---|
 | 1 | 00 answer | the UK's total effective tax burden on a sole trader's profit, at 40 | LIT | masterplan step 34: the same figure /gb's masthead prints (buildHeroBoard), `--terra-text` at 40, the page's only 40 |
 | 2 | firms-last (`#firms-last`) | of 100 firms born in the cohort, those still trading five years on, in the UK city that leads, at 30 | LIT | plan 2026-10-08, home sections, section 1: the city leads a measured ranking of the UK's cities (buildFirmsLast; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent |
-| 3 | us-restaurants (`#us-restaurants`) | the full-service restaurants the leading US metro added since the first year on disk, at 30 | LIT | plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent |
+| 3 | us-restaurants (`#us-restaurants`) | the full-service restaurants the leading US metro added since the first year counted, at 30 | LIT | plan 2026-10-08, home sections, section 3: the metro leads a measured ranking of 44 by restaurants added (buildUsRestaurants; a tie features nobody and the section is not drawn), `--terra-text` at 30 through Focal's accent |
 
 <!-- census:end -->
