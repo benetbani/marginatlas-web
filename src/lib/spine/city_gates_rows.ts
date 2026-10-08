@@ -34,7 +34,7 @@ import type { FactTag } from "@/lib/facts/types";
 import type { TiersFigureRow, TiersHeads } from "@/components/spine/archetypes/TiersTable";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
-import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityHeldToSources } from "@/lib/uk/registers/register_city";
 
 type CityRow = { slug: string; name: string; iso2: string };
 const CITIES = (cityListJson as { cities: CityRow[] }).cities;
@@ -122,8 +122,8 @@ export function buildCityGates(slug: string): CityGatesData | null {
     totalCost: totalCostFig ? Math.round(totalCostFig.value) : null,
     heads: { name: C.heads.gate, a: C.heads.wait, b: C.heads.fee },
     rows,
-    /* A page held to a register region says in its one line which figures are estimates (masterplan step 03, 2026-10-05; the labels audit's item 24). */
-    basis: cityRegisterPlace(iso2, slug) ? C.basisSourcedOnly : C.basis,
+    /* A UK city's page says in its one line which figures are estimates (London since masterplan step 03; every UK city since plan 2026-10-08, uk:cities-sourced-or-marked): each UK city's food registration is the free gate the line names. */
+    basis: cityHeldToSources(iso2, slug) ? C.basisSourcedOnly : C.basis,
     foot: sample ? C.footModelled : null,
     sample,
   };

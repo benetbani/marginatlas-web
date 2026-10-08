@@ -126,5 +126,12 @@ for (const slug of SIX) {
 }
 check("Paris's crew line is unchanged", buildCityCrew("paris")?.basis === COPY.cityCrew.basis);
 
+/* THE PERMITS (plan 2026-10-08): London's line word for word; every UK city's food registration is the one free gate it names. */
+for (const slug of SIX) {
+  const g = buildCityGates(slug);
+  check(`${slug}'s permits say their fees are estimates but food registration`, g?.basis === COPY.cityGates.basisSourcedOnly);
+  check(`${slug}'s food registration is a required gate at no fee, as the line says`, !!g && g.gates.some((x) => /food/i.test(x.name) && x.required && x.cost === 0));
+}
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");
