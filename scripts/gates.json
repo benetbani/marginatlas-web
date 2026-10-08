@@ -306,6 +306,15 @@
       "claims": []
     },
     {
+      "name": "no-control-bytes",
+      "script": "scripts/verify_no_control_bytes.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "No source or document file holds a literal control byte: an escape written as `\\u0000` or `\\b` stays an escape.",
+      "reads": [],
+      "claims": []
+    },
+    {
       "name": "no-source-agencies",
       "script": "scripts/verify_no_source_agencies.ts",
       "args": [],

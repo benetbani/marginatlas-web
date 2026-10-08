@@ -176,6 +176,9 @@ const GATES: Gate[] = [
   { name: "loud-seats", script: "scripts/verify_loud_seats.mjs", browser: true },
   { name: "taxonomy", script: "scripts/verify_taxonomy.ts" },
   { name: "no-em-dashes", script: "scripts/verify_no_em_dashes.ts" },
+  /* No literal control byte in source or documents (the checkup of 2026-10-08): a heredoc or the Write tool had turned escapes
+     into bytes in four scripts, hiding counts.ts from grep and one gate's diffs from git. Planted with a backspace, watched red. */
+  { name: "no-control-bytes", script: "scripts/verify_no_control_bytes.ts" },
   { name: "no-source-agencies", script: "scripts/verify_no_source_agencies.ts" },
   /* The archetype harness's browser-free half (2026-09-04): builds the answer
      card's facts for every country from local modules and checks the copy
