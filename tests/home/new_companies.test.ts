@@ -149,25 +149,28 @@ if (built && d) {
 }
 
 /* THE DRAWING (plan Task 13): the list card's grouped form, the two regions in order, each drawn country its flag, its name and its
-   figure, a door to its page; the rest behind each plus, closed; quiet (no accent); every figure stamped; one line. */
+   figure, a door to its page; the rest behind each plus, closed; quiet (no accent); every figure stamped; one line. A red here is the
+   component's to put right (the slice and the builder are held above), so its finding names HomeNewCompanies and the laws it is
+   drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeNewCompanies.tsx", remedy: "draw section 2 as HomeNewCompanies holds it, the list card's grouped form with Latin America then Africa never ranked together, a country its flag and its name and a door to its page (MarkList's clause 5), quiet with no accent, every figure stamped" };
 if (built) {
   /* CountryFlag is written for Next's automatic JSX runtime and names no React; this runner compiles JSX to React.createElement, so
      the flags read the one React this file lends them (as tests/spine/uk_sources.test.ts lends it to the About page). */
   (globalThis as unknown as { React: typeof React }).React = React;
   const html = renderToStaticMarkup(React.createElement(HomeNewCompanies, { nc: built }));
-  check("the section is the list card's grouped form, Latin America then Africa", /id="new-companies"/.test(html) && /data-archetype="mark-list"/.test(html) && /data-form="groups"/.test(html) && html.indexOf('data-group="latam"') !== -1 && html.indexOf('data-group="africa"') > html.indexOf('data-group="latam"'));
+  check("the section is the list card's grouped form, Latin America then Africa", /id="new-companies"/.test(html) && /data-archetype="mark-list"/.test(html) && /data-form="groups"/.test(html) && html.indexOf('data-group="latam"') !== -1 && html.indexOf('data-group="africa"') > html.indexOf('data-group="latam"'), DRAWN_AT);
   const drawn = built.groups.reduce((s, g) => s + g.rows.length, 0);
-  check(`each drawn country is its flag, its name and its figure, a door to its page (${drawn})`, (html.match(/<a [^>]*data-row=/g) ?? []).length === drawn && (html.match(/flagcdn\.com\//g) ?? []).length === drawn && html.split(`data-lands="${SURFACE_ANSWERS.country}"`).length - 1 === drawn);
-  check("the card's figure is the UK's, under its label, and every drawn rate prints at one decimal", new RegExp(`--t-focal[^>]*data-src="home/new_companies\\.json:GB"[^>]*>${built.uk.value.toFixed(1).replace(".", "\\.")}<`).test(html) && html.includes(`>${COPY.home.newCompanies.headline}<`) && built.groups.every((g) => g.rows.every((r) => html.includes(`>${r.value.toFixed(1)}</span>`))));
-  check("the rest of each region stands behind its plus, closed", (html.match(/<details/g) ?? []).length === built.groups.filter((g) => g.rest.length >= 2).length && !/<details[^>]*\bopen\b/.test(html));
+  check(`each drawn country is its flag, its name and its figure, a door to its page (${drawn})`, (html.match(/<a [^>]*data-row=/g) ?? []).length === drawn && (html.match(/flagcdn\.com\//g) ?? []).length === drawn && html.split(`data-lands="${SURFACE_ANSWERS.country}"`).length - 1 === drawn, DRAWN_AT);
+  check("the card's figure is the UK's, under its label, and every drawn rate prints at one decimal", new RegExp(`--t-focal[^>]*data-src="home/new_companies\\.json:GB"[^>]*>${built.uk.value.toFixed(1).replace(".", "\\.")}<`).test(html) && html.includes(`>${COPY.home.newCompanies.headline}<`) && built.groups.every((g) => g.rows.every((r) => html.includes(`>${r.value.toFixed(1)}</span>`))), DRAWN_AT);
+  check("the rest of each region stands behind its plus, closed", (html.match(/<details/g) ?? []).length === built.groups.filter((g) => g.rest.length >= 2).length && !/<details[^>]*\bopen\b/.test(html), DRAWN_AT);
   check("no region leaves exactly one country behind the plus (a plus of one is not drawn, so that country would vanish)", built.groups.every((g) => g.rest.length !== 1), { file: "src/components/spine/home/HomeNewCompanies.tsx", remedy: "draw a lone leftover as a sixth row, in the builder and the drawing together" });
-  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html));
+  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   const rest = built.groups.reduce((s, g) => s + (g.rest.length >= 2 ? g.rest.length : 0), 0);
-  check(`every figure says where it came from (${figs.length}: the UK's, ${drawn} drawn, ${rest} behind the plus)`, figs.length === 1 + drawn + rest && figs.every((f) => /data-src="home\/new_companies\.json:/.test(f) && /data-kind="looked up"/.test(f)));
+  check(`every figure says where it came from (${figs.length}: the UK's, ${drawn} drawn, ${rest} behind the plus)`, figs.length === 1 + drawn + rest && figs.every((f) => /data-src="home\/new_companies\.json:/.test(f) && /data-kind="looked up"/.test(f)), DRAWN_AT);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.newCompanies.kicker && title.split(/\s+/).length <= 4);
-  check("one supporting line, the measure said once", (html.match(/<p /g) ?? []).length === 1 && html.includes(COPY.home.newCompanies.basis.replace("{year}", String(built.year))));
+  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.newCompanies.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
+  check("one supporting line, the measure said once", (html.match(/<p /g) ?? []).length === 1 && html.includes(COPY.home.newCompanies.basis.replace("{year}", String(built.year))), DRAWN_AT);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

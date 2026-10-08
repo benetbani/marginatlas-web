@@ -1812,7 +1812,8 @@
       "reads": [
         "data/cities/city_list_v1.json",
         "data/home/city_survival.json",
-        "data/uk/registers/survival.json"
+        "data/uk/registers/survival.json",
+        "src/components/spine/home/HomeFirmsLast.tsx"
       ],
       "claims": []
     },
@@ -1838,7 +1839,8 @@
       "asserts": "WHERE US RESTAURANTS GREW AND SHRANK (plan 2026-10-08, home sections, section 3; his idea of 2026-10-08, \"US biggest winners and losers ranking of top 5 cities bottom 5\").",
       "reads": [
         "data/cities/city_list_v1.json",
-        "data/home/us_restaurants.json"
+        "data/home/us_restaurants.json",
+        "src/components/spine/home/HomeUsRestaurants.tsx"
       ],
       "claims": []
     },
@@ -1851,6 +1853,7 @@
       "reads": [
         "data/home/method.json",
         "data/uk/registers/failures.json",
+        "src/components/spine/home/HomeHowMade.tsx",
         "src/lib/home/how_made.ts",
         "src/lib/spine/copy.ts"
       ],

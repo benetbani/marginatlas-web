@@ -17,7 +17,12 @@
  * takings figure (tradeHeadFigure, which the page, its description and its share card read), of the London trade pages served
  * (the taxonomy's trade slugs that are not retired, the sitemap's list), at least the trades the UK page's money card ranks; no
  * row counts countries and the copy holds no countries row (his ruling of 2026-10-07: the home's 195 counter is wrong); every
- * figure stamped; the focal's line twelve words at most; the copy's checks name the copy.
+ * figure stamped; the focal's line twelve words at most; each row's label three words at most and its note twelve, no semicolon; the
+ * copy's checks name the copy.
+ *
+ * Holds the drawing (src/components/spine/home/HomeHowMade.tsx): a box with its id, the focal and its two ruled rows; quiet, no
+ * accent; every figure stamped; no word of countries or of estimates anywhere in it (his ruling of 2026-10-07); one supporting line;
+ * the door to About the figures; the title the copy's.
  *
  * Run: npx tsx tests/home/how_made.test.ts
  */
@@ -101,23 +106,26 @@ if (built && d) {
   check("the door goes to About the figures", built.link.href === "/about-data" && built.link.label === COPY.home.howMade.link);
   const words = built.notices.words.split(/\s+/).filter(Boolean).length;
   check(`the focal's line is twelve words at most, no semicolon ("${built.notices.words}")`, words <= 12 && !built.notices.words.includes(";"), { file: COPY_FILE, remedy: "cut COPY.home.howMade.words to twelve words at most and no semicolon, the card's one supporting line" });
-  check(`the title is four words at most, and every row's label three ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3), { file: COPY_FILE, remedy: "cut COPY.home.howMade.kicker to four words at most and each row's label (COPY.home.howMade.matched.label, COPY.home.howMade.trades.label) to three" });
+  /* THE ROWS' NOTES are drawn by FactRows, whose words the copy gate cannot see, so this is the only check on them. */
+  check(`the title is four words at most, every row's label three and its note twelve at most with no semicolon ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3 && r.note.split(/\s+/).length <= 12 && !r.note.includes(";")), { file: COPY_FILE, remedy: "cut COPY.home.howMade.kicker to four words at most, each row's label (COPY.home.howMade.matched.label, COPY.home.howMade.trades.label) to three, and each row's note (COPY.home.howMade.matched.note, COPY.home.howMade.trades.note) to twelve words with no semicolon" });
 }
 
 /* THE DRAWING (plan Task 14): quiet (no accent), the focal and two ruled rows, no count of countries and no estimates line, every
-   figure stamped, one supporting line, the door to About the figures. */
+   figure stamped, one supporting line, the door to About the figures. A red here is the component's to put right (the slice and the
+   counts are held above), so its finding names HomeHowMade and the law it is drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeHowMade.tsx", remedy: "draw section 4 as HomeHowMade holds it, quiet with no accent, the focal and two ruled rows, no count of countries and no estimates line (his ruling of 2026-10-07), every figure stamped, one supporting line and the door to About the figures" };
 if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeHowMade, { how: built }));
   const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
-  check("the section is a box with its id, its figure and its rows", /id="how-made"/.test(html) && /data-archetype="fact-rows"/.test(html) && (html.match(/data-row="/g) ?? []).length === built.rows.length);
-  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html));
+  check("the section is a box with its id, its figure and its rows", /id="how-made"/.test(html) && /data-archetype="fact-rows"/.test(html) && (html.match(/data-row="/g) ?? []).length === built.rows.length, DRAWN_AT);
+  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + built.rows.length && figs.every((f) => /data-src="/.test(f) && /data-kind="counted"/.test(f)));
-  check("no count of countries and no estimates line", !/Country pages/.test(text) && !/Outside the UK, these pages print estimates/.test(text));
-  check("one supporting line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.notices.words));
-  check("the door to About the figures", html.includes(`href="${built.link.href}"`) && html.includes(built.link.label) && /tap-y/.test(html));
+  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + built.rows.length && figs.every((f) => /data-src="/.test(f) && /data-kind="counted"/.test(f)), DRAWN_AT);
+  check("no count of countries and no estimates line, in any words (his ruling of 2026-10-07)", !/countr/i.test(text) && !/estimate/i.test(text), DRAWN_AT);
+  check("one supporting line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.notices.words), DRAWN_AT);
+  check("the door to About the figures", html.includes(`href="${built.link.href}"`) && html.includes(built.link.label) && /tap-y/.test(html), DRAWN_AT);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.howMade.kicker && title.split(/\s+/).length <= 4);
+  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.howMade.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

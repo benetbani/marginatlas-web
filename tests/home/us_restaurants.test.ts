@@ -21,6 +21,10 @@
  * is drawn; two counts a row as the slice holds them, never a percent; the lead the single metro that added most, its count added
  * the card's figure; every figure stamped; the lead's line twelve words at most.
  *
+ * Holds the drawing (src/components/spine/home/HomeUsRestaurants.tsx): a box with its id and two tables of a name and two counts;
+ * each table's heads its name, the first year and the last, and its rows the builder's names in the builder's order; the lead's count
+ * the card's one accent; every count stamped; no percent; Detroit, held out, not drawn; one supporting line; the title the copy's.
+ *
  * Run: npx tsx tests/home/us_restaurants.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -124,18 +128,29 @@ if (built && d) {
 }
 
 /* THE DRAWING (plan Task 14): the lead's count added the card's one accent, two tables of a name and two counts (most added, most
-   lost), each count stamped, no percent anywhere, the title the copy gate's. */
+   lost), each count stamped, no percent anywhere, the title the copy gate's. A red here is the component's to put right (the slice
+   and the builder are held above), so its finding names HomeUsRestaurants and the laws it is drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeUsRestaurants.tsx", remedy: "draw section 3 as HomeUsRestaurants holds it, the lead's count added the card's one accent (ART-DIRECTION C2), two tables of a name and two counts and never a percent (PART 9 clause 15), every count stamped, and Detroit not drawn (plan decision 12)" };
 if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeUsRestaurants, { us: built }));
-  check("the section is a box with its id and two tables of a name and two figures", /id="us-restaurants"/.test(html) && (html.match(/data-archetype="tiers-table"/g) ?? []).length === 2 && (html.match(/data-shape="figures"/g) ?? []).length === 2 && html.indexOf(COPY.home.usRestaurants.added) < html.indexOf(COPY.home.usRestaurants.lost));
+  check("the section is a box with its id and two tables of a name and two figures", /id="us-restaurants"/.test(html) && (html.match(/data-archetype="tiers-table"/g) ?? []).length === 2 && (html.match(/data-shape="figures"/g) ?? []).length === 2 && html.indexOf(COPY.home.usRestaurants.added) < html.indexOf(COPY.home.usRestaurants.lost), DRAWN_AT);
+  /* THE TABLES' HEADS AND ROWS, read back out of the markup (a name is escaped there as React writes it): each table's heads are its
+     name, then the first year and the last, and its rows are the builder's names in the builder's order. */
+  const tables = html.split('data-archetype="tiers-table"').slice(1);
+  const spans = (table: string, attr: string) => [...table.matchAll(new RegExp(`<span ${attr}="true"[^>]*>([^<]*)</span>`, "g"))].map((m) => m[1]);
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+  const heads = [[COPY.home.usRestaurants.added, String(built.from), String(built.to)], [COPY.home.usRestaurants.lost, String(built.from), String(built.to)]];
+  check(`each table's heads are its name, ${built.from} and ${built.to} (${tables.map((t) => spans(t, "data-head").join(" | ")).join("; ")})`, tables.length === 2 && tables.every((t, i) => JSON.stringify(spans(t, "data-head")) === JSON.stringify(heads[i].map(esc))), DRAWN_AT);
+  check(`the drawn rows are the builder's, in its order (${tables.map((t) => spans(t, "data-label").join(", ")).join("; ")})`, tables.length === 2 && JSON.stringify(spans(tables[0], "data-label")) === JSON.stringify(built.added.map((r) => esc(r.name))) && JSON.stringify(spans(tables[1], "data-label")) === JSON.stringify(built.lost.map((r) => esc(r.name))), DRAWN_AT);
+  check("Detroit, held out of the ranking by plan decision 12, is not drawn", !html.includes("Detroit"), DRAWN_AT);
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
-  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(html));
+  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + 2 * (built.added.length + built.lost.length) && figs.every((f) => /data-src="home\/us_restaurants\.json:/.test(f) && /data-kind="(counted|worked out)"/.test(f)));
-  check("no percent anywhere in the card", !/%/.test(html.replace(/<[^>]+>/g, " ")));
+  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + 2 * (built.added.length + built.lost.length) && figs.every((f) => /data-src="home\/us_restaurants\.json:/.test(f) && /data-kind="(counted|worked out)"/.test(f)), DRAWN_AT);
+  check("no percent anywhere in the card", !/%/.test(html.replace(/<[^>]+>/g, " ")), DRAWN_AT);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is four words at most ("${title}")`, title === COPY.home.usRestaurants.kicker.replace("{from}", String(built.from)) && title.split(/\s+/).length <= 4);
-  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words));
+  check(`the title is four words at most ("${title}")`, title === COPY.home.usRestaurants.kicker.replace("{from}", String(built.from)) && title.split(/\s+/).length <= 4, DRAWN_AT);
+  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
