@@ -167,12 +167,13 @@ moments; the type ladder and width ratchets only shrink.
 | `tests/home/how_made.test.ts` | 5, 12, 14 | gate `home-how-made` |
 | `scripts/prebuild_all.ts`, `scripts/gates.json`, `CLAUDE.md` | 2 to 6, 9 to 15 | the four gates registered; the generated registry and counts |
 | `src/app/(site)/about-data/page.tsx`, `tests/spine/uk_sources.test.ts` | 6 | the world sources printed and held |
-| `src/components/spine/country/focal.tsx`, `archetypes/TiersTable.tsx`, `archetypes/DetailPanel.tsx` | 7 | `accent`, `prov` |
+| `src/components/spine/country/focal.tsx`, `archetypes/TiersTable.tsx`, `archetypes/DetailPanel.tsx` | 7, 16 | `accent`, `prov`; TiersTable's figure heads in tabular numerals (16) |
 | `src/components/spine/archetypes/MarkList.tsx` | 8 | the grouped form |
 | `src/lib/home/{firms_last,new_companies,us_restaurants,how_made}.ts` | 9 to 12 | the builders |
 | `src/lib/spine/copy.ts` | 9 to 12, 15 | the sections' words, the world level's label |
 | `src/components/spine/home/{HomeFirmsLast,HomeNewCompanies,HomeUsRestaurants,HomeHowMade}.tsx` | 13, 14 | the drawings |
 | `src/components/spine/home/home-view.tsx`, `tests/trust/home_shape.test.ts`, `docs/loop/CENSUS.md` | 15 | the wiring, its gate, the census |
+| `src/app/page.tsx`, `src/components/spine/archetypes/CityCards.tsx` | 15 | a comment; comments and one class token |
 | `scratchpad/home-sections/*` (never committed) | all | outputs, identity checks, the hand-run list |
 | `E:/atlas/design/loop/build/QUEUE.md`, `E:/atlas/design/loop/build/PAGES.md` | 17 | the records |
 
@@ -2539,7 +2540,8 @@ above ` * Run: npx tsx tests/home/how_made.test.ts` add:
  * takings figure (tradeHeadFigure, which the page, its description and its share card read), of the London trade pages served
  * (the taxonomy's trade slugs that are not retired, the sitemap's list), at least the trades the UK page's money card ranks; no
  * row counts countries and the copy holds no countries row (his ruling of 2026-10-07: the home's 195 counter is wrong); every
- * figure stamped; the focal's line twelve words at most; the copy's checks name the copy.
+ * figure stamped; the focal's line twelve words at most; each row's label three words at most and its note twelve, no semicolon; the
+ * copy's checks name the copy.
  *
 ```
 
@@ -2573,9 +2575,12 @@ if (built && d) {
   check("the door goes to About the figures", built.link.href === "/about-data" && built.link.label === COPY.home.howMade.link);
   const words = built.notices.words.split(/\s+/).filter(Boolean).length;
   check(`the focal's line is twelve words at most, no semicolon ("${built.notices.words}")`, words <= 12 && !built.notices.words.includes(";"), { file: COPY_FILE, remedy: "cut COPY.home.howMade.words to twelve words at most and no semicolon, the card's one supporting line" });
-  check(`the title is four words at most, and every row's label three ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3), { file: COPY_FILE, remedy: "cut COPY.home.howMade.kicker to four words at most and each row's label (COPY.home.howMade.matched.label, COPY.home.howMade.trades.label) to three" });
+  /* THE ROWS' NOTES are drawn by FactRows, whose words the copy gate cannot see, so this is the only check on them. */
+  check(`the title is four words at most, every row's label three and its note twelve at most with no semicolon ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3 && r.note.split(/\s+/).length <= 12 && !r.note.includes(";")), { file: COPY_FILE, remedy: "cut COPY.home.howMade.kicker to four words at most, each row's label (COPY.home.howMade.matched.label, COPY.home.howMade.trades.label) to three, and each row's note (COPY.home.howMade.matched.note, COPY.home.howMade.trades.note) to twelve words with no semicolon" });
 }
 ```
+
+The rows' notes are drawn by FactRows, whose words the copy gate cannot see, so the labels check also holds each note to twelve words at most and no semicolon, its remedy naming `COPY.home.howMade.matched.note` and `COPY.home.howMade.trades.note`.
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t12.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t12.txt`
 Expected: a module-not-found error on `src/lib/home/how_made`, `exit 1`.
@@ -2688,24 +2693,49 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HomeFirmsLast } from "../../src/components/spine/home/HomeFirmsLast";
 ```
 
+above ` * Run: npx tsx tests/home/firms_last.test.ts` add:
+
+```ts
+ * Holds the drawing (src/components/spine/home/HomeFirmsLast.tsx): a box with its id and the site's bars, plain and filling the half;
+ * each bar its city's own share of 100, never of the leader's; the lead's bar the one marked and its figure the card's one accent;
+ * the UK's tick at its share and keyed once; every row a door to its city page; every figure stamped; the title the copy gate's.
+ *
+```
+
 and above `if (failed > 0) {` add:
 
 ```ts
 /* THE DRAWING (plan Task 13): the bars, plain and filling the half, the lead's bar marked and its figure the card's one accent, the
-   UK's tick keyed once, every figure stamped, the title the copy gate's. */
+   UK's tick keyed once, every figure stamped, the title the copy gate's. The four checks after the tick see the VALUES (a bar's width,
+   the tick's place, a door's address, which bar is marked): a drawing that kept every part and lost a value would pass the ones before.
+   A red here is the component's to put right (the slice and the builder are held above), so its finding names HomeFirmsLast and the
+   laws it is drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeFirmsLast.tsx", remedy: "draw section 1 as HomeFirmsLast holds it, the site's bars at the whole of 100 with the lead's bar the one marked and its figure the card's one accent (ART-DIRECTION C2), the UK's tick keyed once, every row a door to its city page and every figure stamped" };
 if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeFirmsLast, { last: built }));
-  check("the section is a box with its id and its bars (plain, filling its half, the lead's bar marked)", /id="firms-last"/.test(html) && /data-archetype="bar-list"/.test(html) && /data-look="plain"/.test(html) && /data-marked="1"/.test(html) && /flex-1/.test(html));
+  check("the section is a box with its id and its bars (plain, filling its half, the lead's bar marked)", /id="firms-last"/.test(html) && /data-archetype="bar-list"/.test(html) && /data-look="plain"/.test(html) && /data-marked="1"/.test(html) && /flex-1/.test(html), DRAWN_AT);
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
-  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure.replace(".", "\\.")}<`).test(html));
+  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure.replace(".", "\\.")}<`).test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)));
-  check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey));
+  check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)), DRAWN_AT);
+  check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey), DRAWN_AT);
+  /* A width is value / 100 * 100 in floats (43.29999999999999 for a share of 43.3, 9% of the shares at one decimal), so a drawn place is
+     read at the shares' own resolution, one decimal, and never as the exact string. */
+  const tenth = (n: number) => Math.round(n * 10) / 10;
+  const widths = [...html.matchAll(/data-bar="true"[^>]*style="width:([\d.]+)%/g)].map((m) => Number(m[1]));
+  check(`each bar is its city's own share of 100 (${widths.join(", ")})`, widths.length === built.rows.length && widths.every((w, i) => tenth(w) === built.rows[i].value), DRAWN_AT);
+  const ticks = [...html.matchAll(/data-ref-tick[^>]*style="left:calc\(([\d.]+)% - 1px\)/g)].map((m) => Number(m[1]));
+  check(`the UK's tick stands at ${built.uk.value} on every bar (${ticks.join(", ")})`, ticks.length === built.rows.length && ticks.every((t) => tenth(t) === built.uk.value), DRAWN_AT);
+  check("every row is a door to its city page", built.rows.every((r) => html.includes(`href="${r.href}"`)), DRAWN_AT);
+  const leadRow = html.split("<li ").find((s) => s.startsWith(`data-row="${built.lead.key}"`)) ?? "";
+  check("the lead's bar is the one marked", /data-marked="1"/.test(leadRow) && (html.match(/data-marked="1"/g) ?? []).length === 1, DRAWN_AT);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.firmsLast.kicker && title.split(/\s+/).length <= 4);
-  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words));
+  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.firmsLast.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
+  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
 }
 ```
+
+The drawing block reads the VALUES out of the markup as well as the parts: each bar's width is its city's own share of 100 (compared at one decimal, because a width is `value / 100 * 100` in floats and 93 of the 1,001 shares from 0.0 to 100.0 at one decimal come out as 43.29999999999999 and the like), the UK's tick stands at its share on every bar, every row is a door to its city page, and the lead's bar is the one marked. Each was proven to bite on a scratch copy of the section (BarList's `max` dropped, the tick moved, another bar marked, the hrefs dropped: `scratchpad/home-sections/mf2-biteC.txt`). Every drawing check passes the section's `DRAWN_AT`, the component's file and a remedy that names the component and its laws, so a drawing red names the component and never says to re-run the export.
 
 In `tests/home/new_companies.test.ts`, above `import { red, redSummary } from "../../scripts/lib/red";` add:
 
@@ -2715,29 +2745,46 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HomeNewCompanies } from "../../src/components/spine/home/HomeNewCompanies";
 ```
 
+above ` * Run: npx tsx tests/home/new_companies.test.ts` add:
+
+```ts
+ * Holds the drawing (src/components/spine/home/HomeNewCompanies.tsx): the list card's grouped form, Latin America then Africa; each
+ * drawn country its flag, its name and its figure at one decimal, a door to its page; the card's figure the UK's, under its label;
+ * the rest of each region behind its plus, closed, and no region leaving a lone country there (a plus of one is not drawn); quiet,
+ * no accent; every figure stamped; one line.
+ *
+```
+
 and above `if (failed > 0) {` add:
 
 ```ts
 /* THE DRAWING (plan Task 13): the list card's grouped form, the two regions in order, each drawn country its flag, its name and its
-   figure, a door to its page; the rest behind each plus, closed; quiet (no accent); every figure stamped; one line. */
+   figure, a door to its page; the rest behind each plus, closed; quiet (no accent); every figure stamped; one line. A red here is the
+   component's to put right (the slice and the builder are held above), so its finding names HomeNewCompanies and the laws it is
+   drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeNewCompanies.tsx", remedy: "draw section 2 as HomeNewCompanies holds it, the list card's grouped form with Latin America then Africa never ranked together, a country its flag and its name and a door to its page (MarkList's clause 5), quiet with no accent, every figure stamped" };
 if (built) {
   /* CountryFlag is written for Next's automatic JSX runtime and names no React; this runner compiles JSX to React.createElement, so
      the flags read the one React this file lends them (as tests/spine/uk_sources.test.ts lends it to the About page). */
   (globalThis as unknown as { React: typeof React }).React = React;
   const html = renderToStaticMarkup(React.createElement(HomeNewCompanies, { nc: built }));
-  check("the section is the list card's grouped form, Latin America then Africa", /id="new-companies"/.test(html) && /data-archetype="mark-list"/.test(html) && /data-form="groups"/.test(html) && html.indexOf('data-group="latam"') !== -1 && html.indexOf('data-group="africa"') > html.indexOf('data-group="latam"'));
+  check("the section is the list card's grouped form, Latin America then Africa", /id="new-companies"/.test(html) && /data-archetype="mark-list"/.test(html) && /data-form="groups"/.test(html) && html.indexOf('data-group="latam"') !== -1 && html.indexOf('data-group="africa"') > html.indexOf('data-group="latam"'), DRAWN_AT);
   const drawn = built.groups.reduce((s, g) => s + g.rows.length, 0);
-  check(`each drawn country is its flag, its name and its figure, a door to its page (${drawn})`, (html.match(/<a [^>]*data-row=/g) ?? []).length === drawn && (html.match(/flagcdn\.com\//g) ?? []).length === drawn && (html.match(/data-lands="government-take"/g) ?? []).length === drawn);
-  check("the rest of each region stands behind its plus, closed", (html.match(/<details/g) ?? []).length === built.groups.filter((g) => g.rest.length >= 2).length && !/<details[^>]*\bopen\b/.test(html));
-  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html));
+  check(`each drawn country is its flag, its name and its figure, a door to its page (${drawn})`, (html.match(/<a [^>]*data-row=/g) ?? []).length === drawn && (html.match(/flagcdn\.com\//g) ?? []).length === drawn && html.split(`data-lands="${SURFACE_ANSWERS.country}"`).length - 1 === drawn, DRAWN_AT);
+  check("the card's figure is the UK's, under its label, and every drawn rate prints at one decimal", new RegExp(`--t-focal[^>]*data-src="home/new_companies\\.json:GB"[^>]*>${built.uk.value.toFixed(1).replace(".", "\\.")}<`).test(html) && html.includes(`>${COPY.home.newCompanies.headline}<`) && built.groups.every((g) => g.rows.every((r) => html.includes(`>${r.value.toFixed(1)}</span>`))), DRAWN_AT);
+  check("the rest of each region stands behind its plus, closed", (html.match(/<details/g) ?? []).length === built.groups.filter((g) => g.rest.length >= 2).length && !/<details[^>]*\bopen\b/.test(html), DRAWN_AT);
+  check("no region leaves exactly one country behind the plus (a plus of one is not drawn, so that country would vanish)", built.groups.every((g) => g.rest.length !== 1), { file: "src/components/spine/home/HomeNewCompanies.tsx", remedy: "draw a lone leftover as a sixth row, in the builder and the drawing together" });
+  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   const rest = built.groups.reduce((s, g) => s + (g.rest.length >= 2 ? g.rest.length : 0), 0);
-  check(`every figure says where it came from (${figs.length}: the UK's, ${drawn} drawn, ${rest} behind the plus)`, figs.length === 1 + drawn + rest && figs.every((f) => /data-src="home\/new_companies\.json:/.test(f) && /data-kind="looked up"/.test(f)));
+  check(`every figure says where it came from (${figs.length}: the UK's, ${drawn} drawn, ${rest} behind the plus)`, figs.length === 1 + drawn + rest && figs.every((f) => /data-src="home\/new_companies\.json:/.test(f) && /data-kind="looked up"/.test(f)), DRAWN_AT);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.newCompanies.kicker && title.split(/\s+/).length <= 4);
-  check("one supporting line, the measure said once", (html.match(/<p /g) ?? []).length === 1 && html.includes(COPY.home.newCompanies.basis.replace("{year}", String(built.year))));
+  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.newCompanies.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
+  check("one supporting line, the measure said once", (html.match(/<p /g) ?? []).length === 1 && html.includes(COPY.home.newCompanies.basis.replace("{year}", String(built.year))), DRAWN_AT);
 }
 ```
+
+The card's figure is held to the UK's own under its label ("The UK, for scale"), and every drawn rate to one decimal. A region that leaves exactly one country behind the plus is a red of its own: the drawing draws no plus of one (`rest.length >= 2`), so that country would vanish, and the remedy is to draw a lone leftover as a sixth row, in the builder and the drawing together. The answer each row promises is read from `SURFACE_ANSWERS.country`, never typed. Proven on a scratch copy (a wrong figure, a wrong label, a row without its answer, a lone leftover: `mf2-biteC.txt`).
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/firms_last.test.ts > scratchpad/home-sections/t13a.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t13a.txt`
 Expected: a module-not-found error on `HomeFirmsLast`, `exit 1` (and the same for `HomeNewCompanies` in its file).
@@ -2853,24 +2900,46 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HomeUsRestaurants } from "../../src/components/spine/home/HomeUsRestaurants";
 ```
 
+above ` * Run: npx tsx tests/home/us_restaurants.test.ts` add:
+
+```ts
+ * Holds the drawing (src/components/spine/home/HomeUsRestaurants.tsx): a box with its id and two tables of a name and two counts;
+ * each table's heads its name, the first year and the last, and its rows the builder's names in the builder's order; the lead's count
+ * the card's one accent; every count stamped; no percent; Detroit, held out, not drawn; one supporting line; the title the copy's.
+ *
+```
+
 and above `if (failed > 0) {` add:
 
 ```ts
 /* THE DRAWING (plan Task 14): the lead's count added the card's one accent, two tables of a name and two counts (most added, most
-   lost), each count stamped, no percent anywhere, the title the copy gate's. */
+   lost), each count stamped, no percent anywhere, the title the copy gate's. A red here is the component's to put right (the slice
+   and the builder are held above), so its finding names HomeUsRestaurants and the laws it is drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeUsRestaurants.tsx", remedy: "draw section 3 as HomeUsRestaurants holds it, the lead's count added the card's one accent (ART-DIRECTION C2), two tables of a name and two counts and never a percent (PART 9 clause 15), every count stamped, and Detroit not drawn (plan decision 12)" };
 if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeUsRestaurants, { us: built }));
-  check("the section is a box with its id and two tables of a name and two figures", /id="us-restaurants"/.test(html) && (html.match(/data-archetype="tiers-table"/g) ?? []).length === 2 && (html.match(/data-shape="figures"/g) ?? []).length === 2 && html.indexOf(COPY.home.usRestaurants.added) < html.indexOf(COPY.home.usRestaurants.lost));
+  check("the section is a box with its id and two tables of a name and two figures", /id="us-restaurants"/.test(html) && (html.match(/data-archetype="tiers-table"/g) ?? []).length === 2 && (html.match(/data-shape="figures"/g) ?? []).length === 2 && html.indexOf(COPY.home.usRestaurants.added) < html.indexOf(COPY.home.usRestaurants.lost), DRAWN_AT);
+  /* THE TABLES' HEADS AND ROWS, read back out of the markup (a name is escaped there as React writes it): each table's heads are its
+     name, then the first year and the last, and its rows are the builder's names in the builder's order. */
+  const tables = html.split('data-archetype="tiers-table"').slice(1);
+  const spans = (table: string, attr: string) => [...table.matchAll(new RegExp(`<span ${attr}="true"[^>]*>([^<]*)</span>`, "g"))].map((m) => m[1]);
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+  const heads = [[COPY.home.usRestaurants.added, String(built.from), String(built.to)], [COPY.home.usRestaurants.lost, String(built.from), String(built.to)]];
+  check(`each table's heads are its name, ${built.from} and ${built.to} (${tables.map((t) => spans(t, "data-head").join(" | ")).join("; ")})`, tables.length === 2 && tables.every((t, i) => JSON.stringify(spans(t, "data-head")) === JSON.stringify(heads[i].map(esc))), DRAWN_AT);
+  check(`the drawn rows are the builder's, in its order (${tables.map((t) => spans(t, "data-label").join(", ")).join("; ")})`, tables.length === 2 && JSON.stringify(spans(tables[0], "data-label")) === JSON.stringify(built.added.map((r) => esc(r.name))) && JSON.stringify(spans(tables[1], "data-label")) === JSON.stringify(built.lost.map((r) => esc(r.name))), DRAWN_AT);
+  check("Detroit, held out of the ranking by plan decision 12, is not drawn", !html.includes("Detroit"), DRAWN_AT);
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
-  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(html));
+  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + 2 * (built.added.length + built.lost.length) && figs.every((f) => /data-src="home\/us_restaurants\.json:/.test(f) && /data-kind="(counted|worked out)"/.test(f)));
-  check("no percent anywhere in the card", !/%/.test(html.replace(/<[^>]+>/g, " ")));
+  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + 2 * (built.added.length + built.lost.length) && figs.every((f) => /data-src="home\/us_restaurants\.json:/.test(f) && /data-kind="(counted|worked out)"/.test(f)), DRAWN_AT);
+  check("no percent anywhere in the card", !/%/.test(html.replace(/<[^>]+>/g, " ")), DRAWN_AT);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is four words at most ("${title}")`, title === COPY.home.usRestaurants.kicker.replace("{from}", String(built.from)) && title.split(/\s+/).length <= 4);
-  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words));
+  check(`the title is four words at most ("${title}")`, title === COPY.home.usRestaurants.kicker.replace("{from}", String(built.from)) && title.split(/\s+/).length <= 4, DRAWN_AT);
+  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
 }
 ```
+
+Each table's heads are read back out of the markup (its name, then the first year and the last), the rows are the builder's names in the builder's order, and Detroit, held out by decision 12, is nowhere in the markup. Proven on a scratch copy (the two years swapped, the rows reversed, Detroit drawn: `mf2-biteC.txt`).
 
 In `tests/home/how_made.test.ts`, above `import { red, redSummary } from "../../scripts/lib/red";` add:
 
@@ -2880,25 +2949,38 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HomeHowMade } from "../../src/components/spine/home/HomeHowMade";
 ```
 
+above ` * Run: npx tsx tests/home/how_made.test.ts` add:
+
+```ts
+ * Holds the drawing (src/components/spine/home/HomeHowMade.tsx): a box with its id, the focal and its two ruled rows; quiet, no
+ * accent; every figure stamped; no word of countries or of estimates anywhere in it (his ruling of 2026-10-07); one supporting line;
+ * the door to About the figures; the title the copy's.
+ *
+```
+
 and above `if (failed > 0) {` add:
 
 ```ts
 /* THE DRAWING (plan Task 14): quiet (no accent), the focal and two ruled rows, no count of countries and no estimates line, every
-   figure stamped, one supporting line, the door to About the figures. */
+   figure stamped, one supporting line, the door to About the figures. A red here is the component's to put right (the slice and the
+   counts are held above), so its finding names HomeHowMade and the law it is drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeHowMade.tsx", remedy: "draw section 4 as HomeHowMade holds it, quiet with no accent, the focal and two ruled rows, no count of countries and no estimates line (his ruling of 2026-10-07), every figure stamped, one supporting line and the door to About the figures" };
 if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeHowMade, { how: built }));
   const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
-  check("the section is a box with its id, its figure and its rows", /id="how-made"/.test(html) && /data-archetype="fact-rows"/.test(html) && (html.match(/data-row="/g) ?? []).length === built.rows.length);
-  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html));
+  check("the section is a box with its id, its figure and its rows", /id="how-made"/.test(html) && /data-archetype="fact-rows"/.test(html) && (html.match(/data-row="/g) ?? []).length === built.rows.length, DRAWN_AT);
+  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + built.rows.length && figs.every((f) => /data-src="/.test(f) && /data-kind="counted"/.test(f)));
-  check("no count of countries and no estimates line", !/Country pages/.test(text) && !/Outside the UK, these pages print estimates/.test(text));
-  check("one supporting line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.notices.words));
-  check("the door to About the figures", html.includes(`href="${built.link.href}"`) && html.includes(built.link.label) && /tap-y/.test(html));
+  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + built.rows.length && figs.every((f) => /data-src="/.test(f) && /data-kind="counted"/.test(f)), DRAWN_AT);
+  check("no count of countries and no estimates line, in any words (his ruling of 2026-10-07)", !/countr/i.test(text) && !/estimate/i.test(text), DRAWN_AT);
+  check("one supporting line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.notices.words), DRAWN_AT);
+  check("the door to About the figures", html.includes(`href="${built.link.href}"`) && html.includes(built.link.label) && /tap-y/.test(html), DRAWN_AT);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.howMade.kicker && title.split(/\s+/).length <= 4);
+  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.howMade.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
 }
 ```
+
+The words check reads `countr` and `estimate` in any wording: the check it replaces named two exact phrases and passed a door worded "estimates for 195 countries" (shown on a scratch copy against the gate as it stood before, `mf2-biteC.txt`). The rows' notes, which FactRows draws and the copy gate cannot see, are held in Task 12's check (twelve words at most, no semicolon).
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/us_restaurants.test.ts > scratchpad/home-sections/t14a.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t14a.txt`
 Expected: a module-not-found error on `HomeUsRestaurants`, `exit 1`.
@@ -2998,6 +3080,7 @@ git commit -m "Sections 3 and 4 drawn: the leading metro's count added in the ac
 - Modify: `src/components/spine/home/home-view.tsx` (header, imports, `LOUD_SEATS`, `HomeCities`, `Notebook`'s comment, the
   builders, the zones)
 - Modify: `src/lib/spine/copy.ts:2736` (`worldLabel`)
+- Modify: `src/app/page.tsx` (a comment), `src/components/spine/archetypes/CityCards.tsx` (comments and one class token; steps (i) and (j))
 - Modify: `tests/trust/home_shape.test.ts` (rewritten)
 - Modify: `scripts/prebuild_all.ts` (the `home-shape` comment); generated `scripts/gates.json`, `CLAUDE.md`, `docs/loop/CENSUS.md`
   and `E:/atlas/design/loop/build/PAGES.md` (committed in Task 17)
@@ -3009,8 +3092,8 @@ Replace the whole of `tests/trust/home_shape.test.ts` with:
 ```ts
 /**
  * THE REBUILT HOME'S SHAPE (his instruction of 2026-10-07: "reform home drastically"; he called the live home "catastrophically
- * bad"; his section ideas of 2026-10-08, plan docs/superpowers/plans/2026-10-08-home-sections/PLAN.md). In this order and nothing
- * else: the search (the h1 asks the question, so the picker draws no heading of its own), the UK's three answers, the duel and the
+ * bad"). His section ideas of 2026-10-08 are built in plan docs/superpowers/plans/2026-10-08-home-sections/PLAN.md. In this order and
+ * nothing else: the search (the h1 asks the question, so the picker draws no heading of its own), the UK's three answers, the duel and the
  * kitchens list from the registers, Pro only while the paywall is on, then three levels of two halves each: where new firms last
  * beside the UK's city pages held still (his refusal of carousels and pagination, 2026-09-22), where new companies open beside
  * where US restaurants grew and shrank, and how figures are made beside the notebook, last. Every level but the search is a pair:
@@ -3029,7 +3112,8 @@ import { CityCards } from "../../src/components/spine/archetypes/CityCards";
 import { buildCityCards } from "../../src/lib/spine/city_cards";
 
 let failed = 0;
-const check = (name: string, ok: boolean) => { if (!ok) failed++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}`); };
+let deferred = 0;
+const check = (name: string, ok: boolean, remedy?: string) => { if (!ok) failed++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}`); if (!ok && remedy) console.log(`      Remedy: ${remedy}`); };
 const view = readFileSync("src/components/spine/home/home-view.tsx", "utf8");
 const live = readFileSync("src/app/page.tsx", "utf8");
 const picker = readFileSync("src/components/NavigatorForm.tsx", "utf8");
@@ -3079,6 +3163,12 @@ check("no counts zone (no AtlasHolds, buildAtlasHolds, ledger counts or COPY.hom
 /* THE THREE LOUD MOMENTS: the UK's answer, and the leads of sections 1 and 3, each declared LIT with its card's id. */
 const seats = /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(view)?.[0] ?? "";
 check("three loud moments declared LIT: the UK's answer, where new firms last, the US restaurants", (seats.match(/state: "LIT"/g) ?? []).length === 3 && /card: "00 answer"/.test(seats) && /id: "firms-last"/.test(seats) && /id: "us-restaurants"/.test(seats));
+/* SEAT 3 TYPES THE SIZE OF ITS RANKING ("a measured ranking of 44 by restaurants added", a literal read from source, as the seats' own
+   comment says), so that number is held to the metros the slice ranks. */
+const seat3At = seats.indexOf("seat: 3");
+const said = /ranking of (\d+)/.exec(seat3At >= 0 ? seats.slice(seat3At) : "")?.[1];
+const ranked = (JSON.parse(readFileSync("data/home/us_restaurants.json", "utf8")) as { metros: unknown[] }).metros.length;
+check(`seat 3's condition says a ranking of ${said ?? "(no number found)"} and the slice ranks ${ranked} metros`, said !== undefined && Number(said) === ranked, "make the number in seat 3's condition (LOUD_SEATS in src/components/spine/home/home-view.tsx) the metros ranked in data/home/us_restaurants.json (its metros.length), or re-export that slice if the slice is the stale one");
 
 /* THE PICKER'S HEADING: off on the rebuilt home, on (the default) on the live home. */
 check("the rebuilt home renders the picker without its heading", /<NavigatorForm showHeading=\{false\} \/>/.test(view));
@@ -3098,11 +3188,13 @@ if (render) {
   check("no zone of the page is a wide zone but the search", [...render.matchAll(/<section data-zone="wide"/g)].length === 1);
   check("the render prints no picker heading, no counts and no newsletter form", !/Pick a country, a city, and a business\./.test(render) && !/What the atlas holds|atlas_ledger\.ts:/.test(render) && !/Notify me when my city/.test(render));
   check("the render's cities zone carries no pager", !/aria-label="(Previous cities|More cities)"/.test(render));
-} else console.log("NOTE  scratchpad/harness/pages/home-gb.html is not rendered here; the render's checks did not run");
+} else { deferred++; console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the render's checks did not run"); }
 
 if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep src/components/spine/home/home-view.tsx to the zones search, answers, registers, (pro), then three pairs at split 1-1, never a wide zone (the section-bands gate bars a full width that is not the hero): cities [<HomeFirmsLast> | <HomeCities>] even while both draw, world [<HomeNewCompanies> | <HomeUsRestaurants>] not even, method [<HomeHowMade> | <Notebook>] even while both draw; three LIT seats (00 answer, firms-last, us-restaurants); no HomeNewsletter and no counts section; its cities a <CityCards still stack fill> with no pager labels and its picker <NavigatorForm showHeading={false} />; keep <NavigatorForm /> with its heading in src/app/page.tsx and the heading behind showHeading (default true) in src/components/NavigatorForm.tsx; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
-console.log("trust/home_shape: all pass");
+console.log(deferred ? `trust/home_shape: all pass, ${deferred} deferred (render: not rendered here)` : "trust/home_shape: all pass");
 ```
+
+The header's first sentence ends after `"catastrophically bad")`, so the `asserts` the registry generates from it is a whole sentence. Seat 3's condition types the size of its ranking ("a measured ranking of 44"), so the test holds that number to the metros the slice ranks (`metros.length` of `data/home/us_restaurants.json`); `check` takes an optional remedy and prints it under a FAIL, and this one names both the seat (`LOUD_SEATS` in `home-view.tsx`) and the slice. The block also carries the `deferred` count an earlier fix gave the file (a render that is not on the machine ends the last line as deferred, never as a plain pass). Proven on a scratch copy (the seat saying 45, or no number: `mf2-biteD.txt`).
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/trust/home_shape.test.ts > scratchpad/home-sections/t15.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t15.txt`
 Expected: FAIL lines on the zone order, the three pairs, the `fill`, the seats and the render's zones, `exit 1`.
@@ -3171,11 +3263,22 @@ export const LOUD_SEATS = [
 ] as const satisfies readonly LoudSeat[];
 ```
 
-(d) In `HomeCities`, replace `   tall law exempts, at every width. */` with:
+(d) In `HomeCities`, replace:
 
 ```
-   tall law exempts, at every width. BESIDE WHERE NEW FIRMS LAST since plan 2026-10-08 (the notebook moved to the last level),
-   the rows share the height the pair is given (`fill`), as the bars beside them do, so neither half stands a blank foot. */
+   stands in a half, beside the notebook (below), and a half cannot hold a row of seven tall cards (132 a card is the least that
+   holds "Birmingham" at the name's rung, and a half is 504 at the widest), so it takes the archetype's own row form, which the
+   tall law exempts, at every width. */
+```
+
+with:
+
+```
+   stands in a half, beside where new firms last (it stood beside the notebook until plan 2026-10-08 moved the notebook to the last
+   level), and a half cannot hold a row of seven tall cards (132 a card is the least that holds "Birmingham" at the name's rung,
+   and a half is 504 at the widest), so it takes the archetype's own row form, which the tall law exempts, at every width. Since
+   plan 2026-10-08 the rows share the height the pair is given (`fill`), as the bars beside them do, so neither half stands a blank
+   foot. */
 ```
 
 and replace `      <CityCards still stack cards={cards.cards.map((c) => ({ ...c, region: undefined }))} basis={COPY.cityCards.plain.basis} />` with
@@ -3237,7 +3340,8 @@ with:
        "never one lone section per horizontal band", 2026-06-18; the section-bands gate bars a full width that is not the hero, and
        the home's baseline is 0). Each is read through the zones' own rules: a level with one of its two to draw is a lone section at
        two thirds (the LONE rule), a level with neither is not listed. Pro, where it draws, still stands after the registers and
-       before the first of them. A zone is named by its first section (a data attribute the checks read, not a word the page prints).
+       before the first of them. The cities and world levels carry fixed level names (COPY.home.citiesLabel, COPY.home.worldLabel) and
+       the last level is named by its first section (a data attribute the checks read, not a word the page prints).
 
        THE UK'S CITIES, AND WHERE THEIR NEW FIRMS LAST (section 1; HomeCities says why the cities stand in a half): the 2019 cohort's
        five-year survival per UK city, its lead one of the page's three loud moments, beside the UK's city pages held still. It ends
@@ -3290,6 +3394,80 @@ with:
   /* His instruction of 2026-10-07, "reform home drastically", and his section ideas of 2026-10-08: the rebuilt home runs search, answers, registers, (Pro), then three pairs, where new firms last beside the UK's cities (still), where new companies open beside the US restaurants, how figures are made beside the notebook; no counts, no newsletter band, no picker heading. */
 ```
 
+(i) In `src/app/page.tsx`, in `HomePage`'s opening comment, replace:
+
+```
+     search first, then the UK's answers, the duel and the kitchens list, Pro while its switch is on, and the cities beside the
+     notebook, as src/components/spine/home/home-view.tsx seats them. It replaces the earlier rebuild, whose "Free vs paid" and
+     coined index contradicted his rulings 11 and 17. With the flag OFF (NEXT_PUBLIC_HOME_REFORM=0) the earlier body below
+     renders exactly as it did before 2026-10-07. */
+```
+
+with:
+
+```
+     search first, then the UK's answers, the duel and the kitchens list, Pro while its switch is on, and three pairs of halves
+     (where new firms last beside the UK's city pages, where new companies open beside where US restaurants grew and shrank, and
+     how figures are made beside the notebook), as src/components/spine/home/home-view.tsx seats them. It replaces the earlier
+     rebuild, whose "Free vs paid" and coined index contradicted his rulings 11 and 17. With the flag OFF
+     (NEXT_PUBLIC_HOME_REFORM=0) the earlier body below renders exactly as it did before 2026-10-07. */
+```
+
+(j) In `src/components/spine/archetypes/CityCards.tsx` (comments, and one class token), replace, in the `still` prop's comment:
+
+```
+   *  (as RankedBars writes its bars, its table and its phone list); each city is a link in each. The cards keep `fill` off. */
+```
+
+with:
+
+```
+   *  (as RankedBars writes its bars, its table and its phone list); each city is a link in each. This two-form row keeps `fill` off
+   *  (each form stands its own height); with `stack` the rows take it. */
+```
+
+in the `stack` prop's comment:
+
+```
+   *  beside the notebook and take the form that fits a half: every city a row, one under another, a gap of 8 between. Read only
+   *  with `still` (the pager's forms are unchanged). */
+```
+
+with:
+
+```
+   *  beside where new firms last (beside the notebook until plan 2026-10-08) and take the form that fits a half: every city a row,
+   *  one under another, a gap of 8 between, sharing the height the half is given when `fill` is on. Read only with `still` (the
+   *  pager's forms are unchanged). */
+```
+
+the comment above `{stillForm ? (`:
+
+```
+      {/* `fill`: the grid takes the height the card is lent and its rows share it (`auto-rows-fr`), so the cards grow instead of a blank under the link. */}
+```
+
+with:
+
+```
+      {/* `fill`: the grid takes the height the card is lent (`flex-1`) and its rows share it (`auto-rows-fr`, which the rows form carries
+          already and the tall grid is given here), so the cards grow instead of a blank under the link. */}
+```
+
+and, in the rows grid's class, so that the rows form (which carries `auto-rows-fr` already) is not given it twice when `fill` is on:
+
+```
+        <div className={`${rows ? `grid grid-cols-1 items-stretch auto-rows-fr${still && stack ? " gap-2" : ""}` : tall} ${fill ? "flex-1 auto-rows-fr" : ""}`}>
+```
+
+with:
+
+```
+        <div className={`${rows ? `grid grid-cols-1 items-stretch auto-rows-fr${still && stack ? " gap-2" : ""}` : tall} ${fill ? `flex-1${rows ? "" : " auto-rows-fr"}` : ""}`}>
+```
+
+The still row's markup for a caller that does not pass `fill` is byte-identical before and after: 40 cases (paged or still, stacked or not, with `fill` or without, 1, 3, 4, 7 and 9 cards), 20 of them with `fill` off and all 20 identical; of the 20 with `fill` on, 11 (the rows forms) lose only the second `auto-rows-fr`, 13 bytes each, and the tall grid, which needs its own, is unchanged (`scratchpad/home-sections/mf2-idD.txt`). The home's render is 13 bytes shorter.
+
 - [ ] **Step 4: Typecheck, the census, the counts**
 
 Run: `node --max-old-space-size=3072 node_modules/typescript/bin/tsc --noEmit -p . > scratchpad/home-sections/tsc15.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/tsc15.txt`
@@ -3312,7 +3490,7 @@ Expected: `Passed: 19`, `Failed: 0`, `SUBSET: PASS`.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add src/components/spine/home/home-view.tsx src/lib/spine/copy.ts tests/trust/home_shape.test.ts scripts/prebuild_all.ts scripts/gates.json CLAUDE.md docs/loop/CENSUS.md
+git add src/components/spine/home/home-view.tsx src/app/page.tsx src/components/spine/archetypes/CityCards.tsx src/lib/spine/copy.ts tests/trust/home_shape.test.ts scripts/prebuild_all.ts scripts/gates.json CLAUDE.md docs/loop/CENSUS.md
 git commit -m "The home wired: three pairs after the registers (firms last | cities, new companies | US restaurants, how figures are made | notebook), three loud moments, the shape held (plan 2026-10-08, home sections)" -m "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ```
 
@@ -3362,6 +3540,8 @@ Expected, each against the home's baselines (no entry, so zero; model laws 0):
 
 Any red is this plan's: fix the card it names under its law (a line past twelve words, a figure without a stamp, a foot left
 blank) and run again; never raise a baseline.
+
+**Found when this step first ran (2026-10-08, micro-fix round 2, group A):** `art-direction` read `home:numerals: 0 -> 4`: the year heads "2019" and "2023" of the two tables of `#us-restaurants` were set in proportional numerals (law F1, `design/ART-DIRECTION.md`). The fix is in `FiguresTable` (`src/components/spine/archetypes/TiersTable.tsx`): its two figure columns' heads (`heads.a`, `heads.b`) carry `tabular-nums`, like the figures under them, and the name column's head is left as it is. On the other two callers (`city/opening.tsx`, `cell/turn-one.tsx`) the heads are words, so nothing changes to the eye.
 
 - [ ] **Step 3: The chain's render readers and the home's gates**
 
