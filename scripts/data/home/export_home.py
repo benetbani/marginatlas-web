@@ -22,7 +22,7 @@ By hand, never in the chain (it reads the parent repo), from the website root, w
   python -P scripts/data/home/export_home.py city_survival     section 1: of 100 firms born in a year, still trading five years on
   python -P scripts/data/home/export_home.py new_companies     section 2: new limited companies per 1,000 people of working age
   python -P scripts/data/home/export_home.py us_restaurants    section 3: full-service restaurants in 45 US metros, two years
-  python -P scripts/data/home/export_home.py method            section 4: the insolvency notices the failure rates were read from
+  python -P scripts/data/home/export_home.py method            section 4: the year of company notices the failure rates were read from
 (each joins with its task; with no argument, every one this file holds runs.)
 """
 from __future__ import annotations
@@ -373,8 +373,9 @@ FAILURES = "E:/atlas/registers/uk/tables/company_failures_by_trade.json"
 
 
 def method() -> None:
-    """The year of insolvency notices the failure rates were read from: how many notices, how many company names they held, how
-    many of those the register matched by name, how many notices matched nothing (the registers' failures table, its `match`)."""
+    """The year of company notices the failure rates were read from: how many notices, how many different company names, how many
+    of those the register matched by name, how many notices matched nothing (the registers' failures table, its `match`). They
+    are company notices, not all insolvencies: a members' voluntary liquidation, a solvent company closed by its owners, is one."""
     t = json.loads(Path(FAILURES).read_text(encoding="utf-8"))
     m = t.get("match") or {}
     keys = ("notices", "names", "matched_names", "unmatched_notices")
@@ -384,7 +385,7 @@ def method() -> None:
         refuse("the failures table's match counts do not nest")
     obj = {**{k: m[k] for k in keys}, "source": t["source"]}
     write("method.json", obj, 1, [
-        source("failures", FAILURES, "gazette", "The registers' failures table: a year of company insolvency notices, matched by name to the company register"),
+        source("failures", FAILURES, "gazette", "The registers' failures table: a year of company notices, matched by name to the company register"),
     ])
 
 
