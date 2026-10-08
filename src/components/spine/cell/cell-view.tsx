@@ -176,7 +176,7 @@ import { SourcesFoot } from "@/components/spine/SourcesFoot";
 import { ReportFoot } from "@/components/spine/ReportFoot";
 import { checkedDateForTrade } from "@/lib/spine/checked";
 import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
-import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityHeldToSources, cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import { sayTradeTypical } from "@/lib/spine/uk_trade_typical";
 
 const X: any = spineCellSeed;
@@ -377,9 +377,13 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
   /* `16 customers` (exit.tsx): one regular customer's year off the shard's spend and visits, on every trade holding either (2026-09-20 night). */
   const customersBuilt = buildTradeCustomers(d.meta?.industry_id);
   /* A PAGE HELD TO A REGISTER REGION (a London trade page; masterplan step 04, the labels audit's item 10): each card printing
-     the trade's figure says so in its one line, the market drops the metro density and takes the UK's insolvencies. */
+     the trade's figure says so in its one line, the market drops the metro density and takes the UK's insolvencies. EVERY OTHER
+     UK CITY'S TRADE PAGE (plan 2026-10-08, uk:cities-sourced-or-marked) says the same and keeps the city's own density, marked an
+     estimate: its city page prints that figure as an estimate. */
   const builtCards = { split: splitBuilt, team: teamBuilt, clears: clearsBuilt, mix: mixBuilt, customers: customersBuilt, open: openBuilt, market: marketBuilt };
-  const { split, team, clears, mix, customers, open, market } = cityRegisterPlace(String(d.meta?.iso2 ?? ""), String(d.meta?.geo ?? "")) ? sayTradeTypical(builtCards, typeof d.meta?.industry === "string" ? d.meta.industry : null) : builtCards;
+  const placeIso2 = String(d.meta?.iso2 ?? ""), placeGeo = String(d.meta?.geo ?? "");
+  const tradeSlug = typeof d.meta?.industry === "string" ? d.meta.industry : null;
+  const { split, team, clears, mix, customers, open, market } = cityRegisterPlace(placeIso2, placeGeo) ? sayTradeTypical(builtCards, tradeSlug) : cityHeldToSources(placeIso2, placeGeo) ? sayTradeTypical(builtCards, tradeSlug, { keepHere: true }) : builtCards;
   /* A5's two seats: the customers card in the exit only where the spread drew (it moved to the opening otherwise), the worth only as its strip. */
   const exitCustomers = spreadDrawn ? customers : null;
   const worthDrawn = worth && worth.state === "strip" ? worth : null;

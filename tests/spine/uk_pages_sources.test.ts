@@ -1,6 +1,7 @@
 /**
- * THE LONDON TRADE PAGES AND THE UK'S PAGE PRINT A SOURCED FIGURE, A MARKED ONE, OR NONE (masterplan step 04, 2026-10-05; the
- * labels audit of 2026-10-02, items 10, 17 and 18; QUEUE country:cities-region-line).
+ * THE UK'S TRADE PAGES AND THE UK'S PAGE PRINT A SOURCED FIGURE, A MARKED ONE, OR NONE (masterplan step 04, 2026-10-05, London's
+ * trade pages; plan 2026-10-08, every other UK city's; the labels audit of 2026-10-02, items 10, 17 and 18; QUEUE
+ * country:cities-region-line).
  *
  * Run: npx tsx tests/spine/uk_pages_sources.test.ts
  */
@@ -67,6 +68,7 @@ for (const w of Object.values(T).flatMap((v) => (typeof v === "string" ? [v] : O
 }
 const view = readFileSync("src/components/spine/cell/cell-view.tsx", "utf8");
 check("the cell view says it on a page held to a register region", /cityRegisterPlace\([^;]*\) \? sayTradeTypical\(builtCards/.test(view));
+check("and on every other UK city's trade page, the city's density kept", /cityHeldToSources\(placeIso2, placeGeo\) \? sayTradeTypical\(builtCards, tradeSlug, \{ keepHere: true \}\)/.test(view));
 
 /* Item 17: the peers' line says their figures are estimates on the UK's page; elsewhere unchanged. */
 check("the UK's peers say their figures are estimates", buildPeerTable("GB")?.caveat === COPY.peers.caveatEstimates);
