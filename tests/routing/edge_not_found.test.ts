@@ -15,10 +15,10 @@ import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN } from "../../src/l
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "../../src/lib/routing/hood_slugs";
 import { renderHoodSlugs, HOOD_SLUGS_FILE } from "../../scripts/gen_hood_slugs";
 import { renderServedFiles, SERVED_FILES_FILE } from "../../scripts/gen_served_files";
-import { RETIRED } from "../../src/lib/taxonomy/retired";
+import { RETIRED, redirectFor } from "../../src/lib/taxonomy/retired";
 import { TAXONOMY_REDIRECTS } from "../../src/lib/taxonomy/legacy_redirects";
 import { COUNTRIES, INDUSTRY_SLUG_ALIASES, SLUG_TO_INDUSTRY, liveIndustryFor, resolveIndustryIdExact, slugToIndustry } from "../../src/lib/taxonomy";
-import { redirectFor } from "../../src/lib/taxonomy/retired";
+import { CITY_SLUGS_BY_COUNTRY } from "../../src/lib/routing/city_paths_generated";
 import { industryQueryCandidates, resolveDisplayIndustry } from "../../src/lib/cells/industry_resolution";
 import { getRegionsForCountry } from "../../src/lib/regions/regions-by-country";
 import { PACK_FILES, packHref } from "../../src/lib/data_pack";
@@ -262,7 +262,9 @@ check(`every API route is a static folder with no dot in its name${apiDotted.len
 
 /* A WORD THAT NAMES A BUILT-IN NAMES NOTHING (2026-10-06): every lookup the edge asks reads a plain object, which answers
    "constructor" with the Object function and "__proto__" with Object.prototype unless it is asked for its own entries
-   (src/lib/own.ts). Every Object.prototype member, as written and lowercased (the canonical form a request reaches). */
+   (src/lib/own.ts). Every Object.prototype member, as written and lowercased (the canonical form a request reaches). Five edge
+   shapes are asked with them below: a three-part address under a city, an activity, a hub, a district, and the old district
+   address (in the district slot of every city that holds districts, and in the city slot). */
 const PROTO_KEYS = [...new Set(Object.getOwnPropertyNames(Object.prototype).flatMap((k) => [k, k.toLowerCase()]))];
 const quietly = <T>(f: () => T): T | "throws" => { try { return f(); } catch { return "throws"; } };
 const protoWrong = (f: (k: string) => unknown, want: unknown) =>
@@ -282,7 +284,21 @@ protoCheck("a three-part London address for an Object.prototype name is the edge
 protoCheck("an activity address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/industries/${k.toLowerCase()}`), true), FILE);
 protoCheck("a hub address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/cities/${k.toLowerCase()}/neighborhoods`), true), FILE);
 protoCheck("a district address under an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/cities/${k.toLowerCase()}/neighborhoods/central`), true), FILE);
-protoCheck("no old district address is an Object.prototype name", protoWrong((k) => legacyHoodTarget(`/gb/${k.toLowerCase()}/central`), null), FILE);
+/* THE OLD DISTRICT ADDRESS, with the built-in name where the tables are read (2026-10-08). `/gb/{k}/central` puts it in the CITY
+   slot, and there cityPathFor (a Set of the listed cities) answers first, so the district tables are never read with it: it
+   passed on the code from before own() as it does now. The shape that reaches `own(NEIGHBORHOOD_SLUGS, city)` and the
+   `.includes(word)` on its list is a REAL city that holds districts with the name in the DISTRICT slot. It answers nothing,
+   where a lookup written `word in list` or `list[word]` would send the reader to the city's hub (`"constructor" in []` is true).
+   Both stay: the second proves a built-in name is no listed city; no request reaches `own(NEIGHBORHOOD_SLUGS, city)` with one,
+   so that read is defence in depth, held by the text gate (tests/trust/own_lookups.test.ts). */
+const hubCities = Object.entries(CITY_SLUGS_BY_COUNTRY).flatMap(([cc, slugs]) => slugs.filter((s) => Object.hasOwn(NEIGHBORHOOD_SLUGS, s)).map((s) => [cc, s] as const));
+check(`the hub cities the check below walks are found (${hubCities.length})`, hubCities.length >= 2 && hubCities.some(([cc, s]) => cc === "gb" && s === "london"));
+protoCheck(
+  `no built-in name is an old district address in the district slot of any of ${hubCities.length} cities that hold districts`,
+  hubCities.flatMap(([cc, city]) => protoWrong((k) => legacyHoodTarget(`/${cc}/${city}/${k.toLowerCase()}`), null).map((w) => `${cc}/${city}/${w}`)),
+  FILE,
+);
+protoCheck("no old district address is a built-in name in the city slot (cityPathFor answers first: no listed city is named so)", protoWrong((k) => legacyHoodTarget(`/gb/${k.toLowerCase()}/central`), null), FILE);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("routing/edge_not_found: all pass");
