@@ -431,6 +431,9 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
  *    a name and its figure, stamped where it came from.
  *  - THE HEADLINE IS WHAT THE GROUPS ARE READ AGAINST: the one-set form's middle of its set; here what its label names (the home
  *    passes the UK's own figure on the same measure). Ink at 30, never the accent.
+ *  - NOTHING LEFT OUT BY THE CARD (`data-withheld` is 0): the card leaves no member out itself and has no withheld line. Who is a
+ *    member at all (the home's labour-force floor, a figure for the year) is the builder's, said on the card's one line and on
+ *    About the figures.
  */
 function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, groups, fmt }: Pick<MarkListShared, "id" | "kicker" | "icon" | "tagged" | "headline" | "basis" | "head" | "fmt"> & { groups: MarkGroup[] }) {
   if (groups.length === 0 || groups.some((g) => g.rows.length < MARK_LIST_FLOOR) || !Number.isFinite(headline.value)) return null;

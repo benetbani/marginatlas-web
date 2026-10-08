@@ -2791,7 +2791,7 @@ export const COPY = {
     newCompanies: {
       kicker: "Where new companies open",
       headline: "The UK, for scale",
-      basis: "New limited companies per 1,000 people of working age, {year}.",
+      basis: "New limited companies per 1,000 people of working age, {year}, where published.",
       headName: "Country",
       headValue: "Per 1,000",
       regions: { latam: "Latin America and the Caribbean", africa: "Africa" },
@@ -2801,7 +2801,7 @@ export const COPY = {
      *  narrower trade named, the metro last so a long name still fits twelve words), the two tables' heads. */
     usRestaurants: {
       kicker: "US restaurants since {from}",
-      words: "Full-service restaurants added since {from}, most of {n} metros: {city}",
+      words: "Full-service restaurants added since {from}, most among {n} metros: {city}",
       added: "Most added",
       lost: "Most lost",
     },
@@ -2810,7 +2810,7 @@ export const COPY = {
      *  line that the pages print estimates (his ruling of 2026-10-07: the home's 195 counter is wrong). */
     howMade: {
       kicker: "How figures are made",
-      words: "Company notices in a year, matched by name to the company register",
+      words: "Liquidation and administration notices in a year, matched by name",
       matched: { label: "Names matched", note: "Company names in the notices, found in the register" },
       trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
       link: "About the figures",

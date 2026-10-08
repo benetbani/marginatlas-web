@@ -96,7 +96,7 @@ if (built) {
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)), DRAWN_AT);
   check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey), DRAWN_AT);
-  /* A width is value / 100 * 100 in floats (43.29999999999999 for a share of 43.3, 9% of the shares at one decimal), so a drawn place is
+  /* A width is value / 100 * 100 in floats (30.099999999999998 for a share of 30.1, 9% of the shares at one decimal), so a drawn place is
      read at the shares' own resolution, one decimal, and never as the exact string. */
   const tenth = (n: number) => Math.round(n * 10) / 10;
   const widths = [...html.matchAll(/data-bar="true"[^>]*style="width:([\d.]+)%/g)].map((m) => Number(m[1]));

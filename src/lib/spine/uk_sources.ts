@@ -245,7 +245,7 @@ export const WORLD_SOURCES: readonly UkSource[] = [
     names: ["World Bank"],
     attribution: null,
     items: [
-      { prints: "New limited companies per 1,000 people of working age, in Latin America and the Caribbean and in Africa, on the home page, leaving out countries with a labour force under one million", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
+      { prints: "New limited companies per 1,000 people of working age, in Latin America and the Caribbean and in Africa, on the home page, leaving out countries with a labour force under one million, and those with no figure for the year", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
     ],
   },
   {
