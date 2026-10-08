@@ -381,8 +381,13 @@ export const COPY = {
     rows: { visitors: "Visitors", permits: "City permits", permitsLongest: "Longest permit wait", density: "Per 10,000 residents", gdp: "Metro GDP", living: "Cost of living" },
     units: { aYear: "a year", per10k: "businesses" },
     levelBasis: "Levels compare cities. Cost of living: cheapest city 1, dearest 100.",
-    /** The level line where the cost of living does not print (a city held to a register region: no source holds the index). */
-    levelBasisNoLiving: "Levels compare cities.",
+    /** The level line where the cost of living does not print (a city held to a register region, London: no source holds the
+     *  index). It says the board's one estimate, the permit wait, in words (plan 2026-10-08): the row's tag is drawn by nothing
+     *  on the board, and the visitors above it are counted. */
+    levelBasisNoLiving: "The permit wait is an estimate. Levels compare cities.",
+    /** A UK city held to no register region (the six; plan 2026-10-08, uk:cities-sourced-or-marked): every row is an estimate,
+     *  and the line says so first. */
+    levelBasisEstimates: "Estimates. Levels compare cities. Cost of living: cheapest city 1, dearest 100.",
     /** The answer drawn: the typical pay's place among the covered cities, its two ends named (labels, never a city). */
     pay: { low: "Lowest pay", high: "Highest pay", aria: "Typical pay among the cities we cover" },
   },

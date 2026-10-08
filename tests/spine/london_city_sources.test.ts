@@ -133,5 +133,23 @@ for (const slug of SIX) {
   check(`${slug}'s food registration is a required gate at no fee, as the line says`, !!g && g.gates.some((x) => /food/i.test(x.name) && x.required && x.cost === 0));
 }
 
+/* THE BOARD (plan 2026-10-08): the six keep their four rows, each an estimate, the column's line saying so first; the answer is the
+   earnings survey's typical pay for the city (by residence, April 2025, research note 2026-09-25 row 19) at the site's one rate,
+   and keeps its line. London's permit wait, the one estimate on its board, is said in its line: the board draws no tag. */
+const SURVEY_GBP: Record<(typeof SIX)[number], number> = { manchester: 36278, birmingham: 35989, leeds: 36716, glasgow: 38125, edinburgh: 43169, bristol: 39509 };
+for (const slug of SIX) {
+  const b = buildCityHeroBoard(slug);
+  const keys = (b?.rows ?? []).map((r) => r.key).join(",");
+  check(`${slug}'s board keeps its four rows (${keys})`, keys === "permits,density,gdp,living");
+  check(`${slug}'s rows are each an estimate`, !!b && b.rows.every((r) => r.confidence === "modeled"));
+  check(`${slug}'s permit row says what it is ("${b?.rows.find((r) => r.key === "permits")?.label}")`, b?.rows.find((r) => r.key === "permits")?.label === COPY.cityHeroBoard.rows.permitsLongest);
+  check(`${slug}'s column says its figures are estimates ("${b?.levelBasis}")`, b?.levelBasis === COPY.cityHeroBoard.levelBasisEstimates);
+  const want = Math.round(convertToUsd("GBP", SURVEY_GBP[slug]) ?? 0);
+  const typical = cityTypicalIncome(slug)?.value ?? 0;
+  check(`${slug}'s answer is the survey's pay, ${SURVEY_GBP[slug]} pounds at the site's rate (${typical} against ${want})`, Math.abs(typical - want) <= 12 && b?.answerBasis === COPY.cityHero.answerBasis);
+}
+check(`London's line says its permit wait is an estimate ("${hero?.levelBasis}")`, hero?.levelBasis === COPY.cityHeroBoard.levelBasisNoLiving && /permit wait is an estimate/i.test(hero?.levelBasis ?? ""));
+check("Paris's board is unchanged", paris?.levelBasis === COPY.cityHeroBoard.levelBasis && paris?.rows.find((r) => r.key === "permits")?.label === COPY.cityHeroBoard.rows.permits);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");
