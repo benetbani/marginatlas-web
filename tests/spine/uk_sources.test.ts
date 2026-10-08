@@ -11,7 +11,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { UK_SOURCES, UK_REGISTER_SOURCE, UK_SOURCES_FOOT, OGL_LINE, ONS_LINE } from "../../src/lib/spine/uk_sources";
+import { UK_SOURCES, UK_REGISTER_SOURCE, UK_SOURCES_FOOT, OGL_LINE, ONS_LINE, WORLD_SOURCES } from "../../src/lib/spine/uk_sources";
 import { SourcesFoot } from "../../src/components/spine/SourcesFoot";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -52,6 +52,20 @@ check("every entry says what the pages print from it", UK_SOURCES.every((s) => s
 check("every link is a secure address or none", UK_SOURCES.every((s) => s.items.every((i) => i.url === null || /^https:\/\//.test(i.url))));
 check("one entry a publisher", new Set(UK_SOURCES.map((s) => s.publisher)).size === UK_SOURCES.length);
 
+/* THE HOME'S SOURCES OUTSIDE THE UK (plan 2026-10-08, home sections 2 and 3): each says what the home prints from it, links
+   securely or not at all, prints no attribution its record does not name, and no key is two entries across the two lists. */
+check(`the world list names the home's two sources (${WORLD_SOURCES.map((s) => s.key).join(", ")})`, WORLD_SOURCES.length === 2 && WORLD_SOURCES.every((s) => s.items.length > 0 && s.items.every((i) => i.prints.trim() && i.title.trim() && (i.url === null || /^https:\/\//.test(i.url)))));
+check("no world source prints an attribution line its record does not name", WORLD_SOURCES.every((s) => s.attribution === null));
+check("one key an entry across both lists", new Set([...UK_SOURCES, ...WORLD_SOURCES].map((s) => s.key)).size === UK_SOURCES.length + WORLD_SOURCES.length);
+check("the statistics office's entry says the home prints its cities' survival, and the notices' entry the notices read", UK_SOURCES.some((s) => s.key === "ons" && s.items.some((i) => /by city/.test(i.prints))) && UK_SOURCES.some((s) => s.key === "gazette" && s.items.some((i) => /notices/.test(i.prints))));
+
+/* THE NEW COMPANIES' FLOOR, IN WORDS (the review of the new companies' slice): the list leaves out countries with a labour force
+   under the slice's floor (data/home/new_companies.json, floor.at_least), and a reader must be able to find that here, so the
+   entry says it in words and the words are held to the slice's own figure. */
+const floor = (JSON.parse(readFileSync("data/home/new_companies.json", "utf8")) as { floor: { at_least: number } }).floor.at_least;
+const newCompanies = WORLD_SOURCES.flatMap((s) => s.items).find((i) => i.title.includes("IC.BUS.NDNS.ZS"));
+check(`the new companies' entry says the slice's floor in words (${floor})`, floor === 1000000 && newCompanies !== undefined && newCompanies.prints.includes("under one million"));
+
 /* THE FOOT */
 const gb = renderToStaticMarkup(React.createElement(SourcesFoot, { iso2: "GB" }));
 check("the foot draws on a UK page with the licence's sentence", gb.includes(OGL_LINE.replace(/'/g, "&#x27;")) && gb.includes("data-sources-foot"));
@@ -72,6 +86,8 @@ async function thePage() {
   const absent = UK_SOURCES.filter((s) => !about.includes(s.publisher.replace(/'/g, "&#x27;")));
   check(`the section names every source${absent.length ? `: missing ${absent.map((s) => s.publisher).join(", ")}` : ""}`, absent.length === 0);
   check("the section prints the statistics office's own attribution line", about.includes(ONS_LINE));
+  const absentWorld = WORLD_SOURCES.filter((s) => !about.includes(s.publisher.replace(/'/g, "&#x27;")));
+  check(`the section names the home's sources outside the UK${absentWorld.length ? `: missing ${absentWorld.map((s) => s.publisher).join(", ")}` : ""}`, absentWorld.length === 0);
 
   /* THE GATE THAT KEEPS THE NAMES HERE */
   const gate = readFileSync("scripts/verify_no_source_agencies.ts", "utf8");

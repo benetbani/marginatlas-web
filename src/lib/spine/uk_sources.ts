@@ -56,7 +56,7 @@ export const UK_SOURCES: readonly UkSource[] = [
     attribution: ONS_LINE,
     items: [
       { prints: "Registered businesses and their yearly sales, by trade, in Greater London", title: "UK Business Counts, March 2026 register snapshot, read through Nomis", url: "https://www.nomisweb.co.uk/" },
-      { prints: "How many businesses last one, three and five years, by trade group and by region", title: "Business demography, UK: 2024, reference tables (20 November 2025)", url: "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable" },
+      { prints: "How many businesses last one, three and five years, by trade group, by region and by city", title: "Business demography, UK: 2024, reference tables (20 November 2025)", url: "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable" },
       { prints: "Unemployment, youth unemployment and vacancies", title: "Labour market overview, UK: September 2026", url: "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/bulletins/uklabourmarket/september2026" },
       { prints: "Typical full-time pay, the UK's and its cities'", title: "Annual Survey of Hours and Earnings, April 2025, Tables 1.7a, 7.7a and 8.7a", url: null },
       { prints: "The population by age", title: "Population estimates, mid-2024 and mid-2025", url: "https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2024" },
@@ -175,7 +175,7 @@ export const UK_SOURCES: readonly UkSource[] = [
     names: ["The Gazette"],
     attribution: OGL_LINE,
     items: [
-      { prints: "How many companies of a trade became insolvent in a year, the UK's", title: "Company insolvency notices, October 2025 to September 2026, matched to the Companies House register of 1 May 2026", url: null },
+      { prints: "How many companies of a trade became insolvent in a year, the UK's, and how many notices were read for it", title: "Company insolvency notices, October 2025 to September 2026, matched to the Companies House register of 1 May 2026", url: null },
     ],
   },
   {
@@ -245,7 +245,7 @@ export const WORLD_SOURCES: readonly UkSource[] = [
     names: ["World Bank"],
     attribution: null,
     items: [
-      { prints: "New limited companies per 1,000 people of working age, in Latin America and in Africa, on the home page", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
+      { prints: "New limited companies per 1,000 people of working age, in Latin America and in Africa, on the home page, leaving out countries with a labour force under one million", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
     ],
   },
   {

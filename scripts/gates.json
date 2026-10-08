@@ -2121,6 +2121,7 @@
       "browser": false,
       "asserts": "The UK's sources on one page, linked from every UK page's foot (plan 06, task B4; his ruling of 2026-10-04 on R-002: \"One sources page\").",
       "reads": [
+        "data/home/new_companies.json",
         "data/sections",
         "data/uk/registers/manifest.json",
         "scripts/lib/agency_tokens.ts",

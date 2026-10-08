@@ -1,5 +1,5 @@
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
-import { UK_SOURCES } from "@/lib/spine/uk_sources";
+import { UK_SOURCES, WORLD_SOURCES, type UkSource } from "@/lib/spine/uk_sources";
 
 export const revalidate = 86400;
 
@@ -191,22 +191,12 @@ export default function AboutDataPage() {
           The United Kingdom&rsquo;s pages are built on these sources. Each is named with what the pages print from it and, where
           its licence asks for one, its attribution line. No source endorses Margin Atlas or checks how its figures are used here.
         </p>
-        <ul className="mt-5 space-y-5">
-          {UK_SOURCES.map((s) => (
-            <li key={s.key}>
-              <p className="font-semibold text-ink-900">{s.publisher}</p>
-              <ul className="mt-1 space-y-1 text-sm leading-relaxed text-ink-800">
-                {s.items.map((i) => (
-                  <li key={i.title}>
-                    {i.prints}:{" "}
-                    {i.url ? <a href={i.url} className="underline underline-offset-2">{i.title}</a> : i.title}.
-                  </li>
-                ))}
-              </ul>
-              {s.attribution ? <p className="mt-1 text-sm text-ink-700">{s.attribution}</p> : null}
-            </li>
-          ))}
-        </ul>
+        <SourceList sources={UK_SOURCES} />
+        {/* THE HOME PAGE'S SOURCES OUTSIDE THE UNITED KINGDOM (plan 2026-10-08, home sections 2 and 3), named the way the UK's are. */}
+        <p className="mt-6 text-ink-800">
+          The home page also prints figures from outside the United Kingdom, from these sources.
+        </p>
+        <SourceList sources={WORLD_SOURCES} />
       </section>
 
       <section className="mt-10">
@@ -231,5 +221,28 @@ export default function AboutDataPage() {
         </p>
       </section>
     </article>
+  );
+}
+
+/** One list of sources: the publisher, what the pages print from it with each dataset or page read, and the attribution line where
+ *  its licence asks for one. The UK's list and the home's sources outside the UK draw the same way. */
+function SourceList({ sources }: { sources: readonly UkSource[] }) {
+  return (
+    <ul className="mt-5 space-y-5">
+      {sources.map((s) => (
+        <li key={s.key}>
+          <p className="font-semibold text-ink-900">{s.publisher}</p>
+          <ul className="mt-1 space-y-1 text-sm leading-relaxed text-ink-800">
+            {s.items.map((i) => (
+              <li key={i.title}>
+                {i.prints}:{" "}
+                {i.url ? <a href={i.url} className="underline underline-offset-2">{i.title}</a> : i.title}.
+              </li>
+            ))}
+          </ul>
+          {s.attribution ? <p className="mt-1 text-sm text-ink-700">{s.attribution}</p> : null}
+        </li>
+      ))}
+    </ul>
   );
 }
