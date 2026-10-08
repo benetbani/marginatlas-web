@@ -40,7 +40,6 @@ const ALLOWLIST = new Set([
   "src/app/(site)/cities/page.tsx",
   "src/app/(site)/cities/[slug]/page.tsx",
   "src/app/(site)/cities/[slug]/neighborhoods/page.tsx",
-  "src/app/(site)/cities/[slug]/curiosities/page.tsx",
   "src/app/(site)/countries/page.tsx",
   "src/app/(site)/decide/page.tsx",
   "src/app/(site)/decide/[activity]/[city]/page.tsx",
@@ -48,8 +47,6 @@ const ALLOWLIST = new Set([
   "src/app/(site)/compare/cities/[pair]/page.tsx",
   "src/components/cities/BusinessFormationCosts.tsx",
   "src/components/cities/CitySignaturePanel.tsx",
-  "src/components/countries/CountrySignaturePanel.tsx",
-  "src/components/home/TopCitiesMosaic.tsx",
 ]);
 
 /**
@@ -93,6 +90,21 @@ for (const presDir of PRESENTATION_DIRS) {
 
 const grandfathered = found.filter((f) => ALLOWLIST.has(f.file));
 const newViolations = found.filter((f) => !ALLOWLIST.has(f.file));
+
+/* AN ENTRY ONLY SHRINKS (the checkup of 2026-10-08): three entries named files deleted on 2026-08-03 (649682fc) and stayed
+   for two months, so a file recreated at any of those paths would have been grandfathered without a word. An entry whose file
+   is gone, or no longer imports data/, is now a red: delete the entry in the commit that fixes or removes the file. */
+const violating = new Set(found.map((f) => f.file));
+const staleEntries = [...ALLOWLIST].filter((f) => !violating.has(f));
+if (staleEntries.length > 0) {
+  console.log("=== verify_layering ===");
+  console.log("\n  GATE: FAIL");
+  console.log("  Allowlist entries that grandfather nothing (delete each from ALLOWLIST in scripts/verify_layering.ts):");
+  for (const f of staleEntries) {
+    console.log(`  - ${f}: ${fs.existsSync(path.resolve(ROOT, f)) ? "no longer imports data/" : "the file no longer exists"}`);
+  }
+  process.exit(1);
+}
 
 console.log("=== verify_layering ===");
 console.log(`  Scanned: ${PRESENTATION_DIRS.join(", ")}`);

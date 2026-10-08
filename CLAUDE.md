@@ -69,7 +69,7 @@ website/
 ### Layering
 
 - Application (pages, sections) imports from Domain (`src/lib/`); Domain imports from System (`src/components/ui/`); System imports from Tokens (`src/lib/design-tokens.ts`).
-- Upward only. `scripts/verify_layering.ts` enforces app-to-data; 13 grandfathered violations in the allowlist (14 until the district overview left, 2026-10-06) — migrate when touched, do not add new entries.
+- Upward only. `scripts/verify_layering.ts` enforces app-to-data; its allowlist holds the grandfathered files (the gate prints how many), migrate when touched, do not add new entries. Since the checkup of 2026-10-08 an entry whose file is gone or no longer imports `data/` is a red: delete it in the same commit (three entries had named files deleted on 2026-08-03).
 
 ## Working method (founder-mandated 2026-08-09: "sharpen the axe")
 

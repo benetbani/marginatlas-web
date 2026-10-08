@@ -3255,7 +3255,6 @@
       "asserts": "Architecture-audit gate (2026-05-27, strategy G).",
       "reads": [
         "src/app",
-        "src/app/(site)/cities/[slug]/curiosities/page.tsx",
         "src/app/(site)/cities/[slug]/neighborhoods/page.tsx",
         "src/app/(site)/cities/[slug]/page.tsx",
         "src/app/(site)/cities/page.tsx",
@@ -3266,9 +3265,7 @@
         "src/app/sitemap.ts",
         "src/components",
         "src/components/cities/BusinessFormationCosts.tsx",
-        "src/components/cities/CitySignaturePanel.tsx",
-        "src/components/countries/CountrySignaturePanel.tsx",
-        "src/components/home/TopCitiesMosaic.tsx"
+        "src/components/cities/CitySignaturePanel.tsx"
       ],
       "claims": []
     },
