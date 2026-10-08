@@ -11,7 +11,8 @@ import { buildCityPeerTable } from "../../src/lib/spine/peer_rows";
 import { buildPremisesBento } from "../../src/lib/spine/premises_bento_rows";
 import { buildCityEarningsStrip } from "../../src/lib/spine/range_rows";
 import { buildCityGates } from "../../src/lib/spine/city_gates_rows";
-import { buildCityLiving, buildCityRunway } from "../../src/lib/spine/fact_rows";
+import { buildCityDemand, buildCityLiving, buildCityRunway, buildCitySeason } from "../../src/lib/spine/fact_rows";
+import { buildCityCalendar } from "../../src/lib/spine/city_calendar_rows";
 import { buildCityCrew } from "../../src/lib/spine/city_crew_rows";
 import { buildCityTexture } from "../../src/lib/spine/city_texture_rows";
 import { buildCityDistrictBars } from "../../src/lib/spine/district_rows";
@@ -187,6 +188,19 @@ check(`Paris's market line is unchanged ("${parisMarket?.basis}")`, parisMarket?
 check("London's market keeps the register's line", buildCityMarket("london")?.basis === COPY.cityMarket.register.basis.replace("{city}", "London"));
 const openingSrc = readFileSync("src/components/spine/city/opening.tsx", "utf8");
 check("the market card prints the line its builder hands it", !/basisWithFocal/.test(openingSrc) && /basis=\{`\$\{market\.basis\}/.test(openingSrc));
+
+/* WHAT RESIDENTS SPEND, WHO THE FOOTFALL IS, WHEN THE CITY SPENDS (plan 2026-10-08): the shard's modelled figures, each card's one
+   line saying it is an estimate. London draws none of the three (its spend and calendar are placeholders, its split unheld). */
+for (const slug of SIX) {
+  const d = buildCityDemand(slug);
+  check(`${slug}'s spend says it is an estimate ("${d?.basis}")`, !!d?.figure && d.basis === COPY.cityDemand.basisEstimate);
+  const s = buildCitySeason(slug);
+  check(`${slug}'s split says it is an estimate ("${s?.foot}")`, (s?.cells.length ?? 0) === 2 && s?.foot === COPY.citySeason.footEstimate);
+  const k = buildCityCalendar(slug);
+  check(`${slug}'s calendar says it is an estimate ("${k?.basis}")`, !!k && k.basis === COPY.cityCalendar.basisEstimate);
+}
+check("Paris's three lines are unchanged", buildCityDemand("paris")?.basis === COPY.cityDemand.basis && buildCitySeason("paris")?.foot === null && buildCityCalendar("paris")?.basis === COPY.cityCalendar.basis);
+check("London draws none of the three", buildCityDemand("london")?.figure === null && (buildCitySeason("london")?.cells.length ?? 0) === 0 && buildCityCalendar("london") === null);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");

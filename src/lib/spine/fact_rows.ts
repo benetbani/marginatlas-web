@@ -369,7 +369,8 @@ export function buildCityDemand(slug: string): CityDemandData | null {
     figure: usd(spend.value),
     value: Math.round(spend.value),
     withheld: null,
-    basis: C.basis,
+    /* A UK city's spend says it is an estimate (plan 2026-10-08, uk:cities-sourced-or-marked); London's placeholder never prints. */
+    basis: cityHeldToSources(iso2, slug) ? C.basisEstimate : C.basis,
     foot: notHeld(spend.tag) ? C.footModelled : null,
     tag: spend.tag,
     sample: notHeld(spend.tag),
@@ -443,7 +444,8 @@ export function buildCitySeason(slug: string): CitySeasonData | null {
       from: "shard",
       withheld: null,
       basis: C.basis,
-      foot: notHeld(tag) ? C.footModelled : null,
+      /* A UK city's split says it is an estimate, whatever its tag (plan 2026-10-08): the card prints the foot under its bar. */
+      foot: cityHeldToSources(iso2, slug) ? C.footEstimate : notHeld(tag) ? C.footModelled : null,
       confidence,
     };
   }

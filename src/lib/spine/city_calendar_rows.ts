@@ -39,6 +39,7 @@ import cityListJson from "../../../data/cities/city_list_v1.json";
 import type { FactTag } from "@/lib/facts/types";
 import type { MonthPoint } from "@/components/spine/archetypes/MonthBars";
 import { COPY } from "@/lib/spine/copy";
+import { cityHeldToSources } from "@/lib/uk/registers/register_city";
 
 /** The city list by slug, the gates builder's own lookup. */
 type CityRow = { slug: string; name: string; iso2: string };
@@ -81,7 +82,8 @@ export function buildCityCalendar(slug: string): CityCalendarData | null {
     swing: { figure: `${swingPct}%`, value: swingPct },
     peak: values.indexOf(max),
     trough: values.indexOf(min),
-    basis: COPY.cityCalendar.basis,
+    /* A UK city's months say they are estimates (plan 2026-10-08, uk:cities-sourced-or-marked); London's placeholder draws no card. */
+    basis: cityHeldToSources(iso2, slug) ? COPY.cityCalendar.basisEstimate : COPY.cityCalendar.basis,
     foot: COPY.cityCalendar.foot,
     tag: weakest,
   };

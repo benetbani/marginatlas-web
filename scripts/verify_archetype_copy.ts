@@ -53,6 +53,7 @@ import { buildWorldSeat } from "@/lib/spine/world_seat_rows";
 import { buildCityGlance, CITY_GLANCE_CELLS, cityVisitorsM } from "@/lib/spine/city_glance_rows";
 import { buildCitySeat } from "@/lib/spine/city_seat_rows";
 import { buildCityLiving, buildCityRunway, buildCityDemand, buildCitySeason, CITY_LIVING_CELLS } from "@/lib/spine/fact_rows";
+import { cityHeldToSources } from "@/lib/uk/registers/register_city";
 import { buildCityPeopleTable } from "@/lib/spine/character_rows";
 import { buildCityNeighbourhoods, PLACEHOLDER_SCHEME } from "@/lib/spine/hood_rows";
 import { districtPageTarget } from "@/lib/geo/page_targets";
@@ -822,8 +823,12 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (se.figures.resident == null || se.figures.visitor == null || se.figures.resident + se.figures.visitor !== 100) reds.push(`city season ${c.slug}: the two shares do not sum to a hundred (${se.figures.resident}, ${se.figures.visitor})`);
       if (!se.basis) reds.push(`city season ${c.slug}: cells with no basis`);
       if (se.basis && wordsOf(se.basis) > 14) reds.push(`city season ${c.slug}: a basis over fourteen words: "${se.basis}"`);
-      if ((se.confidence !== "measured") !== (se.foot != null)) reds.push(`city season ${c.slug}: the confidence is ${se.confidence} and the foot is ${se.foot ? "printed" : "absent"}`);
-      if (se.from === "shard" && se.foot != null && se.foot !== COPY.citySeason.footModelled) reds.push(`city season ${c.slug}: the shard's modelled shares under the foot "${se.foot}"`);
+      /* A UK city's split says once that it is an estimate, whatever its tag (plan 2026-10-08, uk:cities-sourced-or-marked); the
+         predicate holds the UK's slugs alone, so "GB" with the slug asks whether the city is one. */
+      const ukSplit = cityHeldToSources("GB", c.slug);
+      if (ukSplit && se.foot !== COPY.citySeason.footEstimate) reds.push(`city season ${c.slug}: a UK city's split under the foot "${se.foot ?? ""}", not "${COPY.citySeason.footEstimate}"`);
+      if (!ukSplit && (se.confidence !== "measured") !== (se.foot != null)) reds.push(`city season ${c.slug}: the confidence is ${se.confidence} and the foot is ${se.foot ? "printed" : "absent"}`);
+      if (!ukSplit && se.from === "shard" && se.foot != null && se.foot !== COPY.citySeason.footModelled) reds.push(`city season ${c.slug}: the shard's modelled shares under the foot "${se.foot}"`);
       if (se.confidence === "measured") sHeld++; else sModelled++;
       if (se.from === "shard") sShard++; else reds.push(`city season ${c.slug}: cells drawn from no named feed`);
     } else {

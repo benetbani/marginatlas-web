@@ -1245,6 +1245,8 @@ export const COPY = {
   cityDemand: {
     kicker: "What residents spend",
     basis: "What one resident spends in a year, on everything.",
+    /** The six UK cities (plan 2026-10-08, uk:cities-sourced-or-marked): the shard's spend, a share of metro GDP, said once. */
+    basisEstimate: "An estimate of what one resident spends in a year, on everything.",
     footModelled: "",
     withheld: {
       placeholder: "No reliable spend figure for {city} yet.",
@@ -1271,6 +1273,8 @@ export const COPY = {
     unit: "of footfall",
     basis: "Of the year's footfall, the share who live here and the share visiting.",
     footModelled: "",
+    /** The six UK cities (plan 2026-10-08): the shard's split, under the drawn bar, whatever its tag. */
+    footEstimate: "An estimated split of the year's footfall.",
     withheld: {
       /** Plan 06, task B3: no city's own footfall row (London; the slope that stood in is gone). The card draws nothing there. */
       noSplit: "No split of residents and visitors for this city yet.",
@@ -2270,6 +2274,8 @@ export const COPY = {
     kicker: "When this city spends",
     swingLabel: "Busiest over quietest",
     basis: "Spending each month, with the busiest set to 100.",
+    /** The six UK cities (plan 2026-10-08): the shard's modelled months. */
+    basisEstimate: "Estimated spending each month, with the busiest set to 100.",
     foot: "",
   },
   crumbs: {
