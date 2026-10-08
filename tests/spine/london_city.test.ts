@@ -23,11 +23,16 @@ import { red, redSummary } from "../../scripts/lib/red";
 const RULE = "london-city";
 const FILE = "src/lib/spine/city_hero_board.ts";
 const REMEDY = "London's city page prints Greater London's own figures: the sourced visits, the register's counts, and no metro row";
+/* The two predicates live in register_city.ts, so a red on one of them points there and not at the London hero. */
+const PREDICATE_FILE = "src/lib/uk/registers/register_city.ts";
+const PREDICATE_REMEDY = "every UK city with a page is held to sources in cityHeldToSources, only London in cityRegisterPlace; a new UK city needs both decided";
 let failed = 0;
-const check = (label: string, ok: boolean) => {
+let firstRemedy = REMEDY;
+const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
+  if (failed === 0) firstRemedy = remedy;
   failed++;
-  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+  red({ rule: RULE, file, detail: label, remedy });
 };
 
 async function main() {
@@ -37,15 +42,18 @@ async function main() {
   /* THE TWO PREDICATES (plan 2026-10-08, uk:cities-sourced-or-marked). cityRegisterPlace says which figures a page reads (London
      alone: Greater London's registers); cityHeldToSources says whether its lines say which figures are estimates (every UK city
      with a page, as countryHeldToRegisters holds the country's page). */
-  check(`the UK's cities with a page are the seven (${UK_CITY_SLUGS.join(", ")})`, UK_CITY_SLUGS.join(",") === "birmingham,bristol,edinburgh,glasgow,leeds,london,manchester");
-  for (const slug of UK_CITY_SLUGS) check(`${slug}'s page is held to sources`, cityHeldToSources("GB", slug));
-  check("the country's code is read in either case", cityHeldToSources("gb", "manchester"));
-  check("only London is held to a register region", UK_CITY_SLUGS.filter((s) => cityRegisterPlace("GB", s) !== null).join(",") === "london");
-  check("a city outside the UK is not held to sources (Paris)", !cityHeldToSources("FR", "paris"));
-  check("a UK city's slug under another country's code is not (Manchester as US)", !cityHeldToSources("US", "manchester"));
-  check("a UK address that is no city page is not (the UK aggregate, a London district)", !cityHeldToSources("GB", "gb") && !cityHeldToSources("GB", "west-end"));
-  check("a word that names a built-in names no city", !cityHeldToSources("GB", "constructor") && !cityHeldToSources("GB", "__proto__"));
-  check("no slug, no city; no country, no city", !cityHeldToSources("GB", "") && !cityHeldToSources("GB", null) && !cityHeldToSources(null, "london"));
+  check(`the UK's cities with a page are the seven (${UK_CITY_SLUGS.join(", ")})`, UK_CITY_SLUGS.join(",") === "birmingham,bristol,edinburgh,glasgow,leeds,london,manchester", PREDICATE_FILE, PREDICATE_REMEDY);
+  for (const slug of UK_CITY_SLUGS) check(`${slug}'s page is held to sources`, cityHeldToSources("GB", slug), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("the country's code is read in either case", cityHeldToSources("gb", "manchester"), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("only London is held to a register region", UK_CITY_SLUGS.filter((s) => cityRegisterPlace("GB", s) !== null).join(",") === "london", PREDICATE_FILE, PREDICATE_REMEDY);
+  check("a city outside the UK is not held to sources (Paris)", !cityHeldToSources("FR", "paris"), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("a UK city's slug under another country's code is not (Manchester as US)", !cityHeldToSources("US", "manchester"), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("a UK address that is no city page is not (the UK aggregate, a London district)", !cityHeldToSources("GB", "gb") && !cityHeldToSources("GB", "west-end"), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("a word that names a built-in names no city", !cityHeldToSources("GB", "constructor") && !cityHeldToSources("GB", "__proto__"), PREDICATE_FILE, PREDICATE_REMEDY);
+  check("no slug, no city; no country, no city", !cityHeldToSources("GB", "") && !cityHeldToSources("GB", null) && !cityHeldToSources(null, "london"), PREDICATE_FILE, PREDICATE_REMEDY);
+  /* The two predicates differ on a slug in capitals: cityHeldToSources lowercases it, cityRegisterPlace does not (London in capitals
+     is no register region), so a caller passes the canonical lowercase slug to both. */
+  check("cityHeldToSources reads a slug in capitals (Manchester), cityRegisterPlace does not (London): callers pass the canonical slug", cityHeldToSources("GB", "Manchester") && cityRegisterPlace("GB", "London") === null, PREDICATE_FILE, PREDICATE_REMEDY);
 
   /* THE HERO */
   const hero = buildCityHeroBoard("london");
@@ -101,7 +109,7 @@ async function main() {
   const manMarket = buildCityMarket("manchester");
   check("Manchester keeps its densities (not held to a region)", manMarket !== null && manMarket.form === "density");
 
-  if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+  if (failed > 0) { redSummary(RULE, failed, firstRemedy, "checks failed"); process.exit(1); }
   console.log("spine/london_city: all pass");
 }
 

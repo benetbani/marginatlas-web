@@ -12,7 +12,7 @@
  */
 import { buildCityHeroBoard } from "../../src/lib/spine/city_hero_board";
 import { buildCityPeerTable } from "../../src/lib/spine/peer_rows";
-import { buildPremisesBento } from "../../src/lib/spine/premises_bento_rows";
+import { buildPremisesBento, listedCitySlugs } from "../../src/lib/spine/premises_bento_rows";
 import { buildCityEarningsStrip } from "../../src/lib/spine/range_rows";
 import { buildCityGates } from "../../src/lib/spine/city_gates_rows";
 import { buildCityDemand, buildCityLiving, buildCityRunway, buildCitySeason } from "../../src/lib/spine/fact_rows";
@@ -31,16 +31,27 @@ import { buildCityMarket } from "../../src/lib/spine/city_market_rows";
 import { cityPeerListRow } from "../../src/lib/spine/city_peer_list";
 import { getCityPeerSet } from "../../src/lib/cities/comparable_cities";
 import { cityTypicalIncome } from "../../src/lib/spine/city_income";
+import { cityFigure } from "../../src/lib/facts/city_shard";
 
 const RULE = "uk-city-sources";
 const FILE = "src/lib/spine";
 const REMEDY = "on a UK city's page print an official figure, say in the card's one line that the figure is an estimate (cityHeldToSources picks the line), or withhold it";
+/* THE SIX NEVER WITHHOLD (his decision 1, mark now and source later, and the plan's decision 3, their deposits marked and not
+   withheld: nothing with an honest estimate line leaves their pages), so a red on one of their checks says to keep the figure and
+   mark it, never to withhold it. REMEDY stays London's and the rest's. */
+const REMEDY_SIX = "on a UK city held to sources, keep the figure and say it is an estimate in its one line (src/lib/spine/copy.ts and the card's builder); an official figure (the survey's pay and tenths, the UK's born-abroad share) keeps its own line";
+/* The permits line claims one free gate, food registration: a red on it names the claim and the shard's gate. */
+const REMEDY_FOOD = "the permits line says food registration is free: keep the shard's required food gate at no fee (reg.local_gates in data/facts/city/GB-<slug>.json) or change the line's claim (cityGates.basisSourcedOnly in src/lib/spine/copy.ts)";
 let failed = 0;
-const check = (label: string, ok: boolean) => {
+let firstRemedy = REMEDY;
+const check = (label: string, ok: boolean, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
+  if (failed === 0) firstRemedy = remedy;
   failed++;
-  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+  red({ rule: RULE, file: FILE, detail: label, remedy });
 };
+/* A check about one of the six other UK cities. */
+const checkSix = (label: string, ok: boolean) => check(label, ok, REMEDY_SIX);
 
 /* Item 22: the hero holds no cost of living; the permit row says what it is and wears the estimate mark. */
 const hero = buildCityHeroBoard("london");
@@ -71,6 +82,7 @@ const p10 = earnings?.figures.p10, p90 = earnings?.figures.p90;
 const want10 = Math.round(convertToUsd("GBP", 23990) ?? 0), want90 = Math.round(convertToUsd("GBP", 76903) ?? 0);
 check(`London's bottom tenth is the survey's 23,990 pounds at the site's rate (${p10} against ${want10})`, p10 != null && Math.abs(p10 - want10) <= 2);
 check(`London's top tenth is the survey's 76,903 pounds at the site's rate (${p90} against ${want90})`, p90 != null && Math.abs(p90 - want90) <= 2);
+check("London's earnings strip is official, no sample", earnings?.sample === false);
 const deciles = JSON.parse(readFileSync("data/economics/wage_deciles_v1.json", "utf8")).countries.GB;
 check("the UK's decile record is held, from the survey", deciles?._meta?.confidence === "held" && /survey of hours and earnings/i.test(deciles?._meta?.source ?? ""));
 
@@ -92,7 +104,7 @@ check("Paris keeps its prime rent cell", !!parisPrem && !parisPrem.rentKicker &&
 check("the permits card says its fees are estimates but food registration", buildCityGates("london")?.basis === COPY.cityGates.basisSourcedOnly);
 check("the living card says its prices are estimates", buildCityLiving("london")?.basis === COPY.cityLiving.basisSourcedOnly);
 check("the runway says its rent is an estimate", buildCityRunway("london")?.basis === COPY.cityRunway.basisSourcedOnly);
-check("the crew card says its pay is estimated", buildCityCrew("london")?.basis === COPY.cityCrew.basisSourcedOnly);
+check("the crew card says its pay and its hours are estimated", buildCityCrew("london")?.basis === COPY.cityCrew.basisSourcedOnly);
 check("the texture card says its visit count is an estimate", buildCityTexture("london")?.basis === COPY.cityTexture.basisSourcedOnly);
 check("Paris's lines are unchanged", buildCityGates("paris")?.basis === COPY.cityGates.basis && buildCityLiving("paris")?.basis === COPY.cityLiving.basis);
 
@@ -109,38 +121,64 @@ const SIX = ["manchester", "birmingham", "leeds", "glasgow", "edinburgh", "brist
 const PB = COPY.premisesBento.basis;
 for (const slug of SIX) {
   const p = buildPremisesBento(slug);
-  check(`${slug}'s premises keep all four cells (${p?.withheld} withheld)`, !!p && p.withheld === 0);
-  check(`${slug}'s prime rent and its details say they are estimates ("${p && "figure" in p.rent ? p.rent.basis : "none"}")`, !!p && !p.rentKicker && "figure" in p.rent && p.rent.basis === `${PB.rentEstimate}.` && (p.rent.detail?.rows.length ?? 0) >= 2);
-  check(`${slug}'s deposit and its lease say they are estimates`, !!p && "figure" in p.deposit && p.deposit.basis === `${PB.depositEstimate}.` && !!p.deposit.second);
-  check(`${slug}'s empty shops say they are an estimate`, !!p && "part" in p.empty && p.empty.basis === `${PB.emptyEstimate}.`);
-  check(`${slug}'s fit-out and its rent-free months say they are estimates (London's line)`, !!p && "figure" in p.fitOut && p.fitOut.basis === `${PB.fitOutEstimate}.` && !!p.fitOut.second);
+  checkSix(`${slug}'s premises keep all four cells (${p?.withheld} withheld)`, !!p && p.withheld === 0);
+  checkSix(`${slug}'s prime rent and its details say they are estimates ("${p && "figure" in p.rent ? p.rent.basis : "none"}")`, !!p && !p.rentKicker && "figure" in p.rent && p.rent.basis === `${PB.rentEstimate}.` && (p.rent.detail?.rows.length ?? 0) >= 2);
+  checkSix(`${slug}'s deposit and its lease say they are estimates`, !!p && "figure" in p.deposit && p.deposit.basis === `${PB.depositEstimate}.` && !!p.deposit.second);
+  checkSix(`${slug}'s empty shops say they are an estimate`, !!p && "part" in p.empty && p.empty.basis === `${PB.emptyEstimate}.`);
+  checkSix(`${slug}'s fit-out and its rent-free months say they are estimates (London's line)`, !!p && "figure" in p.fitOut && p.fitOut.basis === `${PB.fitOutEstimate}.` && !!p.fitOut.second);
+  /* THE FIGURES, NOT ONLY THE LINES: each cell holds the shard's own field, read as the builder reads it (cityFigure), never a
+     neighbouring one; the empty shops hold the rate they were rounded from. */
+  const cells: Array<[string, string, number | null]> = [
+    ["prime rent", "rent_prime_usd_sqm_yr", p && "figure" in p.rent ? p.rent.value : null],
+    ["deposit", "deposit_months", p && "figure" in p.deposit ? p.deposit.value : null],
+    ["empty shops", "vacancy_rate_pct", p && "part" in p.empty ? p.empty.rate : null],
+    ["fit-out", "fit_out_cost_usd_sqm", p && "figure" in p.fitOut ? p.fitOut.value : null],
+  ];
+  for (const [cell, field, shown] of cells) {
+    const held = cityFigure("GB", slug, `realestate.${field}`)?.value;
+    checkSix(`${slug}'s ${cell} cell is the shard's ${field} (${shown} against ${held})`, shown !== null && shown === held);
+  }
 }
-check("Paris's premises lines are unchanged", !!parisPrem && "figure" in parisPrem.rent && parisPrem.rent.basis === `${PB.rent}.`);
+/* A city outside the UK keeps all four of its old premises lines: Paris and Frankfurt (shards held), Abidjan (modelled). */
+for (const slug of ["paris", "frankfurt", "abidjan"]) {
+  const q = buildPremisesBento(slug);
+  const old: Array<[string, string | null, string]> = [
+    ["prime rent", q && "figure" in q.rent ? q.rent.basis : null, PB.rent],
+    ["deposit", q && "figure" in q.deposit ? q.deposit.basis : null, PB.deposit],
+    ["empty shops", q && "part" in q.empty ? q.empty.basis : null, PB.empty],
+    ["fit-out", q && "figure" in q.fitOut ? q.fitOut.basis : null, PB.fitOut],
+  ];
+  for (const [cell, line, was] of old) check(`${slug}'s ${cell} line is unchanged ("${line}")`, line === `${was}.`);
+}
 
 /* LIVING AND THE RUNWAY (plan 2026-10-08): the shard's prices and one-bed rent, London's lines word for word. */
 for (const slug of SIX) {
-  check(`${slug}'s living card says its prices are estimates`, buildCityLiving(slug)?.basis === COPY.cityLiving.basisSourcedOnly);
-  check(`${slug}'s runway says its rent is an estimate`, buildCityRunway(slug)?.basis === COPY.cityRunway.basisSourcedOnly);
+  checkSix(`${slug}'s living card says its prices are estimates`, buildCityLiving(slug)?.basis === COPY.cityLiving.basisSourcedOnly);
+  checkSix(`${slug}'s runway says its rent is an estimate`, buildCityRunway(slug)?.basis === COPY.cityRunway.basisSourcedOnly);
 }
+check("Paris's runway line is unchanged", buildCityRunway("paris")?.basis === COPY.cityRunway.basis);
 
 /* THE CREW AND THE EARNINGS (plan 2026-10-08): the crew's pay and its usual week are the shard's, and the one line says both are
    estimates, on London too (its week printed unmarked until this plan). The earnings strip is official on all seven: the survey's
    tenths for the UK and its typical pay for the city; it keeps its line. */
-check(`London's crew line names the week too ("${buildCityCrew("london")?.basis}")`, /pay and hours/.test(buildCityCrew("london")?.basis ?? ""));
+const londonCrew = buildCityCrew("london");
+check(`London's crew says its pay and its hours are estimates, and holds the week ("${londonCrew?.basis}")`, /^Estimated pay and hours/.test(londonCrew?.basis ?? "") && !!londonCrew?.week);
 for (const slug of SIX) {
   const crew = buildCityCrew(slug);
-  check(`${slug}'s crew says its pay and its week are estimates`, !!crew && crew.basis === COPY.cityCrew.basisSourcedOnly && !!crew.week);
+  checkSix(`${slug}'s crew says its pay and its week are estimates`, !!crew && crew.basis === COPY.cityCrew.basisSourcedOnly && !!crew.week);
   const strip = buildCityEarningsStrip(slug);
-  check(`${slug}'s tenths are the survey's, the UK's (${strip?.figures.p10}, ${strip?.figures.p90})`, strip?.figures.p10 === p10 && strip?.figures.p90 === p90 && strip?.basis === COPY.cityCustomers.basis);
-  check(`${slug}'s typical pay is the one builder's, the survey's for the city`, strip?.figures.typical === cityTypicalIncome(slug)?.value);
+  checkSix(`${slug}'s earnings strip is official, no sample`, strip?.sample === false);
+  checkSix(`${slug}'s tenths are the survey's, the UK's (${strip?.figures.p10}, ${strip?.figures.p90})`, strip?.figures.p10 === p10 && strip?.figures.p90 === p90 && strip?.basis === COPY.cityCustomers.basis);
+  checkSix(`${slug}'s typical pay is the one builder's, the survey's for the city`, strip?.figures.typical === cityTypicalIncome(slug)?.value);
 }
 check("Paris's crew line is unchanged", buildCityCrew("paris")?.basis === COPY.cityCrew.basis);
 
 /* THE PERMITS (plan 2026-10-08): London's line word for word; every UK city's food registration is the one free gate it names. */
-for (const slug of SIX) {
+for (const slug of SIX) checkSix(`${slug}'s permits say their fees are estimates but food registration`, buildCityGates(slug)?.basis === COPY.cityGates.basisSourcedOnly);
+/* The line's one claim, that food registration is free, is held by all seven shards (London's too, whose line it is). */
+for (const slug of [...SIX, "london"]) {
   const g = buildCityGates(slug);
-  check(`${slug}'s permits say their fees are estimates but food registration`, g?.basis === COPY.cityGates.basisSourcedOnly);
-  check(`${slug}'s food registration is a required gate at no fee, as the line says`, !!g && g.gates.some((x) => /food/i.test(x.name) && x.required && x.cost === 0));
+  check(`${slug}'s food registration is a required gate at no fee, as the line says`, !!g && g.gates.some((x) => /food/i.test(x.name) && x.required && x.cost === 0), REMEDY_FOOD);
 }
 
 /* THE BOARD (plan 2026-10-08): the six keep their four rows, each an estimate, the column's line saying so first; the answer is the
@@ -150,19 +188,20 @@ const SURVEY_GBP: Record<(typeof SIX)[number], number> = { manchester: 36278, bi
 for (const slug of SIX) {
   const b = buildCityHeroBoard(slug);
   const keys = (b?.rows ?? []).map((r) => r.key).join(",");
-  check(`${slug}'s board keeps its four rows (${keys})`, keys === "permits,density,gdp,living");
-  check(`${slug}'s rows are each an estimate`, !!b && b.rows.every((r) => r.confidence === "modeled"));
-  check(`${slug}'s permit row says what it is ("${b?.rows.find((r) => r.key === "permits")?.label}")`, b?.rows.find((r) => r.key === "permits")?.label === COPY.cityHeroBoard.rows.permitsLongest);
-  check(`${slug}'s column says its figures are estimates ("${b?.levelBasis}")`, b?.levelBasis === COPY.cityHeroBoard.levelBasisEstimates);
+  checkSix(`${slug}'s board keeps its four rows (${keys})`, keys === "permits,density,gdp,living");
+  checkSix(`${slug}'s rows are each an estimate`, !!b && b.rows.every((r) => r.confidence === "modeled"));
+  checkSix(`${slug}'s permit row says what it is ("${b?.rows.find((r) => r.key === "permits")?.label}")`, b?.rows.find((r) => r.key === "permits")?.label === COPY.cityHeroBoard.rows.permitsLongest);
+  checkSix(`${slug}'s column says its figures are estimates ("${b?.levelBasis}")`, b?.levelBasis === COPY.cityHeroBoard.levelBasisEstimates);
   const want = Math.round(convertToUsd("GBP", SURVEY_GBP[slug]) ?? 0);
   const typical = cityTypicalIncome(slug)?.value ?? 0;
-  check(`${slug}'s answer is the survey's pay, ${SURVEY_GBP[slug]} pounds at the site's rate (${typical} against ${want})`, Math.abs(typical - want) <= 12 && b?.answerBasis === COPY.cityHero.answerBasis);
+  /* The measured mark is what tells the survey's answer from a modelled one: the two lines (answerBasis, answerBasisModelled) are the same words. */
+  checkSix(`${slug}'s answer is the survey's pay, ${SURVEY_GBP[slug]} pounds at the site's rate (${typical} against ${want}), measured`, Math.abs(typical - want) <= 12 && b?.answerBasis === COPY.cityHero.answerBasis && b?.answer?.confidence === "measured");
 }
 check(`London's line says its permit wait is an estimate ("${hero?.levelBasis}")`, hero?.levelBasis === COPY.cityHeroBoard.levelBasisNoLiving && /permit wait is an estimate/i.test(hero?.levelBasis ?? ""));
 check("Paris's board is unchanged", paris?.levelBasis === COPY.cityHeroBoard.levelBasis && paris?.rows.find((r) => r.key === "permits")?.label === COPY.cityHeroBoard.rows.permits);
 
 /* THE TEXTURE (plan 2026-10-08): the count of official visits is the shard's; London's line word for word. */
-for (const slug of SIX) check(`${slug}'s texture card says its visit count is an estimate`, buildCityTexture(slug)?.basis === COPY.cityTexture.basisSourcedOnly);
+for (const slug of SIX) checkSix(`${slug}'s texture card says its visit count is an estimate`, buildCityTexture(slug)?.basis === COPY.cityTexture.basisSourcedOnly);
 check("Paris's texture line is unchanged", buildCityTexture("paris")?.basis === COPY.cityTexture.basis);
 
 /* THE PEERS (plan 2026-10-08): the six keep every figure, the cost of living included, and the caveat says once which are
@@ -177,20 +216,32 @@ const peerSeedOf = (slug: string) => {
 for (const slug of SIX) {
   const t = buildCityPeerTable(peerSeedOf(slug));
   const visitors = !!t && t.columns.some((c) => c.key === "visitors");
-  check(`${slug}'s peers keep every city's cost of living (${t?.rows.map((r) => r.values.living).join(", ")})`, !!t && t.rows.every((r) => typeof r.values.living === "number") && t.columns[0]?.key === "living");
-  check(`${slug}'s peers say which figures are estimates ("${t?.caveat}")`, !!t && t.caveat === (visitors ? COPY.cityPeers.caveatEstimates : COPY.cityPeers.caveatEstimatesNoVisitors));
-  check(`${slug}'s UK rows print the survey's pay, the answer's own`, !!t && t.rows.filter((r) => r.iso2 === "GB").every((r) => r.values.income === cityTypicalIncome(r.key ?? "")?.value));
+  checkSix(`${slug}'s peers keep every city's cost of living (${t?.rows.map((r) => r.values.living).join(", ")})`, !!t && t.rows.every((r) => typeof r.values.living === "number") && t.columns[0]?.key === "living");
+  checkSix(`${slug}'s peers say which figures are estimates ("${t?.caveat}")`, !!t && t.caveat === (visitors ? COPY.cityPeers.caveatEstimates : COPY.cityPeers.caveatEstimatesNoVisitors));
+  checkSix(`${slug}'s UK rows print the survey's pay, the answer's own`, !!t && t.rows.filter((r) => r.iso2 === "GB").every((r) => r.values.income === cityTypicalIncome(r.key ?? "")?.value));
 }
 
 /* WHO IS ALREADY TRADING (plan 2026-10-08): the shard's densities, count and plus, the one line saying they are estimates; the line
    is the builder's in both forms, and the card prints it as handed. */
 for (const slug of SIX) {
   const m = buildCityMarket(slug);
-  check(`${slug}'s market keeps the shard's densities, its count and its plus`, m?.form === "density" && !!m.focal && !!m.detail);
-  check(`${slug}'s market says its figures are estimates ("${m?.basis}")`, m?.basis === COPY.cityMarket.basisWithFocalEstimate);
+  checkSix(`${slug}'s market keeps the shard's densities, its count and its plus`, m?.form === "density" && !!m.focal && !!m.detail);
+  checkSix(`${slug}'s market says its figures are estimates ("${m?.basis}")`, m?.basis === COPY.cityMarket.basisWithFocalEstimate);
 }
-const parisMarket = buildCityMarket("paris");
-check(`Paris's market line is unchanged ("${parisMarket?.basis}")`, parisMarket?.basis === (parisMarket?.focal ? COPY.cityMarket.basisWithFocal : COPY.cityMarket.basis));
+/* Every city outside the UK keeps its market line (the count's words where its count of businesses stands, the bars' otherwise):
+   the city list's others read in one check, a line each would bury the six's. A city that draws no card has no line to change,
+   but Paris, the check's old anchor, must still draw one. */
+const NON_UK = listedCitySlugs().filter((slug) => !UK_CITY_SLUGS.includes(slug));
+const marketsOff: string[] = [];
+let marketsDrawn = 0;
+for (const slug of NON_UK) {
+  const m = buildCityMarket(slug);
+  if (!m) continue;
+  marketsDrawn++;
+  if (m.basis !== (m.focal ? COPY.cityMarket.basisWithFocal : COPY.cityMarket.basis)) marketsOff.push(slug);
+}
+const parisDraws = buildCityMarket("paris") !== null;
+check(`the market line is unchanged on every city outside the UK (${marketsDrawn} of ${NON_UK.length} draw the card${parisDraws ? "" : "; Paris does not"}${marketsOff.length ? `; changed: ${marketsOff.slice(0, 5).join(", ")}` : ""})`, marketsDrawn > 0 && marketsOff.length === 0 && parisDraws);
 check("London's market keeps the register's line", buildCityMarket("london")?.basis === COPY.cityMarket.register.basis.replace("{city}", "London"));
 const openingSrc = readFileSync("src/components/spine/city/opening.tsx", "utf8");
 check("the market card prints the line its builder hands it", !/basisWithFocal/.test(openingSrc) && /basis=\{`\$\{market\.basis\}/.test(openingSrc));
@@ -199,11 +250,11 @@ check("the market card prints the line its builder hands it", !/basisWithFocal/.
    line saying it is an estimate. London draws none of the three (its spend and calendar are placeholders, its split unheld). */
 for (const slug of SIX) {
   const d = buildCityDemand(slug);
-  check(`${slug}'s spend says it is an estimate ("${d?.basis}")`, !!d?.figure && d.basis === COPY.cityDemand.basisEstimate);
+  checkSix(`${slug}'s spend says it is an estimate ("${d?.basis}")`, !!d?.figure && d.basis === COPY.cityDemand.basisEstimate);
   const s = buildCitySeason(slug);
-  check(`${slug}'s split says it is an estimate ("${s?.foot}")`, (s?.cells.length ?? 0) === 2 && s?.foot === COPY.citySeason.footEstimate);
+  checkSix(`${slug}'s split says it is an estimate ("${s?.foot}")`, (s?.cells.length ?? 0) === 2 && s?.foot === COPY.citySeason.footEstimate);
   const k = buildCityCalendar(slug);
-  check(`${slug}'s calendar says it is an estimate ("${k?.basis}")`, !!k && k.basis === COPY.cityCalendar.basisEstimate);
+  checkSix(`${slug}'s calendar says it is an estimate ("${k?.basis}")`, !!k && k.basis === COPY.cityCalendar.basisEstimate);
 }
 check("Paris's three lines are unchanged", buildCityDemand("paris")?.basis === COPY.cityDemand.basis && buildCitySeason("paris")?.foot === null && buildCityCalendar("paris")?.basis === COPY.cityCalendar.basis);
 check("London draws none of the three", buildCityDemand("london")?.figure === null && (buildCitySeason("london")?.cells.length ?? 0) === 0 && buildCityCalendar("london") === null);
@@ -239,16 +290,17 @@ for (const slug of SIX) {
     ["the calendar", buildCityCalendar(slug)?.basis],
     ["the peers", buildCityPeerTable(peerSeedOf(slug))?.caveat],
   ];
-  for (const [card, line] of marked) check(`${slug}: ${card} says its figures are estimates ("${line ?? "no line"}")`, typeof line === "string" && /\bestimate/i.test(line));
-  check(`${slug}: the answer is official and keeps its line`, board?.answerBasis === COPY.cityHero.answerBasis);
-  check(`${slug}: the earnings strip is official and keeps its line`, buildCityEarningsStrip(slug)?.basis === COPY.cityCustomers.basis);
+  for (const [card, line] of marked) checkSix(`${slug}: ${card} says its figures are estimates ("${line ?? "no line"}")`, typeof line === "string" && /\bestimate/i.test(line));
+  checkSix(`${slug}: the answer is official and keeps its line`, board?.answerBasis === COPY.cityHero.answerBasis && board?.answer?.confidence === "measured");
+  const strip = buildCityEarningsStrip(slug);
+  checkSix(`${slug}: the earnings strip is official and keeps its line`, strip?.basis === COPY.cityCustomers.basis && strip?.sample === false);
   const bornAbroad = buildCityPeopleTable(slug)?.foot?.value;
-  check(`${slug}: the born-abroad share is the UK page's own (${bornAbroad})`, !!bornAbroad && bornAbroad === buildCharacterTables("GB").people?.foot?.value);
+  checkSix(`${slug}: the born-abroad share is the UK page's own (${bornAbroad})`, !!bornAbroad && bornAbroad === buildCharacterTables("GB").people?.foot?.value);
 }
 /* The views print the lines the builders hand them (a builder's line a view ignores is a line no reader meets). */
 const cityViewSrc = readFileSync("src/components/spine/city/city-view.tsx", "utf8");
 check("the split card prints its foot", /\{season\.foot \? <p/.test(cityViewSrc));
 check("the spend card prints its basis", /basis=\{demand\.basis \?\? undefined\}/.test(cityViewSrc));
 
-if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+if (failed > 0) { redSummary(RULE, failed, firstRemedy, "checks failed"); process.exit(1); }
 console.log("spine/uk_city_sources: all pass");
