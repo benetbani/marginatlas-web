@@ -2221,8 +2221,9 @@ export const COPY = {
     head: { name: "The role", value: "A month, gross" },
     week: "hours in the usual week",
     basis: "Five roles a small business hires.",
-    /** A page held to a register region: no source holds the pay by role, so the line says it is estimated. */
-    basisSourcedOnly: "Estimated pay for five roles a small business hires.",
+    /** A UK city's page (held to sources): no source holds the pay by role or the usual week, so the line says both are estimated
+     *  (plan 2026-10-08: the week printed unmarked on London until then). */
+    basisSourcedOnly: "Estimated pay and hours for five roles a small business hires.",
   },
   /** HOW THIS CITY DOES BUSINESS, the city's `21 texture` (city_texture_rows.ts,
    *  2026-09-23). The poles are the shard's own words; these are the SUBJECTS,

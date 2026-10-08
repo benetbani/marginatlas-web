@@ -40,7 +40,7 @@ import { queryFacts } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { COPY } from "@/lib/spine/copy";
-import { cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityHeldToSources } from "@/lib/uk/registers/register_city";
 
 type CityRow = { slug: string; name: string; iso2: string };
 const BY_SLUG = new Map((cityListJson as { cities: CityRow[] }).cities.map((c) => [c.slug, c]));
@@ -109,8 +109,8 @@ export function buildCityCrew(slug: string): CityCrewData | null {
     rows,
     week,
     middle: { label: COPY.cityCrew.middle.replace("{n}", String(rows.length)), value: middle.value },
-    /* A page held to a register region says the pay is estimated (masterplan step 03, 2026-10-05; the labels audit's item 24). */
-    basis: cityRegisterPlace(iso2, slug) ? COPY.cityCrew.basisSourcedOnly : COPY.cityCrew.basis,
+    /* A UK city's page says the pay and the week are estimated (London since masterplan step 03; every UK city, and the week, since plan 2026-10-08). */
+    basis: cityHeldToSources(iso2, slug) ? COPY.cityCrew.basisSourcedOnly : COPY.cityCrew.basis,
     tag: live.some((r) => r.tag === "modeled") ? "modeled" : "held",
   };
 }

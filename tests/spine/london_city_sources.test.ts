@@ -20,6 +20,7 @@ import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 import premisesJson from "../../data/uk/registers/premises.json";
 import { readFileSync } from "node:fs";
+import { cityTypicalIncome } from "../../src/lib/spine/city_income";
 
 const RULE = "london-city-sources";
 const FILE = "src/lib/spine";
@@ -111,6 +112,19 @@ for (const slug of SIX) {
   check(`${slug}'s living card says its prices are estimates`, buildCityLiving(slug)?.basis === COPY.cityLiving.basisSourcedOnly);
   check(`${slug}'s runway says its rent is an estimate`, buildCityRunway(slug)?.basis === COPY.cityRunway.basisSourcedOnly);
 }
+
+/* THE CREW AND THE EARNINGS (plan 2026-10-08): the crew's pay and its usual week are the shard's, and the one line says both are
+   estimates, on London too (its week printed unmarked until this plan). The earnings strip is official on all seven: the survey's
+   tenths for the UK and its typical pay for the city; it keeps its line. */
+check(`London's crew line names the week too ("${buildCityCrew("london")?.basis}")`, /pay and hours/.test(buildCityCrew("london")?.basis ?? ""));
+for (const slug of SIX) {
+  const crew = buildCityCrew(slug);
+  check(`${slug}'s crew says its pay and its week are estimates`, !!crew && crew.basis === COPY.cityCrew.basisSourcedOnly && !!crew.week);
+  const strip = buildCityEarningsStrip(slug);
+  check(`${slug}'s tenths are the survey's, the UK's (${strip?.figures.p10}, ${strip?.figures.p90})`, strip?.figures.p10 === p10 && strip?.figures.p90 === p90 && strip?.basis === COPY.cityCustomers.basis);
+  check(`${slug}'s typical pay is the one builder's, the survey's for the city`, strip?.figures.typical === cityTypicalIncome(slug)?.value);
+}
+check("Paris's crew line is unchanged", buildCityCrew("paris")?.basis === COPY.cityCrew.basis);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_city_sources: all pass");
