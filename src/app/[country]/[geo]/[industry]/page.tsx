@@ -303,10 +303,12 @@ async function CellPageBody({
 }: {
   params: Promise<Params>;
 }) {
-  // Spine reform (flag-gated, default OFF). On promotion the body renders REAL,
-  // reconciled data from buildSpineCellSeed (the same accessor + finance engines
-  // the non-spine page uses), never the illustrative seed. When the adapter finds
-  // no cell it returns undefined; we notFound() to match the non-spine page.
+  // The spine page, ON by default since 2026-09-07 (isSpineReformEnabledFor("cell"):
+  // a shipped page is on unless NEXT_PUBLIC_SPINE_REFORM_CELL=0; this comment said
+  // "default OFF" until the checkup of 2026-10-08). The body renders REAL, reconciled
+  // data from buildSpineCellSeed (the same accessor + finance engines the non-spine
+  // page uses), never the illustrative seed. When the adapter finds no cell it
+  // returns undefined; we notFound() to match the non-spine page.
   if (isSpineReformEnabledFor("cell")) {
     const { country, geo, industry } = await params;
     /* THE ROUTE DECIDES THE LOCK (masterplan step 17; his rulings 18 and 27): a page that locks (the UK's), with the paywall on.

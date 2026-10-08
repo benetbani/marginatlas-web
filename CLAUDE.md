@@ -6,7 +6,7 @@ This file is a navigation index, not the source of truth. The authority document
 
 - **Stack:** Next.js 15.5, React 19.2, TypeScript 5, Tailwind 3.4, Supabase Pro (eu-west-1), Vercel (`fra1`), Sentry
 - **Project root:** `E:\atlas\website\` (its own git repo on `main`; the parent `E:\atlas\` is the data-pipeline project)
-- **Production:** marginatlas.com (615 static pages prerendered at last build)
+- **Production:** marginatlas.com (how many static pages a build prerenders is in its Vercel build log, recorded in the newest `docs/checkup/<date>.md`; the 615 typed here had become 750 by 2026-10-08)
 
 **The counts below are GENERATED. Do not type a repo count anywhere in this file**
 , the gate count alone reached ten different values across 32 files by being typed
@@ -101,7 +101,7 @@ Four rules. Not aspirations, and each one exists because breaking it cost real t
 
 ## Verification commands (ask permission before running)
 
-- `npm run prebuild` , the whole gate chain in parallel, ~60s wall-clock. The count is in the generated block above, never here.
+- `npm run prebuild` , the whole gate chain in parallel (concurrency 4; not for this 8 GB machine, use the serial runs below). The count is in the generated block above and the timings, local and on Vercel, in the newest `docs/checkup/<date>.md`, never here (the "~60s" typed here was a May figure for 25 gates).
 - `npm run prebuild:serial` — runs the SAME LIST at concurrency 1 (use if parallel is flaky)
 
   It did not, until 2026-08-19. It was a hand-written chain of 43 script paths
@@ -119,12 +119,14 @@ which is the proof. Since plan step 14b (2026-09-17) the chain renders the
 six spine pages first (`pages-fresh`) and the browser gates, the archetype
 harness, the page filter and the model-laws list all read those live
 renders; nothing in the chain reads a frozen snapshot of a spine page any
-more. Run the same list locally before a push with `npm run verify:deploy`
+more. On Vercel the browser gates skip (no browser on a build server: `requireBrowser` exits 0, so they read as passes
+in about a second; measured in the 2026-10-08 ledger), so only a local run measures the page laws, the copy laws and
+the loud seats. Run the same list locally before a push with `npm run verify:deploy`
 (serial, to `scratchpad/deploy/chain.txt`; `--build` adds the Next build and the postbuild guard, as `npm run build` runs them; `--print-steps` lists the steps) and
 watch the deploy land with `npm run deploy:watch -- --marker=<a string the new
 code puts on the page>`.
 
-- `npx tsc --noEmit` — typecheck only, ~30-60s
+- `npx tsc --noEmit` , typecheck only; its program size and time are in the newest checkup ledger. The chain runs no typecheck and `next build` does: run it after any deletion or restore.
 - `npm run build` — full Next.js build (after prebuild); minutes
 
 ## Latest handoff

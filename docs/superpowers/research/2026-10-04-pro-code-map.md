@@ -1,5 +1,14 @@
 # What exists for Pro (read-only map, 2026-10-04 night, for milestone 2)
 
+> **Superseded as a map of the code (the checkup of 2026-10-08).** Milestone 2 was built after this was written (masterplan
+> of 2026-10-05, then the checkup fixes of 2026-10-06), so it describes the code before Pro. Of its nine "missing" items,
+> eight are built: one plan at $38/$238 (`src/lib/monetization/plan.ts`), checkout first with the account made from the
+> checkout email, the portal and the annual button, the UK levels locked server-side with a `/pro` mirror, no pop-up, the
+> locked sections' structured data, the old prices left only in history comments, trialing no longer entitled. The ninth,
+> the tables applied to the live database, is his (LAUNCH-SWITCHES row 2). The paid layer as it stands, and what two tiers,
+> a logged-in menu, an API and an MCP server would need, is in `docs/checkup/2026-10-08.md`. Kept as the record of the
+> starting point.
+
 Read on branch `milestone-1` (cd2185a6); nothing below differs from `main` 38f81e8a except a no-op in `analytics.ts`. No `.env*`
 file was opened, so what production has set is unknown. The ruling it is measured against: his interview of 2026-09-26,
 `E:/atlas/design/loop/build/INTERVIEW-2026-09-26.md` (milestone 2, around lines 88 to 95): Pro at $38 a month or $238 a year,

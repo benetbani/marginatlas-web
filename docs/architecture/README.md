@@ -9,8 +9,8 @@ Orient yourself in 10 minutes. Read this before touching code.
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │  PRESENTATION                                                     │
-│    src/app/         46 Next.js routes (App Router)               │
-│    src/components/  87 components                                │
+│    src/app/         App Router routes (count: CLAUDE.md block)   │
+│    src/components/  ui/ (system), spine/ (the page bodies)       │
 │                                                                   │
 │    RULE: presentation MUST NOT import from data/ directly.       │
 │    All data access goes through src/lib/. Locked by              │
@@ -49,26 +49,35 @@ Orient yourself in 10 minutes. Read this before touching code.
 
 `/[country]/[geo]/[industry]` → `src/app/[country]/[geo]/[industry]/page.tsx`
 
-1. `getCellBySlug(country, geo, industry)` in `src/lib/cells.ts` walks the
-   fallback chain: `cells_master` → `regional_cells` → `extrapolated_cells`
-   → `synthesizeCell()`. Returns a `Cell`.
-2. `fillMissingFields()` in `src/lib/cells/fill_defaults.ts` populates
-   any null derived fields (margins, percentiles, employee counts).
-3. `enforceSanity()` → `applyPlausibilitySuppression()` in
-   `src/lib/qa/plausibility_suppression.ts` nulls catastrophically
-   implausible values (e.g., $1B/firm Liechtenstein furniture).
-4. `estimateCostStructure()` in `src/lib/cost_engine/engine.ts` computes
-   the cost breakdown. For AU cells with primary-data coverage, it
-   reads `getAuPrimaryAnchor()` and uses ATO ratios instead of modelled
-   values.
-5. The page renders ~12 sections (`KeyBenchmarkBanner`, `DenseCellHero`,
-   `RevenueDistribution`, `AnnualCostStack`, ...). Each section reads
-   the resulting `Cell` and any contextual data from the domain layer.
+Rewritten by the checkup of 2026-10-08: until then this section described the page of May
+(`KeyBenchmarkBanner`, `DenseCellHero`, `AnnualCostStack`), which the route no longer draws.
+
+1. The route decides whether the page draws locked: `isPaywallOn()` and
+   `lockablePath()` (`src/lib/monetization/pro_route.ts`; UK pages only, his
+   rulings 18 and 27). A page is cached for every reader, so it never knows the
+   reader; the middleware sends a signed-in reader to the uncached `/pro` mirror.
+2. `renderCellRoute()` (`cell_spine.tsx`, beside the page) builds the page's data
+   with `buildSpineCellSeed()` (`src/lib/spine/adapt_cell.ts`), which reads the
+   cell through `getCellBySlug()` in `src/lib/cells.ts` (the fallback chain:
+   `cells_master`, then `regional_cells`, then `extrapolated_cells`, then
+   `synthesizeCell()`) with the fact shards and the finance engines. No cell,
+   `notFound()`.
+3. `SpineCellBody` (`src/components/spine/cell/cell-view.tsx`) draws the page
+   from that seed, its sections built on the archetypes in
+   `src/components/spine/archetypes/`; a locked level draws a stand-in, never
+   its figures (`src/components/spine/LockedSection.tsx`,
+   `src/lib/monetization/levels.ts`).
+
+The page body of May still sits below the spine branch in `page.tsx`, reached
+only when `NEXT_PUBLIC_SPINE_REFORM_CELL=0` turns the spine off.
 
 ## Quality gates
 
-25 prebuild scripts run before every build (~60s wall-clock, currently
-serial). Each gate enforces one invariant:
+The gate chain (`GATES` in `scripts/prebuild_all.ts`; its count in the generated block of
+`CLAUDE.md`; each gate's header sentence and reads in the generated `scripts/gates.json`)
+runs before every build: on Vercel through npm's prebuild hook, locally with
+`npm run verify:deploy`. Its timings, local and on Vercel, are measured in the newest
+`docs/checkup/<date>.md`, never typed here. Each gate enforces one invariant, for example:
 
 - `verify_taxonomy` — industry IDs match the registry
 - `verify_no_em_dashes` — no em-dashes in user-visible source
@@ -77,9 +86,7 @@ serial). Each gate enforces one invariant:
 - `verify_cost_share_invariant` — cost shares sum to ~1
 - `verify_au_industry_map` — every ATO industry maps to a real MA ID
 - `verify_layering` — presentation never imports from `data/` directly
-- ... 18 more
-
-Full list in `package.json` → `prebuild`.
+- ... and the rest, listed with what each asserts in `scripts/gates.json`.
 
 ## Adding a new feature
 
@@ -110,26 +117,29 @@ Full list in `package.json` → `prebuild`.
 | Industry / sector registry | `src/lib/taxonomy.ts` + `src/lib/taxonomy/` |
 | City resolver | `src/lib/cities.ts` + `src/lib/cities/` |
 | Cell-page route | `src/app/[country]/[geo]/[industry]/page.tsx` |
-| Prebuild chain | `package.json` → `prebuild` |
+| Prebuild chain | `scripts/prebuild_all.ts` (`GATES`), its registry `scripts/gates.json` |
 | Data fidelity audit | `docs/strategy/2026-05-26-data-fidelity-audit.md` |
 | Architecture audit | `docs/strategy/2026-05-27-architecture-audit.md` |
 
 ## Known debt (and where it's documented)
 
-- **`cells.ts` is 1,146 lines** (down from 1,321 after the 2026-05-27
-  audit). `cells/geo.ts` and `cells/time_series.ts` are extracted;
+- **`cells.ts` is one of the largest domain files** (its size and the
+  other files over 1,000 lines are measured in the newest checkup ledger;
+  the 1,146 typed here in May had become 1,503 by 2026-10-08).
+  `cells/geo.ts` and `cells/time_series.ts` are extracted;
   the deeper split of `lookup.ts` / `synthesis.ts` / `variants.ts`
   is deferred because those functions share private helpers that
   need an `_internal.ts` module first. `cells.ts` stays as a thin
-  re-export so 32+ external imports don't break.
-- **13 grandfathered layering violations** (14 until 2026-10-06) in the layering gate's
-  allowlist (`scripts/verify_layering.ts`). Each is a page or
-  component that imports `data/*.json` directly. Migration is a
-  separate cleanup wave.
-- **Prebuild chain is parallel now** (`scripts/prebuild_all.ts`,
-  shipped 2026-05-27): ~28s for 25 gates, down from ~60s serial.
-  The old chain is still available as `npm run prebuild:serial` for
-  debugging.
+  re-export so its many importers don't break.
+- **Grandfathered layering violations** in the layering gate's
+  allowlist (`scripts/verify_layering.ts`, which prints how many). Each
+  is a page or component that imports `data/*.json` directly. An entry
+  only shrinks: since 2026-10-08 an entry whose file is gone or clean
+  is a red.
+- **The prebuild chain** (`scripts/prebuild_all.ts`): parallel at
+  concurrency 4 by default (Vercel), serial on this 8 GB machine
+  (`npm run prebuild:serial`, or `npm run verify:deploy` to a file).
+  Timings in the newest checkup ledger.
 
 See `docs/strategy/2026-05-27-architecture-audit.md` for the full
 audit + refactoring roadmap.
@@ -158,14 +168,10 @@ What's already in place — no action needed:
 
 What's pending — apply before serious traffic:
 
-- **Supabase indexes** — `db/migrations/2026-05-27-perf-indexes.sql`
-  is staged but not yet applied. Without them, `getNudgeNeighbor`
-  and `getSameIndustryAcrossStates` time out at the 4s budget on
-  ~3% of cell-page renders. After applying, those queries drop to
-  ~30-80ms and the timeouts disappear. Run in the Supabase SQL
-  Editor one statement at a time (CONCURRENTLY can't be wrapped
-  in a transaction). See the file header for expected per-query
-  speedups.
+- **Supabase indexes**: `db/migrations/2026-05-27-perf-indexes.sql`
+  was APPLIED on 2026-06-02 (CLAUDE.md, "Manual actions outstanding";
+  until 2026-10-08 this line still said "not yet applied"). If high CPU
+  or timeouts recur, check the indexes still exist before anything else.
 - **Runtime slow-query observability**. `withBudget` logs to
   `console.warn` on timeout; that ends up in Vercel function logs
   but isn't aggregated. Sentry is already installed
