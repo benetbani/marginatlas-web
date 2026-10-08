@@ -121,7 +121,7 @@ moments; the type ladder and width ratchets only shrink.
    1's bars and the UK cities' rows both `fill` their level (`even`); the world level is not `even` (open sections, each its height).
 8. **Section 4 shows the match rate and prints no count of countries:** its focal is the 31,926 company notices (insolvencies and
    solvent liquidations alike); its first row "Names matched, 30,510 of 31,376", so the technique's honesty is on the card; its
-   second row "London trade pages, 111"; then its door to About the figures. **Amended 2026-10-08, before Tasks 12 to 17 were
+   second row "London trade pages, 111 of 138"; then its door to About the figures. **Amended 2026-10-08, before Tasks 12 to 17 were
    built:** the draft's last row "Country pages, 195", with the line "Outside the UK, these pages print estimates.", is gone. On
    2026-10-07 the owner called the home's "195 COUNTRIES" counter wrong (`E:/atlas/rules/FOUNDER-VERDICTS.md`, "Countries, the
    still hero, the home reformed and switched on": "the picker's count is wrong"), and that night's fix took every count off the
@@ -2522,11 +2522,12 @@ git commit -m "buildUsRestaurants: the five metros that added most and the five 
 In `tests/home/how_made.test.ts`, above `import { red, redSummary } from "../../scripts/lib/red";` add:
 
 ```ts
-import turnoverJson from "../../data/uk/registers/turnover.json";
 import { buildHowMade } from "../../src/lib/home/how_made";
 import { londonTradeSales } from "../../src/lib/uk/registers/london_trade";
+import { tradeHeadFigure } from "../../src/lib/spine/trade_head";
 import { buildLondonTradeSales } from "../../src/lib/spine/country_depth_rows";
 import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
+import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { COPY } from "../../src/lib/spine/copy";
 ```
 
@@ -2534,9 +2535,11 @@ above ` * Run: npx tsx tests/home/how_made.test.ts` add:
 
 ```ts
  * Holds the builder (src/lib/home/how_made.ts): the focal is the slice's notices; the names matched are the slice's, of its names;
- * the London trade pages read from the band counts are counted from the register slice, at least the trades the UK page's money
- * card ranks; no row counts countries and the copy holds no countries row (his ruling of 2026-10-07: the home's 195 counter is
- * wrong); every figure stamped; the focal's line twelve words at most.
+ * the London trade pages are counted as their pages print them, never as the builder reads them: the trades whose page prints a
+ * takings figure (tradeHeadFigure, which the page, its description and its share card read), of the London trade pages served
+ * (the taxonomy's trade slugs that are not retired, the sitemap's list), at least the trades the UK page's money card ranks; no
+ * row counts countries and the copy holds no countries row (his ruling of 2026-10-07: the home's 195 counter is wrong); every
+ * figure stamped; the focal's line twelve words at most; the copy's checks name the copy.
  *
 ```
 
@@ -2544,6 +2547,8 @@ and above `if (failed > 0) {` add:
 
 ```ts
 /* THE BUILDER (plan Task 12). */
+const COPY_FILE = "src/lib/spine/copy.ts";
+const TRADES_AT = { file: "src/lib/home/how_made.ts", remedy: "count the London trade pages that print a takings figure (tradeHeadFigure) out of the pages served, the taxonomy's trade slugs that are not retired, the sitemap's list" };
 const built = buildHowMade();
 check("section 4 builds", !!built);
 if (built && d) {
@@ -2551,14 +2556,24 @@ if (built && d) {
   check(`the focal is the slice's notices, ${built.notices.figure}`, built.notices.figure === n(d.notices) && built.notices.prov.src === "home/method.json:notices" && built.notices.prov.kind === "counted");
   const row = (key: string) => built.rows.find((r) => r.key === key);
   check(`the names matched are the slice's, of its names (${row("matched")?.value})`, row("matched")?.value === `${n(d.matched_names)} of ${n(d.names)}`);
-  const trades = Object.keys((turnoverJson as { trades: Record<string, unknown> }).trades).filter((s) => Object.hasOwn(SLUG_TO_INDUSTRY, s) && londonTradeSales(s)?.q50.open === false).length;
-  check(`the London trade pages read from the band counts are counted (${row("trades")?.value}; the UK page's money card ranks ${buildLondonTradeSales()?.rows.length} of them, one a code)`, row("trades")?.value === n(trades) && trades >= (buildLondonTradeSales()?.rows.length ?? Number.POSITIVE_INFINITY));
-  check("no row counts countries (his ruling of 2026-10-07: the home's 195 counter is wrong)", !built.rows.some((r) => /countr/i.test(r.label)) && !Object.keys(COPY.home.howMade).includes("countries"));
+  /* THE TRADE PAGES, HELD TO THE PAGES AND NOT TO THE BUILDER'S OWN PREDICATE. A London trade page prints a takings figure where its
+     head gives a dollar one (tradeHeadFigure: the page, its description and its share card read it; a trade whose median falls in
+     an open band prints an edge in words and gives none). The pages served are the sitemap's London list, every trade slug of the
+     taxonomy that is not retired (src/app/sitemap.ts, src/lib/home/destination.ts). A gate cannot read that list from the sitemap:
+     its module builds the database client on load and so needs the database address, which a gate never has. So the sitemap's
+     rule is restated here from the taxonomy, as the routing gates restate it (tests/routing/edge_not_found.test.ts). */
+  const served = Object.keys(SLUG_TO_INDUSTRY).filter((s) => !Object.hasOwn(RETIRED, s));
+  const printing = served.filter((s) => tradeHeadFigure({ isLondon: true, slug: s })?.usd != null);
+  const closed = served.filter((s) => londonTradeSales(s)?.q50.open === false);
+  const apart = [...closed.filter((s) => !printing.includes(s)), ...printing.filter((s) => !closed.includes(s))];
+  check(`the trades whose median falls in a closed band are exactly the pages that print a takings figure (${printing.length} of the ${served.length} served)${apart.length ? `; apart on ${apart.join(", ")}` : ""}`, apart.length === 0, TRADES_AT);
+  check(`the London trade pages are counted as they print (${row("trades")?.value}; the UK page's money card ranks ${buildLondonTradeSales()?.rows.length} of them, one a code)`, row("trades")?.value === `${n(printing.length)} of ${n(served.length)}` && printing.length >= (buildLondonTradeSales()?.rows.length ?? Number.POSITIVE_INFINITY), TRADES_AT);
+  check("no row counts countries (his ruling of 2026-10-07: the home's 195 counter is wrong)", !built.rows.some((r) => /countr/i.test(r.label)) && !Object.keys(COPY.home.howMade).includes("countries"), { file: COPY_FILE, remedy: "take the countries row and its words out of COPY.home.howMade; the home prints no count of countries (his ruling of 2026-10-07)" });
   check("every figure says where it came from", built.rows.every((r) => r.prov.src.length > 0 && r.prov.kind === "counted"));
   check("the door goes to About the figures", built.link.href === "/about-data" && built.link.label === COPY.home.howMade.link);
   const words = built.notices.words.split(/\s+/).filter(Boolean).length;
-  check(`the focal's line is twelve words at most, no semicolon ("${built.notices.words}")`, words <= 12 && !built.notices.words.includes(";"));
-  check(`the title is four words at most, and every row's label three ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3));
+  check(`the focal's line is twelve words at most, no semicolon ("${built.notices.words}")`, words <= 12 && !built.notices.words.includes(";"), { file: COPY_FILE, remedy: "cut COPY.home.howMade.words to twelve words at most and no semicolon, the card's one supporting line" });
+  check(`the title is four words at most, and every row's label three ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3), { file: COPY_FILE, remedy: "cut COPY.home.howMade.kicker to four words at most and each row's label (COPY.home.howMade.matched.label, COPY.home.howMade.trades.label) to three" });
 }
 ```
 
@@ -2594,15 +2609,16 @@ Create `src/lib/home/how_made.ts`:
  * data", "unmatched archival capability" and "the global coverage", merged as the audit found them honest). Each technique shown by
  * a figure it produced: a year of company notices matched by name to the company register (the focal, and the names matched of
  * the names they held, so the match rate is on the card), and London's trades' takings read from the official counts by turnover
- * band (the trade pages that print one). No count of countries and no line that the pages print estimates: his ruling of
+ * band (the London trade pages that print a takings figure, of those served: the taxonomy's trade slugs that are not retired, the
+ * list the sitemap and the home's search go by). No count of countries and no line that the pages print estimates: his ruling of
  * 2026-10-07 is that the home's 195 counter is wrong, so the global coverage is not built. Counts of distinct records and of
  * reachable pages only, never cells or slots (src/lib/coverage/report.ts says why). Quiet: no accent. The notices from
  * data/home/method.json; the rest worked out from this repo's own files, never typed.
  */
 import methodJson from "../../../data/home/method.json";
-import turnoverJson from "../../../data/uk/registers/turnover.json";
 import { londonTradeSales } from "@/lib/uk/registers/london_trade";
 import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
+import { RETIRED } from "@/lib/taxonomy/retired";
 import { hasOwn } from "@/lib/own";
 import type { Provenance } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
@@ -2617,15 +2633,19 @@ const n = (v: number) => v.toLocaleString("en-US");
 export function buildHowMade(): HowMade | null {
   const m = methodJson as unknown as Export;
   if (![m.notices, m.names, m.matched_names].every((v) => Number.isInteger(v) && v > 0)) return null;
-  /* A London trade page prints takings read from the band counts where its register median falls in a closed band. */
-  const trades = Object.keys((turnoverJson as { trades: Record<string, unknown> }).trades).filter((s) => hasOwn(SLUG_TO_INDUSTRY, s) && londonTradeSales(s)?.q50.open === false).length;
+  /* The London trade pages served: every trade slug of the taxonomy that is not retired, the list the sitemap and the home's search
+     go by (src/app/sitemap.ts, src/lib/home/destination.ts). */
+  const served = Object.keys(SLUG_TO_INDUSTRY).filter((s) => !hasOwn(RETIRED, s));
+  /* Of them, the pages that print a takings figure: where the trade's register median falls in a closed band of the band counts. A
+     median in an open band prints an edge in words, and is not counted. */
+  const trades = served.filter((s) => londonTradeSales(s)?.q50.open === false).length;
   if (trades === 0) return null;
   const C = COPY.home.howMade;
   return {
     notices: { figure: n(m.notices), words: C.words, prov: { src: "home/method.json:notices", kind: "counted" } },
     rows: [
       { key: "matched", label: C.matched.label, value: `${n(m.matched_names)} of ${n(m.names)}`, note: C.matched.note, prov: { src: "home/method.json:matched_names of names", kind: "counted" } },
-      { key: "trades", label: C.trades.label, value: n(trades), note: C.trades.note, prov: { src: "uk/registers/turnover.json:London trades with takings read from the band counts", kind: "counted" } },
+      { key: "trades", label: C.trades.label, value: `${n(trades)} of ${n(served.length)}`, note: C.trades.note, prov: { src: "uk/registers/turnover.json:London trades with takings read from the band counts, of the trade pages served", kind: "counted" } },
     ],
     link: { href: "/about-data", label: C.link },
   };
@@ -2635,8 +2655,10 @@ export function buildHowMade(): HowMade | null {
 - [ ] **Step 4: Run the test and the gates**
 
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/how_made.test.ts > scratchpad/home-sections/t12.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t12.txt`
-Expected: `the focal is the slice's notices, 31,926`, `(30,510 of 31,376)`, `(111; the UK page's money card ranks 16 of them, one a
-code)`, `no row counts countries (his ruling of 2026-10-07: the home's 195 counter is wrong)`, `home/how_made: all pass`, `exit 0`.
+Expected: `the focal is the slice's notices, 31,926`, `(30,510 of 31,376)`, `the trades whose median falls in a closed band are
+exactly the pages that print a takings figure (111 of the 138 served)`, `the London trade pages are counted as they print
+(111 of 138; the UK page's money card ranks 16 of them, one a code)`, `no row counts countries (his ruling of 2026-10-07:
+the home's 195 counter is wrong)`, `home/how_made: all pass`, `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write > scratchpad/home-sections/c12.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/c12.txt` → `exit 0`.
 Run: `node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=1 --no-bail --only=home-how-made,copy-no-method-words,model-laws-copy,archetype-copy,no-em-dashes,no-source-agencies,layering,counts-fresh > scratchpad/home-sections/g12.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/g12.txt`
 Expected: `Passed: 8`, `Failed: 0`.
