@@ -2803,6 +2803,16 @@ export const COPY = {
       added: "Most added",
       lost: "Most lost",
     },
+    /** HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4): the title, the focal's one line (the notices and the
+     *  technique), each row's label (three words at most) and note, and the door to About the figures. No countries row and no
+     *  line that the pages print estimates (his ruling of 2026-10-07: the home's 195 counter is wrong). */
+    howMade: {
+      kicker: "How figures are made",
+      words: "Company notices in a year, matched by name to the company register",
+      matched: { label: "Names matched", note: "Company names in the notices, found in the register" },
+      trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
+      link: "About the figures",
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
     pro: {
       kicker: "Pro",
