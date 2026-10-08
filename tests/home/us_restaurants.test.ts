@@ -27,6 +27,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { buildUsRestaurants, US_ENDS } from "../../src/lib/home/us_restaurants";
 import { COPY } from "../../src/lib/spine/copy";
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { HomeUsRestaurants } from "../../src/components/spine/home/HomeUsRestaurants";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-us-restaurants";
@@ -118,6 +121,21 @@ if (built && d) {
   check(`the lead's line is twelve words at most, no semicolon ("${built.lead.words}")`, words <= 12 && !built.lead.words.includes(";") && built.lead.words.endsWith(added[0].name));
   const title = COPY.home.usRestaurants.kicker.replace("{from}", String(d.from));
   check(`the title is four words at most ("${title}")`, title.split(/\s+/).length <= 4);
+}
+
+/* THE DRAWING (plan Task 14): the lead's count added the card's one accent, two tables of a name and two counts (most added, most
+   lost), each count stamped, no percent anywhere, the title the copy gate's. */
+if (built) {
+  const html = renderToStaticMarkup(React.createElement(HomeUsRestaurants, { us: built }));
+  check("the section is a box with its id and two tables of a name and two figures", /id="us-restaurants"/.test(html) && (html.match(/data-archetype="tiers-table"/g) ?? []).length === 2 && (html.match(/data-shape="figures"/g) ?? []).length === 2 && html.indexOf(COPY.home.usRestaurants.added) < html.indexOf(COPY.home.usRestaurants.lost));
+  const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
+  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(html));
+  const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
+  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + 2 * (built.added.length + built.lost.length) && figs.every((f) => /data-src="home\/us_restaurants\.json:/.test(f) && /data-kind="(counted|worked out)"/.test(f)));
+  check("no percent anywhere in the card", !/%/.test(html.replace(/<[^>]+>/g, " ")));
+  const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
+  check(`the title is four words at most ("${title}")`, title === COPY.home.usRestaurants.kicker.replace("{from}", String(built.from)) && title.split(/\s+/).length <= 4);
+  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words));
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

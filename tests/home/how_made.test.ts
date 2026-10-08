@@ -30,6 +30,9 @@ import { buildLondonTradeSales } from "../../src/lib/spine/country_depth_rows";
 import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { COPY } from "../../src/lib/spine/copy";
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { HomeHowMade } from "../../src/components/spine/home/HomeHowMade";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-how-made";
@@ -99,6 +102,22 @@ if (built && d) {
   const words = built.notices.words.split(/\s+/).filter(Boolean).length;
   check(`the focal's line is twelve words at most, no semicolon ("${built.notices.words}")`, words <= 12 && !built.notices.words.includes(";"), { file: COPY_FILE, remedy: "cut COPY.home.howMade.words to twelve words at most and no semicolon, the card's one supporting line" });
   check(`the title is four words at most, and every row's label three ("${COPY.home.howMade.kicker}")`, COPY.home.howMade.kicker.split(/\s+/).length <= 4 && built.rows.every((r) => r.label.split(/\s+/).length <= 3), { file: COPY_FILE, remedy: "cut COPY.home.howMade.kicker to four words at most and each row's label (COPY.home.howMade.matched.label, COPY.home.howMade.trades.label) to three" });
+}
+
+/* THE DRAWING (plan Task 14): quiet (no accent), the focal and two ruled rows, no count of countries and no estimates line, every
+   figure stamped, one supporting line, the door to About the figures. */
+if (built) {
+  const html = renderToStaticMarkup(React.createElement(HomeHowMade, { how: built }));
+  const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+  check("the section is a box with its id, its figure and its rows", /id="how-made"/.test(html) && /data-archetype="fact-rows"/.test(html) && (html.match(/data-row="/g) ?? []).length === built.rows.length);
+  check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html));
+  const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
+  check(`every figure says where it came from (${figs.length})`, figs.length === 1 + built.rows.length && figs.every((f) => /data-src="/.test(f) && /data-kind="counted"/.test(f)));
+  check("no count of countries and no estimates line", !/Country pages/.test(text) && !/Outside the UK, these pages print estimates/.test(text));
+  check("one supporting line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.notices.words));
+  check("the door to About the figures", html.includes(`href="${built.link.href}"`) && html.includes(built.link.label) && /tap-y/.test(html));
+  const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
+  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.howMade.kicker && title.split(/\s+/).length <= 4);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
