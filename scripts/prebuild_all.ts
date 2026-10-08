@@ -790,6 +790,8 @@ const GATES: Gate[] = [
   /* An address that names nothing answers 404 at the edge, each shape by its own route's resolver; the old three-part district
      addresses go to their district's page; nothing the floor census holds is caught (masterplan step 01, 2026-10-05). */
   { name: "edge-not-found", script: "tests/routing/edge_not_found.test.ts" },
+  /* A place word that names a built-in (/gb/constructor/restaurants answered 500, 2026-10-08) names no place: the geo resolvers and the cell route's readers answer it as a made-up word. */
+  { name: "place-word-keys", script: "tests/routing/place_word_keys.test.ts" },
   /* No session recorder on the site, cookie-free counting only behind its switch (milestone 1, M2; his interview of 2026-09-26, answer 7). */
   { name: "no-session-recording", script: "tests/app/no_session_recording.test.ts" },
   /* The industry page's places table links each place to the trade's page there (milestone 1, M5; his interview of 2026-09-26, answer 35). */

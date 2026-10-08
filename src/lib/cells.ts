@@ -44,6 +44,8 @@ import {
 import { isCellSuppressed, applyCellOverrides } from "./cells/triage";
 import { pickMatchingRow } from "./cells/us_industry_match";
 import { getPopularPlaceName } from "./geo/popular_place_overrides";
+/* The place word comes from the address, so the tables it keys are read for their own entries (src/lib/own.ts). */
+import { own } from "./own";
 import {
   REVENUE_PER_FIRM_BOUNDS,
   DEFAULT_REVENUE_BOUNDS,
@@ -319,9 +321,9 @@ export async function getRegionalCell(
   // at the end of getCellBySlug + in geoNameFromSlug, so admin1 slugs
   // with real data slipped through).
   const popularName = getPopularPlaceName(c, geoSlug);
-  const manualLabel = MANUAL_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  const manualLabel = own(own(MANUAL_DISPLAY_LABEL, c), geoSlug.toLowerCase());
   const friendlyLabel =
-    popularName || manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+    popularName || manualLabel || own(own(CITY_FRIENDLY_DISPLAY_LABEL, c), geoSlug.toLowerCase());
   if (friendlyLabel) cell.geo_name = friendlyLabel;
   return cell;
 }
@@ -350,9 +352,9 @@ export async function getRegionalCellVariants(
     .limit(50);
   if (dbFailed("getRegionalCellVariants", error) || !data) return [];
   const popularName = getPopularPlaceName(c, geoSlug);
-  const manualLabel = MANUAL_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+  const manualLabel = own(own(MANUAL_DISPLAY_LABEL, c), geoSlug.toLowerCase());
   const friendlyLabel =
-    popularName || manualLabel || CITY_FRIENDLY_DISPLAY_LABEL[c]?.[geoSlug.toLowerCase()];
+    popularName || manualLabel || own(own(CITY_FRIENDLY_DISPLAY_LABEL, c), geoSlug.toLowerCase());
   return data
     .map((r) => {
       const row = r as Record<string, unknown>;
@@ -640,7 +642,7 @@ async function getCellBySlugRaw(
   // US: state-level cells_master first; if the geoSlug isn't a state
   // slug, it's likely a county or city geo_id (e.g. "us-06-037",
   // "us-city-new-york") and lives in regional_cells.
-  const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
+  const geoId = own(SLUG_TO_GEO_ID, geoSlug.toLowerCase());
   if (!geoId) {
     const regional = await getRegionalCell("US", geoSlug, industrySlug, selector);
     if (regional) return regional;
@@ -741,7 +743,7 @@ export async function getCellVariants(
     if (regional.length) return regional;
     return getExtrapolatedVariants(country, industrySlug);
   }
-  const geoId = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
+  const geoId = own(SLUG_TO_GEO_ID, geoSlug.toLowerCase());
   if (!geoId) {
     const regional = await getRegionalCellVariants("US", geoSlug, industrySlug);
     return regional;

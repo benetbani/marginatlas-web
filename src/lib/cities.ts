@@ -12,6 +12,7 @@
  * The list is "1.0.0-draft" — pending founder review per T-M.2.
  */
 import top100 from "./cities/top100.json";
+import { own } from "./own";
 
 export type CityTier = 1 | 2 | 3;
 export type CityDataStatus = "measured" | "extrapolated" | "missing";
@@ -256,7 +257,8 @@ export const NEIGHBORHOOD_ALIASES: Record<string, Record<string, string>> = {
  * Returns null if the (country, slug) pair isn't a known neighborhood.
  */
 export function lookupNeighborhoodGeoId(country: string, slug: string): string | null {
-  const map = NEIGHBORHOOD_ALIASES[country.toUpperCase()];
+  /* The slug is a word from the address: its own entries only (src/lib/own.ts), so "constructor" is no district. */
+  const map = own(NEIGHBORHOOD_ALIASES, country.toUpperCase());
   if (!map) return null;
-  return map[slug.toLowerCase()] || null;
+  return own(map, slug.toLowerCase()) || null;
 }

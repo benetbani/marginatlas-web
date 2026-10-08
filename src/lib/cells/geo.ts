@@ -26,6 +26,9 @@ import {
 } from "@/lib/cities/manual_city_aliases";
 import { getPopularPlaceName } from "@/lib/geo/popular_place_overrides";
 import { REGIONS_BY_COUNTRY_AUTO } from "@/lib/regions/regions_generated";
+/* The place word comes from the address, so every table below is read for its own entries (src/lib/own.ts): a plain object
+   answers "constructor" with the Object function, and `manual.includes` then threw on /gb/constructor/restaurants (2026-10-08). */
+import { own } from "@/lib/own";
 
 // US state FIPS code → human name → URL slug
 export const US_STATES: Record<string, { name: string; slug: string }> = {
@@ -116,7 +119,7 @@ export function regionalSlugToGeoId(country: string, geoSlug: string): string {
   // map so hand-curated entries (Frankfurt → DE712, not the NUTS-1
   // Hessen region) take precedence. Fixes the founder-reported
   // "/de/frankfurt → Hessen" bug.
-  const manual = MANUAL_FRIENDLY_TO_GEO_ID[c]?.[slug];
+  const manual = own(own(MANUAL_FRIENDLY_TO_GEO_ID, c), slug);
   if (manual) {
     if (manual.includes("-city-")) {
       const idx = manual.indexOf("-city-");
@@ -127,7 +130,7 @@ export function regionalSlugToGeoId(country: string, geoSlug: string): string {
   }
   // Friendly city aliases. Resolves URLs like
   // /us/los-angeles/restaurants → cells lookup against US-06-037.
-  const friendly = CITY_FRIENDLY_TO_GEO_ID[c]?.[slug];
+  const friendly = own(own(CITY_FRIENDLY_TO_GEO_ID, c), slug);
   if (friendly) {
     if (friendly.includes("-city-")) {
       const idx = friendly.indexOf("-city-");
@@ -163,18 +166,18 @@ export function geoNameFromSlug(country: string, geoSlug: string): string | unde
   // Popular-name overrides take priority.
   const popular = getPopularPlaceName(country, geoSlug);
   if (popular) return popular;
-  const manualLabel = MANUAL_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
+  const manualLabel = own(own(MANUAL_DISPLAY_LABEL, country), geoSlug.toLowerCase());
   if (manualLabel) return manualLabel;
   const friendlyLabel =
-    CITY_FRIENDLY_DISPLAY_LABEL[country]?.[geoSlug.toLowerCase()];
+    own(own(CITY_FRIENDLY_DISPLAY_LABEL, country), geoSlug.toLowerCase());
   if (friendlyLabel) return friendlyLabel;
   // US state slug
-  const usState = SLUG_TO_GEO_ID[geoSlug.toLowerCase()];
-  if (usState) return GEO_ID_TO_NAME[usState];
+  const usState = own(SLUG_TO_GEO_ID, geoSlug.toLowerCase());
+  if (usState) return own(GEO_ID_TO_NAME, usState);
   // Sub-national region code (NUTS / province) via the generated table.
   // Exact match first; for a NUTS3 code not listed (e.g. es511) fall back to
   // the nearest listed parent (es51 -> Cataluna) by trimming trailing digits.
-  const regions = REGIONS_BY_COUNTRY_AUTO[country.toUpperCase()];
+  const regions = own(REGIONS_BY_COUNTRY_AUTO, country.toUpperCase());
   if (regions) {
     const lc = geoSlug.toLowerCase();
     const exact = regions.find((r) => r.value === lc);

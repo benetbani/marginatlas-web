@@ -75,6 +75,8 @@ import {
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { CITY_FRIENDLY_TO_GEO_ID } from "@/lib/cities/city_aliases_generated";
 import { MANUAL_FRIENDLY_TO_GEO_ID } from "@/lib/cities/manual_city_aliases";
+/* The place word comes from the address: the state-slug table is read for its own entries (src/lib/own.ts). */
+import { hasOwn, own } from "@/lib/own";
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import type { Cell } from "@/lib/cells";
 
@@ -167,7 +169,7 @@ const REGIONAL_COLUMNS =
 function isUsStateSlug(countrySlug: string, geoSlug: string): boolean {
   return (
     countrySlug.toLowerCase() === "us" &&
-    SLUG_TO_GEO_ID[geoSlug.toLowerCase()] != null
+    hasOwn(SLUG_TO_GEO_ID, geoSlug.toLowerCase())
   );
 }
 
@@ -334,7 +336,7 @@ function displayPlaceName(
 function usStatePlaceSegment(geoName: string | null, geoId: string): string | null {
   const slug = slugify(geoName);
   if (!slug) return null;
-  return SLUG_TO_GEO_ID[slug] === geoId ? slug : null;
+  return own(SLUG_TO_GEO_ID, slug) === geoId ? slug : null;
 }
 
 /** Emit a trade-page path only if every gate passes. */

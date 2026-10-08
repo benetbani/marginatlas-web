@@ -2721,6 +2721,21 @@
       "claims": []
     },
     {
+      "name": "place-word-keys",
+      "script": "tests/routing/place_word_keys.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A PLACE WORD THAT NAMES A BUILT-IN NAMES NO PLACE (2026-10-08).",
+      "reads": [
+        "src/lib/cells.ts",
+        "src/lib/cells/geo.ts",
+        "src/lib/cells/related_links.ts",
+        "src/lib/cities.ts",
+        "tests/routing/place_word_keys.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-session-recording",
       "script": "tests/app/no_session_recording.test.ts",
       "args": [],
