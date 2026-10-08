@@ -270,8 +270,10 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
           form's name is. */}
       <div className={`${GRID_FIGURES} items-end border-b border-[var(--c-border)] pb-2`}>
         {nameHead ? <span data-head className={HEAD}>{nameHead}</span> : <span aria-hidden />}
-        <span data-head className={`text-right ${HEAD}`}>{heads.a}</span>
-        <span data-head className={`text-right ${HEAD}`}>{heads.b}</span>
+        {/* The two FIGURE columns' heads are tabular like the figures under them (ART-DIRECTION F1): the home's years, "2019" and
+            "2023", are digits and a head that stacks over its column must not set them proportional; a word's head is unchanged. */}
+        <span data-head className={`text-right tabular-nums ${HEAD}`}>{heads.a}</span>
+        <span data-head className={`text-right tabular-nums ${HEAD}`}>{heads.b}</span>
       </div>
       <div data-idea="I5" className={fill ? "flex flex-1 flex-col divide-y divide-[var(--c-border)]" : "divide-y divide-[var(--c-border)]"}>
         {figures.map((r, i) => (
