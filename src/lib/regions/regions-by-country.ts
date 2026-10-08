@@ -19,6 +19,7 @@
  */
 import { REGIONS_BY_COUNTRY_AUTO } from "./regions_generated";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
+import { own } from "../own";
 
 export type RegionOption = {
   value: string;
@@ -131,10 +132,10 @@ export function getRegionsForCountry(iso2: string, countryName: string): RegionO
  */
 export function getSubdivisionsForRegion(iso2: string, regionValue: string): RegionOption[] {
   const upper = iso2.toUpperCase();
-  const auto = REGIONS_BY_COUNTRY_AUTO[upper];
+  const auto = own(REGIONS_BY_COUNTRY_AUTO, upper);
   if (!auto) return [];
 
-  let matched: typeof auto;
+  let matched: NonNullable<typeof auto>;
   if (upper === "US") {
     const fips = US_STATE_TO_FIPS[regionValue];
     if (!fips) return [];

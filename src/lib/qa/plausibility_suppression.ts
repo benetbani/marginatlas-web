@@ -44,6 +44,7 @@ import {
   type SmbBounds,
 } from "@/lib/qa/smb_bounds";
 import { LEGACY_DB_TO_TAXONOMY } from "@/lib/cells/industry_resolution";
+import { own } from "@/lib/own";
 import { getIndustryGlobalMedian } from "@/lib/economic_profile/industry_medians";
 import countryBaselineJson from "@/lib/cells/country_smb_baseline.json";
 
@@ -178,7 +179,7 @@ function resolveRevenueBounds(industryId: string | null | undefined): SmbBounds 
   if (!industryId) return DEFAULT_REVENUE_BOUNDS;
   const direct = REVENUE_PER_FIRM_BOUNDS[industryId];
   if (direct) return direct;
-  const taxId = LEGACY_DB_TO_TAXONOMY[industryId];
+  const taxId = own(LEGACY_DB_TO_TAXONOMY, industryId);
   if (taxId) {
     const viaCrosswalk = REVENUE_PER_FIRM_BOUNDS[taxId];
     if (viaCrosswalk) return viaCrosswalk;

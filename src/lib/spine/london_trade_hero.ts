@@ -27,6 +27,7 @@ import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
 import { LONDON_GEOGRAPHY, londonTradeRegister, londonTradeSales, OPEN_ABOVE_GBP, OPEN_BELOW_GBP, type SalesQuantile } from "@/lib/uk/registers/london_trade";
 import { londonTradeRanges, londonWithholding } from "@/lib/uk/pnl/london";
 import { RECIPES } from "@/lib/uk/pnl/recipes";
+import { own } from "@/lib/own";
 import type { Range } from "@/lib/uk/pnl/ranges";
 import { convertToUsd } from "@/lib/finance/fx";
 import { honestRound } from "@/lib/uk/present/precision";
@@ -71,7 +72,7 @@ const percentOf = (r: Range): number => honestRound(r.mid * 100, r.lo * 100, r.h
 
 /** Plan 06 rule (g): money prints only where the engine withholds nothing and the recipe carries utilities. */
 export function londonMoneyPrints(slug: string): boolean {
-  return londonWithholding(slug) === null && RECIPES[slug]?.utilitiesCarried === true;
+  return londonWithholding(slug) === null && own(RECIPES, slug)?.utilitiesCarried === true;
 }
 
 function firmsCell(slug: string): KvCell | null {
@@ -89,7 +90,7 @@ function firmsCell(slug: string): KvCell | null {
 
 function breakEvenHero(slug: string): LondonTradeHero | null {
   if (!londonMoneyPrints(slug)) return null;
-  const noun = PREMISES_NOUN[PREMISES.trade_category[slug] ?? ""];
+  const noun = PREMISES_NOUN[own(PREMISES.trade_category, slug) ?? ""];
   const st = londonTradeRanges(slug, "sole trader");
   const co = londonTradeRanges(slug, "company");
   const firms = firmsCell(slug);

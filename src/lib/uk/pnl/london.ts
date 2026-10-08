@@ -46,10 +46,12 @@ export function londonWithholding(slug: string): string | null {
 
 export function londonTradeInputs(slug: string, form: Form = "sole trader"): PnlInputs | null {
   if (londonWithholding(slug) !== null) return null;
-  const category = PREMISES.trade_category[slug];
+  /* Own entries (src/lib/own.ts), as londonWithholding reads them: it answers null only when the trade holds each of these, so
+     a word that names a built-in never gets here, and if it did the read is undefined and not the Object function. */
+  const category = own(PREMISES.trade_category, slug) as string;
   const row = PREMISES.rows[LONDON].categories[category] as PremisesRow;
-  const bands = TURNOVER.trades[slug].by_geography[LONDON].turnover_bands_k as number[];
-  return buildInputs(RECIPES[slug], { revenueBandsK: bands, premises: row, premisesCategory: category, place: "London", form });
+  const bands = own(TURNOVER.trades, slug)!.by_geography[LONDON].turnover_bands_k as number[];
+  return buildInputs(own(RECIPES, slug)!, { revenueBandsK: bands, premises: row, premisesCategory: category, place: "London", form });
 }
 
 export function londonTradeSummary(slug: string, form: Form = "sole trader"): PnlSummary | null {

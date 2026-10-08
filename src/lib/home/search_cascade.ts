@@ -8,6 +8,7 @@ import {
   CITY_FRIENDLY_DISPLAY_LABEL,
 } from "@/lib/cities/city_aliases_generated";
 import { UK_CITIES } from "@/lib/home/destination";
+import { own } from "@/lib/own";
 
 export type CascadeCity = { slug: string; label: string };
 
@@ -32,9 +33,9 @@ export function getCitiesForCountryCode(iso2: string): CascadeCity[] {
      reader, where the alias tables held four (Birmingham under a "-uk" slug, no Bristol, Glasgow or Leeds). A UK city lands on
      its own page, or London's trade page (src/lib/home/destination.ts), so its slug is the city page's, not a cell geo. */
   if (cc === "GB") return UK_CITIES.map((c) => ({ slug: c.slug, label: c.label }));
-  const byRegion = CITIES_BY_STATE[cc];
+  const byRegion = own(CITIES_BY_STATE, cc);
   if (!byRegion) return [];
-  const labels = CITY_FRIENDLY_DISPLAY_LABEL[cc] || {};
+  const labels: Record<string, string> = own(CITY_FRIENDLY_DISPLAY_LABEL, cc) ?? {};
   const seen = new Set<string>();
   const out: CascadeCity[] = [];
   for (const region of Object.keys(byRegion)) {

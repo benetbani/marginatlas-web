@@ -22,14 +22,15 @@
  * and the field is the shared ComboField the navigator uses.
  *
  * Client-safe by construction: it imports only next/navigation, React, the
- * ComboField, and two pure lib maps (taxonomy + generated city aliases). No
- * Supabase, no server-only module.
+ * ComboField, and three pure lib modules (taxonomy, generated city aliases and
+ * the own-entry reader, src/lib/own.ts). No Supabase, no server-only module.
  */
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ComboField, type ComboOption } from "@/components/ComboField";
 import { COUNTRIES, industryToSlug } from "@/lib/taxonomy";
 import { CITY_FRIENDLY_DISPLAY_LABEL } from "@/lib/cities/city_aliases_generated";
+import { own } from "@/lib/own";
 
 /**
  * Countries we can offer a city for. The generated city map is keyed by ISO-2
@@ -38,7 +39,7 @@ import { CITY_FRIENDLY_DISPLAY_LABEL } from "@/lib/cities/city_aliases_generated
  * still showing the proper country name. Computed once at module load.
  */
 const COUNTRY_OPTIONS: ComboOption[] = COUNTRIES.filter((c) => {
-  const cities = CITY_FRIENDLY_DISPLAY_LABEL[c.code.toUpperCase()];
+  const cities = own(CITY_FRIENDLY_DISPLAY_LABEL, c.code.toUpperCase());
   return cities && Object.keys(cities).length > 0;
 }).map((c) => ({
   value: c.code,
@@ -53,7 +54,7 @@ const COUNTRY_OPTIONS: ComboOption[] = COUNTRIES.filter((c) => {
  * city-less country, which disables the field.
  */
 function cityOptionsForCountry(countryCode: string): ComboOption[] {
-  const cities = CITY_FRIENDLY_DISPLAY_LABEL[countryCode.toUpperCase()];
+  const cities = own(CITY_FRIENDLY_DISPLAY_LABEL, countryCode.toUpperCase());
   if (!cities) return [];
   return Object.entries(cities)
     .map(([slug, label]) => ({

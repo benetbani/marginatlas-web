@@ -41,6 +41,7 @@ import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { LONDON_MARKET } from "@/lib/london/market";
 import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
+import { own } from "@/lib/own";
 import { tradeIconFor } from "@/lib/spine/trade_icon";
 import { LONDON_GEOGRAPHY, londonTradeRegister, londonTradeSales } from "@/lib/uk/registers/london_trade";
 import { registerSrc } from "@/lib/spine/provenance";
@@ -259,7 +260,7 @@ export function buildLondonTradeSales(): { rows: BarRow[]; worldMax: number } | 
   const rows: BarRow[] = [];
   const seen = new Set<string>();
   for (const slug of Object.keys(market.activities)) {
-    const ind = (SLUG_TO_INDUSTRY as Record<string, { id: string; name: string } | undefined>)[slug];
+    const ind = own(SLUG_TO_INDUSTRY, slug);
     const reg = londonTradeRegister(slug);
     const sales = londonTradeSales(slug);
     if (!ind || !reg || !sales || sales.q50.open !== false) continue;

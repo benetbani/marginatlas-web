@@ -24,6 +24,7 @@ import { COUNTRIES, INDUSTRY_BY_ID, industryToSlug } from "@/lib/taxonomy";
 import { getTopIndustriesForCountry } from "@/lib/cells";
 import { CountryFlag } from "@/components/CountryFlag";
 import { CITIES_BY_STATE } from "@/lib/cities/city_aliases_generated";
+import { own } from "@/lib/own";
 import { iso2ToName } from "@/lib/countries";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 // The resolver for "does a page exist for this place", pure and database-free.
@@ -159,7 +160,7 @@ async function RegionLandingPageBody({
   }
 
   const regionLabel = regionEntry.label;
-  const curatedCities = CITIES_BY_STATE[iso2]?.[geo.toLowerCase()] || [];
+  const curatedCities = own(own(CITIES_BY_STATE, iso2), geo.toLowerCase()) || [];
 
   // Country-level dense SMB activities, used ONLY as the internal feed for the
   // best/hardest lede below (the easiest-to-break-in panel left the page on

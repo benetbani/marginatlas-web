@@ -878,7 +878,7 @@ export async function getTopIndustriesForCountry(
   // the aggregator's INDUSTRY_BY_ID lookup and don't show as duplicate labels.
   const folded = (data as ExtrapolatedRow[]).map((r) => ({
     ...r,
-    industry_id: LEGACY_DB_TO_TAXONOMY[r.industry_id] ?? r.industry_id,
+    industry_id: own(LEGACY_DB_TO_TAXONOMY, r.industry_id) ?? r.industry_id,
   }));
   return aggregateExtrapolatedByIndustry(folded, country, limit);
 }
