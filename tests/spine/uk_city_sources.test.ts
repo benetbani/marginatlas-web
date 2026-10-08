@@ -1,10 +1,14 @@
 /**
- * LONDON'S CITY PAGE PRINTS A SOURCED FIGURE OR A MARKED ONE (masterplan step 03, 2026-10-05; the labels audit of 2026-10-02,
- * items 19, 22, 23 and 24). London is held to a register region (Greater London, his ruling of 2026-10-04), so its page is a UK
- * page Pro will sell: the engine's district multipliers, the hand-anchored cost of living, the transported pay tenths and the
- * premises figures held with no source either leave, take an official figure, or say they are estimates.
+ * EVERY UK CITY'S PAGE PRINTS A SOURCED FIGURE OR A MARKED ONE (masterplan step 03, 2026-10-05, for London; plan 2026-10-08,
+ * uk:cities-sourced-or-marked, for the six others). The UK pages are the Pro pages (his ruling 27), so a figure on them is an
+ * official one, says it is an estimate in its card's one line, or is withheld. London is held to a register region (Greater
+ * London, his ruling of 2026-10-04): its shop rent is the valuation's, its pay tenths the survey's, its hand-anchored cost of
+ * living and its engine district rents gone or marked. Manchester, Birmingham, Leeds, Glasgow, Edinburgh and Bristol are held to
+ * no register region: they keep their shards' and the city list's figures, each card's one line saying they are estimates, and
+ * their official figures (the survey's pay, the UK's tenths, the counted visitors, the UK's born-abroad share) keep their lines.
+ * cityHeldToSources picks the lines; cityRegisterPlace picks which figures are read.
  *
- * Run: npx tsx tests/spine/london_city_sources.test.ts
+ * Run: node node_modules/tsx/dist/cli.mjs tests/spine/uk_city_sources.test.ts
  */
 import { buildCityHeroBoard } from "../../src/lib/spine/city_hero_board";
 import { buildCityPeerTable } from "../../src/lib/spine/peer_rows";
@@ -21,14 +25,16 @@ import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 import premisesJson from "../../data/uk/registers/premises.json";
 import { readFileSync } from "node:fs";
+import { buildCharacterTables, buildCityPeopleTable } from "../../src/lib/spine/character_rows";
+import { UK_CITY_SLUGS } from "../../src/lib/uk/registers/register_city";
 import { buildCityMarket } from "../../src/lib/spine/city_market_rows";
 import { cityPeerListRow } from "../../src/lib/spine/city_peer_list";
 import { getCityPeerSet } from "../../src/lib/cities/comparable_cities";
 import { cityTypicalIncome } from "../../src/lib/spine/city_income";
 
-const RULE = "london-city-sources";
+const RULE = "uk-city-sources";
 const FILE = "src/lib/spine";
-const REMEDY = "on a page held to a register region print an official figure, say the figure is an estimate, or withhold it";
+const REMEDY = "on a UK city's page print an official figure, say in the card's one line that the figure is an estimate (cityHeldToSources picks the line), or withhold it";
 let failed = 0;
 const check = (label: string, ok: boolean) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
@@ -209,5 +215,40 @@ check(`a UK city's district card says its rents are estimates ("${ukBars?.basis}
 const deBars = buildCityDistrictBars({ meta: { iso2: "DE", slug: "berlin" }, where_to_trade: { list: [{ name: "B", slug: "b", rent_mult: 1.8 }, { name: "A", slug: "a", rent_mult: 1 }] } });
 check("a city outside the UK keeps its line", !!deBars && !/estimate/i.test(deBars.basis));
 
+/* EVERY CARD'S ONE LINE ON THE SIX, IN ONE LIST (the audit of plan 2026-10-08): a card printing the shard's or the city list's
+   figures says "estimate" in its line; the cards whose figures are official (the answer and the earnings strip, the survey's pay;
+   the people table's born-abroad share, the UK page's own) keep theirs. A card added to the city page joins one of the two. */
+check(`the gate holds every UK city with a page (${UK_CITY_SLUGS.join(", ")})`, [...SIX, "london"].sort().join(",") === UK_CITY_SLUGS.join(","));
+for (const slug of SIX) {
+  const board = buildCityHeroBoard(slug);
+  const cells = buildPremisesBento(slug);
+  const marked: Array<[string, string | null | undefined]> = [
+    ["the board's column", board?.levelBasis],
+    ["the prime rent", cells && "figure" in cells.rent ? cells.rent.basis : null],
+    ["the deposit", cells && "figure" in cells.deposit ? cells.deposit.basis : null],
+    ["the empty shops", cells && "part" in cells.empty ? cells.empty.basis : null],
+    ["the fit-out", cells && "figure" in cells.fitOut ? cells.fitOut.basis : null],
+    ["the permits", buildCityGates(slug)?.basis],
+    ["who is trading", buildCityMarket(slug)?.basis],
+    ["living", buildCityLiving(slug)?.basis],
+    ["the runway", buildCityRunway(slug)?.basis],
+    ["the spend", buildCityDemand(slug)?.basis],
+    ["the split", buildCitySeason(slug)?.foot],
+    ["the crew", buildCityCrew(slug)?.basis],
+    ["the texture", buildCityTexture(slug)?.basis],
+    ["the calendar", buildCityCalendar(slug)?.basis],
+    ["the peers", buildCityPeerTable(peerSeedOf(slug))?.caveat],
+  ];
+  for (const [card, line] of marked) check(`${slug}: ${card} says its figures are estimates ("${line ?? "no line"}")`, typeof line === "string" && /\bestimate/i.test(line));
+  check(`${slug}: the answer is official and keeps its line`, board?.answerBasis === COPY.cityHero.answerBasis);
+  check(`${slug}: the earnings strip is official and keeps its line`, buildCityEarningsStrip(slug)?.basis === COPY.cityCustomers.basis);
+  const bornAbroad = buildCityPeopleTable(slug)?.foot?.value;
+  check(`${slug}: the born-abroad share is the UK page's own (${bornAbroad})`, !!bornAbroad && bornAbroad === buildCharacterTables("GB").people?.foot?.value);
+}
+/* The views print the lines the builders hand them (a builder's line a view ignores is a line no reader meets). */
+const cityViewSrc = readFileSync("src/components/spine/city/city-view.tsx", "utf8");
+check("the split card prints its foot", /\{season\.foot \? <p/.test(cityViewSrc));
+check("the spend card prints its basis", /basis=\{demand\.basis \?\? undefined\}/.test(cityViewSrc));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log("spine/london_city_sources: all pass");
+console.log("spine/uk_city_sources: all pass");

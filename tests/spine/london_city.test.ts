@@ -55,7 +55,7 @@ async function main() {
   check("London's hero has no density over the metro's residents", row("density") === undefined);
   check("London's hero has no metro GDP", row("gdp") === undefined);
   /* The cost of living left London's hero in masterplan step 03 (2026-10-05, the labels audit's items 22 and 24): a hand-anchored
-     index no source holds, which a city held to a register region does not print (tests/spine/london_city_sources.test.ts). */
+     index no source holds, which a city held to a register region does not print (tests/spine/uk_city_sources.test.ts). */
   check("London keeps its city permits row and prints no hand-anchored cost of living", !!row("permits") && row("living") === undefined);
   const man = buildCityHeroBoard("manchester");
   check("Manchester keeps its density and GDP rows (not held to a region)", !!man?.rows.find((r) => r.key === "density") && !!man?.rows.find((r) => r.key === "gdp"));

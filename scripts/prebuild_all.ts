@@ -819,9 +819,10 @@ const GATES: Gate[] = [
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
   { name: "no-place-words", script: "tests/copy/no_place_words.test.ts" },
-  /* London's city page prints an official figure, says a figure is an estimate, or withholds it: the shop rent from the
-     valuation slice, the survey's pay tenths, no hand-anchored cost of living, no engine district rents (masterplan step 03). */
-  { name: "london-city-sources", script: "tests/spine/london_city_sources.test.ts" },
+  /* Every UK city's page prints an official figure, says in its card's one line that a figure is an estimate, or withholds it:
+     London's shop rent from the valuation slice, the survey's pay, no hand-anchored cost of living, no engine district rents
+     (masterplan step 03); the six other cities' shard figures each marked an estimate (plan 2026-10-08, uk:cities-sourced-or-marked). */
+  { name: "uk-city-sources", script: "tests/spine/uk_city_sources.test.ts" },
   /* The London trade pages and the UK's page: the trade's typical said on each world-typical card, the UK's insolvencies for the
      world's closures, the peers' figures called estimates, sourced locals notes, no bank-account wait, no exit card, every UK
      city's nation (masterplan step 04). */
