@@ -64,7 +64,8 @@ with the Write tool (every test holds regex backslashes).
   ring); London's 88,550 and 0.382 are `data/uk/registers/survival.json`'s E12000007.
 - **Section 2's source** (`E:/atlas/macro/global-aggregates/wb-business-density.json`, `lastupdated` 2026-04-08, and
   `wb-labor-force-total.json`): the profile's `world_bank_region` "Latin America & Caribbean" holds 34 countries; its `continent`
-  "Africa" 47, plus Egypt, Morocco, Tunisia and Algeria (continent "MENA", their cities in Africa) = 51. With a 2022 figure and a
+  "Africa" 47, plus Egypt, Morocco, Tunisia and Algeria (continent "MENA", their cities in Africa) and Libya (MENA with no city
+  in the city list, so the export's map places it in Africa; it holds no rate) = 52. With a 2022 figure and a
   2022 labour force of a million or more: 11 in Latin America (Chile 10.8, Costa Rica 5.8, Brazil 5.1, Peru 4.7, Panama 4.5, then
   Uruguay, Jamaica, Colombia, Mexico, Paraguay, Honduras) and 20 in Africa (South Africa 11.1, Botswana 8.7, Morocco 2.6, Tunisia
   1.7, Zambia 1.6, then fifteen); 2023 to 2025 hold no figure for either region, so 2022 is the latest year both show five; the UK
@@ -690,10 +691,11 @@ Create `tests/home/new_companies.test.ts`:
  *
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
  * manifest's row count is its content's; each region's members are the ones the in-repo files give it (the country profile's
- * world_bank_region for Latin America; its continent, or a MENA country whose cities stand in Africa, for Africa); a member shows
- * only with a figure for the year and a labour force over the floor, which carries its reason; five or more show in each region;
- * the UK's own figure is there; every member shown has a country page; and, where the series is on this machine, every figure,
- * the UK's among them, is the source's, read again, and the year is the latest in which both regions show five.
+ * world_bank_region for Latin America; its continent, or a MENA country whose cities stand in Africa, or one with no city in the
+ * list that the export's map places there, for Africa); a member shows only with a figure for the year and a labour force of at
+ * least the floor, which says what it does; five or more show in each region; the UK's own figure is there; every member shown has
+ * a country page; and, where the series is on this machine, each names the indicator the slice says it is, every figure, the UK's
+ * among them, is the source's, read again, and the year is the latest in which both regions show five.
  *
  * Run: npx tsx tests/home/new_companies.test.ts
  */
@@ -711,6 +713,10 @@ const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string
 type Member = { iso2: string; value: number | null; labour_force: number | null; shown: boolean };
 type Export = { year: number; measure: string; last_updated: string; floor: { measure: string; year: number; at_least: number; why: string }; uk: { iso2: string; value: number }; regions: Array<{ key: string; rule: string; members: Member[] }> };
 const REGIONS = ["latam", "africa"] as const;
+/* A MENA country is African by where its cities stand in the city list. One with no city there is placed by this map, the export's own
+   (MENA_WITHOUT_A_CITY in scripts/data/home/export_home.py), kept here as a second copy so a placement changes in both files or this
+   gate fails. On the 2022 figures Libya holds no rate, so placing it in Africa shows nothing new. */
+const MENA_WITHOUT_A_CITY: Record<string, "africa" | null> = { LY: "africa", PS: null, SY: null, YE: null };
 
 const held = holdHomeExport("new_companies.json", check);
 const d = (held?.data ?? null) as Export | null;
@@ -723,8 +729,14 @@ if (d && held) {
     const k = c.iso2.toUpperCase();
     if (!cityContinent.has(k)) cityContinent.set(k, c.continent);
   }
-  const regionOf = (iso2: string, p: { continent?: string; world_bank_region?: string }) =>
-    p.world_bank_region === "Latin America & Caribbean" ? "latam" : p.continent === "Africa" || (p.continent === "MENA" && cityContinent.get(iso2) === "Africa") ? "africa" : null;
+  const regionOf = (iso2: string, p: { continent?: string; world_bank_region?: string }) => {
+    if (p.world_bank_region === "Latin America & Caribbean") return "latam";
+    if (p.continent === "Africa") return "africa";
+    if (p.continent !== "MENA") return null;
+    return cityContinent.has(iso2) ? (cityContinent.get(iso2) === "Africa" ? "africa" : null) : MENA_WITHOUT_A_CITY[iso2] ?? null;
+  };
+  const noCity = Object.entries(profile).filter(([iso2, p]) => p.continent === "MENA" && !cityContinent.has(iso2)).map(([iso2]) => iso2).sort();
+  check(`a MENA country with no city in the list is placed by the map and the map names no other (${noCity.map((i) => `${i}: ${MENA_WITHOUT_A_CITY[i] ?? "not Africa"}`).join(", ") || "none"})`, JSON.stringify(noCity) === JSON.stringify(Object.keys(MENA_WITHOUT_A_CITY).sort()));
   check(`the regions are Latin America and Africa, in that order (${d.regions.map((r) => r.key).join(", ")})`, JSON.stringify(d.regions.map((r) => r.key)) === JSON.stringify(REGIONS));
   for (const key of REGIONS) {
     const want = Object.entries(profile).filter(([iso2, p]) => regionOf(iso2, p) === key).map(([iso2]) => iso2).sort();
@@ -744,13 +756,19 @@ if (d && held) {
   const labour = held.entry.sources.find((s) => s.key === "labour_force");
   check("the manifest names the two series the figures were read from (density, labour_force)", !!density && !!labour);
   if (density && labour && existsSync(density.path) && existsSync(labour.path)) {
-    type Row = { country: { id: string }; date: string; value: number | null };
+    type Row = { country: { id: string }; date: string; value: number | null; indicator?: { id?: string } };
     const table = (path: string) => {
       const by = new Map<string, number>();
-      for (const r of (JSON.parse(readFileSync(path, "utf8")) as [unknown, Row[]])[1]) if (r.value !== null && r.value !== undefined) by.set(`${r.country.id}:${r.date}`, r.value);
-      return by;
+      const ids = new Set<string>();
+      for (const r of (JSON.parse(readFileSync(path, "utf8")) as [unknown, Row[]])[1]) {
+        ids.add(r.indicator?.id ?? "none");
+        if (r.value !== null && r.value !== undefined) by.set(`${r.country.id}:${r.date}`, r.value);
+      }
+      return { by, id: [...ids].sort().join(", ") };
     };
-    const dens = table(density.path), lf = table(labour.path);
+    const densTable = table(density.path), lfTable = table(labour.path);
+    const dens = densTable.by, lf = lfTable.by;
+    check(`each series names the indicator the slice says it is (${densTable.id} for ${d.measure}; ${lfTable.id} for ${d.floor.measure})`, densTable.id === d.measure && lfTable.id === d.floor.measure);
     const all = d.regions.flatMap((r) => r.members);
     const wrong = all.filter((m) => (dens.get(`${m.iso2}:${d.year}`) ?? null) !== m.value || (lf.get(`${m.iso2}:${d.year}`) ?? null) !== m.labour_force).map((m) => m.iso2);
     check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0);
@@ -803,37 +821,62 @@ In `scripts/data/home/export_home.py`, above `EXPORTS = {`, add:
 
 DENSITY = "E:/atlas/macro/global-aggregates/wb-business-density.json"
 LABOUR = "E:/atlas/macro/global-aggregates/wb-labor-force-total.json"
-# THE FLOOR: a labour force of a million or more in the same year. It keeps out the smallest economies, where a few hundred
-# registrations move the rate and registries for companies run from abroad sit (Cape Verde, Mauritius, Barbados on 2022's figures).
+# Every row of a series file names its own indicator; series() reads it and refuses a file that is not the one asked for.
+DENSITY_INDICATOR = "IC.BUS.NDNS.ZS"
+LABOUR_INDICATOR = "SL.TLF.TOTL.IN"
+# THE FLOOR: a labour force under a million, in the same year as the rate, leaves a country out of the lists (on 2022's figures Cape
+# Verde, Mauritius and Barbados hold a rate and are left out). It states what it does and no cause: no file says why a small
+# economy's rate differs from the rest.
 FLOOR = 1_000_000
 SHOWN_AT_LEAST = 5
+# A MENA country counts as African by where its cities stand in the city list. Those with no city there cannot be placed that way,
+# so each is named here and placed by its continent (Libya: Africa; Palestine, Syria and Yemen: not Africa), never left to fall out
+# of Africa for want of a city. The export refuses, naming the country, when a MENA country with no city is missing from this map,
+# and when a country named here has a city or is not MENA, so the map cannot go stale unseen. On the 2022 figures Libya holds no
+# rate, so placing it in Africa changes nothing a list shows.
+MENA_WITHOUT_A_CITY: dict[str, str | None] = {"LY": "africa", "PS": None, "SY": None, "YE": None}
 
 
-def series(path: str) -> tuple[dict, dict]:
+def series(path: str, want: str) -> tuple[dict, dict, str]:
+    """A World Bank series file: its header, {country: {year: value}} and the indicator it names. Every row names one, and it must
+    be `want`: a file of another indicator is refused, so the id the slice records is the file's own, read here."""
     meta, rows = json.loads(Path(path).read_text(encoding="utf-8"))
+    ids = {(r.get("indicator") or {}).get("id") for r in rows}
+    if ids != {want}:
+        refuse(f"{path} names the indicator(s) {sorted(str(i) for i in ids)}, not {want}")
     by: dict[str, dict[str, float]] = {}
     for r in rows:
         if r.get("value") is not None:
             by.setdefault(r["country"]["id"], {})[r["date"]] = r["value"]
-    return meta, by
+    return meta, by, next(iter(ids))
 
 
 def new_companies() -> None:
     """New limited companies registered in a year per 1,000 people aged 15 to 64, each country of Latin America and of Africa (by
-    the country profile in this repo), the UK's beside them for scale. The year is the latest in which both regions show five
+    the country profile in this repo), the UK's beside them for scale. A MENA country is African by where its cities stand in the
+    city list, and one with no city there by MENA_WITHOUT_A_CITY. The year is the latest in which both regions show five
     countries over the floor and the UK has a figure: worked out, never typed."""
-    meta, density = series(DENSITY)
-    _, labour = series(LABOUR)
+    meta, density, density_id = series(DENSITY, DENSITY_INDICATOR)
+    _, labour, labour_id = series(LABOUR, LABOUR_INDICATOR)
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))["countries"]
     city_continent: dict[str, str] = {}
     for c in json.loads(CITY_LIST.read_text(encoding="utf-8"))["cities"]:
         city_continent.setdefault(str(c["iso2"]).upper(), c["continent"])
+    stale = sorted(i for i in MENA_WITHOUT_A_CITY if profile.get(i, {}).get("continent") != "MENA" or i in city_continent)
+    if stale:
+        refuse(f"MENA_WITHOUT_A_CITY names {', '.join(stale)}; each must be a MENA country with no city in the city list")
 
     def region_of(iso2: str, p: dict) -> str | None:
         if p.get("world_bank_region") == "Latin America & Caribbean":
             return "latam"
-        if p.get("continent") == "Africa" or (p.get("continent") == "MENA" and city_continent.get(iso2) == "Africa"):
+        if p.get("continent") == "Africa":
             return "africa"
+        if p.get("continent") == "MENA":
+            if iso2 in city_continent:
+                return "africa" if city_continent[iso2] == "Africa" else None
+            if iso2 not in MENA_WITHOUT_A_CITY:
+                refuse(f"{iso2} ({p.get('name')}) is a MENA country with no city in the city list, and MENA_WITHOUT_A_CITY does not place it")
+            return MENA_WITHOUT_A_CITY[iso2]
         return None
 
     members: dict[str, list[str]] = {"latam": [], "africa": []}
@@ -850,22 +893,24 @@ def new_companies() -> None:
     if year is None:
         refuse("no year in which both regions show five countries over the floor and the UK has a figure")
     regions = []
-    for key, rule in (("latam", "the profile's world_bank_region is Latin America & Caribbean"), ("africa", "the profile's continent is Africa, or MENA with the country's cities in Africa")):
+    named = ", ".join(sorted(i for i, r in MENA_WITHOUT_A_CITY.items() if r == "africa"))
+    africa_rule = "the profile's continent is Africa, or MENA with the country's cities in Africa" + (f", or MENA with no city in the list and named as African ({named})" if named else "")
+    for key, rule in (("latam", "the profile's world_bank_region is Latin America & Caribbean"), ("africa", africa_rule)):
         regions.append({"key": key, "rule": rule, "members": [
             {"iso2": i, "value": density.get(i, {}).get(year), "labour_force": labour.get(i, {}).get(year), "shown": shown(i, year)}
             for i in sorted(members[key])
         ]})
     obj = {
         "year": int(year),
-        "measure": "IC.BUS.NDNS.ZS",
+        "measure": density_id,
         "last_updated": meta.get("lastupdated"),
-        "floor": {"measure": "SL.TLF.TOTL.IN", "year": int(year), "at_least": FLOOR, "why": "a labour force of a million or more keeps out the smallest economies, where a few hundred registrations move the rate and registries for companies run from abroad sit"},
+        "floor": {"measure": labour_id, "year": int(year), "at_least": FLOOR, "why": f"a labour force under {FLOOR:,} is left out of the lists"},
         "uk": {"iso2": "GB", "value": density["GB"][year]},
         "regions": regions,
     }
     write("new_companies.json", obj, sum(len(r["members"]) for r in regions) + 1, [
-        source("density", DENSITY, "worldbank", "New business density (IC.BUS.NDNS.ZS): new limited companies registered per 1,000 people aged 15 to 64"),
-        source("labour_force", LABOUR, "worldbank", "Labor force, total (SL.TLF.TOTL.IN): the list's floor", prints=False),
+        source("density", DENSITY, "worldbank", f"New business density ({density_id}): new limited companies registered per 1,000 people aged 15 to 64"),
+        source("labour_force", LABOUR, "worldbank", f"Labor force, total ({labour_id}): the list's floor", prints=False),
     ])
 
 
@@ -891,9 +936,9 @@ EXPORTS = {
 - [ ] **Step 4: Run it and the gate**
 
 Run: `python -P scripts/data/home/export_home.py new_companies > scratchpad/home-sections/x03.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/x03.txt`
-Expected: `new_companies.json: 86 rows, <twelve hex>` (34 + 51 members and the UK), `exit 0`.
+Expected: `new_companies.json: 87 rows, <twelve hex>` (34 + 52 members and the UK), `exit 0`.
 Run: `node -e "const d=require('./data/home/new_companies.json');console.log(d.year,d.uk.value.toFixed(1));for(const r of d.regions){const s=r.members.filter(m=>m.shown).sort((a,b)=>b.value-a.value);console.log(r.key,r.members.length,s.length,s.slice(0,5).map(m=>m.iso2+'='+(Math.round(m.value*10)/10).toFixed(1)).join(' '))}" > scratchpad/home-sections/x03b.txt 2>&1`
-Expected: `2022 18.6`, `latam 34 11 CL=10.8 CR=5.8 BR=5.1 PE=4.7 PA=4.5`, `africa 51 20 ZA=11.1 BW=8.7 MA=2.6 TN=1.7 ZM=1.6`.
+Expected: `2022 18.6`, `latam 34 11 CL=10.8 CR=5.8 BR=5.1 PE=4.7 PA=4.5`, `africa 52 20 ZA=11.1 BW=8.7 MA=2.6 TN=1.7 ZM=1.6`.
 Run: `node node_modules/tsx/dist/cli.mjs tests/home/new_companies.test.ts > scratchpad/home-sections/t03.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t03.txt`
 Expected: every line PASS, the sources read again, `home/new_companies: all pass`, `exit 0`.
 Run (city_survival's gate still green beside a second slice): `node node_modules/tsx/dist/cli.mjs tests/home/firms_last.test.ts > scratchpad/home-sections/t03b.txt 2>&1; echo "exit $?" >> scratchpad/home-sections/t03b.txt` → `exit 0`.
@@ -1971,7 +2016,7 @@ Create `src/lib/home/new_companies.ts`:
  * companies registered in a year per 1,000 people of working age), one year, countries ranked within their own region and never
  * across the two; each region's five highest drawn with flag and name (his /countries ruling: a country is its flag and its name),
  * the rest behind the founder's plus. A country shows only with a figure for the year and a labour force of a million or more (the
- * export's floor, which keeps out the smallest economies and the registries for companies run from abroad). The card's one figure
+ * export's floor, which leaves a smaller labour force out of the lists). The card's one figure
  * is the UK's own on the same measure, for scale; it ranks nothing. Every number from data/home/new_companies.json, never typed.
  */
 import ncJson from "../../../data/home/new_companies.json";

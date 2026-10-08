@@ -183,37 +183,62 @@ def city_survival() -> None:
 
 DENSITY = "E:/atlas/macro/global-aggregates/wb-business-density.json"
 LABOUR = "E:/atlas/macro/global-aggregates/wb-labor-force-total.json"
-# THE FLOOR: a labour force of a million or more in the same year. It keeps out the smallest economies, where a few hundred
-# registrations move the rate and registries for companies run from abroad sit (Cape Verde, Mauritius, Barbados on 2022's figures).
+# Every row of a series file names its own indicator; series() reads it and refuses a file that is not the one asked for.
+DENSITY_INDICATOR = "IC.BUS.NDNS.ZS"
+LABOUR_INDICATOR = "SL.TLF.TOTL.IN"
+# THE FLOOR: a labour force under a million, in the same year as the rate, leaves a country out of the lists (on 2022's figures Cape
+# Verde, Mauritius and Barbados hold a rate and are left out). It states what it does and no cause: no file says why a small
+# economy's rate differs from the rest.
 FLOOR = 1_000_000
 SHOWN_AT_LEAST = 5
+# A MENA country counts as African by where its cities stand in the city list. Those with no city there cannot be placed that way,
+# so each is named here and placed by its continent (Libya: Africa; Palestine, Syria and Yemen: not Africa), never left to fall out
+# of Africa for want of a city. The export refuses, naming the country, when a MENA country with no city is missing from this map,
+# and when a country named here has a city or is not MENA, so the map cannot go stale unseen. On the 2022 figures Libya holds no
+# rate, so placing it in Africa changes nothing a list shows.
+MENA_WITHOUT_A_CITY: dict[str, str | None] = {"LY": "africa", "PS": None, "SY": None, "YE": None}
 
 
-def series(path: str) -> tuple[dict, dict]:
+def series(path: str, want: str) -> tuple[dict, dict, str]:
+    """A World Bank series file: its header, {country: {year: value}} and the indicator it names. Every row names one, and it must
+    be `want`: a file of another indicator is refused, so the id the slice records is the file's own, read here."""
     meta, rows = json.loads(Path(path).read_text(encoding="utf-8"))
+    ids = {(r.get("indicator") or {}).get("id") for r in rows}
+    if ids != {want}:
+        refuse(f"{path} names the indicator(s) {sorted(str(i) for i in ids)}, not {want}")
     by: dict[str, dict[str, float]] = {}
     for r in rows:
         if r.get("value") is not None:
             by.setdefault(r["country"]["id"], {})[r["date"]] = r["value"]
-    return meta, by
+    return meta, by, next(iter(ids))
 
 
 def new_companies() -> None:
     """New limited companies registered in a year per 1,000 people aged 15 to 64, each country of Latin America and of Africa (by
-    the country profile in this repo), the UK's beside them for scale. The year is the latest in which both regions show five
+    the country profile in this repo), the UK's beside them for scale. A MENA country is African by where its cities stand in the
+    city list, and one with no city there by MENA_WITHOUT_A_CITY. The year is the latest in which both regions show five
     countries over the floor and the UK has a figure: worked out, never typed."""
-    meta, density = series(DENSITY)
-    _, labour = series(LABOUR)
+    meta, density, density_id = series(DENSITY, DENSITY_INDICATOR)
+    _, labour, labour_id = series(LABOUR, LABOUR_INDICATOR)
     profile = json.loads(PROFILE.read_text(encoding="utf-8"))["countries"]
     city_continent: dict[str, str] = {}
     for c in json.loads(CITY_LIST.read_text(encoding="utf-8"))["cities"]:
         city_continent.setdefault(str(c["iso2"]).upper(), c["continent"])
+    stale = sorted(i for i in MENA_WITHOUT_A_CITY if profile.get(i, {}).get("continent") != "MENA" or i in city_continent)
+    if stale:
+        refuse(f"MENA_WITHOUT_A_CITY names {', '.join(stale)}; each must be a MENA country with no city in the city list")
 
     def region_of(iso2: str, p: dict) -> str | None:
         if p.get("world_bank_region") == "Latin America & Caribbean":
             return "latam"
-        if p.get("continent") == "Africa" or (p.get("continent") == "MENA" and city_continent.get(iso2) == "Africa"):
+        if p.get("continent") == "Africa":
             return "africa"
+        if p.get("continent") == "MENA":
+            if iso2 in city_continent:
+                return "africa" if city_continent[iso2] == "Africa" else None
+            if iso2 not in MENA_WITHOUT_A_CITY:
+                refuse(f"{iso2} ({p.get('name')}) is a MENA country with no city in the city list, and MENA_WITHOUT_A_CITY does not place it")
+            return MENA_WITHOUT_A_CITY[iso2]
         return None
 
     members: dict[str, list[str]] = {"latam": [], "africa": []}
@@ -230,22 +255,24 @@ def new_companies() -> None:
     if year is None:
         refuse("no year in which both regions show five countries over the floor and the UK has a figure")
     regions = []
-    for key, rule in (("latam", "the profile's world_bank_region is Latin America & Caribbean"), ("africa", "the profile's continent is Africa, or MENA with the country's cities in Africa")):
+    named = ", ".join(sorted(i for i, r in MENA_WITHOUT_A_CITY.items() if r == "africa"))
+    africa_rule = "the profile's continent is Africa, or MENA with the country's cities in Africa" + (f", or MENA with no city in the list and named as African ({named})" if named else "")
+    for key, rule in (("latam", "the profile's world_bank_region is Latin America & Caribbean"), ("africa", africa_rule)):
         regions.append({"key": key, "rule": rule, "members": [
             {"iso2": i, "value": density.get(i, {}).get(year), "labour_force": labour.get(i, {}).get(year), "shown": shown(i, year)}
             for i in sorted(members[key])
         ]})
     obj = {
         "year": int(year),
-        "measure": "IC.BUS.NDNS.ZS",
+        "measure": density_id,
         "last_updated": meta.get("lastupdated"),
-        "floor": {"measure": "SL.TLF.TOTL.IN", "year": int(year), "at_least": FLOOR, "why": "a labour force of a million or more keeps out the smallest economies, where a few hundred registrations move the rate and registries for companies run from abroad sit"},
+        "floor": {"measure": labour_id, "year": int(year), "at_least": FLOOR, "why": f"a labour force under {FLOOR:,} is left out of the lists"},
         "uk": {"iso2": "GB", "value": density["GB"][year]},
         "regions": regions,
     }
     write("new_companies.json", obj, sum(len(r["members"]) for r in regions) + 1, [
-        source("density", DENSITY, "worldbank", "New business density (IC.BUS.NDNS.ZS): new limited companies registered per 1,000 people aged 15 to 64"),
-        source("labour_force", LABOUR, "worldbank", "Labor force, total (SL.TLF.TOTL.IN): the list's floor", prints=False),
+        source("density", DENSITY, "worldbank", f"New business density ({density_id}): new limited companies registered per 1,000 people aged 15 to 64"),
+        source("labour_force", LABOUR, "worldbank", f"Labor force, total ({labour_id}): the list's floor", prints=False),
     ])
 
 

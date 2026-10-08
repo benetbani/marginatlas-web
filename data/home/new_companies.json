@@ -2,7 +2,7 @@
  "floor": {
   "at_least": 1000000,
   "measure": "SL.TLF.TOTL.IN",
-  "why": "a labour force of a million or more keeps out the smallest economies, where a few hundred registrations move the rate and registries for companies run from abroad sit",
+  "why": "a labour force under 1,000,000 is left out of the lists",
   "year": 2022
  },
  "last_updated": "2026-04-08",
@@ -372,6 +372,12 @@
      "value": null
     },
     {
+     "iso2": "LY",
+     "labour_force": 2516297,
+     "shown": false,
+     "value": null
+    },
+    {
      "iso2": "MA",
      "labour_force": 12170356,
      "shown": true,
@@ -528,7 +534,7 @@
      "value": null
     }
    ],
-   "rule": "the profile's continent is Africa, or MENA with the country's cities in Africa"
+   "rule": "the profile's continent is Africa, or MENA with the country's cities in Africa, or MENA with no city in the list and named as African (LY)"
   }
  ],
  "uk": {

@@ -6,10 +6,11 @@
  *
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
  * manifest's row count is its content's; each region's members are the ones the in-repo files give it (the country profile's
- * world_bank_region for Latin America; its continent, or a MENA country whose cities stand in Africa, for Africa); a member shows
- * only with a figure for the year and a labour force over the floor, which carries its reason; five or more show in each region;
- * the UK's own figure is there; every member shown has a country page; and, where the series is on this machine, every figure,
- * the UK's among them, is the source's, read again, and the year is the latest in which both regions show five.
+ * world_bank_region for Latin America; its continent, or a MENA country whose cities stand in Africa, or one with no city in the
+ * list that the export's map places there, for Africa); a member shows only with a figure for the year and a labour force of at
+ * least the floor, which says what it does; five or more show in each region; the UK's own figure is there; every member shown has
+ * a country page; and, where the series is on this machine, each names the indicator the slice says it is, every figure, the UK's
+ * among them, is the source's, read again, and the year is the latest in which both regions show five.
  *
  * Run: npx tsx tests/home/new_companies.test.ts
  */
@@ -27,6 +28,10 @@ const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string
 type Member = { iso2: string; value: number | null; labour_force: number | null; shown: boolean };
 type Export = { year: number; measure: string; last_updated: string; floor: { measure: string; year: number; at_least: number; why: string }; uk: { iso2: string; value: number }; regions: Array<{ key: string; rule: string; members: Member[] }> };
 const REGIONS = ["latam", "africa"] as const;
+/* A MENA country is African by where its cities stand in the city list. One with no city there is placed by this map, the export's own
+   (MENA_WITHOUT_A_CITY in scripts/data/home/export_home.py), kept here as a second copy so a placement changes in both files or this
+   gate fails. On the 2022 figures Libya holds no rate, so placing it in Africa shows nothing new. */
+const MENA_WITHOUT_A_CITY: Record<string, "africa" | null> = { LY: "africa", PS: null, SY: null, YE: null };
 
 const held = holdHomeExport("new_companies.json", check);
 const d = (held?.data ?? null) as Export | null;
@@ -39,8 +44,14 @@ if (d && held) {
     const k = c.iso2.toUpperCase();
     if (!cityContinent.has(k)) cityContinent.set(k, c.continent);
   }
-  const regionOf = (iso2: string, p: { continent?: string; world_bank_region?: string }) =>
-    p.world_bank_region === "Latin America & Caribbean" ? "latam" : p.continent === "Africa" || (p.continent === "MENA" && cityContinent.get(iso2) === "Africa") ? "africa" : null;
+  const regionOf = (iso2: string, p: { continent?: string; world_bank_region?: string }) => {
+    if (p.world_bank_region === "Latin America & Caribbean") return "latam";
+    if (p.continent === "Africa") return "africa";
+    if (p.continent !== "MENA") return null;
+    return cityContinent.has(iso2) ? (cityContinent.get(iso2) === "Africa" ? "africa" : null) : MENA_WITHOUT_A_CITY[iso2] ?? null;
+  };
+  const noCity = Object.entries(profile).filter(([iso2, p]) => p.continent === "MENA" && !cityContinent.has(iso2)).map(([iso2]) => iso2).sort();
+  check(`a MENA country with no city in the list is placed by the map and the map names no other (${noCity.map((i) => `${i}: ${MENA_WITHOUT_A_CITY[i] ?? "not Africa"}`).join(", ") || "none"})`, JSON.stringify(noCity) === JSON.stringify(Object.keys(MENA_WITHOUT_A_CITY).sort()));
   check(`the regions are Latin America and Africa, in that order (${d.regions.map((r) => r.key).join(", ")})`, JSON.stringify(d.regions.map((r) => r.key)) === JSON.stringify(REGIONS));
   for (const key of REGIONS) {
     const want = Object.entries(profile).filter(([iso2, p]) => regionOf(iso2, p) === key).map(([iso2]) => iso2).sort();
@@ -60,13 +71,19 @@ if (d && held) {
   const labour = held.entry.sources.find((s) => s.key === "labour_force");
   check("the manifest names the two series the figures were read from (density, labour_force)", !!density && !!labour);
   if (density && labour && existsSync(density.path) && existsSync(labour.path)) {
-    type Row = { country: { id: string }; date: string; value: number | null };
+    type Row = { country: { id: string }; date: string; value: number | null; indicator?: { id?: string } };
     const table = (path: string) => {
       const by = new Map<string, number>();
-      for (const r of (JSON.parse(readFileSync(path, "utf8")) as [unknown, Row[]])[1]) if (r.value !== null && r.value !== undefined) by.set(`${r.country.id}:${r.date}`, r.value);
-      return by;
+      const ids = new Set<string>();
+      for (const r of (JSON.parse(readFileSync(path, "utf8")) as [unknown, Row[]])[1]) {
+        ids.add(r.indicator?.id ?? "none");
+        if (r.value !== null && r.value !== undefined) by.set(`${r.country.id}:${r.date}`, r.value);
+      }
+      return { by, id: [...ids].sort().join(", ") };
     };
-    const dens = table(density.path), lf = table(labour.path);
+    const densTable = table(density.path), lfTable = table(labour.path);
+    const dens = densTable.by, lf = lfTable.by;
+    check(`each series names the indicator the slice says it is (${densTable.id} for ${d.measure}; ${lfTable.id} for ${d.floor.measure})`, densTable.id === d.measure && lfTable.id === d.floor.measure);
     const all = d.regions.flatMap((r) => r.members);
     const wrong = all.filter((m) => (dens.get(`${m.iso2}:${d.year}`) ?? null) !== m.value || (lf.get(`${m.iso2}:${d.year}`) ?? null) !== m.labour_force).map((m) => m.iso2);
     check(`every member's ${d.year} figure and labour force are the source's, read again here${wrong.length ? `: differs on ${wrong.join(", ")}` : ""}`, wrong.length === 0);
