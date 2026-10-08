@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Fig, InlineDisclosure } from "@/components/spine/kit";
+import type { Provenance } from "@/lib/spine/provenance";
 
 /**
  * THE FOUNDER'S PLUS (2026-09-08, his words): "the click and show button was
@@ -49,7 +50,8 @@ import { Fig, InlineDisclosure } from "@/components/spine/kit";
  *    terminus door's own line count already did it. Padding is the ordinary
  *    way to reach a touch target and needs no more than that.)
  */
-export type DetailRow = { label: string; value: string; note?: string };
+/** `prov` (plan 2026-10-08, home sections): where the row's figure came from, stamped on it; a row with none stamps nothing. */
+export type DetailRow = { label: string; value: string; note?: string; prov?: Provenance | null };
 
 /**
  * `name` is passed straight to the native `<details name>` attribute (review
@@ -77,7 +79,7 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
                   card beside them drew Space Grotesk. `Fig` carries the face,
                   the tabular lining numerals and the weight, so both utilities
                   it used to spell out are redundant and gone with it. */}
-              <dd className="text-[length:var(--t-micro)] text-[var(--c-ink)]"><Fig>{r.value}</Fig></dd>
+              <dd className="text-[length:var(--t-micro)] text-[var(--c-ink)]"><Fig prov={r.prov}>{r.value}</Fig></dd>
               {/* THE dl'S OWN LAW (review finding 4): a div directly inside a
                   dl may hold only dt/dd, so the note is a second dd , a `p`
                   here rendered live, invalid HTML, since one story's row

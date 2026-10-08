@@ -43,10 +43,13 @@
 import * as React from "react";
 import { Fig, usd } from "@/components/spine/kit";
 import { COPY } from "./copy";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export type TierRow = { tier: string; local_term?: string; cost_usd?: number; days?: number; complexity_1_5?: number };
 /** A row of the figures shape: the name block's two lines and the two figures as printed (null prints an en dash). */
-export type TiersFigureRow = { key: string; name: string; sub?: string | null; a: string | null; b: string | null };
+/** `aProv`, `bProv` (plan 2026-10-08, home sections): where each figure came from, stamped on it (the provenance ratchet); a row
+ *  that passes none stamps nothing, as before. */
+export type TiersFigureRow = { key: string; name: string; sub?: string | null; a: string | null; b: string | null; aProv?: Provenance | null; bProv?: Provenance | null };
 export type TiersHeads = { name?: string; a: string; b: string };
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -298,10 +301,10 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                 {/* Under 330px of table the figures sit on their own row under the heads; a spacer keeps them in their columns. */}
                 <span aria-hidden className="[@container(min-width:330px)]:hidden" />
                 <span className="text-right" data-col="a">
-                  {r.a != null ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.a}</Fig> : DASH}
+                  {r.a != null ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]" prov={r.aProv}>{r.a}</Fig> : DASH}
                 </span>
                 <span className="text-right" data-col="b">
-                  {r.b != null ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.b}</Fig> : DASH}
+                  {r.b != null ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]" prov={r.bProv}>{r.b}</Fig> : DASH}
                 </span>
               </span>
             </div>
