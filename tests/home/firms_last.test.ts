@@ -15,6 +15,10 @@
  * no held-out city drawn; every row a door to its own city page; every figure stamped from the slice; the UK's tick the slice's;
  * the lead's line twelve words at most with the cohort and its fifth year in it.
  *
+ * Holds the drawing (src/components/spine/home/HomeFirmsLast.tsx): a box with its id and the site's bars, plain and filling the half;
+ * each bar its city's own share of 100, never of the leader's; the lead's bar the one marked and its figure the card's one accent;
+ * the UK's tick at its share and keyed once; every row a door to its city page; every figure stamped; the title the copy gate's.
+ *
  * Run: npx tsx tests/home/firms_last.test.ts
  */
 import { readFileSync } from "node:fs";
@@ -79,7 +83,8 @@ if (built && d) {
 }
 
 /* THE DRAWING (plan Task 13): the bars, plain and filling the half, the lead's bar marked and its figure the card's one accent, the
-   UK's tick keyed once, every figure stamped, the title the copy gate's. */
+   UK's tick keyed once, every figure stamped, the title the copy gate's. The four checks after the tick see the VALUES (a bar's width,
+   the tick's place, a door's address, which bar is marked): a drawing that kept every part and lost a value would pass the ones before. */
 if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeFirmsLast, { last: built }));
   check("the section is a box with its id and its bars (plain, filling its half, the lead's bar marked)", /id="firms-last"/.test(html) && /data-archetype="bar-list"/.test(html) && /data-look="plain"/.test(html) && /data-marked="1"/.test(html) && /flex-1/.test(html));
@@ -88,6 +93,16 @@ if (built) {
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)));
   check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey));
+  /* A width is value / 100 * 100 in floats (43.29999999999999 for a share of 43.3, 9% of the shares at one decimal), so a drawn place is
+     read at the shares' own resolution, one decimal, and never as the exact string. */
+  const tenth = (n: number) => Math.round(n * 10) / 10;
+  const widths = [...html.matchAll(/data-bar="true"[^>]*style="width:([\d.]+)%/g)].map((m) => Number(m[1]));
+  check(`each bar is its city's own share of 100 (${widths.join(", ")})`, widths.length === built.rows.length && widths.every((w, i) => tenth(w) === built.rows[i].value));
+  const ticks = [...html.matchAll(/data-ref-tick[^>]*style="left:calc\(([\d.]+)% - 1px\)/g)].map((m) => Number(m[1]));
+  check(`the UK's tick stands at ${built.uk.value} on every bar (${ticks.join(", ")})`, ticks.length === built.rows.length && ticks.every((t) => tenth(t) === built.uk.value));
+  check("every row is a door to its city page", built.rows.every((r) => html.includes(`href="${r.href}"`)));
+  const leadRow = html.split("<li ").find((s) => s.startsWith(`data-row="${built.lead.key}"`)) ?? "";
+  check("the lead's bar is the one marked", /data-marked="1"/.test(leadRow) && (html.match(/data-marked="1"/g) ?? []).length === 1);
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
   check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.firmsLast.kicker && title.split(/\s+/).length <= 4);
   check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words));

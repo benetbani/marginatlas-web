@@ -16,6 +16,11 @@
  * in order, one decimal, the rest behind the plus in order; every row a door to its country's page promising what that page
  * answers; every figure stamped; the card's figure the UK's own; the one line twelve words at most.
  *
+ * Holds the drawing (src/components/spine/home/HomeNewCompanies.tsx): the list card's grouped form, Latin America then Africa; each
+ * drawn country its flag, its name and its figure at one decimal, a door to its page; the card's figure the UK's, under its label;
+ * the rest of each region behind its plus, closed, and no region leaving a lone country there (a plus of one is not drawn); quiet,
+ * no accent; every figure stamped; one line.
+ *
  * Run: npx tsx tests/home/new_companies.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
@@ -152,8 +157,10 @@ if (built) {
   const html = renderToStaticMarkup(React.createElement(HomeNewCompanies, { nc: built }));
   check("the section is the list card's grouped form, Latin America then Africa", /id="new-companies"/.test(html) && /data-archetype="mark-list"/.test(html) && /data-form="groups"/.test(html) && html.indexOf('data-group="latam"') !== -1 && html.indexOf('data-group="africa"') > html.indexOf('data-group="latam"'));
   const drawn = built.groups.reduce((s, g) => s + g.rows.length, 0);
-  check(`each drawn country is its flag, its name and its figure, a door to its page (${drawn})`, (html.match(/<a [^>]*data-row=/g) ?? []).length === drawn && (html.match(/flagcdn\.com\//g) ?? []).length === drawn && (html.match(/data-lands="government-take"/g) ?? []).length === drawn);
+  check(`each drawn country is its flag, its name and its figure, a door to its page (${drawn})`, (html.match(/<a [^>]*data-row=/g) ?? []).length === drawn && (html.match(/flagcdn\.com\//g) ?? []).length === drawn && html.split(`data-lands="${SURFACE_ANSWERS.country}"`).length - 1 === drawn);
+  check("the card's figure is the UK's, under its label, and every drawn rate prints at one decimal", new RegExp(`--t-focal[^>]*data-src="home/new_companies\\.json:GB"[^>]*>${built.uk.value.toFixed(1).replace(".", "\\.")}<`).test(html) && html.includes(`>${COPY.home.newCompanies.headline}<`) && built.groups.every((g) => g.rows.every((r) => html.includes(`>${r.value.toFixed(1)}</span>`))));
   check("the rest of each region stands behind its plus, closed", (html.match(/<details/g) ?? []).length === built.groups.filter((g) => g.rest.length >= 2).length && !/<details[^>]*\bopen\b/.test(html));
+  check("no region leaves exactly one country behind the plus (a plus of one is not drawn, so that country would vanish)", built.groups.every((g) => g.rest.length !== 1), { file: "src/components/spine/home/HomeNewCompanies.tsx", remedy: "draw a lone leftover as a sixth row, in the builder and the drawing together" });
   check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html));
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   const rest = built.groups.reduce((s, g) => s + (g.rest.length >= 2 ? g.rest.length : 0), 0);

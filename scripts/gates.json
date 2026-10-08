@@ -1825,7 +1825,8 @@
       "reads": [
         "data/cities/city_list_v1.json",
         "data/economic_indicators/country_profile_v2.json",
-        "data/home/new_companies.json"
+        "data/home/new_companies.json",
+        "src/components/spine/home/HomeNewCompanies.tsx"
       ],
       "claims": []
     },
