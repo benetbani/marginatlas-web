@@ -35,6 +35,7 @@ import { BuyVsStartHero } from "@/components/buy/BuyVsStartHero";
 import { BuyVsStartCompare } from "@/components/buy/BuyVsStartCompare";
 import { BuyVsStartCatches } from "@/components/buy/BuyVsStartCatches";
 import { SiteChrome } from "@/components/SiteChrome";
+import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -111,6 +112,8 @@ export async function generateMetadata({
     title,
     description: desc,
     alternates: { canonical },
+    /* Its trade page's index status (P1-B of the page architecture, 2026-10-09); until then this page set no robots tag. */
+    robots: robotsFor(canonical),
     openGraph: {
       title,
       description: desc,

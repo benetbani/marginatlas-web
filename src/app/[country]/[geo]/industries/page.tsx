@@ -21,6 +21,7 @@ import { iso2ToName } from "@/lib/countries";
 import { hasRegionalCoverage } from "@/lib/coverage/regional";
 import { getAdmin1Regions } from "@/lib/coverage/admin1";
 import { SiteChrome } from "@/components/SiteChrome";
+import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -59,6 +60,9 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: `/${country.toLowerCase()}/${geo.toLowerCase()}/industries` },
+    /* An industries hub belongs to no family until it is rebuilt (P1-B of the page architecture, 2026-10-09): noindex and out of
+       every sitemap, its address kept. */
+    robots: robotsFor(`/${country.toLowerCase()}/${geo.toLowerCase()}/industries`),
     // See the note on the country-level hub: declaring openGraph replaces the
     // root layout's openGraph wholesale, so a route that declares the key must
     // supply its own images or it ships with no og:image at all.

@@ -49,6 +49,7 @@ import DecideActivitySelector from "@/components/DecideActivitySelector";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import { colors } from "@/lib/design-tokens";
 import { ZoomControl } from "@/components/kit/ZoomControl";
+import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 43200;
 
@@ -143,6 +144,8 @@ export async function generateMetadata({
     title: `Where to open ${withArticle(tradeNounFor(ind.name) || ind.name.toLowerCase())} in ${cityRow.name} | Margin Atlas`,
     description: `Top neighborhoods ranked by expected net margin for ${withArticle(tradeNounFor(ind.name) || ind.name.toLowerCase())} in ${cityRow.name}.`,
     alternates: { canonical },
+    /* A /decide pair is noindex (P1-B of the page architecture, 2026-10-09); the /decide tool page keeps its status. */
+    robots: robotsFor(canonical),
   };
 }
 

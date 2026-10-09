@@ -20,6 +20,7 @@ import { getCoverageFor } from "@/lib/coverage/report";
 import { iso2ToName } from "@/lib/countries";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { SiteChrome } from "@/components/SiteChrome";
+import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -45,6 +46,9 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: `/${country.toLowerCase()}/industries` },
+    /* An industries hub belongs to no family until it is rebuilt as a family 2 parent (P1-B of the page architecture,
+       2026-10-09): noindex and out of every sitemap, its address kept. */
+    robots: robotsFor(`/${country.toLowerCase()}/industries`),
     // images is repeated here rather than inherited. Next resolves metadata
     // per KEY by replacement, not by deep merge, so declaring openGraph at all
     // discards the root layout's openGraph including its images. Without this

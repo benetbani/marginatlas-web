@@ -34,6 +34,7 @@ import { OpeningChecklist } from "@/components/open/OpeningChecklist";
 import { OpeningPayback } from "@/components/open/OpeningPayback";
 import { OpeningComparisons } from "@/components/open/OpeningComparisons";
 import { SiteChrome } from "@/components/SiteChrome";
+import { robotsFor } from "@/lib/seo/indexable";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -114,6 +115,8 @@ export async function generateMetadata({
     title,
     description: desc,
     alternates: { canonical },
+    /* Its trade page's index status (P1-B of the page architecture, 2026-10-09); until then this page set no robots tag. */
+    robots: robotsFor(canonical),
     openGraph: {
       title,
       description: desc,
