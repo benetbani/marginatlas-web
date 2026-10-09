@@ -48,6 +48,8 @@ const URL_KEYED_TABLES = [
   /* the place word: the state slugs, the city aliases and their labels, the district aliases and the hub tables (7d2503ba, 7395d11d) */
   "SLUG_TO_GEO_ID", "MANUAL_FRIENDLY_TO_GEO_ID", "CITY_FRIENDLY_TO_GEO_ID", "MANUAL_DISPLAY_LABEL", "CITY_FRIENDLY_DISPLAY_LABEL",
   "NEIGHBORHOOD_ALIASES", "NEIGHBORHOOD_SLUGS", "HOOD_DISTRICT_SLUGS", "CITIES_BY_STATE", "REGIONS_BY_COUNTRY_AUTO",
+  /* the place word's table (P1-A, 2026-10-09) */
+  "PLACE_SLUGS_BY_COUNTRY",
 ];
 
 /** Tables keyed by an id nearly everywhere and by a word from a query string in a few readers: checked only where a request word
