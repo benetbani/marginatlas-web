@@ -1,8 +1,9 @@
 {
- "why": "Rows cells_master holds for two states, in the order a stand-in for the database answers them to the US state lookup: industry titles and codes only, never a figure. Read by tests/seo/state_trade_label.test.ts (P1-D of the page architecture, 2026-10-09: /us/mississippi/offices-of-lawyers printed Software development).",
+ "why": "Rows cells_master holds for two states, in the order a stand-in for the database answers them to the US state lookup (the stand-in ignores the queries' order and limit, so this file is the order): industry titles, codes and size bands only, never a figure. Offices of Lawyers is held twice, the all-sizes row and then its 1-4 band, as the database answers (year, then the larger count, first), which pins that the lookup takes the first own row. Read by tests/seo/state_trade_label.test.ts (P1-D of the page architecture, 2026-10-09: /us/mississippi/offices-of-lawyers printed Software development).",
  "rows": [
   { "country": "US", "geo_id": "US-28", "industry_description": "Professional, Scientific, and Technical Services", "naics_6": "541", "year": 2022, "size_band": null },
   { "country": "US", "geo_id": "US-28", "industry_description": "Offices of Lawyers", "naics_6": "541110", "year": 2022, "size_band": null },
+  { "country": "US", "geo_id": "US-28", "industry_description": "Offices of Lawyers", "naics_6": "541110", "year": 2022, "size_band": "1-4" },
   { "country": "US", "geo_id": "US-28", "industry_description": "Legal Services", "naics_6": "5411", "year": 2022, "size_band": null },
   { "country": "US", "geo_id": "US-28", "industry_description": "Custom Computer Programming Services", "naics_6": "541511", "year": 2022, "size_band": null },
   { "country": "US", "geo_id": "US-28", "industry_description": "All Other Information Services", "naics_6": "519190", "year": 2022, "size_band": null },
