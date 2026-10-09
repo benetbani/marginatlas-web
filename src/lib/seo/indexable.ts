@@ -72,7 +72,8 @@ export type IndexVerdict = { index: boolean; follow: true; family: Family; reaso
 
 /** The upper levels the census counts: a country page, its how-to page, an industry page. An industry page is `/industries/` and
  *  any one word, not only a slug: the route also serves an industry id with underscores (/industries/craft_beer_mfg) and
- *  names its slug's page canonical, and such an address is a spine page the census holds no entry for, so it does not index. */
+ *  names its slug's page canonical. Such an address is a spine page the census holds no entry for, so the ADDRESS is never
+ *  indexable and stays out of every sitemap; the page's own robots tag follows its canonical, the slug's page. */
 const SPINE_UPPER = /^\/(?:[a-z]{2}(?:\/how-to-open)?|industries\/[^/]+)$/;
 
 /** The family of a page, by its address alone. */

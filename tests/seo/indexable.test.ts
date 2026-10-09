@@ -123,9 +123,11 @@ const leftAlone = entries.filter(([p]) => !(p.startsWith("/us/") && p.split("/")
 const drifted = leftAlone.filter(([p, e]) => isIndexable(p) !== (isUkPage(p) || e.blocks >= census.floors[e.surface]));
 check(`every census page outside the United States descriptions keeps milestone 1's answer (${leftAlone.length})${firstFew(drifted.map(([p]) => p))}`, leftAlone.length > 0 && drifted.length === 0, FILE, R_MILESTONE1);
 /* An industry id spelled with underscores is served by the industry route (the edge passes it, the route names its slug's page
-   canonical) and the census holds no entry for it: it answers as any spine page the census does not hold, noindex. */
+   canonical) and the census holds no entry for it: the ADDRESS answers as any spine page the census does not hold, noindex, so it
+   is never indexable and stays out of every sitemap. This check holds the address only. The page's own robots tag is robotsFor
+   of its canonical, the live slug's page, so it follows that page's answer: index, or noindex where that page is under its floor. */
 const idSpellings = (INDUSTRIES as Array<{ id: string }>).map((i) => `/industries/${i.id}`).filter((p) => p.includes("_"));
-check(`an industry id spelled with underscores indexes nowhere (${idSpellings.length})${firstFew(idSpellings.filter(isIndexable))}`, idSpellings.length > 0 && idSpellings.every((p) => !isIndexable(p)), FILE, R_ID);
+check(`an industry id spelled with underscores: the address is never indexable and stays out of every sitemap (${idSpellings.length})${firstFew(idSpellings.filter(isIndexable))}`, idSpellings.length > 0 && idSpellings.every((p) => !isIndexable(p)), FILE, R_ID);
 check("a spine page the census never counted does not index (noindex on the rest)", !isIndexable("/zz/nowhere/nothing") && floorStanding("/zz/nowhere/nothing") === null);
 check("the robots value: indexed or not, links always followed, and an indexed page keeps the root layout's googlebot hints", JSON.stringify(robotsFor("/gb")) === '{"index":true,"follow":true,"googleBot":{"index":true,"follow":true,"max-image-preview":"large","max-snippet":-1}}' && JSON.stringify(robotsFor("/zz/nowhere/nothing")) === '{"index":false,"follow":true,"googleBot":{"index":false,"follow":true}}', FILE, R_HINTS);
 check("indexFor answers a family and a reason with every verdict", ["/", "/gb/manchester/restaurants", "/us/industries"].every((p) => indexFor(p).reason.length > 0 && indexFor(p).follow === true && indexFor(p).family === classify(p)));
