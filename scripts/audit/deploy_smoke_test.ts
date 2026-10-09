@@ -10,10 +10,20 @@
  * any assertion fails, so this can be wired into CI / a cron / a
  * GitHub Action with email-on-failure.
  *
+ * THE SITEMAP ROWS ARE THE TABLE'S (P1-E, 2026-10-09). They were typed here, shards 0 to 5 each over 1 KB, and drifted: shard 5 had
+ * failed since 2026-08-08, and the families split makes shards 1, 2, 4 and 5 empty by design. They are now read from
+ * SITEMAP_FAMILIES (src/lib/seo/sitemap_families.ts) through scripts/lib/sitemap_shard_probes.ts: a listed shard answers a sitemap
+ * over 1 KB, an empty shard a valid empty urlset, a reserved shard is not asked. Run it from the commit that was deployed, so the
+ * table it reads is the one the site was built from.
+ *
+ * BY HAND ONLY. Nothing in the chain, the build or package.json runs it (docs/superpowers/specs/2026-05-22-monitoring-setup.md
+ * proposes a GitHub Action for it; this repo has no .github folder). It needs the live site, so it cannot run offline; what it asks
+ * of the sitemaps lives in scripts/lib/sitemap_shard_probes.ts, apart from the network, so that part runs without the site.
+ *
  * Run: `npx tsx scripts/audit/deploy_smoke_test.ts`
  *   or `BASE=https://www.marginatlas.com npx tsx scripts/audit/deploy_smoke_test.ts`
  */
-export {}; // make this file a module to avoid global-scope collisions
+import { shardProbes } from "../lib/sitemap_shard_probes"; // an import also makes this file a module (no global-scope collisions)
 
 const BASE = process.env.BASE || "https://www.marginatlas.com";
 
@@ -29,6 +39,8 @@ type Assertion = {
   url: string;
   check: (status: number, headers: Headers, body: string) => boolean;
   failReason?: string;
+  /** What to do when it fails, printed after the reason (the sitemap rows name SITEMAP_FAMILIES). */
+  remedy?: string;
 };
 
 const ASSERTIONS: Assertion[] = [
@@ -42,36 +54,8 @@ const ASSERTIONS: Assertion[] = [
     url: "/",
     check: (_s, _h, body) => !body.includes("Click for details"),
   },
-  {
-    name: "Sitemap shard 0 (static + countries) > 1 KB",
-    url: "/sitemap/0.xml",
-    check: (status, _h, body) => status === 200 && body.length > 1024,
-  },
-  {
-    name: "Sitemap shard 1 (US cells) > 1 KB",
-    url: "/sitemap/1.xml",
-    check: (status, _h, body) => status === 200 && body.length > 1024,
-  },
-  {
-    name: "Sitemap shard 2 (regional cells) > 1 KB",
-    url: "/sitemap/2.xml",
-    check: (status, _h, body) => status === 200 && body.length > 1024,
-  },
-  {
-    name: "Sitemap shard 3 (coverage) > 1 KB",
-    url: "/sitemap/3.xml",
-    check: (status, _h, body) => status === 200 && body.length > 1024,
-  },
-  {
-    name: "Sitemap shard 4 (region-industry hubs) > 1 KB",
-    url: "/sitemap/4.xml",
-    check: (status, _h, body) => status === 200 && body.length > 1024,
-  },
-  {
-    name: "Sitemap shard 5 (neighborhoods) > 1 KB",
-    url: "/sitemap/5.xml",
-    check: (status, _h, body) => status === 200 && body.length > 1024,
-  },
+  /* One row per shard the table serves: the listed ones over 1 KB, the empty ones a valid empty urlset (SITEMAP_FAMILIES). */
+  ...shardProbes(),
   {
     name: "/us/california/restaurants returns 200",
     url: "/us/california/restaurants",
@@ -146,10 +130,11 @@ async function probe(a: Assertion): Promise<{ pass: boolean; status: number; rea
       body = await res.text();
     }
     const pass = a.check(status, res.headers, body);
+    const why = a.failReason || `assertion returned false (status=${status}, body length=${body.length})`;
     return {
       pass,
       status,
-      reason: pass ? "" : a.failReason || `assertion returned false (status=${status}, body length=${body.length})`,
+      reason: pass ? "" : a.remedy ? `${why}. Remedy: ${a.remedy}` : why,
     };
   } catch (e) {
     return {
