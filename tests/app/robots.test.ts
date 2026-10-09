@@ -1,75 +1,92 @@
 /**
- * robots.txt policy test (2026-08-09).
+ * robots.txt and the edge's 451 list tell every crawler the same thing (P1-F of the page architecture, 2026-10-09; his "Adopt the
+ * plan": Google-Extended allowed, Claude-SearchBot and Claude-User named, the harvesters blocked), and the two defects of
+ * 2026-08-09 stay closed.
  *
- * TWO DEFECTS, both found by reading the file rather than the served output.
+ * 2026-08-09: /dev/ was crawlable (58 of 113 page routes, served at 200), and the sitemap list stopped at shard 4 while eight
+ * shards were registered. 2026-10-09: robots.txt blocked Google-Extended, a token no request carries, and the edge's 451 list
+ * held three harvesters robots.txt never named (Amazonbot, YouBot, ImagesiftBot); both now read src/lib/seo/crawlers.ts.
  *
- * 1. /dev/ was crawlable. 58 of this repository's 113 page routes live under
- *    src/app/dev, they are served at 200 in production, and robots.txt withheld
- *    /api/, /_next/ and /admin but never them. /dev/cell2 alone is 202KB of
- *    public HTML. They are prototypes: the workshop, not the shop.
+ * THE EXPECTATIONS ARE TYPED HERE, on purpose: importing the list under test to build them would make this test agree with any
+ * change it made.
  *
- * 2. The sitemap list stopped at shard 4. generateSitemaps registers EIGHT
- *    shards. Shard 6 (cities, 525 URLs) and shard 7 (the learn corpus, 55) were
- *    never declared, so 580 live URLs were invisible in the one file a crawler
- *    reads to find them. Shard 5 stays off the list on purpose: the
- *    neighbourhood pages were withdrawn from the index on 2026-08-08.
- *
- * Follows this repository's test idiom: a bare tsx script that prints PASS/FAIL
- * per case and exits 1 on any failure. No framework is installed and none is
- * needed.
+ * Run: node node_modules/tsx/dist/cli.mjs tests/app/robots.test.ts
  */
+import { NextRequest } from "next/server";
 import robots from "../../src/app/robots";
+import { routeRequest, AI_CRAWLER_PATTERNS } from "../../src/middleware";
+import { red, redSummary } from "../../scripts/lib/red";
+
+const RULE = "robots";
+const FILE = "src/app/robots.ts";
+const MW = "src/middleware.ts";
+const REMEDY =
+  "Change HARVESTERS, ANSWERING_AGENTS or INTERNALS in src/lib/seo/crawlers.ts: src/app/robots.ts and AI_CRAWLER_PATTERNS in src/middleware.ts both read them, so the two change together";
+let failed = 0;
+const check = (label: string, ok: boolean, file = FILE) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file, detail: label, remedy: REMEDY });
+};
 
 const out = robots();
 const groups = Array.isArray(out.rules) ? out.rules : [out.rules];
+type Group = (typeof groups)[number];
+const agentsOf = (g: Group) => ([] as string[]).concat(g.userAgent ?? "*");
+const disallowOf = (g: Group) => ([] as string[]).concat(g.disallow ?? []);
+const groupOf = (agent: string) => groups.find((g) => agentsOf(g).some((a) => a.toLowerCase() === agent.toLowerCase()));
+const letIn = (agent: string) => { const g = groupOf(agent); return !!g && !disallowOf(g).includes("/"); };
+const shutOut = (agent: string) => { const g = groupOf(agent); return !!g && disallowOf(g).includes("/"); };
 
-let failed = 0;
-const check = (label: string, ok: boolean, detail = "") => {
-  if (!ok) failed++;
-  console.log(`${ok ? "PASS" : "FAIL"}  ${label}${detail ? ` :: ${detail}` : ""}`);
-};
+/* THE ANSWERING AGENTS, Claude's two by name and Google-Extended among them (2026-10-09). */
+const ANSWERING = ["ChatGPT-User", "PerplexityBot", "OAI-SearchBot", "Claude-SearchBot", "Claude-User", "Google-Extended"];
+for (const a of ANSWERING) check(`${a} is named in the answering group and let in`, letIn(a) && groupOf(a) === groupOf("ChatGPT-User"));
+for (const a of ["Googlebot", "Bingbot", "DuckDuckBot", "Slurp"]) check(`${a} is let in`, letIn(a));
 
-/* Every group that is allowed in at all must be kept out of /dev/. A group that
-   is already disallowed from "/" wholesale (the training harvesters) needs no
-   /dev/ entry, and demanding one would be a rule about nothing. */
+/* THE HARVESTERS, blocked from everything: the split of 2026-08-01 less Google-Extended, and the three the edge alone refused. */
+const HARVEST = ["GPTBot", "ClaudeBot", "anthropic-ai", "CCBot", "Bytespider", "cohere-ai", "FacebookBot", "Meta-ExternalAgent", "Diffbot", "Amazonbot", "YouBot", "ImagesiftBot"];
+for (const a of HARVEST) check(`${a} is blocked from everything`, shutOut(a));
+
+/* ROBOTS.TXT AND THE EDGE AGREE: every name a blocking group holds is answered 451, no name a group lets in is, and every 451
+   pattern blocks a name robots.txt blocks. */
+const blockedNames = groups.filter((g) => disallowOf(g).includes("/")).flatMap(agentsOf);
+const allowedNames = groups.filter((g) => !disallowOf(g).includes("/")).flatMap(agentsOf).filter((a) => a !== "*");
+const at451 = (name: string) => AI_CRAWLER_PATTERNS.some((re) => re.test(name));
+const unrefused = blockedNames.filter((a) => !at451(a));
+check(`every name robots.txt blocks is refused 451 at the edge${unrefused.length ? `: not refused ${unrefused.join(", ")}` : ""}`, blockedNames.length > 0 && unrefused.length === 0, MW);
+const refusedButLetIn = allowedNames.filter(at451);
+check(`no name robots.txt lets in is refused 451 at the edge${refusedButLetIn.length ? `: refused ${refusedButLetIn.join(", ")}` : ""}`, refusedButLetIn.length === 0, MW);
+const strayPatterns = AI_CRAWLER_PATTERNS.filter((re) => !blockedNames.some((a) => re.test(a))).map(String);
+check(`every 451 pattern blocks a name robots.txt blocks${strayPatterns.length ? `: ${strayPatterns.join(", ")}` : ""}`, strayPatterns.length === 0, MW);
+check("google-extended left the 451 list (no request carries it; robots.txt alone reads it)", !at451("Google-Extended"), MW);
+
+/* THE EDGE ITSELF, asked with each crawler's user agent in the form its operator publishes. */
+let client = 0;
+const statusFor = (ua: string) =>
+  routeRequest(new NextRequest("https://www.marginatlas.com/gb", { headers: { host: "www.marginatlas.com", "user-agent": ua, "accept-language": "en-GB", "x-real-ip": `10.9.0.${client++}` } })).status;
+const UA = {
+  GPTBot: "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; GPTBot/1.2; +https://openai.com/gptbot)",
+  ClaudeBot: "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; ClaudeBot/1.0; +claudebot@anthropic.com)",
+  "Claude-User": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Claude-User/1.0; +Claude-User@anthropic.com)",
+  "Claude-SearchBot": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Claude-SearchBot/1.0; +Claude-SearchBot@anthropic.com)",
+  "ChatGPT-User": "Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko); compatible; ChatGPT-User/1.0; +https://openai.com/bot",
+} as const;
+check("GPTBot is answered 451 at the edge", statusFor(UA.GPTBot) === 451, MW);
+check("ClaudeBot is answered 451 at the edge", statusFor(UA.ClaudeBot) === 451, MW);
+for (const a of ["Claude-User", "Claude-SearchBot", "ChatGPT-User"] as const) check(`${a} is served at the edge, never 451`, statusFor(UA[a]) !== 451, MW);
+
+/* THE WORKSHOP AND THE INTERNALS (2026-08-09): every group let in at all is kept out of /dev/, /api/, /_next/ and /admin. */
 for (const g of groups) {
-  const agents = ([] as string[]).concat(g.userAgent ?? "*").join(", ");
-  const disallow = ([] as string[]).concat(g.disallow ?? []);
-  const blanketBlocked = disallow.includes("/");
-  if (blanketBlocked) {
-    check(`[${agents}] blocked wholesale, no /dev/ rule needed`, true);
-    continue;
-  }
-  check(`[${agents}] disallows /dev/`, disallow.includes("/dev/"), `got ${JSON.stringify(disallow)}`);
-}
-
-/* The internals that were already withheld must stay withheld. This is the
-   regression half: it is easy to rewrite a disallow list and drop one. */
-for (const g of groups) {
-  const disallow = ([] as string[]).concat(g.disallow ?? []);
+  const disallow = disallowOf(g);
   if (disallow.includes("/")) continue;
-  const agents = ([] as string[]).concat(g.userAgent ?? "*").join(", ");
-  for (const required of ["/api/", "/_next/", "/admin"]) {
-    check(`[${agents}] still disallows ${required}`, disallow.includes(required));
-  }
+  const agents = agentsOf(g).join(", ");
+  for (const required of ["/dev/", "/api/", "/_next/", "/admin"]) check(`[${agents}] disallows ${required}`, disallow.includes(required));
 }
 
-/* Shard 5 is empty by decision, so it is the one id that must NOT be declared.
-   Every other registered shard must be. Hard-coded rather than imported from
-   sitemap.ts, deliberately: importing the module under test to build the
-   expectation would make this test agree with any change it made. */
+/* THE SITEMAPS: every registered shard declared but shard 5 (withdrawn 2026-08-08). */
 const declared = ([] as string[]).concat(out.sitemap ?? []);
-for (const id of [0, 1, 2, 3, 4, 6, 7]) {
-  const url = `https://www.marginatlas.com/sitemap/${id}.xml`;
-  check(`sitemap shard ${id} declared`, declared.includes(url));
-}
-check(
-  "sitemap shard 5 NOT declared (withdrawn 2026-08-08)",
-  !declared.includes("https://www.marginatlas.com/sitemap/5.xml"),
-);
+for (const id of [0, 1, 2, 3, 4, 6, 7]) check(`sitemap shard ${id} declared`, declared.includes(`https://www.marginatlas.com/sitemap/${id}.xml`));
+check("sitemap shard 5 NOT declared (withdrawn 2026-08-08)", !declared.includes("https://www.marginatlas.com/sitemap/5.xml"));
 
-if (failed > 0) {
-  console.error(`robots: ${failed} failures`);
-  process.exit(1);
-}
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("robots: all pass");

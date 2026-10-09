@@ -2558,8 +2558,11 @@
       "script": "tests/app/robots.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "robots.txt policy test (2026-08-09).",
-      "reads": [],
+      "asserts": "robots.txt and the edge's 451 list tell every crawler the same thing (P1-F of the page architecture, 2026-10-09; his \"Adopt the plan\": Google-Extended allowed, Claude-SearchBot and Claude-User named, ",
+      "reads": [
+        "src/app/robots.ts",
+        "src/middleware.ts"
+      ],
       "claims": []
     },
     {
@@ -2597,7 +2600,8 @@
       "asserts": "THE WORKSHOP IS NOT THE SHOP.",
       "reads": [
         "src/app/dev",
-        "src/app/robots.ts"
+        "src/app/robots.ts",
+        "src/lib/seo/crawlers.ts"
       ],
       "claims": []
     },

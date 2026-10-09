@@ -35,39 +35,23 @@ import { edgeNotFound, fileNotServed, legacyHoodTarget } from "@/lib/routing/edg
 import { SERVED_FILES } from "@/lib/routing/served_files";
 import { proRewrite } from "@/lib/monetization/pro_route";
 import { isPaywallOn } from "@/lib/feature_flags";
+import { HARVESTERS } from "@/lib/seo/crawlers";
 
 /**
  * TRAINING harvesters, blocked at the door with a 451.
  *
- * Split from the answering agents on 2026-08-01, the founder's call, reversing
- * a blanket block. A harvester crawls broadly to build a corpus and nothing
- * comes back. An answering agent fetches one page because a person has just
- * asked about it, and the answer cites the source. Blocking the second kind
- * does not protect the work, it only removes this site from the answer.
+ * Split from the answering agents on 2026-08-01, the founder's call, reversing a blanket block. A harvester crawls broadly to
+ * build a corpus and nothing comes back. An answering agent fetches one page because a person has just asked about it, and the
+ * answer cites the source. Blocking the second kind does not protect the work, it only removes this site from the answer.
  *
- * `chatgpt-user`, `perplexitybot` and `oai-searchbot` were removed from this
- * list for that reason and are now served normally. robots.ts carries the same
- * split, and both must be changed together or a crawler is told one thing and
- * handed another.
+ * ONE LIST SINCE 2026-10-09 (P1-F of the page architecture): built from HARVESTERS in src/lib/seo/crawlers.ts, the list
+ * robots.txt blocks, so a crawler is never told one thing and handed another. The edge refused Amazonbot, YouBot and
+ * ImagesiftBot while robots.txt never named them, and refused Google-Extended, a token no request carries (robots.txt alone
+ * reads it), which his ruling of 2026-10-09 allows. Exported for tests/app/robots.test.ts.
  *
- * The test for adding a pattern here: does a human wait on the other end of the
- * request. If yes it does not belong in this list.
+ * The test for adding a name: does a human wait on the other end of the request. If yes it does not belong in the list.
  */
-const AI_CRAWLER_PATTERNS = [
-  /gptbot/i,
-  /claudebot/i,
-  /anthropic-ai/i,
-  /google-extended/i,
-  /ccbot/i,
-  /bytespider/i,
-  /cohere-ai/i,
-  /facebookbot/i,
-  /meta-externalagent/i,
-  /diffbot/i,
-  /amazonbot/i,
-  /youbot/i,
-  /imagesiftbot/i,
-];
+export const AI_CRAWLER_PATTERNS: readonly RegExp[] = HARVESTERS.map((name) => new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"));
 
 // Cheap signal: scrapers often skip Accept-Language AND match obvious tool UAs.
 // CC.6 — only block on BOTH conditions. Brave / Firefox in strict-privacy

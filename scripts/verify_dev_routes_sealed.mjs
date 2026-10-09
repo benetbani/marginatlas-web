@@ -121,8 +121,13 @@ if (leaks.length === 0) {
 
 /* ---- Rule 2: the workshop is not advertised ---- */
 const robotsSrc = fs.readFileSync("src/app/robots.ts", "utf8");
+/* Since 2026-10-09 (P1-F of the page architecture) the paths every group let in withholds are written once, as INTERNALS in
+   src/lib/seo/crawlers.ts, and robots.ts spreads them (`disallow: [...INTERNALS]`). The spread is expanded to that list before
+   the check, so a /dev/ dropped from INTERNALS fails here exactly as a /dev/ dropped from a literal list always did. */
+const crawlersSrc = fs.readFileSync("src/lib/seo/crawlers.ts", "utf8");
+const internals = /export const INTERNALS\b[^=]*=\s*\[([^\]]*)\]/.exec(crawlersSrc)?.[1] ?? "";
 // Count groups that allow anything at all, and require /dev/ in each.
-const disallowLists = [...robotsSrc.matchAll(/disallow:\s*(\[[^\]]*\]|"[^"]*")/g)].map((m) => m[1]);
+const disallowLists = [...robotsSrc.matchAll(/disallow:\s*(\[[^\]]*\]|"[^"]*")/g)].map((m) => m[1].replace("...INTERNALS", () => internals));
 const allowingGroups = disallowLists.filter((d) => !/^"\/"$/.test(d.trim()));
 const missing = allowingGroups.filter((d) => !d.includes("/dev/"));
 
@@ -130,7 +135,7 @@ if (allowingGroups.length > 0 && missing.length === 0) {
   console.log(`PASS  robots.txt disallows /dev/ in all ${allowingGroups.length} crawler group(s) that are let in`);
 } else {
   failed++;
-  console.log(`FAIL  ${missing.length} of ${allowingGroups.length} crawler group(s) in robots.ts may crawl /dev/`);
+  console.log(`FAIL  ${missing.length} of ${allowingGroups.length} crawler group(s) in robots.ts may crawl /dev/. Remedy: keep "/dev/" in INTERNALS in src/lib/seo/crawlers.ts, the list every group let in spreads`);
 }
 
 if (failed > 0) {
