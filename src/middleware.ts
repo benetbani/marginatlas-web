@@ -36,6 +36,7 @@ import { SERVED_FILES } from "@/lib/routing/served_files";
 import { proRewrite } from "@/lib/monetization/pro_route";
 import { isPaywallOn } from "@/lib/feature_flags";
 import { HARVESTERS } from "@/lib/seo/crawlers";
+import { placeNotHeldIn } from "@/lib/routing/place_words";
 
 /**
  * TRAINING harvesters, blocked at the door with a 451.
@@ -396,9 +397,10 @@ export function routeRequest(req: NextRequest): NextResponse {
     const segments = path.split("/").filter(Boolean);
     if (segments.length > 0) {
       const last = segments[segments.length - 1];
-      /* Its own entries only (src/lib/own.ts): `/gb/london/constructor` read the Object function here and moved to its text. */
+      /* Its own entries only (src/lib/own.ts): `/gb/london/constructor` read the Object function here and moved to its text. A
+         renamed trade under a place no table holds is that place's 404 below, not a hop to it (P1-A, 2026-10-09). */
       const target = own(TAXONOMY_REDIRECTS, last);
-      if (target && target !== last) {
+      if (target && target !== last && !placeNotHeldIn(path)) {
         segments[segments.length - 1] = target;
         const url = req.nextUrl.clone();
         url.pathname = "/" + segments.join("/");

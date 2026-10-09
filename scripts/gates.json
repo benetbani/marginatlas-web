@@ -2797,6 +2797,10 @@
       "reads": [
         "public/",
         "src/app/[country]/[geo]",
+        "src/app/[country]/[geo]/[industry]",
+        "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx",
+        "src/app/[country]/[geo]/[industry]/opening/page.tsx",
+        "src/app/[country]/[geo]/[industry]/page.tsx",
         "src/app/api",
         "src/lib/cells/industry_resolution.ts",
         "src/lib/routing/edge_not_found.ts",

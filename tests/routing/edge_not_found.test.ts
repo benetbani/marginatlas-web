@@ -11,7 +11,7 @@
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { NextRequest } from "next/server";
-import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN } from "../../src/lib/routing/edge_not_found";
+import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN, TRADE_SUB_PAGES } from "../../src/lib/routing/edge_not_found";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "../../src/lib/routing/hood_slugs";
 import { renderHoodSlugs, HOOD_SLUGS_FILE } from "../../scripts/gen_hood_slugs";
 import { renderServedFiles, SERVED_FILES_FILE } from "../../scripts/gen_served_files";
@@ -73,8 +73,8 @@ check("a place's static child: /gb/london/industries", nf("/gb/london/industries
 check("a neighbourhood and trade, the shape published until 2026-08-08: /gb/london/west-end/restaurants (another route's)", nf("/gb/london/west-end/restaurants") === false);
 check("a trade's opening page is left to its route: /gb/london/restaurants/opening", nf("/gb/london/restaurants/opening") === false);
 check("a word under another country is judged the same: /de/berlin/zz-not-a-trade", nf("/de/berlin/zz-not-a-trade") === true);
-check("a United States word is the database's: /us/mississippi/business-support-services (a census description the US shard declares)", nf("/us/mississippi/business-support-services") === false);
-check("a United States word is never judged here: /us/california/zz-not-a-trade (the edge cannot see the database's words)", nf("/us/california/zz-not-a-trade") === false);
+check("a census description the database holds passes under a state: /us/mississippi/business-support-services", nf("/us/mississippi/business-support-services") === false);
+check("an unknown United States word answers 404 (P1-A): /us/california/zz-not-a-trade", nf("/us/california/zz-not-a-trade") === true);
 check("a file is not a place: /geo/countries-110m.json", nf("/geo/countries-110m.json") === false);
 check("a static first segment is not a country: /blog/zz-post", nf("/blog/zz-post") === false);
 check("an unknown first segment with three parts is left alone: /zz/london/zz", nf("/zz/london/zz") === false);
@@ -115,6 +115,45 @@ check(`every district page${districtCaught.length ? `: ${districtCaught.join(", 
 const census = Object.keys((floorCensus as { pages: Record<string, unknown> }).pages);
 const censusCaught = census.filter(nf);
 check(`every page the floor census holds (${census.length})${censusCaught.length ? `: ${censusCaught.slice(0, 5).join(", ")}` : ""}`, censusCaught.length === 0);
+
+/* P1-A (the page architecture, 2026-10-09): the place of a trade page and its sub-pages is judged against the place table, a United
+   States word against the census descriptions the database holds, and a /decide pair by its route's own resolvers. */
+const FIVE = ["gb", "us", "de", "fr", "tr"];
+const placeMissed = FIVE.filter((cc) => !nf(`/${cc}/atlantis/restaurants`));
+check(`a made-up place under a live trade answers 404 in five countries${placeMissed.length ? `: not under ${placeMissed.join(", ")}` : ""}`, placeMissed.length === 0);
+check("a made-up place under an opening page, a buy-or-start page and a district's trade page answers 404", nf("/gb/atlantis/restaurants/opening") && nf("/gb/atlantis/restaurants/buy-or-start") && nf("/gb/atlantis/west-end/restaurants"));
+check("a static child of the country is no place: /gb/industries/restaurants, /gb/how-to-open/restaurants", nf("/gb/industries/restaurants") && nf("/gb/how-to-open/restaurants"));
+const HELD_PLACES: Array<[string, string]> = [
+  ["/gb/gb/restaurants", "the country's own code"],
+  ["/gb/england/restaurants", "a nation, a region of the UK"],
+  ["/gb/birmingham-uk/restaurants", "a friendly city alias (city_aliases_generated.ts)"],
+  ["/gb/liverpool/restaurants", "a manual city alias the rivals list links (manual_city_aliases.ts)"],
+  ["/gb/camden/restaurants", "a district alias the cell route reads (NEIGHBORHOOD_ALIASES)"],
+  ["/de/frankfurt-am-main/restaurants", "the label address the across-cities columns link (cellUrl)"],
+  ["/us/us-06-037/restaurants", "a county the database holds"],
+  ["/us/california/restaurants", "a state"],
+];
+for (const [p, what] of HELD_PLACES) check(`${what} passes: ${p}`, !nf(p));
+check("an opening page follows its trade page: /gb/london/restaurants/opening and /buy-or-start pass, /gb/london/zz-not-a-trade/opening answers 404", !nf("/gb/london/restaurants/opening") && !nf("/gb/london/restaurants/buy-or-start") && nf("/gb/london/zz-not-a-trade/opening"));
+check("a district's trade page is judged by its place alone: /gb/london/west-end/zz goes on to its route", !nf("/gb/london/west-end/zz"));
+check("a census description under a county answers 404, only a state's lookup reads one: /us/us-06-037/offices-of-lawyers", nf("/us/us-06-037/offices-of-lawyers"));
+check("a census description under a state passes: /us/mississippi/offices-of-lawyers", !nf("/us/mississippi/offices-of-lawyers"));
+check("a /decide pair its route draws passes: /decide/restaurants/london", !nf("/decide/restaurants/london"));
+check("a /decide pair whose activity names nothing answers 404: /decide/zz-not-a-trade/london", nf("/decide/zz-not-a-trade/london"));
+check("a /decide pair whose city holds no neighbourhood scheme answers 404: /decide/restaurants/atlantis", nf("/decide/restaurants/atlantis"));
+const hubCityList = Object.keys(NEIGHBORHOOD_SLUGS);
+const decideCaught = hubCityList.flatMap((city) => live.map((s) => `/decide/${s}/${city}`)).filter(nf);
+check(`every /decide pair of a hub city and a live trade passes (${hubCityList.length * live.length})${decideCaught.length ? `: ${decideCaught.slice(0, 5).join(", ")}` : ""}`, hubCityList.length > 0 && decideCaught.length === 0);
+const PRERENDER_ROUTES: Array<[string, string]> = [
+  ["src/app/[country]/[geo]/[industry]/page.tsx", ""],
+  ["src/app/[country]/[geo]/[industry]/opening/page.tsx", "/opening"],
+  ["src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx", "/buy-or-start"],
+];
+const prerendered = PRERENDER_ROUTES.flatMap(([file, sub]) =>
+  [...readFileSync(file, "utf8").matchAll(/\{\s*country:\s*"([a-z]{2})",\s*geo:\s*"([a-z0-9-]+)",\s*industry:\s*"([a-z0-9-]+)"\s*\}/g)].map((m) => `/${m[1]}/${m[2]}/${m[3]}${sub}`),
+);
+const prerenderCaught = prerendered.filter(nf);
+check(`every address the trade, opening and buy-or-start routes prerender passes (${prerendered.length})${prerenderCaught.length ? `: ${prerenderCaught.join(", ")}` : ""}`, prerendered.length >= 30 && prerenderCaught.length === 0);
 
 /* A FILE ONLY IF IT IS ONE (2026-10-06). A dot in the last part used to pass an address through untouched, to spare the files
    under public/, so a made-up file reached a page route and answered 200 (production, 2026-10-06): "Page not found" at
@@ -178,6 +217,8 @@ if (servedFresh !== null) {
 }
 const geoChildren = readdirSync("src/app/[country]/[geo]", { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith("[")).map((d) => d.name).sort();
 check(`GEO_STATIC_CHILDREN is the static folders of src/app/[country]/[geo] (${geoChildren.join(", ")})`, JSON.stringify([...GEO_STATIC_CHILDREN].sort()) === JSON.stringify(geoChildren));
+const tradeChildren = readdirSync("src/app/[country]/[geo]/[industry]", { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith("[")).map((d) => d.name).sort();
+check(`TRADE_SUB_PAGES is the static folders of src/app/[country]/[geo]/[industry] (${tradeChildren.join(", ")})`, JSON.stringify([...TRADE_SUB_PAGES].sort()) === JSON.stringify(tradeChildren));
 
 /* THE PLACE TABLE (P1-A of the page architecture, 2026-10-09). Every place word a table of the site holds, and the ids and the
    United States' census descriptions the database holds, generated by hand (scripts/gen_place_slugs.ts --database writes the scan
@@ -327,6 +368,7 @@ protoCheck("resolveDisplayIndustry names no trade for any Object.prototype name"
 protoCheck("industryQueryCandidates queries nothing for any Object.prototype name", protoWrong((k) => industryQueryCandidates(k).length, 0), "src/lib/cells/industry_resolution.ts");
 protoCheck("redirectFor redirects no Object.prototype name", protoWrong(redirectFor, null), "src/lib/taxonomy/retired.ts");
 protoCheck("a three-part London address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/gb/london/${k.toLowerCase()}`), true), FILE);
+protoCheck("a three-part address with an Object.prototype name as its place is the edge's 404 (P1-A)", protoWrong((k) => nf(`/gb/${k.toLowerCase()}/restaurants`), true), FILE);
 protoCheck("an activity address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/industries/${k.toLowerCase()}`), true), FILE);
 protoCheck("a hub address for an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/cities/${k.toLowerCase()}/neighborhoods`), true), FILE);
 protoCheck("a district address under an Object.prototype name is the edge's 404", protoWrong((k) => nf(`/cities/${k.toLowerCase()}/neighborhoods/central`), true), FILE);

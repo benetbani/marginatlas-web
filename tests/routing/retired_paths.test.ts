@@ -24,7 +24,8 @@ check(`retired with no successor, under a city: /gb/london/banking to the city's
 check(`retired with no successor, under a region: /us/new-york/banking to the state's page (${at("/us/new-york/banking")})`, at("/us/new-york/banking") === "/us/new-york");
 check(`merged into a live trade: /gb/london/sit-down-restaurants to restaurants in London (${at("/gb/london/sit-down-restaurants")})`, at("/gb/london/sit-down-restaurants") === "/gb/london/restaurants");
 check(`merged, under a region: /us/california/plumbing-services to plumbers in California (${at("/us/california/plumbing-services")})`, at("/us/california/plumbing-services") === "/us/california/plumbers");
-check("a place the country does not hold: the country's page", at("/gb/atlantis/banking") === "/gb");
+check("a place no table holds: no hop, the edge's 404 (P1-A, 2026-10-09)", at("/gb/atlantis/banking") === null);
+check(`a place a table holds that is neither a region nor a listed city: the country's page (${at("/gb/liverpool/banking")})`, at("/gb/liverpool/banking") === "/gb");
 check("any case: /GB/London/Banking as /gb/london/banking", at("/GB/London/Banking") === "/cities/london");
 check("a live trade stays where it is", at("/gb/london/restaurants") === null);
 check("not a place path: /industries/banking (the middleware's own block)", at("/industries/banking") === null);

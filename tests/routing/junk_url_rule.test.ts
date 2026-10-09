@@ -137,9 +137,28 @@ const PROTO_PINNED = [
 for (const p of PROTO_PINNED) expectVerdict(p, "pinned to 404", BUILT_IN, PROTO_REMEDY);
 /* An uppercase letter is canonicalised first, as for any word, and the lowercase address is then judged above. */
 expectVerdict("/gb/london/toString", "answers 308 to /gb/london/tostring", "an uppercase address goes to its lowercase form first, as any address does", PROTO_REMEDY);
-/* A United States word is the database's and never judged at the edge (src/lib/routing/edge_not_found.ts), so it passes as
-   /us/california/zz does; what it must never do is move to a built-in's text. */
-expectVerdict("/us/california/constructor", "passes", "a United States word passes to its route as any made-up one does, never to a built-in's text", PROTO_REMEDY);
+/* A United States word is judged at the edge since P1-A (2026-10-09): one that is no trade and no census description the database
+   holds answers 404, and a built-in's name is such a word; it must never move to a built-in's text. */
+expectVerdict("/us/california/constructor", "pinned to 404", "a United States word that names no trade and no census description, as any made-up one", PROTO_REMEDY);
+
+/* P1-A (the page architecture, 2026-10-09): a made-up place in five countries, a retired or renamed trade under one, an unknown
+   United States word and a /decide pair its route cannot draw answer 404 at the address asked, never a hop first. */
+const P1A_PINNED: ReadonlyArray<readonly [string, string]> = [
+  ["/gb/atlantis/restaurants", "a place no UK table holds"],
+  ["/us/atlantis/restaurants", "a place no United States table holds"],
+  ["/de/atlantis/restaurants", "a place no German table holds"],
+  ["/fr/atlantis/restaurants", "a place no French table holds"],
+  ["/tr/atlantis/restaurants", "a place no Turkish table holds"],
+  ["/gb/atlantis/restaurants/opening", "an opening page under a place no table holds"],
+  ["/gb/atlantis/banking", "a retired trade under a place no table holds: that place's 404, not a hop to the country"],
+  ["/gb/atlantis/crop-farming", "a renamed trade under a place no table holds: that place's 404, not a hop to the new name"],
+  ["/us/california/zz-not-a-trade", "a United States word that is no trade and no census description"],
+  ["/us/us-06-037/offices-of-lawyers", "a census description under a county: only a state's lookup reads one"],
+  ["/gb/london/zz-not-a-trade/opening", "an opening page whose trade names nothing"],
+  ["/decide/zz-not-a-trade/london", "a /decide pair whose activity names nothing"],
+  ["/decide/restaurants/atlantis", "a /decide pair whose city holds no neighbourhood scheme"],
+];
+for (const [p, why] of P1A_PINNED) expectVerdict(p, "pinned to 404", why, PIN_REMEDY);
 
 /* PASSES: every shape the site serves goes on to its route untouched. */
 const PASSES: ReadonlyArray<readonly [string, string]> = [
@@ -155,7 +174,15 @@ const PASSES: ReadonlyArray<readonly [string, string]> = [
   ["/coverage/us", "a child of a route folder"],
   ["/gb/london/restaurants", "a trade under a UK city, a shape the edge's not-found rule judges"],
   ["/us/california/restaurants", "a trade under a state"],
-  ["/us/mississippi/offices-of-lawyers", "a census description: a United States word is the database's, never judged at the edge"],
+  ["/us/mississippi/offices-of-lawyers", "a census description the database holds (src/lib/routing/place_slugs_generated.ts), under a state"],
+  ["/gb/gb/restaurants", "the country's own code as its place"],
+  ["/gb/england/restaurants", "a nation"],
+  ["/gb/birmingham-uk/restaurants", "a friendly city alias: kept until the inventory gives it its line"],
+  ["/gb/liverpool/restaurants", "a manual city alias the rivals list links: kept until the inventory gives it its line"],
+  ["/us/us-06-037/restaurants", "a county the database holds"],
+  ["/gb/london/restaurants/opening", "an opening page of a trade page that exists"],
+  ["/decide/restaurants/london", "a /decide pair its route draws"],
+  ["/de/frankfurt-am-main/restaurants", "the address the across-cities columns link for Frankfurt (cellUrl spells its label)"],
   ["/geo/countries-110m.json", "a file is not a place: the world map's data, which the place rule once pinned"],
 ];
 for (const [p, why] of PASSES) expectVerdict(p, "passes", why, PASS_REMEDY);

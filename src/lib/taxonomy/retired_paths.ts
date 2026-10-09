@@ -19,11 +19,14 @@ import { redirectFor } from "@/lib/taxonomy/retired";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { COUNTRY_STATIC_CHILDREN, TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 import { cityPathFor } from "@/lib/cities/city_path";
+import { placeNotHeldIn } from "@/lib/routing/place_words";
 
 /** Where a retired trade's place path goes, or null when the path is not a place path or its trade is not retired. */
 export function retiredPlaceTarget(path: string): string | null {
   const parts = path.split("/").filter(Boolean).map((s) => s.toLowerCase());
   if (parts.length !== 3) return null;
+  /* A place no table holds is the edge's 404, never a hop to the country (P1-A of the page architecture, 2026-10-09). */
+  if (placeNotHeldIn(path)) return null;
   const [country, geo, slug] = parts;
   if (TOP_LEVEL_SEGMENTS.has(country) || COUNTRY_STATIC_CHILDREN.has(geo)) return null;
   const iso2 = country.toUpperCase();

@@ -2,39 +2,46 @@
  * src/lib/routing/edge_not_found.ts
  *
  * AN ADDRESS FOR NOTHING ANSWERS 404 AT THE EDGE (masterplan step 01, 2026-10-05; QUEUE launch:retired-trades-live, whose
- * recommendation milestone 1 left half built). `/gb/london/<any word>` rendered a synthesized "Small business" page at 200,
- * canonical to itself and indexable like every UK page: the cell lookup never returns nothing (getCellBySlug synthesizes),
- * so the route's own notFound() could not fire. `/industries/<word>` and `/cities/<word>` did call notFound(), inside a
- * streamed page, after the 200 was on the wire (the middleware's note on isPlaceWeDoNotHold says why). The middleware is
- * the one place that runs first, so it judges here, and pins the status the same way the place rule does.
+ * recommendation milestone 1 left half built; P1-A of the page architecture, 2026-10-09, which added the place, the United
+ * States' words, the trade pages' sub-pages and the /decide pairs). `/gb/london/<any word>` rendered a synthesized "Small
+ * business" page at 200, canonical to itself and indexable like every UK page: the cell lookup never returns nothing
+ * (getCellBySlug synthesizes), so the route's own notFound() could not fire. `/industries/<word>` and `/cities/<word>` did call
+ * notFound(), inside a streamed page, after the 200 was on the wire (the middleware's note on isPlaceWeDoNotHold says why). The
+ * middleware is the one place that runs first, so it judges here, and pins the status the same way the place rule does.
  *
  * THE RULE: each shape is judged by the resolver its own route runs, never by a guess.
- *  - `/{country}/{place}/{word}`, a country the site holds other than the United States (below): the word names nothing
- *    when the cell route's own resolver
- *    (`resolveDisplayIndustry`: the taxonomy's exact slug, id, alias, phrase and tight fuzzy match, plus the legacy data
- *    crosswalk) finds no live trade, and no redirect owns it (retired, renamed), and it is not one of the place's static
- *    children (`/gb/london/industries`) or an old neighbourhood address (`legacyHoodTarget`, below).
+ *  - `/{country}/{place}/{word}`, a country the site holds: the place names nothing when no table of the site holds the word
+ *    (src/lib/routing/place_words.ts: the country's own code, its regions, its listed cities and the label addresses their links
+ *    spell, every city, district and state alias the cell route reads, the places the trade routes prerender, and the ids the
+ *    database holds). The word names nothing when the cell route's own resolver (`resolveDisplayIndustry`: the taxonomy's exact
+ *    slug, id, alias, phrase and tight fuzzy match, plus the legacy data crosswalk) finds no live trade, no redirect owns it
+ *    (retired, renamed), it is not one of the place's static children (`/gb/london/industries`) or an old neighbourhood address
+ *    (`legacyHoodTarget`, below), and, under a state of the United States, it is no census description the database holds (that
+ *    lookup's last step reads them: getCellBySlugRaw in src/lib/cells.ts).
+ *  - `/{country}/{place}/{word}/opening` and `/{country}/{place}/{word}/buy-or-start` (TRADE_SUB_PAGES): their trade page's
+ *    verdict, the old neighbourhood address aside.
+ *  - `/{country}/{place}/{district}/{trade}`, a district's trade page: its place alone; the rest is its route's.
  *  - `/industries/{word}` and `/industries/{word}/across`: the industry routes' resolver (`slugToIndustry`) finds nothing.
  *  - `/cities/{slug}`: the city list holds no such city (the generated slug table `cityPathFor` reads).
  *  - `/cities/{slug}/neighborhoods[/{district}]`: no hub (`hasHoodScheme`), or no admitted district (`spineHoodDistrict`,
  *    while the neighbourhood spine is on), read from the generated table src/lib/routing/hood_slugs.ts.
+ *  - `/decide/{activity}/{city}`: the pair route's own resolvers: no trade for the activity (`slugToIndustry`), or no
+ *    neighbourhood scheme for the city (`hasHoodScheme`, the keys of src/lib/routing/hood_slugs.ts).
  *  - Any address whose last part has a dot names a file (2026-10-06), at any depth: it names nothing unless the site serves that
  *    file, a file under public/ or one a route of src/app writes (`/robots.txt`, `/sitemap/0.xml`), read from the generated table
  *    src/lib/routing/served_files.ts; the platform's own addresses under `/_vercel/` are Vercel's. No page takes a dotted part
  *    (no country, region, city, trade, district, post or article slug holds a dot; the test reds when one does), so a dotted
  *    address that is no file could only ever have drawn a page's not-found, or worse, a synthesized page at 200.
- * Everything else is left alone: one- and two-part paths are isPlaceWeDoNotHold's, four-part trade paths are their routes'.
+ * Everything else is left alone: one- and two-part paths are isPlaceWeDoNotHold's.
  *
- * WHAT IT CANNOT SEE, said once. A place segment is not judged (`/us/us-06-037/restaurants` is a county the database
- * holds and no table here lists), so `/gb/atlantis/restaurants` still renders. And a United States word is never judged:
- * the US state lookup's last step matches the word against the census descriptions by the database's own text
- * (getCellBySlugRaw in src/lib/cells.ts), and the US shard declares 469 such pages
- * (`/us/mississippi/business-support-services`, floor census of 2026-10-05), so a word the taxonomy does not hold may
- * still name a real row there. No other country's lookup reads a word the taxonomy cannot. A dotted United States word IS judged,
- * as a file: that lookup's last step (`ilike` on the word, hyphens as wildcards) could match a description with a dot in it, but
- * no published address holds a dot, so such a match could only be a second address for a page the site already publishes. Pure,
- * and small enough for the edge: the taxonomy module the middleware already imports, two small crosswalks and three generated
- * tables; never src/lib/spine/hood_scheme.ts, which pulls the neighbourhood data in.
+ * WHAT IT CANNOT SEE, said once. The place table is the database's as of its last scan (data/seo/place_db_words.json): a county
+ * or a description loaded since answers 404 until scripts/gen_place_slugs.ts runs with the database again. A census description
+ * is judged for the whole country: a word one state holds passes under every state, and a state without that row draws the
+ * estimated page. A dotted United States word IS judged, as a file: that lookup's last step (`ilike` on the word, hyphens as
+ * wildcards) could match a description with a dot in it, but no published address holds a dot, so such a match could only be a
+ * second address for a page the site already publishes. Pure, and small enough for the edge: the taxonomy module the middleware
+ * already imports, two small crosswalks and five generated tables; never src/lib/spine/hood_scheme.ts, which pulls the
+ * neighbourhood data in.
  *
  * Next strips an RSC request's `.rsc` ending before the middleware sees the path (normalizeRscURL in
  * next/dist/server/web/adapter.js), so a page's payload is judged as its page. The `.segments/` prefetch addresses of Next's client
@@ -48,7 +55,10 @@ import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 import { CITY_SLUGS_BY_COUNTRY } from "@/lib/routing/city_paths_generated";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "@/lib/routing/hood_slugs";
 import { SERVED_FILES } from "@/lib/routing/served_files";
+import { US_DESCRIPTION_SLUGS } from "@/lib/routing/place_slugs_generated";
+import { isHeldPlace } from "@/lib/routing/place_words";
 import { namesFile } from "@/lib/routing/names_file";
+import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { cityPathFor } from "@/lib/cities/city_path";
 import { own } from "@/lib/own";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
@@ -57,10 +67,15 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
  *  the filesystem and reds when this set and the folders disagree. */
 export const GEO_STATIC_CHILDREN: ReadonlySet<string> = new Set(["industries"]);
 
+/** The static folders of src/app/[country]/[geo]/[industry], each a page under its trade page that names nothing when its trade
+ *  page names nothing (P1-A); the edge test reds when this set and the folders disagree. The index policy and the alias
+ *  canonicals read it too. */
+export const TRADE_SUB_PAGES: ReadonlySet<string> = new Set(["opening", "buy-or-start"]);
+
 const HELD_COUNTRIES = new Set(COUNTRIES.map((c) => c.code.toLowerCase()));
-/** Countries whose cell lookup can match a word the taxonomy does not hold, by the database's own text (the note above). */
-const DATABASE_WORDS = new Set(["us"]);
 const LISTED_CITIES = new Set(Object.values(CITY_SLUGS_BY_COUNTRY).flat());
+/** The United States' states: the only places whose lookup reads a census description (getCellBySlugRaw, src/lib/cells.ts). */
+const US_STATES = new Set(getRegionsForCountry("US", "United States").map((r) => r.value));
 
 /** A redirect earlier in the middleware owns the word: a retired trade, or one renamed to another slug. Every table here is read
  *  for its own entries (src/lib/own.ts), so a word that names a built-in ("constructor", "__proto__") names nothing. */
@@ -102,6 +117,13 @@ export function fileNotServed(path: string): boolean {
   return namesFile(path) && !SERVED_FILES.has(path) && !path.startsWith("/_vercel/");
 }
 
+/** The trade slot of a place's address names nothing (P1-A): no live trade, no redirect, no static child of the place, and, under
+ *  a state of the United States, no census description the database holds. */
+function tradeWordNamesNothing(country: string, place: string, word: string): boolean {
+  if (GEO_STATIC_CHILDREN.has(word) || ownedByRedirect(word) || resolveDisplayIndustry(word)) return false;
+  return !(country === "us" && US_STATES.has(place) && US_DESCRIPTION_SLUGS.has(word));
+}
+
 /** True only for an address its own route would render as nothing (the rule above); the middleware pins it to 404. */
 export function edgeNotFound(path: string): boolean {
   if (namesFile(path)) return fileNotServed(path);
@@ -120,10 +142,14 @@ export function edgeNotFound(path: string): boolean {
     return !(isSpineReformEnabledFor("hood") && (own(HOOD_DISTRICT_SLUGS, second) ?? []).includes(fourth));
   }
 
-  if (segs.length === 3 && HELD_COUNTRIES.has(first) && !TOP_LEVEL_SEGMENTS.has(first) && !DATABASE_WORDS.has(first)) {
-    if (GEO_STATIC_CHILDREN.has(third) || ownedByRedirect(third)) return false;
-    if (resolveDisplayIndustry(third)) return false;
-    return legacyHoodTarget(path) === null;
+  if (first === "decide" && segs.length === 3) {
+    return slugToIndustry(second) === null || own(NEIGHBORHOOD_SLUGS, third) === undefined;
+  }
+
+  if ((segs.length === 3 || segs.length === 4) && HELD_COUNTRIES.has(first) && !TOP_LEVEL_SEGMENTS.has(first)) {
+    if (!isHeldPlace(first, second)) return true;
+    if (segs.length === 3) return legacyHoodTarget(path) === null && tradeWordNamesNothing(first, second, third);
+    return TRADE_SUB_PAGES.has(fourth) && tradeWordNamesNothing(first, second, third);
   }
 
   return false;
