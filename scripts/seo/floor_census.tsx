@@ -4,8 +4,11 @@
  * builders and views, the same shell), counts its blocks (scripts/lib/block_count.mjs, the model laws' BLOCK FLOOR without a
  * browser) and writes data/seo/floor_census.json, which src/lib/seo/indexable.ts reads for each page's robots tag and the sitemap.
  *
- * WHICH PAGES: every country page and its how-to page, every city page, every industry page, and the trade pages the sitemap
- * lists (its US and regional sets, read the way the sitemap reads them). UK pages are not counted: they index by his rule whatever
+ * WHICH PAGES: every country page and its how-to page, every city page, every industry page, and the trade pages of two sets: the
+ * top 500 United States cells and the top 300 regional cells of quality 40 or more, as the sitemap's shards 1 and 2 read them until
+ * P1-E (2026-10-09). The sitemap lists neither set now (both shards answer empty) and this script never reads it: it asks the
+ * database for the two sets itself. indexFor (byCensus, src/lib/seo/indexable.ts) reads the counts for the pages outside the UK
+ * that it leaves to the census, regional trade pages among them. UK pages are not counted: they index by his rule whatever
  * their count. A page whose seed builder returns nothing is not counted either: its route answers 404.
  *
  * Needs the database (the trade pages' seeds read it) and runs by hand, never in the chain:
@@ -79,7 +82,8 @@ async function candidates(): Promise<Array<{ surface: Surface; slugs: string[]; 
   if (only.includes("city")) for (const c of (cityListJson as { cities: Array<{ slug: string; iso2: string }> }).cities) if (String(c.iso2).toUpperCase() !== "GB") out.push({ surface: "city", slugs: [c.slug], path: `/cities/${c.slug}` });
   if (only.includes("industry")) for (const slug of Object.keys(SLUG_TO_INDUSTRY as Record<string, unknown>)) if (!(slug in RETIRED)) out.push({ surface: "industry", slugs: [slug], path: `/industries/${slug}` });
   if (only.includes("cell")) {
-    /* The trade pages the sitemap lists, read as it reads them (src/app/sitemap.ts, the US and the regional sets). */
+    /* The trade pages outside the United Kingdom: the two sets the sitemap's shards 1 and 2 listed until P1-E, read as that sitemap
+       read them, from the database. The sitemap lists neither now, and this script does not read the sitemap. */
     const us = await quiet(() => withBudget(getTopCells(500), [], 60_000, "census:usCells"));
     const regional = await quiet(() => withBudget(getTopRegionalCells(300), [], 60_000, "census:regionalCells"));
     const paths = new Set<string>();

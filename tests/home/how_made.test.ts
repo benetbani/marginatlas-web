@@ -91,10 +91,10 @@ if (built && d) {
   check(`the names matched are the slice's, of its names (${row("matched")?.value})`, row("matched")?.value === `${n(d.matched_names)} of ${n(d.names)}`);
   /* THE TRADE PAGES, HELD TO THE PAGES AND NOT TO THE BUILDER'S OWN PREDICATE. A London trade page prints a takings figure where its
      head gives a dollar one (tradeHeadFigure: the page, its description and its share card read it; a trade whose median falls in
-     an open band prints an edge in words and gives none). The pages served are the sitemap's London list, every trade slug of the
-     taxonomy that is not retired (src/app/sitemap.ts, src/lib/home/destination.ts). A gate cannot read that list from the sitemap:
-     its module builds the database client on load and so needs the database address, which a gate never has. So the sitemap's
-     rule is restated here from the taxonomy, as the routing gates restate it (tests/routing/edge_not_found.test.ts). */
+     an open band prints an edge in words and gives none). The pages served are the sitemap's London list, shard 8: every trade slug
+     of the taxonomy that is not retired (src/app/sitemap.ts, src/lib/home/destination.ts). Since P1-E (2026-10-09) the sitemap reads
+     no database, so a gate can ask it offline (scripts/lib/sitemap_entries.ts), and the gate sitemap-families holds shard 8 to the
+     count of that list. Here the list is taken from the taxonomy, as the routing gates take it (tests/routing/edge_not_found.test.ts). */
   const served = Object.keys(SLUG_TO_INDUSTRY).filter((s) => !Object.hasOwn(RETIRED, s));
   const printing = served.filter((s) => tradeHeadFigure({ isLondon: true, slug: s })?.usd != null);
   const closed = served.filter((s) => londonTradeSales(s)?.q50.open === false);
