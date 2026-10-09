@@ -1,5 +1,5 @@
 /**
- * THE PRICING PAGE LEADS WITH THE YEAR (his decision of 2026-10-09: Pro is $48 month to month or $456 a year, and the page leads with the year as "$38 a month, billed yearly"). Rendered with billing dormant (the notify-me link) and with billing live (two checkout buttons), the page prints the headline first, one plain line with the year's total and the saving, and the monthly price one line away, every figure from src/lib/monetization/plan.ts, and no other dollar figure.
+ * THE PRICING PAGE LEADS WITH THE YEAR (his decision of 2026-10-09: Pro is $48 month to month or $456 a year, and the page leads with the year as "$38 a month, billed yearly"). Rendered with billing dormant (the notify-me link) and with billing live (two checkout buttons), the page prints the headline first, one plain line with the year's total and the saving, and the monthly price one line away, every figure from src/lib/monetization/plan.ts, and no other dollar figure. With billing live, each checkout button posts the interval its label names (the year's "year", the month to month one "month"), read from the data-interval CheckoutButton draws.
  *
  * The bans of the v34 rules stay (scripts/verify_v34_research_rules.ts reads the source for them; this reads the page as drawn): no "Most popular" badge, no trial, no countdown, no "Contact sales" tier. Copy is plain: no em dash, no semicolon.
  *
@@ -33,6 +33,9 @@ const text = (html: string) =>
   html.replace(/<[^>]*>/g, " ").replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 const dollars = (t: string) => [...new Set([...t.matchAll(/\$\d[\d,]*(?:\.\d+)?/g)].map((m) => m[0]))].sort();
 const buttons = (html: string) => [...html.matchAll(/<button[^>]*>([\s\S]*?)<\/button>/g)].map((m) => text(m[1]));
+/* What each checkout button does, not only what it says: CheckoutButton draws the interval it posts as data-interval, so two
+   `interval` props swapped in the page cannot hide behind labels that still read right. */
+const posts = (html: string) => [...html.matchAll(/<button([^>]*)>([\s\S]*?)<\/button>/g)].map((m) => ({ label: text(m[2]), interval: /\bdata-interval="([^"]*)"/.exec(m[1])?.[1] ?? null }));
 
 /* Billing is live only when accounts are on and a Stripe secret is set; a marker stands in for the secret in this render, and
    nothing is sent anywhere. */
@@ -66,6 +69,10 @@ for (const { name, live, html } of pages) {
   const b = buttons(html);
   if (live) {
     check(`${name}: the first checkout is the year, the second the month, one click from the line`, () => b[0].includes(priceLine("year")) && b[1] === monthToMonthLine());
+    /* The label and the interval it posts agree: the year's button posts "year", the month to month one posts "month". */
+    const postedBy = (label: string) => { const hits = posts(html).filter((x) => x.label.includes(label)); return hits.length === 1 ? hits[0].interval : null; };
+    check(`${name}: the button labelled "${priceLine("year")}" posts "year"`, () => postedBy(priceLine("year")) === "year");
+    check(`${name}: the button labelled "${monthToMonthLine()}" posts "month"`, () => postedBy(monthToMonthLine()) === "month");
   } else {
     check(`${name}: the notify-me link leads and no checkout button carries a price`, () => at("Notify me when Pro opens") > -1 && at("Notify me when Pro opens") < at(monthToMonthLine()) && !b.some((x) => /\$\d/.test(x)));
   }
