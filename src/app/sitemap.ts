@@ -1,16 +1,18 @@
 /**
  * THE SITEMAPS, ONE SHARD PER FAMILY (P1-E of the page architecture, 2026-10-09; his "Adopt the plan").
  *
- * Next 15's generateSitemaps writes one file per id at /sitemap/{id}.xml. Which id holds which family, and which are listed, answer
- * empty or are reserved, is one table, SITEMAP_FAMILIES (src/lib/seo/sitemap_families.ts), read here, by robots.txt and by
- * scripts/gen_served_files.ts. Every address a listed shard writes is one indexFor admits (src/lib/seo/indexable.ts), names itself
- * canonical, passes the edge and sits in one shard only; lastmod is a page's own date where it has one (a post's) and absent
- * elsewhere, never the build's time. The gate sitemap-families holds all of it, offline: no shard reads the database.
+ * Next 15's generateSitemaps writes one file per id at /sitemap/{id}.xml. One table, SITEMAP_FAMILIES
+ * (src/lib/seo/sitemap_families.ts), says which id holds which family and whether its shard is listed, answers empty or is reserved;
+ * this file, robots.txt and scripts/gen_served_files.ts all read it. Every address a listed shard writes is one indexFor admits
+ * (src/lib/seo/indexable.ts), names itself canonical, passes the edge and sits in one shard only; lastmod is a page's own date where
+ * it has one (a post's) and absent elsewhere, never the build's time. The gate sitemap-families holds all of it, offline: no shard
+ * reads the database.
  *
- * WHAT LEFT ON 2026-10-09: the 195 country industries hubs from shard 0 and the region hubs of shard 4, noindex now (P1-B); the
- * United States cells of shard 1, named by census descriptions and noindex now, and the regional cells of shard 2, none at its
- * floor; London's trade pages moved from shard 6 to their family's shard 8, and the posts from shard 0 to the articles' shard 7.
- * Shards 1, 2, 4 and 5 still answer, empty and unlisted.
+ * WHAT THE SITEMAPS STOPPED LISTING ON 2026-10-09: the 195 country industries hubs (shard 0) and the region industries hubs (shard
+ * 4), noindex now (P1-B); the United States trade pages a census description names (shard 1), noindex now (P1-B). Two moved to the
+ * shard of their family: London's trade pages from shard 6 to shard 8, and the posts from shard 0 to the articles' shard 7. Shard 2
+ * held the regional cells, none of them at its floor, and shard 5 the district trade pages, withdrawn on 2026-08-08. Shards 1, 2, 4
+ * and 5 still answer, empty and unlisted.
  *
  * /browse and /you are absent on purpose (2026-08-09): the first is a permanentRedirect to /world, the second sets noindex because
  * everything on it lives in the reader's browser. A sitemap lists the pages to index; a redirect and a noindex page are not among
@@ -26,12 +28,12 @@ import { hasOwn } from "@/lib/own";
 import { spineHoodDistricts } from "@/lib/spine/hood_scheme";
 import { getAllPosts } from "@/lib/blog";
 import { LEARN_ARTICLES } from "@/lib/learn/articles";
-import { SITEMAP_FAMILIES, servedShardIds } from "@/lib/seo/sitemap_families";
+import { SITE_ORIGIN, SITEMAP_FAMILIES, servedShardIds } from "@/lib/seo/sitemap_families";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
 import cityListJson from "../../data/cities/city_list_v1.json";
 import cityComparisonsJson from "../../data/cities/city_comparisons_v1.json";
 
-const BASE_URL = "https://www.marginatlas.com";
+const BASE_URL = SITE_ORIGIN;
 
 /** The live trades' own slugs, as every link on the site spells them. */
 const liveTradeSlugs = (): string[] => Object.keys(SLUG_TO_INDUSTRY as Record<string, unknown>).filter((slug) => !hasOwn(RETIRED, slug));

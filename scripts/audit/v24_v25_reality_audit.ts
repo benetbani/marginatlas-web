@@ -93,13 +93,16 @@ const CHECKS: Check[] = [
     test: (html) => html.length > 1024 && /<url>/.test(html),
     failNote: "Sitemap shard 0 still empty urlset — v24 Block 11 not live",
   },
+  /* Item 8 asked shard 2, the regional cells, for real content. Since P1-E (2026-10-09) shard 2 answers empty by design
+     (SITEMAP_FAMILIES, src/lib/seo/sitemap_families.ts), so the item asks shard 6, the city pages, which is listed: the same
+     question, that a shard other than 0 reaches its builder (the string id Next 15 passes). */
   {
     id: 8,
     block: "v24 Block 11",
-    description: "Sitemap shard 2 (regional cells) has real content",
-    url: "/sitemap/2.xml",
+    description: "Sitemap shard 6 (city pages) has real content",
+    url: "/sitemap/6.xml",
     test: (html) => html.length > 1024 && /<url>/.test(html),
-    failNote: "Sitemap shard 2 still empty — v24 Block 11 routing fix not live",
+    failNote: "Sitemap shard 6 empty, so a shard other than 0 does not reach its builder: v24 Block 11 routing fix not live",
   },
   {
     id: 9,

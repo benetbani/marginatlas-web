@@ -1445,13 +1445,16 @@ export async function getTopCells(limit = 100): Promise<Cell[]> {
 }
 
 /**
- * Top N regional_cells rows for the sitemap. Plan v26 follow-up
+ * Top N regional_cells rows. The sitemap's regional shard read them
+ * until P1-E (2026-10-09, it answers empty now); the floor census
+ * (scripts/seo/floor_census.tsx) and the outcomes check
+ * (scripts/query_outcomes.ts) read them today. Plan v26 follow-up
  * findings: ANY .order() clause on regional_cells times out at the
  * 60s Supabase statement limit (no index supports it). Workaround:
  * drop the order, accept whatever PostgREST returns first. The
  * inventory probe showed ~95%+ of rows score >= 85 quality, so the
- * downstream score-filter keeps most rows anyway. Simple limit(1000)
- * with a single gte filter returns in <1 second.
+ * score filter the sitemap applied kept most rows anyway. Simple
+ * limit(1000) with a single gte filter returns in <1 second.
  */
 export async function getTopRegionalCells(limit = 1000): Promise<Cell[]> {
   const { data, error } = await supabaseAdmin

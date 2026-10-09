@@ -5,8 +5,10 @@
  * Refuses: an address outside its shard's family, one indexFor refuses, one that does not name itself canonical (an alias, which
  * names the live slug's page), one the edge does not pass untouched (a 404 or a redirect), one listed twice; an address no page
  * file under src/app serves, and one whose page says noindex, itself or in a layout above it, or sets robots in a form this gate
- * cannot read; a listed or empty shard generateSitemaps does not write; an empty shard that writes an address; robots.txt's list
- * unequal to the table's listed shards; a lastmod that is a time rather than a page's own date, or a `new Date()` in
+ * cannot read; a listed or empty shard generateSitemaps does not write; a listed shard that lists nothing; an empty shard that
+ * writes an address; an address robots.txt disallows (it starts with one of the internals); an address off the one origin
+ * (SITE_ORIGIN), or an origin spelled in src/app/sitemap.ts; robots.txt's list unequal to the table's listed shards; a lastmod that
+ * is not a post's own date (its update, else its writing) or that dates a page no post stands behind, or a `new Date()` in
  * src/app/sitemap.ts (the build's time).
  *
  * THE INSTRUMENT: src/app/sitemap.ts itself, called offline (no listed shard reads the database since the families split), the
@@ -25,12 +27,14 @@ import { NextRequest } from "next/server";
 import { generateSitemaps } from "../../src/app/sitemap";
 import robots from "../../src/app/robots";
 import { routeRequest } from "../../src/middleware";
-import { SITEMAP_FAMILIES, listedShardIds, servedShardIds, shardUrl } from "../../src/lib/seo/sitemap_families";
+import { SITE_ORIGIN, SITEMAP_FAMILIES, listedShardIds, servedShardIds, shardUrl } from "../../src/lib/seo/sitemap_families";
 import { classify, indexFor, isIndexable, robotsFor } from "../../src/lib/seo/indexable";
 import { canonicalPath } from "../../src/lib/seo/alias_canonical";
 import { COUNTRIES, SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { TOP_LEVEL_SEGMENTS } from "../../src/lib/routing/top_level_segments";
+import { INTERNALS } from "../../src/lib/seo/crawlers";
+import { getAllPosts } from "../../src/lib/blog";
 import { hasOwn } from "../../src/lib/own";
 import { sitemapEntries } from "../../scripts/lib/sitemap_entries";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
@@ -42,6 +46,9 @@ const SITEMAP = "src/app/sitemap.ts";
 const SELF = "tests/seo/sitemap_families.test.ts";
 const REMEDY = "Change SITEMAP_FAMILIES (src/lib/seo/sitemap_families.ts) or the shard's builder in src/app/sitemap.ts; rerun scripts/gen_served_files.ts";
 const R_PAGE = "List only an address a page.tsx under src/app serves: fix the shard's builder in src/app/sitemap.ts, or add the page";
+const R_DISALLOWED = "Take the address out of the shard's builder in src/app/sitemap.ts: robots.txt withholds the internals (INTERNALS in src/lib/seo/crawlers.ts) from every crawler a sitemap is for, so a listed address under one asks a crawler for what it may not fetch";
+const R_EMPTY_LISTED = "List the shard's pages: fix its builder in src/app/sitemap.ts, or give the shard the state empty in SITEMAP_FAMILIES (src/lib/seo/sitemap_families.ts) and robots.txt stops listing it";
+const R_LASTMOD = "Give an entry a lastModified only where it is a blog post, and then the post's own date (`updated ?? date` of getAllPosts, src/lib/blog.ts): a page with no date of its own is absent from lastmod, never stamped";
 const R_ROBOTS = "List only a page whose robots tag says index: take the address out of the shard's builder in src/app/sitemap.ts, or set the page's robots through robotsFor (src/lib/seo/indexable.ts) and no literal noindex in the page or its layouts";
 let failed = 0;
 const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
@@ -162,6 +169,12 @@ async function main(): Promise<void> {
   const londonListed = entries.filter((e) => e.shard === 8).length;
   check(`shard 8 lists London's ${live.length} trade pages (${londonListed})`, londonListed === live.length, SITEMAP);
   check("no industries hub is listed", entries.every((e) => classify(e.path) !== "hub"), SITEMAP);
+  const nothingListed = listedShardIds().filter((id) => !entries.some((e) => e.shard === id)).map((id) => `shard ${id} lists none`);
+  check(`every listed shard lists at least one address (${listedShardIds().map((id) => `${id}: ${entries.filter((e) => e.shard === id).length}`).join(", ")})${firstFew(nothingListed)}`, nothingListed.length === 0, SITEMAP, R_EMPTY_LISTED);
+  const offOrigin = entries.filter((e) => !e.url.startsWith(`${SITE_ORIGIN}/`)).map((e) => e.url);
+  check(`every listed address is on the one origin, ${SITE_ORIGIN}${firstFew(offOrigin)}`, offOrigin.length === 0, SITEMAP);
+  const disallowed = entries.filter((e) => INTERNALS.some((p) => e.path.startsWith(p))).map((e) => e.path);
+  check(`no listed address is one robots.txt disallows (none starts with ${INTERNALS.join(" ")})${firstFew(disallowed)}`, disallowed.length === 0, SITEMAP, R_DISALLOWED);
 
   /* A PAGE THE SITE SERVES, AND ITS OWN ROBOTS TAG SAYS INDEX. indexFor answers "index" for an address outside the families it
      names, so on its own it vouches for no page: the pages are asked, by their files. */
@@ -186,13 +199,17 @@ async function main(): Promise<void> {
   }
   check(`the robots tag of the page serving every address says index (${[...modes].map(([m, n]) => `${n} ${m}`).join(", ")})${firstFew(saysNoindex)}`, entries.length > 0 && saysNoindex.length === 0, SITEMAP, R_ROBOTS);
 
-  /* LASTMOD: A PAGE'S OWN DATE OR NOTHING */
-  const timed = entries
-    .filter((e) => e.lastModified !== undefined && !(typeof e.lastModified === "string" && /^\d{4}-\d{2}-\d{2}$/.test(e.lastModified)))
-    .map((e) => `${e.path} (${String(e.lastModified)})`);
-  check(`every lastmod is a page's own date or absent${firstFew(timed)}`, timed.length === 0, SITEMAP);
+  /* LASTMOD: A POST'S OWN DATE OR NOTHING. A dated entry is a blog post and carries what its post says, the update else the writing, as
+     a plain date; every other page has no date of its own and is not dated. */
+  const postDate = new Map(getAllPosts().map((p) => [`/blog/${p.slug}`, p.updated ?? p.date] as const));
+  const dated = entries.filter((e) => e.lastModified !== undefined);
+  const notPostDate = dated
+    .filter((e) => !(typeof e.lastModified === "string" && /^\d{4}-\d{2}-\d{2}$/.test(e.lastModified) && postDate.get(e.path) === e.lastModified))
+    .map((e) => `${e.path} (${String(e.lastModified)}${postDate.has(e.path) ? `; its post says ${postDate.get(e.path)}` : "; no post stands at that address"})`);
+  check(`every lastmod is a post's own date, and no other page is dated (${dated.length} dated of ${entries.length}, ${postDate.size} posts)${firstFew(notPostDate)}`, notPostDate.length === 0, SITEMAP, R_LASTMOD);
   const code = stripCommentLines(readFileSync(SITEMAP, "utf8").split("\n")).join("\n");
   check("the sitemap file never stamps the build's time (no `new Date()`)", !/new Date\(\s*\)/.test(code), SITEMAP);
+  check("the sitemap file names no origin of its own: it reads SITE_ORIGIN (src/lib/seo/sitemap_families.ts), the one the table and the gates read", !/https?:\/\/www\.marginatlas\.com/.test(code), SITEMAP);
 }
 
 main().then(

@@ -4,8 +4,9 @@
  * The production sitemap.xml is unreachable (the `/[country]` catch-all
  * intercepts /sitemap.xml; tracked separately under Block 11). This
  * variant pulls a representative cell sample directly from Supabase
- * using the same selection rule as the sitemap (top regional + manual
- * cities × top industries) and runs section-presence scoring.
+ * using the selection rule the sitemap applied until P1-E (2026-10-09:
+ * its regional shard answers empty now): top regional + manual
+ * cities by top industries. It runs section-presence scoring.
  *
  * Outputs (overwriting the page_fill_from_sitemap.ts paths so the
  * downstream sitemap integration uses the freshest list):

@@ -41,6 +41,8 @@ const R_HINTS = "robotsFor (src/lib/seo/indexable.ts) carries the root layout's 
 const ALIAS_FILE = "src/lib/seo/alias_canonical.ts";
 const R_ALIAS = "Name the live slug's page through src/lib/seo/alias_canonical.ts; each route builds its canonical through the helper";
 const R_DECIDE = "Keep a /decide address of three parts or more in the decide family (classify in src/lib/seo/indexable.ts): an activity can hold a slash, and an address read decoded splits it into a fourth part, which would fall to the upper-level default, index";
+const R_SITEMAP = "Take the address out of the shard's builder in src/app/sitemap.ts (SITEMAP_FAMILIES in src/lib/seo/sitemap_families.ts says which shard lists it), or change what indexFor says about it in src/lib/seo/indexable.ts: a sitemap lists only the pages to index";
+const R_OFFLINE = "Keep every listed shard of src/app/sitemap.ts readable offline: no listed shard reads the database or the network, so the gates can ask it without a secret";
 let failed = 0;
 const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
@@ -232,12 +234,12 @@ function finish(): void {
 sitemapEntries().then(
   (listed) => {
     const refused = listed.filter((e) => !isIndexable(e.path)).map((e) => `${e.path} (shard ${e.shard}: ${indexFor(e.path).reason})`);
-    check(`every address the listed sitemaps declare is one indexFor admits (${listed.length})${firstFew(refused)}`, listed.length > 0 && refused.length === 0, "src/app/sitemap.ts");
+    check(`every address the listed sitemaps declare is one indexFor admits (${listed.length})${firstFew(refused)}`, listed.length > 0 && refused.length === 0, "src/app/sitemap.ts", R_SITEMAP);
     finish();
     process.exit(0);
   },
   (e: unknown) => {
-    check(`the listed sitemaps could be asked offline: ${e instanceof Error ? e.message : String(e)}`, false, "src/app/sitemap.ts");
+    check(`the listed sitemaps could be asked offline: ${e instanceof Error ? e.message : String(e)}`, false, "src/app/sitemap.ts", R_OFFLINE);
     finish();
   },
 );

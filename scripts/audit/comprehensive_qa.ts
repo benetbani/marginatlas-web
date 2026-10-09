@@ -10,10 +10,10 @@
  *   F. Accessibility (static)        ( 8 checks)
  *   G. Performance signals           ( 8 checks)
  *   H. Internal linking              (10 checks)
- *   I. Sitemap completeness          ( 8 checks)
+ *   I. Sitemap completeness          (11 checks: one for each shard the sitemap table serves, 9 on 2026-10-09, and 2 more)
  *   J. Mobile / responsive markers   ( 6 checks)
  *
- * = 112 total assertions
+ * = 115 total assertions
  *
  * Output: data/audit/comprehensive_qa.md (human report) +
  *         data/audit/comprehensive_qa.json (raw)
@@ -26,6 +26,7 @@
  */
 import { writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
+import { shardProbes } from "../lib/sitemap_shard_probes";
 
 export {}; // module marker
 
@@ -70,11 +71,6 @@ const SAMPLE_URLS = {
   coverageDE: "/coverage/de",
   ogCell: "/og/cell?country=us&geo=california&industry=restaurants",
   sitemap0: "/sitemap/0.xml",
-  sitemap1: "/sitemap/1.xml",
-  sitemap2: "/sitemap/2.xml",
-  sitemap3: "/sitemap/3.xml",
-  sitemap4: "/sitemap/4.xml",
-  sitemap5: "/sitemap/5.xml",
   robots: "/robots.txt",
   adminQuality: "/admin/data-quality",
 };
@@ -901,20 +897,22 @@ const CHECKS: Check[] = [
   },
 
   // ============================================================
-  // I. Sitemap completeness (8)
+  // I. Sitemap completeness (11)
   // ============================================================
-  ...[0, 1, 2, 3, 4, 5].map((i) => ({
+  /* One row for each shard the table serves (SITEMAP_FAMILIES, src/lib/seo/sitemap_families.ts; P1-E, 2026-10-09): a listed shard
+     answers a sitemap over 1 KB with addresses in it, an empty one a valid empty urlset. These rows asked shards 0 to 5 for more
+     than 1 KB until the families split left shards 1, 2, 4 and 5 empty by design. */
+  ...shardProbes().map((p, i) => ({
     category: "I. Sitemap",
     id: `I${i + 1}`,
-    description: `Sitemap shard ${i} > 1 KB`,
-    url: `/sitemap/${i}.xml`,
-    test: ({ body, status }: { body: string; status: number }) =>
-      status === 200 && body.length > 1024 && /<url>/.test(body),
+    description: p.name,
+    url: p.url,
+    test: ({ body, status, headers }: { body: string; status: number; headers: Headers }) => p.check(status, headers, body),
     needsBody: true,
   })),
   {
     category: "I. Sitemap",
-    id: "I7",
+    id: `I${shardProbes().length + 1}`,
     description: "Sitemap returns XML content-type",
     url: SAMPLE_URLS.sitemap0,
     test: ({ headers }) =>
@@ -923,7 +921,7 @@ const CHECKS: Check[] = [
   },
   {
     category: "I. Sitemap",
-    id: "I8",
+    id: `I${shardProbes().length + 2}`,
     description: "Robots.txt references sitemap URLs",
     url: SAMPLE_URLS.robots,
     test: ({ body }) =>

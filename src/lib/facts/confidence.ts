@@ -59,11 +59,13 @@ export function fromTier(tier: string): FactTag {
 /**
  * Supabase cells_master's quality_score, 0..100, read throughout src/lib/cells.ts.
  *
- * The one threshold the live code already commits to is 40. src/app/sitemap.ts
- * keeps a regional cell in the sitemap only when quality_score >= 40, and
- * documents that as the 0..100 equivalent of a retired score100to10(...) >= 4
- * filter (score100to10 itself no longer ships, it now lives only in
- * _archive/2026-08-03-dead-code/src/components/QualityDots.tsx). That same 40
+ * The one threshold the code ever committed to is 40. Until P1-E (2026-10-09)
+ * src/app/sitemap.ts kept a regional cell in the sitemap only when
+ * quality_score >= 40, and documented that as the 0..100 equivalent of a
+ * retired score100to10(...) >= 4 filter (score100to10 itself no longer ships,
+ * it now lives only in
+ * _archive/2026-08-03-dead-code/src/components/QualityDots.tsx); the regional
+ * shard answers empty now and that filter is gone with it. That same 40
  * is reused here as the modeled floor: below it a cell is carrying a generic,
  * pattern-based estimate rather than a fitted one, src/lib/cells.ts's
  * synthesizeCell gives a fully invented cell quality_score 20, and

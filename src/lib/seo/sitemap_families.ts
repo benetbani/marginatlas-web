@@ -6,7 +6,7 @@
  * (which it lists) and scripts/gen_served_files.ts (which addresses the edge serves), so each shard Search Console reports on is
  * one family, and robots.txt and the sitemaps cannot disagree. The gate sitemap-families holds every listed address.
  *
- * listed    written and listed in robots.txt; every address one its family's policy indexes
+ * listed    written and listed in robots.txt; every address is one its family's policy indexes
  * empty     still answered, with no address, and listed nowhere: a shard a search console already holds reads as empty until he
  *           removes it there (the spec's section 6, his task 2)
  * reserved  a later phase's family: never written yet, its id never reused
