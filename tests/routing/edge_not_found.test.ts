@@ -419,7 +419,7 @@ for (const [cc, place, what] of DB_ONLY_SAMPLES) tableCheck(`${what} passes the 
    words are written with their escapes below, so this file stays ASCII and a composed letter cannot turn into a letter and an accent. */
 const SAO_PAULO = "s\u00e3o-paulo";
 const SAO_ATLANTIS = "s\u00e3o-atlantis";
-const ENCODED_REMEDY = "Read each part of an address as its route reads it, percent-decoded and lowercased (routeWord in src/lib/routing/place_words.ts), in both splitters: parts() in src/lib/routing/edge_not_found.ts and placeNotHeldIn in src/lib/routing/place_words.ts";
+const ENCODED_REMEDY = "Read the place of an address (its second part, under a country the site holds) as its route reads it, percent-decoded and lowercased (routeWord in src/lib/routing/place_words.ts), in both splitters: parts() in src/lib/routing/edge_not_found.ts and placeNotHeldIn in src/lib/routing/place_words.ts; decode no other part, and a malformed escape stays as written";
 const nonAscii = (s: string) => /[^\x00-\x7f]/.test(s);
 const accentedWords = Object.entries(PLACE_SLUGS_BY_COUNTRY).flatMap(([cc, words]) => words.filter(nonAscii).map((w) => [cc, w] as const));
 const accentedSource = Object.keys(popularPlaceOverrides.overrides).filter(nonAscii);
@@ -472,11 +472,47 @@ for (const [what, spell] of SPELLINGS) {
   const end = landing(invented);
   check(`an accented place no table holds still answers 404 after the hop, written ${what}: ${invented} (${end.hops} hop, on ${end.at})`, end.hops >= 0 && end.hops <= 1 && quiet(() => pinned(end.at)), MW, ENCODED_REMEDY);
 }
+/* All six accented places, in all three spellings (the re-review of 2026-10-09, which narrowed the decode to the place): each ends on its
+   route after at most the one canonical hop, so no spelling of a held place is lost when the other parts stay as written. */
+const spellingLost: string[] = [];
+for (const [cc, w] of accentedWords) {
+  for (const [what, spell] of SPELLINGS) {
+    const l = landing(`/${cc}/${spell(w)}/restaurants`);
+    if (!(l.hops >= 0 && l.hops <= 1 && quiet(() => passed(l.at)))) spellingLost.push(`${cc}/${w} written ${what}`);
+  }
+}
+check(`every accented place the table holds reaches its trade page after at most the one canonical hop, written decoded, in upper-case hex and in lower-case hex (${accentedWords.length} places, ${accentedWords.length * SPELLINGS.length} spellings)${spellingLost.length ? `: ${spellingLost.join(", ")}` : ""}`, accentedWords.length > 0 && spellingLost.length === 0, MW, ENCODED_REMEDY);
 /* The decode's two edges. A malformed escape (`%e0%a4%a`, a cut-off byte sequence) throws in decodeURIComponent, so the part is kept as
    written: no table holds it, it names nothing, and the middleware answers 404 instead of throwing. An encoded dot is no file's
    ending: the dot test reads the last part as written, so `x%2ey` is a word that names nothing, never a file the edge waves through. */
 for (const p of ["/gb/london/%e0%a4%a", "/gb/%e0%a4%a/restaurants", "/gb/london/x%2ey", "/gb/london/res%2ftaurants"]) {
   check(`an encoded or malformed part names nothing and answers 404, never a throw: ${p}`, quiet(() => pinned(p)), MW, ENCODED_REMEDY);
+}
+
+/* EVERY OTHER PART IS AS WRITTEN (the re-review of 2026-10-09). The decode above reaches the place alone. The retired-activity redirect,
+   the retired-trade hop (retiredPlaceTarget) and the rename hop read their segment as written, so a word they own, spelled with an
+   escape, is a word they do not move. When parts() decoded every part, `/gb/london/b%61nking` read as the retired `banking`, a word a
+   redirect owns: the edge passed it, no redirect moved it, and the route drew a default page at 200 (each of these answered 404 before
+   that decode). Written with an escape, a trade, an activity or a city names nothing: the edge says so, and the middleware as a whole
+   pins the 404 onto the address asked. One row for each shape that reads a word: a trade under a place (retired, renamed and live;
+   three and four parts), an activity and its across page, a city and its hub, a /decide pair. The three-part rows outside a country
+   (across, hub, /decide) are the ones that hold the decode to the place of a held country's address. */
+const ESCAPED_REMEDY = "Decode the place of an address alone in parts() of src/lib/routing/edge_not_found.ts and compare every other part as written, lowercased: the retired-activity, retired-trade and rename redirects read their segment as written, so a word they own spelled with an escape (b%61nking, crop%2dfarming, media%2dpublishing) names nothing and answers 404, as do res%74aurants and lond%6fn";
+const ESCAPED: Array<[string, string]> = [
+  ["/gb/london/b%61nking", "a retired trade under a UK city"],
+  ["/gb/london/crop%2dfarming", "a legacy slug the retired table owns too, under a UK city"],
+  ["/gb/london/media%2dpublishing", "a renamed trade under a UK city"],
+  ["/us/california/b%61nking", "a retired trade under a state"],
+  ["/gb/london/res%74aurants", "a live trade under a UK city"],
+  ["/gb/london/res%74aurants/opening", "a live trade's opening page"],
+  ["/industries/b%61nking", "a retired activity"],
+  ["/industries/b%61nking/across", "a retired activity, across"],
+  ["/cities/lond%6fn", "a listed city"],
+  ["/cities/lond%6fn/neighborhoods", "a listed city's hub"],
+  ["/decide/res%74aurants/london", "a /decide pair's activity"],
+];
+for (const [p, what] of ESCAPED) {
+  check(`${what}, spelled with an escape, names nothing and answers 404 at the edge and through the middleware: ${p}`, quiet(() => nf(p) && pinned(p)), FILE, ESCAPED_REMEDY);
 }
 
 /* THE MATCHER (2026-10-06). It skipped every address ending like an image, an icon or a font, and favicon.ico, robots.txt and
