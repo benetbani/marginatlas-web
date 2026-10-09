@@ -83,7 +83,9 @@ export function classify(path: string): Family {
   if (a === "cities" || (a === "compare" && b === "cities")) return "city";
   if (a === "blog" || a === "learn") return "article";
   if (a === "coverage" && n === 2) return "coverage";
-  if (a === "decide" && n === 3) return "decide";
+  /* A pair's activity can hold a slash (the names "Optometry / Vision Centers", "Nutritionist / Dietician Practices"): read decoded,
+     /decide/optometry / vision centers/london has four parts, and is still a /decide pair. */
+  if (a === "decide" && n >= 3) return "decide";
   if (a === "industries" && n === 3 && c === "across") return "where-to-open";
   if (a === "editions" && n === 2) return "edition";
   if (a !== undefined && /^[a-z]{2}$/.test(a) && !TOP_LEVEL_SEGMENTS.has(a)) {

@@ -39,6 +39,7 @@ const R_DEF = "Build the route's canonical as its row names it: robotsFor(canoni
 const R_HINTS = "robotsFor (src/lib/seo/indexable.ts) carries the root layout's googlebot hints (src/app/layout.tsx): a route's robots replaces the layout's wholesale, so change the two together";
 const ALIAS_FILE = "src/lib/seo/alias_canonical.ts";
 const R_ALIAS = "Name the live slug's page through src/lib/seo/alias_canonical.ts; each route builds its canonical through the helper";
+const R_DECIDE = "Keep a /decide address of three parts or more in the decide family (classify in src/lib/seo/indexable.ts): an activity can hold a slash, and an address read decoded splits it into a fourth part, which would fall to the upper-level default, index";
 let failed = 0;
 const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
@@ -76,6 +77,15 @@ const decidePairs = Object.keys(NEIGHBORHOOD_SLUGS).flatMap((city) => live.map((
 const decideIndexed = decidePairs.filter(isIndexable);
 check(`no /decide pair indexes (${decidePairs.length})${firstFew(decideIndexed)}`, decidePairs.length > 0 && decideIndexed.length === 0);
 check("the /decide tool page keeps its status", isIndexable("/decide"));
+/* A /decide pair whose activity holds a slash. Two industry names do ("Optometry / Vision Centers", "Nutritionist / Dietician
+   Practices"), and an address made from one is the name, lowercased. Spelled with its escapes it is three parts
+   (/decide/optometry%20%2f%20vision%20centers/london); decoded, as a route handed its param decoded would build its canonical, the
+   slash makes it four. Both are /decide pairs, out of the index. */
+const slashedNames = (INDUSTRIES as Array<{ name: string }>).map((i) => i.name.toLowerCase()).filter((n) => n.includes("/"));
+const slashedPairs = slashedNames.flatMap((n) => [encodeURIComponent(n), n].map((a) => `/decide/${a}/london`));
+const slashedOut = slashedPairs.filter((p) => classify(p) !== "decide" || isIndexable(p));
+check("a /decide address with an encoded slash stays in the decide family and out of the index: /decide/optometry%20%2f%20vision%20centers/london", classify("/decide/optometry%20%2f%20vision%20centers/london") === "decide" && !isIndexable("/decide/optometry%20%2f%20vision%20centers/london"), FILE, R_DECIDE);
+check(`a /decide address whose activity holds a slash stays a /decide pair, encoded or decoded (${slashedPairs.length} addresses from ${slashedNames.length} industry names)${firstFew(slashedOut)}`, slashedNames.length > 0 && slashedOut.length === 0, FILE, R_DECIDE);
 const ukPlaces = [...(CITY_SLUGS_BY_COUNTRY.gb ?? []).filter((s) => s !== "london"), ...getRegionsForCountry("GB", "United Kingdom").map((r) => r.value), "gb"];
 const ukOff = ukPlaces.flatMap((p) => live.map((s) => `/gb/${p}/${s}`));
 const ukOffIndexed = ukOff.filter(isIndexable);
