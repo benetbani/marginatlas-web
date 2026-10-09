@@ -810,6 +810,10 @@ const GATES: Gate[] = [
   /* An address that names nothing answers 404 at the edge, each shape by its own route's resolver; the old three-part district
      addresses go to their district's page; nothing the floor census holds is caught (masterplan step 01, 2026-10-05). */
   { name: "edge-not-found", script: "tests/routing/edge_not_found.test.ts" },
+  /* No address is redirected or retired before the inventory (his URL rule of 2026-10-09; the page architecture's dispositions
+     gate, as Phase 1's guard): no disposition table, and the redirect sites of 2026-10-09 unchanged, while data/seo/inventory.json
+     does not exist. */
+  { name: "dispositions", script: "tests/routing/dispositions.test.ts" },
   /* A place word that names a built-in (/gb/constructor/restaurants answered 500, 2026-10-08) names no place: the geo resolvers and the cell route's readers answer it as a made-up word. */
   { name: "place-word-keys", script: "tests/routing/place_word_keys.test.ts" },
   /* The same for the words a request sends: /api/cell-lookup?industry=constructor fails the validity guard, and the presence threshold reads a country or activity word that names a built-in as an unknown one. */
