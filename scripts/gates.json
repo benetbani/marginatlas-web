@@ -2963,6 +2963,19 @@
       "claims": []
     },
     {
+      "name": "indexnow",
+      "script": "tests/seo/indexnow.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "IndexNow stays a tool he runs by hand (P1-G of the page architecture, 2026-10-09: \"a key file in public/ and scripts/seo/indexnow.ts, run by hand after each deploy he approves to post the addresses wh",
+      "reads": [
+        "scripts/prebuild_all.ts",
+        "scripts/seo/indexnow.ts",
+        "src/lib/routing/served_files.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "depth-notify",
       "script": "tests/seo/depth_notify.test.ts",
       "args": [],

@@ -9,6 +9,7 @@
  *  no request reaches. */
 export const SERVED_FILES: ReadonlySet<string> = new Set([
   /* public/ */
+  "/69fd594eb74f011d470c833c8baab986.txt",
   "/atlas-accent.svg",
   "/atlas-columns.svg",
   "/atlas-crosshatch.svg",
