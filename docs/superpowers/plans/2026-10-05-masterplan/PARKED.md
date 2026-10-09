@@ -67,6 +67,7 @@ MORNING-REPORT.md.
   Stripe retries rather than losing an event.
 
 ### P09.1 Stripe: the product, the terms URL, and VAT (step 09)
+- **Replaced 2026-10-09:** $48 a month or $456 a year, shown as $38 a month billed yearly (FOUNDER-VERDICTS).
 - **Ruled 2026-10-05:** option (a). launch day: both Stripe prices tax-inclusive (LAUNCH-SWITCHES row 4); the drafts' VAT wording follows.
 - **Question:** three settings only you can make before Pro sells: (1) create the Pro product with two prices, $38 a month and
   $238 a year, then set `STRIPE_PRICE_PRO_MONTHLY` and `STRIPE_PRICE_PRO_ANNUAL` in Vercel; (2) set a terms URL in Stripe's

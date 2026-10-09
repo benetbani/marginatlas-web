@@ -89,6 +89,7 @@ a search that lands only on pages that exist, the UK's three answers as doors, t
 the notebook, the newsletter), every harness gate at zero for `home-gb`. Launch: the sample gate holds his ruling 5 (marks stay
 off; a public build passes while the honesty stands in source), the launch checklist's faults fixed, LAUNCH-SWITCHES.md in his
 order, four launch posts drafted in `E:/atlas/design/loop/build/launch/posts/`.
+Replaced 2026-10-09: $48 a month or $456 a year, shown as $38 a month billed yearly (FOUNDER-VERDICTS).
 
 **Proven.** Full chains: 219 of 225 after step 21, 228 of 231 after step 31, 233 of 235 after step 40 (at 04f16d2b) (every red fixed at its source,
 green alone). Sheets: `photos/m2/MILESTONE-2-SHEET.jpeg`, `photos/night-D/PHASE-D-SHEET.jpeg`, `photos/m3/MILESTONE-3-SHEET.jpeg`
@@ -140,6 +141,7 @@ Premium plans, wired to no live page).
   $38 a month or $238 a year (dollars), Stripe checkout first, no trial; on UK pages each chapter's first level free, the rest
   locked (title, icon, blurred drawing, one line, one button, never a pop-up). Order: **milestone 1 the launch fixes, milestone 2
   Pro, milestone 3 the home page**; he reviews only at each milestone and before launch day.
+  Replaced 2026-10-09: $48 a month or $456 a year, shown as $38 a month billed yearly (FOUNDER-VERDICTS).
 - **The current tactic:** milestone 1 live and reviewed. Done means: the chain green on `milestone-1`, his yes, `main` moved to it,
   production probed, his review taken.
 - **His working instruction this session:** "push forward" (three times) means continue the plan autonomously, deciding what the
@@ -290,6 +292,7 @@ Premium plans, wired to no live page).
    the paywall modal sits on every page while he said "never a pop-up", and a chain gate (`verify_monetization_coverage` check B)
    requires that modal, so the gate changes with his ruling written into it; `verify_v34_research_rules` bans the word "refund".
    His alone: the Stripe account, live keys and price objects, applying the two migrations, VAT registration, the terms' wording.
+   Replaced 2026-10-09: $48 a month or $456 a year, shown as $38 a month billed yearly (FOUNDER-VERDICTS).
 
 **Optional / later:** the labels audit's remaining items (the world-typical cards on London trade pages such as "Covering the costs
 70%"; rent by district from the valuation tables; customer earnings tenths from ASHE; the premises figures); the corrections and
