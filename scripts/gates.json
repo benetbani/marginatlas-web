@@ -2987,7 +2987,8 @@
       "reads": [
         "scripts/prebuild_all.ts",
         "scripts/seo/indexnow.ts",
-        "src/lib/routing/served_files.ts"
+        "src/lib/routing/served_files.ts",
+        "src/middleware.ts"
       ],
       "claims": []
     },
