@@ -8,11 +8,14 @@
  *  - a trade MERGED into another (its retired entry points at `/industries/<successor>`): the successor's page in the same place
  *    (`/gb/london/sit-down-restaurants` to `/gb/london/restaurants`), every successor a live trade by the generator's own rule;
  *  - a trade retired with no successor: the place's own page, a region's (`/us/new-york`), else the city's (`/cities/london`, the
- *    page `/gb/london` itself sends a reader to, so no chain), else the country's.
+ *    page `/gb/london` itself sends a reader to, so no chain), else the country's;
+ *  - under a place no table of the site holds (`/gb/atlantis/banking`): no hop at all. It is the edge's 404
+ *    (src/lib/routing/edge_not_found.ts), never a redirect to the country's page (P1-A of the page architecture, 2026-10-09). The
+ *    places are the tables of src/lib/routing/place_words.ts, which reads each part of the address as its route does, percent-decoded.
  *
- * Pure, and cheap enough for the edge: the retired table, the country list, the regions and the city slug table the middleware
- * already reads. Only a three-part path under a country code is a place path; `/cities/...`, `/industries/...` and a country's
- * static children (`/gb/how-to-open`) are never one.
+ * Pure, and cheap enough for the edge: the retired table, the country list, the regions, the city slug table and the place table
+ * the middleware already reads. Only a three-part path under a country code is a place path; `/cities/...`, `/industries/...` and
+ * a country's static children (`/gb/how-to-open`) are never one.
  */
 import { COUNTRIES } from "@/lib/taxonomy";
 import { redirectFor } from "@/lib/taxonomy/retired";

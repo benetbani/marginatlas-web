@@ -2,8 +2,10 @@
  * An address that names nothing answers 404 at the edge (masterplan step 01, 2026-10-05; QUEUE launch:retired-trades-live).
  * `/gb/london/<any word>` rendered a synthesized "Small business" page at 200, canonical to itself and indexable, and
  * `/industries/<word>` and `/cities/<word>` called notFound() inside a streamed page, so the 200 was on the wire first.
- * The edge now judges the four shapes it can judge from small tables, each by the resolver its own route runs.
- * And since 2026-10-06 a fifth: an address whose last part has a dot names a file, and answers 404 unless the site serves that
+ * The edge now judges the shapes it can judge from small tables, each by the resolver its own route runs: the list is the header of
+ * src/lib/routing/edge_not_found.ts, and P1-A (2026-10-09) added to the first four (a trade under a city, an activity, a city, a
+ * hub) a trade page's place, the United States' words, the /opening and /buy-or-start pages and the /decide pairs.
+ * And since 2026-10-06 a file: an address whose last part has a dot names a file, and answers 404 unless the site serves that
  * file (src/lib/routing/served_files.ts); a dot alone used to pass any address through, so `/data/uk/2026.10/nothing.csv` drew a
  * page at 200.
  *
@@ -11,7 +13,7 @@
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { NextRequest } from "next/server";
-import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN, TRADE_SUB_PAGES } from "../../src/lib/routing/edge_not_found";
+import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN, TRADE_SUB_PAGES, US_STATES } from "../../src/lib/routing/edge_not_found";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "../../src/lib/routing/hood_slugs";
 import { renderHoodSlugs, HOOD_SLUGS_FILE } from "../../scripts/gen_hood_slugs";
 import { renderServedFiles, SERVED_FILES_FILE } from "../../scripts/gen_served_files";
@@ -36,20 +38,21 @@ import cityListJson from "../../data/cities/city_list_v1.json";
 import floorCensus from "../../data/seo/floor_census.json";
 import { renderPlaceSlugs, readDbWords, staticPlaceWords, PLACE_SLUGS_FILE, PLACE_DB_FILE, PLACE_TABLE_BUDGET_BYTES } from "../../scripts/gen_place_slugs";
 import { PLACE_SLUGS_BY_COUNTRY, US_DESCRIPTION_SLUGS } from "../../src/lib/routing/place_slugs_generated";
-import { isHeldPlace, placeWordsFor } from "../../src/lib/routing/place_words";
+import { isHeldPlace, placeWordsFor, placeNotHeldIn, routeWord } from "../../src/lib/routing/place_words";
 import { REGIONS_BY_COUNTRY_AUTO } from "../../src/lib/regions/regions_generated";
 import { DEFAULT_REGION_BY_COUNTRY } from "../../src/lib/regions/default_region_by_country";
-import { geoNameFromSlug, slugify } from "../../src/lib/cells/geo";
+import { geoNameFromSlug, slugify, SLUG_TO_GEO_ID } from "../../src/lib/cells/geo";
+import popularPlaceOverrides from "../../src/lib/geo/popular_place_overrides.json";
 import { own } from "../../src/lib/own";
 
 const RULE = "edge-not-found";
 const FILE = "src/lib/routing/edge_not_found.ts";
 const REMEDY = "answer 404 at the edge only for an address its own route would render as nothing, by that route's own resolver";
 let failed = 0;
-const check = (label: string, ok: boolean, file = FILE) => {
+const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
   failed++;
-  red({ rule: RULE, file, detail: label, remedy: REMEDY });
+  red({ rule: RULE, file, detail: label, remedy });
 };
 const nf = (p: string) => edgeNotFound(p);
 
@@ -127,6 +130,11 @@ const placeMissed = FIVE.filter((cc) => !nf(`/${cc}/atlantis/restaurants`));
 check(`a made-up place under a live trade answers 404 in five countries${placeMissed.length ? `: not under ${placeMissed.join(", ")}` : ""}`, placeMissed.length === 0);
 check("a made-up place under an opening page, a buy-or-start page and a district's trade page answers 404", nf("/gb/atlantis/restaurants/opening") && nf("/gb/atlantis/restaurants/buy-or-start") && nf("/gb/atlantis/west-end/restaurants"));
 check("a static child of the country is no place: /gb/industries/restaurants, /gb/how-to-open/restaurants", nf("/gb/industries/restaurants") && nf("/gb/how-to-open/restaurants"));
+/* THE REVIEW OF 2026-10-09: the exemption of a place's static child (`/gb/london/industries`, a page of its own) was also given to
+   the trade's sub-pages, where it holds no trade: /gb/london/industries/opening and /buy-or-start passed, and their route cannot draw
+   them. The exemption is the trade page's own, in the three-part return. */
+const STATIC_CHILD_REMEDY = "Exempt a static child of the place (GEO_STATIC_CHILDREN) from the verdict for its own three-part address only, in edgeNotFound's three-part return, never in tradeWordNamesNothing: the /opening and /buy-or-start routes draw a trade, and a static child is none";
+check("a static child of a place is a page of its own, and no trade for the trade's sub-pages: /gb/london/industries passes, /gb/london/industries/opening and /gb/london/industries/buy-or-start answer 404", !nf("/gb/london/industries") && nf("/gb/london/industries/opening") && nf("/gb/london/industries/buy-or-start"), FILE, STATIC_CHILD_REMEDY);
 const HELD_PLACES: Array<[string, string]> = [
   ["/gb/gb/restaurants", "the country's own code"],
   ["/gb/england/restaurants", "a nation, a region of the UK"],
@@ -223,6 +231,21 @@ const geoChildren = readdirSync("src/app/[country]/[geo]", { withFileTypes: true
 check(`GEO_STATIC_CHILDREN is the static folders of src/app/[country]/[geo] (${geoChildren.join(", ")})`, JSON.stringify([...GEO_STATIC_CHILDREN].sort()) === JSON.stringify(geoChildren));
 const tradeChildren = readdirSync("src/app/[country]/[geo]/[industry]", { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith("[")).map((d) => d.name).sort();
 check(`TRADE_SUB_PAGES is the static folders of src/app/[country]/[geo]/[industry] (${tradeChildren.join(", ")})`, JSON.stringify([...TRADE_SUB_PAGES].sort()) === JSON.stringify(tradeChildren));
+/* THE STATES A CENSUS DESCRIPTION IS READ UNDER (the review of 2026-10-09). The edge lets a description through only under a state of the
+   United States, and the cell lookup reads one only for a place SLUG_TO_GEO_ID names (getCellBySlugRaw, src/lib/cells.ts). The edge cannot
+   import that table (src/lib/cells/geo.ts pulls the city alias tables into the middleware), so it keeps its own list, from the regions
+   table the middleware already bundles, and this holds the two equal: a state on one list only answers 404 for a description the page
+   draws, or passes an address the page cannot. */
+const cellStates = Object.keys(SLUG_TO_GEO_ID).sort();
+const edgeStates = [...US_STATES].sort();
+const onlyEdge = edgeStates.filter((s) => !cellStates.includes(s));
+const onlyCell = cellStates.filter((s) => !edgeStates.includes(s));
+check(
+  `US_STATES is the keys of the cell lookup's SLUG_TO_GEO_ID (${edgeStates.length} of ${cellStates.length})${onlyEdge.length ? `; only the edge's: ${onlyEdge.join(", ")}` : ""}${onlyCell.length ? `; only the cell lookup's: ${onlyCell.join(", ")}` : ""}`,
+  cellStates.length > 0 && onlyEdge.length === 0 && onlyCell.length === 0,
+  FILE,
+  "Make US_STATES in src/lib/routing/edge_not_found.ts the places getCellBySlugRaw reads a census description under, the keys of SLUG_TO_GEO_ID in src/lib/cells/geo.ts; never import that table into the edge",
+);
 
 /* THE PLACE TABLE (P1-A of the page architecture, 2026-10-09). Every place word a table of the site holds, and the ids and the
    United States' census descriptions the database holds, generated by hand (scripts/gen_place_slugs.ts --database writes the scan
@@ -382,10 +405,79 @@ for (const p of ["/data/uk/2026.10/ledger.json", "/data/uk/2026.10/readme.md", "
 }
 check("a training crawler is still refused a file of the data pack, as before (451)", send("/data/uk/2026.10/ledger.json", "GPTBot/1.1").status === 451, MW);
 check("a place the site does not hold still answers 404: /gb/atlantis", pinned("/gb/atlantis"), MW);
+check("a static child of a place has no sub-pages: the middleware pins /gb/london/industries/opening and /gb/london/industries/buy-or-start to 404 and passes /gb/london/industries", pinned("/gb/london/industries/opening") && pinned("/gb/london/industries/buy-or-start") && passed("/gb/london/industries"), MW, STATIC_CHILD_REMEDY);
 /* The words the site's own links spell reach their routes (the review of 2026-10-09): the middleware, asked as above, passes each
    address the first table made it answer 404 for, and the ids only the scan holds. */
 for (const [cc, place, what] of LINKED_SAMPLES) tableCheck(`${what} passes the middleware to its route: /${cc}/${place}/restaurants`, passed(`/${cc}/${place}/restaurants`), PLACE_SLUGS_FILE, LINKED_REMEDY);
 for (const [cc, place, what] of DB_ONLY_SAMPLES) tableCheck(`${what} passes the middleware to its route: /${cc}/${place}/restaurants`, passed(`/${cc}/${place}/restaurants`), PLACE_DB_FILE, SCAN_REMEDY);
+
+/* A PERCENT-ENCODED PLACE WORD (the review of 2026-10-09). Six places the table holds are spelled with an accent (the accented keys of
+   src/lib/geo/popular_place_overrides.json: br/s%c3%a3o-paulo is one, de/baden-w%c3%bcrttemberg another). A reader's browser may send
+   the address in three spellings (decoded, upper-case hex, lower-case hex), the middleware hops the first two to the lower-case hex
+   one, and the pathname it judges there is still encoded (`/br/s%c3%a3o-paulo/restaurants`), while Next's route matcher hands the
+   page the decoded word. The edge compared the word as written, so all six answered 404 where the route draws a page. The accented
+   words are written with their escapes below, so this file stays ASCII and a composed letter cannot turn into a letter and an accent. */
+const SAO_PAULO = "s\u00e3o-paulo";
+const SAO_ATLANTIS = "s\u00e3o-atlantis";
+const ENCODED_REMEDY = "Read each part of an address as its route reads it, percent-decoded and lowercased (routeWord in src/lib/routing/place_words.ts), in both splitters: parts() in src/lib/routing/edge_not_found.ts and placeNotHeldIn in src/lib/routing/place_words.ts";
+const nonAscii = (s: string) => /[^\x00-\x7f]/.test(s);
+const accentedWords = Object.entries(PLACE_SLUGS_BY_COUNTRY).flatMap(([cc, words]) => words.filter(nonAscii).map((w) => [cc, w] as const));
+const accentedSource = Object.keys(popularPlaceOverrides.overrides).filter(nonAscii);
+const accentedLost = accentedSource.filter((k) => !accentedWords.some(([cc, w]) => `${cc}/${w}` === k));
+tableCheck(`the premise of the accent rows: the table holds every accented key of popular_place_overrides.json (${accentedSource.length}: ${accentedSource.join(", ")}), br/${SAO_PAULO} among them${accentedLost.length ? `; not in the table: ${accentedLost.join(", ")}` : ""}`, accentedSource.includes(`br/${SAO_PAULO}`) && accentedLost.length === 0, PLACE_SLUGS_FILE, LINKED_REMEDY);
+/* The form the middleware judges after its canonical hop, and the form the route receives. */
+const hexForm = (cc: string, w: string) => `/${cc}/${encodeURIComponent(w).toLowerCase()}/restaurants`;
+const accentedRejected = accentedWords
+  .filter(([cc, w]) => nf(hexForm(cc, w)) || placeNotHeldIn(hexForm(cc, w)) || nf(`/${cc}/${w}/restaurants`) || placeNotHeldIn(`/${cc}/${w}/restaurants`))
+  .map(([cc, w]) => `${cc}/${w}`);
+check(`the edge holds every accented place the table holds, written decoded or as the middleware sees it (${accentedWords.length})${accentedRejected.length ? `: ${accentedRejected.join(", ")}` : ""}`, accentedWords.length > 0 && accentedRejected.length === 0, FILE, ENCODED_REMEDY);
+/* A request that makes the middleware throw is a red of its own, not a stack that hides the rows after it. */
+const quiet = (f: () => boolean) => { try { return f(); } catch { return false; } };
+const accentedNotPassed = accentedWords.filter(([cc, w]) => !quiet(() => passed(hexForm(cc, w)))).map(([cc, w]) => `${cc}/${w}`);
+check(`the middleware passes the trade page of every accented place the table holds to its route, in the form its canonical hop writes (${accentedWords.length})${accentedNotPassed.length ? `: ${accentedNotPassed.join(", ")}` : ""}`, accentedWords.length > 0 && accentedNotPassed.length === 0, MW, ENCODED_REMEDY);
+/* The reader itself, case by case: [as written, as its route reads it, why]. */
+const WORD_CASES: Array<[string, string, string]> = [
+  ["s%c3%a3o-paulo", SAO_PAULO, "an escape decodes"],
+  ["S%C3%83O-PAULO", SAO_PAULO, "decoded first, then lowercased, so a decoded capital is lowercased too"],
+  ["Restaurants", "restaurants", "a plain word is lowercased"],
+  ["%e0%a4%a", "%e0%a4%a", "a malformed escape stays as written"],
+  ["%E0%A4%A", "%e0%a4%a", "a malformed escape stays as written, lowercased"],
+  ["x%2ey", "x.y", "an encoded dot decodes to a dot, which is why the dot test reads the last part as written"],
+];
+const wordOf = (s: string): string => { try { return routeWord(s); } catch (e) { return `throws ${(e as Error).message}`; } };
+const wordWrong = WORD_CASES.filter(([from, want]) => wordOf(from) !== want).map(([from, want, why]) => `${from} (${why}): wanted ${JSON.stringify(want)}, got ${JSON.stringify(wordOf(from))}`);
+check(`routeWord reads a part as its route does: an escape decodes, a decoded capital is lowercased, a malformed escape stays as written (${WORD_CASES.length} cases)${wordWrong.length ? `: ${wordWrong.join("; ")}` : ""}`, wordWrong.length === 0, WORDS_FILE, ENCODED_REMEDY);
+/* The three spellings of one address, each followed through the one canonical hop to where a reader ends. */
+const SPELLINGS: Array<[string, (w: string) => string]> = [
+  ["decoded", (w) => w],
+  ["upper-case hex", (w) => encodeURIComponent(w)],
+  ["lower-case hex", (w) => encodeURIComponent(w).toLowerCase()],
+];
+const landing = (path: string): { hops: number; at: string } => {
+  try {
+    const r = send(path);
+    const to = r.status === 308 ? r.headers.get("location") : null;
+    return to ? { hops: 1, at: new URL(to).pathname } : { hops: 0, at: path };
+  } catch {
+    return { hops: -1, at: path };
+  }
+};
+for (const [what, spell] of SPELLINGS) {
+  for (const tail of ["/restaurants", "/restaurants/opening"]) {
+    const asked = `/br/${spell(SAO_PAULO)}${tail}`;
+    const l = landing(asked);
+    check(`a held accented place, written ${what}, reaches its route after at most the one canonical hop: ${asked} (${l.hops} hop, on ${l.at})`, l.hops >= 0 && l.hops <= 1 && quiet(() => passed(l.at)), MW, ENCODED_REMEDY);
+  }
+  const invented = `/br/${spell(SAO_ATLANTIS)}/restaurants`;
+  const end = landing(invented);
+  check(`an accented place no table holds still answers 404 after the hop, written ${what}: ${invented} (${end.hops} hop, on ${end.at})`, end.hops >= 0 && end.hops <= 1 && quiet(() => pinned(end.at)), MW, ENCODED_REMEDY);
+}
+/* The decode's two edges. A malformed escape (`%e0%a4%a`, a cut-off byte sequence) throws in decodeURIComponent, so the part is kept as
+   written: no table holds it, it names nothing, and the middleware answers 404 instead of throwing. An encoded dot is no file's
+   ending: the dot test reads the last part as written, so `x%2ey` is a word that names nothing, never a file the edge waves through. */
+for (const p of ["/gb/london/%e0%a4%a", "/gb/%e0%a4%a/restaurants", "/gb/london/x%2ey", "/gb/london/res%2ftaurants"]) {
+  check(`an encoded or malformed part names nothing and answers 404, never a throw: ${p}`, quiet(() => pinned(p)), MW, ENCODED_REMEDY);
+}
 
 /* THE MATCHER (2026-10-06). It skipped every address ending like an image, an icon or a font, and favicon.ico, robots.txt and
    sitemap.xml by name, so a made-up one never reached the rule above: /favicon.ico, /apple-touch-icon.png and /zz/x.png drew the

@@ -67,6 +67,13 @@ const PASS_REMEDY =
   "let the middleware pass an address the site serves: a route folder belongs in TOP_LEVEL_SEGMENTS and a static child of [country] in COUNTRY_STATIC_CHILDREN (src/lib/routing/top_level_segments.ts), a trade or a city in its route's resolver (src/lib/routing/edge_not_found.ts)" +
   OR_CORRECT;
 const MOVE_REMEDY = `send the address to its page in one hop (cityPathUnderCountry in ${MW})${OR_CORRECT}`;
+/* The P1-A hops: a retired or renamed trade under a place no table holds is that place's 404, and the two redirects that would move it
+   first each skip such a place by one guard. A red on those rows names the guard, never the edge's rule alone. */
+const GUARD_REMEDY = `leave a place no table holds to the edge's 404 and never move it first: placeNotHeldIn (src/lib/routing/place_words.ts) guards the retired-trade hop, retiredPlaceTarget in src/lib/taxonomy/retired_paths.ts, and the rename handler in ${MW}${OR_CORRECT}`;
+const RENAME_REMEDY = `keep the rename handler in ${MW} sending a renamed trade (TAXONOMY_REDIRECTS, src/lib/taxonomy/legacy_redirects.ts) to its new slug in one hop under a place a table holds: only a place placeNotHeldIn (src/lib/routing/place_words.ts) names is left to the edge's 404${OR_CORRECT}`;
+const RENAME_ENCODED_REMEDY = `keep the rename handler in ${MW} sending a renamed trade to its new slug under a place a table holds, and read the place as its route does, percent-decoded (routeWord in src/lib/routing/place_words.ts, which placeNotHeldIn uses)${OR_CORRECT}`;
+const STATIC_CHILD_REMEDY = `exempt a static child of a place (GEO_STATIC_CHILDREN, src/lib/routing/edge_not_found.ts) from the 404 for its own three-part address only: under /opening and /buy-or-start the route wants a trade, and a static child is none${OR_CORRECT}`;
+const ENCODED_REMEDY = `read each part of an address as its route reads it, percent-decoded and lowercased (routeWord in src/lib/routing/place_words.ts), in parts() of src/lib/routing/edge_not_found.ts and in placeNotHeldIn${OR_CORRECT}`;
 const OG_REMEDY = `spare /og in isPlaceWeDoNotHold (${MW}) before a page at ${OG} can be reached: the two-letter rule pins every bare two-letter address that is no country`;
 const WALK_REMEDY = `point OG in ${SELF} at the folder that holds the image routes`;
 const LIVE_REMEDY = `fix the rule in ${MW} that catches a page production declares, or stop src/app/sitemap.ts declaring an address the edge moves`;
@@ -143,25 +150,28 @@ expectVerdict("/us/california/constructor", "pinned to 404", "a United States wo
 
 /* P1-A (the page architecture, 2026-10-09): a made-up place in five countries, a retired or renamed trade under one, an unknown
    United States word and a /decide pair its route cannot draw answer 404 at the address asked, never a hop first. */
-const P1A_PINNED: ReadonlyArray<readonly [string, string]> = [
+const P1A_PINNED: ReadonlyArray<readonly [string, string, string?]> = [
   ["/gb/atlantis/restaurants", "a place no UK table holds"],
   ["/us/atlantis/restaurants", "a place no United States table holds"],
   ["/de/atlantis/restaurants", "a place no German table holds"],
   ["/fr/atlantis/restaurants", "a place no French table holds"],
   ["/tr/atlantis/restaurants", "a place no Turkish table holds"],
   ["/gb/atlantis/restaurants/opening", "an opening page under a place no table holds"],
-  ["/gb/atlantis/banking", "a retired trade under a place no table holds: that place's 404, not a hop to the country"],
-  ["/gb/atlantis/crop-farming", "a renamed trade under a place no table holds: that place's 404, not a hop to the new name"],
+  ["/gb/atlantis/banking", "a retired trade under a place no table holds: that place's 404, not a hop to the country", GUARD_REMEDY],
+  ["/gb/atlantis/crop-farming", "a renamed trade under a place no table holds: that place's 404, not a hop to the new name", GUARD_REMEDY],
   ["/us/california/zz-not-a-trade", "a United States word that is no trade and no census description"],
   ["/us/us-06-037/offices-of-lawyers", "a census description under a county: only a state's lookup reads one"],
   ["/gb/london/zz-not-a-trade/opening", "an opening page whose trade names nothing"],
+  ["/gb/london/industries/opening", "a static child of the place has no opening page: the route wants a trade, and industries is none", STATIC_CHILD_REMEDY],
+  ["/gb/london/industries/buy-or-start", "a static child of the place has no buy-or-start page", STATIC_CHILD_REMEDY],
   ["/decide/zz-not-a-trade/london", "a /decide pair whose activity names nothing"],
   ["/decide/restaurants/atlantis", "a /decide pair whose city holds no neighbourhood scheme"],
+  ["/br/s%c3%a3o-atlantis/restaurants", "an accented place no table holds, in the percent-encoded form the canonical hop writes", ENCODED_REMEDY],
 ];
-for (const [p, why] of P1A_PINNED) expectVerdict(p, "pinned to 404", why, PIN_REMEDY);
+for (const [p, why, remedy] of P1A_PINNED) expectVerdict(p, "pinned to 404", why, remedy ?? PIN_REMEDY);
 
 /* PASSES: every shape the site serves goes on to its route untouched. */
-const PASSES: ReadonlyArray<readonly [string, string]> = [
+const PASSES: ReadonlyArray<readonly [string, string, string?]> = [
   ["/", "the home page"],
   ["/us", "a country we hold"],
   ["/gb", "a country we hold"],
@@ -181,11 +191,13 @@ const PASSES: ReadonlyArray<readonly [string, string]> = [
   ["/gb/liverpool/restaurants", "a manual city alias the rivals list links: kept until the inventory gives it its line"],
   ["/us/us-06-037/restaurants", "a county the database holds"],
   ["/gb/london/restaurants/opening", "an opening page of a trade page that exists"],
+  ["/gb/london/industries", "a static child of a place is a page of its own", STATIC_CHILD_REMEDY],
   ["/decide/restaurants/london", "a /decide pair its route draws"],
   ["/de/frankfurt-am-main/restaurants", "the address the across-cities columns link for Frankfurt (cellUrl spells its label)"],
+  ["/br/s%c3%a3o-paulo/restaurants", "a place the table spells with an accent, in the percent-encoded form the canonical hop writes (the route receives the decoded word)", ENCODED_REMEDY],
   ["/geo/countries-110m.json", "a file is not a place: the world map's data, which the place rule once pinned"],
 ];
-for (const [p, why] of PASSES) expectVerdict(p, "passes", why, PASS_REMEDY);
+for (const [p, why, remedy] of PASSES) expectVerdict(p, "passes", why, remedy ?? PASS_REMEDY);
 
 const ROUTE_FOLDERS = [
   "/cities", "/learn", "/compare", "/browse", "/world", "/pricing", "/about-data", "/faq", "/blog", "/you", "/status",
@@ -197,6 +209,13 @@ for (const p of ROUTE_FOLDERS) expectVerdict(p, "passes", "a route folder", PASS
 
 /* MOVES: an address the edge sends on, permanently, before any 404 rule is asked. */
 expectVerdict("/gb/london", "answers 308 to /cities/london", "a city its country holds, under the country's path, goes to its own page", MOVE_REMEDY);
+
+/* THE RENAME HOP, POSITIVELY (the review of 2026-10-09). The Wave 4b handler in src/middleware.ts is guarded since P1-A: a renamed
+   trade under a place no table holds is that place's 404 (P1A_PINNED above). Every row of that kind pins the guard shut; nothing pinned
+   it open, so a guard that skipped the hop for every place survived. A renamed trade under a place a table holds still goes to its new
+   name in one hop, and the guard reads the place as its route does: percent-decoded, so an accented place the table holds is held. */
+expectVerdict("/gb/london/media-publishing", "answers 308 to /gb/london/news-periodical-publishing", "a renamed trade under a place the tables hold goes to its new name, in one hop", RENAME_REMEDY);
+expectVerdict("/br/s%c3%a3o-paulo/media-publishing", "answers 308 to /br/s%c3%a3o-paulo/news-periodical-publishing", "the same under a place the table spells with an accent, as the middleware sees it", RENAME_ENCODED_REMEDY);
 
 /* /og is rightly the edge's 404 only while src/app/og holds nothing at its own root; the image routes under it pass. */
 const ROUTE_FILE = /^(page|route)\.[jt]sx?$/;
