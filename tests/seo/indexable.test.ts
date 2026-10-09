@@ -3,17 +3,18 @@
  * Phase 1's rules (P1-B), and milestone 1's rule wherever Phase 1 changes nothing (his interview of 2026-09-26, answer 6: "UK pages
  * + every page at its floor; thin pages noindexed until they reach it").
  *
- * Refuses: a family, hub, region or /decide route whose robots is not indexFor's; a P1-B page indexable (an industries hub, a
- * /decide pair, a UK trade page off London, a United States page named by a census description, an /opening or /buy-or-start
- * page whose trade page is noindex); London's trade pages, or any page Phase 1 leaves alone, losing its status; the census's
- * floors unequal to the model laws'.
+ * Refuses: a family, hub, region or /decide route whose robots is not indexFor's, or that asks robotsFor about another page; a
+ * P1-B page indexable (an industries hub, a /decide pair, a UK trade page off London, a United States page named by a census
+ * description, an /opening or /buy-or-start page whose trade page is noindex); an industry id spelled with underscores
+ * indexable; London's trade pages, or any page Phase 1 leaves alone (every other page the census counted), losing milestone 1's
+ * answer; an indexed page that loses the root layout's googlebot hints; the census's floors unequal to the model laws'.
  *
  * Run: node node_modules/tsx/dist/cli.mjs tests/seo/indexable.test.ts
  */
 import { readFileSync, readdirSync, statSync } from "node:fs";
-import { classify, indexFor, isIndexable, isUkPage, floorStanding, robotsFor, type Family } from "../../src/lib/seo/indexable";
+import { classify, indexFor, isIndexable, isUkPage, floorStanding, robotsFor, type Family, type RobotsMeta } from "../../src/lib/seo/indexable";
 import { canonicalPath } from "../../src/lib/seo/alias_canonical";
-import { COUNTRIES, SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
+import { COUNTRIES, INDUSTRIES, SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { hasOwn } from "../../src/lib/own";
 import { getRegionsForCountry } from "../../src/lib/regions/regions-by-country";
@@ -29,11 +30,17 @@ const RULE = "indexable";
 const FILE = "src/lib/seo/indexable.ts";
 const SELF = "tests/seo/indexable.test.ts";
 const REMEDY = "Set robots through indexFor (src/lib/seo/indexable.ts); a failing page loses its index status, never its address. Rerun the census, commit its file";
+/* The remedies of the rows that guard one thing each: the red names the code to change. */
+const R_MILESTONE1 = "Outside Phase 1's rules indexFor answers milestone 1's: a UK page indexes, any other counted page indexes when the census counted it at its type's floor (SPINE_UPPER, byCensus and the family branches in src/lib/seo/indexable.ts); change the branch that answers otherwise, never the census or this row";
+const R_ID = "An industry page is /industries/ and any one word: SPINE_UPPER in src/lib/seo/indexable.ts must match industries/[^/]+, so an address the census holds no entry for (an id with underscores) falls to noindex and not to an upper-level default";
+const R_ARG = "Pass robotsFor the route's own page, the address its row names, in the route's metadata: a route that asks about another page gives its robots tag that page's answer";
+const R_DEF = "Build the route's canonical as its row names it: robotsFor(canonical) asks indexFor about that address, so a canonical that names another page gives the route that page's robots tag";
+const R_HINTS = "robotsFor (src/lib/seo/indexable.ts) carries the root layout's googlebot hints (src/app/layout.tsx): a route's robots replaces the layout's wholesale, so change the two together";
 let failed = 0;
-const check = (label: string, ok: boolean, file = FILE) => {
+const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
   failed++;
-  red({ rule: RULE, file, detail: label, remedy: REMEDY });
+  red({ rule: RULE, file, detail: label, remedy });
 };
 const firstFew = (list: string[]) => (list.length ? `: ${list.slice(0, 5).join(", ")}` : "");
 
@@ -95,39 +102,50 @@ const at = entries.find(([p, e]) => e.blocks >= census.floors[e.surface] && !p.s
 const below = entries.find(([, e]) => e.blocks < census.floors[e.surface]);
 check(`a page counted at its floor indexes${at ? ` (${at[0]}, ${at[1].blocks} of ${census.floors[at[1].surface]})` : ""}`, !!at && isIndexable(at[0]) && floorStanding(at[0])?.atFloor === true);
 check(`a page counted under its floor does not${below ? ` (${below[0]}, ${below[1].blocks} of ${census.floors[below[1].surface]})` : ""}`, !below || (!isIndexable(below[0]) && floorStanding(below[0])?.atFloor === false));
+/* The two samples above find one page each. This holds milestone 1's rule over the whole census: every counted page Phase 1 does not
+   name keeps its answer, so a branch that lets a whole type of page through (the under-floor cities, the industry pages, the
+   country and how-to pages) or keeps one out reds here. */
+const leftAlone = entries.filter(([p]) => !(p.startsWith("/us/") && p.split("/").filter(Boolean).length === 3));
+const drifted = leftAlone.filter(([p, e]) => isIndexable(p) !== (isUkPage(p) || e.blocks >= census.floors[e.surface]));
+check(`every census page outside the United States descriptions keeps milestone 1's answer (${leftAlone.length})${firstFew(drifted.map(([p]) => p))}`, leftAlone.length > 0 && drifted.length === 0, FILE, R_MILESTONE1);
+/* An industry id spelled with underscores is served by the industry route (the edge passes it, the route names its slug's page
+   canonical) and the census holds no entry for it: it answers as any spine page the census does not hold, noindex. */
+const idSpellings = (INDUSTRIES as Array<{ id: string }>).map((i) => `/industries/${i.id}`).filter((p) => p.includes("_"));
+check(`an industry id spelled with underscores indexes nowhere (${idSpellings.length})${firstFew(idSpellings.filter(isIndexable))}`, idSpellings.length > 0 && idSpellings.every((p) => !isIndexable(p)), FILE, R_ID);
 check("a spine page the census never counted does not index (noindex on the rest)", !isIndexable("/zz/nowhere/nothing") && floorStanding("/zz/nowhere/nothing") === null);
-check("the robots value: indexed or not, links always followed", JSON.stringify(robotsFor("/gb")) === '{"index":true,"follow":true}' && JSON.stringify(robotsFor("/zz/nowhere/nothing")) === '{"index":false,"follow":true}');
+check("the robots value: indexed or not, links always followed, and an indexed page keeps the root layout's googlebot hints", JSON.stringify(robotsFor("/gb")) === '{"index":true,"follow":true,"googleBot":{"index":true,"follow":true,"max-image-preview":"large","max-snippet":-1}}' && JSON.stringify(robotsFor("/zz/nowhere/nothing")) === '{"index":false,"follow":true,"googleBot":{"index":false,"follow":true}}', FILE, R_HINTS);
 check("indexFor answers a family and a reason with every verdict", ["/", "/gb/manchester/restaurants", "/us/industries"].every((p) => indexFor(p).reason.length > 0 && indexFor(p).follow === true && indexFor(p).family === classify(p)));
 check("no UK page is in the census (they index by his rule, uncounted)", entries.every(([p]) => !isUkPage(p)));
 for (const p of ["/us/california", "/de/bavaria", "/gb/england", "/industries/restaurants/across", "/coverage/gb", "/blog", "/learn", "/cities", "/compare/cities/london-vs-new-york", "/pricing", "/"]) {
   check(`keeps its route's default, index: ${p}`, isIndexable(p));
 }
 
-/* THE ROUTES: every page under the families' folders sets robots through robotsFor, or sets none where indexFor admits every
-   address it serves (the root layout's default, which also carries the googlebot snippet directives), or sets a literal noindex
-   where indexFor refuses them. */
+/* THE ROUTES: every page under the families' folders sets robots through robotsFor, asked about the page's own address (`arg`, the
+   text between the brackets; where `arg` is the route's `canonical`, `def` is how the route builds it, left out where the alias
+   canonicals below pin that), or sets none where indexFor admits every address it serves (the root layout's default, which also
+   carries the googlebot snippet directives), or sets a literal noindex where indexFor refuses them. */
 type Mode = "robotsFor" | "default" | "noindex";
-const ROUTES: Array<{ file: string; family: Family; mode: Mode; samples: string[] }> = [
-  { file: "src/app/[country]/page.tsx", family: "upper", mode: "robotsFor", samples: ["/fr", "/gb"] },
-  { file: "src/app/[country]/how-to-open/page.tsx", family: "upper", mode: "robotsFor", samples: ["/fr/how-to-open"] },
-  { file: "src/app/[country]/industries/page.tsx", family: "hub", mode: "robotsFor", samples: ["/us/industries"] },
+const ROUTES: Array<{ file: string; family: Family; mode: Mode; samples: string[]; arg?: string; def?: string }> = [
+  { file: "src/app/[country]/page.tsx", family: "upper", mode: "robotsFor", samples: ["/fr", "/gb"], arg: "canonical", def: "`/${country.toLowerCase()}`" },
+  { file: "src/app/[country]/how-to-open/page.tsx", family: "upper", mode: "robotsFor", samples: ["/fr/how-to-open"], arg: "`/${country.toLowerCase()}/how-to-open`" },
+  { file: "src/app/[country]/industries/page.tsx", family: "hub", mode: "robotsFor", samples: ["/us/industries"], arg: "`/${country.toLowerCase()}/industries`" },
   { file: "src/app/[country]/[geo]/page.tsx", family: "region", mode: "default", samples: ["/us/california", "/de/bavaria", "/gb/england"] },
-  { file: "src/app/[country]/[geo]/industries/page.tsx", family: "hub", mode: "robotsFor", samples: ["/us/california/industries"] },
-  { file: "src/app/[country]/[geo]/[industry]/page.tsx", family: "trade-in-place", mode: "robotsFor", samples: ["/gb/london/restaurants"] },
-  { file: "src/app/[country]/[geo]/[industry]/opening/page.tsx", family: "trade-in-place", mode: "robotsFor", samples: ["/gb/london/restaurants/opening"] },
-  { file: "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx", family: "trade-in-place", mode: "robotsFor", samples: ["/gb/london/restaurants/buy-or-start"] },
+  { file: "src/app/[country]/[geo]/industries/page.tsx", family: "hub", mode: "robotsFor", samples: ["/us/california/industries"], arg: "`/${country.toLowerCase()}/${geo.toLowerCase()}/industries`" },
+  { file: "src/app/[country]/[geo]/[industry]/page.tsx", family: "trade-in-place", mode: "robotsFor", samples: ["/gb/london/restaurants"], arg: "canonical" },
+  { file: "src/app/[country]/[geo]/[industry]/opening/page.tsx", family: "trade-in-place", mode: "robotsFor", samples: ["/gb/london/restaurants/opening"], arg: "canonical" },
+  { file: "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx", family: "trade-in-place", mode: "robotsFor", samples: ["/gb/london/restaurants/buy-or-start"], arg: "canonical" },
   { file: "src/app/[country]/[geo]/[industry]/[sub]/page.tsx", family: "district-trade", mode: "noindex", samples: ["/gb/london/west-end/restaurants"] },
   { file: "src/app/(site)/cities/page.tsx", family: "city", mode: "default", samples: ["/cities"] },
-  { file: "src/app/(site)/cities/[slug]/page.tsx", family: "city", mode: "robotsFor", samples: ["/cities/london"] },
-  { file: "src/app/(site)/cities/[slug]/neighborhoods/page.tsx", family: "city", mode: "robotsFor", samples: ["/cities/london/neighborhoods"] },
-  { file: "src/app/(site)/cities/[slug]/neighborhoods/[district]/page.tsx", family: "city", mode: "robotsFor", samples: ["/cities/london/neighborhoods/west-end"] },
+  { file: "src/app/(site)/cities/[slug]/page.tsx", family: "city", mode: "robotsFor", samples: ["/cities/london"], arg: "canonical", def: "`/cities/${city.slug}`" },
+  { file: "src/app/(site)/cities/[slug]/neighborhoods/page.tsx", family: "city", mode: "robotsFor", samples: ["/cities/london/neighborhoods"], arg: "`/cities/${city.slug}/neighborhoods`" },
+  { file: "src/app/(site)/cities/[slug]/neighborhoods/[district]/page.tsx", family: "city", mode: "robotsFor", samples: ["/cities/london/neighborhoods/west-end"], arg: "districtPageHref(city.slug, row.slug)" },
   { file: "src/app/(site)/compare/page.tsx", family: "upper", mode: "default", samples: ["/compare"] },
   { file: "src/app/(site)/compare/cities/[pair]/page.tsx", family: "city", mode: "default", samples: ["/compare/cities/london-vs-new-york"] },
   { file: "src/app/(site)/coverage/page.tsx", family: "upper", mode: "default", samples: ["/coverage"] },
   { file: "src/app/(site)/coverage/[iso2]/page.tsx", family: "coverage", mode: "default", samples: ["/coverage/gb"] },
   { file: "src/app/(site)/decide/page.tsx", family: "upper", mode: "default", samples: ["/decide"] },
-  { file: "src/app/(site)/decide/[activity]/[city]/page.tsx", family: "decide", mode: "robotsFor", samples: ["/decide/restaurants/london"] },
-  { file: "src/app/(site)/industries/[industry]/page.tsx", family: "upper", mode: "robotsFor", samples: ["/industries/restaurants"] },
+  { file: "src/app/(site)/decide/[activity]/[city]/page.tsx", family: "decide", mode: "robotsFor", samples: ["/decide/restaurants/london"], arg: "canonical", def: "`/decide/${activity.toLowerCase()}/${cityRow.slug}`" },
+  { file: "src/app/(site)/industries/[industry]/page.tsx", family: "upper", mode: "robotsFor", samples: ["/industries/restaurants"], arg: "canonical" },
   { file: "src/app/(site)/industries/[industry]/across/page.tsx", family: "where-to-open", mode: "default", samples: ["/industries/restaurants/across"] },
   { file: "src/app/industries/page.tsx", family: "upper", mode: "default", samples: ["/industries"] },
 ];
@@ -135,10 +153,21 @@ const routeCode = (f: string) => stripCommentLines(readFileSync(f, "utf8").split
 for (const r of ROUTES) {
   const code = routeCode(r.file);
   check(`${r.file} serves ${r.family} pages (${r.samples.join(", ")})`, r.samples.every((p) => classify(p) === r.family), r.file);
-  if (r.mode === "robotsFor") check(`${r.file} sets robots through robotsFor`, /robots:\s*robotsFor\(/.test(code), r.file);
+  if (r.mode === "robotsFor") {
+    const asked = !!r.arg && code.includes(`robots: robotsFor(${r.arg})`);
+    check(`${r.file} sets robots through robotsFor(${r.arg})${asked ? "" : `; it asks robotsFor(${/robots:\s*robotsFor\((.*)\),?\s*$/m.exec(code)?.[1] ?? "nothing"})`}`, asked, r.file, R_ARG);
+    if (r.def) check(`${r.file} builds its canonical as ${r.def}`, code.includes(`const canonical = ${r.def};`), r.file, R_DEF);
+  }
   if (r.mode === "default") check(`${r.file} sets no robots, and indexFor admits what it serves (${r.samples.join(", ")})`, !/\brobots\s*:/.test(code) && r.samples.every(isIndexable), r.file);
   if (r.mode === "noindex") check(`${r.file} sets noindex, and indexFor refuses what it serves`, /robots:\s*\{\s*index:\s*false/.test(code) && r.samples.every((p) => !isIndexable(p)), r.file);
 }
+/* The root layout's hints: a route that sets robots replaces the layout's wholesale (Next never merges the key), so robotsFor
+   carries the layout's googlebot hints itself, and the two stay equal. */
+const layoutHints = /robots:\s*\{[^}]*googleBot:\s*\{([^}]*)\}/.exec(routeCode("src/app/layout.tsx"))?.[1] ?? "";
+const layoutImage = /"max-image-preview":\s*"([^"]*)"/.exec(layoutHints)?.[1];
+const layoutSnippet = /"max-snippet":\s*(-?\d+)/.exec(layoutHints)?.[1];
+const carried: Partial<RobotsMeta["googleBot"]> = robotsFor("/gb").googleBot ?? {};
+check(`robotsFor's googlebot hints are the root layout's (robotsFor: max-image-preview ${carried["max-image-preview"]}, max-snippet ${carried["max-snippet"]}; layout: max-image-preview ${layoutImage}, max-snippet ${layoutSnippet})`, layoutImage !== undefined && layoutImage === carried["max-image-preview"] && layoutSnippet !== undefined && layoutSnippet === String(carried["max-snippet"]), "src/app/layout.tsx", R_HINTS);
 const FOLDERS = ["src/app/[country]", "src/app/(site)/cities", "src/app/(site)/industries", "src/app/(site)/decide", "src/app/(site)/compare", "src/app/(site)/coverage", "src/app/industries"];
 const walkPages = (dir: string): string[] =>
   readdirSync(dir).flatMap((n) => {

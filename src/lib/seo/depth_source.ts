@@ -3,8 +3,11 @@
  *
  * THE "NOTIFY ME" TAG FOR A THIN PAGE (milestone 1, M9; his interview of 2026-09-26: "the 'notify me when my place reaches this
  * depth' capture on thinner pages"). A thin page is a spine page outside the United Kingdom the floor census counted under its
- * floor, the same page the robots tag keeps out of the index (indexable.ts). Its form posts the address with the source
- * `depth:<the page's path>`, so the list knows which place each reader is waiting for.
+ * floor, and the robots tag keeps it out of the index (indexable.ts); the converse does not hold. Since Phase 1 (P1-B) the
+ * industries hubs, the /decide pairs, the UK trade pages off London and the United States pages named by a census description
+ * are noindex whatever the census counted, so a United States page at its floor is out of the index and is not thin. A thin
+ * page's form posts the address with the source `depth:<the page's path>`, so the list knows which place each reader is
+ * waiting for.
  *
  * The newsletter endpoint takes its source from an unauthenticated POST and keeps an allowlist for that reason (an unbounded
  * string from a public form is a column that ends up holding anything); a depth tag passes only when its path is one the census

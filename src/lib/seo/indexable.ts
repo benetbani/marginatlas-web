@@ -70,8 +70,10 @@ export type Family =
 
 export type IndexVerdict = { index: boolean; follow: true; family: Family; reason: string };
 
-/** The upper levels the census counts: a country page, its how-to page, an industry page. */
-const SPINE_UPPER = /^\/(?:[a-z]{2}(?:\/how-to-open)?|industries\/[a-z0-9-]+)$/;
+/** The upper levels the census counts: a country page, its how-to page, an industry page. An industry page is `/industries/` and
+ *  any one word, not only a slug: the route also serves an industry id with underscores (/industries/craft_beer_mfg) and
+ *  names its slug's page canonical, and such an address is a spine page the census holds no entry for, so it does not index. */
+const SPINE_UPPER = /^\/(?:[a-z]{2}(?:\/how-to-open)?|industries\/[^/]+)$/;
 
 /** The family of a page, by its address alone. */
 export function classify(path: string): Family {
@@ -134,9 +136,22 @@ export function isIndexable(path: string): boolean {
   return indexFor(path).index;
 }
 
-/** The robots value for a route's metadata: indexed or not, its links always followed. */
-export function robotsFor(path: string): { index: boolean; follow: boolean } {
-  return { index: indexFor(path).index, follow: true };
+/** What a route's `robots` metadata holds: indexed or not, links always followed, and the googlebot half of the root layout's. */
+export type RobotsMeta = {
+  index: boolean;
+  follow: boolean;
+  googleBot: { index: boolean; follow: boolean; "max-image-preview"?: "large"; "max-snippet"?: number };
+};
+
+/** The hints for how an indexed page shows in results, as src/app/layout.tsx sets them (tests/seo/indexable.test.ts holds the two
+ *  equal). Next replaces a page's `robots` wholesale, never merges it with the layout's, so a route that sets its own carries them. */
+const GOOGLEBOT_HINTS = { "max-image-preview": "large", "max-snippet": -1 } as const;
+
+/** The robots value for a route's metadata: indexed or not, its links always followed; an indexed page keeps the layout's hints,
+ *  a noindex page has none to keep. */
+export function robotsFor(path: string): RobotsMeta {
+  const { index } = indexFor(path);
+  return { index, follow: true, googleBot: index ? { index, follow: true, ...GOOGLEBOT_HINTS } : { index, follow: true } };
 }
 
 /** When the census was written, for the sitemap's and the gate's reports. */
