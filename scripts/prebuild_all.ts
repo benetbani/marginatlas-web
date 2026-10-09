@@ -404,8 +404,12 @@ const GATES: Gate[] = [
   { name: "deepening", script: "scripts/verify_deepening.ts" },
   { name: "monetization-coverage", script: "scripts/verify_monetization_coverage.ts" },
   { name: "v34-research-rules", script: "scripts/verify_v34_research_rules.ts" },
-  /* The one Pro plan, $38 a month or $238 a year, its price ids read by name (masterplan step 05; his rulings 14, 20, 33). */
+  /* The one Pro plan, $48 a month or $456 a year led with as $38 a month billed yearly, its price ids read by name (masterplan step 05;
+     his rulings 20, 33; his decision of 2026-10-09 replaced ruling 14's price). */
   { name: "pro-plan", script: "tests/monetization/pro_plan.test.ts" },
+  /* The pricing page leads with the year, as drawn with billing dormant and live: the headline, the year's total and the saving, the
+     month one line away, no dollar figure but the plan's own (his decision of 2026-10-09). */
+  { name: "pricing-page", script: "tests/monetization/pricing_page.test.ts" },
   /* What a Stripe event does to an account: found by email, re-read from Stripe, retried on a database error (masterplan step 07). */
   { name: "stripe-sync", script: "tests/monetization/stripe_sync.test.ts" },
   /* Checkout first: no account needed, no trial, the welcome return, consent and tax behind his Stripe settings (masterplan step 09). */

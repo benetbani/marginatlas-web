@@ -1,12 +1,14 @@
 /**
- * /pricing: one plan, Pro (milestone 2; masterplan step 12; his interview of 2026-09-26: 13, Pro sells depth; 14, $38 a month or
- * $238 a year; 17, each UK chapter opens free and Pro opens the rest; 20, checkout first, no trial; 33, dollars everywhere; 34,
- * cancel any time).
+ * /pricing: one plan, Pro (milestone 2; masterplan step 12; his interview of 2026-09-26: 13, Pro sells depth; 17, each UK chapter
+ * opens free and Pro opens the rest; 20, checkout first, no trial; 33, dollars everywhere; 34, cancel any time; and his decision
+ * of 2026-10-09 on the price: the page leads with the year).
  *
  * Server component. Every price prints through src/lib/monetization/plan.ts (gate one-price) and every line of what Pro opens
- * through paywall_copy.ts, so this page and the home teaser cannot drift. One plan card, two buttons, what Pro opens, the
- * cancel-any-time block, and one line saying the prices are dollars. While billing is dormant (accounts off or no Stripe key)
- * the buttons are the site's notify-me link to the newsletter.
+ * through paywall_copy.ts, so this page and the home teaser cannot drift. One plan card: the year first, its headline and one
+ * plain line with the year's total and the saving, the month's price one line away (one click while billing is live), what Pro
+ * opens, the cancel-any-time block, and one line saying the prices are dollars. While billing is dormant (accounts off or no
+ * Stripe key) the button is the site's notify-me link to the newsletter. tests/monetization/pricing_page.test.ts holds the page
+ * as drawn: the lead, the order, and no dollar figure but the plan's own.
  *
  * The v34 bans this page still keeps: no trial copy, no money-back promise, no "Contact sales", no charm pricing, no countdown or
  * scarcity counter, no "Most popular" badge, no Free column and no comparison table (one plan has nothing to compare).
@@ -16,16 +18,17 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { TIERS, CANCEL_ANYTIME_BLOCK, METHODOLOGY_HREF, METHODOLOGY_LABEL, PRO_OPENS } from "@/components/monetization";
 import { CheckoutButton } from "@/components/monetization/CheckoutButton";
 import { isAuthEnabled, isPaywallOn } from "@/lib/feature_flags";
-import { priceLine } from "@/lib/monetization/plan";
+import { monthToMonthLine, priceLine, yearlyHeadline, yearlySavingLine } from "@/lib/monetization/plan";
 import { ANTI_TE_CALLOUT } from "@/lib/pricing/matrix";
 
 export const metadata = {
   title: "Pricing - Margin Atlas",
-  description: `One plan, Pro: ${priceLine("month")} or ${priceLine("year")}. Each UK chapter opens free. Cancel any time.`,
+  description: `One plan, Pro: ${yearlyHeadline()}, ${monthToMonthLine()}. Each UK chapter opens free. Cancel any time.`,
   alternates: { canonical: "/pricing" },
 };
 
-const BUTTON = "inline-flex w-full cursor-pointer justify-center items-center gap-1.5 rounded-full py-2.5 text-sm font-semibold transition-colors disabled:opacity-60";
+/* One pill. Full width on a phone, its own width from 640px, so the single button does not stretch across a wide card. */
+const BUTTON = "inline-flex w-full cursor-pointer justify-center items-center gap-1.5 rounded-full px-8 py-2.5 text-sm font-semibold transition-colors disabled:opacity-60 sm:w-auto";
 
 export default function PricingPage() {
   /* Billing is live only when accounts are on AND Stripe is configured (a server-only key), read at render, so the page keeps
@@ -50,33 +53,33 @@ export default function PricingPage() {
       <section className="pb-14 sm:pb-16">
         <div className="atlas-card border-atlas-300 shadow-lift p-6 md:p-8">
           <p className="font-display text-[44px] font-bold leading-none tracking-[-0.025em] text-ink-900">{pro.name}</p>
-          <div className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
-            {billingLive ? (
-              <>
-                <div>
-                  <CheckoutButton interval="month" className={`${BUTTON} bg-atlas-700 text-white hover:bg-atlas-800`}>
-                    {priceLine("month")}
-                  </CheckoutButton>
-                </div>
-                <div>
-                  <CheckoutButton interval="year" className={`${BUTTON} bg-ink-900 text-white hover:bg-ink-800`}>
-                    {priceLine("year")}
-                  </CheckoutButton>
-                  <p className="mt-2 text-center text-[11px] text-cocoa-700">billed annually</p>
-                </div>
-              </>
-            ) : (
-              <div className="min-[420px]:col-span-2">
-                <a href="#newsletter" className={`${BUTTON} bg-atlas-700 text-white hover:bg-atlas-800`}>
-                  Notify me when Pro opens
-                </a>
-                {/* Both prices, the yearly one as its total (v34 Part 4.2), read from the plan. */}
-                <p className="mt-2 text-center text-[11px] text-cocoa-700 tabular-nums">
-                  {priceLine("month")} or {priceLine("year")}
-                </p>
+
+          {/* THE YEAR FIRST (his decision of 2026-10-09): the year written by the month, then one plain line with its total (v34
+              Part 4.2) and the saving, all read from the plan. The month's price comes after, one line away. */}
+          <h2 className="mt-6 text-balance font-display text-2xl sm:text-3xl font-semibold leading-tight tracking-[-0.02em] text-ink-900 tabular-nums">
+            {yearlyHeadline()}
+          </h2>
+          <p className="mt-2 text-sm text-ink-700 tabular-nums">{yearlySavingLine()}</p>
+
+          {billingLive ? (
+            <div className="mt-5">
+              <CheckoutButton interval="year" className={`${BUTTON} bg-atlas-700 text-white hover:bg-atlas-800`}>
+                {`Get Pro for ${priceLine("year")}`}
+              </CheckoutButton>
+              <div className="mt-3 text-center sm:text-left">
+                <CheckoutButton interval="month" className="cursor-pointer text-sm font-medium tabular-nums text-atlas-700 underline underline-offset-4 hover:text-atlas-900 disabled:opacity-60">
+                  {monthToMonthLine()}
+                </CheckoutButton>
               </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="mt-5">
+              <a href="#newsletter" className={`${BUTTON} bg-atlas-700 text-white hover:bg-atlas-800`}>
+                Notify me when Pro opens
+              </a>
+              <p className="mt-3 text-center text-sm text-ink-700 tabular-nums sm:text-left">{monthToMonthLine()}</p>
+            </div>
+          )}
 
           <h2 className="mt-8 font-display text-xl font-semibold text-ink-900">What Pro opens</h2>
           <ul className="mt-3 space-y-2 text-sm text-ink-800">

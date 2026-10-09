@@ -1,14 +1,15 @@
 /**
  * UpgradeTeaser: the home page's word on Pro (masterplan step 12; his interview of 2026-09-26: 14, one plan; 17, each UK chapter
  * opens free and Pro opens the rest). Until 2026-10-05 a mini table of Free, Basic $37 and Premium $77 columns; one plan has
- * nothing to compare, so it is now the plan's own list (PRO_OPENS, the pricing page's) and its price through priceLine, the
- * heading following the paywall's switch so it says today what is true today. Pure presentational server component, tokens
- * only. The link points to /pricing; no checkout from the home page. Step 35 reseats it on the rebuilt home page.
+ * nothing to compare, so it is now the plan's own list (PRO_OPENS, the pricing page's) and its price through the plan's lines (the
+ * year first, then the month to month price, his decision of 2026-10-09), the heading following the paywall's switch so it says
+ * today what is true today. Pure presentational server component, tokens only. The link points to /pricing; no checkout from the
+ * home page. Step 35 reseats it on the rebuilt home page.
  */
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { PRICING_HREF, PRO_OPENS } from "@/components/monetization";
 import { isPaywallOn } from "@/lib/feature_flags";
-import { priceLine } from "@/lib/monetization/plan";
+import { monthToMonthLine, yearlyHeadline } from "@/lib/monetization/plan";
 
 /**
  * Two shapes, same content. "panel" drops the outer section padding and the
@@ -25,7 +26,7 @@ export function UpgradeTeaser({ variant = "band" }: { variant?: "band" | "panel"
       </h2>
       <div className={`atlas-card px-5 py-5 ${panel ? "mt-5" : "mt-8 max-w-3xl"}`}>
         <p className="text-sm font-semibold text-ink-900">
-          Pro, {priceLine("month")} or {priceLine("year")}
+          Pro, {yearlyHeadline()}, {monthToMonthLine()}
         </p>
         <ul className="mt-3 space-y-2 text-sm text-ink-800">
           {PRO_OPENS.map((line) => (

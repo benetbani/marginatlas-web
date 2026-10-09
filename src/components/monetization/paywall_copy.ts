@@ -17,10 +17,10 @@
  */
 
 import type { PaywallTier } from "./events";
-import { PRO, priceLine } from "@/lib/monetization/plan";
+import { PRO, yearlyHeadline } from "@/lib/monetization/plan";
 
-/** THE ONE PLAN (masterplan step 12; his interview of 2026-09-26, ruling 14: one plan, Pro, $38 a month or $238 a year). Every
- * figure here is read from src/lib/monetization/plan.ts, never typed, so a price printed anywhere is the plan's own (gate
+/** THE ONE PLAN (masterplan step 12; his interview of 2026-09-26, ruling 14: one plan, Pro; its price his decision of 2026-10-09).
+ * Every figure here is read from src/lib/monetization/plan.ts, never typed, so a price printed anywhere is the plan's own (gate
  * one-price). The June Basic and Premium tiers, and their $37, $77, $372 and $768, are gone. */
 export type TierSpec = {
   id: PaywallTier;
@@ -36,7 +36,7 @@ export const TIERS: Record<PaywallTier, TierSpec> = {
     name: PRO.name,
     priceMonthly: PRO.monthlyUsd,
     priceAnnualTotal: PRO.yearlyUsd,
-    description: `Pro opens the rest of every UK chapter, ${priceLine("month")} or ${priceLine("year")}.`,
+    description: `Pro opens the rest of every UK chapter, ${yearlyHeadline()}.`,
   },
 };
 

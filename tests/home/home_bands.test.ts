@@ -1,9 +1,10 @@
 /**
  * THE HOME PAGE'S PRO SAID ONCE, ITS NOTEBOOK, AND THE LAUNCH CHECK'S COUNTS (milestone 3, masterplan steps 35 and 36; his ruling 23
  * of 2026-09-26: "a quiet band after the search and the UK answers: what Pro opens, the price, one button"). The Pro band draws
- * only while the paywall's switch is on, its prices through the plan, one button to /pricing; the notebook is the newest post of
- * each category; and the launch check's item (i) reads the live home's band and passes the rebuilt home, which prints no counts
- * since his instruction of 2026-10-07 ("reform home drastically"; tests/trust/home_shape.test.ts holds that).
+ * only while the paywall's switch is on, its prices through the plan and the year first (his decision of 2026-10-09), one button
+ * to /pricing; the notebook is the newest post of each category; and the launch check's item (i) reads the live home's band and
+ * passes the rebuilt home, which prints no counts since his instruction of 2026-10-07 ("reform home drastically";
+ * tests/trust/home_shape.test.ts holds that).
  *
  * Run: npx tsx tests/home/home_bands.test.ts
  */
@@ -11,7 +12,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { ProBand } from "../../src/components/spine/home/ProBand";
-import { priceLine } from "../../src/lib/monetization/plan";
+import { priceLine, yearlyByMonthLine } from "../../src/lib/monetization/plan";
 import { buildNotebook, NOTEBOOK_SIZE } from "../../src/lib/home/notebook";
 import { BLOG_CATEGORIES, getAllPosts } from "../../src/lib/blog";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -20,7 +21,14 @@ const RULE = "home-bands";
 const FILE = "src/components/spine/home/home-view.tsx";
 const REMEDY = "draw Pro only with the paywall's switch on, its prices through the plan; keep the launch check reading the live home's band and passing the rebuilt home that prints no counts";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+/* A check may be a value or a function: a function that throws (a name the plan does not export yet) is a failed check. */
+const check = (label: string, ok: boolean | (() => boolean)) => {
+  let pass = false;
+  try { pass = typeof ok === "function" ? ok() : ok; } catch { pass = false; }
+  if (pass) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY });
+};
 
 const set = (on: boolean) => { process.env.NEXT_PUBLIC_AUTH_ENABLED = on ? "1" : ""; process.env.NEXT_PUBLIC_PAYWALL = on ? "1" : ""; };
 set(false);
@@ -29,7 +37,15 @@ set(true);
 const on = renderToStaticMarkup(React.createElement(ProBand));
 set(false);
 check("nothing about Pro prints while the switch is off", off === "");
-check(`with the switch on: the line, both prices through the plan (${priceLine("month")}, ${priceLine("year")}), one button to /pricing`, on.includes(priceLine("month")) && on.includes(priceLine("year")) && (on.match(/href="\/pricing"/g) ?? []).length === 1 && (on.match(/<a /g) ?? []).length === 1);
+/* His decision of 2026-10-09: the year leads. The focal figure is the year by the month, then the year's total billed yearly, then
+   the month to month price, every figure through the plan, and one button to /pricing. */
+check("with the switch on: the year leads (the year by the month at the focal rung, then the year billed yearly, then month to month), all through the plan, one button to /pricing", () => {
+  const focal = /data-focal="1"[^>]*>([^<]*)</.exec(on)?.[1];
+  const atYear = on.indexOf(priceLine("year"));
+  return focal === yearlyByMonthLine() && atYear > -1 && on.indexOf(priceLine("month")) > atYear
+    && /Billed yearly/.test(on) && /Month to month/.test(on)
+    && (on.match(/href="\/pricing"/g) ?? []).length === 1 && (on.match(/<a /g) ?? []).length === 1;
+});
 
 /* The notebook (masterplan step 36; since the checkup of 2026-10-06 the newest post of each category, four at most, text first). */
 const notebook = buildNotebook();

@@ -1021,9 +1021,21 @@
       "script": "tests/monetization/pro_plan.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "THE ONE PRO PLAN (milestone 2; his interview of 2026-09-26, rulings 14, 20, 33): one paid plan at $38 a month or $238 a year, dollars everywhere, the Stripe price ids read by name, a price written one",
+      "asserts": "THE ONE PRO PLAN (milestone 2; rulings 20 and 33; his decision of 2026-10-09 over ruling 14's price): one plan, Pro, at $48 a month or $456 a year, led with as \"$38 a month, billed yearly\".",
       "reads": [
+        "docs/superpowers/plans/2026-10-05-masterplan/LAUNCH-SWITCHES.md",
         "src/lib/monetization/plan.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "pricing-page",
+      "script": "tests/monetization/pricing_page.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PRICING PAGE LEADS WITH THE YEAR (his decision of 2026-10-09: Pro is $48 month to month or $456 a year, and the page leads with the year as \"$38 a month, billed yearly\").",
+      "reads": [
+        "src/app/(site)/pricing/page.tsx"
       ],
       "claims": []
     },
@@ -1076,7 +1088,7 @@
       "script": "tests/monetization/one_price.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "ONE PRICE, WRITTEN ONCE (milestone 2; masterplan step 12; his interview of 2026-09-26, ruling 14: one plan, Pro, $38 a month or $238 a year).",
+      "asserts": "ONE PRICE, WRITTEN ONCE (milestone 2; masterplan step 12; his decision of 2026-10-09 over ruling 14's price): Pro's $48, $456 and $38 are typed in plan.ts only, and no older price stands anywhere.",
       "reads": [
         "src/app/(site)/account/",
         "src/app/(site)/pricing/",

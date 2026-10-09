@@ -2815,11 +2815,13 @@ export const COPY = {
       trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
       link: "About the figures",
     },
-    /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. */
+    /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
+     *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */
     pro: {
       kicker: "Pro",
       words: "The second half of every UK chapter, and four Pro sections.",
-      yearLabel: "By the year",
+      yearLabel: "Billed yearly",
+      monthLabel: "Month to month",
       button: "See what Pro opens",
     },
   },

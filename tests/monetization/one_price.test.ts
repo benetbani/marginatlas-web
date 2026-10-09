@@ -1,9 +1,12 @@
 /**
- * ONE PRICE, WRITTEN ONCE (milestone 2; masterplan step 12; his interview of 2026-09-26, ruling 14: one plan, Pro, $38 a month or
- * $238 a year). The June plans (Basic $37 and Premium $77, their annual $31 and $64 a month, $372 and $768 a year) and the older
- * $19, $78 and $150 still stood in a dozen files. This walks src/, content/ and README.md, comments stripped, and reds on:
+ * ONE PRICE, WRITTEN ONCE (milestone 2; masterplan step 12; his decision of 2026-10-09 over ruling 14's price): Pro's $48, $456 and $38 are typed in plan.ts only, and no older price stands anywhere.
+ * His interview of 2026-09-26 (ruling 14) made it one plan, Pro, and his decision of 2026-10-09 priced it $48 a month or $456 a
+ * year, led with as $38 a month, billed yearly, which replaced the $238 year. The June plans (Basic $37 and Premium $77, their
+ * annual $31 and $64 a month, $372 and $768 a year), the older $19, $78 and $150 and the $238 year still stood in a dozen files.
+ * This walks src/, content/ and README.md, comments stripped, and reds on:
  *  - an old price literal anywhere;
- *  - a $38 or $238 literal outside src/lib/monetization/plan.ts (a price prints through PRO or priceLine, never typed twice);
+ *  - a $38, $48 or $456 literal outside src/lib/monetization/plan.ts (a price prints through PRO, priceLine or the plan's
+ *    other lines, never typed twice; the saving between them is checked on the rendered page, tests/monetization/pricing_page.test.ts);
  *  - the words Basic and Premium outside the monetization and billing folders where they meant the June tiers (elsewhere they
  *    mean other things: the kit's budget tier, the decide page's "Premium pricing").
  *
@@ -15,7 +18,7 @@ import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "one-price";
-const REMEDY = "print the price through PRO or priceLine (src/lib/monetization/plan.ts); the June tiers and their prices are gone";
+const REMEDY = "print the price through PRO, priceLine or the plan's other lines (src/lib/monetization/plan.ts); the June tiers, their prices and the $238 year are gone";
 const ROOTS = ["src", "content"];
 const SKIP = ["src/app/dev", "src/app/_design"];
 const PLAN = "src/lib/monetization/plan.ts";
@@ -30,9 +33,11 @@ const TIER_WORDS_ALLOWED = [
   "src/lib/monetization/",
 ];
 
-/* A figure in thousands or millions ($150K, $31K) is a benchmark, not a price. */
-const OLD_PRICES = /\$(?:37|77|31|64|372|768|78|150)(?![\d.,KkMmBb])|\$19\/mo/;
-const PRO_PRICES = /\$(?:38|238)(?![\d.,KkMmBb])/;
+/* A figure in thousands or millions ($150K, $31K) is a benchmark, not a price. $238 is the year ruling 14 priced and the
+   decision of 2026-10-09 replaced; Pro's three printed prices are the month ($48), the year ($456) and the year by the month
+   ($38), all written once, in plan.ts. */
+const OLD_PRICES = /\$(?:37|77|31|64|372|768|78|150|238)(?![\d.,KkMmBb])|\$19\/mo/;
+const PRO_PRICES = /\$(?:38|48|456)(?![\d.,KkMmBb])/;
 const TIER_WORDS = /\b(?:Basic|Premium)\b/;
 
 function walk(dir: string, acc: string[] = []): string[] {

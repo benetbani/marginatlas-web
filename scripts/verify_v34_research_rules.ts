@@ -266,23 +266,27 @@ function readIfExists(rel: string): string | null {
   const pricingPage = readIfExists("app/(site)/pricing/page.tsx");
   const paywallCopy = readIfExists("components/monetization/paywall_copy.ts");
   /* ONE PLAN, ITS PRICE WRITTEN ONCE (masterplan step 12; his ruling 14, and the one-price gate, which exists because a price
-     typed twice is a price that will disagree): the page prints the yearly total through priceLine("year") from
-     src/lib/monetization/plan.ts, and paywall_copy.ts takes priceAnnualTotal from PRO.yearlyUsd rather than a typed digit. The
-     rule's point stands: the annual total is shown, beside "billed annually". */
+     typed twice is a price that will disagree): the page prints the yearly total through the plan (src/lib/monetization/plan.ts:
+     priceLine("year"), or yearlySavingLine(), which opens with it), and paywall_copy.ts takes priceAnnualTotal from PRO.yearlyUsd
+     rather than a typed digit. Since his decision of 2026-10-09 the page leads with the year as yearlyHeadline(), "$38 a month,
+     billed yearly", so the monthly equivalent is shown with how it is billed, and the total follows on the next line. The rule's
+     point stands: the annual total is shown, beside the way it is billed. What the page draws, in order, is held by
+     tests/monetization/pricing_page.test.ts. */
   const refersToAnnualTotal =
-    !!pricingPage && (pricingPage.includes("priceAnnualTotal") || pricingPage.includes('priceLine("year")'));
-  const mentionsBilledAnnually =
-    !!pricingPage && /billed annually/i.test(pricingPage);
+    !!pricingPage &&
+    (pricingPage.includes("priceAnnualTotal") || pricingPage.includes('priceLine("year")') || pricingPage.includes("yearlySavingLine()"));
+  const mentionsBilledYearly =
+    !!pricingPage && (/billed (?:annually|yearly)/i.test(pricingPage) || pricingPage.includes("yearlyHeadline()"));
   const hasTier = !!paywallCopy && /priceAnnualTotal:\s*(?:\d+|PRO\.yearlyUsd)/.test(paywallCopy);
-  if (!refersToAnnualTotal || !mentionsBilledAnnually || !hasTier) {
+  if (!refersToAnnualTotal || !mentionsBilledYearly || !hasTier) {
     record(
       "annual_framing_shows_total",
       pricingPage ? "src/app/(site)/pricing/page.tsx" : "<missing>",
       0,
       "",
       "v34 Part 4.2: annual price must be displayed as monthly-equiv PLUS " +
-        "the actual yearly total in the same line. Could not find " +
-        "'billed annually' + priceAnnualTotal reference on the pricing page.",
+        "the actual yearly total. Could not find 'billed yearly' (or " +
+        "yearlyHeadline()) + a yearly total reference on the pricing page.",
     );
   }
 }

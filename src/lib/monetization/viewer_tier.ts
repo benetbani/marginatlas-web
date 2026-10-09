@@ -2,9 +2,10 @@
  * viewer_tier: the tier type, and the tier a static render assumes.
  *
  * ONE PAID TIER (milestone 2, masterplan step 05; his interview of
- * 2026-09-26, ruling 14: one plan, Pro, $38 a month or $238 a year).
- * The June "basic" / "premium" pair is gone; src/lib/monetization/plan.ts
- * holds the plan and its prices.
+ * 2026-09-26, ruling 14: one plan, Pro). The June "basic" / "premium"
+ * pair is gone; src/lib/monetization/plan.ts holds the plan and its
+ * prices (his decision of 2026-10-09: a month, or a year led with by the
+ * month).
  *
  * WHAT READS A TIER (the checkup of 2026-10-08; this header used to call
  * getViewerTier the single read point every page calls once per request,
