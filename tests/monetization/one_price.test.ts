@@ -33,11 +33,13 @@ const TIER_WORDS_ALLOWED = [
   "src/lib/monetization/",
 ];
 
-/* A figure in thousands or millions ($150K, $31K) is a benchmark, not a price. $238 is the year ruling 14 priced and the
+/* A figure in thousands or millions ($150K, $31K) is a benchmark, not a price, and so is a longer number ($480, $1.5). A price
+   followed by a period or a comma that ends a sentence or a list item ("$48.", "$48,") is still a price, so only a digit, a point
+   or comma with a digit after it, or a K, M or B stops the match. $238 is the year ruling 14 priced and the
    decision of 2026-10-09 replaced; Pro's three printed prices are the month ($48), the year ($456) and the year by the month
    ($38), all written once, in plan.ts. */
-const OLD_PRICES = /\$(?:37|77|31|64|372|768|78|150|238)(?![\d.,KkMmBb])|\$19\/mo/;
-const PRO_PRICES = /\$(?:38|48|456)(?![\d.,KkMmBb])/;
+const OLD_PRICES = /\$(?:37|77|31|64|372|768|78|150|238)(?!\d|[.,]\d|[KkMmBb])|\$19\/mo/;
+const PRO_PRICES = /\$(?:38|48|456)(?!\d|[.,]\d|[KkMmBb])/;
 const TIER_WORDS = /\b(?:Basic|Premium)\b/;
 
 function walk(dir: string, acc: string[] = []): string[] {

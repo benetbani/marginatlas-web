@@ -271,12 +271,17 @@ function readIfExists(rel: string): string | null {
      rather than a typed digit. Since his decision of 2026-10-09 the page leads with the year as yearlyHeadline(), "$38 a month,
      billed yearly", so the monthly equivalent is shown with how it is billed, and the total follows on the next line. The rule's
      point stands: the annual total is shown, beside the way it is billed. What the page draws, in order, is held by
-     tests/monetization/pricing_page.test.ts. */
+     tests/monetization/pricing_page.test.ts. The page may name yearlyHeadline() in place of typing the words only while the words
+     are there: plan.ts's yearlyHeadline must itself say "billed yearly" (or "billed annually"), read here from plan.ts. */
   const refersToAnnualTotal =
     !!pricingPage &&
     (pricingPage.includes("priceAnnualTotal") || pricingPage.includes('priceLine("year")') || pricingPage.includes("yearlySavingLine()"));
+  const plan = readIfExists("lib/monetization/plan.ts");
+  const headlineWords = plan ? /export function yearlyHeadline\s*\(\)[^{]*\{([\s\S]*?)^\}/m.exec(plan)?.[1] ?? "" : "";
+  const headlineSaysBilledYearly = /billed (?:annually|yearly)/i.test(headlineWords);
   const mentionsBilledYearly =
-    !!pricingPage && (/billed (?:annually|yearly)/i.test(pricingPage) || pricingPage.includes("yearlyHeadline()"));
+    !!pricingPage &&
+    (/billed (?:annually|yearly)/i.test(pricingPage) || (pricingPage.includes("yearlyHeadline()") && headlineSaysBilledYearly));
   const hasTier = !!paywallCopy && /priceAnnualTotal:\s*(?:\d+|PRO\.yearlyUsd)/.test(paywallCopy);
   if (!refersToAnnualTotal || !mentionsBilledYearly || !hasTier) {
     record(
@@ -285,8 +290,9 @@ function readIfExists(rel: string): string | null {
       0,
       "",
       "v34 Part 4.2: annual price must be displayed as monthly-equiv PLUS " +
-        "the actual yearly total. Could not find 'billed yearly' (or " +
-        "yearlyHeadline()) + a yearly total reference on the pricing page.",
+        "the actual yearly total. Could not find 'billed yearly' on the " +
+        "pricing page, or yearlyHeadline() with 'billed yearly' in its words " +
+        "in src/lib/monetization/plan.ts, + a yearly total reference.",
     );
   }
 }

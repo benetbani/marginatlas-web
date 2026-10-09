@@ -1035,7 +1035,9 @@
       "browser": false,
       "asserts": "THE PRICING PAGE LEADS WITH THE YEAR (his decision of 2026-10-09: Pro is $48 month to month or $456 a year, and the page leads with the year as \"$38 a month, billed yearly\").",
       "reads": [
-        "src/app/(site)/pricing/page.tsx"
+        "src/app/(site)/pricing/page.tsx",
+        "src/components/monetization/CheckoutButton.tsx",
+        "src/lib/monetization/plan.ts"
       ],
       "claims": []
     },
