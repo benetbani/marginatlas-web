@@ -97,6 +97,7 @@ import { SpineShell } from "@/components/spine/shell";
 import { SpineIndustryBody } from "@/components/spine/industry/industry-view";
 import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
 import { robotsFor } from "@/lib/seo/indexable";
+import { industryCanonicalPath } from "@/lib/seo/alias_canonical";
 
 void INDUSTRY_PAGE_SECTIONS;
 
@@ -146,7 +147,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   if (!ind) return { title: "Activity not found | Margin Atlas" };
   const title = `${ind.name}: small-business benchmarks | Margin Atlas`;
   const description = `Margin structure and cost stack for ${ind.name.toLowerCase()}. Pick a country for revenue benchmarks.`;
-  const canonical = `/industries/${industry.toLowerCase()}`;
+  /* An alias names its live trade's page (P1-C, 2026-10-09): /industries/hostel names /industries/hostels. */
+  const canonical = industryCanonicalPath(industry);
   // The card is handed the RESOLVED activity slug, not the raw route param, so
   // it shows the trade this page actually rendered. A request for hair-salons
   // that resolves to a parent must not produce a card titled with the parent

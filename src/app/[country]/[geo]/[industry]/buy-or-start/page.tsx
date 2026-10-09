@@ -36,6 +36,7 @@ import { BuyVsStartCompare } from "@/components/buy/BuyVsStartCompare";
 import { BuyVsStartCatches } from "@/components/buy/BuyVsStartCatches";
 import { SiteChrome } from "@/components/SiteChrome";
 import { robotsFor } from "@/lib/seo/indexable";
+import { tradeCanonicalPath } from "@/lib/seo/alias_canonical";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -103,7 +104,8 @@ export async function generateMetadata({
   const startCash = fmtUSD(page.start.cashNeededUsd);
   const buyCash = fmtUSD(page.buy.cashNeededUsd);
   const desc = `Is it smarter to buy an existing ${lower} in ${page.placeName} or start one fresh? About ${startCash} to start, ${buyCash} to buy in. The cash, the wait, and the honest catch on both sides.`;
-  const canonical = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}/buy-or-start`;
+  /* An alias names its live trade's buy-or-start page (P1-C, 2026-10-09; src/lib/seo/alias_canonical.ts). */
+  const canonical = tradeCanonicalPath(country, geo, industry, "buy-or-start");
   const ogPath = `/og/cell?country=${encodeURIComponent(
     country,
   )}&geo=${encodeURIComponent(geo)}&industry=${encodeURIComponent(industry)}`;

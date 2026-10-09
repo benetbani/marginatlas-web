@@ -110,6 +110,7 @@ import { lockablePath } from "@/lib/monetization/pro_route";
 import { renderCellRoute } from "./cell_spine";
 import { SiteChrome } from "@/components/SiteChrome";
 import { robotsFor } from "@/lib/seo/indexable";
+import { tradeCanonicalPath } from "@/lib/seo/alias_canonical";
 /**
  * MEASURED COST OF THE IMPORT ABOVE (2026-07-26, Loop 2 I-8). Do not "optimise" it
  * without reading PROPOSALS.md F2 first; the obvious fix does not work.
@@ -276,7 +277,9 @@ export async function generateMetadata({
         ? `~${formatMoney(head.usd)} typical revenue for ${ind.toLowerCase()} in ${geoName}.`
         : `Revenue and employment numbers for ${ind.toLowerCase()} in ${geoName}.`;
   const ogPath = `/og/cell?country=${encodeURIComponent(country)}&geo=${encodeURIComponent(geo)}&industry=${encodeURIComponent(industry)}`;
-  const canonical = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}`;
+  /* AN ALIAS NAMES ITS LIVE TRADE'S PAGE (P1-C of the page architecture, 2026-10-09): /gb/london/plumber renders the plumbers'
+     page and names /gb/london/plumbers, until the alias's redirect ships with the inventory (src/lib/seo/alias_canonical.ts). */
+  const canonical = tradeCanonicalPath(country, geo, industry);
   return {
     title,
     description: desc,

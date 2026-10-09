@@ -2923,6 +2923,7 @@
         "src/app/[country]/page.tsx",
         "src/app/industries",
         "src/app/industries/page.tsx",
+        "src/lib/seo/alias_canonical.ts",
         "src/lib/seo/indexable.ts",
         "tests/seo/indexable.test.ts"
       ],

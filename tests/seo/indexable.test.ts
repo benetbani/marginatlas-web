@@ -12,6 +12,7 @@
  */
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { classify, indexFor, isIndexable, isUkPage, floorStanding, robotsFor, type Family } from "../../src/lib/seo/indexable";
+import { canonicalPath } from "../../src/lib/seo/alias_canonical";
 import { COUNTRIES, SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { hasOwn } from "../../src/lib/own";
@@ -147,6 +148,24 @@ const walkPages = (dir: string): string[] =>
 const pages = FOLDERS.flatMap(walkPages);
 const unlisted = pages.filter((p) => !ROUTES.some((r) => r.file === p));
 check(`every page under the families' folders is in the route table (${pages.length})${unlisted.length ? `: add ${unlisted.join(", ")} with how it sets robots` : ""}`, pages.length === ROUTES.length && unlisted.length === 0, SELF);
+
+/* THE ALIAS CANONICALS (P1-C of the page architecture, 2026-10-09; QUEUE seo:alias-canonical): an alias trade address names its
+   live slug's page until its redirect ships with the inventory; a census description and every live slug name themselves. */
+check(`/gb/london/plumber names /gb/london/plumbers (got ${canonicalPath("/gb/london/plumber")})`, canonicalPath("/gb/london/plumber") === "/gb/london/plumbers");
+check(`/tr/istanbul/cafes-coffee names /tr/istanbul/cafes-coffee-shops (got ${canonicalPath("/tr/istanbul/cafes-coffee")})`, canonicalPath("/tr/istanbul/cafes-coffee") === "/tr/istanbul/cafes-coffee-shops");
+check(`/industries/hostel names /industries/hostels (got ${canonicalPath("/industries/hostel")})`, canonicalPath("/industries/hostel") === "/industries/hostels");
+check("an alias's opening page names the live slug's opening page", canonicalPath("/gb/london/plumber/opening") === "/gb/london/plumbers/opening");
+check("a census description names itself: /us/mississippi/offices-of-lawyers", canonicalPath("/us/mississippi/offices-of-lawyers") === "/us/mississippi/offices-of-lawyers");
+check("a hub names itself: /gb/london/industries", canonicalPath("/gb/london/industries") === "/gb/london/industries");
+const selfNot = live.flatMap((s) => [`/gb/london/${s}`, `/industries/${s}`]).filter((p) => canonicalPath(p) !== p);
+check(`every live slug names itself (${live.length * 2})${firstFew(selfNot)}`, selfNot.length === 0, "src/lib/seo/alias_canonical.ts");
+const CANONICAL_CALLS: Array<[string, string]> = [
+  ["src/app/[country]/[geo]/[industry]/page.tsx", "tradeCanonicalPath(country, geo, industry)"],
+  ["src/app/[country]/[geo]/[industry]/opening/page.tsx", 'tradeCanonicalPath(country, geo, industry, "opening")'],
+  ["src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx", 'tradeCanonicalPath(country, geo, industry, "buy-or-start")'],
+  ["src/app/(site)/industries/[industry]/page.tsx", "industryCanonicalPath(industry)"],
+];
+for (const [file, call] of CANONICAL_CALLS) check(`${file} builds its canonical as ${call}`, routeCode(file).includes(`const canonical = ${call};`), file);
 
 /* THE CENSUS'S FLOORS ARE THE MODEL LAWS' OWN: a floor moved since the census was written makes it stale. */
 const laws = floorsFromLaws(readFileSync("scripts/harness/check_model_laws.mjs", "utf8")) as Record<string, number>;

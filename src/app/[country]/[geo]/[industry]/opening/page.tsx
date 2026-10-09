@@ -35,6 +35,7 @@ import { OpeningPayback } from "@/components/open/OpeningPayback";
 import { OpeningComparisons } from "@/components/open/OpeningComparisons";
 import { SiteChrome } from "@/components/SiteChrome";
 import { robotsFor } from "@/lib/seo/indexable";
+import { tradeCanonicalPath } from "@/lib/seo/alias_canonical";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -106,7 +107,8 @@ export async function generateMetadata({
   const title = `What it costs to open a ${lower} in ${page.placeName}`;
   const total = fmtUSD(page.totalToOpenUsd);
   const desc = `Capital, permits, time, and first hires to open a ${lower} in ${page.placeName}: about ${total} to open.`;
-  const canonical = `/${country.toLowerCase()}/${geo.toLowerCase()}/${industry.toLowerCase()}/opening`;
+  /* An alias names its live trade's opening page (P1-C, 2026-10-09; src/lib/seo/alias_canonical.ts). */
+  const canonical = tradeCanonicalPath(country, geo, industry, "opening");
   const ogPath = `/og/cell?country=${encodeURIComponent(
     country,
   )}&geo=${encodeURIComponent(geo)}&industry=${encodeURIComponent(industry)}`;
