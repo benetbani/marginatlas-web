@@ -1215,7 +1215,31 @@ const tail20 = (s: string) => s.split("\n").slice(-20).join("\n");
 const TSX_CLI = path.join(process.cwd(), "node_modules", "tsx", "dist", "cli.mjs");
 const DIRECT = existsSync(TSX_CLI);
 
-function runGate(gate: Gate): Promise<GateResult> {
+/* A BROWSER GATE STARTS ON MEMORY THAT HAS COME BACK (the checkup of 2026-10-08). With each gate started straight from node
+   (change 5 above, no npx in between), the next browser gate's own preflight ran within a second of the last browser closing
+   and read memory that browser had not yet given back: in the whole chain of 2026-10-09 the three browser gates after
+   harness-page-laws refused at 4, 24 and 16 MB free, and run again alone from 1,535 MB they refused at 602, 575 and 560, the
+   same three, the code sound (DOCTRINE 13 has the trap from 2026-09-19: a preflight read right after a renderer exits reads
+   the renderer's memory). So a browser gate waits, polling once a second for up to a minute, until free memory is its
+   preflight's floor plus the cost of starting node; the line it prints says how long. Not on a build server (no browser runs
+   there) and not under --floor=0. After the minute it starts anyway, and its preflight decides as before. */
+const SETTLE_MAX_MS = 60_000;
+const NODE_START_MB = 150;
+async function settleBeforeBrowser(gate: Gate): Promise<void> {
+  if (!gate.browser || CI_SKIP || FLOOR_OVERRIDE === 0) return;
+  const want = readFloors().BROWSER_FLOOR_MB + NODE_START_MB;
+  const t0 = Date.now();
+  while (freeMb() < want && Date.now() - t0 < SETTLE_MAX_MS) await new Promise((r) => setTimeout(r, 1000));
+  const waited = Math.round((Date.now() - t0) / 1000);
+  if (waited > 0 && !QUIET) console.log(`  (${gate.name}: waited ${waited} s for ${want} MB free before starting; ${freeMb()} MB now)`);
+}
+
+async function runGate(gate: Gate): Promise<GateResult> {
+  await settleBeforeBrowser(gate);
+  return spawnGate(gate);
+}
+
+function spawnGate(gate: Gate): Promise<GateResult> {
   return new Promise((resolve) => {
     const started = Date.now();
     const gateArgs = [gate.script, ...(gate.args ?? [])];
