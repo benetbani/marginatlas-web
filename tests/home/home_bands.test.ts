@@ -1,10 +1,10 @@
 /**
  * THE HOME PAGE'S PRO SAID ONCE, ITS NOTEBOOK, AND THE LAUNCH CHECK'S COUNTS (milestone 3, masterplan steps 35 and 36; his ruling 23
  * of 2026-09-26: "a quiet band after the search and the UK answers: what Pro opens, the price, one button"). The Pro band draws
- * only while the paywall's switch is on, its prices through the plan and the year first (his decision of 2026-10-09), one button
- * to /pricing; the notebook is the newest post of each category; and the launch check's item (i) reads the live home's band and
- * passes the rebuilt home, which prints no counts since his instruction of 2026-10-07 ("reform home drastically";
- * tests/trust/home_shape.test.ts holds that).
+ * only while the paywall's switch is on, its prices through the plan and the year first, led with as the pricing page leads, "$38 a
+ * month, billed yearly" (his decision of 2026-10-09), one button to /pricing; the notebook is the newest post of each category;
+ * and the launch check's item (i) reads the live home's band and passes the rebuilt home, which prints no counts since his
+ * instruction of 2026-10-07 ("reform home drastically"; tests/trust/home_shape.test.ts holds that).
  *
  * Run: npx tsx tests/home/home_bands.test.ts
  */
@@ -12,7 +12,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { ProBand } from "../../src/components/spine/home/ProBand";
-import { priceLine, yearlyByMonthLine } from "../../src/lib/monetization/plan";
+import { priceLine, yearlyHeadline } from "../../src/lib/monetization/plan";
 import { buildNotebook, NOTEBOOK_SIZE } from "../../src/lib/home/notebook";
 import { BLOG_CATEGORIES, getAllPosts } from "../../src/lib/blog";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -37,12 +37,15 @@ set(true);
 const on = renderToStaticMarkup(React.createElement(ProBand));
 set(false);
 check("nothing about Pro prints while the switch is off", off === "");
-/* His decision of 2026-10-09: the year leads. The focal figure is the year by the month, then the year's total billed yearly, then
-   the month to month price, every figure through the plan, and one button to /pricing. */
-check("with the switch on: the year leads (the year by the month at the focal rung, then the year billed yearly, then month to month), all through the plan, one button to /pricing", () => {
-  const focal = /data-focal="1"[^>]*>([^<]*)</.exec(on)?.[1];
+/* His decision of 2026-10-09: the year leads. The focal figure is the pricing page's own lead, the year by the month with how it is
+   billed (a "$38 a month" alone reads as a month-to-month price, which is $48), then the year's total, then the month to month
+   price, every figure through the plan, and one button to /pricing. The card is narrow, so the band keeps the last two words of the
+   lead together (a no-break space) and the line breaks after its comma; the text a visitor reads is the plan's line. */
+const focal = /data-focal="1"[^>]*>([^<]*)</.exec(on)?.[1]?.replace(/\xa0/g, " ");
+check(`with the switch on: the focal figure is the pricing page's lead, "${yearlyHeadline()}"`, () => focal === yearlyHeadline());
+check("with the switch on: the year's total, then the month to month price, all through the plan, one button to /pricing", () => {
   const atYear = on.indexOf(priceLine("year"));
-  return focal === yearlyByMonthLine() && atYear > -1 && on.indexOf(priceLine("month")) > atYear
+  return atYear > -1 && on.indexOf(priceLine("month")) > atYear
     && /Billed yearly/.test(on) && /Month to month/.test(on)
     && (on.match(/href="\/pricing"/g) ?? []).length === 1 && (on.match(/<a /g) ?? []).length === 1;
 });
