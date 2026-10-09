@@ -827,6 +827,9 @@ const GATES: Gate[] = [
      /us/mississippi/offices-of-lawyers printed "Software development"; the label and every figure now come from the one row whose
      description is the word. */
   { name: "state-trade-label", script: "tests/seo/state_trade_label.test.ts" },
+  /* The sitemaps by family (P1-E of the page architecture, 2026-10-09): every listed address in its family's shard, indexable,
+     self-canonical, passed by the edge, listed once, dated by its page or not at all; robots.txt listing exactly the listed shards. */
+  { name: "sitemap-families", script: "tests/seo/sitemap_families.test.ts" },
   { name: "depth-notify", script: "tests/seo/depth_notify.test.ts" },
   { name: "copy-no-method-words", script: "tests/spine/copy_no_method_words.test.ts" },
   /* No struck method word and no coined score in the literals of src/app and src/components, a ratchet per file (masterplan

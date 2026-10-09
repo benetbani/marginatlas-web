@@ -2925,6 +2925,7 @@
         "src/app/industries",
         "src/app/industries/page.tsx",
         "src/app/layout.tsx",
+        "src/app/sitemap.ts",
         "src/lib/seo/alias_canonical.ts",
         "src/lib/seo/indexable.ts",
         "tests/seo/indexable.test.ts"
@@ -2942,6 +2943,22 @@
         "src/lib/cells/us_industry_match.ts",
         "tests/fixtures/seo/state_trade_rows.json",
         "tests/seo/state_trade_label.test.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "sitemap-families",
+      "script": "tests/seo/sitemap_families.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "Every sitemap shard holds one family, and every address it lists is a page the site wants indexed (P1-E of the page architecture, 2026-10-09; docs/superpowers/specs/2026-10-09-page-architecture-design",
+      "reads": [
+        "src/app",
+        "src/app/robots.ts",
+        "src/app/sitemap.ts",
+        "src/lib/seo/sitemap_families.ts",
+        "src/middleware.ts",
+        "tests/seo/sitemap_families.test.ts"
       ],
       "claims": []
     },

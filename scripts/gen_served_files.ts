@@ -18,6 +18,7 @@
  */
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { servedShardIds } from "../src/lib/seo/sitemap_families";
 
 export const SERVED_FILES_FILE = "src/lib/routing/served_files.ts";
 const PUBLIC = "public";
@@ -42,6 +43,13 @@ function sitemapIds(file: string, src: string): string[] {
     throw new Error(`${file}: generateSitemaps is not a literal list of { id: <number> }; teach scripts/gen_served_files.ts to read its shards`);
   }
   return ids as string[];
+}
+
+/** The shard ids a sitemap's generateSitemaps returns: the family table's when it reads servedShardIds (P1-E, 2026-10-09;
+ *  src/lib/seo/sitemap_families.ts), else its literal list. */
+function shardIdsOf(file: string, src: string): string[] {
+  if (/\bservedShardIds\s*\(/.test(src)) return servedShardIds().map(String);
+  return sitemapIds(file, src);
 }
 
 /** The URL path of a folder under src/app, groups dropped; null when a dynamic segment makes it more than one address. */
@@ -77,7 +85,7 @@ export function routeFiles(dir = APP, segments: string[] = []): Array<{ from: st
       place(at, () => [`${base}/robots.txt`]);
     } else if (/^sitemap\.(ts|js)$/.test(e.name)) {
       const src = readFileSync(at, "utf8");
-      place(at, () => (/\bgenerateSitemaps\b/.test(src) ? sitemapIds(at, src).map((id) => `${base}/sitemap/${id}.xml`) : [`${base}/sitemap.xml`]));
+      place(at, () => (/\bgenerateSitemaps\b/.test(src) ? shardIdsOf(at, src).map((id) => `${base}/sitemap/${id}.xml`) : [`${base}/sitemap.xml`]));
     } else if (e.name === "sitemap.xml" || e.name === "favicon.ico") {
       place(at, () => [`${base}/${e.name}`]);
     } else if (/^manifest\.(ts|js|json|webmanifest)$/.test(e.name)) {

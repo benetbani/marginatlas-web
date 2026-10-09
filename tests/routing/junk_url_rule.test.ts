@@ -56,6 +56,7 @@ import { NextRequest } from "next/server";
    test reads the routing decision itself, as tests/routing/metadata_routes.test.ts does. */
 import { routeRequest as middleware } from "../../src/middleware";
 import { red, redSummary } from "../../scripts/lib/red";
+import { listedShardIds } from "../../src/lib/seo/sitemap_families";
 
 const RULE = "junk-url-rule";
 const MW = "src/middleware.ts";
@@ -241,9 +242,9 @@ if (process.argv.includes("--live")) {
   (async () => {
     const urls: string[] = [];
     const perShard: string[] = [];
-    /* Shard 5, the neighbourhood shard, has declared nothing since 2026-08-08 (src/app/sitemap.ts). Each shard's count is
-       printed, because a shard that loads empty only shrinks the total and would otherwise pass unseen. */
-    for (const id of [0, 1, 2, 3, 4, 6, 7]) {
+    /* The listed shards of the family table (P1-E, 2026-10-09; src/lib/seo/sitemap_families.ts); the empty ones declare nothing.
+       Each shard's count is printed, because a shard that loads empty only shrinks the total and would otherwise pass unseen. */
+    for (const id of listedShardIds()) {
       const r = await fetch(`${ORIGIN}/sitemap/${id}.xml`);
       if (!r.ok) check(`live: /sitemap/${id}.xml answers ${r.status} on production`, false, "src/app/sitemap.ts", "rerun --live once production serves its sitemap");
       const before = urls.length;

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { ANSWERING_AGENTS, HARVESTERS, INTERNALS, SEARCH_ENGINES } from "@/lib/seo/crawlers";
+import { listedShardIds, shardUrl } from "@/lib/seo/sitemap_families";
 
 /**
  * robots.txt policy.
@@ -32,18 +33,9 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: [...HARVESTERS], disallow: "/" },
       { userAgent: "*", allow: "/", disallow: [...INTERNALS], crawlDelay: 2 },
     ],
-    /* Next 15's generateSitemaps emits per-id sub-sitemaps at /sitemap/[id].xml, not the conventional /sitemap.xml, so every
-       shard is listed explicitly or a crawler never learns it exists. Shard 5 is absent on purpose: the neighbourhood pages were
-       withdrawn from the index on the founder's instruction, 2026-08-08. */
-    sitemap: [
-      "https://www.marginatlas.com/sitemap/0.xml",
-      "https://www.marginatlas.com/sitemap/1.xml",
-      "https://www.marginatlas.com/sitemap/2.xml",
-      "https://www.marginatlas.com/sitemap/3.xml",
-      "https://www.marginatlas.com/sitemap/4.xml",
-      "https://www.marginatlas.com/sitemap/6.xml",
-      "https://www.marginatlas.com/sitemap/7.xml",
-    ],
+    /* One shard per page family, the listed ones only (P1-E, 2026-10-09): SITEMAP_FAMILIES in src/lib/seo/sitemap_families.ts,
+       the table generateSitemaps reads too. */
+    sitemap: listedShardIds().map(shardUrl),
     host: "https://www.marginatlas.com",
   };
 }

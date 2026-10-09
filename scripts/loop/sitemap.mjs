@@ -47,6 +47,9 @@
    empty is the outage this file was written to catch; a shard emptied by a
    ruling is not. Only a named entry with a reason gets the exemption. */
 const WITHDRAWN = new Map([
+  [1, "the US trade pages named by census descriptions, noindex and out of every sitemap since 2026-10-09 (P1-B, P1-E)"],
+  [2, "the regional trade pages, none at its floor, out of every sitemap since 2026-10-09 (P1-E)"],
+  [4, "the region industries hubs, noindex and out of every sitemap since 2026-10-09 (P1-B, P1-E)"],
   [
     5,
     "neighbourhood pages, withdrawn from the index 2026-08-08 on the founder's " +

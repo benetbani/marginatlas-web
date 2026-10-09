@@ -52,4 +52,5 @@ export const SERVED_FILES: ReadonlySet<string> = new Set([
   "/sitemap/5.xml",
   "/sitemap/6.xml",
   "/sitemap/7.xml",
+  "/sitemap/8.xml",
 ]);

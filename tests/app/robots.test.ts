@@ -22,11 +22,14 @@ const FILE = "src/app/robots.ts";
 const MW = "src/middleware.ts";
 const REMEDY =
   "Change HARVESTERS, ANSWERING_AGENTS or INTERNALS in src/lib/seo/crawlers.ts: src/app/robots.ts and AI_CRAWLER_PATTERNS in src/middleware.ts both read them, so the two change together";
+/* The sitemap rows name their own remedy: the table, not the crawler lists, is what they hold (P1-E, 2026-10-09). */
+const SITEMAP_REMEDY =
+  "Declare the listed shards of SITEMAP_FAMILIES (src/lib/seo/sitemap_families.ts) and no other: src/app/robots.ts and src/app/sitemap.ts both read it, so change these rows only when the table changes on purpose";
 let failed = 0;
-const check = (label: string, ok: boolean, file = FILE) => {
+const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
   failed++;
-  red({ rule: RULE, file, detail: label, remedy: REMEDY });
+  red({ rule: RULE, file, detail: label, remedy });
 };
 
 const out = robots();
@@ -83,10 +86,12 @@ for (const g of groups) {
   for (const required of ["/dev/", "/api/", "/_next/", "/admin"]) check(`[${agents}] disallows ${required}`, disallow.includes(required));
 }
 
-/* THE SITEMAPS: every registered shard declared but shard 5 (withdrawn 2026-08-08). */
+/* THE SITEMAPS BY FAMILY (P1-E, 2026-10-09): shards 0, 3, 6, 7 and 8 declared; 1, 2, 4 and 5 answer empty and are not; 9 to 12 are
+   reserved. Typed here, not read from the table, for the reason in the header. */
 const declared = ([] as string[]).concat(out.sitemap ?? []);
-for (const id of [0, 1, 2, 3, 4, 6, 7]) check(`sitemap shard ${id} declared`, declared.includes(`https://www.marginatlas.com/sitemap/${id}.xml`));
-check("sitemap shard 5 NOT declared (withdrawn 2026-08-08)", !declared.includes("https://www.marginatlas.com/sitemap/5.xml"));
+for (const id of [0, 3, 6, 7, 8]) check(`sitemap shard ${id} declared`, declared.includes(`https://www.marginatlas.com/sitemap/${id}.xml`), FILE, SITEMAP_REMEDY);
+for (const id of [1, 2, 4, 5, 9, 10, 11, 12]) check(`sitemap shard ${id} NOT declared`, !declared.includes(`https://www.marginatlas.com/sitemap/${id}.xml`), FILE, SITEMAP_REMEDY);
+check(`robots.txt declares five shards (${declared.length})`, declared.length === 5, FILE, SITEMAP_REMEDY);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("robots: all pass");

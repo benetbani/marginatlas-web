@@ -15,6 +15,7 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { classify, indexFor, isIndexable, isUkPage, floorStanding, robotsFor, type Family, type RobotsMeta } from "../../src/lib/seo/indexable";
 import { canonicalPath } from "../../src/lib/seo/alias_canonical";
+import { sitemapEntries } from "../../scripts/lib/sitemap_entries";
 import { COUNTRIES, INDUSTRIES, SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { hasOwn } from "../../src/lib/own";
@@ -224,4 +225,17 @@ function finish(): void {
   console.log("seo/indexable: all pass");
 }
 
-finish();
+/* EVERY SITEMAP ADDRESS IS ONE indexFor ADMITS (P1-E, 2026-10-09): the listed shards, asked offline (scripts/lib/sitemap_entries.ts);
+   the gate sitemap-families holds the rest of what a listed address must be. */
+sitemapEntries().then(
+  (listed) => {
+    const refused = listed.filter((e) => !isIndexable(e.path)).map((e) => `${e.path} (shard ${e.shard}: ${indexFor(e.path).reason})`);
+    check(`every address the listed sitemaps declare is one indexFor admits (${listed.length})${firstFew(refused)}`, listed.length > 0 && refused.length === 0, "src/app/sitemap.ts");
+    finish();
+    process.exit(0);
+  },
+  (e: unknown) => {
+    check(`the listed sitemaps could be asked offline: ${e instanceof Error ? e.message : String(e)}`, false, "src/app/sitemap.ts");
+    finish();
+  },
+);
