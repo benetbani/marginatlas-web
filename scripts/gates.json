@@ -3806,6 +3806,7 @@
         "src/lib/geo/page_targets.ts",
         "src/lib/home/destination.ts",
         "src/lib/monetization/pro_route.ts",
+        "src/lib/seo/alias_canonical.ts",
         "src/lib/taxonomy/retired_paths.ts"
       ],
       "claims": []
