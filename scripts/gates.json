@@ -2818,23 +2818,12 @@
       "browser": false,
       "asserts": "NO ADDRESS IS REDIRECTED OR RETIRED BEFORE THE INVENTORY (his URL rule as restated on 2026-10-09: \"never change the address of a page that keeps its content; retire an address only by a permanent redi",
       "reads": [
-        "data/blog/moved_posts.json",
-        "data/blog/retired_posts.json",
         "data/seo/inventory.json",
         "src/app",
-        "src/app/(site)/account/page.tsx",
-        "src/app/(site)/browse/page.tsx",
-        "src/app/(site)/decide/go/route.ts",
-        "src/app/[country]/[geo]/page.tsx",
-        "src/app/api/contact/route.ts",
-        "src/app/api/go/route.ts",
-        "src/app/auth/callback/route.ts",
-        "src/app/auth/signout/route.ts",
         "src/app/dev/",
-        "src/app/random/route.ts",
         "src/lib/routing/dispositions.ts",
-        "src/middleware.ts",
-        "tests/routing/dispositions.test.ts"
+        "tests/routing/dispositions.test.ts",
+        "tests/routing/redirect_pins.txt"
       ],
       "claims": []
     },

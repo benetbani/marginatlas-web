@@ -1,0 +1,230 @@
+config /cities/:slug/curiosities -> /cities/:slug 308
+config /download/2026-benchmarks -> /data 308
+config /blog/argentina-overview -> /ar 308
+config /blog/australia-overview -> /au 308
+config /blog/australian-vs-canadian-economy -> /au 308
+config /blog/baltic-tech-rise -> /world 308
+config /blog/brazil-overview -> /br 308
+config /blog/building-from-9-agencies -> /about-data 308
+config /blog/canada-overview -> /ca 308
+config /blog/countries-with-worse-data -> /about-data 308
+config /blog/data-sources-tour -> /about-data 308
+config /blog/emerging-bric-services -> /world 308
+config /blog/estimating-distributions-from-totals -> /about-data 308
+config /blog/france-overview -> /fr 308
+config /blog/french-bakeries-profitability -> /fr 308
+config /blog/germany-mittelstand-overview -> /de 308
+config /blog/germany-vs-france-manufacturing -> /de 308
+config /blog/global-construction-overview -> /industries 308
+config /blog/global-finance-services -> /industries 308
+config /blog/global-healthcare-economics -> /industries 308
+config /blog/global-manufacturing-overview -> /industries 308
+config /blog/global-professional-services -> /industries 308
+config /blog/global-real-estate -> /industries 308
+config /blog/global-software-deep-dive -> /industries 308
+config /blog/global-transportation-logistics -> /industries 308
+config /blog/greek-tourism-recovery -> /gr 308
+config /blog/hairdressers-same-everywhere -> /industries/hairdressers-beauty 308
+config /blog/how-many-cells-do-you-have -> /about-data 308
+config /blog/how-medians-work -> /blog/median-vs-average 308
+config /blog/how-to-read-a-cell-page -> /about-data 308
+config /blog/how-we-built-the-taxonomy -> /industries 308
+config /blog/industry-classification-tour -> /blog/industry-classification-different-meanings 308
+config /blog/industry-classifications-decoded -> /blog/industry-classification-different-meanings 308
+config /blog/italy-family-firms -> /it 308
+config /blog/italy-vs-spain-tourism -> /it 308
+config /blog/japan-overview -> /jp 308
+config /blog/japan-restaurants-density -> /jp 308
+config /blog/nace-vs-naics -> /blog/industry-classification-different-meanings 308
+config /blog/netherlands-overview -> /nl 308
+config /blog/nordics-software-economy -> /world 308
+config /blog/norway-overview -> /no 308
+config /blog/pharmacy-revenue-payroll-margin -> /industries 308
+config /blog/poland-overview -> /pl 308
+config /blog/polish-construction-boom -> /pl 308
+config /blog/shape-transfer-explained -> /about-data 308
+config /blog/singapore-overview -> /sg 308
+config /blog/small-business-size-us-vs-germany -> /us 308
+config /blog/solo-plumbing-business -> /industries 308
+config /blog/spain-overview -> /es 308
+config /blog/switzerland-overview -> /ch 308
+config /blog/typical-us-restaurant-earnings -> /us 308
+config /blog/uk-overview -> /gb 308
+config /blog/us-employer-vs-nonemployer -> /us 308
+config /blog/us-margins-since-2018 -> /us 308
+config /blog/us-small-business-overview -> /us 308
+config /blog/us-state-fips-codes -> /us 308
+config /blog/us-vs-uk-small-business -> /gb 308
+config /blog/v2-coming -> /about-data 308
+config /blog/why-friendly-medians -> /about-data 308
+config /blog/worlds-smallest-hotel-markets -> /industries 308
+config /blog/what-we-omit -> /about-data#leave-out 308
+config /blog/when-we-extrapolate -> /about-data#estimates 308
+vercel.json keys $schema,buildCommand
+next.config redirect-shaping keys none
+retired /industries/aerospace-other-transport-mfg -> /industries
+retired /industries/air-conditioning-refrigeration -> /industries/hvac-services
+retired /industries/air-transportation-carriers -> /industries
+retired /industries/apparel-manufacturing -> /industries
+retired /industries/artisan-bakery-wholesale -> /industries
+retired /industries/automotive-electrical-services -> /industries/auto-repair-shops
+retired /industries/banking -> /industries
+retired /industries/bed-breakfasts -> /industries/guest-houses-pensions
+retired /industries/beverage-manufacturing -> /industries
+retired /industries/blocklaying-services -> /industries/bricklaying-services
+retired /industries/book-retailing -> /industries/indie-bookstores
+retired /industries/breweries-taprooms-retail -> /industries/craft-breweries-taprooms
+retired /industries/broadcasting -> /industries
+retired /industries/broadcasting-telecom -> /industries
+retired /industries/building-garden-supply-stores -> /industries/hardware-stores-local
+retired /industries/cake-shops-patisseries -> /industries/bakeries-retail
+retired /industries/carpentry-services -> /industries/carpenters-finish-work
+retired /industries/carpet-laying-services -> /industries/flooring-installers
+retired /industries/cement-rendering-services -> /industries/plastering-services
+retired /industries/chemical-pharma-manufacturing -> /industries
+retired /industries/chemical-pharmaceutical-manufacturing -> /industries
+retired /industries/chicken-shops -> /industries/restaurants
+retired /industries/childcare-social-services -> /industries/daycare-preschool
+retired /industries/children-s-maternity-clothing -> /industries/clothing-shoe-stores
+retired /industries/civil-engineering -> /industries
+retired /industries/cleaning-building-industrial -> /industries/cleaning-services
+retired /industries/cleaning-carpet-upholstery -> /industries/cleaning-services
+retired /industries/clothing-boutiques -> /industries/clothing-shoe-stores
+retired /industries/commercial-construction -> /industries
+retired /industries/crop-farming -> /industries
+retired /industries/custom-software-contract-dev -> /industries/software-development
+retired /industries/designer-fashion -> /industries/clothing-shoe-stores
+retired /industries/e-commerce-mail-order -> /industries
+retired /industries/electrical-equipment -> /industries
+retired /industries/electricity-gas-utilities -> /industries
+retired /industries/electronics-semiconductors -> /industries
+retired /industries/fabricated-metal-manufacturing -> /industries
+retired /industries/fast-casual-restaurants -> /industries/restaurants
+retired /industries/fishing-aquaculture -> /industries
+retired /industries/food-beverage-manufacturing -> /industries
+retired /industries/food-manufacturing -> /industries
+retired /industries/forestry-logging -> /industries
+retired /industries/funds-trusts -> /industries
+retired /industries/furniture-manufacturing -> /industries
+retired /industries/furniture-other-manufacturing -> /industries
+retired /industries/general-wholesale -> /industries
+retired /industries/grain-farming -> /industries
+retired /industries/hair-salons-full-service -> /industries/hairdressers-beauty
+retired /industries/higher-education -> /industries
+retired /industries/hospitals -> /industries
+retired /industries/independent-hotels-inns -> /industries/hotels-lodging
+retired /industries/independent-pharmacies -> /industries/pharmacies-health-stores
+retired /industries/insurance -> /industries
+retired /industries/investment-securities -> /industries
+retired /industries/it-services-msps-small -> /industries/it-services-hosting
+retired /industries/landscaping-services -> /industries/landscaping-lawn-care
+retired /industries/lingerie-intimates -> /industries/clothing-shoe-stores
+retired /industries/livestock-farming -> /industries
+retired /industries/machinery-manufacturing -> /industries
+retired /industries/management-consulting -> /industries
+retired /industries/med-spas-small -> /industries/day-spas
+retired /industries/metal-products-manufacturing -> /industries
+retired /industries/mining-quarrying -> /industries
+retired /industries/mining-quarrying-metals-stone -> /industries
+retired /industries/mining-support-services -> /industries
+retired /industries/miscellaneous-manufacturing -> /industries
+retired /industries/motor-vehicles-parts -> /industries
+retired /industries/oil-gas-extraction -> /industries
+retired /industries/painting-services -> /industries/painters-residential
+retired /industries/paper-printing-manufacturing -> /industries
+retired /industries/passenger-transport -> /industries
+retired /industries/pastry-dessert-shops -> /industries/bakeries-retail
+retired /industries/petroleum-coal-products -> /industries
+retired /industries/pipeline-transportation -> /industries
+retired /industries/plastics-rubber-products -> /industries
+retired /industries/plumbing-services -> /industries/plumbers
+retired /industries/postal-courier -> /industries
+retired /industries/postal-service -> /industries
+retired /industries/primary-metal-manufacturing -> /industries
+retired /industries/primary-secondary-schools -> /industries
+retired /industries/private-k-12-schools-small -> /industries
+retired /industries/private-libraries-archives -> /industries/museums-cultural
+retired /industries/property-leasing-rental -> /industries
+retired /industries/rail-transportation -> /industries
+retired /industries/real-estate-leasing -> /industries
+retired /industries/residential-cleaning-services -> /industries/cleaning-services
+retired /industries/residential-construction -> /industries
+retired /industries/roofing-services -> /industries/roofers
+retired /industries/securities-brokerage -> /industries
+retired /industries/shoe-stores -> /industries/clothing-shoe-stores
+retired /industries/sit-down-restaurants -> /industries/restaurants
+retired /industries/small-museums -> /industries/museums-cultural
+retired /industries/sole-practitioner-accountants -> /industries/accounting-tax
+retired /industries/sole-practitioner-law-firms -> /industries/legal-services
+retired /industries/specialty-construction-services -> /industries/specialty-trades-mixed
+retired /industries/specialty-food-production -> /industries
+retired /industries/streetwear-casual-apparel -> /industries/clothing-shoe-stores
+retired /industries/telecommunications -> /industries
+retired /industries/test-prep-services -> /industries/tutoring-centers
+retired /industries/textile-apparel-manufacturing -> /industries
+retired /industries/textiles-fabric-manufacturing -> /industries
+retired /industries/transit-ground-passenger-transport -> /industries
+retired /industries/transport-support-services -> /industries
+retired /industries/trucking-freight -> /industries
+retired /industries/vegetable-fruit-farming -> /industries
+retired /industries/videography-services -> /industries/photography-studios
+retired /industries/vintage-consignment -> /industries/clothing-shoe-stores
+retired /industries/warehousing-storage -> /industries
+retired /industries/watch-shops -> /industries/jewelry-stores
+retired /industries/water-transportation -> /industries
+retired /industries/water-waste-management -> /industries
+retired /industries/web-mobile-dev-shops -> /industries/software-development
+retired /industries/wholesale-chemicals-pharma -> /industries
+retired /industries/wholesale-durable-goods -> /industries
+retired /industries/wholesale-food-beverages -> /industries
+retired /industries/wine-bars -> /industries/bars-nightclubs
+retired /industries/wood-paper-products -> /industries
+retired /industries/wood-products-manufacturing -> /industries
+renamed auto-dealers-gas-stations -> auto-dealers
+renamed broadcasting-telecom -> broadcasting
+renamed chemical-pharmaceutical-manufacturing -> chemical-pharma-manufacturing
+renamed crop-farming -> grain-farming
+renamed food-beverage-manufacturing -> food-manufacturing
+renamed furniture-home-goods-stores -> furniture-stores
+renamed furniture-other-manufacturing -> furniture-manufacturing
+renamed investment-securities -> securities-brokerage
+renamed media-publishing -> news-periodical-publishing
+renamed metal-products-manufacturing -> fabricated-metal-manufacturing
+renamed mining-quarrying -> mining-quarrying-metals-stone
+renamed passenger-transport -> transit-ground-passenger-transport
+renamed postal-courier -> postal-service
+renamed property-leasing-rental -> real-estate-leasing
+renamed textile-apparel-manufacturing -> apparel-manufacturing
+renamed wood-paper-products -> wood-products-manufacturing
+route src/app/(site)/account/page.tsx redirect("/signin?next=/account");
+route src/app/(site)/browse/page.tsx permanentRedirect("/world");
+route src/app/(site)/decide/go/route.ts return NextResponse.redirect(new URL("/decide", request.url), 302);
+route src/app/(site)/decide/go/route.ts return NextResponse.redirect(target, 302);
+route src/app/[country]/[geo]/page.tsx if (cityHref) permanentRedirect(cityHref);
+route src/app/api/contact/route.ts return NextResponse.redirect(`${origin}/contact${query}`, { status: 303 });
+route src/app/api/go/route.ts if (!country) return NextResponse.redirect(new URL("/", request.url), 302);
+route src/app/api/go/route.ts return NextResponse.redirect(new URL(path, request.url), 302);
+route src/app/auth/callback/route.ts return NextResponse.redirect(`${origin}/`);
+route src/app/auth/callback/route.ts if (error) return NextResponse.redirect(`${origin}/signin?error=1`);
+route src/app/auth/callback/route.ts return NextResponse.redirect(`${origin}/signin?error=1`);
+route src/app/auth/callback/route.ts return NextResponse.redirect(`${origin}${next}`);
+route src/app/auth/signout/route.ts return NextResponse.redirect(`${origin}/`, { status: 303 });
+route src/app/random/route.ts return NextResponse.redirect(new URL("/us/california/restaurants", req.url));
+route src/app/random/route.ts return NextResponse.redirect(new URL("/us/california/restaurants", req.url));
+route src/app/random/route.ts return NextResponse.redirect(new URL(path, req.url));
+middleware NextResponse.redirect( calls 8
+mw /GB/London 308 /gb/london
+mw /industries/banking 308 /industries
+mw /gb/london/banking 308 /cities/london
+mw /us/new-york/banking 308 /us/new-york
+mw /gb/liverpool/banking 308 /gb
+mw /industries/crop-farming 308 /industries
+mw /industries/auto-dealers-gas-stations 308 /industries/auto-dealers
+mw /gb/london/auto-dealers-gas-stations 308 /gb/london/auto-dealers
+mw /sectors 308 /industries
+mw /sectors/abc 308 /industries
+mw /gb/london 308 /cities/london
+mw /gb/london/west-end 308 /cities/london/neighborhoods/west-end
+mw /gb/atlantis/banking 404 rewrite
+mw /gb/atlantis/restaurants 404 rewrite
+mw marginatlas.com/gb/london 308 https://www.marginatlas.com/gb/london
