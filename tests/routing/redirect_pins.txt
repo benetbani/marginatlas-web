@@ -213,11 +213,13 @@ route src/app/random/route.ts return NextResponse.redirect(new URL("/us/californ
 route src/app/random/route.ts return NextResponse.redirect(new URL("/us/california/restaurants", req.url));
 route src/app/random/route.ts return NextResponse.redirect(new URL(path, req.url));
 middleware NextResponse.redirect( calls 8
+middleware matcher ["/((?!_next/static|_next/image).*)"]
 mw /GB/London 308 /gb/london
 mw /industries/banking 308 /industries
 mw /gb/london/banking 308 /cities/london
 mw /us/new-york/banking 308 /us/new-york
 mw /gb/liverpool/banking 308 /gb
+mw /gb/london/sit-down-restaurants 308 /gb/london/restaurants
 mw /industries/crop-farming 308 /industries
 mw /industries/auto-dealers-gas-stations 308 /industries/auto-dealers
 mw /gb/london/auto-dealers-gas-stations 308 /gb/london/auto-dealers
@@ -225,6 +227,7 @@ mw /sectors 308 /industries
 mw /sectors/abc 308 /industries
 mw /gb/london 308 /cities/london
 mw /gb/london/west-end 308 /cities/london/neighborhoods/west-end
+mw /us/los-angeles/westside 308 /cities/los-angeles/neighborhoods
 mw /gb/atlantis/banking 404 rewrite
 mw /gb/atlantis/restaurants 404 rewrite
 mw marginatlas.com/gb/london 308 https://www.marginatlas.com/gb/london

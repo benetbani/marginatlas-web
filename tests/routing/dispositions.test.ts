@@ -21,10 +21,14 @@
  *   next.config redirect-shaping keys <keys>     trailingSlash, skipTrailingSlashRedirect, skipMiddlewareUrlNormalize, basePath,
  *                                                i18n and rewrites, whichever the evaluated config holds
  *   middleware NextResponse.redirect( calls <n>  the call sites in src/middleware.ts, comments stripped
- *   mw <address> <status> <where>                what the real routeRequest (src/middleware.ts) answers a browser for 15 addresses
- *                                                (one case of each redirect and of the 404 for an invented word): the Location, or
- *                                                "rewrite" (the status-pinned 404), or "pass"; the apex row keeps its Location's
- *                                                host, so a retargeted apex redirect changes it
+ *   middleware matcher <json>                    config.matcher of src/middleware.ts as the file exports it: the mw rows call
+ *                                                routeRequest directly and so bypass it, and it decides which addresses reach the
+ *                                                middleware at all
+ *   mw <address> <status> <where>                what the real routeRequest (src/middleware.ts) answers a browser for 17 addresses
+ *                                                (one case of each redirect, the merged-trade hop and the hub fallback among them,
+ *                                                and of the 404 for an invented word): the Location, or "rewrite" (the status-pinned
+ *                                                404), or "pass"; the apex row keeps its Location's host, so a retargeted apex
+ *                                                redirect changes it
  *
  * HOW A LEGITIMATE CHANGE GOES IN. Never by editing redirect_pins.txt to pass. A redirect on a route new in a commit that retires no
  * published address (a sign-in bounce, a form's redirect after a post) is added to the pins in that commit, with the reason in the
@@ -34,11 +38,13 @@
  *   - Redirects set outside the repo: the dashboard's redirects and the apex domain setting at Vercel (the apex row asks only the
  *     middleware's fallback for the apex).
  *   - A regex inside an existing middleware site widened to an address no pinned row names: the call count pins how many sites there
- *     are and the 15 rows pin what they answer, not what else each condition would match.
+ *     are and the 17 rows pin what they answer, not what else each condition would match.
  *   - The city and district tables (src/lib/routing/edge_not_found.ts and the generated place tables): deliberately unpinned, because
  *     a city or district added on purpose adds its own /gb/<city> hop; /gb/london and /gb/london/west-end show the hop works.
  *   - A redirect written in a place it does not read: a helper in src/lib that a route calls (none holds one today), or a response
  *     header that sets a Location.
+ *   - A redirect called under an alias (permanentRedirect as go): the route rows read the two names redirect( and permanentRedirect(
+ *     in a line of src/app, so `go("/x")` is no row and the import line, which has no "(" after the name, is none either.
  *   - The after-inventory checks (one hop to a 200, dated and kept 365 days, no inventory address at 404, no internal link to a
  *     redirect or a 404) are not written yet; the day the inventory arrives this gate fails until they are.
  *
@@ -48,8 +54,10 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { NextRequest } from "next/server";
 /* routeRequest, not middleware: since A7 (2026-10-06) `middleware` is async (the session refresh wraps the routing), and the
-   routing decision is what is pinned, as tests/routing/junk_url_rule.test.ts asks it. */
-import { routeRequest } from "../../src/middleware";
+   routing decision is what is pinned, as tests/routing/junk_url_rule.test.ts asks it. `config` is the matcher the platform reads to
+   decide which addresses reach the middleware at all; routeRequest bypasses it, so it is pinned as a row of its own. It is imported
+   under another name because liveRows() holds next.config.js's `config` and would shadow it. */
+import { config as middlewareConfig, routeRequest } from "../../src/middleware";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { TAXONOMY_REDIRECTS } from "../../src/lib/taxonomy/legacy_redirects";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
@@ -77,12 +85,16 @@ const check = (label: string, ok: boolean, file: string, remedy: string, lines: 
 };
 const code = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
 
-/** The 15 addresses whose answer is pinned: each redirect of the middleware once, and the 404 for an invented word under a held
+/** The 17 addresses whose answer is pinned: each redirect of the middleware once, among them the merged-trade hop (a retired trade
+ *  merged into a live one, under a place: src/lib/taxonomy/retired_paths.ts) and the hub fallback (a district with no page of its
+ *  own goes to its city's hub: legacyHoodTarget in src/lib/routing/edge_not_found.ts), and the 404 for an invented word under a held
  *  country. [address, host]; the host is www unless it is named. */
 const ADDRESSES: ReadonlyArray<readonly [string, string?]> = [
   ["/GB/London"], ["/industries/banking"], ["/gb/london/banking"], ["/us/new-york/banking"], ["/gb/liverpool/banking"],
+  ["/gb/london/sit-down-restaurants"],
   ["/industries/crop-farming"], ["/industries/auto-dealers-gas-stations"], ["/gb/london/auto-dealers-gas-stations"],
-  ["/sectors"], ["/sectors/abc"], ["/gb/london"], ["/gb/london/west-end"], ["/gb/atlantis/banking"], ["/gb/atlantis/restaurants"],
+  ["/sectors"], ["/sectors/abc"], ["/gb/london"], ["/gb/london/west-end"], ["/us/los-angeles/westside"],
+  ["/gb/atlantis/banking"], ["/gb/atlantis/restaurants"],
   ["/gb/london", "marginatlas.com"],
 ];
 const WWW = "www.marginatlas.com";
@@ -138,6 +150,7 @@ async function liveRows(): Promise<string[]> {
     }
   }
   rows.push(`middleware NextResponse.redirect( calls ${(code("src/middleware.ts").match(/NextResponse\.redirect\(/g) ?? []).length}`);
+  rows.push(`middleware matcher ${JSON.stringify(middlewareConfig.matcher)}`);
   for (const [path, host] of ADDRESSES) rows.push(mwRow(path, host));
   return rows;
 }
