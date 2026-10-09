@@ -34,9 +34,13 @@ import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 import cityListJson from "../../data/cities/city_list_v1.json";
 import floorCensus from "../../data/seo/floor_census.json";
-import { renderPlaceSlugs, readDbWords, PLACE_SLUGS_FILE, PLACE_DB_FILE, PLACE_TABLE_BUDGET_BYTES } from "../../scripts/gen_place_slugs";
+import { renderPlaceSlugs, readDbWords, staticPlaceWords, PLACE_SLUGS_FILE, PLACE_DB_FILE, PLACE_TABLE_BUDGET_BYTES } from "../../scripts/gen_place_slugs";
 import { PLACE_SLUGS_BY_COUNTRY, US_DESCRIPTION_SLUGS } from "../../src/lib/routing/place_slugs_generated";
-import { isHeldPlace } from "../../src/lib/routing/place_words";
+import { isHeldPlace, placeWordsFor } from "../../src/lib/routing/place_words";
+import { REGIONS_BY_COUNTRY_AUTO } from "../../src/lib/regions/regions_generated";
+import { DEFAULT_REGION_BY_COUNTRY } from "../../src/lib/regions/default_region_by_country";
+import { geoNameFromSlug, slugify } from "../../src/lib/cells/geo";
+import { own } from "../../src/lib/own";
 
 const RULE = "edge-not-found";
 const FILE = "src/lib/routing/edge_not_found.ts";
@@ -225,10 +229,13 @@ check(`TRADE_SUB_PAGES is the static folders of src/app/[country]/[geo]/[industr
    to data/seo/place_db_words.json; the table is written again from it offline). Held here to a fresh generation, to the edge's
    budget, and to the places and words the census's pages name. */
 const TABLE_REMEDY = "Rerun scripts/gen_place_slugs.ts with the database; never edit the table";
-const tableCheck = (label: string, ok: boolean, file = PLACE_SLUGS_FILE) => {
+/* A word the site's own links spell and the table lacks is a source the generator does not read, and a rerun cannot add it. */
+const LINKED_REMEDY = "Add the table that spells this word to staticPlaceWords() in scripts/gen_place_slugs.ts, then run it again offline (node node_modules/tsx/dist/cli.mjs scripts/gen_place_slugs.ts); never edit the table";
+const SCAN_REMEDY = "Run scripts/gen_place_slugs.ts --database again, by hand; a scan under its floor left real addresses out, and a floor is lowered only when the database itself holds fewer rows, by the owner's word";
+const tableCheck = (label: string, ok: boolean, file = PLACE_SLUGS_FILE, remedy = TABLE_REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
   failed++;
-  red({ rule: RULE, file, detail: label, remedy: TABLE_REMEDY });
+  red({ rule: RULE, file, detail: label, remedy });
 };
 let placesFresh: string | null = null;
 try { placesFresh = renderPlaceSlugs(); } catch (e) { tableCheck(`the table can be written from ${PLACE_DB_FILE}: ${(e as Error).message}`, false, PLACE_DB_FILE); }
@@ -238,7 +245,20 @@ if (placesFresh !== null) {
 const tableBytes = readFileSync(PLACE_SLUGS_FILE, "utf8").length;
 tableCheck(`the table fits the edge's budget, which the middleware carries on every request (${tableBytes} of ${PLACE_TABLE_BUDGET_BYTES} bytes)`, tableBytes <= PLACE_TABLE_BUDGET_BYTES);
 const scan = readDbWords();
-tableCheck(`the database's scan is in it (${scan.regional_rows} regional rows and ${scan.us_rows} United States rows, scanned ${scan.scanned_at})`, scan.regional_rows > 0 && scan.us_rows > 0 && Object.keys(scan.places).length > 0 && scan.us_descriptions.length > 0, PLACE_DB_FILE);
+/* THE SCAN'S FLOOR (the review of 2026-10-09). A scan that stopped short leaves real addresses out of the table, and the edge answers
+   404 for them; the generator throws on an error, not on a short answer, and "not empty" would pass a scan of one country. Each
+   floor is about 95% of what the scan of 2026-10-09 read (376,033 regional rows, 691,551 United States rows, 9,365 ids in 127
+   countries, 1,348 descriptions), so a rescan may differ a little and a half-read one reds. Raise them when a scan grows. */
+const SCAN_FLOOR = { regional_rows: 350_000, us_rows: 650_000, place_ids: 8_800, countries: 120, descriptions: 1_280 };
+const scanIds = Object.values(scan.places).reduce((n, list) => n + list.length, 0);
+const scanShort = [
+  scan.regional_rows < SCAN_FLOOR.regional_rows && `regional rows ${scan.regional_rows} under ${SCAN_FLOOR.regional_rows}`,
+  scan.us_rows < SCAN_FLOOR.us_rows && `United States rows ${scan.us_rows} under ${SCAN_FLOOR.us_rows}`,
+  scanIds < SCAN_FLOOR.place_ids && `place ids ${scanIds} under ${SCAN_FLOOR.place_ids}`,
+  Object.keys(scan.places).length < SCAN_FLOOR.countries && `countries ${Object.keys(scan.places).length} under ${SCAN_FLOOR.countries}`,
+  scan.us_descriptions.length < SCAN_FLOOR.descriptions && `descriptions ${scan.us_descriptions.length} under ${SCAN_FLOOR.descriptions}`,
+].filter((s): s is string => typeof s === "string");
+tableCheck(`the database's scan is whole (${scan.regional_rows} regional rows, ${scan.us_rows} United States rows, ${scanIds} place ids in ${Object.keys(scan.places).length} countries, ${scan.us_descriptions.length} descriptions, scanned ${scan.scanned_at})${scanShort.length ? `: ${scanShort.join("; ")}` : ""}`, scanShort.length === 0, PLACE_DB_FILE, SCAN_REMEDY);
 const placeWords = Object.values(PLACE_SLUGS_BY_COUNTRY).flat();
 const oddWords = placeWords.filter((w) => w === "" || w.includes(".") || w.includes("/") || w !== w.toLowerCase() || w.trim() !== w);
 tableCheck(`no place word is empty or holds a dot, a slash, a capital or a space (${placeWords.length})${oddWords.length ? `: ${oddWords.slice(0, 5).join(", ")}` : ""}`, placeWords.length > 0 && oddWords.length === 0);
@@ -262,6 +282,64 @@ const HELD_SAMPLES: Array<[string, string, string]> = [
 ];
 for (const [cc, place, what] of HELD_SAMPLES) tableCheck(`${what} is held: /${cc}/${place}`, isHeldPlace(cc, place));
 tableCheck("a made-up place is not: /gb/atlantis", !isHeldPlace("gb", "atlantis"));
+/* THE READER'S CACHE IS AS SMALL AS THE TABLE (the review of 2026-10-09). placeWordsFor is asked with the country part of a request,
+   so a word nobody holds must not get a cache entry of its own: two such words get the one shared empty set, and a code the table
+   holds gets one cached set whatever its case. The statistics codes the table keeps still have their words. */
+const WORDS_FILE = "src/lib/routing/place_words.ts";
+const WORDS_REMEDY = "Cache in placeWordsFor only a code the table holds (own(PLACE_SLUGS_BY_COUNTRY, code)); answer any other word with the shared empty set";
+tableCheck("a word the table does not hold gets the one shared empty set, never a cache entry of its own", placeWordsFor("zz-a-request-word").size === 0 && placeWordsFor("zz-a-request-word") === placeWordsFor("zz-another-request-word"), WORDS_FILE, WORDS_REMEDY);
+tableCheck("a code the table holds gets one cached set, whatever its case: GB and gb", placeWordsFor("GB") === placeWordsFor("gb") && placeWordsFor("gb").size > 0, WORDS_FILE, WORDS_REMEDY);
+tableCheck("a statistics code the table keeps has its words: /el/el3", isHeldPlace("el", "el3") && !isHeldPlace("el", "atlantis"), WORDS_FILE, WORDS_REMEDY);
+
+/* THE WORDS THE SITE'S OWN LINKS SPELL (the review of 2026-10-09). The first table held what the site's tables list and missed
+   three groups that code turns into an address: a country's name (the six trade doors of its page, adapt_country.ts, and its
+   down-link, app/[country]/page.tsx: /jp/japan/restaurants), the curated default region of the home form and /api/go
+   (destination.ts: /es/es300/restaurants), and a region's label (cellUrl spells slugify(geo_name) and getCellBySlug stamps the
+   label on the cell of /de/de21: /de/oberbayern/restaurants). That table lacked 185 country names, 17 default regions and 1,920
+   label slugs, so the edge answered 404 for addresses the site links. A sample of each, then a loop over all of each, read from the
+   tables the code reads. */
+const LINKED_SAMPLES: Array<[string, string, string]> = [
+  ["jp", "japan", "a country's name, the door of its trade rows (adapt_country.ts placeGeo)"],
+  ["de", "germany", "a country's name, the down-link of its page (app/[country]/page.tsx placeGeo)"],
+  ["es", "es300", "the home form's default region for Spain (default_region_by_country.ts)"],
+  ["de", "oberbayern", "a region's label, the address cellUrl spells for /de/de21"],
+];
+for (const [cc, place, what] of LINKED_SAMPLES) tableCheck(`${what} is held: /${cc}/${place}`, isHeldPlace(cc, place), PLACE_SLUGS_FILE, LINKED_REMEDY);
+tableCheck("the premise of the label sample: the page of /de/de21 stamps the label Oberbayern, which slugifies to oberbayern", slugify(geoNameFromSlug("DE", "de21")) === "oberbayern", PLACE_SLUGS_FILE, "Pick another region whose label differs from its id, so the sample stands for a label address");
+const nameNotHeld = COUNTRIES.map((c) => [c.code.toLowerCase(), slugify(c.name)] as const).filter(([cc, w]) => !isHeldPlace(cc, w)).map(([cc, w]) => `/${cc}/${w}`);
+tableCheck(`every country's name is a held place under its code (${COUNTRIES.length})${nameNotHeld.length ? `: ${nameNotHeld.length} are not, as ${nameNotHeld.slice(0, 5).join(", ")}` : ""}`, nameNotHeld.length === 0, PLACE_SLUGS_FILE, LINKED_REMEDY);
+const defaultRegions = Object.entries(DEFAULT_REGION_BY_COUNTRY).map(([iso, w]) => [iso.toLowerCase(), w] as const);
+const defaultNotHeld = defaultRegions.filter(([cc, w]) => !isHeldPlace(cc, w)).map(([cc, w]) => `/${cc}/${w}`);
+tableCheck(`every curated default region of the home form is a held place (${defaultRegions.length})${defaultNotHeld.length ? `: ${defaultNotHeld.length} are not, as ${defaultNotHeld.slice(0, 5).join(", ")}` : ""}`, defaultRegions.length > 0 && defaultNotHeld.length === 0, PLACE_SLUGS_FILE, LINKED_REMEDY);
+let labelCount = 0;
+const labelNotHeld: string[] = [];
+for (const c of COUNTRIES) {
+  const cc = c.code.toLowerCase();
+  const CC = c.code.toUpperCase();
+  const labels = new Set<string>();
+  for (const r of [...getRegionsForCountry(CC, c.name), ...(own(REGIONS_BY_COUNTRY_AUTO, CC) ?? [])]) labels.add(slugify(r.label));
+  for (const w of placeWordsFor(cc)) labels.add(slugify(geoNameFromSlug(CC, w)));
+  labels.delete("");
+  for (const s of labels) {
+    labelCount++;
+    if (!isHeldPlace(cc, s)) labelNotHeld.push(`/${cc}/${s}`);
+  }
+}
+tableCheck(`every label a page can stamp is a held place: the label of every region table's row and of every word the table holds (${labelCount})${labelNotHeld.length ? `: ${labelNotHeld.length} are not, as ${labelNotHeld.slice(0, 5).join(", ")}` : ""}`, labelCount > 0 && labelNotHeld.length === 0, PLACE_SLUGS_FILE, LINKED_REMEDY);
+
+/* THE SAMPLES ONLY THE SCAN HOLDS (the review of 2026-10-09). Every sample above is also in a table of the site, so none of them
+   would red if the database's ids fell out of the table. Each of these is in the scan and in no table of the site. */
+const staticWords = staticPlaceWords();
+const DB_ONLY_SAMPLES: Array<[string, string, string]> = [
+  ["us", "us-01-009", "a United States county id"],
+  ["gb", "gb-e06000004", "a UK local authority id"],
+  ["au", "au-101021007", "an Australian area id"],
+  ["mx", "mx-01-003", "a Mexican municipality id"],
+  ["nl", "nl-gm0037", "a Dutch municipality id"],
+];
+const notDbOnly = DB_ONLY_SAMPLES.filter(([cc, place]) => !scan.places[cc]?.includes(place) || staticWords.get(cc)?.has(place)).map(([cc, place]) => `/${cc}/${place}`);
+tableCheck(`the premise of the database samples: each is in the scan and in no table of the site (${DB_ONLY_SAMPLES.length})${notDbOnly.length ? `: not so for ${notDbOnly.join(", ")}; pick another id the scan holds and no table does` : ""}`, notDbOnly.length === 0, PLACE_DB_FILE, SCAN_REMEDY);
+for (const [cc, place, what] of DB_ONLY_SAMPLES) tableCheck(`${what}, which only the scan holds, is held: /${cc}/${place}`, isHeldPlace(cc, place), PLACE_DB_FILE, SCAN_REMEDY);
 
 /* The middleware asks both, after every redirect it owns, and pins the 404 in the same block as the place rule. */
 const MW = "src/middleware.ts";
@@ -304,6 +382,10 @@ for (const p of ["/data/uk/2026.10/ledger.json", "/data/uk/2026.10/readme.md", "
 }
 check("a training crawler is still refused a file of the data pack, as before (451)", send("/data/uk/2026.10/ledger.json", "GPTBot/1.1").status === 451, MW);
 check("a place the site does not hold still answers 404: /gb/atlantis", pinned("/gb/atlantis"), MW);
+/* The words the site's own links spell reach their routes (the review of 2026-10-09): the middleware, asked as above, passes each
+   address the first table made it answer 404 for, and the ids only the scan holds. */
+for (const [cc, place, what] of LINKED_SAMPLES) tableCheck(`${what} passes the middleware to its route: /${cc}/${place}/restaurants`, passed(`/${cc}/${place}/restaurants`), PLACE_SLUGS_FILE, LINKED_REMEDY);
+for (const [cc, place, what] of DB_ONLY_SAMPLES) tableCheck(`${what} passes the middleware to its route: /${cc}/${place}/restaurants`, passed(`/${cc}/${place}/restaurants`), PLACE_DB_FILE, SCAN_REMEDY);
 
 /* THE MATCHER (2026-10-06). It skipped every address ending like an image, an icon or a font, and favicon.ico, robots.txt and
    sitemap.xml by name, so a made-up one never reached the rule above: /favicon.ico, /apple-touch-icon.png and /zz/x.png drew the

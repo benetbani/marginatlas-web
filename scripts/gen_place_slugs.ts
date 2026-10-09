@@ -8,17 +8,27 @@
  * (src/lib/routing/edge_not_found.ts); the index policy reads the descriptions (src/lib/seo/indexable.ts).
  *
  * TWO SOURCES.
- *  - The site's own tables, read here on every run: the country's own code (/gb/gb), its regions (getRegionsForCountry: admin1,
- *    the US states), its listed cities (city_paths_generated.ts) and the label each one's links spell (cellUrl slugifies the
- *    display label: /de/frankfurt-am-main), the friendly, manual and district aliases the cell route reads
- *    (regionalSlugToGeoId) with their labels, the cities by state the search offers, the generated region table (also for the
- *    country codes the statistics carry that COUNTRIES does not hold: statisticsCodes()), the popular-name keys and the places
- *    the trade routes prerender (generateStaticParams). An address built from a word one of
- *    these holds may be real (the spec's own definition), so none of them is the edge's to 404 before the inventory.
+ *  - The site's own tables, read here on every run: the country's own code (/gb/gb), its name as a place (the six trade doors of a
+ *    country page and its down-link spell /jp/japan/restaurants: src/lib/spine/adapt_country.ts, src/app/[country]/page.tsx), its
+ *    curated default region (the home form and /api/go send a reader with no city there: src/lib/regions/default_region_by_country.ts,
+ *    src/lib/home/destination.ts), its regions (getRegionsForCountry: admin1, the US states), its listed cities
+ *    (city_paths_generated.ts) and the label each one's links spell (cellUrl slugifies the display label: /de/frankfurt-am-main),
+ *    the friendly, manual and district aliases the cell route reads (regionalSlugToGeoId) with their labels, the cities by state
+ *    the search offers, the generated region table (also for the country codes the statistics carry that COUNTRIES does not hold:
+ *    statisticsCodes()), the popular-name keys and the places the trade routes prerender (generateStaticParams). An address built
+ *    from a word one of these holds may be real (the spec's own definition), so none of them is the edge's to 404 before the
+ *    inventory.
  *  - The database, read only with --database: every geo id regional_cells holds per country and per statistics code (the counties,
  *    city overlays and the NUTS and province codes), and every industry description cells_master holds for the United States, slugified as the US
  *    shard of the sitemap built its addresses. Written to data/seo/place_db_words.json, so the table can be written again offline
  *    and the edge gate can hold it to a fresh generation, as it holds served_files.ts and hood_slugs.ts.
+ *
+ * THE LABELS (addLabelSlugs). The first table left out the country names, the home form's default regions and the region labels, so
+ * the edge answered 404 for /jp/japan/restaurants, /es/es300/restaurants and /de/oberbayern/restaurants, addresses the site's own
+ * links spell (the review of 2026-10-09). getCellBySlug stamps geoNameFromSlug(country, word) on a page's cell as its geo_name and
+ * cellUrl spells slugify(geo_name), so the page of /de/de21 links /de/oberbayern/restaurants. The slug of every region table's label
+ * is a word, and so is the slug of the label of every word the table holds, the database's ids included, to a fixpoint (the page of
+ * a label's slug stamps its own label).
  *
  * usage, from E:/atlas/website:
  *   node node_modules/tsx/dist/cli.mjs --require ./scripts/harness/env.cjs scripts/gen_place_slugs.ts --database
@@ -30,6 +40,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { COUNTRIES } from "../src/lib/taxonomy";
 import { getRegionsForCountry } from "../src/lib/regions/regions-by-country";
+import { getDefaultRegionForCountry } from "../src/lib/regions/default_region_by_country";
 import { REGIONS_BY_COUNTRY_AUTO } from "../src/lib/regions/regions_generated";
 import { CITY_SLUGS_BY_COUNTRY } from "../src/lib/routing/city_paths_generated";
 import { CITY_FRIENDLY_TO_GEO_ID, CITY_FRIENDLY_DISPLAY_LABEL, CITIES_BY_STATE } from "../src/lib/cities/city_aliases_generated";
@@ -42,8 +53,9 @@ import { own } from "../src/lib/own";
 export const PLACE_SLUGS_FILE = "src/lib/routing/place_slugs_generated.ts";
 export const PLACE_DB_FILE = "data/seo/place_db_words.json";
 /** What the edge may carry of this table on every request: the middleware bundles it, and Vercel caps the middleware's gzipped
- *  size (scripts/verify_edge_function_sizes.ts holds it at 1 MB; this text compresses about five to one). A table over it is
- *  made smaller at its source, never given a larger budget. */
+ *  size (scripts/verify_edge_function_sizes.ts holds it at 1 MB; this text compresses about 3.7 to one under gzip, measured on
+ *  2026-10-09: about 274,000 characters to 75,000 bytes at level 9, the level that gate uses). A table over it is made smaller at
+ *  its source, never given a larger budget. */
 export const PLACE_TABLE_BUDGET_BYTES = 600_000;
 
 /** The routes whose generateStaticParams prerender trade pages at every build: their places are addresses the build publishes. */
@@ -92,7 +104,32 @@ export function prerenderedPlaces(): Array<[string, string]> {
   );
 }
 
-/** Every place word the site's own tables hold, per lowercase country code; no database. */
+/** The labels' pass: getCellBySlug stamps geoNameFromSlug(country, word) on the cell of any page whose word the table holds, and
+ *  cellUrl spells slugify of that label, so such a page can link /{country}/{slugify(label)}/{trade} (/de/oberbayern/restaurants
+ *  from /de/de21). The slug is then a word of its own, a page of its own, and stamps its label in turn: the pass goes on until a
+ *  round adds nothing. Run after the database's ids join, which are words too (/de/de212 stamps Oberbayern, its listed parent's
+ *  label). Words only ever join the set, so the loop ends. The region tables' own labels (addRegions) cover the labels the tables
+ *  hold; this pass is what keeps a label that reaches a page by any other road from being missed, and the edge test holds the
+ *  table to every label geoNameFromSlug gives (tests/routing/edge_not_found.test.ts). */
+export function addLabelSlugs(words: Map<string, Set<string>>): void {
+  for (const [cc, set] of words) {
+    const CC = cc.toUpperCase();
+    let round = [...set];
+    while (round.length > 0) {
+      const joined: string[] = [];
+      for (const w of round) {
+        const s = slugify(geoNameFromSlug(CC, w));
+        if (s && !set.has(s)) {
+          set.add(s);
+          joined.push(s);
+        }
+      }
+      round = joined;
+    }
+  }
+}
+
+/** Every place word the site's own tables hold, per lowercase country code, and the labels of them; no database. */
 export function staticPlaceWords(): Map<string, Set<string>> {
   const out = new Map<string, Set<string>>();
   const add = (cc: string, w: unknown) => {
@@ -105,11 +142,24 @@ export function staticPlaceWords(): Map<string, Set<string>> {
     }
     set.add(v);
   };
+  /** A region table spells two words for a region: its value, the address of its own page, and the slug of its label, the address
+   *  cellUrl builds for a cell that carries the label (slugify(geo_name), src/lib/cells.ts). */
+  const addRegions = (cc: string, regions: ReadonlyArray<{ value: string; label?: string | null }>) => {
+    for (const r of regions) {
+      add(cc, r.value);
+      add(cc, slugify(r.label));
+    }
+  };
   for (const c of COUNTRIES) {
     const cc = c.code.toLowerCase();
     const CC = c.code.toUpperCase();
     add(cc, cc);
-    for (const r of getRegionsForCountry(CC, c.name)) add(cc, r.value);
+    /* The country's name as a place: the six trade doors of its page and its down-link spell /{cc}/{slugify(name)}/{trade}
+       (src/lib/spine/adapt_country.ts placeGeo, src/app/[country]/page.tsx placeGeo). */
+    add(cc, slugify(c.name));
+    /* The curated default region the home form and /api/go send a reader with no city to (src/lib/home/destination.ts). */
+    add(cc, getDefaultRegionForCountry(CC));
+    addRegions(cc, getRegionsForCountry(CC, c.name));
     for (const s of own(CITY_SLUGS_BY_COUNTRY, cc) ?? []) {
       add(cc, s);
       add(cc, slugify(geoNameFromSlug(CC, s)));
@@ -132,9 +182,9 @@ export function staticPlaceWords(): Map<string, Set<string>> {
       add(cc, state);
       for (const s of cities) add(cc, s);
     }
-    for (const r of own(REGIONS_BY_COUNTRY_AUTO, CC) ?? []) add(cc, r.value);
+    addRegions(cc, own(REGIONS_BY_COUNTRY_AUTO, CC) ?? []);
   }
-  for (const cc of statisticsCodes()) for (const r of own(REGIONS_BY_COUNTRY_AUTO, cc.toUpperCase()) ?? []) add(cc, r.value);
+  for (const cc of statisticsCodes()) addRegions(cc, own(REGIONS_BY_COUNTRY_AUTO, cc.toUpperCase()) ?? []);
   for (const [key, name] of Object.entries((popularJson as { overrides: Record<string, string> }).overrides)) {
     const [cc, slug] = key.split("/");
     if (!out.has(cc)) continue;
@@ -142,10 +192,11 @@ export function staticPlaceWords(): Map<string, Set<string>> {
     add(cc, slugify(name));
   }
   for (const [cc, place] of prerenderedPlaces()) if (out.has(cc)) add(cc, place);
+  addLabelSlugs(out);
   return out;
 }
 
-/** The table's whole text: the site's words and the database's scan, sorted, one line per country. */
+/** The table's whole text: the site's words and the database's scan, and the labels of both, sorted, one line per country. */
 export function renderPlaceSlugs(db: DbWords = readDbWords()): string {
   const words = staticPlaceWords();
   for (const [cc, ids] of Object.entries(db.places)) {
@@ -156,6 +207,7 @@ export function renderPlaceSlugs(db: DbWords = readDbWords()): string {
       if (v) set.add(v);
     }
   }
+  addLabelSlugs(words);
   const rows = [...words.keys()].sort().map((cc) => `  ${JSON.stringify(cc)}: ${JSON.stringify([...(words.get(cc) ?? [])].sort())},`);
   const descriptions = [...new Set(db.us_descriptions.map(word).filter(Boolean))].sort();
   return [

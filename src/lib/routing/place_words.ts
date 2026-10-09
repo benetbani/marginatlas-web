@@ -2,8 +2,9 @@
  * src/lib/routing/place_words.ts
  *
  * A PLACE THE SITE HOLDS, BY ITS WORD (P1-A of the page architecture, 2026-10-09). The middle part of /{country}/{place}/{trade}
- * names a place only when one of the site's tables holds the word: the country's own code, its regions, its listed cities and
- * the label addresses their links spell, every city, district and state alias the cell route reads, the places the trade routes
+ * names a place only when one of the site's tables holds the word: the country's own code and its name (/jp/japan), its curated
+ * default region (the home form's destination), its regions, its listed cities and the label addresses their links spell
+ * (/de/frankfurt-am-main, /de/oberbayern), every city, district and state alias the cell route reads, the places the trade routes
  * prerender, and the county, city and region ids the database holds (src/lib/routing/place_slugs_generated.ts, written by
  * scripts/gen_place_slugs.ts). Pure and small enough for the edge: one generated table, read for its own entries (src/lib/own.ts).
  */
@@ -14,16 +15,23 @@ import { namesFile } from "@/lib/routing/names_file";
 import { own } from "@/lib/own";
 
 const HELD_COUNTRIES = new Set(COUNTRIES.map((c) => c.code.toLowerCase()));
+/** The words of each code the table holds, built once on first use. Only a code the table holds is ever cached (its rows are the
+ *  countries the site holds and the statistics codes it keeps, EL and UK among them), so the map stays as small as the table
+ *  even when a caller passes a word from a request. */
 const WORDS = new Map<string, ReadonlySet<string>>();
+const NO_WORDS: ReadonlySet<string> = new Set();
 
-/** Every place word the site's tables hold for a country (its lowercase code); empty for a country the site does not hold. */
+/** Every place word the table holds for a code (its lowercase code): a country the site holds, or one of the statistics codes the
+ *  table also keeps for the regions its trade pages are published under (EL for Greece, which the site holds as GR); empty, and
+ *  never cached, for any other word. */
 export function placeWordsFor(country: string): ReadonlySet<string> {
   const cc = String(country ?? "").toLowerCase();
-  let words = WORDS.get(cc);
-  if (!words) {
-    words = new Set(own(PLACE_SLUGS_BY_COUNTRY, cc) ?? []);
-    WORDS.set(cc, words);
-  }
+  const cached = WORDS.get(cc);
+  if (cached) return cached;
+  const row = own(PLACE_SLUGS_BY_COUNTRY, cc);
+  if (!row) return NO_WORDS;
+  const words = new Set(row);
+  WORDS.set(cc, words);
   return words;
 }
 
