@@ -29,7 +29,7 @@ export const SITEMAP_FAMILIES: readonly SitemapShard[] = [
   { id: 9, family: "trade-country", state: "reserved", holds: "the trade pages per country (Phase 3)" },
   { id: 10, family: "where-to-open", state: "reserved", holds: "the where-to-open lists (Phase 3)" },
   { id: 11, family: "edition", state: "reserved", holds: "the data editions (Phase 3)" },
-  { id: 12, family: "retired", state: "reserved", holds: "the redirected addresses with equity, for 90 days once the inventory exists" },
+  { id: 12, family: "retired", state: "reserved", holds: "the redirected addresses with equity, each listed 90 days after its redirect, once the inventory exists" },
 ];
 
 export const SITE_ORIGIN = "https://www.marginatlas.com";

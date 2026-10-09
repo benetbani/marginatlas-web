@@ -275,6 +275,17 @@ const SANCTIONED: Array<{ file: string; path: string; guard: string; why: string
       "asked for (masterplan step 18). It is built only from a path lockablePath accepted, the country page, " +
       "a UK city page or a London trade page, each the route's own address, and is never printed on a page.",
   },
+  {
+    file: "src/lib/seo/alias_canonical.ts",
+    path: "/*",
+    guard: 'const segs = String(path ?? "").toLowerCase().split(/[?#]/)[0].split("/").filter(Boolean);',
+    why:
+      "Not a link built from guessed parts. The fallback of canonicalPath (P1-C, 2026-10-09) returns the address the caller handed in, " +
+      "lowercased, with its query and hash dropped and its empty parts removed: the segments are that address's own, read by the guard " +
+      "line, so what it returns resolves where its input did and invents no country page. The shapes that do rewrite a word, a trade " +
+      "or an industry, go through tradeCanonicalPath and industryCanonicalPath, which build three-part and /industries/ paths this gate " +
+      "does not measure at depth one or two.",
+  },
 ];
 
 /* ------------------------------------------------------------------ scanning */

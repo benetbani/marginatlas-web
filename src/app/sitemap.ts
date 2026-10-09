@@ -133,6 +133,6 @@ function articlesSitemap(): MetadataRoute.Sitemap {
 /** Shard 8, trade in a place: London's trade pages, the only ones Phase 1 indexes. */
 function tradeInPlaceSitemap(): MetadataRoute.Sitemap {
   return liveTradeSlugs()
-    .filter((slug) => isIndexable(`/gb/london/${slug}`))
+    .filter((slug) => isIndexable(`/gb/london/${slug}`)) // allow-hardcoded-place: shard 8 is London's trade pages by definition (P1-E), the place its own family names
     .map((slug) => ({ url: `${BASE_URL}/gb/london/${slug}`, changeFrequency: "weekly" as const, priority: 0.75 }));
 }
