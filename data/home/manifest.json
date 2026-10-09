@@ -1,6 +1,22 @@
 {
  "built_by": "scripts/data/home/export_home.py",
  "files": {
+  "archive.json": {
+   "built": "2026-10-10",
+   "rows": 14,
+   "sha256": "730e287ee9425b3015ad89fa6fc4b5dbc7c7e4e84d02dca7460f30b5adb6fc20",
+   "sources": [
+    {
+     "bytes": 11844,
+     "key": "archive",
+     "path": "E:/atlas/archive/uk/ARCHIVE.json",
+     "prints": true,
+     "publisher": "gazette",
+     "sha256": "aa15c828e0ebbd3ac3dcd18859be7c1df1ad8ec4bce11645d3c3d7dc1e1d294e",
+     "title": "The site's own archive, its log: the months of liquidation and administration notices kept and the company register copies kept"
+    }
+   ]
+  },
   "city_survival.json": {
    "built": "2026-10-08",
    "rows": 8,

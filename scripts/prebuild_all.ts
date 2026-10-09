@@ -636,6 +636,10 @@ const GATES: Gate[] = [
   /* Section 4, how figures are made: a technique a figure, the notices and their match rate, the London trade pages read from the
      band counts. */
   { name: "home-how-made", script: "tests/home/how_made.test.ts" },
+  /* The archive, kept and dated (plan 2026-10-09, home introduction, proof 2): data/home/archive.json is the archive's own months of
+     notices and register copies, read from its log by scripts/data/home/export_home.py archive; read again where the log is on this
+     machine, its source deferred on a build server. */
+  { name: "home-archive", script: "tests/home/archive.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

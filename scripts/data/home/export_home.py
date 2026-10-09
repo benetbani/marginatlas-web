@@ -23,6 +23,7 @@ By hand, never in the chain (it reads the parent repo), from the website root, w
   python -P scripts/data/home/export_home.py new_companies     section 2: new limited companies per 1,000 people of working age
   python -P scripts/data/home/export_home.py us_restaurants    section 3: full-service restaurants in 45 US metros, two years
   python -P scripts/data/home/export_home.py method            section 4: the year of company notices the failure rates were read from
+  python -P scripts/data/home/export_home.py archive           the home's proof 2: the months of notices and the register copies kept
 (each joins with its task; with no argument, every one this file holds runs.)
 """
 from __future__ import annotations
@@ -407,11 +408,78 @@ def method() -> None:
     ])
 
 
+# ---- the home's proof 2: what the archive keeps ---------------------------------------------------------------------------------
+
+ARCHIVE_LOG = "E:/atlas/archive/uk/ARCHIVE.json"
+MONTH = re.compile(r"\d{4}-\d{2}")
+REGISTER_DAY = re.compile(r"BasicCompanyData(?:AsOneFile)?-(\d{4}-\d{2}-\d{2})")
+
+
+def next_month(ym: str) -> str:
+    y, m = int(ym[:4]), int(ym[5:7])
+    return f"{y + 1:04d}-01" if m == 12 else f"{y:04d}-{m + 1:02d}"
+
+
+def archive() -> None:
+    """What the site's own archive keeps (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 1; the home's spec of
+    2026-10-09, proof 2, "Kept and dated"), read from the archive's own log, E:/atlas/archive/uk/ARCHIVE.json, which
+    registers/uk/archive_monthly.py appends one entry to a run: the months of liquidation and administration notices it holds
+    (the solvent ones among them, as published), each with the notices the log recorded for it across its four notice files, and
+    the days of the company register copies it holds. A month is the archive's own: the monthly run names it
+    by the UK date of its notices, the seed by its notices' own stamps (archive/uk/README.md says so); nothing printed rests on a
+    month's count. A file is added once, in one run's `added`; a month a run lists as already held must be one a run added. A gap in
+    the months, a count that is not whole, or no register copy is a refusal."""
+    log = json.loads(Path(ARCHIVE_LOG).read_text(encoding="utf-8"))
+    runs = log.get("runs")
+    if log.get("archive") != "uk" or not isinstance(runs, list) or not runs:
+        refuse("the archive's log holds no runs of the UK archive")
+    notices: dict[str, int] = {}
+    held: set[str] = set()
+    days: set[str] = set()
+    for r in runs:
+        g = r.get("gazette") or {}
+        for a in g.get("added") or []:
+            month, n = a.get("month"), a.get("notices")
+            if isinstance(month, str) and MONTH.fullmatch(month):
+                if not isinstance(n, int) or isinstance(n, bool) or n < 0:
+                    refuse(f"the run of {r.get('run_at')} adds {month} with no whole count of notices")
+                notices[month] = notices.get(month, 0) + n
+        for h in g.get("already_held") or []:
+            if isinstance(h, str) and MONTH.fullmatch(h):
+                held.add(h)
+        for a in (r.get("companies_house") or {}).get("added") or []:
+            m = REGISTER_DAY.match(str(a.get("file", "")))
+            if m:
+                days.add(m.group(1))
+    if not notices:
+        refuse("the archive's log adds no month of notices")
+    stray = sorted(held - set(notices))
+    if stray:
+        refuse(f"the log lists {', '.join(stray)} as held, and no run added it")
+    months = sorted(notices)
+    want, cur = [], months[0]
+    while cur <= months[-1]:
+        want.append(cur)
+        cur = next_month(cur)
+    if months != want:
+        refuse(f"the months kept are not one run of months: {', '.join(sorted(set(want) - set(months)))} missing")
+    if not days:
+        refuse("the archive's log adds no copy of the company register")
+    obj = {
+        "gazette": {"first": months[0], "last": months[-1], "months": [{"month": m, "notices": notices[m]} for m in months]},
+        "register": {"copies": sorted(days)},
+    }
+    write("archive.json", obj, len(months) + len(days), [
+        source("archive", ARCHIVE_LOG, "gazette", "The site's own archive, its log: the months of liquidation and administration notices kept and the company register copies kept"),
+    ])
+
+
 EXPORTS = {
     "city_survival": city_survival,
     "new_companies": new_companies,
     "us_restaurants": us_restaurants,
     "method": method,
+    "archive": archive,
 }
 
 
