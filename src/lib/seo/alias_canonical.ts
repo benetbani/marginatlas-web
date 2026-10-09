@@ -32,8 +32,8 @@ export function industryCanonicalPath(word: string): string {
   return `/industries/${liveTradeSlug(word)}`;
 }
 
-/** The canonical of any address, as its route names it: the trade and industry shapes through the helpers above, every other
- *  address itself. */
+/** The canonical of an address through the helpers above: the trade and industry shapes, every other address itself. Not followed:
+ *  /industries/<slug>/across, whose route names the measured parent's across page (across/page.tsx). */
 export function canonicalPath(path: string): string {
   const segs = String(path ?? "").toLowerCase().split(/[?#]/)[0].split("/").filter(Boolean);
   if (segs.length === 2 && segs[0] === "industries") return industryCanonicalPath(segs[1]);

@@ -7,7 +7,8 @@
  * P1-B page indexable (an industries hub, a /decide pair, a UK trade page off London, a United States page named by a census
  * description, an /opening or /buy-or-start page whose trade page is noindex); an industry id spelled with underscores
  * indexable; London's trade pages, or any page Phase 1 leaves alone (every other page the census counted), losing milestone 1's
- * answer; an indexed page that loses the root layout's googlebot hints; the census's floors unequal to the model laws'.
+ * answer; an indexed page that loses the root layout's googlebot hints; an alias address (P1-C) whose canonical, or whose trade
+ * page's breadcrumb, names itself and not the live slug's page; the census's floors unequal to the model laws'.
  *
  * Run: node node_modules/tsx/dist/cli.mjs tests/seo/indexable.test.ts
  */
@@ -36,6 +37,8 @@ const R_ID = "An industry page is /industries/ and any one word: SPINE_UPPER in 
 const R_ARG = "Pass robotsFor the route's own page, the address its row names, in the route's metadata: a route that asks about another page gives its robots tag that page's answer";
 const R_DEF = "Build the route's canonical as its row names it: robotsFor(canonical) asks indexFor about that address, so a canonical that names another page gives the route that page's robots tag";
 const R_HINTS = "robotsFor (src/lib/seo/indexable.ts) carries the root layout's googlebot hints (src/app/layout.tsx): a route's robots replaces the layout's wholesale, so change the two together";
+const ALIAS_FILE = "src/lib/seo/alias_canonical.ts";
+const R_ALIAS = "Name the live slug's page through src/lib/seo/alias_canonical.ts; each route builds its canonical through the helper";
 let failed = 0;
 const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
@@ -180,21 +183,27 @@ check(`every page under the families' folders is in the route table (${pages.len
 
 /* THE ALIAS CANONICALS (P1-C of the page architecture, 2026-10-09; QUEUE seo:alias-canonical): an alias trade address names its
    live slug's page until its redirect ships with the inventory; a census description and every live slug name themselves. */
-check(`/gb/london/plumber names /gb/london/plumbers (got ${canonicalPath("/gb/london/plumber")})`, canonicalPath("/gb/london/plumber") === "/gb/london/plumbers");
-check(`/tr/istanbul/cafes-coffee names /tr/istanbul/cafes-coffee-shops (got ${canonicalPath("/tr/istanbul/cafes-coffee")})`, canonicalPath("/tr/istanbul/cafes-coffee") === "/tr/istanbul/cafes-coffee-shops");
-check(`/industries/hostel names /industries/hostels (got ${canonicalPath("/industries/hostel")})`, canonicalPath("/industries/hostel") === "/industries/hostels");
-check("an alias's opening page names the live slug's opening page", canonicalPath("/gb/london/plumber/opening") === "/gb/london/plumbers/opening");
-check("a census description names itself: /us/mississippi/offices-of-lawyers", canonicalPath("/us/mississippi/offices-of-lawyers") === "/us/mississippi/offices-of-lawyers");
-check("a hub names itself: /gb/london/industries", canonicalPath("/gb/london/industries") === "/gb/london/industries");
+check(`/gb/london/plumber names /gb/london/plumbers (got ${canonicalPath("/gb/london/plumber")})`, canonicalPath("/gb/london/plumber") === "/gb/london/plumbers", ALIAS_FILE, R_ALIAS);
+check(`/tr/istanbul/cafes-coffee names /tr/istanbul/cafes-coffee-shops (got ${canonicalPath("/tr/istanbul/cafes-coffee")})`, canonicalPath("/tr/istanbul/cafes-coffee") === "/tr/istanbul/cafes-coffee-shops", ALIAS_FILE, R_ALIAS);
+check(`/industries/hostel names /industries/hostels (got ${canonicalPath("/industries/hostel")})`, canonicalPath("/industries/hostel") === "/industries/hostels", ALIAS_FILE, R_ALIAS);
+check("an alias's opening page names the live slug's opening page", canonicalPath("/gb/london/plumber/opening") === "/gb/london/plumbers/opening", ALIAS_FILE, R_ALIAS);
+check("a census description names itself: /us/mississippi/offices-of-lawyers", canonicalPath("/us/mississippi/offices-of-lawyers") === "/us/mississippi/offices-of-lawyers", ALIAS_FILE, R_ALIAS);
+check("a hub names itself: /gb/london/industries", canonicalPath("/gb/london/industries") === "/gb/london/industries", ALIAS_FILE, R_ALIAS);
 const selfNot = live.flatMap((s) => [`/gb/london/${s}`, `/industries/${s}`]).filter((p) => canonicalPath(p) !== p);
-check(`every live slug names itself (${live.length * 2})${firstFew(selfNot)}`, selfNot.length === 0, "src/lib/seo/alias_canonical.ts");
+check(`every live slug names itself (${live.length * 2})${firstFew(selfNot)}`, selfNot.length === 0, ALIAS_FILE, R_ALIAS);
 const CANONICAL_CALLS: Array<[string, string]> = [
   ["src/app/[country]/[geo]/[industry]/page.tsx", "tradeCanonicalPath(country, geo, industry)"],
   ["src/app/[country]/[geo]/[industry]/opening/page.tsx", 'tradeCanonicalPath(country, geo, industry, "opening")'],
   ["src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx", 'tradeCanonicalPath(country, geo, industry, "buy-or-start")'],
   ["src/app/(site)/industries/[industry]/page.tsx", "industryCanonicalPath(industry)"],
 ];
-for (const [file, call] of CANONICAL_CALLS) check(`${file} builds its canonical as ${call}`, routeCode(file).includes(`const canonical = ${call};`), file);
+for (const [file, call] of CANONICAL_CALLS) check(`${file} builds its canonical as ${call}`, routeCode(file).includes(`const canonical = ${call};`), file, R_ALIAS);
+/* The trade page's structured data names the same page. An alias page (/gb/london/plumber) renders the plumbers' page, and a
+   BreadcrumbList whose last step is the address as typed claims in the markup the address its canonical gives away. */
+const CELL_SPINE = "src/app/[country]/[geo]/[industry]/cell_spine.tsx";
+const CRUMB_END = "url: `${origin}${tradeCanonicalPath(country, geo, industry)}`";
+const R_CRUMB = "Build the last step of the trade page's BreadcrumbList from tradeCanonicalPath(country, geo, industry) (src/lib/seo/alias_canonical.ts), never from the address as typed, so an alias page's structured data names the live slug's page";
+check(`${CELL_SPINE} ends its breadcrumb on the live slug's page, as ${CRUMB_END}, so /gb/london/plumber's trail names ${canonicalPath("/gb/london/plumber")}`, routeCode(CELL_SPINE).includes(CRUMB_END), CELL_SPINE, R_CRUMB);
 
 /* THE CENSUS'S FLOORS ARE THE MODEL LAWS' OWN: a floor moved since the census was written makes it stale. */
 const laws = floorsFromLaws(readFileSync("scripts/harness/check_model_laws.mjs", "utf8")) as Record<string, number>;

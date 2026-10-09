@@ -2914,6 +2914,7 @@
         "src/app/[country]",
         "src/app/[country]/[geo]/[industry]/[sub]/page.tsx",
         "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx",
+        "src/app/[country]/[geo]/[industry]/cell_spine.tsx",
         "src/app/[country]/[geo]/[industry]/opening/page.tsx",
         "src/app/[country]/[geo]/[industry]/page.tsx",
         "src/app/[country]/[geo]/industries/page.tsx",

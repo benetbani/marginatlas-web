@@ -15,6 +15,7 @@ import { ProLockedData } from "@/components/spine/ProLockedData";
 import { SpineCellBody as SpineCell } from "@/components/spine/cell/cell-view";
 import { buildSpineCellSeed } from "@/lib/spine/adapt_cell";
 import { buildCellCrumbs } from "@/lib/spine/crumb_rows";
+import { tradeCanonicalPath } from "@/lib/seo/alias_canonical";
 
 export async function renderCellRoute(country: string, geo: string, industry: string, { locked }: { locked: boolean }) {
   const spineData = await buildSpineCellSeed(country, geo, industry);
@@ -22,10 +23,11 @@ export async function renderCellRoute(country: string, geo: string, industry: st
   /* THE TRAIL, MACHINE-READABLE (2026-10-02): the July page emitted a BreadcrumbList and the rebuilt page emitted none, so
      retiring the one would have taken the breadcrumbs off London restaurants and left every rebuilt trade without them. One
      source for the trail the reader sees and the one a search engine reads (crumb_rows.ts); a step that resolves to no page
-     is left out, as the July page left it out, and the last step is this URL. */
+     is left out, as the July page left it out, and the last step is this page's canonical address, so an alias page's trail names
+     the live slug's page as its canonical does (P1-C, 2026-10-09; src/lib/seo/alias_canonical.ts). */
   const origin = "https://www.marginatlas.com";
   const trail = buildCellCrumbs(spineData.meta);
-  const crumbItems = trail.flatMap((c, i) => (i === trail.length - 1 ? [{ name: c.label, url: `${origin}/${country}/${geo}/${industry}` }] : c.href ? [{ name: c.label, url: `${origin}${c.href}` }] : []));
+  const crumbItems = trail.flatMap((c, i) => (i === trail.length - 1 ? [{ name: c.label, url: `${origin}${tradeCanonicalPath(country, geo, industry)}` }] : c.href ? [{ name: c.label, url: `${origin}${c.href}` }] : []));
   return (
     <>
       {crumbItems.length > 1 ? <Breadcrumbs items={[{ name: "Home", url: `${origin}/` }, ...crumbItems]} /> : null}
