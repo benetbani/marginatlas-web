@@ -20,6 +20,8 @@
  * exactly the reported bug.
  */
 import { INDUSTRY_BY_ID, type Industry } from "../taxonomy";
+import { slugify } from "./geo";
+import { resolveDisplayIndustry } from "./industry_resolution";
 
 /** Generic words that appear in half the taxonomy and prove nothing. */
 const STOPWORDS = new Set([
@@ -186,4 +188,30 @@ export function pickMatchingRow<
     if (fromAggregate) return { row: fromAggregate, matchedVia: via, matchedIndustry: ind };
   }
   return null;
+}
+
+/**
+ * THE ROW A CENSUS-DESCRIPTION ADDRESS NAMES (P1-D of the page architecture, 2026-10-09). The US shard of the sitemap built such an
+ * address as slugify(industry_description) (/us/mississippi/offices-of-lawyers), so the row it names is the one whose description
+ * slugifies to the word; the loose match that found the rows can return others ("All Other Information Services" for
+ * other-information-services). The first such row in the caller's order, or null.
+ */
+export function rowForWord<R extends { industry_description?: unknown }>(rows: readonly R[], word: string): R | null {
+  const w = String(word ?? "").toLowerCase();
+  return rows.find((r) => typeof r.industry_description === "string" && slugify(r.industry_description) === w) ?? null;
+}
+
+/**
+ * WHETHER A US TRADE PAGE'S PRINTED TRADE MISSES ITS ADDRESS'S WORD (P1-D; the floor census lists the pages it finds). A label reads
+ * as the word when it is the word's own description (the label slugifies to the word), or the live trade the taxonomy reads the
+ * word as, or one of that trade's parents (the matcher's honest inheritance, pickMatchingRow above). Anything else misses:
+ * "Software development" on /us/mississippi/offices-of-lawyers.
+ */
+export function labelMissesWord(label: string | null | undefined, word: string): boolean {
+  if (!label) return true;
+  const w = String(word ?? "").toLowerCase();
+  if (slugify(label) === w) return false;
+  const named = resolveDisplayIndustry(w);
+  if (!named) return true;
+  return ![named, ...parentIdChain(named)].some((ind) => ind.name === label);
 }

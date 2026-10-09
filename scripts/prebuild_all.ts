@@ -823,6 +823,10 @@ const GATES: Gate[] = [
   /* Indexing by his rule (milestone 1, M10; his interview of 2026-09-26, answer 6): UK pages and pages at their floor; the census
      behind it held to the renders outside the UK; the thin page's notify-me ask and its endpoint tag (M9). */
   { name: "indexable", script: "tests/seo/indexable.test.ts" },
+  /* A United States state page prints the trade its address names (P1-D of the page architecture, 2026-10-09):
+     /us/mississippi/offices-of-lawyers printed "Software development"; the label and every figure now come from the one row whose
+     description is the word. */
+  { name: "state-trade-label", script: "tests/seo/state_trade_label.test.ts" },
   { name: "depth-notify", script: "tests/seo/depth_notify.test.ts" },
   { name: "copy-no-method-words", script: "tests/spine/copy_no_method_words.test.ts" },
   /* No struck method word and no coined score in the literals of src/app and src/components, a ratchet per file (masterplan

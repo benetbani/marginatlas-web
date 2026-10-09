@@ -2894,6 +2894,20 @@
       "claims": []
     },
     {
+      "name": "state-trade-label",
+      "script": "tests/seo/state_trade_label.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A US STATE PAGE PRINTS THE TRADE ITS ADDRESS NAMES (P1-D of the page architecture, 2026-10-09).",
+      "reads": [
+        "src/lib/cells.ts",
+        "src/lib/cells/us_industry_match.ts",
+        "tests/fixtures/seo/state_trade_rows.json",
+        "tests/seo/state_trade_label.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "depth-notify",
       "script": "tests/seo/depth_notify.test.ts",
       "args": [],

@@ -32,6 +32,7 @@ import { SpineIndustryBody } from "../../src/components/spine/industry/industry-
 import { SpineShell } from "../../src/components/spine/shell";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
 import { countTopBlocks, floorsFromLaws } from "../lib/block_count.mjs";
+import { labelMissesWord } from "../../src/lib/cells/us_industry_match";
 
 type Surface = "country" | "howto" | "city" | "industry" | "cell";
 type Entry = { surface: Surface; blocks: number };
@@ -50,19 +51,23 @@ const quiet = async <T,>(fn: () => Promise<T>): Promise<T> => {
   try { return await fn(); } finally { console.log = log; console.warn = warn; console.error = err; }
 };
 
-async function render(surface: Surface, slugs: string[]): Promise<number | null> {
+/** A render's block count, and for a trade page the trade its seed prints (P1-D: the census lists a US label that misses its word). */
+type Rendered = { blocks: number; label: string | null };
+
+async function render(surface: Surface, slugs: string[]): Promise<Rendered | null> {
   return quiet(async () => {
     let el: React.ReactElement | null = null;
+    let label: string | null = null;
     if (surface === "country") { const d = await buildSpineCountrySeed(slugs[0]); el = d ? shelled(React.createElement(SpineCountryBody as any, { data: d })) : null; }
     if (surface === "howto") el = React.createElement("main", { className: "mx-auto max-w-[1120px] px-4 py-2 md:px-6" }, React.createElement(SpineShell as any, null, React.createElement(HowToBody as any, { iso2: slugs[0].toUpperCase() })));
     if (surface === "city") { const d = await buildSpineCitySeed(slugs[0]); el = d ? shelled(React.createElement(SpineCityBody as any, { data: d })) : null; }
     if (surface === "industry") { const d = await buildSpineIndustrySeed(slugs[0]); el = d ? shelled(React.createElement(SpineIndustryBody as any, { data: d })) : null; }
-    if (surface === "cell") { const d = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); el = d ? shelled(React.createElement(SpineCellBody as any, { data: d })) : null; }
+    if (surface === "cell") { const d = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); label = d?.meta?.trade ?? null; el = d ? shelled(React.createElement(SpineCellBody as any, { data: d })) : null; }
     if (!el) return null;
     const html = renderToStaticMarkup(el);
     /* A how-to body for a country the builder does not hold renders nothing inside its main: the route answers 404. */
     if (surface === "howto" && !html.includes("data-block")) return null;
-    return countTopBlocks(html) as number;
+    return { blocks: countTopBlocks(html) as number, label };
   });
 }
 
@@ -88,25 +93,30 @@ async function candidates(): Promise<Array<{ surface: Surface; slugs: string[]; 
 async function main() {
   const prior = (() => { try { return JSON.parse(readFileSync(FILE, "utf8")); } catch { return null; } })();
   const pages: Record<string, Entry> = only.length === 5 ? {} : { ...(prior?.pages ?? {}) };
+  /* P1-D (2026-10-09): the US trade pages whose printed trade does not read as their word; a run without trade pages keeps the
+     last run's list. */
+  const labelMisses = new Set<string>(only.includes("cell") ? [] : ((prior?.label_misses ?? []) as string[]));
   const list = (await candidates()).slice(0, limit);
   let done = 0, none = 0;
   const started = Date.now();
   for (const c of list) {
-    let blocks: number | null = null;
-    try { blocks = await render(c.surface, c.slugs); } catch { blocks = null; }
-    if (blocks == null) { none++; delete pages[c.path]; } else pages[c.path] = { surface: c.surface, blocks };
+    let r: Rendered | null = null;
+    try { r = await render(c.surface, c.slugs); } catch { r = null; }
+    if (r == null) { none++; delete pages[c.path]; } else pages[c.path] = { surface: c.surface, blocks: r.blocks };
+    if (r && c.surface === "cell" && c.slugs[0] === "us" && labelMissesWord(r.label, c.slugs[2])) labelMisses.add(c.path);
     done++;
     if (done % 50 === 0) console.log(`floor census: ${done} of ${list.length} (${Math.round((Date.now() - started) / 1000)}s)`);
   }
   const atFloor = Object.values(pages).filter((e) => e.blocks >= (floors[e.surface] ?? Infinity)).length;
   const file = {
-    why: "The floor census (milestone 1, M10; his interview of 2026-09-26, answer 6): each spine page outside the United Kingdom with its block count, read by src/lib/seo/indexable.ts. A page indexes when its count meets its type's floor (`floors`, the model laws' FLOOR_BY_SURFACE); UK pages index by his rule and are not counted. Written by scripts/seo/floor_census.tsx; never edited by hand.",
+    why: "The floor census (milestone 1, M10; his interview of 2026-09-26, answer 6): each spine page outside the United Kingdom with its block count, read by src/lib/seo/indexable.ts. A page indexes when its count meets its type's floor (`floors`, the model laws' FLOOR_BY_SURFACE); UK pages index by his rule and are not counted. label_misses lists the United States trade pages whose printed trade does not read as their address's word (P1-D, 2026-10-09). Written by scripts/seo/floor_census.tsx; never edited by hand.",
     generated_at: new Date().toISOString(),
     floors,
     pages: Object.fromEntries(Object.entries(pages).sort(([a], [b]) => a.localeCompare(b))),
+    label_misses: [...labelMisses].sort(),
   };
   writeFileSync(FILE, `${JSON.stringify(file, null, 1)}\n`);
-  console.log(`floor census: ${Object.keys(pages).length} pages counted (${atFloor} at their floor), ${none} with no page, written to ${FILE}`);
+  console.log(`floor census: ${Object.keys(pages).length} pages counted (${atFloor} at their floor), ${none} with no page, ${labelMisses.size} United States labels missing their word, written to ${FILE}`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

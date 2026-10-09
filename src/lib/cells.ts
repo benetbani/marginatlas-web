@@ -42,7 +42,7 @@ import {
   MANUAL_DISPLAY_LABEL,
 } from "./cities/manual_city_aliases";
 import { isCellSuppressed, applyCellOverrides } from "./cells/triage";
-import { pickMatchingRow } from "./cells/us_industry_match";
+import { pickMatchingRow, rowForWord } from "./cells/us_industry_match";
 import { getPopularPlaceName } from "./geo/popular_place_overrides";
 /* The place word comes from the address, so the tables it keys are read for their own entries (src/lib/own.ts). */
 import { own } from "./own";
@@ -407,7 +407,7 @@ function applyTaxonomy(c: Cell): Cell {
   return c;
 }
 
-function normalizeRow(r: Record<string, unknown>): Cell {
+function normalizeRow(r: Record<string, unknown>, opts: { ownDescription?: boolean } = {}): Cell {
   const cell: Cell = {
     country: (r.country as string) || "US",
     geo_id: r.geo_id as string,
@@ -450,9 +450,23 @@ function normalizeRow(r: Record<string, unknown>): Cell {
   // rows, which is why travel_agencies / Swiss grocery showed $500M-$2B per firm
   // (QA scale-anomaly bug, 2026-05-31). normalizeRegionalRow is the shared exit
   // for getRegionalCell + the variants path, so one call covers them all.
+  /* A census row reached by its own description takes no taxonomy trade (P1-D): nameByOwnDescription, below. */
+  const named = opts.ownDescription ? nameByOwnDescription(cell) : applyTaxonomy(cell);
   return enforceSanity(
-    applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(applyTaxonomy(cell)))),
+    applyPlausibilitySuppression(applyCurrencyCorrection(applyRollforward(named))),
   );
+}
+
+/**
+ * A CENSUS ROW NAMED BY ITS OWN DESCRIPTION (P1-D of the page architecture, 2026-10-09). applyTaxonomy names a row by the first
+ * live trade of its three-digit code, which inside 541 is Software development, so the lawyers' row of Mississippi printed
+ * "Software development" under /us/mississippi/offices-of-lawyers. A row the address reached by its description carries that
+ * description as its name and no trade id, so no other trade's name, bounds or tables reach the page.
+ */
+function nameByOwnDescription(c: Cell): Cell {
+  c.industry_id = null;
+  c.industry_name = c.industry_description ?? null;
+  return c;
 }
 
 export type CellSelector = {
@@ -726,9 +740,12 @@ async function getCellBySlugRaw(
       ? stampIndustry(normalizeRow(picked.row), picked.matchedIndustry)
       : null;
   }
-  // Unknown slug (no taxonomy entry): the ilike itself matched the slug's
-  // own words, which is the only signal we have; keep prior behavior.
-  return normalizeRow(data[0] as Record<string, unknown>);
+  /* A WORD THE TAXONOMY DOES NOT READ IS A CENSUS DESCRIPTION (P1-D of the page architecture, 2026-10-09). The label and every
+     figure come from the one row whose description is the word (rowForWord), named by that description (nameByOwnDescription),
+     never from the first row the loose match returned, named by its three-digit group: that put "Software development" on
+     /us/mississippi/offices-of-lawyers. No row whose description is the word: nothing, and the caller draws the estimated page. */
+  const described = rowForWord(data as Array<Record<string, unknown>>, industrySlug);
+  return described ? normalizeRow(described, { ownDescription: true }) : null;
 }
 
 /** All matching cells (same geo + same industry-group) across size_bands and years. */
