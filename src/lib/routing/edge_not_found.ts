@@ -35,26 +35,27 @@
  *    address that is no file could only ever have drawn a page's not-found, or worse, a synthesized page at 200.
  * Everything else is left alone: one- and two-part paths are isPlaceWeDoNotHold's.
  *
- * THE PLACE IS THE ROUTE'S WORD, EVERY OTHER PART IS AS WRITTEN (the reviews of 2026-10-09). The pathname is percent-encoded and the
- * route's params are not, and the place table spells six places with an accent, decoded (`/br/s%c3%a3o-paulo/restaurants` is the
- * address of one; only a place can be non-ASCII). So the place of a three- or four-part address under a country the site holds is
- * percent-decoded and lowercased before the table is asked (routeWord, src/lib/routing/place_words.ts), and a malformed escape keeps
- * the part as written and names nothing. Every other part is only lowercased, because the redirects that run before this rule read
- * their segment as written (the retired-activity redirect, the retired-trade hop, the rename hop): `/gb/london/b%61nking` and
- * `/industries/b%61nking` are not words they move, and decoded here each would read as `banking`, a word a redirect owns, pass this
- * rule, escape all three and be answered 200. As written, each names nothing and answers 404, as does every spelling the site never
- * links (`/cities/lond%6fn`). The file rule reads the last part as written, so an encoded dot (`x%2ey`) is no file.
+ * THE COUNTRY AND THE PLACE ARE THE ROUTE'S WORDS, EVERY OTHER PART IS AS WRITTEN (the reviews of 2026-10-09). The pathname is
+ * percent-encoded and the route's params are not, and the place table spells six places with an accent, decoded
+ * (`/br/s%c3%a3o-paulo/restaurants` is the address of one; only a place can be non-ASCII). So the first two parts of a three- or
+ * four-part address are percent-decoded and lowercased before the tables are asked (routeWord, src/lib/routing/place_words.ts): the
+ * place, and the country where it decodes to one the site holds, so `/g%62/atlantis/restaurants` is the invented place `atlantis`
+ * under `gb`, the address the route is handed, and answers 404 as that one does. A malformed escape keeps the part as written and
+ * names nothing. Every other part is only lowercased, because the redirects that run before this rule read their segment as
+ * written (the retired-activity redirect, the retired-trade hop, the rename hop): `/gb/london/b%61nking` and `/industries/b%61nking`
+ * are not words they move, and decoded here each would read as `banking`, a word a redirect owns, pass this rule, escape all three
+ * and be answered 200. As written, each names nothing and answers 404, as does every spelling the site never links
+ * (`/cities/lond%6fn`). The file rule reads the last part as written, so an encoded dot (`x%2ey`) is no file.
  *
  * WHAT IT CANNOT SEE, said once. The place table is the database's as of its last scan (data/seo/place_db_words.json): a county
  * or a description loaded since answers 404 until scripts/gen_place_slugs.ts runs with the database again. A census description
  * is judged for the whole country: a word one state holds passes under every state, and a state without that row draws the
- * estimated page. A country spelled with an escape (`/g%62/atlantis/restaurants`) is no held country as written, so it is left alone;
- * a place spelled with an escape that decodes to a held one (`/gb/lond%6fn/restaurants`) passes to that place's page. No link of the
- * site spells either. A dotted United States word IS judged, as a file: that lookup's last step (`ilike` on the word, hyphens as
- * wildcards) could match a description with a dot in it, but no published address holds a dot, so such a match could only be a
- * second address for a page the site already publishes. Pure, and small enough for the edge: the taxonomy module the middleware
- * already imports, two small crosswalks and five generated tables; never src/lib/spine/hood_scheme.ts, which pulls the
- * neighbourhood data in.
+ * estimated page. A country or a place spelled with an escape that decodes to a held one (`/g%62/london/restaurants`,
+ * `/gb/lond%6fn/restaurants`) passes to that place's page. No link of the site spells either. A dotted United States word IS
+ * judged, as a file: that lookup's last step (`ilike` on the word, hyphens as wildcards) could match a description with a dot in
+ * it, but no published address holds a dot, so such a match could only be a second address for a page the site already publishes.
+ * Pure, and small enough for the edge: the taxonomy module the middleware already imports, two small crosswalks and five generated
+ * tables; never src/lib/spine/hood_scheme.ts, which pulls the neighbourhood data in.
  *
  * Next strips an RSC request's `.rsc` ending before the middleware sees the path (normalizeRscURL in
  * next/dist/server/web/adapter.js), so a page's payload is judged as its page. The `.segments/` prefetch addresses of Next's client
@@ -104,13 +105,21 @@ function parts(path: string): string[] | null {
   /* A file is not a page (the world map's TopoJSON lesson, src/middleware.ts isPlaceWeDoNotHold). Judged on the last part as written,
      like namesFile: an encoded dot (`x%2ey`) is no file's ending, and as a word it names nothing. */
   if (written.length === 0 || written[written.length - 1].includes(".")) return null;
-  /* Every part as written, lowercased, except the place: the second part of a three- or four-part address under a country the site
-     holds, read as its route reads it (routeWord). The pathname the middleware sees is percent-encoded, the route's params are not,
-     and the place table spells the six accented places decoded (the review of 2026-10-09). Not the trade, the activity or the city:
-     the redirects before this rule read those as written, so decoding one here made `b%61nking` read as the retired `banking`, a
-     word a redirect owns, and it passed unmoved (the re-review of the same day). */
+  /* Every part as written, lowercased, except the country and the place: the first two parts of a three- or four-part address, read
+     as their route reads them (routeWord), the country only where it decodes to one the site holds. The pathname the middleware sees
+     is percent-encoded, the route's params are not, and the place table spells the six accented places decoded (the review of
+     2026-10-09); an escape-spelled country (`/g%62/atlantis/restaurants`) reaches the route as `gb`, so an invented place under it is
+     as invented as under `gb` (the re-review, concern 1). Not the trade, the activity or the city: the redirects before this rule
+     read those as written, so decoding one here made `b%61nking` read as the retired `banking`, a word a redirect owns, and it
+     passed unmoved (the re-review of the same day). */
   const segs = written.map((s) => s.toLowerCase());
-  if (written.length >= 3 && written.length <= 4 && HELD_COUNTRIES.has(segs[0])) segs[1] = routeWord(written[1]);
+  if (written.length >= 3 && written.length <= 4) {
+    const country = routeWord(written[0]);
+    if (HELD_COUNTRIES.has(country)) {
+      segs[0] = country;
+      segs[1] = routeWord(written[1]);
+    }
+  }
   return segs;
 }
 
