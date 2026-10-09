@@ -5,8 +5,9 @@
  *
  * Server component. Every price prints through src/lib/monetization/plan.ts (gate one-price) and every line of what Pro opens
  * through paywall_copy.ts, so this page and the home teaser cannot drift. One plan card: the year first, its headline and one
- * plain line with the year's total and the saving, the month's price one line away (one click while billing is live), what Pro
- * opens, the cancel-any-time block, and one line saying the prices are dollars. While billing is dormant (accounts off or no
+ * plain line with the year's total and the saving, the month's price one line away (plain text under the saving line while billing
+ * is dormant, one click under the year's button once it is live), what Pro opens, the cancel-any-time block, and one line saying
+ * the prices are dollars. While billing is dormant (accounts off or no
  * Stripe key) the button is the site's notify-me link to the newsletter. tests/monetization/pricing_page.test.ts holds the page
  * as drawn: the lead, the order, and no dollar figure but the plan's own.
  *
@@ -55,19 +56,24 @@ export default function PricingPage() {
           <p className="font-display text-[44px] font-bold leading-none tracking-[-0.025em] text-ink-900">{pro.name}</p>
 
           {/* THE YEAR FIRST (his decision of 2026-10-09): the year written by the month, then one plain line with its total (v34
-              Part 4.2) and the saving, all read from the plan. The month's price comes after, one line away. */}
+              Part 4.2) and the saving, all read from the plan. The month's price comes after, one line away: plain text under the
+              saving line while billing is dormant (after the notify-me link, its "or" would read as an "or" on the link), and once
+              billing is live the second checkout under the year's, with the site's 44px tap and a name for a screen reader that
+              does not open with "or" ("Get Pro " is hidden text before the visible line). */}
           <h2 className="mt-6 text-balance font-display text-2xl sm:text-3xl font-semibold leading-tight tracking-[-0.02em] text-ink-900 tabular-nums">
             {yearlyHeadline()}
           </h2>
           <p className="mt-2 text-sm text-ink-700 tabular-nums">{yearlySavingLine()}</p>
+          {billingLive ? null : <p className="mt-1 text-sm text-ink-700 tabular-nums">{monthToMonthLine()}</p>}
 
           {billingLive ? (
             <div className="mt-5">
               <CheckoutButton interval="year" className={`${BUTTON} bg-atlas-700 text-white hover:bg-atlas-800`}>
                 {`Get Pro for ${priceLine("year")}`}
               </CheckoutButton>
-              <div className="mt-3 text-center sm:text-left">
-                <CheckoutButton interval="month" className="cursor-pointer text-sm font-medium tabular-nums text-atlas-700 underline underline-offset-4 hover:text-atlas-900 disabled:opacity-60">
+              <div className="mt-1 text-center sm:text-left">
+                <CheckoutButton interval="month" className="inline-flex min-h-11 cursor-pointer items-center text-sm font-medium tabular-nums text-atlas-700 underline underline-offset-4 hover:text-atlas-900 disabled:opacity-60">
+                  <span className="sr-only">Get Pro </span>
                   {monthToMonthLine()}
                 </CheckoutButton>
               </div>
@@ -77,7 +83,6 @@ export default function PricingPage() {
               <a href="#newsletter" className={`${BUTTON} bg-atlas-700 text-white hover:bg-atlas-800`}>
                 Notify me when Pro opens
               </a>
-              <p className="mt-3 text-center text-sm text-ink-700 tabular-nums sm:text-left">{monthToMonthLine()}</p>
             </div>
           )}
 
