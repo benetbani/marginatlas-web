@@ -201,7 +201,7 @@ async function main(): Promise<void> {
 
   /* LASTMOD: A POST'S OWN DATE OR NOTHING. A dated entry is a blog post and carries what its post says, the update else the writing, as
      a plain date; every other page has no date of its own and is not dated. */
-  const postDate = new Map(getAllPosts().map((p) => [`/blog/${p.slug}`, p.updated ?? p.date] as const));
+  const postDate = new Map<string, string>(getAllPosts().map((p) => [`/blog/${p.slug}`, p.updated ?? p.date] as const));
   const dated = entries.filter((e) => e.lastModified !== undefined);
   const notPostDate = dated
     .filter((e) => !(typeof e.lastModified === "string" && /^\d{4}-\d{2}-\d{2}$/.test(e.lastModified) && postDate.get(e.path) === e.lastModified))
