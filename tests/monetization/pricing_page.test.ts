@@ -1,5 +1,5 @@
 /**
- * THE PRICING PAGE LEADS WITH THE YEAR (his decision of 2026-10-09: Pro is $48 month to month or $456 a year, and the page leads with the year as "$38 a month, billed yearly"). Rendered with billing dormant (the notify-me link) and with billing live (two checkout buttons), the page prints the headline first, one plain line with the year's total and the saving, and the monthly price one line away, every figure from src/lib/monetization/plan.ts, and no other dollar figure. With billing live, each checkout button posts the interval its label names (the year's "year", the month to month one "month"), read from the data-interval CheckoutButton draws, and the month to month one takes the 44px tap and a name that does not open with "or". While billing is dormant the monthly line sits under the saving line, above the notify-me link.
+ * THE PRICING PAGE LEADS WITH THE YEAR (his decision of 2026-10-09: Pro is $48 month to month or $456 a year, and the page leads with the year as "$38 a month, billed yearly"). Rendered with billing dormant (the notify-me link) and with billing live (two checkout buttons), the page prints the headline first, one plain line with the year's total and the saving, and the monthly price one line away, every figure from src/lib/monetization/plan.ts, and no other dollar figure. With billing live, each checkout button posts the interval its label names (the year's "year", the month to month one "month"), read from the data-interval CheckoutButton draws. Both buttons take the site's 44px tap (min-h-11, the label kept centred), and the month to month one has a name that does not open with "or". While billing is dormant the monthly line sits under the saving line, above the notify-me link, and that link takes the 44px tap too.
  *
  * The bans of the v34 rules stay (scripts/verify_v34_research_rules.ts reads the source for them; this reads the page as drawn): no "Most popular" badge, no trial, no countdown, no "Contact sales" tier. Copy is plain: no em dash, no semicolon.
  *
@@ -19,8 +19,8 @@ const RULE = "pricing-page";
 const PAGE = "src/app/(site)/pricing/page.tsx";
 const PLAN = "src/lib/monetization/plan.ts";
 const BUTTON = "src/components/monetization/CheckoutButton.tsx";
-/* The page prints words of its own and words from two modules it imports: what Pro opens and the cancel block, and the questions. */
-const WORDS = `${PAGE}, src/components/monetization/paywall_copy.ts (what Pro opens, the cancel block) or src/components/billing/PricingFAQ.tsx (the questions)`;
+/* The page prints words of its own and words from three modules it imports: what Pro opens and the cancel block, the questions, and the card callout at the foot. */
+const WORDS = `${PAGE}, src/components/monetization/paywall_copy.ts (what Pro opens, the cancel block), src/components/billing/PricingFAQ.tsx (the questions) or src/lib/pricing/matrix.ts (the card callout at the foot)`;
 /* EACH CHECK NAMES THE MODULE TO CHANGE. One remedy for every check had a reader of the ban or the copy check sent to "lead the plan
    card with the year", which was not what that check wanted. */
 type Fix = { file: string; remedy: string };
@@ -33,6 +33,7 @@ const FIX = {
   dormant: { file: PAGE, remedy: `in ${PAGE} put the month to month line under the saving line and above the notify-me link, and give no button a price while billing is dormant` },
   checkout: { file: PAGE, remedy: `in ${PAGE} give the year's button interval="year" and the month to month one interval="month", which ${BUTTON} draws as data-interval` },
   monthButton: { file: PAGE, remedy: `in ${PAGE} give the month to month button inline-flex min-h-11 items-center and a hidden (sr-only) "Get Pro " before its visible line` },
+  tap: { file: PAGE, remedy: `in ${PAGE} give the shared BUTTON class (the year's pill and the notify-me link) min-h-11, the site's 44px tap, with inline-flex items-center justify-center so the label stays centred` },
   description: { file: PAGE, remedy: `in ${PAGE} build metadata.description from yearlyHeadline() and monthToMonthLine()` },
 } satisfies Record<string, Fix>;
 let failed = 0;
@@ -50,6 +51,7 @@ const text = (html: string) =>
   html.replace(/<[^>]*>/g, " ").replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 const dollars = (t: string) => [...new Set([...t.matchAll(/\$\d[\d,]*(?:\.\d+)?/g)].map((m) => m[0]))].sort();
 const buttons = (html: string) => [...html.matchAll(/<button[^>]*>([\s\S]*?)<\/button>/g)].map((m) => text(m[1]));
+const classesOf = (attrs: string) => (/\bclass="([^"]*)"/.exec(attrs)?.[1] ?? "").split(/\s+/);
 /* Each checkout button as drawn: what it says (label), the markup it says it in (inner), what it does and how it looks. What it
    does is the interval it posts: CheckoutButton draws it as data-interval, so two `interval` props swapped in the page cannot hide
    behind labels that still read right. */
@@ -57,8 +59,13 @@ const checkouts = (html: string) => [...html.matchAll(/<button([^>]*)>([\s\S]*?)
   label: text(m[2]),
   inner: m[2],
   interval: /\bdata-interval="([^"]*)"/.exec(m[1])?.[1] ?? null,
-  classes: (/\bclass="([^"]*)"/.exec(m[1])?.[1] ?? "").split(/\s+/),
+  classes: classesOf(m[1]),
 }));
+/* The notify-me link as drawn while billing is dormant: its classes. */
+const notifyClasses = (html: string) => classesOf(/<a\b([^>]*)>\s*Notify me when Pro opens\s*<\/a>/.exec(html)?.[1] ?? "");
+/* THE 44px TAP (scripts/harness/check_page_laws.mjs, TAP SIZE). The year's pill and the notify-me link share one BUTTON class on the
+   page, whose padding and one 20px line make 40px, so the tap is min-h-11, and these keep the label centred in the taller box. */
+const TAP = ["min-h-11", "inline-flex", "items-center", "justify-center"];
 
 /* Billing is live only when accounts are on and a Stripe secret is set; a marker stands in for the secret in this render, and
    nothing is sent anywhere. */
@@ -98,12 +105,15 @@ for (const { name, live, html } of pages) {
     check(`${name}: the button labelled "${priceLine("year")}" posts "year"`, () => named(priceLine("year"))?.interval === "year", FIX.checkout);
     check(`${name}: the button labelled "${monthToMonthLine()}" posts "month"`, () => named(monthToMonthLine())?.interval === "month", FIX.checkout);
     /* A screen reader says a button's name alone, so the month button must not open with "or": "Get Pro " is hidden text before
-       the visible line. And it takes the site's 44px tap (scripts/harness/check_page_laws.mjs, TAP SIZE), as the year's pill does by its padding. */
+       the visible line. Both buttons take the site's 44px tap (scripts/harness/check_page_laws.mjs, TAP SIZE): the month one by its own
+       min-h-11, the year's pill by min-h-11 on the page's shared BUTTON class, since its padding alone makes 40px (py-2.5 and one 20px line). */
     check(`${name}: the month button's accessible name opens "Get Pro", hidden, and not "or"`, () => b[1] === `Get Pro ${monthToMonthLine()}` && cs[1].inner.startsWith('<span class="sr-only">Get Pro </span>'), FIX.monthButton);
     check(`${name}: the month button takes the 44px tap (min-h-11, inline-flex, items-center)`, () => ["min-h-11", "inline-flex", "items-center"].every((c) => cs[1].classes.includes(c)), FIX.monthButton);
+    check(`${name}: the year's pill takes the 44px tap (${TAP.join(", ")})`, () => TAP.every((c) => cs[0].classes.includes(c)), FIX.tap);
   } else {
     check(`${name}: the monthly line sits under the saving line, above the notify-me link, and no button carries a price`, () =>
       at(yearlySavingLine()) < at(monthToMonthLine()) && at(monthToMonthLine()) < at("Notify me when Pro opens") && at("Notify me when Pro opens") < at("What Pro opens") && !b.some((x) => /\$\d/.test(x)), FIX.dormant);
+    check(`${name}: the notify-me link takes the 44px tap (${TAP.join(", ")})`, () => TAP.every((c) => notifyClasses(html).includes(c)), FIX.tap);
   }
 }
 

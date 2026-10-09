@@ -28,8 +28,10 @@ export const metadata = {
   alternates: { canonical: "/pricing" },
 };
 
-/* One pill. Full width on a phone, its own width from 640px, so the single button does not stretch across a wide card. */
-const BUTTON = "inline-flex w-full cursor-pointer justify-center items-center gap-1.5 rounded-full px-8 py-2.5 text-sm font-semibold transition-colors disabled:opacity-60 sm:w-auto";
+/* One pill. Full width on a phone, its own width from 640px, so the single button does not stretch across a wide card. It takes the
+   site's 44px tap: the padding and one 20px line make only 40px, so min-h-11 sets the height and items-center, justify-center keep
+   the label centred in the taller box. The year's checkout and the notify-me link both wear it. */
+const BUTTON = "inline-flex min-h-11 w-full cursor-pointer justify-center items-center gap-1.5 rounded-full px-8 py-2.5 text-sm font-semibold transition-colors disabled:opacity-60 sm:w-auto";
 
 export default function PricingPage() {
   /* Billing is live only when accounts are on AND Stripe is configured (a server-only key), read at render, so the page keeps

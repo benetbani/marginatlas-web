@@ -4,8 +4,9 @@
  * first).
  *
  * Posts { interval } to /api/stripe/checkout and goes to the Checkout URL it returns. No account is needed, so no sign-in branch
- * exists; any failure says so in one line under the button (no modal, ruling 22). The pricing page renders this only once billing
- * is live; until then it shows its notify-me link. The button carries `data-interval`, the interval it posts, so
+ * exists; any failure says so in one line under the button (no modal, ruling 22), lined up with the buttons as the pricing page sets
+ * them: centred on a phone, where they run full width, and left from 640px, where each takes its own width. The pricing page renders
+ * this only once billing is live; until then it shows its notify-me link. The button carries `data-interval`, the interval it posts, so
  * tests/monetization/pricing_page.test.ts reads what each button does and not only what it says.
  */
 import * as React from "react";
@@ -46,7 +47,7 @@ export function CheckoutButton({
       <button type="button" onClick={go} disabled={state === "busy"} data-interval={interval} className={className}>
         {children}
       </button>
-      {state === "failed" ? <p className="mt-2 text-center text-xs text-clay-700">Checkout did not open. Try again.</p> : null}
+      {state === "failed" ? <p className="mt-2 text-center text-xs text-clay-700 sm:text-left">Checkout did not open. Try again.</p> : null}
     </>
   );
 }
