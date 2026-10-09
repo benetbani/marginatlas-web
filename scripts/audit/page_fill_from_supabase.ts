@@ -383,8 +383,9 @@ async function main() {
   md.push("");
   md.push("## Wired into");
   md.push("");
-  md.push("- `data/quality/thin_pages_v1.json` — sitemap excludes these URLs");
-  md.push("- `src/app/sitemap.ts` reads via `isPathSuppressed()` at build time");
+  md.push("- `data/quality/thin_pages_v1.json` is read by `isPathSuppressed()` in `src/lib/quality/thin_pages.ts`");
+  md.push("- `src/lib/cells/related_links.ts` calls it, so no trade page links to a path on this list");
+  md.push("- the sitemaps do not read it: since 2026-10-09 they list only what `indexFor` admits (`src/lib/seo/sitemap_families.ts`)");
   md.push("");
   writeFileSync(join(OUT_DIR, "page_fill_REPORT.md"), md.join("\n"));
 

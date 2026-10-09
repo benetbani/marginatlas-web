@@ -3,9 +3,12 @@
  *
  * Loads `data/quality/thin_pages_v1.json` (produced by
  * `scripts/audit/page_fill_audit.ts`) at module init and exposes a
- * single `isPathSuppressed(path)` helper. Used by the sitemap to skip
- * URLs that crawled empty / missing-core sections so we never advertise
- * a half-empty page to search engines.
+ * single `isPathSuppressed(path)` helper. Its one caller is
+ * src/lib/cells/related_links.ts, which leaves a page that crawled empty
+ * / missing-core out of a trade page's onward links so no page points a
+ * reader at a half-empty one. The sitemaps do not read it: since P1-E
+ * (2026-10-09) they list only the addresses indexFor admits
+ * (src/lib/seo/sitemap_families.ts).
  *
  * Source data is never mutated; the suppression is a pure render-layer
  * decision and can be re-derived from a fresh audit run.
@@ -34,7 +37,7 @@ function load(): { set: Set<string>; generatedAt: string } {
 }
 
 /**
- * Is `path` flagged as too thin to advertise from the sitemap?
+ * Is `path` flagged as too thin to point a reader at?
  * Path comparison is case-insensitive.
  */
 export function isPathSuppressed(path: string): boolean {
@@ -42,7 +45,7 @@ export function isPathSuppressed(path: string): boolean {
   return load().set.has(path.toLowerCase());
 }
 
-/** Total count of suppressed paths (for sitemap reporting). */
+/** Total count of suppressed paths. */
 export function suppressedPathCount(): number {
   return load().set.size;
 }

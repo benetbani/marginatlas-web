@@ -83,6 +83,12 @@ async function tool(args: string[], answer: (post: number) => Response = () => n
     posts.push(JSON.parse(String(init?.body)) as Post);
     return answer(posts.length - 1);
   }) as typeof fetch;
+  /* THE GATE NEVER POSTS, in a build as much as here: an assignment that did not take (a fetch that is frozen, or has a setter that
+     ignores it) would leave the real one in place and the tool would reach the endpoint. Only fetch is held so far, so nothing is
+     restored; the run is refused and handed to the rejection handler below. */
+  if (globalThis.fetch === real.fetch) {
+    throw new Error("the fetch stub did not take (globalThis.fetch is still the real one), so the tool is not run: it would post for real. Nothing was sent. Run this gate in a plain Node process (node node_modules/tsx/dist/cli.mjs tests/seo/indexnow.test.ts), where globalThis.fetch can be replaced.");
+  }
   console.log = (...a: unknown[]) => { out.push(a.join(" ")); };
   console.error = (...a: unknown[]) => { err.push(a.join(" ")); };
   let code = -1;
@@ -240,15 +246,18 @@ async function run(): Promise<void> {
     rmSync(dir, { recursive: true, force: true });
   }
 
-  /* NEVER IN THE CHAIN OR THE BUILD: the path of the tool, in either slash, is named nowhere in the chain file, an npm command or vercel.json */
-  const names = (text: string) => /scripts[\\/]+seo[\\/]+indexnow/.test(text.replace(/\\/g, "/"));
+  /* NEVER IN THE CHAIN OR THE BUILD: the tool, by any way of naming it, is named nowhere in the chain file, an npm command or vercel.json.
+     `seo/indexnow` in either slash is the name, so `cd scripts && npx tsx seo/indexnow.ts` is caught as well as `scripts/seo/indexnow.ts`;
+     this gate's own file (`seo/indexnow.test`) is the one name allowed, and so is the gate's chain name (`--only=indexnow`). WHAT IT
+     CANNOT SEE: a cd into scripts/seo and then a bare `indexnow.ts`, which carries neither slash. */
+  const names = (text: string) => /seo[\\/]+indexnow(?!\.test)/.test(text);
   const chain = readFileSync("scripts/prebuild_all.ts", "utf8");
   check("no gate runs the script (its path is named nowhere in scripts/prebuild_all.ts)", chain.includes("script:") && !names(chain), "scripts/prebuild_all.ts", PIN_REMEDY);
   const pkg = JSON.parse(readFileSync("package.json", "utf8")) as { scripts?: Record<string, string> };
   const npmRuns = Object.entries(pkg.scripts ?? {}).filter(([, cmd]) => names(cmd));
   check(`no npm script runs it${npmRuns.length ? `: ${npmRuns.map(([n]) => n).join(", ")}` : ""}`, npmRuns.length === 0, "package.json", PIN_REMEDY);
   const vercel = existsSync("vercel.json") ? readFileSync("vercel.json", "utf8") : "";
-  check("the build never runs it (vercel.json)", !vercel.includes("indexnow"), "vercel.json", PIN_REMEDY);
+  check("the build never runs it (vercel.json)", !names(vercel), "vercel.json", PIN_REMEDY);
   const src = readFileSync(FILE, "utf8");
   check("it posts only with --send, a dry run otherwise, through one fetch", src.includes('args.includes("--send")') && (src.match(/\bfetch\(/g) ?? []).length === 1);
 }
