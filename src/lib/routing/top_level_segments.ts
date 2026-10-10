@@ -69,8 +69,12 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "extremes",
   "faq",
   /* The site icon: src/app/icon.tsx is a metadata route FILE, served at /icon and linked from every page's head. Pinned
-     to 404 with its own PNG as the body until the gate read files as well as folders (2026-10-06). */
+     to 404 with its own PNG as the body until the gate read files as well as folders (2026-10-06). Its two numbered kin,
+     icon1.tsx (192) and icon2.tsx (512), are the manifest's and serve at /icon1 and /icon2 (the plan 2026-10-10, Task 7's fix
+     round): numbered files, so that /icon keeps its address. */
   "icon",
+  "icon1",
+  "icon2",
   "industries",
   "learn",
   "margin-index",

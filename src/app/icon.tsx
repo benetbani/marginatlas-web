@@ -1,29 +1,14 @@
 /**
- * The site icon, at three sizes (plan 2026-10-10, the home reformed to ship, Task 7; the ship audit's 2.2). It was one 32 by 32
- * PNG: Google asks a favicon whose side is a multiple of 48, and the manifest (src/app/manifest.ts) needs 192 and 512 for a phone's
- * home screen. One drawing, the header's compass mark (src/components/brand/LogoMark.tsx), black on white, drawn at build time; Next
- * serves each size at /icon/<id> and links each from every page's head.
- *
- * White is written as a word: the cream gate counts #ffffff for the name its ramp step once carried (scripts/verify_no_cream.ts).
+ * The site icon at 48, served at /icon (plan 2026-10-10, the home reformed to ship, Task 7 and its fix round 7). The first of three
+ * numbered files: icon1.tsx (192, at /icon1) and icon2.tsx (512, at /icon2) are the ones the manifest names. None exports
+ * generateImageMetadata, which would serve /icon/<id> and leave /icon, the address production has served since 2026-10-06, to the
+ * country wildcard. The drawing is src/app/_site-icon.tsx, the header's compass mark, black on white.
  */
-import { ImageResponse } from "next/og";
-import { LogoMark } from "@/components/brand/LogoMark";
+import { siteIcon } from "./_site-icon";
 
-/** The sizes, in pixels: 48 for a tab and a search result, 192 and 512 for the manifest. Each is its own id and address. */
-const ICON_SIZES = [48, 192, 512] as const;
+export const size = { width: 48, height: 48 };
+export const contentType = "image/png";
 
-export function generateImageMetadata() {
-  return ICON_SIZES.map((px) => ({ id: String(px), size: { width: px, height: px }, contentType: "image/png" }));
-}
-
-export default function Icon({ id }: { id: string }) {
-  const px = ICON_SIZES.find((s) => String(s) === String(id)) ?? ICON_SIZES[0];
-  return new ImageResponse(
-    (
-      <div style={{ width: px, height: px, display: "flex", alignItems: "center", justifyContent: "center", background: "white" }}>
-        <LogoMark size={Math.round(px * 0.875)} color="#000000" />
-      </div>
-    ),
-    { width: px, height: px },
-  );
+export default function Icon() {
+  return siteIcon(size.width);
 }

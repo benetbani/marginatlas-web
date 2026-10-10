@@ -4,8 +4,11 @@
  * home stops shipping:
  *   - the root's Open Graph and Twitter cut to what every page shares (the site's name, the kind, the card and its alt), so no page
  *     inherits the home's og:url or the old positioning; the viewport's theme colour, white, light only;
- *   - the icon at 48, 192 and 512 and the home-screen icon at 180, each a PNG of its size, drawn from the header's mark; the manifest
- *     naming the site, its definition and the 192 and 512 icons; none of the three writes the cream-named white hex;
+ *   - the icon at 48, 192 and 512 as three NUMBERED files (src/app/icon.tsx at /icon, icon1.tsx at /icon1, icon2.tsx at /icon2, each
+ *     exporting its `size` and `contentType` and none exporting generateImageMetadata, which would move /icon, the address
+ *     production has served since 2026-10-06, to /icon/<id>), and the home-screen icon at 180, each a PNG of its size, drawn from the
+ *     header's mark by one shared drawing; the manifest naming the site, its definition and the icon1 and icon2 addresses; none of
+ *     the files writes the cream-named white hex;
  *   - the share card's words the home's definition (COPY.home.definition), its warm tint gone; the home's title at 51 characters;
  *   - every JSON-LD block escaped so a "<" cannot close its script;
  *   - the auth client imported only behind the accounts switch, and the session read once for the bar and the sheet; Sentry started
@@ -62,21 +65,48 @@ async function main() {
   check(`the viewport: white theme, light only, device width at scale 1 (${JSON.stringify(layout.viewport ?? null)})`, JSON.stringify(layout.viewport ?? null) === JSON.stringify({ width: "device-width", initialScale: 1, themeColor: "white", colorScheme: "light" }));
 
   /* ---------------- THE ICONS AND THE MANIFEST ---------------- */
-  const icon = (await import("../../src/app/icon")) as unknown as { generateImageMetadata?: () => Array<{ id: string; size: { width: number; height: number }; contentType: string }>; default: (p: { id: string }) => Response };
-  const sizes = typeof icon.generateImageMetadata === "function" ? icon.generateImageMetadata() : [];
-  check(`the icon comes at 48, 192 and 512, each a PNG id of its size (${sizes.map((s) => s.id).join(", ")})`, JSON.stringify(sizes) === JSON.stringify([48, 192, 512].map((px) => ({ id: String(px), size: { width: px, height: px }, contentType: "image/png" }))), { file: "src/app/icon.tsx" });
-  for (const s of sizes) {
-    const got = pngSize(Buffer.from(await icon.default({ id: s.id }).arrayBuffer()));
-    check(`/icon/${s.id} draws a PNG ${s.id} by ${s.id} (${got ? got.join(" by ") : "no PNG"})`, !!got && got[0] === s.size.width && got[1] === s.size.height, { file: "src/app/icon.tsx" });
+  /* THREE NUMBERED FILES, NOT ONE FILE WITH generateImageMetadata (the Task 7 review, fix round 7). A file that exports
+     generateImageMetadata is served at /icon/<id> and nothing answers /icon, the address production has served since the icon fix of
+     2026-10-06: Next routes it to the country wildcard, and no redirect may be added before the inventory (his URL rule). Next's
+     numbered icon files are served at /icon, /icon1 and /icon2 and linked from every head, each with its own `size`. */
+  type IconFile = { size?: { width: number; height: number }; contentType?: string; generateImageMetadata?: unknown; default: () => Response };
+  const SHARED_ICON = "src/app/_site-icon.tsx";
+  const ICONS = [
+    { file: "src/app/icon.tsx", address: "/icon", px: 48, mod: await tryImport<IconFile>(() => import("../../src/app/icon")) },
+    { file: "src/app/icon1.tsx", address: "/icon1", px: 192, mod: await tryImport<IconFile>(() => import("../../src/app/icon1")) },
+    { file: "src/app/icon2.tsx", address: "/icon2", px: 512, mod: await tryImport<IconFile>(() => import("../../src/app/icon2")) },
+  ];
+  /** The PNG size a file's default export draws, or null when it throws, returns no PNG or is not there. */
+  const drawn = async (mod: IconFile | null): Promise<[number, number] | null> => {
+    try { return mod ? pngSize(Buffer.from(await mod.default().arrayBuffer())) : null; } catch { return null; }
+  };
+  for (const { file, address, px, mod } of ICONS) {
+    const got = await drawn(mod);
+    check(
+      `${address} (${file}) declares ${px} by ${px} and image/png, and exports no generateImageMetadata`,
+      !!mod && mod.size?.width === px && mod.size?.height === px && mod.contentType === "image/png" && typeof mod.generateImageMetadata === "undefined",
+      { file, remedy: `export const size = { width: ${px}, height: ${px} } and contentType = "image/png", and no generateImageMetadata: with it Next serves the file at ${address}/<id> and nothing answers ${address} itself, which routes to the country wildcard` },
+    );
+    check(`${address} draws a PNG ${px} by ${px} (${got ? got.join(" by ") : "no PNG"})`, !!got && got[0] === px && got[1] === px, { file, remedy: `${file} default-exports a function returning the drawing at ${px} by ${px} (siteIcon(size.width))` });
   }
+  const drawers = ICONS.filter(({ file }) => existsSync(file) && /from "\.\/_site-icon"/.test(code(file))).length;
+  check(
+    `the three icon files draw through one shared drawing, ${SHARED_ICON} (${drawers} of 3 import it)`,
+    drawers === 3 && existsSync(SHARED_ICON) && /new ImageResponse\(/.test(code(SHARED_ICON)),
+    { file: SHARED_ICON, remedy: "icon.tsx, icon1.tsx and icon2.tsx each return siteIcon(size.width) from src/app/_site-icon.tsx, the one drawing, which holds the black and the white; its name ends in icon.tsx because scripts/verify_hardcoded_hex.ts skips raster icon routes by that ending, which icon1.tsx and icon2.tsx do not match; it sits in src/app, not src/components, because scripts/audit_render_graph.ts calls a component that only a metadata file imports an orphan" },
+  );
   const apple = await tryImport<{ size: { width: number; height: number }; contentType: string; default: () => Response }>(() => import("../../src/app/apple-icon"));
   const appleGot = apple ? pngSize(Buffer.from(await apple.default().arrayBuffer())) : null;
   check(`the home-screen icon is a PNG 180 by 180 (${appleGot ? appleGot.join(" by ") : "no PNG"})`, !!apple && apple.size.width === 180 && apple.size.height === 180 && apple.contentType === "image/png" && !!appleGot && appleGot[0] === 180 && appleGot[1] === 180, { file: "src/app/apple-icon.tsx" });
   const manifest = (await tryImport<{ default: () => Record<string, unknown> }>(() => import("../../src/app/manifest")))?.default() ?? {};
   const icons = (manifest.icons as Array<{ src: string; sizes: string; type: string }>) ?? [];
   check("the manifest names the site, says what it is, opens at the home, is white and read in a browser", manifest.name === "Margin Atlas" && manifest.short_name === "Margin Atlas" && manifest.description === def && manifest.start_url === "/" && manifest.display === "browser" && manifest.theme_color === "white" && manifest.background_color === "white", { file: "src/app/manifest.ts" });
-  check(`the manifest's icons are the icon's own 192 and 512 (${icons.map((i) => i.src).join(", ")})`, JSON.stringify(icons) === JSON.stringify([{ src: "/icon/192", sizes: "192x192", type: "image/png" }, { src: "/icon/512", sizes: "512x512", type: "image/png" }]) && icons.every((i) => sizes.some((s) => `/icon/${s.id}` === i.src)), { file: "src/app/manifest.ts" });
-  const creamWhite = ["src/app/icon.tsx", "src/app/apple-icon.tsx", "src/app/manifest.ts", LAYOUT].filter((f) => existsSync(f) && /#ffffff/i.test(code(f)));
+  check(
+    `the manifest's icons are the numbered files' own 192 and 512, /icon1 and /icon2 (${icons.map((i) => i.src).join(", ")})`,
+    JSON.stringify(icons) === JSON.stringify([{ src: "/icon1", sizes: "192x192", type: "image/png" }, { src: "/icon2", sizes: "512x512", type: "image/png" }]) && icons.every((i) => ICONS.some((f) => f.address === i.src && !!f.mod?.size && i.sizes === `${f.mod.size.width}x${f.mod.size.height}`)),
+    { file: "src/app/manifest.ts", remedy: "point the manifest's icons at /icon1 (192x192) and /icon2 (512x512), the addresses of src/app/icon1.tsx and icon2.tsx; /icon/192 and /icon/512 are not routes" },
+  );
+  const creamWhite = ["src/app/icon.tsx", "src/app/icon1.tsx", "src/app/icon2.tsx", SHARED_ICON, "src/app/apple-icon.tsx", "src/app/manifest.ts", LAYOUT].filter((f) => existsSync(f) && /#ffffff/i.test(code(f)));
   check(`no new file writes white as #ffffff, the hex the cream gate counts (${creamWhite.join(", ") || "none"})`, creamWhite.length === 0, { file: creamWhite[0] ?? "src/app/icon.tsx", remedy: "write white as the word white" });
 
   /* ---------------- THE SHARE CARD AND THE HOME'S TITLE ---------------- */

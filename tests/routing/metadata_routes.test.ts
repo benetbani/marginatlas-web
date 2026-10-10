@@ -67,9 +67,14 @@ function asRequested(address: string): string | null {
 /* The instrument sees the files: the three src/app holds, each at the address Next serves it at. */
 const routes = metadataRoutes();
 const at = (file: string) => routes.find((r) => r.file === file)?.address;
-/* The icon at three sizes since plan 2026-10-10 (the home reformed to ship, Task 7): src/app/icon.tsx exports generateImageMetadata, so
-   it serves one address per size under /icon/; the home-screen icon and the manifest joined it. */
-check(`the walk finds src/app/icon.tsx, the site icon, one address per size under /icon/ (found ${at("src/app/icon.tsx")})`, at("src/app/icon.tsx") === "/icon/[__metadata_id__]", LIB, WALK_REMEDY);
+/* The icon at three sizes since plan 2026-10-10 (the home reformed to ship, Task 7), as three NUMBERED files and not one file that
+   exports generateImageMetadata (fix round 7): that export serves /icon/<id> and leaves /icon, the address production has served
+   since 2026-10-06, to the country wildcard. icon.tsx stays at /icon, icon1.tsx and icon2.tsx are the 192 and 512 the manifest
+   names, and `--live` asks these real addresses, never /icon/0. The home-screen icon and the manifest joined them. */
+const ICON_REMEDY = "keep the icon files numbered (src/app/icon.tsx, icon1.tsx, icon2.tsx) with `size` and `contentType` exports and no generateImageMetadata: with it Next serves the file at /icon/<id> and /icon routes to the country wildcard";
+check(`the walk finds src/app/icon.tsx, the site icon, at /icon (found ${at("src/app/icon.tsx")})`, at("src/app/icon.tsx") === "/icon", "src/app/icon.tsx", ICON_REMEDY);
+check(`the walk finds src/app/icon1.tsx, the 192 icon, at /icon1 (found ${at("src/app/icon1.tsx")})`, at("src/app/icon1.tsx") === "/icon1", "src/app/icon1.tsx", ICON_REMEDY);
+check(`the walk finds src/app/icon2.tsx, the 512 icon, at /icon2 (found ${at("src/app/icon2.tsx")})`, at("src/app/icon2.tsx") === "/icon2", "src/app/icon2.tsx", ICON_REMEDY);
 check(`the walk finds src/app/apple-icon.tsx at /apple-icon (found ${at("src/app/apple-icon.tsx")})`, at("src/app/apple-icon.tsx") === "/apple-icon", LIB, WALK_REMEDY);
 check(`the walk finds src/app/manifest.ts at /manifest.webmanifest (found ${at("src/app/manifest.ts")})`, at("src/app/manifest.ts") === "/manifest.webmanifest", LIB, WALK_REMEDY);
 check(`the walk finds src/app/robots.ts at /robots.txt (found ${at("src/app/robots.ts")})`, at("src/app/robots.ts") === "/robots.txt", LIB, WALK_REMEDY);
