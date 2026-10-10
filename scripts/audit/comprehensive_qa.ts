@@ -301,9 +301,9 @@ const CHECKS: Check[] = [
   {
     category: "C. Consistency",
     id: "C4",
-    description: "Tesseract Research credit in footer (homepage)",
+    description: "Margin Atlas copyright credit in footer (homepage)",
     url: SAMPLE_URLS.homepage,
-    test: ({ body }) => /Tesseract Research/.test(body),
+    test: ({ body }) => /©\s*(?:<!--\s*-->)?\s*\d{4}\s*(?:<!--\s*-->)?\s*Margin Atlas/.test(body),
     needsBody: true,
   },
   {

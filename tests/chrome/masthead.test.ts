@@ -429,7 +429,16 @@ async function main() {
   check("the footer's heads are sentence case at 14 semibold white, no tracked capitals", !/uppercase|tracking-wide/.test(o.footer) && (o.footer.match(/class="mb-3 text-sm font-semibold text-white"/g) ?? []).length === 4);
   check("every footer row is 44px tall on a phone", anchors(footNav).length > 0 && anchors(footNav).every((n) => /min-h-11/.test(n.tag) && /md:min-h-0/.test(n.tag)));
   check("no version string in the footer", !/\bv\d+\.\d+\.\d+\b/.test(o.footer));
-  check(`the year stands beside the publisher (© ${new Date().getFullYear()} Tesseract Research)`, o.footer.includes(`© ${new Date().getFullYear()} Tesseract Research`));
+  /* THE PUBLISHER IS MARGIN ATLAS (his ruling of 2026-10-10: "publisher name is Margin Atlas"; fix round D1). The copyright line reads the year and
+     the name and nothing after it (the domain is the page's own address, and the wordmark above the columns says the name too); the Dataset
+     block's publisher on every cell page names the same organisation as its creator; no file in src names the earlier publisher. BLIND SPOT:
+     source text, read as written; the audit row that looks for the credit (scripts/audit/comprehensive_qa.ts) is outside the chain. */
+  const PUBLISHER_REMEDY = "write the publisher as \"Margin Atlas\" (his ruling of 2026-10-10) in SiteChrome's copyright line and in StructuredData.tsx's Dataset publisher";
+  const copyright = /<span>(©[^<]*)<\/span>/.exec(o.footer)?.[1]?.replace(/&amp;/g, "&").trim() ?? "";
+  check(`the year stands beside the publisher: the copyright line reads "© ${new Date().getFullYear()} Margin Atlas" and nothing after it (${copyright})`, copyright === `© ${new Date().getFullYear()} Margin Atlas`, { file: CHROME, remedy: PUBLISHER_REMEDY });
+  const publisherRow = /publisher:\s*\{[^}]*?name:\s*"([^"]*)"/.exec(code("src/components/StructuredData.tsx"))?.[1] ?? "(none found)";
+  const earlierPublisher = srcFiles.filter((f) => /Tesseract/.test(readFileSync(f, "utf8")));
+  check(`the Dataset block's publisher is Margin Atlas, as its creator is, and no file in src names the earlier publisher (publisher "${publisherRow}"${earlierPublisher.length ? `; in ${earlierPublisher.join(", ")}` : ""})`, publisherRow === "Margin Atlas" && earlierPublisher.length === 0, { file: earlierPublisher[0] ?? "src/components/StructuredData.tsx", remedy: PUBLISHER_REMEDY });
   check("the footer still leads to /about, /corrections and /data (about-page's rule)", ["/about", "/corrections", "/data"].every((h) => anchors(footNav).some((n) => n.href === h)));
   /* ONE NAME FOR THE FREE DATA, FOOTER AND HOME (critique pass 2, fix round C2, item P2.5): /data was "Free UK data" on the home's Where to
      next and "Free data" in the footer. The name lives once in src/lib/nav.ts (FREE_DATA, "Free UK data": the page's own description

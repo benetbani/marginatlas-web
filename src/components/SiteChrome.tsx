@@ -271,8 +271,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               </div>
             </nav>
             <div className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs text-white/70">
-              {/* The year beside the publisher (the ship audit's 5.7); the publisher's name itself is his (the spec's section 7). */}
-              <span>© {new Date().getFullYear()} Tesseract Research · marginatlas.com</span>
+              {/* The year beside the publisher (the ship audit's 5.7). The publisher is Margin Atlas (his ruling of 2026-10-10); the line ends on the
+                  name, because the domain is the page's own address and the wordmark above the columns says the name once more. */}
+              <span>© {new Date().getFullYear()} Margin Atlas</span>
               {/* Ruling 17 from launch day (the paywall's switch, masterplan step 12). */}
               <span>Covering small businesses worldwide · {paywallOn ? "each UK chapter opens free" : "free to browse"}</span>
             </div>

@@ -127,7 +127,7 @@ export function CellDataset({
     },
     publisher: {
       "@type": "Organization",
-      name: "Tesseract Research",
+      name: "Margin Atlas",
       url: "https://www.marginatlas.com",
     },
     inLanguage: "en",
