@@ -15,7 +15,7 @@
  * height and the name takes the words' place.
  *
  * HOW IT DECIDES. An IntersectionObserver on `main h1`, its top margin the bar's own height, so "under the bar" is wherever the
- * bar ends at any width (HeaderSearch.tsx's idiom: an element, never a scroll offset). The home page keeps the brand: its h1
+ * bar ends at any width (an element, never a scroll offset). The home page keeps the brand: its h1
  * is a sentence about the atlas, not a place. No h1, no name, the lockup as it was.
  *
  * The server renders the brand (no name yet), so the first paint agrees with it; the name can only arrive after hydration.

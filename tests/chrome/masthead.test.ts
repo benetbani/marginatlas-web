@@ -4,12 +4,14 @@
  * 1.1 to 1.14 and its menu spec, 1c). What every page's chrome holds:
  *   - a skip link first, landing on <main id="main" tabindex="-1">;
  *   - the bar: the wordmark, `<nav aria-label="Primary">` with the seven names of src/lib/nav.ts in order, the page being read marked
- *     `aria-current="page"` with a 2px ink underline, Search always in its slot (hidden and out of reach on the home until the picker
- *     leaves the screen), the account link and the Pricing pill only while their switches are on, nothing terracotta, 8px above and
- *     below its controls under 768 (the 60px bar) and 24px from;
+ *     `aria-current="page"` with a 2px ink underline, Search always shown, on the home from its first paint as on every page (item P1.2
+ *     of critique pass 3: it had been invisible until the picker left the screen, which left 96px of nothing at the bar's right edge),
+ *     the account link and the Pricing pill only while their switches are on, nothing terracotta, 8px above and below its controls
+ *     under 768 (the 60px bar) and 24px from;
  *   - the sheet under 1280: a constant "Menu" name with `aria-expanded`, its panel always in the document and `hidden` while shut, on
- *     the bar's column, its height capped to the viewport less the bar and scrollable, 48px rows in the spec's order (Search, the seven
- *     names, About the figures and Who runs this, then the account and Pricing rows only while on), closing on Escape with focus back
+ *     the bar's column, its height capped to the viewport less the bar and scrollable, 48px rows in the spec's order (the seven
+ *     names, About the figures and Who runs this, then the account and Pricing rows only while on; no Search row, because the bar
+ *     always carries Search, so the open sheet showed it twice), closing on Escape with focus back
  *     on the toggle, on a tap outside, on a row, and when the window reaches 1280; the account entry of the bar and of the sheet reads
  *     the session ONCE between them (one client, one getUser, however many entries stand on the page) and, while it does, holds the
  *     width of the longer of its two words, Account, unseen (plan Task 7, amendment 8c; the Task 1 review's m2);
@@ -302,8 +304,17 @@ async function main() {
   check("nothing in the bar is terracotta (the wordmark's red aside)", ![barNoMark, pBarNoMark].some((h) => /(?:text|bg|border|ring|decoration|fill|stroke)-atlas-\d|var\(--terra/.test(h)));
   const search = (h: string) => anchors(h).find((n) => n.href === "/search");
   const homeSearch = search(o.bar), blogSearch = search(b.bar);
-  check("Search holds its slot on the home, unseen and out of reach: invisible, aria-hidden, tabindex -1", !!homeSearch && /\binvisible\b/.test(homeSearch.tag) && /aria-hidden="true"/.test(homeSearch.tag) && /tabindex="-1"/.test(homeSearch.tag));
-  check("Search shows on every other page, a 44 by 44 target with no box", !!blogSearch && !/\binvisible\b|aria-hidden|tabindex/.test(blogSearch.tag) && /min-h-11/.test(blogSearch.tag) && /min-w-11/.test(blogSearch.tag) && !/\bborder\b/.test(blogSearch.tag));
+  /* SEARCH ON THE HOME FROM THE FIRST PAINT (critique pass 3, fix round D1, item P1.2). The slot was kept invisible until the picker left the
+     screen, which stopped the seven names 96px short of the content's right edge on the home's first screen at 1280 (99px at 1080): a hole
+     where the edge should be, on the screen most visitors judge the site by. The reason for hiding it (two search affordances on one
+     screen) no longer holds: the picker answers one case in three fields and the bar's Search is a link to /search for anything. It draws
+     on the home as on every page: no invisible, no aria-hidden, no tabindex, a 44 by 44 target with no box. */
+  const searchShown = (a: A | undefined) => !!a && !/\binvisible\b|aria-hidden|tabindex/.test(a.tag) && /min-h-11/.test(a.tag) && /min-w-11/.test(a.tag) && !/\bborder\b/.test(a.tag);
+  check("Search shows on the home from its first paint, a 44 by 44 target with no box: not invisible, not aria-hidden, in the tab order", searchShown(homeSearch), { file: "src/components/HeaderSearch.tsx", remedy: "draw HeaderSearch's link on the home as on every page: drop the waiting state, the invisible class, aria-hidden and tabIndex -1, and the IntersectionObserver that set them" });
+  check("Search shows on every other page, a 44 by 44 target with no box", searchShown(blogSearch));
+  const searchSrc = code("src/components/HeaderSearch.tsx");
+  check("HeaderSearch keeps no observer, no waiting state and no read of the home's anchor, and is not a client file (a link has nothing to run)", !/IntersectionObserver|useState|useEffect|home-search-anchor|heroSearchGone|waiting|usePathname|["']use client["']/.test(searchSrc), { file: "src/components/HeaderSearch.tsx", remedy: "HeaderSearch is one <a href=\"/search\"> with its glyph and, from 768, its word: no hook, no observer, no \"use client\"" });
+  check("the sheet carries no Search row: the bar always carries Search, so the open sheet showed it twice", !anchors(o.sheet).some((n) => n.href === "/search") && !anchors(b.sheet).some((n) => n.href === "/search") && !/href="\/search"/.test(code(SHEET)), { file: SHEET, remedy: "drop the Search row, the first <li> of the sheet's first list in MobileNav.tsx" });
   check("the bar's row is 8px above and below its controls under 768, 24px from (the 60px phone bar)", /<div class="max-w-content mx-auto px-6 py-2 md:py-6 /.test(o.header));
   /* AIR BETWEEN THE WORDMARK AND THE NAMES (plan 2026-10-10 Task 9). Photographed at 1280 with accounts and Pricing both on, the names at
      24px apart filled the bar's 1072px to the pixel and "Atlas" touched "Countries" (0px measured, 9px with "Sign in"); at 20 the names
@@ -349,7 +360,7 @@ async function main() {
   check("the sheet's rows stand on the bar's column (max-w-content), a labelled navigation", /<nav aria-label="Primary" class="mx-auto max-w-content px-6/.test(o.sheet));
   const rows = (h: string) => anchors(h).map((n) => n.text || (/>Sign in</.test(n.tag) ? "Sign in" : ""));
   const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>([^<]*)<\/(?:a|span)>/g)].map((m) => m[1].trim());
-  const wantOff = ["Search", ...WANT_NAMES, "About the figures", "Who runs this"];
+  const wantOff = [...WANT_NAMES, "About the figures", "Who runs this"];
   check(`the sheet's rows, switches off: ${spanRows(o.sheet).join(", ")}`, JSON.stringify(spanRows(o.sheet)) === JSON.stringify(wantOff));
   /* The server's markup is drawn before the session is read, so the account row is the entry's first state, Sign in (critique pass 2,
      fix round C2, item P2.7); the mounted sheet below swaps it to Account if the read says the reader is signed in. */

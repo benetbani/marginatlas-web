@@ -36,7 +36,7 @@
  * to ship (plan 2026-10-10, Task 1; the spec's section 3, the critique's section
  * 5, the ship audit's 1c), and each change says why where it stands: a skip link
  * first; the seven names from one list (src/lib/nav.ts), the page being read
- * marked; Search always in its slot; the account link and the Pricing pill only
+ * marked; Search always shown, the home from its first paint; the account link and the Pricing pill only
  * behind their switches; a 60px bar on a phone; nothing terracotta in the bar;
  * the footer's names, heads and rows matched to the bar's.
  */

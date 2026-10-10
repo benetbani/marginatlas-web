@@ -12,10 +12,11 @@
  * THE PANEL: full width under the bar, white, a --c-border hairline under it and the card's shadow; its rows on the bar's own column
  * (`max-w-content`, `px-6`, `px-4` under 360; it was max-w-7xl, up to 80px off the wordmark between 1120 and 1279); its height
  * capped at the viewport less the bar and scrollable (a landscape phone and 200 percent zoom cut its last rows off, and the page
- * could not scroll them into reach because the sheet moves with the sticky bar). Rows are 48px: Search first (the bar keeps it
- * hidden on the home until the picker leaves the screen), the seven names (src/lib/nav.ts); then, quieter, About the figures and
- * Who runs this; then Sign in or Account and Pricing, each only while its switch is on. The page being read is marked as the bar
- * marks it, `aria-current="page"`, and for the eye: ink, semibold, a 2px ink rule at the row's left.
+ * could not scroll them into reach because the sheet moves with the sticky bar). Rows are 48px: the seven names (src/lib/nav.ts);
+ * then, quieter, About the figures and Who runs this; then Sign in or Account and Pricing, each only while its switch is on. No
+ * Search row (critique pass 3, fix round D1, item P1.2): the bar carries Search on every page now, the home from its first paint, so
+ * the open sheet showed it twice. The page being read is marked as the bar marks it, `aria-current="page"`, and for the eye: ink,
+ * semibold, a 2px ink rule at the row's left.
  *
  * IT CLOSES on a row tap, on Escape (focus goes back to the toggle; it used to fall to the page, and the next Tab began again at
  * the top), on a tap outside it, and when the window grows to 1280, where the bar's own names take over. Inline SVG glyphs, tokens
@@ -112,11 +113,6 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
       >
         <nav aria-label="Primary" className="mx-auto max-w-content px-6 py-2 max-[359px]:px-4">
           <ul>
-            <li>
-              <Link href="/search" onClick={close} className={`${ROW_MAIN} ${IDLE}`}>
-                Search
-              </Link>
-            </li>
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link

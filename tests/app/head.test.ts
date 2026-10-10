@@ -14,7 +14,7 @@
  *   - the auth client imported only behind the accounts switch, and the session read once for the bar and the sheet; Sentry started
  *     when the browser is idle; one Geist; the home's h1 still from its first frame; no `transition-all` left in the hero's word or
  *     field; the root layout and SiteChrome import the modules they use, not the kit's barrel; and a static walk of the client closure
- *     (the chrome's seven client roots, and the kit barrel taken as a client root, which is what a client component that imports it
+ *     (the chrome's six client roots, and the kit barrel taken as a client root, which is what a client component that imports it
  *     bundles) holds neither the taxonomy nor industries.json (ProfileChip's import of the taxonomy had put industries.json into the
  *     client closure of every route that imports the barrel, and EngravedHero's flag then the taxonomy). (The flag-off home's
  *     picker seed, amendment 8b, is read in tests/trust/home_shape.test.ts beside the rebuilt home's.)
@@ -336,15 +336,16 @@ async function main() {
   );
   /* THE CLIENT CLOSURE, NOT ONLY THE TWO IMPORT LINES (the Task 7 review, fix round 7): the line check above misses a chrome file that
      reaches the taxonomy through another module, and it never looked at the routes that import the barrel, where ProfileChip's
-     import of @/lib/taxonomy still put industries.json (130 KB of source) into the client closure. */
-  const CHROME_ROOTS = ["src/components/HeaderAuth.tsx", "src/components/HeaderSearch.tsx", "src/components/MobileNav.tsx", "src/components/NavLinks.tsx", "src/components/brand/PhoneLockup.tsx", "src/components/kit/WatchTray.tsx", "src/components/newsletter/NewsletterSignupVariants.tsx"];
+     import of @/lib/taxonomy still put industries.json (130 KB of source) into the client closure. HeaderSearch left the list in
+     critique pass 3 (fix round D1, item P1.2): the bar's Search is a plain link now, a server component with no client code. */
+  const CHROME_ROOTS = ["src/components/HeaderAuth.tsx", "src/components/MobileNav.tsx", "src/components/NavLinks.tsx", "src/components/brand/PhoneLockup.tsx", "src/components/kit/WatchTray.tsx", "src/components/newsletter/NewsletterSignupVariants.tsx"];
   const HEAVY_REMEDY = "the file named is the one that imports the taxonomy, the last link of the chain: have it read what it needs from a light module (src/lib/country_list.ts holds the country list with no imports; src/lib/nav.ts holds the country codes), or load the heavy module with import() on use, as src/components/NavigatorForm.tsx loads src/lib/home/picker.ts";
   const chrome = clientClosure([LAYOUT, CHROME]);
   const missingRoots = CHROME_ROOTS.filter((r) => !chrome.roots.includes(r));
   check(
-    `the chrome's client closure (the layout and SiteChrome: ${sizeOf(chrome)}) holds the seven chrome roots and neither the taxonomy nor industries.json (${heavyLine(chrome)}${missingRoots.length ? `; roots not found: ${missingRoots.join(", ")}` : ""})`,
+    `the chrome's client closure (the layout and SiteChrome: ${sizeOf(chrome)}) holds the six chrome roots and neither the taxonomy nor industries.json (${heavyLine(chrome)}${missingRoots.length ? `; roots not found: ${missingRoots.join(", ")}` : ""})`,
     missingRoots.length === 0 && heavyEntry(chrome) === undefined,
-    { file: (heavyEntry(chrome) && chrome.files.get(heavyEntry(chrome) as string)) || LAYOUT, remedy: heavyEntry(chrome) ? HEAVY_REMEDY : "the walk found fewer than the seven chrome roots (HeaderAuth, HeaderSearch, MobileNav, NavLinks, PhoneLockup, WatchTray, NewsletterSignupVariants): read it against the layout and SiteChrome, or update CHROME_ROOTS in tests/app/head.test.ts with the change" },
+    { file: (heavyEntry(chrome) && chrome.files.get(heavyEntry(chrome) as string)) || LAYOUT, remedy: heavyEntry(chrome) ? HEAVY_REMEDY : "the walk found fewer than the six chrome roots (HeaderAuth, MobileNav, NavLinks, PhoneLockup, WatchTray, NewsletterSignupVariants): read it against the layout and SiteChrome, or update CHROME_ROOTS in tests/app/head.test.ts with the change" },
   );
   /* THE BARREL AS A CLIENT ROOT (cleanup round 2): a client component that imports the barrel bundles every module the barrel
      re-exports. The walk used to take the barrel as a server entry and look only for the "use client" files under it, so EngravedHero

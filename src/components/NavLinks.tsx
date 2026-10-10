@@ -8,7 +8,7 @@
  * The page being read is marked for a screen reader (`aria-current="page"`) and for the eye: ink, a 2px ink underline 6px under the
  * words. Every other name is --c-ink2 and goes to ink with a 1px --c-line-strong underline on hover. Nothing here is terracotta
  * (MODEL.md PART 6: terracotta never marks a link or a hover; his ruling of 2026-07-11). A client island only because the page
- * being read comes from the address (usePathname, HeaderSearch.tsx's idiom).
+ * being read comes from the address (usePathname).
  */
 import Link from "next/link";
 import { usePathname } from "next/navigation";

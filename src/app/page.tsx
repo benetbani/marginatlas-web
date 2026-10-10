@@ -414,10 +414,9 @@ export default async function HomePage() {
              form (and its ComboField dropdown, which extends below the
              card) above the band that follows so the open list stays
              fully visible and scrollable. */}
-          {/* The id is read by HeaderSearch. While this card is on screen the
-              header keeps its search hidden, because two search affordances on
-              one screen is what got the header one switched off here in the
-              first place; once it scrolls away the header takes over. */}
+          {/* The id was read by HeaderSearch, which kept the bar's search hidden
+              while this card was on screen; the bar shows its Search from the
+              first paint now (critique pass 3, item P1.2), so nothing reads it. */}
           <div
             id="home-search-anchor"
             className="relative z-30 mt-4 md:mt-5 max-w-5xl mx-auto"

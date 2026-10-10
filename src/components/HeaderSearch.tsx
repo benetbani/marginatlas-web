@@ -1,91 +1,30 @@
-"use client";
-
 /**
- * HeaderSearch — the persistent search in the masthead.
+ * HeaderSearch: the persistent search in the masthead.
  *
- * Every route gets it. The home page used to get nothing, and the reason had
- * expired:
+ * Every route gets it, the home from its first paint (critique pass 3, fix round D1, item P1.2). The home page used to get nothing, then
+ * got a search that stayed invisible until the picker had scrolled away. Both rested on one reason, and it had expired:
  *
- *   "The homepage hero (Wave 4e) already mounts <GlobalSearch /> inside the
- *    rotating-headline card as the primary CTA; showing the header version
- *    simultaneously produced two visible search affordances on the same
- *    screen."
+ *   "The homepage hero already mounts a search inside the rotating-headline card as the primary CTA; showing the header
+ *    version simultaneously produced two visible search affordances on the same screen."
  *
- * Both halves of that stopped being true. The hero was rebuilt around
- * NavigatorForm, the three-field cascade, and the rotating-headline card is
- * gone. GlobalSearch is now mounted by this file and nowhere else, so the
- * duplicate it was avoiding could not occur.
+ * Both halves stopped being true. The hero is a three-field picker for one case (a country, a city, a business), and the bar's
+ * Search is a link to /search, a page that finds any page on the site; one does not stand in for the other. Meanwhile the invisible
+ * slot cost the home's first screen its right edge: the seven names stopped 96px short of the content's edge at 1280 (99px at 1080),
+ * a hole in the one element every page repeats, on the screen most visitors judge the site by. The slot is drawn and shown, as on
+ * every other page, so the bar is balanced from the first paint and nothing moves on the first scroll.
  *
- * What the stale guard left behind was a real gap: the home page was the ONLY
- * route with no persistent search. Ten bands below the hero, a reader who
- * wanted to look something else up had to scroll back to the top, while every
- * other page on the site kept a search in reach.
+ * No box: the icon at 16 and the word from 768, --c-ink2, ink on hover, a 44 by 44 target (the icon-only form under 768 was 40
+ * wide). A link and nothing else, so no client code runs for it: no observer, no state, no read of the address.
  *
- * THE OBJECTION WAS STILL RIGHT AT THE TOP OF THE PAGE, though, and that is
- * why this is not simply deleted. With the navigator card on screen, a second
- * search in the header is exactly the redundancy the original note describes.
- * So the header search appears only once the navigator has scrolled away,
- * which is the behaviour of every reference this page is measured against: the
- * hero search is the instrument while you can see it, and the masthead takes
- * over when you cannot.
- *
- * HOW IT DECIDES. An IntersectionObserver on #home-search-anchor, the wrapper
- * around NavigatorForm. Watching the element itself rather than a scroll offset
- * means the threshold is wherever the card actually ends, at any viewport, with
- * no magic pixel number to go stale when the hero is edited again.
- *
- * THE SLOT IS ALWAYS DRAWN (plan 2026-10-10, the home reformed to ship, Task 1;
- * the ship audit's 1.9 and 1.13, the critique's section 5). It used to return
- * nothing while the picker was on screen, so at 1280 the seven names slid about
- * 120px left on the home's first scroll. Now the link is always in its place;
- * on the home, until the picker leaves the screen, it is invisible, hidden from
- * the accessibility tree and out of the tab order. The server draws it waiting
- * on the home, so the first client paint agrees with it. No box: the icon at
- * 16 and the word from 768, --c-ink2, ink on hover, a 44 by 44 target (the
- * icon-only form under 768 was 40 wide).
- *
- * If the anchor is missing (the home page changed shape, or this mounts
- * somewhere unexpected), the observer never attaches and the search stays
- * waiting. Failing to the current behaviour rather than to two search boxes.
+ * A LINK, NOT A DIALOG (masterplan step 33; his refusals of 2026-09-22: no modal). The header's search once opened GlobalSearch,
+ * a dialog over the page on a click or ⌘K; it goes to /search, a page that works without script, and the dialog is gone.
  */
-
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
-/* A LINK, NOT A DIALOG (masterplan step 33; his refusals of 2026-09-22: no modal). The header's search opened GlobalSearch, a
-   dialog over the page on a click or ⌘K; it now goes to /search, a page that works without script, and the dialog is gone. */
-
-/** The home page's hero search wrapper, set in src/components/spine/home/home-view.tsx. */
-const HOME_ANCHOR_ID = "home-search-anchor";
-
 export function HeaderSearch() {
-  const pathname = usePathname();
-  const isHome = pathname === "/";
-  const [heroSearchGone, setHeroSearchGone] = useState(false);
-
-  useEffect(() => {
-    if (!isHome) return;
-    const anchor = document.getElementById(HOME_ANCHOR_ID);
-    if (!anchor) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setHeroSearchGone(!entry.isIntersecting),
-      // A sliver still counts as present: the header should not appear while
-      // the bottom edge of the navigator is still under it.
-      { threshold: 0 },
-    );
-    observer.observe(anchor);
-    return () => observer.disconnect();
-  }, [isHome]);
-
-  const waiting = isHome && !heroSearchGone;
   return (
     <a
       href="/search"
       aria-label="Search Margin Atlas"
-      aria-hidden={waiting ? "true" : undefined}
-      tabIndex={waiting ? -1 : undefined}
-      className={`inline-flex min-h-11 min-w-11 items-center justify-center gap-2 text-base text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]${waiting ? " invisible" : ""}`}
+      className="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 text-base text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
         <circle cx="11" cy="11" r="7" />
