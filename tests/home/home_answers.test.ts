@@ -19,6 +19,9 @@ import { HERO_BUSINESSES } from "../../src/lib/hero-words";
 import { industryToSlug } from "../../src/lib/taxonomy";
 import { usd } from "../../src/lib/spine/money";
 import { COPY } from "../../src/lib/spine/copy";
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { HomePlace, HomePays } from "../../src/components/spine/home/HomeExample";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-answers";
@@ -61,6 +64,29 @@ if (ex && hero && strip) {
   check(`every step's line is twelve words at most, no semicolon, and says how its figure was made (${lines.map(words).join(", ")} words)`, lines.every((l) => words(l) <= 12 && !l.includes(";")) && /^Counted\b/.test(lines[0]) && /^Worked out\b/.test(lines[1]) && /^An estimate\b/.test(lines[2]) && /worked out/.test(lines[3]), { file: COPY_FILE, remedy: "cut COPY.home.example's lines to twelve words, no semicolon, each opening with its figure's kind as About the figures names it" });
   check(`the two titles are four words at most ("${s.title}", "${p.title}")`, words(s.title) <= 4 && words(p.title) <= 4, { file: COPY_FILE, remedy: "cut COPY.home.example.placeTitle and paysTitle to four words" });
   check(`the left door opens the London page (${ex.href})`, ex.href === `/gb/london/${EXAMPLE_TRADE}`);
+}
+
+/* THE DRAWING (Task 7): the halves, each step's numeral where a row's glyph stands, every figure stamped, one 40 (step 3, the page's
+   first loud moment), the share as 100 units in ink2, the doors. A red here is HomeExample.tsx's to put right. */
+const DRAWN_AT = { file: "src/components/spine/home/HomeExample.tsx", remedy: "draw the halves as HomeExample holds them: the steps in order with their numerals, step 2 the card's 30 on the strip, step 3 the page's one 40 in the accent with the share as 100 units in ink2, every figure stamped, the doors to the London page and to #search" };
+if (ex) {
+  const place = renderToStaticMarkup(React.createElement(HomePlace, { ex }));
+  const pays = renderToStaticMarkup(React.createElement(HomePays, { ex }));
+  const steps = (h: string) => [...h.matchAll(/data-step="(\d)"/g)].map((m) => m[1]).join("");
+  check(`the steps run 1 and 2 on the left, 3 and 4 on the right (${steps(place)} | ${steps(pays)})`, steps(place) === "12" && steps(pays) === "34", DRAWN_AT);
+  check(`each half's title is its own h2 ("${ex.place.title}", "${ex.pays.title}")`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(ex.place.title))}</h2>`).test(place) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(ex.pays.title))}</h2>`).test(pays), DRAWN_AT);
+  const figs = (h: string) => [...h.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
+  check(`every figure on the left says where it came from (${figs(place).length}: the count and the strip's three)`, figs(place).length === 4 && figs(place).every((f) => /data-src="uk\/registers\/turnover\.json:restaurants:E12000007"/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
+  check(`every figure on the right says where it came from (${figs(pays).length}: break-even, its share, the insolvencies)`, figs(pays).length === 3 && figs(pays).every((f) => /data-src="/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
+  check("step 2 is the card's 30, on the strip of three marks", new RegExp(`--t-focal[^"]*"[^>]*>${reEsc(ex.place.sales.figure)}<`).test(place) && /data-archetype="range-strip"/.test(place) && /data-marks="3"/.test(place), DRAWN_AT);
+  const accentsL = place.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
+  const accentsR = pays.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
+  check(`step 3 is the page's one 40, in the accent, the example's only accent (${accentsL.length} left, ${accentsR.length} right)`, accentsL.length === 0 && accentsR.length === 1 && (pays.match(/data-hero-figure/g) ?? []).length === 1 && new RegExp(`data-hero-figure[^>]*--t-answer[^>]*terra-text[^>]*data-src="uk/pnl:restaurants:E12000007" data-kind="estimate">${reEsc(ex.pays.breakEven.figure)}<`).test(pays), DRAWN_AT);
+  const units = /data-units="(\d+)"/.exec(pays)?.[1];
+  const inked = (pays.match(/background:var\(--c-ink2\);border-color:var\(--c-ink2\)/g) ?? []).length;
+  check(`the share is ${units} units with ${inked} inked in ink2, never the accent`, units === "100" && inked === ex.pays.above.part && !/background:var\(--terra\)/.test(pays), DRAWN_AT);
+  check("the doors: the London page on the left, the picker on the right", place.includes(`href="${ex.href}"`) && place.includes(`>${esc(ex.place.door)}<`) && pays.includes('href="#search"') && pays.includes(`>${esc(ex.pays.door)}<`), DRAWN_AT);
+  check("steps 2 and 3 carry their line at 14, not a small line (the copy gate's LINES reads 13.5px and under)", [[place, ex.place.sales.line], [pays, ex.pays.breakEven.line]].every(([h, l]) => new RegExp(`<p data-focal-words="" class="[^"]*--t-body[^"]*">${reEsc(esc(l))}</p>`).test(h)), DRAWN_AT);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
