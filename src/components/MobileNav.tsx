@@ -11,7 +11,8 @@
  * reaches 14px into the gutter (-mr-3.5; critique pass 3, fix round D1, item P1.3): the 22px glyph's ink stops 13.75px inside its
  * box, so without it the three lines ended 22px short of the card's edge on a phone; with it they end on the content's edge.
  *
- * THE PANEL: full width under the bar, white, a --c-border hairline under it and the card's shadow; its rows on the bar's own column
+ * THE PANEL: under 768 a sheet, from 768 a 360px dropdown under its own button (BOX and PANEL below say how, critique pass 3, fix round D1,
+ * item P1.4). The sheet: full width under the bar, white, a --c-border hairline under it and the card's shadow; its rows on the bar's own column
  * (`max-w-content` and the site's one gutter, GUTTER in src/lib/nav.ts; it was max-w-7xl, up to 80px off the wordmark between 1120 and 1279); its height
  * capped at the viewport less the bar and scrollable (a landscape phone and 200 percent zoom cut its last rows off, and the page
  * could not scroll them into reach because the sheet moves with the sticky bar). Rows are 48px: the seven names (src/lib/nav.ts);
@@ -41,6 +42,16 @@ const ROW_QUIET = `${ROW} border-transparent text-sm text-[var(--c-ink2)] transi
 const IDLE = "border-transparent text-[var(--c-ink)] underline-offset-[6px] hover:underline hover:decoration-1 hover:decoration-[var(--c-line-strong)]";
 const CURRENT = "border-[var(--c-ink)] font-semibold text-[var(--c-ink)]";
 const GROUP = "mt-2 border-t border-[var(--c-border)] pt-2";
+/**
+ * THE SHEET UNDER 768, THE PANEL FROM 768 (critique pass 3, fix round D1, item P1.4). Under 768 the box is the full-width white sheet it
+ * was (hairline, the card's shadow, capped to the viewport less the bar, scrolling). From 768, where the sheet is a tablet's only navigation
+ * (768 to 1079, to 1279 with a switch on), a phone's list in a tablet-wide slab left about 85 percent of the white empty, so the box turns
+ * transparent and takes no pointer, and the <nav> inside it is the panel: 360px, on the content's right edge under its own button, white, a
+ * hairline on three sides (its top is the bar's own), 12px under-corners, the card's shadow, scrolling within the viewport less the bar.
+ * The page stays visible and live beside it. No scrim and no dim (his refusal of modals, 2026-09-22: a dropdown, not a dialog).
+ */
+const BOX = "absolute inset-x-0 top-full z-dropdown max-h-[calc(100dvh_-_var(--atlas-header-h))] overflow-y-auto overscroll-contain border-b border-[var(--c-border)] bg-white shadow-card md:pointer-events-none md:max-h-none md:overflow-visible md:border-b-0 md:bg-transparent md:shadow-none";
+const PANEL = "py-2 md:ml-auto md:w-[22.5rem] md:pointer-events-auto md:max-h-[calc(100dvh_-_var(--atlas-header-h))] md:overflow-y-auto md:overscroll-contain md:rounded-b-xl md:border md:border-t-0 md:border-[var(--c-border)] md:bg-white md:px-3 md:shadow-card";
 
 export function MobileNav({ pricing = false }: { pricing?: boolean }) {
   const [open, setOpen] = React.useState(false);
@@ -111,49 +122,51 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
       <div
         id={SHEET_ID}
         hidden={!open}
-        className="absolute inset-x-0 top-full z-dropdown max-h-[calc(100dvh_-_var(--atlas-header-h))] overflow-y-auto overscroll-contain border-b border-[var(--c-border)] bg-white shadow-card"
+        className={BOX}
       >
-        <nav aria-label="Primary" className={`mx-auto max-w-content ${GUTTER} py-2`}>
-          <ul>
-            {NAV.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={close}
-                  aria-current={current === item.href ? "page" : undefined}
-                  className={`${ROW_MAIN} ${current === item.href ? CURRENT : IDLE}`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <ul className={GROUP}>
-            {SHEET_TRUST.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} onClick={close} className={ROW_QUIET}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          {auth || pricing ? (
-            <ul className={GROUP}>
-              {auth ? (
-                <li>
-                  <AuthLink onClick={close} className={`${ROW_MAIN} ${IDLE}`} />
-                </li>
-              ) : null}
-              {pricing ? (
-                <li>
-                  <Link href="/pricing" onClick={close} className={`${ROW_MAIN} ${IDLE}`}>
-                    Pricing
+        <div className={`mx-auto max-w-content ${GUTTER}`}>
+          <nav aria-label="Primary" className={PANEL}>
+            <ul>
+              {NAV.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={close}
+                    aria-current={current === item.href ? "page" : undefined}
+                    className={`${ROW_MAIN} ${current === item.href ? CURRENT : IDLE}`}
+                  >
+                    {item.label}
                   </Link>
                 </li>
-              ) : null}
+              ))}
             </ul>
-          ) : null}
-        </nav>
+            <ul className={GROUP}>
+              {SHEET_TRUST.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} onClick={close} className={ROW_QUIET}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            {auth || pricing ? (
+              <ul className={GROUP}>
+                {auth ? (
+                  <li>
+                    <AuthLink onClick={close} className={`${ROW_MAIN} ${IDLE}`} />
+                  </li>
+                ) : null}
+                {pricing ? (
+                  <li>
+                    <Link href="/pricing" onClick={close} className={`${ROW_MAIN} ${IDLE}`}>
+                      Pricing
+                    </Link>
+                  </li>
+                ) : null}
+              </ul>
+            ) : null}
+          </nav>
+        </div>
       </div>
     </div>
   );

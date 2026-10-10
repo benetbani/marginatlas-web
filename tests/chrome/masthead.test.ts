@@ -272,7 +272,7 @@ async function main() {
   };
   const parts = (html: string) => {
     const header = slice(html, /<header\b/, "</header>");
-    const sheet = slice(header, /<div id="site-menu"/, "</nav></div>");
+    const sheet = slice(header, /<div id="site-menu"/, "</nav></div></div>");
     const bar = header.replace(sheet, "");
     return { header, sheet, bar, footer: slice(html, /<footer\b/, "</footer>"), main: /<main\b[^>]*>/.exec(html)?.[0] ?? "" };
   };
@@ -332,7 +332,7 @@ async function main() {
     ["the bar's row", /<div class="max-w-content mx-auto [^"]*">/.exec(o.header)?.[0] ?? ""],
     ["<main>", o.main],
     ["the footer's column", /<div class="max-w-content mx-auto [^"]*py-12">/.exec(o.footer)?.[0] ?? ""],
-    ["the sheet's rows", /<nav aria-label="Primary" class="mx-auto max-w-content [^"]*">/.exec(o.sheet)?.[0] ?? ""],
+    ["the sheet's rows", /<div class="mx-auto max-w-content [^"]*"><nav aria-label="Primary"/.exec(o.sheet)?.[0] ?? ""],
     ["the newsletter bar's form", /<form [^>]*class="mx-auto max-w-content [^"]*"/.exec(off)?.[0] ?? ""],
   ];
   const offGutter = gutterTags.filter(([, t]) => { const c = classOf(t); return !t || !c.includes("px-4") || !c.includes("md:px-6") || bareSix(c); }).map(([n]) => n);
@@ -390,7 +390,26 @@ async function main() {
   const panel = /<div id="site-menu"[^>]*>/.exec(o.header)?.[0] ?? "";
   check("the sheet's panel is in the document while shut, hidden", /\bhidden=""/.test(panel));
   check("the panel's height is capped to the viewport less the bar, and it scrolls", /max-h-\[calc\(100dvh_-_var\(--atlas-header-h\)\)\]/.test(panel) && /overflow-y-auto/.test(panel) && /overscroll-contain/.test(panel));
-  check("the sheet's rows stand on the bar's column (max-w-content) and its gutter, a labelled navigation", /<nav aria-label="Primary" class="mx-auto max-w-content px-4 md:px-6/.test(o.sheet));
+  check("the sheet's rows stand on the bar's column (max-w-content) and its gutter, a labelled navigation", /<div class="mx-auto max-w-content px-4 md:px-6"><nav aria-label="Primary" class="/.test(o.sheet));
+  /* THE TABLET'S MENU IS A PANEL UNDER ITS BUTTON, NOT A PHONE'S LIST IN A SLAB (critique pass 3, fix round D1, item P1.4). From 768 to 1079
+     (1279 with a switch on) the sheet is the only navigation, and it opened as a full-width white panel holding a 110px column of ten rows:
+     about 85 percent of it empty (probed at 768 and 1024: a 768 and a 1024px slab, the rows at its left). A menu opens where it was tapped, and
+     the size of its content sets the size of the panel. Under 768 it stays the full-width sheet. From 768 the positioning box is transparent
+     and takes no pointer (the page stays visible and live beside the panel), the <nav> is the panel: 360px (22.5rem), its right edge on the
+     content's right edge, white, a --c-border hairline on three sides (its top is the bar's own hairline), 12px under-corners, the card's
+     shadow, scrolling within the viewport less the bar. No scrim, no dim, no focus trap: a dropdown, never a dialog (his refusal of modals,
+     2026-09-22); it closes as it did (a row, Escape, a tap outside, the window growing to the bar's width). BLIND SPOT: classes as written;
+     the measured box, panel width, right edge, last row inside the screen and what a tap beside the panel reaches are
+     scratchpad/home-reform/d1_probe.mjs's (sheet). */
+  const PANEL_REMEDY = "give the sheet's positioning box the phone sheet's classes plus md:pointer-events-none md:max-h-none md:overflow-visible md:border-b-0 md:bg-transparent md:shadow-none, wrap the <nav> in the bar's column (mx-auto max-w-content GUTTER), and give the <nav> md:ml-auto md:w-[22.5rem] md:pointer-events-auto md:bg-white md:border md:border-t-0 md:border-[var(--c-border)] md:rounded-b-xl md:shadow-card md:px-3 and its own md:max-h-[calc(100dvh_-_var(--atlas-header-h))] md:overflow-y-auto md:overscroll-contain";
+  const boxTokens = classOf(panel);
+  const navTokens = classOf(/<nav aria-label="Primary"[^>]*>/.exec(o.sheet)?.[0] ?? "");
+  const missingFrom = (have: string[], want: string[]) => want.filter((t) => !have.includes(t));
+  const boxLack = missingFrom(boxTokens, ["bg-white", "border-b", "shadow-card", "max-h-[calc(100dvh_-_var(--atlas-header-h))]", "overflow-y-auto", "overscroll-contain", "md:pointer-events-none", "md:max-h-none", "md:overflow-visible", "md:border-b-0", "md:bg-transparent", "md:shadow-none"]);
+  check(`under 768 the sheet is the full-width white panel it was; from 768 its box is transparent, takes no pointer and does not scroll${boxLack.length ? `: lacks ${boxLack.join(" ")}` : ""}`, boxLack.length === 0, { file: SHEET, remedy: PANEL_REMEDY });
+  const navLack = missingFrom(navTokens, ["md:ml-auto", "md:w-[22.5rem]", "md:pointer-events-auto", "md:bg-white", "md:border", "md:border-t-0", "md:border-[var(--c-border)]", "md:rounded-b-xl", "md:shadow-card", "md:px-3", "md:max-h-[calc(100dvh_-_var(--atlas-header-h))]", "md:overflow-y-auto", "md:overscroll-contain"]);
+  check(`from 768 the <nav> is a 360px panel on the content's right edge: white, a hairline on three sides, 12px under-corners, the card's shadow, scrolling within the viewport${navLack.length ? `: lacks ${navLack.join(" ")}` : ""}`, navLack.length === 0, { file: SHEET, remedy: PANEL_REMEDY });
+  check("the panel is a dropdown, not a dialog: no scrim, no dim, no fixed layer, no modal role, no inert page", !/\bfixed\b|inset-0|backdrop|bg-black|bg-\[var\(--c-ink|aria-modal|role="dialog"|<dialog|\binert\b/.test(o.sheet + p.sheet), { file: SHEET, remedy: "his refusal of modals (2026-09-22): the sheet is a dropdown under its button, with no scrim over the page and no focus trap" });
   const rows = (h: string) => anchors(h).map((n) => n.text || (/>Sign in</.test(n.tag) ? "Sign in" : ""));
   const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>([^<]*)<\/(?:a|span)>/g)].map((m) => m[1].trim());
   const wantOff = [...WANT_NAMES, "About the figures", "Who runs this"];
