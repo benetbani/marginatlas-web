@@ -90,6 +90,10 @@ const lead = renderToStaticMarkup(React.createElement(Ring, { value: 97.2, figur
 check("a ring by default is 144px with its figure at the focal rung", /class="relative h-36 w-36"/.test(big) && /width="144"/.test(big) && /class="fig text-\[length:var\(--t-focal\)\] leading-none/.test(big), RING, "keep the default ring 144px and its figure at --t-focal");
 check("a lead ring is 96px with its figure at the lead rung, stamped", /class="relative h-24 w-24"/.test(lead) && /width="96"/.test(lead) && /class="fig text-\[length:var\(--t-lead\)\] font-semibold leading-none text-\[var\(--c-ink\)\]" data-src="home\/method\.json:matched_names" data-kind="counted">30,510</.test(lead) && !/--t-focal/.test(lead), RING, "Ring size lead: a 96px ring (h-24 w-24) and its figure at --t-lead, semibold");
 check("a ring's caption may hold a stamped figure", /data-mark-label="true"[^>]*>of <span class="fig " data-src="home\/method\.json:names" data-kind="counted">31,376<\/span> names found in the register</.test(lead), RING, "Ring's caption is a node drawn as given");
+/* THE LEAD RING'S CAPTION BALANCES ITS LINES (fix round 2b; the Task 4 review's concern 1). "in 100 names found in the register" in the
+   22ch box broke as "in 100 names found in the" and "register" at every width. Only the lead ring, which only the home's joins draws,
+   takes text-balance, so no other ring's caption moves. */
+check("a lead ring's caption balances its lines (text-balance on its element), and a default ring's caption keeps its classes without it", /<div data-mark-label="true" class="[^"]*\btext-balance\b[^"]*">/.test(lead) && /<div data-mark-label="true" class="mt-2 max-w-\[22ch\] text-center text-\[length:var\(--t-micro\)\] leading-snug text-\[var\(--c-muted\)\]">of new firms, after 5 years<\/div>/.test(big), RING, "Ring size lead: text-balance on the caption's element, and nothing added to a default ring's caption");
 
 /* BARLIST'S QUIET */
 const BARS = "src/components/spine/charts/BarList.tsx";

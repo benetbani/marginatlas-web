@@ -19,7 +19,11 @@
  *    rung, in grey.
  *  - `size="lead"`: the figure at the lead rung (16px semibold, var(--t-lead))
  *    in a 96px ring, so a ring beside a card's focal figure is never a second
- *    30.
+ *    30. Its caption takes `text-balance` (fix round 2b): in the 22ch box the
+ *    joins' "in 100 names found in the register" broke as "in 100 names found
+ *    in the" and "register" at every width, a word left alone under the ring;
+ *    balanced it breaks as "in 100 names found" and "in the register". Only
+ *    the lead ring takes it, so no other ring's caption moves.
  *  - `data-archetype="ring"`, `data-visual="1"`, `data-share` the whole
  *    percent. No second hue.
  *  - `tone="ink"` (plan 2026-10-10, the home reformed to ship, Task 4; the
@@ -57,7 +61,7 @@ export function Ring({ value, figure, caption, accent = false, prov, size = "foc
           <span className={`fig ${lead ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-focal)]"} leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</span>
         </div>
       </div>
-      {caption ? <div data-mark-label className="mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{caption}</div> : null}
+      {caption ? <div data-mark-label className={`mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${lead ? " text-balance" : ""}`}>{caption}</div> : null}
     </div>
   );
 }

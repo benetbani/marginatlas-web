@@ -1908,6 +1908,7 @@
         "data/uk/registers/failures.json",
         "scratchpad/harness/pages/home-gb.html",
         "src/app/(site)/about-data/page.tsx",
+        "src/components/spine/archetypes/Ring.tsx",
         "src/components/spine/home/HomeProofs.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/lib/home/how_made.ts",
