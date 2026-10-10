@@ -15,11 +15,13 @@
  *
  * THE BOUNDARY IS NOT THE COLOUR ALONE (R3: every band pair scores under APCA's visibility floor; forced colours remove
  * backgrounds): the zone's padding, the numbered chapter heading and each section's own heading carry it; on a phone two
- * sections stacked in one zone are parted by a hairline with 24px either side.
+ * sections stacked in one zone are parted by a hairline with 24px either side, except above a section that keeps its box (a door
+ * or an instrument): its own edge parts them, so that pair has the 24px and no hairline (plan 2026-10-10, the home reformed to ship,
+ * Task 4; the critique's P1.8).
  *
  * Distances, all on the ladder (DISTANCES.md): zone padding 40 / 48 / 64 at 375 / 768 / 1024 (globals.css); chapter number to
  * title 8; chapter heading to the level 24 on a phone, 32 from 1024; two sections in a level 48 apart from 768 and 64 from 1024;
- * stacked sections (under 768) 24, a hairline, 24.
+ * stacked sections (under 768) 24, a hairline, 24 (24 alone above a section that keeps its box).
  */
 import * as React from "react";
 

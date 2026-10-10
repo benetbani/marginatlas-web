@@ -204,8 +204,13 @@ const uk = ukTaxOnProfit();
 if (proofs && uk) {
   const t = proofs.tax;
   check(`the tax proof is /gb's masthead: "${t.label}" ${t.figure}, worked out`, t.label === board.answer?.label && t.figure === board.answer?.value && t.prov.src === board.answer?.prov?.src && t.prov.kind === "worked out", { file: "src/lib/home/proofs.ts", remedy: "take the tax proof from buildHomeAnswers' answer, the figure buildHeroBoard prints" });
-  const year = UK_2026_27.taxYear.replace("-", "‑");
-  check(`its line names the profit and the year's rules, the year's hyphen unbreakable ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", year) && t.line.includes("‑") && !t.line.includes(UK_2026_27.taxYear) && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: the profit and the law's year, twelve words at most; src/lib/home/proofs.ts writes the year with U+2011" });
+  const year = UK_2026_27.taxYear.replace("-", "\u2011");
+  check(`its line names the profit and the year's rules, the year's hyphen unbreakable ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", year) && t.line.includes("\u2011") && !t.line.includes(UK_2026_27.taxYear) && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: the profit and the law's year, twelve words at most; src/lib/home/proofs.ts writes the year with U+2011" });
+  /* THE HYPHEN IS WRITTEN, NOT PASTED (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 12). U+2011 looks like the
+     hyphen beside it, so a literal one in the source is a character nobody can see: the builder and this file write it as the escape
+     \u2011. Geist's Latin subset holds no U+2011, so the browser draws the glyph from a fallback face; Task 9's photographs look at it. */
+  const proofsSrc = readFileSync("src/lib/home/proofs.ts", "utf8");
+  check("the builder writes the year's unbreakable hyphen as an escape (\\u2011) and holds no invisible U+2011 itself", /taxYear\.replace\("-", "\\u2011"\)/.test(proofsSrc) && !proofsSrc.includes(String.fromCodePoint(0x2011)), { file: "src/lib/home/proofs.ts", remedy: "write the year's hyphen as the escape in the string, replace(\"-\", \"\\u2011\"), never the character itself" });
   /* ITS TWO RULES (P0.7): income tax and National Insurance, each the law engine's own part, whole numbers that sum to the printed total. */
   const RULES_AT = { file: "src/lib/home/proofs.ts", remedy: "hand ProofTax two rows from ukTaxOnProfit().partsPercent (src/lib/spine/uk_tax_on_profit.ts): income tax, then National Insurance, each a whole percent, worked out" };
   const total = Number.parseInt(t.figure, 10);

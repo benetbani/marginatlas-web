@@ -126,7 +126,7 @@ async function RegionIndustriesPageBody({
           {regionName}
         </Link>
         <span className="mx-2">/</span>
-        <span>Activities</span>
+        <span>Trades</span>
       </nav>
 
       <h1 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 mb-3">

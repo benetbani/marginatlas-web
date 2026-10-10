@@ -97,7 +97,7 @@ export function buildProofs(): Proofs | null {
       label: answer.kicker,
       figure: answer.figure,
       /* THE YEAR HOLDS TOGETHER (P2.3): a non-breaking hyphen, so "2026-27" never ends one line and starts the next. */
-      line: C.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", UK_2026_27.taxYear.replace("-", "‑")),
+      line: C.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", UK_2026_27.taxYear.replace("-", "\u2011")),
       prov: answer.prov,
       lands: answer.lands,
       /* ITS TWO RULES (P0.7): whole numbers that sum to the printed total, each the law engine's own part (uk_tax_on_profit.ts). */

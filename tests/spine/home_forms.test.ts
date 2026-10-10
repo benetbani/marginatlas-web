@@ -98,6 +98,17 @@ check("a ring's caption may hold a stamped figure", /data-mark-label="true"[^>]*
    takes text-balance, so no other ring's caption moves. */
 check("a lead ring's caption balances its lines (text-balance on its element), and a default ring's caption keeps its classes without it", /<div data-mark-label="true" class="[^"]*\btext-balance\b[^"]*">/.test(lead) && /<div data-mark-label="true" class="mt-2 max-w-\[22ch\] text-center text-\[length:var\(--t-micro\)\] leading-snug text-\[var\(--c-muted\)\]">of new firms, after 5 years<\/div>/.test(big), RING, "Ring size lead: text-balance on the caption's element, and nothing added to a default ring's caption");
 
+/* THE RING'S LABEL IS ITS CAPTION'S, AND ITS CAP TURNS AT 90 (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 13).
+   The svg was labelled "97 of the whole" beside a caption that says what the 97 is of ("in 100 names found in the register"), so a
+   screen reader met two accounts of one drawing. The label is now the figure and the caption's words when a caption is given (a
+   caption that is a node is read for its text, a stamped figure in it included), and "of the whole" only when there is none. The cap is
+   butt above 90 percent so a nearly closed ring shows no notch at twelve o'clock, round at 90 and under: pinned at its edge. */
+const svgLabel = (html: string) => /<svg [^>]*aria-label="([^"]*)"/.exec(html)?.[1] ?? "";
+const ringOf = (props: Record<string, unknown>) => renderToStaticMarkup(React.createElement(Ring, { value: 62, figure: "62%", ...props }));
+check(`a ring with a caption is labelled by its figure and its caption, a node's text included, and one without by "of the whole" ("${svgLabel(big)}", "${svgLabel(lead)}", "${svgLabel(ringOf({}))}")`, svgLabel(big) === "38% of new firms, after 5 years" && svgLabel(lead) === "30,510 of 31,376 names found in the register" && svgLabel(ringOf({})) === "62% of the whole" && svgLabel(ringOf({ caption: "of the day" })) === "62% of the day", RING, "Ring: the svg's aria-label is the figure then the caption's words when a caption is given (a node by its text), else the figure then \"of the whole\"");
+const capOf = (value: number) => /stroke-linecap="(butt|round)"/.exec(ringOf({ value, figure: String(value) }))?.[1] ?? "none";
+check(`the sweep's cap is butt above 90 percent and round at 90 and under (91 ${capOf(91)}, 90 ${capOf(90)}, 89.9 ${capOf(89.9)}, 90.1 ${capOf(90.1)}, 100 ${capOf(100)}, 38 ${capOf(38)})`, capOf(91) === "butt" && capOf(90.1) === "butt" && capOf(100) === "butt" && capOf(90) === "round" && capOf(89.9) === "round" && capOf(38) === "round", RING, "Ring: strokeLinecap is butt when the share is over 0.9 and round at 0.9 and under");
+
 /* MONTHBARS' PROV (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 11). The twelve counts a MonthBars draws are
    figures, and the archive's second proof printed them with no data-src and no data-kind: a prov stamps the drawing's root with where
    they came from, as a figure's own element is stamped, and without it the drawing is exactly what it was. */

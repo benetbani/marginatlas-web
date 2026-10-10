@@ -136,7 +136,7 @@ export default async function AcrossCitiesPage({
       <div className="mx-auto max-w-2xl px-4 py-16 md:px-6">
         <nav className="mb-6 text-sm text-cocoa-700/70">
           <Link href="/industries" className="hover:text-atlas-700">
-            Activities
+            Trades
           </Link>
           <span className="mx-2">/</span>
           <Link href={`/industries/${activitySlug}`} className="hover:text-atlas-700">
@@ -174,7 +174,7 @@ export default async function AcrossCitiesPage({
       {/* Breadcrumb */}
       <nav className="mb-5 text-sm text-cocoa-700/70">
         <Link href="/industries" className="hover:text-atlas-700">
-          Activities
+          Trades
         </Link>
         <span className="mx-2">/</span>
         <Link href={`/industries/${activitySlug}`} className="hover:text-atlas-700">

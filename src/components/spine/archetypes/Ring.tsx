@@ -32,12 +32,29 @@
  *    answer. The default, "accent", is the terracotta pair as before.
  *  - THE CAP (P1.6): round, but butt above 90 percent, so a nearly closed
  *    ring shows no notch at twelve o'clock where the round cap overlapped.
+ *    Pinned at its edge in tests/spine/home_forms.test.ts: 91 butt, 90 round.
+ *  - THE LABEL (the closing cleanup of the same plan, item 13): the svg's
+ *    account to a screen reader is the figure and the caption's words when a
+ *    caption is given ("97 in 100 names found in the register"; a caption that
+ *    is a node is read for its text, a stamped figure in it included), and the
+ *    figure and "of the whole" only when there is none. It said "97 of the
+ *    whole" beside a caption that says what the 97 is of.
  *
  * Gated by the archetype harness (stories `ring`: the exemplar, a share over
  * a hundred, a share under a quarter) and the page laws.
  */
 import * as React from "react";
 import { provAttrs, type Provenance } from "@/lib/spine/provenance";
+
+/** The words of a caption node as a screen reader gets them: a string or a number as it is, an element by its children, so a caption
+ *  that holds a stamped figure ("of <Fig>31,376</Fig> names found in the register") reads whole. */
+function wordsOf(node: React.ReactNode): string {
+  if (node === null || node === undefined || typeof node === "boolean") return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(wordsOf).join("");
+  if (React.isValidElement(node)) return wordsOf((node.props as { children?: React.ReactNode }).children);
+  return "";
+}
 
 /** `prov` stamps the figure inside the ring with where it came from (plan 06, task B5), as every other figure is stamped. `size`
  *  (plan 2026-10-09, home introduction): "lead" draws a 96px ring with its figure at the lead rung (16, semibold), for a ring that is a
@@ -50,10 +67,11 @@ export function Ring({ value, figure, caption, accent = false, prov, size = "foc
   const len = share * c;
   const lead = size === "lead";
   const ink = tone === "ink";
+  const label = `${figure} ${wordsOf(caption).replace(/\s+/g, " ").trim() || "of the whole"}`;
   return (
     <div data-archetype="ring" data-visual="1" data-share={String(Math.round(value))} className="flex flex-col items-center">
       <div className={lead ? "relative h-24 w-24" : "relative h-36 w-36"}>
-        <svg viewBox="0 0 120 120" width={lead ? "96" : "144"} height={lead ? "96" : "144"} role="img" aria-label={`${figure} of the whole`} className={lead ? "block h-24 w-24" : "block h-36 w-36"}>
+        <svg viewBox="0 0 120 120" width={lead ? "96" : "144"} height={lead ? "96" : "144"} role="img" aria-label={label} className={lead ? "block h-24 w-24" : "block h-36 w-36"}>
           <circle r={r} cx="60" cy="60" fill="none" stroke={ink ? "var(--c-soft2)" : "var(--terra-soft)"} strokeWidth="14" />
           <circle r={r} cx="60" cy="60" fill="none" stroke={ink ? "var(--c-ink2)" : "var(--terra)"} strokeWidth="14" strokeDasharray={`${len} ${c - len}`} strokeDashoffset={c / 4} strokeLinecap={share > 0.9 ? "butt" : "round"} data-sweep />
         </svg>

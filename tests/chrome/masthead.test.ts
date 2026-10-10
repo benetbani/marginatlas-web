@@ -15,7 +15,7 @@
  *     width of the longer of its two words, Account, unseen (plan Task 7, amendment 8c; the Task 1 review's m2);
  *   - the footer: `<nav aria-label="Footer">`, its first column the same seven names, heads in sentence case, 44px rows on a phone,
  *     no version string, the year beside the publisher, Pricing only while the paywall is on; one name per destination across the bar,
- *     the sheet and the footer;
+ *     the sheet, the footer and the breadcrumbs (no page calls the trades' destination "Activities");
  *   - the height token by width (src/app/layout.tsx), the focus floor, scroll-padding-top, the one text red and the control-line
  *     token (src/app/globals.css); the 404 inside the chrome with true lines (src/app/not-found.tsx); no Phosphor barrel anywhere in
  *     SiteChrome's import graph (the 404's header records a static export killed by one);
@@ -153,6 +153,16 @@ async function main() {
   for (const f of srcFiles) code(f).split("\n").forEach((l, i) => { if (/rgba?\(\s*153\s*,\s*22\s*,\s*0\b/.test(l)) redWritten.push({ file: f, line: i + 1 }); });
   for (const s of redWritten) red({ rule: RULE, file: s.file, line: s.line, detail: "the text red's shade (153, 22, 0) is written out beside the token that holds it", remedy: "write it from the token: color-mix(in srgb, var(--terra-text) 55%, transparent), so one line in globals.css moves every use" });
   check(`the text red is read from --terra-text and not written as an rgb (${redWritten.length} written)`, redWritten.length === 0, { file: redWritten[0]?.file ?? "src", remedy: "write it from the token: color-mix(in srgb, var(--terra-text) 55%, transparent)" });
+
+  /* ONE NAME FOR THE TRADES' DESTINATION, EVERYWHERE A PAGE SAYS IT (the closing cleanup of plan 2026-10-10, the home reformed to ship,
+     item 4). The bar, the sheet and the footer call /industries "Trades" (src/lib/nav.ts), and two breadcrumbs still called it
+     "Activities", as did the two on the across-cities page; the region's list of trades says it as its last crumb. No page draws a
+     crumb or a link whose words are "Activities". BLIND SPOT: this reads text written in the markup, one word on its own, and cannot
+     see a name built from a variable. */
+  const activities: Array<{ file: string; line: number }> = [];
+  for (const f of srcFiles) if (f.endsWith(".tsx")) code(f).split("\n").forEach((l, i) => { if (/>\s*Activities\s*</.test(l) || /^\s*Activities\s*$/.test(l)) activities.push({ file: f, line: i + 1 }); });
+  for (const s of activities) red({ rule: RULE, file: s.file, line: s.line, detail: "a breadcrumb or a link calls the trades' page \"Activities\"; the bar, the sheet and the footer call it \"Trades\"", remedy: "say \"Trades\": one name per destination (src/lib/nav.ts)" });
+  check(`no page calls the trades' destination "Activities" (${activities.length} sites${activities.length ? ", listed above" : ""})`, activities.length === 0, { file: activities[0]?.file ?? "src/app", remedy: "say \"Trades\": one name per destination (src/lib/nav.ts)" });
 
   /* The graph: every file SiteChrome reaches through src/, and each package it names. */
   const seen = new Set<string>();

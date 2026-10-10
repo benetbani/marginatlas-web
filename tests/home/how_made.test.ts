@@ -105,9 +105,19 @@ if (proofs && joins) {
   const html = renderToStaticMarkup(React.createElement(ProofJoins, { p }));
   /** The markup with the two entities React writes into a class read back, so a class is matched as it is written. */
   const raw = html.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+  /* THE TITLE NAMES WHAT IS DRAWN (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 8). "Failures by trade" named no
+     drawn thing: the 31,926 are notices of four kinds, the solvent liquidations among them, and what the card draws is the match of
+     their names to the register. The title is "Matched by name", three words. That it stands on one line at 20 beside the chip and the
+     arrow from 1024 to 1440 is a measure of pixels, which this file cannot take (the browser probe's, kept in the report). */
+  const joinsTitle = COPY.home.proofs.joins.kicker;
+  check(`the first proof is titled "${joinsTitle}", three words, naming the match it draws`, joinsTitle === "Matched by name" && joinsTitle.split(" ").length === 3, { file: "src/lib/spine/copy.ts", remedy: "title the first proof \"Matched by name\" (COPY.home.proofs.joins.kicker): the card draws the match of the notices' names to the register, and \"Failures by trade\" named no drawn thing" });
   check("it is a door card to About the figures' #failures, its title an h2", /id="joins"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#failures"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.joins.kicker}</h2>`).test(html), PROOF_AT);
   check(`its figure is the card's 30, the ring's "${p.ring.figure}" at 16 in a lead ring, worked out`, /data-focal="1" class="fig text-\[length:var\(--t-focal\)\][^"]*" data-src="home\/method\.json:notices" data-kind="counted">/.test(html) && /data-archetype="ring"/.test(html) && /class="relative h-24 w-24"/.test(html) && new RegExp(`--t-lead[^"]*" data-src="home/method\\.json:matched_names of names" data-kind="worked out">${p.ring.figure}<`).test(html), PROOF_AT);
   check(`the ring is drawn at the builder's share, ${Math.round(joins.share)} of 100 (${joins.share.toFixed(1)})`, new RegExp(`data-archetype="ring"[^>]*data-share="${Math.round(joins.share)}"`).test(html), PROOF_AT);
+  /* The ring's account to a screen reader is the figure and the caption together ("97 in 100 names found in the register"), not "97 of
+     the whole" beside a caption that says what the 97 is of (the closing cleanup of plan 2026-10-10, item 13). */
+  const ringLabel = /<svg [^>]*aria-label="([^"]*)"/.exec(html)?.[1] ?? "";
+  check(`the ring is labelled by its figure and its caption: "${ringLabel}"`, ringLabel === `${p.ring.figure} ${p.ring.caption}`, { file: "src/components/spine/archetypes/Ring.tsx", remedy: "Ring: the svg's aria-label is the figure then the caption's words when a caption is given, so the home's ring reads \"97 in 100 names found in the register\"" });
   check(`the ring's caption reads "${COPY.home.proofs.joins.ring}", the copy's words alone`, new RegExp(`data-mark-label="true"[^>]*>${COPY.home.proofs.joins.ring}</div>`).test(html), PROOF_AT);
   /* The caption balances its two lines (fix round 2b; the Task 4 review's concern 1): in the 22ch box it broke as "in 100 names found in the"
      and "register", at every width, a word left alone under the ring. */
@@ -129,6 +139,8 @@ async function main(): Promise<void> {
   const section = (id: string) => { const at = about.indexOf(`id="${id}"`); return at < 0 ? "" : about.slice(at, about.indexOf("<h2", at + 1)).replace(/<[^>]+>/g, " ").replace(/\s+/g, " "); };
   const ABOUT_AT = { file: "src/app/(site)/about-data/page.tsx", remedy: "print #failures from buildJoins and #reading's pages line from londonPagesRead (src/lib/home/how_made.ts), never typed, no source named" };
   check("About the figures holds #failures", /id="failures"/.test(about), ABOUT_AT);
+  /* The destination keeps its own name: the door's subject is the join, and the section under it is failures, trade by trade. */
+  check("About's destination heading stays \"Failures, trade by trade\" (the first proof's door lands on it)", /<h2 id="failures"[^>]*>Failures, trade by trade<\/h2>/.test(about), ABOUT_AT);
   if (joins) check(`#failures prints the notices, ${joins.notices.figure}, and the names found, ${joins.matched.figure} of the ${joins.names.figure}`, section("failures").includes(joins.notices.figure) && section("failures").includes(`${joins.matched.figure} of the ${joins.names.figure}`), ABOUT_AT);
   if (pages) check(`#reading prints the London trade pages read from the band counts, ${pages.printing} of the ${pages.served}`, section("reading").includes(`${pages.printing} of the ${pages.served} London trade pages`), ABOUT_AT);
   check("neither names a source (R-002: the sources section does)", !/Gazette|Companies House/.test(section("failures") + section("reading")), ABOUT_AT);
