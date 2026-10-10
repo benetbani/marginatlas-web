@@ -5,7 +5,7 @@
  * One canonical row / table / lock / sort grammar so the 6 archetypes do NOT each
  * fork their own. Composed READ-ONLY from kit.tsx atoms (Box, Stat, Fig, StackBar,
  * MiniBar, Ico, Chip). Geist text + Space Grotesk figures (.fig); soft terracotta
- * (#fb8469 fill / #c2410c accent) on the kept/leading/winning slice only.
+ * (#fb8469 fill / --terra-text accent) on the kept/leading/winning slice only.
  *
  * HARD LAWS baked in here so consumers cannot regress:
  *  - NEVER horizontal scroll. Multi-column rows + tables reflow to stacked mini-cards

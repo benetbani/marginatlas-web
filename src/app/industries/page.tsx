@@ -44,9 +44,9 @@ import "@/styles/atlas-spine.css";
 export const revalidate = 86400;
 
 export const metadata = {
-  title: "All activities: Margin Atlas",
+  title: "All trades: Margin Atlas",
   description:
-    "Every activity covered in Margin Atlas, grouped by sector. Pick one to see its cost shape and the revenue range it runs depending on the city.",
+    "Every trade covered in Margin Atlas, grouped by sector. Pick one to see its cost shape and the revenue range it runs depending on the city.",
   alternates: { canonical: "/industries" },
 };
 

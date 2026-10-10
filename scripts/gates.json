@@ -2562,11 +2562,15 @@
       "browser": false,
       "asserts": "THE MASTHEAD, PUBLISHING READY (plan docs/superpowers/plans/2026-10-10-home-reform, Task 1, in the design repo; the spec docs/superpowers/specs/2026-10-10-home-reform-design.md, decisions 4 to 6 and s",
       "reads": [
+        "src/app",
+        "src/app/(site)",
         "src/app/dev",
         "src/app/globals.css",
         "src/app/layout.tsx",
         "src/app/not-found.tsx",
+        "src/components/HeaderAuth.tsx",
         "src/components/MobileNav.tsx",
+        "src/components/NavLinks.tsx",
         "src/components/SiteChrome.tsx",
         "src/lib/nav.ts",
         "src/styles/v0-tokens.css"

@@ -75,12 +75,34 @@ async function main() {
   /* ---------------- 1. THE LIST, THE TOKEN, THE STYLESHEET, THE GRAPH (source) ---------------- */
   check(`${NAVFILE} exists`, existsSync(NAVFILE), { file: NAVFILE, remedy: "create src/lib/nav.ts with NAV, SHEET_TRUST and currentNav (plan Task 1)" });
   if (!existsSync(NAVFILE)) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-  const { NAV, SHEET_TRUST, currentNav } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
+  const { NAV, SHEET_TRUST, currentNav, HELD_COUNTRIES, NAV_IDLE, NAV_CURRENT } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
   check(`NAV is the seven names in the bar's order (${NAV.map((n) => n.label).join(", ")})`, JSON.stringify(NAV.map((n) => n.label)) === JSON.stringify(WANT_NAMES) && JSON.stringify(NAV.map((n) => n.href)) === JSON.stringify(WANT_HREFS), { file: NAVFILE });
   check(`the sheet's trust rows are About the figures and Who runs this (${SHEET_TRUST.map((n) => n.label).join(", ")})`, JSON.stringify(SHEET_TRUST) === JSON.stringify([{ href: "/about-data#reading", label: "About the figures" }, { href: "/about", label: "Who runs this" }]), { file: NAVFILE });
-  const marks: Array<[string | null, string | null]> = [["/", null], [null, null], ["/blog/what-a-cafe-makes", "/blog"], ["/cities/london", "/cities"], ["/industries/restaurants", "/industries"], ["/gb", "/countries"], ["/gb/london/restaurants", "/countries"], ["/og", null], ["/about", null], ["/compare", "/compare"]];
+  const marks: Array<[string | null, string | null]> = [["/", null], [null, null], ["/blog/what-a-cafe-makes", "/blog"], ["/cities/london", "/cities"], ["/industries/restaurants", "/industries"], ["/gb", "/countries"], ["/gb/london", "/countries"], ["/gb/london/restaurants", "/countries"], ["/og", null], ["/zz", null], ["/uk", null], ["/about", null], ["/compare", "/compare"]];
   const wrongMarks = marks.filter(([p, want]) => currentNav(p) !== want).map(([p, want]) => `${p}: ${currentNav(p)} (want ${want})`);
-  check(`currentNav marks the page's own name, a country's pages Countries, the home nothing${wrongMarks.length ? `: ${wrongMarks.join("; ")}` : ""}`, wrongMarks.length === 0, { file: NAVFILE });
+  check(`currentNav marks the page's own name, a held country's pages Countries, the home and a code the site does not hold nothing${wrongMarks.length ? `: ${wrongMarks.join("; ")}` : ""}`, wrongMarks.length === 0, { file: NAVFILE, remedy: "mark Countries only for a first part that HELD_COUNTRIES holds (the 404 at /zz or /uk marks nothing)" });
+  /* The list the mark reads is a copy of the middleware's (HELD_COUNTRIES in src/lib/routing/edge_not_found.ts, built from COUNTRIES), because the
+     taxonomy module is client weight in the bar: this holds the two equal, both ways. */
+  const { COUNTRIES } = (await import("../../src/lib/taxonomy")) as typeof import("../../src/lib/taxonomy");
+  const wantHeld = COUNTRIES.map((c) => c.code.toLowerCase()).sort();
+  const haveHeld = [...(HELD_COUNTRIES ?? [])].sort();
+  const lacks = wantHeld.filter((c) => !haveHeld.includes(c));
+  const extra = haveHeld.filter((c) => !wantHeld.includes(c));
+  check(`the countries the bar knows are the site's own: HELD_COUNTRIES is the codes of COUNTRIES, lowercased (${wantHeld.length}${lacks.length ? `; missing ${lacks.join(" ")}` : ""}${extra.length ? `; not held ${extra.join(" ")}` : ""})`, wantHeld.length > 100 && lacks.length === 0 && extra.length === 0, { file: NAVFILE, remedy: "write the codes of COUNTRIES (src/lib/taxonomy.ts), lowercased, into HELD_COUNTRIES in src/lib/nav.ts; it is a copy because importing the taxonomy added 94 KB (22 KB gzipped) to the bar's client chunk" });
+  /* A page is named as the bar names it (the Trades page was titled "All activities"). */
+  const titleOf = (href: string): string => {
+    const f = ["src/app/(site)", "src/app"].map((root) => `${root}${href}/page.tsx`).find((p) => existsSync(p));
+    if (!f) return "";
+    const src = code(f);
+    const at = src.indexOf("export const metadata");
+    return /\btitle:\s*"([^"]+)"/.exec(src.slice(at < 0 ? 0 : at))?.[1] ?? "";
+  };
+  const unnamed = NAV.filter((n) => !titleOf(n.href).toLowerCase().includes(n.label.toLowerCase())).map((n) => `${n.label} (${n.href}) is titled "${titleOf(n.href)}"`);
+  check(`each name in the bar is in its own page's title${unnamed.length ? `: ${unnamed.join("; ")}` : ""}`, unnamed.length === 0, { file: NAVFILE, remedy: "title the page with the bar's name for it, as All countries and All cities are (the address stays)" });
+  /* The two class strings that dress a name live in a module a server file may import. */
+  const navLinksSrc = code("src/components/NavLinks.tsx");
+  const headerAuthSrc = code("src/components/HeaderAuth.tsx");
+  check("NAV_IDLE and NAV_CURRENT are exported from src/lib/nav.ts, no client file exports them, and both readers import them from there", typeof NAV_IDLE === "string" && typeof NAV_CURRENT === "string" && !/export\s+const\s+NAV_(?:IDLE|CURRENT)\b/.test(navLinksSrc) && /import\s*\{[^}]*\bNAV_IDLE\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(headerAuthSrc) && /import\s*\{[^}]*\bNAV_CURRENT\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(navLinksSrc), { file: "src/components/NavLinks.tsx", remedy: "move NAV_IDLE and NAV_CURRENT into src/lib/nav.ts and import them from there (a server file importing a constant from a \"use client\" file gets a reference, not the string)" });
 
   const layout = code(LAYOUT);
   check("the header height token reads 61px under 768 and 93px from (the 60px bar under its 1px rule)", /\[--atlas-header-h:61px\] md:\[--atlas-header-h:93px\]/.test(layout) && !/xl:\[--atlas-header-h/.test(layout), { file: LAYOUT, remedy: "set the <html> className token to [--atlas-header-h:61px] md:[--atlas-header-h:93px]" });
@@ -122,12 +144,21 @@ async function main() {
   for (const s of offsetSites) red({ rule: RULE, file: s.file, line: s.line, detail: `${s.what} repeats the bar the page's scroll-padding-top already clears`, remedy: OFFSET_REMEDY });
   check(`no scroll offset in src repeats the bar's height (${srcFiles.length} files read, ${offsetSites.length} sites${offsetSites.length ? ", listed above" : ""})`, srcFiles.length > 500 && offsetSites.length === 0, { file: offsetSites[0]?.file ?? "src", remedy: OFFSET_REMEDY });
 
+  /* THE TEXT RED IS READ, NEVER WRITTEN (fix round 1, group 2). --terra-text is the one text red (one line in globals.css moves it),
+     so no file draws its shade as an rgb of its own: the map marker's focus ring wrote rgba(153,22,0,0.55) and a change of that one
+     line would have left the ring behind. The token's hex (#991600) stays in src/lib/design-tokens.ts, the brand ramp's own copy. */
+  const redWritten: Array<{ file: string; line: number }> = [];
+  for (const f of srcFiles) code(f).split("\n").forEach((l, i) => { if (/rgba?\(\s*153\s*,\s*22\s*,\s*0\b/.test(l)) redWritten.push({ file: f, line: i + 1 }); });
+  for (const s of redWritten) red({ rule: RULE, file: s.file, line: s.line, detail: "the text red's shade (153, 22, 0) is written out beside the token that holds it", remedy: "write it from the token: color-mix(in srgb, var(--terra-text) 55%, transparent), so one line in globals.css moves every use" });
+  check(`the text red is read from --terra-text and not written as an rgb (${redWritten.length} written)`, redWritten.length === 0, { file: redWritten[0]?.file ?? "src", remedy: "write it from the token: color-mix(in srgb, var(--terra-text) 55%, transparent)" });
+
   /* The graph: every file SiteChrome reaches through src/, and each package it names. */
   const seen = new Set<string>();
   const pkgs = new Map<string, string>();
   const resolveLocal = (from: string, spec: string): string | null => {
-    const base = spec.startsWith("@/") ? path.join("src", spec.slice(2)) : path.join(path.dirname(from), spec);
-    for (const c of [base, `${base}.tsx`, `${base}.ts`, `${base}/index.tsx`, `${base}/index.ts`]) if (existsSync(c) && !c.endsWith(path.sep) && path.extname(c)) return c;
+    /* path.posix throughout: every path in the walk is spelled with forward slashes, whatever the platform (the walk's roots are). */
+    const base = spec.startsWith("@/") ? path.posix.join("src", spec.slice(2)) : path.posix.join(path.posix.dirname(from), spec);
+    for (const c of [base, `${base}.tsx`, `${base}.ts`, `${base}/index.tsx`, `${base}/index.ts`]) if (existsSync(c) && !c.endsWith("/") && path.posix.extname(c)) return c;
     return null;
   };
   const walk = (file: string) => {
@@ -143,6 +174,10 @@ async function main() {
   walk(NOT_FOUND);
   const barrel = [...pkgs].filter(([p]) => p === "@phosphor-icons/react");
   check(`no Phosphor barrel in SiteChrome's or the 404's import graph (${seen.size} files, ${pkgs.size} packages${barrel.length ? `; barrel from ${barrel[0][1]}` : ""})`, seen.size > 10 && barrel.length === 0, { file: barrel[0]?.[1] ?? CHROME, remedy: "import each icon from @phosphor-icons/react/dist/ssr/<Icon>, never the barrel (the 404's header: a barrel import killed the static export)" });
+  /* One spelling per file: Windows joins with a backslash and a build server with a slash, and the walk began on a slash-spelled path, so
+     a file reached by two routes was counted twice on Windows only (116 files here, 115 on Vercel). */
+  const backslashed = [...seen].filter((f) => f.includes(path.win32.sep));
+  check(`the import graph names each file once, spelled with forward slashes on every platform (${seen.size} files${backslashed.length ? `; ${backslashed.length} spelled with a backslash, e.g. ${backslashed[0]}` : ""})`, backslashed.length === 0, { file: process.argv[1] ?? CHROME, remedy: "join and split the walk's paths with path.posix in resolveLocal, so Windows and a build server count the same files" });
   const nf = code(NOT_FOUND);
   check("the 404 draws SiteChrome, imports nothing else but next/link, and no <main> of its own", /<SiteChrome>/.test(nf) && !/<main[\s>]/.test(nf) && [...nf.matchAll(/^import .* from "([^"]+)";$/gm)].map((m) => m[1]).sort().join(",") === "@/components/SiteChrome,next/link", { file: NOT_FOUND });
 
@@ -153,6 +188,16 @@ async function main() {
      React.createElement, so they read the React this file lends them (tests/legal/pro_legal.test.ts). */
   (globalThis as unknown as { React: typeof React }).React = React;
   const { PathnameContext } = await import("next/dist/shared/lib/hooks-client-context.shared-runtime");
+  /* The account entry reads the session once through the Supabase browser client (HeaderAuth.tsx), which wants a project address, a key
+     and a network. A stand-in goes into the module cache before HeaderAuth first loads, and its read settles when this test says so: no
+     network and no secret, as the chain requires, and the moment "the session is being read" can be held still and looked at. */
+  let settleSession!: () => void;
+  const sessionRead = new Promise<void>((resolve) => { settleSession = resolve; });
+  const clientPath = require.resolve("../../src/lib/supabase/client");
+  require.cache[clientPath] = {
+    id: clientPath, filename: clientPath, loaded: true, children: [], paths: [],
+    exports: { createSupabaseBrowserClient: () => ({ auth: { getUser: async () => { await sessionRead; return { data: { user: null } }; } } }) },
+  } as unknown as NodeJS.Module;
   const { SiteChrome } = await import("../../src/components/SiteChrome");
   const NotFound = (await import("../../src/app/not-found")).default;
   const render = (pathname: string, on: { auth: boolean; paywall: boolean }) => {
@@ -303,6 +348,30 @@ async function main() {
     check("a row's tap shuts it", !isOpen(), { file: SHEET });
   }
   await act(async () => { root.unmount(); });
+
+  /* ---------------- 3b. THE SHEET WITH ACCOUNTS ON (fix round 1, group 2) ---------------- */
+  /* The first mount had accounts off. With them on the sheet draws the entry in two steps: while the session is read it holds the words'
+     width unseen, and once the read settles it is a live /signin row; the order is Sign in, then Pricing last; a tap on it shuts the sheet. */
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "1";
+  const root2 = createRoot(doc.getElementById("root")!);
+  await act(async () => { root2.render(React.createElement(PathnameContext.Provider, { value: "/blog/x" }, React.createElement(MobileNav, { pricing: true }))); });
+  const btn2 = doc.querySelector('button[aria-controls="site-menu"]') as HTMLButtonElement | null;
+  const isOpen2 = () => !!pane() && !pane()!.hasAttribute("hidden") && btn2?.getAttribute("aria-expanded") === "true";
+  check("accounts on, mounted: the sheet starts shut", !!btn2 && !!pane() && !isOpen2(), { file: SHEET });
+  if (btn2) {
+    await act(async () => { btn2.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); });
+    const linkRows = () => [...pane()!.querySelectorAll("a")].map((x) => (x.textContent ?? "").trim());
+    const held = pane()!.querySelector('span[aria-hidden="true"]');
+    check(`accounts on, the session not read yet: the entry holds its words unseen (aria-hidden, invisible) and is no link (${linkRows().join(", ")})`, isOpen2() && !!held && (held.textContent ?? "").trim() === "Sign in" && /\binvisible\b/.test(held.getAttribute("class") ?? "") && !pane()!.querySelector('a[href="/signin"]') && !pane()!.querySelector('a[href="/account"]'), { file: SHEET });
+    await act(async () => { settleSession(); await sessionRead; for (let i = 0; i < 6; i++) await Promise.resolve(); });
+    const signIn = pane()!.querySelector('a[href="/signin"]') as HTMLAnchorElement | null;
+    check(`accounts on, the session read: a live /signin row appears and the unseen one is gone (${linkRows().join(", ")})`, !!signIn && (signIn.textContent ?? "").trim() === "Sign in" && !pane()!.querySelector('span[aria-hidden="true"]'), { file: SHEET });
+    check("accounts on, the order is the spec's: Sign in, then Pricing last", JSON.stringify(linkRows()) === JSON.stringify([...wantOff, "Sign in", "Pricing"]), { file: SHEET });
+    if (signIn) await act(async () => { signIn.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true, cancelable: true })); });
+    check("a tap on the Sign in row shuts the sheet", !isOpen2(), { file: SHEET });
+  }
+  await act(async () => { root2.unmount(); });
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("chrome/masthead: all pass");

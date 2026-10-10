@@ -90,7 +90,7 @@ const SCOPED_CSS = `
 .spinemap-root .spinemap-marker{touch-action:manipulation;}
 .spinemap-root .spinemap-marker:focus-visible{outline:none;}
 .spinemap-root .spinemap-marker:focus-visible .spinemap-dot{
-  box-shadow:0 0 0 3px rgba(255,255,255,0.92),0 0 0 6px rgba(153,22,0,0.55),0 1px 3px rgba(43,28,22,0.35);
+  box-shadow:0 0 0 3px rgba(255,255,255,0.92),0 0 0 6px color-mix(in srgb, ${TERRA_TEXT} 55%, transparent),0 1px 3px rgba(43,28,22,0.35);
 }
 .spinemap-root .maplibregl-popup.spinemap-pop .maplibregl-popup-content{
   padding:8px 10px;border-radius:10px;border:1px solid ${BORDER};

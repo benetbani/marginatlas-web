@@ -14,7 +14,7 @@
 import * as React from "react";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { NAV_IDLE } from "@/components/NavLinks";
+import { NAV_IDLE } from "@/lib/nav";
 
 /** Where a reader stands: accounts off; on, the session not read yet; signed in; signed out. */
 export type AuthState = "off" | "checking" | "in" | "out";
@@ -67,7 +67,7 @@ export function AuthLink({ className = "", onClick }: { className?: string; onCl
   );
 }
 
-/** The bar's entry from 1280, after Search, in the names' own style (NavLinks.tsx). SiteChrome draws it only while accounts are on. */
+/** The bar's entry from 1280, after Search, in the names' own style (NAV_IDLE, src/lib/nav.ts). SiteChrome draws it only while accounts are on. */
 export function HeaderAuth() {
   return <AuthLink className={`hidden xl:inline-flex ${NAV_IDLE}`} />;
 }

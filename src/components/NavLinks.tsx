@@ -12,13 +12,7 @@
  */
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAV, currentNav } from "@/lib/nav";
-
-/** A name that is not the page being read: --c-ink2, ink with a hairline underline on hover. HeaderAuth.tsx draws its link the same. */
-export const NAV_IDLE =
-  "text-[var(--c-ink2)] underline-offset-[6px] transition-colors hover:text-[var(--c-ink)] hover:underline hover:decoration-1 hover:decoration-[var(--c-line-strong)]";
-/** The page being read: ink, a 2px ink underline 6px under the words. */
-export const NAV_CURRENT = "text-[var(--c-ink)] underline decoration-2 decoration-[var(--c-ink)] underline-offset-[6px]";
+import { NAV, NAV_CURRENT, NAV_IDLE, currentNav } from "@/lib/nav";
 
 export function NavLinks() {
   const current = currentNav(usePathname());
