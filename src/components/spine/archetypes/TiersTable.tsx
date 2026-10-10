@@ -52,6 +52,8 @@ export type TierRow = { tier: string; local_term?: string; cost_usd?: number; da
 export type TiersFigureRow = { key: string; name: string; sub?: string | null; a: string | null; b: string | null; aProv?: Provenance | null; bProv?: Provenance | null };
 export type TiersHeads = { name?: string; a: string; b: string };
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+/** The longest name that stays on one line in the figures table's narrowest name column (see FiguresTable's reserve). */
+export const ONE_LINE = 18;
 
 export function TierPanel({ explainer, paperwork }: { explainer?: string; paperwork?: string }) {
   if (!explainer && !paperwork) return null;
@@ -246,6 +248,15 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
 function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; figures: TiersFigureRow[]; fill?: boolean }) {
   if (figures.length === 0) return null;
   const nameHead = heads.name ?? null;
+  /* THE TWO-LINE RESERVE STANDS ONLY WHERE A ROW CAN RUN TO TWO LINES (critique pass 2, fix round C2, item P1.6): the reserve keeps the
+     rows of a table equal when some carry a second line (a role's local term, "or ...") or a name wraps into it, and a table whose
+     rows carry neither (the US metros) held an empty line under every name, each row about 66px with its name at the top and 45px
+     blank under it. A name can wrap only past ONE_LINE characters: the name column is 178px at its narrowest (a 330px table less the
+     two figure columns and their gaps; under 330 the name takes the row), which holds 18 characters of the lead rung. The first
+     draft reserved only for a second name and the archetype harness caught it: the most-roles trade's team (no second names, two
+     long roles that wrap) drew rows of 24, 24, 24, 24, 42, 42, 24. BLIND SPOT: a character count is not a measurement of width, so a
+     name of 18 characters set in capitals could still wrap; the harness's UNEQUAL rule reds it. */
+  const reserve = figures.some((r) => r.sub || r.name.length > ONE_LINE);
   /* THE ROWS SHARE A STRETCHED CARD (the goal's B12, 2026-09-24): the trade
      page's team sits at the narrow side of 3-2 beside the split, and where the
      split stands taller (a trade of three roles) the card's foot held 120 to
@@ -284,13 +295,13 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                   column and the figures on its first line; under 330 the name
                   block spans the row, the figures under their heads below. */}
               <span className={`${GRID_FIGURES} w-full items-baseline gap-y-1`} data-tier-row={i}>
-                {/* THE NAME BLOCK: two lines reserved on every row (2.5rem, two
+                {/* THE NAME BLOCK: two lines reserved on every row of a table that has a second name anywhere (2.5rem, two
                     lines of the lead rung at its tight leading, measured: the
                     two variants stood 37 and 39 before the reserve was one
                     number), the name wrapping into the second when it must
                     (clamped there, so two lines is the block's ceiling and its
                     floor) and the second name standing there otherwise. */}
-                <span className="col-span-3 min-h-[2.5rem] min-w-0 [@container(min-width:330px)]:col-span-1">
+                <span className={`col-span-3 ${reserve ? "min-h-[2.5rem] " : ""}min-w-0 [@container(min-width:330px)]:col-span-1`}>
                   {r.sub ? (
                     <>
                       <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{r.name}</span>

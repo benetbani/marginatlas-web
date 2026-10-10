@@ -22,9 +22,11 @@ export function UsRestaurants({ us }: { us: UsRestaurantsData }) {
     <Box id="us-restaurants" className="flex flex-col">
       <Rail icon="trade-restaurant" kicker={C.kicker.replace("{from}", String(us.from))} />
       <Focal figure={us.lead.figure} words={us.lead.words} prov={us.lead.prov} accent />
-      <TiersTable heads={heads(C.added)} figures={figures(us.added)} />
-      <div className="mt-6">
-        <TiersTable heads={heads(C.lost)} figures={figures(us.lost)} />
+      {/* BOTH TABLES FILL (critique pass 2, fix round C2, item P1.6): the pair's zone is even, so beside the taller left card the rows
+          of both tables share the height with their names centred, and no row hugs its top or pools the spare at the card's foot. */}
+      <TiersTable heads={heads(C.added)} figures={figures(us.added)} fill />
+      <div className="mt-6 flex flex-1 flex-col">
+        <TiersTable heads={heads(C.lost)} figures={figures(us.lost)} fill />
       </div>
     </Box>
   );

@@ -1932,6 +1932,7 @@
         "data/home/us_restaurants.json",
         "scratchpad/harness/pages/home-gb.html",
         "scratchpad/harness/pages/openings-world.html",
+        "src/components/spine/archetypes/TiersTable.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/components/spine/openings/UsRestaurants.tsx",
         "src/components/spine/openings/openings-view.tsx"

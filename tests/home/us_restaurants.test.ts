@@ -34,6 +34,7 @@ import { COPY } from "../../src/lib/spine/copy";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { UsRestaurants } from "../../src/components/spine/openings/UsRestaurants";
+import { TiersTable, ONE_LINE } from "../../src/components/spine/archetypes/TiersTable";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-us-restaurants";
@@ -148,6 +149,23 @@ if (built) {
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === 1 + 2 * (built.added.length + built.lost.length) && figs.every((f) => /data-src="home\/us_restaurants\.json:/.test(f) && /data-kind="(counted|worked out)"/.test(f)), DRAWN_AT);
   check("no percent anywhere in the card", !/%/.test(html.replace(/<[^>]+>/g, " ")), DRAWN_AT);
+  /* THE METRO ROWS DO NOT HUG THEIR TOPS (critique pass 2, fix round C2, item P1.6): the figures table reserved two lines (2.5rem) for
+     every name, for tables whose rows carry a second name; the metros carry none, so each row held an empty line under its name and
+     stood about 66px with the name at the top and 45px blank under it. The reserve stands only where a row of the table has a second
+     name (`sub`), and the card fills the height its level lends it, both tables, so beside the taller left card the rows share that
+     height with their names centred (the shape's own `grow items-center`) and never pool it at the card's foot. */
+  check("the metros carry no second name, so no row reserves a second line (no min-h-[2.5rem] in the card)", !html.includes("min-h-[2.5rem]"), DRAWN_AT);
+  const growRows = (html.match(/<div class="flex grow items-center py-2 first:pt-2 last:pb-0">/g) ?? []).length;
+  const fillRoots = (html.match(/data-shape="figures" data-heads="3" class="\[container-type:inline-size\] flex flex-1 flex-col"/g) ?? []).length;
+  check(`both tables fill the card's free height and every row grows into it with its name centred (${fillRoots} tables, ${growRows} of ${built.added.length + built.lost.length} rows)`, fillRoots === 2 && growRows === built.added.length + built.lost.length && html.includes('<div class="mt-6 flex flex-1 flex-col">'), DRAWN_AT);
+  /* THE SHARED TABLE'S RULE, both ways: a table with a second name on any row keeps the two-line reserve on every row (equal rows by
+     construction, as before), a table with none reserves nothing. */
+  const figs2 = (rows: Array<{ name: string; sub?: string | null }>) => renderToStaticMarkup(React.createElement(TiersTable, { heads: { name: "Role", a: "People", b: "Pay" }, figures: rows.map((r, i) => ({ key: String(i), name: r.name, sub: r.sub ?? null, a: "1", b: "2" })) }));
+  const reserves = (h: string) => (h.match(/min-h-\[2\.5rem\]/g) ?? []).length;
+  const withSub = figs2([{ name: "Owner", sub: "working supervisor" }, { name: "Cook" }]);
+  const longName = figs2([{ name: "Cook" }, { name: "Skilled tradesperson and foreman" }]);
+  const shortNames = figs2([{ name: "Cook" }, { name: "San Francisco" }]);
+  check(`a figures table reserves two lines per name only where a row can run to two lines: with a second name every row reserves (${reserves(withSub)} of 2), with a name over ${ONE_LINE} characters every row reserves (${reserves(longName)} of 2, equal rows as before), with neither none does (${reserves(shortNames)})`, reserves(withSub) === 2 && reserves(longName) === 2 && reserves(shortNames) === 0 && Math.max(...[...built.added, ...built.lost].map((r) => r.name.length)) <= ONE_LINE, { file: "src/components/spine/archetypes/TiersTable.tsx", remedy: "in FiguresTable reserve the name block's 2.5rem when figures.some((r) => r.sub || r.name.length > ONE_LINE), and not otherwise" });
   const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
   check(`the title is four words at most ("${title}")`, title === COPY.home.usRestaurants.kicker.replace("{from}", String(built.from)) && title.split(/\s+/).length <= 4, DRAWN_AT);
   check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
@@ -164,6 +182,12 @@ check(`/new-businesses' first seat says a ranking of ${said ?? "(no number found
 const openingsPage = existsSync("scratchpad/harness/pages/openings-world.html") ? readFileSync("scratchpad/harness/pages/openings-world.html", "utf8") : "";
 if (openingsPage && built) check("/new-businesses draws the US restaurants, the lead in the accent, stamped", /id="us-restaurants"/.test(openingsPage) && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(openingsPage), { file: OPENINGS_VIEW, remedy: "seat UsRestaurants in the pair zone of SpineOpeningsBody" });
 else if (!openingsPage) console.log("DEFER  scratchpad/harness/pages/openings-world.html is not rendered here; the new page's render check did not run");
+/* THE PAIR'S ZONE IS EVEN (item P1.6): the zone lends the shorter card the taller one's height, so the metros' rows (both tables fill) share it. */
+if (openingsPage) {
+  const at = openingsPage.indexOf('id="us-restaurants"');
+  const zoneOpen = at < 0 ? "" : openingsPage.slice(openingsPage.lastIndexOf("<section data-zone", at), at);
+  check("/new-businesses' pair of cards stands in an even zone, so the US restaurants' rows share the height the new companies' card lends", /^<section data-zone="1-1"/.test(zoneOpen) && /data-zone-even/.test(zoneOpen), { file: "src/components/spine/openings/openings-view.tsx", remedy: "give the pair zone even: true in SpineOpeningsBody and pass it to Zone, then render the page (bash scratchpad/reform/render_some.sh \"openings world\")" });
+}
 
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
    draws it. */

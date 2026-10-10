@@ -52,16 +52,16 @@ function OpeningsHead() {
 export function SpineOpeningsBody() {
   const nc = buildNewCompanies();
   const us = buildUsRestaurants();
-  const zones: Array<{ key: string; split: ZoneSplit; label: string; body: React.ReactNode[] }> = [
+  const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; label: string; body: React.ReactNode[] }> = [
     { key: "head", split: "wide", label: COPY.openings.h1, body: [<OpeningsHead key="head" />] },
-    ...(nc || us ? [{ key: "pair", split: "1-1" as ZoneSplit, label: COPY.openings.pairLabel, body: [...(nc ? [<NewCompanies key="new-companies" nc={nc} />] : []), ...(us ? [<UsRestaurants key="us-restaurants" us={us} />] : [])] }] : []),
+    ...(nc || us ? [{ key: "pair", split: "1-1" as ZoneSplit, even: true, label: COPY.openings.pairLabel, body: [...(nc ? [<NewCompanies key="new-companies" nc={nc} />] : []), ...(us ? [<UsRestaurants key="us-restaurants" us={us} />] : [])] }] : []),
     { key: "next", split: "1-1", label: COPY.home.next.title, body: [<WhereNext key="next" title={COPY.home.next.title} doors={nextDoors(OPENINGS_PATH)} />] },
   ];
   return (
     <>
       <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
         {zones.map((z, i) => (
-          <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label}>
+          <Zone key={z.key} tone={zoneTone(i)} split={z.split} even={z.even} label={z.label}>
             {z.body}
           </Zone>
         ))}
