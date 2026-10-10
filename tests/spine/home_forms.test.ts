@@ -61,7 +61,19 @@ const quiet = renderToStaticMarkup(React.createElement(BarList, { items, max: 10
 const barStyles = (html: string) => [...html.matchAll(/data-bar="true"[^>]*style="([^"]*)"/g)].map((m) => m[1]);
 check("a list's marked bar is the accent's gradient by default", /data-marked="1"[^>]*style="[^"]*var\(--terra\)/.test(loud), BARS, "keep the default marked bar in the accent's gradient");
 check("a quiet list's marked bar is ink2 and no bar holds terracotta", /data-marked="1"[^>]*style="[^"]*background-color:var\(--c-ink2\)/.test(quiet) && barStyles(quiet).every((s) => !/terra/.test(s)), BARS, "BarList quiet: the marked bar's background var(--c-ink2)");
-check("quiet changes the marked bar's colour and nothing else", loud.replace(/style="width:[^"]*"/g, "") === quiet.replace(/style="width:[^"]*"/g, ""), BARS);
+/* "NOTHING ELSE" IS COMPARED WHOLE. The check stripped every bar's style from both lists (each opens with `width:`), so an unmarked bar's
+   recolour, or a wrong width under quiet, could not be seen. Now: each unmarked bar's style whole (the marked bar is the first row, Leeds), the
+   marked bar's style apart from its two colour declarations (its width is what is left), and the rest of the markup with the bars' styles out.
+   The two lists must show both bars, so a markup this reads nothing from is a red and never a pass. */
+const uncoloured = (style: string) => style.split(";").filter((d) => !/^background-(?:color|image):/.test(d.trim())).join(";");
+const withoutBarStyles = (html: string) => html.replace(/(data-bar="true"[^>]*) style="[^"]*"/g, "$1");
+const apart = [
+  ...(barStyles(loud).length !== items.length || barStyles(quiet).length !== items.length ? ["the bars it reads"] : []),
+  ...(JSON.stringify(barStyles(loud).slice(1)) !== JSON.stringify(barStyles(quiet).slice(1)) ? ["an unmarked bar's style"] : []),
+  ...(uncoloured(barStyles(loud)[0] ?? "") !== uncoloured(barStyles(quiet)[0] ?? "") ? ["the marked bar's width"] : []),
+  ...(withoutBarStyles(loud) !== withoutBarStyles(quiet) ? ["the rest of the markup"] : []),
+];
+check(`quiet changes the marked bar's colour and nothing else${apart.length ? `: apart on ${apart.join(", ")}` : ""}`, apart.length === 0, BARS, "BarList quiet may change the marked bar's background-color and background-image only: no other bar's style, not the marked bar's width, nothing else in the markup");
 
 /* THE COPY GATE'S TITLE */
 const GATE = "scripts/harness/check_copy_plain.mjs";
