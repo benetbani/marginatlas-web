@@ -21,7 +21,10 @@
  *
  * FIX ROUND 8 (Task 8's review). The button is disabled until a first effect has run: the field's new `name` made a native submit
  * before hydration a GET with the address in the URL. And the route's 400 (an address its stricter check refuses) shows the
- * bad-address line, where any non-OK answer said "Try again in a minute", which is for a 429 or a server error.
+ * bad-address line, where any non-OK answer said "Try again in a minute", which is for a 429 or a server error. CLEANUP ROUND 2:
+ * `aria-invalid` is set only when the address itself is invalid (status "invalid"). After a 429 or a server error the address is
+ * fine and the post did not go through: the alert still describes it and the field still points at it (`aria-describedby`), but a
+ * screen reader is not told the address is wrong.
  *
  * InlineMidArticle, the card for /learn posts, was deleted the same day: nothing mounted it (its import in
  * src/app/[country]/[geo]/[industry]/page.tsx is a comment), and it promised "Once a month we send one deep-dive" and "Check your
@@ -142,7 +145,7 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@work.com"
-                aria-invalid={error ? true : undefined}
+                aria-invalid={status === "invalid" ? true : undefined}
                 aria-describedby={error ? ERROR_ID : undefined}
                 className={`h-11 flex-1 rounded-md border bg-white px-3 text-base text-[var(--c-ink)] placeholder:text-[var(--c-muted)] sm:w-64 sm:flex-none md:text-sm ${
                   error ? "border-[var(--terra-text)]" : "border-[var(--control-line)]"

@@ -13,7 +13,8 @@
  * and newsletter forms post names, emails and messages. A trace (5 percent of requests) is the same request again, and its root
  * span also copies the headers onto itself as `http.request.header.*` attributes, past the SDK's own filter, which lets `x-real-ip`
  * and `x-vercel-forwarded-for`, the reader's address, through. So a report and a trace leave here without the cookies, the cookie
- * header, the location headers, that copy of the headers, and any body. The headers that stay are the rest of the request's own
+ * header, the location headers (x-vercel-ip-* and x-vercel-id, whose first part names the edge region that served the reader), that
+ * copy of the headers, and any body. The headers that stay are the rest of the request's own
  * (the browser, its language, the address it came from); the SDK already drops the address headers from the request itself.
  * tests/trust/launch_guards.test.ts hands this file an event that carries all of it, and holds the privacy page's words to it.
  */
@@ -31,7 +32,8 @@ function keepNoCookiesPlaceOrBody<T extends Sentry.Event>(event: T): T {
       for (const name of Object.keys(headers)) {
         const lower = name.toLowerCase();
         // x-vercel-proxied-for is an address header the SDK's own list of them (which it drops from the request) does not know.
-        if (lower === "cookie" || lower.startsWith("x-vercel-ip-") || lower === "x-vercel-proxied-for") delete headers[name];
+        // x-vercel-id starts with the code of the edge region that served the reader (lhr1::...), a coarse location (cleanup round 2).
+        if (lower === "cookie" || lower.startsWith("x-vercel-ip-") || lower === "x-vercel-proxied-for" || lower === "x-vercel-id") delete headers[name];
       }
     }
     // Drop any captured request body that looks form-shaped.

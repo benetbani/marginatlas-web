@@ -36,13 +36,26 @@ const p = (text: string, when?: LegalParagraph["when"]): LegalParagraph => (when
  * and sentry.edge.config.ts send every error and 5 percent of traces when NEXT_PUBLIC_SENTRY_DSN is set in production, with
  * `sendDefaultPii: false` (no user, and the browser SDK tells Sentry never to infer an IP address), no replay and no setUser. A
  * report holds what the SDKs add: what failed, the page's address, the address the reader came from, the trail of clicks, page
- * changes and requests, and the browser's language and time zone. A report from the servers holds the request's headers, and
- * sentry.server.config.ts drops the cookies, the location headers and any body from it and from a trace (the edge SDK adds no
- * request at all). What no code can take out is what the reader wrote into an address or an error message, and the words say so.
+ * changes, requests and console lines (the browser keeps 20 of them: maxBreadcrumbs in src/instrumentation-client.ts, where the SDK's
+ * default is 100), and the browser's language and time zone. A report from the servers holds the request's headers, and
+ * sentry.server.config.ts drops the cookies, the location headers (x-vercel-ip-* and x-vercel-id, whose first part names the edge
+ * region that served the reader) and any body from it and from a trace (the edge SDK adds no request at all). What no code can take out is what the reader wrote into an address or an error message, and the words say so.
  */
 export const SENTRY_LEAD = "Errors.";
 export const SENTRY_WORDS =
-  "When a page fails, in your browser or on our servers, Sentry, the service we use to find bugs, receives a report. It holds what failed, the page's address, the address you came from, a short trail of your last clicks, page changes and requests, and details of your browser such as its language and time zone. A report from our servers also holds the request's headers, without cookies or location. A small share of visits also send how long the page and the files it needs took to load. Sentry is set to keep no IP address. We do not attach your name or account to a report, but anything written in an address or an error message goes with it.";
+  "When a page fails, in your browser or on our servers, Sentry, the service we use to find bugs, receives a report. It holds what failed, the page's address, the address you came from, a trail of your last clicks, page changes, requests and console lines, and details of your browser such as its language and time zone. A report from our servers also holds the request's headers, without cookies or location. A small share of visits also send how long the page and the files it needs took to load. Sentry is set to keep no IP address. We do not attach your name or account to a report, but anything written in an address or an error message goes with it.";
+
+/**
+ * WHAT THE EMAIL LIST HOLDS AND WHY, said once for the live privacy page and for this draft (cleanup round 2 of plan 2026-10-10, the Task 8
+ * re-review's item 8). The paragraph was scoped to "the bar at the foot of each page", but two forms post to /api/newsletter: the
+ * bar (source "footer") and DepthNotify, the place form (src/components/spine/interact/DepthNotify.tsx: the home page's ask and the
+ * foot of the pages for places we cover in less depth), whose source is the place's own tag so the list knows which place a reader
+ * is waiting for (src/lib/seo/depth_source.ts). Three reasons: new figures land, a place the reader asked about gains depth, Pro
+ * opens. HE READS THESE WORDS BEFORE ANY DEPLOY. tests/trust/launch_guards.test.ts pins them whole.
+ */
+export const EMAIL_LIST_LEAD = "Email when new figures land, a place gains depth or Pro opens.";
+export const EMAIL_LIST_WORDS =
+  "Two forms take an email. The bar at the foot of each page takes the address alone. The place form, on the home page and at the foot of pages for places we cover in less depth, also asks which place you want to hear about. We store the address with the day you signed up and the form you used, and for the place form the place you chose. We use it to write to you when new figures land, when a place you asked about gains depth, or when Pro opens. Nothing else is attached to it.";
 
 export const PRO_TERMS: LegalDoc = {
   key: "terms",
@@ -121,7 +134,7 @@ export const PRO_PRIVACY: LegalDoc = {
       p("Payments run through Stripe. Card details go straight to Stripe and never reach our servers. We see that a payment happened, for which plan and for how much. Stripe keeps its own record of each payment, as its own privacy notice explains."),
     ] },
     { id: "given", heading: "Your email and corrections", paragraphs: [
-      p("**Email when new figures land or Pro opens.** If you leave your email, we store it with the day you signed up and the form you used, so we can write to you when new figures land or Pro opens. Nothing else is attached to it."),
+      p(`**${EMAIL_LIST_LEAD}** ${EMAIL_LIST_WORDS}`),
       p("**Corrections.** If you tell us a figure is wrong, we keep what you wrote so we can act on it and so we have a record of why a number changed."),
     ] },
     { id: "automatic", heading: "What is collected automatically", paragraphs: [

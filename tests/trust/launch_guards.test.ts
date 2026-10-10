@@ -108,6 +108,11 @@ async function main() {
   answer = "fail";
   await send(a.host);
   check(`a failed post says so in an alert ("${a.host.querySelector('[role="alert"]')?.textContent ?? ""}")`, a.host.querySelector('[role="alert"]')?.textContent === NEWSLETTER_COPY.failed);
+  /* CLEANUP ROUND 2 (item 7): aria-invalid says the ADDRESS is wrong. After a 429 or a 500 the address is fine and the post did not
+     go through, so the field is not invalid, though the alert still describes the failure and the field still points at it. */
+  const ARIA_REMEDY = { file: BAR, remedy: "set aria-invalid on the field only when status is \"invalid\" (the address itself is wrong); keep aria-describedby pointing at the alert for a failed post too" };
+  const failedField = a.host.querySelector("input")!;
+  check(`after a failed post the field is not marked invalid, and still points at the alert (aria-invalid ${failedField.getAttribute("aria-invalid") ?? "absent"})`, failedField.getAttribute("aria-invalid") === null && failedField.getAttribute("aria-describedby") === a.host.querySelector('[role="alert"]')?.id, ARIA_REMEDY);
   answer = "ok";
   await send(a.host);
   const status = a.host.querySelector('[role="status"]');
@@ -120,16 +125,17 @@ async function main() {
   const b = await mount();
   await type(b.host, "a@b.c");
   const REFUSED = { file: BAR, remedy: "map the route's 400 to the bad-address line (setStatus invalid) and leave every other non-OK answer as a post that did not go through" };
+  const BOTH = { file: BAR, remedy: `${REFUSED.remedy}, and for aria-invalid: ${ARIA_REMEDY.remedy}` };
   answer = 400;
   await send(b.host);
   const refused = b.host.querySelector('[role="alert"]');
   check(`a 400 from the route shows the bad-address line the field points at, not "try again" ("${refused?.textContent ?? ""}")`, refused?.textContent === NEWSLETTER_COPY.badAddress && b.host.querySelector("input")?.getAttribute("aria-invalid") === "true" && b.host.querySelector("input")?.getAttribute("aria-describedby") === refused?.id, REFUSED);
   answer = 429;
   await send(b.host);
-  check(`a 429 shows the try-again line ("${b.host.querySelector('[role="alert"]')?.textContent ?? ""}")`, b.host.querySelector('[role="alert"]')?.textContent === NEWSLETTER_COPY.failed, REFUSED);
+  check(`a 429 shows the try-again line ("${b.host.querySelector('[role="alert"]')?.textContent ?? ""}") and does not mark the address invalid (aria-invalid ${b.host.querySelector("input")?.getAttribute("aria-invalid") ?? "absent"})`, b.host.querySelector('[role="alert"]')?.textContent === NEWSLETTER_COPY.failed && b.host.querySelector("input")?.getAttribute("aria-invalid") === null, BOTH);
   answer = 500;
   await send(b.host);
-  check(`a server error shows the try-again line ("${b.host.querySelector('[role="alert"]')?.textContent ?? ""}")`, b.host.querySelector('[role="alert"]')?.textContent === NEWSLETTER_COPY.failed, REFUSED);
+  check(`a server error shows the try-again line ("${b.host.querySelector('[role="alert"]')?.textContent ?? ""}") and does not mark the address invalid (aria-invalid ${b.host.querySelector("input")?.getAttribute("aria-invalid") ?? "absent"})`, b.host.querySelector('[role="alert"]')?.textContent === NEWSLETTER_COPY.failed && b.host.querySelector("input")?.getAttribute("aria-invalid") === null, BOTH);
   await act(async () => { b.root.unmount(); });
 
   /* ---------------- THE PRIVACY PAGE ---------------- */
@@ -142,7 +148,16 @@ async function main() {
   check("the privacy page promises no unsubscribe link while nothing sends, and calls the list what it is", !/unsubscrib|link in every email|newsletter/i.test(privacy) && /the email list/.test(privacy), { file: PRIVACY });
   check("the privacy page is dated 10 October 2026, the day its text changed", privacy.includes("Last updated 10 October 2026"), { file: PRIVACY });
   check("the privacy page still holds what you gave us and nothing more", privacy.includes("what you gave us and nothing more"), { file: PRIVACY });
-  check("the privacy page says what the email list holds beside the address, and both reasons for it (the pricing page's Notify me lands there too)", privacy.includes("Email when new figures land or Pro opens.") && privacy.includes("we store it with the day you signed up and the form you used, so we can write to you when new figures land or Pro opens. Nothing else is attached to it."), { file: PRIVACY });
+  /* CLEANUP ROUND 2 (the Task 8 re-review, item 8): the paragraph was scoped to "the bar at the foot of each page", but DepthNotify
+     posts to the same route with a place as its source (the home page's ask and the foot of the pages for places we cover in less
+     depth), to tell a reader when that place gains depth. The page and the draft say both forms and the three reasons, from one
+     pair of constants (EMAIL_LIST_LEAD and EMAIL_LIST_WORDS in src/lib/legal/pro_legal.ts); the words are pinned whole here. */
+  const EMAIL_LIST_LEAD_PINNED = "Email when new figures land, a place gains depth or Pro opens.";
+  const EMAIL_LIST_WORDS_PINNED = "Two forms take an email. The bar at the foot of each page takes the address alone. The place form, on the home page and at the foot of pages for places we cover in less depth, also asks which place you want to hear about. We store the address with the day you signed up and the form you used, and for the place form the place you chose. We use it to write to you when new figures land, when a place you asked about gains depth, or when Pro opens. Nothing else is attached to it.";
+  const { EMAIL_LIST_LEAD, EMAIL_LIST_WORDS } = (await import("../../src/lib/legal/pro_legal")) as unknown as { EMAIL_LIST_LEAD?: string; EMAIL_LIST_WORDS?: string };
+  check("the privacy page says what the email list holds beside the address: both forms, the place a reader chose, and the three reasons (new figures land, a place gains depth, Pro opens)", privacy.includes(`${EMAIL_LIST_LEAD_PINNED} ${EMAIL_LIST_WORDS_PINNED}`) && EMAIL_LIST_LEAD === EMAIL_LIST_LEAD_PINNED && EMAIL_LIST_WORDS === EMAIL_LIST_WORDS_PINNED, { file: PRIVACY, remedy: "write the email-list paragraph from EMAIL_LIST_LEAD and EMAIL_LIST_WORDS (src/lib/legal/pro_legal.ts) as the page and the draft both print them, and name both forms (the bar, and the place form DepthNotify draws), what each row holds (the day, the form, the place) and the three reasons" });
+  const emailListText = `${EMAIL_LIST_LEAD ?? ""} ${EMAIL_LIST_WORDS ?? ""}`.trim();
+  check("the email-list words keep the copy rules: present, no semicolon, no em-dash, no 'newsletter' or 'unsubscribe'", emailListText.length > 0 && !emailListText.includes(";") && !emailListText.includes(String.fromCharCode(8212)) && !/newsletter|unsubscrib/i.test(emailListText), { file: "src/lib/legal/pro_legal.ts", remedy: "write the email-list words in plain sentences, with no semicolon, no em-dash and no promise of a newsletter or an unsubscribe link while nothing sends" });
 
   /* ---------------- WHAT SENTRY IS SET TO KEEP (fix round 8: the facts the privacy page's words rest on) ---------------- */
   const SENTRY_CLIENT = "src/instrumentation-client.ts", SENTRY_SERVER = "sentry.server.config.ts", SENTRY_EDGE = "sentry.edge.config.ts";
@@ -154,13 +169,17 @@ async function main() {
     check(`${f} sets sendDefaultPii: false, so no IP address is inferred and no user is attached`, /\bsendDefaultPii:\s*false\b/.test(c), { file: f, remedy: SENTRY_REMEDY });
     check(`${f} samples traces at 0.05, the small share of visits the words name`, /\btracesSampleRate:\s*0\.05\b/.test(c), { file: f, remedy: SENTRY_REMEDY });
   }
+  /* CLEANUP ROUND 2 (item 5): the words said "a short trail", while the browser SDK keeps up to 100 breadcrumbs, console lines among
+     them. The browser config caps the trail at 20, and the words say what a trail holds (pinned whole below). The server and edge
+     configs set no cap: the words give no number, and their trail is the server's own requests and console lines. */
+  check("the browser config keeps at most 20 breadcrumbs, the trail the privacy words describe", /\bmaxBreadcrumbs:\s*20\b/.test(code(SENTRY_CLIENT)), { file: SENTRY_CLIENT, remedy: SENTRY_REMEDY });
   const sentryScope = [...sourceFiles("src"), ...SENTRY_FILES.filter((f) => !f.startsWith("src/"))];
   const replays = sentryScope.filter((f) => /\b(?:replayIntegration|replaysSessionSampleRate|replaysOnErrorSampleRate)\b/.test(code(f)));
   const userSetters = sentryScope.filter((f) => /\bsetUser\b/.test(code(f)));
   check(`no session replay is recorded: no replayIntegration or replay sample rate in ${sentryScope.length} source files${replays.length ? ` (found in ${replays.join(", ")})` : ""}`, replays.length === 0, { file: replays[0] ?? SENTRY_CLIENT, remedy: SENTRY_REMEDY });
   check(`no user is attached to a report: no setUser in ${sentryScope.length} source files${userSetters.length ? ` (found in ${userSetters.join(", ")})` : ""}`, userSetters.length === 0, { file: userSetters[0] ?? SENTRY_CLIENT, remedy: SENTRY_REMEDY });
   const serverSrc = code(SENTRY_SERVER);
-  check("the server config deletes the request's cookies, the cookie header and the x-vercel-ip location headers, from a report and from a trace", /delete\s+[\w.]*request\.cookies\b/.test(serverSrc) && /["']cookie["']/.test(serverSrc) && /x-vercel-ip-/.test(serverSrc) && /\bbeforeSendTransaction\b/.test(serverSrc), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check("the server config deletes the request's cookies, the cookie header, the x-vercel-ip location headers and x-vercel-id (its first part names the edge region that served the reader), from a report and from a trace", /delete\s+[\w.]*request\.cookies\b/.test(serverSrc) && /["']cookie["']/.test(serverSrc) && /x-vercel-ip-/.test(serverSrc) && /["']x-vercel-id["']/.test(serverSrc) && /\bbeforeSendTransaction\b/.test(serverSrc), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   check("the edge config adds no request data: no requestDataIntegration (the edge SDK adds it only when sendDefaultPii is true, so an edge report holds no headers and no cookies)", !/requestDataIntegration/.test(code(SENTRY_EDGE)), { file: SENTRY_EDGE, remedy: SENTRY_REMEDY });
   check("the browser config's comment says what it keeps, not 'no personal data'", !/no personal data/i.test(readFileSync(SENTRY_CLIENT, "utf8")), { file: SENTRY_CLIENT, remedy: SENTRY_REMEDY });
 
@@ -181,7 +200,7 @@ async function main() {
     if (!given) throw new Error(`the ${which} Sentry config never called Sentry.init`);
     return given;
   };
-  const READER = "reader@example.com", READER_IP = "203.0.113.7", READER_LATITUDE = "51.5072";
+  const READER = "reader@example.com", READER_IP = "203.0.113.7", READER_LATITUDE = "51.5072", READER_EDGE = "lhr1";
   const dirty = (kind: "error" | "transaction") => ({
     ...(kind === "transaction" ? { type: "transaction" } : {}),
     request: {
@@ -189,7 +208,7 @@ async function main() {
       method: "GET",
       cookies: { "sb-ref-auth-token": `{"user":{"email":"${READER}"}}`, theme: "dark" },
       headers: {
-        host: "www.marginatlas.com", "user-agent": "Reader/1.0", "accept-language": "en-GB", referer: "https://www.marginatlas.com/gb", "x-vercel-id": "lhr1::t",
+        host: "www.marginatlas.com", "user-agent": "Reader/1.0", "accept-language": "en-GB", referer: "https://www.marginatlas.com/gb", "x-vercel-id": `${READER_EDGE}::t`,
         [kind === "error" ? "Cookie" : "cookie"]: `sb-ref-auth-token=${encodeURIComponent(READER)}; theme=dark`,
         "X-Vercel-IP-City": "London", "x-vercel-ip-country": "GB", "x-vercel-ip-latitude": READER_LATITUDE, "X-Vercel-Proxied-For": READER_IP,
       } as Record<string, string>,
@@ -202,18 +221,18 @@ async function main() {
     const left: string[] = [];
     const request = out?.request ?? {};
     if (request.cookies !== undefined) left.push("request.cookies");
-    for (const h of Object.keys(request.headers ?? {})) { const lower = h.toLowerCase(); if (lower === "cookie" || lower.startsWith("x-vercel-ip-") || lower === "x-vercel-proxied-for") left.push(`header ${h}`); }
+    for (const h of Object.keys(request.headers ?? {})) { const lower = h.toLowerCase(); if (lower === "cookie" || lower.startsWith("x-vercel-ip-") || lower === "x-vercel-proxied-for" || lower === "x-vercel-id") left.push(`header ${h}`); }
     for (const k of Object.keys(out?.contexts?.trace?.data ?? {})) if (k.startsWith("http.request.header.")) left.push(`trace attribute ${k}`);
     for (const s of out?.spans ?? []) for (const k of Object.keys(s.data ?? {})) if (k.startsWith("http.request.header.")) left.push(`span attribute ${k}`);
     const whole = JSON.stringify(out);
-    for (const needle of [READER, READER_IP, READER_LATITUDE]) if (whole.includes(needle)) left.push(`the text ${needle}`);
+    for (const needle of [READER, READER_IP, READER_LATITUDE, READER_EDGE]) if (whole.includes(needle)) left.push(`the text ${needle}`);
     return left;
   };
-  const keptIn = (out: any): boolean => out?.request?.url === "https://www.marginatlas.com/gb/london?x=1" && ["host", "user-agent", "accept-language", "referer", "x-vercel-id"].every((h) => typeof out?.request?.headers?.[h] === "string") && out?.contexts?.trace?.data?.["next.route"] === "/[country]/[geo]" && out?.spans?.[0]?.data?.["http.url"] === "https://example.test/";
+  const keptIn = (out: any): boolean => out?.request?.url === "https://www.marginatlas.com/gb/london?x=1" && ["host", "user-agent", "accept-language", "referer"].every((h) => typeof out?.request?.headers?.[h] === "string") && out?.contexts?.trace?.data?.["next.route"] === "/[country]/[geo]" && out?.spans?.[0]?.data?.["http.url"] === "https://example.test/";
   const server = optionsOf("server");
   const errorOut = typeof server.beforeSend === "function" ? server.beforeSend(dirty("error"), { originalException: new Error("a page failed") }) : null;
   const errorLeft = errorOut === null ? ["no beforeSend in the config, or it dropped the report"] : leftIn(errorOut);
-  check(`a server report leaves the config without cookies, without the reader's place and without a copy of them (left: ${errorLeft.join(", ") || "nothing"})`, errorLeft.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check(`a server report leaves the config without cookies, without the reader's place (the edge region too) and without a copy of them (left: ${errorLeft.join(", ") || "nothing"})`, errorLeft.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   check("a server report keeps the request's address and its other headers, and the form-field scrub still runs", keptIn(errorOut) && errorOut?.request?.data?.email === "[scrubbed]" && errorOut?.request?.data?.note === "kept", { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   check("a server report for Next's own dynamic-render signal is still dropped", typeof server.beforeSend === "function" && server.beforeSend(dirty("error"), { originalException: new Error("Dynamic server usage: cookies") }) === null, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   const traceOut = typeof server.beforeSendTransaction === "function" ? server.beforeSendTransaction(dirty("transaction"), {}) : null;
@@ -230,6 +249,11 @@ async function main() {
   const edge = optionsOf("edge");
   check("the edge config still drops Next's dynamic-render signal and hands any other report on whole", typeof edge.beforeSend === "function" && edge.beforeSend(dirty("error"), { originalException: new Error("couldn't be rendered statically") }) === null && edge.sendDefaultPii === false, { file: SENTRY_EDGE, remedy: SENTRY_REMEDY });
   check(`SENTRY_WORDS promises none of "no name", "no email" or "no personal data" (${SENTRY_WORDS.split(/\s+/).length} words)`, !/\bno (?:name|email|personal data)\b/i.test(SENTRY_WORDS), { file: "src/lib/legal/pro_legal.ts", remedy: SENTRY_REMEDY });
+  /* THE WORDS, WHOLE (cleanup round 2, item 6): two clauses pinned by substring let a flipped clause elsewhere in the sentence through
+     (the IP one, "Sentry is set to keep no IP address"). The exact text is held here, so any edit to it reds until this line moves
+     with it, which is the moment he reads it. */
+  const SENTRY_WORDS_PINNED = "When a page fails, in your browser or on our servers, Sentry, the service we use to find bugs, receives a report. It holds what failed, the page's address, the address you came from, a trail of your last clicks, page changes, requests and console lines, and details of your browser such as its language and time zone. A report from our servers also holds the request's headers, without cookies or location. A small share of visits also send how long the page and the files it needs took to load. Sentry is set to keep no IP address. We do not attach your name or account to a report, but anything written in an address or an error message goes with it.";
+  check("SENTRY_WORDS is the pinned text, whole", SENTRY_WORDS === SENTRY_WORDS_PINNED, { file: "src/lib/legal/pro_legal.ts", remedy: "change SENTRY_WORDS and SENTRY_WORDS_PINNED in tests/trust/launch_guards.test.ts together, after he has read the new sentence: it is the privacy page's Sentry paragraph and the draft's, and every clause of it is a fact about the configs" });
   check("SENTRY_WORDS says what a server report leaves out and what still goes with a report", SENTRY_WORDS.includes("A report from our servers also holds the request's headers, without cookies or location.") && SENTRY_WORDS.includes("We do not attach your name or account to a report, but anything written in an address or an error message goes with it."), { file: "src/lib/legal/pro_legal.ts", remedy: SENTRY_REMEDY });
 
   /* ---------------- LAUNCH:CHECK'S ITEM (j) SEES THE SWITCH IT GUARDS (fix round 8) ---------------- */

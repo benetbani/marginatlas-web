@@ -124,8 +124,9 @@ export async function POST(request: NextRequest) {
     }
 
     if (error && !error.message.includes("duplicate")) {
-      // Table might not exist yet — log for now, return success.
-      console.log("[newsletter] would insert:", email, "(error:", error.message, ")");
+      // Table might not exist yet: log for now, return success. The line holds the error's code and message and NEVER the address:
+      // a console line reaches the host's logs and, as a breadcrumb, every error report (tests/trust/forms_store_nothing_more.test.ts).
+      console.log("[newsletter] insert failed, code:", error.code ?? "none", "message:", error.message);
     }
 
     return NextResponse.json({ ok: true });

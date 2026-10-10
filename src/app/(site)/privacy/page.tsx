@@ -24,11 +24,18 @@
  * else is attached to it" was said of the email list, whose row also holds the day and the form (db/migrations/
  * 2026-08-16-newsletter-source.sql), so the paragraph says so. And the pricing page's "Notify me when Pro opens" lands on the same
  * list as the bar, so the paragraph names both reasons.
+ *
+ * CLEANUP ROUND 2 (the Task 8 re-review): the Sentry words now say the trail holds console lines, and that it is a trail (the browser
+ * keeps 20 entries, not the SDK's 100), and a server report is without the edge region too (x-vercel-id). And the email-list paragraph
+ * was scoped to the bar at the foot of each page, while the place form (DepthNotify: the home page's ask and the foot of pages for
+ * places we cover in less depth) posts to the same list with the place as its source: the paragraph says both forms, what each row
+ * holds and the three reasons (new figures land, a place gains depth, Pro opens), from EMAIL_LIST_LEAD and EMAIL_LIST_WORDS in
+ * src/lib/legal/pro_legal.ts, which the draft prints too. HE READS THIS TEXT BEFORE ANY DEPLOY.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 import { LegalDraft } from "@/components/LegalDraft";
 import { isPaywallOn } from "@/lib/feature_flags";
-import { PRO_PRIVACY, SENTRY_LEAD, SENTRY_WORDS } from "@/lib/legal/pro_legal";
+import { EMAIL_LIST_LEAD, EMAIL_LIST_WORDS, PRO_PRIVACY, SENTRY_LEAD, SENTRY_WORDS } from "@/lib/legal/pro_legal";
 import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 
 export const revalidate = 86400;
@@ -71,10 +78,7 @@ export default function PrivacyPage() {
           recognise you next time. Authentication runs on Supabase.
         </p>
         <p>
-          <b>Email when new figures land or Pro opens.</b> If you leave your
-          email in the bar at the foot of each page, we store it with the day
-          you signed up and the form you used, so we can write to you when new
-          figures land or Pro opens. Nothing else is attached to it.
+          <b>{EMAIL_LIST_LEAD}</b> {EMAIL_LIST_WORDS}
         </p>
         <p>
           <b>Corrections.</b> If you tell us a figure is wrong, we keep what you

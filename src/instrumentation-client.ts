@@ -25,8 +25,9 @@
  * is the one it can miss. What it sends is unchanged, and the privacy page
  * names it (SENTRY_WORDS in src/lib/legal/pro_legal.ts, which he reads before
  * any deploy): every error and 5 percent of traces, each with the page's
- * address, the address the reader came from, a trail of clicks, page changes
- * and requests, and the browser's language and time zone. `sendDefaultPii: false`
+ * address, the address the reader came from, a trail of the last 20 clicks, page
+ * changes, requests and console lines (`maxBreadcrumbs: 20`; the SDK's default is
+ * 100), and the browser's language and time zone. `sendDefaultPii: false`
  * tells Sentry not to infer an IP address and to attach no user; the browser
  * SDK's default integrations read no cookies (httpClientIntegration is the one
  * that does, and it is not added); no replay is recorded and nothing calls setUser. What
@@ -56,6 +57,11 @@ function startSentry(): void {
     // paid plan is taken later.
 
     sendDefaultPii: false,
+
+    // The trail a report carries: the SDK keeps 100 breadcrumbs by default (clicks, page changes, requests, console lines), more than
+    // the privacy page's "a trail of your last clicks, page changes, requests and console lines" suggests. Twenty is a trail
+    // (cleanup round 2; tests/trust/launch_guards.test.ts pins the number and the words).
+    maxBreadcrumbs: 20,
 
     ignoreErrors: [
       "AbortError",
