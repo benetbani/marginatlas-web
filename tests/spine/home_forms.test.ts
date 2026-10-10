@@ -10,6 +10,9 @@
  *   - BarList `quiet`: the marked bar in ink2 and no terracotta in the bars (PART 6: a card with no accent figure marks its leader in
  *     ink2); without it the accent's gradient.
  *   - The copy gate reads a card's title from a Rail's h2 where the card has one, else from its h3.
+ *   - (plan 2026-10-10, home reform, Task 3) StepMark the numeral alone, 16 semibold in the muted grey, no tile; a Rail's chip a circle
+ *     by its own class; RangeStrip's `headless` (a mark with no figure), `oneRow` (the names never step) and `decades` (a log track's
+ *     powers of ten as round values); CountUnits' `fine` (2px apart under 1024, 4 from it). Each off by default.
  *
  * Run: npx tsx tests/spine/home_forms.test.ts
  */
@@ -22,6 +25,9 @@ import { Fig, Rail } from "../../src/components/spine/kit";
 import { FactRows } from "../../src/components/spine/archetypes/FactRows";
 import { Ring } from "../../src/components/spine/archetypes/Ring";
 import { BarList } from "../../src/components/spine/charts/BarList";
+import { RangeStrip } from "../../src/components/spine/archetypes/RangeStrip";
+import { CountUnits } from "../../src/components/spine/archetypes/BentoBand";
+import { usd } from "../../src/lib/spine/money";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-forms";
@@ -42,9 +48,27 @@ const stepped = renderToStaticMarkup(React.createElement(FactRows, { rows: [{ ke
 const glyphed = renderToStaticMarkup(React.createElement(FactRows, { rows: [{ key: "copies", icon: "filings", label: "Register copies", value: "2" }] }));
 const mark = /<span data-step="1" aria-hidden="true" class="([^"]*)">1<\/span>/.exec(stepped);
 check("a stepped row draws its numeral where the glyph stands, and no glyph", !!mark && !/spine-ic/.test(stepped), FACT, "draw StepMark in place of the glyph when a row carries a step");
-check("the numeral is ink2 on the soft tile with tabular figures, never a figure and never the accent", !!mark && /\btabular-nums\b/.test(mark[1]) && /text-\[var\(--c-ink2\)\]/.test(mark[1]) && /bg-\[var\(--c-soft\)\]/.test(mark[1]) && !/\bfig\b/.test(mark[1]) && !/terra/.test(mark[1]), FACT, "StepMark (kit.tsx): ink2 on --c-soft, tabular-nums, no fig class, no terracotta");
+check("the numeral stands alone in the 28px column: 16 semibold in the muted grey, tabular figures, no tile, never a figure and never the accent", !!mark && /\bh-7\b/.test(mark[1]) && /\bw-7\b/.test(mark[1]) && /--t-lead/.test(mark[1]) && /\bfont-semibold\b/.test(mark[1]) && /\btabular-nums\b/.test(mark[1]) && /text-\[var\(--c-muted\)\]/.test(mark[1]) && !/\bbg-/.test(mark[1]) && !/\bborder\b/.test(mark[1]) && !/\bfig\b/.test(mark[1]) && !/terra/.test(mark[1]), FACT, "StepMark (kit.tsx): the numeral alone, font-serif at --t-lead semibold in --c-muted, tabular-nums, h-7 w-7, no bg, no border, no fig class, no terracotta");
 check("a row with no step draws its glyph as before, and no numeral", /spine-ic/.test(glyphed) && !/data-step=/.test(glyphed), FACT);
 check("the stepped row's figure keeps its stamp", /data-src="uk\/registers\/turnover\.json:restaurants:E12000007" data-kind="counted">7,865</.test(stepped), FACT);
+
+/* THE CHIP AND THE STRIP'S AND THE UNITS' NEW PROPS (plan 2026-10-10, home reform, Task 3; the critique's P2.1, P0.5 and P1.5). */
+check("a Rail's chip is a circle by its own class (rounded-full), not by the radius token that happened to round it", /<span class="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border"/.test(h2) && !/rounded-lg/.test(h2), KIT, "Ico (kit.tsx): rounded-full on the 28px tile");
+const STRIP = "src/components/spine/archetypes/RangeStrip.tsx";
+const MARKS = [{ key: "p10", label: "Bottom tenth", value: 76_300 }, { key: "typical", label: "Typical", value: 374_000, lead: true }, { key: "p90", label: "Top tenth", value: 2_550_000 }];
+const stripOf = (props: Record<string, unknown>) => renderToStaticMarkup(React.createElement(RangeStrip, { marks: MARKS, fmt: usd, basis: "", ...props }));
+const plainStrip = stripOf({ scale: "log" });
+const homeStrip = stripOf({ scale: "log", oneRow: true, decades: true, marks: MARKS.map((m) => (m.key === "typical" ? { ...m, headless: true } : m)) });
+const tops = (h: string) => [...h.matchAll(/data-mark-label="[^"]+"[^>]*top:(\d+)px/g)].map((m) => Number(m[1]));
+const scaleLabels = (h: string) => [...h.matchAll(/data-scale-label="true"[^>]*>([^<]*)</g)].map((m) => m[1]);
+check("without the new props a strip of three steps its middle name, draws every figure and no round value", new Set(tops(plainStrip)).size === 2 && scaleLabels(plainStrip).length === 0 && /data-mark="typical"/.test(plainStrip), STRIP, "RangeStrip: headless, oneRow and decades off by default");
+check(`oneRow keeps the three names on one row (tops ${tops(homeStrip).join(", ")})`, tops(homeStrip).length === 3 && new Set(tops(homeStrip)).size === 1, STRIP, "RangeStrip oneRow: every name on the first row");
+check(`decades prints the powers of ten inside a log range as round values (${scaleLabels(homeStrip).join(", ")})`, JSON.stringify(scaleLabels(homeStrip)) === JSON.stringify([usd(100_000), usd(1_000_000)]) && (homeStrip.match(/data-scale-tick="true"/g) ?? []).length === 2, STRIP, "RangeStrip decades: each power of ten strictly inside the range, a 6px tick under the track and its figure at the micro rung, on a log track only");
+check("decades draws nothing on a linear track", scaleLabels(stripOf({ scale: "linear", decades: true })).length === 0, STRIP, "RangeStrip decades: on a log track only");
+check("a headless mark keeps its tick and its name and draws no figure", !/data-mark="typical"/.test(homeStrip) && /data-mark-label="typical"/.test(homeStrip) && (homeStrip.match(/data-mark="/g) ?? []).length === 2, STRIP, "RangeStrip headless: no figure over the mark's tick");
+const UNITS = "src/components/spine/archetypes/BentoBand.tsx";
+const unitsClass = (props: Record<string, unknown>) => /data-units="100"[^>]*class="([^"]*)"/.exec(renderToStaticMarkup(React.createElement(CountUnits, { whole: 100, filled: 32, columns: 25, aria: "32 of 100", ...props })))?.[1] ?? "";
+check("fine units stand 2px apart under 1024 and 4 from it; without it 4px as before", /^grid gap-\[2px\] lg:gap-\[4px\]$/.test(unitsClass({ fine: true })) && /^grid gap-\[4px\]$/.test(unitsClass({})), UNITS, "CountUnits fine: grid gap-[2px] lg:gap-[4px]");
 
 /* RING'S SIZE AND CAPTION */
 const RING = "src/components/spine/archetypes/Ring.tsx";

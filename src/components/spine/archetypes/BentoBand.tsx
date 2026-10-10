@@ -613,9 +613,14 @@ export function BentoMetric({
  * five of twenty in a third of a desktop level, never a grid that fills half
  * a wide card and leaves the other half blank (measured on the survival card
  * at 768, 312 by 138). Filled units in the accent (or ink2 where the card is
- * not loud), the rest in the soft tint.
+ * not loud), the rest in the soft tint. `fine` (plan 2026-10-10, the home
+ * reformed to ship, Task 3; the critique's P1.5) sets the units 2px apart
+ * under 1024 and 4 from 1024, for a hundred in twenty-five columns, which
+ * stand about 12px wide on a phone and in a tablet's half and 16 in a
+ * desktop's (the distance ladder holds no 3); read only with `columns`, and
+ * without it the units stand 4px apart at every width, as before.
  */
-export function CountUnits({ whole, filled, accent = true, columns, columnsWide, aria, className = "" }: { whole: number; filled: number; accent?: boolean; columns?: number; columnsWide?: number; aria: string; className?: string }) {
+export function CountUnits({ whole, filled, accent = true, columns, columnsWide, fine = false, aria, className = "" }: { whole: number; filled: number; accent?: boolean; columns?: number; columnsWide?: number; fine?: boolean; aria: string; className?: string }) {
   const units = Array.from({ length: Math.max(0, Math.round(whole)) });
   const cols = columns ? Math.max(1, Math.round(columns)) : 0;
   const wide = columns && columnsWide ? Math.max(1, Math.round(columnsWide)) : 0;
@@ -623,7 +628,7 @@ export function CountUnits({ whole, filled, accent = true, columns, columnsWide,
     <div
       data-units={units.length}
       data-visual="1"
-      className={`${columns ? "grid gap-[4px]" : "flex flex-wrap gap-[4px]"} ${wide ? "grid-cols-[repeat(var(--units-cols),minmax(0,1fr))] [@container(min-width:560px)]:grid-cols-[repeat(var(--units-cols-wide),minmax(0,1fr))]" : ""} ${className}`.trim()}
+      className={`${columns ? (fine ? "grid gap-[2px] lg:gap-[4px]" : "grid gap-[4px]") : "flex flex-wrap gap-[4px]"} ${wide ? "grid-cols-[repeat(var(--units-cols),minmax(0,1fr))] [@container(min-width:560px)]:grid-cols-[repeat(var(--units-cols-wide),minmax(0,1fr))]" : ""} ${className}`.trim()}
       style={wide ? ({ "--units-cols": String(cols), "--units-cols-wide": String(wide) } as React.CSSProperties) : columns ? { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` } : undefined}
       role="img"
       aria-label={aria}

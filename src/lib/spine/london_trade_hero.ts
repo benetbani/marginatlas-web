@@ -76,7 +76,7 @@ export function londonMoneyPrints(slug: string): boolean {
 }
 
 /** The share of a money trade's registered London businesses whose sales reach break-even, of 100, rounded once through its range: the
- *  number the masthead's "Take that much" cell prints before " of 100" (plan 2026-10-09, home introduction: the home's worked example
+ *  number the masthead's "Already take that much" cell prints before " of 100" (plan 2026-10-09, home introduction: the home's worked example
  *  draws it as units). Null off the money trades. */
 export function londonShareAbove(slug: string): number | null {
   if (!londonMoneyPrints(slug)) return null;

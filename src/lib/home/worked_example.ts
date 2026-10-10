@@ -8,7 +8,7 @@
  *
  *   1 Registered businesses   londonTradeHero's firms cell, the register's count                    counted
  *   2 Typical yearly sales    londonTradeStrip's typical mark, the strip's tenths drawn beside it    worked out
- *   3 Sales to break even     londonTradeHero's answer, with its "Take that much" share             estimate
+ *   3 Sales to break even     londonTradeHero's answer, with its "Already take that much" share     estimate
  *   4 Insolvent a year        ukInsolvencyPer100: notices matched by name, of 100 live companies    worked out
  *
  * Step 2 carries the London pages' own name for the typical, "Typical yearly sales" (COPY.londonTrade.salesLabel, the answer's label on a
@@ -95,8 +95,10 @@ export function buildWorkedExample(slug: string = EXAMPLE_TRADE, insolvent: numb
     },
     pays: {
       title: C.paysTitle,
-      breakEven: { n: "3", label: hero.answer.label, figure: hero.answer.value, line: C.breakEven.replace("{basis}", hero.answer.basis), prov: hero.answer.prov },
-      above: { part: share, figure: String(above.value), label: above.label, prov: above.prov },
+      breakEven: { n: "3", label: hero.answer.label, figure: hero.answer.value, line: C.breakEven.replace("{noun}", noun), prov: hero.answer.prov },
+      /* THE SAME WORDS AS THE LONDON PAGE (plan 2026-10-10, home reform, Task 3): its label stands over its figure there and runs after
+         the figure here, so its first letter is lowered ("32 of 100 already take that much"). */
+      above: { part: share, figure: String(above.value), label: above.label.charAt(0).toLowerCase() + above.label.slice(1), prov: above.prov },
       insolvent: { n: "4", label: C.insolventLabel, figure: C.insolventFigure.replace("{n}", String(insolvent)), line: C.insolvent.replace("{noun}", noun), prov: { src: registerSrc("failures.json", slug), kind: "worked out" } },
       door: C.paysDoor,
     },

@@ -85,8 +85,10 @@ export const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : "");
 
 export function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "terra" }) {
   const terra = tone === "terra";
+  /* A CIRCLE BY ITS OWN CLASS (plan 2026-10-10, home reform, Task 3; the critique's P2.1): `rounded-lg` resolves to the 1rem radius token,
+     which on a 28px tile happened to draw a circle; `rounded-full` says the shape is a decision. The same circle on every page. */
   return (
-    <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border" style={{ background: terra ? "var(--terra-soft)" : "var(--c-soft)", borderColor: terra ? "var(--terra-border)" : "var(--c-border)" }}>
+    <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border" style={{ background: terra ? "var(--terra-soft)" : "var(--c-soft)", borderColor: terra ? "var(--terra-border)" : "var(--c-border)" }}>
       {/* 18px at stroke 2.4 (was 16 at 1.9): founder 2026-08-30, "the icons
           should be bolder because right now they are very small." */}
       <AtlasIcon id={id} size={18} strokeWidth={2.4} className="spine-ic" style={{ color: terra ? "var(--terra-text)" : "var(--c-ink2)" }} />
@@ -98,12 +100,15 @@ export function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "ter
 export function Fig({ children, className = "", prov }: { children: React.ReactNode; className?: string; prov?: Provenance | null }) {
   return <span className={`fig ${className}`} {...provAttrs(prov)}>{children}</span>;
 }
-/** A STEP'S NUMERAL (plan 2026-10-09, home introduction: the worked example's four steps), in the 28px tile a row's glyph takes: ink2
- *  on the soft tile, never the accent (a numeral is text, and the accent walk counts text), tabular figures. It is no figure: no `fig`
- *  class and no provenance. Hidden from a screen reader, which reads the step's own label. */
+/** A STEP'S NUMERAL (plan 2026-10-09, home introduction: the worked example's four steps), in the 28px column a row's glyph takes. THE
+ *  NUMERAL ALONE (plan 2026-10-10, home reform, Task 3; the critique's P2.2): a grey tile under a pink glyph circle drew two badge styles
+ *  down one edge, so the numeral stands with no tile, in the figures' face (`font-serif` names Space Grotesk off the root layout's
+ *  variable, as the city cards' figures do) at 16, semibold, in the muted grey, centred in the column under the title's chip. Never the
+ *  accent (a numeral is text, and the accent walk counts text); no figure: no `fig` class and no provenance. Hidden from a screen
+ *  reader, which reads the step's own label. */
 export function StepMark({ n }: { n: string }) {
   return (
-    <span data-step={n} aria-hidden className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] text-[length:var(--t-body)] font-semibold leading-none tabular-nums text-[var(--c-ink2)]">
+    <span data-step={n} aria-hidden className="inline-flex h-7 w-7 shrink-0 items-center justify-center font-serif text-[length:var(--t-lead)] font-semibold leading-none tabular-nums text-[var(--c-muted)]">
       {n}
     </span>
   );

@@ -1646,7 +1646,9 @@ export const COPY = {
     salesBasis: "the middle registered business in London",
     salesBasisGroup: "the middle {group} in London",
     cells: {
-      above: "Take that much",
+      /** "Already" says these are businesses trading today; the home's worked example runs the same words after its figure (plan
+       *  2026-10-10, home reform, Task 3; the critique's P1.5). */
+      above: "Already take that much",
       keeps: "Middle one keeps",
       keepsNote: "as a sole trader, an estimate",
       firms: "Registered businesses",
@@ -2822,7 +2824,8 @@ export const COPY = {
       paysTitle: "Does it pay?",
       registered: "Counted in the business register, Greater London, {month}.",
       sales: "Worked out from the register's ten sales bands.",
-      breakEven: "An estimate, {basis}.",
+      /** One run of words, no comma (plan 2026-10-10, home reform, Task 3; the critique's P2.5); twelve words with the noun. */
+      breakEven: "An estimate of the yearly sales that carry an average London {noun}.",
       insolventLabel: "Insolvent a year",
       insolventFigure: "{n} of 100",
       insolvent: "UK {noun} companies, worked out from notices matched by name.",

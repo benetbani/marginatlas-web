@@ -28,7 +28,7 @@ check("money prints on restaurants, nail salons and sports and fitness, and not 
 const r = londonTradeHero("restaurants");
 check("restaurants: break-even leads, $740K a year to carry an average London restaurant", r !== null && r.kind === "breakEven" && r.answer.label === "Sales to break even" && r.answer.value === "$740K" && r.answer.basis === "a year, to carry an average London restaurant");
 const cell = (key: string) => r?.cells.find((c) => c.key === key);
-check("restaurants: 32 of 100 registered restaurants take that much", cell("above")?.value === "32 of 100" && cell("above")?.label === "Take that much");
+check("restaurants: 32 of 100 registered restaurants already take that much (the home's worked example says the same words after its figure)", cell("above")?.value === "32 of 100" && cell("above")?.label === "Already take that much");
 check("restaurants: the middle one keeps $18K as a sole trader, an estimate", cell("keeps")?.value === "$18K" && cell("keeps")?.note === "as a sole trader, an estimate");
 check("restaurants: 7,865 registered businesses", cell("firms")?.value === "7,865");
 check("restaurants: the company's keeps under the plus beside the sole trader's", r !== null && r.detail !== null && r.detail.rows.length === 2 && r.detail.rows[1].value === "$18K");

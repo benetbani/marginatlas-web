@@ -1,17 +1,27 @@
 /**
- * THE WORKED EXAMPLE ON THE HOME PAGE (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 7; the home's spec of
- * 2026-10-09, sections 2 and 5, approved as written): the picker's own case answered in four steps, in two open halves of one level
- * (the zone stretches them, `even`). Left, "Restaurants in London": step 1 a row, the register's count, its numeral where a row's glyph
- * stands and its note the card's one small line; then step 2, the typical yearly sales, the card's one 30, drawn on the London page's own
- * strip with the bottom and top tenths, its line at 14 under its head and the strip centred in the height the level lends, the steps
- * ruled apart (RULE); then the door to the London page. Right, "Does it pay?": step 3, break-even, the page's one 40 and its first loud
- * moment (LOUD_SEATS seat 1), its line at 14; the share that takes that much as 100 units in ink2 (one accent a card); step 4 as a row
- * ruled off from the units (RULE); then the door to the picker. Left to right, or down a phone, the steps run in order. Every figure from
- * src/lib/home/worked_example.ts, stamped, the same name and value as the London page prints (tests/home/home_answers.test.ts holds that).
+ * THE WORKED EXAMPLE ON THE HOME PAGE (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 7; reformed by plan
+ * docs/superpowers/plans/2026-10-10-home-reform, Task 3: the critique's P0.5, P1.4, P1.5, P1.7, P2.1, P2.2 and P2.5): the picker's own
+ * case answered in four steps, in two open halves of one level (the zone stretches them, `even`).
+ *
+ * ONE ANATOMY FOR EVERY STEP (P1.4): its numeral and its name on one line, then its figure flush left, then its line, then its
+ * drawing; one left edge for each half at every width. The figure stands at 16 for steps 1 and 4, at 30 for step 2 (the card's one 30)
+ * and at 40 for step 3 (the page's one 40 and its first loud moment, LOUD_SEATS seat 1); beside a 16 the line is the third rung (12,
+ * muted, and no focal words, so the zone's rule leaves it small), beside a 30 or a 40 it is 14 in ink2. Nothing stands between 16 and 30
+ * in a half that holds a 30 or a 40 (clause 28). A hairline between steps 1 and 2 and between steps 3 and 4, none under the titles.
+ *
+ * Left, "Restaurants in London": step 1, the register's count; step 2, the typical yearly sales on a line of their own and the London
+ * page's three marks drawn on a LOG strip (P0.5, MODEL 10.8: $76K to $2.5M is 33 times, and on a linear track the typical stood in the
+ * left fifth with the names stepping), its names on one row, its round values $100K and $1.0M as small ticks, the typical's figure
+ * not printed twice; the strip centred in the height the level lends; then the door to the London page. Right, "Does it pay?" (the
+ * wallet glyph, money in and out, P2.1): step 3, break-even at 40 in the accent, then the share that already takes that much as 100
+ * units in 25 columns, the 32 in the accent (fills follow their figure, PART 6) and the rest in the soft grey (P1.5); step 4, the UK's
+ * insolvencies; then the door to the picker. The doors are ink at 14, weight 500, an arrow after, underlined on hover (P1.7).
+ *
+ * Every figure from src/lib/home/worked_example.ts, stamped, the same name and value as the London page prints
+ * (tests/home/home_answers.test.ts holds that).
  */
 import * as React from "react";
 import { Box, Fig, Rail, StepMark, usd } from "@/components/spine/kit";
-import { FactRows } from "@/components/spine/archetypes/FactRows";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
 import { CountUnits } from "@/components/spine/archetypes/BentoBand";
 import { provAttrs } from "@/lib/spine/provenance";
@@ -19,45 +29,70 @@ import type { ExampleStep, WorkedExample } from "@/lib/home/worked_example";
 
 /** Of 100: the share's whole. */
 const WHOLE = 100;
-/** A hundred units twenty to a row: five rows in a half at every width. */
-const UNIT_COLUMNS = 20;
-const DOOR = "tap-y inline-block text-[length:var(--t-body)] text-[var(--c-ink2)] underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)]";
-const LINE = "mt-2 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]";
-/** A hairline, the interior line FactRows rules its rows with: the left half takes two, under its title and between its two steps, the
- * right half one, above step 4. A step stands in a band of its own, so what a short step leaves to its right reads as the end of a ruled
- * row, as it does wherever a row is drawn. Without them the left half held a blank 200 by 216 at its top right at 1280 (the page
- * filter's WHITE SPACE) and the right a blank 158 by 132 at its foot, beside step 4's figure (the gathered-emptiness gate's E6). */
+/** A hundred units twenty-five to a row: four rows, about 16px a unit at 1280 and 12 on a phone (P1.5). */
+const UNIT_COLUMNS = 25;
+/** A door (P1.7): ink, 14 at weight 500, its arrow after it, underlined on hover only; the words stand in a span of their own. */
+const DOOR = "tap-y inline-flex items-baseline gap-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)] no-underline decoration-[var(--c-line-strong)] underline-offset-2 hover:underline";
+/** The hairline between two steps, the interior line FactRows rules its rows with. */
 const RULE = "border-t border-[var(--c-border)]";
 
-/** A step's head where the step is no row: its numeral in the glyph's tile, then its name. */
-function StepHead({ step }: { step: ExampleStep }) {
+/** The rung a step's figure stands at: 16 (steps 1 and 4), 30 (step 2), 40 (step 3). */
+type Rung = "lead" | "focal" | "answer";
+
+/** ONE STEP ON ONE ANATOMY (P1.4): its numeral and its name, its figure flush left, its line, then whatever it draws. */
+function Step({ step, rung, className = "", children }: { step: ExampleStep; rung: Rung; className?: string; children?: React.ReactNode }) {
   return (
-    <div data-step-head="" className="flex items-center gap-3">
-      <StepMark n={step.n} />
-      <span className="text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{step.label}</span>
+    <div data-step-block={step.n} className={`flex flex-col ${className}`}>
+      <div data-step-head="" className="flex items-center gap-3">
+        <StepMark n={step.n} />
+        <span className="text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{step.label}</span>
+      </div>
+      {rung === "answer" ? (
+        <div data-hero-figure className="fig mt-2 text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]" {...provAttrs(step.prov)}>
+          {step.figure}
+        </div>
+      ) : rung === "focal" ? (
+        <Fig className="mt-2 block text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]" prov={step.prov}>{step.figure}</Fig>
+      ) : (
+        <Fig className="mt-2 block text-[length:var(--t-lead)] font-semibold leading-5 text-[var(--c-ink)]" prov={step.prov}>{step.figure}</Fig>
+      )}
+      {rung === "lead" ? (
+        <p className="mt-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-muted)]">{step.line}</p>
+      ) : (
+        <p data-focal-words="" className="mt-2 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{step.line}</p>
+      )}
+      {children}
     </div>
+  );
+}
+
+function Door({ href, words }: { href: string; words: string }) {
+  return (
+    <a href={href} className={DOOR}>
+      <span>{words}</span>
+      <span aria-hidden>&#8594;</span>
+    </a>
   );
 }
 
 export function HomePlace({ ex }: { ex: WorkedExample }) {
   const P = ex.place;
+  /* THE TYPICAL IS PRINTED ONCE (P0.5; clause 66): step 2's figure line holds it at 30, so its mark keeps its tick and its name and
+     draws no figure. */
+  const marks = P.strip.map((m) => (m.key === "typical" ? { ...m, headless: true } : m));
   return (
     <Box id="place" className="flex flex-col">
       <Rail icon="trade-restaurant" kicker={P.title} level={2} />
-      <FactRows className={RULE} rows={[{ key: "registered", step: P.registered.n, label: P.registered.label, value: P.registered.figure, note: P.registered.line, prov: P.registered.prov }]} />
-      {/* STEP 2'S LINE STANDS UNDER ITS HEAD, ABOVE THE STRIP: the strip draws three marks on a long track, so the band over it is
-          mostly air, and with the line under the strip the page filter found a blank 252 by 144 in the middle of the card (WHITE SPACE). */}
-      <div className={`${RULE} pt-4`}>
-        <StepHead step={P.sales} />
-        <p data-focal-words="" className={LINE}>{P.sales.line}</p>
-      </div>
-      {/* THE STRIP CENTRED IN THE HEIGHT ITS LEVEL LENDS (the trade page's `01 spread`, cell-view.tsx): beside the taller "Does it pay?"
-          the air stands above and below the strip, never in one block at the card's foot. */}
-      <div className="flex flex-1 flex-col justify-center py-2">
-        <RangeStrip marks={P.strip} scale="linear" fmt={usd} basis="" />
-      </div>
-      <div className="mt-3">
-        <a href={ex.href} className={DOOR}>{P.door}</a>
+      <Step step={P.registered} rung="lead" />
+      <Step step={P.sales} rung="focal" className={`mt-4 flex-1 ${RULE} pt-4`}>
+        {/* THE STRIP CENTRED IN THE HEIGHT THE LEVEL LENDS (the trade page's `01 spread`): beside the taller "Does it pay?" the air stands
+            above and below the strip, never in one block at the card's foot. */}
+        <div className="flex flex-1 flex-col justify-center pt-4">
+          <RangeStrip marks={marks} scale="log" fmt={usd} basis="" oneRow decades />
+        </div>
+      </Step>
+      <div className="pt-4">
+        <Door href={ex.href} words={P.door} />
       </div>
     </Box>
   );
@@ -67,22 +102,17 @@ export function HomePays({ ex }: { ex: WorkedExample }) {
   const P = ex.pays;
   return (
     <Box id="pays" className="flex flex-col">
-      <Rail icon="break-even" kicker={P.title} level={2} />
-      <StepHead step={P.breakEven} />
-      <div data-hero-figure className="fig mt-2 text-[length:var(--t-answer)] leading-none text-[var(--terra-text)]" {...provAttrs(P.breakEven.prov)}>
-        {P.breakEven.figure}
-      </div>
-      <p data-focal-words="" className={LINE}>{P.breakEven.line}</p>
-      <div data-units-head="" className="mt-4 flex flex-wrap items-baseline gap-x-2">
-        <Fig className="text-[length:var(--t-lead)] font-semibold leading-5 text-[var(--c-ink)]" prov={P.above.prov}>{P.above.figure}</Fig>
-        <span className="text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{P.above.label}</span>
-      </div>
-      <CountUnits className="mt-2" whole={WHOLE} filled={P.above.part} accent={false} columns={UNIT_COLUMNS} aria={`${P.above.figure}, ${P.above.label}`} />
-      <div className="mt-4">
-        <FactRows className={RULE} rows={[{ key: "insolvent", step: P.insolvent.n, label: P.insolvent.label, value: P.insolvent.figure, note: P.insolvent.line, prov: P.insolvent.prov }]} />
-      </div>
-      <div className="mt-auto pt-3">
-        <a href="#search" className={DOOR}>{P.door}</a>
+      <Rail icon="owner-keeps" kicker={P.title} level={2} />
+      <Step step={P.breakEven} rung="answer">
+        <div data-units-head="" className="mt-4 flex flex-wrap items-baseline gap-x-2">
+          <Fig className="text-[length:var(--t-lead)] font-semibold leading-5 text-[var(--c-ink)]" prov={P.above.prov}>{P.above.figure}</Fig>
+          <span className="text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{P.above.label}</span>
+        </div>
+        <CountUnits className="mt-2" whole={WHOLE} filled={P.above.part} columns={UNIT_COLUMNS} fine aria={`${P.above.figure}, ${P.above.label}`} />
+      </Step>
+      <Step step={P.insolvent} rung="lead" className={`mt-4 ${RULE} pt-4`} />
+      <div className="mt-auto pt-4">
+        <Door href="#search" words={P.door} />
       </div>
     </Box>
   );
