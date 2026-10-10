@@ -34,13 +34,19 @@
  * means the threshold is wherever the card actually ends, at any viewport, with
  * no magic pixel number to go stale when the hero is edited again.
  *
- * Hidden is the initial state, so the server renders nothing and the first
- * client paint agrees with it. The reveal can only happen after a scroll, which
- * is after hydration, so there is no mismatch to reconcile.
+ * THE SLOT IS ALWAYS DRAWN (plan 2026-10-10, the home reformed to ship, Task 1;
+ * the ship audit's 1.9 and 1.13, the critique's section 5). It used to return
+ * nothing while the picker was on screen, so at 1280 the seven names slid about
+ * 120px left on the home's first scroll. Now the link is always in its place;
+ * on the home, until the picker leaves the screen, it is invisible, hidden from
+ * the accessibility tree and out of the tab order. The server draws it waiting
+ * on the home, so the first client paint agrees with it. No box: the icon at
+ * 16 and the word from 768, --c-ink2, ink on hover, a 44 by 44 target (the
+ * icon-only form under 768 was 40 wide).
  *
  * If the anchor is missing (the home page changed shape, or this mounts
  * somewhere unexpected), the observer never attaches and the search stays
- * hidden. Failing to the current behaviour rather than to two search boxes.
+ * waiting. Failing to the current behaviour rather than to two search boxes.
  */
 
 import { usePathname } from "next/navigation";
@@ -49,7 +55,7 @@ import { useEffect, useState } from "react";
 /* A LINK, NOT A DIALOG (masterplan step 33; his refusals of 2026-09-22: no modal). The header's search opened GlobalSearch, a
    dialog over the page on a click or ⌘K; it now goes to /search, a page that works without script, and the dialog is gone. */
 
-/** The home page's hero search wrapper, set in src/app/page.tsx. */
+/** The home page's hero search wrapper, set in src/components/spine/home/home-view.tsx. */
 const HOME_ANCHOR_ID = "home-search-anchor";
 
 export function HeaderSearch() {
@@ -72,18 +78,20 @@ export function HeaderSearch() {
     return () => observer.disconnect();
   }, [isHome]);
 
-  if (isHome && !heroSearchGone) return null;
+  const waiting = isHome && !heroSearchGone;
   return (
     <a
       href="/search"
-      className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-paper-350 bg-white px-3 py-1.5 text-sm text-ink-700 transition hover:border-ink-500"
       aria-label="Search Margin Atlas"
+      aria-hidden={waiting ? "true" : undefined}
+      tabIndex={waiting ? -1 : undefined}
+      className={`inline-flex min-h-11 min-w-11 items-center justify-center gap-2 text-base text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]${waiting ? " invisible" : ""}`}
     >
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
         <circle cx="11" cy="11" r="7" />
         <path d="M21 21l-4.35-4.35" />
       </svg>
-      <span className="hidden sm:inline">Search</span>
+      <span className="hidden md:inline">Search</span>
     </a>
   );
 }

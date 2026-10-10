@@ -1373,7 +1373,7 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
                 <line x1={x} y1={axisY} x2={x} y2={topY} stroke={TERRA} strokeWidth={1.5} />
                 <circle cx={x} cy={topY} r={6} fill={TERRA} stroke="#fff" strokeWidth={2} />
                 <circle cx={x} cy={topY} r={9} fill="none" stroke={TERRA} strokeWidth={1} opacity={0.45} />
-                <text x={x} y={topY - 12} textAnchor="middle" fill="#c2410c" fontSize={11} fontWeight={600}>{n.label}</text>
+                <text x={x} y={topY - 12} textAnchor="middle" fill="var(--terra-text)" fontSize={11} fontWeight={600}>{n.label}</text>
                 {n.sub ? <text x={x} y={topY - 24} textAnchor="middle" fill="#8c8c8a" fontSize={9}>{n.sub}</text> : null}
               </g>
             );

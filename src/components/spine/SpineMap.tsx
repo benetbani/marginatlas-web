@@ -34,7 +34,12 @@ export type SpinePoint = {
   tone?: "terra" | "ink"; // pin encoding: terra = above the page's baseline (the answer side), ink = below. Default terra.
 };
 
-const TERRA_ACCENT = "#c2410c"; // the marker fill (atlas terracotta accent)
+/* THE FILE'S REDS ARE TOKENS (plan 2026-10-10, the home reformed to ship, Task 1, amendment 2). It wrote one orange literal for
+   every red mark: a fill, a word and a ring. Now a fill reads the drawn-answer terracotta, --terra, and a word reads the one text
+   red, --terra-text. A focus ring reads the text red too, since the fill's colour is 2.36:1 on the control and a ring needs 3:1.
+   Both are DOM styles and a stylesheet string, so the page's custom properties (globals.css, :root) reach them. */
+const TERRA_FILL = "var(--terra)"; // the marker's dot and the legend's two dots
+const TERRA_TEXT = "var(--terra-text)"; // the popup's figure, and the focus rings
 const INK = "#1b1b1a";
 const BORDER = "#e7e2df";
 const MUTED = "#6f6f6d";
@@ -74,7 +79,7 @@ const SCOPED_CSS = `
   background:var(--terra-soft,#fff1ed);
 }
 .spinemap-root .maplibregl-ctrl-group button:focus-visible{
-  outline:none;box-shadow:inset 0 0 0 2px ${TERRA_ACCENT};
+  outline:none;box-shadow:inset 0 0 0 2px ${TERRA_TEXT};
 }
 .spinemap-root .maplibregl-ctrl-group button + button{border-top:1px solid ${BORDER};}
 .spinemap-root .maplibregl-ctrl-attrib{
@@ -85,7 +90,7 @@ const SCOPED_CSS = `
 .spinemap-root .spinemap-marker{touch-action:manipulation;}
 .spinemap-root .spinemap-marker:focus-visible{outline:none;}
 .spinemap-root .spinemap-marker:focus-visible .spinemap-dot{
-  box-shadow:0 0 0 3px rgba(255,255,255,0.92),0 0 0 6px rgba(194,65,12,0.55),0 1px 3px rgba(43,28,22,0.35);
+  box-shadow:0 0 0 3px rgba(255,255,255,0.92),0 0 0 6px rgba(153,22,0,0.55),0 1px 3px rgba(43,28,22,0.35);
 }
 .spinemap-root .maplibregl-popup.spinemap-pop .maplibregl-popup-content{
   padding:8px 10px;border-radius:10px;border:1px solid ${BORDER};
@@ -106,7 +111,7 @@ function popupHTML(p: SpinePoint): string {
     s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const fig =
     p.signalLabel
-      ? `<div style="font-family:var(--font-num),system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:12.5px;color:${TERRA_ACCENT};margin-top:2px;letter-spacing:.01em;">${esc(
+      ? `<div style="font-family:var(--font-num),system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:12.5px;color:${TERRA_TEXT};margin-top:2px;letter-spacing:.01em;">${esc(
           p.signalLabel
         )}</div>`
       : "";
@@ -157,7 +162,7 @@ function buildMarkerEl(
 
   const dot = document.createElement("span");
   dot.className = "spinemap-dot";
-  const dotFill = p.tone === "ink" ? INK : TERRA_ACCENT;
+  const dotFill = p.tone === "ink" ? INK : TERRA_FILL;
   dot.style.cssText =
     `display:block;width:${size}px;height:${size}px;border-radius:9999px;background:${dotFill};` +
     "box-shadow:0 0 0 3px rgba(255,255,255,0.92),0 1px 3px rgba(43,28,22,0.35);transition:transform .12s ease;flex:0 0 auto;";
@@ -409,8 +414,8 @@ export function SpineMap({
         // clear for the CARTO attribution (they collided on narrow cards).
         <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-3 rounded-[10px] border border-[var(--c-border)] bg-[var(--c-card)]/95 px-2 py-2 shadow-[0_1px_2px_rgba(43,28,22,0.10)]">
           <span className="flex items-end gap-2" aria-hidden="true">
-            <span className="block h-[8px] w-[8px] rounded-full" style={{ background: TERRA_ACCENT }} />
-            <span className="block h-[16px] w-[16px] rounded-full" style={{ background: TERRA_ACCENT }} />
+            <span className="block h-[8px] w-[8px] rounded-full" style={{ background: TERRA_FILL }} />
+            <span className="block h-[16px] w-[16px] rounded-full" style={{ background: TERRA_FILL }} />
           </span>
           <span className="text-[11px] font-medium leading-tight text-[var(--c-ink2)]">{legendLabel}</span>
         </div>

@@ -1,12 +1,19 @@
 /**
- * Minimal not-found that avoids the Next.js 15.5
- * post-export rename bug. The previous version (Phosphor barrel imports)
- * triggered an ENOENT on .next/export/500.html during static export,
- * killing every Vercel deploy of commits 4348a23 + 4680afc + 34b9e61.
+ * The site's 404, inside the site's chrome (plan 2026-10-10, the home reformed to ship, Task 1; the ship audit's 5.5).
  *
- * This minimal version uses plain HTML + Tailwind only.
+ * WHY IT DRAWS SiteChrome. This boundary sits above src/app/(site)/layout.tsx, and since 2026-08-09 the chrome is drawn per page,
+ * so a 404 showed no wordmark, no search and no footer: a dead end with no way back but the browser's. Wrapped, it carries the bar,
+ * the sheet and the footer every other page carries, and SiteChrome's <main> is its landmark (it drew a <main> of its own, sized
+ * for a 3.5rem header that was not there).
+ *
+ * THE STATIC EXPORT. A previous version of this file (Phosphor barrel imports) triggered an ENOENT on .next/export/500.html during
+ * static export, killing every Vercel deploy of commits 4348a23 + 4680afc + 34b9e61. SiteChrome imports no Phosphor barrel: the
+ * newsletter bar takes its three icons from `@phosphor-icons/react/dist/ssr/<Icon>`, and tests/chrome/masthead.test.ts walks
+ * SiteChrome's whole import graph and reds on a bare `@phosphor-icons/react`. SiteChrome is also already prerendered on every
+ * (site) page of every green deploy, so wrapping this page in it adds no module the export has not built. Imports stay at two.
  */
 import Link from "next/link";
+import { SiteChrome } from "@/components/SiteChrome";
 
 /**
  * The 404 boundary nominates no canonical, and that is the point.
@@ -33,53 +40,43 @@ export const metadata = {
   alternates: { canonical: null },
 };
 
-/* No counts in here, deliberately. "245 cities across the atlas" was wrong by
-   seven, the list holds 252, and a hardcoded total on the 404 page is the least
-   likely number in the codebase to be revisited. The sibling entry below
-   already reads "Every activity with a page", which cannot go stale, so the
-   cities line now matches it.
-   
-   Not derived from city_list_v1.json either: this file's header records that a
-   previous version's imports triggered an ENOENT on .next/export/500.html and
-   killed every Vercel deploy of three commits. It stays plain HTML and
-   Tailwind, with no data imports, which is why the honest fix here is to drop
-   the number rather than compute it. */
+/* No counts in here, deliberately. "245 cities across the atlas" was wrong by seven, and a hardcoded total on the 404 page is the
+   least likely number in the codebase to be revisited; each line says what the page holds without a number, so none can go stale.
+   EVERY LINE TRUE (the ship audit's 5.5): the world map left the home on 2026-09-25 and the site has no glossary, so "Start from the
+   world map on the homepage" and "Methodology, glossary, atlas guides" went. Each door's name is the one the bar, the sheet and the
+   footer give the same page (src/lib/nav.ts, SiteChrome.tsx), and each line is its page's own description, shortened. */
 const HATCHES = [
-  { label: "Browse cities",           desc: "Every city with a page",                      href: "/cities" },
-  { label: "Browse industries",       desc: "Every activity with a page",                  href: "/industries" },
-  { label: "Pick a country",          desc: "Start from the world map on the homepage",    href: "/" },
-  { label: "Read the knowledge base", desc: "Methodology, glossary, atlas guides",         href: "/learn" },
-  { label: "Compare three places",    desc: "Side-by-side country, city, or sector",       href: "/compare" },
-  { label: "Use the calculator",      desc: "Plug your numbers into the typical operator", href: "/calculator" },
+  { label: "Countries", desc: "Every country with a page, by continent", href: "/countries" },
+  { label: "Cities", desc: "Every city with a page, on one map", href: "/cities" },
+  { label: "Trades", desc: "Every trade with a page, by sector", href: "/industries" },
+  { label: "Compare", desc: "One trade in up to three cities, side by side", href: "/compare" },
+  { label: "Calculator", desc: "The sales you need to break even", href: "/calculator" },
+  { label: "About the figures", desc: "How to read a figure, and where each comes from", href: "/about-data#reading" },
 ];
 
 export default function NotFound() {
   return (
-    <main className="w-full bg-white min-h-[calc(100vh-3.5rem)]">
-      <div className="mx-auto max-w-6xl px-6 pt-16 pb-12 sm:pt-24">
-        <div className="text-center">
-          <p aria-hidden="true" className="font-display text-6xl sm:text-7xl font-semibold text-atlas-700 leading-none">
-            404
-          </p>
-          <h1 className="font-display text-2xl sm:text-3xl font-semibold tracking-tight text-ink-900 mt-6">
-            This page isn&apos;t part of the atlas.
-          </h1>
-          <p className="text-base text-cocoa-700 mt-4 max-w-xl mx-auto leading-relaxed">
-            Atlas might still add this combination, or the URL might be
-            misspelled. Either way, six places to go next:
-          </p>
-        </div>
-        <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+    <SiteChrome>
+      <div className="pb-12 pt-10 md:pt-16">
+        <p className="text-[length:var(--t-body)] text-[var(--c-muted)]">404</p>
+        <h1 className="mt-2 font-display text-2xl font-semibold tracking-tight text-[var(--c-ink)]">
+          Nothing at this address
+        </h1>
+        <p className="mt-3 text-[length:var(--t-lead)] text-[var(--c-ink2)]">Check the spelling, or start from one of these.</p>
+        <ul className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-3">
           {HATCHES.map((h) => (
             <li key={h.href}>
-              <Link href={h.href} className="block rounded-lg border border-parchment bg-white hover:bg-paper-100 hover:border-atlas-500 transition-colors p-5">
-                <div className="font-semibold text-ink-900">{h.label}</div>
-                <div className="text-sm text-cocoa-700 mt-1 leading-relaxed">{h.desc}</div>
+              <Link
+                href={h.href}
+                className="block h-full rounded-[12px] border border-[var(--c-border)] bg-white p-5 transition-colors hover:border-[var(--c-ink2)]"
+              >
+                <span className="block font-semibold text-[var(--c-ink)]">{h.label}</span>
+                <span className="mt-1 block text-[length:var(--t-body)] text-[var(--c-ink2)]">{h.desc}</span>
               </Link>
             </li>
           ))}
         </ul>
       </div>
-    </main>
+    </SiteChrome>
   );
 }

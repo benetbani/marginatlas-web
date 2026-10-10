@@ -2554,6 +2554,22 @@
       "claims": []
     },
     {
+      "name": "masthead",
+      "script": "tests/chrome/masthead.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE MASTHEAD, PUBLISHING READY (plan docs/superpowers/plans/2026-10-10-home-reform, Task 1, in the design repo; the spec docs/superpowers/specs/2026-10-10-home-reform-design.md, decisions 4 to 6 and s",
+      "reads": [
+        "src/app/globals.css",
+        "src/app/layout.tsx",
+        "src/app/not-found.tsx",
+        "src/components/MobileNav.tsx",
+        "src/components/SiteChrome.tsx",
+        "src/lib/nav.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "break-in-for-cell",
       "script": "tests/scores/break_in_for_cell.test.ts",
       "args": [],

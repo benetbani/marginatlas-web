@@ -793,6 +793,11 @@ const GATES: Gate[] = [
      <main> lives, and nothing replaced the landmark. Invisible in a browser;
      a screen reader had no content region to jump to. Negative-tested. */
   { name: "main-landmark", script: "scripts/verify_main_landmark.mjs" },
+  /* THE MASTHEAD, PUBLISHING READY (plan 2026-10-10, the home reformed to ship, Task 1; the spec's section 3): a skip link to
+     <main id="main">, the seven names of src/lib/nav.ts with the page being read marked, Search in its slot, Pricing and the account
+     link only behind their switches, the sheet's panel always in the document and pressed in jsdom (Escape, a tap outside, 1280, a
+     row), the footer matched, the focus floor, the height token, the one text red, the 404 inside the chrome. No browser. */
+  { name: "masthead", script: "tests/chrome/masthead.test.ts" },
   { name: "break-in-for-cell", script: "tests/scores/break_in_for_cell.test.ts" },
   { name: "composite", script: "tests/scores/composite.test.ts" },
   { name: "country-board", script: "tests/scores/country_board.test.ts" },

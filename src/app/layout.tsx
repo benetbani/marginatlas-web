@@ -139,7 +139,14 @@ export const metadata: Metadata = {
   },
 };
 
-/* --atlas-header-h HAS THREE VALUES BECAUSE THE MASTHEAD HAS THREE HEIGHTS.
+/* --atlas-header-h HAS TWO VALUES BECAUSE THE MASTHEAD HAS TWO HEIGHTS (plan 2026-10-10, the home reformed to ship, Task 1; the
+   spec's decision 6). Under 768 the bar is a 60px row, 8px above and below its 44px controls, under its 1px rule: 61. From 768 it
+   keeps 24px above and below the same 44px controls and the 40px mark: 93 at every width, because the search's slot is now drawn
+   on every page (on the home it was absent until the picker scrolled away, which is why 1280 and up once measured 89). Each value
+   is rounded UP to the next whole pixel, so a sticky may sit a fraction low but never underneath the bar; the page's
+   scroll-padding-top (globals.css) and the sheet's height cap (MobileNav.tsx) read the same token.
+
+   THE HISTORY, kept so nobody re-derives it: the token once HAD THREE VALUES BECAUSE THE MASTHEAD HAD THREE HEIGHTS.
    It declared two, 80 and 88, and matched the bar at neither.
 
    Measured on the rendered page, header.getBoundingClientRect().height against
@@ -182,7 +189,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${displayFace.variable} ${bodyFace.variable} [--atlas-header-h:85px] md:[--atlas-header-h:93px] xl:[--atlas-header-h:89px]`}
+      className={`${displayFace.variable} ${bodyFace.variable} [--atlas-header-h:61px] md:[--atlas-header-h:93px]`}
     >
       {/* SaaS reformation 2026-06-12 — the body is the app ground, a cool
           neutral (via the `body` rule in globals.css). The .atlas-paper

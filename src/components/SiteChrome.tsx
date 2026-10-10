@@ -30,30 +30,59 @@
  * single dynamic tree holding both the routes that need chrome and the one
  * branch that must not have it.
  *
- * NOTHING HERE IS NEW. This markup was LIFTED from the previous root layout by
- * a script rather than retyped, because retyping it by hand produced an invented
- * footer on the first attempt. Pages that had chrome get byte-identical chrome.
+ * THE MARKUP WAS LIFTED from the previous root layout by a script rather than
+ * retyped, because retyping it by hand produced an invented footer on the first
+ * attempt. It was changed on purpose once since, when the masthead was reformed
+ * to ship (plan 2026-10-10, Task 1; the spec's section 3, the critique's section
+ * 5, the ship audit's 1c), and each change says why where it stands: a skip link
+ * first; the seven names from one list (src/lib/nav.ts), the page being read
+ * marked; Search always in its slot; the account link and the Pricing pill only
+ * behind their switches; a 60px bar on a phone; nothing terracotta in the bar;
+ * the footer's names, heads and rows matched to the bar's.
  */
+import Link from "next/link";
 import { FooterNewsletterBar } from "@/components/newsletter/NewsletterSignupVariants";
 import { HeaderAuth } from "@/components/HeaderAuth";
 import { HeaderSearch } from "@/components/HeaderSearch";
+import { NavLinks } from "@/components/NavLinks";
 import { AtlasFrame } from "@/components/AtlasFrame";
 import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { PhoneLockup } from "@/components/brand/PhoneLockup";
 import { MobileNav } from "@/components/MobileNav";
 import { WatchTray } from "@/components/kit";
-import { isWarmFrameEnabled, isPaywallOn } from "@/lib/feature_flags";
+import { isAuthEnabled, isWarmFrameEnabled, isPaywallOn } from "@/lib/feature_flags";
+import { NAV } from "@/lib/nav";
+
+/** The skip link: visually hidden until it takes focus, then an ink pill over the bar's corner (the site's focus floor rings it). */
+const SKIP =
+  "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-2 focus:z-toast focus:rounded-full focus:bg-[var(--c-ink)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white";
+/** Pricing while the paywall is on: the bar's one ink pill, last, from 1280; ink2 on hover (7.36:1 with white), never terracotta. */
+const PRICING_PILL =
+  "tap hidden xl:inline-flex items-center rounded-full bg-[var(--c-ink)] px-3.5 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--c-ink2)]";
+/** A footer column's head: sentence case, 14 semibold white (it was 12px tracked capitals, which read as texture). */
+const FOOT_HEAD = "mb-3 text-sm font-semibold text-white";
+/** A footer column's rows: 44px tall on a phone, the type's own height from 768. */
+const FOOT_LIST = "md:space-y-2";
+const FOOT_LINK = "flex min-h-11 items-center transition-colors hover:text-white hover:underline md:inline-flex md:min-h-0";
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   // Warm frame (R6 Phase B): the glass chrome class on the sticky header swaps
   // in only when the frame is on; the gutters render themselves (no-op when
-  // off). With the flag off the header keeps its white + parchment-hairline bar.
+  // off). With the flag off the header keeps its white bar and its hairline, the
+  // spine's --c-border (it was the parchment grey).
   const warmFrame = isWarmFrameEnabled();
   const headerClass = warmFrame
     ? "atlas-glass-chrome sticky top-0 z-raised"
-    : "bg-white border-b border-parchment sticky top-0 z-raised";
+    : "bg-white border-b border-[var(--c-border)] sticky top-0 z-raised";
+  const authOn = isAuthEnabled();
+  const paywallOn = isPaywallOn();
   return (
     <>
+        {/* SKIP TO CONTENT, FIRST IN THE DOCUMENT (the ship audit's 1.4; WCAG 2.4.1): at 1280 a keyboard met the wordmark and
+            the seven names before the first word of the page. It lands on <main id="main">, below. */}
+        <a href="#main" className={SKIP}>
+          Skip to content
+        </a>
         {/* THE SITE-WIDE ATMOSPHERE, mounted here because this is the one
             component every page reaches. Founder, 2026-08-16: the background
             "should be totally visible on the edges of the whole site, and on
@@ -70,67 +99,51 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
            stays defined as content scrolls beneath it. */}
         <header className={headerClass}>
           {/* UNDER 360px THE BAR TAKES THE PAGE'S 16px GUTTER AND A 12px GAP (2026-10-04): at 320 the lockup, the search and the menu
-              ran 11px past the screen and the whole page scrolled sideways (the UK page reform's phone check; production the same). */}
-          <div className="max-w-content mx-auto px-6 py-5 md:py-6 flex items-center justify-between max-[359px]:px-4">
-            <a href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
+              ran 11px past the screen and the whole page scrolled sideways (the UK page reform's phone check; production the same).
+              A 60px BAR ON A PHONE (the spec's decision 6): 8px above and below the 44px controls under 768, so the h1, the picker
+              and the definition stand in the first screen at 375; from 768 the bar keeps its 24px and the 40px mark. The height
+              token in src/app/layout.tsx follows both. */}
+          <div className="max-w-content mx-auto px-6 py-2 md:py-6 flex items-center justify-between max-[359px]:px-4">
+            <Link href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
               {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. ON A PHONE, 28 AND ONE LINE (2026-10-01, T5):
                   at 40 everywhere the two words wrapped beside the search and the menu at every phone width (the bar 117px tall
                   at 375) and the founder's 36 cannot stand on one line there (251px of lockup in 223); 28 is the size that does
                   at 360. The phone lockup also takes the page's own name once its title has scrolled away (PhoneLockup.tsx). */}
               <span className="inline-flex md:hidden"><PhoneLockup /></span>
               <span className="hidden md:inline-flex"><LogoWordmark size={40} labeled={false} /></span>
-            </a>
+            </Link>
             <div className="flex items-center gap-5 md:gap-6 max-[359px]:gap-3">
-              {/* lg, NOT md, and this was a measured defect rather than a
+              {/* THE ORDER (the spec's section 3): the seven names, Search, the account link while accounts are on, Pricing while the
+                  paywall is on, then the menu under 1280. Nothing in the bar is terracotta; a hover is ink.
+
+                  xl, NOT md, and this was a measured defect rather than a
                   preference. The full nav is seven links plus a search and a
                   pricing button; it switched on at md (768) and there is not
                   room for it there, so the masthead WRAPPED TO TWO ROWS across
-                  768 to 1023.
-
-                  Measured on the rendered page: header height 84.8px at 360,
-                  **124.8px at 753**, 88.8px at 1265, against a
-                  --atlas-header-h token declaring 80/88. So the token was
-                  36.8px wrong exactly where the bar was tallest, and every
-                  `top-[var(--atlas-header-h)]` sticky on the site was pinned
-                  to a number the bar does not have.
-
-                  Raising both this and MobileNav's own breakpoint to lg gives
-                  the masthead TWO heights instead of four, which is what the
-                  token was always describing. The hamburger covers 768 to 1023
-                  now, which is what it is for.
-
-                  AND THEN XL, NOT LG (2026-10-01, T5), for the same
-                  measured reason one size up: once the lockup grew to
-                  40, the seven links, the search and the lockup did not
-                  fit at 1024 either, and the two words wrapped (the bar
-                  125px tall at 1024). The full nav needs 1280; the
-                  hamburger covers 768 to 1279. */}
-              <nav className="text-base text-ink-800 hidden xl:flex items-center gap-5">
-                <a href="/countries" className="hover:text-atlas-600 transition-colors">Countries</a>
-                <a href="/industries" className="hover:text-atlas-600 transition-colors">Activities</a>
-                <a href="/cities" className="hover:text-atlas-600 transition-colors">Cities</a>
-                <a href="/extremes" className="hover:text-atlas-600 transition-colors">Extremes</a>
-                {/* Tools hub (2026-06-07): the founder folded Decide, Check, and
-                   Calculator under one entry. The individual routes are
-                   unchanged; /tools points to all three. */}
-                <a href="/tools" className="hover:text-atlas-600 transition-colors">Tools</a>
-                <a href="/compare" className="hover:text-atlas-600 transition-colors">Compare</a>
-                <a href="/blog" className="hover:text-atlas-600 transition-colors">Blog</a>
-                <HeaderAuth />
-                {/* Plan v32 — pricing promoted to button-style CTA so
-                   it's visually distinct from the rest of the nav. */}
-                <a
-                  href="/pricing"
-                  className="ml-1 inline-flex items-center px-3.5 py-1.5 rounded-full bg-ink-900 text-white text-sm font-semibold hover:bg-atlas-700 transition-colors"
-                >
-                  Pricing
-                </a>
-              </nav>
+                  768 to 1023. Measured on the rendered page: header height
+                  84.8px at 360, **124.8px at 753**, 88.8px at 1265. Raising
+                  both this and MobileNav's own breakpoint to lg gave the
+                  masthead two heights instead of four; AND THEN XL (2026-10-01,
+                  T5), for the same measured reason one size up: once the lockup
+                  grew to 40, the seven links, the search and the lockup did not
+                  fit at 1024 either. The full nav needs 1280; the menu covers
+                  768 to 1279. */}
+              <NavLinks />
               <HeaderSearch />
-              {/* Mobile chrome (R5 Part 8): below md the desktop nav above is
-                  hidden, so this hamburger is the only navigation. It toggles a
-                  token-styled menu of the same primary links. */}
-              <MobileNav />
+              {authOn ? <HeaderAuth /> : null}
+              {/* PRICING ONLY WHILE THE PAYWALL IS ON (the spec's decision 4; the ship audit's 1.1): the black pill advertised Pro on
+                  every page while the switch was off and the footer's own line said "free to browse". The page stays reachable by its
+                  address and listed in the sitemap. */}
+              {paywallOn ? (
+                <Link href="/pricing" className={PRICING_PILL}>
+                  Pricing
+                </Link>
+              ) : null}
+              {/* Mobile chrome (R5 Part 8): under 1280 the names above are
+                  hidden, so this menu is the only navigation. It carries the
+                  same names, the trust pages, and the account and Pricing rows
+                  behind the same switches. */}
+              <MobileNav pricing={paywallOn} />
             </div>
           </div>
         </header>
@@ -163,8 +176,11 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             paint step as the frame, permanently. It is safe by construction:
             no offsets, so layout is untouched, and `z-index` stays `auto`, so
             <main> forms no stacking context and every descendant z-index goes
-            on competing in the root context exactly as before. */}
-        <main className="relative max-w-content mx-auto px-6 pt-4">{children}</main>
+            on competing in the root context exactly as before.
+
+            `id="main"` and `tabIndex={-1}` are the skip link's target (the ship audit's 1.4): the link lands here and focus with it,
+            so the next Tab starts inside the page. globals.css draws no ring round the whole page for that focus. */}
+        <main id="main" tabIndex={-1} className="relative max-w-content mx-auto px-6 pt-4">{children}</main>
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />
@@ -191,103 +207,67 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             <div className="mb-8">
               <LogoWordmark size={22} labeled tone="dark" />
             </div>
-            <div className="grid md:grid-cols-5 gap-8 text-sm text-white/80">
-              <div>
-                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Browse</div>
-                <ul className="space-y-2 text-xs">
-                  <li><a href="/countries" className="hover:text-atlas-500">All countries</a></li>
-                  <li><a href="/cities" className="hover:text-atlas-500">All cities</a></li>
-                  <li><a href="/industries" className="hover:text-atlas-500">All activities</a></li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Use</div>
-                <ul className="space-y-2 text-xs">
-                  <li><a href="/calculator" className="hover:text-atlas-500">Where do I sit?</a></li>
-                  <li><a href="/compare" className="hover:text-atlas-500">Compare snapshots</a></li>
-                  {/* "Ask Atlas" pointed at /#ask-atlas. The home page defines
-                      #pick-a-country and #newsletter and nothing else, so this
-                      was a SIXTH dead anchor , found by the new gate on its
-                      first run, not by me. Removed rather than left promising a
-                      feature that has no section. */}
-                  <li><a href="/#newsletter" className="hover:text-atlas-500">Newsletter</a></li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Learn</div>
-                <ul className="space-y-2 text-xs">
-                  <li><a href="/about-data" className="hover:text-atlas-500">About the data</a></li>
-                  <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">How a figure is built</a></li>
-                  <li><a href="/blog" className="hover:text-atlas-500">Blog</a></li>
-                  {/* "Tax overlay guide" and "Glossary" pointed at #tax and
-                      #glossary on about-data. Neither section exists, so both
-                      links landed at the top of a page that never mentions
-                      either subject. Removed rather than left promising
-                      content; writing them is real work, tracked as W12. */}
-                </ul>
-              </div>
-              <div>
-                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Trust</div>
-                <ul className="space-y-2 text-xs">
-                  {/* All five about-data anchors in this footer were DEAD: the
-                      page defines #estimated, #measured, #modeled and #regional
-                      only, so #quality, #sources, #glossary, #tax and #contact
-                      landed silently at the top, on every page. The dead-links
-                      gate is green because it validates routes, not fragments.
+            {/* THE FOOTER, MATCHED TO THE BAR (the critique's section 5 and P2.8, the ship audit's 4.2, 4.5 and 5.6): a named
+                navigation; the first column the bar's own seven names (src/lib/nav.ts); heads in sentence case; rows 44px tall on a
+                phone, two columns a row there; one name per destination (it held "About the data" and "About the figures" for one
+                page, "How a figure is built" and "Where the numbers come from" for another, and a version string, v1.18.0, that no
+                build stamps). Pricing heads the Atlas column only while the paywall is on.
 
-                      #quality now has its id. #sources points at the section
-                      that actually carries it. #glossary and #tax are gone
-                      rather than pointing at nothing , the site has no glossary
-                      and no tax page. Tracked as W10 and W12.
-
-                      The contact link is the one that came back, 2026-08-01. It
-                      was recorded as blocked on an address the founder had to
-                      supply, and that was never true: a form posts to our own
-                      endpoint and needs no address at all. The link below goes
-                      to a real page carrying a real form. */}
-                  {/* First in the column because it is the plainest door into
-                      the same material: a reader who is deciding whether to
-                      believe any of this asks a question before they read a
-                      methodology note. */}
-                  <li><a href="/faq" className="hover:text-atlas-500">Common questions</a></li>
-                  {/* "About the figures" in the footer (his interview of 2026-09-26; milestone 1, M9): how to read a figure, then the sources. */}
-                  <li><a href="/about-data#reading" className="hover:text-atlas-500">About the figures</a></li>
-                  <li><a href="/methodology/key-benchmarks" className="hover:text-atlas-500">Where the numbers come from</a></li>
-                  <li><a href="/coverage" className="hover:text-atlas-500">Coverage report</a></li>
-                  {/* Who runs this, the corrections log and the free data pack (his rulings of 2026-10-05 on PARKED P0.2, P31.1, P0.3). */}
-                  <li><a href="/about" className="hover:text-atlas-500">Who runs this</a></li>
-                  <li><a href="/corrections" className="hover:text-atlas-500">Corrections</a></li>
-                  <li><a href="/data" className="hover:text-atlas-500">Free data</a></li>
-                  <li><a href="/contact" className="hover:text-atlas-500">Contact</a></li>
+                All five about-data anchors in this footer were DEAD on 2026-07-29 (#quality, #sources, #glossary, #tax, #contact):
+                the dead-links gate validates routes, not fragments. "About the figures" lands on #reading, which exists (his
+                interview of 2026-09-26, milestone 1, M9: how to read a figure, then the sources). "Ask Atlas" (/#ask-atlas), "API"
+                (/api, no page; design/loop3/api/DECISION.md) and the glossary and tax links went for the same reason, and the
+                "Newsletter" link (/#newsletter) went on 2026-10-10: the bar it pointed at stands directly above this footer on every
+                page, and no newsletter is sent (NewsletterSignupVariants.tsx says so). Who runs this, the corrections log and the free
+                data pack are his rulings of 2026-10-05 (PARKED P0.2, P31.1, P0.3); the contact link goes to a real form. */}
+            <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4 text-sm text-white/80">
+              <div>
+                <div className={FOOT_HEAD}>Browse</div>
+                <ul className={FOOT_LIST}>
+                  {NAV.map((item) => (
+                    <li key={item.href}>
+                      <Link href={item.href} className={FOOT_LINK}>
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div>
-                <div className="font-semibold text-white mb-3 text-xs uppercase tracking-wide">Atlas</div>
-                <ul className="space-y-2 text-xs">
-                  <li><a href="/pricing" className="hover:text-atlas-500">Pricing</a></li>
-                  <li><a href="/status" className="hover:text-atlas-500">Status</a></li>
-                  {/* "API" pointed at /api, which is not a page. Only route
-                      handlers live under src/app/api, so the link fell through
-                      to the [country] wildcard and rendered "Country not found"
-                      at HTTP 200, a soft 404 linked from every page on the
-                      site. Removed rather than repointed: there is no developer
-                      API and no page describing the one export that does exist.
-                      The decision and the argument are in
-                      design/loop3/api/DECISION.md; the page is tracked as A3. */}
-                  {/* A trust page nobody can reach is not a trust page. These
-                      sit in the footer because that is the first place a
-                      suspicious reader looks for them. */}
-                  <li><a href="/privacy" className="hover:text-atlas-500">Privacy</a></li>
-                  <li><a href="/terms" className="hover:text-atlas-500">Terms</a></li>
-                  <li><a href="/cookies" className="hover:text-atlas-500">Cookies</a></li>
-                  <li className="text-white/55">v1.18.0</li>
+                <div className={FOOT_HEAD}>Learn</div>
+                <ul className={FOOT_LIST}>
+                  <li><Link href="/about-data#reading" className={FOOT_LINK}>About the figures</Link></li>
+                  <li><Link href="/methodology/key-benchmarks" className={FOOT_LINK}>The one ratio to watch</Link></li>
+                  <li><Link href="/faq" className={FOOT_LINK}>Common questions</Link></li>
+                  <li><Link href="/coverage" className={FOOT_LINK}>Coverage report</Link></li>
+                  <li><Link href="/calculator" className={FOOT_LINK}>Calculator</Link></li>
                 </ul>
               </div>
-            </div>
+              <div>
+                <div className={FOOT_HEAD}>Trust</div>
+                <ul className={FOOT_LIST}>
+                  <li><Link href="/about" className={FOOT_LINK}>Who runs this</Link></li>
+                  <li><Link href="/corrections" className={FOOT_LINK}>Corrections</Link></li>
+                  <li><Link href="/data" className={FOOT_LINK}>Free data</Link></li>
+                  <li><Link href="/contact" className={FOOT_LINK}>Contact</Link></li>
+                </ul>
+              </div>
+              <div>
+                <div className={FOOT_HEAD}>Atlas</div>
+                <ul className={FOOT_LIST}>
+                  {paywallOn ? <li><Link href="/pricing" className={FOOT_LINK}>Pricing</Link></li> : null}
+                  <li><Link href="/status" className={FOOT_LINK}>Status</Link></li>
+                  <li><Link href="/privacy" className={FOOT_LINK}>Privacy</Link></li>
+                  <li><Link href="/terms" className={FOOT_LINK}>Terms</Link></li>
+                  <li><Link href="/cookies" className={FOOT_LINK}>Cookies</Link></li>
+                </ul>
+              </div>
+            </nav>
             <div className="mt-10 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs text-white/70">
-              <span>© Tesseract Research · marginatlas.com</span>
+              {/* The year beside the publisher (the ship audit's 5.7); the publisher's name itself is his (the spec's section 7). */}
+              <span>© {new Date().getFullYear()} Tesseract Research · marginatlas.com</span>
               {/* Ruling 17 from launch day (the paywall's switch, masterplan step 12). */}
-              <span>Covering small businesses worldwide · {isPaywallOn() ? "each UK chapter opens free" : "free to browse"}</span>
+              <span>Covering small businesses worldwide · {paywallOn ? "each UK chapter opens free" : "free to browse"}</span>
             </div>
           </div>
         </footer>

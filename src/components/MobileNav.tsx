@@ -1,47 +1,78 @@
 "use client";
 
 /**
- * MobileNav - the below-md header navigation (R5 Part 8 mobile-chrome fix).
+ * MobileNav , the masthead's sheet under 1280 (R5 Part 8; reformed to ship 2026-10-10, plan Task 1; the critique's section 5, the
+ * ship audit's 1.2, 1.6, 1.7, 1.8 and 1.12). Under 1280 it is a phone's, a tablet's and a small laptop's only navigation, so it
+ * carries what the bar carries, and the trust pages besides.
  *
- * The desktop nav is `hidden md:flex`; before this component the header had
- * NO navigation at all on phones (only a logo and the search icon). This adds
- * a real hamburger button shown only below md that toggles a simple menu of
- * the same primary links the desktop nav carries. The dead MobileNavDrawer
- * (which pulled a banned icon dependency) is gone; this is the replacement.
+ * THE TOGGLE: its name is "Menu", always, and `aria-expanded` says the state (the name used to flip between "Open menu" and "Close
+ * menu" while aria-expanded changed too, two signals for one state). `aria-controls` names a panel that is always in the document
+ * and `hidden` while shut (it named a node that did not exist while closed). The glyph swaps; nothing moves.
  *
- * Token styling only. Inline SVG glyphs (no icon library, no emoji). The menu
- * closes on any link tap and on Escape. WCAG AA: aria-expanded on the toggle,
- * visible focus ring on every interactive element, >= 44px touch targets.
+ * THE PANEL: full width under the bar, white, a --c-border hairline under it and the card's shadow; its rows on the bar's own column
+ * (`max-w-content`, `px-6`, `px-4` under 360; it was max-w-7xl, up to 80px off the wordmark between 1120 and 1279); its height
+ * capped at the viewport less the bar and scrollable (a landscape phone and 200 percent zoom cut its last rows off, and the page
+ * could not scroll them into reach because the sheet moves with the sticky bar). Rows are 48px: Search first (the bar keeps it
+ * hidden on the home until the picker leaves the screen), the seven names (src/lib/nav.ts); then, quieter, About the figures and
+ * Who runs this; then Sign in or Account and Pricing, each only while its switch is on. The page being read is marked as the bar
+ * marks it, `aria-current="page"`, and for the eye: ink, semibold, a 2px ink rule at the row's left.
+ *
+ * IT CLOSES on a row tap, on Escape (focus goes back to the toggle; it used to fall to the page, and the next Tab began again at
+ * the top), on a tap outside it, and when the window grows to 1280, where the bar's own names take over. Inline SVG glyphs, tokens
+ * only. No ring of its own: the site's focus floor (globals.css) draws every ring, 2px ink (the old ring here read 1.93:1).
  */
 
 import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { NAV, SHEET_TRUST, currentNav } from "@/lib/nav";
+import { isAuthEnabled } from "@/lib/feature_flags";
+import { AuthLink } from "@/components/HeaderAuth";
 
-// Mirror of the desktop nav's primary links (kept in sync with layout.tsx).
-// Pricing is included here as a normal row; the desktop CTA pill is a
-// desktop-only visual treatment and does not need to be replicated on mobile.
-const LINKS: { href: string; label: string }[] = [
-  { href: "/countries", label: "Countries" },
-  { href: "/industries", label: "Activities" },
-  { href: "/cities", label: "Cities" },
-  { href: "/extremes", label: "Extremes" },
-  { href: "/tools", label: "Tools" },
-  { href: "/compare", label: "Compare" },
-  { href: "/blog", label: "Blog" },
-  { href: "/pricing", label: "Pricing" },
-];
+/** The panel's id: the toggle's `aria-controls`. */
+export const SHEET_ID = "site-menu";
+/** Where the bar's own names take over (Tailwind's xl; the bar's breakpoint in SiteChrome.tsx and NavLinks.tsx). */
+const XL = "(min-width: 1280px)";
 
-export function MobileNav() {
+const ROW = "flex min-h-12 items-center border-l-2 pl-3";
+const ROW_MAIN = `${ROW} text-base font-medium`;
+const ROW_QUIET = `${ROW} border-transparent text-sm text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]`;
+const IDLE = "border-transparent text-[var(--c-ink)] underline-offset-[6px] hover:underline hover:decoration-1 hover:decoration-[var(--c-line-strong)]";
+const CURRENT = "border-[var(--c-ink)] font-semibold text-[var(--c-ink)]";
+const GROUP = "mt-2 border-t border-[var(--c-border)] pt-2";
+
+export function MobileNav({ pricing = false }: { pricing?: boolean }) {
   const [open, setOpen] = React.useState(false);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const current = currentNav(usePathname());
+  const auth = isAuthEnabled();
 
-  // Close on Escape for keyboard users.
   React.useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      buttonRef.current?.focus();
+    };
+    const onPointer = (e: PointerEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const wide = window.matchMedia(XL);
+    const onWide = () => {
+      if (wide.matches) setOpen(false);
     };
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    wide.addEventListener("change", onWide);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+      wide.removeEventListener("change", onWide);
+    };
   }, [open]);
+
+  const close = () => setOpen(false);
 
   return (
     /* xl:hidden, not md:hidden. Its sibling desktop nav in SiteChrome does not
@@ -50,68 +81,81 @@ export function MobileNav() {
        1024 the nav and the 40px lockup wrapped the lockup instead. The two
        breakpoints must always match: a gap leaves no nav at all, an overlap
        shows two. */
-    <div className="xl:hidden">
+    <div ref={rootRef} className="xl:hidden">
       <button
+        ref={buttonRef}
         type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label="Menu"
         aria-expanded={open}
-        aria-controls="mobile-nav-menu"
+        aria-controls={SHEET_ID}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink-800 transition-colors hover:text-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-[var(--c-ink)]"
       >
         {open ? (
           // Close glyph.
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
         ) : (
           // Hamburger glyph.
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <path d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         )}
       </button>
 
-      {open && (
-        <div
-          id="mobile-nav-menu"
-          className="absolute inset-x-0 top-full z-dropdown border-b border-parchment bg-white shadow-card"
-        >
-          <nav aria-label="Primary" className="max-w-7xl mx-auto px-6 py-2">
-            <ul className="flex flex-col">
-              {LINKS.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    className="flex min-h-11 items-center text-base text-ink-800 transition-colors hover:text-atlas-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                  >
-                    {l.label}
-                  </a>
+      <div
+        id={SHEET_ID}
+        hidden={!open}
+        className="absolute inset-x-0 top-full z-dropdown max-h-[calc(100dvh_-_var(--atlas-header-h))] overflow-y-auto overscroll-contain border-b border-[var(--c-border)] bg-white shadow-card"
+      >
+        <nav aria-label="Primary" className="mx-auto max-w-content px-6 py-2 max-[359px]:px-4">
+          <ul>
+            <li>
+              <Link href="/search" onClick={close} className={`${ROW_MAIN} ${IDLE}`}>
+                Search
+              </Link>
+            </li>
+            {NAV.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={close}
+                  aria-current={current === item.href ? "page" : undefined}
+                  className={`${ROW_MAIN} ${current === item.href ? CURRENT : IDLE}`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <ul className={GROUP}>
+            {SHEET_TRUST.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} onClick={close} className={ROW_QUIET}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {auth || pricing ? (
+            <ul className={GROUP}>
+              {auth ? (
+                <li>
+                  <AuthLink onClick={close} className={`${ROW_MAIN} ${IDLE}`} />
                 </li>
-              ))}
+              ) : null}
+              {pricing ? (
+                <li>
+                  <Link href="/pricing" onClick={close} className={`${ROW_MAIN} ${IDLE}`}>
+                    Pricing
+                  </Link>
+                </li>
+              ) : null}
             </ul>
-          </nav>
-        </div>
-      )}
+          ) : null}
+        </nav>
+      </div>
     </div>
   );
 }

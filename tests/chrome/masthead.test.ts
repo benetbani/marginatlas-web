@@ -1,0 +1,279 @@
+/**
+ * THE MASTHEAD, PUBLISHING READY (plan docs/superpowers/plans/2026-10-10-home-reform, Task 1, in the design repo; the spec
+ * docs/superpowers/specs/2026-10-10-home-reform-design.md, decisions 4 to 6 and section 3; the critique's section 5; the ship audit's
+ * 1.1 to 1.14 and its menu spec, 1c). What every page's chrome holds:
+ *   - a skip link first, landing on <main id="main" tabindex="-1">;
+ *   - the bar: the wordmark, `<nav aria-label="Primary">` with the seven names of src/lib/nav.ts in order, the page being read marked
+ *     `aria-current="page"` with a 2px ink underline, Search always in its slot (hidden and out of reach on the home until the picker
+ *     leaves the screen), the account link and the Pricing pill only while their switches are on, nothing terracotta, 8px above and
+ *     below its controls under 768 (the 60px bar) and 24px from;
+ *   - the sheet under 1280: a constant "Menu" name with `aria-expanded`, its panel always in the document and `hidden` while shut, on
+ *     the bar's column, its height capped to the viewport less the bar and scrollable, 48px rows in the spec's order (Search, the seven
+ *     names, About the figures and Who runs this, then the account and Pricing rows only while on), closing on Escape with focus back
+ *     on the toggle, on a tap outside, on a row, and when the window reaches 1280;
+ *   - the footer: `<nav aria-label="Footer">`, its first column the same seven names, heads in sentence case, 44px rows on a phone,
+ *     no version string, the year beside the publisher, Pricing only while the paywall is on; one name per destination across the bar,
+ *     the sheet and the footer;
+ *   - the height token by width (src/app/layout.tsx), the focus floor, scroll-padding-top, the one text red and the control-line
+ *     token (src/app/globals.css); the 404 inside the chrome with true lines (src/app/not-found.tsx); no Phosphor barrel anywhere in
+ *     SiteChrome's import graph (the 404's header records a static export killed by one).
+ * HOW: SiteChrome rendered server-side, the switches set per render in process.env (src/lib/feature_flags.ts reads them at render, as
+ * tests/legal/pro_legal.test.ts sets them) and the page's address handed in through Next's own pathname context; the sheet mounted in
+ * jsdom and pressed. BLIND SPOT, stated: this reads classes and a mounted tree, never pixels: the bar's measured heights, the sheet's
+ * scroll on a short screen and the ring's look are the browser gates' (plan Task 9). jsdom has no matchMedia; a stand-in answers.
+ * Run: npx tsx tests/chrome/masthead.test.ts
+ */
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
+import { red, redSummary } from "../../scripts/lib/red";
+
+/* React ships `act` in its development build only, and a build server sets NODE_ENV=production (tests/spine/setup_tiers_expand.test.ts
+   records the deploy that cost); React reads the variable when it is first loaded, so it is set before the first import below. */
+Object.assign(process.env, { NODE_ENV: "development" });
+
+const RULE = "masthead";
+const CHROME = "src/components/SiteChrome.tsx";
+const SHEET = "src/components/MobileNav.tsx";
+const NAVFILE = "src/lib/nav.ts";
+const LAYOUT = "src/app/layout.tsx";
+const CSS = "src/app/globals.css";
+const NOT_FOUND = "src/app/not-found.tsx";
+const REMEDY = "keep the chrome to the spec's section 3: the names from src/lib/nav.ts, Pricing and the account link only behind their switches, the skip link and <main id=\"main\">, the sheet's panel always in the document, the footer matched";
+let failed = 0;
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => {
+  if (ok) { console.log(`PASS  ${label}`); return; }
+  failed++;
+  red({ rule: RULE, file: at?.file ?? CHROME, detail: label, remedy: at?.remedy ?? REMEDY });
+};
+const code = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
+const WANT_NAMES = ["Countries", "Cities", "Trades", "Compare", "Tools", "Extremes", "Blog"];
+const WANT_HREFS = ["/countries", "/cities", "/industries", "/compare", "/tools", "/extremes", "/blog"];
+
+/* Every <a> in a stretch of markup: its href, its visible words (tags out), and its whole opening tag. */
+type A = { href: string; text: string; tag: string };
+const anchors = (html: string): A[] =>
+  [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)].map((m) => ({
+    href: /\bhref="([^"]*)"/.exec(m[1])?.[1] ?? "",
+    text: m[2].replace(/<[^>]*>/g, "").replace(/&amp;/g, "&").replace(/&#x27;/g, "'").replace(/\s+/g, " ").trim(),
+    tag: `<a${m[1]}>`,
+  }));
+/* The markup between an element's opening tag and the end of the element that opens with `open` (the first one after `from`). */
+const slice = (html: string, open: RegExp, close: string): string => {
+  const m = open.exec(html);
+  if (!m) return "";
+  const end = html.indexOf(close, m.index);
+  return end < 0 ? html.slice(m.index) : html.slice(m.index, end + close.length);
+};
+
+async function main() {
+  /* ---------------- 1. THE LIST, THE TOKEN, THE STYLESHEET, THE GRAPH (source) ---------------- */
+  check(`${NAVFILE} exists`, existsSync(NAVFILE), { file: NAVFILE, remedy: "create src/lib/nav.ts with NAV, SHEET_TRUST and currentNav (plan Task 1)" });
+  if (!existsSync(NAVFILE)) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+  const { NAV, SHEET_TRUST, currentNav } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
+  check(`NAV is the seven names in the bar's order (${NAV.map((n) => n.label).join(", ")})`, JSON.stringify(NAV.map((n) => n.label)) === JSON.stringify(WANT_NAMES) && JSON.stringify(NAV.map((n) => n.href)) === JSON.stringify(WANT_HREFS), { file: NAVFILE });
+  check(`the sheet's trust rows are About the figures and Who runs this (${SHEET_TRUST.map((n) => n.label).join(", ")})`, JSON.stringify(SHEET_TRUST) === JSON.stringify([{ href: "/about-data#reading", label: "About the figures" }, { href: "/about", label: "Who runs this" }]), { file: NAVFILE });
+  const marks: Array<[string | null, string | null]> = [["/", null], [null, null], ["/blog/what-a-cafe-makes", "/blog"], ["/cities/london", "/cities"], ["/industries/restaurants", "/industries"], ["/gb", "/countries"], ["/gb/london/restaurants", "/countries"], ["/og", null], ["/about", null], ["/compare", "/compare"]];
+  const wrongMarks = marks.filter(([p, want]) => currentNav(p) !== want).map(([p, want]) => `${p}: ${currentNav(p)} (want ${want})`);
+  check(`currentNav marks the page's own name, a country's pages Countries, the home nothing${wrongMarks.length ? `: ${wrongMarks.join("; ")}` : ""}`, wrongMarks.length === 0, { file: NAVFILE });
+
+  const layout = code(LAYOUT);
+  check("the header height token reads 61px under 768 and 93px from (the 60px bar under its 1px rule)", /\[--atlas-header-h:61px\] md:\[--atlas-header-h:93px\]/.test(layout) && !/xl:\[--atlas-header-h/.test(layout), { file: LAYOUT, remedy: "set the <html> className token to [--atlas-header-h:61px] md:[--atlas-header-h:93px]" });
+  const css = code(CSS);
+  check("globals.css draws the focus floor: :focus-visible, 2px ink, 2px off", /:focus-visible\s*\{\s*outline:\s*2px solid var\(--c-ink\);\s*outline-offset:\s*2px;\s*\}/.test(css), { file: CSS });
+  check("the black footer's ring is white", /footer\.bg-black :focus-visible\s*\{\s*outline-color:\s*white;\s*\}/.test(css), { file: CSS });
+  check("the page scrolls a target clear of the bar: scroll-padding-top reads the height token", /scroll-padding-top:\s*var\(--atlas-header-h\);/.test(css), { file: CSS });
+  check("one text red: --terra-text is #991600, and #c2410c is nowhere in the stylesheet", /--terra-text:\s*#991600;/.test(css) && !/#c2410c/i.test(css), { file: CSS, remedy: "re-point --terra-text to #991600 and read it where #c2410c was written" });
+  check("--control-line is #8f8f8b, a control's 3:1 edge", /--control-line:\s*#8f8f8b;/.test(css), { file: CSS });
+  check("the bar's edge is --c-border", /\.atlas-glass-chrome\s*\{[^}]*border-bottom:\s*1px solid var\(--c-border\);/.test(css), { file: CSS });
+
+  /* The graph: every file SiteChrome reaches through src/, and each package it names. */
+  const seen = new Set<string>();
+  const pkgs = new Map<string, string>();
+  const resolveLocal = (from: string, spec: string): string | null => {
+    const base = spec.startsWith("@/") ? path.join("src", spec.slice(2)) : path.join(path.dirname(from), spec);
+    for (const c of [base, `${base}.tsx`, `${base}.ts`, `${base}/index.tsx`, `${base}/index.ts`]) if (existsSync(c) && !c.endsWith(path.sep) && path.extname(c)) return c;
+    return null;
+  };
+  const walk = (file: string) => {
+    if (seen.has(file)) return;
+    seen.add(file);
+    for (const m of code(file).matchAll(/(?:import|export)\s[^"';]*?from\s*["']([^"']+)["']|import\s*\(\s*["']([^"']+)["']\s*\)|^\s*import\s*["']([^"']+)["']/gm)) {
+      const spec = m[1] ?? m[2] ?? m[3];
+      if (spec.startsWith("@/") || spec.startsWith(".")) { const r = resolveLocal(file, spec); if (r) walk(r); }
+      else if (!pkgs.has(spec)) pkgs.set(spec, file.replace(/\\/g, "/"));
+    }
+  };
+  walk(CHROME);
+  walk(NOT_FOUND);
+  const barrel = [...pkgs].filter(([p]) => p === "@phosphor-icons/react");
+  check(`no Phosphor barrel in SiteChrome's or the 404's import graph (${seen.size} files, ${pkgs.size} packages${barrel.length ? `; barrel from ${barrel[0][1]}` : ""})`, seen.size > 10 && barrel.length === 0, { file: barrel[0]?.[1] ?? CHROME, remedy: "import each icon from @phosphor-icons/react/dist/ssr/<Icon>, never the barrel (the 404's header: a barrel import killed the static export)" });
+  const nf = code(NOT_FOUND);
+  check("the 404 draws SiteChrome, imports nothing else but next/link, and no <main> of its own", /<SiteChrome>/.test(nf) && !/<main[\s>]/.test(nf) && [...nf.matchAll(/^import .* from "([^"]+)";$/gm)].map((m) => m[1]).sort().join(",") === "@/components/SiteChrome,next/link", { file: NOT_FOUND });
+
+  /* ---------------- 2. THE CHROME, RENDERED (server, switches set per render) ---------------- */
+  const React = (await import("react")).default;
+  const { renderToStaticMarkup } = await import("react-dom/server");
+  /* The site's files are written for Next's automatic JSX runtime and some name no React; this runner compiles JSX to
+     React.createElement, so they read the React this file lends them (tests/legal/pro_legal.test.ts). */
+  (globalThis as unknown as { React: typeof React }).React = React;
+  const { PathnameContext } = await import("next/dist/shared/lib/hooks-client-context.shared-runtime");
+  const { SiteChrome } = await import("../../src/components/SiteChrome");
+  const NotFound = (await import("../../src/app/not-found")).default;
+  const render = (pathname: string, on: { auth: boolean; paywall: boolean }) => {
+    process.env.NEXT_PUBLIC_AUTH_ENABLED = on.auth ? "1" : "";
+    process.env.NEXT_PUBLIC_PAYWALL = on.paywall ? "1" : "";
+    return renderToStaticMarkup(React.createElement(PathnameContext.Provider, { value: pathname }, React.createElement(SiteChrome, null, React.createElement("p", null, "The page."))));
+  };
+  const parts = (html: string) => {
+    const header = slice(html, /<header\b/, "</header>");
+    const sheet = slice(header, /<div id="site-menu"/, "</nav></div>");
+    const bar = header.replace(sheet, "");
+    return { header, sheet, bar, footer: slice(html, /<footer\b/, "</footer>"), main: /<main\b[^>]*>/.exec(html)?.[0] ?? "" };
+  };
+  const off = render("/", { auth: false, paywall: false });
+  const offBlog = render("/blog/what-a-cafe-makes", { auth: false, paywall: false });
+  const authOnly = render("/", { auth: true, paywall: false });
+  const allOn = render("/blog/what-a-cafe-makes", { auth: true, paywall: true });
+  const country = render("/gb/london/restaurants", { auth: false, paywall: false });
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
+  process.env.NEXT_PUBLIC_PAYWALL = "";
+  const o = parts(off), b = parts(offBlog), a = parts(authOnly), p = parts(allOn), c = parts(country);
+
+  /* The skip link and the landmark. */
+  check("a skip link is the first thing in the chrome, to #main", /^<a href="#main"[^>]*>Skip to content<\/a>/.test(off));
+  check(`<main> is the skip link's target: id="main", tabindex -1 (${o.main})`, /\bid="main"/.test(o.main) && /\btabindex="-1"/.test(o.main));
+
+  /* The bar. */
+  const primary = slice(o.bar, /<nav aria-label="Primary"/, "</nav>");
+  const names = anchors(primary);
+  check(`the bar's <nav aria-label="Primary"> holds the seven names in order, each a link (${names.map((n) => n.text).join(", ")})`, JSON.stringify(names.map((n) => n.text)) === JSON.stringify(WANT_NAMES) && JSON.stringify(names.map((n) => n.href)) === JSON.stringify(WANT_HREFS));
+  check("the home marks no name current", !/aria-current/.test(o.bar));
+  const blogLink = anchors(slice(b.bar, /<nav aria-label="Primary"/, "</nav>")).find((n) => n.href === "/blog");
+  check("on /blog/x, Blog is the page being read: aria-current=\"page\", ink, a 2px ink underline 6px under", !!blogLink && /aria-current="page"/.test(blogLink.tag) && /decoration-2/.test(blogLink.tag) && /decoration-\[var\(--c-ink\)\]/.test(blogLink.tag) && /underline-offset-\[6px\]/.test(blogLink.tag) && (b.bar.match(/aria-current="page"/g) ?? []).length === 1);
+  const countriesLink = anchors(slice(c.bar, /<nav aria-label="Primary"/, "</nav>")).find((n) => n.href === "/countries");
+  check("on a country's page (/gb/london/restaurants), Countries is the page being read", !!countriesLink && /aria-current="page"/.test(countriesLink.tag));
+  check("a name not current is --c-ink2 with an ink hover and a hairline underline, never terracotta", anchors(primary).every((n) => /text-\[var\(--c-ink2\)\]/.test(n.tag) && /hover:text-\[var\(--c-ink\)\]/.test(n.tag) && /hover:decoration-\[var\(--c-line-strong\)\]/.test(n.tag)));
+  const barNoMark = o.bar.replace(/<a [^>]*aria-label="Margin Atlas home"[\s\S]*?<\/a>/, "");
+  const pBarNoMark = p.bar.replace(/<a [^>]*aria-label="Margin Atlas home"[\s\S]*?<\/a>/, "");
+  check("nothing in the bar is terracotta (the wordmark's red aside)", ![barNoMark, pBarNoMark].some((h) => /(?:text|bg|border|ring|decoration|fill|stroke)-atlas-\d|var\(--terra/.test(h)));
+  const search = (h: string) => anchors(h).find((n) => n.href === "/search");
+  const homeSearch = search(o.bar), blogSearch = search(b.bar);
+  check("Search holds its slot on the home, unseen and out of reach: invisible, aria-hidden, tabindex -1", !!homeSearch && /\binvisible\b/.test(homeSearch.tag) && /aria-hidden="true"/.test(homeSearch.tag) && /tabindex="-1"/.test(homeSearch.tag));
+  check("Search shows on every other page, a 44 by 44 target with no box", !!blogSearch && !/\binvisible\b|aria-hidden|tabindex/.test(blogSearch.tag) && /min-h-11/.test(blogSearch.tag) && /min-w-11/.test(blogSearch.tag) && !/\bborder\b/.test(blogSearch.tag));
+  check("the bar's row is 8px above and below its controls under 768, 24px from (the 60px phone bar)", /<div class="max-w-content mx-auto px-6 py-2 md:py-6 /.test(o.header));
+
+  /* The switches. */
+  const noPro = (h: string) => !/Pricing|href="\/pricing"/.test(h);
+  const noAuth = (h: string) => !/Sign in|Account|href="\/signin"|href="\/account"/.test(h);
+  check("switches off: nothing about Pro anywhere in the chrome (no Pricing in the bar, the sheet or the footer)", noPro(off) && noPro(offBlog));
+  check("switches off: nothing about sign-in anywhere in the chrome", noAuth(off) && noAuth(offBlog));
+  check("accounts on, paywall off: the account entry in the bar and the sheet, still no Pricing", /Sign in/.test(a.bar) && /Sign in/.test(a.sheet) && noPro(authOnly));
+  check("while the session is read the bar's entry holds its width unseen (aria-hidden, invisible), from 1280 only", /<span aria-hidden="true" class="invisible hidden xl:inline-flex[^"]*">Sign in<\/span>/.test(a.bar));
+  const pill = anchors(p.bar).find((n) => n.href === "/pricing");
+  check("paywall on: Pricing is the bar's ink pill, last, from 1280, ink2 on hover", !!pill && /bg-\[var\(--c-ink\)\]/.test(pill.tag) && /hover:bg-\[var\(--c-ink2\)\]/.test(pill.tag) && /xl:inline-flex/.test(pill.tag) && p.bar.lastIndexOf('href="/pricing"') > p.bar.lastIndexOf('href="/search"'));
+  check("paywall on: Pricing in the footer, and the footer's line says each UK chapter opens free", anchors(p.footer).some((n) => n.href === "/pricing" && n.text === "Pricing") && /each UK chapter opens free/.test(p.footer));
+
+  /* The sheet. */
+  const toggle = /<button[^>]*aria-controls="site-menu"[^>]*>/.exec(o.header)?.[0] ?? "";
+  check(`the sheet's toggle is named "Menu", constant, with aria-expanded (${toggle.slice(0, 90)})`, /aria-label="Menu"/.test(toggle) && /aria-expanded="false"/.test(toggle));
+  const panel = /<div id="site-menu"[^>]*>/.exec(o.header)?.[0] ?? "";
+  check("the sheet's panel is in the document while shut, hidden", /\bhidden=""/.test(panel));
+  check("the panel's height is capped to the viewport less the bar, and it scrolls", /max-h-\[calc\(100dvh_-_var\(--atlas-header-h\)\)\]/.test(panel) && /overflow-y-auto/.test(panel) && /overscroll-contain/.test(panel));
+  check("the sheet's rows stand on the bar's column (max-w-content), a labelled navigation", /<nav aria-label="Primary" class="mx-auto max-w-content px-6/.test(o.sheet));
+  const rows = (h: string) => anchors(h).map((n) => n.text || (/>Sign in</.test(n.tag) ? "Sign in" : ""));
+  const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>([^<]*)<\/(?:a|span)>/g)].map((m) => m[1].trim());
+  const wantOff = ["Search", ...WANT_NAMES, "About the figures", "Who runs this"];
+  check(`the sheet's rows, switches off: ${spanRows(o.sheet).join(", ")}`, JSON.stringify(spanRows(o.sheet)) === JSON.stringify(wantOff));
+  check(`the sheet's rows, both switches on: ${spanRows(p.sheet).join(", ")}`, JSON.stringify(spanRows(p.sheet)) === JSON.stringify([...wantOff, "Sign in", "Pricing"]));
+  check("every row of the sheet is 48px (min-h-12)", rows(o.sheet).length === wantOff.length && anchors(o.sheet).every((n) => /min-h-12/.test(n.tag)));
+  const sheetCountries = anchors(c.sheet).find((n) => n.href === "/countries");
+  check("the sheet marks the page being read as the bar does: aria-current, ink, semibold, a 2px ink rule at the left", !!sheetCountries && /aria-current="page"/.test(sheetCountries.tag) && /border-\[var\(--c-ink\)\]/.test(sheetCountries.tag) && /font-semibold/.test(sheetCountries.tag) && /border-l-2/.test(sheetCountries.tag));
+
+  /* The footer. */
+  const footNav = slice(o.footer, /<nav aria-label="Footer"/, "</nav>");
+  check("the footer's links are a navigation named Footer", footNav.length > 0);
+  const footFirst = anchors(slice(footNav, /<div><div class="mb-3 text-sm font-semibold text-white">Browse<\/div>/, "</ul>"));
+  check(`the footer's first column is the bar's seven names (${footFirst.map((n) => n.text).join(", ")})`, JSON.stringify(footFirst.map((n) => n.text)) === JSON.stringify(WANT_NAMES) && JSON.stringify(footFirst.map((n) => n.href)) === JSON.stringify(WANT_HREFS));
+  check("the footer's heads are sentence case at 14 semibold white, no tracked capitals", !/uppercase|tracking-wide/.test(o.footer) && (o.footer.match(/class="mb-3 text-sm font-semibold text-white"/g) ?? []).length === 4);
+  check("every footer row is 44px tall on a phone", anchors(footNav).length > 0 && anchors(footNav).every((n) => /min-h-11/.test(n.tag) && /md:min-h-0/.test(n.tag)));
+  check("no version string in the footer", !/\bv\d+\.\d+\.\d+\b/.test(o.footer));
+  check(`the year stands beside the publisher (© ${new Date().getFullYear()} Tesseract Research)`, o.footer.includes(`© ${new Date().getFullYear()} Tesseract Research`));
+  check("the footer still leads to /about, /corrections and /data (about-page's rule)", ["/about", "/corrections", "/data"].every((h) => anchors(footNav).some((n) => n.href === h)));
+
+  /* One name per destination, across the bar, the sheet and the footer, with every switch on. */
+  const named = new Map<string, Set<string>>();
+  for (const n of anchors(p.header + p.footer)) { if (!n.text || n.href.startsWith("#")) continue; (named.get(n.href) ?? named.set(n.href, new Set()).get(n.href)!).add(n.text); }
+  const twice = [...named].filter(([, s]) => s.size > 1).map(([h, s]) => `${h}: ${[...s].join(" / ")}`);
+  check(`one name per destination across the bar, the sheet and the footer${twice.length ? `: ${twice.join("; ")}` : ""}`, named.size > 15 && twice.length === 0);
+
+  /* The 404. */
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
+  process.env.NEXT_PUBLIC_PAYWALL = "";
+  const nfHtml = renderToStaticMarkup(React.createElement(PathnameContext.Provider, { value: "/zz" }, React.createElement(NotFound)));
+  check("the 404 carries the bar, the footer and one <main id=\"main\">", /<header\b/.test(nfHtml) && /<footer\b/.test(nfHtml) && (nfHtml.match(/<main\b/g) ?? []).length === 1 && /<main id="main"/.test(nfHtml), { file: NOT_FOUND });
+  const nfMain = slice(nfHtml, /<main\b/, "</main>");
+  check("the 404's doors carry the bar's names and true lines (no world map, no glossary)", ["Countries", "Cities", "Trades", "Compare", "Calculator", "About the figures"].every((t) => anchors(nfMain).some((n) => n.text.startsWith(t))) && !/world map|glossary|knowledge base|activit/i.test(nfMain), { file: NOT_FOUND });
+  check("the 404 has one h1", (nfHtml.match(/<h1\b/g) ?? []).length === 1, { file: NOT_FOUND });
+
+  /* ---------------- 3. THE SHEET, PRESSED (jsdom) ---------------- */
+  const { JSDOM } = await import("jsdom");
+  const dom = new JSDOM("<!doctype html><html><body><p id='outside'>Outside</p><div id='root'></div></body></html>", { pretendToBeVisual: true, url: "https://www.marginatlas.com/blog/x" });
+  const g = globalThis as unknown as Record<string, unknown>;
+  g.window = dom.window;
+  g.document = dom.window.document;
+  g.self = dom.window;
+  Object.defineProperty(globalThis, "navigator", { value: dom.window.navigator, configurable: true });
+  g.IS_REACT_ACT_ENVIRONMENT = true;
+  /* jsdom has no matchMedia: a stand-in whose width the test sets, and whose listeners it fires. */
+  const listeners = new Set<() => void>();
+  let wide = false;
+  (dom.window as unknown as { matchMedia: (q: string) => unknown }).matchMedia = (q: string) => ({
+    media: q,
+    get matches() { return q === "(min-width: 1280px)" ? wide : false; },
+    addEventListener: (_: string, f: () => void) => listeners.add(f),
+    removeEventListener: (_: string, f: () => void) => listeners.delete(f),
+  });
+  /* A row's click must not navigate jsdom: the capture listener prevents the default, the row's own onClick still runs. */
+  dom.window.document.addEventListener("click", (e) => e.preventDefault(), true);
+  const { createRoot } = await import("react-dom/client");
+  const { act } = await import("react");
+  const { MobileNav } = await import("../../src/components/MobileNav");
+  const root = createRoot(dom.window.document.getElementById("root")!);
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
+  await act(async () => { root.render(React.createElement(PathnameContext.Provider, { value: "/blog/x" }, React.createElement(MobileNav, { pricing: true }))); });
+  const doc = dom.window.document;
+  const btn = doc.querySelector('button[aria-controls="site-menu"]') as HTMLButtonElement | null;
+  const pane = () => doc.getElementById("site-menu");
+  const isOpen = () => !!pane() && !pane()!.hasAttribute("hidden") && btn?.getAttribute("aria-expanded") === "true";
+  const openIt = async () => { await act(async () => { btn!.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); }); };
+  check("mounted, the sheet starts shut, its panel in the document", !!btn && !!pane() && !isOpen(), { file: SHEET });
+  if (btn) {
+    await openIt();
+    check("a press on the toggle opens it (aria-expanded true, the panel shown); its name stays Menu", isOpen() && btn.getAttribute("aria-label") === "Menu", { file: SHEET });
+    const rowsShown = [...pane()!.querySelectorAll("a")].map((x) => (x.textContent ?? "").trim());
+    check(`open, the rows are the spec's, Pricing last behind its switch (${rowsShown.join(", ")})`, JSON.stringify(rowsShown) === JSON.stringify([...wantOff, "Pricing"]), { file: SHEET });
+    (pane()!.querySelector("a") as HTMLAnchorElement).focus();
+    await act(async () => { doc.dispatchEvent(new dom.window.KeyboardEvent("keydown", { key: "Escape", bubbles: true })); });
+    check("Escape shuts it and puts focus back on the toggle", !isOpen() && doc.activeElement === btn, { file: SHEET });
+    await openIt();
+    await act(async () => { doc.getElementById("outside")!.dispatchEvent(new dom.window.Event("pointerdown", { bubbles: true })); });
+    check("a tap outside shuts it", !isOpen(), { file: SHEET });
+    await openIt();
+    await act(async () => { wide = true; for (const f of [...listeners]) f(); });
+    check("the window reaching 1280 shuts it", !isOpen(), { file: SHEET });
+    wide = false;
+    await openIt();
+    await act(async () => { (pane()!.querySelectorAll("a")[3] as HTMLAnchorElement).dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true, cancelable: true })); });
+    check("a row's tap shuts it", !isOpen(), { file: SHEET });
+  }
+  await act(async () => { root.unmount(); });
+
+  if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+  console.log("chrome/masthead: all pass");
+}
+
+main().catch((e) => {
+  red({ rule: RULE, file: CHROME, detail: `the masthead test crashed: ${e instanceof Error ? e.message : String(e)}`, remedy: REMEDY });
+  process.exit(1);
+});
