@@ -75,6 +75,15 @@ export function londonMoneyPrints(slug: string): boolean {
   return londonWithholding(slug) === null && own(RECIPES, slug)?.utilitiesCarried === true;
 }
 
+/** The share of a money trade's registered London businesses whose sales reach break-even, of 100, rounded once through its range: the
+ *  number the masthead's "Take that much" cell prints before " of 100" (plan 2026-10-09, home introduction: the home's worked example
+ *  draws it as units). Null off the money trades. */
+export function londonShareAbove(slug: string): number | null {
+  if (!londonMoneyPrints(slug)) return null;
+  const st = londonTradeRanges(slug, "sole trader");
+  return st?.shareAbove ? percentOf(st.shareAbove) : null;
+}
+
 function firmsCell(slug: string): KvCell | null {
   const reg = londonTradeRegister(slug);
   if (!reg) return null;

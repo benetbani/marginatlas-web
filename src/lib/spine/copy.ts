@@ -2830,6 +2830,23 @@ export const COPY = {
         notebook: "From the notebook",
       },
     },
+    /** THE WORKED EXAMPLE (plan 2026-10-09, home introduction; the spec's section 2, DRAFT approved as written): the level's name (a
+     *  data attribute, not a printed word), the two halves' titles, each step's one line (it opens with how its figure was made, as
+     *  About the figures names the kinds), the name of step 4 (the London page prints that figure in a sentence), and the two doors.
+     *  Every other name and every figure is the London page's own. */
+    example: {
+      label: "Worked example",
+      placeTitle: "{trade} in London",
+      paysTitle: "Does it pay?",
+      registered: "Counted in the business register, Greater London, {month}.",
+      sales: "Worked out from the register's ten sales bands.",
+      breakEven: "An estimate, {basis}.",
+      insolventLabel: "Insolvent a year",
+      insolventFigure: "{n} of 100",
+      insolvent: "UK {noun} companies, worked out from notices matched by name.",
+      placeDoor: "See London {trade}",
+      paysDoor: "Try your own",
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */
     pro: {

@@ -97,6 +97,13 @@ function londonRow(slug: string): { trade: TurnoverFile["trades"][string]; row: 
   return trade && row ? { trade, row } : null;
 }
 
+/** The month the register snapshot is of, as the slice's own line names it ("March 2026 register snapshot; ..."): "March 2026", or
+ *  null where the line names none (plan 2026-10-09, home introduction: step 1's line dates its count). */
+export function londonRegisterMonth(): string | null {
+  const line = String((turnoverJson as unknown as { snapshot?: string }).snapshot ?? "");
+  return /^([A-Z][a-z]+ \d{4}) register snapshot/.exec(line)?.[1] ?? null;
+}
+
 export function londonTradeRegister(slug: string): LondonTradeRegister | null {
   const found = londonRow(slug);
   if (!found) return null;

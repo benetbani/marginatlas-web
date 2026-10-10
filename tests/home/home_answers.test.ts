@@ -1,78 +1,67 @@
 /**
- * THE UK'S HEADLINE ANSWERS ON THE HOME PAGE (milestone 3, masterplan step 34; his ruling 11 of 2026-09-26: "a place-and-trade
- * search, then the UK's headline answers"). Each answer is the same figure, under the same name, in the same unit, as the /gb
- * section it opens, read from the same builder and checked against /gb's own render; each carries where it came from; each
- * section is a door to that section of /gb; the answer is the page's one 40. Since his instruction of 2026-10-07 ("reform home
- * drastically"): one name, one figure, one line a card, no rows, and each figure drawn (the masthead's bar, the range of
- * London's trades, a ring), so no card is a lone figure (clause 65).
+ * THE WORKED EXAMPLE AND THE THIRD PROOF ON THE HOME PAGE (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in
+ * the design repo, sections 2 and 4, approved as written on 2026-10-09; plan docs/superpowers/plans/2026-10-09-home-introduction.md,
+ * Tasks 6, 7, 8 and 10). The picker's own case, restaurants in London, answered in four steps, each figure the London page's own under
+ * the same name, from the same builder, with its kind; the case whole (break-even and its share print, every tenth placed, an exact
+ * failure code, one survival group); the picker's default and the first rotating word name it; the one 40 is step 3; the tax proof is
+ * /gb's masthead figure, its line naming the profit and the year's rules. Holds the builders (src/lib/home/worked_example.ts,
+ * src/lib/home/proofs.ts), the drawings (HomeExample.tsx, HomeProofs.tsx) and, where the harness wrote them, the renders of the home,
+ * London restaurants and /gb.
  *
  * Run: npx tsx tests/home/home_answers.test.ts
  */
-import { existsSync, readFileSync } from "node:fs";
-import { buildHomeAnswers } from "../../src/lib/spine/home_answers";
-import { buildHeroBoard } from "../../src/lib/spine/hero_board";
-import { ukTaxOnProfit } from "../../src/lib/spine/uk_tax_on_profit";
-import { buildLondonTradeSales, londonMiddleSales } from "../../src/lib/spine/country_depth_rows";
-import { buildSurvival } from "../../src/lib/spine/sections/first_years";
+import { readFileSync } from "node:fs";
+import { buildWorkedExample, exampleCaseWhole, EXAMPLE_TRADE } from "../../src/lib/home/worked_example";
+import { londonTradeHero, londonTradeStrip, londonShareAbove } from "../../src/lib/spine/london_trade_hero";
+import { ukInsolvencyPer100 } from "../../src/lib/spine/uk_trade_typical";
+import { CASCADE_PREFILLS } from "../../src/lib/home/search_cascade";
+import { HERO_BUSINESSES } from "../../src/lib/hero-words";
+import { industryToSlug } from "../../src/lib/taxonomy";
 import { usd } from "../../src/lib/spine/money";
 import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-answers";
-const FILE = "src/lib/spine/home_answers.ts";
-const REMEDY = "print on the home page the figure /gb prints, from the same builder, under the same name, stamped, as a door to its section";
+const FILE = "src/lib/home/worked_example.ts";
+const REMEDY = "print on the home page each figure the London restaurant page prints, from the same builder, under the same name, stamped with its kind; the tax proof the figure /gb's masthead prints";
+const COPY_FILE = "src/lib/spine/copy.ts";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
-
-const answers = buildHomeAnswers("GB");
-/* The trades last (2026-10-07): from 768 to 1023 the third card takes the whole row, and only the trades' range fills it. */
-check(`three answers, in the page's order (${answers.map((a) => a.key).join(", ")})`, JSON.stringify(answers.map((a) => a.key)) === JSON.stringify(["answer", "years", "trades"]));
-const by = (k: string) => answers.find((a) => a.key === k);
-
-const board = buildHeroBoard("GB");
-const a = by("answer");
-check(`the UK's answer is the masthead's: "${board.answer?.label}" ${board.answer?.value}`, !!a && a.kicker === board.answer?.label && a.figure === board.answer?.value && a.prov?.src === board.answer?.prov?.src);
-/* Its line is the short form of the masthead's basis (his instruction of 2026-10-07): the same profit, from the same function. */
-const uk = ukTaxOnProfit();
-check(`its line names the profit the masthead's basis names ("${a?.words}" beside "${board.answerBasis}")`, !!a && !!uk && a.words === COPY.home.lines.answer.replace("{profit}", usd(uk.profitUsd)) && !!board.answerBasis?.includes(usd(uk.profitUsd)));
-check("the UK's answer is drawn with the masthead's own bar", !!a && !!a.bar && !!board.answerBar && a.bar.value === board.answerBar.value && a.bar.part === board.answerBar.part && a.bar.rest === board.answerBar.rest);
-const sales = buildLondonTradeSales();
-const t = by("trades");
-check(`what London's trades take is /gb's middle trade, ${sales ? usd(londonMiddleSales(sales)) : "none"}`, !!t && !!sales && t.figure === usd(londonMiddleSales(sales)) && t.kicker === COPY.londonSales.kicker && t.words === COPY.londonSales.focalWords);
-const sorted = sales ? sales.rows.map((r) => r.value).sort((x, z) => x - z) : [];
-check(`it is drawn on the range of /gb's ${sorted.length} London trades, their lowest to their highest, every trade a hairline, the marker at the middle`, !!t?.range && !!sales && t.range.range.min === sorted[0] && t.range.range.max === sorted[sorted.length - 1] && t.range.range.median === londonMiddleSales(sales) && t.range.range.count === sorted.length && JSON.stringify(t.range.values) === JSON.stringify(sorted) && t.range.range.p25 <= t.range.range.median && t.range.range.median <= t.range.range.p75);
-const surv = buildSurvival("GB");
-const y = by("years");
-check(`who is still trading is /gb's, ${surv ? `${Math.round(surv.last.pct)}% after ${surv.last.year} years` : "none"}`, !!y && !!surv && y.figure === `${Math.round(surv.last.pct)}%` && y.kicker === COPY.firstYears.kicker && y.words === COPY.home.lines.years.replace("{n}", String(surv.last.year)));
-check("its share is drawn as a ring, the cohort's own last point", !!y && !!surv && y.ring === surv.last.pct);
-check("every answer says where its figure came from", answers.every((x) => !!x.prov?.src && !!x.prov?.kind));
-check("each is a door to its section of /gb (#take, #first-years, #money)", JSON.stringify(answers.map((x) => x.href)) === JSON.stringify(["/gb#take", "/gb#first-years", "/gb#money"]));
-
-/* Against the renders: /gb prints the same figures, and the home page prints them stamped, as doors, with one 40. */
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
+const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
+/** A string as React writes it into markup. */
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+const reEsc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** Markup reduced to its text runs, each between bars. */
 const text = (h: string) => h.replace(/<[^>]+>/g, "|").replace(/\|+/g, "|");
-const gb = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
-const home = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
-const after = (h: string, marker: string, n = 1200) => { const i = h.indexOf(marker); return i < 0 ? "" : text(h.slice(i, i + n)); };
-check("/gb's render prints the same three figures", !!a && !!t && !!y && after(gb, 'data-answer="1"').includes(`|${a.figure}|`) && after(gb, 'id="money"').includes(`|${t.figure}|`) && after(gb, 'id="first-years"').includes(`|${y.figure}|`));
-for (const x of answers) {
-  const card = home.slice(home.indexOf(`id="${x.id}"`), home.indexOf(`id="${x.id}"`) + 4000);
-  check(`the home page's ${x.key} prints ${x.figure}, stamped, behind a door to ${x.href}`, home.includes(`id="${x.id}"`) && text(card).includes(`|${x.figure}|`) && new RegExp(`data-src="${x.prov.src.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`).test(card) && card.includes(`href="${x.href}"`) && /data-lands="[a-z-]+"/.test(card));
+void esc; void reEsc; void text;
+
+/* THE CASE (Task 6): the picker's own, whole. */
+const pick = CASCADE_PREFILLS[0];
+check(`the picker opens on the example's case (${pick.country} ${pick.city} ${pick.business})`, pick.country === "GB" && pick.city === "london" && industryToSlug(pick.business) === EXAMPLE_TRADE, { file: "src/lib/home/search_cascade.ts", remedy: "keep CASCADE_PREFILLS[0] restaurants in London, the worked example's case" });
+check(`the first rotating word names it ("${HERO_BUSINESSES[0]}")`, HERO_BUSINESSES[0] === "restaurant", { file: "src/lib/hero-words.ts", remedy: "keep \"restaurant\" first in HERO_BUSINESSES (his yes of 2026-10-09, order only)" });
+check("the case is whole: break-even and its share print, every tenth placed, an exact failure code, one survival group", exampleCaseWhole(EXAMPLE_TRADE));
+check("the bakery's case is not whole, which is why the example is a restaurant", !exampleCaseWhole("bakeries-retail") && buildWorkedExample("bakeries-retail") === null);
+
+const ex = buildWorkedExample();
+check("the worked example builds", !!ex);
+const hero = londonTradeHero(EXAMPLE_TRADE);
+const strip = londonTradeStrip(EXAMPLE_TRADE);
+if (ex && hero && strip) {
+  const firms = hero.cells.find((c) => c.key === "firms");
+  const above = hero.cells.find((c) => c.key === "above");
+  const typical = strip.marks.find((m) => m.key === "typical");
+  const s = ex.place, p = ex.pays;
+  check(`step 1 is the London page's registered businesses: "${s.registered.label}" ${s.registered.figure}, counted`, !!firms && s.registered.label === firms.label && s.registered.figure === String(firms.value) && s.registered.prov.src === firms.prov?.src && s.registered.prov.kind === "counted" && s.registered.n === "1");
+  check(`step 2 is the strip's typical, ${s.sales.figure}, worked out, under the London pages' own label "${s.sales.label}"`, !!typical && s.sales.figure === usd(typical.value) && s.sales.prov.src === typical.prov.src && s.sales.prov.kind === "worked out" && s.sales.label === COPY.londonTrade.salesLabel && s.sales.n === "2");
+  check(`the strip is the London page's own three marks (${s.strip.map((m) => usd(m.value)).join(", ")})`, s.strip.length === 3 && JSON.stringify(s.strip) === JSON.stringify(strip.marks));
+  check(`step 3 is the masthead's answer: "${p.breakEven.label}" ${p.breakEven.figure}, an estimate`, p.breakEven.label === hero.answer.label && p.breakEven.figure === hero.answer.value && p.breakEven.prov.src === hero.answer.prov.src && p.breakEven.prov.kind === "estimate" && p.breakEven.n === "3");
+  check(`its share is the masthead's "${p.above.label}" ${p.above.figure}, ${p.above.part} of 100 drawn`, !!above && p.above.label === above.label && p.above.figure === String(above.value) && String(above.value) === `${londonShareAbove(EXAMPLE_TRADE)} of 100` && p.above.part === londonShareAbove(EXAMPLE_TRADE));
+  check(`step 4 is the UK's insolvencies for the trade, ${p.insolvent.figure}, worked out`, p.insolvent.figure === `${ukInsolvencyPer100(EXAMPLE_TRADE)?.toFixed(1)} of 100` && p.insolvent.prov.src === `uk/registers/failures.json:${EXAMPLE_TRADE}` && p.insolvent.prov.kind === "worked out" && p.insolvent.n === "4");
+  const lines = [s.registered.line, s.sales.line, p.breakEven.line, p.insolvent.line];
+  check(`every step's line is twelve words at most, no semicolon, and says how its figure was made (${lines.map(words).join(", ")} words)`, lines.every((l) => words(l) <= 12 && !l.includes(";")) && /^Counted\b/.test(lines[0]) && /^Worked out\b/.test(lines[1]) && /^An estimate\b/.test(lines[2]) && /worked out/.test(lines[3]), { file: COPY_FILE, remedy: "cut COPY.home.example's lines to twelve words, no semicolon, each opening with its figure's kind as About the figures names it" });
+  check(`the two titles are four words at most ("${s.title}", "${p.title}")`, words(s.title) <= 4 && words(p.title) <= 4, { file: COPY_FILE, remedy: "cut COPY.home.example.placeTitle and paysTitle to four words" });
+  check(`the left door opens the London page (${ex.href})`, ex.href === `/gb/london/${EXAMPLE_TRADE}`);
 }
-check("the home page holds one 40, the UK's answer", (home.match(/data-hero-figure/g) ?? []).length === 1);
-/* One figure a card and its drawing (his instruction of 2026-10-07; clause 65): no rows, a drawing in each. */
-const cardOf = (id: string, next: string | null) => home.slice(home.indexOf(`id="${id}"`), next ? home.indexOf(`id="${next}"`) : home.indexOf(`id="${id}"`) + 6000);
-const cardsHtml = [cardOf("answer", "years"), cardOf("years", "trades"), cardOf("trades", null)];
-check("the render draws the three in that order", home.indexOf('id="answer"') < home.indexOf('id="years"') && home.indexOf('id="years"') < home.indexOf('id="trades"'));
-check("no answer card prints rows (FactRows), and each holds a drawing", cardsHtml.every((c) => !/data-archetype="fact-rows"/.test(c) && /data-visual="1"/.test(c)));
-check("the answer's bar, the years' ring and the trades' range are drawn", /data-archetype="segment-bar"/.test(cardsHtml[0]) && /data-archetype="ring"/.test(cardsHtml[1]) && /data-archetype="world-range"/.test(cardsHtml[2]));
-/* One figure on the trades card (the review of 2026-10-07): the middle trade's, never the range's two ends beside it unlabelled. The
-   drawing stays; its ends line is not drawn (WorldRangeRows `showEnds={false}`). */
-const tradesCard = cardsHtml[2].slice(0, cardsHtml[2].indexOf("</a>"));
-const moneyOnTrades = text(tradesCard).match(/\$[0-9][0-9.,]*[KMB]?/g) ?? [];
-check(`the trades card prints one money figure (${moneyOnTrades.join(", ") || "none"}) and no end of the range`, moneyOnTrades.length === 1 && !!t && moneyOnTrades[0] === t.figure && !/data-end=/.test(tradesCard) && /data-archetype="world-range"/.test(tradesCard));
-const ia = home.indexOf('id="answer"');
-const zs = home.lastIndexOf("<section data-zone", ia);
-check("the answers' level ends level: its three doors stretch to one height (MODEL PART 10.5)", ia > 0 && zs >= 0 && /data-zone-even/.test(home.slice(zs, ia)));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/home_answers: all pass");

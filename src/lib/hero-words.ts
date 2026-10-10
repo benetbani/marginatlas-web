@@ -27,12 +27,14 @@ export const HERO_CITIES = [
   "Shanghai",
 ] as const;
 
+/* "restaurant" first since his yes of 2026-10-09 (the home introduction's spec, section 5: order only): the server renders the first
+   word, so the h1 asks "How much does a restaurant make in London?", the question the picker and the worked example answer. */
 export const HERO_BUSINESSES = [
+  "restaurant",
   "bakery",
   "pharmacy",
   "barber",
   "hotel",
-  "restaurant",
   "boutique",
   "butcher",
   "gym",
