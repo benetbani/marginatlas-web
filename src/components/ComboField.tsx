@@ -180,13 +180,16 @@ export function ComboField({
       setFocusIdx((i) => Math.min(i + 1, filtered.length - 1));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
+      setOpen(true);
       setFocusIdx((i) => Math.max(i - 1, 0));
     } else if (e.key === "Enter") {
       /* The lit row is chosen whatever is typed: the arrow keys alone reach a row, and the Enter that was stopped for it picked
-         nothing while the query was empty (the Task 2 review). With words typed and no row lit, the top match. Over "No match", or
-         over "Loading…" with words typed, the Enter stays in the field, so the form never sends the previous pick for words that
-         matched nothing yet or ever. Any other Enter is the form's own submit. */
-      const lit = focusIdx >= 0 ? filtered[focusIdx] : undefined;
+         nothing while the query was empty (the Task 2 review). It is chosen only while its list is open, because a row of a shut
+         list is one nobody can see (ArrowUp lit one without opening the list, and a press outside shuts a list and leaves its lit
+         row; the Task 2 re-review). With words typed and no row lit, the top match. Over "No match", or over "Loading…" with words
+         typed, the Enter stays in the field, so the form never sends the previous pick for words that matched nothing yet or ever.
+         Any other Enter is the form's own submit. */
+      const lit = expanded && focusIdx >= 0 ? filtered[focusIdx] : undefined;
       if (lit) {
         e.preventDefault();
         choose(lit);

@@ -8,10 +8,12 @@
  * the taxonomy, the cascade, the destination, the regions or the city tables, its lists loaded with import() on first use, and its
  * first paint from the server's seed, whose labels are the lists' own.
  * ComboField is rendered on the server and mounted in jsdom, and steered with the keys (the Task 2 fix rounds: Enter chooses the lit
- * row whatever is typed and keeps the visitor in the field over "No match" or "Loading…"; leaving the field closes its list; a field
- * told its lists are coming draws one "Loading…" row). NavigatorForm is mounted inside the app router's context, the module cache the
- * instrument for its lazy load (no list module before a pointer, a focus or a key); its source is read here too, comments stripped,
- * and its markup in the home's render (tests/trust/home_shape.test.ts, the hero's checks).
+ * row whatever is typed, and only while its list is open, and keeps the visitor in the field over "No match" or "Loading…"; ArrowUp
+ * opens a shut list as ArrowDown does; leaving the field closes its list; a field told its lists are coming draws one "Loading…"
+ * row). NavigatorForm is mounted inside the app router's context, the module cache the instrument for its lazy load (no list module
+ * before a pointer, a focus or a key) and a submit event dispatched at it the instrument for its two submits (the browser's own
+ * before the lists are in, the page's own after); its source is read here too, comments stripped, and its markup in the home's
+ * render (tests/trust/home_shape.test.ts, the hero's checks).
  * Run: npx tsx tests/home/picker.test.ts
  */
 import { readFileSync } from "node:fs";
@@ -165,6 +167,66 @@ async function main() {
   check(`a row lit before the field was left is not lit when it is entered again, so that Enter is the form's (rows lit ${litAfterVisit}, picked [${keys.log.join(",")}], Enter kept by the field ${enterAfterVisit.defaultPrevented})`, litAfterVisit === 0 && keys.log.length === 0 && !enterAfterVisit.defaultPrevented, FIELD, "reset the highlight when the field is left without a pick (the blur path in src/components/ComboField.tsx), because Enter chooses the lit row");
   await keys.unmount();
 
+  /* ARROWUP, AND A LIST THAT IS SHUT (the re-review's Important finding). ArrowUp lit the first row without opening the list, so with a
+     value picked, Escape, ArrowUp and Enter changed the field to the list's first row while the list stayed shut: a silent wrong value
+     (on the home, "United Kingdom" became Afghanistan). ArrowUp now opens a shut list as ArrowDown does, so the row it lights is one the
+     visitor can see, and an Enter chooses a lit row only while the list is open, so a highlight left behind by a list that shut without
+     the field being left (a press outside closes the list and the field keeps its focus) is never chosen unseen. These start on Spain,
+     because the list's first row is the United Kingdom: a wrong pick of the first row has to change the value to show. */
+  const UP_REMEDY = "in src/components/ComboField.tsx onKey, ArrowUp opens the list as ArrowDown does (setOpen(true)), and the Enter chooses filtered[focusIdx] only while the list is expanded (expanded && focusIdx >= 0), so a row the visitor cannot see is never chosen";
+  type Mounted = Awaited<ReturnType<typeof mountField>>;
+  const view = (f: Mounted) => ({
+    rows: f.rowsOf().length,
+    expanded: f.input.getAttribute("aria-expanded"),
+    lit: f.rowsOf().map((r, i) => (r.getAttribute("aria-selected") === "true" ? i : -1)).filter((i) => i >= 0).join(","),
+    named: f.rowsOf().findIndex((r) => r.id === f.input.getAttribute("aria-activedescendant")),
+  });
+  const show = (v: ReturnType<typeof view>) => `${v.rows} rows, expanded ${v.expanded}, lit [${v.lit}], named ${v.named}`;
+  const upKey = await mountField("ES");
+  await act(async () => { upKey.input.focus(); });
+  await upKey.press("Escape");
+  const shut = view(upKey);
+  await upKey.press("ArrowDown");
+  const downOpens = view(upKey);
+  await upKey.press("Escape");
+  const upWasEscaped = view(upKey);
+  const upEvent = await upKey.press("ArrowUp");
+  const upOpens = view(upKey);
+  check(`Escape, then ArrowUp opens the list as ArrowDown does, the first row lit and named to a screen reader, and chooses nothing yet (shut: ${show(shut)}; after Escape again: ${show(upWasEscaped)}; ArrowDown: ${show(downOpens)}; ArrowUp: ${show(upOpens)}; the key kept by the field ${upEvent.defaultPrevented}; picked [${upKey.log.join(",")}])`, shut.rows === 0 && shut.expanded === "false" && upWasEscaped.rows === 0 && downOpens.rows === 3 && downOpens.lit === "0" && upOpens.rows === 3 && upOpens.expanded === "true" && upOpens.lit === "0" && upOpens.named === 0 && JSON.stringify(upOpens) === JSON.stringify(downOpens) && upEvent.defaultPrevented && upKey.log.length === 0, FIELD, UP_REMEDY);
+  const enterAfterUp = await upKey.press("Enter");
+  check(`Escape, ArrowUp, Enter chooses the first row because the visitor can see it lit: the list was open when the Enter came (${upOpens.rows} rows), the row is chosen and the list closes (picked [${upKey.log.join(",")}], Enter kept by the field ${enterAfterUp.defaultPrevented}, field reads "${upKey.input.value}", ${upKey.rowsOf().length} rows left, expanded ${upKey.input.getAttribute("aria-expanded")})`, upOpens.rows === 3 && upKey.log.join() === "GB" && enterAfterUp.defaultPrevented && upKey.input.value === "United Kingdom" && upKey.rowsOf().length === 0 && upKey.input.getAttribute("aria-expanded") === "false", FIELD, UP_REMEDY);
+  await upKey.unmount();
+  /* A highlight a shut list was left with. A press outside closes the list and drops the typed words but not the lit row, and a press that
+     moves no focus (an element that cancels its own mousedown) leaves the field focused: the next Enter would have chosen that row, shut. */
+  const left = await mountField("GB");
+  await act(async () => { left.input.focus(); });
+  await left.press("ArrowDown");
+  await left.press("ArrowDown");
+  const litFirst = view(left);
+  await act(async () => { document.body.dispatchEvent(new dom.window.MouseEvent("mousedown", { bubbles: true })); });
+  const shutByPress = view(left);
+  const focusKept = document.activeElement === left.input;
+  const enterOnShut = await left.press("Enter");
+  check(`a list shut by a press outside, which leaves the field its focus and a row lit, is not chosen from: that Enter is the form's (before the press: ${show(litFirst)}; after: ${show(shutByPress)}, focus kept ${focusKept}; picked [${left.log.join(",")}], Enter kept by the field ${enterOnShut.defaultPrevented}, field reads "${left.input.value}")`, litFirst.lit === "1" && shutByPress.rows === 0 && shutByPress.expanded === "false" && focusKept && left.log.length === 0 && !enterOnShut.defaultPrevented && left.input.value === "United Kingdom", FIELD, UP_REMEDY);
+  await left.unmount();
+  /* The key's other half, unchanged: in an open list ArrowUp moves the highlight up a row, stops at the first, and the Enter chooses the row it stands on. */
+  const climb = await mountField("GB");
+  await act(async () => { climb.input.focus(); });
+  await climb.press("ArrowDown");
+  await climb.press("ArrowDown");
+  await climb.press("ArrowDown");
+  const onThird = view(climb);
+  await climb.press("ArrowUp");
+  const onSecond = view(climb);
+  await climb.press("ArrowUp");
+  await climb.press("ArrowUp");
+  await climb.press("ArrowUp");
+  const onFirst = view(climb);
+  await climb.press("ArrowDown");
+  const enterAfterClimb = await climb.press("Enter");
+  check(`in an open list ArrowUp moves the highlight up a row and stops at the first (rows lit: third [${onThird.lit}], then [${onSecond.lit}], then after three more [${onFirst.lit}], list still open ${onFirst.rows} rows), and the Enter chooses the row it stands on (picked [${climb.log.join(",")}], Enter kept by the field ${enterAfterClimb.defaultPrevented})`, onThird.lit === "2" && onSecond.lit === "1" && onFirst.lit === "0" && onFirst.rows === 3 && climb.log.join() === "FR" && enterAfterClimb.defaultPrevented, FIELD, UP_REMEDY);
+  await climb.unmount();
+
   /* LEAVING THE FIELD (the review's missing test; the same field serves /compare, /you and the activity pages). Blur closes the list and
      gives the field its picked label back; words that match nothing are dropped with it; words that match pick the top match, which is
      the Berlin-nightclubs fix the field carries (a typed value always lands somewhere usable). */
@@ -238,7 +300,9 @@ async function main() {
   const cached = () => Object.keys(require.cache).filter(isList).map((k) => k.replace(/\\/g, "/").replace(/^.*\/src\//, "src/"));
   const LAZY_REMEDY = "load the lists only with import(\"@/lib/home/picker\") from the form's loadLists, started by a pointer entering the form, focus landing in it or a key pressed in it (src/components/NavigatorForm.tsx), and keep every list module out of its static imports";
   const SEED: PickerSeed = { country: { value: "GB", label: "United Kingdom" }, city: { value: "london", label: "London" }, business: { value: "restaurants", label: "Restaurants" }, hidden: { country: "gb", region: "", subdivision: "london", industry: "restaurants" }, tries: [], tryCity: "London" };
-  const router = { push() {}, replace() {}, back() {}, forward() {}, refresh() {}, prefetch() {} };
+  /* Every push through the router is logged: a submit the page took for itself is told from one it left to the browser by the push. */
+  const pushed: string[] = [];
+  const router = { push(path: string) { pushed.push(path); }, replace() {}, back() {}, forward() {}, refresh() {}, prefetch() {} };
   /* The type argument is named because the form's own signature has a default parameter, which createElement cannot infer from. */
   const tree = () => React.createElement(AppRouterContext.Provider, { value: router as any }, React.createElement<{ seed?: PickerSeed }>(NavigatorForm, { seed: SEED }));
   const mountForm = async () => {
@@ -258,12 +322,25 @@ async function main() {
   const byPointer = await mountForm();
   const coldPointer = cached();
   check(`mounted, the form has loaded none of its lists: not the taxonomy, the cascade, the destination, the picker, the regions or the city tables (${coldPointer.length} in the module cache${coldPointer[0] ? `, e.g. ${coldPointer[0]}` : ""})`, coldPointer.length === 0, FORM, LAZY_REMEDY);
+  /* A SUBMIT BEFORE THE LISTS ARE IN IS THE BROWSER'S OWN (the review's probe B; the source regex further down says what the handler
+     holds, not what it does). A cancelable submit event is dispatched at the form as the browser fires one before it navigates: the form
+     leaves it alone and pushes nothing, so the browser sends the four hidden fields, which hold the seed's case, to /api/go. */
+  const SUBMIT_REMEDY = "in src/components/NavigatorForm.tsx onSubmit, return before preventDefault while the lists are not in (the browser then sends the hidden fields to /api/go), and once they are in, preventDefault and push lists.homeDestination(...) through the router";
+  const nativeSubmit = new dom.window.Event("submit", { bubbles: true, cancelable: true });
+  await act(async () => { byPointer.form.dispatchEvent(nativeSubmit); });
+  const sent = [...new dom.window.FormData(byPointer.form).entries()].map(([k, v]) => `${k}=${v}`).join("&");
+  check(`a submit before the lists are in is the browser's own: the form does not stop it and pushes nothing, and the browser sends ${byPointer.form.getAttribute("method")} ${byPointer.form.getAttribute("action")}?${sent} (default prevented ${nativeSubmit.defaultPrevented}, pushed [${pushed.join(",")}])`, !nativeSubmit.defaultPrevented && pushed.length === 0 && byPointer.form.getAttribute("action") === "/api/go" && byPointer.form.getAttribute("method") === "get" && sent === "country=gb&region=&subdivision=london&industry=restaurants", FORM, SUBMIT_REMEDY);
   await act(async () => { byPointer.form.dispatchEvent(new dom.window.PointerEvent("pointerover", { bubbles: true })); });
   await until(listsIn);
   check(`a pointer entering the form loads them (the picker and the taxonomy are in the module cache now: ${listsIn()}, ${cached().length} list modules)`, listsIn(), FORM, LAZY_REMEDY);
   await act(async () => { byPointer.country.focus(); });
   const countryRows = byPointer.box.querySelectorAll("#country-listbox [role=\"option\"]").length;
   check(`and the country field then lists every country (${countryRows} rows)`, countryRows > 100, FORM, LAZY_REMEDY);
+  /* The same submit once the lists are in (the list of every country is the proof the form holds them) is the page's own: the form stops
+     the browser's and pushes the destination of the case on screen through the router. */
+  const scriptedSubmit = new dom.window.Event("submit", { bubbles: true, cancelable: true });
+  await act(async () => { byPointer.form.dispatchEvent(scriptedSubmit); });
+  check(`a submit once the lists are in is the page's own: the form stops the browser's and pushes the destination through the router (default prevented ${scriptedSubmit.defaultPrevented}, pushed [${pushed.join(",")}])`, scriptedSubmit.defaultPrevented && pushed.join() === "/gb/london/restaurants", FORM, SUBMIT_REMEDY);
   await byPointer.unmount();
 
   /* From here the lists are in the module system for good: a second import() is served from the loader's own map and does not touch
