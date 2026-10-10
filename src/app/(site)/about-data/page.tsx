@@ -2,6 +2,7 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { UK_SOURCES, WORLD_SOURCES, type UkSource } from "@/lib/spine/uk_sources";
 import { buildJoins, londonPagesRead } from "@/lib/home/how_made";
 import { buildArchive } from "@/lib/home/archive";
+import { provAttrs } from "@/lib/spine/provenance";
 
 export const revalidate = 86400;
 
@@ -78,8 +79,8 @@ export default function AboutDataPage() {
         </ul>
         {pages ? (
           <p className="mt-3 text-ink-800">
-            {pages.printing} of the {pages.served} London trade pages print a typical business&rsquo;s yearly sales, worked out from the
-            register&rsquo;s sales bands.
+            <span {...provAttrs(pages.prov)}>{pages.printing} of the {pages.served}</span> London trade pages print a typical
+            business&rsquo;s yearly sales, worked out from the register&rsquo;s sales bands.
           </p>
         ) : null}
         <p className="mt-3 text-sm text-ink-700">
@@ -185,9 +186,12 @@ export default function AboutDataPage() {
         {joins ? (
           <p className="mt-3 text-ink-800">
             The official failure figures stop at broad industries. We read a year of liquidation and administration notices,{" "}
-            {joins.notices.figure} of them, and look up each company&rsquo;s name in the company register, which gives its trade:{" "}
-            {joins.matched.figure} of the {joins.names.figure} names are found. A trade&rsquo;s failure rate is its companies that
-            became insolvent in the year, for every 100 of its live companies. Solvent closures are read and left out of the rate.
+            <span {...provAttrs(joins.notices.prov)}>{joins.notices.figure}</span> of them, and look up each company&rsquo;s name in
+            the company register, which gives its trade:{" "}
+            <span {...provAttrs(joins.matched.prov)}>{joins.matched.figure}</span> of the{" "}
+            <span {...provAttrs(joins.names.prov)}>{joins.names.figure}</span> names are found. A trade&rsquo;s failure rate is its
+            companies that became insolvent in the year, for every 100 of its live companies. Solvent closures are read and left out
+            of the rate.
           </p>
         ) : null}
       </section>
@@ -200,9 +204,10 @@ export default function AboutDataPage() {
           <p className="mt-3 text-ink-800">
             The company register&rsquo;s free file lists only the companies alive today and is replaced every month, so a month not
             kept is gone. Each month we keep a dated copy of it, and the month&rsquo;s liquidation and administration notices as
-            published. The archive
-            holds {archive.months} months of notices, {archive.firstName} to {archive.lastName}, and copies of the register of{" "}
-            {archive.copiesWords}.
+            published. The archive holds <span {...provAttrs(archive.prov.months)}>{archive.months}</span> months of notices,{" "}
+            <span {...provAttrs(archive.prov.months)}>{archive.firstName}</span> to{" "}
+            <span {...provAttrs(archive.prov.months)}>{archive.lastName}</span>, and copies of the register of{" "}
+            <span {...provAttrs(archive.prov.copies)}>{archive.copiesWords}</span>.
           </p>
         ) : null}
       </section>

@@ -18,6 +18,7 @@ import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { buildArchive, monthName, daysWords } from "../../src/lib/home/archive";
+import type { Provenance } from "../../src/lib/spine/provenance";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-archive";
@@ -89,6 +90,19 @@ async function main(): Promise<void> {
   check("About the figures holds #archive", at > 0, ABOUT_AT);
   if (built) check(`#archive prints the builder's months and copies (${built.months} months, ${built.firstName} to ${built.lastName}, ${built.copiesWords})`, section.includes(`${built.months} months of notices`) && section.includes(`${built.firstName} to ${built.lastName}`) && section.includes(built.copiesWords), ABOUT_AT);
   check("#archive names no source (R-002: the sources section does)", !/Gazette|Companies House/.test(section), ABOUT_AT);
+
+  /* EACH FIGURE #ARCHIVE PRINTS CARRIES ITS BUILDER'S PROVENANCE (the plan's Global Constraint "Figures": data-src and data-kind, provAttrs
+     in src/lib/spine/provenance.ts): the figure as printed sits inside the element that holds its builder's two attributes, in this
+     section, so a figure left bare, or stamped with another figure's source, is a red. The builder stamps the months (the count) and the
+     copies (their days); the first and the last month are the ends of the months' list, so they carry the months' stamp. */
+  if (built) {
+    const STAMPED_AT = { file: "src/app/(site)/about-data/page.tsx", remedy: "wrap each figure in <span {...provAttrs(x.prov)}> (provAttrs from @/lib/spine/provenance), x the builder's own prov (src/lib/home/archive.ts), the words around it unchanged" };
+    const rawSection = at < 0 ? "" : about.slice(at, about.indexOf("<h2", at + 1));
+    const escaped = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+    const figures: Array<[string, Provenance]> = [[String(built.months), built.prov.months], [built.firstName, built.prov.months], [built.lastName, built.prov.months], [built.copiesWords, built.prov.copies]];
+    const left = figures.filter(([figure, prov]) => !rawSection.includes(`<span data-src="${escaped(prov.src)}" data-kind="${prov.kind}">${escaped(figure)}</span>`)).map(([figure]) => figure);
+    check(`#archive's months (${built.months}), first (${built.firstName}) and last (${built.lastName}) month and copies' days (${built.copiesWords}) each carry their builder's data-src and data-kind${left.length ? `; left bare: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
+  }
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log(homePassLine("home/archive", held));
 }

@@ -35,6 +35,7 @@ import { buildLondonTradeSales } from "../../src/lib/spine/country_depth_rows";
 import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { COPY } from "../../src/lib/spine/copy";
+import type { Provenance } from "../../src/lib/spine/provenance";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { HomeHowMade } from "../../src/components/spine/home/HomeHowMade";
@@ -154,6 +155,23 @@ async function main(): Promise<void> {
   if (joins) check(`#failures prints the notices, ${joins.notices.figure}, and the names found, ${joins.matched.figure} of the ${joins.names.figure}`, section("failures").includes(joins.notices.figure) && section("failures").includes(`${joins.matched.figure} of the ${joins.names.figure}`), ABOUT_AT);
   if (pages) check(`#reading prints the London trade pages read from the band counts, ${pages.printing} of the ${pages.served}`, section("reading").includes(`${pages.printing} of the ${pages.served} London trade pages`), ABOUT_AT);
   check("neither names a source (R-002: the sources section does)", !/Gazette|Companies House/.test(section("failures") + section("reading")), ABOUT_AT);
+
+  /* EACH FIGURE ABOUT PRINTS CARRIES ITS BUILDER'S PROVENANCE (the plan's Global Constraint "Figures": data-src and data-kind, provAttrs in
+     src/lib/spine/provenance.ts): the figure as printed sits inside the element that holds its builder's two attributes, in the section
+     that prints it, so a figure left bare, or stamped with another figure's source, is a red. */
+  const STAMPED_AT = { file: "src/app/(site)/about-data/page.tsx", remedy: "wrap each figure in <span {...provAttrs(x.prov)}> (provAttrs from @/lib/spine/provenance), x the builder's own prov (src/lib/home/how_made.ts), the words around it unchanged" };
+  const rawSection = (id: string) => { const at = about.indexOf(`id="${id}"`); return at < 0 ? "" : about.slice(at, about.indexOf("<h2", at + 1)); };
+  const escaped = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+  /** The figures of `figures` that `id`'s section does not print inside `<span data-src="its prov's src" data-kind="its kind">figure</span>`. */
+  const bare = (id: string, figures: Array<[string, Provenance]>) => figures.filter(([figure, prov]) => !rawSection(id).includes(`<span data-src="${escaped(prov.src)}" data-kind="${prov.kind}">${escaped(figure)}</span>`)).map(([figure]) => figure);
+  if (pages) {
+    const left = bare("reading", [[`${pages.printing} of the ${pages.served}`, pages.prov]]);
+    check(`#reading's pages line (${pages.printing} of the ${pages.served}) carries its builder's data-src and data-kind${left.length ? `; left bare: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
+  }
+  if (joins) {
+    const left = bare("failures", [[joins.notices.figure, joins.notices.prov], [joins.matched.figure, joins.matched.prov], [joins.names.figure, joins.names.prov]]);
+    check(`#failures' notices (${joins.notices.figure}), names matched (${joins.matched.figure}) and names (${joins.names.figure}) each carry their builder's data-src and data-kind${left.length ? `; left bare: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
+  }
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log(homePassLine("home/how_made", held));
