@@ -94,6 +94,23 @@ const gb = buildCityCards("GB");
 const rows = gb ? renderToStaticMarkup(React.createElement(CityRows, { cards: gb.cards, basis: "basis", allHref: "/gb#cities", allLabel: COPY.home.citiesAll, unit: COPY.home.citiesUnit })) : "";
 check("CityRows draws every city once, as a row (one door a city), and one door to every UK city, no tall card and no button", !!gb && (rows.match(/<a [^>]*data-card=/g) ?? []).length === gb.cards.length && (rows.match(/<a /g) ?? []).length === gb.cards.length + 1 && !/data-still=/.test(rows) && !/<button/.test(rows) && /data-form="rows"/.test(rows));
 
+/* ONE TRACKING FOR THE HOME'S H2 RUNG (critique pass 2, fix round C2, item P2.2): the section titles (Rail, at 20 on a zone) take -0.01em
+   from globals.css, "Where to next" took none and "Read from the record" took tracking-tight (-0.025em), so three 20px headings were set
+   three ways. The two hand-set h2s now say -0.01em in their own class, the value the stylesheet gives every Rail title. */
+const railTracking = /\[data-zone\] \.spine-card:not\(\[data-keep-card\]\) \[data-rail-title\] \{[^}]*letter-spacing:\s*(-?[\d.]+em)/.exec(readFileSync("src/app/globals.css", "utf8"))?.[1] ?? "none";
+const h2Class = (f: string) => /<h2[^>]*className="([^"]*)"/.exec(readFileSync(f, "utf8"))?.[1] ?? "";
+const nextH2 = h2Class("src/components/spine/WhereNext.tsx"), recordH2 = h2Class("src/components/spine/home/HomeRecord.tsx");
+check(`the home's h2 rung is set at one tracking, ${railTracking}: Where to next and Read from the record both take tracking-[${railTracking}] and no tracking-tight`, railTracking === "-0.01em" && nextH2.includes(`tracking-[${railTracking}]`) && recordH2.includes(`tracking-[${railTracking}]`) && !/tracking-tight/.test(nextH2 + recordH2), "WhereNext.tsx's h2 and HomeRecord.tsx's h2 take tracking-[-0.01em], the letter-spacing globals.css gives every Rail title on a zone");
+
+/* CURLY APOSTROPHES IN THE HOME'S WORDS (critique pass 2, fix round C2, item P2.3): "The UK's cities", "a sole trader's", "A typical
+   customer's pay" and "the register's ten sales bands" printed straight quotes while About the figures prints curly ones, so the two
+   pages set one mark two ways. No string value of COPY.home or of the city rows' basis line holds a straight apostrophe. */
+const straightApostrophes: string[] = [];
+const walkStrings = (v: unknown, path: string): void => { if (typeof v === "string") { if (v.includes("'")) straightApostrophes.push(`${path}: ${v.slice(0, 40)}`); } else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) walkStrings(x, `${path}.${k}`); };
+walkStrings(COPY.home, "COPY.home");
+walkStrings(COPY.cityCards.plain, "COPY.cityCards.plain");
+check(`the home's words print curly apostrophes, never straight (${straightApostrophes.length ? straightApostrophes.join("; ") : "none straight"})`, straightApostrophes.length === 0, "write the typographic apostrophe (U+2019) in every string of COPY.home and COPY.cityCards.plain.basis, as About the figures does");
+
 /* THE RENDER, where the harness wrote it (pages-fresh renders it first in the chain). */
 const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
 if (render) {

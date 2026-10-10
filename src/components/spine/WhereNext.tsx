@@ -15,7 +15,7 @@ export function WhereNext({ id = "next", title, doors, pitch = false }: { id?: s
   if (doors.length === 0) return null;
   return (
     <nav data-next={id} aria-labelledby={`${id}-title`} className="flex h-full flex-col">
-      <h2 id={`${id}-title`} data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-7 text-[var(--c-ink)]">
+      <h2 id={`${id}-title`} data-typography="custom" className="text-[length:var(--t-head)] font-semibold leading-7 tracking-[-0.01em] text-[var(--c-ink)]">
         {title}
       </h2>
       <ul className={pitch ? "mt-4 grid flex-1 grid-cols-1 md:auto-rows-[56px]" : "mt-3 grid flex-1 grid-cols-1 md:auto-rows-fr"}>

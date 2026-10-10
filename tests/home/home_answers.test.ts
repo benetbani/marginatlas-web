@@ -123,6 +123,12 @@ if (ex) {
   const steps = (h: string) => [...h.matchAll(/data-step="(\d)"/g)].map((m) => m[1]).join("");
   check(`the steps run 1 and 2 on the left, 3 and 4 on the right (${steps(place)} | ${steps(pays)})`, steps(place) === "12" && steps(pays) === "34", DRAWN_AT);
   check(`each half's title is its own h2 ("${ex.place.title}", "${ex.pays.title}")`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(ex.place.title))}</h2>`).test(place) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(ex.pays.title))}</h2>`).test(pays), DRAWN_AT);
+  /* THE STEP NAMES STAND WHERE THE TITLES DO (critique pass 2, fix round C2, item P2.1): "Registered businesses" started 4px right of
+     "Restaurants in London" because a step's head was a 28px numeral and a 12px gap (name at 40) and a title's row a 28px chip and an 8px
+     gap (title at 36). Both rows are 28 and 8 now. */
+  const stepHeads = (h: string) => (h.match(/<div data-step-head="" class="flex items-center gap-2">/g) ?? []).length;
+  const stepNumerals = (h: string) => (h.match(/<span data-step="\d" aria-hidden="true" class="inline-flex h-7 w-7 /g) ?? []).length;
+  check(`a step's name stands 36 from its edge, where its half's title does: the numeral column 28 and the gap after it 8, as the title's chip row (${stepHeads(place)} and ${stepHeads(pays)} step heads, ${stepNumerals(place)} and ${stepNumerals(pays)} numerals, each half's title row ${place.includes('<div class="mb-2 flex items-center gap-2">') && pays.includes('<div class="mb-2 flex items-center gap-2">') ? "the same" : "different"})`, stepHeads(place) === 2 && stepHeads(pays) === 2 && stepNumerals(place) === 2 && stepNumerals(pays) === 2 && place.includes('<div class="mb-2 flex items-center gap-2">') && pays.includes('<div class="mb-2 flex items-center gap-2">'), DRAWN_AT);
   const figs = (h: string) => [...h.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure on the left says where it came from (${figs(place).length}: the count, step 2's figure and the strip's three marks)`, figs(place).length === 5 && figs(place).every((f) => /data-src="uk\/registers\/turnover\.json:restaurants:E12000007"/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
   check(`every figure on the right says where it came from (${figs(pays).length}: break-even, its share, the insolvencies)`, figs(pays).length === 3 && figs(pays).every((f) => /data-src="/.test(f) && /data-kind="/.test(f)), DRAWN_AT);

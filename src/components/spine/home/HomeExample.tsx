@@ -43,7 +43,7 @@ type Rung = "lead" | "focal" | "answer";
 function Step({ step, rung, className = "", children }: { step: ExampleStep; rung: Rung; className?: string; children?: React.ReactNode }) {
   return (
     <div data-step-block={step.n} className={`flex flex-col ${className}`}>
-      <div data-step-head="" className="flex items-center gap-3">
+      <div data-step-head="" className="flex items-center gap-2">
         <StepMark n={step.n} />
         <span className="text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{step.label}</span>
       </div>

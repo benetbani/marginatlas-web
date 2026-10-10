@@ -74,7 +74,7 @@ export function HomeRecord({ record }: { record: SiteCounts }) {
         <div data-zone-cell="" className="min-w-0">
           <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,3fr)] lg:gap-x-16">
             <div>
-              <h2 id="record-title" data-typography="custom" data-rail-title="" className="text-[length:var(--t-head)] font-semibold leading-7 tracking-tight text-[var(--c-ink)]">
+              <h2 id="record-title" data-typography="custom" data-rail-title="" className="text-[length:var(--t-head)] font-semibold leading-7 tracking-[-0.01em] text-[var(--c-ink)]">
                 {C.title}
               </h2>
               <p className="mt-2 text-pretty text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">{C.line.replace("{month}", record.month)}</p>

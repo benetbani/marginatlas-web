@@ -1310,7 +1310,7 @@ export const COPY = {
    *  card does not keep. The three looks add the clause that reads theirs. It
    *  never says what any of it means. */
   cityCards: {
-    plain: { basis: "A typical customer's pay, a year." },
+    plain: { basis: "A typical customer’s pay, a year." },
   },
   /** The comparison table (the peers); the founder praised its desktop form unprompted on 2026-08-30. */
   peers: {
@@ -2731,8 +2731,8 @@ export const COPY = {
     /** THE ANSWERS' SHORT LINES (his instruction of 2026-10-07: one short line a card). The same facts /gb's masthead and curve state
      *  at length ("on $52K of profit, a sole trader under Self Assessment"; "of new firms still trading after 5 years"), said in
      *  the fewest words beside the card's name; the trades keep /gb's own line, already short. */
-    lines: { answer: "of a sole trader's {profit} profit", years: "of new firms, after {n} years" },
-    citiesLabel: "The UK's cities",
+    lines: { answer: "of a sole trader’s {profit} profit", years: "of new firms, after {n} years" },
+    citiesLabel: "The UK’s cities",
     /** THE HOME'S CITY ROWS (plan 2026-10-10, the home reformed to ship, Task 6; the critique's P1.10, the ship audit's 4.4): the eighth
      *  cell under 768, a door to /gb's cities, and the figure's unit said to a screen reader (the basis line says it once for the eye). */
     citiesAll: "All UK cities",
@@ -2743,7 +2743,7 @@ export const COPY = {
     notify: {
       eyebrow: "Your city",
       title: "Notify me when my city reaches this depth",
-      line: "We write when your city's page holds what London's does.",
+      line: "We write when your city’s page holds what London’s does.",
       label: "Your email",
       choose: "City",
       pick: "Choose a city",
@@ -2827,7 +2827,7 @@ export const COPY = {
       placeTitle: "{trade} in London",
       paysTitle: "Does it pay?",
       registered: "Counted in the business register, Greater London, {month}.",
-      sales: "Worked out from the register's ten sales bands.",
+      sales: "Worked out from the register’s ten sales bands.",
       /** One run of words, no comma (plan 2026-10-10, home reform, Task 3; the critique's P2.5); twelve words with the noun. */
       breakEven: "An estimate of the yearly sales that carry an average London {noun}.",
       insolventLabel: "Insolvent a year",
