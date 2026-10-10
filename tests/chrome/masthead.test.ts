@@ -379,6 +379,10 @@ async function main() {
   check("the 404 carries the bar, the footer and one <main id=\"main\">", /<header\b/.test(nfHtml) && /<footer\b/.test(nfHtml) && (nfHtml.match(/<main\b/g) ?? []).length === 1 && /<main id="main"/.test(nfHtml), { file: NOT_FOUND });
   const nfMain = slice(nfHtml, /<main\b/, "</main>");
   check("the 404's doors carry the bar's names and true lines (no world map, no glossary)", ["Countries", "Cities", "Trades", "Compare", "Calculator", "About the figures"].every((t) => anchors(nfMain).some((n) => n.text.startsWith(t))) && !/world map|glossary|knowledge base|activit/i.test(nfMain), { file: NOT_FOUND });
+  /* BALANCED LINES (critique pass 2, P0.3: the first photograph of the 404). The doors' lines are 14px in a 349px card and wrapped to a last line of
+     one word at seven of eight widths from 320 to 1440 ("continent", "side", "even", "from"); text-balance evens the lines. The measure is
+     scratchpad/home-reform/p3_door_lines.mjs (Range rectangles per word, Chromium). */
+  check("the 404's six door lines are balanced (text-balance), so none ends on a one-word line", (nfMain.match(/<span class="[^"]*\btext-balance\b/g) ?? []).length === 6, { file: NOT_FOUND, remedy: "give each door's line text-balance in src/app/not-found.tsx: unbalanced, 'continent', 'side', 'even' and 'from' stood alone on a last line at seven of eight widths" });
   check("the 404 has one h1", (nfHtml.match(/<h1\b/g) ?? []).length === 1, { file: NOT_FOUND });
 
   /* ---------------- 3. THE SHEET, PRESSED (jsdom) ---------------- */

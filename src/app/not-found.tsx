@@ -71,7 +71,7 @@ export default function NotFound() {
                 className="block h-full rounded-[12px] border border-[var(--c-border)] bg-white p-5 transition-colors hover:border-[var(--c-ink2)]"
               >
                 <span className="block font-semibold text-[var(--c-ink)]">{h.label}</span>
-                <span className="mt-1 block text-[length:var(--t-body)] text-[var(--c-ink2)]">{h.desc}</span>
+                <span className="mt-1 block text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{h.desc}</span>
               </Link>
             </li>
           ))}
