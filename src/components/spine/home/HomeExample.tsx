@@ -4,10 +4,10 @@
  * (the zone stretches them, `even`). Left, "Restaurants in London": step 1 a row, the register's count, its numeral where a row's glyph
  * stands and its note the card's one small line; then step 2, the typical yearly sales, the card's one 30, drawn on the London page's own
  * strip with the bottom and top tenths, its line at 14 under its head and the strip centred in the height the level lends, the steps
- * ruled apart (RULE); then the door to the London page. Right, "Does it pay?": step 3, break-even, the page's one 40 and its first loud moment (LOUD_SEATS seat 1), its line at 14; the
- * share that takes that much as 100 units in ink2 (one accent a card); step 4 as a row; then the door to the picker. Left to right, or
- * down a phone, the steps run in order. Every figure from src/lib/home/worked_example.ts, stamped, the same name and value as the London
- * page prints (tests/home/home_answers.test.ts holds that).
+ * ruled apart (RULE); then the door to the London page. Right, "Does it pay?": step 3, break-even, the page's one 40 and its first loud
+ * moment (LOUD_SEATS seat 1), its line at 14; the share that takes that much as 100 units in ink2 (one accent a card); step 4 as a row
+ * ruled off from the units (RULE); then the door to the picker. Left to right, or down a phone, the steps run in order. Every figure from
+ * src/lib/home/worked_example.ts, stamped, the same name and value as the London page prints (tests/home/home_answers.test.ts holds that).
  */
 import * as React from "react";
 import { Box, Fig, Rail, StepMark, usd } from "@/components/spine/kit";
@@ -23,10 +23,10 @@ const WHOLE = 100;
 const UNIT_COLUMNS = 20;
 const DOOR = "tap-y inline-block text-[length:var(--t-body)] text-[var(--c-ink2)] underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)]";
 const LINE = "mt-2 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]";
-/** The left half's hairlines, under its title and between its two steps, the interior line FactRows rules its rows with: each step
- * stands in a band of its own, so what a short step leaves to its right reads as the end of a ruled row, as it does wherever a row is
- * drawn. Without them the half held a blank 200 by 216 at its top right at 1280 (the page filter's WHITE SPACE). The right half takes
- * none: its hundred units fill its width. */
+/** A hairline, the interior line FactRows rules its rows with: the left half takes two, under its title and between its two steps, the
+ * right half one, above step 4. A step stands in a band of its own, so what a short step leaves to its right reads as the end of a ruled
+ * row, as it does wherever a row is drawn. Without them the left half held a blank 200 by 216 at its top right at 1280 (the page
+ * filter's WHITE SPACE) and the right a blank 158 by 132 at its foot, beside step 4's figure (the gathered-emptiness gate's E6). */
 const RULE = "border-t border-[var(--c-border)]";
 
 /** A step's head where the step is no row: its numeral in the glyph's tile, then its name. */
@@ -79,7 +79,7 @@ export function HomePays({ ex }: { ex: WorkedExample }) {
       </div>
       <CountUnits className="mt-2" whole={WHOLE} filled={P.above.part} accent={false} columns={UNIT_COLUMNS} aria={`${P.above.figure}, ${P.above.label}`} />
       <div className="mt-4">
-        <FactRows rows={[{ key: "insolvent", step: P.insolvent.n, label: P.insolvent.label, value: P.insolvent.figure, note: P.insolvent.line, prov: P.insolvent.prov }]} />
+        <FactRows className={RULE} rows={[{ key: "insolvent", step: P.insolvent.n, label: P.insolvent.label, value: P.insolvent.figure, note: P.insolvent.line, prov: P.insolvent.prov }]} />
       </div>
       <div className="mt-auto pt-3">
         <a href="#search" className={DOOR}>{P.door}</a>
