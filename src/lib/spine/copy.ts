@@ -2882,6 +2882,8 @@ export const COPY = {
       "trade-peers": "How this trade does here against other places.",
       districts: "What rent costs in each part of the city.",
       trades: "Trades with figures for this city.",
+      "firms-last": "How long new firms last in each UK city.",
+      duel: "Which trades see the most companies fail.",
     },
   },
   /** Words that must never appear in an archetype's copy: the corporate register.

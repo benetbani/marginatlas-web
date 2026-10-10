@@ -120,6 +120,10 @@ import { Obstacles } from "@/components/spine/sections/Obstacles";
 import { AgeMix } from "@/components/spine/sections/AgeMix";
 import { JobMarket } from "@/components/spine/sections/JobMarket";
 import { buildSurvival, buildObstacles } from "@/lib/spine/sections/first_years";
+import { FirmsLast } from "./FirmsLast";
+import { Duel } from "./Duel";
+import { buildFirmsLast } from "@/lib/home/firms_last";
+import { buildDuel } from "@/lib/home/duel";
 import { buildAgeMix, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildJobMarket } from "@/lib/spine/sections/market_jobs";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
@@ -1510,6 +1514,10 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
     const fromAbroad = iso2 === "GB" ? buildFromAbroad() : null;
     /* IF IT FAILS (masterplan step 29): what failing costs the owner in England and Wales, the UK's alone. */
     const ifItFails = iso2 === "GB" ? buildIfItFails() : null;
+    /* WHERE NEW FIRMS LAST BESIDE WHICH TRADES FAIL MOST (plan 2026-10-09, home introduction, Task 4; the home's spec, section 6): the
+       two rankings the home printed until that plan, the UK's own, seated in chapter 04 after its first level. The UK's alone. */
+    const lasts = iso2 === "GB" ? buildFirmsLast() : null;
+    const duel = iso2 === "GB" ? buildDuel() : null;
     /* In the order the body draws them, each under the chapter it stands in (the rail heads each run with its chapter). */
     const sections: RailSection[] = [
       { id: "take", label: "The tax burden" },
@@ -1536,6 +1544,8 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       { id: "spend", label: "What households spend on", chapter: "03" },
       { id: "character-people", label: COPY.character.people.kicker, chapter: "03" },
       ...(seatFirstYears ? [{ id: "first-years", label: COPY.firstYears.kicker, chapter: "04" }, { id: "obstacles", label: COPY.firstYears.obstaclesKicker, chapter: "04" }] : []),
+      ...(lasts ? [{ id: "firms-last", label: COPY.home.firmsLast.kicker, chapter: "04" }] : []),
+      ...(duel ? [{ id: "duel", label: duel.title, chapter: "04" }] : []),
     ];
     /* WHAT A LOCKED LEVEL DRAWS (masterplan step 16; his rulings 18 and 22): each card of a level Pro opens, by the key the body
        gives it, as a locked section under its rail list label, with the icon its own rail draws and the stand-in nearest its
@@ -1561,6 +1571,8 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
           ["locals", "locals", "locals-know", "rows"],
           ["spend", "spend", "spending-power", "bars"],
           ["people", "character-people", "who-for", "table"],
+          ["lasts", "firms-last", "ranking", "bars"],
+          ["duel", "duel", "vacancy", "bars"],
         ] as const
       ).map(([key, id, icon, kind]) => [key, { id, title: railLabel(id), icon, kind }]),
     );
@@ -1656,7 +1668,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
     ]) : null;
     const payments = iso2 ? buildPayments(iso2) : null;
     const financingCells = financing.cells.filter((c) => !c.key.startsWith("grant-"));
-    const zones: Array<{ key: string; split: ZoneSplit; label: string; chapter?: { index: string; heading: string }; outside?: boolean; body: React.ReactNode[] }> = [
+    const zones: Array<{ key: string; split: ZoneSplit; label: string; chapter?: { index: string; heading: string }; outside?: boolean; even?: boolean; body: React.ReactNode[] }> = [
       { key: "take", split: "wide", label: "The tax burden", outside: true, body: [<Masthead key="take" name={name} iso2={iso2} hero={d.hero} />] },
       /* THE HOT STUFF FIRST (his word of 2026-10-04): what changed for a small firm here and what is coming, sourced and dated,
          right under the answer, before the costs it changes. */
@@ -1753,6 +1765,21 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
             },
           ]
         : []),
+      /* WHERE NEW FIRMS LAST BESIDE WHICH TRADES FAIL MOST (plan 2026-10-09, home introduction, Task 4; the home's spec, section 6), a
+         level after chapter 04's first, so the paywall's half rule locks it as it locks every later level (lockedLevelKeys). Two halves,
+         even while both draw: the bars fill their half (`fill`) beside the duel. The duel draws only while the feed's item is fresh, and
+         where it does not, where new firms last stands alone at two thirds (the zones' LONE rule). Where chapter 04's first level does
+         not draw, this level opens the chapter. */
+      ...(lasts || duel
+        ? [{
+            key: "lasts",
+            split: "1-1" as ZoneSplit,
+            even: !!(lasts && duel),
+            label: COPY.home.firmsLast.kicker,
+            ...(seatFirstYears ? {} : { chapter: { index: "04", heading: COPY.chapters.firstYears } }),
+            body: [...(lasts ? [<FirmsLast key="lasts" last={lasts} />] : []), ...(duel ? [<Duel key="duel" duel={duel} />] : [])],
+          }]
+        : []),
       { key: "close", split: "wide", label: COPY.close.kicker, outside: true, body: [<Close key="close" meta={d.meta} name={name} zone />] },
     ];
     /* THE LOCK (masterplan step 16; his ruling 18): told the page is locked, each chapter's first level stays open and every later
@@ -1761,9 +1788,16 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
     const lockedZones = locked ? lockedLevelKeys(zones.map((z) => ({ key: z.key, chapter: z.chapter?.index ?? null, outside: z.outside }))) : null;
     /* THE FREE DOORS (his ruling of 2026-10-05 on PARKED P20.1): where the cities' level locks, the UK's city pages by name, in a
        zone of their own after the close, outside the chapters, so a free reader keeps every city the open page links. */
-    const shown: typeof zones = lockedZones?.has("cities") && cities && cities.cards.length > 0
-      ? [...zones, { key: "doors", split: "wide" as ZoneSplit, label: COPY.freeDoors.cities as string, outside: true, body: [<FreeDoors key="doors" id="cities" title={COPY.freeDoors.cities} doors={[...cities.cards.map((c) => ({ name: c.name, href: c.href })), { name: COPY.cities.allLabel, href: cities.allHref }]} />] }]
-      : zones;
+    const cityDoors: typeof zones = lockedZones?.has("cities") && cities && cities.cards.length > 0
+      ? [{ key: "doors", split: "wide" as ZoneSplit, label: COPY.freeDoors.cities as string, outside: true, body: [<FreeDoors key="doors" id="cities" title={COPY.freeDoors.cities} doors={[...cities.cards.map((c) => ({ name: c.name, href: c.href })), { name: COPY.cities.allLabel, href: cities.allHref }]} />] }]
+      : [];
+    /* THE DUEL'S TRADES, FREE (his ruling of 2026-10-05 on PARKED P20.1, held by the paywall gate's rule 7; plan 2026-10-09, home
+       introduction): where the level of where new firms last locks, the London trade pages the duel's bars open stand by name after the
+       close, so locking cuts no path. Where new firms last opens city pages, which the cities' doors above already hold. */
+    const tradeDoors: typeof zones = lockedZones?.has("lasts") && duel
+      ? [{ key: "trade-doors", split: "wide" as ZoneSplit, label: duel.title, outside: true, body: [<FreeDoors key="trade-doors" id="trades" title={duel.title} doors={duel.rows.map((r) => ({ name: r.name, href: r.href }))} />] }]
+      : [];
+    const shown: typeof zones = [...zones, ...cityDoors, ...tradeDoors];
     return (
       <>
         {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2: Material, iOS and the NHS hold 16; the site's column holds 24): the
@@ -1771,7 +1805,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
             phone table on the page is laid out for. The bands' colour runs edge to edge either way. */}
         <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
           {shown.map((z, i) => (
-            <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label} chapter={z.chapter}>
+            <Zone key={z.key} tone={zoneTone(i)} split={z.split} even={z.even} label={z.label} chapter={z.chapter}>
               {lockedZones?.has(z.key) ? lockedBody(z.body, countryLocks) : z.body}
             </Zone>
           ))}

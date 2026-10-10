@@ -1804,11 +1804,12 @@
       "script": "tests/home/duel.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "THE DUEL ON THE HOME PAGE (his ruling of 2026-10-05 on PARKED P36.2, option (a): \"the duel\" from the trades that fail most, checked against the 45-day rule before it prints).",
+      "asserts": "THE DUEL, WHICH TRADES FAIL MOST (his ruling of 2026-10-05 on PARKED P36.2, option (a): \"the duel\" from the trades that fail most, checked against the 45-day rule before it prints).",
       "reads": [
         "data/editorial/editorial_feed.json",
         "scratchpad/harness/pages/cell-gb-london-restaurants.html",
-        "scratchpad/harness/pages/home-gb.html",
+        "scratchpad/harness/pages/country-GB.html",
+        "src/components/spine/country/Duel.tsx",
         "src/lib/home/duel.ts"
       ],
       "claims": []
@@ -1836,7 +1837,9 @@
         "data/cities/city_list_v1.json",
         "data/home/city_survival.json",
         "data/uk/registers/survival.json",
-        "src/components/spine/home/HomeFirmsLast.tsx"
+        "scratchpad/harness/pages/country-GB.html",
+        "src/components/spine/country/FirmsLast.tsx",
+        "src/components/spine/country/country-view.tsx"
       ],
       "claims": []
     },

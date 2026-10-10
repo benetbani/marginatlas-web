@@ -1,17 +1,22 @@
 /**
- * THE DUEL ON THE HOME PAGE (his ruling of 2026-10-05 on PARKED P36.2, option (a): "the duel" from the trades that fail most,
+ * THE DUEL, WHICH TRADES FAIL MOST (his ruling of 2026-10-05 on PARKED P36.2, option (a): "the duel" from the trades that fail most,
  * checked against the 45-day rule before it prints). src/lib/home/duel.ts reads data/editorial/editorial_feed.json.
  *
  * Holds: the feed's own rules on every item (a title of four words or fewer, a line of twelve or fewer, no em dash and no
  * semicolon, the dimension ranked and the place held named, a floor); the duel's four rows are the set's two highest and two
  * lowest, each in the trade pages' unit (per 100, one decimal), each a door to its live London trade page, each stamped; its figure
  * is the set's middle, which no row prints; it prints for 45 days from its data's end and not a day after, and never without that
- * date; the restaurants row reads what London restaurants' page prints; the home render carries the duel, stamped.
+ * date; the restaurants row reads what London restaurants' page prints; since plan 2026-10-09 (home introduction) /gb's render
+ * carries the duel in chapter 04, beside where new firms last, stamped; and the drawing (src/components/spine/country/Duel.tsx)
+ * fills its half of that even level: its four rows as the table, never the fixed-height columns.
  *
  * Run: npx tsx tests/home/duel.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { buildDuel, isFresh, FRESH_DAYS } from "../../src/lib/home/duel";
+import { Duel } from "../../src/components/spine/country/Duel";
 import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -19,7 +24,7 @@ const RULE = "home-duel";
 const FILE = "src/lib/home/duel.ts";
 const REMEDY = "print the duel from the feed only, in the trade pages' unit, its middle as its figure, fresh by the 45-day rule";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 type Item = { id: string; title: string; line: string; dimension?: string; held?: string; floor?: string; refresh: string; as_of?: string; middle?: number; members: number; top: Array<{ member: string; trades: string[]; value: number }>; bottom: Array<{ member: string; trades: string[]; value: number }> };
 const feed = JSON.parse(readFileSync("data/editorial/editorial_feed.json", "utf8")) as { items: Item[] };
@@ -41,6 +46,11 @@ if (item?.as_of) {
     check(`its figure is the set's middle, ${duel.middle.figure}, which no row prints`, duel.middle.value === Math.round(item.middle as number) / 10 && !duel.rows.some((r) => r.value === duel.middle.value));
     check("every row is a door to a live London trade page", duel.rows.every((r) => r.href === `/gb/london/${r.key}` && r.key in SLUG_TO_INDUSTRY && !!r.lands));
     check("every figure is stamped from the feed", [duel.middle.prov, ...duel.rows.map((r) => r.prov)].every((p) => p.src.startsWith("editorial/editorial_feed.json:fail-most") && !!p.kind));
+    /* THE DRAWING (plan 2026-10-09, home introduction, Task 4): it stands in a half of /gb's even level and takes the taller card's
+       height, so its four rows are the table (RankedBars `fill`), which shares that height, and never the columns, whose fixed height
+       stood 52px of blank foot at 1280 (the page laws' CARD FOOT BLANK, clause 52). The columns alone stamp `data-bar` on a row. */
+    const html = renderToStaticMarkup(React.createElement(Duel, { duel }));
+    check("the duel fills its half: its four rows are the table at every width, never the fixed-height columns", /id="duel"/.test(html) && !/data-bar=/.test(html) && (html.match(/data-track="set"/g) ?? []).length === 4, { file: "src/components/spine/country/Duel.tsx", remedy: "draw the duel as Duel holds it, RankedBars with fill, so its four rows are the table at every width from sm and share the height /gb's even level gives it (the columns' fixed height stood 52px of blank foot at 1280)" });
   }
   check(`it prints on day ${FRESH_DAYS} and not on day ${FRESH_DAYS + 1} after its data ends`, !!buildDuel(day(FRESH_DAYS)) && buildDuel(day(FRESH_DAYS + 1)) === null);
 }
@@ -51,8 +61,10 @@ const cell = existsSync("scratchpad/harness/pages/cell-gb-london-restaurants.htm
 const r0 = item?.top[0];
 if (cell && r0) check(`London restaurants' page prints ${(Math.round(r0.value) / 10).toFixed(1)} of 100, as the duel does`, cell.includes(`|${(Math.round(r0.value) / 10).toFixed(1)}|`));
 
-const home = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
-if (home) check("the home render carries the duel, its middle stamped from the feed", /id="duel"/.test(home) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(home));
+/* ON THE UK PAGE (plan 2026-10-09, home introduction, Task 4): /gb's chapter 04, beside where new firms last, while the item is fresh. */
+const gb = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
+if (gb && buildDuel()) check("/gb's render carries the duel beside where new firms last, its middle stamped from the feed", /id="duel"/.test(gb) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(gb) && gb.indexOf('id="firms-last"') > -1 && gb.indexOf('id="firms-last"') < gb.indexOf('id="duel"'));
+else if (!gb) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's check did not run");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/duel: all pass");

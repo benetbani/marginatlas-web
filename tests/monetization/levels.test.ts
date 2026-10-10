@@ -19,10 +19,11 @@ const gb: LevelRef[] = [
   { key: "setup", chapter: "01" }, { key: "staff" }, { key: "running" }, { key: "peers" },
   { key: "state", chapter: "02" }, { key: "money" },
   { key: "trades", chapter: "03" }, { key: "people" }, { key: "cities" }, { key: "spend" },
-  { key: "years", chapter: "04" },
+  { key: "years", chapter: "04" }, { key: "lasts" },
   { key: "close", outside: true },
 ];
-check("/gb locks seven of eleven chapter levels", same(lockedLevelKeys(gb), ["staff", "running", "peers", "money", "people", "cities", "spend"]));
+/* Chapter 04's second level since plan 2026-10-09 (home introduction): where new firms last beside which trades fail most. */
+check("/gb locks eight of twelve chapter levels", same(lockedLevelKeys(gb), ["staff", "running", "peers", "money", "people", "cities", "spend", "lasts"]));
 
 const london: LevelRef[] = [
   { key: "premises", chapter: "01" }, { key: "gates", chapter: "01" }, { key: "living", chapter: "01" }, { key: "crew", chapter: "01" },

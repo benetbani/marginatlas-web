@@ -253,6 +253,11 @@ export type RankedBarsProps = {
    *  with the leader. The industry page's "Similar trades" headlined the trade's rank ("Joint 7th") while nothing on the chart
    *  said which column was the trade. */
   selfKey?: string | null;
+  /** THE CARD STANDS IN A LEVEL THAT STRETCHES IT (plan 2026-10-09, home introduction, Task 4: /gb's duel, a half of the zone `even`
+   *  beside where new firms last). The columns have a fixed height and stand any stretch as a blank foot (the page laws' CARD FOOT
+   *  BLANK, clause 52: 52px at 1280), so a card of four or five rows draws the table at every width from sm, whose rows share the
+   *  height the level gives it (PART 5's height law; the form six or more rows already take). Off, as before: columns from lg. */
+  fill?: boolean;
   /** THE CARD'S OWN FOCAL OVER THE BARS (MODEL.md 8.6 `04 open`, plan step 33's
    *  second dispatch, 2026-09-18): one figure at 30 between the opener and the
    *  basis, `--terra-text` when the card is one of the page's loud moments and
@@ -378,7 +383,7 @@ const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey, selfKey = null }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey, selfKey = null, fill = false }: RankedBarsProps) {
   if (rows.length < 2) return null;
   /* THE RESIDUAL IS LIFTED OUT OF THE RANKING BEFORE ANYTHING IS SORTED (see
      the prop): it takes no part in the order and cannot be the leader. A key
@@ -409,10 +414,11 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
   /* A RESIDUAL CARD IS NEVER COLUMNS, whatever its row count: the columns' last
      reading position is their loudest and a leftover cannot stand there (see
      `residualKey`). */
-  const drawBars = sorted.length >= 4 && sorted.length < WIDE_ROWS && !residual;
+  /* AND A CARD A LEVEL STRETCHES IS THE TABLE FROM FOUR ROWS (`fill`, see the prop): the columns' height is fixed. */
+  const drawBars = sorted.length >= 4 && sorted.length < WIDE_ROWS && !residual && !fill;
   /* SIX OR MORE READ TOP TO BOTTOM AT EVERY WIDTH (rule 20), which is why
      this is not another breakpoint: the columns are wrong at 1280 as well. */
-  const drawWide = sorted.length >= WIDE_ROWS || Boolean(residual);
+  const drawWide = sorted.length >= WIDE_ROWS || Boolean(residual) || (fill && sorted.length >= 4);
   /* THE BARS CARD'S MIDDLE FORM (plan step 33's second dispatch, 2026-09-18).
      The bars stand from lg; below it the card drew the PHONE list, whose rows
      are `[1fr auto]` justify-between, which PART 5 licenses only on a card of

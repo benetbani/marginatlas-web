@@ -7,7 +7,7 @@
  * Holds the slice: it is its source's (scripts/lib/home_export.ts), a source this machine lacks ends the last line as deferred; the
  * manifest's row count is its content's; every UK city with a page is read by its own area code and is drawn or held out with the
  * publisher's reason (a star: over 500 businesses at one postcode), never both and never neither; every share is its two counts'
- * (half up, one decimal, in whole numbers), so none can be typed; the UK's share is the one the home's ring prints
+ * (half up, one decimal, in whole numbers), so none can be typed; the UK's share is the one /gb's survival curve prints
  * (data/sections/survival.json) and London's the one London's pages read (data/uk/registers/survival.json); the shares are of the
  * cohort's fifth year.
  *
@@ -15,20 +15,22 @@
  * no held-out city drawn; every row a door to its own city page; every figure stamped from the slice; the UK's tick the slice's;
  * the lead's line twelve words at most with the cohort and its fifth year in it.
  *
- * Holds the drawing (src/components/spine/home/HomeFirmsLast.tsx): a box with its id and the site's bars, plain and filling the half;
- * each bar its city's own share of 100, never of the leader's; the lead's bar the one marked and its figure the card's one accent;
- * the UK's tick at its share and keyed once; every row a door to its city page; every figure stamped; the title the copy gate's.
+ * Holds the drawing on the UK page since plan 2026-10-09, home introduction (src/components/spine/country/FirmsLast.tsx, in /gb's
+ * chapter 04 after its first level, beside which trades fail most): a box with its id and the site's bars, plain and filling the half;
+ * each bar its city's own share of 100; the lead's bar the one marked, by weight (ink2), its figure in ink (quiet: /gb's three loud
+ * moments are its own); the UK's tick at its share and keyed once; every row a door to its city page; every figure stamped; the
+ * title the copy gate's; and the /gb render draws it there.
  *
  * Run: npx tsx tests/home/firms_last.test.ts
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { buildSurvival } from "../../src/lib/spine/sections/first_years";
 import { buildFirmsLast } from "../../src/lib/home/firms_last";
 import { COPY } from "../../src/lib/spine/copy";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { HomeFirmsLast } from "../../src/components/spine/home/HomeFirmsLast";
+import { FirmsLast } from "../../src/components/spine/country/FirmsLast";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-firms-last";
@@ -60,7 +62,7 @@ if (held && d) {
   /* The ring prints the GB curve's LAST point (home_answers.ts reads buildSurvival("GB").last) and the slice reads the cohort's fifth
      year, so the two are one figure only while the curve's last point is its fifth year. */
   const ring = buildSurvival("GB");
-  check(`the UK's share is the home's ring's: the slice's fifth year is ${d.uk.pct} (the ${d.cohort} cohort), the ring prints the curve's last point, year ${ring?.last.year}, ${ring?.last.pct} (the ${ring?.cohort} cohort)`, !!ring && ring.last.year === 5 && ring.cohort === d.cohort && ring.last.pct === d.uk.pct);
+  check(`the UK's share is /gb's survival curve's: the slice's fifth year is ${d.uk.pct} (the ${d.cohort} cohort), the ring prints the curve's last point, year ${ring?.last.year}, ${ring?.last.pct} (the ${ring?.cohort} cohort)`, !!ring && ring.last.year === 5 && ring.cohort === d.cohort && ring.last.pct === d.uk.pct);
   const london = d.cities.find((c) => c.slug === "london");
   const slice = (JSON.parse(readFileSync("data/uk/registers/survival.json", "utf8")) as { areas: Record<string, { births_2019: number; cohort_2019_five_years: number }> }).areas[london?.code ?? ""];
   check(`London's row is the register slice's (${london?.births} births, ${london?.pct} of 100, against ${slice?.births_2019} and ${slice?.cohort_2019_five_years})`, !!london && !!slice && london.births === slice.births_2019 && Math.abs(london.pct / 100 - slice.cohort_2019_five_years) < 0.0005);
@@ -82,22 +84,18 @@ if (built && d) {
   check(`the title is four words at most ("${COPY.home.firmsLast.kicker}")`, COPY.home.firmsLast.kicker.split(/\s+/).length <= 4);
 }
 
-/* THE DRAWING (plan Task 13): the bars, plain and filling the half, the lead's bar marked and its figure the card's one accent, the
-   UK's tick keyed once, every figure stamped, the title the copy gate's. The four checks after the tick see the VALUES (a bar's width,
-   the tick's place, a door's address, which bar is marked): a drawing that kept every part and lost a value would pass the ones before.
-   A red here is the component's to put right (the slice and the builder are held above), so its finding names HomeFirmsLast and the
-   laws it is drawn by, and never the export. */
-const DRAWN_AT = { file: "src/components/spine/home/HomeFirmsLast.tsx", remedy: "draw section 1 as HomeFirmsLast holds it, the site's bars at the whole of 100 with the lead's bar the one marked and its figure the card's one accent (ART-DIRECTION C2), the UK's tick keyed once, every row a door to its city page and every figure stamped" };
+/* THE DRAWING ON THE UK PAGE (plan 2026-10-09, home introduction, Task 4): the bars, plain and filling the half, the lead's bar marked
+   by weight (ink2, BarList's `quiet`) and its figure in ink, the UK's tick keyed once, every figure stamped, the title the copy gate's.
+   A red here is the component's to put right (the slice and the builder are held above), so it names FirmsLast and never the export. */
+const DRAWN_AT = { file: "src/components/spine/country/FirmsLast.tsx", remedy: "draw where new firms last on /gb as FirmsLast holds it: the site's bars at the whole of 100, the lead's bar marked in ink2 (BarList quiet) and its figure in ink (no accent: /gb's seats are its own), the UK's tick keyed once, every row a door to its city page, every figure stamped" };
 if (built) {
-  const html = renderToStaticMarkup(React.createElement(HomeFirmsLast, { last: built }));
+  const html = renderToStaticMarkup(React.createElement(FirmsLast, { last: built }));
   check("the section is a box with its id and its bars (plain, filling its half, the lead's bar marked)", /id="firms-last"/.test(html) && /data-archetype="bar-list"/.test(html) && /data-look="plain"/.test(html) && /data-marked="1"/.test(html) && /flex-1/.test(html), DRAWN_AT);
-  const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
-  check(`one figure in the accent, the lead's (${accents.length})`, accents.length === 1 && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure.replace(".", "\\.")}<`).test(html), DRAWN_AT);
+  check("no figure in the accent (quiet: /gb's three loud moments are its own)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), DRAWN_AT);
+  check("the lead's bar is marked by weight, in ink2, and no bar is terracotta", /data-marked="1"[^>]*style="[^"]*background-color:var\(--c-ink2\)/.test(html) && [...html.matchAll(/data-bar="true"[^>]*style="([^"]*)"/g)].every((m) => !/terra/.test(m[1])), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)), DRAWN_AT);
   check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey), DRAWN_AT);
-  /* A width is value / 100 * 100 in floats (30.099999999999998 for a share of 30.1, 9% of the shares at one decimal), so a drawn place is
-     read at the shares' own resolution, one decimal, and never as the exact string. */
   const tenth = (n: number) => Math.round(n * 10) / 10;
   const widths = [...html.matchAll(/data-bar="true"[^>]*style="width:([\d.]+)%/g)].map((m) => Number(m[1]));
   check(`each bar is its city's own share of 100 (${widths.join(", ")})`, widths.length === built.rows.length && widths.every((w, i) => tenth(w) === built.rows[i].value), DRAWN_AT);
@@ -110,6 +108,18 @@ if (built) {
   check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.firmsLast.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
   check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
 }
+
+/* THE UK PAGE'S RENDER (pages-fresh renders it first in the chain): the level after chapter 04's first, where new firms last beside which
+   trades fail most. */
+const VIEW_AT = { file: "src/components/spine/country/country-view.tsx", remedy: "seat FirmsLast in the zone keyed lasts after chapter 04's first level: split 1-1, even while both draw, FirmsLast then Duel" };
+const gbRender = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
+if (gbRender && built) {
+  const at = gbRender.indexOf(`data-zone-label="${COPY.home.firmsLast.kicker}"`);
+  const zone = at < 0 ? "" : gbRender.slice(gbRender.lastIndexOf("<section", at), gbRender.indexOf("<section data-zone", at + 1));
+  const years = gbRender.indexOf('id="first-years"');
+  check("/gb draws where new firms last in a level of chapter 04 after its first, its lead stamped", years > 0 && at > years && /id="firms-last"/.test(zone) && new RegExp(`data-src="home/city_survival\\.json:${built.lead.key}"`).test(zone), VIEW_AT);
+  check("the level is two halves with the duel, even, where the duel is fresh", !/id="duel"/.test(zone) || (/^<section data-zone="1-1"/.test(zone) && /data-zone-even/.test(zone) && zone.indexOf('id="firms-last"') < zone.indexOf('id="duel"')), VIEW_AT);
+} else if (!gbRender) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's checks did not run");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/firms_last", held));
