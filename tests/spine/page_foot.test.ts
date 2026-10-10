@@ -92,7 +92,7 @@ for (const p of PAGES) {
 const withDate = renderToStaticMarkup(React.createElement(ReportFoot, { path: "/gb", checked: "2026-10-01" }));
 const without = renderToStaticMarkup(React.createElement(ReportFoot, { path: "/gb", checked: null }));
 check("given a held date, the foot prints it once, as a date", (withDate.match(/data-checked="1"/g) ?? []).length === 1 && /datetime="2026-10-01"/i.test(withDate) && withDate.includes("1 October 2026"));
-check("given none, it prints no checked line", !without.includes("data-checked"));
+check("given none, it prints no checked line", !without.includes("data-checked")); check("the foot stands 24px clear of what follows it, as it stands 24px under the last band (mb-6): the newsletter bar's hairline touched it, 0px, on every spine page (critique pass 2, P0.3, the first photograph of the home inside its chrome)", /<p data-page-foot[^>]*\bmb-6\b/.test(without), FILE, "give ReportFoot's paragraph mb-6, the 24px its mt-6 gives it above, so the last line is not set against the newsletter bar's border");
 check("the link carries the path, nothing else, and asks crawlers not to follow it", reportHref("/gb/london/restaurants") === "/corrections/new?page=%2Fgb%2Flondon%2Frestaurants" && /rel="nofollow"/.test(without));
 check("a path from elsewhere is never carried", reportHref("https://example.com/x") === "/corrections/new" && reportHref("//evil.example") === "/corrections/new");
 
