@@ -1,5 +1,5 @@
 {
-  "_about": "The photographs on the UK's pages, each a Wikimedia Commons file in the public domain or under CC0 (no credit required; kept here as the record of where each came from). Chosen 2026-09-25 on the founder's word ('you choose, push forward'); no stock libraries (the no-stock-imagery rule).",
+  "_about": "The photographs on the UK's pages, each a Wikimedia Commons file in the public domain or under CC0 (no credit required; kept here as the record of where each came from). Chosen 2026-09-25 on the founder's word ('you choose, push forward'); no stock libraries (the no-stock-imagery rule). Since 2026-10-10 (plan home reform, Task 6) each city's position is the CSS object-position that keeps its landmark in a short row, read into data/cities/images_manifest.json by scripts/build_city_images_manifest.ts.",
   "photos": {
     "gb": {
       "file": "/countries/gb.jpeg",
@@ -12,6 +12,7 @@
     "london": {
       "file": "/cities/london.jpeg",
       "alt": "The City of London skyline from Dulwich",
+      "position": "50% 44%",
       "title": "File:City of London skyline from Dawson Heights, Dulwich (2).jpg",
       "license": "CC0",
       "source": "https://commons.wikimedia.org/wiki/File:City_of_London_skyline_from_Dawson_Heights,_Dulwich_(2).jpg",
@@ -20,6 +21,7 @@
     "manchester": {
       "file": "/cities/manchester.jpeg",
       "alt": "Manchester city centre from above Deansgate",
+      "position": "50% 25%",
       "title": "File:Looking northwards up Deansgate from Cloud 23 on the 23rd floor of the Beetham Tower, Manchester.jpg",
       "license": "CC0",
       "source": "https://commons.wikimedia.org/wiki/File:Looking_northwards_up_Deansgate_from_Cloud_23_on_the_23rd_floor_of_the_Beetham_Tower,_Manchester.jpg",
@@ -28,6 +30,7 @@
     "birmingham": {
       "file": "/cities/birmingham.jpeg",
       "alt": "The Bullring, Birmingham",
+      "position": "50% 65%",
       "title": "File:The Bullring Birmingham (175816679).jpeg",
       "license": "CC0",
       "source": "https://commons.wikimedia.org/wiki/File:The_Bullring_Birmingham_(175816679).jpeg",
@@ -36,6 +39,7 @@
     "leeds": {
       "file": "/cities/leeds.jpeg",
       "alt": "A shopping street in Leeds city centre",
+      "position": "50% 42%",
       "title": "File:Leeds City Centre.JPG",
       "license": "CC0",
       "source": "https://commons.wikimedia.org/wiki/File:Leeds_City_Centre.JPG",
@@ -44,6 +48,7 @@
     "glasgow": {
       "file": "/cities/glasgow.jpeg",
       "alt": "The River Clyde and Glasgow's skyline",
+      "position": "50% 20%",
       "title": "File:River Clyde pontoon pier with dockyard cranes and modern Glasgow skyline.jpg",
       "license": "CC0",
       "source": "https://commons.wikimedia.org/wiki/File:River_Clyde_pontoon_pier_with_dockyard_cranes_and_modern_Glasgow_skyline.jpg",
@@ -52,6 +57,7 @@
     "edinburgh": {
       "file": "/cities/edinburgh.jpeg",
       "alt": "Grassmarket, Edinburgh's Old Town",
+      "position": "50% 38%",
       "title": "File:Grassmarket Square, Old Town Edinburgh, Scotland.jpg",
       "license": "cc0",
       "source": "https://commons.wikimedia.org/wiki/File:Grassmarket_Square,_Old_Town_Edinburgh,_Scotland.jpg",
@@ -60,6 +66,7 @@
     "bristol": {
       "file": "/cities/bristol.jpeg",
       "alt": "Bristol's harbourside",
+      "position": "50% 38%",
       "title": "File:Bristol Waterfront.jpg",
       "license": "CC0",
       "source": "https://commons.wikimedia.org/wiki/File:Bristol_Waterfront.jpg",

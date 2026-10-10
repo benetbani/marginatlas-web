@@ -3,31 +3,45 @@
   "cities": {
     "birmingham": {
       "file": "/cities/birmingham.jpeg",
-      "bytes": 155741
+      "bytes": 155741,
+      "thumb": "/cities/thumbs/birmingham.jpeg",
+      "position": "50% 65%"
     },
     "bristol": {
       "file": "/cities/bristol.jpeg",
-      "bytes": 145150
+      "bytes": 145150,
+      "thumb": "/cities/thumbs/bristol.jpeg",
+      "position": "50% 38%"
     },
     "edinburgh": {
       "file": "/cities/edinburgh.jpeg",
-      "bytes": 153208
+      "bytes": 153208,
+      "thumb": "/cities/thumbs/edinburgh.jpeg",
+      "position": "50% 38%"
     },
     "glasgow": {
       "file": "/cities/glasgow.jpeg",
-      "bytes": 143231
+      "bytes": 143231,
+      "thumb": "/cities/thumbs/glasgow.jpeg",
+      "position": "50% 20%"
     },
     "leeds": {
       "file": "/cities/leeds.jpeg",
-      "bytes": 137230
+      "bytes": 137230,
+      "thumb": "/cities/thumbs/leeds.jpeg",
+      "position": "50% 42%"
     },
     "london": {
       "file": "/cities/london.jpeg",
-      "bytes": 115842
+      "bytes": 115842,
+      "thumb": "/cities/thumbs/london.jpeg",
+      "position": "50% 44%"
     },
     "manchester": {
       "file": "/cities/manchester.jpeg",
-      "bytes": 153565
+      "bytes": 153565,
+      "thumb": "/cities/thumbs/manchester.jpeg",
+      "position": "50% 25%"
     }
   }
 }

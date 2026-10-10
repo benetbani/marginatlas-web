@@ -202,6 +202,7 @@
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/country/country-view.tsx",
         "src/components/spine/country/how-to-view.tsx",
+        "src/components/spine/home/home-view.tsx",
         "src/components/spine/hood/hood-view.tsx",
         "src/lib/spine/checked.ts"
       ],
@@ -1966,6 +1967,28 @@
         "src/components/spine/archetypes/Ring.tsx",
         "src/components/spine/charts/BarList.tsx",
         "src/components/spine/kit.tsx"
+      ],
+      "claims": []
+    },
+    {
+      "name": "home-foot",
+      "script": "tests/home/foot.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE HOME'S FOOT (plan docs/superpowers/plans/2026-10-10-home-reform, Task 6; the spec's decisions 2 and 5; the critique's P1.10, P1.11, P1.12 and P2.7; the ship audit's 3.3, 3.5, 4.4 and 5.8).",
+      "reads": [
+        "data/cities/images_manifest.json",
+        "public/cities",
+        "public/cities/thumbs",
+        "public/cities/thumbs/${f}",
+        "scratchpad/harness/pages/country-GB.html",
+        "scratchpad/harness/pages/home-gb.html",
+        "src/app/globals.css",
+        "src/components/spine/archetypes/CityRows.tsx",
+        "src/components/spine/country/country-view.tsx",
+        "src/components/spine/home/home-view.tsx",
+        "src/lib/home/next_doors.ts",
+        "src/lib/spine/city_cards.ts"
       ],
       "claims": []
     },

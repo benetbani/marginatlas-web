@@ -3,6 +3,11 @@
  * CityCards , THE CITY CARD, IN THE ONE LOOK HE KEPT: THE FIELD, THE CITY'S
  * PHOTOGRAPH UNDER A TERRACOTTA WASH.
  *
+ * THE PAGER'S FILE SINCE 2026-10-10 (plan docs/superpowers/plans/2026-10-10-home-reform, Task 6; the ship audit's 3.5): the home's
+ * still rows left for CityRows.tsx, a server component (the home never pages, so it ships no client code and no cards in its payload
+ * for them), and the picture's recipe and the money grammar moved to CityParts.tsx, which both files read. This file keeps the pager
+ * and its two forms: the tall cards, and the row form for a set under four.
+ *
  * ONE LOOK SINCE 2026-10-02. Three were built on 2026-09-10 for him to choose
  * between (the field, the plate, the column); the field went live with the
  * cities' own photographs, and his ruling 39 of 2026-09-26 closed the choice
@@ -86,66 +91,17 @@
 import * as React from "react";
 import { provAttrs } from "@/lib/spine/provenance";
 import type { CityCard } from "@/lib/spine/city_cards";
+import { DuotonePhoto, moneyFor } from "./CityParts";
+
+/* The picture's recipe is CityParts' (no client directive, so the home's server rows draw it without this file); it stays exported
+   from here for the callers that import it from this path (HeroBoard, the live home's post cards). */
+export { DuotonePhoto };
 
 /* FOUR A PAGE, the card pager's own arithmetic, kept: the cities card is the
    two-thirds band, 693px at 1280, whose inner 653px holds four tracks and not
    five, and five put one card alone on a second row. Four is inside his
    "five cities maximum" of 2026-08-30 and it fills the row. */
 const PER_PAGE = 4;
-
-/* THE PHOTOGRAPH STACK: a DUOTONE, three layers, each with exactly one job.
-
-   1. THE PICTURE, `object-cover`, full-bleed, and DESATURATED. That last word
-      is the design decision and it was made from a photograph, not from an
-      argument. Built first in full colour, the terracotta wash over a blue sky
-      and green cliffs produced a pink-mauve cast that reads as a filter someone
-      forgot to turn off , which is the exact quality the founder named when he
-      killed the hero photograph on 2026-09-07 ("it gives a feeling of being
-      cheap"). Desaturated first, the same wash reads as one deliberate
-      terracotta monotone: the picture survives as texture, the row belongs to
-      the palette, and green (banned outright) cannot appear. Both were
-      photographed side by side before this was chosen.
-      IT IS ALSO THE HONEST FORM FOR A STAND-IN. This is a coastline in Italy
-      standing behind Birmingham and Manchester. Nobody mistakes a terracotta
-      duotone for a document of a place; a full-colour photograph invites
-      exactly that mistake, and would be a fabricated place detail the day a
-      reader looked closely.
-   2. THE VEIL, white, whose only job is to lift the photograph's darkest
-      regions so near-black ink clears the contrast floor everywhere on the
-      card and not just over the sky. A scrim behind the name alone was the
-      alternative and was rejected: it reads as a label stuck on a picture, and
-      the name is meant to be the card, not a caption.
-   3. THE WASH, `--terra` at ONE fixed opacity. Fixed, not per-card: it is no
-      longer a figure (see the header note).
-
-   THE TWO NUMBERS ARE SET BY A MEASUREMENT, NOT BY EYE. Composited over the
-   photograph's darkest pixel, which is rgb(0,0,0) (measured 2026-09-11 by
-   decoding the file and walking all 1,116,717 pixels), this stack lands a
-   backdrop of rgb(190,137,124), and `--c-ink` on it reads 5.78 to 1 , over the
-   4.5 WCAG AA floor this repo holds, and 11.6 to 1 over the picture's brightest
-   region. Lowering the veil to 0.42 to let more of the picture through was
-   computed and rejected at 4.57 to 1: clearing the floor by seven hundredths is
-   not a margin, it is a coincidence waiting for a different photograph. The
-   harness re-measures this from the rendered layers at every run
-   (check_archetypes.mjs, the city-cards CONTRAST rule), so changing either
-   number here fails the build rather than the reader. */
-const PHOTO_VEIL = 0.55;
-const PHOTO_WASH = 0.45;
-/* The grey form's veil (`DuotonePhoto`'s `tint={false}`): no name is printed over
-   that picture, so it answers to no contrast floor, only to keeping the grey soft
-   beside the cards' ink. */
-const PHOTO_VEIL_GREY = 0.3;
-
-/* ONE GRAMMAR FOR THE WHOLE COLUMN, decided by the set and not by each figure
-   (PART 5: every figure in a column shares one font, one size, one weight and
-   one decimal count). The site's `usd()` switches to thousands at 10,000, which
-   inside one set of cities would print "$8,400" beside "$12K": the same column
-   in two notations. The set decides once, and it rounds to thousands only when
-   its own SMALLEST figure can carry the rounding. */
-const moneyFor = (pays: number[]) => {
-  const k = pays.length > 0 && Math.min(...pays) >= 1e4;
-  return (v: number) => (k ? "$" + Math.round(v / 1000) + "K" : "$" + Math.round(v).toLocaleString("en-US"));
-};
 
 export function CityCards({
   cards,
@@ -155,11 +111,9 @@ export function CityCards({
   prevLabel = "Previous",
   nextLabel = "More",
   fill = false,
-  still = false,
-  stack = false,
 }: {
   cards: CityCard[];
-  /** Where the link to every covered city goes; only read with `allLabel` (the home's still row holds every UK city page and draws no link). */
+  /** Where the link to every covered city goes; only read with `allLabel` (the home's rows draw their own door, CityRows). */
   allHref?: string;
   /** The link to every covered city under the row; none is drawn without it and without `allHref`. */
   allLabel?: string;
@@ -169,22 +123,6 @@ export function CityCards({
   nextLabel?: string;
   /** The cards grow into the height the level lends the card that holds them (2026-09-24), instead of a blank under the link. */
   fill?: boolean;
-  /** THE STILL ROW (his instruction of 2026-10-07, "reform home drastically"; his refusal of carousels and pagination,
-   *  2026-09-22): every card at once, no pager. FROM 1024 (`lg`) the tall cards stand in ONE row of equal widths; BELOW IT the
-   *  rows draw this archetype's own full-width ROW form, one under another, because a wrapping row of tall cards leaves its
-   *  last line's lone card (a country's seventh, an odd one out) to stretch wider than tall, which the NOT TALL law (height over
-   *  width 1.15 at the least) bars, and a row is the form that law exempts. Both forms are in the markup and the width picks one
-   *  (as RankedBars writes its bars, its table and its phone list); each city is a link in each. This two-form row keeps `fill` off
-   *  (each form stands its own height); with `stack` the rows take it. */
-  still?: boolean;
-  /** THE ROW FORM AT EVERY WIDTH, for a card that stands in a half or a third of a level (2026-10-07). A row of seven tall cards
-   *  needs the whole 976px of a desktop column (132 a card, 114 inside the padding, for "Birmingham" at the name's rung), and the
-   *  section-bands gate bars a full-width section that is not the hero (the founder, 2026-08-25: "for every subsection that
-   *  stretches left to right full width, I think we should ban it except hero section"), so the home's cities stand in a half
-   *  beside where new firms last (beside the notebook until plan 2026-10-08) and take the form that fits a half: every city a row,
-   *  one under another, a gap of 8 between, sharing the height the half is given when `fill` is on. Read only with `still` (the
-   *  pager's forms are unchanged). */
-  stack?: boolean;
 }) {
   const [page, setPage] = React.useState(0);
   /* BELOW FOUR, THE ROW FORM (the threshold measured 2026-09-19, QUEUE
@@ -201,16 +139,13 @@ export function CityCards({
      the names. So the set that cannot fill the row takes the row form, which
      is what the paragraph below already reasons for one and two; the number
      is the row's own track count, not a guess. */
-  const rows = cards.length < PER_PAGE || (still && stack);
+  const rows = cards.length < PER_PAGE;
   const pays = cards.map((c) => c.payUsd).filter((v): v is number => typeof v === "number");
   const fmt = moneyFor(pays);
-  const pages = still ? 1 : Math.max(1, Math.ceil(cards.length / PER_PAGE));
+  const pages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
   const cur = Math.min(page, pages - 1);
-  const slice = still ? cards : cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
+  const slice = cards.slice(cur * PER_PAGE, cur * PER_PAGE + PER_PAGE);
   const tall = "grid grid-cols-2 items-stretch gap-2 md:[grid-template-columns:repeat(auto-fill,minmax(9rem,1fr))]";
-  /* THE STILL ROW'S TWO FORMS (see `still`): the row form below `lg`, the single tall row from it. Fewer than four cities take the
-     row form at every width, as any set does (`rows`). */
-  const stillForm = still && !rows;
   const btn =
     "tap flex h-8 w-8 items-center justify-center rounded-[12px] border border-[var(--c-border)] text-[var(--c-ink2)] transition-colors hover:border-[var(--c-ink2)] hover:text-[var(--c-ink)] disabled:cursor-default disabled:opacity-35 disabled:hover:border-[var(--c-border)] disabled:hover:text-[var(--c-ink2)]";
   return (
@@ -236,26 +171,9 @@ export function CityCards({
           same figure, the arrow at the right edge, and no hole. */}
       {/* `fill`: the grid takes the height the card is lent (`flex-1`) and its rows share it (`auto-rows-fr`, which the rows form carries
           already and the tall grid is given here), so the cards grow instead of a blank under the link. */}
-      {stillForm ? (
-        <>
-          {/* BELOW 1024: THE ROW FORM, seven rows one under another at the width of the card. A row is exempt from the tall law, and a
-              row has no last line to stretch. */}
-          <div data-still="row" className="grid grid-cols-1 items-stretch gap-2 lg:hidden">
-            {slice.map((c, i) => <Row key={c.id} card={c} fmt={fmt} index={i} />)}
-          </div>
-          {/* FROM 1024: ONE ROW OF SEVEN TALL CARDS, equal widths (`flex-1` on a zero basis, `min-w-0` so a long name cannot widen its
-              own card). `snug`: the card's side padding drops from 12 to 8 at this width only, because seven cards in the 976px
-              the row has at 1024 are 132 wide, 106 inside the border and the 12px padding, and "Birmingham" at the name's 20 is
-              estimated at about 107 (not measured: no browser here); at 8 the name has 114 and the name's own rung is untouched. */}
-          <div data-still="tall" className="hidden items-stretch gap-2 lg:flex [&>*]:min-w-0 [&>*]:flex-1">
-            {slice.map((c, i) => <Card key={c.id} card={c} fmt={fmt} index={i} snug />)}
-          </div>
-        </>
-      ) : (
-        <div className={`${rows ? `grid grid-cols-1 items-stretch auto-rows-fr${still && stack ? " gap-2" : ""}` : tall} ${fill ? `flex-1${rows ? "" : " auto-rows-fr"}` : ""}`}>
-          {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} index={still && stack ? i : 0} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
-        </div>
-      )}
+      <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : tall} ${fill ? `flex-1${rows ? "" : " auto-rows-fr"}` : ""}`}>
+        {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} index={0} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
+      </div>
       <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p>
       {allLabel && allHref ? (
         <div className="mt-2 text-right">
@@ -263,53 +181,6 @@ export function CityCards({
         </div>
       ) : null}
     </div>
-  );
-}
-
-/** THE PICTURE AND THE TWO LAYERS OVER IT, drawn once and used by both forms so
- *  a tall card and a wide row can never drift into two different recipes.
- *
- *  EXPORTED 2026-09-25 so the home page's post cards draw this recipe and not a
- *  copy of it (the founder: the blog blocks need a placeholder image). `crop`
- *  zooms into one region of the picture, so cards that share the single
- *  placeholder show different parts of it rather than one image six times. The
- *  parent must be `relative` and `overflow-hidden`.
- *
- *  `tint={false}` drops the terracotta wash and keeps a lighter veil: the
- *  picture in grey. For a grid of several photographs with no name printed over
- *  them (the post cards), where six washed pictures made a wall of the accent
- *  (the founder's reference of 2026-09-20: one warm card per grid). */
-export function DuotonePhoto({
-  src,
-  placeholder,
-  crop,
-  tint = true,
-}: {
-  src: string;
-  placeholder: boolean;
-  crop?: { x: number; y: number; zoom: number };
-  tint?: boolean;
-}) {
-  return (
-    <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt=""
-        loading="lazy"
-        aria-hidden
-        data-photo={placeholder ? "placeholder" : "own"}
-        className="absolute inset-0 h-full w-full object-cover"
-        /* DESATURATED, so the wash above it reads as a duotone rather than as a
-           filter left on by accident. See the stack note. */
-        style={{
-          filter: "grayscale(1)",
-          ...(crop ? { transform: `scale(${crop.zoom})`, transformOrigin: `${crop.x}% ${crop.y}%` } : {}),
-        }}
-      />
-      <span aria-hidden data-veil className="absolute inset-0 bg-white" style={{ opacity: tint ? PHOTO_VEIL : PHOTO_VEIL_GREY }} />
-      {tint ? <span aria-hidden data-tint className="absolute inset-0" style={{ background: "var(--terra)", opacity: PHOTO_WASH }} /> : null}
-    </>
   );
 }
 
@@ -331,13 +202,13 @@ function Photo({ card, index = 0 }: { card: CityCard; index?: number }) {
 /* On a terracotta field every line goes to `--c-ink`: `--c-muted` reads about 3.3 to 1 on the deepest step, under the floor this
    repo holds, and the hierarchy is carried by size (20 over 12), never by greying a line out. The card wears a TRANSPARENT
    border rather than none, so the hover has an edge to colour without moving anything. */
-function Card({ card, fmt, index = 0, snug = false }: { card: CityCard; fmt: (v: number) => string; index?: number; snug?: boolean }) {
+function Card({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => string; index?: number }) {
   return (
     <a
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] border border-transparent py-2 transition-colors hover:border-[var(--c-ink2)] ${snug ? "px-3 lg:px-2" : "px-3"}`}
+      className="group relative flex h-full min-h-[12.5rem] flex-col overflow-hidden rounded-[12px] border border-transparent py-2 transition-colors hover:border-[var(--c-ink2)] px-3"
     >
       <Photo card={card} index={index} />
       <span className="relative flex h-full flex-col">

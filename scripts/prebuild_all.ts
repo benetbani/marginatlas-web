@@ -660,6 +660,10 @@ const GATES: Gate[] = [
   /* The shared forms' small props for the home (plan 2026-10-09, home introduction, Task 3): Rail's level, FactRows' step, Ring's
      lead size, BarList's quiet, each byte-identical where not passed; the copy gate reads a Rail's h2. */
   { name: "home-forms", script: "tests/spine/home_forms.test.ts" },
+  /* The home's foot (plan 2026-10-10, the home reformed to ship, Task 6; the spec's decisions 2 and 5): the cities as grey rows of
+     480 by 360 small copies with their landmark crops, two to a row under 768 with "All UK cities", a server component; "From the
+     blog"; the foot's checked date, London restaurants'. Reads the home's and /gb's renders where the harness wrote them. */
+  { name: "home-foot", script: "tests/home/foot.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

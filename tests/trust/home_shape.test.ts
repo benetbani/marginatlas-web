@@ -17,7 +17,7 @@
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { existsSync, readFileSync } from "node:fs";
-import { CityCards } from "../../src/components/spine/archetypes/CityCards";
+import { CityRows } from "../../src/components/spine/archetypes/CityRows";
 import { buildCityCards } from "../../src/lib/spine/city_cards";
 import { HERO_BUSINESSES, HERO_CITIES } from "../../src/lib/hero-words";
 import { homeTryLinks, homeTryCityLabel } from "../../src/lib/home/destination";
@@ -52,7 +52,7 @@ const even = (key: string) => /even: (true|!!cities)/.test(zoneLine(key)?.[0] ??
 check(`the splits: the hero wide, the example 1-1 even, the proofs 1-1-1 even, the band wide, the foot 1-1 even (read: ${["search", "example", "proofs", "record", "foot"].map((k) => `${k} ${split(k)}${even(k) ? " even" : ""}`).join(", ")})`, split("search") === "wide" && split("example") === "1-1" && even("example") && split("proofs") === "1-1-1" && even("proofs") && split("record") === "wide" && !even("record") && split("foot") === "1-1" && even("foot") && (body.match(/split: "wide"/g) ?? []).length === 2, "the hero and the band are the only wide zones (the spec's section 5: the band's four siblings cannot be halved); the example and the foot are halves, the proofs thirds, each even");
 check("the example is two halves, the place then whether it pays", /<HomePlace key="place"[^\n]*<HomePays key="pays"/.test(zoneLine("example")?.[0] ?? ""));
 check("the proofs are three doors, the joins, the archive, then the tax", /<ProofJoins key="joins"[^\n]*<ProofArchive key="archive"[^\n]*<ProofTax key="tax"/.test(zoneLine("proofs")?.[0] ?? ""));
-check("the foot is the UK's cities, still, then where to next", /<HomeCities key="cities"[^\n]*<WhereNext key="next"/.test(zoneLine("foot")?.[0] ?? "") && /<CityCards\s+still\s+stack\s+fill\b/.test(code));
+check("the foot is the UK's cities, still, then where to next", /<HomeCities key="cities"[^\n]*<WhereNext key="next"/.test(zoneLine("foot")?.[0] ?? "") && /<CityRows\b/.test(code));
 
 /* THE BAND (plan 2026-10-10, the home reformed to ship, Task 5): HomeRecord from its builder, listed only when three counts build, its
    own zone on the terracotta, and the tones given by the zones that are not the band, so the foot keeps its tone. */
@@ -82,14 +82,15 @@ check("32px from the h1 to the picker from 1024 and 20 on a phone; the definitio
 /* Each function's own text, to the next export: the WebSite comes before the Organization, so a lazy scan from the one would run on into the other. */
 const sdFn = (name: string) => { const at = sd.indexOf(`export function ${name}(`); if (at < 0) return ""; const next = sd.indexOf("\nexport function ", at + 1); return sd.slice(at, next < 0 ? undefined : next); };
 check("the WebSite's and the Organization's descriptions in the structured data are both the definition, so the home states it once", /description:\s*COPY\.home\.definition/.test(sdFn("WebSite")) && /description:\s*COPY\.home\.definition/.test(sdFn("Organization")), "in src/components/StructuredData.tsx set WebSite()'s description to COPY.home.definition, as Organization()'s is");
-check("under the bands: the licence line, then Report a mistake", /<SourcesFoot iso2="GB" \/>\s*<ReportFoot path="\/" \/>/.test(code));
+check("under the bands: the licence line, then Report a mistake with the London restaurant page's checked date", /<SourcesFoot iso2="GB" \/>\s*<ReportFoot path="\/" checked=\{example \? checkedDateForTrade\("GB", "london", example\.trade\) : null\} \/>/.test(code));
 
-/* THE UK'S CITIES HELD STILL (his refusal of carousels and pagination, 2026-09-22), in the foot's half. */
+/* THE UK'S CITIES HELD STILL (his refusal of carousels and pagination, 2026-09-22), in the foot's half: CityRows since plan 2026-10-10
+   (the home reformed to ship, Task 6), a server component, every city once as a row and one door to every UK city under 768. */
 const cities = /function HomeCities[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
-check("the cities draw CityCards still and stacked, a Rail at level 2, no pager labels", /<CityCards\s+still\s+stack\b/.test(cities) && /<Rail [^>]*level=\{2\}/.test(cities) && !/prevLabel|nextLabel|CardPager|[Cc]arousel/.test(cities));
+check("the cities draw CityRows, a Rail at level 2, no pager labels", /<CityRows\b/.test(cities) && /<Rail [^>]*level=\{2\}/.test(cities) && !/prevLabel|nextLabel|CardPager|[Cc]arousel/.test(cities));
 const gb = buildCityCards("GB");
-const stacked = gb ? renderToStaticMarkup(React.createElement(CityCards, { still: true, stack: true, cards: gb.cards, basis: "basis" })) : "";
-check("CityCards still + stack draws every city once, as a row (one anchor a city), no tall card and no button", !!gb && (stacked.match(/<a /g) ?? []).length === gb.cards.length && !/data-still=/.test(stacked) && !/<button/.test(stacked) && /data-form="rows"/.test(stacked));
+const rows = gb ? renderToStaticMarkup(React.createElement(CityRows, { cards: gb.cards, basis: "basis", allHref: "/gb#cities", allLabel: COPY.home.citiesAll, unit: COPY.home.citiesUnit })) : "";
+check("CityRows draws every city once, as a row (one door a city), and one door to every UK city, no tall card and no button", !!gb && (rows.match(/<a [^>]*data-card=/g) ?? []).length === gb.cards.length && (rows.match(/<a /g) ?? []).length === gb.cards.length + 1 && !/data-still=/.test(rows) && !/<button/.test(rows) && /data-form="rows"/.test(rows));
 
 /* THE RENDER, where the harness wrote it (pages-fresh renders it first in the chain). */
 const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
@@ -153,5 +154,5 @@ if (render) {
   check("the render's cities carry no pager", !/aria-label="(Previous cities|More cities)"/.test(render));
 } else { deferred++; console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the render's checks did not run"); }
 
-if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep ${VIEW} to the zones search (wide, the hero: his h1, the picker with no heading, the definition after it), example [<HomePlace> | <HomePays>] 1-1 even, (pro behind isPaywallOn), proofs [<ProofJoins> | <ProofArchive> | <ProofTax>] 1-1-1 even, record [<HomeRecord>] wide on the terracotta tone, foot [<HomeCities> | <WhereNext>] 1-1 even; seats pays LIT, record FIELD, foot NO HONEST CANDIDATE; then <SourcesFoot iso2="GB" /> and <ReportFoot path="/" />; every Rail on the home at level 2; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
+if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep ${VIEW} to the zones search (wide, the hero: his h1, the picker with no heading, the definition after it), example [<HomePlace> | <HomePays>] 1-1 even, (pro behind isPaywallOn), proofs [<ProofJoins> | <ProofArchive> | <ProofTax>] 1-1-1 even, record [<HomeRecord>] wide on the terracotta tone, foot [<HomeCities> | <WhereNext>] 1-1 even; seats pays LIT, record FIELD, foot NO HONEST CANDIDATE; then <SourcesFoot iso2="GB" /> and <ReportFoot path="/" checked={example ? checkedDateForTrade("GB", "london", example.trade) : null} />; every Rail on the home at level 2; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
 console.log(deferred ? `trust/home_shape: all pass, ${deferred} deferred (render: not rendered here)` : "trust/home_shape: all pass");

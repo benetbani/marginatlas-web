@@ -196,7 +196,7 @@ Loud today: 2 of 3, as `LOUD_SEATS` in industry-view.tsx declares (a LIT seat is
 | archive | ProofArchive | p.kicker | MonthBars |  |
 | tax | ProofTax | p.kicker | FactRows |  |
 | pro | ProBand | Pro | FactRows |  |
-| cities | HomeCities | The UK's cities | CityCards |  |
+| cities | HomeCities | The UK's cities | CityRows |  |
 
 Loud today: 2 of 3, as `LOUD_SEATS` in home-view.tsx declares (a LIT seat is unlit on a render whose figure is withheld; a FIELD seat is lit by its terracotta zone, never by an accent figure; the loud-seats gate reads that off the render).
 

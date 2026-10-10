@@ -29,7 +29,7 @@
 import * as React from "react";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { Box, Rail } from "@/components/spine/kit";
-import { CityCards } from "@/components/spine/archetypes/CityCards";
+import { CityRows } from "@/components/spine/archetypes/CityRows";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { isPaywallOn } from "@/lib/feature_flags";
 import { ProBand } from "./ProBand";
@@ -48,6 +48,7 @@ import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { COPY } from "@/lib/spine/copy";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
 import { ReportFoot } from "@/components/spine/ReportFoot";
+import { checkedDateForTrade } from "@/lib/spine/checked";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 /**
@@ -90,14 +91,16 @@ function HomeSearch() {
 }
 
 /* THE UK'S CITIES, STILL (masterplan step 35; his refusal of carousels and pagination, 2026-09-22): every UK city the covered list gives
-   a page (buildCityCards, his field look with the city's photograph), at once, each its name and the figure its own page opens with, a
-   door to that page; in the foot's left half, one row each (`stack`), sharing the height the level gives the pair (`fill`), so neither
-   half stands a blank foot. Its title an h2, as every section's on the home (one h2 a section). */
+   a page (buildCityCards), at once, each its name and the figure its own page opens with, a door to that page. Since plan 2026-10-10
+   (the home reformed to ship, Task 6) drawn by CityRows, a server component: the photographs in grey (the spec's decision 2), small
+   copies with their landmark crops; two to a row under 768 with an eighth cell, "All UK cities", to /gb's cities (his ruling of
+   2026-08-30); from 768 one row each, sharing the height the level gives the pair, so neither half stands a blank foot. Its title an
+   h2, as every section's on the home (one h2 a section). */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
     <Box id="cities" className="flex flex-col">
       <Rail icon="best-areas" kicker={COPY.home.citiesLabel} level={2} />
-      <CityCards still stack fill cards={cards.cards.map((c) => ({ ...c, region: undefined }))} basis={COPY.cityCards.plain.basis} />
+      <CityRows cards={cards.cards} basis={COPY.cityCards.plain.basis} allHref="/gb#cities" allLabel={COPY.home.citiesAll} unit={COPY.home.citiesUnit} />
     </Box>
   );
 }
@@ -136,7 +139,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
       </div>
       {/* THE LICENCE LINE AND ITS LINK (MODEL 10.8c: the home prints UK register figures), THEN REPORT A MISTAKE (masterplan step 31). */}
       <SourcesFoot iso2="GB" />
-      <ReportFoot path="/" />
+      <ReportFoot path="/" checked={example ? checkedDateForTrade("GB", "london", example.trade) : null} />
     </>
   );
 }

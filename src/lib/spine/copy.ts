@@ -2733,6 +2733,10 @@ export const COPY = {
      *  the fewest words beside the card's name; the trades keep /gb's own line, already short. */
     lines: { answer: "of a sole trader's {profit} profit", years: "of new firms, after {n} years" },
     citiesLabel: "The UK's cities",
+    /** THE HOME'S CITY ROWS (plan 2026-10-10, the home reformed to ship, Task 6; the critique's P1.10, the ship audit's 4.4): the eighth
+     *  cell under 768, a door to /gb's cities, and the figure's unit said to a screen reader (the basis line says it once for the eye). */
+    citiesAll: "All UK cities",
+    citiesUnit: "a year",
     /** THE HOME PAGE'S ASK (his interview of 2026-09-26: "notify me when my place reaches this depth"; the checkup of 2026-10-06,
      *  finding 5): in place of a free report nobody is writing, a city to wait for (src/lib/home/depth_places.ts). Drawn by the live
      *  home only since 2026-10-07: the rebuilt home leaves the asking to the footer's bar. */
@@ -2810,7 +2814,7 @@ export const COPY = {
         openings: "Where new businesses open",
         data: "Free UK data",
         about: "About the figures",
-        notebook: "From the notebook",
+        blog: "From the blog",
       },
     },
     /** THE WORKED EXAMPLE (plan 2026-10-09, home introduction; the spec's section 2, DRAFT approved as written): the level's name (a
