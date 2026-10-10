@@ -2847,6 +2847,17 @@ export const COPY = {
       archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices a month by their own date, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
       tax: { kicker: "Tax, rule by rule", words: "Of a sole trader's {profit} profit, from the {year} rules.", income: "Income tax", class4: "National Insurance" },
     },
+    /** THE BAND, "READ FROM THE RECORD" (plan 2026-10-10, the home reformed to ship, Task 5; the spec's decision 7 and its critique,
+     *  section 4): the zone's name (a data attribute, not a printed word), its heading, its one line ({month} is the register slices'
+     *  build month, from src/lib/home/site_counts.ts), the word before a count's pages served, and each count's label. Ink on the
+     *  terracotta, no source named, every figure the builder's. */
+    record: {
+      label: "Read from the record",
+      title: "Read from the record",
+      line: "What the UK pages draw on, counted in {month}.",
+      of: "of",
+      labels: { sources: "Official datasets", laws: "Legal rates and limits", sales: "London trades with sales", failures: "Trades with failure rates" },
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */
     pro: {

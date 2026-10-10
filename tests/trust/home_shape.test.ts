@@ -4,8 +4,10 @@
  * vastly problematic and not serving as an elegant introduction of the concept but rather: here is what we have". In this order and
  * nothing else: the hero (his h1, still, "restaurant" first among its words, the picker with no heading, its three examples links, the
  * one line that says what the site is, after the form), the worked example (two halves, even), Pro only while the paywall is on, the
- * three proofs (a level of three, even), the foot (the UK's cities, still, beside where to next, even); then the licence line and
- * Report a mistake. One wide zone, the hero's. Three seats: step 3 and the tax proof lit, the foot none. No counts, no newsletter band,
+ * three proofs (a level of three, even), the band of the site's own counts (its own zone on the terracotta; plan 2026-10-10, Task 5),
+ * the foot (the UK's cities, still, beside where to next, even); then the licence line and Report a mistake. Two wide zones, the
+ * hero's and the band's, by name. Three seats: step 3 lit, the band a field, the foot none. No ledger counts (the band's four
+ * evidence counts are tests/home/site_counts.test.ts's), no newsletter band,
  * no picker heading, no section the plan re-homed. One h2 a section and none skipped. Every figure carries its stamp, but for Pro's
  * three prices as the plan prints them (src/lib/monetization/plan.ts): an offer, no statistic. Read from src/components/spine/home/home-view.tsx,
  * src/app/page.tsx, src/components/NavigatorForm.tsx and src/components/StructuredData.tsx, and from the harness render
@@ -41,26 +43,31 @@ const sd = readFileSync("src/components/StructuredData.tsx", "utf8");
 /* THE ZONE ORDER, as the body lists its zones (each `key:` inside the `zones` array of SpineHomeBody), and each zone's line. */
 const body = /const zones[\s\S]*?\n  \];/.exec(code)?.[0] ?? "";
 const keys = [...body.matchAll(/\bkey: "([a-z-]+)"/g)].map((m) => m[1]);
-check(`the zones run the hero, the worked example, the proofs, then the foot (read: ${keys.join(", ") || "none"})`, JSON.stringify(keys.filter((k) => k !== "pro")) === JSON.stringify(["search", "example", "proofs", "foot"]), `keep SpineHomeBody's zones (${VIEW}) search, example, (pro), proofs, foot`);
+check(`the zones run the hero, the worked example, the proofs, the band, then the foot (read: ${keys.join(", ") || "none"})`, JSON.stringify(keys.filter((k) => k !== "pro")) === JSON.stringify(["search", "example", "proofs", "record", "foot"]), `keep SpineHomeBody's zones (${VIEW}) search, example, (pro), proofs, record, foot`);
 const pro = keys.indexOf("pro");
 check("Pro, where it is listed, stands after the example and before the proofs, behind the paywall's switch", pro === -1 || (pro > keys.indexOf("example") && pro < keys.indexOf("proofs") && /isPaywallOn\(\) \? \[\{ key: "pro"/.test(body)));
 const zoneLine = (key: string) => new RegExp(`\\{ key: "${key}", split: "([^"]+)"[^\\n]*`).exec(body);
 const split = (key: string) => zoneLine(key)?.[1];
 const even = (key: string) => /even: (true|!!cities)/.test(zoneLine(key)?.[0] ?? "");
-check(`the splits: the hero wide, the example 1-1 even, the proofs 1-1-1 even, the foot 1-1 even (read: ${["search", "example", "proofs", "foot"].map((k) => `${k} ${split(k)}${even(k) ? " even" : ""}`).join(", ")})`, split("search") === "wide" && split("example") === "1-1" && even("example") && split("proofs") === "1-1-1" && even("proofs") && split("foot") === "1-1" && even("foot") && (body.match(/split: "wide"/g) ?? []).length === 1, "the hero alone is wide (section-bands: the hero only); the example and the foot are halves, the proofs thirds, each even");
+check(`the splits: the hero wide, the example 1-1 even, the proofs 1-1-1 even, the band wide, the foot 1-1 even (read: ${["search", "example", "proofs", "record", "foot"].map((k) => `${k} ${split(k)}${even(k) ? " even" : ""}`).join(", ")})`, split("search") === "wide" && split("example") === "1-1" && even("example") && split("proofs") === "1-1-1" && even("proofs") && split("record") === "wide" && !even("record") && split("foot") === "1-1" && even("foot") && (body.match(/split: "wide"/g) ?? []).length === 2, "the hero and the band are the only wide zones (the spec's section 5: the band's four siblings cannot be halved); the example and the foot are halves, the proofs thirds, each even");
 check("the example is two halves, the place then whether it pays", /<HomePlace key="place"[^\n]*<HomePays key="pays"/.test(zoneLine("example")?.[0] ?? ""));
 check("the proofs are three doors, the joins, the archive, then the tax", /<ProofJoins key="joins"[^\n]*<ProofArchive key="archive"[^\n]*<ProofTax key="tax"/.test(zoneLine("proofs")?.[0] ?? ""));
 check("the foot is the UK's cities, still, then where to next", /<HomeCities key="cities"[^\n]*<WhereNext key="next"/.test(zoneLine("foot")?.[0] ?? "") && /<CityCards\s+still\s+stack\s+fill\b/.test(code));
 
-/* NOTHING THE PLAN RE-HOMED OR RETIRED, AND NO COUNTS OR NEWSLETTER. */
+/* THE BAND (plan 2026-10-10, the home reformed to ship, Task 5): HomeRecord from its builder, listed only when three counts build, its
+   own zone on the terracotta, and the tones given by the zones that are not the band, so the foot keeps its tone. */
+check("the band is HomeRecord from buildSiteCounts, listed only when it builds, on the terracotta tone the alternation skips", /\.\.\.\(record \? \[\{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY\.home\.record\.label, body: \[<HomeRecord key="record" record=\{record\} \/>\] \}\] : \[\]\)/.test(body) && /const record = buildSiteCounts\(\);/.test(code) && /const toned = zones\.filter\(\(z\) => z\.tone !== "terra"\);/.test(code) && /zoneTone\(toned\.indexOf\(z\)\)/.test(code), `list the band in ${VIEW} as ...(record ? [{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.record.label, body: [<HomeRecord key="record" record={record} />] }] : []) and give the tones by the zones that are not the band`);
+
+/* NOTHING THE PLAN RE-HOMED OR RETIRED, AND NO LEDGER COUNTS OR NEWSLETTER (the band's four evidence counts are tests/home/site_counts.test.ts's). */
 const RETIRED = ["HomeDuel", "HomeKitchens", "HomeFirmsLast", "HomeNewCompanies", "HomeUsRestaurants", "HomeHowMade", "Notebook", "buildNotebook", "AnswerDoor", "TaxAnswer", "TradesAnswer", "YearsAnswer", "buildHomeAnswers", "buildDuel", "buildKitchens", "buildFirmsLast", "buildNewCompanies", "buildUsRestaurants", "buildHowMade", "HomeNewsletter", "AtlasHolds", "buildAtlasHolds", "getAtlasLedger"];
 const still = RETIRED.filter((n) => new RegExp(`\\b${n}\\b`).test(code));
 check(`no section the plan re-homed or retired is drawn (${still.join(", ") || "none"})`, still.length === 0, "the duel and where new firms last stand on /gb, new companies and the US restaurants on /new-businesses, the join on the first proof, the kitchens list and the notebook off the home");
-check("no counts zone and no newsletter band", !/atlas_ledger|What the atlas holds|COPY\.home\.atlas\b/.test(code));
+check("no ledger counts zone and no newsletter band", !/atlas_ledger|What the atlas holds|COPY\.home\.atlas\b/.test(code));
 
-/* THE SEATS (the spec's section 5). */
+/* THE SEATS (plan 2026-10-10, the home reformed to ship, Task 5: the spec's decision 7, critique section 4): step 3 lit, the band lit by
+   its ground (FIELD), the foot none; the tax proof quiet. */
 const seats = /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(code)?.[0] ?? "";
-check("three seats: step 3 and the tax proof lit, the foot none", (seats.match(/state: "LIT"/g) ?? []).length === 2 && /id: "pays"/.test(seats) && /id: "tax"/.test(seats) && /seat: 3, card: "foot"[^\n]*state: "NO HONEST CANDIDATE"/.test(seats));
+check("three seats: step 3 lit, the band a field, the foot none, the tax proof quiet", (seats.match(/state: "LIT"/g) ?? []).length === 1 && /seat: 1, card: "pays", id: "pays"[^\n]*state: "LIT"/.test(seats) && /seat: 2, card: "record", id: "record"[^\n]*state: "FIELD"/.test(seats) && /seat: 3, card: "foot"[^\n]*state: "NO HONEST CANDIDATE"/.test(seats) && !/id: "tax"/.test(seats), `declare LOUD_SEATS in ${VIEW}: seat 1 pays LIT, seat 2 record FIELD, seat 3 foot NO HONEST CANDIDATE`);
 
 /* THE HERO (the spec's sections 3 and 5; plan 2026-10-10, home reform, Task 2: the h1 on set lines with both words on one timer, the
    picker's first paint from the server's seed, the spacing and the definition of the reform's spec, decision 3 and critique P1.13). */
@@ -88,14 +95,19 @@ check("CityCards still + stack draws every city once, as a row (one anchor a cit
 const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
 if (render) {
   const labels = [...render.matchAll(/<section data-zone="[^"]*"(?: data-tone="[^"]*")? data-zone-label="([^"]*)"/g)].map((m) => m[1].replace(/&#x27;/g, "'"));
-  check(`the render's zones run in that order (${labels.join(" | ")})`, JSON.stringify(labels.filter((l) => l !== COPY.home.pro.kicker)) === JSON.stringify([COPY.home.searchLabel, COPY.home.example.label, COPY.home.proofs.label, COPY.home.citiesLabel]));
+  check(`the render's zones run in that order (${labels.join(" | ")})`, JSON.stringify(labels.filter((l) => l !== COPY.home.pro.kicker)) === JSON.stringify([COPY.home.searchLabel, COPY.home.example.label, COPY.home.proofs.label, COPY.home.record.label, COPY.home.citiesLabel]));
   const zoneRange = (label: string): [number, number] => { const at = render.indexOf(`data-zone-label="${label.replace(/'/g, "&#x27;")}"`); if (at < 0) return [0, 0]; const next = render.indexOf("<section data-zone", at + 1); return [render.lastIndexOf("<section", at), next < 0 ? render.length : next]; };
   const zoneOf = (label: string) => render.slice(...zoneRange(label));
   const ex = zoneOf(COPY.home.example.label), pr = zoneOf(COPY.home.proofs.label), ft = zoneOf(COPY.home.citiesLabel);
   check("the example: two halves, even, the place then whether it pays", /^<section data-zone="1-1"/.test(ex) && /data-zone-even/.test(ex) && ex.indexOf('id="place"') > 0 && ex.indexOf('id="pays"') > ex.indexOf('id="place"'));
   check("the proofs: a level of three, even, the joins, the archive, the tax", /^<section data-zone="1-1-1"/.test(pr) && /data-zone-even/.test(pr) && pr.indexOf('id="joins"') > 0 && pr.indexOf('id="archive"') > pr.indexOf('id="joins"') && pr.indexOf('id="tax"') > pr.indexOf('id="archive"'));
   check("the foot: the UK's cities, then where to next, even", /^<section data-zone="1-1"/.test(ft) && /data-zone-even/.test(ft) && ft.indexOf('id="cities"') > 0 && ft.indexOf("data-next=") > ft.indexOf('id="cities"'));
-  check("no zone of the page is a wide zone but the hero's", [...render.matchAll(/<section data-zone="wide"/g)].length === 1 && /<section data-zone="wide"[^>]*>[\s\S]{0,240}data-hero/.test(render));
+  /* TWO FULL WIDTHS, BY NAME (plan 2026-10-10, Task 5; the spec's section 5): the hero's zone, then the band's on the terracotta. */
+  const wides = [...render.matchAll(/<section data-zone="wide"[^>]*>/g)];
+  const wideLabel = (m: RegExpMatchArray) => (/data-zone-label="([^"]*)"/.exec(m[0])?.[1] ?? "").replace(/&#x27;/g, "'");
+  const afterHero = wides[0] ? render.slice((wides[0].index ?? 0) + wides[0][0].length, (wides[0].index ?? 0) + wides[0][0].length + 240) : "";
+  check(`the wide zones are the hero's and the band's, by name (${wides.map(wideLabel).join(" | ") || "none"})`, wides.length === 2 && wideLabel(wides[0]) === COPY.home.searchLabel && afterHero.includes("data-hero") && wideLabel(wides[1]) === COPY.home.record.label && /data-tone="terra"/.test(wides[1][0]) && /id="record"/.test(wides[1][0]), "the hero and the band are the home's two full widths (the spec's section 5); every other level is halves or thirds");
+  check(`the terracotta tone is the band's alone (${(render.match(/data-tone="terra"/g) ?? []).length} zones)`, (render.match(/data-tone="terra"/g) ?? []).length === 1, "one terracotta zone on the home, the band (ZONE TONES accepts it once, on home-gb)");
   const form = render.indexOf("<form");
   check("the definition stands once in the render, after the form", form > -1 && render.indexOf(COPY.home.definition) > form && render.split(COPY.home.definition).length === 2);
   const links = homeTryLinks();
@@ -120,9 +132,9 @@ if (render) {
   check("the picker paints its case on the first paint, and its no-script fields hold it", ["United Kingdom", "London", "Restaurants"].every((v) => formHtml.includes(`value="${v}"`)) && ['name="country" value="gb"', 'name="subdivision" value="london"', 'name="industry" value="restaurants"'].every((v) => formHtml.includes(v)), "pass NavigatorForm the server's seed (homePickerSeed, src/lib/home/picker.ts), so the first paint carries the three labels and the no-script fields");
   check("the picker's labels read in sentence case, and its one action is the ink button", ["Country", "City", "Business"].every((l) => new RegExp(`<label for="[a-z]+" class="[^"]*">${l}</label>`).test(formHtml)) && !/uppercase|tracking-/.test(formHtml) && /<button type="submit"[^>]*class="[^"]*bg-\[var\(--c-ink\)\][^"]*">Show me the numbers /.test(formHtml), "draw ComboField's labels as their words (no capitals) and NavigatorForm's button in bg-[var(--c-ink)]");
   const h = (tag: string) => (render.match(new RegExp(`<${tag}\\b`, "g")) ?? []).length;
-  /* Seven sections with a title (the place, whether it pays, the three proofs, the cities, where to next), and Pro's where the
-     paywall's switch is on in the render's environment. */
-  const sections = 7 + (labels.includes(COPY.home.pro.kicker) ? 1 : 0);
+  /* Eight sections with a title (the place, whether it pays, the three proofs, the band, the cities, where to next), and Pro's where
+     the paywall's switch is on in the render's environment. */
+  const sections = 8 + (labels.includes(COPY.home.pro.kicker) ? 1 : 0);
   check(`one h1 and one h2 a section, none skipped (h1 ${h("h1")}, h2 ${h("h2")} of ${sections}, h3 ${h("h3")})`, h("h1") === 1 && h("h2") === sections && h("h3") === 0);
   /* A PRO PRICE IS THE SITE'S OWN OFFER, NOT A STATISTIC (his decision of 2026-10-09): none of the four kinds (counted, worked out,
      looked up, estimate) is true of it, so with the paywall on the band's three prices carry no stamp. The one exemption: a figure
@@ -141,5 +153,5 @@ if (render) {
   check("the render's cities carry no pager", !/aria-label="(Previous cities|More cities)"/.test(render));
 } else { deferred++; console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the render's checks did not run"); }
 
-if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep ${VIEW} to the zones search (wide, the hero: his h1, the picker with no heading, the definition after it), example [<HomePlace> | <HomePays>] 1-1 even, (pro behind isPaywallOn), proofs [<ProofJoins> | <ProofArchive> | <ProofTax>] 1-1-1 even, foot [<HomeCities> | <WhereNext>] 1-1 even; seats pays and tax LIT, foot NO HONEST CANDIDATE; then <SourcesFoot iso2="GB" /> and <ReportFoot path="/" />; every Rail on the home at level 2; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
+if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep ${VIEW} to the zones search (wide, the hero: his h1, the picker with no heading, the definition after it), example [<HomePlace> | <HomePays>] 1-1 even, (pro behind isPaywallOn), proofs [<ProofJoins> | <ProofArchive> | <ProofTax>] 1-1-1 even, record [<HomeRecord>] wide on the terracotta tone, foot [<HomeCities> | <WhereNext>] 1-1 even; seats pays LIT, record FIELD, foot NO HONEST CANDIDATE; then <SourcesFoot iso2="GB" /> and <ReportFoot path="/" />; every Rail on the home at level 2; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
 console.log(deferred ? `trust/home_shape: all pass, ${deferred} deferred (render: not rendered here)` : "trust/home_shape: all pass");

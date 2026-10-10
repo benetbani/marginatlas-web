@@ -1935,6 +1935,24 @@
       "claims": []
     },
     {
+      "name": "site-counts",
+      "script": "tests/home/site_counts.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE TERRACOTTA BAND, \"READ FROM THE RECORD\" (plan docs/superpowers/plans/2026-10-10-home-reform, Task 5; the spec docs/superpowers/specs/2026-10-10-home-reform-design.md, decision 7 and sections 1, 5 ",
+      "reads": [
+        "data/uk/registers/failures.json",
+        "scratchpad/harness/pages/home-gb.html",
+        "src/components/spine/home/HomeRecord.tsx",
+        "src/components/spine/home/home-view.tsx",
+        "src/lib/home/site_counts.ts",
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/uk_sources.ts",
+        "tests/home/site_counts.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "home-forms",
       "script": "tests/spine/home_forms.test.ts",
       "args": [],

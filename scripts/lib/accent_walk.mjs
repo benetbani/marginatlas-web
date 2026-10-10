@@ -31,22 +31,35 @@
  * neighbour cell withheld beside a figure that lost its colour; the clusters
  * draw all their cells on every page today (8.3's 252 of 252, 8.7's 243 of
  * 243), and BentoMetric throws on a cell with neither a figure nor a line.
+ *
+ * A ZONE LIT BY ITS GROUND (plan 2026-10-10, the home reformed to ship, Task
+ * 5; the spec's decision 7): the home's band is a zone painted the terracotta
+ * fill (`[data-zone][data-tone="terra"]`) whose words and figures are ink, a
+ * loud moment with no accent text on it. The walk lists every such zone under
+ * `fields` and says of each card in `ids` whether it is one (`field`), so the
+ * loud-seats gate holds a FIELD seat to its zone. A zone is never an accent
+ * figure: `accents` counts what it counted before, and so does the page
+ * filter's ACCENT BUDGET; an accent drawn inside such a zone outside any card
+ * is named by the zone's id, so the gate can say whose it is. A page with no
+ * such zone reads exactly as it read before.
  */
 export function accentWalk({ ids = [] } = {}) {
   const CLUSTER = "[data-archetype='bento-band'][id]";
   const CARD = '[data-card]';
+  const FIELD = '[data-zone][data-tone="terra"]';
   const probe = (token) => { const d = document.createElement("div"); d.style.color = "var(" + token + ")"; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; };
   const accentRgb = probe("--terra-text");
   const accentReadable = accentRgb !== probe("--no-such-token-xyz");
   const accents = !accentReadable ? [] : [...document.querySelectorAll("main *")]
     .filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && getComputedStyle(el).color === accentRgb)
-    .map((el) => ({ card: el.closest(CARD)?.id || el.closest(CLUSTER)?.id || "card", text: (el.textContent || "").trim().slice(0, 16) }));
+    .map((el) => ({ card: el.closest(CARD)?.id || el.closest(CLUSTER)?.id || el.closest(FIELD)?.id || "card", text: (el.textContent || "").trim().slice(0, 16) }));
+  const fields = [...document.querySelectorAll("main " + FIELD)].filter((z) => z.getClientRects().length).map((z) => ({ id: z.id || "", label: z.getAttribute("data-zone-label") || "" }));
   const cards = {};
   for (const id of ids) {
     const el = document.getElementById(id);
-    if (!el || !el.getClientRects().length) { cards[id] = { present: false, withheld: false }; continue; }
+    if (!el || !el.getClientRects().length) { cards[id] = { present: false, withheld: false, field: false }; continue; }
     const withheld = el.matches("[data-blocked]") || el.querySelector('[data-state="no-answer"], [data-withheld-line="focal"], [data-withheld="1"]') != null;
-    cards[id] = { present: true, withheld };
+    cards[id] = { present: true, withheld, field: el.matches(FIELD) };
   }
-  return { accentReadable, accentRgb, accents, cards };
+  return { accentReadable, accentRgb, accents, cards, fields };
 }

@@ -7,10 +7,13 @@
  * The frame, in the order the page reads:
  *   the hero       his h1 (2026-08-16, "it was just perfect"; still since 2026-10-07, the gate hero-still), "restaurant" first among
  *                  its rotating words, the picker with no heading (his instruction of 2026-10-07), its examples links, and the one
- *                  plain line that says what the site is, at the hero's foot (clause 67); the one full width (section-bands)
+ *                  plain line that says what the site is, at the hero's foot (clause 67); one of the page's two full widths, the band the other
  *   the example    the picker's own case in four steps, two halves of one level, even: "Restaurants in London" | "Does it pay?"
  *   Pro            only while the paywall's switch is on, quiet (ruling 23), after the answer
  *   the proofs     three doors, a level of three, even: what the site reads, keeps and works out
+ *   the band       "Read from the record" (plan 2026-10-10, the home reformed to ship, Task 5; his request of 2026-10-10): what the UK
+ *                  pages draw on, four counts in ink on the terracotta, its own zone and the page's second full width; no country, city
+ *                  or trade-list count (src/lib/home/site_counts.ts, HomeRecord.tsx)
  *   the foot       the UK's cities, still, beside where to next: doors, no counts (his ruling of 2026-10-07)
  * then the licence line and its link to the sources (MODEL 10.8c: the home prints UK register figures), then Report a mistake.
  *
@@ -32,8 +35,10 @@ import { isPaywallOn } from "@/lib/feature_flags";
 import { ProBand } from "./ProBand";
 import { HomePlace, HomePays } from "./HomeExample";
 import { ProofJoins, ProofArchive, ProofTax } from "./HomeProofs";
+import { HomeRecord } from "./HomeRecord";
 import { buildWorkedExample } from "@/lib/home/worked_example";
 import { buildProofs } from "@/lib/home/proofs";
+import { buildSiteCounts } from "@/lib/home/site_counts";
 import { WhereNext } from "@/components/spine/WhereNext";
 import { nextDoors } from "@/lib/home/next_doors";
 import { NavigatorForm } from "@/components/NavigatorForm";
@@ -46,14 +51,15 @@ import { ReportFoot } from "@/components/spine/ReportFoot";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 /**
- * THE THREE LOUD MOMENTS (MODEL.md PART 6; the spec's section 5): the answer, step 3's break-even at 40 (his ruling 3 of 2026-10-04:
- * break-even leads a London trade page), and the decision-relevant proof, the tax at 30 (lit on /gb too). The foot ends quiet: doors and
- * no figure. Two quiet cards (the joins, the archive; Pro when on) stand between the two loud ones, which is why the tax proof stands
- * last. The search's brand-red button is no seat. Literals only, read from source (src/lib/spine/loud_seats.ts says why).
+ * THE THREE LOUD MOMENTS (MODEL.md PART 6; plan 2026-10-10, the home reformed to ship, Task 5: the spec's decision 7 and its critique,
+ * section 4): the answer, step 3's break-even at 40 (his ruling 3 of 2026-10-04: break-even leads a London trade page); then the band,
+ * the site's own counts on the terracotta, a seat lit by its ground (FIELD: the zone is the moment and its figures stand in ink); the
+ * foot ends quiet, doors and no figure. Three quiet cards stand between the two loud ones (the joins, the archive and the tax, which went
+ * quiet for it; Pro when on). The search's button is no seat. Literals only, read from source (src/lib/spine/loud_seats.ts says why).
  */
 export const LOUD_SEATS = [
   { seat: 1, card: "pays", id: "pays", figure: "the sales a London restaurant needs a year to break even, step 3 of the worked example, at 40", state: "LIT", condition: "plan 2026-10-09, home introduction (the spec's section 5): his ruling 3 of 2026-10-04, break-even leads a London trade page; the figure /gb/london/restaurants' masthead prints (londonTradeHero), `--terra-text` at 40, the page's only 40" },
-  { seat: 2, card: "tax", id: "tax", figure: "the UK's total effective tax burden on a sole trader's profit, the third proof, at 30", state: "LIT", condition: "plan 2026-10-09, home introduction (the spec's section 5): the decision-relevant figure of the three proofs, lit on /gb too; the figure /gb's masthead prints (buildHeroBoard), `--terra-text` at 30 through Focal's accent" },
+  { seat: 2, card: "record", id: "record", figure: "the band Read from the record, four counts of what the UK pages draw on, in ink on its terracotta zone", state: "FIELD", condition: "plan 2026-10-10, the home reformed to ship (the spec's decision 7, critique section 4): his request of 2026-10-10 for one section in terracotta; the zone is the seat's moment, its figures in ink and never an accent; the tax proof went quiet so that three quiet cards stand between seat 1 and this one" },
   { seat: 3, card: "foot", figure: "none: the foot holds doors", state: "NO HONEST CANDIDATE", condition: "plan 2026-10-09, home introduction (the spec's section 5): the UK's cities and where to next are doors with no figure lit (his ruling of 2026-10-07: no counts); the page ends quiet" },
 ] as const satisfies readonly LoudSeat[];
 
@@ -99,24 +105,34 @@ function HomeCities({ cards }: { cards: CityCardsData }) {
 export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null } = {}) {
   const example = buildWorkedExample();
   const proofs = buildProofs();
+  const record = buildSiteCounts();
   const cities = buildCityCards(data?.iso2 ?? "GB");
   /* Each zone one line, so tests/trust/home_shape.test.ts reads its split, its evenness and its body together. The example and the
-     proofs draw only where their case and their builders are whole; the foot always draws its doors. */
-  const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; label: string; body: React.ReactNode[] }> = [
+     proofs draw only where their case and their builders are whole; the band only where three of its counts build, drawing its own
+     zone on the terracotta (HomeRecord); the foot always draws its doors. */
+  const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; tone?: "terra"; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     ...(example ? [{ key: "example", split: "1-1" as ZoneSplit, even: true, label: COPY.home.example.label, body: [<HomePlace key="place" ex={example} />, <HomePays key="pays" ex={example} />] }] : []),
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
     ...(proofs ? [{ key: "proofs", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.proofs.label, body: [<ProofJoins key="joins" p={proofs.joins} />, <ProofArchive key="archive" p={proofs.archive} />, <ProofTax key="tax" p={proofs.tax} />] }] : []),
+    ...(record ? [{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.record.label, body: [<HomeRecord key="record" record={record} />] }] : []),
     { key: "foot", split: "1-1", even: !!cities, label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <WhereNext key="next" title={COPY.home.next.title} doors={nextDoors("/")} />] },
   ];
+  /* THE TONES ALTERNATE OVER THE ZONES THAT ARE NOT THE BAND (critique section 7): the band draws its own zone on the terracotta, so
+     the zones either side of it keep the tones they had, the foot paper as before. */
+  const toned = zones.filter((z) => z.tone !== "terra");
   return (
     <>
       <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
-        {zones.map((z, i) => (
-          <Zone key={z.key} tone={zoneTone(i)} split={z.split} even={z.even} label={z.label}>
-            {z.body}
-          </Zone>
-        ))}
+        {zones.map((z) =>
+          z.tone === "terra" ? (
+            <React.Fragment key={z.key}>{z.body}</React.Fragment>
+          ) : (
+            <Zone key={z.key} tone={zoneTone(toned.indexOf(z))} split={z.split} even={z.even} label={z.label}>
+              {z.body}
+            </Zone>
+          ),
+        )}
       </div>
       {/* THE LICENCE LINE AND ITS LINK (MODEL 10.8c: the home prints UK register figures), THEN REPORT A MISTAKE (masterplan step 31). */}
       <SourcesFoot iso2="GB" />

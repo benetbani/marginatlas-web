@@ -196,7 +196,7 @@ if (ex) {
 /* THE THIRD PROOF (Task 8; reformed by plan 2026-10-10, the home reformed to ship, Task 4: the critique's P0.7, P1.1, P1.7, P2.3, P2.4
    and P2.12): the formulas, /gb's masthead figure under its own name, at 14 in ink2 over it, its line the profit and the year's rules
    (the year's hyphen unbreakable), its two rules as rows whose whole numbers sum to it, the masthead's own data drawn as a bar of 50
-   cells in ink and grey, two inner columns from 600px of card; the home's second loud moment. */
+   cells in ink and grey, two inner columns from 600px of card; quiet since the band took the page's second loud seat (plan 2026-10-10, Task 5). */
 const proofs = buildProofs();
 check("the three proofs build", !!proofs, { file: "src/lib/home/proofs.ts", remedy: "build the proofs from buildJoins, buildArchive and buildHomeAnswers' answer" });
 const board = buildHeroBoard("GB");
@@ -214,14 +214,16 @@ if (proofs && uk) {
   const PROOF_DATA_AT = { file: "src/lib/home/proofs.ts", remedy: "take the tax proof's bar and door from buildHomeAnswers' answer" };
   check("its bar takes the masthead's own data (the value, the tax and what is kept)", !!board.answerBar && t.bar.value === board.answerBar.value && t.bar.part === board.answerBar.part && t.bar.rest === board.answerBar.rest, PROOF_DATA_AT);
   check(`its door is /gb's answer (${t.href})`, t.href === "/gb#take", PROOF_DATA_AT);
-  const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card with its arrow, its title an h2, the figure's name over its 30 in the accent, its line, its two rules as rows and the masthead's data as a bar of 50 cells in ink and grey, in two columns from 600px of card" };
+  const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card with its arrow, its title an h2, the figure's name over its 30 in ink, its line, its two rules as rows and the masthead's data as a bar of 50 cells in ink and grey, in two columns from 600px of card" };
   const html = renderToStaticMarkup(React.createElement(ProofTax, { p: t }));
   const raw = unent(html);
   check("it is a door card to /gb's answer", /id="tax"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/gb#take" data-lands="[a-z-]+"/.test(html), PROOF_AT);
   check(`its title is an h2, "${COPY.home.proofs.tax.kicker}", and the figure's name stands over the figure`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(COPY.home.proofs.tax.kicker))}</h2>`).test(html) && html.indexOf(`>${esc(t.label)}<`) > -1 && html.indexOf(`>${esc(t.label)}<`) < html.indexOf(`>${t.figure}<`), PROOF_AT);
   check(`the figure's name at 14 regular in ink2, 4px over the figure ("${t.label}")`, html.includes(`<span data-figure-name="" class="mb-1 block text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">${esc(t.label)}</span>`), PROOF_AT);
+  /* QUIET SINCE THE BAND (plan 2026-10-10, the home reformed to ship, Task 5): the terracotta band holds the page's second loud seat, so
+     the tax figure stands in ink and the card carries no accent. */
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
-  check(`its figure, at 30, is the card's one accent (${accents.length})`, accents.length === 1 && new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\] leading-none text-\\[var\\(--terra-text\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(t.figure)}<`).test(html), PROOF_AT);
+  check(`its figure, at 30, is in ink, and the card holds no accent (${accents.length})`, accents.length === 0 && new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\] leading-none text-\\[var\\(--c-ink\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(t.figure)}<`).test(html), PROOF_AT);
   check(`its two rules stand under the line as fact rows, each figure stamped (${t.rows.map((r) => r.value).join(", ")})`, html.indexOf(`>${esc(t.line)}</p>`) > -1 && html.indexOf('data-archetype="fact-rows" data-rows="2"') > html.indexOf(`>${esc(t.line)}</p>`) && t.rows.every((r) => html.includes(`data-row="${r.key}"`) && html.includes(`data-src="${esc(r.prov.src)}" data-kind="worked out">${r.value}</span>`)), PROOF_AT);
   check("two columns from 600px of card: the name, the figure and the line on the left, the rules and the bar on the right", raw.includes('<div class="flex flex-1 flex-col [container-type:inline-size]"><div class="grid flex-1 grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12"><div><span data-figure-name=""') && raw.indexOf('<div class="flex flex-col"><div class="mt-auto"><div class="[container-type:inline-size]') > raw.indexOf("data-figure-name"), PROOF_AT);
   check("its bar is drawn as the segment bar in its split form, under the measure", /data-archetype="segment-bar"/.test(html) && /data-form="split"/.test(html) && /max-w-\[28ch\]/.test(html), PROOF_AT);

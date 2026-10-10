@@ -18,7 +18,8 @@
  * so in its first line.
  *
  * An entry is a publisher, what the pages print from it (a label, plain words), each dataset or page read (its title as published,
- * its link where the records hold one), and its attribution line. The test (tests/spine/uk_sources.test.ts) holds the list to the
+ * its link where the records hold one), its attribution line, and whether its publisher is official (a public body), the class the
+ * home's band counts by (plan 2026-10-10, Task 5; tests/home/site_counts.test.ts holds every entry to one). The test (tests/spine/uk_sources.test.ts) holds the list to the
  * records: every section file's publisher maps to an entry, every register slice a page reads maps to one, and no attribution line
  * is anything but the two the ledger states.
  */
@@ -41,6 +42,10 @@ export type UkSourceItem = {
 export type UkSource = {
   key: string;
   publisher: string;
+  /** Whether the publisher is a public body (a department, an agency, a regulator, a public corporation, the official record), so its
+   *  datasets are official; false for a trade body, a commercial panel or a seller's own page. The home's band counts the official
+   *  ones (plan 2026-10-10, the home reformed to ship, Task 5); tests/home/site_counts.test.ts holds every entry to a class. */
+  official: boolean;
   /** The names the repository's files use for this publisher (a section file's `publisher` starts with one of them). */
   names: string[];
   items: UkSourceItem[];
@@ -52,6 +57,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "ons",
     publisher: "Office for National Statistics",
+    official: true,
     names: ["ONS", "Office for National Statistics"],
     attribution: ONS_LINE,
     items: [
@@ -70,6 +76,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "voa",
     publisher: "Valuation Office Agency",
+    official: true,
     names: ["Valuation Office Agency"],
     attribution: OGL_LINE,
     items: [
@@ -79,6 +86,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "govuk",
     publisher: "GOV.UK",
+    official: true,
     names: ["GOV.UK"],
     attribution: OGL_LINE,
     items: [
@@ -93,6 +101,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "dbt",
     publisher: "Department for Business and Trade",
+    official: true,
     names: ["Department for Business and Trade"],
     attribution: OGL_LINE,
     items: [
@@ -102,6 +111,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "dft",
     publisher: "Department for Transport",
+    official: true,
     names: ["Department for Transport"],
     attribution: OGL_LINE,
     items: [
@@ -111,6 +121,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "desnz",
     publisher: "Department for Energy Security and Net Zero",
+    official: true,
     names: ["Department for Energy Security and Net Zero"],
     attribution: OGL_LINE,
     items: [
@@ -121,6 +132,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "legislation",
     publisher: "legislation.gov.uk",
+    official: true,
     names: ["legislation.gov.uk"],
     attribution: null,
     items: [
@@ -132,6 +144,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "boe",
     publisher: "Bank of England",
+    official: true,
     names: ["Bank of England"],
     attribution: null,
     items: [
@@ -143,6 +156,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "visitbritain",
     publisher: "VisitBritain",
+    official: true,
     names: ["VisitBritain"],
     attribution: null,
     items: [
@@ -152,6 +166,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "ukfinance",
     publisher: "UK Finance",
+    official: false,
     names: ["UK Finance"],
     attribution: null,
     items: [
@@ -161,6 +176,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "brc",
     publisher: "British Retail Consortium",
+    official: false,
     names: ["British Retail Consortium"],
     attribution: null,
     items: [
@@ -172,6 +188,7 @@ export const UK_SOURCES: readonly UkSource[] = [
        ledger's row uk.failures names the licence and the attribution line). */
     key: "gazette",
     publisher: "The Gazette",
+    official: true,
     names: ["The Gazette"],
     attribution: OGL_LINE,
     items: [
@@ -182,6 +199,7 @@ export const UK_SOURCES: readonly UkSource[] = [
     /* The bank wall of opening from abroad (masterplan step 27): no right to a business account, from the regulator's report. */
     key: "fca",
     publisher: "Financial Conduct Authority",
+    official: true,
     names: ["Financial Conduct Authority"],
     attribution: null,
     items: [
@@ -191,6 +209,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "worldpanel",
     publisher: "Worldpanel by Numerator",
+    official: false,
     names: ["Worldpanel by Numerator"],
     attribution: null,
     items: [
@@ -200,6 +219,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "acas",
     publisher: "Acas",
+    official: true,
     names: ["Acas"],
     attribution: null,
     items: [
@@ -209,6 +229,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "tpr",
     publisher: "The Pensions Regulator",
+    official: true,
     names: ["The Pensions Regulator"],
     attribution: null,
     items: [
@@ -218,6 +239,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "startuploans",
     publisher: "Start Up Loans",
+    official: true,
     names: ["Start Up Loans"],
     attribution: null,
     items: [
@@ -227,6 +249,7 @@ export const UK_SOURCES: readonly UkSource[] = [
   {
     key: "sellers",
     publisher: "Sellers' own pages",
+    official: false,
     names: [],
     attribution: null,
     items: [
@@ -243,6 +266,7 @@ export const WORLD_SOURCES: readonly UkSource[] = [
   {
     key: "worldbank",
     publisher: "World Bank",
+    official: true,
     names: ["World Bank"],
     attribution: null,
     items: [
@@ -252,6 +276,7 @@ export const WORLD_SOURCES: readonly UkSource[] = [
   {
     key: "bls",
     publisher: "US Bureau of Labor Statistics",
+    official: true,
     names: ["Bureau of Labor Statistics"],
     attribution: null,
     items: [

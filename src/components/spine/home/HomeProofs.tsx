@@ -5,7 +5,7 @@
  * 65) and one door. The joins, a year of company notices matched by name, its names found drawn as a ring in ink at the lead rung
  * ("97", "in 100 names found in the register"), so the card's one 30 stays its focal; the archive, the months of notices kept, the
  * last twelve drawn as quiet columns in their own order with each month's count as its reading, its register copies as a row; the
- * formulas, /gb's tax burden under its own name, the page's second loud moment (LOUD_SEATS seat 2), its two rules as rows and the
+ * formulas, /gb's tax burden under its own name, in ink since the band took the page's second loud seat (plan 2026-10-10, Task 5), its two rules as rows and the
  * masthead's own data drawn as a bar of 50 cells in ink and grey (/gb draws that share as a pie). The drawings differ in kind on the
  * level and from the example's above (ring, columns, segment bar; strip, units), as clauses 55 and 64 ask. Each second reading
  * stands at its card's foot (`mt-auto`), so the height a shorter card is lent opens above it and never pools under it.
@@ -91,7 +91,7 @@ export function ProofTax({ p }: { p: ProofTaxData }) {
         <div className="grid flex-1 grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12">
           <div>
             <span data-figure-name="" className="mb-1 block text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{p.label}</span>
-            <Focal figure={p.figure} words={p.line} prov={p.prov} accent />
+            <Focal figure={p.figure} words={p.line} prov={p.prov} />
           </div>
           <div className="flex flex-col">
             <div className="mt-auto">

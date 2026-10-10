@@ -125,7 +125,7 @@ if (files.length === 0) { console.error("usage: node scripts/harness/check_page_
 
 /* THE IN-PAGE WALK. Everything below runs inside the browser; it takes the
    viewport width so the level and measure rules know whether they apply. */
-function inPage(width) {
+function inPage({ width, pageName }) {
   /* The four chart forms of 2026-09-25 (src/components/spine/charts/: a figure on the world's range, a bar list, a ring with its
      centre figure, a country's span against the world's) draw, so they are visual kinds like the rest. */
   /* The page-agnostic sections of the same night (src/components/spine/sections/) that draw: a cohort's curve, columns, a scale of
@@ -396,7 +396,8 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
      thing where the sections have alternating background colors ... the rendering of the tables ... has a horrible execution";
      the design in docs/superpowers/specs/2026-10-04-uk-page-reform-design.md, sections 3 to 5). They run only where a page draws
      zones, at every width, and each reads the thing he saw rather than a class:
-       ZONE TONES    neighbouring zones are not one colour, and every zone is paper (#ffffff) or tint (#f6f6f5).
+       ZONE TONES    neighbouring zones are not one colour, and every zone is paper (#ffffff) or tint (#f6f6f5), but for the one
+                     terracotta zone, the home's band, accepted once and on home-gb only (plan 2026-10-10, Task 5).
        ZONE PAD      a zone's padding is the ladder's: 40 / 48 / 64 at 375 / 768 / 1024 and up; the first zone 24 / 32 / 48.
        ZONE SPLIT    a zone that declares a pair draws two cells, and no cell stands empty.
        OPEN SECTION  a section card on a zone stands open (no edge, no fill), and a box that stays on a zone holds something the
@@ -409,13 +410,22 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
   const zones = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
   if (zones.length) {
     const PAPER = "rgb(255, 255, 255)", TINT = "rgb(246, 246, 245)";
+    /* THE ONE TERRACOTTA ZONE (plan 2026-10-10, the home reformed to ship, Task 5; his request of 2026-10-10: "add 1 section in
+       terracotta background to signify some stats for the site"; the spec's section 5 bends PART 10 clause 69 for it and gates the
+       bend): the home's band, `--terra`, accepted once and only on home-gb; on any other page, or a second time on the home, a red. */
+    const TERRA = "rgb(251, 132, 105)", TERRA_PAGE = "home-gb";
+    let terra = 0;
     const want = width >= 1024 ? [48, 64] : width >= 768 ? [32, 48] : [24, 40];
     let prev = null;
     zones.forEach((z, i) => {
       const cs = getComputedStyle(z);
       const zid = z.getAttribute("data-zone-label") || z.getAttribute("aria-label") || z.querySelector("[id]")?.id || `zone ${i + 1}`;
       const bg = cs.backgroundColor;
-      if (bg !== PAPER && bg !== TINT) red(zid, "ZONE TONES", `a zone painted ${bg}; a zone is paper (${PAPER}) or tint (${TINT})`);
+      if (bg === TERRA) {
+        terra++;
+        if (pageName !== TERRA_PAGE) red(zid, "ZONE TONES", `a zone painted the band's terracotta (${bg}) on ${pageName}; the one terracotta zone is the home's band, on ${TERRA_PAGE}`);
+        else if (terra > 1) red(zid, "ZONE TONES", `a second terracotta zone (${bg}); the home holds one, its band`);
+      } else if (bg !== PAPER && bg !== TINT) red(zid, "ZONE TONES", `a zone painted ${bg}; a zone is paper (${PAPER}) or tint (${TINT})`);
       if (prev && prev === bg) red(zid, "ZONE TONES", `two neighbouring zones in one colour (${bg}); zones alternate`);
       prev = bg;
       const top = Math.round(parseFloat(cs.paddingTop)), bottom = Math.round(parseFloat(cs.paddingBottom));
@@ -493,7 +503,7 @@ for (const file of files) {
     await page.goto(pathToFileURL(file).href, { waitUntil: "load" });
     await page.evaluate(() => document.fonts && document.fonts.ready);
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
-    const walk = await page.evaluate(inPage, w);
+    const walk = await page.evaluate(inPage, { width: w, pageName: name });
     if (walk.cards === 0) reds.push({ page: name, w, id: "page", rule: "NO SECTIONS", msg: "no section card found under main; the render or the landmark is broken" });
     for (const r of walk.reds) reds.push({ page: name, w, ...r });
     console.log(`${name}@${w}: ${walk.cards} cards, ${walk.reds.length} red(s)`);

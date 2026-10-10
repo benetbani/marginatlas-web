@@ -12,8 +12,8 @@
  * values are numbers and double-quoted strings and nothing else; comments are
  * stripped first (scripts/lib/strip_comments), so a commented-out declaration
  * is not one. Each page in SPINE_PAGES must declare exactly once, with seats
- * 1, 2 and 3 each once, every state one of src/lib/spine/loud_seats.ts's three
- * words, and every LIT seat naming a card id (the block's word after its
+ * 1, 2 and 3 each once, every state one of src/lib/spine/loud_seats.ts's four
+ * words, and every LIT or FIELD seat naming a card id (the block's word after its
  * two-digit number, or `id`). Anything else is a fault this module reports as
  * a list of lines naming the file; the caller reds and exits, never prints a
  * half-read ledger.
@@ -42,7 +42,7 @@ const SKIP_DIRS = new Set(["archetypes"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx", "motion.tsx"]);
 
 /** The vocabulary, a literal copy of src/lib/spine/loud_seats.ts's LOUD_STATES; the gate asserts the two equal. */
-export const LOUD_STATES = ["LIT", "HELD EMPTY", "NO HONEST CANDIDATE"] as const;
+export const LOUD_STATES = ["LIT", "HELD EMPTY", "NO HONEST CANDIDATE", "FIELD"] as const;
 export type LoudState = (typeof LOUD_STATES)[number];
 
 export type LoudSeat = { seat: 1 | 2 | 3; card: string; figure: string; state: LoudState; condition: string; id?: string };
@@ -81,6 +81,11 @@ export function loudCardId(seat: Pick<LoudSeat, "card" | "id">): string | null {
 
 export function litCount(seats: readonly LoudSeat[]): number {
   return seats.filter((s) => s.state === "LIT").length;
+}
+
+/** The loud seats, LIT and FIELD (the type module's `loudCount`, copied): the census's "Loud today: n of 3". */
+export function loudCount(seats: readonly LoudSeat[]): number {
+  return seats.filter((s) => s.state === "LIT" || s.state === "FIELD").length;
 }
 
 /* THE LITERAL PARSER. Walks the source from `export const LOUD_SEATS` to the
@@ -165,7 +170,7 @@ export function parseLoudSeats(src: string, file: string): { seats: LoudSeat[]; 
     if (id !== undefined && (typeof id !== "string" || !/^[a-z][a-z0-9-]*$/.test(id))) fault(base + i, `seat ${String(seat)} has an id ${JSON.stringify(id)} that is not a DOM id`);
     const built: LoudSeat = { seat: seat as 1 | 2 | 3, card: String(card ?? ""), figure: String(figure ?? ""), state: state as LoudState, condition: String(condition ?? "") };
     if (typeof id === "string") built.id = id;
-    if (built.state === "LIT" && !loudCardId(built)) fault(base + i, `seat ${String(seat)} is LIT and names no card id: its card "${built.card}" is not "<nn> <id>" and it gives no \`id\``);
+    if ((built.state === "LIT" || built.state === "FIELD") && !loudCardId(built)) fault(base + i, `seat ${String(seat)} is ${built.state} and names no card id: its card "${built.card}" is not "<nn> <id>" and it gives no \`id\``);
     seats.push(built);
     i = objEnd;
   }

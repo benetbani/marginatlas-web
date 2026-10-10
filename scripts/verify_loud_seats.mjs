@@ -20,11 +20,20 @@
  *       blocked seat's data-blocked), which is the model's own "LIT where
  *       held or baseline; UNLIT where withheld", and the line says so;
  *   (b) every measured accent sits in the card of a seat declared LIT: an
- *       accent in a seat declared HELD EMPTY or NO HONEST CANDIDATE, or in a
- *       card no seat names, is a stray and is named;
- *   (c) the declarations parse: six pages, seats 1 to 3 once each, the three
- *       states, every LIT seat naming a card id; and the reader's vocabulary
- *       equals the type module's (src/lib/spine/loud_seats.ts).
+ *       accent in a seat declared HELD EMPTY, NO HONEST CANDIDATE or FIELD,
+ *       or in a card no seat names, is a stray and is named;
+ *   (c) the declarations parse: every spine page's, seats 1 to 3 once each,
+ *       the four states, every LIT or FIELD seat naming a card id; and the
+ *       reader's vocabulary equals the type module's
+ *       (src/lib/spine/loud_seats.ts);
+ *   (d) every seat declared FIELD (plan 2026-10-10, the home reformed to
+ *       ship, Task 5: a seat lit by its ground) names a zone the render
+ *       draws on the band's terracotta (`[data-zone][data-tone="terra"]`,
+ *       the walk's `fields`), and every terracotta zone on the render is a
+ *       FIELD seat's: the zone is that seat's one moment and never an accent
+ *       figure, so a missing zone, a zone in another tone, or a terracotta
+ *       zone no seat names is a red. A page with no FIELD seat and no such
+ *       zone prints and measures exactly as before.
  * So the ledger's LIT count and the measured count agree on every render, or
  * this gate reds and names the card. A missing accent is never read as
  * withheld on a card that prints its figure; a withheld card is never read
@@ -152,7 +161,7 @@ for (const m of MISSING) {
 }
 
 const browser = await chromium.launch();
-let measuredTotal = 0, litTotal = 0, withheldTotal = 0;
+let measuredTotal = 0, litTotal = 0, withheldTotal = 0, fieldTotal = 0;
 for (const entry of PRESENT) {
   const d = declared.declarations.get(entry.surface);
   if (!d) { reds.push({ file: entry.path, detail: `the render's surface "${entry.surface}" has no declaration`, remedy: "the surface's view exports LOUD_SEATS" }); continue; }
@@ -188,21 +197,43 @@ for (const entry of PRESENT) {
     reds.push({ file: d.file, line: d.line, detail: `${label} carries ${n} accent figures on ${where} (${byCard.get(id).join("; ")}); a seat is one figure`, remedy: "one figure in the accent per card; the rest to ink" });
     seatLines.push(`  ${label}: LIT declared, ${n} accents`);
   }
-  for (const s of d.seats.filter((x) => x.state !== "LIT")) seatLines.push(`  seat ${s.seat} ${s.card}: ${s.state}`);
-  /* (b) every accent sits in a LIT seat's card. */
+  /* (d) every FIELD seat: its zone on the render, on the band's terracotta (plan 2026-10-10, the home reformed to ship, Task 5). */
+  const fieldSeats = d.seats.filter((s) => s.state === "FIELD");
+  const fieldIds = new Set(fieldSeats.map((s) => loudCardId(s)));
+  let fieldFaults = 0;
+  for (const s of fieldSeats) {
+    const id = loudCardId(s);
+    const card = walk.cards[id];
+    const label = `seat ${s.seat} ${s.card} (#${id})`;
+    if (!card || !card.present) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and its zone is not on the render ${where}`, remedy: "draw the zone (the home's band draws with three counts or more: run node node_modules/tsx/dist/cli.mjs tests/home/site_counts.test.ts), or correct the declaration's card id" }); seatLines.push(`  ${label}: FIELD declared, zone absent`); continue; }
+    if (!card.field) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and #${id} is not a terracotta zone ([data-zone][data-tone="terra"]) on ${where}`, remedy: "give the seat's zone data-tone=\"terra\" (globals.css, THE ZONES), or declare the seat LIT on a figure" }); seatLines.push(`  ${label}: FIELD declared, not a terracotta zone`); continue; }
+    seatLines.push(`  ${label}: FIELD, lit by its ground (the terracotta zone)`);
+  }
+  for (const s of d.seats.filter((x) => x.state !== "LIT" && x.state !== "FIELD")) seatLines.push(`  seat ${s.seat} ${s.card}: ${s.state}`);
+  /* ...and every terracotta zone is a FIELD seat's: one more is a loud moment no seat declares. */
+  for (const f of walk.fields) {
+    if (f.id && fieldIds.has(f.id)) continue;
+    fieldFaults++;
+    reds.push({ file: d.file, line: d.line, detail: `a terracotta zone not declared on ${where}: #${f.id || "(no id)"}${f.label ? ` (${f.label})` : ""}`, remedy: "the zone to paper or tint (PART 6: anything terracotta not on the list goes quiet), or declare it a FIELD seat with its condition" });
+    seatLines.push(`  #${f.id || "(no id)"}: terracotta zone NOT DECLARED`);
+  }
+  /* (b) every accent sits in a LIT seat's card; a FIELD seat's zone holds none. */
   for (const [card, texts] of byCard) {
     if (litIds.has(card)) continue;
     const held = d.seats.find((s) => s.state !== "LIT" && loudCardId(s) === card);
-    if (held) reds.push({ file: d.file, line: d.line, detail: `seat ${held.seat} ${held.card} (#${card}) is declared ${held.state} and carries an accent on ${where} (${texts.join("; ")})`, remedy: "the seat's figure to ink until its condition is met, or declare it LIT with the condition" });
+    if (held && held.state === "FIELD") reds.push({ file: d.file, line: d.line, detail: `seat ${held.seat} ${held.card} (#${card}) is declared FIELD and carries an accent figure on ${where} (${texts.join("; ")})`, remedy: "a zone lit by its ground holds no accent: its figures to ink (--c-ink, 7.06:1 on --terra)" });
+    else if (held) reds.push({ file: d.file, line: d.line, detail: `seat ${held.seat} ${held.card} (#${card}) is declared ${held.state} and carries an accent on ${where} (${texts.join("; ")})`, remedy: "the seat's figure to ink until its condition is met, or declare it LIT with the condition" });
     else reds.push({ file: d.file, line: d.line, detail: `a lit figure not declared on ${where}: #${card}: ${texts.join("; ")}`, remedy: "that figure to ink (PART 6: anything terracotta not on the list goes to ink), or declare the seat if the model names it" });
     seatLines.push(`  #${card}: accent NOT DECLARED (${texts.join("; ")})`);
   }
   const litDeclared = litCount(d.seats);
   const measured = walk.accents.length;
-  const agree = measured === litDeclared - withheld && [...byCard.keys()].every((c) => litIds.has(c)) && [...byCard.values()].every((t) => t.length === 1);
-  say(`${entry.name}: declared LIT ${litDeclared} of 3, withheld on this render ${withheld}, measured ${measured}: ${agree ? "agree" : "DISAGREE"}`);
+  const agree = measured === litDeclared - withheld && [...byCard.keys()].every((c) => litIds.has(c)) && [...byCard.values()].every((t) => t.length === 1) && fieldFaults === 0;
+  const fieldWords = fieldSeats.length || walk.fields.length ? `, FIELD ${fieldSeats.length}` : "";
+  const zoneWords = fieldSeats.length || walk.fields.length ? `, terracotta zones ${walk.fields.length}` : "";
+  say(`${entry.name}: declared LIT ${litDeclared} of 3${fieldWords}, withheld on this render ${withheld}, measured ${measured}${zoneWords}: ${agree ? "agree" : "DISAGREE"}`);
   for (const l of seatLines) say(l);
-  measuredTotal += measured; litTotal += litDeclared; withheldTotal += withheld;
+  measuredTotal += measured; litTotal += litDeclared; withheldTotal += withheld; fieldTotal += fieldSeats.length;
 }
 await browser.close();
 
@@ -211,7 +242,7 @@ writeFileSync(OUT, lines.join("\n") + "\n", "utf8");
 
 if (reds.length) {
   for (const r of reds) red({ rule: RULE, ...r });
-  redSummary(RULE, reds.length, `every render's accent figures are the seats its view declares LIT and nothing else (MODEL.md PART 8's seat tables; ${MODULE})`, `${PRESENT.length} renders at ${WIDTH}, ${measuredTotal} accents against ${litTotal} declared LIT less ${withheldTotal} withheld`);
+  redSummary(RULE, reds.length, `every render's accent figures are the seats its view declares LIT and nothing else, and every FIELD seat is its one terracotta zone (MODEL.md PART 8's seat tables; ${MODULE})`, `${PRESENT.length} renders at ${WIDTH}, ${measuredTotal} accents against ${litTotal} declared LIT less ${withheldTotal} withheld${fieldTotal ? `, ${fieldTotal} FIELD` : ""}`);
   process.exit(1);
 }
-console.log(`ok ${RULE}: ${PRESENT.length} renders at ${WIDTH}, ${measuredTotal} accent figures, every one a seat declared LIT and every LIT seat lit or withheld (${litTotal} declared LIT, ${withheldTotal} withheld on these renders)`);
+console.log(`ok ${RULE}: ${PRESENT.length} renders at ${WIDTH}, ${measuredTotal} accent figures, every one a seat declared LIT and every LIT seat lit or withheld (${litTotal} declared LIT, ${withheldTotal} withheld on these renders)${fieldTotal ? `; ${fieldTotal} FIELD seat${fieldTotal === 1 ? "" : "s"}, each its terracotta zone and none other drawn` : ""}`);

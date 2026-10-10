@@ -7,7 +7,9 @@
  * on 8.2, 8.3, 8.6, 8.7 and 8.8, and 8.9's "Loud today: 0 of 3").
  *
  * A page carries three loud moments or fewer, his ruling; a loud moment is an
- * accent figure, text in `--terra-text` (M8). Each surface's VIEW exports a
+ * accent figure, text in `--terra-text` (M8), or, since plan 2026-10-10 (the
+ * home reformed to ship, Task 5), a zone lit by its ground, the home's
+ * terracotta band (FIELD, below). Each surface's VIEW exports a
  * `LOUD_SEATS` table of this shape, three entries, seats 1 to 3, declared
  * beside the code that lights or holds them and never typed into a document:
  * the section census (scripts/harness/census.ts) reads the six tables off the
@@ -15,9 +17,10 @@
  * docs/loop/CENSUS.md, and the loud-seats gate (scripts/verify_loud_seats.ts)
  * holds every render in scripts/harness/pages.json to its declaration with
  * the page filter's own accent walk: the LIT seats and the measured accents
- * must agree, card by card.
+ * must agree, card by card, and every FIELD seat names the terracotta zone
+ * the render draws, the only one it draws.
  *
- * THE STATES, the brief's vocabulary of three:
+ * THE STATES, the brief's vocabulary of three, and FIELD since plan 2026-10-10:
  *   LIT                  the figure is in `--terra-text` on the page; the
  *                        render carries one accent in that card. A LIT seat
  *                        whose figure the data withholds is unlit on that
@@ -35,12 +38,21 @@
  *   NO HONEST CANDIDATE  no figure in that turn could honestly be lit, by a
  *                        ruling the entry names (the hood's turn one under the
  *                        no-featuring ruling; the how-to page by design).
+ *   FIELD                the seat is lit by its ground, not by a figure: its
+ *                        card is a zone painted the band's terracotta
+ *                        (`[data-zone][data-tone="terra"]`, globals.css THE
+ *                        ZONES; the home's "Read from the record"), its words
+ *                        and figures in ink. The walk counts that zone as the
+ *                        seat's moment and never as an accent figure; an
+ *                        accent inside it, a missing zone, or a terracotta
+ *                        zone no FIELD seat names is the gate's red. It names
+ *                        its card's id as a LIT seat does.
  *
  * `card` is the block as the seat table names it ("00 take", "turn two, `03`
  * or `09`"); a LIT seat's card is matched to the render's accents by its DOM
  * id, the block's word after the two-digit number ("take", "hiring", "open"),
  * or `id` where the two differ (the city's masthead is `city-take`). A seat
- * that is not LIT needs no id.
+ * that is neither LIT nor FIELD needs no id.
  *
  * The declaration is data, read from source by scripts/lib/loud_seats.ts: the
  * entries are object literals of numbers and double-quoted strings and nothing
@@ -48,7 +60,7 @@
  * graph builds the database client at import, and the chain never needs a
  * secret). `satisfies readonly LoudSeat[]` keeps the shape type-checked.
  */
-export const LOUD_STATES = ["LIT", "HELD EMPTY", "NO HONEST CANDIDATE"] as const;
+export const LOUD_STATES = ["LIT", "HELD EMPTY", "NO HONEST CANDIDATE", "FIELD"] as const;
 
 export type LoudState = (typeof LOUD_STATES)[number];
 
@@ -73,7 +85,12 @@ export function loudCardId(seat: Pick<LoudSeat, "card" | "id">): string | null {
   return m ? m[1] : null;
 }
 
-/** How many of the three seats are declared LIT: the ledger's "Loud today: n of 3". */
+/** How many of the three seats are declared LIT, each one accent figure on the render (the loud-seats gate's agreement). */
 export function litCount(seats: readonly LoudSeat[]): number {
   return seats.filter((s) => s.state === "LIT").length;
+}
+
+/** The loud seats, LIT and FIELD: the ledger's "Loud today: n of 3" (a FIELD seat is lit by its terracotta zone, plan 2026-10-10). */
+export function loudCount(seats: readonly LoudSeat[]): number {
+  return seats.filter((s) => s.state === "LIT" || s.state === "FIELD").length;
 }
