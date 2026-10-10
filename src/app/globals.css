@@ -1200,6 +1200,15 @@
     padding-top: 48px;
   }
 }
+/* THE PAGE MEETS THE BAR (critique pass 3, fix round D1, item P1.1): that 16px of the site column is white, and a tint zone that opens the
+   column began under it, so a white strip ran between the bar's hairline and the grey at every width. The first zone of a spine body that
+   is the column's first rendered child paints its fill 16px upward over it, as it paints 100vmax to either side: a border image's top
+   outset, which moves no box (the h1 and every zone stay where they were) and draws only in <main>'s own padding. The selector names
+   the column's first child that is not a script, so a page that opens with a breadcrumb or a masthead (the city, the hood and the cell
+   pages) keeps its strip, clear of the thing above it. */
+main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > [data-spine-body]:first-child > [data-zone]:nth-child(1 of [data-zone]) {
+  border-image-outset: 1rem 100vmax 0;
+}
 /* EDGE TO EDGE WITHOUT A CLIP (the code review of 2026-10-04): the spread shadow needed a clip-path to keep it off its neighbours,
    and the clip cut whatever stood out of the zone (a "?" tip near its top opening upward). A border image's outset paints the
    band's colour 100vmax to either side and none above or below; like the shadow it is ink overflow, so nothing scrolls sideways.

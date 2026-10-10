@@ -116,6 +116,16 @@ async function main() {
   check("one text red: --terra-text is #991600, and #c2410c is nowhere in the stylesheet", /--terra-text:\s*#991600;/.test(css) && !/#c2410c/i.test(css), { file: CSS, remedy: "re-point --terra-text to #991600 and read it where #c2410c was written" });
   check("--control-line is #8f8f8b, a control's 3:1 edge", /--control-line:\s*#8f8f8b;/.test(css), { file: CSS });
   check("the bar's edge is --c-border", /\.atlas-glass-chrome\s*\{[^}]*border-bottom:\s*1px solid var\(--c-border\);/.test(css), { file: CSS });
+  /* THE PAGE MEETS THE BAR (critique pass 3, fix round D1, item P1.1). <main> opens 16px under the bar (pt-4), and a spine page's first zone
+     started under that padding, so a tint zone showed a 16px white strip between the bar's hairline and the grey (photographed at 375, 768,
+     1080 and 1280). The first zone of a spine body that is the column's first thing paints its fill 16px upward over that padding: a border
+     image's top outset, nothing moves (the h1 stays where it was; the critique's margin-and-padding form would have moved every gate's
+     zone rectangle). The selector names the column's first rendered child, so a page that opens with a breadcrumb or a masthead before its
+     body keeps its strip clear of the thing above it. BLIND SPOT: this reads the stylesheet's text; the pixel under the hairline is
+     measured in a browser (scratchpad/home-reform/d1_probe.mjs), which no gate of the chain draws the bar for. */
+  check("the first zone of a spine body that opens the column paints 16px up over <main>'s padding: border-image-outset 1rem 100vmax 0, under a selector that needs the spine to be the column's first rendered child",
+    /main\s*>\s*\.spine-scope:nth-child\(1 of :not\([^)]*\bscript\b[^)]*\)\)\s*>\s*div\s*>\s*\[data-spine-body\]:first-child\s*>\s*\[data-zone\]:nth-child\(1 of \[data-zone\]\)\s*\{[^}]*border-image-outset:\s*1rem 100vmax 0;/.test(css),
+    { file: CSS, remedy: "in THE ZONES, add main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > [data-spine-body]:first-child > [data-zone]:nth-child(1 of [data-zone]) { border-image-outset: 1rem 100vmax 0; }" });
 
   /* THE ANCHORS (fix round 1, group 1; widened in the closing cleanup of plan 2026-10-10, item 2). The scroll-padding-top above is the
      bar's whole height and 8px of air, and a browser ADDS an element's own scroll-margin-top to it, so an offset written before the
