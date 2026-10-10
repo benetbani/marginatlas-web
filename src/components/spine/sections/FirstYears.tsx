@@ -4,7 +4,8 @@
  *
  * THE LAW, inside the component:
  *  - THE CARD'S ONE FIGURE is the cohort's share still trading at the curve's last year, and the curve's last point is the one
- *    point drawn in the accent; the years before it print their share at their own point, the last does not (it is the figure).
+ *    point drawn in the accent; every point after the start prints its share at its own point, the last too (critique pass 2, fix round
+ *    C2, item P1.5: the figure above is the large one and the label on the drawing is its key).
  *  - THE CURVE is one cohort followed year by year: a line over an area whose accent gradient fades into the card (his "the
  *    gradient is barely used"), a start at the whole and a point a year. The area is SVG stretched to the box; every mark and
  *    label is HTML placed in percentages, so no text stretches, and a point at either end is pinned inside the box.

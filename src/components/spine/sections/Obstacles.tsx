@@ -5,32 +5,35 @@
  * could sit beside it, so the two are two cards on one level.
  *
  * THE LAW, inside the component:
- *  - THE CARD'S ONE FIGURE is the obstacle small employers name most, its share said once; its column is the one in the accent
- *    and carries no share of its own (the figure says it).
+ *  - THE CARD'S ONE FIGURE is the obstacle small employers name most, its share said large above the drawing; its column is the
+ *    one in the accent, a flat --terra, and prints its share small over it as every other column does (critique pass 2, fix
+ *    round C2, item P1.5: a mark with no number in a list where every other has one read as a rendering fault; the label on a
+ *    drawing is its key, not a second statement of the figure).
  *  - THE OBSTACLES AS COLUMNS, ranked, on one scale from zero (the most named is the tallest), each its share over it and its
  *    name under it. Columns and not a ranked bar list, because the country page already draws two bar lists, and his clause 55
  *    allows a kind of drawing twice a page.
  *  - THE COLUMNS TAKE THE HEIGHT THE LEVEL LENDS THE CARD (`fill`, the kit's word): the drawing is the part that stretches, so a
  *    taller card beside it never leaves a blank under the names.
  *  - UNDER 480px OF CARD, ROWS: the name, the share and a thin bar under them, since eight names do not fit under eight columns on
- *    a phone. The same order, the same accent, the same unlabelled first row.
+ *    a phone. The same order, the same accent, the same share on every row.
  *  - `data-archetype="obstacles"`, `data-visual="1"`, `data-cols`; `data-row` and `data-label` on each row of the phone's form,
  *    `data-col` on each column, `data-mark-label` on a column's share and its name (a mark's own label, the one thing centred).
  */
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
 import { Box, Fig, Rail } from "@/components/spine/kit";
+import { provAttrs } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
 import type { Obstacles as ObstaclesData } from "@/lib/spine/sections/first_years";
 
 /* EACH MARK AS BARLIST DRAWS ITS BARS: a painted track the full length of the slot, and the bar over it filled with a colour under
    a gradient that runs from the tint at its base to the full tone at its tip. The colour is what the page filter reads as ink; a
    gradient alone read as a blank (the first render: 350 by 396 where eight bars stood), and a ranked chart with no track leaves
-   the corner over its short marks empty (the second: 292 by 138 over the last four columns). */
-const fill = (lead: boolean, deg: 0 | 90) =>
-  lead
-    ? { backgroundColor: "var(--terra)", backgroundImage: `linear-gradient(${deg}deg, var(--terra-border), var(--terra))` }
-    : { backgroundColor: "var(--c-line-strong)", backgroundImage: `linear-gradient(${deg}deg, var(--c-border), var(--c-line-strong))` };
+   the corner over its short marks empty (the second: 292 by 138 over the last four columns). THE TOP'S BAR IS FLAT --terra (critique
+   pass 2, fix round C2, item P1.5): the longest bar was the one drawn in a gradient and the only one with nothing beside it; it is
+   the one mark in the accent, plain, and the greys keep their soft gradient. */
+const fill = (deg: 0 | 90) => ({ backgroundColor: "var(--c-line-strong)", backgroundImage: `linear-gradient(${deg}deg, var(--c-border), var(--c-line-strong))` });
+const FLAT_TERRA = { backgroundColor: "var(--terra)" };
 
 export function Obstacles({ id = "obstacles", data }: { id?: string; data: ObstaclesData }) {
   const C = COPY.firstYears;
@@ -46,17 +49,15 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
         <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{top.pct}%</div>
         <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{C.obstaclesWords.replace("{item}", top.label.toLowerCase())}</p>
       </div>
-      {/* EACH OBSTACLE READS ITS SHARE (goal 2026-09-26, M1), the leading column too, which prints none (the figure says it). */}
+      {/* EACH OBSTACLE READS ITS SHARE (goal 2026-09-26, M1), the leading column too (item P1.5), its label held inside the plot by the 20px above the bars. */}
       <Marks label={C.obstaclesKicker} data-archetype="obstacles" data-visual="1" data-cols={String(items.length)} className="flex flex-1 flex-col [container-type:inline-size]">
         <div className="hidden flex-1 flex-col [@container(min-width:480px)]:flex">
-          <div className="flex min-h-40 flex-1 items-stretch gap-2" role="img" aria-label={`${C.obstaclesKicker}: ${items.map((o) => `${o.label} ${o.pct}%`).join(", ")}`}>
+          <div className="flex min-h-40 flex-1 items-stretch gap-2 pt-5" role="img" aria-label={`${C.obstaclesKicker}: ${items.map((o) => `${o.label} ${o.pct}%`).join(", ")}`}>
             {items.map((o) => (
               <div key={o.key} data-col={o.key} data-readout-figure={`${o.pct}%`} data-readout-words={o.label} className="relative min-w-0 flex-1">
                 <span aria-hidden className="absolute inset-0 rounded-t-[2px] bg-[var(--c-soft2)]" />
-                <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-[2px]" style={{ height: `${h(o.pct)}%`, ...fill(o === top, 0) }}>
-                  {o === top ? null : (
-                    <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 text-center text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{o.pct}%</span>
-                  )}
+                <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-[2px]" style={{ height: `${h(o.pct)}%`, ...(o === top ? FLAT_TERRA : fill(0)) }}>
+                  <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 text-center text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]" {...provAttrs(o.prov)}>{o.pct}%</span>
                 </span>
               </div>
             ))}
@@ -72,11 +73,11 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
             <li key={o.key} data-row={o.key} data-readout-figure={`${o.pct}%`} data-readout-words={o.label} className="max-w-none py-2">
               <div className="flex items-baseline justify-between gap-3">
                 <span data-label className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{o.label}</span>
-                {o === top ? null : <Fig className="text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{o.pct}%</Fig>}
+                <Fig prov={o.prov} className="text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{o.pct}%</Fig>
               </div>
               <span aria-hidden className="relative mt-2 block h-2 rounded-full">
                 <span className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
-                <span data-bar className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${h(o.pct)}%`, ...fill(o === top, 90) }} />
+                <span data-bar className="absolute inset-y-0 left-0 rounded-full" style={{ width: `${h(o.pct)}%`, ...(o === top ? FLAT_TERRA : fill(90)) }} />
               </span>
             </li>
           ))}

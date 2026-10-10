@@ -1889,6 +1889,21 @@
       "claims": []
     },
     {
+      "name": "focal-values",
+      "script": "tests/spine/focal_values.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "A DRAWING'S FOCAL MARK PRINTS ITS VALUE, SMALL, AS ITS NEIGHBOURS DO (critique pass 2, fix round C2, item P1.5; the controller's decision on the critique's Q2, YES): the mark a section's figure belong",
+      "reads": [
+        "scratchpad/harness/pages/country-GB.html",
+        "src/components/spine/country/country-view.tsx",
+        "src/components/spine/interact/SurvivalCurve.tsx",
+        "src/components/spine/sections/Obstacles.tsx",
+        "src/lib/spine/sections/first_years.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "home-new-companies",
       "script": "tests/home/new_companies.test.ts",
       "args": [],

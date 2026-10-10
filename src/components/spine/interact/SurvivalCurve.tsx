@@ -7,6 +7,9 @@
  * curve kept as a thin reference line while a region is shown, the card's figure and its words following the choice, and the
  * region's place marked on the best-to-worst strip under the curve.
  *
+ * EVERY POINT AFTER THE START PRINTS ITS SHARE, the last (the terracotta dot) too (critique pass 2, fix round C2, item P1.5): the
+ * card's figure stays the large one above the plot and the label is the drawing's key.
+ *
  * THE LAW (M3): the default is the country, the curve the card printed; a region's figures are the table's own, rounded as the
  * country's are; nothing is computed but the plot's geometry. The choice is a native select, so a phone opens its own picker and
  * a screen reader reads it; the figure is a polite live region.
@@ -80,8 +83,9 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
             return (
               <React.Fragment key={p.year}>
                 <span aria-hidden data-point={p.year} className={`absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] ${isLast ? "h-3.5 w-3.5" : ""}`} style={{ left: `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%`, background: isLast ? "var(--terra)" : "var(--c-ink2)" }} />
-                {i > 0 && !isLast ? (
-                  <span data-mark-label className="absolute -translate-x-1/2 -translate-y-full pb-2 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]" style={{ left: `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }}>{Math.round(p.pct)}%</span>
+                {/* EVERY POINT AFTER THE START PRINTS ITS SHARE, THE LAST TOO (critique pass 2, fix round C2, item P1.5; the card's figure stays the large 38%): the last label is right-aligned to the plot's edge so it never leaves the box. */}
+                {i > 0 ? (
+                  <span data-mark-label className={`absolute ${isLast ? "-translate-x-full" : "-translate-x-1/2"} -translate-y-full pb-2 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]`} style={{ left: isLast ? "100%" : `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }}>{Math.round(p.pct)}%</span>
                 ) : null}
               </React.Fragment>
             );

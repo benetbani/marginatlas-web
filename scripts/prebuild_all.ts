@@ -641,6 +641,11 @@ const GATES: Gate[] = [
      drawing, on the page each belongs on since plan 2026-10-09, home introduction (the home draws none of them). Section 1, where
      new firms last: the UK cities' 2019 cohort after five years, Birmingham held out; on /gb, chapter 04's level after its first. */
   { name: "home-firms-last", script: "tests/home/firms_last.test.ts" },
+  /* A drawing's focal mark prints its value (critique pass 2, fix round C2, item P1.5; the answer to the critique's Q2, yes): /gb's
+     chapter 04, "What holds firms back" (the Tax column and row print their share, the top's bar flat terracotta, no gradient) and
+     "Who is still trading" (year 5 prints its share), each beside its own large figure. Reads /gb's render where the harness wrote it,
+     deferred where it is not rendered. */
+  { name: "focal-values", script: "tests/spine/focal_values.test.ts" },
   /* Section 2, where new companies open: Latin America and Africa, one year, each region within itself, the labour-force floor; on
      /new-businesses, beside the US restaurants. */
   { name: "home-new-companies", script: "tests/home/new_companies.test.ts" },

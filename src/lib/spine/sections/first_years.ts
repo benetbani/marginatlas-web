@@ -9,6 +9,7 @@
  */
 import survivalJson from "../../../../data/sections/survival.json";
 import { COPY } from "@/lib/spine/copy";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export type SurvivalPoint = { year: number; pct: number };
 export type Survival = {
@@ -21,7 +22,9 @@ export type Survival = {
   place: string | null;
   regionCurves: Array<{ key: string; name: string; inName: string; points: SurvivalPoint[] }>;
 };
-export type Obstacle = { key: string; label: string; pct: number };
+/** `prov`: where the share was read (the survey table in data/sections/survival.json, a published count read there), stamped on every
+ *  figure that prints it (critique pass 2, fix round C2, item P1.5: the leading obstacle now prints its share too). */
+export type Obstacle = { key: string; label: string; pct: number; prov: Provenance };
 export type Obstacles = { iso2: string; year: number; items: Obstacle[] };
 
 type FileCountry = {
@@ -57,7 +60,7 @@ export function buildSurvival(iso2: string): Survival | null {
 export function buildObstacles(iso2: string): Obstacles | null {
   const c = countryOf(iso2);
   const labels = COPY.firstYears.obstacles as Record<string, string>;
-  const items = (c?.obstacles?.items ?? []).filter((i) => isPct(i.pct) && labels[i.key]).map((i) => ({ key: i.key, label: labels[i.key], pct: i.pct }));
+  const items = (c?.obstacles?.items ?? []).filter((i) => isPct(i.pct) && labels[i.key]).map((i) => ({ key: i.key, label: labels[i.key], pct: i.pct, prov: { src: `sections/survival.json:${iso2.toUpperCase()}:obstacles:${i.key}`, kind: "looked up" as const } }));
   if (!c?.obstacles || items.length < 4) return null;
   return { iso2: iso2.toUpperCase(), year: c.obstacles.year, items: items.sort((a, b) => b.pct - a.pct) };
 }
