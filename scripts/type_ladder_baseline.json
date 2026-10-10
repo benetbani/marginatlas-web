@@ -1,5 +1,5 @@
 {
-  "total": 852,
+  "total": 850,
   "files": {
     "src/app/(site)/about-data/page.tsx": 2,
     "src/app/(site)/account/AccountPreview.tsx": 11,
@@ -28,7 +28,7 @@
     "src/app/(site)/learn/[slug]/page.tsx": 7,
     "src/app/(site)/methodology/key-benchmarks/page.tsx": 2,
     "src/app/(site)/methodology/page.tsx": 3,
-    "src/app/(site)/pricing/page.tsx": 7,
+    "src/app/(site)/pricing/page.tsx": 5,
     "src/app/(site)/saved/page.tsx": 3,
     "src/app/(site)/search/page.tsx": 2,
     "src/app/(site)/signin/SignInForm.tsx": 4,

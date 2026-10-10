@@ -2,7 +2,7 @@
   "total": {
     "remCaps": 205,
     "chCaps": 43,
-    "smPairings": 42
+    "smPairings": 41
   },
   "byFile": {
     "src/app/(site)/about-data/page.tsx": {
@@ -555,10 +555,10 @@
       "chCaps": 1,
       "smPairings": 0
     },
-    "src/components/spine/home/home-view.tsx": {
+    "src/components/spine/home/HomeProofs.tsx": {
       "remCaps": 0,
       "chCaps": 1,
-      "smPairings": 1
+      "smPairings": 0
     },
     "src/components/spine/industry/turn-one.tsx": {
       "remCaps": 0,
