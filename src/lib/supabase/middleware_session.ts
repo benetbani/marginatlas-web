@@ -9,7 +9,8 @@
  *
  * Four guards, each for a reason:
  *  - auth off (today, until launch day): nothing runs;
- *  - a file (a photograph, a flag, a font, a pack file): nothing runs; no file needs a session;
+ *  - a file (a photograph, a flag, a font, a pack file, and the four icon routes /icon, /icon1, /icon2 and /apple-icon, which have
+ *    no dot): nothing runs; no file needs a session;
  *  - no session cookie on the request: nothing runs, so an anonymous reader or a crawler costs no call;
  *  - a redirect: left as it is.
  * A response that receives a refreshed cookie is marked `private, no-store`: the middleware marks the UK pages publicly cacheable,
@@ -24,13 +25,15 @@ import type { NextRequest, NextResponse } from "next/server";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { isSessionCookie } from "@/lib/monetization/pro_route";
 import { namesFile } from "@/lib/routing/names_file";
+import { ICON_ROUTES } from "@/lib/routing/icon_routes";
 
 /** A request for a file (its last path part has a dot: a photograph, a flag, a font, a pack file, a sitemap shard, or a made-up
- *  file the edge answers with a 404). It never needs a session, and since the matcher sends every address through the
- *  middleware, refreshing on one would call Supabase for each image a signed-in reader's page loads. The edge's file rule reads
- *  the same definition (src/lib/routing/names_file.ts). */
+ *  file the edge answers with a 404), or for one of the four dotless icon routes (/icon, /icon1, /icon2, /apple-icon: the same set
+ *  the rate-limit skip reads, src/lib/routing/icon_routes.ts). It never needs a session, and since the matcher sends every address
+ *  through the middleware, refreshing on one would call Supabase for each image and icon a signed-in reader's page loads. The edge's
+ *  file rule reads the same definition of a dotted file (src/lib/routing/names_file.ts). */
 export function isFileRequest(pathname: string): boolean {
-  return namesFile(pathname);
+  return namesFile(pathname) || ICON_ROUTES.has(pathname);
 }
 
 export async function refreshSessionOn(req: NextRequest, res: NextResponse): Promise<NextResponse> {

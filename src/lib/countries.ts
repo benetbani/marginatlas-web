@@ -5,7 +5,9 @@
  * extrapolated_cells table key (ISO-3, e.g. DEU).
  */
 
-import { COUNTRIES } from "./taxonomy";
+/* From the light module, not the taxonomy: this file reaches client bundles through CountryFlag and the kit barrel, and the taxonomy
+   (about 100 files, 984 KB of source) came with it (cleanup round 2; tests/app/head.test.ts walks the barrel and reds on it). */
+import { COUNTRIES } from "./country_list";
 
 // Comprehensive ISO-2 → ISO-3 map. Includes every country in COUNTRIES + the
 // rest of the ISO-3166 universe so unknown codes still resolve where possible.

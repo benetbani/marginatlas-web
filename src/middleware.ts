@@ -33,6 +33,7 @@ import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_l
 import { cityPathFor } from "@/lib/cities/city_path";
 import { edgeNotFound, fileNotServed, legacyHoodTarget } from "@/lib/routing/edge_not_found";
 import { SERVED_FILES } from "@/lib/routing/served_files";
+import { ICON_ROUTES } from "@/lib/routing/icon_routes";
 import { proRewrite } from "@/lib/monetization/pro_route";
 import { isPaywallOn } from "@/lib/feature_flags";
 import { HARVESTERS } from "@/lib/seo/crawlers";
@@ -298,12 +299,8 @@ function clientIp(req: NextRequest): string {
  *  so the rate limit below must not count it. */
 const ONCE_SKIPPED = /(?:^\/(?:favicon\.ico|robots\.txt|sitemap\.xml|manifest\.webmanifest)$|\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)$)/;
 
-/** The site's icon routes, the metadata files src/app/icon.tsx, icon1.tsx, icon2.tsx and apple-icon.tsx (fix round 7 of the plan
- *  2026-10-10). Their addresses have no dot, so SERVED_FILES (the dotted files) cannot hold them, and like the manifest they are files
- *  a browser asks for, not pages: they pass untouched, first, and are never counted against the rate limit. Exact addresses, not a
- *  pattern, so a made-up /icon7 still meets the 404 for a place the site does not hold. tests/routing/metadata_routes.test.ts
- *  asks every such file src/app holds, so an icon file added without an entry here reds there. */
-const ICON_ROUTES: ReadonlySet<string> = new Set(["/icon", "/icon1", "/icon2", "/apple-icon"]);
+/* The site's icon routes (/icon, /icon1, /icon2, /apple-icon) are files a browser asks for, not pages: they pass untouched, first, and are
+   never counted against the rate limit. ICON_ROUTES lives in src/lib/routing/icon_routes.ts, where the session refresh reads the same set. */
 
 // --- Plan v13 Wave 4b: split-industry redirects (auto-generated) ---
 /* MOVED to src/lib/taxonomy/legacy_redirects.ts, unchanged, so that

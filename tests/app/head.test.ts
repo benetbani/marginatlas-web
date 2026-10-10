@@ -14,8 +14,9 @@
  *   - the auth client imported only behind the accounts switch, and the session read once for the bar and the sheet; Sentry started
  *     when the browser is idle; one Geist; the home's h1 still from its first frame; no `transition-all` left in the hero's word or
  *     field; the root layout and SiteChrome import the modules they use, not the kit's barrel; and a static walk of the client closure
- *     (the chrome's seven client roots, and the kit barrel's) holds neither the taxonomy nor industries.json (ProfileChip's import of
- *     the taxonomy had put industries.json into the client closure of every route that imports the barrel). (The flag-off home's
+ *     (the chrome's seven client roots, and the kit barrel taken as a client root, which is what a client component that imports it
+ *     bundles) holds neither the taxonomy nor industries.json (ProfileChip's import of the taxonomy had put industries.json into the
+ *     client closure of every route that imports the barrel, and EngravedHero's flag then the taxonomy). (The flag-off home's
  *     picker seed, amendment 8b, is read in tests/trust/home_shape.test.ts beside the rebuilt home's.)
  * Imports the root layout through the repo's next/font stub (scripts/spikes/stub_next_font.cjs, which also empties the CSS import),
  * calls the icons and the card as Next would and reads their PNG headers. BLIND SPOT, stated: this proves what the files export and
@@ -25,7 +26,9 @@
  * for a year, while the drawing lives in src/components/brand/LogoMark.tsx and src/app/_site-icon.tsx. An edit to the mark that leaves
  * the four icon files (icon.tsx, icon1.tsx, icon2.tsx, apple-icon.tsx) as they were keeps the old icon in every returning browser for
  * a year, so such an edit touches them in the same commit (the "Mark revised" date in each header). The hash is Next's, taken at
- * build, so nothing here can tell that the mark changed; LogoMark.tsx and _site-icon.tsx say so where the edit is made.
+ * build, so nothing here can tell that the mark changed; LogoMark.tsx and _site-icon.tsx say so where the edit is made. The
+ * manifest's two icon URLs are written by hand and carry no hash, so they carry ?v=<MARK_REVISED> (one constant in _site-icon.tsx),
+ * and this test holds the four headers' dates to that constant, so the date a person moves is the one the manifest reads.
  * Run: npx tsx tests/app/head.test.ts
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
@@ -54,8 +57,11 @@ const pngSize = (buf: Buffer): [number, number] | null =>
 /* ---------------- THE CLIENT CLOSURE, BY A STATIC WALK (no build) ---------------- */
 /* The walk the Task 7 review wrote (its closure.cjs), copied here so the guard runs in the chain. Its rules, stated so a number is read
    for what it is:
-   - the entries are SERVER modules (the layout, SiteChrome, a barrel), each walked only to find the client modules ("use client" at the
-     top) it imports; a client module found is a ROOT;
+   - the entries are SERVER modules (the layout, SiteChrome), each walked only to find the client modules ("use client" at the
+     top) it imports; a client module found is a ROOT. A module that a CLIENT file imports is not an entry of that kind: the kit
+     barrel is taken as a root itself (clientClosure's second argument), because a client component that imports it bundles every
+     module it re-exports, whether that module is a client file or not (EngravedHero is a server file, and its import of the flag
+     put the country list, and through it the taxonomy, into the bundle of every client file that imports the barrel);
    - the CLIENT CLOSURE is every module a root reaches by static import or re-export, whatever its own directive, because a client file
      bundles what it imports;
    - a barrel counts every module it re-exports: this repo sets neither sideEffects nor optimizePackageImports, so a first-party barrel
@@ -110,7 +116,7 @@ function readModule(file: string): Mod {
 }
 /** `files` maps each module of the closure to the module that first imported it ("" for a root); `bytes` is their source. */
 type Closure = { roots: string[]; files: Map<string, string>; bytes: number; lazy: string[] };
-function clientClosure(entries: string[]): Closure {
+function clientClosure(entries: string[], entriesAreClient = false): Closure {
   const roots = new Set<string>(), seen = new Set<string>();
   const findRoots = (file: string): void => {
     if (seen.has(file)) return;
@@ -119,7 +125,7 @@ function clientClosure(entries: string[]): Closure {
     if (m.client) { roots.add(file); return; }
     for (const s of m.statics) if (!/\.(json|css)$/.test(s)) findRoots(s);
   };
-  entries.forEach(findRoots);
+  if (entriesAreClient) entries.forEach((e) => roots.add(e)); else entries.forEach(findRoots);
   const files = new Map<string, string>(), lazy = new Set<string>();
   const walk = (file: string, via: string): void => {
     if (files.has(file)) return;
@@ -206,10 +212,29 @@ async function main() {
   const manifest = (await tryImport<{ default: () => Record<string, unknown> }>(() => import("../../src/app/manifest")))?.default() ?? {};
   const icons = (manifest.icons as Array<{ src: string; sizes: string; type: string }>) ?? [];
   check("the manifest names the site, says what it is, opens at the home, is white and read in a browser", manifest.name === "Margin Atlas" && manifest.short_name === "Margin Atlas" && manifest.description === def && manifest.start_url === "/" && manifest.display === "browser" && manifest.theme_color === "white" && manifest.background_color === "white", { file: "src/app/manifest.ts" });
+  /* THE MANIFEST'S TWO ICON URLS CARRY A VERSION (cleanup round 2). Next links /icon, /icon1 and /icon2 from every head with the hash of
+     the icon file's own text, but the manifest is written by hand, and an address with no hash is cached by a browser for a year
+     under its own key: the old 192 or 512 would stay on a home screen after the mark changes. The version is the mark's revised date,
+     one constant (MARK_REVISED) beside the shared drawing, read by the manifest; the "Mark revised" date in each icon file's header
+     is the same day, so the date a person changes in the header and the one the manifest reads cannot part. */
+  const shared = await tryImport<{ MARK_REVISED?: unknown }>(() => import("../../src/app/_site-icon"));
+  const version = typeof shared?.MARK_REVISED === "string" ? shared.MARK_REVISED : "";
   check(
-    `the manifest's icons are the numbered files' own 192 and 512, /icon1 and /icon2 (${icons.map((i) => i.src).join(", ")})`,
-    JSON.stringify(icons) === JSON.stringify([{ src: "/icon1", sizes: "192x192", type: "image/png" }, { src: "/icon2", sizes: "512x512", type: "image/png" }]) && icons.every((i) => ICONS.some((f) => f.address === i.src && !!f.mod?.size && i.sizes === `${f.mod.size.width}x${f.mod.size.height}`)),
-    { file: "src/app/manifest.ts", remedy: "point the manifest's icons at /icon1 (192x192) and /icon2 (512x512), the addresses of src/app/icon1.tsx and icon2.tsx; /icon/192 and /icon/512 are not routes" },
+    `the mark's revised date is one constant beside the shared drawing, a day (MARK_REVISED in ${SHARED_ICON}: ${version || "absent"})`,
+    /^\d{4}-\d{2}-\d{2}$/.test(version),
+    { file: SHARED_ICON, remedy: `export const MARK_REVISED = "<the day the mark or its drawing last changed, yyyy-mm-dd>" from ${SHARED_ICON}, and have src/app/manifest.ts put it on both icon URLs as ?v=` },
+  );
+  const HEADED = ["src/app/icon.tsx", "src/app/icon1.tsx", "src/app/icon2.tsx", "src/app/apple-icon.tsx"];
+  const parted = HEADED.filter((f) => /Mark revised: (\d{4}-\d{2}-\d{2})/.exec(readFileSync(f, "utf8"))?.[1] !== version);
+  check(
+    `the four icon files' "Mark revised" headers read the constant's day, ${version || "absent"} (${parted.length ? `parted: ${parted.join(", ")}` : "all four"})`,
+    version !== "" && parted.length === 0,
+    { file: parted[0] ?? SHARED_ICON, remedy: `change MARK_REVISED in ${SHARED_ICON} and the "Mark revised" date in the header of icon.tsx, icon1.tsx, icon2.tsx and apple-icon.tsx in the same commit: the header's text is what Next takes the head links' hash from, and the constant is what the manifest's two icon URLs carry` },
+  );
+  check(
+    `the manifest's icons are the numbered files' own 192 and 512, /icon1 and /icon2, each with ?v=${version || "<MARK_REVISED>"} (${icons.map((i) => i.src).join(", ")})`,
+    version !== "" && JSON.stringify(icons) === JSON.stringify([{ src: `/icon1?v=${version}`, sizes: "192x192", type: "image/png" }, { src: `/icon2?v=${version}`, sizes: "512x512", type: "image/png" }]) && icons.every((i) => ICONS.some((f) => f.address === i.src.split("?")[0] && !!f.mod?.size && i.sizes === `${f.mod.size.width}x${f.mod.size.height}`)),
+    { file: "src/app/manifest.ts", remedy: `point the manifest's icons at /icon1?v=\${MARK_REVISED} (192x192) and /icon2?v=\${MARK_REVISED} (512x512), the addresses of src/app/icon1.tsx and icon2.tsx with the version from ${SHARED_ICON}: an address with no version is cached for a year under its own key; /icon/192 and /icon/512 are not routes` },
   );
   const creamWhite = ["src/app/icon.tsx", "src/app/icon1.tsx", "src/app/icon2.tsx", SHARED_ICON, "src/app/apple-icon.tsx", "src/app/manifest.ts", LAYOUT].filter((f) => existsSync(f) && /#ffffff/i.test(code(f)));
   check(`no new file writes white as #ffffff, the hex the cream gate counts (${creamWhite.join(", ") || "none"})`, creamWhite.length === 0, { file: creamWhite[0] ?? "src/app/icon.tsx", remedy: "write white as the word white" });
@@ -313,7 +338,7 @@ async function main() {
      reaches the taxonomy through another module, and it never looked at the routes that import the barrel, where ProfileChip's
      import of @/lib/taxonomy still put industries.json (130 KB of source) into the client closure. */
   const CHROME_ROOTS = ["src/components/HeaderAuth.tsx", "src/components/HeaderSearch.tsx", "src/components/MobileNav.tsx", "src/components/NavLinks.tsx", "src/components/brand/PhoneLockup.tsx", "src/components/kit/WatchTray.tsx", "src/components/newsletter/NewsletterSignupVariants.tsx"];
-  const HEAVY_REMEDY = "the first link of the chain is the module to change: have it read what it needs from a light module (src/lib/country_list.ts holds the country list with no imports; src/lib/nav.ts holds the country codes), or load the heavy module with import() on use, as src/components/NavigatorForm.tsx loads src/lib/home/picker.ts";
+  const HEAVY_REMEDY = "the file named is the one that imports the taxonomy, the last link of the chain: have it read what it needs from a light module (src/lib/country_list.ts holds the country list with no imports; src/lib/nav.ts holds the country codes), or load the heavy module with import() on use, as src/components/NavigatorForm.tsx loads src/lib/home/picker.ts";
   const chrome = clientClosure([LAYOUT, CHROME]);
   const missingRoots = CHROME_ROOTS.filter((r) => !chrome.roots.includes(r));
   check(
@@ -321,11 +346,15 @@ async function main() {
     missingRoots.length === 0 && heavyEntry(chrome) === undefined,
     { file: (heavyEntry(chrome) && chrome.files.get(heavyEntry(chrome) as string)) || LAYOUT, remedy: heavyEntry(chrome) ? HEAVY_REMEDY : "the walk found fewer than the seven chrome roots (HeaderAuth, HeaderSearch, MobileNav, NavLinks, PhoneLockup, WatchTray, NewsletterSignupVariants): read it against the layout and SiteChrome, or update CHROME_ROOTS in tests/app/head.test.ts with the change" },
   );
-  const barrel = clientClosure(["src/components/kit/index.ts"]);
+  /* THE BARREL AS A CLIENT ROOT (cleanup round 2): a client component that imports the barrel bundles every module the barrel
+     re-exports. The walk used to take the barrel as a server entry and look only for the "use client" files under it, so EngravedHero
+     (a server file) and its import of the flag, the country list and the taxonomy were never in it, while CompareClient, DecideWizard,
+     YouDashboard, MakeItYoursPanel and CityWatchAction all carried them. */
+  const barrel = clientClosure(["src/components/kit/index.ts"], true);
   check(
-    `an import of the kit barrel pulls neither the taxonomy nor industries.json into a client bundle (its client closure: ${sizeOf(barrel)}; ${heavyLine(barrel)})`,
-    barrel.roots.length > 0 && heavyEntry(barrel) === undefined,
-    { file: (heavyEntry(barrel) && barrel.files.get(heavyEntry(barrel) as string)) || "src/components/kit/index.ts", remedy: heavyEntry(barrel) ? HEAVY_REMEDY : "the walk found no client module under the kit barrel: read it against src/components/kit/index.ts" },
+    `a client module that imports the kit barrel bundles the barrel's ${barrel.files.size} files (${Math.round(barrel.bytes / 1024)} KB of source), with neither the taxonomy nor industries.json (${heavyLine(barrel)})`,
+    barrel.files.size > 1 && heavyEntry(barrel) === undefined,
+    { file: (heavyEntry(barrel) && barrel.files.get(heavyEntry(barrel) as string)) || "src/components/kit/index.ts", remedy: heavyEntry(barrel) ? HEAVY_REMEDY : "the walk found nothing under the kit barrel: read it against src/components/kit/index.ts" },
   );
   const sentry = code("src/instrumentation-client.ts");
   check("Sentry starts when the browser is idle (within four seconds), not before hydration", /function startSentry\(\): void \{\s*Sentry\.init\(/.test(sentry) && (sentry.match(/Sentry\.init\(/g) ?? []).length === 1 && /requestIdleCallback\(startSentry, \{ timeout: 4000 \}\)/.test(sentry) && /setTimeout\(startSentry, 1\)/.test(sentry) && /sendDefaultPii: false/.test(sentry), { file: "src/instrumentation-client.ts" });

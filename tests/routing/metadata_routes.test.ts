@@ -112,7 +112,7 @@ for (const { file, address } of routes) {
    per address: a reader on a shared address (a school, an office, a phone network) spent the page budget on files. They pass
    untouched, first, like robots.txt and the images; a counted request carries x-ratelimit-limit and an uncounted one does not.
    Every such file src/app holds is asked, from the walk, so an icon3.tsx added tomorrow reds here until the middleware skips it. */
-const RATE_REMEDY = "pass the manifest and the icon routes untouched, first, like robots.txt and the images: webmanifest in ONCE_SKIPPED and the icon addresses in ICON_ROUTES (src/middleware.ts), so a browser's requests for them are never counted against the page budget (60 a minute per address)";
+const RATE_REMEDY = "pass the manifest and the icon routes untouched, first, like robots.txt and the images: webmanifest in ONCE_SKIPPED (src/middleware.ts) and the icon addresses in ICON_ROUTES (src/lib/routing/icon_routes.ts, which the session refresh reads too), so a browser's requests for them are never counted against the page budget (60 a minute per address)";
 let counter = 0;
 const rawResponse = (address: string, ip: string) => middleware(new NextRequest(`https://www.marginatlas.com${address}`, {
   headers: { host: "www.marginatlas.com", "user-agent": UA, "accept-language": "en-GB,en;q=0.9", "x-real-ip": ip },

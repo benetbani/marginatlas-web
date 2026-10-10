@@ -15,7 +15,9 @@
  * and /icon2?<hash>, the hash of THAT ICON FILE'S OWN TEXT (Next takes it at build from the file), and the PNG is served immutable
  * for a year. The drawing lives here and in src/components/brand/LogoMark.tsx, so an edit to either that leaves icon.tsx, icon1.tsx
  * and icon2.tsx as they were keeps the old icon in every returning browser. Change the "Mark revised" date in the header of each of
- * the three (and of src/app/apple-icon.tsx) in the same commit, so the hash moves. Not machine-checked: the hash is Next's.
+ * the three (and of src/app/apple-icon.tsx) in the same commit, so the hash moves, and MARK_REVISED below to the same day: the
+ * manifest's two icon URLs carry no hash of Next's, so they carry ?v=<MARK_REVISED>, and tests/app/head.test.ts holds the four
+ * headers' dates to the constant. The hash itself is not machine-checked: it is Next's.
  *
  * WHY IT LIVES HERE AND NOT IN src/components/brand: a leaf file inside the app folder, not a route (src/app/og/_card.tsx is the
  * precedent: only page, route and the metadata names are routable, and this one is none of them, so it adds no URL). The render-graph
@@ -25,7 +27,12 @@
 import { ImageResponse } from "next/og";
 import { LogoMark } from "@/components/brand/LogoMark";
 
-/** The icon, a square `px` pixels a side: the mark at seven eighths of it, centred on white. */
+/** The day the mark or its drawing last changed. src/app/manifest.ts puts it on both icon URLs as ?v=<this>, so a browser that cached
+ *  /icon1 or /icon2 for a year under an address with no hash asks again after the mark changes. The "Mark revised" date in the
+ *  header of icon.tsx, icon1.tsx, icon2.tsx and apple-icon.tsx is this same day (tests/app/head.test.ts reads them against it). */
+export const MARK_REVISED = "2026-10-10";
+
+/** The icon,a square `px` pixels a side: the mark at seven eighths of it, centred on white. */
 export function siteIcon(px: number): ImageResponse {
   return new ImageResponse(
     (
