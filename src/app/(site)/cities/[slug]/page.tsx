@@ -431,21 +431,13 @@ export default async function CityPage({
          first and a second gutter on top of the first: 1024px of content where
          every sibling page type reads at 1072, and the only doubled padding on
          the site. This is now a bare flex row. */}
-      {/* `[&_[id]]:scroll-mt-*`: every anchor here had scroll-margin-top: 0.
-          Measured in a browser, not inferred: jumping to `#owners-keep` from the
-          right-rail nav put the eyebrow and the h2 behind the opaque bar and
-          dropped the reader onto the lede. One class on the column rather than
-          eleven `className` props, because the anchors sit on BeatCard, on bare
-          divs and on OneThing alike.
-
-          32 below lg, not 24. The 24 was sized against a masthead measured at
-          89px at desktop; the bar is 117px below 414 and 125px from 768 to
-          1023, where it wraps to two rows. Re-measured at 375 after that fix,
-          `#headline` and `#peers` still landed with their first ink under the
-          bar. 128px clears the tallest of the four heights, and `lg:` goes back
-          to 24 at 1024 where 89 is real. */}
+      {/* NO SCROLL OFFSET ON THIS COLUMN. The page's scroll-padding-top (globals.css) is the bar's whole height, so a jump to
+          `#owners-keep` or any other anchor lands the eyebrow and the h2 just under the bar. An offset here (the 128px
+          below lg and 96px from lg this column once carried, sized when the bar had no padding of its own) is ADDED to that padding
+          and lands every target a whole bar too low. The zoom row above is a card that clips its own sticky bar, and the chip
+          row below xl is the last child of the page, so no second sticky element stands above a target. */}
       <div className="xl:flex xl:gap-16">
-        <div className="min-w-0 [&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24 xl:flex-1">
+        <div className="min-w-0 xl:flex-1">
           {/* THE HERO, in ONE card.
              Was `<HeroWash category="city">`, which paints `.atlas-wash--city`:
              an OPAQUE `var(--atlas-surface-paper)` ground with an amber radial

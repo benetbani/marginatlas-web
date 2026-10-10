@@ -372,8 +372,6 @@
     nav,
     button,
     [class*="hover\\:"],
-    .scroll-mt-20 #ask-atlas,
-    .scroll-mt-20 #pick-a-city,
     [id="newsletter"] {
       display: none !important;
     }

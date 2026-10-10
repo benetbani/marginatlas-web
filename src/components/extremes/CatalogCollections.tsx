@@ -44,7 +44,7 @@ export function CatalogCollections() {
       {collections.map((c) => {
         const held = c.measured > 0;
         return (
-          <section key={c.id} id={c.id} className="scroll-mt-24">
+          <section key={c.id} id={c.id}>
             <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
               <h3 className="font-display text-xl font-semibold tracking-tight text-ink-900 md:text-2xl">
                 {c.title}

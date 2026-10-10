@@ -63,7 +63,7 @@ export function MarginIndexView({ board }: { board: MarginIndexBoard }) {
           <div className="spine-scope">
             <DecisionRowHeader signals={SIGNALS} />
             {board.rows.map((r) => (
-              <div key={r.id} id={r.anchor} className="scroll-mt-24">
+              <div key={r.id} id={r.anchor}>
                 <DecisionRow d={toDatum(r)} signals={SIGNALS} />
               </div>
             ))}

@@ -396,11 +396,11 @@ export default async function ExtremesPage() {
 
       {/* EVERY LENS AS A SECTION, IN ORDER, NO CHIP ROW (QUEUE ui:extremes-chips; his refusals of 2026-09-22 name filter
          chips). The server resolved every block already; the chips only hid all but one. Each section carries its lens key
-         as an anchor, held clear of the sticky masthead as the site's other anchors are (scroll-mt). */}
+         as an anchor, held clear of the sticky masthead by the page's scroll-padding-top (globals.css), as every anchor is. */}
       {lenses.length > 0 ? (
         <div className="space-y-12 md:space-y-16">
           {lenses.map((l) => (
-            <section key={l.key} id={l.key} aria-label={l.label} className="scroll-mt-32 lg:scroll-mt-24">
+            <section key={l.key} id={l.key} aria-label={l.label}>
               {l.node}
             </section>
           ))}

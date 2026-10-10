@@ -228,7 +228,7 @@ export default async function NeighborhoodHub({
                  read as a washed patch of sky. `.atlas-card` is
                  `position: relative`, so it sits on top, and its .955 fill lets
                  the photograph read through instead of blocking it. */
-              className="atlas-card scroll-mt-24 group p-5 md:p-6"
+              className="atlas-card group p-5 md:p-6"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">

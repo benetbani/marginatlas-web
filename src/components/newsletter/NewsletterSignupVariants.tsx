@@ -90,7 +90,7 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
        background is not drawn on this site. */
     <div
       id="newsletter"
-      className="relative w-full bg-white border-t border-parchment scroll-mt-20"
+      className="relative w-full bg-white border-t border-parchment"
     >
       <form
         onSubmit={submit}

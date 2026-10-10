@@ -55,7 +55,7 @@ export default function AboutDataPage() {
       <section className="mt-10">
         {/* THE FOUR KINDS (milestone 1, M9): the register ledger's own words, the same four every truth-pass figure carries in its
             markup (src/lib/spine/provenance.ts), each with a figure a reader meets on the United Kingdom's pages. */}
-        <h2 id="reading" className="scroll-mt-24 text-xl font-semibold text-ink-900">How to read a figure</h2>
+        <h2 id="reading" className="text-xl font-semibold text-ink-900">How to read a figure</h2>
         <p className="mt-3 text-ink-800">
           Every figure on the United Kingdom&rsquo;s pages is one of four kinds, and where it matters the line under it says which.
         </p>
@@ -129,7 +129,7 @@ export default function AboutDataPage() {
         {/* WHEN WE ESTIMATE (P36.1, the rewrites of 2026-10-06): the old post "When we extrapolate and when we don't" moved here, as
             BLOG.md says, its tiers and badges gone with the pages that printed them; /blog/when-we-extrapolate lands on this id
             (data/blog/moved_posts.json). */}
-        <h2 id="estimates" className="scroll-mt-24 text-xl font-semibold text-ink-900">When we estimate</h2>
+        <h2 id="estimates" className="text-xl font-semibold text-ink-900">When we estimate</h2>
         <ul className="mt-4 space-y-3 text-ink-800">
           <li className="flex gap-3">
             <span className="text-atlas-500 shrink-0">·</span>
@@ -150,7 +150,7 @@ export default function AboutDataPage() {
         {/* WHAT THE FIGURES LEAVE OUT (P36.1, the rewrites of 2026-10-06): the old post "What we won't show" moved here, as BLOG.md
             says, rewritten from the data pack's own ledger (public/data/uk/2026.10/ledger.json, each row's leaves_out), so it says
             what the UK tables leave out in their own terms; /blog/what-we-omit lands on this id (data/blog/moved_posts.json). */}
-        <h2 id="leave-out" className="scroll-mt-24 text-xl font-semibold text-ink-900">What the figures leave out</h2>
+        <h2 id="leave-out" className="text-xl font-semibold text-ink-900">What the figures leave out</h2>
         <ul className="mt-4 space-y-3 text-ink-800">
           <li className="flex gap-3">
             <span className="text-atlas-500 shrink-0">·</span>
@@ -182,7 +182,7 @@ export default function AboutDataPage() {
       <section className="mt-10">
         {/* FAILURES, TRADE BY TRADE (plan 2026-10-09, home introduction, proof 1): the join the home's first proof opens on, its
             figures from src/lib/home/how_made.ts (data/home/method.json), never typed; no source named here (#sources does). */}
-        <h2 id="failures" className="scroll-mt-24 text-xl font-semibold text-ink-900">Failures, trade by trade</h2>
+        <h2 id="failures" className="text-xl font-semibold text-ink-900">Failures, trade by trade</h2>
         {joins ? (
           <p className="mt-3 text-ink-800">
             The official failure figures stop at broad industries. We read a year of liquidation and administration notices,{" "}
@@ -199,7 +199,7 @@ export default function AboutDataPage() {
       <section className="mt-10">
         {/* KEPT AND DATED (plan 2026-10-09, home introduction, proof 2): what the site's own archive holds, from
             src/lib/home/archive.ts (data/home/archive.json, its log's own count), never typed. */}
-        <h2 id="archive" className="scroll-mt-24 text-xl font-semibold text-ink-900">Kept and dated</h2>
+        <h2 id="archive" className="text-xl font-semibold text-ink-900">Kept and dated</h2>
         {archive ? (
           <p className="mt-3 text-ink-800">
             The company register&rsquo;s free file lists only the companies alive today and is replaced every month, so a month not
@@ -233,7 +233,7 @@ export default function AboutDataPage() {
             links here (SourcesFoot.tsx). The list is src/lib/spine/uk_sources.ts, the one module allowed to name a source, built
             from the repository's own records; an attribution line prints only where those records name the licence. The
             licence asks that nothing imply a source endorses the site, so the opening line says so. */}
-        <h2 id="sources" className="scroll-mt-24 text-xl font-semibold text-ink-900">Sources and licences</h2>
+        <h2 id="sources" className="text-xl font-semibold text-ink-900">Sources and licences</h2>
         <p className="mt-3 text-ink-800">
           The United Kingdom&rsquo;s pages are built on these sources. Each is named with what the pages print from it and, where
           its licence asks for one, its attribution line. No source endorses Margin Atlas or checks how its figures are used here.

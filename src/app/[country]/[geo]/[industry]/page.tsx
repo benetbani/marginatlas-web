@@ -844,19 +844,14 @@ async function CellPageBody({
           and the correction form. AtlasFrame's fixed layers sit at z-index 0
           and paint above any static sibling. The decision stack's own sections
           already carry .atlas-card and were never at risk. */}
-      {/* `[&_[id]]:scroll-mt-*`: every anchor in this column had
-          scroll-margin-top: 0, so the right-rail TOC scrolled each target to
-          y=0 and the sticky bar then covered its heading. One class on the
-          column, since the anchors sit on sections, divs and kit components
-          alike.
-
-          32 below lg, not the 24 this originally shipped with: that value was
-          sized against a masthead measured at 89px, and the bar is 117px from
-          320 to 413 and 125px from 768 to 1023, where it wraps to two rows. So
-          96px was short by 21 and 29 in those two bands and the heading went
-          back under the bar. 128px clears the tallest; `lg:` returns to 24 at
-          1024, where 89 is the real height. Measured, per page type. */}
-      <div className="relative [&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24 xl:flex-1 xl:min-w-0">
+      {/* ONE OFFSET STAYS ON THIS COLUMN, FOR THE SECOND STICKY BAR. The page's scroll-padding-top (globals.css) clears the
+          masthead, so the 128px below lg and 96px from lg this column once carried, ADDED to it, landed every target a bar
+          too low and are gone. The DimensionSwitcher is sticky from 768 under the same bar (md:sticky, top the same token),
+          so from 768 a target must also clear the switcher's own height, and that height is the data's. Measured on the
+          rendered component: 60px on one row, 106px on two (a Size field, or a Type select), 126px to 172px with a Type
+          switch. 106 is the two-row height most trades have; a taller switcher still hides the top of a target, and its own
+          fix is to stop being sticky or to publish its height. Under 768 it is not sticky, so there is no offset there. */}
+      <div className="relative md:[&_[id]]:scroll-mt-[106px] xl:flex-1 xl:min-w-0">
       <CellDataset
         url={url}
         industryName={cell.industry_name || industry}

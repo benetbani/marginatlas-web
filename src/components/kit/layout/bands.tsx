@@ -44,7 +44,7 @@ export function Band({
   return (
     <section
       id={id}
-      className={[first ? "mt-10" : "mt-16", "scroll-mt-24", className]
+      className={[first ? "mt-10" : "mt-16", className]
         .filter(Boolean)
         .join(" ")}
     >

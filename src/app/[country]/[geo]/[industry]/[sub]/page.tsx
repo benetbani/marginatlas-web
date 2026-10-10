@@ -458,14 +458,12 @@ async function NeighborhoodCellPageBody({
       {/* `relative` lifts the furniture in this column that is not a card:
           the breadcrumb, the zoom row and the closing stamp. AtlasFrame's fixed
           layers sit at z-index 0 and paint above any static sibling. */}
-      {/* `[&_[id]]:scroll-mt-*`: every anchor here had scroll-margin-top: 0, so
-          a jump-nav click buried the heading it jumped to. Same one-class fix
-          as the sibling trade page, and the same corrected value: the masthead
-          is 89px only from 1024 up. It is 117px below 414 and 125px from 768 to
-          1023, both because the bar wraps to two rows, so the 24 (96px) this
-          shipped with was short in exactly the two bands a phone and a tablet
-          land in. 32 is 128px and clears all four heights. */}
-      <div className="relative [&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24 xl:flex-1 xl:min-w-0">
+      {/* NO SCROLL OFFSET ON THIS COLUMN. The page's scroll-padding-top (globals.css) is the bar's whole height, so a jump-nav
+          click lands the heading just under the bar. An offset here (the 128px below lg and 96px from lg this column once
+          carried, sized when the bar had no padding of its own) is ADDED to that padding and lands every target a whole bar
+          too low. The zoom row is not sticky on this page and the chip row below xl is the last child of the page, so no
+          second sticky element stands above a target. */}
+      <div className="relative xl:flex-1 xl:min-w-0">
         <Breadcrumb items={breadcrumbs} />
 
         {/* Neighborhood adjustment band: the one thing this page has that the

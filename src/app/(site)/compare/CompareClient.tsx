@@ -904,27 +904,12 @@ export function CompareClient({
 
   return (
     <div className="xl:flex xl:gap-12">
-      {/* `[&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24`. THE SIXTH PAGE TYPE
-          WITH A JUMP NAV, and the only one the anchor pass missed: `cde67eb2`
-          fixed country, city, industry, trade and cell and never reached this
-          file, so all four targets here computed `scroll-margin-top: 0px`.
-
-          The value is not the 24 those five got, because the masthead is not
-          89px. Measured on this page at seven widths, the bar's own height is:
-
-              320 to 413     117px   (the wordmark wraps to two lines)
-              414 to 767      85px
-              768 to 1023    125px   (the desktop nav appears and wraps)
-              1024 and up     89px
-
-          89 is only the LAST of four. `scroll-mt-24` is 96px, so it clears the
-          bar at 414 and above 1024 and is short by 21px and 29px in the other
-          two bands. 32 is 128px, which clears the tallest of them with air;
-          `lg:` returns to 24 at 1024 where the bar is genuinely 89.
-
-          The descendant form, not one class per anchor, for the reason the
-          original commit gives: the targets sit on section and on div alike. */}
-      <div className="min-w-0 flex-1 space-y-12 [&_[id]]:scroll-mt-32 md:space-y-16 lg:[&_[id]]:scroll-mt-24">
+      {/* NO SCROLL OFFSET ON THIS COLUMN. The page's scroll-padding-top (globals.css) is the bar's whole height, so a jump to
+          #compare-pickers, #where-each-wins, #revenue-spread or #compare-grid lands the heading just under the bar. An
+          offset here (the 128px below lg and 96px from lg this column once carried, sized when the bar had no padding of
+          its own) is ADDED to that padding and lands every target a whole bar too low. The nav is last in the page, below
+          the column, so no second sticky element stands above a target. */}
+      <div className="min-w-0 flex-1 space-y-12 md:space-y-16">
       {/* ----- Pick the matchup ----- */}
       {/* <HeroWash category="business"> REMOVED. .atlas-wash paints
           var(--atlas-surface-paper) as its BASE layer, fully opaque, under the

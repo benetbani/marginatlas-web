@@ -906,27 +906,12 @@ async function CountryPageBody({ params }: { params: Promise<Params> }) {
           the closing freshness stamp. AtlasFrame's fixed layers sit at z-index
           0, which paints them over any static sibling; one positioned ancestor
           puts the whole column back in front of the photograph. */}
-      {/* `[&_[id]]:scroll-mt-*` is not decoration. Every anchor target on this
-          page had scroll-margin-top: 0, so clicking any entry in the right-rail
-          "On this page" landed the section's eyebrow and h2 UNDER the opaque
-          masthead and the reader arrived mid-sentence. Applied once on the
-          column instead of at ~20 call sites because the anchors are section,
-          div and component alike.
-
-          32 BELOW lg, NOT 24. The original fix used 24 (96px) against a
-          masthead measured at 89px, and 89 is only ONE of the four heights
-          that bar has. Measured at seven widths on the rendered page:
-
-              320 to 413     117px   (the wordmark wraps to two lines)
-              414 to 767      85px
-              768 to 1023    125px   (the desktop nav appears and wraps)
-              1024 and up     89px
-
-          So 96px cleared the bar in two bands and was short by 21px on a phone
-          and 29px at tablet width, where the heading it was supposed to reveal
-          went back under the bar. 32 is 128px and clears the tallest of the
-          four; `lg:` returns to 24 at 1024, where the bar really is 89. */}
-      <div className="relative [&_[id]]:scroll-mt-32 lg:[&_[id]]:scroll-mt-24 xl:min-w-0 xl:flex-1">
+      {/* NO SCROLL OFFSET ON THIS COLUMN. The page's scroll-padding-top (globals.css) is the bar's whole height, so a jump from the
+          right-rail "On this page" lands the section's eyebrow and h2 just under the bar. An offset here (the 128px below
+          lg and 96px from lg this column once carried, sized when the bar had no padding of its own) is ADDED to that padding and
+          lands every target a whole bar too low. The chip row that stands in for the rail below xl is the last child of the
+          page, below this column, so no second sticky element stands above a target. */}
+      <div className="relative xl:min-w-0 xl:flex-1">
         {/* Breadcrumb */}
         <nav className="mb-4 text-sm text-ink-700/70">
           <a href="/" className="hover:text-atlas-600">Home</a>
