@@ -63,6 +63,7 @@
  */
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { HOME_TRY } from "../src/lib/home/destination";
 
 const ROOT = process.cwd();
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");
@@ -212,6 +213,16 @@ for (const abs of walkSeedDir(SEEDS_ROOT)) {
  * plumbers) are a deliberate breadth demo, not a spine example slate. It is no
  * longer scanned. `NAVIGATOR_FORM` const retained above for documentation. */
 void NAVIGATOR_FORM;
+
+/* PART 3 (plan 2026-10-09, home introduction): the picker's line is no longer a breadth demo. It is the home's three examples, each a
+ * link to its London page, and the spec draws them from rule 32's set, so they are held to it, read from the module that prints them
+ * (src/lib/home/destination.ts HOME_TRY), never from the form's text. */
+for (const t of HOME_TRY) {
+  if (isAllowedTrade(t.word)) continue;
+  jsonReport.push(`src/lib/home/destination.ts: HOME_TRY "${t.word}" (${t.trade}) , outside the rule-32 set`);
+  violations++;
+}
+console.log(`verify_trade_set: the picker's examples , ${HOME_TRY.map((t) => t.word).join(", ")}`);
 
 console.log(`verify_trade_set: allowed set , ${ALLOWED_RAW.join(", ")}`);
 

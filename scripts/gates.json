@@ -1609,6 +1609,7 @@
         "src/components/GlobalSearch.tsx",
         "src/components/HeaderSearch.tsx",
         "src/components/NavigatorForm.tsx",
+        "src/components/StructuredData.tsx",
         "src/lib/home/destination.ts"
       ],
       "claims": []
@@ -3623,7 +3624,8 @@
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 32: \"One shared component and interaction kit, and one fixed set of example businesses (restaurant, grocery, pharmacy, salon, gym, auto repair), reused across all page",
       "reads": [
-        "src/components/NavigatorForm.tsx"
+        "src/components/NavigatorForm.tsx",
+        "src/lib/home/destination.ts: HOME_TRY \"${t.word}\" (${t.trade}) , outside the rule-32 set"
       ],
       "claims": []
     },

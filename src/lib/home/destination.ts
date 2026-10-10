@@ -64,3 +64,25 @@ export function homeDestination({ country, city = "", trade = "" }: { country: s
   const geo = place || getDefaultRegionForCountry(cc) || cl;
   return `/${cl}/${geo}/${industryToSlug(String(trade))}`;
 }
+
+/* THE PICKER'S EXAMPLES, EACH THE PAGE THAT ANSWERS IT (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 9; the
+   home's spec of 2026-10-09, section 3, approved as written: "Try restaurants, gyms or salons in London", each trade a link to its
+   London page, from rule 32's six, each printing register figures). The trade ids and the words the line prints; the city is the one
+   the form opens on. Each link is this file's own answer to the search its words describe, so a link and the form never disagree. The
+   words live here and not in the copy table: the form is a client component, and the table is the whole site's. */
+export const HOME_TRY_CITY = "london";
+export const HOME_TRY: ReadonlyArray<{ trade: string; word: string }> = [
+  { trade: "restaurants", word: "restaurants" },
+  { trade: "sports_fitness", word: "gyms" },
+  { trade: "hairdressers_beauty", word: "salons" },
+];
+
+/** The examples as the links the line prints: each the page a search for it lands on. */
+export function homeTryLinks(): Array<{ word: string; href: string }> {
+  return HOME_TRY.map((t) => ({ word: t.word, href: homeDestination({ country: "GB", city: HOME_TRY_CITY, trade: t.trade }) }));
+}
+
+/** The examples' city as the form names it (the city list's label). */
+export function homeTryCityLabel(): string {
+  return UK_CITIES.find((c) => c.slug === HOME_TRY_CITY)?.label ?? "";
+}

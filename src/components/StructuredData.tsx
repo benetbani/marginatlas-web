@@ -5,6 +5,7 @@
  * derivation techniques. Schema.org is a public surface that scrapers and
  * AI crawlers can read. Keep it generic.
  */
+import { COPY } from "@/lib/spine/copy";
 
 type CellDatasetProps = {
   url: string;
@@ -278,8 +279,9 @@ export function Organization() {
     "@type": "Organization",
     name: "Margin Atlas",
     url: "https://www.marginatlas.com",
-    description:
-      "Small-business benchmarks worldwide: revenue, employment, and wage distributions.",
+    /* The site's one definition, the line the home prints under its picker (plan 2026-10-09, home introduction), so the structured
+       data says what the page says. No logo field: the only mark is 32px, under the 112px a logo needs. */
+    description: COPY.home.definition,
     // NOTE: no `sameAs` linking to data mirrors. We don't broadcast where the
     // raw data lives publicly.
   };

@@ -3,12 +3,17 @@
  * first). The destination answers only with pages that exist, read off the lists the routes and the sitemap read: the seven UK
  * cities against rule 32's six trades, anywhere in the UK, a city alone and the UK alone, never /gb/gb/...; elsewhere, today's
  * behaviour. The form opens on restaurants in London, offers the UK's seven cities and submits through the destination with no
- * alert; /search lists pages that exist, at most a screen of them; and no dialog search is left in the header.
+ * alert; /search lists pages that exist, at most a screen of them; and no dialog search is left in the header. Since plan 2026-10-09
+ * (home introduction): the picker's three examples are rule 32's trades, each a link to the London page that answers it; the h1 asks
+ * the example's question first; the site's one definition is the structured data's.
  *
  * Run: npx tsx tests/home/destination.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
-import { homeDestination, UK_CITIES } from "../../src/lib/home/destination";
+import { homeDestination, UK_CITIES, HOME_TRY, HOME_TRY_CITY, homeTryLinks, homeTryCityLabel } from "../../src/lib/home/destination";
+import { londonTradeHero } from "../../src/lib/spine/london_trade_hero";
+import { HERO_BUSINESSES, HERO_CITIES } from "../../src/lib/hero-words";
+import { COPY } from "../../src/lib/spine/copy";
 import { getCitiesForCountryCode, CASCADE_PREFILLS } from "../../src/lib/home/search_cascade";
 import { searchSite, SEARCH_ROWS_MAX } from "../../src/lib/home/site_search";
 import { countryPageTarget } from "../../src/lib/geo/page_targets";
@@ -68,6 +73,16 @@ check("a query under two letters lists nothing", searchSite("l").uk.length + sea
 
 /* No dialog search left. */
 check("the header's search is a link to /search, and the dialog is gone", /href="\/search"/.test(readFileSync("src/components/HeaderSearch.tsx", "utf8")) && !existsSync("src/components/GlobalSearch.tsx"));
+
+/* THE PICKER'S EXAMPLES AND THE HERO (plan 2026-10-09, home introduction, Task 9; the home's spec, sections 3 and 5). */
+const tries = homeTryLinks();
+check(`the picker's three examples are rule 32's trades (${HOME_TRY.map((t) => t.trade).join(", ")})`, HOME_TRY.length === 3 && HOME_TRY.every((t) => SIX.includes(t.trade)));
+check(`each lands on its London trade page, a page that exists (${tries.map((t) => t.href).join(", ")})`, tries.length === 3 && tries.every((t) => /^\/gb\/london\/[a-z0-9-]+$/.test(t.href) && exists(t.href)));
+check("each London page prints the register's figures", tries.every((t) => londonTradeHero(t.href.split("/").pop() as string) !== null));
+check(`the examples' city is the form's own (${homeTryCityLabel()})`, homeTryCityLabel() === "London" && HOME_TRY_CITY === CASCADE_PREFILLS[0].city);
+check("the form prints the examples as links and no longer names a city page's trade", /homeTryLinks\(\)/.test(form) && /<a href=\{t\.href\}/.test(form) && !/salons in Manchester|gyms in Leeds/.test(form));
+check(`the h1 asks the example's question first ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}"), the words his, the order changed only`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London" && [...HERO_BUSINESSES].sort().join() === "bakery,barber,boutique,butcher,gym,hotel,pharmacy,restaurant");
+check(`the site's definition is one sentence of twelve words at most, and the structured data's Organization description ("${COPY.home.definition}")`, COPY.home.definition.split(/\s+/).length <= 12 && !COPY.home.definition.includes(";") && /export function Organization\(\)[\s\S]*?description: COPY\.home\.definition/.test(readFileSync("src/components/StructuredData.tsx", "utf8")));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/destination: all pass");

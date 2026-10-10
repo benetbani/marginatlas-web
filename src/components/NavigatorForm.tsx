@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useMemo, useEffect } from "react";
+import { Fragment, useState, useMemo, useEffect } from "react";
 import { ComboField, type ComboOption } from "./ComboField";
 import {
   COUNTRIES,
@@ -11,7 +11,7 @@ import {
 } from "@/lib/taxonomy";
 import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
 import { getCitiesForCountryCode, CASCADE_PREFILLS } from "@/lib/home/search_cascade";
-import { homeDestination } from "@/lib/home/destination";
+import { homeDestination, homeTryLinks, homeTryCityLabel } from "@/lib/home/destination";
 import { elevation } from "@/lib/design-tokens";
 
 /**
@@ -34,6 +34,11 @@ import { elevation } from "@/lib/design-tokens";
  * top rule, the "The Navigator" eyebrow, and the "Surprise me" button were removed in the
  * 2026-07-12 taste pass (see the inline notes).
  */
+
+/* The line's three examples and their city, from the destination's one list (src/lib/home/destination.ts, HOME_TRY), so a link and a
+   search for the same words land on one page. */
+const TRIES = homeTryLinks();
+const TRY_CITY = homeTryCityLabel();
 
 /** Client-side gate read. Matches lib/audience.ts on the server. */
 function readClientGate(): Gate {
@@ -76,9 +81,9 @@ export function NavigatorForm({ showHeading = true }: { showHeading?: boolean } 
      genuinely different examples and holds still while it does it.
 
      One real example, kept, because the design intent it served is right: the
-     form should never read blank. CASCADE_PREFILLS[0] is restaurants in Los
-     Angeles, which is also the first example in that footer line, so the card
-     shows the reader the same thing twice instead of two different things. */
+     form should never read blank. CASCADE_PREFILLS[0] is restaurants in
+     London, the home's worked example (plan 2026-10-09, home introduction),
+     and the first of the footer line's three examples. */
   const [country, setCountry] = useState(CASCADE_PREFILLS[0].country);
   const [city, setCity] = useState(CASCADE_PREFILLS[0].city);
   const [business, setBusiness] = useState(CASCADE_PREFILLS[0].business);
@@ -234,15 +239,22 @@ export function NavigatorForm({ showHeading = true }: { showHeading?: boolean } 
       {/* Footer bar: sample line + submit. */}
       <div className="rounded-b-2xl border-t border-paper-350 bg-white px-5 md:px-8 py-4 md:py-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          {/* THE EXAMPLES ARE LINKS (plan 2026-10-09, home introduction; the home's spec, section 3: "Try restaurants, gyms or salons in
+              London", each a link to the page that answers exactly what it names, read without script). Until then two of the three
+              named a city off London, where a search lands on the city's page and not on the trade named. */}
           <p className="text-xs text-cocoa-700/80 leading-relaxed">
             <span className="font-semibold uppercase tracking-[0.12em] text-ink-500 mr-1.5">
               Try
             </span>
-            restaurants in London
-            <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
-            salons in Manchester
-            <span aria-hidden="true" className="mx-1.5 text-cocoa-700/40">·</span>
-            gyms in Leeds
+            {TRIES.map((t, i) => (
+              <Fragment key={t.href}>
+                {i === 0 ? null : i === TRIES.length - 1 ? " or " : ", "}
+                <a href={t.href} className="underline decoration-cocoa-700/40 underline-offset-2 hover:text-ink-900">
+                  {t.word}
+                </a>
+              </Fragment>
+            ))}
+            {` in ${TRY_CITY}`}
           </p>
           <div className="flex items-center shrink-0">
             {/* Soft-terracotta submit, the ONE action the card leads to (rule 37). The

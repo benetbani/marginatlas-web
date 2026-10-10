@@ -2847,6 +2847,9 @@ export const COPY = {
       placeDoor: "See London {trade}",
       paysDoor: "Try your own",
     },
+    /** WHAT THE SITE IS, ONCE (plan 2026-10-09, home introduction; the spec's sections 1 and 7, DRAFT approved as written): the hero's
+     *  one plain line under the picker, and the Organization's description in the structured data (src/components/StructuredData.tsx). */
+    definition: "Margin Atlas shows what a small business earns and its owner keeps.",
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */
     pro: {
