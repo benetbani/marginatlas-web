@@ -2865,6 +2865,8 @@ export const COPY = {
       label: "Read from the record",
       title: "Read from the record",
       line: "What the UK pages draw on, counted in {month}.",
+      /** The band's one door, to the list its first count is (critique pass 2, P1.2): three words, About the figures' #sources. */
+      door: "See every source",
       of: "of",
       labels: { sources: "Official datasets", laws: "Legal rates and limits", sales: "London trades with sales", failures: "Trades with failure rates" },
     },

@@ -17,8 +17,12 @@
  *
  * Layout (critique section 4): from 1024 one row, the heading and line in the left quarter, the cells in the right three quarters,
  * each after the first behind a 1px `--band-rule` with 20 of air either side; under 1024 the heading and line on top, 32 above a two
- * by two grid, a rule between its columns and one above its second row, 24 inside each; a label keeps two lines' room so the cells end
- * level. The line's measure is the prose measure every paragraph takes (globals.css), half the page at 768. The zone's padding (64,
+ * by two grid, a rule between its columns and one above its second row, 24 inside each; the cells of one row end level by the grid's own
+ * stretch (a label once reserved a second line, `min-h-10`, which left a one-line label 20px of terracotta under itself and the rule low:
+ * critique pass 2, P1.2; measured at 320, 375, 768, 1024 and 1280, the rule's air under the tallest label is the 24 of the cell's padding).
+ * One door under the line, "See every source", to About the figures' sources: the band's first count is exactly the list printed there,
+ * and evidence a reader can open is worth more than evidence asserted. Ink at 14, weight 500, its arrow after, underlined on hover with the
+ * decoration in the band's rule colour; ink on the terracotta is 7.06 to 1 and the global focus floor draws its ring. The line's measure is the prose measure every paragraph takes (globals.css), half the page at 768. The zone's padding (64,
  * 48, 40) and its bleed edge to edge are THE ZONES' own.
  *
  * NO WORD LEFT ALONE (the reform's precedents: text-pretty on the worked example's lines, text-balance on the joins ring's caption; a
@@ -40,11 +44,13 @@ const CELL = [
   "border-t pr-6 pt-6 lg:border-l lg:border-t-0 lg:pl-5 lg:pr-0 lg:pt-0",
   "border-l border-t pl-6 pt-6 lg:border-t-0 lg:pl-5 lg:pt-0",
 ];
+/** The band's one door: the worked example's (ink at 14, weight 500, an arrow after, underlined on hover only) with its decoration in the band's rule colour. */
+const DOOR = "tap-y inline-flex items-baseline gap-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)] no-underline decoration-[var(--band-rule)] underline-offset-2 hover:underline";
 function RecordCount({ c, at }: { c: SiteCount; at: number }) {
   const C = COPY.home.record;
   return (
     <div data-count={c.key} className={`flex min-w-0 flex-col-reverse justify-end border-[var(--band-rule)] ${CELL[at] ?? CELL[3]}`}>
-      <dt className="mt-2 min-h-10 text-pretty text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{C.labels[c.key]}</dt>
+      <dt className="mt-2 text-pretty text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{C.labels[c.key]}</dt>
       <dd className="leading-none text-[var(--c-ink)]">
         <Fig prov={c.prov} className="text-[length:var(--t-focal)] leading-none">
           {c.figure}
@@ -72,6 +78,12 @@ export function HomeRecord({ record }: { record: SiteCounts }) {
                 {C.title}
               </h2>
               <p className="mt-2 text-pretty text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">{C.line.replace("{month}", record.month)}</p>
+              <div className="mt-4">
+                <a href="/about-data#sources" className={DOOR}>
+                  <span>{C.door}</span>
+                  <span aria-hidden>&#8594;</span>
+                </a>
+              </div>
             </div>
             <dl data-sibling-figures="" className="grid grid-cols-2 lg:grid-cols-4 lg:gap-x-5">
               {record.counts.map((c, i) => (

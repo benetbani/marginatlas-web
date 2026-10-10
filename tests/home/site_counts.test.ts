@@ -165,8 +165,21 @@ function holdBand(where: string, band: string): void {
   const grey = GREYS.filter((g) => band.includes(g));
   check(`${where}: ink on the terracotta, no grey and no red text (${grey.join(", ") || "none"})`, grey.length === 0 && (band.match(/text-\[var\(--c-ink\)\]/g) ?? []).length >= 2 + 2 * counts.length && !band.includes("--t-answer"), at);
   check(`${where}: its rules are the band's own`, band.includes("border-[var(--band-rule)]") && !/border-\[var\(--c-(?:border|line-strong)\)\]/.test(band), at);
+  /* THE ROWS' PADDING IS EVEN AROUND THE RULE (critique pass 2, P1.2). The label carried `min-h-10`, a second line reserved for every label, so
+     a one-line label left about 20px of terracotta under itself and the horizontal rule stood low (48 above it and 28 below at 768 and 375).
+     The grid already stretches the cells of one row to one height, so the reserve did nothing useful: the rule's padding is 24 on both
+     sides, and the rows stay even by the stretch (measured at 320, 375, 768, 1024 and 1280 in the browser). */
+  check(`${where}: no label reserves a second line (no min-h-10), so the rule's air is the cells' own 24 above and below`, !/min-h-10/.test(band) && cells.every((c) => /<dt class="mt-2 text-pretty /.test(c[3])), { file: DRAWING, remedy: "remove min-h-10 from RecordCount's dt: the grid stretches a row's cells to one height, and a reserved second line left the rule 20px low" });
+  /* THE DOOR TO WHAT THE BAND COUNTS (critique pass 2, P1.2): "32 Official datasets" counts exactly the list About the figures prints under
+     #sources, and evidence a reader can open is worth more than evidence asserted. One door under the line in the left column, 16 down
+     (mt-4): ink at 14, weight 500, its arrow after, underlined on hover with its decoration in the band's own rule colour; ink on the
+     terracotta is 7.06 to 1 and nothing on the band turns terracotta on terracotta. */
+  const door = /<div class="mt-4"><a href="\/about-data#sources" class="([^"]*)"><span>([^<]*)<\/span><span aria-hidden="true">→<\/span><\/a><\/div>/.exec(band);
+  const lineAt = band.indexOf(`>${esc(line)}</p>`), doorAt = band.indexOf('href="/about-data#sources"'), listAt = band.indexOf("<dl");
+  check(`${where}: one door under the line to About the figures' sources, "${C.door}", ink at 14 weight 500, its decoration in the band's rule colour`, !!door && door[2] === esc(C.door) && words(C.door) <= 3 && /\btext-\[length:var\(--t-body\)\] font-medium leading-5 text-\[var\(--c-ink\)\] no-underline decoration-\[var\(--band-rule\)\] underline-offset-2 hover:underline\b/.test(door[1]) && lineAt > 0 && lineAt < doorAt && doorAt < listAt && (band.match(/<a /g) ?? []).length === 1 && !/--c-line-strong|--terra/.test(door[1]), { file: DRAWING, remedy: "draw one door under the band's line: <div className=\"mt-4\"><a href=\"/about-data#sources\"> the words of COPY.home.record.door and an aria-hidden arrow, ink at 14 weight 500, no underline until hover, decoration in --band-rule" });
 }
 if (built) holdBand("the drawing", renderToStaticMarkup(React.createElement(HomeRecord, { record: built })));
+check("the door lands: About the figures holds #sources", /id="sources"/.test(readFileSync("src/app/(site)/about-data/page.tsx", "utf8")), { file: "src/app/(site)/about-data/page.tsx", remedy: "keep the sources section's id=\"sources\": the band's door lands on /about-data#sources" });
 
 const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
 if (render) {

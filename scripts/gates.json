@@ -1971,6 +1971,7 @@
       "reads": [
         "data/uk/registers/failures.json",
         "scratchpad/harness/pages/home-gb.html",
+        "src/app/(site)/about-data/page.tsx",
         "src/components/spine/home/HomeRecord.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/lib/home/site_counts.ts",
