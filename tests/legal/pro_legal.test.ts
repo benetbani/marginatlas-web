@@ -8,7 +8,9 @@
  * AND NEVER A DRAFT WITH A GAP (plan 2026-10-10, the home reformed to ship, Task 8; the spec's decision 11, the ship audit's 5.1):
  * with the switch on, a page whose draft still holds a [HIS: ...] gap draws its text of today (LegalDraft's required `now`), so no
  * gap can print; the pricing page links to #refunds only once the terms' draft is drawn; the launch checklist's item (j) is a reason
- * while the switch is on and a gap remains. The privacy draft names Sentry in the live page's own words.
+ * while the switch is on and a gap remains. The privacy draft names Sentry in the live page's own words. FIX ROUND 8: item (j) is
+ * also a reason while it cannot see the switch (launch day sets it in Vercel's dashboard, which the terminal that runs launch:check
+ * cannot read) and a gap remains; the privacy draft says what the email list holds and why.
  *
  * Run: npx tsx tests/legal/pro_legal.test.ts
  */
@@ -93,8 +95,14 @@ check("the pricing page links to the terms' cancelling section only when the swi
 const filled = PRO_LEGAL.map(fill);
 check("legalLaunchLine is a reason while the switch is on and a gap remains", PRO_LEGAL.flatMap((d) => gapsIn(d)).length === 0 || !legalLaunchLine(true).ok);
 check("it is no reason while the switch is off, and none once every gap is filled", legalLaunchLine(false).ok && legalLaunchLine(true, filled).ok);
+/* FIX ROUND 8: launch day sets the switches in Vercel's dashboard, which the terminal that runs launch:check cannot read, so a
+   switch no source answers is unknown (null), never off. */
+check("legalLaunchLine cannot see the switch: a reason while a gap remains, and it says so", PRO_LEGAL.flatMap((d) => gapsIn(d)).length === 0 || (!legalLaunchLine(null).ok && legalLaunchLine(null).text.startsWith("cannot see Vercel's switches: fill the gaps first, or measure /terms on production")));
+check("an unseen switch is no reason once every gap is filled, and it names no state it did not read", legalLaunchLine(null, filled).ok && !/paywall is off/.test(legalLaunchLine(null).text));
 const launch = readFileSync("scripts/verify_launch_ready.ts", "utf8");
-check("launch:check runs item (j) on the module's own judge, before anything loads .env.local", /function itemJ\(\): void \{\s*const line = legalLaunchLine\(isPaywallOn\(\)\);/.test(launch) && /const order = \[[^\]]*"j"\]/.test(launch) && /if \(wanted\("d"\)\) itemD\(\);\s*if \(wanted\("j"\)\) itemJ\(\);/.test(launch));
+check("launch:check runs item (j) on the module's own judge over the two switches as readFlag reads them, before anything loads .env.local", /async function itemJ\(\): Promise<void> \{\s*const switches = readPaywallSwitches\(/.test(launch) && /legalLaunchLine\(switches\.on\)/.test(launch) && !/legalLaunchLine\(isPaywallOn\(\)\)/.test(launch) && /const order = \[[^\]]*"j"\]/.test(launch) && /if \(wanted\("d"\)\) itemD\(\);\s*if \(wanted\("j"\)\) await itemJ\(\);/.test(launch));
+const launchFlat = launch.replace(/\r?\n\s*\*\s*/g, " "); /* the comment's line breaks do not split a phrase */
+check("launch:check states the blind spot: a switch set only in Vercel's dashboard is unknown to it", /cannot see a variable set only in Vercel's dashboard/.test(launchFlat) && /measures production's \/terms/.test(launchFlat));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("legal/pro_legal: all pass");

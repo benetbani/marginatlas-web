@@ -19,7 +19,10 @@
  * them, and not the bar's pixels.
  * Run: npx tsx tests/trust/launch_guards.test.ts
  */
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -39,7 +42,7 @@ const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string
 };
 const code = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
 const sourceFiles = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? sourceFiles(`${dir}/${e.name}`) : /\.(?:ts|tsx)$/.test(e.name) ? [`${dir}/${e.name}`] : []));
-const words =(html: string) => html.replace(/<[^>]*>/g, " ").replace(/&#x27;/g, "'").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+const words = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/&#x27;/g, "'").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 
 async function main() {
   const React = (await import("react")).default;
@@ -205,6 +208,57 @@ async function main() {
   check("the edge config still drops Next's dynamic-render signal and hands any other report on whole", typeof edge.beforeSend === "function" && edge.beforeSend(dirty("error"), { originalException: new Error("couldn't be rendered statically") }) === null && edge.sendDefaultPii === false, { file: SENTRY_EDGE, remedy: SENTRY_REMEDY });
   check(`SENTRY_WORDS promises none of "no name", "no email" or "no personal data" (${SENTRY_WORDS.split(/\s+/).length} words)`, !/\bno (?:name|email|personal data)\b/i.test(SENTRY_WORDS), { file: "src/lib/legal/pro_legal.ts", remedy: SENTRY_REMEDY });
   check("SENTRY_WORDS says what a server report leaves out and what still goes with a report", SENTRY_WORDS.includes("A report from our servers also holds the request's headers, without cookies or location.") && SENTRY_WORDS.includes("We do not attach your name or account to a report, but anything written in an address or an error message goes with it."), { file: "src/lib/legal/pro_legal.ts", remedy: SENTRY_REMEDY });
+
+  /* ---------------- LAUNCH:CHECK'S ITEM (j) SEES THE SWITCH IT GUARDS (fix round 8) ---------------- */
+  /* Launch day sets NEXT_PUBLIC_AUTH_ENABLED and NEXT_PUBLIC_PAYWALL in Vercel's dashboard (LAUNCH-SWITCHES row 10) and runs
+     launch:check from his terminal (row 13), where neither is set: item (j) read isPaywallOn() from this process's environment
+     alone and printed "[ok] ... the paywall is off" while production had it on. It now reads both switches through
+     verify_sample_switch's readFlag (the environment, then .env.production, then .env.local), prints where each came from, and
+     treats a switch no source answers as unknown. Item (j) runs by hand as a subset (`--only=j`) over a scratch folder of env
+     files (`--env-root`) and an unreachable site (`--site`), so nothing reads the real env files and nothing leaves the machine. */
+  const J_FILE = "scripts/verify_launch_ready.ts";
+  const J_REMEDY = "read both switches through readFlag (scripts/lib/paywall_switches.ts), print the source of each, and treat a switch no source answers as unknown: with a gap left that is a reason that says it cannot see Vercel's switches (scripts/verify_launch_ready.ts, itemJ)";
+  const { PRO_LEGAL: legalDrafts, gapsIn: gapsOf } = await import("../../src/lib/legal/pro_legal");
+  const gapsLeft = legalDrafts.flatMap((d) => gapsOf(d)).length;
+  const SWITCH_NAMES = ["NEXT_PUBLIC_PAYWALL", "NEXT_PUBLIC_AUTH_ENABLED"];
+  const scratchFolder = (files: Record<string, string>) => { const dir = mkdtempSync(join(tmpdir(), "fix8-switches-")); for (const [name, text] of Object.entries(files)) writeFileSync(join(dir, name), text); return dir; };
+  const noSwitches = scratchFolder({});
+  const bothOnInFile = scratchFolder({ ".env.production": "NEXT_PUBLIC_PAYWALL=1\nNEXT_PUBLIC_AUTH_ENABLED=1\n" });
+  const itemJ = (root: string) => {
+    const env: NodeJS.ProcessEnv = { ...process.env };
+    for (const name of SWITCH_NAMES) delete env[name];
+    const r = spawnSync(process.execPath, ["node_modules/tsx/dist/cli.mjs", J_FILE, "--only=j", `--env-root=${root}`, "--site=http://127.0.0.1:9"], { encoding: "utf8", env, cwd: process.cwd(), timeout: 180_000 });
+    const out = r.stdout ?? "";
+    return { status: r.status, line: out.split("\n").find((l) => /^\[(?:ok|no)\] \(j\)/.test(l)) ?? `(no item (j) line: exit ${r.status}, ${r.error?.message ?? (r.stderr ?? "").slice(0, 200)})` };
+  };
+  const blind = itemJ(noSwitches);
+  check(`with no switch in the environment and none in the env files, item (j) does not call the paywall off (${blind.line.slice(0, 260)})`,
+    gapsLeft === 0 ? /^\[ok\] \(j\)/.test(blind.line) && blind.status === 0
+      : /^\[no\] \(j\)/.test(blind.line) && blind.line.includes("cannot see Vercel's switches: fill the gaps first, or measure /terms on production") && !/paywall is off/.test(blind.line) && blind.status === 1, { file: J_FILE, remedy: J_REMEDY });
+  const seen = itemJ(bothOnInFile);
+  check(`with both switches in a scratch .env.production, item (j) reads them and names the file (${seen.line.slice(0, 260)})`,
+    gapsLeft === 0 ? /^\[ok\] \(j\)/.test(seen.line) && seen.status === 0
+      : /^\[no\] \(j\)/.test(seen.line) && seen.line.includes("the paywall is on") && seen.line.includes("NEXT_PUBLIC_PAYWALL ON (.env.production)") && seen.line.includes("NEXT_PUBLIC_AUTH_ENABLED ON (.env.production)") && seen.status === 1, { file: J_FILE, remedy: J_REMEDY });
+  const switchReader = await import("../../scripts/lib/paywall_switches").catch(() => null);
+  check("the paywall switch reader exists and reads the paywall's two switches through readFlag", switchReader !== null && typeof switchReader.readPaywallSwitches === "function", { file: "scripts/lib/paywall_switches.ts", remedy: J_REMEDY });
+  if (switchReader) {
+    const readWith = (root: string, env: Record<string, string> = {}) => {
+      const saved = SWITCH_NAMES.map((name) => [name, process.env[name]] as const);
+      for (const name of SWITCH_NAMES) delete process.env[name];
+      Object.assign(process.env, env);
+      try { return switchReader.readPaywallSwitches(root); } finally { for (const [name, value] of saved) { if (value === undefined) delete process.env[name]; else process.env[name] = value; } }
+    };
+    const none = readWith(noSwitches);
+    check(`no source answers: the paywall is unknown, not off (${none.words})`, none.on === null && none.paywall.source === "unset" && none.accounts.source === "unset", { file: "scripts/lib/paywall_switches.ts", remedy: J_REMEDY });
+    const filed = readWith(bothOnInFile);
+    check(`both switches on in .env.production: on, and the words name the file (${filed.words})`, filed.on === true && filed.paywall.source === ".env.production" && filed.words.includes("NEXT_PUBLIC_PAYWALL ON (.env.production)"), { file: "scripts/lib/paywall_switches.ts", remedy: J_REMEDY });
+    const overruled = readWith(bothOnInFile, { NEXT_PUBLIC_PAYWALL: "0" });
+    check(`the environment is read before the files: PAYWALL=0 over a file with both on is off, from the environment (${overruled.words})`, overruled.on === false && overruled.paywall.source === "environment", { file: "scripts/lib/paywall_switches.ts", remedy: J_REMEDY });
+    const half = readWith(scratchFolder({ ".env.local": "NEXT_PUBLIC_AUTH_ENABLED=1\n" }));
+    check(`accounts on in .env.local and the paywall unanswered: unknown, since the paywall needs both (${half.words})`, half.on === null && half.accounts.source === ".env.local", { file: "scripts/lib/paywall_switches.ts", remedy: J_REMEDY });
+    const off = readWith(scratchFolder({ ".env.production": "NEXT_PUBLIC_PAYWALL=0\n" }));
+    check(`the paywall off in a file and accounts unanswered: off, since either switch off keeps it off (${off.words})`, off.on === false && off.paywall.source === ".env.production", { file: "scripts/lib/paywall_switches.ts", remedy: J_REMEDY });
+  }
 
   /* ---------------- THE STATUS PAGE (source: it fetches the network when it renders) ---------------- */
   const status_ = code(STATUS);

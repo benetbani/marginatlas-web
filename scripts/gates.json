@@ -1811,6 +1811,8 @@
       "browser": false,
       "asserts": "TRUST AND THE LAUNCH GUARDS (plan docs/superpowers/plans/2026-10-10-home-reform, Task 8, in the design repo; the spec's decisions 10 and 11 and section 4, \"Trust\"; the ship audit's 4.2, 4.5, 4.6, 5.2 ",
       "reads": [
+        "scripts/lib/paywall_switches.ts",
+        "scripts/verify_launch_ready.ts",
         "src/",
         "src/app/(site)/privacy/page.tsx",
         "src/app/(site)/status/page.tsx",

@@ -63,10 +63,20 @@
  *   (j) the legal drafts carry no [HIS: ...] gap while the paywall is on
  *       (plan 2026-10-10, the home reformed to ship, Task 8; the ship
  *       audit's 5.1): src/lib/legal/pro_legal.ts's own legalLaunchLine()
- *       over isPaywallOn(), read before anything loads .env.local, as (d)
- *       is. With a gap left the legal pages keep today's text (LegalDraft),
- *       which names no Pro, so a launch with one is a reason; the gaps
- *       left are counted on the line either way.
+ *       over the paywall's two switches as (d)'s readFlag() reads them
+ *       (scripts/lib/paywall_switches.ts: this terminal's environment,
+ *       then .env.production, then .env.local, each reading printed with
+ *       its source), read before anything loads .env.local, as (d) is.
+ *       A switch no source answers is UNKNOWN, never off (fix round 8 of
+ *       that plan: launch day sets both switches in Vercel's dashboard,
+ *       which this terminal cannot read, and (j) used to print "the
+ *       paywall is off" then). With a gap left the legal pages keep
+ *       today's text (LegalDraft), which names no Pro, so a launch with
+ *       one is a reason, and so is not being able to see the switch while
+ *       one is left; the gaps left are counted on the line either way.
+ *       The line also says whether production's /terms carries
+ *       id="refunds", the section only the drafts have, fetched the way
+ *       (b) and (i) read production (never in the chain).
  *
  * THE BLIND SPOTS, stated before the first line is read as a fact.
  *  - (a) reads the harness's static render, not the Next page: a block the
@@ -82,6 +92,14 @@
  *    a sentence the data track writes; this checks the sentence has the
  *    words, not that the block on the page is withheld (that is (a)'s
  *    renderer and the page gates' business).
+ *  - (d) and (j) read this terminal's environment and the two env files,
+ *    which is where a build on this machine looks. They cannot see a
+ *    variable set only in Vercel's dashboard, where launch day sets the
+ *    paywall's two switches (LAUNCH-SWITCHES row 10), and a file's answer
+ *    is the file's: the dashboard may hold a different value. So for (j) a
+ *    switch no source answers is unknown, never off, and with a gap left
+ *    that is a reason; the line prints the source of each reading and
+ *    measures production's /terms for id="refunds" beside it.
  *
  * NEVER LOOSENED TO PASS: a `[no]` on the first run is the plan for the
  * fortnight after (plan step 50's "done means"); the remedy is on the page,
@@ -91,7 +109,10 @@
  *   npm run launch:check
  *   npx tsx scripts/verify_launch_ready.ts [--marker=<string> [--marker-url=/gb]] [--site=https://marginatlas.com] [--only=a,g]
  * --only runs a subset by hand (a fault plant, a re-fetch after a deploy);
- * its last line says SUBSET and it never writes the checklist file.
+ * its last line says SUBSET and it never writes the checklist file. With it,
+ * --env-root=<dir> reads (j)'s two env files from that folder instead of the
+ * repo, so a plant (and tests/trust/launch_guards.test.ts) never touches the
+ * real ones.
  *
  * PLANTED ONCE, 2026-09-19, for the one item that is a parser of its own
  * ((g); the others carry their instruments' own plants): with item 36's
@@ -106,8 +127,9 @@ import { basename, resolve } from "node:path";
 import { preflight } from "./harness/preflight.mjs";
 import { shellMangled } from "./lib/watch_args.mjs";
 import { readFlag, judge, honestyMissing, HONESTY } from "./verify_sample_switch";
-import { areSampleMarksVisible, isAuthEnabled, isPaywallOn } from "../src/lib/feature_flags";
+import { areSampleMarksVisible, isAuthEnabled } from "../src/lib/feature_flags";
 import { legalLaunchLine } from "../src/lib/legal/pro_legal";
+import { readPaywallSwitches } from "./lib/paywall_switches";
 
 const ROOT = process.cwd();
 const OUT = "scratchpad/launch";
@@ -147,7 +169,10 @@ const REQUIREMENTS_OVERRIDE = ONLY ? arg("requirements", null) : null;
    deployed, so its ledger section can be read before the deploy off the harness's render; the checklist itself always reads
    production. */
 const HOME_FILE = ONLY ? arg("home-file", null) : null;
-const TSX = [process.execPath, "node_modules/tsx/dist/cli.mjs"];
+/* A scratch folder of env files for (j), honoured only in a subset run (fix round 8): the paywall's two switches are read from it
+   instead of the repo's .env.production and .env.local, so a plant never touches them; the checklist itself always reads the repo. */
+const ENV_ROOT = ONLY ? arg("env-root", null) : null;
+const TSX =[process.execPath, "node_modules/tsx/dist/cli.mjs"];
 
 /* ------------------------------------------------------------------------ */
 /* THE EXEMPLARS: three per surface, the harness's page first.               */
@@ -622,11 +647,22 @@ async function itemI(home: string | null): Promise<void> {
 /* (j) the legal drafts drawn only whole                                     */
 /* ------------------------------------------------------------------------ */
 
-/** The drafts' gaps against the paywall's switch, by the module's own judge (src/lib/legal/pro_legal.ts, legalLaunchLine). Run
- *  before anything loads .env.local into this process, as (d) is, so the switch it reads is the build's. */
-function itemJ(): void {
-  const line = legalLaunchLine(isPaywallOn());
-  record("j", line.ok, line.text);
+/** The drafts' gaps against the paywall's switches, by the module's own judge (src/lib/legal/pro_legal.ts, legalLaunchLine), the
+ *  switches read the way (d) reads its own (scripts/lib/paywall_switches.ts) and the source of each printed. Run before anything
+ *  loads .env.local into this process, as (d) is, so "environment" means this shell's. A switch no source answers is unknown:
+ *  launch day sets both in Vercel's dashboard, which this terminal cannot read (fix round 8), so with a gap left that is a reason.
+ *  Then the one thing that can be measured from here: whether production's /terms carries id="refunds", the section only the
+ *  drafts have. */
+async function itemJ(): Promise<void> {
+  const switches = readPaywallSwitches(ENV_ROOT ?? undefined);
+  const line = legalLaunchLine(switches.on);
+  const terms = await fetchPage("/terms");
+  say(terms.line);
+  const carries = terms.body.includes('id="refunds"');
+  const production = terms.status === 200
+    ? `production's /terms ${carries ? `carries id="refunds": the drafts are drawn there` : `does not carry id="refunds": today's text is drawn there`}`
+    : `production's /terms was not reached (${terms.status ?? terms.error ?? "no answer"})`;
+  record("j", line.ok, `${line.text}; read here: ${switches.words}; ${production}`);
 }
 
 /* ------------------------------------------------------------------------ */
@@ -644,9 +680,9 @@ async function main(): Promise<number> {
   const wanted = (id: string) => !only || only.has(id);
   if (only) { const unknown = [...only].filter((id) => !order.includes(id)); if (unknown.length) { process.stdout.write(`--only names no item: ${unknown.join(", ")} (the items are ${order.join(", ")})\n`); return 2; } }
 
-  /* (d) is read before anything loads .env.local into this process, so the flag sources it prints are the build's. */
+  /* (d) and (j) are read before anything loads .env.local into this process, so the flag sources they print are the build's. */
   if (wanted("d")) itemD();
-  if (wanted("j")) itemJ();
+  if (wanted("j")) await itemJ();
   if (wanted("a")) itemA();
   let home: string | null = null;
   if (wanted("b")) home = (await itemB()).home;

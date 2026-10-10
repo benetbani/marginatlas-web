@@ -202,11 +202,14 @@ export function draftReady(doc: LegalDoc): boolean {
 
 /** The launch checklist's line on the drafts (scripts/verify_launch_ready.ts, item j): a reason while the paywall is on and a gap
  *  remains, since the legal pages would then keep today's text, which names no Pro; the count either way, so the gaps left stay in
- *  sight. `docs` is the three drafts unless a test hands it filled copies. */
-export function legalLaunchLine(paywallOn: boolean, docs: readonly LegalDoc[] = PRO_LEGAL): { ok: boolean; text: string } {
+ *  sight. `paywallOn` is null when the terminal that runs the check cannot see the switch (launch day sets it in Vercel's
+ *  dashboard; fix round 8): with a gap left that is a reason too, never a quiet "off". `docs` is the three drafts unless a test
+ *  hands it filled copies. */
+export function legalLaunchLine(paywallOn: boolean | null, docs: readonly LegalDoc[] = PRO_LEGAL): { ok: boolean; text: string } {
   const gaps = docs.flatMap((d) => gapsIn(d).map((g) => `${d.key}: ${g}`));
   const counts = docs.map((d) => `${d.key} ${gapsIn(d).length}`).join(", ");
   if (gaps.length === 0) return { ok: true, text: `the legal drafts hold no gap (${counts}), so the paywall's pages draw them` };
+  if (paywallOn === null) return { ok: false, text: `cannot see Vercel's switches: fill the gaps first, or measure /terms on production. ${gaps.length} gaps for him remain (${counts}), so if the paywall is on the legal pages keep today's text, which names no Pro, until he fills ${gaps.join(" | ")}` };
   if (!paywallOn) return { ok: true, text: `${gaps.length} gaps for him remain (${counts}), and the paywall is off, so the pages keep today's text` };
   return { ok: false, text: `the paywall is on and ${gaps.length} gaps for him remain (${counts}): the legal pages keep today's text, which names no Pro, until he fills ${gaps.join(" | ")}` };
 }

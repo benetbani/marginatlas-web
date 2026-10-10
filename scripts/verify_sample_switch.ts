@@ -34,7 +34,8 @@
  *
  * THE READERS ARE EXPORTED (plan step 50, 2026-09-19): the launch checklist (scripts/verify_launch_ready.ts, by hand, never in the
  * chain) reads the flags through `readFlag` and judges them through `judge`, so there is one parser of the env files and one rule.
- * `main()` runs only when this file is the entry point.
+ * Item (j) of that checklist reads the paywall's two switches through the same `readFlag` (scripts/lib/paywall_switches.ts; fix
+ * round 8), which takes the folder to read the env files from. `main()` runs only when this file is the entry point.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -98,12 +99,14 @@ function isOn(value: string | undefined): boolean | null {
   return null;
 }
 
-export function readFlag(name: string): { on: boolean | null; source: Source } {
+/** One switch: the process environment, then `.env.production`, then `.env.local`, and which of them answered. `root` is the
+ *  folder the two env files are read from: the repo, unless a test hands a scratch folder (scripts/lib/paywall_switches.ts). */
+export function readFlag(name: string, root: string = ROOT): { on: boolean | null; source: Source } {
   const fromEnv = isOn(process.env[name]);
   if (fromEnv != null) return { on: fromEnv, source: "environment" };
-  const prod = isOn(parseEnvFile(resolve(ROOT, ".env.production"))[name]);
+  const prod = isOn(parseEnvFile(resolve(root, ".env.production"))[name]);
   if (prod != null) return { on: prod, source: ".env.production" };
-  const local = isOn(parseEnvFile(resolve(ROOT, ".env.local"))[name]);
+  const local = isOn(parseEnvFile(resolve(root, ".env.local"))[name]);
   if (local != null) return { on: local, source: ".env.local" };
   return { on: null, source: "unset" };
 }
