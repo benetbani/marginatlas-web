@@ -1629,11 +1629,13 @@
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/home/HomeExample.tsx",
         "src/components/spine/home/HomeProofs.tsx",
+        "src/components/spine/zones.tsx",
         "src/lib/hero-words.ts",
         "src/lib/home/proofs.ts",
         "src/lib/home/search_cascade.ts",
         "src/lib/home/worked_example.ts",
-        "src/lib/spine/copy.ts"
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/uk_tax_on_profit.ts"
       ],
       "claims": []
     },

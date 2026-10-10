@@ -22,6 +22,12 @@
  *    30.
  *  - `data-archetype="ring"`, `data-visual="1"`, `data-share` the whole
  *    percent. No second hue.
+ *  - `tone="ink"` (plan 2026-10-10, the home reformed to ship, Task 4; the
+ *    critique's P1.1): the sweep in ink2 on the soft grey, for a ring in a
+ *    quiet card (the home's joins), where the accent belongs to the page's
+ *    answer. The default, "accent", is the terracotta pair as before.
+ *  - THE CAP (P1.6): round, but butt above 90 percent, so a nearly closed
+ *    ring shows no notch at twelve o'clock where the round cap overlapped.
  *
  * Gated by the archetype harness (stories `ring`: the exemplar, a share over
  * a hundred, a share under a quarter) and the page laws.
@@ -33,18 +39,19 @@ import { provAttrs, type Provenance } from "@/lib/spine/provenance";
  *  (plan 2026-10-09, home introduction): "lead" draws a 96px ring with its figure at the lead rung (16, semibold), for a ring that is a
  *  card's second reading, so the card's one 30 stays its focal (PART 4); "focal", the default, is the 144px ring and its 30. The caption
  *  is a node, so it may hold a stamped figure. */
-export function Ring({ value, figure, caption, accent = false, prov, size = "focal" }: { value: number; figure: string; caption?: React.ReactNode; accent?: boolean; prov?: Provenance | null; size?: "focal" | "lead" }) {
+export function Ring({ value, figure, caption, accent = false, prov, size = "focal", tone = "accent" }: { value: number; figure: string; caption?: React.ReactNode; accent?: boolean; prov?: Provenance | null; size?: "focal" | "lead"; /** "ink": the sweep in ink2 on the soft grey, for a quiet card (plan 2026-10-10, home reform, Task 4). */ tone?: "accent" | "ink" }) {
   if (!Number.isFinite(value) || value <= 0) return null;
   const share = Math.min(1, value / 100);
   const r = 44, c = 2 * Math.PI * r;
   const len = share * c;
   const lead = size === "lead";
+  const ink = tone === "ink";
   return (
     <div data-archetype="ring" data-visual="1" data-share={String(Math.round(value))} className="flex flex-col items-center">
       <div className={lead ? "relative h-24 w-24" : "relative h-36 w-36"}>
         <svg viewBox="0 0 120 120" width={lead ? "96" : "144"} height={lead ? "96" : "144"} role="img" aria-label={`${figure} of the whole`} className={lead ? "block h-24 w-24" : "block h-36 w-36"}>
-          <circle r={r} cx="60" cy="60" fill="none" stroke="var(--terra-soft)" strokeWidth="14" />
-          <circle r={r} cx="60" cy="60" fill="none" stroke="var(--terra)" strokeWidth="14" strokeDasharray={`${len} ${c - len}`} strokeDashoffset={c / 4} strokeLinecap={share >= 1 ? "butt" : "round"} data-sweep />
+          <circle r={r} cx="60" cy="60" fill="none" stroke={ink ? "var(--c-soft2)" : "var(--terra-soft)"} strokeWidth="14" />
+          <circle r={r} cx="60" cy="60" fill="none" stroke={ink ? "var(--c-ink2)" : "var(--terra)"} strokeWidth="14" strokeDasharray={`${len} ${c - len}`} strokeDashoffset={c / 4} strokeLinecap={share > 0.9 ? "butt" : "round"} data-sweep />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
           <span className={`fig ${lead ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-focal)]"} leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</span>

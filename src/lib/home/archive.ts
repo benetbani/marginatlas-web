@@ -4,7 +4,10 @@
  * WHAT THE SITE KEEPS (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 2; the home's spec of 2026-10-09, proof 2,
  * "Kept and dated"): the months of liquidation and administration notices the site's own archive holds and the dated copies of the
  * company register it keeps, from data/home/archive.json (the archive's log, read by scripts/data/home/export_home.py archive), never typed. Counted: a
- * month is held or not, a copy is kept or not. The home's second proof and About the figures' #archive read it.
+ * month is held or not, a copy is kept or not. The home's second proof and About the figures' #archive read it. Since plan
+ * 2026-10-10 (the home reformed to ship, Task 4; the spec's decision 8) it also hands over each month's notices in month order
+ * (`series`), which the home's second proof draws as twelve columns: a month's count is the archive's own, each notice counted in
+ * the month of its own date.
  */
 import archiveJson from "../../../data/home/archive.json";
 import type { Provenance } from "@/lib/spine/provenance";
@@ -16,6 +19,8 @@ export type Archive = {
   months: number;
   firstName: string;
   lastName: string;
+  /** Each month held and its notices, in month order ({ month: "2025-10", notices: 2828 }): the months the home's second proof draws. */
+  series: Array<{ month: string; notices: number }>;
   /** The register copies kept, and their days as one phrase ("1 May and 1 October 2026"). */
   copies: number;
   copiesWords: string;
@@ -47,6 +52,7 @@ export function buildArchive(): Archive | null {
     months: months.length,
     firstName: monthName(d.gazette.first),
     lastName: monthName(d.gazette.last),
+    series: months.map((m) => ({ month: m.month, notices: m.notices })),
     copies: copies.length,
     copiesWords: daysWords(copies),
     prov: {

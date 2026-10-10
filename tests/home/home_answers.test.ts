@@ -23,8 +23,9 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { HomePlace, HomePays } from "../../src/components/spine/home/HomeExample";
 import { buildProofs } from "../../src/lib/home/proofs";
-import { ProofTax } from "../../src/components/spine/home/HomeProofs";
-import { SEGMENT_BAR_CELLS } from "../../src/components/spine/archetypes/SegmentBar";
+import { ProofTax, TAX_BAR_CELLS } from "../../src/components/spine/home/HomeProofs";
+import { Zone } from "../../src/components/spine/zones";
+import { Box } from "../../src/components/spine/kit";
 import { RivalsCell } from "../../src/components/spine/cell/market";
 import type { MarketData } from "../../src/lib/spine/market_rows";
 import type { Provenance } from "../../src/lib/spine/provenance";
@@ -45,6 +46,8 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const reEsc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** Markup reduced to its text runs, each between bars. */
 const text = (h: string) => h.replace(/<[^>]+>/g, "|").replace(/\|+/g, "|");
+/** Markup with the two entities React writes into a class (`&` and `>`) read back, so a class is matched as it is written. */
+const unent = (h: string) => h.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 
 /* THE CASE (Task 6): the picker's own, whole. */
 const pick = CASCADE_PREFILLS[0];
@@ -190,8 +193,10 @@ if (ex) {
   check(`step 3 is the page's one 40, in the accent, the example's only accent text (${accentsL.length} left, ${accentsR.length} right)`, accentsL.length === 0 && accentsR.length === 1 && (pays.match(/data-hero-figure/g) ?? []).length === 1 && new RegExp(`data-hero-figure[^>]*--t-answer[^>]*terra-text[^>]*data-src="uk/pnl:restaurants:E12000007" data-kind="estimate">${reEsc(ex.pays.breakEven.figure)}<`).test(pays), DRAWN_AT);
 }
 
-/* THE THIRD PROOF (Task 8): the formulas, /gb's masthead figure under its own name, its line the profit and the year's rules, the
-   masthead's own data, drawn as the segment bar; the home's second loud moment. */
+/* THE THIRD PROOF (Task 8; reformed by plan 2026-10-10, the home reformed to ship, Task 4: the critique's P0.7, P1.1, P1.7, P2.3, P2.4
+   and P2.12): the formulas, /gb's masthead figure under its own name, at 14 in ink2 over it, its line the profit and the year's rules
+   (the year's hyphen unbreakable), its two rules as rows whose whole numbers sum to it, the masthead's own data drawn as a bar of 50
+   cells in ink and grey, two inner columns from 600px of card; the home's second loud moment. */
 const proofs = buildProofs();
 check("the three proofs build", !!proofs, { file: "src/lib/home/proofs.ts", remedy: "build the proofs from buildJoins, buildArchive and buildHomeAnswers' answer" });
 const board = buildHeroBoard("GB");
@@ -199,23 +204,44 @@ const uk = ukTaxOnProfit();
 if (proofs && uk) {
   const t = proofs.tax;
   check(`the tax proof is /gb's masthead: "${t.label}" ${t.figure}, worked out`, t.label === board.answer?.label && t.figure === board.answer?.value && t.prov.src === board.answer?.prov?.src && t.prov.kind === "worked out", { file: "src/lib/home/proofs.ts", remedy: "take the tax proof from buildHomeAnswers' answer, the figure buildHeroBoard prints" });
-  check(`its line names the profit and the year's rules ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", UK_2026_27.taxYear) && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: the profit and the law's year, twelve words at most" });
+  const year = UK_2026_27.taxYear.replace("-", "‑");
+  check(`its line names the profit and the year's rules, the year's hyphen unbreakable ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", year) && t.line.includes("‑") && !t.line.includes(UK_2026_27.taxYear) && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: the profit and the law's year, twelve words at most; src/lib/home/proofs.ts writes the year with U+2011" });
+  /* ITS TWO RULES (P0.7): income tax and National Insurance, each the law engine's own part, whole numbers that sum to the printed total. */
+  const RULES_AT = { file: "src/lib/home/proofs.ts", remedy: "hand ProofTax two rows from ukTaxOnProfit().partsPercent (src/lib/spine/uk_tax_on_profit.ts): income tax, then National Insurance, each a whole percent, worked out" };
+  const total = Number.parseInt(t.figure, 10);
+  check(`its two rules: ${t.rows.map((r) => `${r.label} ${r.value}`).join(", ")}, summing to the printed ${t.figure}`, t.rows.length === 2 && t.rows[0].label === COPY.home.proofs.tax.income && t.rows[1].label === COPY.home.proofs.tax.class4 && t.rows[0].value === `${uk.partsPercent.incomeTax}%` && t.rows[1].value === `${uk.partsPercent.class4}%` && uk.partsPercent.incomeTax + uk.partsPercent.class4 === total && total === uk.percent && t.rows.every((r) => r.prov.kind === "worked out" && r.prov.src.startsWith(`${t.prov.src}:`)), RULES_AT);
+  check(`the two parts are the law engine's own (${uk.parts.incomeTax.toFixed(2)} and ${uk.parts.class4.toFixed(2)} of ${(uk.share * 100).toFixed(2)})`, Math.abs(uk.parts.incomeTax + uk.parts.class4 - uk.share * 100) < 1e-9 && uk.parts.incomeTax > uk.parts.class4, { file: "src/lib/spine/uk_tax_on_profit.ts", remedy: "return the income tax and the Class 4 contributions each as a share of the profit (parts), and their largest-remainder whole numbers over percent (partsPercent)" });
   const PROOF_DATA_AT = { file: "src/lib/home/proofs.ts", remedy: "take the tax proof's bar and door from buildHomeAnswers' answer" };
   check("its bar takes the masthead's own data (the value, the tax and what is kept)", !!board.answerBar && t.bar.value === board.answerBar.value && t.bar.part === board.answerBar.part && t.bar.rest === board.answerBar.rest, PROOF_DATA_AT);
   check(`its door is /gb's answer (${t.href})`, t.href === "/gb#take", PROOF_DATA_AT);
-  const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card, its title an h2, the figure's name over its 30 in the accent, its line, the masthead's data as the segment bar" };
+  const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card with its arrow, its title an h2, the figure's name over its 30 in the accent, its line, its two rules as rows and the masthead's data as a bar of 50 cells in ink and grey, in two columns from 600px of card" };
   const html = renderToStaticMarkup(React.createElement(ProofTax, { p: t }));
+  const raw = unent(html);
   check("it is a door card to /gb's answer", /id="tax"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/gb#take" data-lands="[a-z-]+"/.test(html), PROOF_AT);
   check(`its title is an h2, "${COPY.home.proofs.tax.kicker}", and the figure's name stands over the figure`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(COPY.home.proofs.tax.kicker))}</h2>`).test(html) && html.indexOf(`>${esc(t.label)}<`) > -1 && html.indexOf(`>${esc(t.label)}<`) < html.indexOf(`>${t.figure}<`), PROOF_AT);
+  check(`the figure's name at 14 regular in ink2, 4px over the figure ("${t.label}")`, html.includes(`<span data-figure-name="" class="mb-1 block text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">${esc(t.label)}</span>`), PROOF_AT);
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
   check(`its figure, at 30, is the card's one accent (${accents.length})`, accents.length === 1 && new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\] leading-none text-\\[var\\(--terra-text\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(t.figure)}<`).test(html), PROOF_AT);
+  check(`its two rules stand under the line as fact rows, each figure stamped (${t.rows.map((r) => r.value).join(", ")})`, html.indexOf(`>${esc(t.line)}</p>`) > -1 && html.indexOf('data-archetype="fact-rows" data-rows="2"') > html.indexOf(`>${esc(t.line)}</p>`) && t.rows.every((r) => html.includes(`data-row="${r.key}"`) && html.includes(`data-src="${esc(r.prov.src)}" data-kind="worked out">${r.value}</span>`)), PROOF_AT);
+  check("two columns from 600px of card: the name, the figure and the line on the left, the rules and the bar on the right", raw.includes('<div class="flex flex-1 flex-col [container-type:inline-size]"><div class="grid flex-1 grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12"><div><span data-figure-name=""') && raw.indexOf('<div class="flex flex-col"><div class="mt-auto"><div class="[container-type:inline-size]') > raw.indexOf("data-figure-name"), PROOF_AT);
   check("its bar is drawn as the segment bar in its split form, under the measure", /data-archetype="segment-bar"/.test(html) && /data-form="split"/.test(html) && /max-w-\[28ch\]/.test(html), PROOF_AT);
-  /* THE LINE AND THE BAR AS DRAWN (fix round B): the line stands as the card's one small line, and the bar fills the cells the masthead's
-     share asks of it (SEGMENT_BAR_CELLS, the nearest cell), the tax named at its left end and what is kept at its right. */
-  const filled = Math.round(Math.max(0, Math.min(1, t.bar.value / 100)) * SEGMENT_BAR_CELLS);
+  /* THE LINE AND THE BAR AS DRAWN (fix round B; since plan 2026-10-10 P1.1 and P2.4): the line stands as the card's one small line, and
+     the bar fills the cells the masthead's share asks of it (TAX_BAR_CELLS, fifty: 18 percent is 9 exactly), in ink2, the rest in the
+     soft grey, the tax named at its left end and what is kept at its right. */
+  const filled = Math.round(Math.max(0, Math.min(1, t.bar.value / 100)) * TAX_BAR_CELLS);
+  const bar = html.slice(html.indexOf('data-archetype="segment-bar"'));
+  const inked = (bar.match(/style="background:var\(--c-ink2\)"/g) ?? []).length;
+  const grey = (bar.match(/style="background:var\(--c-soft2\)"/g) ?? []).length;
   check(`its line is drawn as the card's one small line ("${t.line}")`, html.includes(`>${esc(t.line)}</p>`), PROOF_AT);
-  check(`its bar fills ${filled} of ${SEGMENT_BAR_CELLS} cells for ${t.bar.value.toFixed(1)} of 100, the tax named at the left and what is kept at the right`, html.includes(`data-filled="${filled}"`) && html.includes(`data-segments="${SEGMENT_BAR_CELLS}"`) && !!t.bar.part && !!t.bar.rest && html.includes(`<span data-part="true">${esc(t.bar.part)}</span>`) && html.includes(`<span data-rest="true">${esc(t.bar.rest)}</span>`), PROOF_AT);
+  check(`its bar fills ${filled} of ${TAX_BAR_CELLS} cells for ${t.bar.value.toFixed(1)} of 100, in ink2 (${inked}), the rest in the soft grey (${grey}), the tax named at the left and what is kept at the right`, html.includes(`data-filled="${filled}"`) && html.includes(`data-segments="${TAX_BAR_CELLS}"`) && inked === filled && grey === TAX_BAR_CELLS - filled && !/background:var\(--terra/.test(bar) && !!t.bar.part && !!t.bar.rest && html.includes(`<span data-part="true">${esc(t.bar.part)}</span>`) && html.includes(`<span data-rest="true">${esc(t.bar.rest)}</span>`), PROOF_AT);
+  check("the door: its title the link, stretched over the card, an arrow at the row's end, the edge to ink2 on hover, the title at 20 on 28", /<a href="\/gb#take" data-lands="[a-z-]+" class="min-w-0 flex-1 text-\[var\(--c-ink\)\] no-underline after:absolute after:inset-0 after:z-10 after:rounded-\[12px\]">/.test(raw) && /<span aria-hidden="true" class="mt-1 shrink-0 [^"]*text-\[var\(--c-ink2\)\]">→<\/span>/.test(raw) && /id="tax"[^>]*class="[^"]*hover:border-\[var\(--c-ink2\)\][^"]*\[&_\[data-rail-title\]\]:text-\[length:var\(--t-head\)\] \[&_\[data-rail-title\]\]:leading-7/.test(raw), PROOF_AT);
 }
+
+/* ONE SEPARATOR BETWEEN STACKED CARDS (plan 2026-10-10, Task 4; the critique's P1.8): under 768 a level of kept cards is parted by its
+   24px gap and the cards' own edges; the hairline and its padding stay for open sections. */
+const level = unent(renderToStaticMarkup(React.createElement(Zone, { split: "1-1-1", even: true, label: "Proofs", children: [React.createElement(Box, { key: "a", id: "a", keep: true, children: "a" }), React.createElement(Box, { key: "b", id: "b", keep: true, children: "b" }), React.createElement(Box, { key: "c", id: "c", keep: true, children: "c" })] })));
+const levelClass = /<div data-zone-level=""[^>]*class="([^"]*)"/.exec(level)?.[1] ?? "";
+check("a stacked level parts kept cards by its gap alone: no hairline and no padding over a cell that holds a kept card", levelClass.includes("gap-y-6") && levelClass.includes("[&>*+*]:border-t ") && levelClass.includes("[&>*+*:has(>[data-keep-card])]:border-t-0") && levelClass.includes("[&>*+*:has(>[data-keep-card])]:pt-0"), { file: "src/components/spine/zones.tsx", remedy: "add [&>*+*:has(>[data-keep-card])]:border-t-0 [&>*+*:has(>[data-keep-card])]:pt-0 to STACKED" });
 
 /* THE RENDERS (Task 10), where the harness wrote them (pages-fresh renders them first in the chain). */
 const homeR = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";

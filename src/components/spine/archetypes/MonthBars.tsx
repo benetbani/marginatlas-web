@@ -40,6 +40,22 @@
  *    `data-peak`, `data-trough`. It is a drawing: it counts as its level's
  *    visual and toward the bar budget.
  *
+ * A DATED ORDER, COUNTS AND A QUIET TONE (plan 2026-10-10, the home reformed
+ * to ship, Task 4; the spec's decision 8 and the critique's P0.6), each off
+ * by default, so every other caller draws exactly what it drew:
+ *  - `start` ("2025-10") names the first column's month and the twelve run on
+ *    from it, October to September, for a year that is not the calendar's;
+ *    the year stands under the first column (when three or more of its
+ *    months are drawn) and under every January, at the micro rung. A start
+ *    that is not a month, or points that are not the twelve months once
+ *    each, draw nothing.
+ *  - `counts` ({ words, aria }) makes each column's reading the month's own
+ *    count ("2,828", "notices in October 2025") and the drawing's label every
+ *    month with its count, so the panel says only what the drawing holds;
+ *    without it a column reads its share of the busiest month, as before.
+ *  - `tone="ink"` draws the busiest column in ink2 and the rest in the soft
+ *    grey, for a quiet card: no accent.
+ *
  * Gated by the archetype harness (stories `month-bars`), the page laws and the
  * model laws on every page that seats it.
  */
@@ -52,44 +68,65 @@ const H = 96;
 
 export type MonthPoint = { month: number; value: number };
 
-export function MonthBars({ points, unit = "" }: { points: MonthPoint[]; unit?: string }) {
+/** "2025-10" as its month's index (9) and its year (2025), or null where it is not a month. */
+function startOf(start: string): { month: number; year: number } | null {
+  const m = /^(\d{4})-(\d{2})$/.exec(start);
+  if (!m) return null;
+  const month = Number(m[2]) - 1;
+  return month >= 0 && month < MONTH_BAR_POINTS ? { month, year: Number(m[1]) } : null;
+}
+
+export function MonthBars({ points, unit = "", start, tone = "accent", counts }: { points: MonthPoint[]; unit?: string; /** The first column's month, "YYYY-MM"; the twelve run on from it (plan 2026-10-10, home reform, Task 4). */ start?: string; /** "ink": the busiest column in ink2 and no accent, for a quiet card. */ tone?: "accent" | "ink"; /** Each column reads its month's count: `words` with {month}, `aria` with {first}, {last} and {months}. */ counts?: { words: string; aria: string } }) {
   const live = points
     .filter((p) => p && Number.isFinite(p.value) && Number.isInteger(p.month) && p.month >= 0 && p.month < MONTH_BAR_POINTS)
     .sort((a, b) => a.month - b.month);
   if (live.length !== MONTH_BAR_POINTS) return null;
-  const values = live.map((p) => p.value);
+  /* THE DATED ORDER: the columns run on from the start's month. A start that is not a month, or twelve points that are not the twelve
+     months once each, draw nothing (a part-year or a doubled month is a different subject). */
+  const from = start === undefined ? null : startOf(start);
+  if (start !== undefined && (!from || live.some((p, i) => p.month !== i))) return null;
+  const first = from ? from.month : 0;
+  const drawn = from ? live.map((_, i) => live[(first + i) % MONTH_BAR_POINTS]) : live;
+  const yearOf = (i: number) => (from ? from.year + Math.floor((first + i) / MONTH_BAR_POINTS) : 0);
+  const values = drawn.map((p) => p.value);
   const max = Math.max(...values), min = Math.min(...values);
   if (!(max > 0)) return null;
   const peak = values.indexOf(max), trough = values.indexOf(min);
-  const months = COPY.monthLine.initials;
+  const months = from ? drawn.map((p) => COPY.monthLine.initials[p.month]) : COPY.monthLine.initials;
   /* EVERY MONTH READS (goal 2026-09-26, M1; queue ui:reading-on-every-point): the drawing named the busiest month alone, so a
      reader who wanted March could not have it. Each column reads its share of the busiest month, and the drawing's label now
-     says all twelve by name, so the readings are the drawing's own. */
-  const shares = live.map((p) => Math.round((p.value / max) * 100));
-  const names = COPY.monthLine.names;
+     says all twelve by name, so the readings are the drawing's own. Since plan 2026-10-10 a caller may hand `counts`, and each
+     column then reads its month's own count, its name with its year where the order is dated. */
+  const shares = drawn.map((p) => Math.round((p.value / max) * 100));
+  const names = from ? drawn.map((p, i) => `${COPY.monthLine.names[p.month]} ${yearOf(i)}`) : COPY.monthLine.names;
+  const count = (v: number) => v.toLocaleString("en-US");
+  const label = counts
+    ? counts.aria.replace("{first}", names[0]).replace("{last}", names[MONTH_BAR_POINTS - 1]).replace("{months}", names.map((m, i) => `${m} ${count(values[i])}`).join(", "))
+    : COPY.monthLine.aria.replace("{peak}", names[peak]).replace("{trough}", names[trough]).replace("{months}", names.map((m, i) => `${m} ${shares[i]}%`).join(", "));
   return (
     <Marks
-      label={COPY.monthLine.aria.replace("{peak}", names[peak]).replace("{trough}", names[trough]).replace("{months}", names.map((m, i) => `${m} ${shares[i]}%`).join(", "))}
+      label={label}
       data-archetype="month-bars"
       data-visual="1"
-      data-points={String(live.length)}
+      data-points={String(drawn.length)}
       data-peak={String(peak)}
       data-trough={String(trough)}
+      data-start={from ? start : undefined}
       className="w-full"
     >
-      <div className="flex w-full items-end gap-1" style={{ height: H }} role="img" aria-label={COPY.monthLine.aria.replace("{peak}", names[peak]).replace("{trough}", names[trough]).replace("{months}", names.map((m, i) => `${m} ${shares[i]}%`).join(", "))}>
-        {live.map((p, i) => (
+      <div className="flex w-full items-end gap-1" style={{ height: H }} role="img" aria-label={label}>
+        {drawn.map((p, i) => (
           <span
             key={p.month}
             data-month-bar={String(i)}
-            data-readout-figure={`${shares[i]}%`}
-            data-readout-words={COPY.monthLine.readout.replace("{month}", names[i])}
+            data-readout-figure={counts ? count(p.value) : `${shares[i]}%`}
+            data-readout-words={counts ? counts.words.replace("{month}", names[i]) : COPY.monthLine.readout.replace("{month}", names[i])}
             data-share={String(Math.round((p.value / max) * 100))}
             className="min-w-0 flex-1 rounded-t-[2px]"
             style={{
               height: `${Math.max(4, (p.value / max) * 100)}%`,
-              /* ONE LOUD COLUMN AND ONE TONE FOR THE REST (2026-09-23, measured on the render): the trough drawn in the accent's tint read as an EMPTY slot rather than the quietest month, which is the opposite of what it meant. The shortest column is already the quietest; it needs no second colour to say so. */
-              background: i === peak ? "var(--terra)" : "var(--c-soft2)",
+              /* ONE LOUD COLUMN AND ONE TONE FOR THE REST (2026-09-23, measured on the render): the trough drawn in the accent's tint read as an EMPTY slot rather than the quietest month, which is the opposite of what it meant. The shortest column is already the quietest; it needs no second colour to say so. In a quiet card (`tone="ink"`, plan 2026-10-10) the loud column is ink2. */
+              background: i === peak ? (tone === "ink" ? "var(--c-ink2)" : "var(--terra)") : "var(--c-soft2)",
             }}
           />
         ))}
@@ -101,6 +138,19 @@ export function MonthBars({ points, unit = "" }: { points: MonthPoint[]; unit?: 
           </span>
         ))}
       </div>
+      {/* THE YEARS OF A DATED ORDER, on the columns' grid: under the first column where three or more of its months are drawn, and under
+          every January; a year near the right end stands against it, so it never runs past the drawing. */}
+      {from ? (
+        <div data-years="" className="mt-1 grid w-full grid-cols-12 gap-1 text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
+          {drawn.map((p, i) =>
+            p.month === 0 || (i === 0 && MONTH_BAR_POINTS - first >= 3) ? (
+              <span key={i} data-year={String(yearOf(i))} className="whitespace-nowrap" style={{ gridColumn: `${i + 1} / span ${Math.min(3, MONTH_BAR_POINTS - i)}`, ...(MONTH_BAR_POINTS - i < 3 ? { justifySelf: "end" } : {}) }}>
+                {yearOf(i)}
+              </span>
+            ) : null,
+          )}
+        </div>
+      ) : null}
     </Marks>
   );
 }

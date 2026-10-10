@@ -26,6 +26,11 @@
  *    they are the same reading (clause 55).
  *  - no accent text: the fill is colour on a drawing, not a figure in the
  *    accent, so the accent budget does not count it.
+ *  - `tone="ink"` (plan 2026-10-10, the home reformed to ship, Task 4; the
+ *    critique's P1.1 and P2.4): the filled cells in ink2 and the rest in the
+ *    soft grey, for a bar in a quiet card. The accent's pale tint is 1.07 to 1
+ *    on white, so beside it the rest vanished and "You keep" named nothing a
+ *    reader could see.
  *  - THE BARE FORM (`bare`, 2026-09-24): no label row, for a bar drawn right
  *    under the figure it pictures (the country hero's tax on profit, a
  *    city's typical pay among the cities), where a label row would print
@@ -37,7 +42,7 @@ import * as React from "react";
 
 export const SEGMENT_BAR_CELLS = 25;
 
-export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest, part, ends, bare = false, segments = SEGMENT_BAR_CELLS }: { label: string; value: number; total?: number; figure: string; unit: string; chip?: React.ReactNode; /** The unfilled part named, one micro line under the segments at the right ("Visitors 38%"), for a share of a whole whose remainder has a name. */ rest?: string; /** The filled part named under the cells at the left, the bare form's. */ part?: string; /** A scale's two ends named under the cells, the bare form's (its reading stays "scale"). */ ends?: readonly [string, string]; /** No label row: the figure is printed right above the bar (THE BARE FORM). */ bare?: boolean; segments?: number }) {
+export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest, part, ends, bare = false, segments = SEGMENT_BAR_CELLS, tone = "accent" }: { label: string; value: number; total?: number; figure: string; unit: string; chip?: React.ReactNode; /** The unfilled part named, one micro line under the segments at the right ("Visitors 38%"), for a share of a whole whose remainder has a name. */ rest?: string; /** The filled part named under the cells at the left, the bare form's. */ part?: string; /** A scale's two ends named under the cells, the bare form's (its reading stays "scale"). */ ends?: readonly [string, string]; /** No label row: the figure is printed right above the bar (THE BARE FORM). */ bare?: boolean; segments?: number; /** "ink": the filled cells in ink2 and the rest in the soft grey (plan 2026-10-10, home reform, Task 4). */ tone?: "accent" | "ink" }) {
   const share = total > 0 ? Math.max(0, Math.min(1, value / total)) : 0;
   const filled = Math.round(share * segments);
   return (
@@ -54,7 +59,7 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
       </div>}
       <div className="flex gap-0.5" aria-hidden="true">
         {Array.from({ length: segments }, (_, i) => (
-          <span key={i} className="h-3 min-w-0 flex-1 rounded-[2px]" style={{ background: i < filled ? "var(--terra)" : "var(--terra-soft)" }} />
+          <span key={i} className="h-3 min-w-0 flex-1 rounded-[2px]" style={{ background: i < filled ? (tone === "ink" ? "var(--c-ink2)" : "var(--terra)") : tone === "ink" ? "var(--c-soft2)" : "var(--terra-soft)" }} />
         ))}
       </div>
       {ends ? (

@@ -2837,12 +2837,15 @@ export const COPY = {
     definition: "Margin Atlas shows what a small business earns and its owner keeps.",
     /** THE THREE PROOFS (plan 2026-10-09, home introduction; the spec's section 4, DRAFT approved as written): the level's name (a data
      *  attribute, not a printed word), each proof's title, its one line, the ring's caption, the archive's figure and row. No boast
-     *  word (the 2026-10-08 audit); no source named. */
+     *  word (the 2026-10-08 audit); no source named. Reformed by plan 2026-10-10 (the home reformed to ship, Task 4): the joins' title
+     *  in three words, so it stands on one line at 20 beside the chip and the arrow from 1024 ("Failures, trade by trade" took two);
+     *  the ring's caption the words alone under "97" (P1.6); the archive's line saying how a month is counted (decision 8), a column's
+     *  reading ({month} is "October 2025") and the drawing's spoken label; the tax's two rules (P0.7). */
     proofs: {
       label: "Proofs",
-      joins: { kicker: "Failures, trade by trade", words: "Liquidation and administration notices in a year, matched by name.", ring: "of {names} names found in the register" },
-      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices by month, {first} to {last}, as published.", row: "Register copies" },
-      tax: { kicker: "Tax, rule by rule", words: "Of a sole trader's {profit} profit, from the {year} rules." },
+      joins: { kicker: "Failures by trade", words: "Liquidation and administration notices in a year, matched by name.", ring: "in 100 names found in the register" },
+      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices a month by their own date, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
+      tax: { kicker: "Tax, rule by rule", words: "Of a sole trader's {profit} profit, from the {year} rules.", income: "Income tax", class4: "National Insurance" },
     },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */

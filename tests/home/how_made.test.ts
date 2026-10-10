@@ -12,7 +12,8 @@
  * (src/lib/home/how_made.ts): the join's three counts and the share of names found, each stamped; the London trade pages counted as their
  * pages print them, never as the builder reads them. Holds About the figures: #failures prints the join, #reading the pages read, each
  * figure inside the element that holds its builder's data-src and data-kind, no source named in either. Holds the proof
- * (src/lib/home/proofs.ts, HomeProofs.tsx) and, where the harness wrote it, the home's render.
+ * (src/lib/home/proofs.ts, HomeProofs.tsx) and, where the harness wrote it, the home's render; since plan 2026-10-10 (the home
+ * reformed to ship, Task 4) the proof's ring reads the names found in 100, in ink, and its title is the door, with its arrow.
  *
  * Run: npx tsx tests/home/how_made.test.ts
  */
@@ -91,26 +92,30 @@ const apart = [...closed.filter((s) => !printing.includes(s)), ...printing.filte
 check(`the trades whose median falls in a closed band are exactly the pages that print a takings figure (${printing.length} of the ${served.length} served)${apart.length ? `; apart on ${apart.join(", ")}` : ""}`, apart.length === 0, PAGES_AT);
 check(`the London trade pages are counted as they print (${pages ? `${pages.printing} of ${pages.served}` : "none"}; the UK page's money card ranks ${buildLondonTradeSales()?.rows.length} of them)`, !!pages && pages.printing === printing.length && pages.served === served.length && printing.length >= (buildLondonTradeSales()?.rows.length ?? Number.POSITIVE_INFINITY), PAGES_AT);
 
-/* THE FIRST PROOF (Task 8). */
-const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the first proof as ProofJoins holds it: a door card to /about-data#failures, its title an h2, the notices at 30 and the names found as a lead ring, quiet, every figure stamped" };
+/* THE FIRST PROOF (Task 8 of the home introduction; reformed by plan 2026-10-10, the home reformed to ship, Task 4: the critique's
+   P1.6, P1.7 and P1.9). The ring prints the names found in 100 and its caption the copy's words alone (the two counts it is worked
+   out from stand on About the figures' #failures), in ink, its cap butt above 90 so no notch shows; the title is the door, stretched
+   over the card, an arrow at its row's end, the card's edge in ink2 on hover, the title at 20 on 28. */
+const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the first proof as ProofJoins holds it: a door card to /about-data#failures (its title an h2 at 20 and the stretched link, an arrow at the title row's end, the edge to ink2 on hover), the notices at 30 and the names found in 100 as a lead ring in ink with its caption, quiet, every figure stamped" };
 const proofs = buildProofs();
 check("the proofs build", !!proofs, { file: "src/lib/home/proofs.ts", remedy: "build the proofs from buildJoins, buildArchive and buildHomeAnswers' answer" });
 if (proofs && joins) {
   const p = proofs.joins;
-  check(`the first proof is the join: ${p.figure} notices, the ring ${p.ring.figure} of ${p.ring.names}`, p.figure === joins.notices.figure && p.prov.src === joins.notices.prov.src && p.ring.figure === joins.matched.figure && p.ring.names === joins.names.figure && p.ring.value === joins.share && p.href === "/about-data#failures", { file: "src/lib/home/proofs.ts", remedy: "take the first proof's figures from buildJoins" });
+  check(`the first proof is the join: ${p.figure} notices, the ring "${p.ring.figure}" "${p.ring.caption}"`, p.figure === joins.notices.figure && p.prov.src === joins.notices.prov.src && p.ring.value === joins.share && p.ring.figure === String(Math.round(joins.share)) && p.ring.prov.src === "home/method.json:matched_names of names" && p.ring.prov.kind === "worked out" && p.ring.caption === COPY.home.proofs.joins.ring && p.href === "/about-data#failures", { file: "src/lib/home/proofs.ts", remedy: "take the first proof's figures from buildJoins: the ring's figure the share of names found, rounded, stamped worked out from home/method.json:matched_names of names; its caption COPY.home.proofs.joins.ring alone" });
   const html = renderToStaticMarkup(React.createElement(ProofJoins, { p }));
+  /** The markup with the two entities React writes into a class read back, so a class is matched as it is written. */
+  const raw = html.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   check("it is a door card to About the figures' #failures, its title an h2", /id="joins"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#failures"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.joins.kicker}</h2>`).test(html), PROOF_AT);
-  check("its figure is the card's 30, the ring's at 16 in a lead ring", /data-focal="1" class="fig text-\[length:var\(--t-focal\)\][^"]*" data-src="home\/method\.json:notices" data-kind="counted">/.test(html) && /data-archetype="ring"/.test(html) && /class="relative h-24 w-24"/.test(html) && /--t-lead[^"]*" data-src="home\/method\.json:matched_names" data-kind="counted">/.test(html), PROOF_AT);
-  check("the ring's caption names the names held, stamped", /data-src="home\/method\.json:names" data-kind="counted">/.test(html), PROOF_AT);
-  /* THE RING'S SHARE AND THE WORDS OF ITS CAPTION, AS DRAWN (fix round B): the ring sweeps the builder's share to the whole percent, and
-     its caption reads the copy's words either side of the stamped count of names, with nothing else in it. */
-  const [capBefore, capAfter] = COPY.home.proofs.joins.ring.split("{names}");
+  check(`its figure is the card's 30, the ring's "${p.ring.figure}" at 16 in a lead ring, worked out`, /data-focal="1" class="fig text-\[length:var\(--t-focal\)\][^"]*" data-src="home\/method\.json:notices" data-kind="counted">/.test(html) && /data-archetype="ring"/.test(html) && /class="relative h-24 w-24"/.test(html) && new RegExp(`--t-lead[^"]*" data-src="home/method\\.json:matched_names of names" data-kind="worked out">${p.ring.figure}<`).test(html), PROOF_AT);
   check(`the ring is drawn at the builder's share, ${Math.round(joins.share)} of 100 (${joins.share.toFixed(1)})`, new RegExp(`data-archetype="ring"[^>]*data-share="${Math.round(joins.share)}"`).test(html), PROOF_AT);
-  check(`the ring's caption reads "${capBefore}${joins.names.figure}${capAfter}", the copy's words either side of the stamped span`, new RegExp(`data-mark-label="true"[^>]*>${capBefore}<span class="fig[^"]*" data-src="home/method\\.json:names" data-kind="counted">${joins.names.figure}</span>${capAfter}</div>`).test(html), PROOF_AT);
+  check(`the ring's caption reads "${COPY.home.proofs.joins.ring}", the copy's words alone`, new RegExp(`data-mark-label="true"[^>]*>${COPY.home.proofs.joins.ring}</div>`).test(html), PROOF_AT);
+  const ring = html.slice(html.indexOf('data-archetype="ring"'));
+  check("the ring in ink: ink2 on the soft grey, its cap butt above 90, no terracotta in it", /stroke="var\(--c-soft2\)"/.test(ring) && /stroke="var\(--c-ink2\)"[^>]*stroke-linecap="butt"/.test(ring) && !/var\(--terra/.test(ring), PROOF_AT);
   check("quiet: no figure in the accent, and no word of countries or estimates", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html) && !/countr|estimate/i.test(html.replace(/<[^>]+>/g, " ")), PROOF_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === 3 && figs.every((f) => /data-src="home\/method\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);
+  check(`every figure says where it came from (${figs.length}: the notices and the ring's)`, figs.length === 2 && figs.every((f) => /data-src="home\/method\.json:/.test(f) && /data-kind="(counted|worked out)"/.test(f)), PROOF_AT);
   check("one small line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(COPY.home.proofs.joins.words), PROOF_AT);
+  check("the door: its title the link, stretched over the card, an arrow at the row's end, the edge to ink2 on hover, the title at 20 on 28", /<div data-door-title="" class="flex items-start gap-2"><a href="\/about-data#failures" class="min-w-0 flex-1 text-\[var\(--c-ink\)\] no-underline after:absolute after:inset-0 after:z-10 after:rounded-\[12px\]">/.test(raw) && /<span aria-hidden="true" class="mt-1 shrink-0 text-\[length:var\(--t-body\)\] leading-5 text-\[var\(--c-ink2\)\]">→<\/span><\/div>/.test(raw) && /id="joins"[^>]*class="[^"]*\brelative isolate\b[^"]*hover:border-\[var\(--c-ink2\)\][^"]*\[&_\[data-rail-title\]\]:text-\[length:var\(--t-head\)\] \[&_\[data-rail-title\]\]:leading-7/.test(raw), PROOF_AT);
 }
 
 async function main(): Promise<void> {
