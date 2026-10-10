@@ -838,6 +838,12 @@ const GATES: Gate[] = [
      site icon answered 404 with its PNG as the body. Every metadata route's address, Next's own, goes through the real
      middleware and must pass it untouched; /zz and /definitely-not-a-route-xyz must stay pinned. */
   { name: "metadata-routes", script: "tests/routing/metadata_routes.test.ts" },
+  /* THE HEAD, THE ICONS AND THE WEIGHT (plan 2026-10-10, the home reformed to ship, Task 7; the ship audit's 2.1 to 2.5 and 3.x): the
+     root's share tags cut to what every page shares, the viewport's white, the icon drawn at 48, 192 and 512 and the home-screen icon
+     at 180, the manifest, the card's words the home's definition, the home's title at 51 characters, every JSON-LD block escaped, the
+     auth client behind its switch and the session read once, Sentry started when idle, one Geist, the home's h1 still, the root layout
+     and SiteChrome on the kit's own modules and not its barrel. No network: the icons draw locally. */
+  { name: "head", script: "tests/app/head.test.ts" },
   /* A retired trade under a place goes to the nearest live page in one hop (milestone 1, M1; his interview of 2026-09-26, answer 12). */
   { name: "retired-paths", script: "tests/routing/retired_paths.test.ts" },
   /* An address that names nothing answers 404 at the edge, each shape by its own route's resolver; the old three-part district

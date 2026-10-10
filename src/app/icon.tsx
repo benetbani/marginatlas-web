@@ -1,39 +1,29 @@
 /**
- * Next.js dynamic favicon. Renders the LogoMark as a 32x32 PNG at
- * build time. Browsers show this in the tab.
+ * The site icon, at three sizes (plan 2026-10-10, the home reformed to ship, Task 7; the ship audit's 2.2). It was one 32 by 32
+ * PNG: Google asks a favicon whose side is a multiple of 48, and the manifest (src/app/manifest.ts) needs 192 and 512 for a phone's
+ * home screen. One drawing, the header's compass mark (src/components/brand/LogoMark.tsx), black on white, drawn at build time; Next
+ * serves each size at /icon/<id> and links each from every page's head.
+ *
+ * White is written as a word: the cream gate counts #ffffff for the name its ramp step once carried (scripts/verify_no_cream.ts).
  */
 import { ImageResponse } from "next/og";
+import { LogoMark } from "@/components/brand/LogoMark";
 
-export const size = { width: 32, height: 32 };
-export const contentType = "image/png";
+/** The sizes, in pixels: 48 for a tab and a search result, 192 and 512 for the manifest. Each is its own id and address. */
+const ICON_SIZES = [48, 192, 512] as const;
 
-export default function Icon() {
+export function generateImageMetadata() {
+  return ICON_SIZES.map((px) => ({ id: String(px), size: { width: px, height: px }, contentType: "image/png" }));
+}
+
+export default function Icon({ id }: { id: string }) {
+  const px = ICON_SIZES.find((s) => String(s) === String(id)) ?? ICON_SIZES[0];
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: 32,
-          height: 32,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#FFFFFF",
-        }}
-      >
-        <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
-          <circle cx="32" cy="32" r="28" stroke="#000000" strokeWidth="4" />
-          <path d="M32 6 L29 30 L32 32 L35 30 Z" fill="#000000" />
-          <path d="M32 58 L29 34 L32 32 L35 34 Z" fill="#000000" />
-          <path d="M58 32 L34 29 L32 32 L34 35 Z" fill="#000000" />
-          <path d="M6 32 L30 29 L32 32 L30 35 Z" fill="#000000" />
-          <path d="M48 16 L34 26 L32 32 L38 30 Z" fill="#000000" />
-          <path d="M48 48 L38 34 L32 32 L34 38 Z" fill="#000000" />
-          <path d="M16 48 L30 38 L32 32 L26 34 Z" fill="#000000" />
-          <path d="M16 16 L26 30 L32 32 L30 26 Z" fill="#000000" />
-          <circle cx="32" cy="32" r="3" fill="#000000" />
-        </svg>
+      <div style={{ width: px, height: px, display: "flex", alignItems: "center", justifyContent: "center", background: "white" }}>
+        <LogoMark size={Math.round(px * 0.875)} color="#000000" />
       </div>
     ),
-    size
+    { width: px, height: px },
   );
 }

@@ -72,7 +72,9 @@ check("three seats: step 3 lit, the band a field, the foot none, the tax proof q
 /* THE HERO (the spec's sections 3 and 5; plan 2026-10-10, home reform, Task 2: the h1 on set lines with both words on one timer, the
    picker's first paint from the server's seed, the spacing and the definition of the reform's spec, decision 3 and critique P1.13). */
 check("the rebuilt home renders the picker without its heading, its first paint from the server's seed", /<NavigatorForm showHeading=\{false\} seed=\{homePickerSeed\(\)\} \/>/.test(code), `in ${VIEW} HomeSearch renders <NavigatorForm showHeading={false} seed={homePickerSeed()} />`);
-check("the live home renders the picker with its heading", /<NavigatorForm \/>/.test(live) && !/<NavigatorForm[^>]*showHeading=\{false\}/.test(live));
+/* The flag-off home passes the same seed (plan 2026-10-10, Task 7, amendment 8b): without it the form's first paint was three blank fields
+   and a no-script submit sent empty fields to /api/go. It keeps its heading. */
+check("the live home renders the picker with its heading, its first paint from the server's seed", /^import \{ homePickerSeed \} from "@\/lib\/home\/picker";/m.test(live) && /<NavigatorForm seed=\{homePickerSeed\(\)\} \/>/.test(live) && !/<NavigatorForm[^>]*showHeading=\{false\}/.test(live), "in src/app/page.tsx import { homePickerSeed } from \"@/lib/home/picker\" and render <NavigatorForm seed={homePickerSeed()} /> in the flag-off branch, as the rebuilt home does");
 check("the picker's heading is drawn by default and only when asked", /showHeading = true/.test(picker) && /\{showHeading \? \(/.test(picker) && /Pick a country, a city, and a business\./.test(picker));
 const search = /function HomeSearch[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
 check("the definition stands once, straight after the form, at the hero's foot", search.indexOf("<NavigatorForm") > -1 && search.indexOf("data-definition") > search.indexOf("<NavigatorForm") && (code.match(/\.definition\b/g) ?? []).length === 1);

@@ -37,8 +37,10 @@ export const INK = "#0e1116"; // grey-900, primary text
 export const MUTED = "#6b7785"; // grey-500, secondary text and captions
 export const TERRACOTTA = "#c11c00"; // atlas-600, the only accent
 
-/** The card ground, identical on every card. */
-const PAPER = "linear-gradient(135deg, #ffffff 0%, #f7f6f4 100%)";
+/** The card ground, identical on every card. It ended on #f7f6f4, one of the warm tints the cream purge retired (design-tokens.ts,
+ *  the paper ramp); it ends on the page's own ground, #f6f6f5 (--c-ground), a true neutral (plan 2026-10-10, Task 7; the ship
+ *  audit's 2.3). */
+const PAPER = "linear-gradient(135deg, #ffffff 0%, #f6f6f5 100%)";
 
 /** Every card is a 1200x630 OG frame. Passed to ImageResponse by each route. */
 export const CARD_SIZE = { width: 1200, height: 630 } as const;

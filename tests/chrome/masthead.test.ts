@@ -10,7 +10,9 @@
  *   - the sheet under 1280: a constant "Menu" name with `aria-expanded`, its panel always in the document and `hidden` while shut, on
  *     the bar's column, its height capped to the viewport less the bar and scrollable, 48px rows in the spec's order (Search, the seven
  *     names, About the figures and Who runs this, then the account and Pricing rows only while on), closing on Escape with focus back
- *     on the toggle, on a tap outside, on a row, and when the window reaches 1280;
+ *     on the toggle, on a tap outside, on a row, and when the window reaches 1280; the account entry of the bar and of the sheet reads
+ *     the session ONCE between them (one client, one getUser, however many entries stand on the page) and, while it does, holds the
+ *     width of the longer of its two words, Account, unseen (plan Task 7, amendment 8c; the Task 1 review's m2);
  *   - the footer: `<nav aria-label="Footer">`, its first column the same seven names, heads in sentence case, 44px rows on a phone,
  *     no version string, the year beside the publisher, Pricing only while the paywall is on; one name per destination across the bar,
  *     the sheet and the footer;
@@ -190,13 +192,27 @@ async function main() {
   const { PathnameContext } = await import("next/dist/shared/lib/hooks-client-context.shared-runtime");
   /* The account entry reads the session once through the Supabase browser client (HeaderAuth.tsx), which wants a project address, a key
      and a network. A stand-in goes into the module cache before HeaderAuth first loads, and its read settles when this test says so: no
-     network and no secret, as the chain requires, and the moment "the session is being read" can be held still and looked at. */
+     network and no secret, as the chain requires, and the moment "the session is being read" can be held still and looked at. The
+     stand-in COUNTS what is asked of it (plan Task 7, amendment 8c): the bar's entry and the sheet's share one read, so one client and
+     one getUser however many entries are on the page. HeaderAuth loads the client with import() since Task 7, so the stand-in is reached
+     a moment after the first entry mounts: `until` waits for it. */
   let settleSession!: () => void;
   const sessionRead = new Promise<void>((resolve) => { settleSession = resolve; });
+  const asked = { clients: 0, reads: 0, returned: 0 };
+  const until = async (cond: () => boolean, ms = 5000): Promise<boolean> => {
+    const t0 = Date.now();
+    while (!cond() && Date.now() - t0 < ms) await new Promise((r) => setTimeout(r, 5));
+    return cond();
+  };
   const clientPath = require.resolve("../../src/lib/supabase/client");
   require.cache[clientPath] = {
     id: clientPath, filename: clientPath, loaded: true, children: [], paths: [],
-    exports: { createSupabaseBrowserClient: () => ({ auth: { getUser: async () => { await sessionRead; return { data: { user: null } }; } } }) },
+    exports: {
+      createSupabaseBrowserClient: () => {
+        asked.clients++;
+        return { auth: { getUser: async () => { asked.reads++; await sessionRead; asked.returned++; return { data: { user: null } }; } } };
+      },
+    },
   } as unknown as NodeJS.Module;
   const { SiteChrome } = await import("../../src/components/SiteChrome");
   const NotFound = (await import("../../src/app/not-found")).default;
@@ -248,8 +264,10 @@ async function main() {
   const noAuth = (h: string) => !/Sign in|Account|href="\/signin"|href="\/account"/.test(h);
   check("switches off: nothing about Pro anywhere in the chrome (no Pricing in the bar, the sheet or the footer)", noPro(off) && noPro(offBlog));
   check("switches off: nothing about sign-in anywhere in the chrome", noAuth(off) && noAuth(offBlog));
-  check("accounts on, paywall off: the account entry in the bar and the sheet, still no Pricing", /Sign in/.test(a.bar) && /Sign in/.test(a.sheet) && noPro(authOnly));
-  check("while the session is read the bar's entry holds its width unseen (aria-hidden, invisible), from 1280 only", /<span aria-hidden="true" class="invisible hidden xl:inline-flex[^"]*">Sign in<\/span>/.test(a.bar));
+  check("accounts on, paywall off: the account entry in the bar and the sheet, still no Pricing", /Account/.test(a.bar) && /Account/.test(a.sheet) && noPro(authOnly));
+  /* The holder prints the LONGER of the entry's two words ("Account" is wider than "Sign in"), so a signed-in reader's bar does not grow
+     when the read settles (the Task 1 review's m2; plan Task 7, amendment 8c). Unseen and out of reach: aria-hidden hides it from a screen reader. */
+  check("while the session is read the bar's entry holds the width of its longer word, Account, unseen (aria-hidden, invisible), from 1280 only", /<span aria-hidden="true" class="invisible hidden xl:inline-flex[^"]*">Account<\/span>/.test(a.bar) && !/>Sign in</.test(a.bar));
   const pill = anchors(p.bar).find((n) => n.href === "/pricing");
   check("paywall on: Pricing is the bar's ink pill, last, from 1280, ink2 on hover", !!pill && /bg-\[var\(--c-ink\)\]/.test(pill.tag) && /hover:bg-\[var\(--c-ink2\)\]/.test(pill.tag) && /xl:inline-flex/.test(pill.tag) && p.bar.lastIndexOf('href="/pricing"') > p.bar.lastIndexOf('href="/search"'));
   check("paywall on: Pricing in the footer, and the footer's line says each UK chapter opens free", anchors(p.footer).some((n) => n.href === "/pricing" && n.text === "Pricing") && /each UK chapter opens free/.test(p.footer));
@@ -265,7 +283,9 @@ async function main() {
   const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>([^<]*)<\/(?:a|span)>/g)].map((m) => m[1].trim());
   const wantOff = ["Search", ...WANT_NAMES, "About the figures", "Who runs this"];
   check(`the sheet's rows, switches off: ${spanRows(o.sheet).join(", ")}`, JSON.stringify(spanRows(o.sheet)) === JSON.stringify(wantOff));
-  check(`the sheet's rows, both switches on: ${spanRows(p.sheet).join(", ")}`, JSON.stringify(spanRows(p.sheet)) === JSON.stringify([...wantOff, "Sign in", "Pricing"]));
+  /* The server's markup is drawn before the session is read, so the account row is the entry's unseen holder, which prints the longer
+     word, Account (plan Task 7, amendment 8c); the mounted sheet below turns it into Sign in or Account once the read settles. */
+  check(`the sheet's rows, both switches on: ${spanRows(p.sheet).join(", ")}`, JSON.stringify(spanRows(p.sheet)) === JSON.stringify([...wantOff, "Account", "Pricing"]));
   check("every row of the sheet is 48px (min-h-12)", rows(o.sheet).length === wantOff.length && anchors(o.sheet).every((n) => /min-h-12/.test(n.tag)));
   const sheetCountries = anchors(c.sheet).find((n) => n.href === "/countries");
   check("the sheet marks the page being read as the bar does: aria-current, ink, semibold, a 2px ink rule at the left", !!sheetCountries && /aria-current="page"/.test(sheetCountries.tag) && /border-\[var\(--c-ink\)\]/.test(sheetCountries.tag) && /font-semibold/.test(sheetCountries.tag) && /border-l-2/.test(sheetCountries.tag));
@@ -349,12 +369,15 @@ async function main() {
   }
   await act(async () => { root.unmount(); });
 
-  /* ---------------- 3b. THE SHEET WITH ACCOUNTS ON (fix round 1, group 2) ---------------- */
+  /* ---------------- 3b. THE SHEET WITH ACCOUNTS ON (fix round 1, group 2; the one session read, plan Task 7, amendment 8c) ---------------- */
   /* The first mount had accounts off. With them on the sheet draws the entry in two steps: while the session is read it holds the words'
-     width unseen, and once the read settles it is a live /signin row; the order is Sign in, then Pricing last; a tap on it shuts the sheet. */
+     width unseen, and once the read settles it is a live /signin row; the order is Sign in, then Pricing last; a tap on it shuts the sheet.
+     The bar's entry is mounted beside the sheet, as SiteChrome draws them, so the two ask together: the stand-in counts one client and
+     one getUser between them, and both entries turn live on the one answer. */
   process.env.NEXT_PUBLIC_AUTH_ENABLED = "1";
+  const { HeaderAuth } = await import("../../src/components/HeaderAuth");
   const root2 = createRoot(doc.getElementById("root")!);
-  await act(async () => { root2.render(React.createElement(PathnameContext.Provider, { value: "/blog/x" }, React.createElement(MobileNav, { pricing: true }))); });
+  await act(async () => { root2.render(React.createElement(PathnameContext.Provider, { value: "/blog/x" }, React.createElement(React.Fragment, null, React.createElement(HeaderAuth), React.createElement(MobileNav, { pricing: true })))); });
   const btn2 = doc.querySelector('button[aria-controls="site-menu"]') as HTMLButtonElement | null;
   const isOpen2 = () => !!pane() && !pane()!.hasAttribute("hidden") && btn2?.getAttribute("aria-expanded") === "true";
   check("accounts on, mounted: the sheet starts shut", !!btn2 && !!pane() && !isOpen2(), { file: SHEET });
@@ -362,10 +385,15 @@ async function main() {
     await act(async () => { btn2.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); });
     const linkRows = () => [...pane()!.querySelectorAll("a")].map((x) => (x.textContent ?? "").trim());
     const held = pane()!.querySelector('span[aria-hidden="true"]');
-    check(`accounts on, the session not read yet: the entry holds its words unseen (aria-hidden, invisible) and is no link (${linkRows().join(", ")})`, isOpen2() && !!held && (held.textContent ?? "").trim() === "Sign in" && /\binvisible\b/.test(held.getAttribute("class") ?? "") && !pane()!.querySelector('a[href="/signin"]') && !pane()!.querySelector('a[href="/account"]'), { file: SHEET });
-    await act(async () => { settleSession(); await sessionRead; for (let i = 0; i < 6; i++) await Promise.resolve(); });
+    check(`accounts on, the session not read yet: the entry holds the longer word, Account, unseen (aria-hidden, invisible) and is no link (${linkRows().join(", ")})`, isOpen2() && !!held && (held.textContent ?? "").trim() === "Account" && /\binvisible\b/.test(held.getAttribute("class") ?? "") && !pane()!.querySelector('a[href="/signin"]') && !pane()!.querySelector('a[href="/account"]'), { file: SHEET });
+    const barHeld = [...doc.querySelectorAll('span[aria-hidden="true"]')].filter((x) => !pane()!.contains(x) && (x.textContent ?? "").trim() === "Account");
+    check(`accounts on, the session not read yet: the bar's entry holds the same word, unseen (${barHeld.length} outside the sheet)`, barHeld.length === 1 && /\binvisible\b/.test(barHeld[0].getAttribute("class") ?? "") && !doc.querySelector('a[href="/signin"]'), { file: "src/components/HeaderAuth.tsx" });
+    const reached = await until(() => asked.reads > 0);
+    check(`accounts on, the first entry to ask loads the auth client with import() and starts the read (client ${asked.clients}, getUser ${asked.reads})`, reached && asked.clients === 1 && asked.reads === 1, { file: "src/components/HeaderAuth.tsx", remedy: "load @/lib/supabase/client with await import() inside the shared readSession(), once" });
+    await act(async () => { settleSession(); await until(() => asked.returned > 0); for (let i = 0; i < 12; i++) await Promise.resolve(); });
     const signIn = pane()!.querySelector('a[href="/signin"]') as HTMLAnchorElement | null;
     check(`accounts on, the session read: a live /signin row appears and the unseen one is gone (${linkRows().join(", ")})`, !!signIn && (signIn.textContent ?? "").trim() === "Sign in" && !pane()!.querySelector('span[aria-hidden="true"]'), { file: SHEET });
+    check(`accounts on, the bar's entry and the sheet's share ONE session read: one client, one getUser, two live /signin links (client ${asked.clients}, getUser ${asked.reads}, links ${doc.querySelectorAll('a[href="/signin"]').length})`, asked.clients === 1 && asked.reads === 1 && doc.querySelectorAll('a[href="/signin"]').length === 2, { file: "src/components/HeaderAuth.tsx", remedy: "read the session once for every entry on the page: a module-level promise that the first entry starts and the rest take (readSession in HeaderAuth.tsx)" });
     check("accounts on, the order is the spec's: Sign in, then Pricing last", JSON.stringify(linkRows()) === JSON.stringify([...wantOff, "Sign in", "Pricing"]), { file: SHEET });
     if (signIn) await act(async () => { signIn.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true, cancelable: true })); });
     check("a tap on the Sign in row shuts the sheet", !isOpen2(), { file: SHEET });

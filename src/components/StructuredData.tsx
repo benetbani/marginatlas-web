@@ -7,6 +7,15 @@
  */
 import { COPY } from "@/lib/spine/copy";
 
+/**
+ * A JSON-LD block's text, with every `<` written as its JSON escape (plan 2026-10-10, the home reformed to ship, Task 7; the ship
+ * audit's 2.5, as Next's own JSON-LD guide advises): a value holding "</script>" would otherwise close the script element early and
+ * the rest would be read as markup. `<` is the same character to a JSON reader. Every block in this file goes through it.
+ */
+export function ldJson(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
 type CellDatasetProps = {
   url: string;
   industryName: string;
@@ -163,7 +172,7 @@ export function CellDataset({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: ldJson(data) }}
     />
   );
 }
@@ -186,7 +195,7 @@ export function Breadcrumbs({ items }: BreadcrumbProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: ldJson(data) }}
     />
   );
 }
@@ -223,7 +232,7 @@ export function Article({
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: ldJson(data) }}
     />
   );
 }
@@ -269,7 +278,7 @@ export function WebSite() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: ldJson(data) }}
     />
   );
 }
@@ -289,7 +298,7 @@ export function Organization() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: ldJson(data) }}
     />
   );
 }

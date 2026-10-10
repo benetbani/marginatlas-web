@@ -67,7 +67,11 @@ function asRequested(address: string): string | null {
 /* The instrument sees the files: the three src/app holds, each at the address Next serves it at. */
 const routes = metadataRoutes();
 const at = (file: string) => routes.find((r) => r.file === file)?.address;
-check(`the walk finds src/app/icon.tsx, the site icon, at /icon (found ${at("src/app/icon.tsx")})`, at("src/app/icon.tsx") === "/icon", LIB, WALK_REMEDY);
+/* The icon at three sizes since plan 2026-10-10 (the home reformed to ship, Task 7): src/app/icon.tsx exports generateImageMetadata, so
+   it serves one address per size under /icon/; the home-screen icon and the manifest joined it. */
+check(`the walk finds src/app/icon.tsx, the site icon, one address per size under /icon/ (found ${at("src/app/icon.tsx")})`, at("src/app/icon.tsx") === "/icon/[__metadata_id__]", LIB, WALK_REMEDY);
+check(`the walk finds src/app/apple-icon.tsx at /apple-icon (found ${at("src/app/apple-icon.tsx")})`, at("src/app/apple-icon.tsx") === "/apple-icon", LIB, WALK_REMEDY);
+check(`the walk finds src/app/manifest.ts at /manifest.webmanifest (found ${at("src/app/manifest.ts")})`, at("src/app/manifest.ts") === "/manifest.webmanifest", LIB, WALK_REMEDY);
 check(`the walk finds src/app/robots.ts at /robots.txt (found ${at("src/app/robots.ts")})`, at("src/app/robots.ts") === "/robots.txt", LIB, WALK_REMEDY);
 check(
   `the walk finds src/app/sitemap.ts at one address per id, the first /sitemap/0.xml (found ${at("src/app/sitemap.ts")})`,

@@ -16,48 +16,64 @@
  *
  * The DSN is a NEXT_PUBLIC_ var on purpose: Sentry DSNs are write-only ingest
  * keys designed to ship in the client bundle, not secrets.
+ *
+ * SENTRY STARTS AFTER THE PAGE, NOT BEFORE IT (plan 2026-10-10, the home
+ * reformed to ship, Task 7; the ship audit's 3.4). `Sentry.init` ran at
+ * startup, before hydration, for every visitor. It now runs when the browser is
+ * first idle, and within four seconds at the latest (Safari has no
+ * requestIdleCallback and takes the next tick). An error in those first moments
+ * is the one it can miss. What it sends is unchanged, and the privacy page
+ * names it: errors and 5 percent of traces, no personal data
+ * (`sendDefaultPii: false`, which also tells Sentry not to infer an IP address).
  */
 import * as Sentry from "@sentry/nextjs";
 
 const DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
 
-Sentry.init({
-  dsn: DSN,
-  enabled: Boolean(DSN) && process.env.NODE_ENV === "production",
+function startSentry(): void {
+  Sentry.init({
+    dsn: DSN,
+    enabled: Boolean(DSN) && process.env.NODE_ENV === "production",
 
-  // Capture all errors (low volume for a content site).
-  sampleRate: 1.0,
-  // Performance traces sampled lightly to stay inside the free tier (10k
-  // spans/mo). Low for a static content site.
-  tracesSampleRate: 0.05,
+    // Capture all errors (low volume for a content site).
+    sampleRate: 1.0,
+    // Performance traces sampled lightly to stay inside the free tier (10k
+    // spans/mo). Low for a static content site.
+    tracesSampleRate: 0.05,
 
-  // Session Replay removed: it is a paid feature. After the trial ends this
-  // site is on the free tier, where Replay does not ingest, so shipping the
-  // replay integration would only add bundle weight and dead recording work.
-  // Re-add Sentry.replayIntegration({...}) + replaysOnErrorSampleRate if a
-  // paid plan is taken later.
+    // Session Replay removed: it is a paid feature. After the trial ends this
+    // site is on the free tier, where Replay does not ingest, so shipping the
+    // replay integration would only add bundle weight and dead recording work.
+    // Re-add Sentry.replayIntegration({...}) + replaysOnErrorSampleRate if a
+    // paid plan is taken later.
 
-  sendDefaultPii: false,
+    sendDefaultPii: false,
 
-  ignoreErrors: [
-    "AbortError",
-    "ResizeObserver loop limit exceeded",
-    "ResizeObserver loop completed with undelivered notifications",
-    "Non-Error promise rejection captured",
-  ],
+    ignoreErrors: [
+      "AbortError",
+      "ResizeObserver loop limit exceeded",
+      "ResizeObserver loop completed with undelivered notifications",
+      "Non-Error promise rejection captured",
+    ],
 
-  beforeSend(event) {
-    if (event.request?.data && typeof event.request.data === "object") {
-      const data = event.request.data as Record<string, unknown>;
-      for (const key of Object.keys(data)) {
-        if (/(email|name|password|phone|address|ssn|token|secret|key)/i.test(key)) {
-          data[key] = "[scrubbed]";
+    beforeSend(event) {
+      if (event.request?.data && typeof event.request.data === "object") {
+        const data = event.request.data as Record<string, unknown>;
+        for (const key of Object.keys(data)) {
+          if (/(email|name|password|phone|address|ssn|token|secret|key)/i.test(key)) {
+            data[key] = "[scrubbed]";
+          }
         }
       }
-    }
-    return event;
-  },
-});
+      return event;
+    },
+  });
+}
+
+if (typeof window !== "undefined") {
+  if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(startSentry, { timeout: 4000 });
+  else window.setTimeout(startSentry, 1);
+}
 
 // Next-native client navigation instrumentation hook for @sentry/nextjs.
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

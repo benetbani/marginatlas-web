@@ -45,6 +45,9 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "account",
   "admin",
   "api",
+  /* The home-screen icon: src/app/apple-icon.tsx is a metadata route FILE served at /apple-icon (plan 2026-10-10, the home reformed
+     to ship, Task 7). */
+  "apple-icon",
   "auth",
   "blog",
   "browse",

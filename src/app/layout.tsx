@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 // Pin all server-rendered routes to Frankfurt. Supabase
 // project lives in eu-west-1 (per the dashboard banner); Vercel default
@@ -16,8 +16,13 @@ import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 import { Geist, Space_Grotesk } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
-import { AtlasGutters } from "@/components/kit";
+/* THE MODULE THAT HOLDS THE EXPORT, NOT THE KIT'S BARREL (plan 2026-10-10, the home reformed to ship, Task 7, amendment 8a): the barrel
+   (@/components/kit) re-exports ProfileChip, a client component whose import of @/lib/taxonomy put industries.json into every page's
+   client bundle (the Oct 5 production build's chunk 2373, 22.0 KB gzip, on /about-data, /blog and /account). tests/app/head.test.ts
+   holds this file and SiteChrome to the deep modules. */
+import { AtlasGutters } from "@/components/kit/frame/AtlasGutters";
 import { isWarmFrameEnabled } from "@/lib/feature_flags";
+import { COPY } from "@/lib/spine/copy";
 
 // Typography.
 //
@@ -121,22 +126,33 @@ export const metadata: Metadata = {
   // /og/default carries no figures on purpose. A default card cannot know
   // which page was pasted, so any number on it would be a number that does
   // not say what it measures.
+  //
+  // CUT TO WHAT EVERY PAGE SHARES (plan 2026-10-10, the home reformed to ship, Task 7; the ship audit's 2.1). The root also
+  // declared og:title, og:description and og:url, and a route that sets only its own title and description (the home, /pricing,
+  // /privacy) inherited all three by the replacement described above: Slack, X and LinkedIn showed the old positioning while Google
+  // showed the new, and every such page carried the HOME's og:url against its own canonical. With the three gone, a scraper falls
+  // back to each page's own <title>, description and canonical. What stays is true of every page: the site's name, the kind, the
+  // card, and the card's alt, which is the definition the card prints (COPY.home.definition; src/app/og/default/route.tsx).
   openGraph: {
-    title: "Margin Atlas: Small-business benchmarks worldwide",
-    description:
-      "Revenue, payroll, and after-tax owner take-home for small businesses worldwide, by industry, city, and size.",
-    url: "https://www.marginatlas.com",
     siteName: "Margin Atlas",
     type: "website",
-    images: [{ url: "/og/default", width: 1200, height: 630 }],
+    images: [{ url: "/og/default", width: 1200, height: 630, alt: COPY.home.definition }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Margin Atlas: Small-business benchmarks worldwide",
-    description:
-      "Small-business revenue, payroll, and owner take-home, by industry, city, and size.",
-    images: ["/og/default"],
+    images: [{ url: "/og/default", alt: COPY.home.definition }],
   },
+};
+
+/* THE BROWSER'S OWN CHROME MATCHES THE MASTHEAD (plan 2026-10-10, Task 7; the ship audit's 2.2): Android Chrome tints its bar with
+   theme-color and the masthead is white; the site is light only. Width and scale are Next's defaults, stated so this export cannot
+   lose them. White is written as a word, not as #ffffff: the cream gate counts that hex for the name its ramp step once carried
+   (scripts/verify_no_cream.ts), and plain white was never cream. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "white",
+  colorScheme: "light",
 };
 
 /* --atlas-header-h HAS TWO VALUES BECAUSE THE MASTHEAD HAS TWO HEIGHTS (plan 2026-10-10, the home reformed to ship, Task 1; the

@@ -30,12 +30,12 @@ import { ImageResponse } from "next/og";
 import {
   CARD_SIZE,
   INK,
-  MUTED,
   TERRACOTTA,
   OgFrame,
   OgBrand,
   OgFooter,
 } from "../_card";
+import { COPY } from "@/lib/spine/copy";
 
 export const runtime = "nodejs";
 // The output is byte-identical on every request: no params, no data, no clock.
@@ -58,6 +58,11 @@ export async function GET() {
             paddingLeft: 28,
           }}
         >
+          {/* THE CARD SAYS WHAT THE HOME SAYS (plan 2026-10-10, the home reformed to ship, Task 7; the ship audit's 2.3): the
+              site's one definition (COPY.home.definition), the line the home prints under its picker and both structured-data
+              blocks state, and the card's alt in the root layout. It read "What a small business actually earns" over a second
+              line in the old positioning ("Revenue, payroll, and after-tax owner take-home, by trade, city, and size."); one
+              sentence now, so the card makes no claim the page does not. */}
           <div
             style={{
               fontSize: 62,
@@ -67,30 +72,7 @@ export async function GET() {
               color: INK,
             }}
           >
-            What a small business actually earns
-          </div>
-          {/* The scope of the site, in the root layout's own words. It states
-              what is published and nothing more. An earlier draft of this line
-              also promised that every figure says how it was produced, which
-              is the product's intent but is a universal claim about 615 pages
-              that this card cannot stand behind. The per-cell card at /og/cell
-              makes that claim only where it can prove it, one figure at a
-              time. */}
-          <div
-            style={{
-              fontSize: 28,
-              marginTop: 20,
-              color: MUTED,
-              lineHeight: 1.35,
-              // The measure is tuned, not arbitrary. At full width the line
-              // wrapped with "size." orphaned on a line of its own; at 640 it
-              // broke "take-home" across the hyphen. 780 keeps the hyphenate
-              // whole and puts the break at a comma.
-              maxWidth: 780,
-            }}
-          >
-            Revenue, payroll, and after-tax owner take-home, by trade, city,
-            and size.
+            {COPY.home.definition}
           </div>
         </div>
 

@@ -22,13 +22,13 @@
  * `elevation` prop already uses below.
  */
 import * as React from "react";
-import { Geist } from "next/font/google";
 
-const geist = Geist({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-geist", display: "swap" });
-
+/* ONE GEIST (plan 2026-10-10, the home reformed to ship, Task 7; the ship audit's 3.9): this shell loaded its own next/font Geist
+   into `--font-geist`, the same woff2 the root layout already loads into `--font-sans` (src/app/layout.tsx), so every spine page
+   carried two @font-face sets for one face. It reads the layout's slot now; the face, the weights and the fallback are the same. */
 export function SpineShell({ children }: { children: React.ReactNode; bg?: string; bgPosition?: string }) {
   return (
-    <div className={`spine-scope ${geist.variable}`} style={{ fontFamily: "var(--font-geist), ui-sans-serif, system-ui, sans-serif", background: "var(--c-ground)" }}>
+    <div className="spine-scope" style={{ fontFamily: "var(--font-sans), ui-sans-serif, system-ui, sans-serif", background: "var(--c-ground)" }}>
       {/* THIS SHELL NO LONGER CARRIES A STYLESHEET, and that is the point.
           The twelve colour tokens left in an earlier change for the same
           reason: declared from inside a component, they existed on a page that

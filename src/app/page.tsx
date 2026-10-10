@@ -17,6 +17,7 @@ import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
 import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
 import { CITY_CARD_PLACEHOLDER_IMAGE } from "@/lib/spine/city_cards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
+import { homePickerSeed } from "@/lib/home/picker";
 // Wave 2 Task 7 , the rebuilt-homepage gate (NEXT_PUBLIC_HOME_REFORM, default ON since 2026-10-07; =0 turns it off).
 // The flagged branch draws src/components/spine/home/home-view.tsx, the band page (masterplan step 32).
 import { isHomeReformEnabled } from "@/lib/feature_flags";
@@ -47,8 +48,10 @@ import type { Metadata } from "next";
  * than deep merge, restating either one here for a title alone would discard
  * the social card image along with it.
  */
+/* THE TITLE AT 51 CHARACTERS (plan 2026-10-10, the home reformed to ship, Task 7; the ship audit's 2.4): it was 67, and a search
+   result shows about 60, so the owner's half was cut. Same claim, said in fewer words. */
 export const metadata: Metadata = {
-  title: "Margin Atlas: what a small business earns, and what its owner keeps",
+  title: "Margin Atlas: what a small business earns and keeps",
   description:
     "What a small business earns, and what its owner actually keeps, trade by trade and place by place.",
   alternates: { canonical: "/" },
@@ -419,7 +422,11 @@ export default async function HomePage() {
             id="home-search-anchor"
             className="relative z-30 mt-4 md:mt-5 max-w-5xl mx-auto"
           >
-            <NavigatorForm />
+            {/* THE SEED, AS THE REBUILT HOME PASSES IT (plan 2026-10-10, the home reformed to ship, Task 7, amendment 8b): the
+                form's lists load on first use, and without the server's seed its first paint was three blank fields and a
+                no-script submit sent empty fields to /api/go. The seed carries the three labels and the four hidden fields of
+                the case the form opens on (src/lib/home/picker.ts homePickerSeed). */}
+            <NavigatorForm seed={homePickerSeed()} />
           </div>
         </section>
         </div>

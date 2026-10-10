@@ -49,6 +49,8 @@ export const SERVED_FILES: ReadonlySet<string> = new Set([
   "/london-cities.png",
   "/spine/_skyline.jpeg",
   "/spine/london.jpeg",
+  /* src/app/manifest.ts */
+  "/manifest.webmanifest",
   /* src/app/robots.ts */
   "/robots.txt",
   /* src/app/sitemap.ts */
