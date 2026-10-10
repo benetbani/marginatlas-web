@@ -2631,6 +2631,7 @@
       "reads": [
         "src/app",
         "src/app/(site)",
+        "src/app/[country]/[geo]/[industry]/page.tsx",
         "src/app/dev",
         "src/app/globals.css",
         "src/app/layout.tsx",

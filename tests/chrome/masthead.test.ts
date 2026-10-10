@@ -19,9 +19,10 @@
  *   - the height token by width (src/app/layout.tsx), the focus floor, scroll-padding-top, the one text red and the control-line
  *     token (src/app/globals.css); the 404 inside the chrome with true lines (src/app/not-found.tsx); no Phosphor barrel anywhere in
  *     SiteChrome's import graph (the 404's header records a static export killed by one);
- *   - no per-anchor offset that repeats the bar: a browser adds an element's scroll-margin-top to the page's scroll-padding-top, so
- *     scroll-mt-20, 24, 28 and 32 (or a stylesheet's scroll-margin-top as tall as a bar) are gone from src, and only an offset for a
- *     second sticky element above the target stays, written scroll-mt-[Npx] (the workshop, src/app/dev, is outside the rule).
+ *   - no per-anchor offset that repeats the bar: a browser adds an element's scroll-margin-top to the page's scroll-padding-top (the
+ *     bar's height and 8px of air), so src holds no numeric scroll-mt-<n>, no scroll-margin property other than zero, and no
+ *     arbitrary scroll-mt-[...] but the ones OTHER_STICKY names for a second sticky element above the target (the legacy cell page's
+ *     106px; the workshop, src/app/dev, is outside the rule).
  * HOW: SiteChrome rendered server-side, the switches set per render in process.env (src/lib/feature_flags.ts reads them at render, as
  * tests/legal/pro_legal.test.ts sets them) and the page's address handed in through Next's own pathname context; the sheet mounted in
  * jsdom and pressed. BLIND SPOT, stated: this reads classes and a mounted tree, never pixels: the bar's measured heights, the sheet's
@@ -111,20 +112,35 @@ async function main() {
   const css = code(CSS);
   check("globals.css draws the focus floor: :focus-visible, 2px ink, 2px off", /:focus-visible\s*\{\s*outline:\s*2px solid var\(--c-ink\);\s*outline-offset:\s*2px;\s*\}/.test(css), { file: CSS });
   check("the black footer's ring is white", /footer\.bg-black :focus-visible\s*\{\s*outline-color:\s*white;\s*\}/.test(css), { file: CSS });
-  check("the page scrolls a target clear of the bar: scroll-padding-top reads the height token", /scroll-padding-top:\s*var\(--atlas-header-h\);/.test(css), { file: CSS });
+  check("the page scrolls a target clear of the bar with 8px of air under it: scroll-padding-top is the height token and 8px", /scroll-padding-top:\s*calc\(var\(--atlas-header-h\)\s*\+\s*8px\);/.test(css), { file: CSS, remedy: "set html { scroll-padding-top: calc(var(--atlas-header-h) + 8px); }: a jump lands clear of the bar's border, 8px below it, and not flush against it" });
   check("one text red: --terra-text is #991600, and #c2410c is nowhere in the stylesheet", /--terra-text:\s*#991600;/.test(css) && !/#c2410c/i.test(css), { file: CSS, remedy: "re-point --terra-text to #991600 and read it where #c2410c was written" });
   check("--control-line is #8f8f8b, a control's 3:1 edge", /--control-line:\s*#8f8f8b;/.test(css), { file: CSS });
   check("the bar's edge is --c-border", /\.atlas-glass-chrome\s*\{[^}]*border-bottom:\s*1px solid var\(--c-border\);/.test(css), { file: CSS });
 
-  /* THE ANCHORS (fix round 1, group 1). The scroll-padding-top above is the bar's whole height, and a browser ADDS an element's own
-     scroll-margin-top to it, so an offset written before the page carried that padding (scroll-mt-24 and its kin, or a stylesheet's
-     78px or 92px) lands every target a whole bar too low: about 189px from the top at 768 and up, where the bar ends at 93. What may
-     stay is an offset for a SECOND sticky element above the target, written scroll-mt-[Npx] with that element's own height. The
-     workshop (src/app/dev) and the v0 token sheet are outside the site and outside this rule. */
-  const OFFSET_REMEDY = "the global scroll-padding-top clears the bar; keep only an offset for a second sticky element, as scroll-mt-[Npx]";
-  const BAR_CLASS = /(?<![\w-])scroll-mt-(?:20|24|28|32)(?![\w-])/g;
-  const BAR_MARGIN = /(?:scroll-margin-top|scrollMarginTop)\s*:\s*["']?(\d+(?:\.\d+)?)(?:px)?/g;
-  const SMALLEST_BAR_PX = 56; /* 3.5rem, the fallback in src/components/kit/layout/bands.tsx: the least a bar here has ever measured */
+  /* THE ANCHORS (fix round 1, group 1; widened in the closing cleanup of plan 2026-10-10, item 2). The scroll-padding-top above is the
+     bar's whole height and 8px of air, and a browser ADDS an element's own scroll-margin-top to it, so an offset written before the
+     page carried that padding lands every target a whole bar too low: about 189px from the top at 768 and up, where the bar ends at
+     93. The scan named only the values the first fix round had removed (scroll-mt-20, 24, 28 and 32, and a stylesheet's 56px and up),
+     so any other offset passed. Now: no numeric scroll-mt-<n> (nor the scroll-m-<n> and scroll-my-<n> that set the same top), no
+     scroll-margin property with a value other than zero in a stylesheet, a style object or an arbitrary property, and an arbitrary
+     scroll-mt-[...] only where OTHER_STICKY names its file and its value and the second sticky element it clears. The workshop
+     (src/app/dev) and the v0 token sheet are outside the site and outside this rule. */
+  const OFFSET_REMEDY = "the global scroll-padding-top clears the bar, so write no scroll-margin of your own; the one exception is an offset for a second sticky element, an arbitrary scroll-mt-[Npx] named with its file and the element it clears in OTHER_STICKY (tests/chrome/masthead.test.ts)";
+  const OTHER_STICKY: Array<{ file: string; value: string; clears: string }> = [
+    { file: "src/app/[country]/[geo]/[industry]/page.tsx", value: "106px", clears: "the legacy cell page's DimensionSwitcher, a second sticky bar of a data-driven height (the path does not serve while NEXT_PUBLIC_SPINE_REFORM_CELL is forced on)" },
+  ];
+  const NUMERIC_CLASS = /(?<![\w-])-?scroll-m[ty]?-(?!0(?![\w.]))\d+(?:\.\d+)?(?![\w-])/g;
+  const ARBITRARY_CLASS = /(?<![\w-])-?scroll-m[ty]?-\[([^\]]*)\]/g;
+  const MARGIN_PROPERTY = /(?<![\w-])(?:scroll-margin(?:-[a-z]+)*|scrollMargin(?:[A-Z][A-Za-z]*)?)\s*:\s*["']?([^;"'}\]\n,]*)/g;
+  const ZERO = /^\s*(?:(?:0+(?:\.0+)?(?:px|rem|em|%|vh|vw)?|initial|unset)\s*)+$/i;
+  /** Every offset a line writes: a numeric class, an arbitrary class (with its value), or a scroll-margin property that is not zero. */
+  const offsetsIn = (line: string): Array<{ what: string; arbitrary?: string }> => {
+    const found: Array<{ what: string; arbitrary?: string }> = [];
+    for (const m of line.matchAll(NUMERIC_CLASS)) found.push({ what: m[0] });
+    for (const m of line.matchAll(ARBITRARY_CLASS)) found.push({ what: m[0], arbitrary: m[1] });
+    for (const m of line.matchAll(MARGIN_PROPERTY)) if (m[1].trim() !== "" && !ZERO.test(m[1])) found.push({ what: `${m[0].split(":")[0].trim()}: ${m[1].trim()}` });
+    return found;
+  };
   const srcFiles: string[] = [];
   const walkSrc = (dir: string) => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
@@ -135,16 +151,27 @@ async function main() {
   };
   walkSrc("src");
   const offsetSites: Array<{ file: string; line: number; what: string }> = [];
+  const allowed = OTHER_STICKY.map((o) => ({ ...o, written: 0 }));
   for (const f of srcFiles) {
     code(f).split("\n").forEach((l, i) => {
-      for (const m of l.matchAll(BAR_CLASS)) offsetSites.push({ file: f, line: i + 1, what: m[0] });
-      for (const m of l.matchAll(BAR_MARGIN)) if (Number(m[1]) >= SMALLEST_BAR_PX) offsetSites.push({ file: f, line: i + 1, what: `scroll-margin-top ${m[1]}px` });
+      for (const o of offsetsIn(l)) {
+        const entry = o.arbitrary === undefined ? undefined : allowed.find((a) => a.file === f && a.value === o.arbitrary);
+        if (entry) entry.written++;
+        else offsetSites.push({ file: f, line: i + 1, what: o.what });
+      }
     });
   }
-  const seenBy = (s: string) => [...s.matchAll(BAR_CLASS)].length;
-  check("the offset scan sees what it hunts: scroll-mt-24 inside a variant chain, and not scroll-mt-[43px]", seenBy('class="lg:[&_[id]]:scroll-mt-24"') === 1 && seenBy('class="scroll-mt-32 lg:scroll-mt-24"') === 2 && seenBy('class="md:[&_[id]]:scroll-mt-[43px]"') === 0, { file: process.argv[1] ?? CHROME, remedy: "keep BAR_CLASS naming scroll-mt-20, 24, 28 and 32 as written, whole-word" });
-  for (const s of offsetSites) red({ rule: RULE, file: s.file, line: s.line, detail: `${s.what} repeats the bar the page's scroll-padding-top already clears`, remedy: OFFSET_REMEDY });
-  check(`no scroll offset in src repeats the bar's height (${srcFiles.length} files read, ${offsetSites.length} sites${offsetSites.length ? ", listed above" : ""})`, srcFiles.length > 500 && offsetSites.length === 0, { file: offsetSites[0]?.file ?? "src", remedy: OFFSET_REMEDY });
+  const offsetNames = (s: string) => offsetsIn(s).map((o) => o.what);
+  check("the offset scan sees what it hunts: every numeric scroll-mt-<n> (16 and 40 as much as 24, inside a variant chain), the m and my siblings, an arbitrary one with its value, a scroll-margin property that is not zero in a stylesheet, a style object or an arbitrary property; and not a zero",
+    offsetNames('class="lg:[&_[id]]:scroll-mt-24"').length === 1 && offsetNames('class="scroll-mt-16 lg:scroll-mt-40"').length === 2 && offsetNames('class="-scroll-mt-4 scroll-my-2 scroll-m-8"').length === 3 && offsetNames('class="scroll-mt-0 lg:scroll-mt-0 scroll-mt-px"').length === 0
+    && offsetsIn('class="md:[&_[id]]:scroll-mt-[43px]"')[0]?.arbitrary === "43px" && offsetNames("scroll-margin-top: 78px;").length === 1 && offsetNames("scroll-margin: 0 0 12px;").length === 1 && offsetNames("scroll-margin-block-start: 6rem").length === 1
+    && offsetNames("style={{ scrollMarginTop: 92 }}").length === 1 && offsetNames("style={{ scrollMarginBottom: '2rem' }}").length === 1 && offsetNames('class="[scroll-margin-top:96px]"').length === 1
+    && offsetNames("scroll-margin-top: 0;").length === 0 && offsetNames("scroll-margin: 0px 0 0.0rem;").length === 0 && offsetNames("style={{ scrollMarginTop: 0 }}").length === 0 && offsetNames('class="[scroll-margin-top:0]"').length === 0,
+    { file: process.argv[1] ?? CHROME, remedy: "keep NUMERIC_CLASS, ARBITRARY_CLASS and MARGIN_PROPERTY naming every scroll-mt-<n> but zero, an arbitrary one, and every scroll-margin property with a value other than zero, whole-word" });
+  for (const s of offsetSites) red({ rule: RULE, file: s.file, line: s.line, detail: `${s.what} is a scroll offset the page's scroll-padding-top already supplies (it clears the bar), and not one OTHER_STICKY allows`, remedy: OFFSET_REMEDY });
+  check(`no scroll offset in src beyond the second sticky elements' (${srcFiles.length} files read, ${offsetSites.length} sites${offsetSites.length ? ", listed above" : ""}, ${allowed.reduce((t, a) => t + a.written, 0)} allowed)`, srcFiles.length > 500 && offsetSites.length === 0, { file: offsetSites[0]?.file ?? "src", remedy: OFFSET_REMEDY });
+  const gone = allowed.filter((a) => a.written === 0);
+  check(`every offset OTHER_STICKY allows is still written (${allowed.length - gone.length} of ${allowed.length}${gone.length ? `; gone: ${gone.map((g) => `scroll-mt-[${g.value}] in ${g.file}`).join(", ")}` : ""})`, gone.length === 0, { file: process.argv[1] ?? CHROME, remedy: "delete the entry from OTHER_STICKY: the offset it allowed is no longer written" });
 
   /* THE TEXT RED IS READ, NEVER WRITTEN (fix round 1, group 2). --terra-text is the one text red (one line in globals.css moves it),
      so no file draws its shade as an rgb of its own: the map marker's focus ring wrote rgba(153,22,0,0.55) and a change of that one

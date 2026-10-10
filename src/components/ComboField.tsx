@@ -142,6 +142,10 @@ export function ComboField({
       if (!wrapRef.current?.contains(e.target as Node)) {
         setOpen(false);
         setQuery(null);
+        /* The highlight goes with the list. A press that moves no focus leaves the field focused, and a row left lit would be lit
+           again when the list reopens: an Enter would choose it unseen, and the arrow keys would walk on from it (the Task 2 second
+           re-review). */
+        setFocusIdx(-1);
       }
     }
     document.addEventListener("mousedown", onDoc);

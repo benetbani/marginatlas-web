@@ -661,8 +661,8 @@ const GATES: Gate[] = [
      typed, no slot and no list count, the band drawn with three or
      more; the drawing a zone in ink on the terracotta. Reads the home's render where the harness wrote it, deferred on a build server. */
   { name: "site-counts", script: "tests/home/site_counts.test.ts" },
-  /* The shared forms' small props for the home (plan 2026-10-09, home introduction, Task 3): Rail's level, FactRows' step, Ring's
-     lead size, BarList's quiet, each byte-identical where not passed; the copy gate reads a Rail's h2. */
+  /* The shared forms' small props for the home (plan 2026-10-09, home introduction, Task 3): Rail's level, Ring's lead size and its
+     label, BarList's quiet, MonthBars' stamp, StepMark's numeral, each byte-identical where not passed; the copy gate reads a Rail's h2. */
   { name: "home-forms", script: "tests/spine/home_forms.test.ts" },
   /* The home's foot (plan 2026-10-10, the home reformed to ship, Task 6; the spec's decisions 2 and 5): the cities as grey rows of
      480 by 360 small copies with their landmark crops, two to a row under 768 with "All UK cities", a server component; "From the

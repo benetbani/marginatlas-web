@@ -9,8 +9,8 @@
  * first paint from the server's seed, whose labels are the lists' own.
  * ComboField is rendered on the server and mounted in jsdom, and steered with the keys (the Task 2 fix rounds: Enter chooses the lit
  * row whatever is typed, and only while its list is open, and keeps the visitor in the field over "No match" or "Loading…"; ArrowUp
- * opens a shut list as ArrowDown does; leaving the field closes its list; a field told its lists are coming draws one "Loading…"
- * row). NavigatorForm is mounted inside the app router's context, the module cache the instrument for its lazy load (no list module
+ * opens a shut list as ArrowDown does; leaving the field closes its list; a press outside closes it and drops the highlight with it,
+ * so a reopened list has no row lit; a field told its lists are coming draws one "Loading…" row). NavigatorForm is mounted inside the app router's context, the module cache the instrument for its lazy load (no list module
  * before a pointer, a focus or a key) and a submit event dispatched at it the instrument for its two submits (the browser's own
  * before the lists are in, the page's own after); its source is read here too, comments stripped, and its markup in the home's
  * render (tests/trust/home_shape.test.ts, the hero's checks).
@@ -208,7 +208,27 @@ async function main() {
   const focusKept = document.activeElement === left.input;
   const enterOnShut = await left.press("Enter");
   check(`a list shut by a press outside, which leaves the field its focus and a row lit, is not chosen from: that Enter is the form's (before the press: ${show(litFirst)}; after: ${show(shutByPress)}, focus kept ${focusKept}; picked [${left.log.join(",")}], Enter kept by the field ${enterOnShut.defaultPrevented}, field reads "${left.input.value}")`, litFirst.lit === "1" && shutByPress.rows === 0 && shutByPress.expanded === "false" && focusKept && left.log.length === 0 && !enterOnShut.defaultPrevented && left.input.value === "United Kingdom", FIELD, UP_REMEDY);
+  /* THE HIGHLIGHT DOES NOT OUTLIVE THE LIST (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 15; the Task 2 second
+     re-review). The press outside shut the list but left the row lit (focusIdx), and the field kept its focus: the visitor opens the list
+     again (a click on the field) and the row they had lit before is lit now, which an Enter then chooses unseen, and the arrow keys walk
+     on from it instead of from the top. The press outside drops the highlight with the typed words. */
+  const DOC_REMEDY = "in src/components/ComboField.tsx onDoc, a press outside closes the list, drops the typed words and the highlight (setFocusIdx(-1)), so a reopened list has no row lit and an Enter over it is the form's";
+  await act(async () => { left.input.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); });
+  const reopened = view(left);
+  const enterAfterReopen = await left.press("Enter");
+  check(`a list reopened after a press outside has no row lit, so that Enter is the form's and chooses nothing (before the press: ${show(litFirst)}; reopened: ${show(reopened)}; picked [${left.log.join(",")}], Enter kept by the field ${enterAfterReopen.defaultPrevented}, field reads "${left.input.value}")`, reopened.rows === 3 && reopened.expanded === "true" && reopened.lit === "" && reopened.named === -1 && left.log.length === 0 && !enterAfterReopen.defaultPrevented && left.input.value === "United Kingdom", FIELD, DOC_REMEDY);
   await left.unmount();
+  /* The same press, and the arrow keys alone after the reopen (no Enter in between to clear the row): the walk starts at the top. */
+  const walk = await mountField("GB");
+  await act(async () => { walk.input.focus(); });
+  await walk.press("ArrowDown");
+  await walk.press("ArrowDown");
+  await act(async () => { document.body.dispatchEvent(new dom.window.MouseEvent("mousedown", { bubbles: true })); });
+  await act(async () => { walk.input.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); });
+  await walk.press("ArrowDown");
+  const walkedOn = view(walk);
+  check(`the arrow keys walk a reopened list from its top, not on from the row lit before the press (after ArrowDown, ArrowDown, a press outside, a click and ArrowDown: ${show(walkedOn)})`, walkedOn.rows === 3 && walkedOn.lit === "0" && walkedOn.named === 0, FIELD, DOC_REMEDY);
+  await walk.unmount();
   /* The key's other half, unchanged: in an open list ArrowUp moves the highlight up a row, stops at the first, and the Enter chooses the row it stands on. */
   const climb = await mountField("GB");
   await act(async () => { climb.input.focus(); });

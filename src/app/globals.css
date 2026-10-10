@@ -272,8 +272,10 @@
     color: rgb(var(--foreground));
     /* THE STICKY BAR NEVER COVERS WHAT IT SENDS YOU TO (plan 2026-10-10, the home reformed to ship, Task 1; the ship audit's 1.10,
        WCAG 2.4.11): the home's own "Try your own" door (#search) scrolled the h1 under the bar, and Shift+Tab upward parked the
-       focused control beneath it. The bar's height token is set on this element by src/app/layout.tsx, 61 under 768 and 93 from. */
-    scroll-padding-top: var(--atlas-header-h);
+       focused control beneath it. The bar's height token is set on this element by src/app/layout.tsx, 61 under 768 and 93 from. A jump
+       landed flush against the bar's border, the target's first line touching it; 8px of air under the bar (the closing cleanup of the
+       same plan, item 3) lets it breathe, and no element adds an offset of its own to this (tests/chrome/masthead.test.ts). */
+    scroll-padding-top: calc(var(--atlas-header-h) + 8px);
   }
 
   /* THE FOCUS FLOOR (plan 2026-10-10, Task 1; the ship audit's 1.8, the critique's P0.8): every element that takes keyboard focus
