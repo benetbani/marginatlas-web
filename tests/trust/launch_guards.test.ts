@@ -61,6 +61,11 @@ async function main() {
   check("the form is named by the same line", /<form[^>]*aria-labelledby="atlas-newsletter-line"/.test(idle));
   const input = /<input[^>]*>/.exec(idle)?.[0] ?? "";
   check(`the field has a name, autocomplete=email, 16px type on a phone, 44px, a 3:1 edge (${input.slice(0, 120)})`, /name="email"/.test(input) && /autoComplete="email"|autocomplete="email"/.test(input) && /type="email"/.test(input) && /\bh-11\b/.test(input) && /\btext-base\b/.test(input) && /\bmd:text-sm\b/.test(input) && /border-\[var\(--control-line\)\]/.test(input));
+  /* THE FIELD MAY SHRINK (critique pass 2, P0.3: the first photograph of the home inside its chrome). A flex-1 input keeps its own
+     minimum, about 245px at 16px type, so beside the 111px button it needed 364px of a 327px column: the button ran 13px past a 375 screen,
+     28 past a 360 one and 68 past a 320 one, and the body hides sideways scroll, so it could not be reached. No render gate saw it: the
+     harness draws pages without the chrome. min-w-0 lets the field give way; the pixel measure is scratchpad/home-reform/p3_nl_probe.mjs. */
+  check(`the email field can shrink on a phone (min-w-0 beside flex-1), so the button stays inside the page's gutter at 320 and up (${input.slice(0, 120)})`, /\bmin-w-0\b/.test(input) && /\bflex-1\b/.test(input), { file: BAR, remedy: "give the email field min-w-0 beside flex-1: without it the field keeps its own 245px minimum and the Join the list button runs off a 375 screen by 13px" });
   const button = /<button[^>]*>[\s\S]*?<\/button>/.exec(idle)?.[0] ?? "";
   check(`the button is 44px and says ${NEWSLETTER_COPY.button}`, /\bh-11\b/.test(button) && words(button) === NEWSLETTER_COPY.button);
   /* FIX ROUND 8: the field has a name now, so a native submit before the page hydrated (Enter in the field, or a tap on the button)

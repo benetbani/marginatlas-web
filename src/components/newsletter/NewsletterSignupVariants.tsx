@@ -147,7 +147,7 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
                 placeholder="you@work.com"
                 aria-invalid={status === "invalid" ? true : undefined}
                 aria-describedby={error ? ERROR_ID : undefined}
-                className={`h-11 flex-1 rounded-md border bg-white px-3 text-base text-[var(--c-ink)] placeholder:text-[var(--c-muted)] sm:w-64 sm:flex-none md:text-sm ${
+                className={`h-11 min-w-0 flex-1 rounded-md border bg-white px-3 text-base text-[var(--c-ink)] placeholder:text-[var(--c-muted)] sm:w-64 sm:flex-none md:text-sm ${
                   error ? "border-[var(--terra-text)]" : "border-[var(--control-line)]"
                 }`}
               />
