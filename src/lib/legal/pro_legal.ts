@@ -29,14 +29,20 @@ const p = (text: string, when?: LegalParagraph["when"]): LegalParagraph => (when
 
 /**
  * WHAT SENTRY RECEIVES, said once for the live privacy page and for this draft (plan 2026-10-10, the home reformed to ship, Task 8;
- * the ship audit's 5.2: neither named it). Read from the code: src/instrumentation-client.ts, sentry.server.config.ts and
- * sentry.edge.config.ts send every error and 5 percent of traces when NEXT_PUBLIC_SENTRY_DSN is set in production, with
- * `sendDefaultPii: false` (no user, no cookies, and the browser SDK tells Sentry never to infer an IP address), and the browser and
- * server configs' beforeSend scrubs any form field named like an email, a name or an address.
+ * the ship audit's 5.2: neither named it). FIX ROUND 8: Task 8's review found these words stronger than the code. They said "the
+ * reports carry no name or email" while a server report carried the request's cookies, and from launch day the session cookie
+ * holds the email. So the code keeps less and the words say what is kept. HE READS THEM BEFORE ANY DEPLOY.
+ * Read from the code, and held to it by tests/trust/launch_guards.test.ts: src/instrumentation-client.ts, sentry.server.config.ts
+ * and sentry.edge.config.ts send every error and 5 percent of traces when NEXT_PUBLIC_SENTRY_DSN is set in production, with
+ * `sendDefaultPii: false` (no user, and the browser SDK tells Sentry never to infer an IP address), no replay and no setUser. A
+ * report holds what the SDKs add: what failed, the page's address, the address the reader came from, the trail of clicks, page
+ * changes and requests, and the browser's language and time zone. A report from the servers holds the request's headers, and
+ * sentry.server.config.ts drops the cookies, the location headers and any body from it and from a trace (the edge SDK adds no
+ * request at all). What no code can take out is what the reader wrote into an address or an error message, and the words say so.
  */
 export const SENTRY_LEAD = "Errors.";
 export const SENTRY_WORDS =
-  "When a page fails, in your browser or on our servers, Sentry, the service we use to find bugs, receives a report: the page's address, what failed, and your browser and system. A small share of visits also send how long the page took to load. Sentry is set to keep no IP address, and the reports carry no name or email.";
+  "When a page fails, in your browser or on our servers, Sentry, the service we use to find bugs, receives a report. It holds what failed, the page's address, the address you came from, a short trail of your last clicks, page changes and requests, and details of your browser such as its language and time zone. A report from our servers also holds the request's headers, without cookies or location. A small share of visits also send how long the page and the files it needs took to load. Sentry is set to keep no IP address. We do not attach your name or account to a report, but anything written in an address or an error message goes with it.";
 
 export const PRO_TERMS: LegalDoc = {
   key: "terms",
@@ -115,7 +121,7 @@ export const PRO_PRIVACY: LegalDoc = {
       p("Payments run through Stripe. Card details go straight to Stripe and never reach our servers. We see that a payment happened, for which plan and for how much. Stripe keeps its own record of each payment, as its own privacy notice explains."),
     ] },
     { id: "given", heading: "Your email and corrections", paragraphs: [
-      p("**Email when new figures land.** If you leave your email, we store it so we can write to you when new figures land. Nothing else is attached to it."),
+      p("**Email when new figures land or Pro opens.** If you leave your email, we store it with the day you signed up and the form you used, so we can write to you when new figures land or Pro opens. Nothing else is attached to it."),
       p("**Corrections.** If you tell us a figure is wrong, we keep what you wrote so we can act on it and so we have a record of why a number changed."),
     ] },
     { id: "automatic", heading: "What is collected automatically", paragraphs: [

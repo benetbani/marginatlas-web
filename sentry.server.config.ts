@@ -3,10 +3,58 @@
  *
  * Same DSN as the client, different runtime context. Errors thrown
  * during SSR, in route handlers, or in server actions land here.
+ *
+ * WHAT A SERVER REPORT KEEPS OF THE REQUEST (plan 2026-10-10, the home reformed to ship, Task 8, fix round 8; the privacy page's
+ * Sentry paragraph, SENTRY_WORDS in src/lib/legal/pro_legal.ts, says it, and he reads that text before any deploy). The Node SDK
+ * adds the request to every event whatever `sendDefaultPii` says: @sentry/core's request-data integration defaults to the headers
+ * AND the cookies (only the IP address follows that flag), Next hands onRequestError (src/instrumentation.ts) the raw headers, and
+ * the http server integration reads up to 10 KB of any body a route handler reads and attaches it as TEXT. From launch day the
+ * session cookie holds the reader's email, Vercel adds the reader's place as `x-vercel-ip-*` headers, and the contact, correction
+ * and newsletter forms post names, emails and messages. A trace (5 percent of requests) is the same request again, and its root
+ * span also copies the headers onto itself as `http.request.header.*` attributes, past the SDK's own filter, which lets `x-real-ip`
+ * and `x-vercel-forwarded-for`, the reader's address, through. So a report and a trace leave here without the cookies, the cookie
+ * header, the location headers, that copy of the headers, and any body. The headers that stay are the rest of the request's own
+ * (the browser, its language, the address it came from); the SDK already drops the address headers from the request itself.
+ * tests/trust/launch_guards.test.ts hands this file an event that carries all of it, and holds the privacy page's words to it.
  */
 import * as Sentry from "@sentry/nextjs";
 
 const DSN = process.env.NEXT_PUBLIC_SENTRY_DSN;
+
+/** The request details no server report or trace may carry; see the header above. Mutates and returns the event. */
+function keepNoCookiesPlaceOrBody<T extends Sentry.Event>(event: T): T {
+  const request = event.request;
+  if (request) {
+    delete request.cookies;
+    const headers = request.headers;
+    if (headers) {
+      for (const name of Object.keys(headers)) {
+        const lower = name.toLowerCase();
+        // x-vercel-proxied-for is an address header the SDK's own list of them (which it drops from the request) does not know.
+        if (lower === "cookie" || lower.startsWith("x-vercel-ip-") || lower === "x-vercel-proxied-for") delete headers[name];
+      }
+    }
+    // Drop any captured request body that looks form-shaped.
+    if (request.data && typeof request.data === "object") {
+      const data = request.data as Record<string, unknown>;
+      for (const key of Object.keys(data)) {
+        if (/(email|name|password|phone|address|ssn|token|secret|key)/i.test(key)) {
+          data[key] = "[scrubbed]";
+        }
+      }
+    } else if (typeof request.data === "string") {
+      // The SDK captures a body it read as text, which cannot be searched for field names: drop it whole.
+      delete request.data;
+    }
+  }
+  // A trace's root span copies the request's headers onto itself (Next's handleOnSpanStart): the same cookies and place, and the address.
+  for (const attributes of [event.contexts?.trace?.data, ...(event.spans ?? []).map((span) => span.data)]) {
+    for (const key of Object.keys(attributes ?? {})) {
+      if (key.startsWith("http.request.header.")) delete attributes![key];
+    }
+  }
+  return event;
+}
 
 Sentry.init({
   dsn: DSN,
@@ -31,16 +79,12 @@ Sentry.init({
       return null;
     }
 
-    // Drop any captured request body that looks form-shaped.
-    if (event.request?.data && typeof event.request.data === "object") {
-      const data = event.request.data as Record<string, unknown>;
-      for (const key of Object.keys(data)) {
-        if (/(email|name|password|phone|address|ssn|token|secret|key)/i.test(key)) {
-          data[key] = "[scrubbed]";
-        }
-      }
-    }
-    return event;
+    return keepNoCookiesPlaceOrBody(event);
+  },
+
+  // A trace carries the request as a report does, so it leaves by the same door.
+  beforeSendTransaction(event) {
+    return keepNoCookiesPlaceOrBody(event);
   },
 
   // Suppress noisy/expected errors.

@@ -1811,12 +1811,15 @@
       "browser": false,
       "asserts": "TRUST AND THE LAUNCH GUARDS (plan docs/superpowers/plans/2026-10-10-home-reform, Task 8, in the design repo; the spec's decisions 10 and 11 and section 4, \"Trust\"; the ship audit's 4.2, 4.5, 4.6, 5.2 ",
       "reads": [
+        "src/",
         "src/app/(site)/privacy/page.tsx",
         "src/app/(site)/status/page.tsx",
         "src/app/error.tsx",
         "src/app/global-error.tsx",
         "src/app/loading.tsx",
-        "src/components/newsletter/NewsletterSignupVariants.tsx"
+        "src/components/newsletter/NewsletterSignupVariants.tsx",
+        "src/instrumentation-client.ts",
+        "src/lib/legal/pro_legal.ts"
       ],
       "claims": []
     },

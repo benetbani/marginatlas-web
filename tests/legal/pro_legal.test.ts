@@ -50,6 +50,12 @@ for (const d of PRO_LEGAL) {
 check("who we are is his to fill: the terms name no business, only a gap", (PRO_TERMS.blocks.find((b) => b.id === "who-we-are")?.paragraphs ?? []).some((p) => /\[HIS: /.test(p.text)));
 check("the privacy draft names Sentry in the live page's words", all(PRO_PRIVACY).includes(`**${SENTRY_LEAD}** ${SENTRY_WORDS}`) && /Sentry receives the error reports/.test(all(PRO_PRIVACY)));
 check("the privacy draft promises no newsletter it cannot send", !/newsletter/i.test(all(PRO_PRIVACY)));
+/* FIX ROUND 8 (Task 8's review; he reads these words before any deploy). The Sentry words said "the reports carry no name or email"
+   while a server report carried the request's cookies, and the session cookie holds the email: the code now drops them
+   (sentry.server.config.ts) and the words say what a report holds. The list's sentence said "Nothing else is attached to it" while
+   the row also holds the day and the form, and it named one purpose where two forms collect an address. */
+check("the Sentry words promise no 'no name', 'no email' or 'no personal data', and say what a server report leaves out", !/\bno (?:name|email|personal data)\b/i.test(SENTRY_WORDS) && SENTRY_WORDS.includes("without cookies or location") && SENTRY_WORDS.includes("anything written in an address or an error message goes with it"));
+check("the privacy draft says what the email list holds beside the address, and both reasons for it", all(PRO_PRIVACY).includes("we store it with the day you signed up and the form you used, so we can write to you when new figures land or Pro opens. Nothing else is attached to it.") && all(PRO_PRIVACY).includes("**Email when new figures land or Pro opens.**"));
 console.log(`      gaps for him: ${PRO_LEGAL.flatMap((d) => gapsIn(d)).length} (${PRO_LEGAL.map((d) => `${d.key} ${gapsIn(d).length}`).join(", ")})`);
 
 /* The export he reads: every document and every heading, one source. */

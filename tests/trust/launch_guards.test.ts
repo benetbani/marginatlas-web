@@ -6,7 +6,10 @@
  *     (`name`, `autocomplete="email"`), is 44px tall to touch with 16px type on a phone and a 3:1 edge, and is a labelled form inside
  *     a named region; the dead card that promised a monthly deep-dive is gone;
  *   - the privacy page names Sentry in the words the code earns, promises no unsubscribe link while no email is sent, and is dated
- *     10 October 2026 (he reads this text before any deploy);
+ *     10 October 2026 (he reads this text before any deploy); FIX ROUND 8: it says what the email list holds beside the address and
+ *     both reasons for it, and the Sentry configs keep what its words say: sendDefaultPii false, traces at 5 percent, no replay, no
+ *     setUser, and a server report or trace without the request's cookies, location, copy of the headers and body (the real server
+ *     config is handed an event that carries them all, and what it hands back is read);
  *   - the status page names what a reader uses (Pages, Figures), prints no raw error text, no vendor or table name, and no entity
  *     as letters; its headings are plain;
  *   - the error screens say what they are (no chrome promised that is not there) in the spine's tokens, with no cream and no brown.
@@ -16,7 +19,7 @@
  * them, and not the bar's pixels.
  * Run: npx tsx tests/trust/launch_guards.test.ts
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -35,7 +38,8 @@ const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string
   red({ rule: RULE, file: at?.file ?? BAR, detail: label, remedy: at?.remedy ?? REMEDY });
 };
 const code = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
-const words = (html: string) => html.replace(/<[^>]*>/g, " ").replace(/&#x27;/g, "'").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+const sourceFiles = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? sourceFiles(`${dir}/${e.name}`) : /\.(?:ts|tsx)$/.test(e.name) ? [`${dir}/${e.name}`] : []));
+const words =(html: string) => html.replace(/<[^>]*>/g, " ").replace(/&#x27;/g, "'").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 
 async function main() {
   const React = (await import("react")).default;
@@ -112,6 +116,95 @@ async function main() {
   check("the privacy page promises no unsubscribe link while nothing sends, and calls the list what it is", !/unsubscrib|link in every email|newsletter/i.test(privacy) && /the email list/.test(privacy), { file: PRIVACY });
   check("the privacy page is dated 10 October 2026, the day its text changed", privacy.includes("Last updated 10 October 2026"), { file: PRIVACY });
   check("the privacy page still holds what you gave us and nothing more", privacy.includes("what you gave us and nothing more"), { file: PRIVACY });
+  check("the privacy page says what the email list holds beside the address, and both reasons for it (the pricing page's Notify me lands there too)", privacy.includes("Email when new figures land or Pro opens.") && privacy.includes("we store it with the day you signed up and the form you used, so we can write to you when new figures land or Pro opens. Nothing else is attached to it."), { file: PRIVACY });
+
+  /* ---------------- WHAT SENTRY IS SET TO KEEP (fix round 8: the facts the privacy page's words rest on) ---------------- */
+  const SENTRY_CLIENT = "src/instrumentation-client.ts", SENTRY_SERVER = "sentry.server.config.ts", SENTRY_EDGE = "sentry.edge.config.ts";
+  const SENTRY_FILES = [SENTRY_CLIENT, SENTRY_SERVER, SENTRY_EDGE].filter((f) => existsSync(f));
+  const SENTRY_REMEDY = "keep the Sentry configs as SENTRY_WORDS (src/lib/legal/pro_legal.ts, the privacy page's sentence, which he reads) says they are: sendDefaultPii false, traces at 5 percent, no replay, no setUser, and a server report without the request's cookies and location (sentry.server.config.ts); change the words and the code together, never one alone";
+  check(`the browser's and the server's Sentry configs exist (${SENTRY_FILES.join(", ")})`, SENTRY_FILES.includes(SENTRY_CLIENT) && SENTRY_FILES.includes(SENTRY_SERVER), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  for (const f of SENTRY_FILES) {
+    const c = code(f);
+    check(`${f} sets sendDefaultPii: false, so no IP address is inferred and no user is attached`, /\bsendDefaultPii:\s*false\b/.test(c), { file: f, remedy: SENTRY_REMEDY });
+    check(`${f} samples traces at 0.05, the small share of visits the words name`, /\btracesSampleRate:\s*0\.05\b/.test(c), { file: f, remedy: SENTRY_REMEDY });
+  }
+  const sentryScope = [...sourceFiles("src"), ...SENTRY_FILES.filter((f) => !f.startsWith("src/"))];
+  const replays = sentryScope.filter((f) => /\b(?:replayIntegration|replaysSessionSampleRate|replaysOnErrorSampleRate)\b/.test(code(f)));
+  const userSetters = sentryScope.filter((f) => /\bsetUser\b/.test(code(f)));
+  check(`no session replay is recorded: no replayIntegration or replay sample rate in ${sentryScope.length} source files${replays.length ? ` (found in ${replays.join(", ")})` : ""}`, replays.length === 0, { file: replays[0] ?? SENTRY_CLIENT, remedy: SENTRY_REMEDY });
+  check(`no user is attached to a report: no setUser in ${sentryScope.length} source files${userSetters.length ? ` (found in ${userSetters.join(", ")})` : ""}`, userSetters.length === 0, { file: userSetters[0] ?? SENTRY_CLIENT, remedy: SENTRY_REMEDY });
+  const serverSrc = code(SENTRY_SERVER);
+  check("the server config deletes the request's cookies, the cookie header and the x-vercel-ip location headers, from a report and from a trace", /delete\s+[\w.]*request\.cookies\b/.test(serverSrc) && /["']cookie["']/.test(serverSrc) && /x-vercel-ip-/.test(serverSrc) && /\bbeforeSendTransaction\b/.test(serverSrc), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check("the edge config adds no request data: no requestDataIntegration (the edge SDK adds it only when sendDefaultPii is true, so an edge report holds no headers and no cookies)", !/requestDataIntegration/.test(code(SENTRY_EDGE)), { file: SENTRY_EDGE, remedy: SENTRY_REMEDY });
+  check("the browser config's comment says what it keeps, not 'no personal data'", !/no personal data/i.test(readFileSync(SENTRY_CLIENT, "utf8")), { file: SENTRY_CLIENT, remedy: SENTRY_REMEDY });
+
+  /* The real server and edge configs, each handed an event that carries a signed-in reader's cookie (with the email in it), the
+     reader's place and the copy of the headers a trace's root span makes of itself, and what they hand back read. Only
+     @sentry/nextjs is stood in for (its init records the options the config gives it), so nothing starts and nothing is sent. */
+  const sentryPath = require.resolve("@sentry/nextjs");
+  const optionsOf = (which: "server" | "edge"): Record<string, any> => {
+    const configPath = require.resolve(which === "server" ? "../../sentry.server.config" : "../../sentry.edge.config");
+    const real = require.cache[sentryPath];
+    let given: Record<string, any> | undefined;
+    require.cache[sentryPath] = { id: sentryPath, filename: sentryPath, loaded: true, children: [], paths: [], exports: { init: (o: Record<string, any>) => { given = o; } } } as unknown as NodeJS.Module;
+    delete require.cache[configPath];
+    try { require(configPath); } finally {
+      delete require.cache[configPath];
+      if (real) require.cache[sentryPath] = real; else delete require.cache[sentryPath];
+    }
+    if (!given) throw new Error(`the ${which} Sentry config never called Sentry.init`);
+    return given;
+  };
+  const READER = "reader@example.com", READER_IP = "203.0.113.7", READER_LATITUDE = "51.5072";
+  const dirty = (kind: "error" | "transaction") => ({
+    ...(kind === "transaction" ? { type: "transaction" } : {}),
+    request: {
+      url: "https://www.marginatlas.com/gb/london?x=1",
+      method: "GET",
+      cookies: { "sb-ref-auth-token": `{"user":{"email":"${READER}"}}`, theme: "dark" },
+      headers: {
+        host: "www.marginatlas.com", "user-agent": "Reader/1.0", "accept-language": "en-GB", referer: "https://www.marginatlas.com/gb", "x-vercel-id": "lhr1::t",
+        [kind === "error" ? "Cookie" : "cookie"]: `sb-ref-auth-token=${encodeURIComponent(READER)}; theme=dark`,
+        "X-Vercel-IP-City": "London", "x-vercel-ip-country": "GB", "x-vercel-ip-latitude": READER_LATITUDE, "X-Vercel-Proxied-For": READER_IP,
+      } as Record<string, string>,
+      data: { email: READER, note: "kept" } as Record<string, string>,
+    },
+    contexts: { trace: { trace_id: "t", span_id: "s", data: { "next.route": "/[country]/[geo]", "http.request.header.user_agent": "Reader/1.0", "http.request.header.cookie.theme": "dark", "http.request.header.x_real_ip": READER_IP, "http.request.header.x_vercel_ip_city": "London" } as Record<string, string> } },
+    spans: [{ span_id: "c", trace_id: "t", data: { "http.url": "https://example.test/", "http.request.header.x_real_ip": READER_IP } as Record<string, string> }],
+  });
+  const leftIn = (out: any): string[] => {
+    const left: string[] = [];
+    const request = out?.request ?? {};
+    if (request.cookies !== undefined) left.push("request.cookies");
+    for (const h of Object.keys(request.headers ?? {})) { const lower = h.toLowerCase(); if (lower === "cookie" || lower.startsWith("x-vercel-ip-") || lower === "x-vercel-proxied-for") left.push(`header ${h}`); }
+    for (const k of Object.keys(out?.contexts?.trace?.data ?? {})) if (k.startsWith("http.request.header.")) left.push(`trace attribute ${k}`);
+    for (const s of out?.spans ?? []) for (const k of Object.keys(s.data ?? {})) if (k.startsWith("http.request.header.")) left.push(`span attribute ${k}`);
+    const whole = JSON.stringify(out);
+    for (const needle of [READER, READER_IP, READER_LATITUDE]) if (whole.includes(needle)) left.push(`the text ${needle}`);
+    return left;
+  };
+  const keptIn = (out: any): boolean => out?.request?.url === "https://www.marginatlas.com/gb/london?x=1" && ["host", "user-agent", "accept-language", "referer", "x-vercel-id"].every((h) => typeof out?.request?.headers?.[h] === "string") && out?.contexts?.trace?.data?.["next.route"] === "/[country]/[geo]" && out?.spans?.[0]?.data?.["http.url"] === "https://example.test/";
+  const server = optionsOf("server");
+  const errorOut = typeof server.beforeSend === "function" ? server.beforeSend(dirty("error"), { originalException: new Error("a page failed") }) : null;
+  const errorLeft = errorOut === null ? ["no beforeSend in the config, or it dropped the report"] : leftIn(errorOut);
+  check(`a server report leaves the config without cookies, without the reader's place and without a copy of them (left: ${errorLeft.join(", ") || "nothing"})`, errorLeft.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check("a server report keeps the request's address and its other headers, and the form-field scrub still runs", keptIn(errorOut) && errorOut?.request?.data?.email === "[scrubbed]" && errorOut?.request?.data?.note === "kept", { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check("a server report for Next's own dynamic-render signal is still dropped", typeof server.beforeSend === "function" && server.beforeSend(dirty("error"), { originalException: new Error("Dynamic server usage: cookies") }) === null, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  const traceOut = typeof server.beforeSendTransaction === "function" ? server.beforeSendTransaction(dirty("transaction"), {}) : null;
+  const traceLeft = traceOut === null ? ["no beforeSendTransaction in the config, or it dropped the trace"] : leftIn(traceOut);
+  check(`a server trace leaves the config without cookies, without the reader's place, without the reader's address and without a copy of the headers (left: ${traceLeft.join(", ") || "nothing"})`, traceLeft.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check("a server trace keeps its timings' names and the request's address and other headers", keptIn(traceOut), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  /* The Node SDK reads up to 10 KB of any body a route handler reads and attaches it as TEXT, so the contact, correction and
+     newsletter forms' names, emails and messages would ride on a report or a trace; the field-name scrub only reads objects. */
+  const textBody = JSON.stringify({ name: "Made Up Reader", email: READER, message: "hello from the test" });
+  const withTextBody = (e: any) => ({ ...e, request: { ...e.request, data: textBody } });
+  const bodyReport = typeof server.beforeSend === "function" ? server.beforeSend(withTextBody(dirty("error")), { originalException: new Error("a page failed") }) : null;
+  const bodyTrace = typeof server.beforeSendTransaction === "function" ? server.beforeSendTransaction(withTextBody(dirty("transaction")), {}) : null;
+  check("a server report and a server trace leave without a request body the SDK captured as text (a form's name, email and message)", bodyReport !== null && bodyTrace !== null && bodyReport.request?.data === undefined && bodyTrace.request?.data === undefined && !JSON.stringify([bodyReport, bodyTrace]).includes("Made Up Reader"), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  const edge = optionsOf("edge");
+  check("the edge config still drops Next's dynamic-render signal and hands any other report on whole", typeof edge.beforeSend === "function" && edge.beforeSend(dirty("error"), { originalException: new Error("couldn't be rendered statically") }) === null && edge.sendDefaultPii === false, { file: SENTRY_EDGE, remedy: SENTRY_REMEDY });
+  check(`SENTRY_WORDS promises none of "no name", "no email" or "no personal data" (${SENTRY_WORDS.split(/\s+/).length} words)`, !/\bno (?:name|email|personal data)\b/i.test(SENTRY_WORDS), { file: "src/lib/legal/pro_legal.ts", remedy: SENTRY_REMEDY });
+  check("SENTRY_WORDS says what a server report leaves out and what still goes with a report", SENTRY_WORDS.includes("A report from our servers also holds the request's headers, without cookies or location.") && SENTRY_WORDS.includes("We do not attach your name or account to a report, but anything written in an address or an error message goes with it."), { file: "src/lib/legal/pro_legal.ts", remedy: SENTRY_REMEDY });
 
   /* ---------------- THE STATUS PAGE (source: it fetches the network when it renders) ---------------- */
   const status_ = code(STATUS);

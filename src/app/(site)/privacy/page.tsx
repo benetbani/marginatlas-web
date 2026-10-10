@@ -16,6 +16,14 @@
  * "Unsubscribing from the newsletter is a link in every email" was not true and could not be: nothing sends an email
  * (src/components/newsletter/NewsletterSignupVariants.tsx), so the sentence is out until a sender exists, and the list is called
  * what it is. The date moved, as the page's last section promises. HE READS THIS TEXT BEFORE ANY DEPLOY.
+ *
+ * FIX ROUND 8 (Task 8's review): two sentences were stronger than the code, and a third named one purpose where two forms collect
+ * an address. The Sentry sentence said the reports carry no name or email, while a server report carried the request's cookies
+ * (the session cookie holds the email) and the location headers: sentry.server.config.ts now drops them, and from a trace and any
+ * request body too, and SENTRY_WORDS says what is kept (tests/trust/launch_guards.test.ts holds the words to the configs). "Nothing
+ * else is attached to it" was said of the email list, whose row also holds the day and the form (db/migrations/
+ * 2026-08-16-newsletter-source.sql), so the paragraph says so. And the pricing page's "Notify me when Pro opens" lands on the same
+ * list as the bar, so the paragraph names both reasons.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 import { LegalDraft } from "@/components/LegalDraft";
@@ -63,9 +71,10 @@ export default function PrivacyPage() {
           recognise you next time. Authentication runs on Supabase.
         </p>
         <p>
-          <b>Email when new figures land.</b> If you leave your email in the bar
-          at the foot of each page, we store it so we can write to you when new
-          figures land. Nothing else is attached to it.
+          <b>Email when new figures land or Pro opens.</b> If you leave your
+          email in the bar at the foot of each page, we store it with the day
+          you signed up and the form you used, so we can write to you when new
+          figures land or Pro opens. Nothing else is attached to it.
         </p>
         <p>
           <b>Corrections.</b> If you tell us a figure is wrong, we keep what you

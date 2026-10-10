@@ -23,8 +23,16 @@
  * first idle, and within four seconds at the latest (Safari has no
  * requestIdleCallback and takes the next tick). An error in those first moments
  * is the one it can miss. What it sends is unchanged, and the privacy page
- * names it: errors and 5 percent of traces, no personal data
- * (`sendDefaultPii: false`, which also tells Sentry not to infer an IP address).
+ * names it (SENTRY_WORDS in src/lib/legal/pro_legal.ts, which he reads before
+ * any deploy): every error and 5 percent of traces, each with the page's
+ * address, the address the reader came from, a trail of clicks, page changes
+ * and requests, and the browser's language and time zone. `sendDefaultPii: false`
+ * tells Sentry not to infer an IP address and to attach no user; the browser
+ * SDK's default integrations read no cookies (httpClientIntegration is the one
+ * that does, and it is not added); no replay is recorded and nothing calls setUser. What
+ * is NOT promised is that a report holds nothing personal: anything written in
+ * an address or an error message goes with it. tests/trust/launch_guards.test.ts
+ * holds these facts to the words.
  */
 import * as Sentry from "@sentry/nextjs";
 
