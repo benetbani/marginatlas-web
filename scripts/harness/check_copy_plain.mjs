@@ -19,7 +19,8 @@
  *                is a paragraph at the micro rung, 13px or less; the notes of
  *                a prose card are its content and are not counted), one red
  *                per line past the first;
- *   TITLE LONG   a card title over four words;
+ *   TITLE LONG   a card title over four words (its h3, or a Rail's h2 where the section is the page's own level, the home's
+ *                since plan 2026-10-09);
  *   LINE LONG    a supporting line over twelve words;
  *   SEMICOLON    a supporting line holding a semicolon (a line is one
  *                sentence).
@@ -79,7 +80,7 @@ function inPage() {
     for (let n = walker.nextNode(); n; n = walker.nextNode()) { if (n.parentElement && !hidden(n.parentElement)) text += " " + n.textContent; }
     text = text.replace(/\s+/g, " ");
     for (const [name, re] of BANNED) if (re.test(text)) red(id, "BANNED", `"${name}" in the card's text`);
-    const title = card.querySelector("h3");
+    const title = card.querySelector("h2[data-rail-title]") ?? card.querySelector("h3");
     if (title && !hidden(title) && words(title.textContent) > TITLE_MAX) red(id, "TITLE LONG", `"${title.textContent.trim()}", ${words(title.textContent)} words`);
     const lines = [...card.querySelectorAll("p")].filter((p) => !hidden(p) && !p.closest("table,li,dl,[role='table'],[data-note]") && parseFloat(getComputedStyle(p).fontSize) <= MICRO_MAX && p.textContent.trim());
     /* The page's hero is two or three columns, and a line under the figure and one under the rows do not stand in one place: it may hold two. */

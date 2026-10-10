@@ -19,7 +19,7 @@
  */
 import * as React from "react";
 import type { Provenance } from "@/lib/spine/provenance";
-import { Fig, Ico, SampleTag } from "@/components/spine/kit";
+import { Fig, Ico, SampleTag, StepMark } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 
 export type FactRow = {
@@ -31,6 +31,8 @@ export type FactRow = {
   confidence?: "measured" | "modeled" | "placeholder";
   /** Where the row's figure came from (src/lib/spine/provenance.ts), stamped on its figure; a row without one stamps nothing. */
   prov?: Provenance | null;
+  /** A step's numeral, drawn where the glyph stands (plan 2026-10-09, home introduction: the worked example's steps 1 and 4). */
+  step?: string;
 };
 
 /* A DATE NEVER BREAKS OVER TWO LINES (the design review, 2026-10-04: "since 1 / Apr 2026"): a note's "1 Apr 2026" keeps its two
@@ -53,7 +55,9 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
       className={`col-span-full grid grid-cols-subgrid items-start py-3 ${i > 0 ? "border-t border-[var(--c-border)]" : ""}`}
     >
       <dt className="flex min-w-0 items-start gap-3">
-        {r.icon ? (
+        {r.step ? (
+          <StepMark n={r.step} />
+        ) : r.icon ? (
           <span aria-hidden className="shrink-0">
             <Ico id={r.icon} tone="terra" />
           </span>

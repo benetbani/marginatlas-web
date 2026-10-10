@@ -640,6 +640,9 @@ const GATES: Gate[] = [
      notices and register copies, read from its log by scripts/data/home/export_home.py archive; read again where the log is on this
      machine, its source deferred on a build server. */
   { name: "home-archive", script: "tests/home/archive.test.ts" },
+  /* The shared forms' small props for the home (plan 2026-10-09, home introduction, Task 3): Rail's level, FactRows' step, Ring's
+     lead size, BarList's quiet, each byte-identical where not passed; the copy gate reads a Rail's h2. */
+  { name: "home-forms", script: "tests/spine/home_forms.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },

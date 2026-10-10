@@ -98,6 +98,16 @@ export function Ico({ id, tone = "ink" }: { id: AtlasIconId; tone?: "ink" | "ter
 export function Fig({ children, className = "", prov }: { children: React.ReactNode; className?: string; prov?: Provenance | null }) {
   return <span className={`fig ${className}`} {...provAttrs(prov)}>{children}</span>;
 }
+/** A STEP'S NUMERAL (plan 2026-10-09, home introduction: the worked example's four steps), in the 28px tile a row's glyph takes: ink2
+ *  on the soft tile, never the accent (a numeral is text, and the accent walk counts text), tabular figures. It is no figure: no `fig`
+ *  class and no provenance. Hidden from a screen reader, which reads the step's own label. */
+export function StepMark({ n }: { n: string }) {
+  return (
+    <span data-step={n} aria-hidden className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[var(--c-border)] bg-[var(--c-soft)] text-[length:var(--t-body)] font-semibold leading-none tabular-nums text-[var(--c-ink2)]">
+      {n}
+    </span>
+  );
+}
 export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?: string; endLabels?: [string, string]; w?: number }) {
   if (value == null || !Number.isFinite(value)) return null;
   const v = Math.max(0, Math.min(100, value));
@@ -1117,7 +1127,7 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
  * no-op (the finding lives ON the visual), and no eyebrow returns. `tone` and `verdict`
  * stay in the prop type as tolerated no-ops so existing call sites keep compiling , do not
  * delete either from the type. */
-export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra"; gloss?: string; sample?: boolean }) {
+export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss, level = 3 }: { icon?: AtlasIconId; kicker: string; verdict?: React.ReactNode; tone?: "ink" | "terra"; gloss?: string; sample?: boolean; /** The title's heading level (plan 2026-10-09, home introduction): 3 under a page's chapters, the default; 2 where the section is the page's own level, the home's (one h2 a section, none skipped). Only the tag changes. */ level?: 2 | 3 }) {
   void tone;
   void verdict;
   return (
@@ -1138,13 +1148,23 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss }: { i
             The opt-out attribute is the one this project's own typography file
             asks for, with the reason it asks for: the canonical heading tokens
             are the pre-spine serif scale, and a spine heading cannot wear them. */}
-        <h3
-          data-typography="custom"
-          data-rail-title=""
-          className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
-        >
-          {kicker}
-        </h3>
+        {level === 2 ? (
+          <h2
+            data-typography="custom"
+            data-rail-title=""
+            className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
+          >
+            {kicker}
+          </h2>
+        ) : (
+          <h3
+            data-typography="custom"
+            data-rail-title=""
+            className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
+          >
+            {kicker}
+          </h3>
+        )}
         {/* HIS POP-UP, AT THE ONE SEAT IT TAKES (2026-09-22, QUEUE ui:the-gloss;
             his words after the push of 2026-09-20: "the pop up effect that you
             said you would do... is not executed", and it was on none of the 49

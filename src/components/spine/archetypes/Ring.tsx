@@ -25,21 +25,25 @@
 import * as React from "react";
 import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
-/** `prov` stamps the figure inside the ring with where it came from (plan 06, task B5), as every other figure is stamped. */
-export function Ring({ value, figure, caption, accent = false, prov }: { value: number; figure: string; caption?: string; accent?: boolean; prov?: Provenance | null }) {
+/** `prov` stamps the figure inside the ring with where it came from (plan 06, task B5), as every other figure is stamped. `size`
+ *  (plan 2026-10-09, home introduction): "lead" draws a 96px ring with its figure at the lead rung (16, semibold), for a ring that is a
+ *  card's second reading, so the card's one 30 stays its focal (PART 4); "focal", the default, is the 144px ring and its 30. The caption
+ *  is a node, so it may hold a stamped figure. */
+export function Ring({ value, figure, caption, accent = false, prov, size = "focal" }: { value: number; figure: string; caption?: React.ReactNode; accent?: boolean; prov?: Provenance | null; size?: "focal" | "lead" }) {
   if (!Number.isFinite(value) || value <= 0) return null;
   const share = Math.min(1, value / 100);
   const r = 44, c = 2 * Math.PI * r;
   const len = share * c;
+  const lead = size === "lead";
   return (
     <div data-archetype="ring" data-visual="1" data-share={String(Math.round(value))} className="flex flex-col items-center">
-      <div className="relative h-36 w-36">
-        <svg viewBox="0 0 120 120" width="144" height="144" role="img" aria-label={`${figure} of the whole`} className="block h-36 w-36">
+      <div className={lead ? "relative h-24 w-24" : "relative h-36 w-36"}>
+        <svg viewBox="0 0 120 120" width={lead ? "96" : "144"} height={lead ? "96" : "144"} role="img" aria-label={`${figure} of the whole`} className={lead ? "block h-24 w-24" : "block h-36 w-36"}>
           <circle r={r} cx="60" cy="60" fill="none" stroke="var(--terra-soft)" strokeWidth="14" />
           <circle r={r} cx="60" cy="60" fill="none" stroke="var(--terra)" strokeWidth="14" strokeDasharray={`${len} ${c - len}`} strokeDashoffset={c / 4} strokeLinecap={share >= 1 ? "butt" : "round"} data-sweep />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</span>
+          <span className={`fig ${lead ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-focal)]"} leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</span>
         </div>
       </div>
       {caption ? <div data-mark-label className="mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{caption}</div> : null}

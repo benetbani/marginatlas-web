@@ -23,7 +23,9 @@ export type BarItem = { key: string; label: string; value: number; display: stri
  *  of the height with its words and bar centred in it, and a hairline divides the rows, the key-value grid's ruled rows. */
 /** `reference` (2026-09-26, the goal's M6 guide marks): one value drawn as a tick on every track and keyed once under the list, where
  *  the card's figure is a value the bars are read against (London's middle trade), so a reader sees which rows stand above it. */
-export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill = false, reference }: { items: BarItem[]; max?: number; ariaUnit?: string; look?: "icons" | "plain"; mark?: string; fill?: boolean; reference?: { value: number; label: string } }) {
+/** `quiet` (plan 2026-10-09, home introduction: where new firms last on /gb, whose three loud moments are its own): the marked bar in
+ *  ink2 and no bar in the accent, PART 6's mark for a card with no accent figure; off, the accent's gradient as before. */
+export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill = false, reference, quiet = false }: { items: BarItem[]; max?: number; ariaUnit?: string; look?: "icons" | "plain"; mark?: string; fill?: boolean; reference?: { value: number; label: string }; quiet?: boolean }) {
   const live = items.filter((i) => i && Number.isFinite(i.value) && i.value >= 0);
   if (live.length < 2) return null;
   const top = max ?? Math.max(...live.map((i) => i.value));
@@ -56,7 +58,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
               {/* The track is a painted leaf of its own, so it is ink to anything that measures the card. */}
               <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
               {reference && top > 0 ? <span aria-hidden data-ref-tick className="absolute -bottom-1 -top-1 z-10 w-0.5 rounded-full bg-[var(--c-ink2)]" style={{ left: `calc(${Math.min(100, (reference.value / top) * 100)}% - 1px)` }} /> : null}
-              <span aria-hidden data-bar data-marked={isMarked(i) ? "1" : undefined} className="absolute inset-y-0 left-0 rounded-full" style={isMarked(i) ? { width: `${w}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" } : { width: `${w}%`, backgroundColor: "var(--c-line-strong)", backgroundImage: "linear-gradient(90deg, var(--c-border), var(--c-line-strong))" }} />
+              <span aria-hidden data-bar data-marked={isMarked(i) ? "1" : undefined} className="absolute inset-y-0 left-0 rounded-full" style={isMarked(i) ? (quiet ? { width: `${w}%`, backgroundColor: "var(--c-ink2)" } : { width: `${w}%`, backgroundColor: "var(--terra)", backgroundImage: "linear-gradient(90deg, var(--terra-border), var(--terra))" }) : { width: `${w}%`, backgroundColor: "var(--c-line-strong)", backgroundImage: "linear-gradient(90deg, var(--c-border), var(--c-line-strong))" }} />
             </span>
           </li>
         );
