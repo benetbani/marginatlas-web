@@ -14,6 +14,7 @@
  * imported a constant from a "use client" file would receive a client reference, not the string.
  */
 import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
+import { isAuthEnabled, isPaywallOn } from "@/lib/feature_flags";
 
 export type NavItem = { href: string; label: string };
 
@@ -22,6 +23,28 @@ export const NAV_IDLE =
   "text-[var(--c-ink2)] underline-offset-[6px] transition-colors hover:text-[var(--c-ink)] hover:underline hover:decoration-1 hover:decoration-[var(--c-line-strong)]";
 /** The page being read: ink, a 2px ink underline 6px under the words. */
 export const NAV_CURRENT = "text-[var(--c-ink)] underline decoration-2 decoration-[var(--c-ink)] underline-offset-[6px]";
+/** The account entry (Sign in, or Account once the read says signed in): ink at weight 500, so it does not read as an eighth name beside
+ *  the seven in ink2 (critique pass 2, fix round C2, item P2.7); the same hairline underline on hover. */
+export const NAV_ENTRY = "font-medium text-[var(--c-ink)] underline-offset-[6px] transition-colors hover:underline hover:decoration-1 hover:decoration-[var(--c-line-strong)]";
+
+/**
+ * WHERE THE SEVEN NAMES TAKE OVER FROM THE SHEET, ONE CONSTANT FOR BOTH (critique pass 2, fix round C2, item P2.8): the bar's names
+ * (NavLinks.tsx) show and the sheet's toggle (MobileNav.tsx) hides from the same width, so a gap leaves no navigation and an overlap
+ * shows two. 1280 when accounts or the paywall are on, because the account entry and the Pricing pill need the room (the bar's 1072px
+ * was filled to the pixel with both on, plan 2026-10-10 Task 9); 1080 while both are off, where the bar holds 166px of spare between the
+ * wordmark and the first name at 1080 (measured in Chromium with the names forced in, 211 at 1280), so a desktop reader between 1080
+ * and 1279 gets the names and not a hamburger. Evaluated per call: both switches are inlined at build, and the masthead test sets them
+ * per render. The class strings are written out whole, because Tailwind reads them from source.
+ */
+const BAR_NARROW = { px: 1080, names: "hidden min-[1080px]:flex", sheet: "min-[1080px]:hidden", media: "(min-width: 1080px)" } as const;
+const BAR_WIDE = { px: 1280, names: "hidden xl:flex", sheet: "xl:hidden", media: "(min-width: 1280px)" } as const;
+export function barFrom(): typeof BAR_NARROW | typeof BAR_WIDE {
+  return !isAuthEnabled() && !isPaywallOn() ? BAR_NARROW : BAR_WIDE;
+}
+
+/** The free downloads, named once: the footer's row and the home's Where to next door both read this label (critique pass 2, fix round C2,
+ *  item P2.5; the page's own description says the downloads are the UK tables). */
+export const FREE_DATA: NavItem = { href: "/data", label: "Free UK data" };
 
 /** The seven names, in the bar's order. */
 export const NAV: readonly NavItem[] = [

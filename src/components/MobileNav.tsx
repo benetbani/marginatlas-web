@@ -25,14 +25,12 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAV, SHEET_TRUST, currentNav } from "@/lib/nav";
+import { NAV, SHEET_TRUST, barFrom, currentNav } from "@/lib/nav";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { AuthLink } from "@/components/HeaderAuth";
 
 /** The panel's id: the toggle's `aria-controls`. */
 export const SHEET_ID = "site-menu";
-/** Where the bar's own names take over (Tailwind's xl; the bar's breakpoint in SiteChrome.tsx and NavLinks.tsx). */
-const XL = "(min-width: 1280px)";
 
 const ROW = "flex min-h-12 items-center border-l-2 pl-3";
 const ROW_MAIN = `${ROW} text-base font-medium`;
@@ -47,6 +45,9 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const current = currentNav(usePathname());
   const auth = isAuthEnabled();
+  /* Where the bar's own names take over: ONE constant for the bar and this sheet (barFrom, src/lib/nav.ts), 1080 while accounts and the
+     paywall are both off and 1280 otherwise. */
+  const bar = barFrom();
 
   React.useEffect(() => {
     if (!open) return;
@@ -58,7 +59,7 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
     const onPointer = (e: PointerEvent) => {
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
     };
-    const wide = window.matchMedia(XL);
+    const wide = window.matchMedia(bar.media);
     const onWide = () => {
       if (wide.matches) setOpen(false);
     };
@@ -70,18 +71,18 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
       document.removeEventListener("pointerdown", onPointer);
       wide.removeEventListener("change", onWide);
     };
-  }, [open]);
+  }, [open, bar.media]);
 
   const close = () => setOpen(false);
 
   return (
-    /* xl:hidden, not md:hidden. Its sibling desktop nav in SiteChrome does not
+    /* `bar.sheet` (xl:hidden, or min-[1080px]:hidden while both switches are off), not md:hidden. Its sibling desktop nav in SiteChrome does not
        fit at md and wrapped the masthead to two rows across 768 to 1023, so
        this carried navigation up to lg; since 2026-10-01 up to xl, because at
        1024 the nav and the 40px lockup wrapped the lockup instead. The two
        breakpoints must always match: a gap leaves no nav at all, an overlap
        shows two. */
-    <div ref={rootRef} className="xl:hidden">
+    <div ref={rootRef} className={bar.sheet}>
       <button
         ref={buttonRef}
         type="button"

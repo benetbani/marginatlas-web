@@ -78,7 +78,7 @@ async function main() {
   /* ---------------- 1. THE LIST, THE TOKEN, THE STYLESHEET, THE GRAPH (source) ---------------- */
   check(`${NAVFILE} exists`, existsSync(NAVFILE), { file: NAVFILE, remedy: "create src/lib/nav.ts with NAV, SHEET_TRUST and currentNav (plan Task 1)" });
   if (!existsSync(NAVFILE)) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-  const { NAV, SHEET_TRUST, currentNav, HELD_COUNTRIES, NAV_IDLE, NAV_CURRENT } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
+  const { NAV, SHEET_TRUST, currentNav, HELD_COUNTRIES, NAV_IDLE, NAV_CURRENT, NAV_ENTRY, FREE_DATA, barFrom } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
   check(`NAV is the seven names in the bar's order (${NAV.map((n) => n.label).join(", ")})`, JSON.stringify(NAV.map((n) => n.label)) === JSON.stringify(WANT_NAMES) && JSON.stringify(NAV.map((n) => n.href)) === JSON.stringify(WANT_HREFS), { file: NAVFILE });
   check(`the sheet's trust rows are About the figures and Who runs this (${SHEET_TRUST.map((n) => n.label).join(", ")})`, JSON.stringify(SHEET_TRUST) === JSON.stringify([{ href: "/about-data#reading", label: "About the figures" }, { href: "/about", label: "Who runs this" }]), { file: NAVFILE });
   const marks: Array<[string | null, string | null]> = [["/", null], [null, null], ["/blog/what-a-cafe-makes", "/blog"], ["/cities/london", "/cities"], ["/industries/restaurants", "/industries"], ["/gb", "/countries"], ["/gb/london", "/countries"], ["/gb/london/restaurants", "/countries"], ["/og", null], ["/zz", null], ["/uk", null], ["/about", null], ["/compare", "/compare"]];
@@ -105,7 +105,7 @@ async function main() {
   /* The two class strings that dress a name live in a module a server file may import. */
   const navLinksSrc = code("src/components/NavLinks.tsx");
   const headerAuthSrc = code("src/components/HeaderAuth.tsx");
-  check("NAV_IDLE and NAV_CURRENT are exported from src/lib/nav.ts, no client file exports them, and both readers import them from there", typeof NAV_IDLE === "string" && typeof NAV_CURRENT === "string" && !/export\s+const\s+NAV_(?:IDLE|CURRENT)\b/.test(navLinksSrc) && /import\s*\{[^}]*\bNAV_IDLE\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(headerAuthSrc) && /import\s*\{[^}]*\bNAV_CURRENT\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(navLinksSrc), { file: "src/components/NavLinks.tsx", remedy: "move NAV_IDLE and NAV_CURRENT into src/lib/nav.ts and import them from there (a server file importing a constant from a \"use client\" file gets a reference, not the string)" });
+  check("NAV_IDLE, NAV_CURRENT and NAV_ENTRY are exported from src/lib/nav.ts, no client file exports them, and the readers import them from there (HeaderAuth.tsx its NAV_ENTRY since item P2.7)", typeof NAV_IDLE === "string" && typeof NAV_CURRENT === "string" && !/export\s+const\s+NAV_(?:IDLE|CURRENT)\b/.test(navLinksSrc) && /import\s*\{[^}]*\bNAV_ENTRY\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(headerAuthSrc) && /import\s*\{[^}]*\bNAV_CURRENT\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(navLinksSrc), { file: "src/components/NavLinks.tsx", remedy: "move NAV_IDLE and NAV_CURRENT into src/lib/nav.ts and import them from there (a server file importing a constant from a \"use client\" file gets a reference, not the string)" });
 
   const layout = code(LAYOUT);
   check("the header height token reads 61px under 768 and 93px from (the 60px bar under its 1px rule)", /\[--atlas-header-h:61px\] md:\[--atlas-header-h:93px\]/.test(layout) && !/xl:\[--atlas-header-h/.test(layout), { file: LAYOUT, remedy: "set the <html> className token to [--atlas-header-h:61px] md:[--atlas-header-h:93px]" });
@@ -298,17 +298,34 @@ async function main() {
   /* AIR BETWEEN THE WORDMARK AND THE NAMES (plan 2026-10-10 Task 9). Photographed at 1280 with accounts and Pricing both on, the names at
      24px apart filled the bar's 1072px to the pixel and "Atlas" touched "Countries" (0px measured, 9px with "Sign in"); at 20 the names
      and the group leave 35px at the tightest. A pin on the two classes, not a measurement: this file runs no browser. */
-  check("the names stand 20px apart and the bar's items 20px from 1280, so the wordmark keeps air with accounts and Pricing both on", /<nav aria-label="Primary" class="hidden xl:flex items-center gap-5 /.test(o.bar) && /<div class="flex items-center gap-5 md:gap-6 xl:gap-5 /.test(o.header), { file: "src/components/NavLinks.tsx", remedy: "keep the nav at gap-5 and SiteChrome's group at xl:gap-5: the wordmark, seven names at 24, Search, Account and the Pricing pill fill the bar's 1072px to the pixel" });
+  /* With any switch on the names keep 1280 (the pin the plan's Task 9 added); with both off they show from 1080 (item P2.8: below).
+     THE PHONE'S TWO ICONS SIT TOGETHER (critique pass 2, fix round C2, item P2.6): Search and Menu stood 20px apart at 375, so the search
+     floated between the wordmark and the menu; the group's gap is 4 under 768 (the two 44px targets together at the edge), 24 from 768
+     and 20 from 1280, and the 12px a phone under 360 once took (max-[359px]:gap-3) is gone: 4 is narrower still. */
+  check("the names stand 20px apart and the bar's items 20px from 1280, so the wordmark keeps air with accounts and Pricing both on", /<nav aria-label="Primary" class="hidden xl:flex items-center gap-5 /.test(a.bar) && /<div class="flex items-center gap-1 md:gap-6 xl:gap-5">/.test(o.header) && /<div class="flex items-center gap-1 md:gap-6 xl:gap-5">/.test(p.header), { file: "src/components/NavLinks.tsx", remedy: "keep the nav at gap-5 and SiteChrome's group at gap-1 md:gap-6 xl:gap-5: the wordmark, seven names at 24, Search, Account and the Pricing pill fill the bar's 1072px to the pixel" });
+  check("the phone's two icons sit together: the bar's group is 4px apart under 768, and no 12px gap is left under 360", /<div class="flex items-center gap-1 md:gap-6 xl:gap-5">/.test(o.header) && !/max-\[359px\]:gap-3/.test(o.header), { file: CHROME, remedy: "SiteChrome's right group takes gap-1 md:gap-6 xl:gap-5 and nothing under 360" });
+  /* THE SEVEN NAMES FROM 1080 WHILE BOTH SWITCHES ARE OFF (critique pass 2, fix round C2, item P2.8): between 1080 and 1279 a desktop reader
+     met a hamburger. Measured in Chromium with the names forced in and the sheet's toggle out, the bar holds 166px of spare between the
+     wordmark and the first name at 1080 (211 at 1280), so the names show from 1080 and the sheet hides from there while accounts and the
+     paywall are both off; with either on the account entry and the Pricing pill need the room, so both keep 1280. ONE CONSTANT, read by the
+     bar's names and the sheet (src/lib/nav.ts barFrom), as MobileNav's comment demands of the two breakpoints. */
+  check("both switches off: the names show from 1080 and the sheet hides from 1080 (one constant, barFrom, says where)", /<nav aria-label="Primary" class="hidden min-\[1080px\]:flex items-center gap-5 /.test(o.bar) && /<div class="min-\[1080px\]:hidden">/.test(o.header) && !/\bxl:hidden\b/.test(o.header) && barFrom?.().px === 1080, { file: NAVFILE, remedy: "export barFrom() from src/lib/nav.ts: 1080 with accounts and the paywall both off, 1280 otherwise, and read it in NavLinks.tsx and MobileNav.tsx" });
+  check("either switch on: the names keep 1280 and the sheet hides from 1280", /<nav aria-label="Primary" class="hidden xl:flex /.test(a.bar) && /<div class="xl:hidden">/.test(a.header) && /<nav aria-label="Primary" class="hidden xl:flex /.test(p.bar) && /<div class="xl:hidden">/.test(p.header) && !/min-\[1080px\]/.test(a.header + p.header), { file: NAVFILE });
+  check("the bar's names and the sheet read the one constant and write no breakpoint of their own", /import\s*\{[^}]*\bbarFrom\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(navLinksSrc) && /import\s*\{[^}]*\bbarFrom\b[^}]*\}\s*from\s*"@\/lib\/nav"/.test(code(SHEET)) && !/min-width:\s*1[0-9]{3}px/.test(code(SHEET)) && !/\bxl:/.test(navLinksSrc) && !/\bxl:/.test(code(SHEET)), { file: SHEET, remedy: "NavLinks.tsx and MobileNav.tsx take their breakpoint classes and the sheet's media query from barFrom() in src/lib/nav.ts, and write no xl: or min-width of their own" });
 
   /* The switches. */
   const noPro = (h: string) => !/Pricing|href="\/pricing"/.test(h);
   const noAuth = (h: string) => !/Sign in|Account|href="\/signin"|href="\/account"/.test(h);
   check("switches off: nothing about Pro anywhere in the chrome (no Pricing in the bar, the sheet or the footer)", noPro(off) && noPro(offBlog));
   check("switches off: nothing about sign-in anywhere in the chrome", noAuth(off) && noAuth(offBlog));
-  check("accounts on, paywall off: the account entry in the bar and the sheet, still no Pricing", /Account/.test(a.bar) && /Account/.test(a.sheet) && noPro(authOnly));
-  /* The holder prints the LONGER of the entry's two words ("Account" is wider than "Sign in"), so a signed-in reader's bar does not grow
-     when the read settles (the Task 1 review's m2; plan Task 7, amendment 8c). Unseen and out of reach: aria-hidden hides it from a screen reader. */
-  check("while the session is read the bar's entry holds the width of its longer word, Account, unseen (aria-hidden, invisible), from 1280 only", /<span aria-hidden="true" class="invisible hidden xl:inline-flex[^"]*">Account<\/span>/.test(a.bar) && !/>Sign in</.test(a.bar));
+  check("accounts on, paywall off: the account entry in the bar and the sheet, still no Pricing", /Sign in/.test(a.bar) && /Sign in/.test(a.sheet) && noPro(authOnly));
+  /* A VISIBLE "SIGN IN" FROM THE FIRST PAINT (critique pass 2, fix round C2, item P2.7). Until the session was read the entry held the width
+     of its longer word, "Account", unseen (plan Task 7, amendment 8c), which left about 110px blank between Search and Pricing on launch
+     day's first paint, and "Sign in" is the first state for nearly every visitor. The entry now draws "Sign in", a live link to /signin, from
+     the first paint and swaps to "Account" when the read says the reader is signed in. It stands in ink at weight 500 (NAV_ENTRY), so it
+     does not read as an eighth name beside the seven in ink2. */
+  const entry = anchors(a.bar).find((n) => n.href === "/signin");
+  check("while the session is read the bar's entry is a visible Sign in link to /signin from 1280, in ink at weight 500, no invisible holder", !!entry && entry.text === "Sign in" && /hidden xl:inline-flex/.test(entry.tag) && /\bfont-medium\b/.test(entry.tag) && /text-\[var\(--c-ink\)\]/.test(entry.tag) && !/text-\[var\(--c-ink2\)\]/.test(entry.tag) && !/\binvisible\b|aria-hidden/.test(entry.tag) && typeof NAV_ENTRY === "string" && /\bfont-medium\b/.test(NAV_ENTRY ?? "") && /text-\[var\(--c-ink\)\]/.test(NAV_ENTRY ?? ""), { file: "src/components/HeaderAuth.tsx", remedy: "draw the entry as the Sign in link from the first paint, NAV_ENTRY (ink, weight 500, hairline underline on hover) from src/lib/nav.ts, and swap it to Account when the session read says signed in; no invisible holder" });
   const pill = anchors(p.bar).find((n) => n.href === "/pricing");
   check("paywall on: Pricing is the bar's ink pill, last, from 1280, ink2 on hover", !!pill && /bg-\[var\(--c-ink\)\]/.test(pill.tag) && /hover:bg-\[var\(--c-ink2\)\]/.test(pill.tag) && /xl:inline-flex/.test(pill.tag) && p.bar.lastIndexOf('href="/pricing"') > p.bar.lastIndexOf('href="/search"'));
   check("paywall on: Pricing in the footer, and the footer's line says each UK chapter opens free", anchors(p.footer).some((n) => n.href === "/pricing" && n.text === "Pricing") && /each UK chapter opens free/.test(p.footer));
@@ -324,9 +341,9 @@ async function main() {
   const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>([^<]*)<\/(?:a|span)>/g)].map((m) => m[1].trim());
   const wantOff = ["Search", ...WANT_NAMES, "About the figures", "Who runs this"];
   check(`the sheet's rows, switches off: ${spanRows(o.sheet).join(", ")}`, JSON.stringify(spanRows(o.sheet)) === JSON.stringify(wantOff));
-  /* The server's markup is drawn before the session is read, so the account row is the entry's unseen holder, which prints the longer
-     word, Account (plan Task 7, amendment 8c); the mounted sheet below turns it into Sign in or Account once the read settles. */
-  check(`the sheet's rows, both switches on: ${spanRows(p.sheet).join(", ")}`, JSON.stringify(spanRows(p.sheet)) === JSON.stringify([...wantOff, "Account", "Pricing"]));
+  /* The server's markup is drawn before the session is read, so the account row is the entry's first state, Sign in (critique pass 2,
+     fix round C2, item P2.7); the mounted sheet below swaps it to Account if the read says the reader is signed in. */
+  check(`the sheet's rows, both switches on: ${spanRows(p.sheet).join(", ")}`, JSON.stringify(spanRows(p.sheet)) === JSON.stringify([...wantOff, "Sign in", "Pricing"]));
   check("every row of the sheet is 48px (min-h-12)", rows(o.sheet).length === wantOff.length && anchors(o.sheet).every((n) => /min-h-12/.test(n.tag)));
   const sheetCountries = anchors(c.sheet).find((n) => n.href === "/countries");
   check("the sheet marks the page being read as the bar does: aria-current, ink, semibold, a 2px ink rule at the left", !!sheetCountries && /aria-current="page"/.test(sheetCountries.tag) && /border-\[var\(--c-ink\)\]/.test(sheetCountries.tag) && /font-semibold/.test(sheetCountries.tag) && /border-l-2/.test(sheetCountries.tag));
@@ -341,6 +358,13 @@ async function main() {
   check("no version string in the footer", !/\bv\d+\.\d+\.\d+\b/.test(o.footer));
   check(`the year stands beside the publisher (© ${new Date().getFullYear()} Tesseract Research)`, o.footer.includes(`© ${new Date().getFullYear()} Tesseract Research`));
   check("the footer still leads to /about, /corrections and /data (about-page's rule)", ["/about", "/corrections", "/data"].every((h) => anchors(footNav).some((n) => n.href === h)));
+  /* ONE NAME FOR THE FREE DATA, FOOTER AND HOME (critique pass 2, fix round C2, item P2.5): /data was "Free UK data" on the home's Where to
+     next and "Free data" in the footer. The name lives once in src/lib/nav.ts (FREE_DATA, "Free UK data": the page's own description
+     says the downloads are the UK tables), the footer reads it and the home's door reads it, so neither can drift. */
+  const { nextDoors } = (await import("../../src/lib/home/next_doors")) as typeof import("../../src/lib/home/next_doors");
+  const dataDoor = nextDoors("/").find((d) => d.href === "/data");
+  const dataFoot = anchors(footNav).find((n) => n.href === "/data");
+  check(`/data has one name, ${FREE_DATA?.label ?? "(none held)"}: the footer says "${dataFoot?.text}", the home's door "${dataDoor?.label}"`, !!FREE_DATA && FREE_DATA.href === "/data" && dataFoot?.text === FREE_DATA.label && dataDoor?.label === FREE_DATA.label && !/>Free data</.test(o.footer), { file: NAVFILE, remedy: "export FREE_DATA from src/lib/nav.ts and read its label in SiteChrome's footer and in nextDoors (src/lib/home/next_doors.ts); COPY.home.next.doors holds no name for /data" });
 
   /* One name per destination, across the bar, the sheet and the footer, with every switch on. */
   const named = new Map<string, Set<string>>();
@@ -369,10 +393,11 @@ async function main() {
   /* jsdom has no matchMedia: a stand-in whose width the test sets, and whose listeners it fires. */
   const listeners = new Set<() => void>();
   let wide = false;
+  const mediaAsked: string[] = [];
   (dom.window as unknown as { matchMedia: (q: string) => unknown }).matchMedia = (q: string) => ({
     media: q,
-    get matches() { return q === "(min-width: 1280px)" ? wide : false; },
-    addEventListener: (_: string, f: () => void) => listeners.add(f),
+    get matches() { return q === "(min-width: 1280px)" || q === "(min-width: 1080px)" ? wide : false; },
+    addEventListener: (_: string, f: () => void) => { mediaAsked.push(q); listeners.add(f); },
     removeEventListener: (_: string, f: () => void) => listeners.delete(f),
   });
   /* A row's click must not navigate jsdom: the capture listener prevents the default, the row's own onClick still runs. */
@@ -402,7 +427,7 @@ async function main() {
     check("a tap outside shuts it", !isOpen(), { file: SHEET });
     await openIt();
     await act(async () => { wide = true; for (const f of [...listeners]) f(); });
-    check("the window reaching 1280 shuts it", !isOpen(), { file: SHEET });
+    check(`the window reaching the bar's width shuts it: 1080 while both switches are off (it listened for ${mediaAsked.join(", ") || "nothing"})`, !isOpen() && mediaAsked.length > 0 && mediaAsked.every((q) => q === "(min-width: 1080px)"), { file: SHEET, remedy: "MobileNav closes the sheet on the media query barFrom() names (src/lib/nav.ts): 1080 with accounts and the paywall off, 1280 otherwise" });
     wide = false;
     await openIt();
     await act(async () => { (pane()!.querySelectorAll("a")[3] as HTMLAnchorElement).dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true, cancelable: true })); });
@@ -425,15 +450,16 @@ async function main() {
   if (btn2) {
     await act(async () => { btn2.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); });
     const linkRows = () => [...pane()!.querySelectorAll("a")].map((x) => (x.textContent ?? "").trim());
-    const held = pane()!.querySelector('span[aria-hidden="true"]');
-    check(`accounts on, the session not read yet: the entry holds the longer word, Account, unseen (aria-hidden, invisible) and is no link (${linkRows().join(", ")})`, isOpen2() && !!held && (held.textContent ?? "").trim() === "Account" && /\binvisible\b/.test(held.getAttribute("class") ?? "") && !pane()!.querySelector('a[href="/signin"]') && !pane()!.querySelector('a[href="/account"]'), { file: SHEET });
-    const barHeld = [...doc.querySelectorAll('span[aria-hidden="true"]')].filter((x) => !pane()!.contains(x) && (x.textContent ?? "").trim() === "Account");
-    check(`accounts on, the session not read yet: the bar's entry holds the same word, unseen (${barHeld.length} outside the sheet)`, barHeld.length === 1 && /\binvisible\b/.test(barHeld[0].getAttribute("class") ?? "") && !doc.querySelector('a[href="/signin"]'), { file: "src/components/HeaderAuth.tsx" });
+    const firstEntry = pane()!.querySelector('a[href="/signin"]');
+    check(`accounts on, the session not read yet: the sheet's entry is already the visible Sign in link, no unseen holder and no Account (${linkRows().join(", ")})`, isOpen2() && !!firstEntry && (firstEntry.textContent ?? "").trim() === "Sign in" && !pane()!.querySelector('span[aria-hidden="true"]') && !pane()!.querySelector('a[href="/account"]'), { file: SHEET });
+    const barEntry = [...doc.querySelectorAll('a[href="/signin"]')].filter((x) => !pane()!.contains(x));
+    const barEntryClass = barEntry[0]?.getAttribute("class") ?? "";
+    check(`accounts on, the session not read yet: the bar's entry is the Sign in link too, in ink at weight 500, nothing invisible (${barEntry.length} outside the sheet)`, barEntry.length === 1 && (barEntry[0].textContent ?? "").trim() === "Sign in" && /\bfont-medium\b/.test(barEntryClass) && /text-\[var\(--c-ink\)\]/.test(barEntryClass) && !/\binvisible\b/.test(barEntryClass) && !doc.querySelector('span[aria-hidden="true"].invisible'), { file: "src/components/HeaderAuth.tsx" });
     const reached = await until(() => asked.reads > 0);
     check(`accounts on, the first entry to ask loads the auth client with import() and starts the read (client ${asked.clients}, getUser ${asked.reads})`, reached && asked.clients === 1 && asked.reads === 1, { file: "src/components/HeaderAuth.tsx", remedy: "load @/lib/supabase/client with await import() inside the shared readSession(), once" });
     await act(async () => { settleSession(); await until(() => asked.returned > 0); for (let i = 0; i < 12; i++) await Promise.resolve(); });
     const signIn = pane()!.querySelector('a[href="/signin"]') as HTMLAnchorElement | null;
-    check(`accounts on, the session read: a live /signin row appears and the unseen one is gone (${linkRows().join(", ")})`, !!signIn && (signIn.textContent ?? "").trim() === "Sign in" && !pane()!.querySelector('span[aria-hidden="true"]'), { file: SHEET });
+    check(`accounts on, the session read, signed out: the entry stays the one Sign in row, no second row and no change (${linkRows().join(", ")})`, !!signIn && (signIn.textContent ?? "").trim() === "Sign in" && signIn === firstEntry && !pane()!.querySelector('span[aria-hidden="true"]') && linkRows().filter((t) => t === "Sign in").length === 1, { file: SHEET });
     check(`accounts on, the bar's entry and the sheet's share ONE session read: one client, one getUser, two live /signin links (client ${asked.clients}, getUser ${asked.reads}, links ${doc.querySelectorAll('a[href="/signin"]').length})`, asked.clients === 1 && asked.reads === 1 && doc.querySelectorAll('a[href="/signin"]').length === 2, { file: "src/components/HeaderAuth.tsx", remedy: "read the session once for every entry on the page: a module-level promise that the first entry starts and the rest take (readSession in HeaderAuth.tsx)" });
     check("accounts on, the order is the spec's: Sign in, then Pricing last", JSON.stringify(linkRows()) === JSON.stringify([...wantOff, "Sign in", "Pricing"]), { file: SHEET });
     if (signIn) await act(async () => { signIn.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true, cancelable: true })); });
@@ -441,6 +467,21 @@ async function main() {
   }
   await act(async () => { root2.unmount(); });
   process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
+
+  /* ---------------- 3c. A SIGNED-IN READER (critique pass 2, fix round C2, item P2.7) ---------------- */
+  /* The entry's first state is Sign in for everyone (the first paint is server markup and holds nothing of the reader); when the read says
+     the reader is signed in it is Account, a link to /account, and Sign in is gone. The session read is a module-level promise, answered
+     once per page (3b above answered it signed out), so the signed-in state is drawn the way the chrome render of the owner's photographs
+     draws one state of the real component: the entry's own useState(null) answered with true (HeaderAuth.tsx useAuthState). */
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "1";
+  const R = require("react") as { useState: unknown };
+  const realUseState = R.useState;
+  R.useState = ((init: unknown) => (init === null ? [true, () => {}] : (realUseState as (i: unknown) => unknown)(init))) as unknown;
+  const signedInHtml = renderToStaticMarkup(React.createElement(HeaderAuth));
+  R.useState = realUseState;
+  process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
+  const accountEntry = anchors(signedInHtml).find((n) => n.href === "/account");
+  check("accounts on, the read says signed in: the entry is Account, a link to /account, in ink at weight 500 from 1280, and Sign in is gone", !!accountEntry && accountEntry.text === "Account" && /hidden xl:inline-flex/.test(accountEntry.tag) && /\bfont-medium\b/.test(accountEntry.tag) && /text-\[var\(--c-ink\)\]/.test(accountEntry.tag) && !/Sign in|href="\/signin"/.test(signedInHtml), { file: "src/components/HeaderAuth.tsx", remedy: "AuthLink draws the Account link at state in, with the same NAV_ENTRY class as the Sign in link" });
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("chrome/masthead: all pass");

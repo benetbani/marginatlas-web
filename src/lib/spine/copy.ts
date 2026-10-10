@@ -2812,7 +2812,6 @@ export const COPY = {
         cities: "Every city",
         trades: "Every trade",
         openings: "Where new businesses open",
-        data: "Free UK data",
         about: "About the figures",
         blog: "From the blog",
       },

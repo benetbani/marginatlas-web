@@ -170,7 +170,7 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
       onFocus={loadLists}
       onKeyDown={loadLists}
       data-keep-card=""
-      className="spine-card relative rounded-xl border border-[var(--c-line-strong)] p-6"
+      className="spine-card relative rounded-xl border border-[var(--c-line-strong)] p-5 md:p-6"
     >
       {/* Hidden inputs mirror state for the no-JS native submit (action="/api/go"). */}
       <input type="hidden" name="country" value={hidden.country} />

@@ -54,7 +54,7 @@ import { MobileNav } from "@/components/MobileNav";
    and with it (until fix round 7) the taxonomy and industries.json. */
 import { WatchTray } from "@/components/kit/WatchTray";
 import { isAuthEnabled, isWarmFrameEnabled, isPaywallOn } from "@/lib/feature_flags";
-import { NAV } from "@/lib/nav";
+import { FREE_DATA, NAV } from "@/lib/nav";
 
 /** The skip link: visually hidden until it takes focus, then an ink pill over the bar's corner (the site's focus floor rings it). */
 const SKIP =
@@ -115,7 +115,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <span className="inline-flex md:hidden"><PhoneLockup /></span>
               <span className="hidden md:inline-flex"><LogoWordmark size={40} labeled={false} /></span>
             </Link>
-            <div className="flex items-center gap-5 md:gap-6 xl:gap-5 max-[359px]:gap-3">
+            {/* THE GROUP'S GAP (critique pass 2, fix round C2, item P2.6): 4px under 768, so the phone's two 44px targets, Search and Menu, sit together
+                at the edge (they stood 20px apart and the search floated between the wordmark and the menu); 24 from 768 and 20 from 1280. */}
+            <div className="flex items-center gap-1 md:gap-6 xl:gap-5">
               {/* THE ORDER (the spec's section 3): the seven names, Search, the account link while accounts are on, Pricing while the
                   paywall is on, then the menu under 1280. Nothing in the bar is terracotta; a hover is ink.
 
@@ -251,7 +253,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                 <ul className={FOOT_LIST}>
                   <li><Link href="/about" className={FOOT_LINK}>Who runs this</Link></li>
                   <li><Link href="/corrections" className={FOOT_LINK}>Corrections</Link></li>
-                  <li><Link href="/data" className={FOOT_LINK}>Free data</Link></li>
+                  <li><Link href={FREE_DATA.href} className={FOOT_LINK}>{FREE_DATA.label}</Link></li>
                   <li><Link href="/contact" className={FOOT_LINK}>Contact</Link></li>
                 </ul>
               </div>
