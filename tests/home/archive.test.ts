@@ -19,6 +19,9 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { buildArchive, monthName, daysWords } from "../../src/lib/home/archive";
 import type { Provenance } from "../../src/lib/spine/provenance";
+import { buildProofs } from "../../src/lib/home/proofs";
+import { ProofArchive } from "../../src/components/spine/home/HomeProofs";
+import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-archive";
@@ -77,6 +80,21 @@ if (built && d) {
   check(`the register copies are the slice's: ${built.copies}, ${built.copiesWords}`, built.copies === d.register.copies.length && built.copiesWords === daysWords(d.register.copies), BUILT_AT);
   check("a month and days as a reader says them", monthName("2025-10") === "October 2025" && daysWords(["2026-05-01", "2026-10-01"]) === "1 May and 1 October 2026" && daysWords(["2026-12-01", "2027-01-01"]) === "1 December 2026 and 1 January 2027" && daysWords(["2026-05-01"]) === "1 May 2026", BUILT_AT);
   check("every figure says where it came from, counted", built.prov.months.src.startsWith("home/archive.json:") && built.prov.copies.src.startsWith("home/archive.json:") && built.prov.months.kind === "counted" && built.prov.copies.kind === "counted", BUILT_AT);
+}
+
+/* THE SECOND PROOF (plan Task 8): the archive, its figure the months held, its row the register copies, its door About the figures'
+   #archive; quiet, every figure stamped. */
+const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the second proof as ProofArchive holds it: a door card to /about-data#archive, its title an h2, the months at 30 and the register copies as a row, quiet, every figure stamped" };
+const proofs = buildProofs();
+if (proofs && built) {
+  const p = proofs.archive;
+  check(`the second proof is the archive: ${p.figure}, ${p.row.value} register copies of ${p.row.note}`, p.figure === COPY.home.proofs.archive.figure.replace("{n}", String(built.months)) && p.line === COPY.home.proofs.archive.words.replace("{first}", built.firstName).replace("{last}", built.lastName) && p.row.value === String(built.copies) && p.row.note === built.copiesWords && p.href === "/about-data#archive", { file: "src/lib/home/proofs.ts", remedy: "take the second proof's figures from buildArchive" });
+  const html = renderToStaticMarkup(React.createElement(ProofArchive, { p }));
+  check("it is a door card to About the figures' #archive, its title an h2", /id="archive"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#archive"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.archive.kicker}</h2>`).test(html), PROOF_AT);
+  check("its figure is the card's 30, its copies a row", new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\][^"]*" data-src="home/archive\\.json:gazette\\.months" data-kind="counted">${p.figure}<`).test(html) && /data-archetype="fact-rows"/.test(html) && /data-row="copies"/.test(html), PROOF_AT);
+  check("quiet: no figure in the accent", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), PROOF_AT);
+  const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
+  check(`every figure says where it came from (${figs.length})`, figs.length === 2 && figs.every((f) => /data-src="home\/archive\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);
 }
 
 async function main(): Promise<void> {

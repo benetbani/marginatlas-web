@@ -1622,7 +1622,9 @@
       "asserts": "THE WORKED EXAMPLE AND THE THIRD PROOF ON THE HOME PAGE (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, sections 2 and 4, approved as written on 2026-10-09;",
       "reads": [
         "src/components/spine/home/HomeExample.tsx",
+        "src/components/spine/home/HomeProofs.tsx",
         "src/lib/hero-words.ts",
+        "src/lib/home/proofs.ts",
         "src/lib/home/search_cascade.ts",
         "src/lib/home/worked_example.ts",
         "src/lib/spine/copy.ts"
@@ -1888,7 +1890,9 @@
         "data/uk/registers/failures.json",
         "src/app/(site)/about-data/page.tsx",
         "src/components/spine/home/HomeHowMade.tsx",
+        "src/components/spine/home/HomeProofs.tsx",
         "src/lib/home/how_made.ts",
+        "src/lib/home/proofs.ts",
         "src/lib/spine/copy.ts"
       ],
       "claims": []
@@ -1903,7 +1907,9 @@
         "data/home/archive.json",
         "data/home/method.json",
         "src/app/(site)/about-data/page.tsx",
-        "src/lib/home/archive.ts"
+        "src/components/spine/home/HomeProofs.tsx",
+        "src/lib/home/archive.ts",
+        "src/lib/home/proofs.ts"
       ],
       "claims": []
     },

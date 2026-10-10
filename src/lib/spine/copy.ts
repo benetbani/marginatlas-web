@@ -2850,6 +2850,15 @@ export const COPY = {
     /** WHAT THE SITE IS, ONCE (plan 2026-10-09, home introduction; the spec's sections 1 and 7, DRAFT approved as written): the hero's
      *  one plain line under the picker, and the Organization's description in the structured data (src/components/StructuredData.tsx). */
     definition: "Margin Atlas shows what a small business earns and its owner keeps.",
+    /** THE THREE PROOFS (plan 2026-10-09, home introduction; the spec's section 4, DRAFT approved as written): the level's name (a data
+     *  attribute, not a printed word), each proof's title, its one line, the ring's caption, the archive's figure and row. No boast
+     *  word (the 2026-10-08 audit); no source named. */
+    proofs: {
+      label: "Proofs",
+      joins: { kicker: "Failures, trade by trade", words: "Liquidation and administration notices in a year, matched by name.", ring: "of {names} names found in the register" },
+      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices by month, {first} to {last}, as published.", row: "Register copies" },
+      tax: { kicker: "Tax, rule by rule", words: "Of a sole trader's {profit} profit, from the {year} rules." },
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */
     pro: {

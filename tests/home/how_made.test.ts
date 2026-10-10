@@ -39,6 +39,8 @@ import type { Provenance } from "../../src/lib/spine/provenance";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { HomeHowMade } from "../../src/components/spine/home/HomeHowMade";
+import { buildProofs } from "../../src/lib/home/proofs";
+import { ProofJoins } from "../../src/components/spine/home/HomeProofs";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-how-made";
@@ -143,6 +145,24 @@ if (joins && d) {
 const pages = londonPagesRead();
 const howMade = buildHowMade();
 check(`the pages read are the count the home's card printed (${pages ? `${pages.printing} of ${pages.served}` : "none"})`, !!pages && !!howMade && howMade.rows.find((r) => r.key === "trades")?.value === `${pages.printing.toLocaleString("en-US")} of ${pages.served.toLocaleString("en-US")}`, JOINS_AT);
+
+/* THE FIRST PROOF (plan Task 8): the joins, its figure the notices, its ring the names found of the names held, its door About the
+   figures' #failures; quiet, every figure stamped. A red here is HomeProofs.tsx's or proofs.ts's, never the export's. */
+const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the first proof as ProofJoins holds it: a door card to /about-data#failures, its title an h2, the notices at 30 and the names found as a lead ring, quiet, every figure stamped" };
+const proofs = buildProofs();
+check("the proofs build", !!proofs, { file: "src/lib/home/proofs.ts", remedy: "build the proofs from buildJoins, buildArchive and buildHomeAnswers' answer" });
+if (proofs && joins) {
+  const p = proofs.joins;
+  check(`the first proof is the join: ${p.figure} notices, the ring ${p.ring.figure} of ${p.ring.names}`, p.figure === joins.notices.figure && p.prov.src === joins.notices.prov.src && p.ring.figure === joins.matched.figure && p.ring.names === joins.names.figure && p.ring.value === joins.share && p.href === "/about-data#failures", { file: "src/lib/home/proofs.ts", remedy: "take the first proof's figures from buildJoins" });
+  const html = renderToStaticMarkup(React.createElement(ProofJoins, { p }));
+  check("it is a door card to About the figures' #failures, its title an h2", /id="joins"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#failures"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.joins.kicker}</h2>`).test(html), PROOF_AT);
+  check("its figure is the card's 30, the ring's at 16 in a lead ring", /data-focal="1" class="fig text-\[length:var\(--t-focal\)\][^"]*" data-src="home\/method\.json:notices" data-kind="counted">/.test(html) && /data-archetype="ring"/.test(html) && /class="relative h-24 w-24"/.test(html) && /--t-lead[^"]*" data-src="home\/method\.json:matched_names" data-kind="counted">/.test(html), PROOF_AT);
+  check("the ring's caption names the names held, stamped", /data-src="home\/method\.json:names" data-kind="counted">/.test(html), PROOF_AT);
+  check("quiet: no figure in the accent", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), PROOF_AT);
+  const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
+  check(`every figure says where it came from (${figs.length})`, figs.length === 3 && figs.every((f) => /data-src="home\/method\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);
+  check("one small line, the focal's", (html.match(/<p /g) ?? []).length === 1 && html.includes(COPY.home.proofs.joins.words), PROOF_AT);
+}
 
 async function main(): Promise<void> {
   /* ABOUT THE FIGURES (plan Task 2): #failures prints the join's figures, #reading the pages read; no source named in either. */

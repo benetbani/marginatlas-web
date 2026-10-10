@@ -22,6 +22,11 @@ import { COPY } from "../../src/lib/spine/copy";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { HomePlace, HomePays } from "../../src/components/spine/home/HomeExample";
+import { buildProofs } from "../../src/lib/home/proofs";
+import { ProofTax } from "../../src/components/spine/home/HomeProofs";
+import { buildHeroBoard } from "../../src/lib/spine/hero_board";
+import { ukTaxOnProfit } from "../../src/lib/spine/uk_tax_on_profit";
+import { UK_2026_27 } from "../../src/lib/uk/law/params_2026_27";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-answers";
@@ -87,6 +92,27 @@ if (ex) {
   check(`the share is ${units} units with ${inked} inked in ink2, never the accent`, units === "100" && inked === ex.pays.above.part && !/background:var\(--terra\)/.test(pays), DRAWN_AT);
   check("the doors: the London page on the left, the picker on the right", place.includes(`href="${ex.href}"`) && place.includes(`>${esc(ex.place.door)}<`) && pays.includes('href="#search"') && pays.includes(`>${esc(ex.pays.door)}<`), DRAWN_AT);
   check("steps 2 and 3 carry their line at 14, not a small line (the copy gate's LINES reads 13.5px and under)", [[place, ex.place.sales.line], [pays, ex.pays.breakEven.line]].every(([h, l]) => new RegExp(`<p data-focal-words="" class="[^"]*--t-body[^"]*">${reEsc(esc(l))}</p>`).test(h)), DRAWN_AT);
+}
+
+/* THE THIRD PROOF (Task 8): the formulas, /gb's masthead figure under its own name, its line the profit and the year's rules, the
+   masthead's own bar; the home's second loud moment. */
+const proofs = buildProofs();
+check("the three proofs build", !!proofs, { file: "src/lib/home/proofs.ts", remedy: "build the proofs from buildJoins, buildArchive and buildHomeAnswers' answer" });
+const board = buildHeroBoard("GB");
+const uk = ukTaxOnProfit();
+if (proofs && uk) {
+  const t = proofs.tax;
+  check(`the tax proof is /gb's masthead: "${t.label}" ${t.figure}, worked out`, t.label === board.answer?.label && t.figure === board.answer?.value && t.prov.src === board.answer?.prov?.src && t.prov.kind === "worked out", { file: "src/lib/home/proofs.ts", remedy: "take the tax proof from buildHomeAnswers' answer, the figure buildHeroBoard prints" });
+  check(`its line names the profit and the year's rules ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", UK_2026_27.taxYear) && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: the profit and the law's year, twelve words at most" });
+  check("its bar is the masthead's own", !!board.answerBar && t.bar.value === board.answerBar.value && t.bar.part === board.answerBar.part && t.bar.rest === board.answerBar.rest);
+  check(`its door is /gb's answer (${t.href})`, t.href === "/gb#take");
+  const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card, its title an h2, the figure's name over its 30 in the accent, its line, the masthead's bar" };
+  const html = renderToStaticMarkup(React.createElement(ProofTax, { p: t }));
+  check("it is a door card to /gb's answer", /id="tax"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/gb#take" data-lands="[a-z-]+"/.test(html), PROOF_AT);
+  check(`its title is an h2, "${COPY.home.proofs.tax.kicker}", and the figure's name stands over the figure`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(COPY.home.proofs.tax.kicker))}</h2>`).test(html) && html.indexOf(`>${esc(t.label)}<`) > -1 && html.indexOf(`>${esc(t.label)}<`) < html.indexOf(`>${t.figure}<`), PROOF_AT);
+  const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
+  check(`its figure, at 30, is the card's one accent (${accents.length})`, accents.length === 1 && new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\] leading-none text-\\[var\\(--terra-text\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(t.figure)}<`).test(html), PROOF_AT);
+  check("its bar is the masthead's split bar, under the measure", /data-archetype="segment-bar"/.test(html) && /data-form="split"/.test(html) && /max-w-\[28ch\]/.test(html), PROOF_AT);
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
