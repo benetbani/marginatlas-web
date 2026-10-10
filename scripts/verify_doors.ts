@@ -272,6 +272,8 @@ function expectedAnswer(surface: string, slugs: string[]): DoorKind | null {
     case "hood": return slugs.length > 1 ? SURFACE_ANSWERS.district : SURFACE_ANSWERS.hood;
     /* The home page answers no one place (masterplan step 32): its sections are doors to the pages that do. */
     case "home": return null;
+    /* /new-businesses answers no one place (plan 2026-10-09, home introduction): its rows are doors to the country pages that do. */
+    case "openings": return null;
     default: return null;
   }
 }

@@ -18,7 +18,7 @@
  * do NOT multiply the count.
  *
  * Budgets (rulebook v1): city 3, cell 3, country 8, industry 3,
- * hood 2, home 2.
+ * hood 2, home 2, openings 2.
  *
  * Run: npx tsx scripts/verify_bar_budget.ts
  */
@@ -93,6 +93,7 @@ const GROUPS: Group[] = [
     files: ["src/components/spine/NeighborhoodExplorer.tsx"],
   },
   { name: "home", budget: 2, files: ["src/components/spine/home/home-view.tsx"] }, // masterplan step 32, after home2-view
+  { name: "openings", budget: 2, files: ["src/components/spine/openings/openings-view.tsx"] }, // /new-businesses, plan 2026-10-09
 ];
 
 function isCommentLine(line: string): boolean {

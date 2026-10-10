@@ -1853,7 +1853,9 @@
         "data/cities/city_list_v1.json",
         "data/economic_indicators/country_profile_v2.json",
         "data/home/new_companies.json",
-        "src/components/spine/home/HomeNewCompanies.tsx"
+        "scratchpad/harness/pages/openings-world.html",
+        "src/components/spine/openings/NewCompanies.tsx",
+        "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": []
     },
@@ -1866,7 +1868,9 @@
       "reads": [
         "data/cities/city_list_v1.json",
         "data/home/us_restaurants.json",
-        "src/components/spine/home/HomeUsRestaurants.tsx"
+        "scratchpad/harness/pages/openings-world.html",
+        "src/components/spine/openings/UsRestaurants.tsx",
+        "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": []
     },
@@ -3482,7 +3486,8 @@
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
-        "src/components/spine/industry/industry-view.tsx"
+        "src/components/spine/industry/industry-view.tsx",
+        "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": []
     },
@@ -3499,7 +3504,8 @@
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
-        "src/components/spine/industry/industry-view.tsx"
+        "src/components/spine/industry/industry-view.tsx",
+        "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": []
     },
@@ -3516,7 +3522,8 @@
         "src/app/dev/spine-industry",
         "src/app/dev/spine/page.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
-        "src/components/spine/home/home-view.tsx"
+        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": [
         {
@@ -3585,7 +3592,8 @@
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
-        "src/components/spine/industry/industry-view.tsx"
+        "src/components/spine/industry/industry-view.tsx",
+        "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": []
     },
@@ -3602,7 +3610,8 @@
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
-        "src/components/spine/industry/industry-view.tsx"
+        "src/components/spine/industry/industry-view.tsx",
+        "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": []
     },

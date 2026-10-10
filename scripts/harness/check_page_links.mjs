@@ -52,7 +52,9 @@ const LIST = "scripts/harness/pages.json";
    their trail's one link (the country page) was already on them. */
 /* home 11 since masterplan step 37: the finished page's distinct internal links as this walk counted them on its render (the
    answers' doors, the city cards, the notebook's posts, the report link); raised from the frame's 0 (step 32). */
-const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3, home: 11 };
+/* openings 19 since plan 2026-10-09, home introduction: /new-businesses' distinct internal links as this walk counts them on its render
+   (ten country doors, seven of where to next, the sources line, the report link). */
+const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3, home: 11, openings: 19 };
 
 const surfaceOf = (name) =>
   name.startsWith("country-") ? "country" :
@@ -61,6 +63,7 @@ const surfaceOf = (name) =>
   name.startsWith("industry-") ? "industry" :
   name.startsWith("hood-") ? "hood" :
   name.startsWith("home-") ? "home" :
+  name.startsWith("openings-") ? "openings" :
   name.startsWith("howto-") ? "howto" : "other";
 
 /* THE ROUTES, from src/app: every directory holding a page or a route handler.

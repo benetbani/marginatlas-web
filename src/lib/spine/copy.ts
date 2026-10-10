@@ -2815,6 +2815,21 @@ export const COPY = {
       trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
       link: "About the figures",
     },
+    /** WHERE TO NEXT (plan 2026-10-09, home introduction; the spec's section 6, DRAFT approved as written): eight doors, no counts (his
+     *  ruling of 2026-10-07), drawn by src/components/spine/WhereNext.tsx from src/lib/home/next_doors.ts. */
+    next: {
+      title: "Where to next",
+      doors: {
+        uk: "The United Kingdom",
+        countries: "Every country",
+        cities: "Every city",
+        trades: "Every trade",
+        openings: "Where new businesses open",
+        data: "Free UK data",
+        about: "About the figures",
+        notebook: "From the notebook",
+      },
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */
     pro: {
@@ -2824,6 +2839,12 @@ export const COPY = {
       monthLabel: "Month to month",
       button: "See what Pro opens",
     },
+  },
+  /** WHERE NEW BUSINESSES OPEN, /new-businesses (plan 2026-10-09, home introduction; the home's spec, section 6, DRAFT approved as
+   *  written): its question as the h1, and its pair's level name (a data attribute the checks read, not a word the page prints). */
+  openings: {
+    h1: "Where new businesses open",
+    pairLabel: "New companies and US restaurants",
   },
   /** THE PAGE FOOT (masterplan step 31; QUEUE close:furniture-lines): the link to the correction page and, where the data holds a
    *  date, the date its figures were checked (src/components/spine/ReportFoot.tsx). */

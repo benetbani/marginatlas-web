@@ -16,7 +16,7 @@
  * in order, one decimal, the rest behind the plus in order; every row a door to its country's page promising what that page
  * answers; every figure stamped; the card's figure the UK's own; the one line twelve words at most.
  *
- * Holds the drawing (src/components/spine/home/HomeNewCompanies.tsx): the list card's grouped form, Latin America then Africa; each
+ * Holds the drawing (src/components/spine/openings/NewCompanies.tsx, on /new-businesses since plan 2026-10-09): the grouped form; each
  * drawn country its flag, its name and its figure at one decimal, a door to its page; the card's figure the UK's, under its label;
  * the rest of each region behind its plus, closed, and no region leaving a lone country there (a plus of one is not drawn); quiet,
  * no accent; every figure stamped; one line.
@@ -32,7 +32,7 @@ import { SURFACE_ANSWERS } from "../../src/lib/spine/door_kinds";
 import { COPY } from "../../src/lib/spine/copy";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { HomeNewCompanies } from "../../src/components/spine/home/HomeNewCompanies";
+import { NewCompanies } from "../../src/components/spine/openings/NewCompanies";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-new-companies";
@@ -150,20 +150,20 @@ if (built && d) {
 
 /* THE DRAWING (plan Task 13): the list card's grouped form, the two regions in order, each drawn country its flag, its name and its
    figure, a door to its page; the rest behind each plus, closed; quiet (no accent); every figure stamped; one line. A red here is the
-   component's to put right (the slice and the builder are held above), so its finding names HomeNewCompanies and the laws it is
+   component's to put right (the slice and the builder are held above), so its finding names NewCompanies and the laws it is
    drawn by, and never the export. */
-const DRAWN_AT = { file: "src/components/spine/home/HomeNewCompanies.tsx", remedy: "draw section 2 as HomeNewCompanies holds it, the list card's grouped form with Latin America then Africa never ranked together, a country its flag and its name and a door to its page (MarkList's clause 5), quiet with no accent, every figure stamped" };
+const DRAWN_AT = { file: "src/components/spine/openings/NewCompanies.tsx", remedy: "draw section 2 as NewCompanies holds it, the list card's grouped form with Latin America then Africa never ranked together, a country its flag and its name and a door to its page (MarkList's clause 5), quiet with no accent, every figure stamped" };
 if (built) {
   /* CountryFlag is written for Next's automatic JSX runtime and names no React; this runner compiles JSX to React.createElement, so
      the flags read the one React this file lends them (as tests/spine/uk_sources.test.ts lends it to the About page). */
   (globalThis as unknown as { React: typeof React }).React = React;
-  const html = renderToStaticMarkup(React.createElement(HomeNewCompanies, { nc: built }));
+  const html = renderToStaticMarkup(React.createElement(NewCompanies, { nc: built }));
   check("the section is the list card's grouped form, Latin America then Africa", /id="new-companies"/.test(html) && /data-archetype="mark-list"/.test(html) && /data-form="groups"/.test(html) && html.indexOf('data-group="latam"') !== -1 && html.indexOf('data-group="africa"') > html.indexOf('data-group="latam"'), DRAWN_AT);
   const drawn = built.groups.reduce((s, g) => s + g.rows.length, 0);
   check(`each drawn country is its flag, its name and its figure, a door to its page (${drawn})`, (html.match(/<a [^>]*data-row=/g) ?? []).length === drawn && (html.match(/flagcdn\.com\//g) ?? []).length === drawn && html.split(`data-lands="${SURFACE_ANSWERS.country}"`).length - 1 === drawn, DRAWN_AT);
   check("the card's figure is the UK's, under its label, and every drawn rate prints at one decimal", new RegExp(`--t-focal[^>]*data-src="home/new_companies\\.json:GB"[^>]*>${built.uk.value.toFixed(1).replace(".", "\\.")}<`).test(html) && html.includes(`>${COPY.home.newCompanies.headline}<`) && built.groups.every((g) => g.rows.every((r) => html.includes(`>${r.value.toFixed(1)}</span>`))), DRAWN_AT);
   check("the rest of each region stands behind its plus, closed", (html.match(/<details/g) ?? []).length === built.groups.filter((g) => g.rest.length >= 2).length && !/<details[^>]*\bopen\b/.test(html), DRAWN_AT);
-  check("no region leaves exactly one country behind the plus (a plus of one is not drawn, so that country would vanish)", built.groups.every((g) => g.rest.length !== 1), { file: "src/components/spine/home/HomeNewCompanies.tsx", remedy: "draw a lone leftover as a sixth row, in the builder and the drawing together" });
+  check("no region leaves exactly one country behind the plus (a plus of one is not drawn, so that country would vanish)", built.groups.every((g) => g.rest.length !== 1), { file: "src/components/spine/openings/NewCompanies.tsx", remedy: "draw a lone leftover as a sixth row, in the builder and the drawing together" });
   check("no figure in the accent (a quiet section)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), DRAWN_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   const rest = built.groups.reduce((s, g) => s + (g.rest.length >= 2 ? g.rest.length : 0), 0);
@@ -172,6 +172,13 @@ if (built) {
   check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.newCompanies.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
   check("one supporting line, the measure said once", (html.match(/<p /g) ?? []).length === 1 && html.includes(COPY.home.newCompanies.basis.replace("{year}", String(built.year))), DRAWN_AT);
 }
+
+/* THE NEW PAGE'S RENDER (plan 2026-10-09, home introduction, Task 5): /new-businesses draws the section beside where US restaurants
+   grew and shrank, as the pair stood on the home. */
+const OPENINGS_AT = { file: "src/components/spine/openings/openings-view.tsx", remedy: "seat NewCompanies then UsRestaurants in the pair zone of SpineOpeningsBody" };
+const page = existsSync("scratchpad/harness/pages/openings-world.html") ? readFileSync("scratchpad/harness/pages/openings-world.html", "utf8") : "";
+if (page) check("/new-businesses draws where new companies open, then the US restaurants, side by side, stamped", /<section data-zone="1-1"/.test(page) && page.indexOf('id="new-companies"') !== -1 && page.indexOf('id="us-restaurants"') > page.indexOf('id="new-companies"') && /data-src="home\/new_companies\.json:GB"/.test(page), OPENINGS_AT);
+else console.log("DEFER  scratchpad/harness/pages/openings-world.html is not rendered here; the new page's render check did not run");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/new_companies", held));

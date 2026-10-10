@@ -21,7 +21,7 @@
  * is drawn; two counts a row as the slice holds them, never a percent; the lead the single metro that added most, its count added
  * the card's figure; every figure stamped; the lead's line twelve words at most.
  *
- * Holds the drawing (src/components/spine/home/HomeUsRestaurants.tsx): a box with its id and two tables of a name and two counts;
+ * Holds the drawing (src/components/spine/openings/UsRestaurants.tsx, on /new-businesses since plan 2026-10-09): two tables;
  * each table's heads its name, the first year and the last, and its rows the builder's names in the builder's order; the lead's count
  * the card's one accent; every count stamped; no percent; Detroit, held out, not drawn; one supporting line; the title the copy's.
  *
@@ -33,7 +33,7 @@ import { buildUsRestaurants, US_ENDS } from "../../src/lib/home/us_restaurants";
 import { COPY } from "../../src/lib/spine/copy";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { HomeUsRestaurants } from "../../src/components/spine/home/HomeUsRestaurants";
+import { UsRestaurants } from "../../src/components/spine/openings/UsRestaurants";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-us-restaurants";
@@ -129,10 +129,10 @@ if (built && d) {
 
 /* THE DRAWING (plan Task 14): the lead's count added the card's one accent, two tables of a name and two counts (most added, most
    lost), each count stamped, no percent anywhere, the title the copy gate's. A red here is the component's to put right (the slice
-   and the builder are held above), so its finding names HomeUsRestaurants and the laws it is drawn by, and never the export. */
-const DRAWN_AT = { file: "src/components/spine/home/HomeUsRestaurants.tsx", remedy: "draw section 3 as HomeUsRestaurants holds it, the lead's count added the card's one accent (ART-DIRECTION C2), two tables of a name and two counts and never a percent (PART 9 clause 15), every count stamped, and Detroit not drawn (plan decision 12)" };
+   and the builder are held above), so its finding names UsRestaurants and the laws it is drawn by, and never the export. */
+const DRAWN_AT = { file: "src/components/spine/openings/UsRestaurants.tsx", remedy: "draw section 3 as UsRestaurants holds it, the lead's count added the card's one accent (ART-DIRECTION C2), two tables of a name and two counts and never a percent (PART 9 clause 15), every count stamped, and Detroit not drawn (plan decision 12)" };
 if (built) {
-  const html = renderToStaticMarkup(React.createElement(HomeUsRestaurants, { us: built }));
+  const html = renderToStaticMarkup(React.createElement(UsRestaurants, { us: built }));
   check("the section is a box with its id and two tables of a name and two figures", /id="us-restaurants"/.test(html) && (html.match(/data-archetype="tiers-table"/g) ?? []).length === 2 && (html.match(/data-shape="figures"/g) ?? []).length === 2 && html.indexOf(COPY.home.usRestaurants.added) < html.indexOf(COPY.home.usRestaurants.lost), DRAWN_AT);
   /* THE TABLES' HEADS AND ROWS, read back out of the markup (a name is escaped there as React writes it): each table's heads are its
      name, then the first year and the last, and its rows are the builder's names in the builder's order. */
@@ -152,6 +152,18 @@ if (built) {
   check(`the title is four words at most ("${title}")`, title === COPY.home.usRestaurants.kicker.replace("{from}", String(built.from)) && title.split(/\s+/).length <= 4, DRAWN_AT);
   check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
 }
+
+/* THE NEW PAGE'S FIRST SEAT TYPES THE SIZE OF ITS RANKING ("a measured ranking of 44", a literal read from source; it moved from the
+   home's seat 3 with the section, plan 2026-10-09), so that number is held to the metros the slice ranks; and its render draws the
+   section, lit. */
+const OPENINGS_VIEW = "src/components/spine/openings/openings-view.tsx";
+const seats = existsSync(OPENINGS_VIEW) ? /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(readFileSync(OPENINGS_VIEW, "utf8"))?.[0] ?? "" : "";
+const seat1 = seats.slice(seats.indexOf("seat: 1"), seats.indexOf("seat: 2"));
+const said = /ranking of (\d+)/.exec(seat1)?.[1];
+check(`/new-businesses' first seat says a ranking of ${said ?? "(no number found)"} and the slice ranks ${d?.metros.length ?? "?"} metros`, said !== undefined && !!d && Number(said) === d.metros.length && /id: "us-restaurants"/.test(seat1) && /state: "LIT"/.test(seat1), { file: OPENINGS_VIEW, remedy: "make the number in seat 1's condition (LOUD_SEATS in openings-view.tsx) the metros ranked in data/home/us_restaurants.json, or re-export that slice if the slice is the stale one" });
+const openingsPage = existsSync("scratchpad/harness/pages/openings-world.html") ? readFileSync("scratchpad/harness/pages/openings-world.html", "utf8") : "";
+if (openingsPage && built) check("/new-businesses draws the US restaurants, the lead in the accent, stamped", /id="us-restaurants"/.test(openingsPage) && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(openingsPage), { file: OPENINGS_VIEW, remedy: "seat UsRestaurants in the pair zone of SpineOpeningsBody" });
+else if (!openingsPage) console.log("DEFER  scratchpad/harness/pages/openings-world.html is not rendered here; the new page's render check did not run");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/us_restaurants", held));

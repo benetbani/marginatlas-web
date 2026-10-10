@@ -75,6 +75,13 @@
         "gb"
       ],
       "since": "masterplan step 32, 2026-10-05: the home page on the band page; the default of / since 2026-10-07 (NEXT_PUBLIC_HOME_REFORM=0 turns it off)"
+    },
+    {
+      "surface": "openings",
+      "slugs": [
+        "world"
+      ],
+      "since": "plan 2026-10-09, home introduction: /new-businesses, where new companies open and where US restaurants grew and shrank, re-homed from the home; noindex until his ruling on pages outside the UK"
     }
   ]
 }

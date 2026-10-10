@@ -366,7 +366,9 @@ if (listArg && args.includes("--render")) {
 /* home 5 since masterplan step 37 (2026-10-05): the home page on the band page holds the UK's three answers, its cities and what the
    atlas holds; the hero is the page's question and its search, a band and not a section, and the notebook and the newsletter are
    furniture; the Pro band adds a sixth only with the paywall's switch on. */
-const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5 };
+/* openings 2 since plan 2026-10-09, home introduction: /new-businesses holds where new companies open and where US restaurants grew and
+   shrank; its h1 is a band and not a section, and where to next is furniture (doors, no figure). */
+const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5, openings: 2 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

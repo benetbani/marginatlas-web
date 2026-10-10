@@ -72,6 +72,8 @@ export const TOP_LEVEL_SEGMENTS: ReadonlySet<string> = new Set([
   "learn",
   "margin-index",
   "methodology",
+  /* Where new businesses open (plan 2026-10-09, home introduction): new companies and US restaurants, re-homed from the home. */
+  "new-businesses",
   "og",
   "pricing",
   "privacy",
