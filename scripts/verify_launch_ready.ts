@@ -172,7 +172,7 @@ const HOME_FILE = ONLY ? arg("home-file", null) : null;
 /* A scratch folder of env files for (j), honoured only in a subset run (fix round 8): the paywall's two switches are read from it
    instead of the repo's .env.production and .env.local, so a plant never touches them; the checklist itself always reads the repo. */
 const ENV_ROOT = ONLY ? arg("env-root", null) : null;
-const TSX =[process.execPath, "node_modules/tsx/dist/cli.mjs"];
+const TSX = [process.execPath, "node_modules/tsx/dist/cli.mjs"];
 
 /* ------------------------------------------------------------------------ */
 /* THE EXEMPLARS: three per surface, the harness's page first.               */
