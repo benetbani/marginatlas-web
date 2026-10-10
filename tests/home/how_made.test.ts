@@ -162,15 +162,15 @@ async function main(): Promise<void> {
   const STAMPED_AT = { file: "src/app/(site)/about-data/page.tsx", remedy: "wrap each figure in <span {...provAttrs(x.prov)}> (provAttrs from @/lib/spine/provenance), x the builder's own prov (src/lib/home/how_made.ts), the words around it unchanged" };
   const rawSection = (id: string) => { const at = about.indexOf(`id="${id}"`); return at < 0 ? "" : about.slice(at, about.indexOf("<h2", at + 1)); };
   const escaped = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
-  /** The figures of `figures` that `id`'s section does not print inside `<span data-src="its prov's src" data-kind="its kind">figure</span>`. */
-  const bare = (id: string, figures: Array<[string, Provenance]>) => figures.filter(([figure, prov]) => !rawSection(id).includes(`<span data-src="${escaped(prov.src)}" data-kind="${prov.kind}">${escaped(figure)}</span>`)).map(([figure]) => figure);
+  /** The figures of `figures` that `id`'s section does not print inside `<span data-src="its prov's src" data-kind="its kind">figure</span>`: bare, or stamped with another's source. */
+  const unstamped = (id: string, figures: Array<[string, Provenance]>) => figures.filter(([figure, prov]) => !rawSection(id).includes(`<span data-src="${escaped(prov.src)}" data-kind="${prov.kind}">${escaped(figure)}</span>`)).map(([figure]) => figure);
   if (pages) {
-    const left = bare("reading", [[`${pages.printing} of the ${pages.served}`, pages.prov]]);
-    check(`#reading's pages line (${pages.printing} of the ${pages.served}) carries its builder's data-src and data-kind${left.length ? `; left bare: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
+    const left = unstamped("reading", [[`${pages.printing} of the ${pages.served}`, pages.prov]]);
+    check(`#reading's pages line (${pages.printing} of the ${pages.served}) carries its builder's data-src and data-kind${left.length ? `; without its builder's stamp: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
   }
   if (joins) {
-    const left = bare("failures", [[joins.notices.figure, joins.notices.prov], [joins.matched.figure, joins.matched.prov], [joins.names.figure, joins.names.prov]]);
-    check(`#failures' notices (${joins.notices.figure}), names matched (${joins.matched.figure}) and names (${joins.names.figure}) each carry their builder's data-src and data-kind${left.length ? `; left bare: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
+    const left = unstamped("failures", [[joins.notices.figure, joins.notices.prov], [joins.matched.figure, joins.matched.prov], [joins.names.figure, joins.names.prov]]);
+    check(`#failures' notices (${joins.notices.figure}), names matched (${joins.matched.figure}) and names (${joins.names.figure}) each carry their builder's data-src and data-kind${left.length ? `; without its builder's stamp: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
   }
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
