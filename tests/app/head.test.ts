@@ -131,7 +131,7 @@ function clientClosure(entries: string[]): Closure {
   [...roots].sort().forEach((r) => walk(r, ""));
   return { roots: [...roots].sort(), files, bytes: [...files.keys()].reduce((n, f) => n + readModule(f).bytes, 0), lazy: [...lazy].sort() };
 }
-/** What the guard keeps out of a client bundle: the taxonomy module (src/lib/taxonomy.ts) and everything under its folder, industries.json first. */
+/** What the guard keeps out of a client bundle: the taxonomy module (src/lib/taxonomy.ts) and every file under its folder (industries.json among them). */
 const heavyIn = (c: Closure): string[] => [...c.files.keys()].filter((f) => f === "src/lib/taxonomy.ts" || f.startsWith("src/lib/taxonomy/"));
 /** The chain of imports from a root down to a module of the closure: `root -> ... -> module`. */
 const chainTo = (c: Closure, file: string): string => {
@@ -146,7 +146,7 @@ const heavyLine = (c: Closure): string => {
   const entry = heavyEntry(c);
   return entry === undefined ? "none" : `${chainTo(c, entry)}, with ${heavyIn(c).length - 1} more of its files${heavyIn(c).includes("src/lib/taxonomy/industries.json") ? ", industries.json among them" : ""}`;
 };
-const sizeOf = (c: Closure): string => `${c.roots.length} client roots, ${c.files.size} files, ${Math.round(c.bytes / 1024)} KB of source`;
+const sizeOf = (c: Closure): string => `${c.roots.length} client roots, ${c.files.size} files, ${Math.round(c.bytes / 1024)} KB of source${c.lazy.length ? `, ${c.lazy.length} lazy chunk${c.lazy.length === 1 ? "" : "s"} not counted` : ""}`;
 
 async function main() {
   /* next/font is a build-time transform and the layout imports a stylesheet: the repo's stub stands in for both. */
