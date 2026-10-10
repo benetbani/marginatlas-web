@@ -37,7 +37,8 @@ import { buildProofs } from "@/lib/home/proofs";
 import { WhereNext } from "@/components/spine/WhereNext";
 import { nextDoors } from "@/lib/home/next_doors";
 import { NavigatorForm } from "@/components/NavigatorForm";
-import { RotatingWord } from "@/components/RotatingWord";
+import { HeroWords } from "./HeroWords";
+import { homePickerSeed } from "@/lib/home/picker";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { COPY } from "@/lib/spine/copy";
 import { SourcesFoot } from "@/components/spine/SourcesFoot";
@@ -58,29 +59,25 @@ export const LOUD_SEATS = [
 
 /** The hero he kept: the visitor's own question, its business and its city rotating, then the search, then the one line that says what
  *  the site is. Left-aligned, as every band page's text is. THE QUESTION IS ASKED ONCE (his instruction of 2026-10-07): the h1 asks it,
- *  so the picker draws no heading of its own; the picker's "Try" line is its row of links, and the definition is the hero's one line. */
+ *  so the picker draws no heading of its own; the picker's "Try" line is its row of links, and the definition is the hero's one line.
+ *  SET AND SPACED (plan 2026-10-10, home reform, Task 2; the spec's decision 3): the h1 on set lines, both words on one timer that
+ *  stops (HeroWords); 32px from the h1 to the picker from 1024 and 20 on a phone; the definition at the lead rung in ink2, at most 60
+ *  characters and never past half the page (clause 51), 24px under the picker from 1024 and 16 below. The picker paints its case from
+ *  the server's seed and loads its lists on first use (src/lib/home/picker.ts). */
 function HomeSearch() {
   const C = COPY.home;
   return (
     <div data-hero="1">
       <section id="search" className="flex flex-col">
         <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[var(--c-ink)] leading-[1.08]">
-          {C.h1.lead}{" "}
-          <span className="text-atlas-700">
-            <RotatingWord words={HERO_BUSINESSES as unknown as string[]} />
-          </span>{" "}
-          {C.h1.middle}{" "}
-          <span className="text-atlas-700">
-            <RotatingWord words={HERO_CITIES as unknown as string[]} />
-          </span>
-          ?
+          <HeroWords lead={C.h1.lead} middle={C.h1.middle} businesses={HERO_BUSINESSES} cities={HERO_CITIES} />
         </h1>
         {/* The id the header's search reads: while this card is on screen the header keeps its own search hidden. */}
-        <div id="home-search-anchor" className="relative z-30 mt-5 w-full">
-          <NavigatorForm showHeading={false} />
+        <div id="home-search-anchor" className="relative z-30 mt-5 lg:mt-8 w-full">
+          <NavigatorForm showHeading={false} seed={homePickerSeed()} />
         </div>
         {/* WHAT THE SITE IS, ONCE, AT THE HERO'S FOOT (the spec's sections 1, 3 and 7; clause 67, the model's seat for a page's one plain line): straight after the form, so the question, the reader's own case and the definition stand in the first screen. */}
-        <p data-definition="" className="mt-5 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{C.definition}</p>
+        <p data-definition="" className="mt-4 lg:mt-6 max-w-[min(60ch,var(--measure-half))] text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{C.definition}</p>
       </section>
     </div>
   );

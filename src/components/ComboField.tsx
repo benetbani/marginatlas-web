@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import * as React from "react";
 
 export type ComboOption = {
   value: string;
@@ -45,8 +45,19 @@ type Props = {
    afterwards, so it went in the same sweep rather than sitting here as a loaded
    prop with no consumers. */
 
+/* IN THE SPINE'S TOKENS (plan 2026-10-10, home reform, Task 2; the critique's P0.4 and P1.3, the ship audit's 1b.1 to 1b.4). The label
+   in sentence case at 14px, weight 500, ink2, 8px above its field, with no star (a required field says so to a screen reader with
+   aria-required); the field 48px tall, its corner the card's 12, its edge the control token at 3:1 (WCAG 1.4.11), its type 16px under
+   768 so a phone does not zoom; an ink ring whenever focus is inside, so a field that was picked from or escaped still shows where
+   focus is; the list's rows 44px, the highlighted row the soft fill with an ink bar, the examples in the muted grey, the card's own
+   shadow; a row that says when nothing matches, and says it to a screen reader through a polite live region; on focus the label
+   stays and is selected, so typing replaces it and a tap never blanks the field. The brown and the terracotta left the field. */
+
+/** The card's two drops (CARD_SURFACE in src/components/spine/kit.tsx), written here so this client file never carries the kit. */
+const CARD_SHADOW = "shadow-[0_1px_1px_rgba(43,28,22,0.04),0_8px_24px_-12px_rgba(43,28,22,0.10)]";
+
 /**
- * ComboField — a single field that's a dropdown AND a search-as-you-type filter.
+ * ComboField: a single field that's a dropdown AND a search-as-you-type filter.
  *
  * Searches match: label, examples, and keywords (case-insensitive).
  * Bracket examples render in a lighter tone after the bold label.
@@ -61,15 +72,20 @@ export function ComboField({
   disabled = false,
   required = false,
 }: Props) {
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [focusIdx, setFocusIdx] = useState(-1);
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
+  const [open, setOpen] = React.useState(false);
+  /* What the reader has typed, or null while they have typed nothing since the field last settled: then the field shows the picked
+     option's label. */
+  const [query, setQuery] = React.useState<string | null>(null);
+  const [focusIdx, setFocusIdx] = React.useState(-1);
+  const wrapRef = React.useRef<HTMLDivElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const listRef = React.useRef<HTMLUListElement>(null);
+  /* A focus that a press brought: the browser's mouseup would put the caret down and undo the selection made on focus. */
+  const pressFocus = React.useRef(false);
 
   // Resolve currently selected label
   const selected = options.find((o) => o.value === value);
-  const displayValue = open ? query : selected?.label || "";
+  const displayValue = query ?? selected?.label ?? "";
 
   /* ARIA ids for the combobox pattern below. Derived from the field id, which
      every call site already passes and which is unique per form. */
@@ -77,7 +93,7 @@ export function ComboField({
   const optionId = (i: number) => `${id}-option-${i}`;
 
   // Filter options by query
-  const q = query.trim().toLowerCase();
+  const q = (query ?? "").trim().toLowerCase();
   const filtered = !q
     ? options
     : options.filter((o) => {
@@ -91,6 +107,9 @@ export function ComboField({
      aria-expanded of true over an empty list tells a screen reader to go
      looking for options that are not there. */
   const expanded = open && filtered.length > 0;
+  /* Nothing matches what was typed: one row says so, and the live region says it to a screen reader. */
+  const noMatch = open && q !== "" && filtered.length === 0;
+  const noMatchLine = `No match for ‘${(query ?? "").trim()}’`;
 
   /* KEEP THE HIGHLIGHTED OPTION ON SCREEN.
      listRef was declared and attached to the <ul> and then never read, so the
@@ -99,18 +118,18 @@ export function ComboField({
      the business field over 200, and arrowing down past the visible rows moved
      a highlight nobody could see. block: "nearest" scrolls the minimum needed,
      so it does nothing when the option is already visible. */
-  useEffect(() => {
+  React.useEffect(() => {
     if (focusIdx < 0) return;
     const el = listRef.current?.children[focusIdx] as HTMLElement | undefined;
     el?.scrollIntoView({ block: "nearest" });
   }, [focusIdx]);
 
   // Close on outside click
-  useEffect(() => {
+  React.useEffect(() => {
     function onDoc(e: MouseEvent) {
       if (!wrapRef.current?.contains(e.target as Node)) {
         setOpen(false);
-        setQuery("");
+        setQuery(null);
       }
     }
     document.addEventListener("mousedown", onDoc);
@@ -119,20 +138,20 @@ export function ComboField({
 
   // Commit on Enter (or blur) even when nothing is
   // focused. Founder reported "Show me the numbers" button unclickable
-  // on Berlin nightclubs — root cause was ComboField never committing
+  // on Berlin nightclubs: root cause was ComboField never committing
   // a typed value to state unless the user explicitly clicked an
   // option. Now: pressing Enter or blurring auto-selects the top match
   // when the query is non-empty and the filtered list has at least one
   // entry, so typed input always lands somewhere usable.
-  function commitTopMatch() {
-    if (!q || filtered.length === 0) return;
+  function commitTopMatch(): boolean {
+    if (!q || filtered.length === 0) return false;
     const candidate = focusIdx >= 0 ? filtered[focusIdx] : filtered[0];
-    if (candidate) {
-      onChange(candidate.value);
-      setOpen(false);
-      setQuery("");
-      setFocusIdx(-1);
-    }
+    if (!candidate) return false;
+    onChange(candidate.value);
+    setOpen(false);
+    setQuery(null);
+    setFocusIdx(-1);
+    return true;
   }
 
   function onKey(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -145,34 +164,39 @@ export function ComboField({
       setFocusIdx((i) => Math.max(i - 1, 0));
     } else if (e.key === "Enter") {
       // Commit the focused option, or fall back to the top match for
-      // the current query. Only block default if we actually commit
-      // — otherwise allow the form's normal Enter-to-submit behavior.
+      // the current query. Only block default if we actually commit;
+      // otherwise allow the form's normal Enter-to-submit behavior.
       if (focusIdx >= 0 || (q && filtered.length > 0)) {
         e.preventDefault();
         commitTopMatch();
       }
     } else if (e.key === "Escape") {
       setOpen(false);
-      setQuery("");
+      setQuery(null);
+      setFocusIdx(-1);
     }
   }
 
   return (
     <div ref={wrapRef} className="relative">
-      <label
-        htmlFor={id}
-        className="block text-xs font-semibold uppercase tracking-wider text-cocoa-700 mb-1.5"
-      >
-        {label}
-        {required && <span className="text-atlas-600 ml-0.5">*</span>}
-      </label>
+      {label ? (
+        <label htmlFor={id} className="mb-2 block text-sm font-medium text-[var(--c-ink2)]">
+          {label}
+        </label>
+      ) : null}
       <div
-        className={`flex items-center px-3.5 py-3 rounded-xl border transition-all ${
-          open
-            ? "border-atlas-500 ring-2 ring-atlas-500/30 shadow-sm"
-            : "border-parchment hover:border-atlas-300"
-        } bg-white ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-text"}`}
-        onClick={() => !disabled && setOpen(true)}
+        className={`flex h-12 items-center rounded-xl border bg-white px-4 transition-colors focus-within:border-[var(--c-ink)] focus-within:ring-2 focus-within:ring-[var(--c-ink)] ${
+          disabled ? "cursor-not-allowed border-[var(--control-line)] opacity-50" : "cursor-text border-[var(--control-line)] hover:border-[var(--c-ink2)]"
+        }`}
+        onMouseDown={(e) => {
+          /* A press on the box's edge or its chevron keeps the focus in the field, so the list does not close and reopen. */
+          if (e.target !== inputRef.current) e.preventDefault();
+        }}
+        onClick={() => {
+          if (disabled) return;
+          inputRef.current?.focus();
+          setOpen(true);
+        }}
       >
         {/* THE COMBOBOX PATTERN, which this field implemented in behaviour and
             not in semantics. It filters as you type, opens a list, moves a
@@ -190,6 +214,7 @@ export function ComboField({
             aria-controls is set only while open, because the <ul> is unmounted
             when closed and an IDREF pointing at nothing is worse than no IDREF. */}
         <input
+          ref={inputRef}
           id={id}
           type="text"
           role="combobox"
@@ -199,37 +224,52 @@ export function ComboField({
             expanded && focusIdx >= 0 ? optionId(focusIdx) : undefined
           }
           aria-autocomplete="list"
+          aria-required={required || undefined}
           autoComplete="off"
           value={displayValue}
           onChange={(e) => {
             setQuery(e.target.value);
+            setFocusIdx(-1);
             setOpen(true);
           }}
-          onFocus={() => {
+          onMouseDown={() => {
+            pressFocus.current = document.activeElement !== inputRef.current;
+          }}
+          onMouseUp={(e) => {
+            if (pressFocus.current) {
+              pressFocus.current = false;
+              e.preventDefault();
+            }
+          }}
+          onFocus={(e) => {
             if (disabled) return;
             setOpen(true);
+            /* The label stays, selected whole: typing replaces it, a tap never blanks the field (the ship audit's 1b.4). */
+            const el = e.currentTarget;
+            el.setSelectionRange(0, el.value.length);
           }}
           onKeyDown={onKey}
           onBlur={() => {
             // Auto-commit the top match if the user typed something but
             // never picked an option. Fixes the Berlin-nightclubs button
-            // (founder QA, 2026-05-22).
-            commitTopMatch();
+            // (founder QA, 2026-05-22). Typed words that match nothing
+            // give way to the picked option's label again.
+            if (!commitTopMatch()) {
+              setQuery(null);
+              setOpen(false);
+            }
           }}
           placeholder={placeholder}
           disabled={disabled}
-          className="min-w-0 flex-1 bg-transparent outline-none text-sm font-medium text-ink-900 placeholder:text-cocoa-700/40 placeholder:font-normal"
+          className="h-full min-w-0 flex-1 bg-transparent text-base font-medium text-[var(--c-ink)] outline-none placeholder:font-normal placeholder:text-[var(--c-muted)] focus-visible:outline-none md:text-sm"
         />
-        {/* CitiesFix2 sec 3: brand chevron (vermillion atlas-700 SVG)
-            replaces the generic unicode glyph. Same affordance, on-brand. */}
+        {/* The chevron in ink2 (the critique's P1.1: terracotta marks answers, not controls). */}
         <svg
           aria-hidden="true"
           viewBox="0 0 12 8"
           width="12"
           height="8"
-          className={`ml-2 shrink-0 transition-transform ${
-            open ? "rotate-180 text-atlas-700" : "text-atlas-600"
-          }`}
+          className={`ml-2 shrink-0 text-[var(--c-ink2)] transition-transform motion-reduce:transition-none${open ? " rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -239,13 +279,14 @@ export function ComboField({
           <path d="M1 1.5 L6 6.5 L11 1.5" />
         </svg>
       </div>
-      {open && filtered.length > 0 && (
+      {expanded && (
         <ul
           ref={listRef}
           id={listboxId}
           role="listbox"
-          aria-label={label}
-          className="absolute z-20 mt-1.5 w-full max-h-[60vh] overflow-auto rounded-xl border border-parchment bg-white shadow-[0_10px_30px_rgba(120,53,15,0.12),inset_0_1px_0_rgba(255,255,255,0.5)]"
+          aria-label={label || undefined}
+          onMouseDown={(e) => e.preventDefault()}
+          className={`absolute z-20 mt-2 max-h-[60vh] w-full overflow-auto rounded-xl border border-[var(--c-line-strong)] bg-white py-1 ${CARD_SHADOW}`}
         >
           {filtered.map((o, i) => (
             <li
@@ -257,19 +298,19 @@ export function ComboField({
                 e.preventDefault();
                 onChange(o.value);
                 setOpen(false);
-                setQuery("");
+                setQuery(null);
                 setFocusIdx(-1);
               }}
               onMouseEnter={() => setFocusIdx(i)}
-              className={`px-3.5 py-2 cursor-pointer text-sm border-l-2 transition-colors ${
+              className={`cursor-pointer border-l-2 px-4 py-3 text-sm leading-5 transition-colors ${
                 focusIdx === i
-                  ? "bg-atlas-50 border-atlas-500"
-                  : "border-transparent hover:bg-paper-100"
+                  ? "border-[var(--c-ink)] bg-[var(--c-soft)]"
+                  : "border-transparent hover:bg-[var(--c-soft)]"
               }`}
             >
-              <span className="font-medium text-ink-900">{o.label}</span>
+              <span className="font-medium text-[var(--c-ink)]">{o.label}</span>
               {o.examples && o.examples.length > 0 && (
-                <span className="text-cocoa-700/60 ml-1.5">
+                <span className="ml-1.5 text-[var(--c-muted)]">
                   · {o.examples.slice(0, 3).join(", ")}
                 </span>
               )}
@@ -277,6 +318,18 @@ export function ComboField({
           ))}
         </ul>
       )}
+      {noMatch ? (
+        <div
+          aria-hidden="true"
+          data-no-match=""
+          className={`absolute z-20 mt-2 w-full rounded-xl border border-[var(--c-line-strong)] bg-white px-4 py-3 text-sm leading-5 text-[var(--c-ink2)] ${CARD_SHADOW}`}
+        >
+          {noMatchLine}
+        </div>
+      ) : null}
+      <p role="status" aria-live="polite" className="sr-only">
+        {noMatch ? noMatchLine : ""}
+      </p>
     </div>
   );
 }

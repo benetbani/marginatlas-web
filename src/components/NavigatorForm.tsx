@@ -1,23 +1,15 @@
 "use client";
 
+import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Fragment, useState, useMemo, useEffect } from "react";
-import { ComboField, type ComboOption } from "./ComboField";
-import {
-  COUNTRIES,
-  industryToSlug,
-  visibleIndustries,
-  type Gate,
-} from "@/lib/taxonomy";
-import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
-import { getCitiesForCountryCode, CASCADE_PREFILLS } from "@/lib/home/search_cascade";
-import { homeDestination, homeTryLinks, homeTryCityLabel } from "@/lib/home/destination";
-import { elevation } from "@/lib/design-tokens";
+import { ComboField } from "./ComboField";
+import type { Gate } from "@/lib/taxonomy";
+import type { PickerHidden, PickerSeed } from "@/lib/home/picker";
 
 /**
  * NavigatorForm: the homepage search, reworked into a three-field guided cascade
  * (country to city to business) per the homepage reform SP3. The submit mechanic
- * is unchanged (router.push to `/{country}/{geo}/{industry}`, with the native
+ * is unchanged (router.push to the destination, with the native
  * action="/api/go" fallback for no-JS), per the founder's standing directive.
  *
  * What changed from the six-field Navigator:
@@ -25,20 +17,20 @@ import { elevation } from "@/lib/design-tokens";
  *    and size are gone from the UI. The region is resolved behind the scenes: a
  *    picked city slug IS the URL geo, and "Anywhere in {country}" resolves to
  *    that country's curated default region, so the result link still works.
- *  - The form pre-fills with a rotating real example so it never reads blank;
- *    the rotation stops for good on the first user interaction.
+ *  - The form opens on one real example, restaurants in London, and holds it.
  *  - Business is NOT narrowed by city (activities are not city-specific in the
  *    data), so the full forgiving activity list stays available.
  *
- * The card chrome (header strip, footer sample line, submit CTA) is reused. The vermillion
- * top rule, the "The Navigator" eyebrow, and the "Surprise me" button were removed in the
- * 2026-07-12 taste pass (see the inline notes).
+ * IN THE SPINE'S TOKENS, ONE ROW, ONE ACTION (plan 2026-10-10, home reform, Task 2; the critique's P0.4, P1.2, P1.3 and P1.14; the
+ * ship audit's 1b.5 and 3.2): the card is the spine's (radius 12, the strong edge, the card's shadow, 24 of padding) and stays a card
+ * on the hero's band (data-keep-card: a picker is an instrument); the action is the page's one solid ink button, the fourth column of
+ * the field row from 1024, under the fields at the right from 768, full width on a phone; the footer strip and its divider are gone,
+ * and the examples' line stands under the row in ink2. Any failure says so in the card instead of sending the visitor to a random
+ * page. THE LISTS LOAD ON FIRST USE: the server passes `seed`, the three labels and the no-script fields the first paint needs
+ * (src/lib/home/picker.ts homePickerSeed), and the 195 countries, the activities and the city lists arrive with import() when a
+ * pointer enters the form or focus lands in it. A press that comes before them is the browser's own submit to /api/go, which
+ * answers through the same destination.
  */
-
-/* The line's three examples and their city, from the destination's one list (src/lib/home/destination.ts, HOME_TRY), so a link and a
-   search for the same words land on one page. */
-const TRIES = homeTryLinks();
-const TRY_CITY = homeTryCityLabel();
 
 /** Client-side gate read. Matches lib/audience.ts on the server. */
 function readClientGate(): Gate {
@@ -55,11 +47,18 @@ function readClientGate(): Gate {
   };
 }
 
+/** The picker's lists and destination, as the form loads them on first use. */
+type PickerModule = typeof import("@/lib/home/picker");
+
+const NO_HIDDEN: PickerHidden = { country: "", region: "", subdivision: "", industry: "" };
+
 /** `showHeading={false}` drops the card's own heading where the page's h1 already asks the question (the rebuilt home, his
- *  instruction of 2026-10-07: "reform home drastically"); the live home keeps it. */
-export function NavigatorForm({ showHeading = true }: { showHeading?: boolean } = {}) {
+ *  instruction of 2026-10-07: "reform home drastically"); the live home keeps it. `seed` is what the first paint draws, from the
+ *  server; without it (the live home behind its switch) the form loads its lists at once and opens on the same case. */
+export function NavigatorForm({ showHeading = true, seed }: { showHeading?: boolean; seed?: PickerSeed } = {}) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [failed, setFailed] = React.useState(false);
   /* THE PRE-FILL NO LONGER ROTATES, and the reason is the same ruling that
      took the rotating words out of the h1 one band above this card.
 
@@ -77,101 +76,101 @@ export function NavigatorForm({ showHeading = true }: { showHeading?: boolean } 
 
      It also demonstrated very little. Six of the eight prefills are
      restaurants, so the carousel mostly showed one trade in different cities,
-     while the "Try" line in this card's own footer already names three
+     while the examples' line under this card's fields already names three
      genuinely different examples and holds still while it does it.
 
      One real example, kept, because the design intent it served is right: the
      form should never read blank. CASCADE_PREFILLS[0] is restaurants in
-     London, the home's worked example (plan 2026-10-09, home introduction),
-     and the first of the footer line's three examples. */
-  const [country, setCountry] = useState(CASCADE_PREFILLS[0].country);
-  const [city, setCity] = useState(CASCADE_PREFILLS[0].city);
-  const [business, setBusiness] = useState(CASCADE_PREFILLS[0].business);
-  const [gate, setGate] = useState<Gate>({ revealMixed: false, revealCorp: false });
+     London, the home's worked example (plan 2026-10-09, home introduction);
+     the seed carries it from the server. */
+  const [country, setCountry] = React.useState(seed?.country.value ?? "");
+  const [city, setCity] = React.useState(seed?.city.value ?? "");
+  const [business, setBusiness] = React.useState(seed?.business.value ?? "");
+  const [gate, setGate] = React.useState<Gate>({ revealMixed: false, revealCorp: false });
+  const [lists, setLists] = React.useState<PickerModule | null>(null);
+  const loading = React.useRef<Promise<void> | null>(null);
 
   // Client gate so ?pro=1 / cookies can widen the activity list.
-  useEffect(() => {
+  React.useEffect(() => {
     setGate(readClientGate());
   }, []);
 
-  const countryOptions: ComboOption[] = useMemo(
-    () =>
-      COUNTRIES.map((c) => ({
-        value: c.code,
-        label: c.name,
-        keywords: [c.code.toLowerCase(), c.name.toLowerCase()],
-      })),
-    []
-  );
+  const loadLists = React.useCallback(() => {
+    if (loading.current) return;
+    loading.current = import("@/lib/home/picker").then(
+      (m) => {
+        setLists(m);
+        setFailed(false);
+      },
+      (err) => {
+        loading.current = null;
+        // eslint-disable-next-line no-console
+        console.error("NavigatorForm: the picker's lists did not load", err);
+        setFailed(true);
+      },
+    );
+  }, []);
 
-  // City options depend on country: a leading "Anywhere in {country}" (value "")
-  // plus the country's curated cities (each slug is a URL-resolving geo).
-  const cityOptions: ComboOption[] = useMemo(() => {
-    const countryName = COUNTRIES.find((c) => c.code === country)?.name || country;
-    const anywhere: ComboOption = { value: "", label: `Anywhere in ${countryName}` };
-    const cities = getCitiesForCountryCode(country).map((c) => ({
-      value: c.slug,
-      label: c.label,
-      keywords: [c.slug, c.label.toLowerCase()],
-    }));
-    return [anywhere, ...cities];
-  }, [country]);
+  /* No seed: load at once, and open on the case once the lists are in. */
+  React.useEffect(() => {
+    if (!seed) loadLists();
+  }, [seed, loadLists]);
+  React.useEffect(() => {
+    if (!lists || seed || country) return;
+    const p = lists.CASCADE_PREFILLS[0];
+    setCountry(p.country);
+    setCity(p.city);
+    setBusiness(p.business);
+  }, [lists, seed, country]);
 
-  // Business options: the full forgiving activity list (audience-gated),
-  // alphabetical. NOT narrowed by city (activities are not city-specific).
-  const businessOptions: ComboOption[] = useMemo(
-    () =>
-      visibleIndustries(gate)
-        .slice()
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map((i) => ({
-          value: i.id,
-          label: i.name,
-          examples: i.examples,
-          keywords: i.keywords,
-        })),
-    [gate]
-  );
+  /* Before the lists arrive each field holds its seeded option alone, so it shows its label; after, the whole list. */
+  const countryOptions = React.useMemo(() => (lists ? lists.countryOptions() : seed ? [seed.country] : []), [lists, seed]);
+  const cityOptions = React.useMemo(() => (lists ? lists.cityOptions(country) : seed ? [seed.city] : []), [lists, seed, country]);
+  const businessOptions = React.useMemo(() => (lists ? lists.businessOptions(gate) : seed ? [seed.business] : []), [lists, seed, gate]);
+  /* The no-script fields mirror the state for the native submit (action="/api/go"). */
+  const hidden = lists ? lists.hiddenFields(country, city, business) : (seed?.hidden ?? NO_HIDDEN);
+  /* The line's three examples and their city, from the destination's one list (src/lib/home/destination.ts, HOME_TRY), so a link and a
+     search for the same words land on one page. */
+  const tries = seed?.tries ?? (lists ? lists.homeTryLinks() : []);
+  const tryCity = seed?.tryCity ?? (lists ? lists.homeTryCityLabel() : "");
 
-  function submit() {
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    /* Before the lists load, the browser sends the form itself: the hidden fields hold the case on screen and /api/go answers
+       through the same destination. */
+    if (!lists) return;
+    e.preventDefault();
     try {
       /* WHERE IT LANDS, ONE TESTED FUNCTION (masterplan step 33): a page that exists, UK first (London's trade page, a UK city's
          own page, the trade's page for anywhere in the UK, /gb alone), today's cell path elsewhere. The business is optional, so
          no box ever pops up to ask for it (the alert it used was a pop-up his refusals name). */
-      const path = homeDestination({ country, city, trade: business });
+      const path = lists.homeDestination({ country, city, trade: business });
+      setFailed(false);
       setIsLoading(true);
       router.push(path);
       window.setTimeout(() => setIsLoading(false), 3000);
     } catch (err) {
-      if (typeof window !== "undefined") {
-        // eslint-disable-next-line no-console
-        console.error("NavigatorForm submit failed", err);
-        window.location.href = "/random";
-      }
+      // eslint-disable-next-line no-console
+      console.error("NavigatorForm submit failed", err);
+      setIsLoading(false);
+      setFailed(true);
     }
   }
-
-  // Native-fallback geo (no-JS via /api/go): subdivision carries the city;
-  // region carries the curated default when no city is picked, so the native
-  // submit still lands on a cell (/api/go prefers subdivision, then region).
-  const fallbackRegion = city ? "" : getDefaultRegionForCountry(country) || "";
 
   return (
     <form
       action="/api/go"
       method="get"
-      onSubmit={(e) => {
-        e.preventDefault();
-        submit();
-      }}
-      className="relative rounded-2xl atlas-paper-card border border-paper-350 hover:border-paper-450 transition-colors"
-      style={{ boxShadow: elevation.card }}
+      onSubmit={onSubmit}
+      onPointerEnter={loadLists}
+      onFocus={loadLists}
+      data-keep-card=""
+      className="spine-card relative rounded-xl border border-[var(--c-line-strong)] p-6"
     >
       {/* Hidden inputs mirror state for the no-JS native submit (action="/api/go"). */}
-      <input type="hidden" name="country" value={country.toLowerCase()} />
-      <input type="hidden" name="region" value={fallbackRegion.toLowerCase()} />
-      <input type="hidden" name="subdivision" value={city.toLowerCase()} />
-      <input type="hidden" name="industry" value={business ? industryToSlug(business) : ""} />
+      <input type="hidden" name="country" value={hidden.country} />
+      <input type="hidden" name="region" value={hidden.region} />
+      <input type="hidden" name="subdivision" value={hidden.subdivision} />
+      <input type="hidden" name="industry" value={hidden.industry} />
 
       {/* Card header strip. The vermillion top rule and the "The Navigator" eyebrow were
           deleted 2026-07-12: a decorative accent rule carrying no answer (rule 37/38) and a
@@ -179,133 +178,108 @@ export function NavigatorForm({ showHeading = true }: { showHeading?: boolean } 
           shell font (Geist on the spine page) instead of font-display (Newsreader serif),
           which is off the locked Geist + Space Grotesk system (rule 38). */}
       {showHeading ? (
-        <div className="flex items-baseline justify-between gap-4 px-5 md:px-8 pt-5 md:pt-7 pb-3 border-b border-paper-350">
-          <div>
-            <h2 data-typography="custom" className="font-semibold text-lg md:text-xl text-ink-900 leading-tight">
-              Pick a country, a city, and a business.
-            </h2>
-          </div>
+        <div className="mb-6 border-b border-[var(--c-border)] pb-4">
+          <h2 data-typography="custom" className="font-semibold text-lg md:text-xl text-ink-900 leading-tight">
+            Pick a country, a city, and a business.
+          </h2>
           {/* No count here: his ruling of 2026-10-07, the number overstated what the atlas holds. */}
         </div>
       ) : null}
 
-      {/* Three-field cascade: Country, then City, then Business. */}
-      <div className="px-5 md:px-8 py-6 md:py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          {/* PLACEHOLDERS THAT SAY SOMETHING, which is the half of the founder's
-              2026-08-09 ruling that never got done. He removed the "?" badges
-              from these two fields ("two question marks at the country and at
-              the city, which is like a massive mistake") and the instruction
-              that came with it was to fix the label or put the sentence in the
-              field. The badges went; the sentence did not arrive. Country and
-              city kept ComboField's generic "Pick or type…" while Business,
-              which never carried a badge, told a reader exactly what to do.
+      {/* The field row: Country, then City, then Business, then the action; the examples' line under it. One column on a phone
+          (the action full width under the fields, the line under it), three from 768 (the line and the action on one row under the
+          fields, the action at the right), four from 1024 (the action the row's last column, its foot on the fields' foot, the line
+          under the row: the row's inner wrapper steps out of the way there, `lg:contents`). The fields' columns may shrink to
+          nothing (minmax(0,1fr)), so the action's column keeps the button's own width and its words stay on one line. */}
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
+        {/* PLACEHOLDERS THAT SAY SOMETHING, which is the half of the founder's
+            2026-08-09 ruling that never got done. He removed the "?" badges
+            from these two fields ("two question marks at the country and at
+            the city, which is like a massive mistake") and the instruction
+            that came with it was to fix the label or put the sentence in the
+            field. The badges went; the sentence did not arrive. Country and
+            city kept ComboField's generic "Pick or type…" while Business,
+            which never carried a badge, told a reader exactly what to do.
 
-              City also has a thing worth saying that nothing said: it is the
-              only optional field of the three, and its first option is
-              "Anywhere in {country}". A reader had no way to know they could
-              skip it. */}
-          <ComboField
-            id="country"
-            label="Country"
-            required
-            options={countryOptions}
-            value={country}
-            onChange={(v) => {
-              setCountry(v);
-              setCity("");
-            }}
-            placeholder="Type a country: Spain, Japan, Mexico"
-          />
-          <ComboField
-            id="city"
-            label="City"
-            options={cityOptions}
-            value={city}
-            onChange={setCity}
-            placeholder="Anywhere, or pick a city"
-          />
-          <ComboField
-            id="business"
-            label="Business"
-            options={businessOptions}
-            value={business}
-            onChange={setBusiness}
-            placeholder="Type a business: restaurants, barbers, plumbers"
-          />
-        </div>
-      </div>
-
-      {/* Footer bar: sample line + submit. */}
-      <div className="rounded-b-2xl border-t border-paper-350 bg-white px-5 md:px-8 py-4 md:py-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          {/* THE EXAMPLES ARE LINKS (plan 2026-10-09, home introduction; the home's spec, section 3: "Try restaurants, gyms or salons in
-              London", each a link to the page that answers exactly what it names, read without script). Until then two of the three
-              named a city off London, where a search lands on the city's page and not on the trade named. */}
-          <p className="text-xs text-cocoa-700/80 leading-relaxed">
-            <span className="font-semibold uppercase tracking-[0.12em] text-ink-500">
-              Try
-            </span>
-            {/* A SPACE IS TEXT, NOT MARGIN (fix round B): JSX drops the line break between the label and the first link, so the
-                words read "Tryrestaurants" to a crawler and a screen reader; the margin that drew the gap is the space now. */}
-            {" "}
-            {TRIES.map((t, i) => (
-              <Fragment key={t.href}>
-                {i === 0 ? null : i === TRIES.length - 1 ? " or " : ", "}
-                <a href={t.href} className="underline decoration-cocoa-700/40 underline-offset-2 hover:text-ink-900">
-                  {t.word}
-                </a>
-              </Fragment>
-            ))}
-            {` in ${TRY_CITY}`}
-          </p>
-          <div className="flex items-center shrink-0">
-            {/* Soft-terracotta submit, the ONE action the card leads to (rule 37). The
-                crimson filled pill + bold white label were deleted 2026-07-12:
-                off-palette accent on chrome + "cheap" heavy fill. The soft shape is
-                the reform masthead's ratified CTA and is kept exactly.
-
-                THE COLOUR WAS STOCK TAILWIND ORANGE, AND IT WAS THIS BUTTON.
-                border-orange-200 / bg-orange-50 / text-orange-700, on the primary
-                call to action of the home page. orange-700 is #c2410c at hue 17.5
-                degrees; the brand accent is #991600 at hue 8.6. The founder's note
-                is quoted verbatim in verify_palette_membership's own header: "at the
-                bottom of the home page I see a shade of orange that is not accepted
-                as a brand color."
-
-                Its justification was mistaken. It read that NavigatorForm renders
-                outside SpineShell where the --terra-* vars do not exist, so the
-                terracotta had to come from Tailwind. But atlas-* is not a CSS
-                variable: design-tokens' tailwindColors are spread into the config as
-                plain hex, which is why the h1 twenty lines up this same legacy page
-                uses text-atlas-700 and renders correctly. Nothing ever required the
-                stock ramp.
-
-                Same ladder, on the brand: 50 wash, 200 border, 700 text. Contrast of
-                #991600 on #fff1ee is 7.7:1, past AA and past AAA for body text.
-                These five were the only orange-* classes in the repository, so the
-                palette gate now bans the token outright. */}
+            City also has a thing worth saying that nothing said: it is the
+            only optional field of the three, and its first option is
+            "Anywhere in {country}". A reader had no way to know they could
+            skip it. */}
+        <ComboField
+          id="country"
+          label="Country"
+          required
+          options={countryOptions}
+          value={country}
+          onChange={(v) => {
+            setCountry(v);
+            setCity("");
+          }}
+          placeholder="Type a country: Spain, Japan, Mexico"
+        />
+        <ComboField
+          id="city"
+          label="City"
+          options={cityOptions}
+          value={city}
+          onChange={setCity}
+          placeholder="Anywhere, or pick a city"
+        />
+        <ComboField
+          id="business"
+          label="Business"
+          options={businessOptions}
+          value={business}
+          onChange={setBusiness}
+          placeholder="Type a business: restaurants, barbers, plumbers"
+        />
+        <div className="flex flex-col gap-3 md:col-span-3 md:flex-row-reverse md:items-center md:justify-between md:gap-6 lg:contents">
+          <div className="lg:col-start-4 lg:row-start-1 lg:self-end">
+            {/* THE ONE ACTION, SOLID INK (the critique's P1.2): a pale terracotta pill read as the secondary action, and PART 6
+                keeps terracotta off controls. Hover ink2 (7.36:1 with white); focus takes the site's 2px ink ring (globals.css). */}
             <button
               type="submit"
               disabled={isLoading}
               aria-busy={isLoading}
-              className="min-h-11 px-5 py-2.5 rounded-full border border-atlas-200 bg-atlas-50 hover:bg-atlas-100 text-atlas-700 font-semibold text-sm transition disabled:opacity-70 disabled:cursor-wait inline-flex items-center gap-2"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-[var(--c-ink)] px-6 text-base font-semibold text-white transition-colors hover:bg-[var(--c-ink2)] disabled:cursor-wait disabled:opacity-70 md:w-auto"
             >
               {isLoading ? (
                 <>
                   <span
                     aria-hidden="true"
-                    className="inline-block w-3.5 h-3.5 border-2 border-atlas-700/30 border-t-atlas-700 rounded-full animate-spin"
+                    className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white motion-reduce:animate-none"
                   />
-                  Loading...
+                  Loading…
                 </>
               ) : (
                 <>Show me the numbers <span aria-hidden="true">&rarr;</span></>
               )}
             </button>
           </div>
+          {/* THE EXAMPLES ARE LINKS (plan 2026-10-09, home introduction), three other London trades whose pages print the
+              register's figures (plan 2026-10-10, the critique's P1.14): the line no longer repeats the case the fields already
+              show. A space is text, not margin, so the words read as words to a crawler and a screen reader. */}
+          {tries.length > 0 ? (
+            <p data-try="" className="text-sm leading-5 text-[var(--c-ink2)] lg:col-span-4 lg:row-start-2">
+              Or try{" "}
+              {tries.map((t, i) => (
+                <React.Fragment key={t.href}>
+                  {i === 0 ? null : i === tries.length - 1 ? " or " : ", "}
+                  <a href={t.href} className="underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)] hover:decoration-[var(--c-ink)]">
+                    {t.word}
+                  </a>
+                </React.Fragment>
+              ))}
+              {` in ${tryCity}.`}
+            </p>
+          ) : null}
         </div>
       </div>
+      {failed ? (
+        <p role="alert" className="mt-4 text-sm font-medium leading-5 text-[var(--c-ink)]">
+          Something went wrong. Reload the page and try again.
+        </p>
+      ) : null}
     </form>
   );
 }

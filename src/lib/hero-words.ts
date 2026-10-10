@@ -39,3 +39,24 @@ export const HERO_BUSINESSES = [
   "butcher",
   "gym",
 ] as const;
+
+/* THE SLOTS' WIDTHS, BY DRAWN WIDTH (plan 2026-10-10, home reform, Task 2; the ship audit's 3.6, the critique's P0.2). A slot is as
+   wide as its widest word, and the widest word is the one drawn widest, never the one with the most letters: measured from the
+   Space Grotesk the site serves, weight 500, tight tracking, "Shanghai?" is 4.86em against "Chicago?" 4.32 and "Istanbul?" 4.29 (the
+   letter count chose "Istanbul", and "Shanghai" touched the "?"), and "restaurant" is 4.93em against "pharmacy" 4.66.
+   tests/home/hero_words.test.ts measures every word again from the font's advances, so a new word that draws wider fails it. */
+export const HERO_WIDEST_CITY = "Shanghai";
+export const HERO_WIDEST_BUSINESS = "restaurant";
+
+/* THE HERO'S ONE TIMER (the critique's P0.3; WCAG 2.2.2: moving words beside a form must stop). Both words change together, a tick
+   every 3.5 seconds, each change a quarter-second fade out and back in; twelve ticks in all, one lap of the cities. Ticks 1 to 11
+   move both words on by one; tick 12 is the last fade, back to the first words ("restaurant", "London", the case the page answers),
+   and the words stand still for good. src/components/spine/home/HeroWords.tsx runs it. */
+export const HERO_TICK_MS = 3500;
+export const HERO_FADE_MS = 250;
+export const HERO_TICKS = HERO_CITIES.length;
+
+/** The index both words show after `tick` ticks: the tick itself through the lap, the first words from its last tick on. */
+export function heroIndexAt(tick: number): number {
+  return tick > 0 && tick < HERO_TICKS ? tick : 0;
+}

@@ -34,17 +34,19 @@
  *      a fixed set, the opposite of rule 32's "one reused set".
  *   2. PART 3 (plan 2026-10-09, home introduction): the picker's three
  *      examples, HOME_TRY in src/lib/home/destination.ts , the words of
- *      "Try restaurants, gyms or salons in London", each a link to its
- *      London page. The spec draws them from rule 32's set, so each word
- *      is held to it, read from the module that prints them and never
- *      from the form's text; its failures print under their own heading.
+ *      "Or try gyms, salons or cafés in London." (plan 2026-10-10, home
+ *      reform), each a link to its London page. The spec draws them from
+ *      rule 32's set, so each word is held to it, read from the module
+ *      that prints them and never from the form's text; its failures print
+ *      under their own heading.
  *      (The form's own placeholder text, "Type a business: ...", is not
  *      scanned: Part 2, which grepped the form, was removed on
  *      2026-07-12 , see below.)
  *
- * Case/plural-insensitive match: lowercase, hyphens/underscores/slashes
- * become spaces, then a light depluralize (glasses-style "ies"->"y",
- * trailing "s" stripped otherwise) before comparing to the allowed set.
+ * Case/plural/accent-insensitive match: lowercase, accents folded ("cafés"
+ * is "cafes", plan 2026-10-10), hyphens/underscores/slashes become spaces,
+ * then a light depluralize (glasses-style "ies"->"y", trailing "s" stripped
+ * otherwise) before comparing to the allowed set.
  *
  * Run: npx tsx scripts/verify_trade_set.ts
  */
@@ -71,8 +73,13 @@ const ALIAS: Record<string, string> = {
   "mechanic": "auto repair", "car repair": "auto repair", "auto repair shop": "auto repair",
 };
 
+/* Accents fold away first, so "cafés" is "cafes" (plan 2026-10-10, home reform): decomposed, the combining marks (U+0300 to
+   U+036F) dropped. */
+const foldAccents = (s: string): string =>
+  [...s.normalize("NFD")].filter((c) => { const n = c.codePointAt(0) ?? 0; return n < 0x300 || n > 0x36f; }).join("");
+
 function normalize(s: string): string {
-  let t = s.toLowerCase().trim();
+  let t = foldAccents(s.toLowerCase()).trim();
   t = t.replace(/[&-_/]+/g, " ");
   t = t.replace(/\s+/g, " ").trim();
   if (t.endsWith("ies") && t.length > 3) t = t.slice(0, -3) + "y";

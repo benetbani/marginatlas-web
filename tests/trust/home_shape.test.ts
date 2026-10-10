@@ -62,13 +62,16 @@ check("no counts zone and no newsletter band", !/atlas_ledger|What the atlas hol
 const seats = /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(code)?.[0] ?? "";
 check("three seats: step 3 and the tax proof lit, the foot none", (seats.match(/state: "LIT"/g) ?? []).length === 2 && /id: "pays"/.test(seats) && /id: "tax"/.test(seats) && /seat: 3, card: "foot"[^\n]*state: "NO HONEST CANDIDATE"/.test(seats));
 
-/* THE HERO (the spec's sections 3 and 5). */
-check("the rebuilt home renders the picker without its heading", /<NavigatorForm showHeading=\{false\} \/>/.test(code));
+/* THE HERO (the spec's sections 3 and 5; plan 2026-10-10, home reform, Task 2: the h1 on set lines with both words on one timer, the
+   picker's first paint from the server's seed, the spacing and the definition of the reform's spec, decision 3 and critique P1.13). */
+check("the rebuilt home renders the picker without its heading, its first paint from the server's seed", /<NavigatorForm showHeading=\{false\} seed=\{homePickerSeed\(\)\} \/>/.test(code), `in ${VIEW} HomeSearch renders <NavigatorForm showHeading={false} seed={homePickerSeed()} />`);
 check("the live home renders the picker with its heading", /<NavigatorForm \/>/.test(live) && !/<NavigatorForm[^>]*showHeading=\{false\}/.test(live));
 check("the picker's heading is drawn by default and only when asked", /showHeading = true/.test(picker) && /\{showHeading \? \(/.test(picker) && /Pick a country, a city, and a business\./.test(picker));
 const search = /function HomeSearch[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
 check("the definition stands once, straight after the form, at the hero's foot", search.indexOf("<NavigatorForm") > -1 && search.indexOf("data-definition") > search.indexOf("<NavigatorForm") && (code.match(/\.definition\b/g) ?? []).length === 1);
 check(`the h1's first words ask the example's question ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}")`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London");
+check("the h1 holds the two words on one timer (HeroWords) with the question's own words, and no bare \"?\"", /<h1 [^>]*>\s*<HeroWords lead=\{C\.h1\.lead\} middle=\{C\.h1\.middle\} businesses=\{HERO_BUSINESSES\} cities=\{HERO_CITIES\} \/>\s*<\/h1>/.test(search) && !/<RotatingWord/.test(search), `in ${VIEW} HomeSearch's h1 holds only <HeroWords lead={C.h1.lead} middle={C.h1.middle} businesses={HERO_BUSINESSES} cities={HERO_CITIES} />`);
+check("32px from the h1 to the picker from 1024 and 20 on a phone; the definition at the lead rung in ink2, at most 60ch and never past half the page, 24px under the picker from 1024 and 16 below", /<div id="home-search-anchor" className="relative z-30 mt-5 lg:mt-8 w-full">/.test(search) && /<p data-definition="" className="mt-4 lg:mt-6 max-w-\[min\(60ch,var\(--measure-half\)\)\] text-\[length:var\(--t-lead\)\] leading-snug text-\[var\(--c-ink2\)\]">/.test(search), `in ${VIEW} HomeSearch: the anchor "relative z-30 mt-5 lg:mt-8 w-full"; the definition "mt-4 lg:mt-6 max-w-[min(60ch,var(--measure-half))] text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]"`);
 /* Each function's own text, to the next export: the WebSite comes before the Organization, so a lazy scan from the one would run on into the other. */
 const sdFn = (name: string) => { const at = sd.indexOf(`export function ${name}(`); if (at < 0) return ""; const next = sd.indexOf("\nexport function ", at + 1); return sd.slice(at, next < 0 ? undefined : next); };
 check("the WebSite's and the Organization's descriptions in the structured data are both the definition, so the home states it once", /description:\s*COPY\.home\.definition/.test(sdFn("WebSite")) && /description:\s*COPY\.home\.definition/.test(sdFn("Organization")), "in src/components/StructuredData.tsx set WebSite()'s description to COPY.home.definition, as Organization()'s is");
@@ -97,13 +100,25 @@ if (render) {
   check("the definition stands once in the render, after the form", form > -1 && render.indexOf(COPY.home.definition) > form && render.split(COPY.home.definition).length === 2);
   const links = homeTryLinks();
   check(`the picker's three examples are links (${links.map((l) => l.href).join(", ")})`, links.length === 3 && links.every((l) => render.includes(`href="${l.href}"`)));
-  /* THE LINE READS AS WORDS (fix round B): the "Try" label is a span and the first link followed it with no text between, so a reader of
-     the markup (a crawler, a screen reader) got "Tryrestaurants, gyms or salons in London". Read the line's text, the tags taken out. */
-  const tryAt = render.indexOf(">Try</span>");
-  const tryEnd = render.indexOf("</p>", tryAt);
-  const tryRead = tryAt < 0 || tryEnd < 0 ? "" : render.slice(tryAt + 1, tryEnd).replace(/<[^>]*>/g, "");
-  const tryWant = `Try${links.map((l, i) => (i === 0 ? " " : i === links.length - 1 ? " or " : ", ") + l.word).join("")} in ${homeTryCityLabel()}`;
-  check(`the picker's line reads as words ("${tryRead}", want "${tryWant}")`, tryRead === tryWant, `in src/components/NavigatorForm.tsx put {" "} after the Try label's span, so the line reads "${tryWant}" and not "Tryrestaurants"`);
+  /* THE LINE READS AS WORDS (fix round B: a reader of the markup once got "Tryrestaurants"), and since plan 2026-10-10 it offers three
+     other trades than the case: "Or try {a}, {b} or {c} in {city}." Read the line's text, the tags taken out. */
+  const tryAt = render.indexOf("<p data-try");
+  const tryRead = tryAt < 0 ? "" : render.slice(tryAt, render.indexOf("</p>", tryAt)).replace(/<[^>]*>/g, "");
+  const tryWant = `Or try ${links.map((l, i) => (i === 0 ? "" : i === links.length - 1 ? " or " : ", ") + l.word).join("")} in ${homeTryCityLabel()}.`;
+  check(`the picker's line reads as words ("${tryRead}", want "${tryWant}")`, tryRead === tryWant, `in src/components/NavigatorForm.tsx keep the line <p data-try=""> "Or try {a}, {b} or {c} in {city}." with its spaces as text`);
+  /* THE HERO AS THE SERVER DRAWS IT (plan 2026-10-10, home reform, Task 2): the h1 on set lines, each word ending its line, the "?"
+     against the city; the picker's case and its no-script fields on the first paint; sentence-case labels and the ink action. Each of
+     the two words' wrappers carries data-founder-accent (his h1, the red it has always printed: the accent walk does not count it). */
+  const h1At = render.indexOf("<h1");
+  const h1 = h1At < 0 ? "" : render.slice(h1At, render.indexOf("</h1>", h1At) + 5);
+  const h1Text = h1.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+  check(`the h1 reads as one question ("${h1Text}")`, h1Text === `${COPY.home.h1.lead} ${HERO_BUSINESSES[0]} ${COPY.home.h1.middle} ${HERO_CITIES[0]}?`);
+  check("the h1 stands on set lines: a phone's break after the lead, a break after the business, each word ending its line", /^<h1 [^>]*>How much does a <br class="sm:hidden"\/><span class="text-atlas-700" data-founder-accent="">[\s\S]*?data-w="restaurant"[\s\S]*?<\/span><\/span><\/span> <br\/>make in <span class="text-atlas-700" data-founder-accent="">[\s\S]*?data-w="Shanghai\?"/.test(h1), "render HeroWords' lines: the lead, <br className=\"sm:hidden\" />, the business slot, a space and <br />, the middle, the city slot, each slot's wrapper carrying data-founder-accent");
+  check("the \"?\" stands inside the city's slot against its word, no space before it", h1.includes(`>${HERO_CITIES[0]}<span class="text-[var(--c-ink)]">?</span></span>`) && !/<\/span>\s*\?/.test(h1));
+  const formAt = render.indexOf("<form");
+  const formHtml = formAt < 0 ? "" : render.slice(formAt, render.indexOf("</form>", formAt) + 7);
+  check("the picker paints its case on the first paint, and its no-script fields hold it", ["United Kingdom", "London", "Restaurants"].every((v) => formHtml.includes(`value="${v}"`)) && ['name="country" value="gb"', 'name="subdivision" value="london"', 'name="industry" value="restaurants"'].every((v) => formHtml.includes(v)), "pass NavigatorForm the server's seed (homePickerSeed, src/lib/home/picker.ts), so the first paint carries the three labels and the no-script fields");
+  check("the picker's labels read in sentence case, and its one action is the ink button", ["Country", "City", "Business"].every((l) => new RegExp(`<label for="[a-z]+" class="[^"]*">${l}</label>`).test(formHtml)) && !/uppercase|tracking-/.test(formHtml) && /<button type="submit"[^>]*class="[^"]*bg-\[var\(--c-ink\)\][^"]*">Show me the numbers /.test(formHtml), "draw ComboField's labels as their words (no capitals) and NavigatorForm's button in bg-[var(--c-ink)]");
   const h = (tag: string) => (render.match(new RegExp(`<${tag}\\b`, "g")) ?? []).length;
   /* Seven sections with a title (the place, whether it pays, the three proofs, the cities, where to next), and Pro's where the
      paywall's switch is on in the render's environment. */
