@@ -94,7 +94,7 @@ function HomeSearch() {
    a page (buildCityCards), at once, each its name and the figure its own page opens with, a door to that page. Since plan 2026-10-10
    (the home reformed to ship, Task 6) drawn by CityRows, a server component: the photographs in grey (the spec's decision 2), small
    copies with their landmark crops; two to a row under 768 with an eighth cell, "All UK cities", to /gb's cities (his ruling of
-   2026-08-30); from 768 one row each, sharing the height the level gives the pair, so neither half stands a blank foot. Its title an
+   2026-08-30); from 768 one row each on the doors' 56px pitch (its eighth slot All UK cities), so the two lists meet row for row. Its title an
    h2, as every section's on the home (one h2 a section). */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
@@ -119,7 +119,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
     ...(proofs ? [{ key: "proofs", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.proofs.label, body: [<ProofJoins key="joins" p={proofs.joins} />, <ProofArchive key="archive" p={proofs.archive} />, <ProofTax key="tax" p={proofs.tax} />] }] : []),
     ...(record ? [{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.record.label, body: [<HomeRecord key="record" record={record} />] }] : []),
-    { key: "foot", split: "1-1", even: !!cities, label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <WhereNext key="next" title={COPY.home.next.title} doors={nextDoors("/")} />] },
+    { key: "foot", split: "1-1", even: !!cities, label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <WhereNext key="next" pitch title={COPY.home.next.title} doors={nextDoors("/")} />] },
   ];
   /* THE TONES ALTERNATE OVER THE ZONES THAT ARE NOT THE BAND (critique section 7): the band draws its own zone on the terracotta, so
      the zones either side of it keep the tones they had, the foot paper as before. */

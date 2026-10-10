@@ -2018,6 +2018,7 @@
         "src/app/globals.css",
         "src/app/layout.tsx",
         "src/app/page.tsx",
+        "src/components/spine/WhereNext.tsx",
         "src/components/spine/archetypes/CityCards.tsx",
         "src/components/spine/archetypes/CityParts.tsx",
         "src/components/spine/archetypes/CityRows.tsx",

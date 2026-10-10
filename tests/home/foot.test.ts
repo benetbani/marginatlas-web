@@ -24,6 +24,7 @@ import { posix } from "node:path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { CityRows, ROW_VEIL } from "../../src/components/spine/archetypes/CityRows";
+import { WhereNext } from "../../src/components/spine/WhereNext";
 import { buildCityCards } from "../../src/lib/spine/city_cards";
 import { cityThumb } from "../../src/lib/cities/city_images";
 import { nextDoors } from "../../src/lib/home/next_doors";
@@ -149,12 +150,24 @@ if (gb) {
     tokens: [...r.matchAll(/text-\[var\(--c-[a-z0-9]+\)\]/g)].map((m) => m[0]),
   }));
   check(`the ink the contrast check measures is the ink every row draws: the name, the figure and the arrow of each of ${rowHtml.length} rows take ${INK}, and no row takes another colour token`, rowHtml.length === gb.cards.length && rowTexts.every((t) => t.name.includes(INK) && t.figure.includes(INK) && t.arrow.includes(INK) && t.tokens.every((x) => x === INK)), { remedy: "every text on a row takes text-[var(--c-ink)], the ink the ratio above is worked out for: if a row's text takes another colour, work out its ratio on the veiled darkest pixel first and measure that colour here" });
-  check("two to a row under 768 and one row a city from 768, sharing the height the half lends", html.includes('<div class="grid flex-1 grid-cols-2 gap-2 md:grid-cols-1 md:auto-rows-fr">') && /data-archetype="city-cards" data-look="grey" data-form="rows"/.test(html));
+  /* ONE PITCH WITH THE DOORS (critique pass 2, fix round C2, item P1.3): from 768 each city is a slot of 56px (the row 48 tall, 4 either
+     side) in a grid of fixed rows, so the foot's two lists meet row for row; `md:auto-rows-fr` let the pitch follow the height the half
+     lent, 52 apart beside the doors' 49, and by the seventh row Edinburgh stood 22px below "About the figures". */
+  check("two to a row under 768 and one row a city from 768, each a 56px slot (the doors' own pitch)", html.includes('<div class="grid flex-1 grid-cols-2 gap-2 md:grid-cols-1 md:auto-rows-[56px] md:gap-0">') && !/md:auto-rows-fr/.test(html) && /data-archetype="city-cards" data-look="grey" data-form="rows"/.test(html));
   const all = /<a href="\/gb#cities" data-all-cities="" class="([^"]*)"><span>([^<]*)<\/span><span aria-hidden="true" class="[^"]*">→<\/span><\/a>/.exec(html);
-  check(`an eighth cell under 768, "${COPY.home.citiesAll}", to /gb's cities, so seven cities and the door fill four rows`, !!all && all[2] === COPY.home.citiesAll && /\bmd:hidden\b/.test(all[1]) && /\bmin-h-16\b/.test(all[1]) && gb.cards.length + 1 === 8 && (html.match(/<a /g) ?? []).length === gb.cards.length + 1);
-  const cells = (html.match(/class="group relative grid min-h-16 grid-cols-\[minmax\(0,1fr\)_auto\][^"]*md:min-h-11 md:grid-cols-\[minmax\(0,22ch\)_auto_1fr_auto\]/g) ?? []).length;
+  /* AT EVERY WIDTH (critique pass 2, fix round C2, item P1.3): the door to every city was a phone's (md:hidden) and from 768 the half held
+     seven cities beside the doors' eight. From 768 it is a row with no picture, in the slot after Edinburgh: its words at 20 semibold in
+     ink, the arrow at the edge, the edge it always had. */
+  check(`an eighth cell at every width, "${COPY.home.citiesAll}", to /gb's cities: under 768 so seven cities and the door fill four rows, from 768 a row with no picture in the eighth slot, its words at 20 semibold in ink`, !!all && all[2] === COPY.home.citiesAll && !/\bhidden\b/.test(all[1]) && /\bmin-h-16\b/.test(all[1]) && /\bmd:min-h-0\b/.test(all[1]) && /\bmd:my-1\b/.test(all[1]) && /\bmd:text-\[length:var\(--t-head\)\]/.test(all[1]) && /\bmd:font-semibold\b/.test(all[1]) && /\btext-\[var\(--c-ink\)\]/.test(all[1]) && /\bborder-\[var\(--c-line-strong\)\]/.test(all[1]) && gb.cards.length + 1 === 8 && (html.match(/<a /g) ?? []).length === gb.cards.length + 1);
+  const cells = (html.match(/class="group relative grid min-h-16 grid-cols-\[minmax\(0,1fr\)_auto\][^"]*md:my-1 md:min-h-0 md:grid-cols-\[minmax\(0,22ch\)_auto_1fr_auto\]/g) ?? []).length;
   const names = (html.match(/data-city-name="true" class="relative col-span-2 block min-w-0 text-\[length:var\(--t-head\)\]/g) ?? []).length;
-  check(`each row 64px tall on a phone and 44 at the least from 768, its name at 20 across the cell over its figure (${cells} rows, ${names} names)`, cells === gb.cards.length && names === gb.cards.length);
+  check(`each row 64px tall on a phone and 48 from 768 (its 56px slot less 4 either side), its name at 20 across the cell over its figure (${cells} rows, ${names} names)`, cells === gb.cards.length && names === gb.cards.length);
+  /* THE DOORS' PITCH (item P1.3): Where to next takes a `pitch` from the page that stands it beside a list of rows (the home), so its
+     rows are the same 56px slots and its first row starts where London's does; the pages that stand it alone keep the shared height. */
+  const doorsList = (props: Record<string, unknown>) => renderToStaticMarkup(React.createElement(WhereNext, { title: "Where to next", doors: nextDoors("/"), ...props }));
+  const pitched = doorsList({ pitch: true }), plain = doorsList({});
+  const pitchOf = (h: string) => /md:auto-rows-\[(\d+)px\]/.exec(h)?.[1] ?? "";
+  check(`Where to next takes a pitch: its rows 56px slots from 768 and the list 16px under its heading, as the cities' (${pitchOf(pitched) || "none"} against ${pitchOf(html) || "none"}); without it the rows share the height (md:auto-rows-fr) and the list is 12px under`, pitchOf(pitched) === "56" && pitchOf(pitched) === pitchOf(html) && /<ul class="mt-4 grid flex-1 grid-cols-1 md:auto-rows-\[56px\]">/.test(pitched) && !/md:auto-rows-fr/.test(pitched) && /<ul class="mt-3 grid flex-1 grid-cols-1 md:auto-rows-fr">/.test(plain), { file: "src/components/spine/WhereNext.tsx", remedy: "give WhereNext a `pitch` prop: the list mt-4 with md:auto-rows-[56px] when the page asks for it (the home), mt-3 and md:auto-rows-fr otherwise; the cities' grid is md:auto-rows-[56px]" });
   const priced = gb.cards.filter((c) => typeof c.payUsd === "number").length;
   const units = (html.match(new RegExp(`<span class="sr-only"> ${COPY.home.citiesUnit}</span>`, "g")) ?? []).length;
   check(`every figure says its unit to a screen reader, "${COPY.home.citiesUnit}" (${units} of ${priced})`, priced > 0 && units === priced);
@@ -188,6 +201,8 @@ if (home) {
   const yearSpans = (foot.match(/<span class="sr-only"> a year<\/span>/g) ?? []).length;
   const pricedCities = gb ? gb.cards.filter((c) => typeof c.payUsd === "number").length : -1;
   check(`the home's render hands CityRows its door: the eighth cell opens ${eighth?.[1] ?? "nothing"}, says "${eighth?.[2] ?? "nothing"}", and ${yearSpans} figures say "a year" to a screen reader (${pricedCities} priced)`, eighth?.[1] === "/gb#cities" && eighth?.[2] === "All UK cities" && yearSpans > 0 && yearSpans === pricedCities, { file: "src/components/spine/home/home-view.tsx", remedy: "HomeCities hands CityRows allHref \"/gb#cities\", allLabel COPY.home.citiesAll (\"All UK cities\") and unit COPY.home.citiesUnit (\"a year\"), then render the home (bash scratchpad/reform/render_some.sh \"home gb\")" });
+  const doorsAt = end < 0 ? "" : home.slice(end, end + 600);
+  check("the home's render draws the cities and the doors on one pitch: the cities' grid and the doors' list both md:auto-rows-[56px], the doors' list 16px under its heading", /md:auto-rows-\[56px\]/.test(foot) && /<ul class="mt-4 grid flex-1 grid-cols-1 md:auto-rows-\[56px\]">/.test(doorsAt), { file: VIEW, remedy: "<WhereNext key=\"next\" pitch ... /> on the home, then render the home (bash scratchpad/reform/render_some.sh \"home gb\")" });
   check(`the home's render prints "Checked" with ${REGISTER_BUILT ?? "the slices' date"} at its foot`, !!REGISTER_BUILT && new RegExp(`data-checked="1"[^>]*>[^<]*<time datetime="${REGISTER_BUILT}"`, "i").test(home), { file: VIEW, remedy: "pass ReportFoot the checked date, then render the home" });
   check("the home's render says \"From the blog\" and never the notebook", home.includes(">From the blog<") && !/From the notebook/.test(home), { file: "src/lib/home/next_doors.ts" });
 } else console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the home's render checks did not run");
