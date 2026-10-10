@@ -9,11 +9,18 @@
  * Nothing here is boilerplate. If a practice is not in this file, it is because
  * the site does not do it. That is the only thing that makes a privacy policy
  * worth reading.
+ *
+ * SURVEYED AGAIN ON 2026-10-10 (plan, the home reformed to ship, Task 8; the spec's decision 10, the ship audit's 5.2), and two
+ * things were wrong. Sentry was missing: it receives every error and a share of traces from every visitor's browser and from the
+ * servers (SENTRY_WORDS in src/lib/legal/pro_legal.ts says what, read from the code; the draft prints the same words). And
+ * "Unsubscribing from the newsletter is a link in every email" was not true and could not be: nothing sends an email
+ * (src/components/newsletter/NewsletterSignupVariants.tsx), so the sentence is out until a sender exists, and the list is called
+ * what it is. The date moved, as the page's last section promises. HE READS THIS TEXT BEFORE ANY DEPLOY.
  */
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 import { LegalDraft } from "@/components/LegalDraft";
 import { isPaywallOn } from "@/lib/feature_flags";
-import { PRO_PRIVACY } from "@/lib/legal/pro_legal";
+import { PRO_PRIVACY, SENTRY_LEAD, SENTRY_WORDS } from "@/lib/legal/pro_legal";
 import { WEB_ANALYTICS_ON } from "@/lib/site/web_analytics";
 
 export const revalidate = 86400;
@@ -26,10 +33,7 @@ export const metadata = {
 };
 
 export default function PrivacyPage() {
-  /* From launch day, the draft that adds accounts, the plan and payments (masterplan step 30); the visit count behind the same
-     switch as below. */
-  if (isPaywallOn()) return <LegalDraft doc={PRO_PRIVACY} webAnalytics={WEB_ANALYTICS_ON} />;
-  return (
+  const now = (
     <>
     {/* This page used to opt out of the site-wide place photograph (the
         founder's 2026-08-09 exception for privacy, terms and cookies) via
@@ -39,7 +43,7 @@ export default function PrivacyPage() {
     <LegalPage
       title="Privacy"
       standfirst="What we collect, why we collect it, and who else sees it. Short, because we do not do much."
-      updated="29 July 2026"
+      updated="10 October 2026"
     >
       <LegalSection heading="The short version">
         <p>
@@ -48,7 +52,7 @@ export default function PrivacyPage() {
           advertising, and we do not build profiles to target you with.
         </p>
         <p>
-          If you make an account, subscribe to the newsletter, send a correction
+          If you make an account, leave your email, send a correction
           or pay us, we hold what you gave us and nothing more.
         </p>
       </LegalSection>
@@ -59,8 +63,9 @@ export default function PrivacyPage() {
           recognise you next time. Authentication runs on Supabase.
         </p>
         <p>
-          <b>The newsletter.</b> If you subscribe, we store your email address so
-          we can send it. Nothing else is attached to it.
+          <b>Email when new figures land.</b> If you leave your email in the bar
+          at the foot of each page, we store it so we can write to you when new
+          figures land. Nothing else is attached to it.
         </p>
         <p>
           <b>Corrections.</b> If you tell us a figure is wrong, we keep what you
@@ -89,6 +94,9 @@ export default function PrivacyPage() {
           something slower.
         </p>
         <p>
+          <b>{SENTRY_LEAD}</b> {SENTRY_WORDS}
+        </p>
+        <p>
           <b>Server logs.</b> Requests to the site are logged by our host in the
           ordinary way, including IP address, for security and diagnosis.
         </p>
@@ -110,8 +118,9 @@ export default function PrivacyPage() {
         </p>
         <p>
           <b>Vercel</b> hosts the site{WEB_ANALYTICS_ON ? ", counts visits" : ""} and
-          measures its speed. <b>Supabase</b> stores accounts, newsletter
-          addresses and corrections. <b>Stripe</b> takes payments.
+          measures its speed. <b>Supabase</b> stores accounts, the email list
+          and corrections. <b>Stripe</b> takes payments. <b>Sentry</b> receives
+          the error reports described above.
         </p>
         <p>
           We do not pass your information to anyone else, and we do not sell it
@@ -122,8 +131,8 @@ export default function PrivacyPage() {
       <LegalSection heading="How long we keep things">
         <p>
           Account and payment records are kept while your account exists and for
-          as long afterwards as we need them for tax and accounting. Newsletter
-          addresses are kept until you ask for yours to be removed, which you
+          as long afterwards as we need them for tax and accounting. Addresses on
+          the email list are kept until you ask for yours to be removed, which you
           can do from the{" "}
           <a href="/contact" className="underline">
             contact page
@@ -138,8 +147,7 @@ export default function PrivacyPage() {
         <p>
           Ask us what we hold about you and we will tell you. Ask us to delete it
           and we will, except where we are required to keep a record of a
-          payment. Unsubscribing from the newsletter is a link in every email and
-          needs no explanation.
+          payment.
         </p>
         {/* Both channels named here verifiably exist and neither is an address.
             The contact page (built 2026-08-01) is a form posting to our own
@@ -177,4 +185,7 @@ export default function PrivacyPage() {
     </LegalPage>
     </>
   );
+  /* From launch day, the draft that adds accounts, the plan and payments (masterplan step 30); the visit count behind the same
+     switch as above. LegalDraft draws today's text above while the draft still holds a gap for him (plan 2026-10-10, Task 8). */
+  return isPaywallOn() ? <LegalDraft doc={PRO_PRIVACY} now={now} webAnalytics={WEB_ANALYTICS_ON} /> : now;
 }

@@ -3,9 +3,12 @@
 /**
  * Root error boundary (Track CC.9).
  *
- * Catches errors anywhere in the app tree that escape page-level
- * boundaries. Renders a minimal recovery UI so the layout chrome stays
- * intact.
+ * Catches errors anywhere in the app tree that escape page-level boundaries and draws a plain recovery card: what happened, a
+ * retry, and a way home. WHAT IT REPLACES, said truly (plan 2026-10-10, the home reformed to ship, Task 8; the ship audit's 5.10):
+ * this boundary sits under the root layout and above every route group, and the site's chrome is drawn per page since 2026-08-09
+ * (src/components/SiteChrome.tsx), so when it catches an error the bar and the footer go with the page. It claimed the layout's
+ * chrome would survive an error, which was true only before that date. Spine tokens only; sentence case (it printed its kicker in
+ * tracked capitals, in clay).
  */
 import { useEffect } from "react";
 import Link from "next/link";
@@ -25,33 +28,29 @@ export default function RootError({
 
   return (
     <div className="py-16 max-w-2xl">
-      <div className="text-xs uppercase tracking-wide text-clay-700 font-medium">
-        Hit a snag
-      </div>
-      <h1 className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight text-ink-900">
-        That didn&apos;t render right.
+      <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-[var(--c-ink)]">
+        This page broke
       </h1>
-      <p className="mt-3 text-ink-700 leading-relaxed">
-        Something in this page threw an error. The rest of the site is fine:
-        you can retry or jump elsewhere.
+      <p className="mt-3 text-[var(--c-ink2)] leading-relaxed">
+        Something went wrong while drawing it. Try again, or go home.
       </p>
       <div className="mt-6 flex flex-wrap gap-3 text-sm">
         <button
           onClick={() => reset()}
-          className="px-4 py-2 rounded-full bg-ink-900 text-white hover:bg-ink-800 transition font-medium"
+          className="min-h-11 px-4 rounded-full bg-[var(--c-ink)] text-white hover:bg-[var(--c-ink2)] transition-colors font-medium"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="px-4 py-2 rounded-full bg-paper-100 border border-parchment text-ink-900 hover:bg-white transition font-medium"
+          className="inline-flex min-h-11 items-center px-4 rounded-full border border-[var(--c-line-strong)] bg-white text-[var(--c-ink)] hover:border-[var(--c-ink2)] transition-colors font-medium"
         >
           Go home
         </Link>
       </div>
       {error.digest ? (
-        <p className="mt-6 text-xs text-ink-700/60 font-mono">
-          Error ref: {error.digest}
+        <p className="mt-6 text-xs text-[var(--c-muted)] font-mono">
+          Error reference {error.digest}
         </p>
       ) : null}
     </div>

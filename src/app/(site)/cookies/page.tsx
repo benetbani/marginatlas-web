@@ -25,9 +25,9 @@ export const metadata = {
 };
 
 export default function CookiesPage() {
-  /* From launch day, the draft that names the sign-in cookie (masterplan step 30); the visit count behind the same switch. */
-  if (isPaywallOn()) return <LegalDraft doc={PRO_COOKIES} webAnalytics={WEB_ANALYTICS_ON} />;
-  return (
+  /* From launch day, the draft that names the sign-in cookie (masterplan step 30); the visit count behind the same switch. While a
+     draft still holds a gap for him, LegalDraft draws `now`, the text below (plan 2026-10-10, Task 8; the ship audit's 5.1). */
+  const now = (
     <>
     <LegalPage
       title="Cookies and browser storage"
@@ -95,4 +95,5 @@ export default function CookiesPage() {
     </LegalPage>
     </>
   );
+  return isPaywallOn() ? <LegalDraft doc={PRO_COOKIES} now={now} webAnalytics={WEB_ANALYTICS_ON} /> : now;
 }

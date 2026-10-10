@@ -9,8 +9,8 @@
  * whole chain itself, none of which a chain gate may need. It is registered
  * as `npm run launch:check` and nowhere else.
  *
- * WHAT IT PRINTS: one line per item, `[ok]` or `[no] <reason>`, nine items
- * (a) to (i) in the plan's order, then a last line `LAUNCH READY` or
+ * WHAT IT PRINTS: one line per item, `[ok]` or `[no] <reason>`, ten items
+ * (a) to (j) in the plan's order, then a last line `LAUNCH READY` or
  * `NOT READY: n reasons`, to stdout and to scratchpad/launch/checklist.txt.
  * Exit 1 on any reason. No colour, no formatter. Progress goes to stderr (or
  * to scratchpad/launch/run-log.txt when stderr is the checklist file itself,
@@ -60,6 +60,13 @@
  *   (i) the site's counts as printed on the home page agree with the ledger
  *       module at HEAD (src/lib/home/atlas_ledger.ts) and, where the
  *       definition is the same, with data/facts/index.json.
+ *   (j) the legal drafts carry no [HIS: ...] gap while the paywall is on
+ *       (plan 2026-10-10, the home reformed to ship, Task 8; the ship
+ *       audit's 5.1): src/lib/legal/pro_legal.ts's own legalLaunchLine()
+ *       over isPaywallOn(), read before anything loads .env.local, as (d)
+ *       is. With a gap left the legal pages keep today's text (LegalDraft),
+ *       which names no Pro, so a launch with one is a reason; the gaps
+ *       left are counted on the line either way.
  *
  * THE BLIND SPOTS, stated before the first line is read as a fact.
  *  - (a) reads the harness's static render, not the Next page: a block the
@@ -99,7 +106,8 @@ import { basename, resolve } from "node:path";
 import { preflight } from "./harness/preflight.mjs";
 import { shellMangled } from "./lib/watch_args.mjs";
 import { readFlag, judge, honestyMissing, HONESTY } from "./verify_sample_switch";
-import { areSampleMarksVisible, isAuthEnabled } from "../src/lib/feature_flags";
+import { areSampleMarksVisible, isAuthEnabled, isPaywallOn } from "../src/lib/feature_flags";
+import { legalLaunchLine } from "../src/lib/legal/pro_legal";
 
 const ROOT = process.cwd();
 const OUT = "scratchpad/launch";
@@ -611,6 +619,17 @@ async function itemI(home: string | null): Promise<void> {
 }
 
 /* ------------------------------------------------------------------------ */
+/* (j) the legal drafts drawn only whole                                     */
+/* ------------------------------------------------------------------------ */
+
+/** The drafts' gaps against the paywall's switch, by the module's own judge (src/lib/legal/pro_legal.ts, legalLaunchLine). Run
+ *  before anything loads .env.local into this process, as (d) is, so the switch it reads is the build's. */
+function itemJ(): void {
+  const line = legalLaunchLine(isPaywallOn());
+  record("j", line.ok, line.text);
+}
+
+/* ------------------------------------------------------------------------ */
 /* THE RUN                                                                   */
 /* ------------------------------------------------------------------------ */
 
@@ -619,7 +638,7 @@ async function main(): Promise<number> {
   const head = spawnSync("git", ["rev-parse", "--short", "HEAD"], { encoding: "utf8" }).stdout?.trim() || "HEAD unread";
   say(`${stamp()} launch checklist at ${head}, ${new Date().toISOString()}; instruments write to ${OUT}/`);
 
-  const order = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
+  const order = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
   /* --only=<ids> runs a subset by hand (a plant, a re-fetch after a deploy) and is never the checklist: nothing is written to the checklist file and the last line says so. */
   const only = ONLY ? new Set(ONLY.split(",").map((s) => s.trim()).filter(Boolean)) : null;
   const wanted = (id: string) => !only || only.has(id);
@@ -627,6 +646,7 @@ async function main(): Promise<number> {
 
   /* (d) is read before anything loads .env.local into this process, so the flag sources it prints are the build's. */
   if (wanted("d")) itemD();
+  if (wanted("j")) itemJ();
   if (wanted("a")) itemA();
   let home: string | null = null;
   if (wanted("b")) home = (await itemB()).home;
@@ -649,6 +669,7 @@ async function main(): Promise<number> {
     g: "every launch-blocking data requirement closed or withheld with a line",
     h: "moneyShown prints no filled or floored figure",
     i: "the home page's counts are the site's own",
+    j: "the legal drafts drawn only whole, no gap left while the paywall is on",
   };
   const lines: string[] = [`launch checklist: marginatlas.com at website ${head}, ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC, ${mins(Date.now() - started)} (scripts/verify_launch_ready.ts, plan step 50)${only ? `; a SUBSET by --only=${[...only].join(",")}, not the checklist` : ""}`];
   let reasons = 0;

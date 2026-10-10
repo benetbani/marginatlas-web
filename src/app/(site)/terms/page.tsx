@@ -28,9 +28,9 @@ export const metadata = {
 
 export default function TermsPage() {
   /* FROM LAUNCH DAY, THE TERMS OF PRO (masterplan step 30; his ruling 34): with the paywall's switch on, the draft he approves
-     (src/lib/legal/pro_legal.ts); until then, the text below. */
-  if (isPaywallOn()) return <LegalDraft doc={PRO_TERMS} />;
-  return (
+     (src/lib/legal/pro_legal.ts); until then, the text below, and also while the draft still holds a gap for him (LegalDraft draws
+     `now` then; plan 2026-10-10, Task 8; the ship audit's 5.1). */
+  const now = (
     <>
     <LegalPage
       title="Terms"
@@ -137,4 +137,5 @@ export default function TermsPage() {
     </LegalPage>
     </>
   );
+  return isPaywallOn() ? <LegalDraft doc={PRO_TERMS} now={now} /> : now;
 }

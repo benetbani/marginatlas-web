@@ -5,12 +5,18 @@
  * the prices print through the plan; no em dash and no semicolon a reader sees; every fact about him is a marked gap, never a
  * value; and the pages draw the drafts only when the paywall's switch is on, their current text until then.
  *
+ * AND NEVER A DRAFT WITH A GAP (plan 2026-10-10, the home reformed to ship, Task 8; the spec's decision 11, the ship audit's 5.1):
+ * with the switch on, a page whose draft still holds a [HIS: ...] gap draws its text of today (LegalDraft's required `now`), so no
+ * gap can print; the pricing page links to #refunds only once the terms' draft is drawn; the launch checklist's item (j) is a reason
+ * while the switch is on and a gap remains. The privacy draft names Sentry in the live page's own words.
+ *
  * Run: npx tsx tests/legal/pro_legal.test.ts
  */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "node:fs";
-import { PRO_LEGAL, PRO_TERMS, PRO_PRIVACY, PRO_COOKIES, gapsIn, toMarkdown } from "../../src/lib/legal/pro_legal";
+import { PRO_LEGAL, PRO_TERMS, PRO_PRIVACY, PRO_COOKIES, SENTRY_LEAD, SENTRY_WORDS, draftReady, gapsIn, legalLaunchLine, toMarkdown, type LegalDoc } from "../../src/lib/legal/pro_legal";
+import { LegalDraft } from "../../src/components/LegalDraft";
 import { CONSENT_LINE } from "../../src/lib/monetization/checkout_params";
 import { priceLine } from "../../src/lib/monetization/plan";
 import TermsPage from "../../src/app/(site)/terms/page";
@@ -25,7 +31,7 @@ import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "pro-legal";
 const FILE = "src/lib/legal/pro_legal.ts";
-const REMEDY = "keep the drafts the one source of the legal pages from launch day: #refunds in the terms, the consent line word for word, prices from the plan, gaps marked [HIS: ...], drawn only when the paywall is on";
+const REMEDY = "keep the drafts the one source of the legal pages from launch day: #refunds in the terms, the consent line word for word, prices from the plan, gaps marked [HIS: ...], drawn only when the paywall is on and the draft holds no gap";
 let failed = 0;
 const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
 
@@ -42,13 +48,24 @@ for (const d of PRO_LEGAL) {
   check(`${d.key}: every gap is closed and marked [HIS: ...]`, (all(d).match(/\[HIS:/g) ?? []).length === gapsIn(d).length);
 }
 check("who we are is his to fill: the terms name no business, only a gap", (PRO_TERMS.blocks.find((b) => b.id === "who-we-are")?.paragraphs ?? []).some((p) => /\[HIS: /.test(p.text)));
+check("the privacy draft names Sentry in the live page's words", all(PRO_PRIVACY).includes(`**${SENTRY_LEAD}** ${SENTRY_WORDS}`) && /Sentry receives the error reports/.test(all(PRO_PRIVACY)));
+check("the privacy draft promises no newsletter it cannot send", !/newsletter/i.test(all(PRO_PRIVACY)));
 console.log(`      gaps for him: ${PRO_LEGAL.flatMap((d) => gapsIn(d)).length} (${PRO_LEGAL.map((d) => `${d.key} ${gapsIn(d).length}`).join(", ")})`);
 
 /* The export he reads: every document and every heading, one source. */
 const md = toMarkdown(PRO_LEGAL);
 check("the export holds every draft's title and every heading", PRO_LEGAL.every((d) => md.includes(`# ${d.title}`) && d.blocks.every((b) => md.includes(`## ${b.heading}`))));
 
-/* The pages: the drafts only when the switch is on (accounts and the paywall together), their current text until then. */
+/* A draft with a gap is never drawn: LegalDraft draws `now` for it, and the draft itself once every gap is filled. */
+const fill = (d: LegalDoc): LegalDoc => ({ ...d, blocks: d.blocks.map((b) => ({ ...b, paragraphs: b.paragraphs.map((p) => ({ ...p, text: p.text.replace(/\[HIS: [^\]]+\]/g, "Filled") })) })) });
+const NOW = React.createElement("p", null, "TODAY'S TEXT");
+const drawn = (d: LegalDoc) => renderToStaticMarkup(React.createElement(LegalDraft, { doc: d, now: NOW }));
+check("draftReady is true only for a draft with no gap", (!draftReady(PRO_TERMS)) === (gapsIn(PRO_TERMS).length > 0) && draftReady(fill(PRO_TERMS)));
+check("LegalDraft draws today's text for a draft with a gap, and no gap", gapsIn(PRO_TERMS).length === 0 || (drawn(PRO_TERMS).includes("TODAY") && !drawn(PRO_TERMS).includes("[HIS:")));
+check("LegalDraft draws a filled draft, #refunds and all, and not today's text", drawn(fill(PRO_TERMS)).includes('id="refunds"') && !drawn(fill(PRO_TERMS)).includes("TODAY"));
+
+/* The pages: the drafts only when the switch is on (accounts and the paywall together) and the draft is whole, their current text
+   otherwise. */
 const html = (C: () => React.ReactElement) => renderToStaticMarkup(React.createElement(C));
 const set = (on: boolean) => { process.env.NEXT_PUBLIC_AUTH_ENABLED = on ? "1" : ""; process.env.NEXT_PUBLIC_PAYWALL = on ? "1" : ""; };
 set(false);
@@ -57,12 +74,21 @@ set(true);
 const on = { terms: html(TermsPage), privacy: html(PrivacyPage), cookies: html(CookiesPage), pricing: html(PricingPage) };
 set(false);
 const mark = (d: (typeof PRO_LEGAL)[number]) => d.blocks[d.blocks.length - 1].heading;
-check("the terms draw the draft with the switch on, #refunds included", on.terms.includes('id="refunds"') && on.terms.includes(mark(PRO_TERMS)));
-check("and their current text with it off", !off.terms.includes('id="refunds"') && off.terms.includes("Everything that is free today stays free."));
-check("privacy draws the draft with the switch on, its current text off", on.privacy.includes(mark(PRO_PRIVACY)) && !off.privacy.includes(mark(PRO_PRIVACY)));
-check("cookies draw the draft with the switch on, their current text off", on.cookies.includes(mark(PRO_COOKIES)) && !off.cookies.includes(mark(PRO_COOKIES)));
-check("each page shows the date the draft carries when on", [on.terms, on.privacy, on.cookies].every((h) => h.includes(`Last updated ${PRO_TERMS.updated}`)));
-check("the pricing page links to the terms' cancelling section only when on", on.pricing.includes('href="/terms#refunds"') && !off.pricing.includes('href="/terms#refunds"'));
+const showsDraft = (page: string, d: LegalDoc) => page.includes(mark(d)) && page.includes(`Last updated ${d.updated}`);
+for (const [key, d] of [["terms", PRO_TERMS], ["privacy", PRO_PRIVACY], ["cookies", PRO_COOKIES]] as const) {
+  check(`${key}: with the switch on, the draft only if it is whole (${gapsIn(d).length} gaps), never a gap on the page`, (draftReady(d) ? showsDraft(on[key], d) : !showsDraft(on[key], d)) && !on[key].includes("[HIS:"));
+  check(`${key}: with the switch off, today's text`, !showsDraft(off[key], d) && !off[key].includes("[HIS:"));
+}
+check("the terms with the switch off say everything free stays free", off.terms.includes("Everything that is free today stays free."));
+check("each page hands LegalDraft today's text (`now`), so none can print a gap", ["terms", "privacy", "cookies"].every((k) => new RegExp(`<LegalDraft doc=\\{PRO_${k.toUpperCase()}\\} now=\\{now\\}`).test(readFileSync(`src/app/(site)/${k}/page.tsx`, "utf8"))));
+check("the pricing page links to the terms' cancelling section only when the switch is on and the terms' draft is drawn", /isPaywallOn\(\) && draftReady\(PRO_TERMS\) \? \(/.test(readFileSync("src/app/(site)/pricing/page.tsx", "utf8")) && on.pricing.includes('href="/terms#refunds"') === draftReady(PRO_TERMS) && !off.pricing.includes('href="/terms#refunds"'));
+
+/* The launch checklist's item (j). */
+const filled = PRO_LEGAL.map(fill);
+check("legalLaunchLine is a reason while the switch is on and a gap remains", PRO_LEGAL.flatMap((d) => gapsIn(d)).length === 0 || !legalLaunchLine(true).ok);
+check("it is no reason while the switch is off, and none once every gap is filled", legalLaunchLine(false).ok && legalLaunchLine(true, filled).ok);
+const launch = readFileSync("scripts/verify_launch_ready.ts", "utf8");
+check("launch:check runs item (j) on the module's own judge, before anything loads .env.local", /function itemJ\(\): void \{\s*const line = legalLaunchLine\(isPaywallOn\(\)\);/.test(launch) && /const order = \[[^\]]*"j"\]/.test(launch) && /if \(wanted\("d"\)\) itemD\(\);\s*if \(wanted\("j"\)\) itemJ\(\);/.test(launch));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("legal/pro_legal: all pass");

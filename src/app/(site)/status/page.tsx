@@ -2,8 +2,15 @@
  * /status — simple uptime + dependency dashboard (Track JJ.5).
  *
  * Server component that pings each tracked dependency at request time and
- * renders a green/yellow/red dot per system. No external uptime infra —
- * just inline HTTP checks with a short timeout. Cached for 60 seconds.
+ * renders a dot per system. No external uptime infra, just inline HTTP checks
+ * with a short timeout, run on every request (force-dynamic).
+ *
+ * PLAIN NAMES, AND NO RAW ERROR TEXT (plan 2026-10-10, the home reformed to ship, Task 8; the ship audit's 5.9). This page is linked
+ * from every footer, and it printed "Supabase (cells)", "Read of regional_cells" and whatever a failed fetch threw, a vendor's name,
+ * a table's name and a stack fragment for any reader during an outage. It names what a reader uses, the pages and the figures, and
+ * says only whether each answered. Its outage heading printed "We&apos;re investigating an issue" with the entity in letters: a
+ * JavaScript string in braces is not JSX text, so the entity was never decoded. The words now need no apostrophe, and they promise
+ * no public note nobody writes.
  */
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -13,14 +20,13 @@ type Check = {
   name: string;
   description: string;
   result: "up" | "degraded" | "down" | "unknown";
-  detail?: string;
   latencyMs?: number;
 };
 
 async function checkUrl(
   url: string,
   init: RequestInit & { timeoutMs?: number } = {}
-): Promise<{ result: Check["result"]; detail?: string; latencyMs?: number }> {
+): Promise<{ result: Check["result"]; latencyMs?: number }> {
   const timeoutMs = init.timeoutMs ?? 5000;
   const controller = new AbortController();
   const t = setTimeout(() => controller.abort(), timeoutMs);
@@ -33,16 +39,18 @@ async function checkUrl(
     });
     const latencyMs = Date.now() - started;
     if (res.ok) return { result: "up", latencyMs };
-    if (res.status >= 500) return { result: "down", detail: `HTTP ${res.status}`, latencyMs };
-    return { result: "degraded", detail: `HTTP ${res.status}`, latencyMs };
-  } catch (e) {
-    const latencyMs = Date.now() - started;
-    const msg = e instanceof Error ? e.message : String(e);
-    return { result: "down", detail: msg.slice(0, 80), latencyMs };
+    if (res.status >= 500) return { result: "down", latencyMs };
+    return { result: "degraded", latencyMs };
+  } catch {
+    return { result: "down", latencyMs: Date.now() - started };
   } finally {
     clearTimeout(t);
   }
 }
+
+/** What a reader sees each check as: the pages they read, and the figures those pages draw. */
+const PAGES = { name: "Pages", description: "The home page answers" };
+const FIGURES = { name: "Figures", description: "The figures behind the pages answer" };
 
 async function runChecks(): Promise<Check[]> {
   noStore();
@@ -57,11 +65,7 @@ async function runChecks(): Promise<Check[]> {
   checks.push(
     (async () => {
       const r = await checkUrl("https://www.marginatlas.com/", { method: "HEAD" });
-      return {
-        name: "www.marginatlas.com",
-        description: "Production landing page",
-        ...r,
-      };
+      return { ...PAGES, ...r };
     })()
   );
 
@@ -74,22 +78,11 @@ async function runChecks(): Promise<Check[]> {
             headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}` },
           }
         );
-        return {
-          name: "Supabase (cells)",
-          description: "Read of regional_cells",
-          ...r,
-        };
+        return { ...FIGURES, ...r };
       })()
     );
   } else {
-    checks.push(
-      Promise.resolve({
-        name: "Supabase (cells)",
-        description: "Read of regional_cells",
-        result: "unknown" as const,
-        detail: "no SUPABASE_URL/key in env",
-      })
-    );
+    checks.push(Promise.resolve({ ...FIGURES, result: "unknown" as const }));
   }
 
   // Ask Atlas + Anthropic API checks removed from
@@ -115,19 +108,27 @@ function colorFor(result: Check["result"]): string {
 function labelFor(result: Check["result"]): string {
   switch (result) {
     case "up":
-      return "Operational";
+      return "Working";
     case "degraded":
-      return "Degraded";
+      return "Partly working";
     case "down":
       return "Down";
     default:
-      return "Unknown";
+      return "Not checked";
   }
 }
 
+/** The page's heading for each state of the checks: four words at most, plain, no apostrophe. Not exported: a page file exports
+ *  only what Next reads from it. */
+const STATUS_HEADINGS = {
+  allUp: "Everything is working",
+  anyDown: "Something is down",
+  otherwise: "Something is not right",
+} as const;
+
 export const metadata = {
   title: "Status: Margin Atlas",
-  description: "Live uptime of Margin Atlas dependencies.",
+  description: "Whether Margin Atlas is up, checked when you open the page.",
   alternates: { canonical: "/status" },
 };
 
@@ -141,18 +142,14 @@ export default async function StatusPage() {
       {/* The masthead was bare type on the fixed page photograph. One card,
           the same shape every other route in this group now uses. */}
       <div className="atlas-card px-5 py-6 md:px-7 md:py-7">
-      <div className="text-xs uppercase tracking-wide text-atlas-600 font-medium">
-        System status
+      <div className="text-sm font-medium text-[var(--c-ink2)]">
+        Status
       </div>
-      <h1 className="mt-2 text-3xl md:text-4xl font-semibold tracking-tight text-ink-900">
-        {allUp
-          ? "All systems operational"
-          : anyDown
-          ? "We&apos;re investigating an issue"
-          : "Operating with degraded service"}
+      <h1 className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight text-[var(--c-ink)]">
+        {allUp ? STATUS_HEADINGS.allUp : anyDown ? STATUS_HEADINGS.anyDown : STATUS_HEADINGS.otherwise}
       </h1>
-      <p className="mt-2 text-sm text-ink-700/70">
-        Checked just now from the request edge. Reload to re-run.
+      <p className="mt-2 text-sm text-[var(--c-ink2)]">
+        Checked when you opened this page.
       </p>
       </div>
 
@@ -160,13 +157,8 @@ export default async function StatusPage() {
         {checks.map((c) => (
           <div key={c.name} className="flex items-center justify-between px-5 py-4 gap-4">
             <div className="min-w-0">
-              <div className="text-sm font-semibold text-ink-900">{c.name}</div>
-              <div className="text-xs text-ink-700/70">{c.description}</div>
-              {c.detail ? (
-                <div className="mt-1 text-xs text-ink-700/60 truncate">
-                  {c.detail}
-                </div>
-              ) : null}
+              <div className="text-sm font-semibold text-[var(--c-ink)]">{c.name}</div>
+              <div className="text-xs text-[var(--c-ink2)]">{c.description}</div>
             </div>
             <div className="flex flex-col items-end gap-1 shrink-0">
               <div className="flex items-center gap-2">
@@ -175,12 +167,12 @@ export default async function StatusPage() {
                     c.result
                   )}`}
                 />
-                <span className="text-sm font-medium text-ink-900">
+                <span className="text-sm font-medium text-[var(--c-ink)]">
                   {labelFor(c.result)}
                 </span>
               </div>
               {c.latencyMs ? (
-                <span className="text-xs text-ink-700/60 tabular-nums">
+                <span className="text-xs text-[var(--c-ink2)] tabular-nums">
                   {c.latencyMs}ms
                 </span>
               ) : null}
@@ -189,9 +181,8 @@ export default async function StatusPage() {
         ))}
       </div>
 
-      <p className="mt-8 text-xs text-ink-700/60">
-        Reports here are best-effort. Brief network blips can flag a service as
-        degraded; refresh once. Persistent issues will get a public note.
+      <p className="mt-8 text-xs text-[var(--c-ink2)]">
+        Each check runs when the page loads. A brief network blip can show here, so reload once.
       </p>
     </div>
   );

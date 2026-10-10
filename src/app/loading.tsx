@@ -1,8 +1,11 @@
 /**
  * Root loading skeleton (Track BB.7).
  *
- * Renders while a route segment is still streaming. Shape mirrors the
- * typical page chrome so the perceived layout shift is minimal.
+ * Renders while a route below the root is still streaming. WHAT IT IS, said truly (plan 2026-10-10, the home reformed to ship,
+ * Task 8; the ship audit's 5.10): it sits under the root layout and above every route group, and the site's chrome is drawn per
+ * page (src/components/SiteChrome.tsx), so this draws no bar and no footer. It said its shape matched the page's chrome, and it
+ * never did. It is a quiet block of grey bars in the page's column, its greys the paper ramp's true neutrals (paper-100,
+ * paper-200) and the parchment hairline; the [country] tree streams under its own loading files.
  */
 export default function Loading() {
   return (

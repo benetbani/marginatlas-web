@@ -1115,6 +1115,9 @@
       "browser": false,
       "asserts": "THE TERMS OF PRO, DRAFTED FOR HIS APPROVAL (milestone 2, masterplan step 30; his interview of 2026-09-26, ruling 34): the drafts in src/lib/legal/pro_legal.ts are one source for the three legal pages ",
       "reads": [
+        "scripts/verify_launch_ready.ts",
+        "src/app/(site)/${k}/page.tsx",
+        "src/app/(site)/pricing/page.tsx",
         "src/lib/legal/pro_legal.ts"
       ],
       "claims": []
@@ -1798,6 +1801,22 @@
         "src/app/(site)/about/page.tsx",
         "src/app/sitemap.ts",
         "src/components/SiteChrome.tsx"
+      ],
+      "claims": []
+    },
+    {
+      "name": "launch-guards",
+      "script": "tests/trust/launch_guards.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "TRUST AND THE LAUNCH GUARDS (plan docs/superpowers/plans/2026-10-10-home-reform, Task 8, in the design repo; the spec's decisions 10 and 11 and section 4, \"Trust\"; the ship audit's 4.2, 4.5, 4.6, 5.2 ",
+      "reads": [
+        "src/app/(site)/privacy/page.tsx",
+        "src/app/(site)/status/page.tsx",
+        "src/app/error.tsx",
+        "src/app/global-error.tsx",
+        "src/app/loading.tsx",
+        "src/components/newsletter/NewsletterSignupVariants.tsx"
       ],
       "claims": []
     },

@@ -27,6 +27,17 @@ export const PRO_LEGAL_UPDATED = "5 October 2026";
 
 const p = (text: string, when?: LegalParagraph["when"]): LegalParagraph => (when ? { text, when } : { text });
 
+/**
+ * WHAT SENTRY RECEIVES, said once for the live privacy page and for this draft (plan 2026-10-10, the home reformed to ship, Task 8;
+ * the ship audit's 5.2: neither named it). Read from the code: src/instrumentation-client.ts, sentry.server.config.ts and
+ * sentry.edge.config.ts send every error and 5 percent of traces when NEXT_PUBLIC_SENTRY_DSN is set in production, with
+ * `sendDefaultPii: false` (no user, no cookies, and the browser SDK tells Sentry never to infer an IP address), and the browser and
+ * server configs' beforeSend scrubs any form field named like an email, a name or an address.
+ */
+export const SENTRY_LEAD = "Errors.";
+export const SENTRY_WORDS =
+  "When a page fails, in your browser or on our servers, Sentry, the service we use to find bugs, receives a report: the page's address, what failed, and your browser and system. A small share of visits also send how long the page took to load. Sentry is set to keep no IP address, and the reports carry no name or email.";
+
 export const PRO_TERMS: LegalDoc = {
   key: "terms",
   title: "Terms",
@@ -95,7 +106,7 @@ export const PRO_PRIVACY: LegalDoc = {
   blocks: [
     { id: "short", heading: "The short version", paragraphs: [
       p("You can read the free part of every page without an account and without telling us anything about yourself. We do not sell data, we do not run advertising, and we do not build profiles to target you with."),
-      p("If you make an account, buy Pro, subscribe to the newsletter or send a correction, we hold what you gave us and what we need to run your plan, and nothing more."),
+      p("If you make an account, buy Pro, leave your email or send a correction, we hold what you gave us and what we need to run your plan, and nothing more."),
     ] },
     { id: "account", heading: "Your account and your plan", paragraphs: [
       p("If you sign in, we hold your email address so we can recognise you next time. If you buy Pro, your account also holds your plan, when it renews or ends, and the customer number Stripe gives us, so the site knows to open Pro for you."),
@@ -103,28 +114,29 @@ export const PRO_PRIVACY: LegalDoc = {
     { id: "payments", heading: "Payments", paragraphs: [
       p("Payments run through Stripe. Card details go straight to Stripe and never reach our servers. We see that a payment happened, for which plan and for how much. Stripe keeps its own record of each payment, as its own privacy notice explains."),
     ] },
-    { id: "given", heading: "The newsletter and corrections", paragraphs: [
-      p("**The newsletter.** If you subscribe, we store your email address so we can send it. Nothing else is attached to it."),
+    { id: "given", heading: "Your email and corrections", paragraphs: [
+      p("**Email when new figures land.** If you leave your email, we store it so we can write to you when new figures land. Nothing else is attached to it."),
       p("**Corrections.** If you tell us a figure is wrong, we keep what you wrote so we can act on it and so we have a record of why a number changed."),
     ] },
     { id: "automatic", heading: "What is collected automatically", paragraphs: [
       p("**Counting visits.** Vercel Web Analytics counts which pages are read and where visitors come from. It sets no cookie and keeps no identifier that follows you, so it tells us what is read, not who reads it.", "web-analytics"),
       p("**Performance.** Vercel Speed Insights measures how quickly pages load for real visitors, so we can tell when we have made something slower."),
+      p(`**${SENTRY_LEAD}** ${SENTRY_WORDS}`),
       p("**Server logs.** Requests to the site are logged by our host in the ordinary way, including IP address, for security and diagnosis."),
     ] },
     { id: "device", heading: "What stays on your device", paragraphs: [
       p("Your saved pages, your comparisons and your watch list are stored in your own browser. They are not sent to us and we cannot see them. Clearing your browser storage deletes them, and we have no copy to restore."),
     ] },
     { id: "others", heading: "Who else is involved", paragraphs: [
-      p("Vercel hosts the site and measures its speed. Supabase stores accounts, newsletter addresses and corrections, on servers in the European Union (Ireland). Stripe takes payments. Each sees only what its job needs."),
+      p("Vercel hosts the site and measures its speed. Supabase stores accounts, the email list and corrections, on servers in the European Union (Ireland). Stripe takes payments. Sentry receives the error reports above. Each sees only what its job needs."),
       p("Vercel also counts visits, without cookies.", "web-analytics"),
       p("We do not pass your information to anyone else, and we do not sell it to anyone at all."),
     ] },
     { id: "bases", heading: "Why we may hold it", paragraphs: [
-      p("We hold your account and your plan to provide Pro, which you asked for. We keep server logs to keep the site secure, our legitimate interest. We keep payment records because tax law requires it. We send the newsletter because you asked for it, and you can stop it at any time."),
+      p("We hold your account and your plan to provide Pro, which you asked for. We keep server logs to keep the site secure, our legitimate interest. We keep payment records because tax law requires it. We keep your email on the list because you asked us to, and we remove it when you ask."),
     ] },
     { id: "keep", heading: "How long we keep things", paragraphs: [
-      p("Your account is kept while it exists. Payment records are kept for six years after the end of the financial year they belong to, as tax law requires. Newsletter addresses are kept until you ask for yours to be removed. Corrections are kept for good, because the reason a figure changed is part of the record."),
+      p("Your account is kept while it exists. Payment records are kept for six years after the end of the financial year they belong to, as tax law requires. Addresses on the email list are kept until you ask for yours to be removed. Corrections are kept for good, because the reason a figure changed is part of the record."),
     ] },
     { id: "rights", heading: "Your rights", paragraphs: [
       p("You can ask what we hold about you, have it corrected or deleted (apart from payment records the law makes us keep), and object to how we use it. Ask through the [contact page](/contact). If you are unhappy with our answer, you can complain to the Information Commissioner's Office, the UK's data protection regulator, at [ico.org.uk](https://ico.org.uk)."),
@@ -174,6 +186,23 @@ export const PRO_LEGAL: readonly LegalDoc[] = [PRO_TERMS, PRO_PRIVACY, PRO_COOKI
 /** The gaps he fills, in the order a document holds them. */
 export function gapsIn(doc: LegalDoc): string[] {
   return doc.blocks.flatMap((b) => b.paragraphs.flatMap((x) => x.text.match(/\[HIS: [^\]]+\]/g) ?? []));
+}
+
+/** A draft is drawn only when it holds no gap (plan 2026-10-10, Task 8; the ship audit's 5.1): a [HIS: ...] gap is a note to him,
+ *  never page text, so until he fills them LegalDraft draws the page's text of today (src/components/LegalDraft.tsx). */
+export function draftReady(doc: LegalDoc): boolean {
+  return gapsIn(doc).length === 0;
+}
+
+/** The launch checklist's line on the drafts (scripts/verify_launch_ready.ts, item j): a reason while the paywall is on and a gap
+ *  remains, since the legal pages would then keep today's text, which names no Pro; the count either way, so the gaps left stay in
+ *  sight. `docs` is the three drafts unless a test hands it filled copies. */
+export function legalLaunchLine(paywallOn: boolean, docs: readonly LegalDoc[] = PRO_LEGAL): { ok: boolean; text: string } {
+  const gaps = docs.flatMap((d) => gapsIn(d).map((g) => `${d.key}: ${g}`));
+  const counts = docs.map((d) => `${d.key} ${gapsIn(d).length}`).join(", ");
+  if (gaps.length === 0) return { ok: true, text: `the legal drafts hold no gap (${counts}), so the paywall's pages draw them` };
+  if (!paywallOn) return { ok: true, text: `${gaps.length} gaps for him remain (${counts}), and the paywall is off, so the pages keep today's text` };
+  return { ok: false, text: `the paywall is on and ${gaps.length} gaps for him remain (${counts}): the legal pages keep today's text, which names no Pro, until he fills ${gaps.join(" | ")}` };
 }
 
 /** The drafts as one markdown file for him: each document, its date, its sections with their anchors, the switch a paragraph

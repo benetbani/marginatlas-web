@@ -19,6 +19,7 @@ import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { TIERS, CANCEL_ANYTIME_BLOCK, METHODOLOGY_HREF, METHODOLOGY_LABEL, PRO_OPENS } from "@/components/monetization";
 import { CheckoutButton } from "@/components/monetization/CheckoutButton";
 import { isAuthEnabled, isPaywallOn } from "@/lib/feature_flags";
+import { draftReady, PRO_TERMS } from "@/lib/legal/pro_legal";
 import { monthToMonthLine, priceLine, yearlyHeadline, yearlySavingLine } from "@/lib/monetization/plan";
 import { ANTI_TE_CALLOUT } from "@/lib/pricing/matrix";
 
@@ -101,8 +102,9 @@ export default function PricingPage() {
           </ul>
 
           <p className="mt-8 max-w-3xl text-sm text-ink-700 leading-relaxed">{CANCEL_ANYTIME_BLOCK}</p>
-          {/* From launch day, the terms' cancelling section (masterplan step 30), which exists only once the switch is on. */}
-          {isPaywallOn() ? (
+          {/* From launch day, the terms' cancelling section (masterplan step 30), which exists only once the switch is on and the
+              terms' draft holds no gap for him (LegalDraft draws today's terms, with no #refunds, until then; plan 2026-10-10, Task 8). */}
+          {isPaywallOn() && draftReady(PRO_TERMS) ? (
             <p className="mt-2 text-sm">
               <a href="/terms#refunds" className="text-atlas-700 hover:text-atlas-900 font-medium">
                 How cancelling works

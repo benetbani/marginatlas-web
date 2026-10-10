@@ -620,6 +620,10 @@ const GATES: Gate[] = [
   /* Who runs this (his ruling of 2026-10-05, PARKED P0.2): /about names him and says only what he has given; the footer leads to
      it, the corrections log and the data pack. */
   { name: "about-page", script: "tests/trust/about_page.test.ts" },
+  /* TRUST AND THE LAUNCH GUARDS (plan 2026-10-10, the home reformed to ship, Task 8; the spec's decisions 10 and 11): the newsletter
+     bar promises no send and says its errors and its success in roles a screen reader reads, pressed in jsdom; the privacy page names
+     Sentry and no unsubscribe link; the status page in plain names with no raw error text; the error and loading screens true. */
+  { name: "launch-guards", script: "tests/trust/launch_guards.test.ts" },
   /* What a UK household spends, from the survey itself (his ruling of 2026-10-05, PARKED P04.1): /gb's household card from
      data/sections/household_spend.json (Table A1), eating out as catering services, every figure stamped. */
   { name: "household-spend", script: "tests/spine/household_spend.test.ts" },
