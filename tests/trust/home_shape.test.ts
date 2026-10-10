@@ -6,7 +6,8 @@
  * one line that says what the site is, after the form), the worked example (two halves, even), Pro only while the paywall is on, the
  * three proofs (a level of three, even), the foot (the UK's cities, still, beside where to next, even); then the licence line and
  * Report a mistake. One wide zone, the hero's. Three seats: step 3 and the tax proof lit, the foot none. No counts, no newsletter band,
- * no picker heading, no section the plan re-homed. One h2 a section and none skipped. Read from src/components/spine/home/home-view.tsx,
+ * no picker heading, no section the plan re-homed. One h2 a section and none skipped. Every figure carries its stamp, but for Pro's
+ * three prices as the plan prints them (src/lib/monetization/plan.ts): an offer, no statistic. Read from src/components/spine/home/home-view.tsx,
  * src/app/page.tsx, src/components/NavigatorForm.tsx and src/components/StructuredData.tsx, and from the harness render
  * scratchpad/harness/pages/home-gb.html where it exists.
  * Run: npx tsx tests/trust/home_shape.test.ts
@@ -19,6 +20,7 @@ import { buildCityCards } from "../../src/lib/spine/city_cards";
 import { HERO_BUSINESSES, HERO_CITIES } from "../../src/lib/hero-words";
 import { homeTryLinks } from "../../src/lib/home/destination";
 import { COPY } from "../../src/lib/spine/copy";
+import { priceLine, yearlyHeadline } from "../../src/lib/monetization/plan";
 import { OGL_LINE, UK_SOURCES_FOOT } from "../../src/lib/spine/uk_sources";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 
@@ -78,7 +80,8 @@ const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSyn
 if (render) {
   const labels = [...render.matchAll(/<section data-zone="[^"]*"(?: data-tone="[^"]*")? data-zone-label="([^"]*)"/g)].map((m) => m[1].replace(/&#x27;/g, "'"));
   check(`the render's zones run in that order (${labels.join(" | ")})`, JSON.stringify(labels.filter((l) => l !== COPY.home.pro.kicker)) === JSON.stringify([COPY.home.searchLabel, COPY.home.example.label, COPY.home.proofs.label, COPY.home.citiesLabel]));
-  const zoneOf = (label: string) => { const at = render.indexOf(`data-zone-label="${label.replace(/'/g, "&#x27;")}"`); if (at < 0) return ""; const start = render.lastIndexOf("<section", at); const next = render.indexOf("<section data-zone", at + 1); return render.slice(start, next < 0 ? undefined : next); };
+  const zoneRange = (label: string): [number, number] => { const at = render.indexOf(`data-zone-label="${label.replace(/'/g, "&#x27;")}"`); if (at < 0) return [0, 0]; const next = render.indexOf("<section data-zone", at + 1); return [render.lastIndexOf("<section", at), next < 0 ? render.length : next]; };
+  const zoneOf = (label: string) => render.slice(...zoneRange(label));
   const ex = zoneOf(COPY.home.example.label), pr = zoneOf(COPY.home.proofs.label), ft = zoneOf(COPY.home.citiesLabel);
   check("the example: two halves, even, the place then whether it pays", /^<section data-zone="1-1"/.test(ex) && /data-zone-even/.test(ex) && ex.indexOf('id="place"') > 0 && ex.indexOf('id="pays"') > ex.indexOf('id="place"'));
   check("the proofs: a level of three, even, the joins, the archive, the tax", /^<section data-zone="1-1-1"/.test(pr) && /data-zone-even/.test(pr) && pr.indexOf('id="joins"') > 0 && pr.indexOf('id="archive"') > pr.indexOf('id="joins"') && pr.indexOf('id="tax"') > pr.indexOf('id="archive"'));
@@ -93,9 +96,17 @@ if (render) {
      paywall's switch is on in the render's environment. */
   const sections = 7 + (labels.includes(COPY.home.pro.kicker) ? 1 : 0);
   check(`one h1 and one h2 a section, none skipped (h1 ${h("h1")}, h2 ${h("h2")} of ${sections}, h3 ${h("h3")})`, h("h1") === 1 && h("h2") === sections && h("h3") === 0);
-  const figs = [...render.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  const bare = figs.filter((f) => !/data-src="/.test(f) || !/data-kind="/.test(f));
-  check(`every figure says where it came from (${figs.length} figures, ${bare.length} without)`, figs.length > 0 && bare.length === 0);
+  /* A PRO PRICE IS THE SITE'S OWN OFFER, NOT A STATISTIC (his decision of 2026-10-09): none of the four kinds (counted, worked out,
+     looked up, estimate) is true of it, so with the paywall on the band's three prices carry no stamp. The one exemption: a figure
+     INSIDE THE PRO ZONE whose text is one of the plan's own price strings, as the band prints them (ProBand holds the lead's last two
+     words with a no-break space). Every other figure, in Pro or out of it, and a price anywhere else, still counts. */
+  const PRICES = [priceLine("year"), priceLine("month"), yearlyHeadline().replace(/ (?=\S+$)/, "\xa0")];
+  const [proFrom, proTo] = zoneRange(COPY.home.pro.kicker);
+  /* A figure's text: what stands between its opening tag and its own closing tag, the tags inside taken out. */
+  const figText = (open: string, from: number) => { const end = render.indexOf(`</${/^<(\w+)/.exec(open)?.[1] ?? "span"}>`, from); return render.slice(from, end < 0 ? from : end).replace(/<[^>]*>/g, ""); };
+  const figs = [...render.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => ({ tag: m[0], at: m.index ?? 0, text: figText(m[0], (m.index ?? 0) + m[0].length) }));
+  const bare = figs.filter((f) => (!/data-src="/.test(f.tag) || !/data-kind="/.test(f.tag)) && !(f.at >= proFrom && f.at < proTo && PRICES.includes(f.text)));
+  check(`every figure says where it came from (${figs.length} figures, ${bare.length} without${bare.length ? `: ${bare.map((f) => JSON.stringify(f.text).replace(/\xa0/g, "\\u00a0")).join(", ")}` : ""})`, figs.length > 0 && bare.length === 0, "give the figure its builder's prov (src/lib/spine/provenance.ts provAttrs); a Pro price is exempt only as the plan prints it");
   check("the licence line and its link, then Report a mistake, under the bands", render.includes(OGL_LINE) && render.includes(`href="${UK_SOURCES_FOOT.href}"`) && render.indexOf("data-sources-foot") > -1 && render.indexOf("data-sources-foot") < render.indexOf("data-page-foot"));
   check("the render prints no picker heading, no counts and no newsletter form", !/Pick a country, a city, and a business\./.test(render) && !/What the atlas holds|atlas_ledger\.ts:/.test(render) && !/Notify me when my city/.test(render));
   check("no re-homed section is on the home", !/id="(answer|years|trades|duel|kitchens|firms-last|new-companies|us-restaurants|how-made)"/.test(render) && !/data-notebook/.test(render));

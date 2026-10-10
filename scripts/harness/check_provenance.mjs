@@ -14,6 +14,14 @@
  * one is there (the gates that test each builder check the figure against its file). It reads the static renders the chain's
  * `pages-fresh` writes, with no browser: a figure a client component adds after hydration is not in them.
  *
+ * ONE EXEMPTION, NARROW (plan 2026-10-09, home introduction, fix round B): a Pro price. A `fig` whose closest card is `#pro` and
+ * whose text has the shape of a price (a dollar figure, then optionally "a month" or "a year", then optionally ", billed yearly")
+ * is not held to the baseline (it is counted apart and printed): a price is the site's own offer, set by his decision of
+ * 2026-10-09, and none of the four kinds above is true of it. Every other figure in `#pro` still counts, and a kind outside the
+ * four is still a red on a price. ITS BLIND SPOT: a price-shaped bare figure inside `#pro` is not caught here, and a wrong price
+ * is no business of this check; tests/trust/home_shape.test.ts holds the exact strings, the plan's own
+ * (src/lib/monetization/plan.ts), and reds on any other bare figure in or out of Pro.
+ *
  * usage: node scripts/harness/check_provenance.mjs [--list[=scripts/harness/pages.json]] [--write-baseline]
  *        --write-baseline lowers a page's baseline to its count (never raises it); a page not yet in the file is seeded.
  */
@@ -30,6 +38,10 @@ const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) 
 const WRITE = args.includes("--write-baseline");
 const BASELINE = "scripts/harness/provenance_baseline.json";
 const KINDS = new Set(["counted", "worked out", "looked up", "estimate"]);
+/* A PRO PRICE, the one exemption (header): a dollar figure, then optionally "a month" or "a year", then optionally ", billed
+   yearly" (the band holds its last two words with a no-break space, so either space is read). "31,926" and "18%" are no price. */
+const PRICE_SHAPE = /^\$\d[\d,]*(?:\.\d{2})?(?: a (?:month|year))?(?:, billed[ \xa0]yearly)?$/;
+const isProPrice = (el) => el.closest("[data-card]")?.id === "pro" && PRICE_SHAPE.test(el.textContent.trim());
 
 const files = JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) => `scratchpad/harness/pages/${p.surface}-${p.slugs.join("-")}.html`);
 const stored = existsSync(BASELINE) ? JSON.parse(readFileSync(BASELINE, "utf8")) : { why: "", pages: {} };
@@ -49,8 +61,10 @@ for (const file of files) {
   /* A kind outside the ledger's four is a figure that says something wrong about itself: a red on its own, not a pass. */
   const wrongKind = figs.filter((el) => el.hasAttribute("data-kind") && !KINDS.has(el.getAttribute("data-kind") ?? ""));
   for (const el of wrongKind) reds.push(`${name}: a figure "${el.textContent.trim().slice(0, 40)}" says its kind is "${el.getAttribute("data-kind")}", not one of the ledger's four`);
-  const silent = figs.length - said.length;
-  rows.push(`${name}: ${figs.length} figures, ${said.length} say where they came from, ${silent} do not`);
+  /* A Pro price that carries no stamp is the exemption's, counted apart and printed; a wrong kind above stays a red on a price too. */
+  const prices = figs.filter((el) => !said.includes(el) && isProPrice(el));
+  const silent = figs.length - said.length - prices.length;
+  rows.push(`${name}: ${figs.length} figures, ${said.length} say where they came from, ${silent} do not${prices.length ? ` (${prices.length} Pro price${prices.length === 1 ? "" : "s"} not counted)` : ""}`);
   const base = stored.pages[name];
   if (base === undefined) {
     if (WRITE) { stored.pages[name] = silent; seeded++; }
