@@ -243,9 +243,12 @@ export function NavigatorForm({ showHeading = true }: { showHeading?: boolean } 
               London", each a link to the page that answers exactly what it names, read without script). Until then two of the three
               named a city off London, where a search lands on the city's page and not on the trade named. */}
           <p className="text-xs text-cocoa-700/80 leading-relaxed">
-            <span className="font-semibold uppercase tracking-[0.12em] text-ink-500 mr-1.5">
+            <span className="font-semibold uppercase tracking-[0.12em] text-ink-500">
               Try
             </span>
+            {/* A SPACE IS TEXT, NOT MARGIN (fix round B): JSX drops the line break between the label and the first link, so the
+                words read "Tryrestaurants" to a crawler and a screen reader; the margin that drew the gap is the space now. */}
+            {" "}
             {TRIES.map((t, i) => (
               <Fragment key={t.href}>
                 {i === 0 ? null : i === TRIES.length - 1 ? " or " : ", "}

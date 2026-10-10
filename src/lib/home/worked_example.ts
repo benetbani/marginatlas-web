@@ -54,13 +54,15 @@ export function exampleCaseWhole(slug: string): boolean {
   return londonMoneyPrints(slug) && londonShareAbove(slug) != null && !!sales && [sales.q10, sales.q50, sales.q90].every((q) => q.open === false) && own(FAILURES.trades, slug)?.match === "exact" && tradeSurvivalUk(slug) !== null;
 }
 
-export function buildWorkedExample(slug: string = EXAMPLE_TRADE): WorkedExample | null {
+/** `insolvent` is the UK's company insolvencies a year per 100 live companies, ukInsolvencyPer100(slug) unless it is handed in (a test
+ *  hands in a whole rate, which no trade of the slice has today). Step 4 writes it as the trade page does (market.tsx prints String of
+ *  the same number), so a whole rate reads "3" on both and never "3.0". */
+export function buildWorkedExample(slug: string = EXAMPLE_TRADE, insolvent: number | null = ukInsolvencyPer100(slug)): WorkedExample | null {
   if (!exampleCaseWhole(slug)) return null;
   const C = COPY.home.example;
   const hero = londonTradeHero(slug);
   const strip = londonTradeStrip(slug);
   const share = londonShareAbove(slug);
-  const insolvent = ukInsolvencyPer100(slug);
   const month = londonRegisterMonth();
   const noun = PREMISES_NOUN[own(PREMISES.trade_category, slug) ?? ""];
   const trade = own(SLUG_TO_INDUSTRY, slug)?.name;
@@ -83,7 +85,7 @@ export function buildWorkedExample(slug: string = EXAMPLE_TRADE): WorkedExample 
       title: C.paysTitle,
       breakEven: { n: "3", label: hero.answer.label, figure: hero.answer.value, line: C.breakEven.replace("{basis}", hero.answer.basis), prov: hero.answer.prov },
       above: { part: share, figure: String(above.value), label: above.label, prov: above.prov },
-      insolvent: { n: "4", label: C.insolventLabel, figure: C.insolventFigure.replace("{n}", insolvent.toFixed(1)), line: C.insolvent.replace("{noun}", noun), prov: { src: registerSrc("failures.json", slug), kind: "worked out" } },
+      insolvent: { n: "4", label: C.insolventLabel, figure: C.insolventFigure.replace("{n}", String(insolvent)), line: C.insolvent.replace("{noun}", noun), prov: { src: registerSrc("failures.json", slug), kind: "worked out" } },
       door: C.paysDoor,
     },
   };

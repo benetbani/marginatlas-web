@@ -24,6 +24,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HomePlace, HomePays } from "../../src/components/spine/home/HomeExample";
 import { buildProofs } from "../../src/lib/home/proofs";
 import { ProofTax } from "../../src/components/spine/home/HomeProofs";
+import { RivalsCell } from "../../src/components/spine/cell/market";
+import type { MarketData } from "../../src/lib/spine/market_rows";
 import { buildHeroBoard } from "../../src/lib/spine/hero_board";
 import { ukTaxOnProfit } from "../../src/lib/spine/uk_tax_on_profit";
 import { UK_2026_27 } from "../../src/lib/uk/law/params_2026_27";
@@ -53,6 +55,12 @@ const ex = buildWorkedExample();
 check("the worked example builds", !!ex);
 const hero = londonTradeHero(EXAMPLE_TRADE);
 const strip = londonTradeStrip(EXAMPLE_TRADE);
+/** A rate per 100 as the London trade page writes it: its market card (RivalsCell) rendered with that rate, the companion figure read. */
+const pageRate = (per100: number): string => {
+  const html = renderToStaticMarkup(React.createElement(RivalsCell, { market: { firms: { withheld: "w" }, here: null, close: { withheld: "w" }, insolvent: { per100, words: "w" } } as unknown as MarketData }));
+  return /data-companion[^>]*><span[^>]*class="[^"]*\bfig\b[^"]*"[^>]*>([^<]*)</.exec(html)?.[1] ?? "";
+};
+const rate = ukInsolvencyPer100(EXAMPLE_TRADE);
 if (ex && hero && strip) {
   const firms = hero.cells.find((c) => c.key === "firms");
   const above = hero.cells.find((c) => c.key === "above");
@@ -63,7 +71,11 @@ if (ex && hero && strip) {
   check(`the strip is the London page's own three marks (${s.strip.map((m) => usd(m.value)).join(", ")})`, s.strip.length === 3 && JSON.stringify(s.strip) === JSON.stringify(strip.marks));
   check(`step 3 is the masthead's answer: "${p.breakEven.label}" ${p.breakEven.figure}, an estimate`, p.breakEven.label === hero.answer.label && p.breakEven.figure === hero.answer.value && p.breakEven.prov.src === hero.answer.prov.src && p.breakEven.prov.kind === "estimate" && p.breakEven.n === "3");
   check(`its share is the masthead's "${p.above.label}" ${p.above.figure}, ${p.above.part} of 100 drawn`, !!above && p.above.label === above.label && p.above.figure === String(above.value) && String(above.value) === `${londonShareAbove(EXAMPLE_TRADE)} of 100` && p.above.part === londonShareAbove(EXAMPLE_TRADE));
-  check(`step 4 is the UK's insolvencies for the trade, ${p.insolvent.figure}, worked out`, p.insolvent.figure === `${ukInsolvencyPer100(EXAMPLE_TRADE)?.toFixed(1)} of 100` && p.insolvent.prov.src === `uk/registers/failures.json:${EXAMPLE_TRADE}` && p.insolvent.prov.kind === "worked out" && p.insolvent.n === "4");
+  check(`step 4 is the UK's insolvencies for the trade, ${p.insolvent.figure}, worked out`, rate != null && p.insolvent.figure === `${pageRate(rate)} of 100` && p.insolvent.prov.src === `uk/registers/failures.json:${EXAMPLE_TRADE}` && p.insolvent.prov.kind === "worked out" && p.insolvent.n === "4");
+  /* A WHOLE RATE (fix round B): no trade of the slice has one today, so the builder is handed 3, 2.9, 0.5 and 12 and each is read against
+     the trade page's own card; the home wrote "3.0" where the page wrote "3" while the builder used toFixed(1). */
+  const written = [3, 2.9, 0.5, 12].map((r) => ({ r, home: buildWorkedExample(EXAMPLE_TRADE, r)?.pays.insolvent.figure, page: pageRate(r) }));
+  check(`a rate per 100 is written as the London trade page writes it, whole or not (${written.map((w) => `${w.r}: ${w.home} | ${w.page}`).join(", ")})`, written.every((w) => w.page !== "" && w.home === `${w.page} of 100`) && written[0].page === "3", { remedy: "write step 4's rate as String of the number, as src/components/spine/cell/market.tsx prints it (RivalsCell), so a whole rate reads 3 on the home and on the trade page" });
   const lines = [s.registered.line, s.sales.line, p.breakEven.line, p.insolvent.line];
   check(`every step's line is twelve words at most, no semicolon, and says how its figure was made (${lines.map(words).join(", ")} words)`, lines.every((l) => words(l) <= 12 && !l.includes(";")) && /^Counted\b/.test(lines[0]) && /^Worked out\b/.test(lines[1]) && /^An estimate\b/.test(lines[2]) && /worked out/.test(lines[3]), { file: COPY_FILE, remedy: "cut COPY.home.example's lines to twelve words, no semicolon, each opening with its figure's kind as About the figures names it" });
   check(`the two titles are four words at most ("${s.title}", "${p.title}")`, words(s.title) <= 4 && words(p.title) <= 4, { file: COPY_FILE, remedy: "cut COPY.home.example.placeTitle and paysTitle to four words" });

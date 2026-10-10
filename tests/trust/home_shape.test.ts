@@ -18,7 +18,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { CityCards } from "../../src/components/spine/archetypes/CityCards";
 import { buildCityCards } from "../../src/lib/spine/city_cards";
 import { HERO_BUSINESSES, HERO_CITIES } from "../../src/lib/hero-words";
-import { homeTryLinks } from "../../src/lib/home/destination";
+import { homeTryLinks, homeTryCityLabel } from "../../src/lib/home/destination";
 import { COPY } from "../../src/lib/spine/copy";
 import { priceLine, yearlyHeadline } from "../../src/lib/monetization/plan";
 import { OGL_LINE, UK_SOURCES_FOOT } from "../../src/lib/spine/uk_sources";
@@ -65,7 +65,9 @@ check("the picker's heading is drawn by default and only when asked", /showHeadi
 const search = /function HomeSearch[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
 check("the definition stands once, straight after the form, at the hero's foot", search.indexOf("<NavigatorForm") > -1 && search.indexOf("data-definition") > search.indexOf("<NavigatorForm") && (code.match(/\.definition\b/g) ?? []).length === 1);
 check(`the h1's first words ask the example's question ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}")`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London");
-check("the Organization's description in the structured data is the definition", /export function Organization\(\)[\s\S]*?description: COPY\.home\.definition/.test(sd));
+/* Each function's own text, to the next export: the WebSite comes before the Organization, so a lazy scan from the one would run on into the other. */
+const sdFn = (name: string) => { const at = sd.indexOf(`export function ${name}(`); if (at < 0) return ""; const next = sd.indexOf("\nexport function ", at + 1); return sd.slice(at, next < 0 ? undefined : next); };
+check("the WebSite's and the Organization's descriptions in the structured data are both the definition, so the home states it once", /description:\s*COPY\.home\.definition/.test(sdFn("WebSite")) && /description:\s*COPY\.home\.definition/.test(sdFn("Organization")), "in src/components/StructuredData.tsx set WebSite()'s description to COPY.home.definition, as Organization()'s is");
 check("under the bands: the licence line, then Report a mistake", /<SourcesFoot iso2="GB" \/>\s*<ReportFoot path="\/" \/>/.test(code));
 
 /* THE UK'S CITIES HELD STILL (his refusal of carousels and pagination, 2026-09-22), in the foot's half. */
@@ -91,6 +93,13 @@ if (render) {
   check("the definition stands once in the render, after the form", form > -1 && render.indexOf(COPY.home.definition) > form && render.split(COPY.home.definition).length === 2);
   const links = homeTryLinks();
   check(`the picker's three examples are links (${links.map((l) => l.href).join(", ")})`, links.length === 3 && links.every((l) => render.includes(`href="${l.href}"`)));
+  /* THE LINE READS AS WORDS (fix round B): the "Try" label is a span and the first link followed it with no text between, so a reader of
+     the markup (a crawler, a screen reader) got "Tryrestaurants, gyms or salons in London". Read the line's text, the tags taken out. */
+  const tryAt = render.indexOf(">Try</span>");
+  const tryEnd = render.indexOf("</p>", tryAt);
+  const tryRead = tryAt < 0 || tryEnd < 0 ? "" : render.slice(tryAt + 1, tryEnd).replace(/<[^>]*>/g, "");
+  const tryWant = `Try${links.map((l, i) => (i === 0 ? " " : i === links.length - 1 ? " or " : ", ") + l.word).join("")} in ${homeTryCityLabel()}`;
+  check(`the picker's line reads as words ("${tryRead}", want "${tryWant}")`, tryRead === tryWant, `in src/components/NavigatorForm.tsx put {" "} after the Try label's span, so the line reads "${tryWant}" and not "Tryrestaurants"`);
   const h = (tag: string) => (render.match(new RegExp(`<${tag}\\b`, "g")) ?? []).length;
   /* Seven sections with a title (the place, whether it pays, the three proofs, the cities, where to next), and Pro's where the
      paywall's switch is on in the render's environment. */

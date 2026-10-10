@@ -257,8 +257,9 @@ export function WebSite() {
     "@type": "WebSite",
     name: "Margin Atlas",
     url: "https://www.marginatlas.com",
-    description:
-      "What a small business earns, and what its owner actually keeps, trade by trade and place by place.",
+    /* The site's one definition (src/lib/spine/copy.ts, COPY.home.definition), the Organization's description too, so the home's
+       structured data states it once and not in two wordings. */
+    description: COPY.home.definition,
     publisher: {
       "@type": "Organization",
       name: "Margin Atlas",
