@@ -40,9 +40,6 @@ const CELL = [
   "border-t pr-6 pt-6 lg:border-l lg:border-t-0 lg:pl-5 lg:pr-0 lg:pt-0",
   "border-l border-t pl-6 pt-6 lg:border-t-0 lg:pl-5 lg:pt-0",
 ];
-/* One row from 1024, as many columns as counts drew (three or four, the builder's floor and its whole). */
-const COLS: Record<number, string> = { 3: "lg:grid-cols-3", 4: "lg:grid-cols-4" };
-
 function RecordCount({ c, at }: { c: SiteCount; at: number }) {
   const C = COPY.home.record;
   return (
@@ -76,7 +73,7 @@ export function HomeRecord({ record }: { record: SiteCounts }) {
               </h2>
               <p className="mt-2 text-pretty text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">{C.line.replace("{month}", record.month)}</p>
             </div>
-            <dl data-sibling-figures="" className={`grid grid-cols-2 ${COLS[record.counts.length] ?? COLS[4]} lg:gap-x-5`}>
+            <dl data-sibling-figures="" className="grid grid-cols-2 lg:grid-cols-4 lg:gap-x-5">
               {record.counts.map((c, i) => (
                 <RecordCount key={c.key} c={c} at={i} />
               ))}

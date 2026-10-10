@@ -428,9 +428,13 @@ def archive() -> None:
     2026-10-09, proof 2, "Kept and dated"), read from the archive's own log, E:/atlas/archive/uk/ARCHIVE.json, which
     registers/uk/archive_monthly.py appends one entry to a run: the months of liquidation and administration notices it holds
     (the solvent ones among them, as published), each with the notices the log recorded for it across its four notice files, and
-    the days of the company register copies it holds. A month is the archive's own: the monthly run names it
-    by the UK date of its notices, the seed by its notices' own stamps (archive/uk/README.md says so); nothing printed rests on a
-    month's count. A file is added once, in one run's `added`; a month a run lists as already held must be one a run added. A gap in
+    the days of the company register copies it holds. A month is the archive's own, and twelve of them are printed as columns, each a
+    month's count (the home's second proof), so how a month is cut matters: the seed's months (2025-10 to 2026-09) are cut by each
+    notice's own stamp date, read as UTC (the stamp's own year and month), and the monthly run names a month by the UK date of its
+    notices (archive/uk/README.md says so). Against the Gazette's own UK-date counts two of the seed's months differ by one, July and
+    August 2026 (notice 5184520, stamped 2026-07-31T23:00:10 UTC, is 1 August in UK time: the seed holds it in July, the Gazette
+    counts it in August); the twelve still sum to the year of notices the failure rates read. A file is added once, in one run's
+    `added`; a month a run lists as already held must be one a run added. A gap in
     the months, a count that is not whole, or no register copy is a refusal; so is a month the log cannot vouch for whole: the last
     run of the Gazette left months pending (a partial run), a month holds fewer than four distinct notice files, or a file was
     added twice (a short or a doubled month would pass every other check)."""

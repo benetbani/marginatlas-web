@@ -11,16 +11,23 @@
  * failure rates read hold exactly the notices those rates read (data/home/method.json); and, where the archive's log is on this
  * machine, the months, their counts and the copies are the log's own, read again here.
  *
+ * THE CARD DRAWS THE JOINS' OWN YEAR, NOT THE LAST TWELVE MONTHS HELD (the closing cleanup of plan 2026-10-10, the home reformed to
+ * ship, item 10): proof 1's notices are a fixed window (data/home/method.json names it), so proof 2's columns and its figure are the
+ * archive's months inside that window, and proofs 1 and 2 always agree. The archive keeps growing (the monthly run of 2026-10-12 adds
+ * a thirteenth month); a re-export of the archive alone moves nothing the card draws, and a re-export in the right order (the
+ * failures table, then method and archive) moves the window and the columns with it. proofArchive is held to that on archives and
+ * windows built here from the real ones, without touching a file.
+ *
  * Run: npx tsx tests/home/archive.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { buildArchive, monthName, daysWords } from "../../src/lib/home/archive";
+import { buildArchive, monthName, daysWords, type Archive } from "../../src/lib/home/archive";
 import type { Provenance } from "../../src/lib/spine/provenance";
-import { buildProofs } from "../../src/lib/home/proofs";
-import { buildJoins } from "../../src/lib/home/how_made";
+import { buildProofs, proofArchive } from "../../src/lib/home/proofs";
+import { buildJoins, type Joins } from "../../src/lib/home/how_made";
 import { ProofArchive } from "../../src/components/spine/home/HomeProofs";
 import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -28,6 +35,9 @@ import { red, redSummary } from "../../scripts/lib/red";
 const RULE = "home-archive";
 const FILE = "data/home/archive.json";
 const REMEDY = "re-run python -P scripts/data/home/export_home.py archive (after each monthly archive run), never edit data/home by hand";
+/* THE ORDER OF A RE-EXPORT: the year the joins read comes from the failures table, so that is rebuilt first; method.json copies its
+   counts and its dates, and archive.json holds the months, so both are exported after it, method first. */
+const ORDER = "re-export in this order: the failures table first (python -P registers/uk/build_gazette.py, from E:/atlas), then python -P scripts/data/home/export_home.py method archive, so the year the joins read and the months the archive holds are the same year";
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
@@ -39,6 +49,16 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 /** The month after `ym` (YYYY-MM). */
 const nextMonth = (ym: string) => { const y = Number(ym.slice(0, 4)), m = Number(ym.slice(5)); return m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, "0")}`; };
 
+/* THE YEAR THE FAILURE RATES READ (data/home/method.json's source line names it: "published 2025-10-01 to 2026-09-30"), read here on its
+   own and not through the builder, because the card draws the archive's months inside it. */
+const METHOD_AT = { file: "data/home/method.json", remedy: "re-run python -P scripts/data/home/export_home.py method" };
+type Method = { notices: number; source: string };
+let method: Method | null = null;
+try { method = JSON.parse(readFileSync("data/home/method.json", "utf8")) as Method; } catch { /* a missing or truncated file: the check below is this gate's own red for it, not a stack */ }
+const span = method && typeof method.source === "string" ? /published (\d{4}-\d{2})-\d{2} to (\d{4}-\d{2})-\d{2}/.exec(method.source) : null;
+/** A list of months cut to the joins' year. */
+const inJoinsYear = <T extends { month: string }>(list: readonly T[]): T[] => (span ? list.filter((m) => m.month >= span[1] && m.month <= span[2]) : []);
+
 const held = holdHomeExport("archive.json", check);
 const d = (held?.data ?? null) as Export | null;
 if (held && d) {
@@ -49,17 +69,12 @@ if (held && d) {
   check(`the months run one after another, ${d.gazette?.first} to ${d.gazette?.last}, no gap (${months.length})`, months.length > 0 && run && months[0].month === d.gazette.first && months[months.length - 1].month === d.gazette.last);
   check("each month holds a whole count of notices", months.every((m) => Number.isInteger(m.notices) && m.notices >= 0));
   check(`the register copies are days, in order, none twice (${copies.join(", ")})`, copies.length > 0 && copies.every((c, i) => /^\d{4}-\d{2}-\d{2}$/.test(c) && !Number.isNaN(Date.parse(c)) && (i === 0 || c > copies[i - 1])));
-  /* THE YEAR THE FAILURE RATES READ (method.json's source line names it: "published 2025-10-01 to 2026-09-30"): the archive's months
-     of that year hold exactly the notices those rates read, so the archive is the joins' own year, kept. */
-  const METHOD_AT = { file: "data/home/method.json", remedy: "re-run python -P scripts/data/home/export_home.py method" };
-  let method: { notices: number; source: string } | null = null;
-  try { method = JSON.parse(readFileSync("data/home/method.json", "utf8")) as { notices: number; source: string }; } catch { /* a missing or truncated file: the check below is this gate's own red for it, not a stack */ }
+  /* The archive's months of that year hold exactly the notices those rates read, so the archive is the joins' own year, kept. */
   check("the failure rates' file reads, and holds the notices they read and the dates they were published (data/home/method.json)", !!method && Number.isInteger(method.notices) && typeof method.source === "string", METHOD_AT);
   if (method) {
-    const span = /published (\d{4}-\d{2})-\d{2} to (\d{4}-\d{2})-\d{2}/.exec(method.source);
-    const year = span ? months.filter((m) => m.month >= span[1] && m.month <= span[2]) : [];
+    const year = inJoinsYear(months);
     const sum = year.reduce((s, m) => s + m.notices, 0);
-    check(`the months of the joins' year (${span ? `${span[1]} to ${span[2]}` : "not named"}) hold the ${method.notices.toLocaleString("en-US")} notices the failure rates read (${sum.toLocaleString("en-US")})`, !!span && year.length === 12 && sum === method.notices, { file: "data/home/method.json", remedy: "re-run python -P scripts/data/home/export_home.py method and archive, so both read the archive's year" });
+    check(`the months of the joins' year (${span ? `${span[1]} to ${span[2]}` : "not named"}) hold the ${method.notices.toLocaleString("en-US")} notices the failure rates read (${sum.toLocaleString("en-US")})`, !!span && year.length === 12 && sum === method.notices, { file: "data/home/method.json", remedy: ORDER });
   }
 
   /* THE LOG, READ AGAIN, where it is on this machine (a build server holds no archive: the holder deferred it above). */
@@ -90,26 +105,53 @@ if (built && d) {
   check("a month and days as a reader says them", monthName("2025-10") === "October 2025" && daysWords(["2026-05-01", "2026-10-01"]) === "1 May and 1 October 2026" && daysWords(["2026-12-01", "2027-01-01"]) === "1 December 2026 and 1 January 2027" && daysWords(["2026-05-01"]) === "1 May 2026", BUILT_AT);
   check("every figure says where it came from, counted", built.prov.months.src.startsWith("home/archive.json:") && built.prov.copies.src.startsWith("home/archive.json:") && built.prov.months.kind === "counted" && built.prov.copies.kind === "counted", BUILT_AT);
   /* EACH MONTH'S NOTICES (plan 2026-10-10, the home reformed to ship, Task 4; the spec's decision 8): the series is the slice's months
-     and their counts, in order; its last twelve, the months the home's second proof draws, sum to the joins' notices, proof 1's figure. */
+     and their counts, in order; the twelve inside the joins' year, the months the home's second proof draws, sum to the joins'
+     notices, proof 1's figure. */
   check(`the series is the slice's months and their notices (${built.series.length})`, JSON.stringify(built.series) === JSON.stringify(d.gazette.months.map((m) => ({ month: m.month, notices: m.notices }))), BUILT_AT);
   const joins = buildJoins();
-  const drawn = built.series.slice(-12);
+  const drawn = inJoinsYear(built.series);
   const sum = drawn.reduce((s, m) => s + m.notices, 0);
-  check(`the twelve months drawn, ${drawn[0]?.month} to ${drawn[drawn.length - 1]?.month}, hold the joins' ${joins?.notices.figure ?? "(no joins)"} notices (${sum.toLocaleString("en-US")})`, drawn.length === 12 && !!joins && sum === joins.notices.value, { file: "data/home/method.json", remedy: "re-run python -P scripts/data/home/export_home.py method and archive, so the last twelve months the archive holds are the year the joins read" });
+  check(`the twelve months drawn, ${drawn[0]?.month} to ${drawn[drawn.length - 1]?.month}, hold the joins' ${joins?.notices.figure ?? "(no joins)"} notices (${sum.toLocaleString("en-US")})`, drawn.length === 12 && !!joins && sum === joins.notices.value, { file: "data/home/method.json", remedy: ORDER });
+}
+
+/* A RE-EXPORT MUST NOT MOVE THE CARD (the closing cleanup of plan 2026-10-10, item 10). The archive grows by a month at each monthly run
+   (the run of 2026-10-12 adds the thirteenth) and proof 1's notices are a fixed window, so a card that drew the last twelve months held
+   printed "13 months" over twelve columns that no longer summed to proof 1's figure. proofArchive is handed archives and windows built
+   here from the real ones (a month more, a window moved on), so no file is touched. */
+const joinsNow = buildJoins();
+if (built && joinsNow && span && method) {
+  const JOINS_YEAR_AT = { file: "src/lib/home/proofs.ts", remedy: "draw the card's columns and its figure from the archive's months inside the joins' own year (buildJoins().span, from data/home/method.json), so proofs 1 and 2 always agree; never the last twelve months held" };
+  const last = built.series[built.series.length - 1];
+  const more = nextMonth(last.month);
+  /* A thirteenth month held, as the next monthly run leaves the archive: the real last month's count again, so nothing here is a figure of its own. */
+  const grown: Archive = { ...built, months: built.months + 1, lastName: monthName(more), series: [...built.series, { month: more, notices: last.notices }] };
+  const sumOf = (p: ReturnType<typeof proofArchive>) => (p.months?.points ?? []).reduce((s, x) => s + x.value, 0);
+  const now = proofArchive(built, joinsNow);
+  const grownNow = proofArchive(grown, joinsNow);
+  check(`a thirteenth month held changes nothing the card draws: "${grownNow.figure}", "${grownNow.line}", columns from ${grownNow.months?.start ?? "none"} summing to ${sumOf(grownNow).toLocaleString("en-US")} against proof 1's ${joinsNow.notices.figure}`, JSON.stringify(grownNow) === JSON.stringify(now) && grownNow.figure === COPY.home.proofs.archive.figure.replace("{n}", "12") && grownNow.months?.start === span[1] && sumOf(grownNow) === joinsNow.notices.value, JOINS_YEAR_AT);
+  /* The failures table rebuilt for the next year and both files exported after it: the window moves on and the columns with it. */
+  const moved: Joins = { ...joinsNow, span: { first: nextMonth(span[1]), last: more } };
+  const movedNow = proofArchive(grown, moved);
+  const wantMoved = grown.series.filter((m) => m.month >= nextMonth(span[1]) && m.month <= more);
+  check(`a joins year moved on one month moves the columns with it: from ${movedNow.months?.start ?? "none"} to ${more}, ${movedNow.months?.points.length ?? 0} columns`, wantMoved.length === 12 && movedNow.months?.start === nextMonth(span[1]) && JSON.stringify(movedNow.months?.points) === JSON.stringify(wantMoved.map((m) => ({ month: Number(m.month.slice(5, 7)) - 1, value: m.notices }))) && movedNow.line === COPY.home.proofs.archive.words.replace("{first}", monthName(wantMoved[0].month)).replace("{last}", monthName(more)), JOINS_YEAR_AT);
+  /* A joins year the archive does not hold whole (the failures table exported before the archive has the months): no columns, and the line says the months held. */
+  const short: Joins = { ...joinsNow, span: { first: nextMonth(nextMonth(span[1])), last: nextMonth(more) } };
+  const shortNow = proofArchive(grown, short);
+  check("a joins year the archive does not hold whole draws no columns, its figure and line the months held", shortNow.months === null && shortNow.figure === COPY.home.proofs.archive.figure.replace("{n}", String(grown.months)) && shortNow.line === COPY.home.proofs.archive.words.replace("{first}", grown.firstName).replace("{last}", grown.lastName), JOINS_YEAR_AT);
 }
 
 /* THE SECOND PROOF (plan Task 8; reformed by plan 2026-10-10, the home reformed to ship, Task 4: the spec's decision 8 and the critique's
-   P0.6 and P1.7): the archive, its figure the months held, its line how a month is counted, the last twelve months as quiet columns
+   P0.6 and P1.7): the archive, its figure the months of the joins' year, its line how a month is counted, the twelve months as quiet columns
    in their own order, each column reading the month's own count, its row the register copies, its door About the figures' #archive;
    quiet, every figure stamped. */
-const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the second proof as ProofArchive holds it: a door card to /about-data#archive (its title the stretched link, an arrow at its row's end), the months at 30, the last twelve months as MonthBars with start, tone ink and counts, standing above the link (relative z-20), the register copies as a row, quiet, every figure stamped" };
+const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the second proof as ProofArchive holds it: a door card to /about-data#archive (its title the stretched link, an arrow at its row's end), the months at 30, the twelve months of the joins' year as MonthBars with start, tone ink, counts and the months' stamp, standing above the link (relative z-20), the register copies as a row, quiet, every figure stamped" };
 const proofs = buildProofs();
 if (proofs && built) {
   const p = proofs.archive;
-  const drawn = built.series.slice(-12);
+  const drawn = inJoinsYear(built.series);
   const n = (v: number) => v.toLocaleString("en-US");
-  check(`the second proof is the archive: ${p.figure}, ${p.row.value} register copies of ${p.row.note}`, p.figure === COPY.home.proofs.archive.figure.replace("{n}", String(built.months)) && p.line === COPY.home.proofs.archive.words.replace("{first}", monthName(drawn[0].month)).replace("{last}", monthName(drawn[drawn.length - 1].month)) && p.row.value === String(built.copies) && p.row.note === built.copiesWords && p.href === "/about-data#archive", { file: "src/lib/home/proofs.ts", remedy: "take the second proof's figures from buildArchive, its line's months the twelve it draws" });
-  check(`its months are the last twelve held, from ${p.months?.start}, read as counts`, !!p.months && p.months.start === drawn[0].month && JSON.stringify(p.months.points) === JSON.stringify(drawn.map((m) => ({ month: Number(m.month.slice(5, 7)) - 1, value: m.notices }))) && p.months.counts.words === COPY.home.proofs.archive.readout && p.months.counts.aria === COPY.home.proofs.archive.aria, { file: "src/lib/home/proofs.ts", remedy: "hand ProofArchive the last twelve of buildArchive().series as points (the calendar month, its notices), start the first of them, counts the copy's readout and aria" });
+  check(`the second proof is the archive: ${p.figure}, ${p.row.value} register copies of ${p.row.note}`, drawn.length === 12 && p.figure === COPY.home.proofs.archive.figure.replace("{n}", String(drawn.length)) && p.line === COPY.home.proofs.archive.words.replace("{first}", monthName(drawn[0].month)).replace("{last}", monthName(drawn[drawn.length - 1].month)) && p.row.value === String(built.copies) && p.row.note === built.copiesWords && p.href === "/about-data#archive", { file: "src/lib/home/proofs.ts", remedy: "take the second proof's figures from buildArchive, its figure and its line's months the twelve of the joins' year it draws" });
+  check(`its months are the twelve of the joins' year, from ${p.months?.start}, read as counts`, !!p.months && p.months.start === drawn[0].month && JSON.stringify(p.months.points) === JSON.stringify(drawn.map((m) => ({ month: Number(m.month.slice(5, 7)) - 1, value: m.notices }))) && p.months.counts.words === COPY.home.proofs.archive.readout && p.months.counts.aria === COPY.home.proofs.archive.aria, { file: "src/lib/home/proofs.ts", remedy: "hand ProofArchive the months of buildArchive().series inside the joins' year as points (the calendar month, its notices), start the first of them, counts the copy's readout and aria" });
   const html = renderToStaticMarkup(React.createElement(ProofArchive, { p }));
   const raw = html.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   check("it is a door card to About the figures' #archive, its title an h2", /id="archive"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#archive"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.archive.kicker}</h2>`).test(html), PROOF_AT);
@@ -137,6 +179,10 @@ if (proofs && built) {
   check("quiet: no figure in the accent", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), PROOF_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === 2 && figs.every((f) => /data-src="home\/archive\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);
+  /* THE TWELVE COUNTS SAY WHERE THEY CAME FROM (the closing cleanup, item 11): the columns are figures too, each a month's notices, so
+     the drawing's root carries the months' stamp, as the figure above it does, and it is the builder's own. */
+  const barsRoot = /<div data-archetype="month-bars"[^>]*>/.exec(html)?.[0] ?? "";
+  check(`the twelve counts are stamped: the drawing's root carries ${p.months?.prov?.src ?? "no stamp"}, ${p.months?.prov?.kind ?? "no kind"}, the builder's own`, !!p.months?.prov && p.months.prov.src === built.prov.months.src && p.months.prov.kind === built.prov.months.kind && barsRoot.includes(` data-src="${p.months.prov.src}" data-kind="${p.months.prov.kind}"`), { file: "src/components/spine/archetypes/MonthBars.tsx", remedy: "give MonthBars a prov prop and stamp the Marks root with provAttrs(prov); ProofMonths carries the archive's months stamp (src/lib/home/proofs.ts) and ProofArchive passes it (HomeProofs.tsx)" });
   check("the door: its title the link, stretched over the card, an arrow at the row's end, the edge to ink2 on hover", /<a href="\/about-data#archive" class="min-w-0 flex-1 text-\[var\(--c-ink\)\] no-underline after:absolute after:inset-0 after:z-10 after:rounded-\[12px\]">/.test(raw) && /<span aria-hidden="true" class="mt-1 shrink-0 [^"]*text-\[var\(--c-ink2\)\]">→<\/span>/.test(raw) && /id="archive"[^>]*class="[^"]*hover:border-\[var\(--c-ink2\)\]/.test(raw), PROOF_AT);
 }
 

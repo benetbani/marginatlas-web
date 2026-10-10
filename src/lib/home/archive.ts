@@ -6,8 +6,9 @@
  * company register it keeps, from data/home/archive.json (the archive's log, read by scripts/data/home/export_home.py archive), never typed. Counted: a
  * month is held or not, a copy is kept or not. The home's second proof and About the figures' #archive read it. Since plan
  * 2026-10-10 (the home reformed to ship, Task 4; the spec's decision 8) it also hands over each month's notices in month order
- * (`series`), which the home's second proof draws as twelve columns: a month's count is the archive's own, each notice counted in
- * the month of its own date.
+ * (`series`), which the home's second proof draws as twelve columns, the twelve inside the joins' own year (proofArchive in
+ * src/lib/home/proofs.ts; the archive holds more as it grows): a month's count is the archive's own, each notice counted in the month
+ * of its own date.
  */
 import archiveJson from "../../../data/home/archive.json";
 import type { Provenance } from "@/lib/spine/provenance";

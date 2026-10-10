@@ -18,17 +18,15 @@
  *   failures  the trades served whose UK failure rate a year is publishable (ukInsolvencyPer100 in src/lib/spine/uk_trade_typical.ts),
  *             of the same pages served
  * The month is the register slices' build month (REGISTER_BUILT, src/lib/spine/checked.ts), never today's. A count whose source does
- * not answer, or throws, is null; the band draws with three counts or more (SITE_COUNTS_MIN) and draws nothing with fewer. Every
+ * not answer, or throws, is null; the band draws with all four (SITE_COUNTS_MIN) and draws nothing with fewer, so the row is always
+ * four siblings (the closing cleanup of plan 2026-10-10, item 18: it once drew with three, a layout nothing tested). Every
  * figure is stamped counted, and none is typed: tests/home/site_counts.test.ts recomputes each from its source.
  */
 import { UK_SOURCES } from "@/lib/spine/uk_sources";
 import { UK_2026_27 } from "@/lib/uk/law/params_2026_27";
-import { londonPagesRead } from "@/lib/home/how_made";
+import { londonPagesRead, servedTrades } from "@/lib/home/how_made";
 import { ukInsolvencyPer100 } from "@/lib/spine/uk_trade_typical";
 import { REGISTER_BUILT } from "@/lib/spine/checked";
-import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
-import { RETIRED } from "@/lib/taxonomy/retired";
-import { hasOwn } from "@/lib/own";
 import type { Provenance } from "@/lib/spine/provenance";
 
 export type SiteCountKey = "sources" | "laws" | "sales" | "failures";
@@ -38,17 +36,13 @@ export type SiteCount = { key: SiteCountKey; value: number; figure: string; prov
 /** The band: its month as the line prints it, and its counts in the band's order. */
 export type SiteCounts = { month: string; counts: SiteCount[] };
 
-/** The band draws with this many counts or more and nothing with fewer (critique section 4: four fill the row, three still read). */
-export const SITE_COUNTS_MIN = 3;
+/** The band draws with all four counts and nothing with fewer: a count whose source fails draws no band, never a row of three
+ *  (critique section 4: four fill the row; the three-count layout was never drawn and nothing tested it). */
+export const SITE_COUNTS_MIN = 4;
 
 const figure = (v: number) => v.toLocaleString("en-US");
 const counted = (src: string): Provenance => ({ src, kind: "counted" });
 const SERVED = counted("lib/taxonomy:trade pages served, the slugs not retired");
-
-/** The trade pages served: the taxonomy's trade slugs that are not retired, as londonPagesRead reads them. */
-function servedTrades(): string[] {
-  return Object.keys(SLUG_TO_INDUSTRY).filter((s) => !hasOwn(RETIRED, s));
-}
 
 /** Every finite number in a value, through its objects and arrays. */
 function finiteNumbers(v: unknown): number {
@@ -96,7 +90,7 @@ export function registerMonth(day: string | null = REGISTER_BUILT): string | nul
   return Number.isFinite(at) ? new Date(at).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" }) : null;
 }
 
-/** The band from its counts: three or more and a month, or null, and then the home draws no band. */
+/** The band from its counts: all four and a month, or null, and then the home draws no band. */
 export function siteCountsFrom(counts: Array<SiteCount | null>, month: string | null): SiteCounts | null {
   const held = counts.filter((c): c is SiteCount => c !== null);
   return held.length >= SITE_COUNTS_MIN && month ? { month, counts: held } : null;

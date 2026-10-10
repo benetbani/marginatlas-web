@@ -54,7 +54,7 @@ check("the example is two halves, the place then whether it pays", /<HomePlace k
 check("the proofs are three doors, the joins, the archive, then the tax", /<ProofJoins key="joins"[^\n]*<ProofArchive key="archive"[^\n]*<ProofTax key="tax"/.test(zoneLine("proofs")?.[0] ?? ""));
 check("the foot is the UK's cities, still, then where to next", /<HomeCities key="cities"[^\n]*<WhereNext key="next"/.test(zoneLine("foot")?.[0] ?? "") && /<CityRows\b/.test(code));
 
-/* THE BAND (plan 2026-10-10, the home reformed to ship, Task 5): HomeRecord from its builder, listed only when three counts build, its
+/* THE BAND (plan 2026-10-10, the home reformed to ship, Task 5): HomeRecord from its builder, listed only when all four counts build, its
    own zone on the terracotta, and the tones given by the zones that are not the band, so the foot keeps its tone. */
 check("the band is HomeRecord from buildSiteCounts, listed only when it builds, on the terracotta tone the alternation skips", /\.\.\.\(record \? \[\{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY\.home\.record\.label, body: \[<HomeRecord key="record" record=\{record\} \/>\] \}\] : \[\]\)/.test(body) && /const record = buildSiteCounts\(\);/.test(code) && /const toned = zones\.filter\(\(z\) => z\.tone !== "terra"\);/.test(code) && /zoneTone\(toned\.indexOf\(z\)\)/.test(code), `list the band in ${VIEW} as ...(record ? [{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.record.label, body: [<HomeRecord key="record" record={record} />] }] : []) and give the tones by the zones that are not the band`);
 

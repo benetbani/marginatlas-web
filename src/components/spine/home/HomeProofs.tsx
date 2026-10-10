@@ -4,7 +4,8 @@
  * and works out, each a door card that keeps its box on the band (MODEL 10.4), one figure at 30, one line, one second reading (clause
  * 65) and one door. The joins, a year of company notices matched by name, its names found drawn as a ring in ink at the lead rung
  * ("97", "in 100 names found in the register"), so the card's one 30 stays its focal; the archive, the months of notices kept, the
- * last twelve drawn as quiet columns in their own order with each month's count as its reading, its register copies as a row; the
+ * twelve of the joins' own year drawn as quiet columns in their own order with each month's count as its reading, stamped as a
+ * figure is, its register copies as a row; the
  * formulas, /gb's tax burden under its own name, in ink since the band took the page's second loud seat (plan 2026-10-10, Task 5), its two rules as rows and the
  * masthead's own data drawn as a bar of 50 cells in ink and grey (/gb draws that share as a pie). The drawings differ in kind on the
  * level and from the example's above (ring, columns, segment bar; strip, units), as clauses 55 and 64 ask. Each second reading
@@ -69,7 +70,7 @@ export function ProofArchive({ p }: { p: ProofArchiveData }) {
       {/* THE MONTHS STAND ABOVE THE STRETCHED LINK (z-20 over its z-10): a pointer or a tap there reads a column and never opens the door. */}
       {p.months ? (
         <div className="relative z-20 mt-auto">
-          <MonthBars points={p.months.points} start={p.months.start} tone="ink" counts={p.months.counts} />
+          <MonthBars points={p.months.points} start={p.months.start} tone="ink" counts={p.months.counts} prov={p.months.prov} />
         </div>
       ) : null}
       <div className={p.months ? "mt-4" : "mt-auto"}>

@@ -40,9 +40,10 @@
  *    `data-peak`, `data-trough`. It is a drawing: it counts as its level's
  *    visual and toward the bar budget.
  *
- * A DATED ORDER, COUNTS AND A QUIET TONE (plan 2026-10-10, the home reformed
- * to ship, Task 4; the spec's decision 8 and the critique's P0.6), each off
- * by default, so every other caller draws exactly what it drew:
+ * A DATED ORDER, COUNTS, A QUIET TONE AND A STAMP (plan 2026-10-10, the home
+ * reformed to ship, Task 4 and its closing cleanup; the spec's decision 8 and
+ * the critique's P0.6), each off by default, so every other caller draws
+ * exactly what it drew:
  *  - `start` ("2025-10") names the first column's month and the twelve run on
  *    from it, October to September, for a year that is not the calendar's;
  *    the year stands under the first column (when three or more of its
@@ -55,6 +56,10 @@
  *    without it a column reads its share of the busiest month, as before.
  *  - `tone="ink"` draws the busiest column in ink2 and the rest in the soft
  *    grey, for a quiet card: no accent.
+ *  - `prov` stamps the drawing's root with where the twelve counts came from
+ *    (data-src and data-kind, src/lib/spine/provenance.ts), as a figure's own
+ *    element is stamped: the counts are figures, one to a column, and they
+ *    carried no stamp. None given, no attribute is drawn.
  *
  * Gated by the archetype harness (stories `month-bars`), the page laws and the
  * model laws on every page that seats it.
@@ -62,6 +67,7 @@
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
 import { COPY } from "@/lib/spine/copy";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
 export const MONTH_BAR_POINTS = 12;
 const H = 96;
@@ -76,7 +82,7 @@ function startOf(start: string): { month: number; year: number } | null {
   return month >= 0 && month < MONTH_BAR_POINTS ? { month, year: Number(m[1]) } : null;
 }
 
-export function MonthBars({ points, unit = "", start, tone = "accent", counts }: { points: MonthPoint[]; unit?: string; /** The first column's month, "YYYY-MM"; the twelve run on from it (plan 2026-10-10, home reform, Task 4). */ start?: string; /** "ink": the busiest column in ink2 and no accent, for a quiet card. */ tone?: "accent" | "ink"; /** Each column reads its month's count: `words` with {month}, `aria` with {first}, {last} and {months}. */ counts?: { words: string; aria: string } }) {
+export function MonthBars({ points, unit = "", start, tone = "accent", counts, prov }: { points: MonthPoint[]; unit?: string; /** The first column's month, "YYYY-MM"; the twelve run on from it (plan 2026-10-10, home reform, Task 4). */ start?: string; /** "ink": the busiest column in ink2 and no accent, for a quiet card. */ tone?: "accent" | "ink"; /** Each column reads its month's count: `words` with {month}, `aria` with {first}, {last} and {months}. */ counts?: { words: string; aria: string }; /** Where the twelve counts came from, stamped on the drawing's root (data-src, data-kind). */ prov?: Provenance | null }) {
   const live = points
     .filter((p) => p && Number.isFinite(p.value) && Number.isInteger(p.month) && p.month >= 0 && p.month < MONTH_BAR_POINTS)
     .sort((a, b) => a.month - b.month);
@@ -112,6 +118,7 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts }:
       data-peak={String(peak)}
       data-trough={String(trough)}
       data-start={from ? start : undefined}
+      {...provAttrs(prov)}
       className="w-full"
     >
       <div className="flex w-full items-end gap-1" style={{ height: H }} role="img" aria-label={label}>

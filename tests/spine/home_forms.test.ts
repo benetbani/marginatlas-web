@@ -14,6 +14,8 @@
  *     by its own class; RangeStrip's `headless` (a mark with no figure), `oneRow` (the names never step) and `decades` (a log track's
  *     powers of ten as round values, none within 4 percent of the track of any mark, so no figure is printed twice side by side);
  *     CountUnits' `fine` (2px apart under 1024, 4 from it). Each off by default.
+ *   - (the closing cleanup of the same plan) MonthBars `prov`: the drawing's root stamped with where its twelve counts came from
+ *     (data-src, data-kind); without it the drawing is what it was.
  *
  * Run: npx tsx tests/spine/home_forms.test.ts
  */
@@ -25,6 +27,7 @@ import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { Fig, Rail } from "../../src/components/spine/kit";
 import { FactRows } from "../../src/components/spine/archetypes/FactRows";
 import { Ring } from "../../src/components/spine/archetypes/Ring";
+import { MonthBars } from "../../src/components/spine/archetypes/MonthBars";
 import { BarList } from "../../src/components/spine/charts/BarList";
 import { RangeStrip } from "../../src/components/spine/archetypes/RangeStrip";
 import { CountUnits } from "../../src/components/spine/archetypes/BentoBand";
@@ -94,6 +97,18 @@ check("a ring's caption may hold a stamped figure", /data-mark-label="true"[^>]*
    22ch box broke as "in 100 names found in the" and "register" at every width. Only the lead ring, which only the home's joins draws,
    takes text-balance, so no other ring's caption moves. */
 check("a lead ring's caption balances its lines (text-balance on its element), and a default ring's caption keeps its classes without it", /<div data-mark-label="true" class="[^"]*\btext-balance\b[^"]*">/.test(lead) && /<div data-mark-label="true" class="mt-2 max-w-\[22ch\] text-center text-\[length:var\(--t-micro\)\] leading-snug text-\[var\(--c-muted\)\]">of new firms, after 5 years<\/div>/.test(big), RING, "Ring size lead: text-balance on the caption's element, and nothing added to a default ring's caption");
+
+/* MONTHBARS' PROV (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 11). The twelve counts a MonthBars draws are
+   figures, and the archive's second proof printed them with no data-src and no data-kind: a prov stamps the drawing's root with where
+   they came from, as a figure's own element is stamped, and without it the drawing is exactly what it was. */
+const MONTHS = "src/components/spine/archetypes/MonthBars.tsx";
+const monthPoints = Array.from({ length: 12 }, (_, i) => ({ month: i, value: 1000 + 100 * i }));
+const monthCounts = { words: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" };
+const STAMP = { src: "home/archive.json:gazette.months", kind: "counted" as const };
+const barsPlain = renderToStaticMarkup(React.createElement(MonthBars, { points: monthPoints, start: "2025-10", tone: "ink", counts: monthCounts }));
+const barsStamped = renderToStaticMarkup(React.createElement(MonthBars, { points: monthPoints, start: "2025-10", tone: "ink", counts: monthCounts, prov: STAMP }));
+check("a MonthBars given a prov stamps its drawing's root with data-src and data-kind, and one given none stamps nothing", /<div data-archetype="month-bars"[^>]*data-src="home\/archive\.json:gazette\.months" data-kind="counted"/.test(barsStamped) && !/data-src=|data-kind=/.test(barsPlain), MONTHS, "MonthBars prov: provAttrs(prov) on the Marks root, nothing when none is passed");
+check("the stamp is the only difference: the drawing with a prov, less the two attributes, is the drawing without one", barsStamped.replace(` data-src="${STAMP.src}" data-kind="${STAMP.kind}"`, "") === barsPlain, MONTHS, "MonthBars prov changes the root's two attributes and nothing else");
 
 /* BARLIST'S QUIET */
 const BARS = "src/components/spine/charts/BarList.tsx";

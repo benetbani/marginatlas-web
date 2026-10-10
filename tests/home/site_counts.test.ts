@@ -7,10 +7,10 @@
  * red), the law's finite values for 2026-27, the London trade pages that print a takings figure (as the page prints it,
  * tradeHeadFigure) and the trades with a publishable UK failure rate (read straight from data/uk/registers/failures.json), the two trade
  * counts against the trade pages served; the month from the register slices' build day. Holds the builder (src/lib/home/site_counts.ts):
- * each count stamped counted, the band drawn with three counts or more and nothing with fewer, today's counts as a tripwire. Holds the
+ * each count stamped counted, the band drawn with all four counts and nothing with fewer, today's counts as a tripwire. Holds the
  * drawing (src/components/spine/home/HomeRecord.tsx): a zone and never a card, its four figures at 30 and stamped, the trades' two with
  * their pages served, ink on the terracotta and no grey, its heading of four words and its one line. Fails on a count typed into either
- * file, on a slot or ledger count, and on a count of countries, cities or the trade list. Reads the home's render,
+ * file or a number typed into the band's words, on a slot or ledger count, and on a count of countries, cities or the trade list. Reads the home's render,
  * scratchpad/harness/pages/home-gb.html, where the harness wrote it, and defers those checks where it did not (a build server).
  *
  * Run: npx tsx tests/home/site_counts.test.ts
@@ -56,8 +56,9 @@ const NOT_OFFICIAL_TODAY = ["ukfinance", "brc", "worldpanel", "sellers"];
    record), false for a trade body, a commercial panel or a seller's own page. A publisher with no class is a red. */
 const unclassed = [...UK_SOURCES, ...WORLD_SOURCES].filter((s) => typeof (s as { official?: unknown }).official !== "boolean").map((s) => s.key);
 check(`every publisher is classed official or not (${UK_SOURCES.length} in the UK list, ${WORLD_SOURCES.length} outside it)${unclassed.length ? `; no class: ${unclassed.join(", ")}` : ""}`, unclassed.length === 0, { file: "src/lib/spine/uk_sources.ts", remedy: "give every entry of UK_SOURCES and WORLD_SOURCES official: true (a public body: a department, an agency, a regulator, a public corporation, the official record) or official: false (a trade body, a commercial panel, a seller's own page)" });
-const notOfficial = UK_SOURCES.filter((s) => s.official === false).map((s) => s.key);
-check(`the publishers that are not official are today's four (${notOfficial.join(", ") || "none"})`, JSON.stringify(notOfficial) === JSON.stringify(NOT_OFFICIAL_TODAY), { file: "tests/home/site_counts.test.ts", remedy: "a publisher's class changed, or one was added: confirm it in src/lib/spine/uk_sources.ts (true only for a public body), then set NOT_OFFICIAL_TODAY here" });
+/* Both lists sorted before they are compared: the pin is the set of four, not the order the sources list happens to stand in. */
+const notOfficial = UK_SOURCES.filter((s) => s.official === false).map((s) => s.key).sort();
+check(`the publishers that are not official are today's four (${notOfficial.join(", ") || "none"})`, JSON.stringify(notOfficial) === JSON.stringify([...NOT_OFFICIAL_TODAY].sort()), { file: "tests/home/site_counts.test.ts", remedy: "a publisher's class changed, or one was added: confirm it in src/lib/spine/uk_sources.ts (true only for a public body), then set NOT_OFFICIAL_TODAY here" });
 
 /* THE SOURCES, READ AGAIN HERE. 1. The official datasets: every item of a publisher classed official, distinct by title; the items of
    the publishers that are not, and the list of the sources outside the UK, are not among them. */
@@ -108,7 +109,10 @@ check(`every count is stamped counted from its own source (${counts.map((c) => `
 check(`the band's counts are the four named, in its order (${counts.map((c) => c.key).join(", ") || "none"})`, JSON.stringify(counts.map((c) => c.key)) === JSON.stringify(["sources", "laws", "sales", "failures"]));
 check("only the two trade counts carry the pages served, each stamped counted, and no figure is the served list itself", counts.filter((c) => c.of).map((c) => c.key).join(",") === "sales,failures" && counts.every((c) => !c.of || (c.of.prov.kind === "counted" && c.of.prov.src.startsWith("lib/taxonomy:"))) && counts.every((c) => c.value !== served.length), { remedy: "a trade count stands against the pages served; the served list is never a figure of its own (his ruling of 2026-10-07)" });
 const first = counts[0] ?? null;
-check(`the band draws with ${SITE_COUNTS_MIN} counts or more and nothing with fewer, or with no month`, !!first && SITE_COUNTS_MIN === 3 && siteCountsFrom([first, first, null, null], "m") === null && siteCountsFrom([first, first, first, null], "m")?.counts.length === 3 && siteCountsFrom([first, first, first, first], null) === null);
+/* ALL FOUR OR NO BAND (the closing cleanup of plan 2026-10-10, item 18). The band was allowed to draw with three counts, a layout nothing
+   tested and nothing ever drew; a count whose source fails now draws no band, so the row is always four siblings and a visitor is never
+   shown a band with a figure missing. */
+check(`the band draws with all ${SITE_COUNTS_MIN} counts and nothing with fewer, or with no month`, !!first && SITE_COUNTS_MIN === 4 && [0, 1, 2, 3].every((missing) => siteCountsFrom([first, first, first, first].map((c, i) => (i === missing ? null : c)), "m") === null) && siteCountsFrom([first, first, first, first], "m")?.counts.length === 4 && siteCountsFrom([first, first, first, first], null) === null, { remedy: "SITE_COUNTS_MIN is 4 in src/lib/home/site_counts.ts: a band with a count missing is not drawn" });
 
 /* NOTHING TYPED, NO SLOT, NO LIST COUNT (the plan's Global Constraints: every figure from its builder, never typed; counts are
    evidence, never allocated slots; no country, city or trade-list count on the home). Comments stripped; a size class such as
@@ -120,8 +124,18 @@ for (const file of [BUILDER, DRAWING]) {
   const typed = values.filter((v) => new RegExp(`(?<![\\w.\\-\\[])${v}(?![\\w.])`).test(code));
   check(`${file} types none of the counts ${values.join(", ")} (${typed.join(", ") || "none typed"})`, typed.length === 0, { file, remedy: "read every count from its builder (src/lib/home/site_counts.ts), never write it" });
 }
+/* THE BAND'S WORDS TYPE NO NUMBER EITHER (the closing cleanup of plan 2026-10-10, item 16). The heading, the line, the word before a
+   page count and the four labels live in COPY.home.record, which the loop above does not read, so a count typed into them (the line
+   "117 trades", a label "32 datasets") passed. The line's {month} is the register slices' build month, filled from the builder when
+   the band draws; the words themselves hold no digit at all. */
+const copyWords = JSON.stringify(COPY.home.record).replace("{month}", "");
+const copyDigits = copyWords.match(/\d+/g) ?? [];
+check(`the band's words (COPY.home.record, less its {month}) type no number (${copyDigits.join(", ") || "none typed"}; the counts are ${values.join(", ")})`, copyDigits.length === 0, { file: "src/lib/spine/copy.ts", remedy: "write the band's words without a number: every count comes from src/lib/home/site_counts.ts and the month fills {month} when the band draws" });
 const builderCode = codeOf(BUILDER);
-const LIST_WORDS = ["regional_cells", "extrapolated_cells", "coverage", "atlas_ledger", "getAtlasLedger", "COUNTRIES", "countriesTotal", "city_list", "buildCityCards"];
+/* ONE LIST OF THE TRADES SERVED: the builder takes it from the London takings count's own reading (how_made.ts), as the sales count does,
+   instead of walking the taxonomy a second time. */
+check("the builder takes the trade pages served from how_made.ts (servedTrades) and does not walk the taxonomy itself", /import\s*\{[^}]*\bservedTrades\b[^}]*\}\s*from\s*"@\/lib\/home\/how_made"/.test(builderCode) && !/\bSLUG_TO_INDUSTRY\b|\bRETIRED\b/.test(builderCode), { remedy: "export servedTrades from src/lib/home/how_made.ts (londonPagesRead reads it too) and import it in src/lib/home/site_counts.ts" });
+const LIST_WORDS =["regional_cells", "extrapolated_cells", "coverage", "atlas_ledger", "getAtlasLedger", "COUNTRIES", "countriesTotal", "city_list", "buildCityCards"];
 const listReads = LIST_WORDS.filter((w) => new RegExp(`\\b${w}\\b`).test(builderCode));
 check(`the builder reads no slot, ledger, country or city list (${listReads.join(", ") || "none"})`, listReads.length === 0, { remedy: "count records the UK pages read or pages that print a figure (critique section 4), never cells, slots, countries, cities or the trade list" });
 const drawingCode = codeOf(DRAWING);

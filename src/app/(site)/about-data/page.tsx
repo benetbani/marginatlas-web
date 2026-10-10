@@ -274,13 +274,16 @@ export default function AboutDataPage() {
 
 /** One list of sources: the publisher, what the pages print from it with each dataset or page read, and the attribution line where
  *  its licence asks for one. The UK's list and the sources outside the UK, which /new-businesses prints its figures from, draw the same
- *  way. */
+ *  way. A publisher that is not an official body (a trade body, a commercial panel, a seller's own pages: the `official` flag the
+ *  home's band counts by) says so under its name, so the band's "official datasets" can be reproduced from this list: its items
+ *  without that note (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 17). */
 function SourceList({ sources }: { sources: readonly UkSource[] }) {
   return (
     <ul className="mt-5 space-y-5">
       {sources.map((s) => (
         <li key={s.key}>
           <p className="font-semibold text-ink-900">{s.publisher}</p>
+          {s.official ? null : <p data-not-official="" className="mt-0.5 text-sm text-ink-700">Not an official body.</p>}
           <ul className="mt-1 space-y-1 text-sm leading-relaxed text-ink-800">
             {s.items.map((i) => (
               <li key={i.title}>

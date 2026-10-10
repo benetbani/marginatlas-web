@@ -2,7 +2,8 @@
  * The UK's sources on one page, linked from every UK page's foot (plan 06, task B4; his ruling of 2026-10-04 on R-002: "One
  * sources page"). The list is held to the repository's records: every section file's publisher has an entry, every register slice
  * a page reads has one, and no attribution line is anything but the two the ledger states (a licence the records do not name is
- * never printed). The foot draws on a UK page and nowhere else; About the figures carries the section it links to; and the
+ * never printed). The foot draws on a UK page and nowhere else; About the figures carries the section it links to, marking each
+ * publisher that is not an official body (the flag the home's band counts by, so the band's figure can be reproduced from the list); and the
  * source-agencies gate allows the one module and watches the UK publishers' names everywhere else.
  *
  * Run: npx tsx tests/spine/uk_sources.test.ts
@@ -13,6 +14,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { UK_SOURCES, UK_REGISTER_SOURCE, UK_SOURCES_FOOT, OGL_LINE, ONS_LINE, WORLD_SOURCES } from "../../src/lib/spine/uk_sources";
 import { SourcesFoot } from "../../src/components/spine/SourcesFoot";
+import { buildSiteCounts } from "../../src/lib/home/site_counts";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "uk-sources";
@@ -88,6 +90,21 @@ async function thePage() {
   check("the section prints the statistics office's own attribution line", about.includes(ONS_LINE));
   const absentWorld = WORLD_SOURCES.filter((s) => !about.includes(s.publisher.replace(/'/g, "&#x27;")));
   check(`the section names the home's sources outside the UK${absentWorld.length ? `: missing ${absentWorld.map((s) => s.publisher).join(", ")}` : ""}`, absentWorld.length === 0);
+
+  /* THE LIST SAYS WHICH PUBLISHERS ARE OFFICIAL (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 17). The home's
+     band counts the official datasets, 32 of the list's 36 items, and the list printed all 36 with nothing to tell the four from the
+     rest: a reader could not reproduce the band's figure from it. Each publisher the flag marks as not official (a trade body, a
+     commercial panel, a seller's own pages) carries a quiet "Not an official body." under its name, so the items without a note are the
+     band's count. */
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+  const noted = (s: { publisher: string }) => about.includes(`<p class="font-semibold text-ink-900">${esc(s.publisher)}</p><p data-not-official="" `);
+  const OFFICIAL_AT = "under each publisher whose official flag is false, SourceList (src/app/(site)/about-data/page.tsx) prints <p data-not-official=\"\" className=\"mt-0.5 text-sm text-ink-700\">Not an official body.</p> before its items, and prints none under an official one";
+  const wrongNote = [...UK_SOURCES, ...WORLD_SOURCES].filter((s) => noted(s) !== (s.official === false)).map((s) => s.publisher);
+  check(`the list marks exactly the publishers that are not official${wrongNote.length ? `; wrongly marked or unmarked: ${wrongNote.join(", ")}` : ""}`, wrongNote.length === 0 && (about.match(/data-not-official=""/g) ?? []).length === [...UK_SOURCES, ...WORLD_SOURCES].filter((s) => s.official === false).length, OFFICIAL_AT);
+  const unmarked = UK_SOURCES.filter((s) => !noted(s)).reduce((t, s) => t + s.items.length, 0);
+  const band = buildSiteCounts()?.counts.find((c) => c.key === "sources")?.value;
+  check(`the items in the list without a note are the home band's official datasets (${unmarked} of ${UK_SOURCES.reduce((t, s) => t + s.items.length, 0)}; the band prints ${band ?? "none"})`, band !== undefined && unmarked === band, OFFICIAL_AT);
+  check("the note reads \"Not an official body.\" in plain sentence case, quiet, with no tracked capitals", (about.match(/<p data-not-official="" class="[^"]*">Not an official body\.<\/p>/g) ?? []).length === UK_SOURCES.filter((s) => s.official === false).length && !/data-not-official="" class="[^"]*(?:uppercase|tracking-)/.test(about), OFFICIAL_AT);
 
   /* THE GATE THAT KEEPS THE NAMES HERE */
   const gate = readFileSync("scripts/verify_no_source_agencies.ts", "utf8");
