@@ -30,8 +30,10 @@ const check = (name: string, ok: boolean, remedy?: string) => { if (!ok) failed+
 const VIEW = "src/components/spine/home/home-view.tsx";
 const view = readFileSync(VIEW, "utf8");
 /* JSX COMMENTS GO FIRST, WHOLE (fix round B): one that runs over two lines leaves its `{` and its `}` for stripCommentLines to hand back,
-   the closing one at column 0, and the slices below that end at the first line starting with `}` would stop there, early. */
-const code = stripCommentLines(view.replace(/\{\s*\/\*[\s\S]*?\*\/\s*\}/g, "").split("\n")).join("\n");
+   the closing one at column 0, and the slices below that end at the first line starting with `}` would stop there, early. Tempered,
+   so a match never runs past the end of its own comment: a plain lazy match could start at a brace that opens a comment in code and
+   end at a later JSX comment, deleting the code between (the re-review of fix round B). */
+const code = stripCommentLines(view.replace(/\{\s*\/\*(?:(?!\*\/)[\s\S])*\*\/\s*\}/g, "").split("\n")).join("\n");
 const live = readFileSync("src/app/page.tsx", "utf8");
 const picker = readFileSync("src/components/NavigatorForm.tsx", "utf8");
 const sd = readFileSync("src/components/StructuredData.tsx", "utf8");
