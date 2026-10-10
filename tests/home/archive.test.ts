@@ -175,7 +175,11 @@ if (proofs && built) {
   check(`the years stand under their first months (${years.join(", ")})`, years.length > 0 && JSON.stringify(years) === JSON.stringify(wantYears), PROOF_AT);
   const columns = [...bars.matchAll(/data-month-bar="\d+"[^>]*style="height:[^;]*;background:([^"]*)"/g)].map((m) => m[1]);
   check(`quiet: the busiest month in ink2, the other eleven in the soft grey, no accent (${columns.filter((c) => c === "var(--c-ink2)").length} and ${columns.filter((c) => c === "var(--c-soft2)").length})`, columns.length === 12 && columns.filter((c) => c === "var(--c-ink2)").length === 1 && columns.filter((c) => c === "var(--c-soft2)").length === 11 && !/var\(--terra/.test(bars), PROOF_AT);
-  check("the columns stand above the door's stretched link, so a tap there reads a month", /<div class="relative z-20 mt-auto"><div data-archetype="month-bars"/.test(html), PROOF_AT);
+  check("the columns stand above the door's stretched link, so a tap there reads a month, 20px under the line (the focal's 16 and mt-1) like the other two cards' drawings", /<div class="relative z-20 mb-3 mt-1"><div data-archetype="month-bars"/.test(html), PROOF_AT);
+  /* THE COPIES ROW IS A FOOT ROW LIKE THE OTHER TWO CARDS' (critique pass 2, P0.1): at the card's foot under its hairline (`mt-auto
+     border-t`), and with no glyph, so the three cards' foot rows read alike (the glyph chips stay on the titles, the ruling of
+     2026-09-19; a foot row is not a title). */
+  check("the copies row stands at the card's foot under its hairline (mt-auto border-t) with no glyph", /<div class="mt-auto border-t border-\[var\(--c-border\)\]"><div class="\[container-type:inline-size\]/.test(html) && !/data-row="copies"[^>]*>(?:(?!<\/dt>)[\s\S])*spine-ic/.test(html) && (html.match(/\bmt-auto\b/g) ?? []).length === 1, PROOF_AT);
   check("quiet: no figure in the accent", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), PROOF_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === 2 && figs.every((f) => /data-src="home\/archive\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);

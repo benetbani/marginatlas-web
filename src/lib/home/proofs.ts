@@ -6,7 +6,8 @@
  * at 30, one line, one second reading and one door, showing what the site reads, keeps and works out:
  *   the joins     a year of liquidation and administration notices matched by name to the register (buildJoins): failure rates by
  *                 trade where the official figures stop at broad industry; the names found drawn as a ring, its figure the names
- *                 found in 100 ("97", the critique's P1.6) and its caption the copy's words alone; door: #failures
+ *                 found in 100 ("97", the critique's P1.6) and its caption the copy's words alone, the two counts it is worked out
+ *                 from as rows at the card's foot (critique pass 2, P0.1: the card shows its working); door: #failures
  *   the archive   the months of notices kept and the register copies kept (buildArchive): what the register's monthly file drops;
  *                 the twelve months of the joins' own year drawn as columns in their own order, each the month's notices by each
  *                 notice's own date (the spec's decision 8; they sum to the first proof's figure, 31,926 today, and keep summing
@@ -14,7 +15,8 @@
  *                 door: #archive
  *   the formulas  the UK's total effective tax burden on a sole trader's profit, worked out from the year's rules, the figure /gb's
  *                 masthead prints (buildHomeAnswers' answer), its two rules as rows whose whole numbers sum to it (income tax and
- *                 National Insurance, P0.7), the masthead's own data drawn as the segment bar; door: /gb#take
+ *                 National Insurance, P0.7), each with its note in the law's own pounds read from UK_2026_27 (critique pass 2, P0.1),
+ *                 drawn as one stacked bar of the two rules and what is kept; door: /gb#take
  * Never typed: each figure is its builder's. The tax proof stands last, so the joins and the archive, quiet, stand between it and the
  * example's step 3. The year's hyphen is unbreakable (U+2011), so "2026-27" never breaks over two lines (P2.3).
  */
@@ -30,14 +32,18 @@ import type { Provenance } from "@/lib/spine/provenance";
 import type { AtlasIconId } from "@/components/brand/icons";
 
 type ProofBase = { href: string; icon: AtlasIconId; kicker: string; figure: string; line: string; prov: Provenance };
-export type ProofJoinsData = ProofBase & { ring: { value: number; figure: string; prov: Provenance; caption: string } };
+/** A count printed as a row: its name and its figure, stamped with where it was counted. */
+export type ProofCount = { key: string; label: string; value: string; prov: Provenance };
+export type ProofJoinsData = ProofBase & { ring: { value: number; figure: string; prov: Provenance; caption: string }; rows: ProofCount[] };
 /** The months drawn: each month's index in the calendar (0 is January) and its notices, the order run on from `start` ("2025-10"),
  *  the words a column's reading and the drawing's label take, and where the twelve counts came from (stamped on the drawing's root). */
 export type ProofMonths = { points: Array<{ month: number; value: number }>; start: string; counts: { words: string; aria: string }; prov: Provenance };
 export type ProofArchiveData = ProofBase & { months: ProofMonths | null; row: { label: string; value: string; note: string; prov: Provenance } };
-/** One rule of the tax: its name and its share of the profit as printed, a whole percent. */
-export type ProofRule = { key: string; label: string; value: string; prov: Provenance };
-export type ProofTaxData = ProofBase & { label: string; lands: DoorKind; rows: ProofRule[]; bar: { value: number; part?: string; rest?: string; aria: string } };
+/** One rule of the tax: its name, its share of the profit as printed (a whole percent, as text and as a number) and its note in the law's
+ *  own pounds. */
+export type ProofRule = { key: string; label: string; value: string; percent: number; note: string; prov: Provenance };
+/** The tax drawn as one stacked bar: the printed tax and what is kept, named under it ("Tax 18%", "You keep 82%"), and the bar's spoken label. */
+export type ProofTaxData = ProofBase & { lands: DoorKind; rows: ProofRule[]; bar: { value: number; part: string; rest: string; aria: string } };
 export type Proofs = { joins: ProofJoinsData; archive: ProofArchiveData; tax: ProofTaxData };
 
 /** The months a year of columns draws. */
@@ -69,6 +75,11 @@ export function proofArchive(a: Archive, j: Joins): ProofArchiveData {
   };
 }
 
+/** A pound figure as the law's own money prints it: "£12,570". */
+const gbp = (n: number) => `£${n.toLocaleString("en-GB")}`;
+/** A rate of the law as the whole percent it prints: 0.2 is "20%". */
+const rate = (r: number) => `${Math.round(r * 1000) / 10}%`;
+
 /** The three proofs, or null where any of their builders holds nothing to print. */
 export function buildProofs(): Proofs | null {
   const C = COPY.home.proofs;
@@ -88,24 +99,38 @@ export function buildProofs(): Proofs | null {
       /* THE NAMES FOUND IN 100 (P1.6): the ring prints the share, rounded, and its caption the copy's words alone; the two counts it is
          worked out from stand on About the figures' #failures. */
       ring: { value: j.share, figure: String(Math.round(j.share)), prov: { src: "home/method.json:matched_names of names", kind: "worked out" }, caption: C.joins.ring },
+      /* THE CARD'S WORKING (critique pass 2, P0.1): the two counts the ring's 97 is worked out from, each counted, as the builder stamps them. */
+      rows: [
+        { key: "names", label: C.joins.names, value: j.names.figure, prov: j.names.prov },
+        { key: "found", label: C.joins.found, value: j.matched.figure, prov: j.matched.prov },
+      ],
     },
     archive: proofArchive(a, j),
     tax: {
       href: answer.href,
       icon: "taxes",
       kicker: C.tax.kicker,
-      label: answer.kicker,
       figure: answer.figure,
       /* THE YEAR HOLDS TOGETHER (P2.3): a non-breaking hyphen, so "2026-27" never ends one line and starts the next. */
       line: C.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", UK_2026_27.taxYear.replace("-", "\u2011")),
       prov: answer.prov,
       lands: answer.lands,
-      /* ITS TWO RULES (P0.7): whole numbers that sum to the printed total, each the law engine's own part (uk_tax_on_profit.ts). */
+      /* ITS TWO RULES (P0.7): whole numbers that sum to the printed total, each the law engine's own part (uk_tax_on_profit.ts), each with
+         its note in the law's own pounds, read from the year's parameters and never typed (MODEL 10.8: a rule prints in the law's currency;
+         critique pass 2, P0.1): income tax at the basic rate above the personal allowance, Class 4 at its main rate between its two limits. */
       rows: [
-        { key: "income-tax", label: C.tax.income, value: `${uk.partsPercent.incomeTax}%`, prov: { src: `${answer.prov.src}:income tax`, kind: "worked out" } },
-        { key: "class-4", label: C.tax.class4, value: `${uk.partsPercent.class4}%`, prov: { src: `${answer.prov.src}:class 4`, kind: "worked out" } },
+        { key: "income-tax", label: C.tax.income, value: `${uk.partsPercent.incomeTax}%`, percent: uk.partsPercent.incomeTax, note: C.tax.incomeNote.replace("{rate}", rate(UK_2026_27.incomeTax.basic)).replace("{allowance}", gbp(UK_2026_27.incomeTax.personalAllowance)), prov: { src: `${answer.prov.src}:income tax`, kind: "worked out" } },
+        { key: "class-4", label: C.tax.class4, value: `${uk.partsPercent.class4}%`, percent: uk.partsPercent.class4, note: C.tax.class4Note.replace("{rate}", rate(UK_2026_27.class4.main)).replace("{from}", gbp(UK_2026_27.class4.lowerProfitsLimit)).replace("{to}", gbp(UK_2026_27.class4.upperProfitsLimit)), prov: { src: `${answer.prov.src}:class 4`, kind: "worked out" } },
       ],
-      bar: answer.bar,
+      /* THE BAR IS THE TWO RULES AND THE REST (critique pass 2, P0.1): the tax as printed and what is kept, whole numbers that sum to 100
+         (partsPercent.keep is 100 less the printed total), named under the bar in the masthead's own words. The masthead's own bar must
+         exist for the proof to draw, so the proof and /gb never disagree about whether there is a share to show. */
+      bar: {
+        value: uk.percent,
+        part: `${COPY.heroBoard.share.part} ${uk.percent}%`,
+        rest: `${COPY.heroBoard.share.rest} ${uk.partsPercent.keep}%`,
+        aria: C.tax.aria.replace("{incomeTax}", `${uk.partsPercent.incomeTax}%`).replace("{class4}", `${uk.partsPercent.class4}%`).replace("{keep}", `${uk.partsPercent.keep}%`),
+      },
     },
   };
 }

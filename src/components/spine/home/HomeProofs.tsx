@@ -7,9 +7,20 @@
  * twelve of the joins' own year drawn as quiet columns in their own order with each month's count as its reading, stamped as a
  * figure is, its register copies as a row; the
  * formulas, /gb's tax burden under its own name, in ink since the band took the page's second loud seat (plan 2026-10-10, Task 5), its two rules as rows and the
- * masthead's own data drawn as a bar of 50 cells in ink and grey (/gb draws that share as a pie). The drawings differ in kind on the
- * level and from the example's above (ring, columns, segment bar; strip, units), as clauses 55 and 64 ask. Each second reading
- * stands at its card's foot (`mt-auto`), so the height a shorter card is lent opens above it and never pools under it.
+ * masthead's own data drawn as one stacked bar of the two rules and what is kept (/gb draws that share as a pie). The drawings differ
+ * in kind on the level and from the example's above (ring, columns, stacked bar; strip, units), as clauses 55 and 64 ask.
+ *
+ * ONE ANATOMY FOR THE THREE CARDS (critique pass 2, P0.1), top to bottom: the title row, the figure, the line, the drawing 20px under
+ * the line (and 12px over the foot's hairline at the least), the foot rows under a hairline at the card's foot (`mt-auto`). So the three figures stand on one line (the tax's name for
+ * its figure moved into its line: "Total effective tax burden on a sole trader's {profit} profit, {year} rules."), the three drawings
+ * start at one height (the focal's own 16px and `mt-1`: the critique's `mt-5` measured from the line), and the height a shorter card
+ * is lent opens as one band between its drawing and the hairline, no taller than the cards' difference, never as a block under the
+ * line (the joins held about 100px of nothing there when its ring stood at `mt-auto`). The hairline is the foot's own: measured in the
+ * browser, a one-row foot with its note under its label leaves the right half of the row blank, and without a rule that blank ran up
+ * into the drawing's years row as one 96px hole; the rule is ink the page filter reads, and it ties the three feet together. The joins'
+ * ring stands in its row form with its caption beside it and the two counts it is worked out from at the foot; the archive's copies
+ * row is a foot row like them, with no glyph; the tax draws the stacked bar and its two rules as the bar's key (a swatch in each
+ * part's ink, a note in the law's own pounds), the two columns kept from 600px of card (no rule there: the rules stand beside the bar).
  *
  * DOORS THAT LOOK LIKE DOORS (the critique's P1.7): the title is the link, stretched over the whole card (`after:absolute
  * after:inset-0`), an arrow at the right end of its row, the card's edge in ink2 on hover; nothing lifts and nothing turns terracotta.
@@ -30,8 +41,10 @@ import type { ProofArchiveData, ProofJoinsData, ProofTaxData } from "@/lib/home/
 
 /** A door card: its own stacking context for the stretched link, its edge to ink2 on hover, its title at the heading rung (20 on 28). */
 const CARD = "relative isolate flex flex-col transition-colors hover:border-[var(--c-ink2)] [&_[data-rail-title]]:text-[length:var(--t-head)] [&_[data-rail-title]]:leading-7 [&_[data-rail-title]]:tracking-[-0.01em]";
-/** The tax bar's cells: fifty, so a share of 18 fills 9 exactly (the critique's P2.4; twenty-five drew 4 for it). */
-export const TAX_BAR_CELLS = 50;
+/** THE FOOT: pushed to the card's foot, its rows under a hairline (the rows' own 12px padding stands under it). */
+const FOOT = "mt-auto border-t border-[var(--c-border)]";
+/** The tax bar's two parts and their key's swatches, one ink each: income tax in ink, National Insurance in ink2, the rest in the soft grey. */
+export const TAX_INK: Record<string, string> = { "income-tax": "var(--c-ink)", "class-4": "var(--c-ink2)" };
 
 /** THE DOOR'S TITLE ROW: the card's Rail inside the link (passed as the child, so the census still reads each card's kicker off its
  *  Rail), the link stretched over the card, the arrow at the row's right end. */
@@ -53,8 +66,11 @@ export function ProofJoins({ p }: { p: ProofJoinsData }) {
         <Rail icon={p.icon} kicker={p.kicker} level={2} />
       </DoorTitle>
       <Focal figure={p.figure} words={p.line} prov={p.prov} />
-      <div className="mt-auto">
-        <Ring size="lead" tone="ink" value={p.ring.value} figure={p.ring.figure} prov={p.ring.prov} caption={p.ring.caption} />
+      <div className="mb-3 mt-1">
+        <Ring size="lead" tone="ink" layout="row" value={p.ring.value} figure={p.ring.figure} prov={p.ring.prov} caption={p.ring.caption} />
+      </div>
+      <div className={FOOT}>
+        <FactRows rows={p.rows} />
       </div>
     </Box>
   );
@@ -69,12 +85,12 @@ export function ProofArchive({ p }: { p: ProofArchiveData }) {
       <Focal figure={p.figure} words={p.line} prov={p.prov} />
       {/* THE MONTHS STAND ABOVE THE STRETCHED LINK (z-20 over its z-10): a pointer or a tap there reads a column and never opens the door. */}
       {p.months ? (
-        <div className="relative z-20 mt-auto">
+        <div className="relative z-20 mb-3 mt-1">
           <MonthBars points={p.months.points} start={p.months.start} tone="ink" counts={p.months.counts} prov={p.months.prov} />
         </div>
       ) : null}
-      <div className={p.months ? "mt-4" : "mt-auto"}>
-        <FactRows rows={[{ key: "copies", icon: "filings", label: p.row.label, value: p.row.value, note: p.row.note, prov: p.row.prov }]} />
+      <div className={FOOT}>
+        <FactRows rows={[{ key: "copies", label: p.row.label, value: p.row.value, note: p.row.note, prov: p.row.prov }]} />
       </div>
     </Box>
   );
@@ -86,20 +102,21 @@ export function ProofTax({ p }: { p: ProofTaxData }) {
       <DoorTitle href={p.href} lands={p.lands}>
         <Rail icon={p.icon} kicker={p.kicker} level={2} />
       </DoorTitle>
-      {/* TWO COLUMNS FROM 600px OF CARD (P0.7): the figure's name, the figure and its line on the left, the two rules and the bar on the
-          right; under 600px one column, the rules under the line. The rows stand at the column's foot, so lent height opens above them. */}
+      {/* TWO COLUMNS FROM 600px OF CARD (P0.7): the figure, its line and the bar on the left, the two rules, the bar's key, on the right
+          and centred in their column, lifted 12px so the first rule's text stands level with the figure rather than 12px of its row's padding
+          under it; under 600px one column, the bar 20px under the line (`mt-1` after the focal's 16, where the other
+          two cards' drawings start) and the rules at the foot under their hairline, so lent height opens between the bar and the rule. */}
       <div className="flex flex-1 flex-col [container-type:inline-size]">
-        <div className="grid flex-1 grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12">
-          <div>
-            <span data-figure-name="" className="mb-1 block text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{p.label}</span>
-            <Focal figure={p.figure} words={p.line} prov={p.prov} />
-          </div>
+        <div className="grid flex-1 grid-cols-1 grid-rows-[auto_1fr] [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:grid-rows-1 [@container(min-width:600px)]:gap-x-12">
           <div className="flex flex-col">
-            <div className="mt-auto">
-              <FactRows rows={p.rows} />
+            <Focal figure={p.figure} words={p.line} prov={p.prov} />
+            <div data-answer-bar className="mb-3 mt-1">
+              <SegmentBar bare tone="ink" label={p.bar.aria} value={p.bar.value} figure={p.figure} unit="" part={p.bar.part} rest={p.bar.rest} parts={p.rows.map((r) => ({ key: r.key, value: r.percent, fill: TAX_INK[r.key] ?? "var(--c-ink2)" }))} />
             </div>
-            <div data-answer-bar className="mt-4 max-w-[28ch]">
-              <SegmentBar bare tone="ink" segments={TAX_BAR_CELLS} label={p.bar.aria} value={p.bar.value} figure={p.figure} unit="" part={p.bar.part} rest={p.bar.rest} />
+          </div>
+          <div className="flex flex-col [@container(min-width:600px)]:justify-center">
+            <div className={`${FOOT} [@container(min-width:600px)]:-mt-3 [@container(min-width:600px)]:border-t-0`}>
+              <FactRows rows={p.rows.map((r) => ({ key: r.key, label: r.label, value: r.value, note: r.note, swatch: TAX_INK[r.key] ?? "var(--c-ink2)", prov: r.prov }))} />
             </div>
           </div>
         </div>

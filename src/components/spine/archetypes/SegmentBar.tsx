@@ -31,6 +31,12 @@
  *    soft grey, for a bar in a quiet card. The accent's pale tint is 1.07 to 1
  *    on white, so beside it the rest vanished and "You keep" named nothing a
  *    reader could see.
+ *  - THE CONTINUOUS FORM (`parts`, critique pass 2, P0.1; bare, the home's tax proof): the share drawn not as cells but as one bar of its
+ *    named parts, each part a run of the bar in its own ink (`fill`, a colour token) as wide as its value is of `total`, the rest of
+ *    the whole in the soft grey with a 1px edge in --c-line-strong so the whole is visible against a white card (the soft grey alone
+ *    is 1.19 to 1 on it). One 12px bar, 3px radius, clipped, with no padding of its own (the card sets its distance from the line); under it the two names in `part` and `rest`, each already holding its
+ *    figure ("Tax 18%", "You keep 82%"), at the micro rung in muted. The cells' comb said the 18 a second time and showed nothing of
+ *    the rules behind it; the parts are the rules, and the rows beside the bar are its key. `data-form` stays "split".
  *  - THE BARE FORM (`bare`, 2026-09-24): no label row, for a bar drawn right
  *    under the figure it pictures (the country hero's tax on profit, a
  *    city's typical pay among the cities), where a label row would print
@@ -42,7 +48,23 @@ import * as React from "react";
 
 export const SEGMENT_BAR_CELLS = 25;
 
-export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest, part, ends, bare = false, segments = SEGMENT_BAR_CELLS, tone = "accent" }: { label: string; value: number; total?: number; figure: string; unit: string; chip?: React.ReactNode; /** The unfilled part named, one micro line under the segments at the right ("Visitors 38%"), for a share of a whole whose remainder has a name. */ rest?: string; /** The filled part named under the cells at the left, the bare form's. */ part?: string; /** A scale's two ends named under the cells, the bare form's (its reading stays "scale"). */ ends?: readonly [string, string]; /** No label row: the figure is printed right above the bar (THE BARE FORM). */ bare?: boolean; segments?: number; /** "ink": the filled cells in ink2 and the rest in the soft grey (plan 2026-10-10, home reform, Task 4). */ tone?: "accent" | "ink" }) {
+export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest, part, ends, bare = false, segments = SEGMENT_BAR_CELLS, tone = "accent", parts }: { label: string; value: number; total?: number; figure: string; unit: string; chip?: React.ReactNode; /** The unfilled part named, one micro line under the segments at the right ("Visitors 38%"), for a share of a whole whose remainder has a name. */ rest?: string; /** The filled part named under the cells at the left, the bare form's. */ part?: string; /** A scale's two ends named under the cells, the bare form's (its reading stays "scale"). */ ends?: readonly [string, string]; /** No label row: the figure is printed right above the bar (THE BARE FORM). */ bare?: boolean; segments?: number; /** "ink": the filled cells in ink2 and the rest in the soft grey (plan 2026-10-10, home reform, Task 4). */ tone?: "accent" | "ink"; /** The continuous form: the share as one bar of these parts, each as wide as its value is of `total`, in its own ink; the rest in the soft grey with an edge (critique pass 2, P0.1). */ parts?: ReadonlyArray<{ key: string; value: number; fill: string }> }) {
+  if (parts && parts.length > 0 && total > 0) {
+    return (
+      <div data-archetype="segment-bar" data-visual="1" data-form="split" data-bare="1" data-continuous="1" data-bar-parts={String(parts.length)} role="img" aria-label={label}>
+        <div className="flex h-3 w-full overflow-hidden rounded-[3px]" aria-hidden="true">
+          {parts.map((p) => (
+            <span key={p.key} data-part-key={p.key} className="h-full shrink-0" style={{ width: `${Math.round((Math.max(0, p.value) / total) * 10000) / 100}%`, background: p.fill }} />
+          ))}
+          <span data-rest-fill="" className="h-full min-w-0 flex-1" style={{ background: "var(--c-soft2)", boxShadow: "inset 0 0 0 1px var(--c-line-strong)" }} />
+        </div>
+        <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" aria-hidden="true">
+          <span data-part>{part}</span>
+          {rest ? <span data-rest>{rest}</span> : null}
+        </div>
+      </div>
+    );
+  }
   const share = total > 0 ? Math.max(0, Math.min(1, value / total)) : 0;
   const filled = Math.round(share * segments);
   return (

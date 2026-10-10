@@ -1993,6 +1993,7 @@
         "src/components/spine/archetypes/MonthBars.tsx",
         "src/components/spine/archetypes/RangeStrip.tsx",
         "src/components/spine/archetypes/Ring.tsx",
+        "src/components/spine/archetypes/SegmentBar.tsx",
         "src/components/spine/charts/BarList.tsx",
         "src/components/spine/kit.tsx"
       ],

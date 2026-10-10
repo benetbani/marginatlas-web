@@ -2847,12 +2847,15 @@ export const COPY = {
      *  by trade" named no drawn thing: the notices are of four kinds, solvent liquidations among them); About's heading for the door's
      *  destination stays "Failures, trade by trade", because the door's subject is the join;
      *  the ring's caption the words alone under "97" (P1.6); the archive's line saying how a month is counted (decision 8), a column's
-     *  reading ({month} is "October 2025") and the drawing's spoken label; the tax's two rules (P0.7). */
+     *  reading ({month} is "October 2025") and the drawing's spoken label; the tax's two rules (P0.7). Critique pass 2 (P0.1): the
+     *  joins' line says what is done to each notice and leaves "matched by name" to the title, and its two counts have names; the tax's
+     *  line carries his name for the figure ("Total effective tax burden"), so the three figures stand on one line, and its two rules
+     *  take a note in the law's own pounds ({rate}, {allowance}, {from} and {to} read from the year's parameters, never typed). */
     proofs: {
       label: "Proofs",
-      joins: { kicker: "Matched by name", words: "Liquidation and administration notices in a year, matched by name.", ring: "in 100 names found in the register" },
+      joins: { kicker: "Matched by name", words: "Liquidation and administration notices a year, each looked up in the register.", ring: "in 100 names found in the register", names: "Names in notices", found: "Names found" },
       archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices a month by their own date, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
-      tax: { kicker: "Tax, rule by rule", words: "Of a sole trader's {profit} profit, from the {year} rules.", income: "Income tax", class4: "National Insurance" },
+      tax: { kicker: "Tax, rule by rule", words: "Total effective tax burden on a sole trader’s {profit} profit, {year} rules.", income: "Income tax", class4: "National Insurance", incomeNote: "{rate} above the {allowance} allowance", class4Note: "{rate} from {from} to {to}", aria: "Of 100 of profit: income tax {incomeTax}, National Insurance {class4}, you keep {keep}." },
     },
     /** THE BAND, "READ FROM THE RECORD" (plan 2026-10-10, the home reformed to ship, Task 5; the spec's decision 7 and its critique,
      *  section 4): the zone's name (a data attribute, not a printed word), its heading, its one line ({month} is the register slices'

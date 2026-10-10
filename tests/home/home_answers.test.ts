@@ -23,7 +23,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { HomePlace, HomePays } from "../../src/components/spine/home/HomeExample";
 import { buildProofs } from "../../src/lib/home/proofs";
-import { ProofTax, TAX_BAR_CELLS } from "../../src/components/spine/home/HomeProofs";
+import { ProofTax, TAX_INK } from "../../src/components/spine/home/HomeProofs";
 import { Zone } from "../../src/components/spine/zones";
 import { Box } from "../../src/components/spine/kit";
 import { RivalsCell } from "../../src/components/spine/cell/market";
@@ -33,6 +33,9 @@ import { buildHeroBoard } from "../../src/lib/spine/hero_board";
 import { ukTaxOnProfit } from "../../src/lib/spine/uk_tax_on_profit";
 import { UK_2026_27 } from "../../src/lib/uk/law/params_2026_27";
 import { red, redSummary } from "../../scripts/lib/red";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
+/** The tax bar's inks by rule; empty only if the card does not export them, so a missing export is a red check and never a crash. */
+const INK: Record<string, string> = TAX_INK ?? {};
 
 const RULE = "home-answers";
 const FILE = "src/lib/home/worked_example.ts";
@@ -199,18 +202,20 @@ if (ex) {
 }
 
 /* THE THIRD PROOF (Task 8; reformed by plan 2026-10-10, the home reformed to ship, Task 4: the critique's P0.7, P1.1, P1.7, P2.3, P2.4
-   and P2.12): the formulas, /gb's masthead figure under its own name, at 14 in ink2 over it, its line the profit and the year's rules
-   (the year's hyphen unbreakable), its two rules as rows whose whole numbers sum to it, the masthead's own data drawn as a bar of 50
-   cells in ink and grey, two inner columns from 600px of card; quiet since the band took the page's second loud seat (plan 2026-10-10, Task 5). */
+   and P2.12; and by critique pass 2, P0.1): the formulas, /gb's masthead figure with its own name opening its line ("Total effective tax
+   burden on a sole trader's {profit} profit, {year} rules", the year's hyphen unbreakable), so the three proofs' figures stand on one
+   line, its two rules as rows whose whole numbers sum to it, each with a swatch in its part's ink and a note in the law's own pounds
+   (read from UK_2026_27, never typed), the masthead's own data drawn as one stacked bar of the two rules and what is kept, two inner
+   columns from 600px of card; quiet since the band took the page's second loud seat (plan 2026-10-10, Task 5). */
 const proofs = buildProofs();
 check("the three proofs build", !!proofs, { file: "src/lib/home/proofs.ts", remedy: "build the proofs from buildJoins, buildArchive and buildHomeAnswers' answer" });
 const board = buildHeroBoard("GB");
 const uk = ukTaxOnProfit();
 if (proofs && uk) {
   const t = proofs.tax;
-  check(`the tax proof is /gb's masthead: "${t.label}" ${t.figure}, worked out`, t.label === board.answer?.label && t.figure === board.answer?.value && t.prov.src === board.answer?.prov?.src && t.prov.kind === "worked out", { file: "src/lib/home/proofs.ts", remedy: "take the tax proof from buildHomeAnswers' answer, the figure buildHeroBoard prints" });
+  check(`the tax proof is /gb's masthead: ${t.figure}, worked out, its line opening with the masthead's own name for it, "${board.answer?.label}"`, !!board.answer?.label && t.figure === board.answer?.value && t.prov.src === board.answer?.prov?.src && t.prov.kind === "worked out" && t.line.startsWith(`${board.answer.label} on `), { file: "src/lib/home/proofs.ts", remedy: "take the tax proof from buildHomeAnswers' answer, the figure buildHeroBoard prints, and open its line with the masthead's name for it (COPY.home.proofs.tax.words: critique pass 2, P0.1, so the three figures stand on one line)" });
   const year = UK_2026_27.taxYear.replace("-", "\u2011");
-  check(`its line names the profit and the year's rules, the year's hyphen unbreakable ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", year) && t.line.includes("\u2011") && !t.line.includes(UK_2026_27.taxYear) && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: the profit and the law's year, twelve words at most; src/lib/home/proofs.ts writes the year with U+2011" });
+  check(`its line names the profit and the year's rules, the year's hyphen unbreakable ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", year) && t.line.includes("\u2011") && !t.line.includes(UK_2026_27.taxYear) && t.line.includes("sole trader’s") && !t.line.includes("sole trader's") && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: \"Total effective tax burden on a sole trader’s {profit} profit, {year} rules.\" (a curly apostrophe), twelve words at most; src/lib/home/proofs.ts writes the year with U+2011" });
   /* THE HYPHEN IS WRITTEN, NOT PASTED (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 12). U+2011 looks like the
      hyphen beside it, so a literal one in the source is a character nobody can see: the builder and this file write it as the escape
      \u2011. Geist's Latin subset holds no U+2011, so the browser draws the glyph from a fallback face; Task 9's photographs look at it. */
@@ -222,30 +227,47 @@ if (proofs && uk) {
   check(`its two rules: ${t.rows.map((r) => `${r.label} ${r.value}`).join(", ")}, summing to the printed ${t.figure}`, t.rows.length === 2 && t.rows[0].label === COPY.home.proofs.tax.income && t.rows[1].label === COPY.home.proofs.tax.class4 && t.rows[0].value === `${uk.partsPercent.incomeTax}%` && t.rows[1].value === `${uk.partsPercent.class4}%` && uk.partsPercent.incomeTax + uk.partsPercent.class4 === total && total === uk.percent && t.rows.every((r) => r.prov.kind === "worked out" && r.prov.src.startsWith(`${t.prov.src}:`)), RULES_AT);
   check(`the two parts are the law engine's own (${uk.parts.incomeTax.toFixed(2)} and ${uk.parts.class4.toFixed(2)} of ${(uk.share * 100).toFixed(2)})`, Math.abs(uk.parts.incomeTax + uk.parts.class4 - uk.share * 100) < 1e-9 && uk.parts.incomeTax > uk.parts.class4, { file: "src/lib/spine/uk_tax_on_profit.ts", remedy: "return the income tax and the Class 4 contributions each as a share of the profit (parts), and their largest-remainder whole numbers over percent (partsPercent)" });
   const PROOF_DATA_AT = { file: "src/lib/home/proofs.ts", remedy: "take the tax proof's bar and door from buildHomeAnswers' answer" };
-  check("its bar takes the masthead's own data (the value, the tax and what is kept)", !!board.answerBar && t.bar.value === board.answerBar.value && t.bar.part === board.answerBar.part && t.bar.rest === board.answerBar.rest, PROOF_DATA_AT);
+  /* THE BAR IS THE TWO RULES AND THE REST (critique pass 2, P0.1): the masthead's own words for the tax and for what is kept, each with its
+     whole percent, summing to 100 (the engine's `keep` is 100 less the printed total, so "Tax 18%" and "You keep 82%"). */
+  check(`its bar takes the masthead's own words with the engine's whole percents (${t.bar.part}, ${t.bar.rest}; ${uk.partsPercent.incomeTax} + ${uk.partsPercent.class4} + ${uk.partsPercent.keep})`, !!board.answerBar && t.bar.value === uk.percent && t.bar.part === `${board.answerBar.part} ${uk.percent}%` && t.bar.rest === `${board.answerBar.rest} ${uk.partsPercent.keep}%` && uk.partsPercent.keep === 100 - uk.percent && uk.partsPercent.incomeTax + uk.partsPercent.class4 + uk.partsPercent.keep === 100, PROOF_DATA_AT);
   check(`its door is /gb's answer (${t.href})`, t.href === "/gb#take", PROOF_DATA_AT);
-  const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card with its arrow, its title an h2, the figure's name over its 30 in ink, its line, its two rules as rows and the masthead's data as a bar of 50 cells in ink and grey, in two columns from 600px of card" };
+  const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card with its arrow, its title an h2, its 30 in ink with its line (his name for the figure opening it), the masthead's data as one stacked bar of the two rules and what is kept, its two rules as the bar's key (a swatch each, a note in the law's pounds), in two columns from 600px of card" };
   const html = renderToStaticMarkup(React.createElement(ProofTax, { p: t }));
   const raw = unent(html);
   check("it is a door card to /gb's answer", /id="tax"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/gb#take" data-lands="[a-z-]+"/.test(html), PROOF_AT);
-  check(`its title is an h2, "${COPY.home.proofs.tax.kicker}", and the figure's name stands over the figure`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(COPY.home.proofs.tax.kicker))}</h2>`).test(html) && html.indexOf(`>${esc(t.label)}<`) > -1 && html.indexOf(`>${esc(t.label)}<`) < html.indexOf(`>${t.figure}<`), PROOF_AT);
-  check(`the figure's name at 14 regular in ink2, 4px over the figure ("${t.label}")`, html.includes(`<span data-figure-name="" class="mb-1 block text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">${esc(t.label)}</span>`), PROOF_AT);
+  /* THE FIGURE STANDS ON THE TITLE ROW'S NEXT LINE, WITH NOTHING OVER IT (critique pass 2, P0.1): the tax card had its figure's name over the
+     figure, so "31,926" and "12 months" stood on one line and "18%" 24px lower; the name moved into the line. */
+  check(`its title is an h2, "${COPY.home.proofs.tax.kicker}", and nothing stands between the title row and the figure (no name over it)`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(COPY.home.proofs.tax.kicker))}</h2>`).test(html) && !/data-figure-name/.test(html) && /<\/div><div class="flex flex-1 flex-col \[container-type:inline-size\]"><div class="grid[^"]*"><div class="flex flex-col"><div class="mb-4"><div data-focal="1"/.test(raw), PROOF_AT);
   /* QUIET SINCE THE BAND (plan 2026-10-10, the home reformed to ship, Task 5): the terracotta band holds the page's second loud seat, so
      the tax figure stands in ink and the card carries no accent. */
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
   check(`its figure, at 30, is in ink, and the card holds no accent (${accents.length})`, accents.length === 0 && new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\] leading-none text-\\[var\\(--c-ink\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(t.figure)}<`).test(html), PROOF_AT);
   check(`its two rules stand under the line as fact rows, each figure stamped (${t.rows.map((r) => r.value).join(", ")})`, html.indexOf(`>${esc(t.line)}</p>`) > -1 && html.indexOf('data-archetype="fact-rows" data-rows="2"') > html.indexOf(`>${esc(t.line)}</p>`) && t.rows.every((r) => html.includes(`data-row="${r.key}"`) && html.includes(`data-src="${esc(r.prov.src)}" data-kind="worked out">${r.value}</span>`)), PROOF_AT);
-  check("two columns from 600px of card: the name, the figure and the line on the left, the rules and the bar on the right", raw.includes('<div class="flex flex-1 flex-col [container-type:inline-size]"><div class="grid flex-1 grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12"><div><span data-figure-name=""') && raw.indexOf('<div class="flex flex-col"><div class="mt-auto"><div class="[container-type:inline-size]') > raw.indexOf("data-figure-name"), PROOF_AT);
-  check("its bar is drawn as the segment bar in its split form, under the measure", /data-archetype="segment-bar"/.test(html) && /data-form="split"/.test(html) && /max-w-\[28ch\]/.test(html), PROOF_AT);
-  /* THE LINE AND THE BAR AS DRAWN (fix round B; since plan 2026-10-10 P1.1 and P2.4): the line stands as the card's one small line, and
-     the bar fills the cells the masthead's share asks of it (TAX_BAR_CELLS, fifty: 18 percent is 9 exactly), in ink2, the rest in the
-     soft grey, the tax named at its left end and what is kept at its right. */
-  const filled = Math.round(Math.max(0, Math.min(1, t.bar.value / 100)) * TAX_BAR_CELLS);
+  /* ONE ANATOMY (critique pass 2, P0.1): the figure, its line, the bar at the same 20px under the line as the other two cards' drawings (the
+     focal's 16 and `mt-1`), the rules at the foot under their hairline (`mt-auto border-t`) in one column; from 600px of card two
+     columns, the figure, its line and the bar on the left, the rules on the right, centred in their column, no hairline. */
+  check("two columns from 600px of card: the figure, its line and the bar on the left, the rules centred on the right; one column under it, the bar under the line and the rules at the foot", raw.includes('<div class="flex flex-1 flex-col [container-type:inline-size]"><div class="grid flex-1 grid-cols-1 grid-rows-[auto_1fr] [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:grid-rows-1 [@container(min-width:600px)]:gap-x-12"><div class="flex flex-col"><div class="mb-4"><div data-focal="1"') && raw.includes('<div data-answer-bar="true" class="mb-3 mt-1"><div data-archetype="segment-bar"') && raw.includes('<div class="flex flex-col [@container(min-width:600px)]:justify-center"><div class="mt-auto border-t border-[var(--c-border)] [@container(min-width:600px)]:-mt-3 [@container(min-width:600px)]:border-t-0"><div class="[container-type:inline-size]') && raw.indexOf("data-answer-bar") > raw.indexOf("data-focal") && raw.indexOf('data-archetype="fact-rows"') > raw.indexOf("data-answer-bar"), PROOF_AT);
+  check("its bar is the stacked bar in its split form, one 12px bar the column's full width (no 28ch measure), not cells", /data-archetype="segment-bar"/.test(html) && /data-form="split"/.test(html) && /data-continuous="1"/.test(html) && /<div class="flex h-3 w-full overflow-hidden rounded-\[3px\]"/.test(html) && !/max-w-\[28ch\]/.test(html) && !/data-segments=/.test(html), PROOF_AT);
+  /* THE LINE AND THE BAR AS DRAWN (fix round B; since plan 2026-10-10 P1.1 and P2.4; the bar since critique pass 2, P0.1): the line stands as the
+     card's one small line, and the bar is the tax's two rules and the rest of the whole as one stacked bar: income tax's whole percent in
+     ink, National Insurance's in ink2, the rest in the soft grey with its 1px edge in --c-line-strong, the tax named at its left end ("Tax
+     18%") and what is kept at its right ("You keep 82%"). */
   const bar = html.slice(html.indexOf('data-archetype="segment-bar"'));
-  const inked = (bar.match(/style="background:var\(--c-ink2\)"/g) ?? []).length;
-  const grey = (bar.match(/style="background:var\(--c-soft2\)"/g) ?? []).length;
+  const partStyles = [...bar.matchAll(/<span data-part-key="([^"]+)" class="h-full shrink-0" style="width:([\d.]+)%;background:([^"]*)"/g)].map((m) => `${m[1]} ${m[2]}% ${m[3]}`);
+  const wantParts = t.rows.map((r) => `${r.key} ${r.percent}% ${INK[r.key]}`);
   check(`its line is drawn as the card's one small line ("${t.line}")`, html.includes(`>${esc(t.line)}</p>`), PROOF_AT);
-  check(`its bar fills ${filled} of ${TAX_BAR_CELLS} cells for ${t.bar.value.toFixed(1)} of 100, in ink2 (${inked}), the rest in the soft grey (${grey}), the tax named at the left and what is kept at the right`, html.includes(`data-filled="${filled}"`) && html.includes(`data-segments="${TAX_BAR_CELLS}"`) && inked === filled && grey === TAX_BAR_CELLS - filled && !/background:var\(--terra/.test(bar) && !!t.bar.part && !!t.bar.rest && html.includes(`<span data-part="true">${esc(t.bar.part)}</span>`) && html.includes(`<span data-rest="true">${esc(t.bar.rest)}</span>`), PROOF_AT);
+  check(`its bar draws income tax ${t.rows[0].percent}% in ink and National Insurance ${t.rows[1].percent}% in ink2, then the rest in the soft grey with its edge, the tax named at the left and what is kept at the right (${partStyles.join(", ")})`, JSON.stringify(partStyles) === JSON.stringify(wantParts) && INK["income-tax"] === "var(--c-ink)" && INK["class-4"] === "var(--c-ink2)" && /<span data-rest-fill="" class="h-full min-w-0 flex-1" style="background:var\(--c-soft2\);box-shadow:inset 0 0 0 1px var\(--c-line-strong\)"><\/span>/.test(bar) && !/background:var\(--terra/.test(bar) && !!t.bar.part && !!t.bar.rest && html.includes(`<span data-part="true">${esc(t.bar.part)}</span>`) && html.includes(`<span data-rest="true">${esc(t.bar.rest)}</span>`), PROOF_AT);
+  /* THE ROWS ARE THE BAR'S KEY, IN THE LAW'S OWN POUNDS (critique pass 2, P0.1; MODEL 10.8: a rule prints in the law's currency). Each row
+     stands a 10px swatch in its part's ink before its label and a note under it read from the year's parameters (UK_2026_27), never
+     typed: 20% above the £12,570 allowance, and 6% from £12,570 to £50,270 today. Computed here from the parameters, as the builder does,
+     and the numbers are in no source line of the proof, the card or the copy. */
+  const gbpText = (n: number) => `£${n.toLocaleString("en-GB")}`;
+  const pct = (r: number) => `${Math.round(r * 1000) / 10}%`;
+  const wantNotes = [`${pct(UK_2026_27.incomeTax.basic)} above the ${gbpText(UK_2026_27.incomeTax.personalAllowance)} allowance`, `${pct(UK_2026_27.class4.main)} from ${gbpText(UK_2026_27.class4.lowerProfitsLimit)} to ${gbpText(UK_2026_27.class4.upperProfitsLimit)}`];
+  const swatches = [...html.matchAll(/data-row="([^"]+)"[^>]*><dt[^>]*><span aria-hidden="true" data-swatch="" class="mt-\[9px\] h-2\.5 w-2\.5 shrink-0 rounded-\[2px\]" style="background:([^"]*)"/g)].map((m) => `${m[1]} ${m[2]}`);
+  check(`the two rules are the bar's key: a swatch in each part's ink (${swatches.join(", ")}) and a note in the law's pounds ("${t.rows.map((r) => r.note).join('", "')}")`, JSON.stringify(t.rows.map((r) => r.note)) === JSON.stringify(wantNotes) && JSON.stringify(swatches) === JSON.stringify(t.rows.map((r) => `${r.key} ${INK[r.key]}`)) && t.rows.every((r) => unent(html).includes(`>${esc(r.note)}</span>`)), PROOF_AT);
+  const typed = ["src/lib/home/proofs.ts", "src/components/spine/home/HomeProofs.tsx"].map((f) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n")).join("\n") + JSON.stringify(COPY.home.proofs.tax);
+  check("the law's pounds are read, never typed: no £ threshold in the proof's source or its copy", !/12,?570|50,?270|\b20%|\b6%/.test(typed.replace(/\{[a-z]+\}/g, "")), { file: "src/lib/home/proofs.ts", remedy: "read the notes' rates and limits from UK_2026_27 (incomeTax.basic, incomeTax.personalAllowance, class4.main, class4.lowerProfitsLimit, class4.upperProfitsLimit); COPY.home.proofs.tax holds placeholders only" });
   check("the door: its title the link, stretched over the card, an arrow at the row's end, the edge to ink2 on hover, the title at 20 on 28", /<a href="\/gb#take" data-lands="[a-z-]+" class="min-w-0 flex-1 text-\[var\(--c-ink\)\] no-underline after:absolute after:inset-0 after:z-10 after:rounded-\[12px\]">/.test(raw) && /<span aria-hidden="true" class="mt-1 shrink-0 [^"]*text-\[var\(--c-ink2\)\]">→<\/span>/.test(raw) && /id="tax"[^>]*class="[^"]*hover:border-\[var\(--c-ink2\)\][^"]*\[&_\[data-rail-title\]\]:text-\[length:var\(--t-head\)\] \[&_\[data-rail-title\]\]:leading-7/.test(raw), PROOF_AT);
 }
 

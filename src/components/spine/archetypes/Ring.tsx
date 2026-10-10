@@ -33,6 +33,10 @@
  *  - THE CAP (P1.6): round, but butt above 90 percent, so a nearly closed
  *    ring shows no notch at twelve o'clock where the round cap overlapped.
  *    Pinned at its edge in tests/spine/home_forms.test.ts: 91 butt, 90 round.
+ *  - `layout="row"` (critique pass 2, P0.1): the ring at the left and its caption beside it, left-aligned, at the body rung (14 on 20)
+ *    in ink2, at most 20ch wide, the two centred on one another (`flex items-center gap-4`), for a ring that stands in a card's drawing
+ *    row (the home's joins), where the column form left a ring and a caption centred in a left-aligned card. The caption still
+ *    balances its lines. The default, "column", is the ring over its centred micro caption, as every other ring draws.
  *  - THE LABEL (the closing cleanup of the same plan, item 13): the svg's
  *    account to a screen reader is the figure and the caption's words when a
  *    caption is given ("97 in 100 names found in the register"; a caption that
@@ -60,7 +64,7 @@ function wordsOf(node: React.ReactNode): string {
  *  (plan 2026-10-09, home introduction): "lead" draws a 96px ring with its figure at the lead rung (16, semibold), for a ring that is a
  *  card's second reading, so the card's one 30 stays its focal (PART 4); "focal", the default, is the 144px ring and its 30. The caption
  *  is a node, so it may hold a stamped figure. */
-export function Ring({ value, figure, caption, accent = false, prov, size = "focal", tone = "accent" }: { value: number; figure: string; caption?: React.ReactNode; accent?: boolean; prov?: Provenance | null; size?: "focal" | "lead"; /** "ink": the sweep in ink2 on the soft grey, for a quiet card (plan 2026-10-10, home reform, Task 4). */ tone?: "accent" | "ink" }) {
+export function Ring({ value, figure, caption, accent = false, prov, size = "focal", tone = "accent", layout = "column" }: { value: number; figure: string; caption?: React.ReactNode; accent?: boolean; prov?: Provenance | null; size?: "focal" | "lead"; /** "ink": the sweep in ink2 on the soft grey, for a quiet card (plan 2026-10-10, home reform, Task 4). */ tone?: "accent" | "ink"; /** "row": the caption beside the ring, left-aligned at 14 in ink2 (critique pass 2, P0.1); "column", the default, under it. */ layout?: "column" | "row" }) {
   if (!Number.isFinite(value) || value <= 0) return null;
   const share = Math.min(1, value / 100);
   const r = 44, c = 2 * Math.PI * r;
@@ -68,8 +72,9 @@ export function Ring({ value, figure, caption, accent = false, prov, size = "foc
   const lead = size === "lead";
   const ink = tone === "ink";
   const label = `${figure} ${wordsOf(caption).replace(/\s+/g, " ").trim() || "of the whole"}`;
+  const row = layout === "row";
   return (
-    <div data-archetype="ring" data-visual="1" data-share={String(Math.round(value))} className="flex flex-col items-center">
+    <div data-archetype="ring" data-visual="1" data-share={String(Math.round(value))} className={row ? "flex items-center gap-4" : "flex flex-col items-center"}>
       <div className={lead ? "relative h-24 w-24" : "relative h-36 w-36"}>
         <svg viewBox="0 0 120 120" width={lead ? "96" : "144"} height={lead ? "96" : "144"} role="img" aria-label={label} className={lead ? "block h-24 w-24" : "block h-36 w-36"}>
           <circle r={r} cx="60" cy="60" fill="none" stroke={ink ? "var(--c-soft2)" : "var(--terra-soft)"} strokeWidth="14" />
@@ -79,7 +84,7 @@ export function Ring({ value, figure, caption, accent = false, prov, size = "foc
           <span className={`fig ${lead ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-focal)]"} leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</span>
         </div>
       </div>
-      {caption ? <div data-mark-label className={`mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${lead ? " text-balance" : ""}`}>{caption}</div> : null}
+      {caption ? <div data-mark-label className={row ? "max-w-[20ch] text-balance text-left text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]" : `mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${lead ? " text-balance" : ""}`}>{caption}</div> : null}
     </div>
   );
 }

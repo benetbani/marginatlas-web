@@ -194,7 +194,7 @@ Loud today: 2 of 3, as `LOUD_SEATS` in industry-view.tsx declares (a LIT seat is
 | pays | HomePays | P.title | kit |  |
 | joins | ProofJoins | p.kicker | Ring |  |
 | archive | ProofArchive | p.kicker | MonthBars |  |
-| tax | ProofTax | p.kicker | FactRows |  |
+| tax | ProofTax | p.kicker | SegmentBar |  |
 | pro | ProBand | Pro | FactRows |  |
 | cities | HomeCities | The UK's cities | CityRows |  |
 

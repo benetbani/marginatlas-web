@@ -16,6 +16,9 @@
  *     1024, 4 from it). Each off by default. (`headless`, a mark with no figure, is gone: the home's typical prints its figure.)
  *   - (plan 2026-10-10, home reform, critique pass 2, P0.2) RangeStrip's `namesAbove`: every mark's name over its figure above the
  *     track, the round values alone under it, so no column holds two figures one under the other; off by default.
+ *   - (the same pass, P0.1) Ring `layout="row"` (the caption beside the ring, left-aligned at 14 in ink2), FactRows' `swatch` (a 10px
+ *     key square in the glyph's place) and SegmentBar's `parts` (one continuous bar of named parts and the rest, in place of the
+ *     cells); each off by default, so the default drawings are what they were.
  *   - (the closing cleanup of the same plan) MonthBars `prov`: the drawing's root stamped with where its twelve counts came from
  *     (data-src, data-kind); without it the drawing is what it was.
  *
@@ -30,6 +33,7 @@ import { Fig, Rail, StepMark } from "../../src/components/spine/kit";
 import { FactRows } from "../../src/components/spine/archetypes/FactRows";
 import { Ring } from "../../src/components/spine/archetypes/Ring";
 import { MonthBars } from "../../src/components/spine/archetypes/MonthBars";
+import { SegmentBar } from "../../src/components/spine/archetypes/SegmentBar";
 import { BarList } from "../../src/components/spine/charts/BarList";
 import { RangeStrip } from "../../src/components/spine/archetypes/RangeStrip";
 import { CountUnits } from "../../src/components/spine/archetypes/BentoBand";
@@ -138,6 +142,29 @@ check("a ring's caption may hold a stamped figure", /data-mark-label="true"[^>]*
    22ch box broke as "in 100 names found in the" and "register" at every width. Only the lead ring, which only the home's joins draws,
    takes text-balance, so no other ring's caption moves. */
 check("a lead ring's caption balances its lines (text-balance on its element), and a default ring's caption keeps its classes without it", /<div data-mark-label="true" class="[^"]*\btext-balance\b[^"]*">/.test(lead) && /<div data-mark-label="true" class="mt-2 max-w-\[22ch\] text-center text-\[length:var\(--t-micro\)\] leading-snug text-\[var\(--c-muted\)\]">of new firms, after 5 years<\/div>/.test(big), RING, "Ring size lead: text-balance on the caption's element, and nothing added to a default ring's caption");
+
+/* RING'S ROW LAYOUT (critique pass 2, P0.1). The joins' ring stood centred in a left-aligned card with its caption centred under it, and
+   the card's spare height opened above it. `layout="row"` draws the 96px ring at the left and the caption beside it, left-aligned at 14
+   on 20 in ink2, within 20ch and balanced, the two centred on one another; the default column form is untouched (the checks above). */
+const rowRing = renderToStaticMarkup(React.createElement(Ring, { value: 97.2, figure: "97", size: "lead", tone: "ink", layout: "row", caption: "in 100 names found in the register" }));
+check("a ring in its row form stands the caption beside the ring (flex items-center gap-4), left-aligned at 14 on 20 in ink2 within 20ch, balanced", /<div data-archetype="ring"[^>]*class="flex items-center gap-4">/.test(rowRing) && /<div data-mark-label="true" class="max-w-\[20ch\] text-balance text-left text-\[length:var\(--t-body\)\] leading-5 text-\[var\(--c-ink2\)\]">in 100 names found in the register<\/div>/.test(rowRing) && /class="relative h-24 w-24"/.test(rowRing) && !/flex-col|text-center/.test(rowRing), RING, "Ring layout row: the root flex items-center gap-4; the caption max-w-[20ch] text-balance text-left at --t-body, leading-5, --c-ink2");
+check("a ring's default layout is the column it was: flex flex-col items-center, the caption centred under it", /<div data-archetype="ring"[^>]*class="flex flex-col items-center">/.test(lead) && /<div data-archetype="ring"[^>]*class="flex flex-col items-center">/.test(big), RING, "Ring: layout defaults to column, the root flex flex-col items-center");
+
+/* FACTROWS' SWATCH (critique pass 2, P0.1). A row may carry a colour token, drawn as a 10px key square in the glyph's place, centred on the
+   label's first line, so the home's tax rows are the stacked bar's key. A row with a glyph draws the glyph, and one with neither draws
+   neither, as before. */
+const swatched = renderToStaticMarkup(React.createElement(FactRows, { rows: [{ key: "a", label: "Income tax", value: "14%", note: "20% above the £12,570 allowance", swatch: "var(--c-ink)" }, { key: "b", label: "Both", value: "1", icon: "filings", swatch: "var(--c-ink2)" }, { key: "c", label: "Plain", value: "2" }] }));
+const rowOf = (html: string, k: string) => new RegExp(`data-row="${k}"[\\s\\S]*?</dd>`).exec(html)?.[0] ?? "";
+check("a row's swatch is a 10px square with 2px radius in its colour before the label, centred on the label's first line; a row with a glyph draws the glyph; a row with neither draws neither", /<span aria-hidden="true" data-swatch="" class="mt-\[9px\] h-2\.5 w-2\.5 shrink-0 rounded-\[2px\]" style="background:var\(--c-ink\)"><\/span>/.test(rowOf(swatched, "a")) && /spine-ic/.test(rowOf(swatched, "b")) && !/data-swatch/.test(rowOf(swatched, "b")) && !/data-swatch|spine-ic/.test(rowOf(swatched, "c")) && !/data-swatch/.test(glyphed), FACT, "FactRows swatch: a 10px (h-2.5 w-2.5) square, rounded-[2px], mt-[9px] to centre on the label's first line, in the glyph's place");
+
+/* SEGMENTBAR'S CONTINUOUS FORM (critique pass 2, P0.1). The tax proof's 50 cells repeated the 18 and showed nothing of the two rules behind
+   it: `parts` draws one 12px bar of the named parts, each as wide as its value, the rest in the soft grey with a 1px edge so the whole is
+   visible, the two names under it at the micro rung; the cells form is what it was. */
+const SEGMENTS = "src/components/spine/archetypes/SegmentBar.tsx";
+const stacked = renderToStaticMarkup(React.createElement(SegmentBar, { bare: true, tone: "ink", label: "Of 100 of profit", value: 18, figure: "18%", unit: "", part: "Tax 18%", rest: "You keep 82%", parts: [{ key: "a", value: 14, fill: "var(--c-ink)" }, { key: "b", value: 4, fill: "var(--c-ink2)" }] }));
+const cells = renderToStaticMarkup(React.createElement(SegmentBar, { bare: true, tone: "ink", label: "Of 100 of profit", value: 18, figure: "18%", unit: "", part: "Tax", rest: "You keep" }));
+check("the stacked bar is one 12px bar, 3px radius, clipped: the parts at 14% in ink and 4% in ink2, the rest in the soft grey with its 1px edge, the two names under it", /<div class="flex h-3 w-full overflow-hidden rounded-\[3px\]" aria-hidden="true"><span data-part-key="a" class="h-full shrink-0" style="width:14%;background:var\(--c-ink\)"><\/span><span data-part-key="b" class="h-full shrink-0" style="width:4%;background:var\(--c-ink2\)"><\/span><span data-rest-fill="" class="h-full min-w-0 flex-1" style="background:var\(--c-soft2\);box-shadow:inset 0 0 0 1px var\(--c-line-strong\)"><\/span><\/div>/.test(stacked) && /data-continuous="1"/.test(stacked) && /data-form="split"/.test(stacked) && !/data-segments=/.test(stacked) && /<span data-part="true">Tax 18%<\/span><span data-rest="true">You keep 82%<\/span>/.test(stacked) && /role="img" aria-label="Of 100 of profit"/.test(stacked), SEGMENTS, "SegmentBar parts: one h-3 rounded-[3px] overflow-hidden bar, each part a span as wide as its share in its own fill, the rest --c-soft2 with an inset 1px --c-line-strong edge, the names under at the micro rung");
+check("without parts the bar is the cells it was: 25 cells, no continuous form", /data-segments="25"/.test(cells) && (cells.match(/<span class="h-3 min-w-0 flex-1 rounded-\[2px\]"/g) ?? []).length === 25 && !/data-continuous/.test(cells), SEGMENTS, "SegmentBar: parts off by default, the cells form untouched");
 
 /* THE RING'S LABEL IS ITS CAPTION'S, AND ITS CAP TURNS AT 90 (the closing cleanup of plan 2026-10-10, the home reformed to ship, item 13).
    The svg was labelled "97 of the whole" beside a caption that says what the 97 is of ("in 100 names found in the register"), so a

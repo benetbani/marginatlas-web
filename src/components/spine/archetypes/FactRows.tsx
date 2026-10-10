@@ -14,6 +14,9 @@
  *    between 16 and 30 under it), 12 ON 16 FOR A NOTE; tabular figures, right-aligned in their column (DISTANCES 5.7, rule 2).
  *  - A HAIRLINE BETWEEN ROWS, NONE ABOVE THE FIRST; 12px of padding top and bottom around the glyph's 28px tile, the label's 20px
  *    line centred on it, so a one-line row is 52px and a row with its note 64px.
+ *  - A SWATCH FOR A KEY (critique pass 2, P0.1): a row may carry `swatch`, a colour token, drawn as a 10px square (2px radius) before the
+ *    label in the glyph's place, centred on the label's first line, so the rows are a drawing's key (the home's tax bar: each rule's
+ *    row stands in its part's ink). A row with a glyph draws the glyph; a row with neither draws neither, as before.
  *  - NO EMPTY ROW: a fact without a value is not drawn, and no facts draw nothing.
  *  - `data-archetype="fact-rows"`, `data-row` and `data-label` on each, so the harness reads its rows like any other.
  */
@@ -28,6 +31,8 @@ export type FactRow = {
   value: React.ReactNode;
   note?: string | null;
   icon?: AtlasIconId;
+  /** A colour token for the row's key square, in the glyph's place (critique pass 2, P0.1); a row with an icon draws the icon. */
+  swatch?: string;
   confidence?: "measured" | "modeled" | "placeholder";
   /** Where the row's figure came from (src/lib/spine/provenance.ts), stamped on its figure; a row without one stamps nothing. */
   prov?: Provenance | null;
@@ -57,6 +62,8 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
           <span aria-hidden className="shrink-0">
             <Ico id={r.icon} tone="terra" />
           </span>
+        ) : r.swatch ? (
+          <span aria-hidden data-swatch="" className="mt-[9px] h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ background: r.swatch }} />
         ) : null}
         <span className="min-w-0">
           {/* THE LABEL'S FIRST LINE IS CENTRED ON THE TILE (28): a 20px line 4px down, and the figure the same, so the glyph, the
