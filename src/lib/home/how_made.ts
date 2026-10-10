@@ -46,3 +46,29 @@ export function buildHowMade(): HowMade | null {
     link: { href: "/about-data", label: C.link },
   };
 }
+
+/* THE JOIN AND THE PAGES READ, APART (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 2; the home's spec of
+   2026-10-09, section 6: how figures are made gives way, "its join figures become proof 1; 'London trade pages 111 of 138' moves to
+   About the figures (#reading)"). The same counts buildHowMade reads, each said on its own. */
+
+export type JoinCount = { value: number; figure: string; prov: Provenance };
+export type Joins = { notices: JoinCount; names: JoinCount; matched: JoinCount; /** The names found, of 100 names: the first proof's ring. */ share: number };
+
+/** The year of notices and their match by name to the register (data/home/method.json), or null where the counts do not nest. */
+export function buildJoins(): Joins | null {
+  const m = methodJson as unknown as Export;
+  if (![m.notices, m.names, m.matched_names].every((v) => Number.isInteger(v) && v > 0) || m.matched_names > m.names || m.names > m.notices) return null;
+  const count = (key: "notices" | "names" | "matched_names", value: number): JoinCount => ({ value, figure: n(value), prov: { src: `home/method.json:${key}`, kind: "counted" } });
+  return { notices: count("notices", m.notices), names: count("names", m.names), matched: count("matched_names", m.matched_names), share: (m.matched_names / m.names) * 100 };
+}
+
+export type PagesRead = { printing: number; served: number; prov: Provenance };
+
+/** The London trade pages that print a takings figure read from the band counts, of the trade pages served: the count the home's card
+ *  printed until plan 2026-10-09, said on About the figures' #reading since. */
+export function londonPagesRead(): PagesRead | null {
+  const served = Object.keys(SLUG_TO_INDUSTRY).filter((s) => !hasOwn(RETIRED, s));
+  const printing = served.filter((s) => londonTradeSales(s)?.q50.open === false).length;
+  if (printing === 0) return null;
+  return { printing, served: served.length, prov: { src: "uk/registers/turnover.json:London trades with takings read from the band counts, of the trade pages served", kind: "counted" } };
+}

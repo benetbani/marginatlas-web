@@ -15,6 +15,9 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
+import * as React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { buildArchive, monthName, daysWords } from "../../src/lib/home/archive";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-archive";
@@ -64,7 +67,28 @@ if (held && d) {
   }
 }
 
+/* THE BUILDER (plan Task 2): src/lib/home/archive.ts, the months and the copies counted from the slice, as a reader says them. */
+const BUILT_AT = { file: "src/lib/home/archive.ts", remedy: "count the months and the copies from data/home/archive.json and say them as a reader does (monthName, daysWords)" };
+const built = buildArchive();
+check("the archive builds", !!built, BUILT_AT);
+if (built && d) {
+  check(`the months are the slice's: ${built.months}, ${built.firstName} to ${built.lastName}`, built.months === d.gazette.months.length && built.firstName === monthName(d.gazette.first) && built.lastName === monthName(d.gazette.last), BUILT_AT);
+  check(`the register copies are the slice's: ${built.copies}, ${built.copiesWords}`, built.copies === d.register.copies.length && built.copiesWords === daysWords(d.register.copies), BUILT_AT);
+  check("a month and days as a reader says them", monthName("2025-10") === "October 2025" && daysWords(["2026-05-01", "2026-10-01"]) === "1 May and 1 October 2026" && daysWords(["2026-12-01", "2027-01-01"]) === "1 December 2026 and 1 January 2027" && daysWords(["2026-05-01"]) === "1 May 2026", BUILT_AT);
+  check("every figure says where it came from, counted", built.prov.months.src.startsWith("home/archive.json:") && built.prov.copies.src.startsWith("home/archive.json:") && built.prov.months.kind === "counted" && built.prov.copies.kind === "counted", BUILT_AT);
+}
+
 async function main(): Promise<void> {
+  /* ABOUT THE FIGURES' #archive (plan Task 2), where the second proof's door lands: the builder's months and copies, no source named. */
+  (globalThis as unknown as { React: typeof React }).React = React;
+  const { default: AboutDataPage } = await import("../../src/app/(site)/about-data/page");
+  const about = renderToStaticMarkup(React.createElement(AboutDataPage));
+  const at = about.indexOf('id="archive"');
+  const section = at < 0 ? "" : about.slice(at, about.indexOf("<h2", at + 1)).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+  const ABOUT_AT = { file: "src/app/(site)/about-data/page.tsx", remedy: "print #archive from buildArchive (src/lib/home/archive.ts): the months, the first and the last, the register copies' days; no source named there" };
+  check("About the figures holds #archive", at > 0, ABOUT_AT);
+  if (built) check(`#archive prints the builder's months and copies (${built.months} months, ${built.firstName} to ${built.lastName}, ${built.copiesWords})`, section.includes(`${built.months} months of notices`) && section.includes(`${built.firstName} to ${built.lastName}`) && section.includes(built.copiesWords), ABOUT_AT);
+  check("#archive names no source (R-002: the sources section does)", !/Gazette|Companies House/.test(section), ABOUT_AT);
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log(homePassLine("home/archive", held));
 }

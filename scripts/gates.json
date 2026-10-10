@@ -1876,6 +1876,7 @@
       "reads": [
         "data/home/method.json",
         "data/uk/registers/failures.json",
+        "src/app/(site)/about-data/page.tsx",
         "src/components/spine/home/HomeHowMade.tsx",
         "src/lib/home/how_made.ts",
         "src/lib/spine/copy.ts"
@@ -1890,7 +1891,9 @@
       "asserts": "THE ARCHIVE, KEPT AND DATED (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, section 4, proof 2, approved as written on 2026-10-09; plan docs/superpowers/pla",
       "reads": [
         "data/home/archive.json",
-        "data/home/method.json"
+        "data/home/method.json",
+        "src/app/(site)/about-data/page.tsx",
+        "src/lib/home/archive.ts"
       ],
       "claims": []
     },

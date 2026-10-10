@@ -1,5 +1,7 @@
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { UK_SOURCES, WORLD_SOURCES, type UkSource } from "@/lib/spine/uk_sources";
+import { buildJoins, londonPagesRead } from "@/lib/home/how_made";
+import { buildArchive } from "@/lib/home/archive";
 
 export const revalidate = 86400;
 
@@ -10,6 +12,11 @@ export const metadata = {
 };
 
 export default function AboutDataPage() {
+  /* THE HOME'S PROOFS OPEN HERE (plan 2026-10-09, home introduction, Task 2): the join (#failures), the archive (#archive) and the
+     London trade pages read from the band counts (#reading), each figure its builder's, never typed. */
+  const joins = buildJoins();
+  const pages = londonPagesRead();
+  const archive = buildArchive();
   return (
     /* ON A CARD, converged onto the shell /privacy, /terms and /cookies
        already use (`LegalPage`, whose own comment says it matched THIS page's
@@ -69,6 +76,12 @@ export default function AboutDataPage() {
             <span><strong>Estimate.</strong> Our judgement where no register holds the figure, and the line under it says so: the sales a London restaurant needs to break even, or the cost to open at London prices.</span>
           </li>
         </ul>
+        {pages ? (
+          <p className="mt-3 text-ink-800">
+            {pages.printing} of the {pages.served} London trade pages print a typical business&rsquo;s yearly sales, worked out from the
+            register&rsquo;s sales bands.
+          </p>
+        ) : null}
         <p className="mt-3 text-sm text-ink-700">
           Outside the United Kingdom most figures are estimates from national statistics and a trade&rsquo;s typical shape, and each
           page says so once, at the foot of its first card. Where the figures come from is listed under{" "}
@@ -163,6 +176,35 @@ export default function AboutDataPage() {
             <span><strong>Rent.</strong> The official rent estimate is of April 2021, not today&rsquo;s asking rents. Pubs and hotels are valued on their takings and have none.</span>
           </li>
         </ul>
+      </section>
+
+      <section className="mt-10">
+        {/* FAILURES, TRADE BY TRADE (plan 2026-10-09, home introduction, proof 1): the join the home's first proof opens on, its
+            figures from src/lib/home/how_made.ts (data/home/method.json), never typed; no source named here (#sources does). */}
+        <h2 id="failures" className="scroll-mt-24 text-xl font-semibold text-ink-900">Failures, trade by trade</h2>
+        {joins ? (
+          <p className="mt-3 text-ink-800">
+            The official failure figures stop at broad industries. We read a year of liquidation and administration notices,{" "}
+            {joins.notices.figure} of them, and look up each company&rsquo;s name in the company register, which gives its trade:{" "}
+            {joins.matched.figure} of the {joins.names.figure} names are found. A trade&rsquo;s failure rate is its companies that
+            became insolvent in the year, for every 100 of its live companies. Solvent closures are read and left out of the rate.
+          </p>
+        ) : null}
+      </section>
+
+      <section className="mt-10">
+        {/* KEPT AND DATED (plan 2026-10-09, home introduction, proof 2): what the site's own archive holds, from
+            src/lib/home/archive.ts (data/home/archive.json, its log's own count), never typed. */}
+        <h2 id="archive" className="scroll-mt-24 text-xl font-semibold text-ink-900">Kept and dated</h2>
+        {archive ? (
+          <p className="mt-3 text-ink-800">
+            The company register&rsquo;s free file lists only the companies alive today and is replaced every month, so a month not
+            kept is gone. Each month we keep a dated copy of it, and the month&rsquo;s liquidation and administration notices as
+            published. The archive
+            holds {archive.months} months of notices, {archive.firstName} to {archive.lastName}, and copies of the register of{" "}
+            {archive.copiesWords}.
+          </p>
+        ) : null}
       </section>
 
       <section className="mt-10">

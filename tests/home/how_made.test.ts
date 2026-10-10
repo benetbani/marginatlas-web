@@ -28,7 +28,7 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
-import { buildHowMade } from "../../src/lib/home/how_made";
+import { buildHowMade, buildJoins, londonPagesRead } from "../../src/lib/home/how_made";
 import { londonTradeSales } from "../../src/lib/uk/registers/london_trade";
 import { tradeHeadFigure } from "../../src/lib/spine/trade_head";
 import { buildLondonTradeSales } from "../../src/lib/spine/country_depth_rows";
@@ -128,5 +128,35 @@ if (built) {
   check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.howMade.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
 }
 
-if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log(homePassLine("home/how_made", held));
+/* THE JOIN AND THE PAGES READ, APART (plan 2026-10-09, home introduction, Task 2): the join's three counts, each stamped, and the share
+   of names found (the first proof's ring); the London trade pages read from the band counts, said on About the figures. */
+const JOINS_AT = { file: "src/lib/home/how_made.ts", remedy: "read the join's three counts from data/home/method.json in buildJoins, each stamped counted, and count the pages in londonPagesRead as their pages print" };
+const joins = buildJoins();
+check("the join builds", !!joins, JOINS_AT);
+if (joins && d) {
+  const n = (v: number) => v.toLocaleString("en-US");
+  check(`the join's counts are the slice's (${joins.notices.figure} notices, ${joins.matched.figure} of ${joins.names.figure} names)`, joins.notices.value === d.notices && joins.names.value === d.names && joins.matched.value === d.matched_names && joins.notices.figure === n(d.notices) && joins.names.figure === n(d.names) && joins.matched.figure === n(d.matched_names), JOINS_AT);
+  check(`the share of names found is the slice's (${joins.share.toFixed(1)} of 100)`, Math.abs(joins.share - (100 * d.matched_names) / d.names) < 1e-9, JOINS_AT);
+  check("every count says where it came from, counted", [joins.notices, joins.names, joins.matched].every((c) => c.prov.src.startsWith("home/method.json:") && c.prov.kind === "counted"), JOINS_AT);
+}
+const pages = londonPagesRead();
+const howMade = buildHowMade();
+check(`the pages read are the count the home's card printed (${pages ? `${pages.printing} of ${pages.served}` : "none"})`, !!pages && !!howMade && howMade.rows.find((r) => r.key === "trades")?.value === `${pages.printing.toLocaleString("en-US")} of ${pages.served.toLocaleString("en-US")}`, JOINS_AT);
+
+async function main(): Promise<void> {
+  /* ABOUT THE FIGURES (plan Task 2): #failures prints the join's figures, #reading the pages read; no source named in either. */
+  (globalThis as unknown as { React: typeof React }).React = React;
+  const { default: AboutDataPage } = await import("../../src/app/(site)/about-data/page");
+  const about = renderToStaticMarkup(React.createElement(AboutDataPage));
+  const section = (id: string) => { const at = about.indexOf(`id="${id}"`); return at < 0 ? "" : about.slice(at, about.indexOf("<h2", at + 1)).replace(/<[^>]+>/g, " ").replace(/\s+/g, " "); };
+  const ABOUT_AT = { file: "src/app/(site)/about-data/page.tsx", remedy: "print #failures from buildJoins and #reading's pages line from londonPagesRead (src/lib/home/how_made.ts), never typed, no source named" };
+  check("About the figures holds #failures", /id="failures"/.test(about), ABOUT_AT);
+  if (joins) check(`#failures prints the notices, ${joins.notices.figure}, and the names found, ${joins.matched.figure} of the ${joins.names.figure}`, section("failures").includes(joins.notices.figure) && section("failures").includes(`${joins.matched.figure} of the ${joins.names.figure}`), ABOUT_AT);
+  if (pages) check(`#reading prints the London trade pages read from the band counts, ${pages.printing} of the ${pages.served}`, section("reading").includes(`${pages.printing} of the ${pages.served} London trade pages`), ABOUT_AT);
+  check("neither names a source (R-002: the sources section does)", !/Gazette|Companies House/.test(section("failures") + section("reading")), ABOUT_AT);
+
+  if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+  console.log(homePassLine("home/how_made", held));
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });
