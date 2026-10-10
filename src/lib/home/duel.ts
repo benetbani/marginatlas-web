@@ -7,10 +7,11 @@
  * feed (registers/uk/build_editorial.py), never typed here.
  *
  * In the trade pages' own unit, companies insolvent a year of 100 (a London trade page prints "2.9 of 100 UK companies insolvent
- * a year"), so the home page and the page a bar opens print one figure for one fact. The feed's rates are per 1,000 with one
+ * a year"), so /gb, where the duel is drawn (src/components/spine/country/Duel.tsx, in chapter 04; the home drew it until plan
+ * 2026-10-09), and the page a bar opens print one figure for one fact. The feed's rates are per 1,000 with one
  * decimal; one decimal per 100 is the same figure rounded, and the rounding is the trade page's.
  *
- * The drawing is the site's ranked bars with the set's two highest and two lowest (the form draws its bars from four rows), no
+ * /gb's drawing is the site's ranked bars with the set's two highest and two lowest (the form draws its bars from four rows), no
  * member featured (a failure ranking names nobody best), and the set's middle as the card's figure, a figure no bar prints.
  *
  * THE 45-DAY RULE: a monthly item prints for 45 days from the day its data ends (`as_of`, read by the feed off its table's own

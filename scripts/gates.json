@@ -1621,6 +1621,9 @@
       "browser": false,
       "asserts": "THE WORKED EXAMPLE AND THE THIRD PROOF ON THE HOME PAGE (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, sections 2 and 4, approved as written on 2026-10-09;",
       "reads": [
+        "scratchpad/harness/pages/cell-gb-london-restaurants.html",
+        "scratchpad/harness/pages/country-GB.html",
+        "scratchpad/harness/pages/home-gb.html",
         "src/components/spine/home/HomeExample.tsx",
         "src/components/spine/home/HomeProofs.tsx",
         "src/lib/hero-words.ts",
@@ -1636,7 +1639,7 @@
       "script": "tests/home/home_bands.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "THE HOME PAGE'S PRO SAID ONCE, ITS NOTEBOOK, AND THE LAUNCH CHECK'S COUNTS (milestone 3, masterplan steps 35 and 36; his ruling 23 of 2026-09-26: \"a quiet band after the search and the UK answers: wha",
+      "asserts": "THE HOME PAGE'S PRO SAID ONCE, AND THE LAUNCH CHECK'S COUNTS (milestone 3, masterplan step 35; his ruling 23 of 2026-09-26: \"a quiet band after the search and the UK answers: what Pro opens, the price",
       "reads": [
         "scripts/verify_launch_ready.ts",
         "src/components/spine/home/home-view.tsx"
@@ -1814,6 +1817,7 @@
         "data/editorial/editorial_feed.json",
         "scratchpad/harness/pages/cell-gb-london-restaurants.html",
         "scratchpad/harness/pages/country-GB.html",
+        "scratchpad/harness/pages/home-gb.html",
         "src/components/spine/country/Duel.tsx",
         "src/lib/home/duel.ts"
       ],
@@ -1843,6 +1847,7 @@
         "data/home/city_survival.json",
         "data/uk/registers/survival.json",
         "scratchpad/harness/pages/country-GB.html",
+        "scratchpad/harness/pages/home-gb.html",
         "src/components/spine/country/FirmsLast.tsx",
         "src/components/spine/country/country-view.tsx"
       ],
@@ -1858,6 +1863,7 @@
         "data/cities/city_list_v1.json",
         "data/economic_indicators/country_profile_v2.json",
         "data/home/new_companies.json",
+        "scratchpad/harness/pages/home-gb.html",
         "scratchpad/harness/pages/openings-world.html",
         "src/components/spine/openings/NewCompanies.tsx",
         "src/components/spine/openings/openings-view.tsx"
@@ -1873,6 +1879,7 @@
       "reads": [
         "data/cities/city_list_v1.json",
         "data/home/us_restaurants.json",
+        "scratchpad/harness/pages/home-gb.html",
         "scratchpad/harness/pages/openings-world.html",
         "src/components/spine/openings/UsRestaurants.tsx",
         "src/components/spine/openings/openings-view.tsx"
@@ -1884,16 +1891,16 @@
       "script": "tests/home/how_made.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4; his ideas of 2026-10-08, \"the deep techniques used to derive data\", \"unmatched archival capability\" and \"the global coverage\", merged a",
+      "asserts": "THE JOINS, THE HOME'S FIRST PROOF (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, sections 4 and 6, approved as written on 2026-10-09; plan docs/superpowers",
       "reads": [
         "data/home/method.json",
         "data/uk/registers/failures.json",
+        "scratchpad/harness/pages/home-gb.html",
         "src/app/(site)/about-data/page.tsx",
-        "src/components/spine/home/HomeHowMade.tsx",
         "src/components/spine/home/HomeProofs.tsx",
+        "src/components/spine/home/home-view.tsx",
         "src/lib/home/how_made.ts",
-        "src/lib/home/proofs.ts",
-        "src/lib/spine/copy.ts"
+        "src/lib/home/proofs.ts"
       ],
       "claims": []
     },
@@ -1906,8 +1913,10 @@
       "reads": [
         "data/home/archive.json",
         "data/home/method.json",
+        "scratchpad/harness/pages/home-gb.html",
         "src/app/(site)/about-data/page.tsx",
         "src/components/spine/home/HomeProofs.tsx",
+        "src/components/spine/home/home-view.tsx",
         "src/lib/home/archive.ts",
         "src/lib/home/proofs.ts"
       ],
@@ -3122,14 +3131,12 @@
       "script": "tests/trust/home_shape.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "THE REBUILT HOME'S SHAPE (his instruction of 2026-10-07: \"reform home drastically\"; he called the live home \"catastrophically bad\").",
+      "asserts": "THE HOME AS AN INTRODUCTION (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, approved as written on 2026-10-09; plan docs/superpowers/plans/2026-10-09-home-i",
       "reads": [
-        "data/home/us_restaurants.json",
         "scratchpad/harness/pages/home-gb.html",
         "src/app/page.tsx",
         "src/components/NavigatorForm.tsx",
-        "src/components/spine/archetypes/CityCards.tsx",
-        "src/components/spine/home/HomeFirmsLast.tsx",
+        "src/components/StructuredData.tsx",
         "src/components/spine/home/home-view.tsx"
       ],
       "claims": []

@@ -235,7 +235,8 @@ export const UK_SOURCES: readonly UkSource[] = [
   },
 ];
 
-/** THE HOME PAGE'S SOURCES OUTSIDE THE UNITED KINGDOM (plan 2026-10-08, home sections 2 and 3): named here, the one module allowed
+/** THE SOURCES OUTSIDE THE UNITED KINGDOM (plan 2026-10-08, home sections 2 and 3; on /new-businesses since plan 2026-10-09, home
+ *  introduction): named here, the one module allowed
  *  to name a source, and printed on About the figures under the UK's list. An attribution line prints only where the record names
  *  the licence (the rule above); each section's export names its entry by `key` (data/home/manifest.json), and its gate holds it. */
 export const WORLD_SOURCES: readonly UkSource[] = [
@@ -245,7 +246,7 @@ export const WORLD_SOURCES: readonly UkSource[] = [
     names: ["World Bank"],
     attribution: null,
     items: [
-      { prints: "New limited companies per 1,000 people of working age, in Latin America and the Caribbean and in Africa, on the home page, leaving out countries with a labour force under one million, and those with no figure for the year", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
+      { prints: "New limited companies per 1,000 people of working age, in Latin America and the Caribbean and in Africa, on the page of where new businesses open, leaving out countries with a labour force under one million, and those with no figure for the year", title: "World Development Indicators: new business density (IC.BUS.NDNS.ZS), and the labour force (SL.TLF.TOTL.IN) that sets the list's floor", url: "https://data.worldbank.org/indicator/IC.BUS.NDNS.ZS" },
     ],
   },
   {
@@ -254,7 +255,7 @@ export const WORLD_SOURCES: readonly UkSource[] = [
     names: ["Bureau of Labor Statistics"],
     attribution: null,
     items: [
-      { prints: "Full-service restaurants in the US metro areas the site has city pages for, in two years, on the home page", title: "Quarterly Census of Employment and Wages, annual averages, private establishments, industry 722511", url: "https://www.bls.gov/cew/" },
+      { prints: "Full-service restaurants in the US metro areas the site has city pages for, in two years, on the page of where new businesses open", title: "Quarterly Census of Employment and Wages, annual averages, private establishments, industry 722511", url: "https://www.bls.gov/cew/" },
     ],
   },
 ];

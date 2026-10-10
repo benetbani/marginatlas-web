@@ -4,9 +4,9 @@
  * data/editorial/editorial_feed.json.
  *
  * Holds: the feed's item names what it ranks (boroughs) and what it holds (one trade), with its floor, its middle and its data's
- * end; the list's four rows are the set's two highest and two lowest (as the duel beside it), each the feed's figure, each name three words or fewer,
+ * end; the list's four rows are the set's two highest and two lowest, each the feed's figure, each name three words or fewer,
  * each stamped; its figure is the set's middle; it prints for 45 days from the ratings' date and not a day after; the home render
- * carries it, stamped, beside the duel.
+ * carried it beside the duel until plan 2026-10-09 (home introduction) took it off; QUEUE home:kitchens-page holds its seat.
  *
  * Run: npx tsx tests/home/kitchens.test.ts
  */
@@ -43,11 +43,10 @@ if (item?.as_of) {
   check(`it prints on day ${FRESH_DAYS} and not on day ${FRESH_DAYS + 1} after the ratings' date`, !!buildKitchens(day(FRESH_DAYS)) && buildKitchens(day(FRESH_DAYS + 1)) === null);
 }
 
+/* OFF THE HOME (plan 2026-10-09, home introduction; the home's spec, section 6: it leaves the home for London's page, which the city-page
+   study decides; the builder and the feed item are kept). */
 const home = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
-if (home) {
-  check("the home render carries the list, its middle stamped from the feed", /id="kitchens"/.test(home) && /data-src="editorial\/editorial_feed\.json:kitchens-five:the middle/.test(home));
-  check("the list stands in the duel's level", /data-zone-label="From the registers"/.test(home) && home.indexOf('id="duel"') < home.indexOf('id="kitchens"'));
-}
+if (home) check("the home render no longer carries the list", !/id="kitchens"/.test(home));
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/kitchens: all pass");

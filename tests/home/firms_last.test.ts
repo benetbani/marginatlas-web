@@ -121,5 +121,10 @@ if (gbRender && built) {
   check("the level is two halves with the duel, even, where the duel is fresh", !/id="duel"/.test(zone) || (/^<section data-zone="1-1"/.test(zone) && /data-zone-even/.test(zone) && zone.indexOf('id="firms-last"') < zone.indexOf('id="duel"')), VIEW_AT);
 } else if (!gbRender) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's checks did not run");
 
+/* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
+   draws it. */
+const homeRender = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
+if (homeRender) check("the home render no longer carries the section", !/id="firms-last"/.test(homeRender));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/firms_last", held));

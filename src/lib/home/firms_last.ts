@@ -6,10 +6,11 @@
  * firms born in the table's year), one measure (of 100, still trading five years on), one country's cities with a page, every figure
  * from data/home/city_survival.json (the business demography tables through scripts/data/home/export_home.py; never typed).
  *
- * The cities run highest first. The highest is the section's figure and one of the home's three loud moments (LOUD_SEATS in
- * home-view.tsx): it leads a measured ranking, the reason his featuring rule asks for, so a tie at the top features nobody and the
- * section is not drawn. A city the publisher stars (over 500 businesses at one postcode, Birmingham today) is held out by the
- * export with that reason, recorded and never printed. The UK's own share is the bars' tick, the figure the home's ring prints
+ * The cities run highest first. The highest is the section's figure, drawn on /gb's chapter 04 (src/components/spine/country/
+ * FirmsLast.tsx, at 30 in ink with the lead's bar marked by weight; the home drew it as a loud moment until plan 2026-10-09): it
+ * leads a measured ranking, the reason his featuring rule asks for, so a tie at the top features nobody and the section is not
+ * drawn. A city the publisher stars (over 500 businesses at one postcode, Birmingham today) is held out by the export with that
+ * reason, recorded and never printed. The UK's own share is the bars' tick, the figure the curve of /gb's first years ends on,
  * rounded, so a reader sees which cities stand above it without a word.
  */
 import cityJson from "../../../data/home/city_survival.json";

@@ -855,7 +855,7 @@ const GATES: Gate[] = [
   { name: "countries-disclosure", script: "tests/trust/countries_disclosure.test.ts" },
   /* His ruling of 2026-10-07: the home's hero holds still (the rotating word fades in place, both together; the h1 fades in). */
   { name: "hero-still", script: "tests/trust/hero_still.test.ts" },
-  /* His instruction of 2026-10-07, "reform home drastically", and his section ideas of 2026-10-08: the rebuilt home runs search, answers, registers, (Pro), then three pairs, where new firms last beside the UK's cities (still), where new companies open beside the US restaurants, how figures are made beside the notebook; no counts, no newsletter band, no picker heading. */
+  /* The home as an introduction (his yes of 2026-10-09; plan 2026-10-09, home introduction): the hero (his h1, still, the picker with no heading, its examples links, the definition), the worked example, (Pro), the three proofs, the UK's cities beside where to next; no counts, no newsletter band, nothing the plan re-homed. */
   { name: "home-shape", script: "tests/trust/home_shape.test.ts" },
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */

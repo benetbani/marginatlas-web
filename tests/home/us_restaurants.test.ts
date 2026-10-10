@@ -165,5 +165,10 @@ const openingsPage = existsSync("scratchpad/harness/pages/openings-world.html") 
 if (openingsPage && built) check("/new-businesses draws the US restaurants, the lead in the accent, stamped", /id="us-restaurants"/.test(openingsPage) && new RegExp(`text-\\[var\\(--terra-text\\)\\][^>]*>${built.lead.figure}<`).test(openingsPage), { file: OPENINGS_VIEW, remedy: "seat UsRestaurants in the pair zone of SpineOpeningsBody" });
 else if (!openingsPage) console.log("DEFER  scratchpad/harness/pages/openings-world.html is not rendered here; the new page's render check did not run");
 
+/* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
+   draws it. */
+const homeRender = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
+if (homeRender) check("the home render no longer carries the section", !/id="us-restaurants"/.test(homeRender));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/us_restaurants", held));

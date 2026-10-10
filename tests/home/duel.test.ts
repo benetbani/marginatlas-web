@@ -66,5 +66,10 @@ const gb = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync
 if (gb && buildDuel()) check("/gb's render carries the duel beside where new firms last, its middle stamped from the feed", /id="duel"/.test(gb) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(gb) && gb.indexOf('id="firms-last"') > -1 && gb.indexOf('id="firms-last"') < gb.indexOf('id="duel"'));
 else if (!gb) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's check did not run");
 
+/* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
+   draws it. */
+const homeRender = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
+if (homeRender) check("the home render no longer carries the section", !/id="duel"/.test(homeRender));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/duel: all pass");

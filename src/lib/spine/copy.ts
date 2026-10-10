@@ -2726,20 +2726,11 @@ export const COPY = {
   home: {
     h1: { lead: "How much does a", middle: "make in" },
     searchLabel: "Search",
-    answersLabel: "The UK's answers",
     /** THE ANSWERS' SHORT LINES (his instruction of 2026-10-07: one short line a card). The same facts /gb's masthead and curve state
      *  at length ("on $52K of profit, a sole trader under Self Assessment"; "of new firms still trading after 5 years"), said in
      *  the fewest words beside the card's name; the trades keep /gb's own line, already short. */
     lines: { answer: "of a sole trader's {profit} profit", years: "of new firms, after {n} years" },
-    /** The set the middle trade's track is drawn on, for its spoken label only (src/lib/spine/home_answers.ts, `range`). */
-    tradesAmong: "London's trades",
     citiesLabel: "The UK's cities",
-    /** The level of sections 2 and 3 (plan 2026-10-08, home sections): a data attribute the checks read, not a word the page prints. */
-    worldLabel: "Beyond the UK",
-    /** The level of the duel and the ranked list (P36.2 and P36.2b), both from the registers' feed. */
-    registersLabel: "From the registers",
-    /** THE NOTEBOOK (masterplan step 36): the page's furniture after the readings. */
-    notebook: { title: "From the notebook" },
     /** THE HOME PAGE'S ASK (his interview of 2026-09-26: "notify me when my place reaches this depth"; the checkup of 2026-10-06,
      *  finding 5): in place of a free report nobody is writing, a city to wait for (src/lib/home/depth_places.ts). Drawn by the live
      *  home only since 2026-10-07: the rebuilt home leaves the asking to the footer's bar. */
@@ -2804,16 +2795,6 @@ export const COPY = {
       words: "Full-service restaurants added since {from}, most among {n} metros: {city}",
       added: "Most added",
       lost: "Most lost",
-    },
-    /** HOW FIGURES ARE MADE (plan 2026-10-08, home sections, section 4): the title, the focal's one line (the notices and the
-     *  technique), each row's label (three words at most) and note, and the door to About the figures. No countries row and no
-     *  line that the pages print estimates (his ruling of 2026-10-07: the home's 195 counter is wrong). */
-    howMade: {
-      kicker: "How figures are made",
-      words: "Liquidation and administration notices in a year, matched by name",
-      matched: { label: "Names matched", note: "Company names in the notices, found in the register" },
-      trades: { label: "London trade pages", note: "Takings read from the official counts by turnover band" },
-      link: "About the figures",
     },
     /** WHERE TO NEXT (plan 2026-10-09, home introduction; the spec's section 6, DRAFT approved as written): eight doors, no counts (his
      *  ruling of 2026-10-07), drawn by src/components/spine/WhereNext.tsx from src/lib/home/next_doors.ts. */

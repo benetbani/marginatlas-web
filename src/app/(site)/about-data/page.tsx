@@ -239,9 +239,10 @@ export default function AboutDataPage() {
           its licence asks for one, its attribution line. No source endorses Margin Atlas or checks how its figures are used here.
         </p>
         <SourceList sources={UK_SOURCES} />
-        {/* THE HOME PAGE'S SOURCES OUTSIDE THE UNITED KINGDOM (plan 2026-10-08, home sections 2 and 3), named the way the UK's are. */}
+        {/* THE SOURCES OUTSIDE THE UNITED KINGDOM (plan 2026-10-08, home sections 2 and 3; on /new-businesses since plan 2026-10-09,
+            home introduction), named the way the UK's are. */}
         <p className="mt-6 text-ink-800">
-          The home page also prints figures from outside the United Kingdom, from these sources.
+          The page on where new businesses open prints figures from outside the United Kingdom, from these sources.
         </p>
         <SourceList sources={WORLD_SOURCES} />
       </section>

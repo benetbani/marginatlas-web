@@ -25,7 +25,7 @@ export function ProBand() {
   const C = COPY.home.pro;
   return (
     <Box id="pro" keep className="flex flex-col">
-      <Rail icon="calculator" kicker={C.kicker} />
+      <Rail icon="calculator" kicker={C.kicker} level={2} />
       {/* TWO COLUMNS FROM 768 (the page filter's WHITE SPACE on the first render, a 365 by 120 blank beside a short card): the year
           by the month, billed yearly, and what Pro opens on the left, the year's total, the month's price and the button on the right. */}
       <div className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-x-12">

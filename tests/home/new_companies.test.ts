@@ -180,5 +180,10 @@ const page = existsSync("scratchpad/harness/pages/openings-world.html") ? readFi
 if (page) check("/new-businesses draws where new companies open, then the US restaurants, side by side, stamped", /<section data-zone="1-1"/.test(page) && page.indexOf('id="new-companies"') !== -1 && page.indexOf('id="us-restaurants"') > page.indexOf('id="new-companies"') && /data-src="home\/new_companies\.json:GB"/.test(page), OPENINGS_AT);
 else console.log("DEFER  scratchpad/harness/pages/openings-world.html is not rendered here; the new page's render check did not run");
 
+/* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
+   draws it. */
+const homeRender = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
+if (homeRender) check("the home render no longer carries the section", !/id="new-companies"/.test(homeRender));
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/new_companies", held));

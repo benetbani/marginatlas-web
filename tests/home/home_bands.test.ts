@@ -1,8 +1,8 @@
 /**
- * THE HOME PAGE'S PRO SAID ONCE, ITS NOTEBOOK, AND THE LAUNCH CHECK'S COUNTS (milestone 3, masterplan steps 35 and 36; his ruling 23
- * of 2026-09-26: "a quiet band after the search and the UK answers: what Pro opens, the price, one button"). The Pro band draws
- * only while the paywall's switch is on, its prices through the plan and the year first, led with as the pricing page leads, "$38 a
- * month, billed yearly" (his decision of 2026-10-09), one button to /pricing; the notebook is the newest post of each category;
+ * THE HOME PAGE'S PRO SAID ONCE, AND THE LAUNCH CHECK'S COUNTS (milestone 3, masterplan step 35; his ruling 23 of 2026-09-26: "a
+ * quiet band after the search and the UK answers: what Pro opens, the price, one button"). The Pro band draws only while the
+ * paywall's switch is on, its title an h2 as every section's on the home (plan 2026-10-09), its prices through the plan and the
+ * year first, led with as the pricing page leads, "$38 a month, billed yearly" (his decision of 2026-10-09), one button to /pricing;
  * and the launch check's item (i) reads the live home's band and passes the rebuilt home, which prints no counts since his
  * instruction of 2026-10-07 ("reform home drastically"; tests/trust/home_shape.test.ts holds that).
  *
@@ -13,8 +13,6 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { ProBand } from "../../src/components/spine/home/ProBand";
 import { priceLine, yearlyHeadline } from "../../src/lib/monetization/plan";
-import { buildNotebook, NOTEBOOK_SIZE } from "../../src/lib/home/notebook";
-import { BLOG_CATEGORIES, getAllPosts } from "../../src/lib/blog";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-bands";
@@ -50,12 +48,9 @@ check("with the switch on: the year's total, then the month to month price, all 
     && (on.match(/href="\/pricing"/g) ?? []).length === 1 && (on.match(/<a /g) ?? []).length === 1;
 });
 
-/* The notebook (masterplan step 36; since the checkup of 2026-10-06 the newest post of each category, four at most, text first). */
-const notebook = buildNotebook();
-const posts = getAllPosts();
-const want = BLOG_CATEGORIES.map((c) => posts.find((p) => p.category === c)).filter((p): p is NonNullable<typeof p> => !!p).slice(0, NOTEBOOK_SIZE);
-check(`the notebook shows the newest post of each category, four at most (${notebook.map((c) => c.slug).join(", ")})`, JSON.stringify(notebook.map((c) => c.slug)) === JSON.stringify(want.map((p) => p.slug)) && notebook.length === Math.min(NOTEBOOK_SIZE, want.length));
-check("each card a different category, each a published post", new Set(notebook.map((c) => c.category)).size === notebook.length && notebook.every((c) => posts.some((p) => p.slug === c.slug)));
+/* One h2 a section on the home (plan 2026-10-09, home introduction): the Pro band's title too. The notebook left the home with that plan
+   (where to next links /blog). */
+check("with the switch on: the band's title is an h2", () => /<h2 [^>]*data-rail-title=""[^>]*>Pro<\/h2>/.test(on));
 
 const launch = readFileSync("scripts/verify_launch_ready.ts", "utf8");
 check("the launch check's item (i) reads the live home's band and passes the rebuilt home only while it prints no stamped count", /What the atlas holds/.test(launch) && /data-composition="zones"/.test(launch) && /atlas_ledger\\\.ts:/.test(launch));

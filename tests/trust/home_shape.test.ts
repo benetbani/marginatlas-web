@@ -1,15 +1,13 @@
 /**
- * THE REBUILT HOME'S SHAPE (his instruction of 2026-10-07: "reform home drastically"; he called the live home "catastrophically
- * bad"). His section ideas of 2026-10-08 are built in plan docs/superpowers/plans/2026-10-08-home-sections/PLAN.md. In this order and
- * nothing else: the search (the h1 asks the question, so the picker draws no heading of its own), the UK's three answers, the duel and the
- * kitchens list from the registers, Pro only while the paywall is on, then three levels of two halves each: where new firms last
- * beside the UK's city pages held still (his refusal of carousels and pagination, 2026-09-22), where new companies open beside
- * where US restaurants grew and shrank, and how figures are made beside the notebook, last. Every level but the search is a pair:
- * the section-bands gate bars a full-width section that is not the hero, and the baseline may only come down. The UK's cities' level
- * and the last level end level (`even`), each half filling the height the pair is given; the world level does not (open sections,
- * each its own height). No counts of what the atlas holds (its cities count took in the non-UK city pages, which are not indexed)
- * and no newsletter band (the footer's bar asks once). The live home keeps the picker's heading. Read from
- * src/components/spine/home/home-view.tsx, src/app/page.tsx and src/components/NavigatorForm.tsx, and from the harness render
+ * THE HOME AS AN INTRODUCTION (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, approved as
+ * written on 2026-10-09; plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 10). His words that led to it: the home "is
+ * vastly problematic and not serving as an elegant introduction of the concept but rather: here is what we have". In this order and
+ * nothing else: the hero (his h1, still, "restaurant" first among its words, the picker with no heading, its three examples links, the
+ * one line that says what the site is, after the form), the worked example (two halves, even), Pro only while the paywall is on, the
+ * three proofs (a level of three, even), the foot (the UK's cities, still, beside where to next, even); then the licence line and
+ * Report a mistake. One wide zone, the hero's. Three seats: step 3 and the tax proof lit, the foot none. No counts, no newsletter band,
+ * no picker heading, no section the plan re-homed. One h2 a section and none skipped. Read from src/components/spine/home/home-view.tsx,
+ * src/app/page.tsx, src/components/NavigatorForm.tsx and src/components/StructuredData.tsx, and from the harness render
  * scratchpad/harness/pages/home-gb.html where it exists.
  * Run: npx tsx tests/trust/home_shape.test.ts
  */
@@ -18,85 +16,91 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { existsSync, readFileSync } from "node:fs";
 import { CityCards } from "../../src/components/spine/archetypes/CityCards";
 import { buildCityCards } from "../../src/lib/spine/city_cards";
+import { HERO_BUSINESSES, HERO_CITIES } from "../../src/lib/hero-words";
+import { homeTryLinks } from "../../src/lib/home/destination";
+import { COPY } from "../../src/lib/spine/copy";
+import { OGL_LINE, UK_SOURCES_FOOT } from "../../src/lib/spine/uk_sources";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
 
 let failed = 0;
 let deferred = 0;
 const check = (name: string, ok: boolean, remedy?: string) => { if (!ok) failed++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}`); if (!ok && remedy) console.log(`      Remedy: ${remedy}`); };
-const view = readFileSync("src/components/spine/home/home-view.tsx", "utf8");
+const VIEW = "src/components/spine/home/home-view.tsx";
+const view = readFileSync(VIEW, "utf8");
+const code = stripCommentLines(view.split("\n")).join("\n");
 const live = readFileSync("src/app/page.tsx", "utf8");
 const picker = readFileSync("src/components/NavigatorForm.tsx", "utf8");
+const sd = readFileSync("src/components/StructuredData.tsx", "utf8");
 
-/* THE ZONE ORDER, as the body lists its zones (each `key:` inside the `zones` array of SpineHomeBody). */
-const body = /const zones[\s\S]*?\n  \];/.exec(view)?.[0] ?? "";
+/* THE ZONE ORDER, as the body lists its zones (each `key:` inside the `zones` array of SpineHomeBody), and each zone's line. */
+const body = /const zones[\s\S]*?\n  \];/.exec(code)?.[0] ?? "";
 const keys = [...body.matchAll(/\bkey: "([a-z-]+)"/g)].map((m) => m[1]);
-const want = ["search", "answers", "registers", "cities", "world", "method"];
-check(`the zones run search, answers, registers, the UK's cities, beyond the UK, then how figures are made (read: ${keys.join(", ") || "none"})`, JSON.stringify(keys.filter((k) => k !== "pro")) === JSON.stringify(want));
+check(`the zones run the hero, the worked example, the proofs, then the foot (read: ${keys.join(", ") || "none"})`, JSON.stringify(keys.filter((k) => k !== "pro")) === JSON.stringify(["search", "example", "proofs", "foot"]), `keep SpineHomeBody's zones (${VIEW}) search, example, (pro), proofs, foot`);
 const pro = keys.indexOf("pro");
-check("Pro, where it is listed, stands after the registers and before the UK's cities, behind the paywall's switch", pro === -1 || (pro > keys.indexOf("registers") && pro < keys.indexOf("cities") && /isPaywallOn\(\) \? \[\{ key: "pro"/.test(body)));
-/* THE THREE PAIRS (section-bands: no section but the hero spans the page, and the home's baseline is 0). */
-const levelOf = (key: string) => new RegExp(`key: "${key}",\\s*split: "([^"]+)"[\\s\\S]*?body: (\\[[^\\n]*\\])`).exec(body);
-const PAIRS: Array<[string, string, string]> = [["cities", "<HomeFirmsLast", "<HomeCities"], ["world", "<HomeNewCompanies", "<HomeUsRestaurants"], ["method", "<HomeHowMade", "<Notebook"]];
-for (const [key, first, second] of PAIRS) {
-  const m = levelOf(key);
-  check(`the ${key} level is two halves, ${first.slice(1)} then ${second.slice(1)}, never a wide zone (read: split ${m?.[1] ?? "none"})`, !!m && m[1] === "1-1" && m[2].indexOf(first) !== -1 && m[2].indexOf(second) > m[2].indexOf(first));
-}
-/* The bars' call is one line, and its props hold an arrow (`=>`), so the read runs to the line's end, not to the first `>`. */
-check("the UK's cities' level ends level while both draw, the bars and the city rows filling their halves", /key: "cities",[\s\S]*?even: !!\(last && cities\)/.test(body) && /<CityCards\s+still\s+stack\s+fill\b/.test(view) && /<BarList [^\n]*\sfill\s/.test(readFileSync("src/components/spine/home/HomeFirmsLast.tsx", "utf8")));
-const world = /key: "world",[\s\S]*?body: \[[^\n]*\]/.exec(body)?.[0] ?? "";
-check("the world level is not stretched (open sections, each its own height)", world.length > 0 && !/even:/.test(world));
-check("the last level ends level while both draw, and the notebook's list fills its half in equal rows", /key: "method",[\s\S]*?even: !!\(howMade && notebook\.length\)/.test(body) && /<ul className="[^"]*\bflex-1\b[^"]*\bmd:auto-rows-fr\b[^"]*">/.test(view));
+check("Pro, where it is listed, stands after the example and before the proofs, behind the paywall's switch", pro === -1 || (pro > keys.indexOf("example") && pro < keys.indexOf("proofs") && /isPaywallOn\(\) \? \[\{ key: "pro"/.test(body)));
+const zoneLine = (key: string) => new RegExp(`\\{ key: "${key}", split: "([^"]+)"[^\\n]*`).exec(body);
+const split = (key: string) => zoneLine(key)?.[1];
+const even = (key: string) => /even: (true|!!cities)/.test(zoneLine(key)?.[0] ?? "");
+check(`the splits: the hero wide, the example 1-1 even, the proofs 1-1-1 even, the foot 1-1 even (read: ${["search", "example", "proofs", "foot"].map((k) => `${k} ${split(k)}${even(k) ? " even" : ""}`).join(", ")})`, split("search") === "wide" && split("example") === "1-1" && even("example") && split("proofs") === "1-1-1" && even("proofs") && split("foot") === "1-1" && even("foot") && (body.match(/split: "wide"/g) ?? []).length === 1, "the hero alone is wide (section-bands: the hero only); the example and the foot are halves, the proofs thirds, each even");
+check("the example is two halves, the place then whether it pays", /<HomePlace key="place"[^\n]*<HomePays key="pays"/.test(zoneLine("example")?.[0] ?? ""));
+check("the proofs are three doors, the joins, the archive, then the tax", /<ProofJoins key="joins"[^\n]*<ProofArchive key="archive"[^\n]*<ProofTax key="tax"/.test(zoneLine("proofs")?.[0] ?? ""));
+check("the foot is the UK's cities, still, then where to next", /<HomeCities key="cities"[^\n]*<WhereNext key="next"/.test(zoneLine("foot")?.[0] ?? "") && /<CityCards\s+still\s+stack\s+fill\b/.test(code));
 
-/* NO NEWSLETTER BAND. */
-check("the rebuilt home draws no HomeNewsletter", !/HomeNewsletter/.test(view));
+/* NOTHING THE PLAN RE-HOMED OR RETIRED, AND NO COUNTS OR NEWSLETTER. */
+const RETIRED = ["HomeDuel", "HomeKitchens", "HomeFirmsLast", "HomeNewCompanies", "HomeUsRestaurants", "HomeHowMade", "Notebook", "buildNotebook", "AnswerDoor", "TaxAnswer", "TradesAnswer", "YearsAnswer", "buildHomeAnswers", "buildDuel", "buildKitchens", "buildFirmsLast", "buildNewCompanies", "buildUsRestaurants", "buildHowMade", "HomeNewsletter", "AtlasHolds", "buildAtlasHolds", "getAtlasLedger"];
+const still = RETIRED.filter((n) => new RegExp(`\\b${n}\\b`).test(code));
+check(`no section the plan re-homed or retired is drawn (${still.join(", ") || "none"})`, still.length === 0, "the duel and where new firms last stand on /gb, new companies and the US restaurants on /new-businesses, the join on the first proof, the kitchens list and the notebook off the home");
+check("no counts zone and no newsletter band", !/atlas_ledger|What the atlas holds|COPY\.home\.atlas\b/.test(code));
 
-/* THE UK'S CITIES HELD STILL: the home's CityCards is the still row, given no pager labels, and the still row draws no control. */
-const cities = /function HomeCities[\s\S]*?\n\}/.exec(view)?.[0] ?? "";
-check("the cities zone draws CityCards `still`, with no pager labels and no carousel", /<CityCards\s+still\b/.test(cities) && !/prevLabel|nextLabel|CardPager|[Cc]arousel/.test(cities));
-check("the home's cities take the row form at every width (`stack`), as a half cannot hold a row of tall cards", /<CityCards\s+still\s+stack\b/.test(cities));
-const gb = buildCityCards("GB");
-const stacked = gb ? renderToStaticMarkup(React.createElement(CityCards, { still: true, stack: true, cards: gb.cards, basis: "basis" })) : "";
-check("CityCards still + stack draws every city once, as a row (one anchor a city), no tall card and no button", !!gb && (stacked.match(/<a /g) ?? []).length === gb.cards.length && !/data-still=/.test(stacked) && !/<button/.test(stacked) && /data-form="rows"/.test(stacked) && /\bgap-2\b/.test(stacked));
-const still = gb ? renderToStaticMarkup(React.createElement(CityCards, { still: true, cards: gb.cards, basis: "basis" })) : "";
-/* The still row writes each city in both of its forms (the row form below 1024, the tall card from it; the width picks one), so a
-   city is counted once, by its id, and each form is held to every city. */
-const form = (name: "row" | "tall") => new Set([...(new RegExp(`data-still="${name}"[\\s\\S]*?(?=data-still="|<p class=)`).exec(still)?.[0] ?? "").matchAll(/data-card="([^"]+)"/g)].map((m) => m[1]));
-const drawn = form("tall").size;
-check(`the still row draws every UK city page at once (${drawn} of ${gb?.cards.length ?? 0}) and no button`, !!gb && gb.cards.length > 0 && drawn === gb.cards.length && !/<button/.test(still));
-check(`the still row's row form, drawn below 1024, holds every city too (${form("row").size} of ${gb?.cards.length ?? 0}), hidden from 1024`, !!gb && form("row").size === gb.cards.length && /data-still="row"[^>]*\blg:hidden\b/.test(still) && /data-still="tall"[^>]*\bhidden\b[^>]*\blg:flex\b/.test(still) && !/lg:flex-nowrap|flex-wrap/.test(still));
-check("the still row draws no link to the world's list, so CityCards asks for no allHref", !/CityCards[^]*?allHref/.test(cities) && /allHref\?: string/.test(readFileSync("src/components/spine/archetypes/CityCards.tsx", "utf8")));
+/* THE SEATS (the spec's section 5). */
+const seats = /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(code)?.[0] ?? "";
+check("three seats: step 3 and the tax proof lit, the foot none", (seats.match(/state: "LIT"/g) ?? []).length === 2 && /id: "pays"/.test(seats) && /id: "tax"/.test(seats) && /seat: 3, card: "foot"[^\n]*state: "NO HONEST CANDIDATE"/.test(seats));
 
-/* NO "WHAT THE ATLAS HOLDS" COUNTS. */
-check("no counts zone (no AtlasHolds, buildAtlasHolds, ledger counts or COPY.home.atlas)", !/AtlasHolds|buildAtlasHolds|atlas_ledger|getAtlasLedger|What the atlas holds|COPY\.home\.atlas\b/.test(view));
-
-/* THE THREE LOUD MOMENTS: the UK's answer, and the leads of sections 1 and 3, each declared LIT with its card's id. */
-const seats = /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(view)?.[0] ?? "";
-check("three loud moments declared LIT: the UK's answer, where new firms last, the US restaurants", (seats.match(/state: "LIT"/g) ?? []).length === 3 && /card: "00 answer"/.test(seats) && /id: "firms-last"/.test(seats) && /id: "us-restaurants"/.test(seats));
-/* SEAT 3 TYPES THE SIZE OF ITS RANKING ("a measured ranking of 44 by restaurants added", a literal read from source, as the seats' own
-   comment says), so that number is held to the metros the slice ranks. */
-const seat3At = seats.indexOf("seat: 3");
-const said = /ranking of (\d+)/.exec(seat3At >= 0 ? seats.slice(seat3At) : "")?.[1];
-const ranked = (JSON.parse(readFileSync("data/home/us_restaurants.json", "utf8")) as { metros: unknown[] }).metros.length;
-check(`seat 3's condition says a ranking of ${said ?? "(no number found)"} and the slice ranks ${ranked} metros`, said !== undefined && Number(said) === ranked, "make the number in seat 3's condition (LOUD_SEATS in src/components/spine/home/home-view.tsx) the metros ranked in data/home/us_restaurants.json (its metros.length), or re-export that slice if the slice is the stale one");
-
-/* THE PICKER'S HEADING: off on the rebuilt home, on (the default) on the live home. */
-check("the rebuilt home renders the picker without its heading", /<NavigatorForm showHeading=\{false\} \/>/.test(view));
+/* THE HERO (the spec's sections 3 and 5). */
+check("the rebuilt home renders the picker without its heading", /<NavigatorForm showHeading=\{false\} \/>/.test(code));
 check("the live home renders the picker with its heading", /<NavigatorForm \/>/.test(live) && !/<NavigatorForm[^>]*showHeading=\{false\}/.test(live));
 check("the picker's heading is drawn by default and only when asked", /showHeading = true/.test(picker) && /\{showHeading \? \(/.test(picker) && /Pick a country, a city, and a business\./.test(picker));
+const search = /function HomeSearch[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
+check("the definition stands once, straight after the form, at the hero's foot", search.indexOf("<NavigatorForm") > -1 && search.indexOf("data-definition") > search.indexOf("<NavigatorForm") && (code.match(/\.definition\b/g) ?? []).length === 1);
+check(`the h1's first words ask the example's question ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}")`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London");
+check("the Organization's description in the structured data is the definition", /export function Organization\(\)[\s\S]*?description: COPY\.home\.definition/.test(sd));
+check("under the bands: the licence line, then Report a mistake", /<SourcesFoot iso2="GB" \/>\s*<ReportFoot path="\/" \/>/.test(code));
+
+/* THE UK'S CITIES HELD STILL (his refusal of carousels and pagination, 2026-09-22), in the foot's half. */
+const cities = /function HomeCities[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
+check("the cities draw CityCards still and stacked, a Rail at level 2, no pager labels", /<CityCards\s+still\s+stack\b/.test(cities) && /<Rail [^>]*level=\{2\}/.test(cities) && !/prevLabel|nextLabel|CardPager|[Cc]arousel/.test(cities));
+const gb = buildCityCards("GB");
+const stacked = gb ? renderToStaticMarkup(React.createElement(CityCards, { still: true, stack: true, cards: gb.cards, basis: "basis" })) : "";
+check("CityCards still + stack draws every city once, as a row (one anchor a city), no tall card and no button", !!gb && (stacked.match(/<a /g) ?? []).length === gb.cards.length && !/data-still=/.test(stacked) && !/<button/.test(stacked) && /data-form="rows"/.test(stacked));
 
 /* THE RENDER, where the harness wrote it (pages-fresh renders it first in the chain). */
 const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
 if (render) {
   const labels = [...render.matchAll(/<section data-zone="[^"]*"(?: data-tone="[^"]*")? data-zone-label="([^"]*)"/g)].map((m) => m[1].replace(/&#x27;/g, "'"));
-  check(`the render's zones run in that order (${labels.join(" | ")})`, JSON.stringify(labels.filter((l) => l !== "Pro")) === JSON.stringify(["Search", "The UK's answers", "From the registers", "The UK's cities", "Beyond the UK", "How figures are made"]));
-  const zoneOf = (label: string) => { const at = render.indexOf(`data-zone-label="${label.replace(/'/g, "&#x27;")}"`); if (at < 0) return ""; const next = render.indexOf("<section data-zone", at + 1); return render.slice(at, next < 0 ? undefined : next); };
-  const pair = (label: string, a: string, b: string) => new RegExp(`<section data-zone="1-1"[^>]*data-zone-label="${label.replace(/'/g, "&#x27;")}"`).test(render) && zoneOf(label).indexOf(a) !== -1 && zoneOf(label).indexOf(b) > zoneOf(label).indexOf(a);
-  check("the render's UK cities level holds where new firms last, then the city pages, side by side", pair("The UK's cities", 'id="firms-last"', 'id="cities"'));
-  check("the render's world level holds where new companies open, then the US restaurants, side by side", pair("Beyond the UK", 'id="new-companies"', 'id="us-restaurants"'));
-  check("the render's last level holds how figures are made, then the notebook, side by side", pair("How figures are made", 'id="how-made"', "data-notebook"));
-  check("no zone of the page is a wide zone but the search", [...render.matchAll(/<section data-zone="wide"/g)].length === 1);
+  check(`the render's zones run in that order (${labels.join(" | ")})`, JSON.stringify(labels.filter((l) => l !== COPY.home.pro.kicker)) === JSON.stringify([COPY.home.searchLabel, COPY.home.example.label, COPY.home.proofs.label, COPY.home.citiesLabel]));
+  const zoneOf = (label: string) => { const at = render.indexOf(`data-zone-label="${label.replace(/'/g, "&#x27;")}"`); if (at < 0) return ""; const start = render.lastIndexOf("<section", at); const next = render.indexOf("<section data-zone", at + 1); return render.slice(start, next < 0 ? undefined : next); };
+  const ex = zoneOf(COPY.home.example.label), pr = zoneOf(COPY.home.proofs.label), ft = zoneOf(COPY.home.citiesLabel);
+  check("the example: two halves, even, the place then whether it pays", /^<section data-zone="1-1"/.test(ex) && /data-zone-even/.test(ex) && ex.indexOf('id="place"') > 0 && ex.indexOf('id="pays"') > ex.indexOf('id="place"'));
+  check("the proofs: a level of three, even, the joins, the archive, the tax", /^<section data-zone="1-1-1"/.test(pr) && /data-zone-even/.test(pr) && pr.indexOf('id="joins"') > 0 && pr.indexOf('id="archive"') > pr.indexOf('id="joins"') && pr.indexOf('id="tax"') > pr.indexOf('id="archive"'));
+  check("the foot: the UK's cities, then where to next, even", /^<section data-zone="1-1"/.test(ft) && /data-zone-even/.test(ft) && ft.indexOf('id="cities"') > 0 && ft.indexOf("data-next=") > ft.indexOf('id="cities"'));
+  check("no zone of the page is a wide zone but the hero's", [...render.matchAll(/<section data-zone="wide"/g)].length === 1 && /<section data-zone="wide"[^>]*>[\s\S]{0,240}data-hero/.test(render));
+  const form = render.indexOf("<form");
+  check("the definition stands once in the render, after the form", form > -1 && render.indexOf(COPY.home.definition) > form && render.split(COPY.home.definition).length === 2);
+  const links = homeTryLinks();
+  check(`the picker's three examples are links (${links.map((l) => l.href).join(", ")})`, links.length === 3 && links.every((l) => render.includes(`href="${l.href}"`)));
+  const h = (tag: string) => (render.match(new RegExp(`<${tag}\\b`, "g")) ?? []).length;
+  /* Seven sections with a title (the place, whether it pays, the three proofs, the cities, where to next), and Pro's where the
+     paywall's switch is on in the render's environment. */
+  const sections = 7 + (labels.includes(COPY.home.pro.kicker) ? 1 : 0);
+  check(`one h1 and one h2 a section, none skipped (h1 ${h("h1")}, h2 ${h("h2")} of ${sections}, h3 ${h("h3")})`, h("h1") === 1 && h("h2") === sections && h("h3") === 0);
+  const figs = [...render.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
+  const bare = figs.filter((f) => !/data-src="/.test(f) || !/data-kind="/.test(f));
+  check(`every figure says where it came from (${figs.length} figures, ${bare.length} without)`, figs.length > 0 && bare.length === 0);
+  check("the licence line and its link, then Report a mistake, under the bands", render.includes(OGL_LINE) && render.includes(`href="${UK_SOURCES_FOOT.href}"`) && render.indexOf("data-sources-foot") > -1 && render.indexOf("data-sources-foot") < render.indexOf("data-page-foot"));
   check("the render prints no picker heading, no counts and no newsletter form", !/Pick a country, a city, and a business\./.test(render) && !/What the atlas holds|atlas_ledger\.ts:/.test(render) && !/Notify me when my city/.test(render));
-  check("the render's cities zone carries no pager", !/aria-label="(Previous cities|More cities)"/.test(render));
+  check("no re-homed section is on the home", !/id="(answer|years|trades|duel|kitchens|firms-last|new-companies|us-restaurants|how-made)"/.test(render) && !/data-notebook/.test(render));
+  check("the render's cities carry no pager", !/aria-label="(Previous cities|More cities)"/.test(render));
 } else { deferred++; console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the render's checks did not run"); }
 
-if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep src/components/spine/home/home-view.tsx to the zones search, answers, registers, (pro), then three pairs at split 1-1, never a wide zone (the section-bands gate bars a full width that is not the hero): cities [<HomeFirmsLast> | <HomeCities>] even while both draw, world [<HomeNewCompanies> | <HomeUsRestaurants>] not even, method [<HomeHowMade> | <Notebook>] even while both draw; three LIT seats (00 answer, firms-last, us-restaurants); no HomeNewsletter and no counts section; its cities a <CityCards still stack fill> with no pager labels and its picker <NavigatorForm showHeading={false} />; keep <NavigatorForm /> with its heading in src/app/page.tsx and the heading behind showHeading (default true) in src/components/NavigatorForm.tsx; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
+if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep ${VIEW} to the zones search (wide, the hero: his h1, the picker with no heading, the definition after it), example [<HomePlace> | <HomePays>] 1-1 even, (pro behind isPaywallOn), proofs [<ProofJoins> | <ProofArchive> | <ProofTax>] 1-1-1 even, foot [<HomeCities> | <WhereNext>] 1-1 even; seats pays and tax LIT, foot NO HONEST CANDIDATE; then <SourcesFoot iso2="GB" /> and <ReportFoot path="/" />; every Rail on the home at level 2; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
 console.log(deferred ? `trust/home_shape: all pass, ${deferred} deferred (render: not rendered here)` : "trust/home_shape: all pass");

@@ -10,7 +10,7 @@
  *
  * Run: npx tsx tests/home/home_answers.test.ts
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { buildWorkedExample, exampleCaseWhole, EXAMPLE_TRADE } from "../../src/lib/home/worked_example";
 import { londonTradeHero, londonTradeStrip, londonShareAbove } from "../../src/lib/spine/london_trade_hero";
 import { ukInsolvencyPer100 } from "../../src/lib/spine/uk_trade_typical";
@@ -41,7 +41,6 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const reEsc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** Markup reduced to its text runs, each between bars. */
 const text = (h: string) => h.replace(/<[^>]+>/g, "|").replace(/\|+/g, "|");
-void esc; void reEsc; void text;
 
 /* THE CASE (Task 6): the picker's own, whole. */
 const pick = CASCADE_PREFILLS[0];
@@ -114,6 +113,27 @@ if (proofs && uk) {
   check(`its figure, at 30, is the card's one accent (${accents.length})`, accents.length === 1 && new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\] leading-none text-\\[var\\(--terra-text\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(t.figure)}<`).test(html), PROOF_AT);
   check("its bar is the masthead's split bar, under the measure", /data-archetype="segment-bar"/.test(html) && /data-form="split"/.test(html) && /max-w-\[28ch\]/.test(html), PROOF_AT);
 }
+
+/* THE RENDERS (Task 10), where the harness wrote them (pages-fresh renders them first in the chain). */
+const homeR = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
+const cellR = existsSync("scratchpad/harness/pages/cell-gb-london-restaurants.html") ? readFileSync("scratchpad/harness/pages/cell-gb-london-restaurants.html", "utf8") : "";
+const gbR = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
+if (ex && homeR && cellR) {
+  const cellT = text(cellR);
+  const five = [ex.place.registered.figure, ex.place.sales.figure, ex.pays.breakEven.figure, ex.pays.above.figure, ex.pays.insolvent.figure.split(" ")[0]];
+  check(`London restaurants' page prints the figures the example prints (${five.join(", ")})`, five.every((f) => cellT.includes(`|${f}|`)));
+  const card = (id: string) => { const at = homeR.indexOf(`id="${id}"`); if (at < 0) return ""; const next = homeR.indexOf("data-zone-cell", at + 1); return homeR.slice(at, next < 0 ? undefined : next); };
+  const place = text(card("place")), pays = text(card("pays"));
+  check("the home prints each step in its half", place.includes(`|${ex.place.registered.figure}|`) && place.includes(`|${ex.place.sales.figure}|`) && pays.includes(`|${ex.pays.breakEven.figure}|`) && pays.includes(`|${ex.pays.insolvent.figure}|`));
+  check("the home holds one 40, step 3's", (homeR.match(/data-hero-figure/g) ?? []).length === 1 && card("pays").includes("data-hero-figure"));
+}
+if (proofs && homeR && gbR) {
+  const answerAt = gbR.indexOf('data-answer="1"');
+  check(`/gb's render prints the tax proof's figure in its answer, ${proofs.tax.figure}`, answerAt > 0 && text(gbR.slice(answerAt, answerAt + 1200)).includes(`|${proofs.tax.figure}|`));
+  const at = homeR.indexOf('id="tax"');
+  check("the home prints the tax proof behind its door", at > 0 && text(homeR.slice(at, at + 4000)).includes(`|${proofs.tax.figure}|`) && homeR.slice(at, at + 4000).includes('href="/gb#take"'));
+}
+if (!homeR || !cellR || !gbR) console.log("DEFER  a harness render (home-gb, cell-gb-london-restaurants or country-GB) is not here; the render checks did not run");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/home_answers: all pass");

@@ -121,6 +121,12 @@ async function main(): Promise<void> {
     const left = figures.filter(([figure, prov]) => !rawSection.includes(`<span data-src="${escaped(prov.src)}" data-kind="${prov.kind}">${escaped(figure)}</span>`)).map(([figure]) => figure);
     check(`#archive's months (${built.months}), first (${built.firstName}) and last (${built.lastName}) month and copies' days (${built.copiesWords}) each carry their builder's data-src and data-kind${left.length ? `; without its builder's stamp: ${left.join(", ")}` : ""}`, left.length === 0, STAMPED_AT);
   }
+  /* THE HOME'S RENDER (Task 10), where the harness wrote it: the second proof, stamped, behind its door. */
+  const home = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
+  if (home && proofs) {
+    const at = home.indexOf('id="archive"');
+    check("the home prints the second proof, stamped, behind its door", at > 0 && home.slice(at, at + 4000).includes(`>${proofs.archive.figure}<`) && home.slice(at, at + 4000).includes('href="/about-data#archive"'), { file: "src/components/spine/home/home-view.tsx", remedy: "seat ProofArchive second in the proofs zone" });
+  } else if (!home) console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the home's render check did not run");
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log(homePassLine("home/archive", held));
 }

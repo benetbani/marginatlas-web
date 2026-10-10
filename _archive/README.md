@@ -65,3 +65,14 @@ git mv _archive/2026-08-03-dead-code/src/components/Thing.tsx src/components/Thi
 
 Then fix its relative imports, which are stale by construction, and run
 `npx tsc --noEmit`.
+
+---
+
+## 2026-10-09 , the home as an introduction
+
+Seven files the home drew until plan `docs/superpowers/plans/2026-10-09-home-introduction.md` (in the design repo) rewired it, each
+re-homed or retired by the spec the owner approved that day: `HomeDuel` and `HomeFirmsLast` (drawn on /gb by
+`src/components/spine/country/Duel.tsx` and `FirmsLast.tsx`), `HomeNewCompanies` and `HomeUsRestaurants` (drawn on /new-businesses
+by `src/components/spine/openings/`), `HomeHowMade` (its join the home's first proof, its pages a line on About the figures),
+`HomeKitchens` (off the home until the city-page study places it; `src/lib/home/kitchens.ts` and the feed item kept) and
+`src/lib/home/notebook.ts` (the notebook left; where to next links /blog). Nothing imports them; each is one `git mv` from returning.
