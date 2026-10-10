@@ -144,7 +144,7 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts }:
         <div data-years="" className="mt-1 grid w-full grid-cols-12 gap-1 text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
           {drawn.map((p, i) =>
             p.month === 0 || (i === 0 && MONTH_BAR_POINTS - first >= 3) ? (
-              <span key={i} data-year={String(yearOf(i))} className="whitespace-nowrap" style={{ gridColumn: `${i + 1} / span ${Math.min(3, MONTH_BAR_POINTS - i)}`, ...(MONTH_BAR_POINTS - i < 3 ? { justifySelf: "end" } : {}) }}>
+              <span key={i} data-year={String(yearOf(i))} className="whitespace-nowrap tabular-nums" style={{ gridColumn: `${i + 1} / span ${Math.min(3, MONTH_BAR_POINTS - i)}`, ...(MONTH_BAR_POINTS - i < 3 ? { justifySelf: "end" } : {}) }}>
                 {yearOf(i)}
               </span>
             ) : null,
