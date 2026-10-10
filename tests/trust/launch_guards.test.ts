@@ -63,6 +63,10 @@ async function main() {
   check(`the field has a name, autocomplete=email, 16px type on a phone, 44px, a 3:1 edge (${input.slice(0, 120)})`, /name="email"/.test(input) && /autoComplete="email"|autocomplete="email"/.test(input) && /type="email"/.test(input) && /\bh-11\b/.test(input) && /\btext-base\b/.test(input) && /\bmd:text-sm\b/.test(input) && /border-\[var\(--control-line\)\]/.test(input));
   const button = /<button[^>]*>[\s\S]*?<\/button>/.exec(idle)?.[0] ?? "";
   check(`the button is 44px and says ${NEWSLETTER_COPY.button}`, /\bh-11\b/.test(button) && words(button) === NEWSLETTER_COPY.button);
+  /* FIX ROUND 8: the field has a name now, so a native submit before the page hydrated (Enter in the field, or a tap on the button)
+     would be a GET with the address in the URL: the browser's history, the host's logs, any error report's page address. The
+     server markup holds the button disabled, which also stops Enter (a form whose default button is disabled submits nothing). */
+  check("the button is disabled in the server markup, so nothing can submit before the page has hydrated", /^<button\b[^>]*\sdisabled(?:=""|\s|>)/.test(button), { file: BAR, remedy: "keep the submit button disabled until a first effect has run (useState ready, useEffect sets it): the field is named, and a native submit before hydration is a GET with the address in the URL" });
   check("a status region waits in the document for the success line, and no alert shows at rest", /<div role="status"/.test(idle) && !/role="alert"/.test(idle));
   check("the bar's line is upright in --c-ink2, no synthetic italic, no brown", !/italic|cocoa/.test(barCode) && /text-\[var\(--c-ink2\)\]/.test(barCode));
 
@@ -75,8 +79,8 @@ async function main() {
   g.self = dom.window;
   Object.defineProperty(globalThis, "navigator", { value: dom.window.navigator, configurable: true });
   g.IS_REACT_ACT_ENVIRONMENT = true;
-  let answer: "ok" | "fail" = "ok";
-  g.fetch = async () => { if (answer === "fail") throw new Error("offline"); return { ok: true } as Response; };
+  let answer: "ok" | "fail" | 400 | 429 | 500 = "ok";
+  g.fetch = async () => { if (answer === "fail") throw new Error("offline"); if (typeof answer === "number") return { ok: false, status: answer } as Response; return { ok: true, status: 200 } as Response; };
   const { createRoot } = await import("react-dom/client");
   const { act } = await import("react");
   const doc = dom.window.document;
@@ -95,6 +99,7 @@ async function main() {
   const send = async (host: Element) => { await act(async () => { host.querySelector("form")!.dispatchEvent(new dom.window.Event("submit", { bubbles: true, cancelable: true })); }); };
 
   const a = await mount();
+  check("after the first effect has run the button is enabled", (a.host.querySelector("button") as HTMLButtonElement).disabled === false, { file: BAR, remedy: "set ready in a useEffect, so the button is enabled once the page has hydrated" });
   await send(a.host);
   const alertA = a.host.querySelector('[role="alert"]');
   const fieldA = a.host.querySelector("input")!;
@@ -108,6 +113,24 @@ async function main() {
   const status = a.host.querySelector('[role="status"]');
   check(`a good post says so in the status region, and the alert goes ("${status?.textContent ?? ""}")`, (status?.textContent ?? "").includes(NEWSLETTER_COPY.done) && !a.host.querySelector('[role="alert"]') && !a.host.querySelector("input"));
   await act(async () => { a.root.unmount(); });
+
+  /* FIX ROUND 8: the route answers 400 for an address its own check refuses (src/app/api/newsletter/route.ts: stricter than the
+     bar's, which lets "a@b.c" through), and that is a bad address, not a post that did not go through. 429 (five a minute) and a
+     server error are the posts that did not. */
+  const b = await mount();
+  await type(b.host, "a@b.c");
+  const REFUSED = { file: BAR, remedy: "map the route's 400 to the bad-address line (setStatus invalid) and leave every other non-OK answer as a post that did not go through" };
+  answer = 400;
+  await send(b.host);
+  const refused = b.host.querySelector('[role="alert"]');
+  check(`a 400 from the route shows the bad-address line the field points at, not "try again" ("${refused?.textContent ?? ""}")`, refused?.textContent === NEWSLETTER_COPY.badAddress && b.host.querySelector("input")?.getAttribute("aria-invalid") === "true" && b.host.querySelector("input")?.getAttribute("aria-describedby") === refused?.id, REFUSED);
+  answer = 429;
+  await send(b.host);
+  check(`a 429 shows the try-again line ("${b.host.querySelector('[role="alert"]')?.textContent ?? ""}")`, b.host.querySelector('[role="alert"]')?.textContent === NEWSLETTER_COPY.failed, REFUSED);
+  answer = 500;
+  await send(b.host);
+  check(`a server error shows the try-again line ("${b.host.querySelector('[role="alert"]')?.textContent ?? ""}")`, b.host.querySelector('[role="alert"]')?.textContent === NEWSLETTER_COPY.failed, REFUSED);
+  await act(async () => { b.root.unmount(); });
 
   /* ---------------- THE PRIVACY PAGE ---------------- */
   process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
@@ -275,6 +298,7 @@ async function main() {
   check("the error screen is in the spine's tokens, sentence case, no clay or tracked capitals", !/clay-|uppercase|tracking-wide|ink-900|paper-100/.test(errCode) && /text-\[var\(--c-ink\)\]/.test(errCode), { file: "src/app/error.tsx" });
   const glob = code("src/app/global-error.tsx");
   check("the root error screen paints no cream and no brown, and claims no notice it cannot know", !/#fbf9f4|#9b4f1f|#4a4744/i.test(glob) && !/notified/i.test(glob), { file: "src/app/global-error.tsx" });
+  check("the root error screen's Go home link is 44px tall to touch, as error.tsx's is, with its label in the middle", /minHeight:\s*44\b/.test(glob) && /boxSizing:\s*"border-box"/.test(glob) && /display:\s*"inline-flex"/.test(glob) && /alignItems:\s*"center"/.test(glob), { file: "src/app/global-error.tsx", remedy: "give the Go home link minHeight: 44 with boxSizing border-box (this page has no stylesheet, so the default content-box would make it 68px), display inline-flex and alignItems center, as src/app/error.tsx's min-h-11 does; it was about 41px" });
   const loading = readFileSync("src/app/loading.tsx", "utf8");
   check("the loading screen's comment says what it is (no chrome claimed)", !/mirrors the typical page chrome/.test(loading) && /draws no bar and no footer/.test(loading), { file: "src/app/loading.tsx" });
 

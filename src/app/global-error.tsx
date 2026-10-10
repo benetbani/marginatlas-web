@@ -13,6 +13,10 @@
  * #FBF9F4 and a brown #9B4F1F, and said "We've been notified", which is true only where Sentry is switched on. The values below are
  * the spine's own (--c-ink #1b1b1a, --c-ink2 #565654, the card's white), written out because no token reaches this page; the words
  * claim nothing the page cannot know.
+ *
+ * 44PX TO TOUCH (fix round 8, Task 8's review): "Go home" was about 41px tall (14px type and 0.75rem of padding). It is an
+ * inline-flex link with a 44px minimum height, border-box because this page has no stylesheet to reset it, as the 44px (min-h-11)
+ * of src/app/error.tsx's buttons.
  */
 import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
@@ -54,7 +58,10 @@ export default function GlobalError({
           <a
             href="/"
             style={{
-              display: "inline-block",
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: 44,
+              boxSizing: "border-box",
               marginTop: 24,
               padding: "0.75rem 1rem",
               borderRadius: 999,

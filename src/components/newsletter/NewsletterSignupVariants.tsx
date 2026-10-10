@@ -19,6 +19,10 @@
  * form is named by the same line. The line is set upright in --c-ink2: Space Grotesk ships no italic, so the italic was a
  * synthetic slant, in a brown.
  *
+ * FIX ROUND 8 (Task 8's review). The button is disabled until a first effect has run: the field's new `name` made a native submit
+ * before hydration a GET with the address in the URL. And the route's 400 (an address its stricter check refuses) shows the
+ * bad-address line, where any non-OK answer said "Try again in a minute", which is for a 429 or a server error.
+ *
  * InlineMidArticle, the card for /learn posts, was deleted the same day: nothing mounted it (its import in
  * src/app/[country]/[geo]/[industry]/page.tsx is a comment), and it promised "Once a month we send one deep-dive" and "Check your
  * inbox for a hello", neither of which can happen. The exit-intent pop-up went on 2026-10-06 (QUEUE ui:exit-intent-dead).
@@ -30,7 +34,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
 import { CircleNotch } from "@phosphor-icons/react/dist/ssr/CircleNotch";
 
@@ -55,6 +59,13 @@ const ERROR_ID = "atlas-footer-email-error";
 export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [email, setEmail] = useState("");
+  /* THE BUTTON WAITS FOR THE PAGE (fix round 8). The field has a name, so a native submit before the page has hydrated, by Enter
+     in the field or a tap on the button, is a GET to the page's own address with the email in the query string: the browser's
+     history, the host's logs, and the page address any error report carries. A form whose default button is disabled submits
+     nothing on Enter either. The first effect runs once the page has hydrated this component, so its handler is attached, and
+     enables the button. */
+  const [ready, setReady] = useState(false);
+  useEffect(() => { setReady(true); }, []);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -69,6 +80,12 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ email, source: "footer" }),
       });
+      /* The route answers 400 for an address its own check refuses, which is stricter than this bar's ("a@b.c" passes here and
+         not there): that is a bad address, not a post that did not go through. 429 (five a minute) and a server error are. */
+      if (res.status === 400) {
+        setStatus("invalid");
+        return;
+      }
       if (!res.ok) throw new Error("network");
       setStatus("success");
     } catch {
@@ -133,7 +150,7 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
               />
               <button
                 type="submit"
-                disabled={status === "loading"}
+                disabled={!ready || status === "loading"}
                 className="h-11 shrink-0 rounded-md bg-[var(--c-ink)] px-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--c-ink2)] disabled:opacity-70 inline-flex items-center gap-1.5"
               >
                 {status === "loading" ? (<><Spinner /> {NEWSLETTER_COPY.joining}</>) : NEWSLETTER_COPY.button}
