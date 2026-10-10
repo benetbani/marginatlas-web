@@ -173,8 +173,18 @@ if (proofs && built) {
   const years = [...bars.matchAll(/data-year="(\d{4})"/g)].map((m) => m[1]);
   const wantYears = drawn.filter((m, i) => m.month.slice(5, 7) === "01" || (i === 0 && 13 - Number(m.month.slice(5, 7)) >= 3)).map((m) => m.month.slice(0, 4));
   check(`the years stand under their first months (${years.join(", ")})`, years.length > 0 && JSON.stringify(years) === JSON.stringify(wantYears), PROOF_AT);
-  const columns = [...bars.matchAll(/data-month-bar="\d+"[^>]*style="height:[^;]*;background:([^"]*)"/g)].map((m) => m[1]);
-  check(`quiet: the busiest month in ink2, the other eleven in the soft grey, no accent (${columns.filter((c) => c === "var(--c-ink2)").length} and ${columns.filter((c) => c === "var(--c-soft2)").length})`, columns.length === 12 && columns.filter((c) => c === "var(--c-ink2)").length === 1 && columns.filter((c) => c === "var(--c-soft2)").length === 11 && !/var\(--terra/.test(bars), PROOF_AT);
+  /* THE COLUMNS ARE LEGIBLE (critique pass 2, P1.1): the eleven quiet columns are the soft grey, 1.19 to 1 on the card's white, and failed 3:1 for
+     a graphic a reader needs (WCAG 1.4.11) with no number anywhere on the drawing. Each quiet column keeps its soft fill and gains a 2px cap on
+     its top in --control-line (3.25 to 1), so every height is drawn at 3:1 while the card stays quiet; the busiest is whole ink2 (no cap) and
+     prints its count over itself, 12 semibold ink, stamped as the months' own figure; the label's 16px come out of the columns' height, so the
+     drawing is 96 tall as it was. */
+  const columns = [...bars.matchAll(/data-month-bar="\d+"[^>]*style="height:[^;]*;background:([^;"]*)(?:;box-shadow:([^"]*))?"/g)].map((m) => `${m[1]}${m[2] ? ` | ${m[2]}` : ""}`);
+  const CAP = "inset 0 2px 0 var(--control-line)";
+  check(`quiet: the busiest month whole in ink2 with no cap, the other eleven in the soft grey each with a 2px cap in --control-line, no accent (${columns.filter((c) => c === "var(--c-ink2)").length} and ${columns.filter((c) => c === `var(--c-soft2) | ${CAP}`).length})`, columns.length === 12 && columns.filter((c) => c === "var(--c-ink2)").length === 1 && columns.filter((c) => c === `var(--c-soft2) | ${CAP}`).length === 11 && !/var\(--terra/.test(bars), PROOF_AT);
+  const peakCount = n(Math.max(...drawn.map((m) => m.notices)));
+  const peakMark = /<span class="flex min-w-0 flex-1 justify-center" data-peak-label="" data-mark-label=""><span class="fig [^"]*" data-src="([^"]*)" data-kind="([^"]*)">([^<]*)<\/span><\/span>/.exec(bars);
+  const rowH = (re: RegExp) => Number(re.exec(bars)?.[1] ?? NaN);
+  check(`the busiest month prints its count, ${peakCount}, once, over its column, stamped with the months' own source (${peakMark?.[3] ?? "none"}), 12 semibold ink, and the label row and the columns make the drawing's 96 (${rowH(/data-peak-row="" class="[^"]*" style="height:(\d+)px"/)} + ${rowH(/class="flex w-full items-end gap-1" style="height:(\d+)px"/)})`, (bars.match(/data-peak-label/g) ?? []).length === 1 && !!peakMark && peakMark[3] === peakCount && peakMark[1] === p.months?.prov?.src && peakMark[2] === p.months?.prov?.kind && /--t-micro\)\] font-semibold leading-none tabular-nums text-\[var\(--c-ink\)\]/.test(peakMark[0]) && bars.indexOf("data-peak-row") < bars.indexOf("data-month-bar") && rowH(/data-peak-row="" class="[^"]*" style="height:(\d+)px"/) + rowH(/class="flex w-full items-end gap-1" style="height:(\d+)px"/) === 96, { file: "src/components/spine/archetypes/MonthBars.tsx", remedy: "MonthBars tone ink: a 16px row over the columns holding the busiest month's count (Fig with the drawing's prov, 12 semibold ink, tabular, centred on its column), the columns' height 80 so the drawing stays 96, a 2px --control-line cap on each quiet column" });
   check("the columns stand above the door's stretched link, so a tap there reads a month, 20px under the line (the focal's 16 and mt-1) like the other two cards' drawings", /<div class="relative z-20 mb-3 mt-1"><div data-archetype="month-bars"/.test(html), PROOF_AT);
   /* THE COPIES ROW IS A FOOT ROW LIKE THE OTHER TWO CARDS' (critique pass 2, P0.1): at the card's foot under its hairline (`mt-auto
      border-t`), and with no glyph, so the three cards' foot rows read alike (the glyph chips stay on the titles, the ruling of
@@ -182,7 +192,7 @@ if (proofs && built) {
   check("the copies row stands at the card's foot under its hairline (mt-auto border-t) with no glyph", /<div class="mt-auto border-t border-\[var\(--c-border\)\]"><div class="\[container-type:inline-size\]/.test(html) && !/data-row="copies"[^>]*>(?:(?!<\/dt>)[\s\S])*spine-ic/.test(html) && (html.match(/\bmt-auto\b/g) ?? []).length === 1, PROOF_AT);
   check("quiet: no figure in the accent", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), PROOF_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === 2 && figs.every((f) => /data-src="home\/archive\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);
+  check(`every figure says where it came from (${figs.length}: the months, the busiest month's count over its column, the copies)`, figs.length === 3 && figs.every((f) => /data-src="home\/archive\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);
   /* THE TWELVE COUNTS SAY WHERE THEY CAME FROM (the closing cleanup, item 11): the columns are figures too, each a month's notices, so
      the drawing's root carries the months' stamp, as the figure above it does, and it is the builder's own. */
   const barsRoot = /<div data-archetype="month-bars"[^>]*>/.exec(html)?.[0] ?? "";

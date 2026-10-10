@@ -187,7 +187,16 @@ const STAMP = { src: "home/archive.json:gazette.months", kind: "counted" as cons
 const barsPlain = renderToStaticMarkup(React.createElement(MonthBars, { points: monthPoints, start: "2025-10", tone: "ink", counts: monthCounts }));
 const barsStamped = renderToStaticMarkup(React.createElement(MonthBars, { points: monthPoints, start: "2025-10", tone: "ink", counts: monthCounts, prov: STAMP }));
 check("a MonthBars given a prov stamps its drawing's root with data-src and data-kind, and one given none stamps nothing", /<div data-archetype="month-bars"[^>]*data-src="home\/archive\.json:gazette\.months" data-kind="counted"/.test(barsStamped) && !/data-src=|data-kind=/.test(barsPlain), MONTHS, "MonthBars prov: provAttrs(prov) on the Marks root, nothing when none is passed");
-check("the stamp is the only difference: the drawing with a prov, less the two attributes, is the drawing without one", barsStamped.replace(` data-src="${STAMP.src}" data-kind="${STAMP.kind}"`, "") === barsPlain, MONTHS, "MonthBars prov changes the root's two attributes and nothing else");
+check("the stamp is the only difference: the drawing with a prov, less its stamps (the root's and the busiest count's), is the drawing without one", barsStamped.split(` data-src="${STAMP.src}" data-kind="${STAMP.kind}"`).join("") === barsPlain, MONTHS, "MonthBars prov changes the stamps' two attributes (the root's, and the busiest count's figure under tone ink) and nothing else");
+
+/* MONTHBARS' LEGIBLE QUIET TONE (critique pass 2, P1.1). The quiet columns were the soft grey alone, 1.19 to 1 on white and without a
+   number: tone ink now gives each quiet column a 2px cap in --control-line (3.25 to 1) so every height is drawn at 3:1, the busiest stays
+   whole ink2 and prints its count over itself (12 semibold ink, tabular, centred, stamped as a figure is), the label's 16px taken out of
+   the columns' height so the drawing is 96 tall as before. The default tone is what it was: the accent peak, the soft grey, no cap, no
+   label row, columns 96 tall. */
+const plainTone = renderToStaticMarkup(React.createElement(MonthBars, { points: monthPoints }));
+const caps = (html: string) => (html.match(/box-shadow:inset 0 2px 0 var\(--control-line\)/g) ?? []).length;
+check("a MonthBars in tone ink caps its eleven quiet columns (2px, --control-line), leaves the busiest whole in ink2 and prints its count over it in a 16px row, the columns 80 tall; the default tone has none of it and its columns stay 96 tall", caps(barsPlain) === 11 && /data-peak-row="" class="flex w-full gap-1" style="height:16px"/.test(barsPlain) && /class="flex w-full items-end gap-1" style="height:80px"/.test(barsPlain) && />2,100</.test(barsPlain) && caps(plainTone) === 0 && !/data-peak-row|data-peak-label/.test(plainTone) && /class="flex w-full items-end gap-1" style="height:96px"/.test(plainTone), MONTHS, "MonthBars tone ink: box-shadow inset 0 2px 0 var(--control-line) on each quiet column, a 16px data-peak-row over the columns, the columns' height H less 16; tone accent untouched");
 
 /* BARLIST'S QUIET */
 const BARS = "src/components/spine/charts/BarList.tsx";

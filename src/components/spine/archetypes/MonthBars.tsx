@@ -55,7 +55,15 @@
  *    month with its count, so the panel says only what the drawing holds;
  *    without it a column reads its share of the busiest month, as before.
  *  - `tone="ink"` draws the busiest column in ink2 and the rest in the soft
- *    grey, for a quiet card: no accent.
+ *    grey, for a quiet card: no accent. THE QUIET COLUMNS ARE LEGIBLE (critique
+ *    pass 2, P1.1): the soft grey alone is 1.19 to 1 on a white card and fails
+ *    3:1 for a graphic a reader needs (WCAG 1.4.11), and the drawing held no
+ *    number. Each quiet column keeps its soft fill and gains a 2px cap on its
+ *    top in --control-line (3.25 to 1), so every height is drawn at 3:1 while
+ *    the card stays quiet; the busiest stays whole ink2 and prints its count
+ *    over itself in a 16px row (12 semibold ink, tabular, centred on its
+ *    column, a figure stamped by `prov` as every figure is), the label's 16px
+ *    taken out of the columns' height so the drawing is 96 tall as it was.
  *  - `prov` stamps the drawing's root with where the twelve counts came from
  *    (data-src and data-kind, src/lib/spine/provenance.ts), as a figure's own
  *    element is stamped: the counts are figures, one to a column, and they
@@ -66,11 +74,14 @@
  */
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
+import { Fig } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
 export const MONTH_BAR_POINTS = 12;
 const H = 96;
+/** The row over the columns that holds the busiest month's count in a quiet tone: its 16px come out of the columns' height. */
+const PEAK_ROW = 16;
 
 export type MonthPoint = { month: number; value: number };
 
@@ -106,6 +117,8 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts, p
   const shares = drawn.map((p) => Math.round((p.value / max) * 100));
   const names = from ? drawn.map((p, i) => `${COPY.monthLine.names[p.month]} ${yearOf(i)}`) : COPY.monthLine.names;
   const count = (v: number) => v.toLocaleString("en-US");
+  /* THE QUIET TONE'S LABEL AND CAPS (the header says why): the busiest count over its column, a 2px cap on each quiet column. */
+  const labelled = tone === "ink";
   const label = counts
     ? counts.aria.replace("{first}", names[0]).replace("{last}", names[MONTH_BAR_POINTS - 1]).replace("{months}", names.map((m, i) => `${m} ${count(values[i])}`).join(", "))
     : COPY.monthLine.aria.replace("{peak}", names[peak]).replace("{trough}", names[trough]).replace("{months}", names.map((m, i) => `${m} ${shares[i]}%`).join(", "));
@@ -121,7 +134,20 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts, p
       {...provAttrs(prov)}
       className="w-full"
     >
-      <div className="flex w-full items-end gap-1" style={{ height: H }} role="img" aria-label={label}>
+      {labelled ? (
+        <div data-peak-row="" className="flex w-full gap-1" style={{ height: PEAK_ROW }} aria-hidden="true">
+          {drawn.map((p, i) => (
+            <span key={p.month} className="flex min-w-0 flex-1 justify-center" {...(i === peak ? { "data-peak-label": "", "data-mark-label": "" } : {})}>
+              {i === peak ? (
+                <Fig prov={prov} className="shrink-0 whitespace-nowrap text-[length:var(--t-micro)] font-semibold leading-none tabular-nums text-[var(--c-ink)]">
+                  {count(p.value)}
+                </Fig>
+              ) : null}
+            </span>
+          ))}
+        </div>
+      ) : null}
+      <div className="flex w-full items-end gap-1" style={{ height: labelled ? H - PEAK_ROW : H }} role="img" aria-label={label}>
         {drawn.map((p, i) => (
           <span
             key={p.month}
@@ -134,6 +160,7 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts, p
               height: `${Math.max(4, (p.value / max) * 100)}%`,
               /* ONE LOUD COLUMN AND ONE TONE FOR THE REST (2026-09-23, measured on the render): the trough drawn in the accent's tint read as an EMPTY slot rather than the quietest month, which is the opposite of what it meant. The shortest column is already the quietest; it needs no second colour to say so. In a quiet card (`tone="ink"`, plan 2026-10-10) the loud column is ink2. */
               background: i === peak ? (tone === "ink" ? "var(--c-ink2)" : "var(--terra)") : "var(--c-soft2)",
+              ...(labelled && i !== peak ? { boxShadow: "inset 0 2px 0 var(--control-line)" } : {}),
             }}
           />
         ))}
