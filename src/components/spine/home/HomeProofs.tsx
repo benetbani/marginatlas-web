@@ -19,8 +19,10 @@
  * browser, a one-row foot with its note under its label leaves the right half of the row blank, and without a rule that blank ran up
  * into the drawing's years row as one 96px hole; the rule is ink the page filter reads, and it ties the three feet together. The joins'
  * ring stands in its row form with its caption beside it and the two counts it is worked out from at the foot; the archive's copies
- * row is a foot row like them, with no glyph; the tax draws the stacked bar and its two rules as the bar's key (a swatch in each
- * part's ink, a note in the law's own pounds), the two columns kept from 600px of card (no rule there: the rules stand beside the bar).
+ * row is a foot row like them, with no glyph; the tax draws the stacked bar of its two rules and, as the bar's key, its three parts (a
+ * swatch in each part's ink; a note in the law's own pounds on the two rules; a third row, what is kept, in the soft grey with the bar's own
+ * edge, critique pass 3, item P1.5: the key named two parts and stood 50px under its bar), the bar naming nothing under itself, the two
+ * columns kept from 600px of card (no rule there: the rows stand beside the bar).
  *
  * DOORS THAT LOOK LIKE DOORS (the critique's P1.7): the title is the link, stretched over the whole card (`after:absolute
  * after:inset-0`), an arrow at the right end of its row, the card's edge in ink2 on hover; nothing lifts and nothing turns terracotta.
@@ -43,8 +45,9 @@ import type { ProofArchiveData, ProofJoinsData, ProofTaxData } from "@/lib/home/
 const CARD = "relative isolate flex flex-col transition-colors hover:border-[var(--c-ink2)] [&_[data-rail-title]]:text-[length:var(--t-head)] [&_[data-rail-title]]:leading-7 [&_[data-rail-title]]:tracking-[-0.01em]";
 /** THE FOOT: pushed to the card's foot, its rows under a hairline (the rows' own 12px padding stands under it). */
 const FOOT = "mt-auto border-t border-[var(--c-border)]";
-/** The tax bar's two parts and their key's swatches, one ink each: income tax in ink, National Insurance in ink2, the rest in the soft grey. */
-export const TAX_INK: Record<string, string> = { "income-tax": "var(--c-ink)", "class-4": "var(--c-ink2)" };
+/** The tax bar's three parts and their key's swatches, one ink each: income tax in ink, National Insurance in ink2, what is kept in the soft
+ *  grey (the bar's rest, which carries a 1px edge, as the key's swatch does: FactRows). The key names all three (critique pass 3, item P1.5). */
+export const TAX_INK: Record<string, string> = { "income-tax": "var(--c-ink)", "class-4": "var(--c-ink2)", keep: "var(--c-soft2)" };
 
 /** THE DOOR'S TITLE ROW: the card's Rail inside the link (passed as the child, so the census still reads each card's kicker off its
  *  Rail), the link stretched over the card, the arrow at the row's right end. */
@@ -110,8 +113,8 @@ export function ProofTax({ p }: { p: ProofTaxData }) {
         <div className="grid flex-1 grid-cols-1 grid-rows-[auto_1fr] [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:grid-rows-1 [@container(min-width:600px)]:gap-x-12">
           <div className="flex flex-col">
             <Focal figure={p.figure} words={p.line} prov={p.prov} />
-            <div data-answer-bar className="mb-3 mt-1">
-              <SegmentBar bare tone="ink" label={p.bar.aria} value={p.bar.value} figure={p.figure} unit="" part={p.bar.part} rest={p.bar.rest} parts={p.rows.map((r) => ({ key: r.key, value: r.percent, fill: TAX_INK[r.key] ?? "var(--c-ink2)" }))} />
+            <div data-answer-bar className="mb-3 mt-1 [@container(min-width:600px)]:my-auto">
+              <SegmentBar bare tone="ink" label={p.bar.aria} value={p.bar.value} figure={p.figure} unit="" parts={p.rows.filter((r) => r.key !== "keep").map((r) => ({ key: r.key, value: r.percent, fill: TAX_INK[r.key] ?? "var(--c-ink2)" }))} />
             </div>
           </div>
           <div className="flex flex-col [@container(min-width:600px)]:justify-center">

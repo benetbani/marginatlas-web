@@ -38,6 +38,11 @@ export type FactRow = {
   prov?: Provenance | null;
 };
 
+/* THE SOFT GREY KEY TAKES THE EDGE THE DRAWING'S REST CARRIES (critique pass 3, fix round D1, item P1.5): the stacked bar draws what is not a named
+   part in --c-soft2 with a 1px inset --c-line-strong edge, because the soft grey alone is 1.19 to 1 on a white card, so the key's square for that part
+   carries the same edge or it would vanish. */
+const SOFT_SWATCH = "var(--c-soft2)";
+
 /* A DATE NEVER BREAKS OVER TWO LINES (the design review, 2026-10-04: "since 1 / Apr 2026"): a note's "1 Apr 2026" keeps its two
    spaces unbreakable. */
 const DATE = /(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})/g;
@@ -63,7 +68,7 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
             <Ico id={r.icon} tone="terra" />
           </span>
         ) : r.swatch ? (
-          <span aria-hidden data-swatch="" className="mt-[9px] h-2.5 w-2.5 shrink-0 rounded-[2px]" style={{ background: r.swatch }} />
+          <span aria-hidden data-swatch="" className="mt-[9px] h-2.5 w-2.5 shrink-0 rounded-[2px]" style={r.swatch === SOFT_SWATCH ? { background: r.swatch, boxShadow: "inset 0 0 0 1px var(--c-line-strong)" } : { background: r.swatch }} />
         ) : null}
         <span className="min-w-0">
           {/* THE LABEL'S FIRST LINE IS CENTRED ON THE TILE (28): a 20px line 4px down, and the figure the same, so the glyph, the

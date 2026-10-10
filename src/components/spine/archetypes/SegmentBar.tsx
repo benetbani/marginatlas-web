@@ -34,8 +34,9 @@
  *  - THE CONTINUOUS FORM (`parts`, critique pass 2, P0.1; bare, the home's tax proof): the share drawn not as cells but as one bar of its
  *    named parts, each part a run of the bar in its own ink (`fill`, a colour token) as wide as its value is of `total`, the rest of
  *    the whole in the soft grey with a 1px edge in --c-line-strong so the whole is visible against a white card (the soft grey alone
- *    is 1.19 to 1 on it). One 12px bar, 3px radius, clipped, with no padding of its own (the card sets its distance from the line); under it the two names in `part` and `rest`, each already holding its
- *    figure ("Tax 18%", "You keep 82%"), at the micro rung in muted. The cells' comb said the 18 a second time and showed nothing of
+ *    is 1.19 to 1 on it). One 12px bar, 3px radius, clipped, with no padding of its own (the card sets its distance from the line); under it, only when `part` or `rest` is given, the two names, each already holding its
+ *    figure ("Tax 18%", "You keep 82%"), at the micro rung in muted (the home's tax proof gives none since critique pass 3, item P1.5: the figure above says
+ *    the tax and the key's third row says what is kept). The cells' comb said the 18 a second time and showed nothing of
  *    the rules behind it; the parts are the rules, and the rows beside the bar are its key. `data-form` stays "split". A PART CARRIES `data-bar-part`,
  *    NOT `data-part-key`: the key is the hook of the linked parts that Marks listens to (the interact gate reds one outside a listening
  *    drawing), and this bar is not interactive, so its parts are named for the tests and nothing else (fix round C2's follow-up to C1).
@@ -60,10 +61,12 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
           ))}
           <span data-rest-fill="" className="h-full min-w-0 flex-1" style={{ background: "var(--c-soft2)", boxShadow: "inset 0 0 0 1px var(--c-line-strong)" }} />
         </div>
-        <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" aria-hidden="true">
-          <span data-part>{part}</span>
-          {rest ? <span data-rest>{rest}</span> : null}
-        </div>
+        {part || rest ? (
+          <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" aria-hidden="true">
+            <span data-part>{part}</span>
+            {rest ? <span data-rest>{rest}</span> : null}
+          </div>
+        ) : null}
       </div>
     );
   }

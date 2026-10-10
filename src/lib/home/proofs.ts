@@ -16,7 +16,8 @@
  *   the formulas  the UK's total effective tax burden on a sole trader's profit, worked out from the year's rules, the figure /gb's
  *                 masthead prints (buildHomeAnswers' answer), its two rules as rows whose whole numbers sum to it (income tax and
  *                 National Insurance, P0.7), each with its note in the law's own pounds read from UK_2026_27 (critique pass 2, P0.1),
- *                 drawn as one stacked bar of the two rules and what is kept; door: /gb#take
+ *                 and a third row, what is kept (critique pass 3, P1.5), the three the key of one stacked bar of the two rules
+ *                 and the rest, the bar naming nothing under itself; door: /gb#take
  * Never typed: each figure is its builder's. The tax proof stands last, so the joins and the archive, quiet, stand between it and the
  * example's step 3. The year's hyphen is unbreakable (U+2011), so "2026-27" never breaks over two lines (P2.3).
  */
@@ -42,8 +43,9 @@ export type ProofArchiveData = ProofBase & { months: ProofMonths | null; row: { 
 /** One rule of the tax: its name, its share of the profit as printed (a whole percent, as text and as a number) and its note in the law's
  *  own pounds. */
 export type ProofRule = { key: string; label: string; value: string; percent: number; note: string; prov: Provenance };
-/** The tax drawn as one stacked bar: the printed tax and what is kept, named under it ("Tax 18%", "You keep 82%"), and the bar's spoken label. */
-export type ProofTaxData = ProofBase & { lands: DoorKind; rows: ProofRule[]; bar: { value: number; part: string; rest: string; aria: string } };
+/** The tax drawn as one stacked bar of its two rules, the rest the share kept: the printed share and the bar's spoken label. The bar names
+ *  nothing under itself (critique pass 3, item P1.5): the figure above says the tax and the key's third row says what is kept. */
+export type ProofTaxData = ProofBase & { lands: DoorKind; rows: ProofRule[]; bar: { value: number; aria: string } };
 export type Proofs = { joins: ProofJoinsData; archive: ProofArchiveData; tax: ProofTaxData };
 
 /** The months a year of columns draws. */
@@ -121,14 +123,17 @@ export function buildProofs(): Proofs | null {
       rows: [
         { key: "income-tax", label: C.tax.income, value: `${uk.partsPercent.incomeTax}%`, percent: uk.partsPercent.incomeTax, note: C.tax.incomeNote.replace("{rate}", rate(UK_2026_27.incomeTax.basic)).replace("{allowance}", gbp(UK_2026_27.incomeTax.personalAllowance)), prov: { src: `${answer.prov.src}:income tax`, kind: "worked out" } },
         { key: "class-4", label: C.tax.class4, value: `${uk.partsPercent.class4}%`, percent: uk.partsPercent.class4, note: C.tax.class4Note.replace("{rate}", rate(UK_2026_27.class4.main)).replace("{from}", gbp(UK_2026_27.class4.lowerProfitsLimit)).replace("{to}", gbp(UK_2026_27.class4.upperProfitsLimit)), prov: { src: `${answer.prov.src}:class 4`, kind: "worked out" } },
+        /* WHAT THE OWNER KEEPS (critique pass 3, fix round D1, item P1.5): the key's third part, the bar's largest and the card's point. The key
+           named two parts and stood 50px under a three-part bar; its row is the engine's own keep (100 less the printed total), worked out, with no
+           note (a note would be money the law engine works out: soleTraderTakeHome, and none is needed). */
+        { key: "keep", label: C.tax.keep, value: `${uk.partsPercent.keep}%`, percent: uk.partsPercent.keep, note: "", prov: { src: `${answer.prov.src}:kept`, kind: "worked out" } },
       ],
-      /* THE BAR IS THE TWO RULES AND THE REST (critique pass 2, P0.1): the tax as printed and what is kept, whole numbers that sum to 100
-         (partsPercent.keep is 100 less the printed total), named under the bar in the masthead's own words. The masthead's own bar must
-         exist for the proof to draw, so the proof and /gb never disagree about whether there is a share to show. */
+      /* THE BAR IS THE TWO RULES AND THE REST (critique pass 2, P0.1): the tax as printed, whole numbers that sum to 100 with what is kept
+         (partsPercent.keep is 100 less the printed total). Under the bar nothing is named (critique pass 3, P1.5): the figure above says 18%
+         and the key says 82%. The masthead's own bar must exist for the proof to draw, so the proof and /gb never disagree about whether
+         there is a share to show. */
       bar: {
         value: uk.percent,
-        part: `${COPY.heroBoard.share.part} ${uk.percent}%`,
-        rest: `${COPY.heroBoard.share.rest} ${uk.partsPercent.keep}%`,
         aria: C.tax.aria.replace("{incomeTax}", `${uk.partsPercent.incomeTax}%`).replace("{class4}", `${uk.partsPercent.class4}%`).replace("{keep}", `${uk.partsPercent.keep}%`),
       },
     },
