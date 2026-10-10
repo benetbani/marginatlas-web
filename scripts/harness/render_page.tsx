@@ -37,6 +37,7 @@ import { buildSpineCellSeed } from "../../src/lib/spine/adapt_cell";
 import { buildSpineIndustrySeed } from "../../src/lib/spine/adapt_industry";
 import { buildSpineHoodSeed } from "../../src/lib/spine/adapt_hood";
 import { SpineCountryBody } from "../../src/components/spine/country/country-view";
+import { GUTTER } from "../../src/lib/nav";
 import { SpineCityBody } from "../../src/components/spine/city/city-view";
 import { SpineCellBody } from "../../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../../src/components/spine/industry/industry-view";
@@ -115,13 +116,13 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
       : React.createElement(C, { data });
   /* SITECHROME'S MAIN AROUND THE SHELL, as production serves it (the goal's
      A13, 2026-09-24): every route that draws a spine body wraps it in
-     SiteChrome (`<main className="relative max-w-content mx-auto px-6 pt-4">`),
+     SiteChrome (`<main className="relative max-w-content mx-auto px-4 md:px-6 pt-4">`, the gutter GUTTER holds),
      and the bodies no longer carry a main or a gutter of their own, so the
      render measures the widths a visitor gets (1072 of content at 1280, 720 at
      768, 327 at 375; the renders read 343 at 375 before, production 295). The
      how-to route draws no SiteChrome and keeps the main its page file writes. */
   const shelled = selfShelled ? inner : React.createElement(SpineShell as any, null, inner);
-  const body = renderToStaticMarkup(surface === "howto" ? shelled : React.createElement("main", { className: "relative max-w-content mx-auto px-6 pt-4" }, shelled));
+  const body = renderToStaticMarkup(surface === "howto" ? shelled : React.createElement("main", { className: `relative max-w-content mx-auto ${GUTTER} pt-4` }, shelled));
   mkdirSync("scratchpad/harness/pages", { recursive: true });
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}.html`;
   writeFileSync(out, mapAssets(page(`${surface} ${slugs.join(" ")}`, body)), "utf8");
@@ -144,7 +145,7 @@ async function renderLocked(surface: string, slugs: string[]): Promise<string | 
     case "cell": tree = await renderCellRoute(slugs[0], slugs[1], slugs[2], { locked: true }); break;
     default: console.error(`render_page --locked draws the three UK page types (country, city, cell), not ${surface}`); process.exit(2);
   }
-  const body = renderToStaticMarkup(React.createElement("main", { className: "relative max-w-content mx-auto px-6 pt-4" }, tree));
+  const body = renderToStaticMarkup(React.createElement("main", { className: `relative max-w-content mx-auto ${GUTTER} pt-4` }, tree));
   mkdirSync("scratchpad/harness/pages", { recursive: true });
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}-locked.html`;
   writeFileSync(out, mapAssets(page(`${surface} ${slugs.join(" ")} locked`, body)), "utf8");

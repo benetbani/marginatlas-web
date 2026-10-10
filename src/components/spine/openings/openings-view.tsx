@@ -59,7 +59,7 @@ export function SpineOpeningsBody() {
   ];
   return (
     <>
-      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+      <div data-spine-body data-composition="zones">
         {zones.map((z, i) => (
           <Zone key={z.key} tone={zoneTone(i)} split={z.split} even={z.even} label={z.label}>
             {z.body}

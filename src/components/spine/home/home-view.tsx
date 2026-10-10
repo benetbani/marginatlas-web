@@ -126,7 +126,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const toned = zones.filter((z) => z.tone !== "terra");
   return (
     <>
-      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+      <div data-spine-body data-composition="zones">
         {zones.map((z) =>
           z.tone === "terra" ? (
             <React.Fragment key={z.key}>{z.body}</React.Fragment>

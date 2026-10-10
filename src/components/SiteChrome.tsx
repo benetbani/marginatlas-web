@@ -54,7 +54,7 @@ import { MobileNav } from "@/components/MobileNav";
    and with it (until fix round 7) the taxonomy and industries.json. */
 import { WatchTray } from "@/components/kit/WatchTray";
 import { isAuthEnabled, isWarmFrameEnabled, isPaywallOn } from "@/lib/feature_flags";
-import { FREE_DATA, NAV } from "@/lib/nav";
+import { FREE_DATA, GUTTER, NAV } from "@/lib/nav";
 
 /** The skip link: visually hidden until it takes focus, then an ink pill over the bar's corner (the site's focus floor rings it). */
 const SKIP =
@@ -101,12 +101,14 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
            the page is gone, carries a thin bottom hairline so the sticky bar
            stays defined as content scrolls beneath it. */}
         <header className={headerClass}>
-          {/* UNDER 360px THE BAR TAKES THE PAGE'S 16px GUTTER AND A 12px GAP (2026-10-04): at 320 the lockup, the search and the menu
-              ran 11px past the screen and the whole page scrolled sideways (the UK page reform's phone check; production the same).
+          {/* THE SITE'S ONE GUTTER (critique pass 3, fix round D1, item P1.3): 16 under 768 and 24 from, read from src/lib/nav.ts by the bar,
+              <main>, the footer, the sheet and the newsletter bar, so the wordmark, the h1 and the foot lines share one left edge on a phone.
+              It is also what keeps the bar on the screen at 320 (2026-10-04: at 24 the lockup, the search and the menu ran 11px past it and the
+              whole page scrolled sideways; under 360 the bar took 16 as a patch, and every width has it now).
               A 60px BAR ON A PHONE (the spec's decision 6): 8px above and below the 44px controls under 768, so the h1, the picker
               and the definition stand in the first screen at 375; from 768 the bar keeps its 24px and the 40px mark. The height
               token in src/app/layout.tsx follows both. */}
-          <div className="max-w-content mx-auto px-6 py-2 md:py-6 flex items-center justify-between max-[359px]:px-4">
+          <div className={`max-w-content mx-auto ${GUTTER} py-2 md:py-6 flex items-center justify-between`}>
             <Link href="/" aria-label="Margin Atlas home" className="inline-flex items-center">
               {/* Cities §10: bump 32 to 40 on desktop, 36 on mobile per founder request. ON A PHONE, 28 AND ONE LINE (2026-10-01, T5):
                   at 40 everywhere the two words wrapped beside the search and the menu at every phone width (the bar 117px tall
@@ -185,7 +187,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
 
             `id="main"` and `tabIndex={-1}` are the skip link's target (the ship audit's 1.4): the link lands here and focus with it,
             so the next Tab starts inside the page. globals.css draws no ring round the whole page for that focus. */}
-        <main id="main" tabIndex={-1} className="relative max-w-content mx-auto px-6 pt-4">{children}</main>
+        <main id="main" tabIndex={-1} className={`relative max-w-content mx-auto ${GUTTER} pt-4`}>{children}</main>
         {/* Plan v30 Bundle 5 — site-wide newsletter signup bar; calm,
             non-aggressive, slim. Sits above the main footer. */}
         <FooterNewsletterBar />
@@ -208,7 +210,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             It took a screenshot to find, which is exactly what the charter
             said was missing. */}
         <footer className="relative bg-black text-white border-t border-white/10">
-          <div className="max-w-content mx-auto px-6 py-12">
+          <div className={`max-w-content mx-auto ${GUTTER} py-12`}>
             <div className="mb-8">
               <LogoWordmark size={22} labeled tone="dark" />
             </div>

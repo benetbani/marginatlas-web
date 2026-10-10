@@ -61,8 +61,9 @@ export function HowToBody({ iso2 }: { iso2: string }) {
     <>
       {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the country page above, this page below. */}
       <Crumbs items={buildHowToCrumbs(iso2)} />
-      {/* NO NEGATIVE MARGIN HERE (2026-10-04): the other bodies take SiteChrome's 24 down to the phone's 16 with -mx-2, but this
-          route writes its own main at 16 on a phone (24 from 768), so the same -mx-2 left the open sections 8 from the glass. */}
+      {/* NO NEGATIVE MARGIN HERE, AND NONE ON ANY BODY (2026-10-04; critique pass 3, fix round D1, item P1.3): this route writes its own main
+          at 16 on a phone and 24 from 768, the site's one gutter (GUTTER, src/lib/nav.ts), which SiteChrome's <main> now stands on too, so no
+          body pulls itself back with -mx-2 any more (a -mx-2 here left the open sections 8 from the glass). */}
       <div data-spine-body data-composition="zones">
         <Zone split="wide" label={d.title}>
           {/* THE PAGE'S OPENING, MARKED AS THE BENTO'S HERO BAND MARKED IT (`Band hero`): the sanction the full-width gates read for

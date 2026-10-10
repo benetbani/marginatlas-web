@@ -1803,7 +1803,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
         {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2: Material, iOS and the NHS hold 16; the site's column holds 24): the
             zones reach 8px into the column's padding below 768, so a section's content is 343px wide at 375, the width every
             phone table on the page is laid out for. The bands' colour runs edge to edge either way. */}
-        <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+        <div data-spine-body data-composition="zones">
           {shown.map((z, i) => (
             <Zone key={z.key} tone={zoneTone(i)} split={z.split} even={z.even} label={z.label} chapter={z.chapter}>
               {lockedZones?.has(z.key) ? lockedBody(z.body, countryLocks) : z.body}
@@ -1947,7 +1947,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
   return (
     <>
       {/* The same frame as the United Kingdom's: 16px of phone gutter, the bands' colour edge to edge. */}
-      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+      <div data-spine-body data-composition="zones">
         {generalZones.map((z, i) => (
           <Zone key={z.key} tone={zoneTone(i)} split={z.split} label={z.label} chapter={z.chapter}>
             {z.body}

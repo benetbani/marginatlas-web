@@ -253,7 +253,7 @@ export function SpineIndustryBody({ data = spineIndustrySeed, path = null }: { d
       {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
       {/* THE TRAIL BACK UP (Crumbs.tsx, 2026-09-22): the real hierarchy, every step resolved through page_targets.ts, the last step the page itself. */}
       <Crumbs items={buildIndustryCrumbs(industryId)} />
-      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+      <div data-spine-body data-composition="zones">
         <Zone split="wide" label="The answer">
           <Masthead facts={hero} />
         </Zone>

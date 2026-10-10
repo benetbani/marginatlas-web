@@ -478,7 +478,7 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
     <>
       {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
       <Crumbs items={buildCellCrumbs(d.meta)} />
-      <div className="-mx-2 md:mx-0" data-spine-body data-composition="zones">
+      <div data-spine-body data-composition="zones">
         {shownZones.map((z) => {
           const chapter = z.chapter && !headed.has(z.chapter) ? (headed.add(z.chapter), { index: z.chapter, heading: CHAPTERS[z.chapter] }) : undefined;
           return (

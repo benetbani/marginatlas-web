@@ -33,6 +33,7 @@ import { SpineCityBody } from "../../src/components/spine/city/city-view";
 import { SpineCellBody } from "../../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../../src/components/spine/industry/industry-view";
 import { SpineShell } from "../../src/components/spine/shell";
+import { GUTTER } from "../../src/lib/nav";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
 import { countTopBlocks, floorsFromLaws } from "../lib/block_count.mjs";
 import { labelMissesWord } from "../../src/lib/cells/us_industry_match";
@@ -47,7 +48,7 @@ const FILE = "data/seo/floor_census.json";
 const floors = floorsFromLaws(readFileSync("scripts/harness/check_model_laws.mjs", "utf8")) as Record<string, number>;
 
 /* The views render inside the shell and SiteChrome's main, as the harness and production draw them. */
-const shelled = (el: React.ReactElement) => React.createElement("main", { className: "relative max-w-content mx-auto px-6 pt-4" }, React.createElement(SpineShell as any, null, el));
+const shelled = (el: React.ReactElement) => React.createElement("main", { className: `relative max-w-content mx-auto ${GUTTER} pt-4` }, React.createElement(SpineShell as any, null, el));
 const quiet = async <T,>(fn: () => Promise<T>): Promise<T> => {
   const log = console.log, warn = console.warn, err = console.error;
   console.log = () => {}; console.warn = () => {}; console.error = () => {};

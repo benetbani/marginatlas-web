@@ -7,10 +7,12 @@
  *
  * THE TOGGLE: its name is "Menu", always, and `aria-expanded` says the state (the name used to flip between "Open menu" and "Close
  * menu" while aria-expanded changed too, two signals for one state). `aria-controls` names a panel that is always in the document
- * and `hidden` while shut (it named a node that did not exist while closed). The glyph swaps; nothing moves.
+ * and `hidden` while shut (it named a node that did not exist while closed). The glyph swaps; nothing moves. The 44px target
+ * reaches 14px into the gutter (-mr-3.5; critique pass 3, fix round D1, item P1.3): the 22px glyph's ink stops 13.75px inside its
+ * box, so without it the three lines ended 22px short of the card's edge on a phone; with it they end on the content's edge.
  *
  * THE PANEL: full width under the bar, white, a --c-border hairline under it and the card's shadow; its rows on the bar's own column
- * (`max-w-content`, `px-6`, `px-4` under 360; it was max-w-7xl, up to 80px off the wordmark between 1120 and 1279); its height
+ * (`max-w-content` and the site's one gutter, GUTTER in src/lib/nav.ts; it was max-w-7xl, up to 80px off the wordmark between 1120 and 1279); its height
  * capped at the viewport less the bar and scrollable (a landscape phone and 200 percent zoom cut its last rows off, and the page
  * could not scroll them into reach because the sheet moves with the sticky bar). Rows are 48px: the seven names (src/lib/nav.ts);
  * then, quieter, About the figures and Who runs this; then Sign in or Account and Pricing, each only while its switch is on. No
@@ -26,7 +28,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAV, SHEET_TRUST, barFrom, currentNav } from "@/lib/nav";
+import { GUTTER, NAV, SHEET_TRUST, barFrom, currentNav } from "@/lib/nav";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { AuthLink } from "@/components/HeaderAuth";
 
@@ -91,7 +93,7 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
         aria-expanded={open}
         aria-controls={SHEET_ID}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-[var(--c-ink)]"
+        className="-mr-3.5 inline-flex h-11 w-11 items-center justify-center rounded-lg text-[var(--c-ink)]"
       >
         {open ? (
           // Close glyph.
@@ -111,7 +113,7 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
         hidden={!open}
         className="absolute inset-x-0 top-full z-dropdown max-h-[calc(100dvh_-_var(--atlas-header-h))] overflow-y-auto overscroll-contain border-b border-[var(--c-border)] bg-white shadow-card"
       >
-        <nav aria-label="Primary" className="mx-auto max-w-content px-6 py-2 max-[359px]:px-4">
+        <nav aria-label="Primary" className={`mx-auto max-w-content ${GUTTER} py-2`}>
           <ul>
             {NAV.map((item) => (
               <li key={item.href}>

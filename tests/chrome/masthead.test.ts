@@ -80,7 +80,7 @@ async function main() {
   /* ---------------- 1. THE LIST, THE TOKEN, THE STYLESHEET, THE GRAPH (source) ---------------- */
   check(`${NAVFILE} exists`, existsSync(NAVFILE), { file: NAVFILE, remedy: "create src/lib/nav.ts with NAV, SHEET_TRUST and currentNav (plan Task 1)" });
   if (!existsSync(NAVFILE)) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-  const { NAV, SHEET_TRUST, currentNav, HELD_COUNTRIES, NAV_IDLE, NAV_CURRENT, NAV_ENTRY, FREE_DATA, barFrom } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
+  const { NAV, SHEET_TRUST, currentNav, HELD_COUNTRIES, NAV_IDLE, NAV_CURRENT, NAV_ENTRY, FREE_DATA, barFrom, GUTTER } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
   check(`NAV is the seven names in the bar's order (${NAV.map((n) => n.label).join(", ")})`, JSON.stringify(NAV.map((n) => n.label)) === JSON.stringify(WANT_NAMES) && JSON.stringify(NAV.map((n) => n.href)) === JSON.stringify(WANT_HREFS), { file: NAVFILE });
   check(`the sheet's trust rows are About the figures and Who runs this (${SHEET_TRUST.map((n) => n.label).join(", ")})`, JSON.stringify(SHEET_TRUST) === JSON.stringify([{ href: "/about-data#reading", label: "About the figures" }, { href: "/about", label: "Who runs this" }]), { file: NAVFILE });
   const marks: Array<[string | null, string | null]> = [["/", null], [null, null], ["/blog/what-a-cafe-makes", "/blog"], ["/cities/london", "/cities"], ["/industries/restaurants", "/industries"], ["/gb", "/countries"], ["/gb/london", "/countries"], ["/gb/london/restaurants", "/countries"], ["/og", null], ["/zz", null], ["/uk", null], ["/about", null], ["/compare", "/compare"]];
@@ -315,7 +315,35 @@ async function main() {
   const searchSrc = code("src/components/HeaderSearch.tsx");
   check("HeaderSearch keeps no observer, no waiting state and no read of the home's anchor, and is not a client file (a link has nothing to run)", !/IntersectionObserver|useState|useEffect|home-search-anchor|heroSearchGone|waiting|usePathname|["']use client["']/.test(searchSrc), { file: "src/components/HeaderSearch.tsx", remedy: "HeaderSearch is one <a href=\"/search\"> with its glyph and, from 768, its word: no hook, no observer, no \"use client\"" });
   check("the sheet carries no Search row: the bar always carries Search, so the open sheet showed it twice", !anchors(o.sheet).some((n) => n.href === "/search") && !anchors(b.sheet).some((n) => n.href === "/search") && !/href="\/search"/.test(code(SHEET)), { file: SHEET, remedy: "drop the Search row, the first <li> of the sheet's first list in MobileNav.tsx" });
-  check("the bar's row is 8px above and below its controls under 768, 24px from (the 60px phone bar)", /<div class="max-w-content mx-auto px-6 py-2 md:py-6 /.test(o.header));
+  check("the bar's row is 8px above and below its controls under 768, 24px from (the 60px phone bar), on the site's one gutter", /<div class="max-w-content mx-auto px-4 md:px-6 py-2 md:py-6 /.test(o.header));
+  /* ONE PHONE GUTTER, 16, FOR THE CHROME AND THE PAGE (critique pass 3, fix round D1, item P1.3). The bar, <main>, the newsletter bar and the
+     footer stood on a 24px edge under 768 while every spine body took itself back to 16 with `-mx-2 md:mx-0`, so on a phone the wordmark began
+     8px right of the h1, the foot lines (outside the body) stayed at 24, and the menu glyph ended 8px short of the card (probed at 375:
+     wordmark 24, h1 and card 16, licence line, newsletter line and footer 24). One constant, GUTTER ("px-4 md:px-6", src/lib/nav.ts), is
+     read by the bar's row, <main>, the footer's column, the sheet's rows and the newsletter bar's form; the eight `-mx-2 md:mx-0`
+     wrappers of the seven spine views are gone, and the harness' own <main> (scripts/harness/render_page.tsx, scripts/seo/floor_census.tsx)
+     reads the same constant, so a render measures the widths a visitor gets. From 768 nothing changes (24 there as before).
+     BLIND SPOT: classes as written; the measured left edges at 320, 375 and 414 are scratchpad/home-reform/d1_probe.mjs's (edges). */
+  const GUTTER_REMEDY = "write the gutter once: GUTTER = \"px-4 md:px-6\" in src/lib/nav.ts, read by SiteChrome's header row, <main> and footer column, MobileNav's <nav> and the newsletter bar's form; spine bodies carry no negative margin";
+  check("src/lib/nav.ts holds the one gutter: GUTTER is px-4 md:px-6 (16 under 768, 24 from)", GUTTER === "px-4 md:px-6", { file: NAVFILE, remedy: GUTTER_REMEDY });
+  const classOf = (tag: string) => (/\bclass="([^"]*)"/.exec(tag)?.[1] ?? "").split(/\s+/);
+  const bareSix = (cls: string[]) => cls.includes("px-6") || cls.some((c) => /^max-\[359px\]:px-/.test(c));
+  const gutterTags: Array<[string, string]> = [
+    ["the bar's row", /<div class="max-w-content mx-auto [^"]*">/.exec(o.header)?.[0] ?? ""],
+    ["<main>", o.main],
+    ["the footer's column", /<div class="max-w-content mx-auto [^"]*py-12">/.exec(o.footer)?.[0] ?? ""],
+    ["the sheet's rows", /<nav aria-label="Primary" class="mx-auto max-w-content [^"]*">/.exec(o.sheet)?.[0] ?? ""],
+    ["the newsletter bar's form", /<form [^>]*class="mx-auto max-w-content [^"]*"/.exec(off)?.[0] ?? ""],
+  ];
+  const offGutter = gutterTags.filter(([, t]) => { const c = classOf(t); return !t || !c.includes("px-4") || !c.includes("md:px-6") || bareSix(c); }).map(([n]) => n);
+  check(`the chrome's five columns stand on the one gutter, px-4 md:px-6, none on a bare px-6 or a max-[359px] patch${offGutter.length ? `: not on it: ${offGutter.join(", ")}` : ""}`, offGutter.length === 0, { file: CHROME, remedy: GUTTER_REMEDY });
+  const bodyWrappers: Array<{ file: string; line: number }> = [];
+  let bodiesFound = 0;
+  for (const f of srcFiles) if (f.endsWith(".tsx")) code(f).split("\n").forEach((l, i) => { if (/<div\b[^>]*data-spine-body/.test(l)) { bodiesFound++; if (/(?<![\w:-])-m[xlr]?-\d/.test(l)) bodyWrappers.push({ file: f, line: i + 1 }); } });
+  for (const w of bodyWrappers) red({ rule: RULE, file: w.file, line: w.line, detail: "a spine body takes a negative margin (-mx-2): the page's column is on the one 16px phone gutter, so the body stands on it with none", remedy: GUTTER_REMEDY });
+  check(`no spine body takes a negative margin: the column is already on the 16px gutter (${bodiesFound} bodies read, ${bodyWrappers.length} with one)`, bodiesFound >= 9 && bodyWrappers.length === 0, { file: bodyWrappers[0]?.file ?? "src/components/spine", remedy: GUTTER_REMEDY });
+  const harnessMains = ["scripts/harness/render_page.tsx", "scripts/seo/floor_census.tsx"].filter((f) => !/\bGUTTER\b/.test(code(f)) || /mx-auto px-6 pt-4/.test(code(f)));
+  check(`the harness' own <main> reads GUTTER, so a render measures the widths a visitor gets${harnessMains.length ? `: ${harnessMains.join(", ")} do not` : ""}`, harnessMains.length === 0, { file: harnessMains[0] ?? "scripts/harness/render_page.tsx", remedy: "import GUTTER from src/lib/nav and write the render's <main> as `relative max-w-content mx-auto ${GUTTER} pt-4`, as SiteChrome does" });
   /* AIR BETWEEN THE WORDMARK AND THE NAMES (plan 2026-10-10 Task 9). Photographed at 1280 with accounts and Pricing both on, the names at
      24px apart filled the bar's 1072px to the pixel and "Atlas" touched "Countries" (0px measured, 9px with "Sign in"); at 20 the names
      and the group leave 35px at the tightest. A pin on the two classes, not a measurement: this file runs no browser. */
@@ -354,10 +382,15 @@ async function main() {
   /* The sheet. */
   const toggle = /<button[^>]*aria-controls="site-menu"[^>]*>/.exec(o.header)?.[0] ?? "";
   check(`the sheet's toggle is named "Menu", constant, with aria-expanded (${toggle.slice(0, 90)})`, /aria-label="Menu"/.test(toggle) && /aria-expanded="false"/.test(toggle));
+  /* THE MENU'S GLYPH ENDS ON THE CONTENT EDGE (critique pass 3, fix round D1, item P1.3): the 44px target holds a 22px glyph whose ink stops
+     13.75px short of the box's right edge, so the three lines ended 22px inside the card's edge at 375 (337 against 359). The toggle takes a
+     14px negative right margin, so the target reaches into the gutter (inside the screen at 320: 304 + 14 is 318) and the ink meets the
+     edge, as the word Search does from 768. The measure is the glyph's own pixels, scratchpad/home-reform/d1_probe.mjs (edges). */
+  check("the menu's toggle reaches 14px into the gutter (-mr-3.5), so its glyph's ink ends on the content's right edge", /(?<![\w-])-mr-3\.5(?![\w.-])/.test(toggle) && /\bh-11\b/.test(toggle) && /\bw-11\b/.test(toggle), { file: SHEET, remedy: "give the toggle in MobileNav.tsx -mr-3.5 (its 44px box stays; the 22px glyph's ink ends 13.75px inside it)" });
   const panel = /<div id="site-menu"[^>]*>/.exec(o.header)?.[0] ?? "";
   check("the sheet's panel is in the document while shut, hidden", /\bhidden=""/.test(panel));
   check("the panel's height is capped to the viewport less the bar, and it scrolls", /max-h-\[calc\(100dvh_-_var\(--atlas-header-h\)\)\]/.test(panel) && /overflow-y-auto/.test(panel) && /overscroll-contain/.test(panel));
-  check("the sheet's rows stand on the bar's column (max-w-content), a labelled navigation", /<nav aria-label="Primary" class="mx-auto max-w-content px-6/.test(o.sheet));
+  check("the sheet's rows stand on the bar's column (max-w-content) and its gutter, a labelled navigation", /<nav aria-label="Primary" class="mx-auto max-w-content px-4 md:px-6/.test(o.sheet));
   const rows = (h: string) => anchors(h).map((n) => n.text || (/>Sign in</.test(n.tag) ? "Sign in" : ""));
   const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>([^<]*)<\/(?:a|span)>/g)].map((m) => m[1].trim());
   const wantOff = [...WANT_NAMES, "About the figures", "Who runs this"];

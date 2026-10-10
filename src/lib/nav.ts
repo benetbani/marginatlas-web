@@ -42,6 +42,17 @@ export function barFrom(): typeof BAR_NARROW | typeof BAR_WIDE {
   return !isAuthEnabled() && !isPaywallOn() ? BAR_NARROW : BAR_WIDE;
 }
 
+/**
+ * THE SITE'S ONE GUTTER (critique pass 3, fix round D1, item P1.3): 16px at each side under 768, 24 from. The bar's row, <main>, the
+ * newsletter bar's form, the footer's column and the sheet's rows (SiteChrome.tsx, MobileNav.tsx, NewsletterSignupVariants.tsx) stand on it, and
+ * so does every page body, which takes no negative margin of its own. It was 24 under 768 for the chrome while each of the seven spine
+ * views pulled its body back to 16 with `-mx-2 md:mx-0`, so on a phone the wordmark began 8px right of the h1, the foot lines and the
+ * newsletter line stayed at 24, and the menu glyph ended 8px short of the card. The harness' own <main> reads this constant too
+ * (scripts/harness/render_page.tsx), so a render measures the widths a visitor gets. Written whole, because Tailwind reads the class
+ * strings from source. A server-safe string: nothing here is client code.
+ */
+export const GUTTER = "px-4 md:px-6";
+
 /** The free downloads, named once: the footer's row and the home's Where to next door both read this label (critique pass 2, fix round C2,
  *  item P2.5; the page's own description says the downloads are the UK tables). */
 export const FREE_DATA: NavItem = { href: "/data", label: "Free UK data" };

@@ -40,6 +40,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
 import { CircleNotch } from "@phosphor-icons/react/dist/ssr/CircleNotch";
+import { GUTTER } from "@/lib/nav";
 
 /** The bar's words: its line, its button and its answers, each twelve words or fewer (the copy rules). */
 export const NEWSLETTER_COPY = {
@@ -116,7 +117,7 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
         onSubmit={submit}
         aria-labelledby={LINE_ID}
         noValidate
-        className="mx-auto max-w-content px-6 py-3 flex items-center gap-3 sm:gap-5 flex-wrap sm:flex-nowrap"
+        className={`mx-auto max-w-content ${GUTTER} py-3 flex items-center gap-3 sm:gap-5 flex-wrap sm:flex-nowrap`}
       >
         {/* A HEIGHT THAT GROWS ON A PHONE (2026-10-04, the UK page reform's design review): the bar was 56px tall exactly, and on a
             phone its line and its field wrap to two rows, so the field and the button hung under the bar, half under the footer. */}
