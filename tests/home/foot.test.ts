@@ -128,7 +128,7 @@ if (gb) {
   const imgs = [...html.matchAll(/<img [^>]*>/g)].map((m) => m[0]);
   check(`each row's picture is its city's small copy, lazy, decoding off the main thread, at its own size, in grey at its crop (${imgs.length})`, imgs.length === gb.cards.length && gb.cards.every((c, i) => { const t = cityThumb(c.id); return !!t && !!imgs[i] && imgs[i].includes(`src="${t.src}"`) && imgs[i].includes('loading="lazy"') && imgs[i].includes('decoding="async"') && imgs[i].includes('width="480"') && imgs[i].includes('height="360"') && imgs[i].includes("filter:grayscale(1)") && imgs[i].includes(`object-position:${t.position}`); }));
   const veils = [...html.matchAll(/<span aria-hidden="true" data-veil="true" class="absolute inset-0 bg-white" style="opacity:([0-9.]+)"><\/span>/g)].map((m) => Number(m[1]));
-  check(`grey and no wash: a white veil at ${ROW_VEIL} over each picture, no terracotta (${veils.length})`, ROW_VEIL === 0.6 && veils.length === gb.cards.length && veils.every((v) => v === ROW_VEIL) && !/data-tint/.test(html) && !/var\(--terra/.test(html));
+  check(`grey and no wash: a white veil at ${ROW_VEIL} over each phone cell's picture, no terracotta (${veils.length})`, ROW_VEIL === 0.6 && veils.length === gb.cards.length && veils.every((v) => v === ROW_VEIL) && !/data-tint/.test(html) && !/var\(--terra/.test(html));
   /* INK ON THE DARKEST PIXEL (decision 2): white at the veil over black is 255 times the veil in each channel, and --c-ink on it must
      read 4.5 to 1 at the least (WCAG AA, this repo's floor); at 0.6 it reads 6.05. */
   const lin = (c: number) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
@@ -137,7 +137,7 @@ if (gb) {
   const ink = /--c-ink:\s*#([0-9a-f]{6})/i.exec(readFileSync("src/app/globals.css", "utf8"))?.[1] ?? "";
   const [ir, ig, ib] = [0, 2, 4].map((k) => parseInt(ink.slice(k, k + 2), 16));
   const ratio = (lum(floor, floor, floor) + 0.05) / (lum(ir, ig, ib) + 0.05);
-  check(`ink on the darkest pixel under the veil reads ${ratio.toFixed(2)} to 1 (rgb(${floor}, ${floor}, ${floor}) under #${ink})`, ink.length === 6 && ratio >= 4.5, { remedy: "keep ROW_VEIL where ink on the veiled darkest pixel reads 4.5 to 1 or more (0.6 reads 6.05)" });
+  check(`ink on the darkest pixel under the veil reads ${ratio.toFixed(2)} to 1 (rgb(${floor}, ${floor}, ${floor}) under #${ink}), in the phone's cells where the name stands over the picture`, ink.length === 6 && ratio >= 4.5, { remedy: "keep ROW_VEIL where ink on the veiled darkest pixel reads 4.5 to 1 or more (0.6 reads 6.05)" });
   /* THE INK MEASURED IS THE INK DRAWN (the closing cleanup, item 24): the ratio above is --c-ink's, read from the stylesheet, so it
      holds only while every text on a row takes --c-ink. The name, the figure and the arrow each take text-[var(--c-ink)], and no row
      takes another colour token: ink2 or the muted grey over the veiled picture would read at a ratio this check never worked out. */
@@ -159,9 +159,22 @@ if (gb) {
      seven cities beside the doors' eight. From 768 it is a row with no picture, in the slot after Edinburgh: its words at 20 semibold in
      ink, the arrow at the edge, the edge it always had. */
   check(`an eighth cell at every width, "${COPY.home.citiesAll}", to /gb's cities: under 768 so seven cities and the door fill four rows, from 768 a row with no picture in the eighth slot, its words at 20 semibold in ink`, !!all && all[2] === COPY.home.citiesAll && !/\bhidden\b/.test(all[1]) && /\bmin-h-16\b/.test(all[1]) && /\bmd:min-h-0\b/.test(all[1]) && /\bmd:my-1\b/.test(all[1]) && /\bmd:text-\[length:var\(--t-head\)\]/.test(all[1]) && /\bmd:font-semibold\b/.test(all[1]) && /\btext-\[var\(--c-ink\)\]/.test(all[1]) && /\bborder-\[var\(--c-line-strong\)\]/.test(all[1]) && gb.cards.length + 1 === 8 && (html.match(/<a /g) ?? []).length === gb.cards.length + 1);
-  const cells = (html.match(/class="group relative grid min-h-16 grid-cols-\[minmax\(0,1fr\)_auto\][^"]*md:my-1 md:min-h-0 md:grid-cols-\[minmax\(0,22ch\)_auto_1fr_auto\]/g) ?? []).length;
+  const cells = (html.match(/class="group relative grid min-h-16 grid-cols-\[minmax\(0,1fr\)_auto\][^"]*md:min-h-0 md:grid-cols-\[72px_minmax\(0,22ch\)_auto_1fr_auto\]/g) ?? []).length;
   const names = (html.match(/data-city-name="true" class="relative col-span-2 block min-w-0 text-\[length:var\(--t-head\)\]/g) ?? []).length;
-  check(`each row 64px tall on a phone and 48 from 768 (its 56px slot less 4 either side), its name at 20 across the cell over its figure (${cells} rows, ${names} names)`, cells === gb.cards.length && names === gb.cards.length);
+  check(`each row 64px tall on a phone and the whole 56px slot from 768, its name at 20 across the cell over its figure (${cells} rows, ${names} names)`, cells === gb.cards.length && names === gb.cards.length);
+  /* THE PICTURE IS A THUMBNAIL FROM 768 (critique pass 2, fix round C2, item P1.4): under the 0.6 veil each picture read as a pale grey
+     smear in a 44px row, and the busiest ground on the page (Birmingham's discs) stood behind "$48K" and the arrow, so a washed row
+     looked disabled. From 768 the picture leaves the row's ground: a 72 by 48 thumbnail at the left in grey with no veil, the row on
+     white with a hairline above it as Where to next rules its doors (none above the first), the name underlined on hover. Under 768
+     the two-up photo cells stay as they were. The thumbnail carries no text, so the ink-on-picture check above reads the phone's cells
+     only: the text spans are the wrapper's siblings, never inside it. */
+  const decode = (s: string) => s.replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<");
+  const wrappers = rowHtml.map((r) => /^<a [^>]*><span aria-hidden="true" class="([^"]*)"><img [^>]*><span aria-hidden="true" data-veil="true"[^>]*><\/span><\/span><span data-city-name/.exec(r)?.[1]).map((c) => (c ? decode(c).split(" ") : []));
+  const THUMB = ["absolute", "inset-0", "md:relative", "md:inset-auto", "md:block", "md:h-12", "md:w-[72px]", "md:overflow-hidden", "md:rounded-[8px]", "md:[&>[data-veil]]:hidden"];
+  check(`from 768 the picture is a 72 by 48 thumbnail at the row's left, rounded 8, its white veil not drawn, and no text inside it (${wrappers.filter((c) => THUMB.every((k) => c.includes(k))).length} of ${gb.cards.length})`, rowHtml.length === gb.cards.length && wrappers.every((c) => THUMB.every((k) => c.includes(k))));
+  const rowClasses = rowHtml.map((r) => decode(/^<a [^>]*class="([^"]*)"/.exec(r)?.[1] ?? "").split(" "));
+  const WHITE = ["md:overflow-visible", "md:rounded-none", "md:border-0", "md:px-0", "md:py-0", "md:border-[var(--c-border)]", "md:hover:border-[var(--c-border)]", "md:grid-cols-[72px_minmax(0,22ch)_auto_1fr_auto]"];
+  check(`from 768 each row is on white with a hairline above it, none above the first: no box, no veil, ink on white (${rowClasses.filter((c) => WHITE.every((k) => c.includes(k))).length} of ${gb.cards.length} rows, ${rowClasses.filter((c) => c.includes("md:border-t")).length} with the hairline)`, rowClasses.length === gb.cards.length && rowClasses.every((c, i) => WHITE.every((k) => c.includes(k)) && c.includes("md:border-t") === (i > 0)) && rowHtml.every((r) => /data-city-name="true" class="[^"]*md:group-hover:underline/.test(r)));
   /* THE DOORS' PITCH (item P1.3): Where to next takes a `pitch` from the page that stands it beside a list of rows (the home), so its
      rows are the same 56px slots and its first row starts where London's does; the pages that stand it alone keep the shared height. */
   const doorsList = (props: Record<string, unknown>) => renderToStaticMarkup(React.createElement(WhereNext, { title: "Where to next", doors: nextDoors("/"), ...props }));
