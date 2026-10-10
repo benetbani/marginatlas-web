@@ -24,7 +24,10 @@
  */
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { COUNTRIES } from "@/lib/taxonomy";
+/* The country list from its own module, not from @/lib/taxonomy: the kit barrel re-exports this client component, and the taxonomy
+   (industries.json, 130 KB of source) went into the client closure of every route that imports the barrel. tests/app/head.test.ts
+   walks that closure. */
+import { COUNTRIES } from "@/lib/country_list";
 import {
   useProfile,
   type DrawMode,

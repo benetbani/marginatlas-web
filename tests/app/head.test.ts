@@ -13,16 +13,24 @@
  *   - every JSON-LD block escaped so a "<" cannot close its script;
  *   - the auth client imported only behind the accounts switch, and the session read once for the bar and the sheet; Sentry started
  *     when the browser is idle; one Geist; the home's h1 still from its first frame; no `transition-all` left in the hero's word or
- *     field; the root layout and SiteChrome import the modules they use, not the kit's barrel (whose ProfileChip carried the taxonomy
- *     and industries.json into every page's client bundle). (The flag-off home's picker seed, amendment 8b, is read in
- *     tests/trust/home_shape.test.ts beside the rebuilt home's.)
+ *     field; the root layout and SiteChrome import the modules they use, not the kit's barrel; and a static walk of the client closure
+ *     (the chrome's seven client roots, and the kit barrel's) holds neither the taxonomy nor industries.json (ProfileChip's import of
+ *     the taxonomy had put industries.json into the client closure of every route that imports the barrel). (The flag-off home's
+ *     picker seed, amendment 8b, is read in tests/trust/home_shape.test.ts beside the rebuilt home's.)
  * Imports the root layout through the repo's next/font stub (scripts/spikes/stub_next_font.cjs, which also empties the CSS import),
  * calls the icons and the card as Next would and reads their PNG headers. BLIND SPOT, stated: this proves what the files export and
  * draw, not the tags Next writes into a served page (Next's own metadata resolver does that at build); the bundle the auth client
  * and the barrel leave is proved by the imports' shape, not by measuring a build.
+ * THE ICONS' CACHE, NOT MACHINE-CHECKED: Next links each icon as /icon?<hash of that icon file's OWN text> and serves the PNG immutable
+ * for a year, while the drawing lives in src/components/brand/LogoMark.tsx and src/app/_site-icon.tsx. An edit to the mark that leaves
+ * the four icon files (icon.tsx, icon1.tsx, icon2.tsx, apple-icon.tsx) as they were keeps the old icon in every returning browser for
+ * a year, so such an edit touches them in the same commit (the "Mark revised" date in each header). The hash is Next's, taken at
+ * build, so nothing here can tell that the mark changed; LogoMark.tsx and _site-icon.tsx say so where the edit is made.
  * Run: npx tsx tests/app/head.test.ts
  */
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { posix } from "node:path";
+import ts from "typescript";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -42,6 +50,103 @@ const tryImport = async <T,>(load: () => Promise<unknown>): Promise<T | null> =>
 /** A PNG's width and height from its IHDR chunk, or null when the bytes are no PNG. */
 const pngSize = (buf: Buffer): [number, number] | null =>
   buf.length > 24 && buf.subarray(0, 8).toString("hex") === "89504e470d0a1a0a" ? [buf.readUInt32BE(16), buf.readUInt32BE(20)] : null;
+
+/* ---------------- THE CLIENT CLOSURE, BY A STATIC WALK (no build) ---------------- */
+/* The walk the Task 7 review wrote (its closure.cjs), copied here so the guard runs in the chain. Its rules, stated so a number is read
+   for what it is:
+   - the entries are SERVER modules (the layout, SiteChrome, a barrel), each walked only to find the client modules ("use client" at the
+     top) it imports; a client module found is a ROOT;
+   - the CLIENT CLOSURE is every module a root reaches by static import or re-export, whatever its own directive, because a client file
+     bundles what it imports;
+   - a barrel counts every module it re-exports: this repo sets neither sideEffects nor optimizePackageImports, so a first-party barrel
+     is bundled whole (the Oct 5 production build's chunk 2373 held the taxonomy because ProfileChip was re-exported there);
+   - `import type`, `export type` and an import whose every specifier is `type X` are erased; an import used only as a type is NOT
+     elided here, so a count can only be too high, never too low, on that account;
+   - import() is its own chunk, fetched on use: listed as lazy, never in the closure; a package is named, not walked.
+   BLIND SPOT: this reads import statements, not a bundle. It cannot tell which re-exports the bundler keeps, how a chunk is split or
+   what a package pulls in, so it proves a module IS in the closure by the statements and never how many bytes a build ships. */
+type Mod = { client: boolean; statics: string[]; dynamics: string[]; bytes: number };
+const modules = new Map<string, Mod>();
+const EXTENSIONS = ["", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".json", "/index.ts", "/index.tsx", "/index.js"];
+const isFile = (p: string): boolean => { try { return statSync(p).isFile(); } catch { return false; } };
+/** The repo file a local specifier names (`@/` is src/), or undefined for a package and for a local one that names nothing. */
+const resolveLocal = (spec: string, from: string): string | undefined => {
+  const base = spec.startsWith("@/") ? posix.join("src", spec.slice(2)) : spec.startsWith(".") ? posix.join(posix.dirname(from), spec) : null;
+  return base === null ? undefined : EXTENSIONS.map((e) => base + e).find(isFile);
+};
+function readModule(file: string): Mod {
+  const known = modules.get(file);
+  if (known) return known;
+  const text = readFileSync(file, "utf8");
+  const mod: Mod = { client: false, statics: [], dynamics: [], bytes: Buffer.byteLength(text) };
+  modules.set(file, mod);
+  if (/\.(json|css)$/.test(file)) return mod;
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, file.endsWith("x") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+  for (const st of sf.statements) {
+    /* the directive prologue: the string statements at the top */
+    if (ts.isExpressionStatement(st) && ts.isStringLiteral(st.expression)) { if (st.expression.text === "use client") mod.client = true; continue; }
+    break;
+  }
+  const add = (spec: string, into: string[]): void => { const r = resolveLocal(spec, file); if (r) into.push(r); };
+  for (const st of sf.statements) {
+    if (ts.isImportDeclaration(st) && ts.isStringLiteral(st.moduleSpecifier)) {
+      const c = st.importClause, named = c?.namedBindings;
+      if (c?.isTypeOnly) continue;
+      if (c && !c.name && named && ts.isNamedImports(named) && named.elements.length > 0 && named.elements.every((e) => e.isTypeOnly)) continue;
+      add(st.moduleSpecifier.text, mod.statics);
+    } else if (ts.isExportDeclaration(st) && st.moduleSpecifier && ts.isStringLiteral(st.moduleSpecifier)) {
+      const ex = st.exportClause;
+      if (st.isTypeOnly) continue;
+      if (ex && ts.isNamedExports(ex) && ex.elements.length > 0 && ex.elements.every((e) => e.isTypeOnly)) continue;
+      add(st.moduleSpecifier.text, mod.statics);
+    }
+  }
+  const visit = (n: ts.Node): void => {
+    if (ts.isCallExpression(n) && n.expression.kind === ts.SyntaxKind.ImportKeyword && n.arguments.length === 1 && ts.isStringLiteral(n.arguments[0])) add(n.arguments[0].text, mod.dynamics);
+    ts.forEachChild(n, visit);
+  };
+  visit(sf);
+  return mod;
+}
+/** `files` maps each module of the closure to the module that first imported it ("" for a root); `bytes` is their source. */
+type Closure = { roots: string[]; files: Map<string, string>; bytes: number; lazy: string[] };
+function clientClosure(entries: string[]): Closure {
+  const roots = new Set<string>(), seen = new Set<string>();
+  const findRoots = (file: string): void => {
+    if (seen.has(file)) return;
+    seen.add(file);
+    const m = readModule(file);
+    if (m.client) { roots.add(file); return; }
+    for (const s of m.statics) if (!/\.(json|css)$/.test(s)) findRoots(s);
+  };
+  entries.forEach(findRoots);
+  const files = new Map<string, string>(), lazy = new Set<string>();
+  const walk = (file: string, via: string): void => {
+    if (files.has(file)) return;
+    files.set(file, via);
+    const m = readModule(file);
+    m.dynamics.forEach((d) => lazy.add(d));
+    m.statics.forEach((s) => walk(s, file));
+  };
+  [...roots].sort().forEach((r) => walk(r, ""));
+  return { roots: [...roots].sort(), files, bytes: [...files.keys()].reduce((n, f) => n + readModule(f).bytes, 0), lazy: [...lazy].sort() };
+}
+/** What the guard keeps out of a client bundle: the taxonomy module (src/lib/taxonomy.ts) and everything under its folder, industries.json first. */
+const heavyIn = (c: Closure): string[] => [...c.files.keys()].filter((f) => f === "src/lib/taxonomy.ts" || f.startsWith("src/lib/taxonomy/"));
+/** The chain of imports from a root down to a module of the closure: `root -> ... -> module`. */
+const chainTo = (c: Closure, file: string): string => {
+  const out = [file];
+  for (let v = c.files.get(file); v; v = c.files.get(v)) out.push(v);
+  return out.reverse().join(" -> ");
+};
+/** The module through which the taxonomy comes in (the taxonomy module itself, else the first file of its folder), or undefined when it is out. */
+const heavyEntry = (c: Closure): string | undefined => { const hv = heavyIn(c); return hv.includes("src/lib/taxonomy.ts") ? "src/lib/taxonomy.ts" : hv[0]; };
+/** The taxonomy in a line: the chain of imports that brings it in and how much of its folder comes with it, or "none". */
+const heavyLine = (c: Closure): string => {
+  const entry = heavyEntry(c);
+  return entry === undefined ? "none" : `${chainTo(c, entry)}, with ${heavyIn(c).length - 1} more of its files${heavyIn(c).includes("src/lib/taxonomy/industries.json") ? ", industries.json among them" : ""}`;
+};
+const sizeOf = (c: Closure): string => `${c.roots.length} client roots, ${c.files.size} files, ${Math.round(c.bytes / 1024)} KB of source`;
 
 async function main() {
   /* next/font is a build-time transform and the layout imports a stylesheet: the repo's stub stands in for both. */
@@ -129,6 +234,55 @@ async function main() {
   const orgHtml = renderToStaticMarkup(React.createElement(sd.Organization));
   const orgJson = /<script type="application\/ld\+json">([\s\S]*)<\/script>/.exec(orgHtml)?.[1] ?? "";
   check("the Organization block renders, its JSON holding the definition and no raw <", orgJson.length > 0 && !orgJson.includes("<") && (JSON.parse(orgJson) as { description?: string }).description === def, { file: "src/components/StructuredData.tsx" });
+  /* ldJson is total (fix round 7): JSON.stringify answers undefined for undefined, a function and a symbol, and the `.replace` after it
+     then threw; a block with no data is the JSON of nothing, null. */
+  const totalResults = (() => { try { return [undefined, () => 1, Symbol("x"), null].map((v) => sd.ldJson(v)); } catch (e) { return [`threw: ${e instanceof Error ? e.message : String(e)}`]; } })();
+  check(`ldJson is total: undefined, a function, a symbol and null each give null, never a throw (${totalResults.join(" | ")})`, totalResults.length === 4 && totalResults.every((r) => r === "null"), { file: "src/components/StructuredData.tsx", remedy: "write ldJson as (JSON.stringify(data) ?? \"null\").replace(/</g, \"\\\\u003c\")" });
+  /* EVERY application/ld+json EMITTER IN src (fix round 7): this test read StructuredData.tsx alone, and four other files wrote the block
+     without the shared escape (FAQSchema, ProLockedData, the learn article page, and the blog post page with a copy of the escape of its
+     own). The scan reads the syntax of each src file that names ld+json: a <script type="application/ld+json"> whose
+     dangerouslySetInnerHTML.__html is a call of the ldJson imported from StructuredData; an ld+json string it cannot read as such is
+     a finding too, so an emitter written another way (createElement, a template) never passes unseen. BLIND SPOT: it cannot see a block
+     assembled from a string that does not contain the words ld+json. */
+  const srcFiles = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? srcFiles(`${dir}/${e.name}`) : /\.tsx?$/.test(e.name) ? [`${dir}/${e.name}`] : []));
+  const emitters: Array<{ file: string; line: number; shared: boolean }> = [];
+  const unreadable: string[] = [];
+  for (const file of srcFiles("src")) {
+    const text = readFileSync(file, "utf8");
+    if (!text.includes("ld+json")) continue;
+    const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, file.endsWith("x") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
+    const importsShared = file === "src/components/StructuredData.tsx" || /import\s*\{[^}]*\bldJson\b[^}]*\}\s*from\s*"@\/components\/StructuredData"/.test(text);
+    let literals = 0, scripts = 0;
+    const visit = (n: ts.Node): void => {
+      if (ts.isStringLiteralLike(n) && n.text.includes("ld+json")) literals++;
+      if (ts.isJsxOpeningElement(n) || ts.isJsxSelfClosingElement(n)) {
+        const attrs = n.attributes.properties.filter(ts.isJsxAttribute);
+        const named = (name: string) => attrs.find((a) => a.name.getText(sf) === name);
+        const type = named("type")?.initializer;
+        if (n.tagName.getText(sf) === "script" && type && ts.isStringLiteral(type) && type.text === "application/ld+json") {
+          scripts++;
+          const raw = named("dangerouslySetInnerHTML")?.initializer;
+          const obj = raw && ts.isJsxExpression(raw) ? raw.expression : undefined;
+          const prop = obj && ts.isObjectLiteralExpression(obj) ? obj.properties.find((p): p is ts.PropertyAssignment => ts.isPropertyAssignment(p) && p.name.getText(sf) === "__html") : undefined;
+          const via = prop?.initializer;
+          emitters.push({ file, line: sf.getLineAndCharacterOfPosition(n.getStart(sf)).line + 1, shared: importsShared && !!via && ts.isCallExpression(via) && ts.isIdentifier(via.expression) && via.expression.text === "ldJson" });
+        }
+      }
+      ts.forEachChild(n, visit);
+    };
+    visit(sf);
+    if (literals !== scripts) unreadable.push(file);
+  }
+  const loose = emitters.filter((e) => !e.shared).map((e) => `${e.file}:${e.line}`).concat(unreadable.map((f) => `${f} (an ld+json string this scan cannot read as a script block)`));
+  check(
+    `every application/ld+json block in src goes through the shared ldJson (${emitters.length} blocks in ${new Set(emitters.map((e) => e.file)).size} files; ${loose.join(", ") || "none loose"})`,
+    emitters.length >= 5 && loose.length === 0,
+    { file: loose[0]?.replace(/:\d+$| \(.*$/, "") ?? "src/components/StructuredData.tsx", remedy: "write __html: ldJson(data) with ldJson imported from @/components/StructuredData: a raw JSON.stringify lets a value that holds </script> close the script element early" },
+  );
+  const faq = await tryImport<{ FAQSchema: (p: { faqs: Array<{ question: string; answer: string }> }) => React.ReactElement | null }>(() => import("../../src/components/FAQSchema"));
+  const faqHtml = faq ? renderToStaticMarkup(React.createElement(faq.FAQSchema, { faqs: [{ question: "Is a < b </script> safe?", answer: "<b>yes</b>" }] })) : "";
+  const faqJson = /<script type="application\/ld\+json">([\s\S]*)<\/script>/.exec(faqHtml)?.[1] ?? "";
+  check("the FAQ block renders a question holding </script> with no raw <, and reads back as the same text", faqJson.length > 0 && !faqJson.includes("<") && (JSON.parse(faqJson) as { mainEntity?: Array<{ name?: string }> }).mainEntity?.[0]?.name === "Is a < b </script> safe?", { file: "src/components/FAQSchema.tsx", remedy: "write FAQSchema's block as __html: ldJson(json), with ldJson imported from @/components/StructuredData" });
 
   /* ---------------- THE WEIGHT ---------------- */
   /* The auth client loads inside the one shared session read (readSession), and that read starts only from the hook's effect, after
@@ -153,7 +307,25 @@ async function main() {
   check(
     `neither the root layout nor SiteChrome imports the kit barrel (${barrelUsers.join(", ") || "none"})`,
     barrelUsers.length === 0,
-    { file: barrelUsers[0] ?? LAYOUT, remedy: "import the module that holds the export (@/components/kit/frame/AtlasGutters, @/components/kit/WatchTray): the barrel re-exports ProfileChip, whose import of @/lib/taxonomy put industries.json (130 KB of source) into every page's client bundle" },
+    { file: barrelUsers[0] ?? LAYOUT, remedy: "import the module that holds the export (@/components/kit/frame/AtlasGutters, @/components/kit/WatchTray): the barrel re-exports every client module of the kit (the sliders, the switchers, the waterfall on recharts), and a root file that imports it ships all of them to every page" },
+  );
+  /* THE CLIENT CLOSURE, NOT ONLY THE TWO IMPORT LINES (the Task 7 review, fix round 7): the line check above misses a chrome file that
+     reaches the taxonomy through another module, and it never looked at the routes that import the barrel, where ProfileChip's
+     import of @/lib/taxonomy still put industries.json (130 KB of source) into the client closure. */
+  const CHROME_ROOTS = ["src/components/HeaderAuth.tsx", "src/components/HeaderSearch.tsx", "src/components/MobileNav.tsx", "src/components/NavLinks.tsx", "src/components/brand/PhoneLockup.tsx", "src/components/kit/WatchTray.tsx", "src/components/newsletter/NewsletterSignupVariants.tsx"];
+  const HEAVY_REMEDY = "the first link of the chain is the module to change: have it read what it needs from a light module (src/lib/country_list.ts holds the country list with no imports; src/lib/nav.ts holds the country codes), or load the heavy module with import() on use, as src/components/NavigatorForm.tsx loads src/lib/home/picker.ts";
+  const chrome = clientClosure([LAYOUT, CHROME]);
+  const missingRoots = CHROME_ROOTS.filter((r) => !chrome.roots.includes(r));
+  check(
+    `the chrome's client closure (the layout and SiteChrome: ${sizeOf(chrome)}) holds the seven chrome roots and neither the taxonomy nor industries.json (${heavyLine(chrome)}${missingRoots.length ? `; roots not found: ${missingRoots.join(", ")}` : ""})`,
+    missingRoots.length === 0 && heavyEntry(chrome) === undefined,
+    { file: (heavyEntry(chrome) && chrome.files.get(heavyEntry(chrome) as string)) || LAYOUT, remedy: heavyEntry(chrome) ? HEAVY_REMEDY : "the walk found fewer than the seven chrome roots (HeaderAuth, HeaderSearch, MobileNav, NavLinks, PhoneLockup, WatchTray, NewsletterSignupVariants): read it against the layout and SiteChrome, or update CHROME_ROOTS in tests/app/head.test.ts with the change" },
+  );
+  const barrel = clientClosure(["src/components/kit/index.ts"]);
+  check(
+    `an import of the kit barrel pulls neither the taxonomy nor industries.json into a client bundle (its client closure: ${sizeOf(barrel)}; ${heavyLine(barrel)})`,
+    barrel.roots.length > 0 && heavyEntry(barrel) === undefined,
+    { file: (heavyEntry(barrel) && barrel.files.get(heavyEntry(barrel) as string)) || "src/components/kit/index.ts", remedy: heavyEntry(barrel) ? HEAVY_REMEDY : "the walk found no client module under the kit barrel: read it against src/components/kit/index.ts" },
   );
   const sentry = code("src/instrumentation-client.ts");
   check("Sentry starts when the browser is idle (within four seconds), not before hydration", /function startSentry\(\): void \{\s*Sentry\.init\(/.test(sentry) && (sentry.match(/Sentry\.init\(/g) ?? []).length === 1 && /requestIdleCallback\(startSentry, \{ timeout: 4000 \}\)/.test(sentry) && /setTimeout\(startSentry, 1\)/.test(sentry) && /sendDefaultPii: false/.test(sentry), { file: "src/instrumentation-client.ts" });

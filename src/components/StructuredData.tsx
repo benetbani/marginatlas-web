@@ -10,10 +10,15 @@ import { COPY } from "@/lib/spine/copy";
 /**
  * A JSON-LD block's text, with every `<` written as its JSON escape (plan 2026-10-10, the home reformed to ship, Task 7; the ship
  * audit's 2.5, as Next's own JSON-LD guide advises): a value holding "</script>" would otherwise close the script element early and
- * the rest would be read as markup. `<` is the same character to a JSON reader. Every block in this file goes through it.
+ * the rest would be read as markup. `<` is the same character to a JSON reader. Every JSON-LD block on the site goes through it, the
+ * ones in this file and the FAQ, locked-parts, learn-article and blog-post blocks elsewhere (tests/app/head.test.ts scans every
+ * application/ld+json emitter in src).
+ *
+ * TOTAL (fix round 7): JSON.stringify answers undefined, not a string, for undefined, a function and a symbol, and the replace after it
+ * threw on that. A block with no data is the JSON of nothing, null.
  */
 export function ldJson(data: unknown): string {
-  return JSON.stringify(data).replace(/</g, "\\u003c");
+  return (JSON.stringify(data) ?? "null").replace(/</g, "\\u003c");
 }
 
 type CellDatasetProps = {

@@ -7,6 +7,12 @@
  * tab pills, small standalone moments.
  *
  * Pair with LogoWordmark when there's room for the full name.
+ *
+ * ALSO THE SITE ICON. src/app/icon.tsx, icon1.tsx and icon2.tsx (through src/app/_site-icon.tsx) and src/app/apple-icon.tsx draw this
+ * mark as the favicon, the manifest's two icons and the home-screen icon. Every page's head links each as /icon?<hash>, the hash of
+ * THAT ICON FILE'S OWN TEXT, and the PNG is served immutable for a year, so an edit to the mark that leaves those four files as they
+ * were keeps the old icon in every returning browser. When the mark changes, touch the four icon files in the same commit (each
+ * header carries a "Mark revised" date to change), so the hash moves. Not machine-checked: the hash is Next's, taken at build.
  */
 import * as React from "react";
 

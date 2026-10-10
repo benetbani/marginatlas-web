@@ -17,9 +17,10 @@ import { Geist, Space_Grotesk } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Organization } from "@/components/StructuredData";
 /* THE MODULE THAT HOLDS THE EXPORT, NOT THE KIT'S BARREL (plan 2026-10-10, the home reformed to ship, Task 7, amendment 8a): the barrel
-   (@/components/kit) re-exports ProfileChip, a client component whose import of @/lib/taxonomy put industries.json into every page's
-   client bundle (the Oct 5 production build's chunk 2373, 22.0 KB gzip, on /about-data, /blog and /account). tests/app/head.test.ts
-   holds this file and SiteChrome to the deep modules. */
+   (@/components/kit) re-exports every client module of the kit (the sliders, the switchers, the waterfall on recharts), so a root file
+   that imports it ships them all to every page. Until fix round 7 one of them, ProfileChip, also carried the taxonomy and
+   industries.json (the Oct 5 production build's chunk 2373, 22.0 KB gzip, on /about-data, /blog and /account). tests/app/head.test.ts
+   holds this file and SiteChrome to the deep modules and walks the client closure. */
 import { AtlasGutters } from "@/components/kit/frame/AtlasGutters";
 import { isWarmFrameEnabled } from "@/lib/feature_flags";
 import { COPY } from "@/lib/spine/copy";

@@ -3,6 +3,7 @@
  * the ship audit's 2.2): without it iOS falls back to a screenshot of the page. 180 by 180, Apple's size; the header's compass mark
  * (src/components/brand/LogoMark.tsx), black on an opaque white square, which iOS rounds itself. Served at /apple-icon, a first part
  * of the address the middleware passes because src/lib/routing/top_level_segments.ts lists it.
+ * Mark revised: 2026-10-10. Change this date when the mark or its drawing changes: this file's text is what the icon link's ?hash is taken from.
  */
 import { ImageResponse } from "next/og";
 import { LogoMark } from "@/components/brand/LogoMark";

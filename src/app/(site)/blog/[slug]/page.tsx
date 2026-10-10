@@ -3,6 +3,7 @@ import { getAllPosts, getPost } from "@/lib/blog";
 import LongformArticle from "@/components/editorial/LongformArticle";
 import { BlogCover } from "@/components/blog/BlogCover";
 import { PostFoot } from "@/components/blog/PostFoot";
+import { ldJson } from "@/components/StructuredData";
 
 const SITE = "https://www.marginatlas.com";
 const longDate = (d: string) => new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
@@ -75,7 +76,7 @@ export default async function BlogPost({ params }: { params: Promise<Params> }) 
       <nav className="text-sm text-ink-700/70 mb-2">
         <a href="/blog" className="hover:text-atlas-600">Back to all posts</a>
       </nav>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd).replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson(articleLd) }} />
       <LongformArticle
         seriesLabel={post.category ?? "Margin Atlas"}
         title={post.title}

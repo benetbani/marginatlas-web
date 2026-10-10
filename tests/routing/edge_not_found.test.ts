@@ -556,9 +556,9 @@ const untouched = (path: string, ua = BROWSER, host = "www.marginatlas.com") => 
   const r = middleware(new NextRequest(`https://${host}${path}`, { headers: { "user-agent": ua, host } }));
   return r.status === 200 && r.headers.get("x-middleware-next") === "1" && !r.headers.get("x-middleware-override-headers") && !r.headers.get("x-ratelimit-limit");
 };
-const onceSkipped = [...onDisk.filter((p) => /\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)$/.test(p)), "/robots.txt"];
+const onceSkipped = [...onDisk.filter((p) => /\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)$/.test(p)), "/robots.txt", "/manifest.webmanifest"];
 const touched = onceSkipped.filter((p) => !(reaches(p) && untouched(p)));
-check(`every real image and robots.txt reaches the middleware and passes untouched (${onceSkipped.length})${touched.length ? `: ${touched.slice(0, 5).join(", ")}` : ""}`, onceSkipped.length > 1 && touched.length === 0, MW);
+check(`every real image, robots.txt and the manifest reaches the middleware and passes untouched (${onceSkipped.length})${touched.length ? `: ${touched.slice(0, 5).join(", ")}` : ""}`, onceSkipped.length > 2 && touched.length === 0, MW, "pass a real file untouched, first (ONCE_SKIPPED and SERVED_FILES in src/middleware.ts): no redirect, no count against the rate limit, no refusal to a crawler; the manifest is skipped by name, like robots.txt");
 check("a training crawler still reads robots.txt, which was never refused it", untouched("/robots.txt", "GPTBot/1.1"), MW);
 check("a training crawler still fetches a photograph, as before", untouched("/spine/_skyline.jpeg", "GPTBot/1.1"), MW);
 check("a photograph on the bare domain is served there, not redirected, as before", untouched("/spine/_skyline.jpeg", BROWSER, "marginatlas.com"), MW);

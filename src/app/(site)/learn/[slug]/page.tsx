@@ -34,6 +34,7 @@ import {
   type NavSection,
 } from "@/components/kit";
 import { LEARN_SECTIONS } from "@/lib/page-sections";
+import { ldJson } from "@/components/StructuredData";
 
 export const revalidate = 86400;
 
@@ -157,7 +158,7 @@ export default async function LearnArticlePage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: ldJson({
             "@context": "https://schema.org",
             "@type": "FAQPage",
             mainEntity: [

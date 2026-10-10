@@ -14,6 +14,10 @@
  * than production, never looser), and whatever the platform does after the middleware answers. `--live` asks production
  * itself; the chain never passes it, because the chain must not need the network.
  *
+ * THE RATE LIMIT (fix round 7 of the plan 2026-10-10): the manifest, robots.txt and the icon routes are files a browser asks for on
+ * its views of a page, and they must not be counted against the page budget (60 a minute per address). Each such file src/app holds
+ * is asked, and far more requests for them than the limit allows, from one address, must leave that address's page budget whole.
+ *
  * Run: npx tsx tests/routing/metadata_routes.test.ts
  *      npx tsx tests/routing/metadata_routes.test.ts --live
  */
@@ -103,9 +107,39 @@ for (const { file, address } of routes) {
   check(`${file} serves at ${asked}: ${v}`, v === "passes", LIST);
 }
 
+/* THE MANIFEST AND THE ICONS ARE NOT COUNTED BY THE RATE LIMIT (fix round 7 of the plan 2026-10-10, Task 7's review). A browser asks for
+   /manifest.webmanifest on each view of a page and for the icons on its first, and the middleware's limit is 60 requests a minute
+   per address: a reader on a shared address (a school, an office, a phone network) spent the page budget on files. They pass
+   untouched, first, like robots.txt and the images; a counted request carries x-ratelimit-limit and an uncounted one does not.
+   Every such file src/app holds is asked, from the walk, so an icon3.tsx added tomorrow reds here until the middleware skips it. */
+const RATE_REMEDY = "pass the manifest and the icon routes untouched, first, like robots.txt and the images: webmanifest in ONCE_SKIPPED and the icon addresses in ICON_ROUTES (src/middleware.ts), so a browser's requests for them are never counted against the page budget (60 a minute per address)";
+let counter = 0;
+const rawResponse = (address: string, ip: string) => middleware(new NextRequest(`https://www.marginatlas.com${address}`, {
+  headers: { host: "www.marginatlas.com", "user-agent": UA, "accept-language": "en-GB,en;q=0.9", "x-real-ip": ip },
+}));
+const assets = routes.filter((r) => /^src\/app\/(?:icon\d?|apple-icon\d?|manifest|robots)\.[jt]sx?$/.test(r.file)).map((r) => ({ file: r.file, asked: asRequested(r.address) ?? r.address }));
+check(`the walk finds the assets a browser asks for on a view: the manifest, robots.txt and the icons (${assets.map((a) => a.asked).join(", ")})`, assets.length >= 6, LIB, WALK_REMEDY);
+for (const { file, asked } of assets) {
+  counter++;
+  const res = rawResponse(asked, `10.7.0.${counter}`);
+  const header = res.headers.get("x-ratelimit-limit");
+  check(`${file} at ${asked} is not counted by the rate limit: no x-ratelimit-limit header (${header ?? "absent"})`, res.status === 200 && res.headers.get("x-middleware-next") === "1" && header === null, MW, RATE_REMEDY);
+}
+/* The same, as a reader's budget: 70 rounds of every asset from one address (more than the limit) leave that address's page budget
+   whole, and a page is still counted, so the limit itself is not switched off. */
+const BUDGET_IP = "10.7.255.254";
+let assetsAnswered = 0;
+for (let round = 0; round < 70; round++) for (const { asked } of assets) if (rawResponse(asked, BUDGET_IP).status === 200) assetsAnswered++;
+check(`${70 * assets.length} requests for the assets from one address are all answered, none turned away (${assetsAnswered})`, assetsAnswered === 70 * assets.length, MW, RATE_REMEDY);
+let firstTurnedAway = 0;
+for (let page = 1; page <= 70; page++) if (rawResponse("/gb", BUDGET_IP).status === 429 && !firstTurnedAway) firstTurnedAway = page;
+check(`that address still has its whole page budget, and pages are still counted: the first page request turned away is number ${firstTurnedAway || "none"} (the limit is 60 a minute, so 61)`, firstTurnedAway === 61, MW, RATE_REMEDY);
+
 /* The 404 for a made-up first segment is not weakened: the addresses the place rule exists for stay pinned, and so does a
    metadata name src/app holds no file for (a name is listed for its file, never for its convention). */
-for (const p of ["/zz", "/definitely-not-a-route-xyz"]) {
+/* /icon7 and /apple-icon1 are made up: the icon routes skip the rate limit by exact address (ICON_ROUTES), not by a pattern that
+   would let a numbered name no file holds through the 404. */
+for (const p of ["/zz", "/definitely-not-a-route-xyz", "/icon7", "/apple-icon1"]) {
   const v = verdict(p);
   check(`a made-up first segment stays the edge's 404: ${p} ${v}`, v === "pinned to 404", MW, CONTROL_REMEDY);
 }

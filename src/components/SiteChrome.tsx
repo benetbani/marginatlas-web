@@ -50,7 +50,8 @@ import { LogoWordmark } from "@/components/brand/LogoWordmark";
 import { PhoneLockup } from "@/components/brand/PhoneLockup";
 import { MobileNav } from "@/components/MobileNav";
 /* THE MODULE THAT HOLDS THE EXPORT, NOT THE KIT'S BARREL (plan 2026-10-10, Task 7, amendment 8a): see the same line in src/app/layout.tsx.
-   Through the barrel this file shipped ProfileChip, and with it the taxonomy and industries.json, to every page that draws the chrome. */
+   Through the barrel this file shipped every client module of the kit to every page that draws the chrome, ProfileChip among them,
+   and with it (until fix round 7) the taxonomy and industries.json. */
 import { WatchTray } from "@/components/kit/WatchTray";
 import { isAuthEnabled, isWarmFrameEnabled, isPaywallOn } from "@/lib/feature_flags";
 import { NAV } from "@/lib/nav";

@@ -7,8 +7,12 @@
  * "how much does a pharmacy make in California" surfaces this page.
  *
  * Renders a single <script type="application/ld+json"> tag — no visible
- * DOM. Safe to place anywhere in the page tree.
+ * DOM. Safe to place anywhere in the page tree. The block's text goes through
+ * the shared ldJson (src/components/StructuredData.tsx), so a question or an
+ * answer holding "</script>" cannot close the tag early.
  */
+import { ldJson } from "@/components/StructuredData";
+
 type FAQ = { question: string; answer: string };
 
 type Props = {
@@ -32,7 +36,7 @@ export function FAQSchema({ faqs }: Props) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+      dangerouslySetInnerHTML={{ __html: ldJson(json) }}
     />
   );
 }

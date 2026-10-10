@@ -293,8 +293,17 @@ function clientIp(req: NextRequest): string {
 }
 
 /** What the matcher skipped until 2026-10-06, by ending or by name. A real file among these still passes untouched (the first
- *  lines of the middleware); a made-up one now goes on to the 404 for a file the site does not serve. */
-const ONCE_SKIPPED = /(?:^\/(?:favicon\.ico|robots\.txt|sitemap\.xml)$|\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)$)/;
+ *  lines of the middleware); a made-up one now goes on to the 404 for a file the site does not serve. The web app manifest joined
+ *  them by name (fix round 7 of the plan 2026-10-10): a browser asks for it on each view of a page, and it is a file, not a page,
+ *  so the rate limit below must not count it. */
+const ONCE_SKIPPED = /(?:^\/(?:favicon\.ico|robots\.txt|sitemap\.xml|manifest\.webmanifest)$|\.(?:png|jpg|jpeg|svg|webp|gif|ico|woff2|woff)$)/;
+
+/** The site's icon routes, the metadata files src/app/icon.tsx, icon1.tsx, icon2.tsx and apple-icon.tsx (fix round 7 of the plan
+ *  2026-10-10). Their addresses have no dot, so SERVED_FILES (the dotted files) cannot hold them, and like the manifest they are files
+ *  a browser asks for, not pages: they pass untouched, first, and are never counted against the rate limit. Exact addresses, not a
+ *  pattern, so a made-up /icon7 still meets the 404 for a place the site does not hold. tests/routing/metadata_routes.test.ts
+ *  asks every such file src/app holds, so an icon file added without an entry here reds there. */
+const ICON_ROUTES: ReadonlySet<string> = new Set(["/icon", "/icon1", "/icon2", "/apple-icon"]);
 
 // --- Plan v13 Wave 4b: split-industry redirects (auto-generated) ---
 /* MOVED to src/lib/taxonomy/legacy_redirects.ts, unchanged, so that
@@ -311,8 +320,9 @@ export function routeRequest(req: NextRequest): NextResponse {
   // -2. A real image, icon, font or robots.txt passes untouched, first, exactly as when the matcher skipped it by its ending or
   // name (until 2026-10-06): never redirected, counted against the rate limit or refused to a crawler. The matcher now lets
   // every such address in, because skipping by ending also skipped the made-up ones: /favicon.ico and /gb/london/x.png drew a
-  // page at 200, the second a synthesized London page.
-  if (ONCE_SKIPPED.test(path) && SERVED_FILES.has(path)) return NextResponse.next();
+  // page at 200, the second a synthesized London page. The manifest and the icon routes join them (ONCE_SKIPPED, ICON_ROUTES):
+  // a browser asks for them on its views of a page, and a reader behind one address spent the page budget on files.
+  if ((ONCE_SKIPPED.test(path) && SERVED_FILES.has(path)) || ICON_ROUTES.has(path)) return NextResponse.next();
 
   // -1. Apex → www canonical (Phase F server-side fallback).
   // Primary apex-to-www handling lives in Vercel DNS / project settings,
