@@ -42,7 +42,7 @@ import { COPY } from "@/lib/spine/copy";
 import type { HeroBoardData } from "@/lib/spine/hero_board";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
-import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
+import { DuotonePhoto } from "@/components/spine/archetypes/CityParts";
 import { Pie } from "@/components/spine/charts/Pie";
 import { provAttrs } from "@/lib/spine/provenance";
 

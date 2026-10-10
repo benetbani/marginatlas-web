@@ -14,7 +14,7 @@ import { WebSite } from "@/components/StructuredData";
 import { getToneClass } from "@/lib/page-layout/section-order";
 import { getAllPosts, GRADIENT_PALETTE, type BlogPost } from "@/lib/blog";
 import { NeighborhoodCards } from "@/components/home/NeighborhoodCards";
-import { DuotonePhoto } from "@/components/spine/archetypes/CityCards";
+import { DuotonePhoto } from "@/components/spine/archetypes/CityParts";
 import { CITY_CARD_PLACEHOLDER_IMAGE } from "@/lib/spine/city_cards";
 import { loadNeighborhoodCards } from "@/lib/home/neighborhood_cards";
 import { homePickerSeed } from "@/lib/home/picker";

@@ -93,9 +93,9 @@ import { provAttrs } from "@/lib/spine/provenance";
 import type { CityCard } from "@/lib/spine/city_cards";
 import { DuotonePhoto, moneyFor } from "./CityParts";
 
-/* The picture's recipe is CityParts' (no client directive, so the home's server rows draw it without this file); it stays exported
-   from here for the callers that import it from this path (HeroBoard, the live home's post cards). */
-export { DuotonePhoto };
+/* The picture's recipe is CityParts' (no client directive, so the home's server rows draw it without this file), and it is imported
+   from there: this file no longer re-exports it (the closing cleanup of plan 2026-10-10, item 21), because a route that imported the
+   recipe through this client file shipped the pager it never draws. */
 
 /* FOUR A PAGE, the card pager's own arithmetic, kept: the cities card is the
    two-thirds band, 693px at 1280, whose inner 653px holds four tracks and not

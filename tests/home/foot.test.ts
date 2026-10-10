@@ -9,11 +9,18 @@
  *    /gb's cities, one row a city from 768, each figure stamped and saying its unit to a screen reader;
  *  - the doors: "From the blog" opens /blog, and no door is called the notebook;
  *  - the date: the home's foot asks the date the London restaurant page prints, whose figures its worked example prints;
- *  - where the harness wrote them, the home's render (the grey rows, the date, the blog) and /gb's (the anchor All UK cities opens).
+ *  - where the harness wrote them, the home's render (the grey rows, the date, the blog, and the home's own door props: the eighth
+ *    cell's address, its words and the unit each figure says) and /gb's (the anchor All UK cities opens);
+ *  - the guards the closing cleanup of plan 2026-10-10 (items 21 to 24) added: the root route's static import closure holds no pager
+ *    (CityCards.tsx, a client file; the picture's recipe is imported from CityParts.tsx); CityRows.tsx and CityParts.tsx stay server
+ *    modules and reach no client module; the manifest's crops are the credits file's; and the ink the contrast check measures is the
+ *    ink the rows draw. BLIND SPOT: the closure is a static walk of import and export statements, so it cannot see an import() call
+ *    or a require, and a text class is read as written, never as computed.
  *
  * Run: npx tsx tests/home/foot.test.ts
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { posix } from "node:path";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { CityRows, ROW_VEIL } from "../../src/components/spine/archetypes/CityRows";
@@ -23,6 +30,7 @@ import { nextDoors } from "../../src/lib/home/next_doors";
 import { checkedDateForTrade, REGISTER_BUILT } from "../../src/lib/spine/checked";
 import { EXAMPLE_TRADE } from "../../src/lib/home/worked_example";
 import { COPY } from "../../src/lib/spine/copy";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-foot";
@@ -45,6 +53,32 @@ function jpegSize(path: string): { width: number; height: number } | null {
   return null;
 }
 
+/** The files a module reaches by static import or re-export (a type-only clause is erased, a package and a JSON file are left out),
+ *  the module itself first, each with whether it carries a "use client" directive. A static walk of the source, as the 404's check in
+ *  tests/chrome/masthead.test.ts walks the chrome's graph: it cannot see an import() call. */
+function reaches(entry: string): Array<{ file: string; client: boolean }> {
+  const seen = new Map<string, boolean>();
+  const resolve = (from: string, spec: string): string | null => {
+    const base = spec.startsWith("@/") ? posix.join("src", spec.slice(2)) : spec.startsWith(".") ? posix.join(posix.dirname(from), spec) : null;
+    if (!base) return null;
+    return [base, `${base}.tsx`, `${base}.ts`, `${base}/index.tsx`, `${base}/index.ts`].find((c) => /\.tsx?$/.test(c) && existsSync(c)) ?? null;
+  };
+  const walk = (file: string): void => {
+    if (seen.has(file)) return;
+    const text = stripCommentLines(readFileSync(file, "utf8").split("\n")).join("\n");
+    seen.set(file, /^\s*["']use client["']/.test(text));
+    for (const m of text.matchAll(/(?:^|[\n;])\s*(?:import|export)\s+(type\s+)?([^;"']*?)\s*from\s*["']([^"']+)["']|(?:^|[\n;])\s*import\s*["']([^"']+)["']/g)) {
+      if (m[1]) continue;
+      const named = m[2] === undefined ? null : /^\{([\s\S]*)\}$/.exec(m[2].trim());
+      if (named) { const specs = named[1].split(",").map((s) => s.trim()).filter(Boolean); if (specs.length > 0 && specs.every((s) => /^type\s/.test(s))) continue; }
+      const to = resolve(file, m[3] ?? m[4]);
+      if (to) walk(to);
+    }
+  };
+  walk(entry);
+  return [...seen].map(([file, client]) => ({ file, client }));
+}
+
 /* THE SMALL COPIES (the critique's P1.11; the ship audit's 3.3). */
 const THUMBS_AT = { file: "public/cities/thumbs", remedy: "run node node_modules/tsx/dist/cli.mjs scripts/build_city_images_manifest.ts --thumbs, then node node_modules/tsx/dist/cli.mjs scripts/gen_served_files.ts, and commit public/cities/thumbs with the manifest and src/lib/routing/served_files.ts" };
 const photos = readdirSync("public/cities").filter((f) => /^[a-z0-9-]+\.jpe?g$/i.test(f));
@@ -57,9 +91,33 @@ const MANIFEST_AT = { file: "data/cities/images_manifest.json", remedy: "give ea
 const entries = Object.entries(manifest.cities);
 check(`the manifest names each small copy and its crop (${entries.map(([slug, e]) => `${slug} ${e.position ?? "none"}`).join(", ")})`, entries.length === photos.length && entries.every(([slug, e]) => e.thumb === `/cities/thumbs/${e.file.split("/").pop()}` && /^\d{1,3}% \d{1,3}%$/.test(e.position ?? "") && cityThumb(slug)?.src === e.thumb && cityThumb(slug)?.position === e.position), MANIFEST_AT);
 
+/* THE CROP IS THE CREDITS FILE'S (the closing cleanup of plan 2026-10-10, item 24). A city's position is chosen by hand in
+   data/cities/images_credits.json and carried into the manifest by scripts/build_city_images_manifest.ts, which is run by hand too; the
+   check above holds the manifest's position to a well-formed one and to what cityThumb hands the rows, but nothing compared it with the
+   credits, so a position changed in the credits and not carried over (or a manifest edited by hand) drew the old crop silently. */
+const credits = JSON.parse(readFileSync("data/cities/images_credits.json", "utf8")) as { photos: Record<string, { file?: string; position?: string }> };
+const cropsApart = entries.filter(([slug, e]) => credits.photos[slug.toLowerCase()]?.position !== e.position).map(([slug, e]) => `${slug} ${e.position ?? "none"} against ${credits.photos[slug.toLowerCase()]?.position ?? "none"}`);
+const unread = Object.entries(credits.photos).filter(([slug, c]) => c.position && !manifest.cities[slug]).map(([slug]) => slug);
+check(`each city's crop in the manifest is the credits file's${cropsApart.length ? `; apart: ${cropsApart.join(", ")}` : ""}${unread.length ? `; credits with a position and no manifest entry: ${unread.join(", ")}` : ""} (${entries.length} cities)`, cropsApart.length === 0 && unread.length === 0, MANIFEST_AT);
+
 /* THE ROWS (the spec's decision 2; the critique's P1.10; the ship audit's 3.5 and 4.4). */
 const src = readFileSync(FILE, "utf8");
 check("CityRows is a server component: no client directive, no state, no button", !/^"use client"/m.test(src) && !/useState|useEffect|<button/.test(src));
+/* THE TWO SERVER MODULES STAY SERVER MODULES (the closing cleanup, item 23): neither carries a client directive, and neither reaches a
+   client module through an import, however far down, so the home ships no client code for a list that never pages. */
+const SERVER_AT = { remedy: "keep CityRows.tsx and CityParts.tsx free of a \"use client\" directive and of any import that reaches a client module: the home's rows are a server component, and the pager (CityCards.tsx) is the client file" };
+for (const f of ["src/components/spine/archetypes/CityRows.tsx", "src/components/spine/archetypes/CityParts.tsx"]) {
+  const reached = reaches(f);
+  const clients = reached.filter((r) => r.client).map((r) => r.file);
+  check(`${f} is a server module and reaches no client module (${reached.length} files in its static closure${clients.length ? `; client: ${clients.join(", ")}` : ""})`, clients.length === 0, { file: f, ...SERVER_AT });
+}
+/* THE ROOT ROUTE SHIPS NO PAGER (item 21): the home draws no pager, so the pager's client file (CityCards.tsx) is nowhere in the static
+   import closure of the root layout and page. DuotonePhoto is imported from CityParts, which has no client directive, and CityCards no
+   longer re-exports it. */
+const PAGER = "src/components/spine/archetypes/CityCards.tsx";
+const rootReach = [...reaches("src/app/layout.tsx"), ...reaches("src/app/page.tsx")];
+const importers = [...new Set(rootReach.map((r) => r.file))].filter((f) => f !== PAGER && readFileSync(f, "utf8").includes("/CityCards\""));
+check(`the root route's static import closure holds no pager (CityCards.tsx)${importers.length ? `; imported by ${importers.join(", ")}` : ""}, and CityCards re-exports no DuotonePhoto`, !rootReach.some((r) => r.file === PAGER) && importers.length === 0 && !/export\s*\{\s*DuotonePhoto\s*\}/.test(readFileSync(PAGER, "utf8")), { file: "src/app/page.tsx", remedy: "import DuotonePhoto from \"@/components/spine/archetypes/CityParts\" in src/app/page.tsx and HeroBoard.tsx, and delete the re-export in CityCards.tsx: the root route draws no pager" });
 const gb = buildCityCards("GB");
 check("the UK's cities build", !!gb, { file: "src/lib/spine/city_cards.ts", remedy: "keep buildCityCards(\"GB\") holding the covered UK cities" });
 if (gb) {
@@ -79,6 +137,18 @@ if (gb) {
   const [ir, ig, ib] = [0, 2, 4].map((k) => parseInt(ink.slice(k, k + 2), 16));
   const ratio = (lum(floor, floor, floor) + 0.05) / (lum(ir, ig, ib) + 0.05);
   check(`ink on the darkest pixel under the veil reads ${ratio.toFixed(2)} to 1 (rgb(${floor}, ${floor}, ${floor}) under #${ink})`, ink.length === 6 && ratio >= 4.5, { remedy: "keep ROW_VEIL where ink on the veiled darkest pixel reads 4.5 to 1 or more (0.6 reads 6.05)" });
+  /* THE INK MEASURED IS THE INK DRAWN (the closing cleanup, item 24): the ratio above is --c-ink's, read from the stylesheet, so it
+     holds only while every text on a row takes --c-ink. The name, the figure and the arrow each take text-[var(--c-ink)], and no row
+     takes another colour token: ink2 or the muted grey over the veiled picture would read at a ratio this check never worked out. */
+  const INK = "text-[var(--c-ink)]";
+  const rowHtml = [...html.matchAll(/<a href="[^"]*" data-card="[^"]*"[^>]*>[\s\S]*?<\/a>/g)].map((m) => m[0]);
+  const rowTexts = rowHtml.map((r) => ({
+    name: (/<span data-city-name="true" class="([^"]*)"/.exec(r)?.[1] ?? "").split(" "),
+    figure: (/<span class="(fig [^"]*)"/.exec(r)?.[1] ?? "").split(" "),
+    arrow: (/<span aria-hidden="true" class="(relative [^"]*)"/.exec(r)?.[1] ?? "").split(" "),
+    tokens: [...r.matchAll(/text-\[var\(--c-[a-z0-9]+\)\]/g)].map((m) => m[0]),
+  }));
+  check(`the ink the contrast check measures is the ink every row draws: the name, the figure and the arrow of each of ${rowHtml.length} rows take ${INK}, and no row takes another colour token`, rowHtml.length === gb.cards.length && rowTexts.every((t) => t.name.includes(INK) && t.figure.includes(INK) && t.arrow.includes(INK) && t.tokens.every((x) => x === INK)), { remedy: "every text on a row takes text-[var(--c-ink)], the ink the ratio above is worked out for: if a row's text takes another colour, work out its ratio on the veiled darkest pixel first and measure that colour here" });
   check("two to a row under 768 and one row a city from 768, sharing the height the half lends", html.includes('<div class="grid flex-1 grid-cols-2 gap-2 md:grid-cols-1 md:auto-rows-fr">') && /data-archetype="city-cards" data-look="grey" data-form="rows"/.test(html));
   const all = /<a href="\/gb#cities" data-all-cities="" class="([^"]*)"><span>([^<]*)<\/span><span aria-hidden="true" class="[^"]*">→<\/span><\/a>/.exec(html);
   check(`an eighth cell under 768, "${COPY.home.citiesAll}", to /gb's cities, so seven cities and the door fill four rows`, !!all && all[2] === COPY.home.citiesAll && /\bmd:hidden\b/.test(all[1]) && /\bmin-h-16\b/.test(all[1]) && gb.cards.length + 1 === 8 && (html.match(/<a /g) ?? []).length === gb.cards.length + 1);
@@ -111,6 +181,13 @@ if (home) {
   const end = at < 0 ? -1 : home.indexOf("data-next=", at);
   const foot = at < 0 ? "" : home.slice(at, end < 0 ? undefined : end);
   check("the home's render draws the cities as grey rows with All UK cities, no wash", /data-archetype="city-cards" data-look="grey" data-form="rows"/.test(foot) && foot.includes('data-all-cities=""') && !/data-tint/.test(foot), { file: VIEW, remedy: "draw HomeCities with CityRows, then render the home (bash scratchpad/reform/render_some.sh \"home gb\")" });
+  /* THE HOME'S OWN DOOR PROPS (the closing cleanup, item 22): the checks above hand CityRows their own allHref, allLabel and unit, so
+     they cannot tell what the home hands it. In the home's render the eighth cell opens /gb's cities, says "All UK cities", and every
+     priced figure says "a year" to a screen reader (seven today: one for each of the UK's cities the builder prices). */
+  const eighth = /<a href="([^"]*)" data-all-cities="" class="[^"]*"><span>([^<]*)<\/span>/.exec(foot);
+  const yearSpans = (foot.match(/<span class="sr-only"> a year<\/span>/g) ?? []).length;
+  const pricedCities = gb ? gb.cards.filter((c) => typeof c.payUsd === "number").length : -1;
+  check(`the home's render hands CityRows its door: the eighth cell opens ${eighth?.[1] ?? "nothing"}, says "${eighth?.[2] ?? "nothing"}", and ${yearSpans} figures say "a year" to a screen reader (${pricedCities} priced)`, eighth?.[1] === "/gb#cities" && eighth?.[2] === "All UK cities" && yearSpans > 0 && yearSpans === pricedCities, { file: "src/components/spine/home/home-view.tsx", remedy: "HomeCities hands CityRows allHref \"/gb#cities\", allLabel COPY.home.citiesAll (\"All UK cities\") and unit COPY.home.citiesUnit (\"a year\"), then render the home (bash scratchpad/reform/render_some.sh \"home gb\")" });
   check(`the home's render prints "Checked" with ${REGISTER_BUILT ?? "the slices' date"} at its foot`, !!REGISTER_BUILT && new RegExp(`data-checked="1"[^>]*>[^<]*<time datetime="${REGISTER_BUILT}"`, "i").test(home), { file: VIEW, remedy: "pass ReportFoot the checked date, then render the home" });
   check("the home's render says \"From the blog\" and never the notebook", home.includes(">From the blog<") && !/From the notebook/.test(home), { file: "src/lib/home/next_doors.ts" });
 } else console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the home's render checks did not run");
