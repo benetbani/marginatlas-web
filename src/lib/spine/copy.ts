@@ -2812,8 +2812,9 @@ export const COPY = {
       },
     },
     /** THE WORKED EXAMPLE (plan 2026-10-09, home introduction; the spec's section 2, DRAFT approved as written): the level's name (a
-     *  data attribute, not a printed word), the two halves' titles, each step's one line (it opens with how its figure was made, as
-     *  About the figures names the kinds), the name of step 4 (the London page prints that figure in a sentence), and the two doors.
+     *  data attribute, not a printed word), the two halves' titles, each step's one line (steps 1 to 3 open with how the figure was
+     *  made, as About the figures names the kinds; step 4 names what it counts, "UK {noun} companies," and then says it was worked
+     *  out), the name of step 4 (the London page prints that figure in a sentence), and the two doors.
      *  Every other name and every figure is the London page's own. */
     example: {
       label: "Worked example",

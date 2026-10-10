@@ -5,7 +5,9 @@
  * beneath as the link; six or more it is a table read top to bottom (the
  * paragraph after next); a basis line and a withheld line in the practical
  * register in both. Below 768 the phone gets a two-column table, because six
- * names cannot stand under six bars at 327px without cutting.
+ * names cannot stand under six bars at 327px without cutting. A card a level
+ * stretches (`fill`, plan 2026-10-09, home introduction, Task 4) takes the
+ * table from four rows at every width from sm, never the fixed-height columns.
  *
  * THE CEILING IS DRAWN AND NAMED IN BOTH FORMS (founder ruling 13,
  * 2026-09-04). The bars form rules it with a hairline across the top of the

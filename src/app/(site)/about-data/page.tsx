@@ -273,7 +273,8 @@ export default function AboutDataPage() {
 }
 
 /** One list of sources: the publisher, what the pages print from it with each dataset or page read, and the attribution line where
- *  its licence asks for one. The UK's list and the home's sources outside the UK draw the same way. */
+ *  its licence asks for one. The UK's list and the sources outside the UK, which /new-businesses prints its figures from, draw the same
+ *  way. */
 function SourceList({ sources }: { sources: readonly UkSource[] }) {
   return (
     <ul className="mt-5 space-y-5">

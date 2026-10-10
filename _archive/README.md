@@ -76,3 +76,5 @@ re-homed or retired by the spec the owner approved that day: `HomeDuel` and `Hom
 by `src/components/spine/openings/`), `HomeHowMade` (its join the home's first proof, its pages a line on About the figures),
 `HomeKitchens` (off the home until the city-page study places it; `src/lib/home/kitchens.ts` and the feed item kept) and
 `src/lib/home/notebook.ts` (the notebook left; where to next links /blog). Nothing imports them; each is one `git mv` from returning.
+The home view's own inline parts, `TaxAnswer`, `TradesAnswer`, `YearsAnswer`, `AnswerDoor` and `Notebook`, left with the rewrite too; they
+were never files, and are recoverable from commit `bd9ae540` (`src/components/spine/home/home-view.tsx`).

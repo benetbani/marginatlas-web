@@ -4,7 +4,7 @@
  * it keeps its box on the band), one figure at 30, one line, one second reading (clause 65) and one door. The joins, a year of company
  * notices matched by name, its names found drawn as a ring at the lead rung so the card's one 30 stays its focal; the archive, the months
  * of notices kept, its register copies as a row; the formulas, /gb's tax burden under its own name, the page's second loud moment
- * (LOUD_SEATS seat 2), drawn with the masthead's own bar. The drawings differ in kind on the level and from the example's above (ring,
+ * (LOUD_SEATS seat 2), the masthead's own data, drawn as the segment bar (/gb draws that share as a pie). The drawings differ in kind on the level and from the example's above (ring,
  * row, segment bar; strip, units), as clauses 55 and 64 ask. Each second reading stands at its card's foot (`mt-auto`), so the height a
  * shorter card is lent opens above it and never pools under it. Every figure from src/lib/home/proofs.ts, stamped.
  */

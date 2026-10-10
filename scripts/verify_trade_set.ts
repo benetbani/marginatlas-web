@@ -6,54 +6,41 @@
  * grocery, pharmacy, salon, gym, auto repair), reused across all pages.
  * No out-of-context trade examples forced in."
  *
- * ALLOWLIST NOTE: the task brief for this gate said "allow also cafe and
- * bar per rulebook rule 32" and asked this gate to confirm the exact list
- * in rules/DESIGN-RULEBOOK.md and use it. Rule 32 as currently written
- * lists exactly six: restaurant, grocery, pharmacy, salon, gym, auto
- * repair , no cafe, no bar. FORM-CATALOG.md's "Featured trade card" entry
- * independently confirms "only the fixed six example trades appear (rule
- * 32...)". This gate therefore uses the literal six-item list, NOT eight;
- * cafe/bar occurrences are reported like any other out-of-context trade.
- * If the founder intends cafe/bar to be permanently allowed, the fix is a
- * rulebook edit (rule 32 + the changelog), and this ALLOWED array below
+ * ALLOWLIST NOTE: the set is EIGHT since rule 32 v2 (2026-07-12): restaurant,
+ * grocery, pharmacy, salon, gym, auto repair, cafe and bar (ALLOWED_RAW
+ * below, with the common synonyms collapsing to a canonical member in
+ * ALIAS). The first version of this gate held the six of rule 32 v1 and
+ * reported cafe and bar like any other out-of-context trade; v2 made them
+ * members. If the founder widens or narrows the set again, the fix is a
+ * rulebook edit (rule 32 + the changelog), and the ALLOWED_RAW array below
  * should be updated to match , not the other way around.
  *
  * Scans two sources:
- *   1. JSON seed arrays under src/lib/spine-seeds/**\/*.json whose key
- *      looks like an example-trade slate: a direct array at a key named
- *      everyday_trades / take_home_trades / trades / related, OR a
- *      `list`/`items` array nested one level inside an object keyed by one
- *      of those names (the seeds' common `{ _meta, read, list: [...] }`
- *      wrapper shape). Elements must look like trade entries (an object
- *      carrying a `name` and/or `slug` string) before being scanned, a
- *      shape guard against false slate detection.
+ *   1. JSON seed arrays under src/lib/spine-seeds/**\/*.json at the two
+ *      canonical example-slate keys (TARGET_KEYS below: everyday_trades,
+ *      take_home_trades): a direct array at one of them, OR a `list`/`items`
+ *      array nested one level inside an object keyed by one of them (the
+ *      seeds' common `{ _meta, read, list: [...] }` wrapper shape).
+ *      Elements must look like trade entries (an object carrying a `name`
+ *      and/or `slug` string) before being scanned, a shape guard against
+ *      false slate detection.
  *
- *      Deliberately NOT scanned (false-negative preference, per the task
- *      brief, on genuinely ambiguous slates):
- *        - `competition.trades` in country seeds IS scanned (its key
- *          matches "trades" directly and its shape matches), even though
- *          it reads as a country-specific saturation analysis rather than
- *          the shared six-trade illustration , flagged in the run report
- *          below for the founder's judgment call, not silently excluded.
- *        - `best_trades` (the neighborhood-hub per-district lists) is
- *          EXCLUDED: it is not one of the four named keys, and by design
- *          it is a deliberately-diverse, hyper-local "what actually lifts
- *          in this district" ranking (the real adapter, adapt_hood.ts,
- *          computes it from the live per-city trade catalog, never a
- *          fixed set) , the opposite of rule 32's "one reused set".
- *   2. The home NavigatorForm's hardcoded placeholder examples
- *      (src/components/NavigatorForm.tsx , grepped; not at the
- *      originally-assumed src/components/home/NavigatorForm.tsx path):
- *      the `placeholder="Type a business: ..."` attribute, and the
- *      "Try restaurants in Los Angeles / law firms in the UK / software in
- *      San Francisco" example line. These are almost certainly a
- *      deliberate "show the product's real breadth" choice (the same
- *      spirit as the homepage's CASCADE_PREFILLS rotation, which
- *      legitimately spans law/software/restaurants across real
- *      data-rich cells) rather than a rule-32 violation, but the task
- *      brief named this file explicitly, so it is scanned and reported;
- *      the founder decides whether it needs a rule-32 exemption note or a
- *      copy edit.
+ *      Deliberately NOT scanned: `trades` (competition and benchmark
+ *      lists, including `competition.trades` in the country seeds),
+ *      `related` (real cell adjacency) and `best_trades` (the
+ *      neighborhood-hub per-district lists). They are real per-context
+ *      data, deliberately diverse , `best_trades` is the real adapter's
+ *      (adapt_hood.ts) ranking from the live per-city trade catalog, never
+ *      a fixed set, the opposite of rule 32's "one reused set".
+ *   2. PART 3 (plan 2026-10-09, home introduction): the picker's three
+ *      examples, HOME_TRY in src/lib/home/destination.ts , the words of
+ *      "Try restaurants, gyms or salons in London", each a link to its
+ *      London page. The spec draws them from rule 32's set, so each word
+ *      is held to it, read from the module that prints them and never
+ *      from the form's text; its failures print under their own heading.
+ *      (The form's own placeholder text, "Type a business: ...", is not
+ *      scanned: Part 2, which grepped the form, was removed on
+ *      2026-07-12 , see below.)
  *
  * Case/plural-insensitive match: lowercase, hyphens/underscores/slashes
  * become spaces, then a light depluralize (glasses-style "ies"->"y",
@@ -202,7 +189,7 @@ for (const abs of walkSeedDir(SEEDS_ROOT)) {
   for (const h of hits) {
     const line = lineOfValue(raw, h.raw, h.keyPath);
     const slugNote = h.slug ? ` (slug: ${h.slug})` : "";
-    jsonReport.push(`${rel}:${line}: "${h.raw}"${slugNote} at ${h.keyPath} , outside the rule-32 six`);
+    jsonReport.push(`${rel}:${line}: "${h.raw}"${slugNote} at ${h.keyPath} , outside the rule-32 set`);
     violations++;
   }
 }
@@ -217,9 +204,10 @@ void NAVIGATOR_FORM;
 /* PART 3 (plan 2026-10-09, home introduction): the picker's line is no longer a breadth demo. It is the home's three examples, each a
  * link to its London page, and the spec draws them from rule 32's set, so they are held to it, read from the module that prints them
  * (src/lib/home/destination.ts HOME_TRY), never from the form's text. */
+const triesReport: string[] = [];
 for (const t of HOME_TRY) {
   if (isAllowedTrade(t.word)) continue;
-  jsonReport.push(`src/lib/home/destination.ts: HOME_TRY "${t.word}" (${t.trade}) , outside the rule-32 set`);
+  triesReport.push(`"${t.word}" (${t.trade}) , outside the rule-32 set`);
   violations++;
 }
 console.log(`verify_trade_set: the picker's examples , ${HOME_TRY.map((t) => t.word).join(", ")}`);
@@ -230,14 +218,18 @@ if (jsonReport.length > 0) {
   console.error("\nSeed slate offenders:");
   for (const line of jsonReport) console.error(`  ${line}`);
 }
+if (triesReport.length > 0) {
+  console.error("\nPicker example offenders (HOME_TRY, src/lib/home/destination.ts):");
+  for (const line of triesReport) console.error(`  ${line}`);
+}
 
 if (violations > 0) {
   console.error(`\n✗ ${violations} out-of-context trade example(s) found.`);
-  console.error("  Rulebook v1 rule 32: one fixed set of example businesses (restaurant,");
-  console.error("  grocery, pharmacy, salon, gym, auto repair), reused everywhere. Replace");
+  console.error("  Rulebook rule 32 (v2): one fixed set of example businesses (restaurant,");
+  console.error("  grocery, pharmacy, salon, gym, auto repair, cafe, bar), reused everywhere. Replace");
   console.error("  the offending name/slug with one from that set, or fix the rulebook first");
   console.error("  if the set itself should widen.");
   process.exit(1);
 }
 
-console.log("✓ Every scanned example-trade slate stays inside the rule-32 six.");
+console.log("✓ Every scanned example-trade slate stays inside the rule-32 set.");

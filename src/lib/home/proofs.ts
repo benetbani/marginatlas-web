@@ -9,7 +9,7 @@
  *   the archive   the months of notices kept and the register copies kept (buildArchive): what the register's monthly file drops;
  *                 the copies as a row; door: #archive
  *   the formulas  the UK's total effective tax burden on a sole trader's profit, worked out from the year's rules, the figure /gb's
- *                 masthead prints (buildHomeAnswers' answer), drawn with the masthead's own bar; door: /gb#take
+ *                 masthead prints (buildHomeAnswers' answer), the masthead's own data drawn as the segment bar; door: /gb#take
  * Never typed: each figure is its builder's. The tax proof is the home's second loud moment (LOUD_SEATS seat 2) and stands last, so the
  * joins and the archive, quiet, stand between it and the first.
  */

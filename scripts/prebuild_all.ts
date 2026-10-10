@@ -579,13 +579,18 @@ const GATES: Gate[] = [
   { name: "industry-resolution", script: "tests/cells/industry_resolution.test.ts" },
   { name: "search-cascade", script: "tests/home/search_cascade.test.ts" },
   /* Where a home search lands: only pages that exist, the UK first, never /gb/gb/...; the search page lists pages that exist;
-     no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). */
+     no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). Since plan 2026-10-09, home
+     introduction: the picker's three examples are links to the London pages that answer them, each word its trade's; the h1 asks
+     the example's question first; the site's one definition is the structured data's. */
   { name: "home-destination", script: "tests/home/destination.test.ts" },
-  /* The UK's headline answers on the home page: the figure /gb prints, from the same builder, under the same name, stamped,
-     a door to its section; the page's one 40 (masterplan step 34; his ruling 11). Reads the /gb and home renders. */
+  /* The worked example and the third proof on the home (plan 2026-10-09, home introduction, Tasks 6, 7, 8 and 10): the picker's own
+     case, restaurants in London, in four steps, each figure the London page's own from the same builder, under the same name, with
+     its kind; the case whole; the one 40 is step 3; the tax proof is /gb's masthead figure under its own name, its bar the masthead's
+     data drawn as the segment bar. Reads the home, London restaurants and /gb renders (masterplan step 34 first held the UK answers). */
   { name: "home-answers", script: "tests/home/home_answers.test.ts" },
-  /* What the atlas holds, the ledger's counts stamped; Pro said once, only with the paywall's switch on, its prices through the
-     plan; the launch check reading the new section (masterplan step 35; his ruling 23). */
+  /* Pro said once, only with the paywall's switch on, its title an h2, its prices through the plan and the year first; the launch
+     check's item (i) reading the live home's counts band and passing the rebuilt home, which prints no counts (masterplan step 35;
+     his ruling 23; his decisions of 2026-10-07 and 2026-10-09). */
   { name: "home-bands", script: "tests/home/home_bands.test.ts" },
   /* The 58 retired blog posts (his ruling of 2026-10-05, PARKED P36.1): none left in content/blog, each redirected by
      next.config.js to a page that lives, no link to one anywhere (data/blog/retired_posts.json). */
@@ -618,23 +623,29 @@ const GATES: Gate[] = [
   /* What a UK household spends, from the survey itself (his ruling of 2026-10-05, PARKED P04.1): /gb's household card from
      data/sections/household_spend.json (Table A1), eating out as catering services, every figure stamped. */
   { name: "household-spend", script: "tests/spine/household_spend.test.ts" },
-  /* The duel on the home page (his ruling of 2026-10-05, PARKED P36.2): which trades fail most, from the registers' feed, the
-     set's ends in the trade pages' unit, its middle as the figure, fresh by the 45-day rule (data/editorial/editorial_feed.json). */
+  /* The duel (his ruling of 2026-10-05, PARKED P36.2): which trades fail most, from the registers' feed, the set's ends in the
+     trade pages' unit, its middle as the figure, fresh by the 45-day rule (data/editorial/editorial_feed.json). It stands on /gb,
+     chapter 04, beside where new firms last, since plan 2026-10-09, home introduction; the home no longer draws it. */
   { name: "home-duel", script: "tests/home/duel.test.ts" },
-  /* The ranked list beside it (his ruling of 2026-10-05, PARKED P36.2b): where kitchens score five, the boroughs' three highest and
-     three lowest from the feed, the middle borough as the figure, fresh by the 45-day rule from the ratings' own date. */
+  /* The ranked list of boroughs (his ruling of 2026-10-05, PARKED P36.2b): where kitchens score five, the set's two highest and two
+     lowest from the feed, the middle borough as the figure, fresh by the 45-day rule from the ratings' own date. It left the home
+     with plan 2026-10-09, home introduction (London's page, which the city-page study decides, is its next seat); the gate holds
+     the builder, which is kept, and that the home no longer draws it. */
   { name: "home-kitchens", script: "tests/home/kitchens.test.ts" },
-  /* The home's new sections (plan 2026-10-08, home sections; his section ideas of that day): each held to its slice in data/home
+  /* The four sections of plan 2026-10-08, home sections (his section ideas of that day): each held to its slice in data/home
      (scripts/data/home/export_home.py: the hash, the sources, the arithmetic) and, from its builder's task on, its builder and its
-     drawing. Section 1, where new firms last: the UK cities' 2019 cohort after five years, Birmingham held out. */
+     drawing, on the page each belongs on since plan 2026-10-09, home introduction (the home draws none of them). Section 1, where
+     new firms last: the UK cities' 2019 cohort after five years, Birmingham held out; on /gb, chapter 04's level after its first. */
   { name: "home-firms-last", script: "tests/home/firms_last.test.ts" },
-  /* Section 2, where new companies open: Latin America and Africa, one year, each region within itself, the labour-force floor. */
+  /* Section 2, where new companies open: Latin America and Africa, one year, each region within itself, the labour-force floor; on
+     /new-businesses, beside the US restaurants. */
   { name: "home-new-companies", script: "tests/home/new_companies.test.ts" },
   /* Section 3, where US restaurants grew and shrank: one trade, 45 read, 44 ranked (Detroit held out, plan decision 12), two years,
-     two counts a row. */
+     two counts a row; on /new-businesses, where its first loud seat stands. */
   { name: "home-us-restaurants", script: "tests/home/us_restaurants.test.ts" },
-  /* Section 4, how figures are made: a technique a figure, the notices and their match rate, the London trade pages read from the
-     band counts. */
+  /* Section 4, how figures are made, is the join now: a year of notices matched by name to the register, the notices, the names and
+     the names found, and the London trade pages read from the band counts. The home's first proof draws the join behind a door to
+     About the figures' #failures; the pages read are a line of its #reading. */
   { name: "home-how-made", script: "tests/home/how_made.test.ts" },
   /* The archive, kept and dated (plan 2026-10-09, home introduction, proof 2): data/home/archive.json is the archive's own months of
      notices and register copies, read from its log by scripts/data/home/export_home.py archive; read again where the log is on this

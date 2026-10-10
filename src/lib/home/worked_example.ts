@@ -4,7 +4,7 @@
  * THE WORKED EXAMPLE, A LONDON RESTAURANT IN FOUR STEPS (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 6; the home's
  * spec of 2026-10-09, section 2, approved as written). The case the picker opens on (src/lib/home/search_cascade.ts, CASCADE_PREFILLS[0]),
  * answered with the London page's own figures, each read from the builder that page reads (never typed), each with its kind
- * (src/lib/spine/provenance.ts) and one line that opens with how it was made:
+ * (src/lib/spine/provenance.ts) and one line that says how it was made (steps 1 to 3 open with it, step 4 names what it counts first):
  *
  *   1 Registered businesses   londonTradeHero's firms cell, the register's count                    counted
  *   2 Typical yearly sales    londonTradeStrip's typical mark, the strip's tenths drawn beside it    worked out
