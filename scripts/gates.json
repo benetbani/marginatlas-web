@@ -1958,7 +1958,8 @@
         "src/components/spine/home/HomeProofs.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/lib/home/archive.ts",
-        "src/lib/home/proofs.ts"
+        "src/lib/home/proofs.ts",
+        "src/lib/spine/copy.ts"
       ],
       "claims": []
     },

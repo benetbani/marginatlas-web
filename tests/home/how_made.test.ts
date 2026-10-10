@@ -131,6 +131,9 @@ if (proofs && joins) {
   /* THE LINE SAYS WHAT IS DONE TO EACH NOTICE, AND THE TITLE SAYS THE MATCH (critique pass 2, P0.1 and P2.10): "matched by name" stood in the
      title and in the line, and in step 4 above, three times in two screens. The line now reads "Liquidation and administration notices a
      year, each looked up in the register." (twelve words) and leaves the match to the title. */
+  /* The words the home prints that say it, by their copy: the joins' title, the joins' line and step 4's line (the render check below reads the page itself). */
+  const sayers = [COPY.home.proofs.joins.kicker, COPY.home.proofs.joins.words, COPY.home.example.insolvent].filter((s) => /matched by name/i.test(s));
+  check(`"matched by name" is said by ${sayers.length} of the home's words (the joins' title and step 4's line), never a third`, sayers.length <= 2, { file: "src/lib/spine/copy.ts", remedy: "COPY.home.proofs.joins.words says what is done to each notice (\"each looked up in the register\") and leaves \"matched by name\" to the card's title and step 4's line" });
   check(`the line is "${p.line}", twelve words at most, and says "matched by name" nowhere (the title does)`, p.line === COPY.home.proofs.joins.words && p.line.split(" ").length <= 12 && !/matched by name/i.test(p.line) && !p.line.includes(";"), { file: "src/lib/spine/copy.ts", remedy: "COPY.home.proofs.joins.words: \"Liquidation and administration notices a year, each looked up in the register.\"" });
   /* THE CARD SHOWS ITS WORKING (critique pass 2, P0.1): 30,510 of 31,376 is the ring's 97, and a proof card lets the reader check it. The
      two counts the builder returns stand as rows at the card's foot, each stamped counted from home/method.json, and the ring stands in its
@@ -175,6 +178,11 @@ async function main(): Promise<void> {
   const home = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
   if (home && joins) {
     const at = home.indexOf('id="joins"');
+    /* "MATCHED BY NAME" IS SAID TWICE AT MOST (critique pass 2, P2.10): step 4's line and the joins' title said it, and the joins' own line a
+       third time within two screens; the joins' line now says what is done to each notice and leaves the match to the title. */
+    const spoken = home.replace(/<style[\s\S]*?<\/style>/g, "").replace(/<script[\s\S]*?<\/script>/g, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+    const matchedCount = (spoken.match(/matched by name/gi) ?? []).length;
+    check(`"matched by name" stands ${matchedCount} times on the home (step 4's line and the joins' title), never a third`, matchedCount <= 2, { file: "src/lib/spine/copy.ts", remedy: "COPY.home.proofs.joins.words says what is done to each notice (\"each looked up in the register\") and leaves \"matched by name\" to the card's title and step 4's line" });
     check("the home prints the first proof, stamped, behind its door, and no longer how figures are made", at > 0 && home.slice(at, at + 4000).includes(`>${joins.notices.figure}<`) && home.slice(at, at + 4000).includes('href="/about-data#failures"') && !/id="how-made"/.test(home), { file: "src/components/spine/home/home-view.tsx", remedy: "seat ProofJoins first in the proofs zone" });
   } else if (!home) console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the home's render check did not run");
 
