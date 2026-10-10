@@ -29,7 +29,9 @@ let deferred = 0;
 const check = (name: string, ok: boolean, remedy?: string) => { if (!ok) failed++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}`); if (!ok && remedy) console.log(`      Remedy: ${remedy}`); };
 const VIEW = "src/components/spine/home/home-view.tsx";
 const view = readFileSync(VIEW, "utf8");
-const code = stripCommentLines(view.split("\n")).join("\n");
+/* JSX COMMENTS GO FIRST, WHOLE (fix round B): one that runs over two lines leaves its `{` and its `}` for stripCommentLines to hand back,
+   the closing one at column 0, and the slices below that end at the first line starting with `}` would stop there, early. */
+const code = stripCommentLines(view.replace(/\{\s*\/\*[\s\S]*?\*\/\s*\}/g, "").split("\n")).join("\n");
 const live = readFileSync("src/app/page.tsx", "utf8");
 const picker = readFileSync("src/components/NavigatorForm.tsx", "utf8");
 const sd = readFileSync("src/components/StructuredData.tsx", "utf8");

@@ -19,7 +19,7 @@ const RULE = "home-kitchens";
 const FILE = "src/lib/home/kitchens.ts";
 const REMEDY = "print the ranked list from the feed only, the set's ends as its rows and its middle as its figure, fresh by the 45-day rule";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 type Member = { member: string; value: number };
 type Item = { id: string; dimension?: string; held?: string; floor?: string; as_of?: string; middle?: number; members: number; top: Member[]; bottom: Member[] };
@@ -46,7 +46,7 @@ if (item?.as_of) {
 /* OFF THE HOME (plan 2026-10-09, home introduction; the home's spec, section 6: it leaves the home for London's page, which the city-page
    study decides; the builder and the feed item are kept). */
 const home = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
-if (home) check("the home render no longer carries the list", !/id="kitchens"/.test(home));
+if (home) check("the home render no longer carries the list", !/id="kitchens"/.test(home), { file: "src/components/spine/home/home-view.tsx", remedy: "take the kitchens list out of SpineHomeBody's zones" });
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/kitchens: all pass");

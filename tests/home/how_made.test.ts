@@ -102,6 +102,11 @@ if (proofs && joins) {
   check("it is a door card to About the figures' #failures, its title an h2", /id="joins"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#failures"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.joins.kicker}</h2>`).test(html), PROOF_AT);
   check("its figure is the card's 30, the ring's at 16 in a lead ring", /data-focal="1" class="fig text-\[length:var\(--t-focal\)\][^"]*" data-src="home\/method\.json:notices" data-kind="counted">/.test(html) && /data-archetype="ring"/.test(html) && /class="relative h-24 w-24"/.test(html) && /--t-lead[^"]*" data-src="home\/method\.json:matched_names" data-kind="counted">/.test(html), PROOF_AT);
   check("the ring's caption names the names held, stamped", /data-src="home\/method\.json:names" data-kind="counted">/.test(html), PROOF_AT);
+  /* THE RING'S SHARE AND THE WORDS OF ITS CAPTION, AS DRAWN (fix round B): the ring sweeps the builder's share to the whole percent, and
+     its caption reads the copy's words either side of the stamped count of names, with nothing else in it. */
+  const [capBefore, capAfter] = COPY.home.proofs.joins.ring.split("{names}");
+  check(`the ring is drawn at the builder's share, ${Math.round(joins.share)} of 100 (${joins.share.toFixed(1)})`, new RegExp(`data-archetype="ring"[^>]*data-share="${Math.round(joins.share)}"`).test(html), PROOF_AT);
+  check(`the ring's caption reads "${capBefore}${joins.names.figure}${capAfter}", the copy's words either side of the stamped span`, new RegExp(`data-mark-label="true"[^>]*>${capBefore}<span class="fig[^"]*" data-src="home/method\\.json:names" data-kind="counted">${joins.names.figure}</span>${capAfter}</div>`).test(html), PROOF_AT);
   check("quiet: no figure in the accent, and no word of countries or estimates", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html) && !/countr|estimate/i.test(html.replace(/<[^>]+>/g, " ")), PROOF_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === 3 && figs.every((f) => /data-src="home\/method\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);

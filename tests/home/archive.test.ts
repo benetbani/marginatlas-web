@@ -32,6 +32,9 @@ const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string
 
 type Export = { gazette: { first: string; last: string; months: Array<{ month: string; notices: number }> }; register: { copies: string[] } };
 
+/** A string as React writes it into markup. */
+const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+
 /** The month after `ym` (YYYY-MM). */
 const nextMonth = (ym: string) => { const y = Number(ym.slice(0, 4)), m = Number(ym.slice(5)); return m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, "0")}`; };
 
@@ -97,6 +100,12 @@ if (proofs && built) {
   const html = renderToStaticMarkup(React.createElement(ProofArchive, { p }));
   check("it is a door card to About the figures' #archive, its title an h2", /id="archive"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#archive"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.archive.kicker}</h2>`).test(html), PROOF_AT);
   check("its figure is the card's 30, its copies a row", new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\][^"]*" data-src="home/archive\\.json:gazette\\.months" data-kind="counted">${p.figure}<`).test(html) && /data-archetype="fact-rows"/.test(html) && /data-row="copies"/.test(html), PROOF_AT);
+  /* THE LINE AND THE ROW'S DAYS, AS DRAWN (fix round B): the line stands as the card's one small line, and the row names its days under
+     its label (a date's spaces are held unbreakable in the markup, so they are read as spaces here). */
+  const plain = html.replace(/\xa0/g, " ");
+  const runs = (h: string) => h.replace(/<[^>]+>/g, "|").replace(/\|+/g, "|");
+  check(`its line is drawn as the card's one small line ("${p.line}")`, plain.includes(`>${esc(p.line)}</p>`), PROOF_AT);
+  check(`its row names its days, "${p.row.note}", under "${p.row.label}"`, runs(/data-row="copies"[\s\S]*?<\/dd>/.exec(plain)?.[0] ?? "").includes(`|${esc(p.row.label)}|${esc(p.row.note)}|`), PROOF_AT);
   check("quiet: no figure in the accent", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), PROOF_AT);
   const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure says where it came from (${figs.length})`, figs.length === 2 && figs.every((f) => /data-src="home\/archive\.json:/.test(f) && /data-kind="counted"/.test(f)), PROOF_AT);

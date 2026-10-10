@@ -124,7 +124,7 @@ if (gbRender && built) {
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
    draws it. */
 const homeRender = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
-if (homeRender) check("the home render no longer carries the section", !/id="firms-last"/.test(homeRender));
+if (homeRender) check("the home render no longer carries the section", !/id="firms-last"/.test(homeRender), { file: "src/components/spine/home/home-view.tsx", remedy: "take where new firms last out of SpineHomeBody's zones" });
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(homePassLine("home/firms_last", held));

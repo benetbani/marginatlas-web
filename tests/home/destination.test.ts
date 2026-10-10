@@ -17,7 +17,7 @@ import { COPY } from "../../src/lib/spine/copy";
 import { getCitiesForCountryCode, CASCADE_PREFILLS } from "../../src/lib/home/search_cascade";
 import { searchSite, SEARCH_ROWS_MAX } from "../../src/lib/home/site_search";
 import { countryPageTarget } from "../../src/lib/geo/page_targets";
-import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
+import { SLUG_TO_INDUSTRY, INDUSTRY_BY_ID } from "../../src/lib/taxonomy";
 import { RETIRED } from "../../src/lib/taxonomy/retired";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -25,7 +25,7 @@ const RULE = "home-destination";
 const FILE = "src/lib/home/destination.ts";
 const REMEDY = "answer a home search only with a page that exists, read off the lists the routes and the sitemap read, the UK first";
 let failed = 0;
-const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: FILE, detail: label, remedy: REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? FILE, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 /* Rule 32's six example trades, by their taxonomy ids. */
 const SIX = ["restaurants", "grocery_stores", "health_beauty_stores", "hairdressers_beauty", "sports_fitness", "auto_repair_shops"];
@@ -80,9 +80,13 @@ check(`the picker's three examples are rule 32's trades (${HOME_TRY.map((t) => t
 check(`each lands on its London trade page, a page that exists (${tries.map((t) => t.href).join(", ")})`, tries.length === 3 && tries.every((t) => /^\/gb\/london\/[a-z0-9-]+$/.test(t.href) && exists(t.href)));
 check("each London page prints the register's figures", tries.every((t) => londonTradeHero(t.href.split("/").pop() as string) !== null));
 check(`the examples' city is the form's own (${homeTryCityLabel()})`, homeTryCityLabel() === "London" && HOME_TRY_CITY === CASCADE_PREFILLS[0].city);
-check("the form prints the examples as links and no longer names a city page's trade", /homeTryLinks\(\)/.test(form) && /<a href=\{t\.href\}/.test(form) && !/salons in Manchester|gyms in Leeds/.test(form));
-check(`the h1 asks the example's question first ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}"), the words his, the order changed only`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London" && [...HERO_BUSINESSES].sort().join() === "bakery,barber,boutique,butcher,gym,hotel,pharmacy,restaurant");
-check(`the site's definition is one sentence of twelve words at most, and the structured data's Organization description ("${COPY.home.definition}")`, COPY.home.definition.split(/\s+/).length <= 12 && !COPY.home.definition.includes(";") && /export function Organization\(\)[\s\S]*?description: COPY\.home\.definition/.test(readFileSync("src/components/StructuredData.tsx", "utf8")));
+check("the form prints the examples as links and no longer names a city page's trade", /homeTryLinks\(\)/.test(form) && /<a href=\{t\.href\}/.test(form) && !/salons in Manchester|gyms in Leeds/.test(form), { file: "src/components/NavigatorForm.tsx", remedy: "print the picker's examples as the links homeTryLinks() gives, and name no city page's trade in the line" });
+/* Each example's word is the trade's own: a link reads as the page it opens ({trade: grocery_stores, word: gyms} would not). */
+const unnamed = HOME_TRY.filter((t) => { const industry = INDUSTRY_BY_ID[t.trade]; return !industry || ![industry.name, ...(industry.examples ?? [])].some((s) => s.toLowerCase() === t.word.toLowerCase()); }).map((t) => `${t.word} (${t.trade})`);
+check(`each example's word is its trade's name or one of its examples in the taxonomy (${HOME_TRY.map((t) => `${t.word} in ${t.trade}`).join(", ")})${unnamed.length ? `; not so: ${unnamed.join(", ")}` : ""}`, unnamed.length === 0, { remedy: "set each HOME_TRY word to the name or one of the examples of its taxonomy trade (src/lib/taxonomy/industries.json), so a link reads as the page it opens" });
+check(`the h1 asks the example's question first ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}"), the words his, the order changed only`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London" && [...HERO_BUSINESSES].sort().join() === "bakery,barber,boutique,butcher,gym,hotel,pharmacy,restaurant", { file: "src/lib/hero-words.ts", remedy: "keep \"restaurant\" first in HERO_BUSINESSES and \"London\" first in HERO_CITIES: the words are his, the order only is changed" });
+check(`the site's definition is one sentence of twelve words at most ("${COPY.home.definition}")`, COPY.home.definition.split(/\s+/).length <= 12 && !COPY.home.definition.includes(";"), { file: "src/lib/spine/copy.ts", remedy: "COPY.home.definition: one sentence of twelve words at most, no semicolon" });
+check("the structured data's Organization description is that definition", /export function Organization\(\)[\s\S]*?description: COPY\.home\.definition/.test(readFileSync("src/components/StructuredData.tsx", "utf8")), { file: "src/components/StructuredData.tsx", remedy: "set Organization()'s description to COPY.home.definition, the site's one definition" });
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/destination: all pass");

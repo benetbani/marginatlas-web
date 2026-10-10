@@ -69,7 +69,7 @@ else if (!gb) console.log("DEFER  scratchpad/harness/pages/country-GB.html is no
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
    draws it. */
 const homeRender = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
-if (homeRender) check("the home render no longer carries the section", !/id="duel"/.test(homeRender));
+if (homeRender) check("the home render no longer carries the section", !/id="duel"/.test(homeRender), { file: "src/components/spine/home/home-view.tsx", remedy: "take the duel out of SpineHomeBody's zones" });
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/duel: all pass");

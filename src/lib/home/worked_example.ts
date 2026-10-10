@@ -47,11 +47,23 @@ export type WorkedExample = {
   pays: { title: string; breakEven: ExampleStep; above: { part: number; figure: string; label: string; prov: Provenance }; insolvent: ExampleStep; door: string };
 };
 
-/** Whether a London trade's case is whole: break-even and its share print, every tenth is placed, the failures sit on an exact code,
- *  one survival group. */
-export function exampleCaseWhole(slug: string): boolean {
+/** The clauses of a whole case, each named so a test can show each one is there (tests/home/home_answers.test.ts holds a trade that
+ *  fails each): break-even prints (`money`) and its share (`share`), every tenth is placed (`placed`), the failures sit on an exact
+ *  code (`exact`), one survival group (`survival`). */
+export function exampleCaseClauses(slug: string) {
   const sales = londonTradeSales(slug);
-  return londonMoneyPrints(slug) && londonShareAbove(slug) != null && !!sales && [sales.q10, sales.q50, sales.q90].every((q) => q.open === false) && own(FAILURES.trades, slug)?.match === "exact" && tradeSurvivalUk(slug) !== null;
+  return {
+    money: londonMoneyPrints(slug),
+    share: londonShareAbove(slug) != null,
+    placed: !!sales && [sales.q10, sales.q50, sales.q90].every((q) => q.open === false),
+    exact: own(FAILURES.trades, slug)?.match === "exact",
+    survival: tradeSurvivalUk(slug) !== null,
+  };
+}
+
+/** Whether a London trade's case is whole: every clause of exampleCaseClauses holds. */
+export function exampleCaseWhole(slug: string): boolean {
+  return Object.values(exampleCaseClauses(slug)).every(Boolean);
 }
 
 /** `insolvent` is the UK's company insolvencies a year per 100 live companies, ukInsolvencyPer100(slug) unless it is handed in (a test

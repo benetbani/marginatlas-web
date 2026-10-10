@@ -11,7 +11,7 @@
  * Run: npx tsx tests/home/home_answers.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
-import { buildWorkedExample, exampleCaseWhole, EXAMPLE_TRADE } from "../../src/lib/home/worked_example";
+import { buildWorkedExample, exampleCaseWhole, exampleCaseClauses, EXAMPLE_TRADE } from "../../src/lib/home/worked_example";
 import { londonTradeHero, londonTradeStrip, londonShareAbove } from "../../src/lib/spine/london_trade_hero";
 import { ukInsolvencyPer100 } from "../../src/lib/spine/uk_trade_typical";
 import { CASCADE_PREFILLS } from "../../src/lib/home/search_cascade";
@@ -24,8 +24,10 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { HomePlace, HomePays } from "../../src/components/spine/home/HomeExample";
 import { buildProofs } from "../../src/lib/home/proofs";
 import { ProofTax } from "../../src/components/spine/home/HomeProofs";
+import { SEGMENT_BAR_CELLS } from "../../src/components/spine/archetypes/SegmentBar";
 import { RivalsCell } from "../../src/components/spine/cell/market";
 import type { MarketData } from "../../src/lib/spine/market_rows";
+import type { Provenance } from "../../src/lib/spine/provenance";
 import { buildHeroBoard } from "../../src/lib/spine/hero_board";
 import { ukTaxOnProfit } from "../../src/lib/spine/uk_tax_on_profit";
 import { UK_2026_27 } from "../../src/lib/uk/law/params_2026_27";
@@ -48,8 +50,22 @@ const text = (h: string) => h.replace(/<[^>]+>/g, "|").replace(/\|+/g, "|");
 const pick = CASCADE_PREFILLS[0];
 check(`the picker opens on the example's case (${pick.country} ${pick.city} ${pick.business})`, pick.country === "GB" && pick.city === "london" && industryToSlug(pick.business) === EXAMPLE_TRADE, { file: "src/lib/home/search_cascade.ts", remedy: "keep CASCADE_PREFILLS[0] restaurants in London, the worked example's case" });
 check(`the first rotating word names it ("${HERO_BUSINESSES[0]}")`, HERO_BUSINESSES[0] === "restaurant", { file: "src/lib/hero-words.ts", remedy: "keep \"restaurant\" first in HERO_BUSINESSES (his yes of 2026-10-09, order only)" });
-check("the case is whole: break-even and its share print, every tenth placed, an exact failure code, one survival group", exampleCaseWhole(EXAMPLE_TRADE));
-check("the bakery's case is not whole, which is why the example is a restaurant", !exampleCaseWhole("bakeries-retail") && buildWorkedExample("bakeries-retail") === null);
+/* THE CASE IS WHOLE, CLAUSE BY CLAUSE (fix round B). exampleCaseWhole is five clauses (exampleCaseClauses names them). The trade the
+   example works holds every one; and a trade of today's slices that fails each clause shows the clause is there, so a clause dropped
+   or weakened leaves its trade whole, or its name missing, and turns a check below red. These are facts of the slices, which move: the
+   remedy for a red here is another default trade, or the slice restored. */
+const WHOLE_AT = { remedy: "the slices moved under the example's case: choose another default trade (CASCADE_PREFILLS[0] in src/lib/home/search_cascade.ts, then EXAMPLE_TRADE) whose London page prints every figure the example holds, or restore the slice (registers/uk/export_for_site.py)" };
+const CLAUSES = ["money", "share", "placed", "exact", "survival"];
+const clause = (slug: string, k: string) => (exampleCaseClauses(slug) as Record<string, boolean | undefined>)[k];
+check(`the case is whole: break-even and its share print, every tenth placed, an exact failure code, one survival group (${CLAUSES.map((k) => `${k} ${clause(EXAMPLE_TRADE, k)}`).join(", ")})`, exampleCaseWhole(EXAMPLE_TRADE) && JSON.stringify(Object.keys(exampleCaseClauses(EXAMPLE_TRADE))) === JSON.stringify(CLAUSES) && CLAUSES.every((k) => clause(EXAMPLE_TRADE, k) === true), WHOLE_AT);
+const NOT_WHOLE: Array<[string, string[], string]> = [
+  ["bakeries-retail", ["money", "share", "survival"], "its break-even prints nowhere (its recipe carries no utilities), so no share, and its survival maps to two groups; which is why the example is a restaurant"],
+  ["nail-salons", ["placed", "exact"], "a tenth of its strip is not placed and its failures sit on a shared code"],
+  ["sports-fitness", ["placed", "exact"], "a tenth of its strip is not placed and its failures sit on a shared code"],
+];
+for (const [slug, failing, why] of NOT_WHOLE) {
+  check(`${slug} is not whole, and fails ${failing.join(", ")} (${why})`, !exampleCaseWhole(slug) && buildWorkedExample(slug) === null && failing.every((k) => clause(slug, k) === false), WHOLE_AT);
+}
 
 const ex = buildWorkedExample();
 check("the worked example builds", !!ex);
@@ -94,6 +110,20 @@ if (ex) {
   const figs = (h: string) => [...h.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
   check(`every figure on the left says where it came from (${figs(place).length}: the count and the strip's three)`, figs(place).length === 4 && figs(place).every((f) => /data-src="uk\/registers\/turnover\.json:restaurants:E12000007"/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
   check(`every figure on the right says where it came from (${figs(pays).length}: break-even, its share, the insolvencies)`, figs(pays).length === 3 && figs(pays).every((f) => /data-src="/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
+  /* EACH FIGURE AS DRAWN IS THE BUILDER'S (fix round B), by its text, its data-src and its data-kind, against the seven triples the builder
+     holds: the count, the strip's three marks, break-even, its share, the insolvencies. A figure stamped with another figure's source, or
+     with a kind the builder did not give it, passes the two checks above; it does not pass this one. */
+  const drawn = (h: string) => [...h.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>[^<]*/g)].map((m) => `${m[0].slice(m[0].lastIndexOf(">") + 1)} | ${/data-src="([^"]*)"/.exec(m[0])?.[1]} | ${/data-kind="([^"]*)"/.exec(m[0])?.[1]}`).sort();
+  const held = (steps: Array<[string, Provenance]>) => steps.map(([t, v]) => `${t} | ${v.src} | ${v.kind}`).sort();
+  const wantL = held([[ex.place.registered.figure, ex.place.registered.prov], ...ex.place.strip.map((m): [string, Provenance] => [usd(m.value), m.prov])]);
+  const wantR = held([[ex.pays.breakEven.figure, ex.pays.breakEven.prov], [ex.pays.above.figure, ex.pays.above.prov], [ex.pays.insolvent.figure, ex.pays.insolvent.prov]]);
+  const gotL = drawn(place), gotR = drawn(pays);
+  const apart = [...wantL.filter((t) => !gotL.includes(t)).map((t) => `missing left ${t}`), ...gotL.filter((t) => !wantL.includes(t)).map((t) => `drawn left ${t}`), ...wantR.filter((t) => !gotR.includes(t)).map((t) => `missing right ${t}`), ...gotR.filter((t) => !wantR.includes(t)).map((t) => `drawn right ${t}`)];
+  check(`each figure drawn is the builder's, by text, data-src and data-kind (${gotL.length + gotR.length} of ${wantL.length + wantR.length})${apart.length ? `: ${apart.join(", ")}` : ""}`, wantL.length + wantR.length === 7 && apart.length === 0, DRAWN_AT);
+  /* THE 30 AND THE 40 ARE COUNTED BY THE RUNG EACH FIGURE IS DRAWN AT: one 30 on the left, the strip's typical; on the right one figure at
+     30 or 40 and it is step 3's 40 (a second 30 in a card would be a second loud figure; PART 4). */
+  const rung = (h: string, r: string) => figs(h).filter((f) => f.includes(`--t-${r})`)).length;
+  check(`the left card holds one figure at 30 (${rung(place, "focal")}) and none at 40; the right holds exactly one at 30 or 40, step 3's 40 (${rung(pays, "focal")} at 30, ${rung(pays, "answer")} at 40)`, rung(place, "focal") === 1 && rung(place, "answer") === 0 && rung(pays, "focal") === 0 && rung(pays, "answer") === 1, DRAWN_AT);
   check("step 2 is the card's 30, on the strip of three marks", new RegExp(`--t-focal[^"]*"[^>]*>${reEsc(ex.place.sales.figure)}<`).test(place) && /data-archetype="range-strip"/.test(place) && /data-marks="3"/.test(place), DRAWN_AT);
   const accentsL = place.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
   const accentsR = pays.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
@@ -115,8 +145,9 @@ if (proofs && uk) {
   const t = proofs.tax;
   check(`the tax proof is /gb's masthead: "${t.label}" ${t.figure}, worked out`, t.label === board.answer?.label && t.figure === board.answer?.value && t.prov.src === board.answer?.prov?.src && t.prov.kind === "worked out", { file: "src/lib/home/proofs.ts", remedy: "take the tax proof from buildHomeAnswers' answer, the figure buildHeroBoard prints" });
   check(`its line names the profit and the year's rules ("${t.line}")`, t.line === COPY.home.proofs.tax.words.replace("{profit}", usd(uk.profitUsd)).replace("{year}", UK_2026_27.taxYear) && words(t.line) <= 12 && !t.line.includes(";"), { file: COPY_FILE, remedy: "COPY.home.proofs.tax.words: the profit and the law's year, twelve words at most" });
-  check("its bar is the masthead's own", !!board.answerBar && t.bar.value === board.answerBar.value && t.bar.part === board.answerBar.part && t.bar.rest === board.answerBar.rest);
-  check(`its door is /gb's answer (${t.href})`, t.href === "/gb#take");
+  const PROOF_DATA_AT = { file: "src/lib/home/proofs.ts", remedy: "take the tax proof's bar and door from buildHomeAnswers' answer" };
+  check("its bar is the masthead's own", !!board.answerBar && t.bar.value === board.answerBar.value && t.bar.part === board.answerBar.part && t.bar.rest === board.answerBar.rest, PROOF_DATA_AT);
+  check(`its door is /gb's answer (${t.href})`, t.href === "/gb#take", PROOF_DATA_AT);
   const PROOF_AT = { file: "src/components/spine/home/HomeProofs.tsx", remedy: "draw the tax proof as ProofTax holds it: a door card, its title an h2, the figure's name over its 30 in the accent, its line, the masthead's bar" };
   const html = renderToStaticMarkup(React.createElement(ProofTax, { p: t }));
   check("it is a door card to /gb's answer", /id="tax"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/gb#take" data-lands="[a-z-]+"/.test(html), PROOF_AT);
@@ -124,6 +155,11 @@ if (proofs && uk) {
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];
   check(`its figure, at 30, is the card's one accent (${accents.length})`, accents.length === 1 && new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\] leading-none text-\\[var\\(--terra-text\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(t.figure)}<`).test(html), PROOF_AT);
   check("its bar is the masthead's split bar, under the measure", /data-archetype="segment-bar"/.test(html) && /data-form="split"/.test(html) && /max-w-\[28ch\]/.test(html), PROOF_AT);
+  /* THE LINE AND THE BAR AS DRAWN (fix round B): the line stands as the card's one small line, and the bar fills the cells the masthead's
+     share asks of it (SEGMENT_BAR_CELLS, the nearest cell), the tax named at its left end and what is kept at its right. */
+  const filled = Math.round(Math.max(0, Math.min(1, t.bar.value / 100)) * SEGMENT_BAR_CELLS);
+  check(`its line is drawn as the card's one small line ("${t.line}")`, html.includes(`>${esc(t.line)}</p>`), PROOF_AT);
+  check(`its bar fills ${filled} of ${SEGMENT_BAR_CELLS} cells for ${t.bar.value.toFixed(1)} of 100, the tax named at the left and what is kept at the right`, html.includes(`data-filled="${filled}"`) && html.includes(`data-segments="${SEGMENT_BAR_CELLS}"`) && !!t.bar.part && !!t.bar.rest && html.includes(`<span data-part="true">${esc(t.bar.part)}</span>`) && html.includes(`<span data-rest="true">${esc(t.bar.rest)}</span>`), PROOF_AT);
 }
 
 /* THE RENDERS (Task 10), where the harness wrote them (pages-fresh renders them first in the chain). */

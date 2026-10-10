@@ -16,6 +16,8 @@
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "node:fs";
+import { JSDOM } from "jsdom";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { Fig, Rail } from "../../src/components/spine/kit";
 import { FactRows } from "../../src/components/spine/archetypes/FactRows";
 import { Ring } from "../../src/components/spine/archetypes/Ring";
@@ -75,9 +77,26 @@ const apart = [
 ];
 check(`quiet changes the marked bar's colour and nothing else${apart.length ? `: apart on ${apart.join(", ")}` : ""}`, apart.length === 0, BARS, "BarList quiet may change the marked bar's background-color and background-image only: no other bar's style, not the marked bar's width, nothing else in the markup");
 
-/* THE COPY GATE'S TITLE */
+/* THE COPY GATE'S TITLE, EVALUATED (fix round B). The gate's own line is read comment-stripped (a commented-out copy is no line) and run on
+   jsdom cards: a level-2 Rail, a default Rail, an h2 that is no Rail's, a card with no heading, a Rail's h2 before an h3, and an h2 that
+   is no Rail's before an h3. A regex over the raw source passed a gate that read the wrong heading, or none. */
 const GATE = "scripts/harness/check_copy_plain.mjs";
-check("the copy gate reads a card's title from a Rail's h2 where it has one, else its h3", /card\.querySelector\("h2\[data-rail-title\]"\) \?\? card\.querySelector\("h3"\)/.test(readFileSync(GATE, "utf8")), GATE, 'read the title as card.querySelector("h2[data-rail-title]") ?? card.querySelector("h3")');
+const GATE_REMEDY = 'read the title as card.querySelector("h2[data-rail-title]") ?? card.querySelector("h3") in the code of the gate, not in a comment';
+const titleExpr = /const title = ([^;\n]+);/.exec(stripCommentLines(readFileSync(GATE, "utf8").split("\n")).join("\n"))?.[1];
+const titleOf = (html: string): string | null => {
+  const card = new JSDOM(`<body><div>${html}</div></body>`).window.document.body.firstElementChild;
+  return (new Function("card", `return ${titleExpr};`)(card) as Element | null)?.textContent ?? null;
+};
+const TITLE_CARDS: Array<[string, string, string | null]> = [
+  ["a level-2 Rail's h2", h2, "Tax, rule by rule"],
+  ["a default Rail's h3", h3, "Tax, rule by rule"],
+  ["an h2 with no data-rail-title", "<h2>Not a Rail's title</h2>", null],
+  ["a card with no heading", "<p>No heading</p>", null],
+  ["a Rail's h2 before an h3", `${h2}<h3>An h3 after it</h3>`, "Tax, rule by rule"],
+  ["an h2 with no data-rail-title before an h3", "<h2>Not a Rail's title</h2><h3>The h3</h3>", "The h3"],
+];
+const titleWrong = titleExpr ? TITLE_CARDS.map(([what, html, want]) => ({ what, got: titleOf(html), want })).filter((c) => c.got !== c.want) : [];
+check(`the copy gate reads a card's title from a Rail's h2 where it has one, else its h3, evaluated on ${TITLE_CARDS.length} cards${!titleExpr ? ": its code holds no title line" : titleWrong.length ? `: wrong on ${titleWrong.map((c) => `${c.what} (${JSON.stringify(c.got)}, want ${JSON.stringify(c.want)})`).join(", ")}` : ""}`, !!titleExpr && titleWrong.length === 0, GATE, GATE_REMEDY);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/home_forms: all pass");
