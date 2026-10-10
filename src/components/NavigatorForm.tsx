@@ -28,8 +28,11 @@ import type { PickerHidden, PickerSeed } from "@/lib/home/picker";
  * and the examples' line stands under the row in ink2. Any failure says so in the card instead of sending the visitor to a random
  * page. THE LISTS LOAD ON FIRST USE: the server passes `seed`, the three labels and the no-script fields the first paint needs
  * (src/lib/home/picker.ts homePickerSeed), and the 195 countries, the activities and the city lists arrive with import() when a
- * pointer enters the form or focus lands in it. A press that comes before them is the browser's own submit to /api/go, which
- * answers through the same destination.
+ * pointer enters the form, focus lands in it or a key is pressed in it (a field focused before the page hydrated fires no focus
+ * that React hears, so its first key starts the load). Until they are in, an open field says "Loading…" in place of a list or of
+ * "No match" (ComboField's `loading`, the Task 2 review: typing then filtered the one seeded option alone), and its Enter keeps
+ * typed words in the field. A press that comes before them is the browser's own submit to /api/go, which answers through the same
+ * destination.
  */
 
 /** Client-side gate read. Matches lib/audience.ts on the server. */
@@ -127,6 +130,8 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
   const countryOptions = React.useMemo(() => (lists ? lists.countryOptions() : seed ? [seed.country] : []), [lists, seed]);
   const cityOptions = React.useMemo(() => (lists ? lists.cityOptions(country) : seed ? [seed.city] : []), [lists, seed, country]);
   const businessOptions = React.useMemo(() => (lists ? lists.businessOptions(gate) : seed ? [seed.business] : []), [lists, seed, gate]);
+  /* Until the lists are in (and unless loading them failed, which the card says), an open field says "Loading…" and filters nothing. */
+  const loadingLists = !lists && !failed;
   /* The no-script fields mirror the state for the native submit (action="/api/go"). */
   const hidden = lists ? lists.hiddenFields(country, city, business) : (seed?.hidden ?? NO_HIDDEN);
   /* The line's three examples and their city, from the destination's one list (src/lib/home/destination.ts, HOME_TRY), so a link and a
@@ -163,6 +168,7 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
       onSubmit={onSubmit}
       onPointerEnter={loadLists}
       onFocus={loadLists}
+      onKeyDown={loadLists}
       data-keep-card=""
       className="spine-card relative rounded-xl border border-[var(--c-line-strong)] p-6"
     >
@@ -211,6 +217,7 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
           required
           options={countryOptions}
           value={country}
+          loading={loadingLists}
           onChange={(v) => {
             setCountry(v);
             setCity("");
@@ -222,6 +229,7 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
           label="City"
           options={cityOptions}
           value={city}
+          loading={loadingLists}
           onChange={setCity}
           placeholder="Anywhere, or pick a city"
         />
@@ -230,6 +238,7 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
           label="Business"
           options={businessOptions}
           value={business}
+          loading={loadingLists}
           onChange={setBusiness}
           placeholder="Type a business: restaurants, barbers, plumbers"
         />

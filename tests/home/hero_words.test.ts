@@ -45,8 +45,8 @@ const check = (label: string, ok: boolean, file: string, remedy = REMEDY) => { i
 async function main() {
   const React = (await import("react")).default;
   const { act } = await import("react");
-  const { createRoot } = await import("react-dom/client");
-  const { renderToStaticMarkup } = await import("react-dom/server");
+  const { createRoot, hydrateRoot } = await import("react-dom/client");
+  const { renderToStaticMarkup, renderToString } = await import("react-dom/server");
   const { HeroWords } = await import("../../src/components/spine/home/HeroWords");
   const { RotatingWord } = await import("../../src/components/RotatingWord");
   const W = await import("../../src/lib/hero-words");
@@ -68,6 +68,14 @@ async function main() {
   check("the \"?\" stands inside the city's slot against its word, no space before it, in ink", html.includes('>London<span class="text-[var(--c-ink)]">?</span></span>') && !/<\/span>\s*\?/.test(html), HERO);
   const wordClasses = [...html.matchAll(/<span class="(absolute [^"]*)">/g)].map((m) => m[1]);
   check(`each word stands at its slot's left, no padding and no translate, and fades by opacity alone (read: ${wordClasses.join(" | ")})`, wordClasses.length === 2 && wordClasses.every((c) => c === "absolute left-0 inline-block transition-opacity duration-300 ease-out opacity-100") && !/padding|translate|transition-all/.test(html), WORD);
+  /* THE H1'S RED IS HIS, NOT AN ACCENT (the plan's amendment 1): the accent walk (scripts/lib/accent_walk.mjs) skips any element inside
+     [data-founder-accent], so BOTH wrappers must carry it, the business's and the city's; one without it counts a red word as an accent
+     and the home reads over its budget. */
+  const holder = document.createElement("div");
+  holder.innerHTML = html;
+  const exempt = [...holder.querySelectorAll("[data-founder-accent]")];
+  const drawn2 = [...holder.querySelectorAll("span.absolute")];
+  check(`the business and the city each stand in their own wrapper carrying data-founder-accent, the accent walk's exemption (${exempt.length} wrappers, around: ${exempt.map((e) => e.querySelector("[data-w]")?.getAttribute("data-w") ?? "nothing").join(" | ")}; ${drawn2.filter((w) => w.closest("[data-founder-accent]")).length} of ${drawn2.length} drawn words inside one)`, exempt.length === 2 && exempt.every((e) => e.classList.contains("text-atlas-700")) && exempt[0]?.querySelector('[data-w="restaurant"]') !== null && exempt[1]?.querySelector('[data-w="Shanghai?"]') !== null && drawn2.length === 2 && drawn2.every((w) => w.closest("[data-founder-accent]") !== null), HERO, "put data-founder-accent on the wrapper of the business and on the wrapper of the city in HeroWords (the walk's own exemption for a mark he ruled), because --terra-text is the red these words have always printed");
 
   /* THE LIVE HOME'S WORD, UNCHANGED: centred, padded, sized by letters, when nothing else is asked. */
   const plain = renderToStaticMarkup(React.createElement(RotatingWord, { words: ["Paris", "Istanbul"] }));
@@ -159,7 +167,23 @@ async function main() {
   check(`under reduced motion the first words, still, and no timer (${words()}, ${timers.length} timer)`, words() === "restaurant / London" && timers.length === 0, HERO);
   reduce = false;
 
+  /* A FIELD FOCUSED BEFORE THE PAGE HYDRATED fires no focusin the listener hears (the server's HTML takes input before React is there),
+     so the words would keep moving under a visitor who is already typing in the picker: on mount, a focus already inside #search stops
+     them at once. The page is hydrated here, not mounted: the server's markup goes in first and the field is focused before React. */
   await act(async () => { root.unmount(); });
+  timers = [];
+  const tree = () => React.createElement("section", { id: "search" }, React.createElement("h1", null, React.createElement(HeroWords, props)), React.createElement("input", { id: "probe", "aria-label": "probe" }));
+  container.innerHTML = renderToString(tree());
+  const early = document.getElementById("probe") as HTMLInputElement;
+  early.focus();
+  let hydrated!: ReturnType<typeof hydrateRoot>;
+  await act(async () => { hydrated = hydrateRoot(container, tree()); });
+  const heldFocus = document.activeElement === early;
+  const waiting = timers.length;
+  await advance(TICK);
+  check(`a field focused before the page hydrated stops the words at once: no timer is set and they stay where they are (focus kept ${heldFocus}, ${waiting} timer after hydration, then ${words()}, ${timers.length} timer)`, heldFocus && waiting === 0 && words() === "restaurant / London" && timers.length === 0, HERO, "in HeroWords' effect, return before the timer is set when #search already contains document.activeElement");
+  await act(async () => { hydrated.unmount(); });
+
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("home/hero_words: all pass");
   process.exit(0);

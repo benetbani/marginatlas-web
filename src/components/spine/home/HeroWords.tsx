@@ -10,9 +10,9 @@
  *
  * ONE TIMER FOR BOTH WORDS, AND IT STOPS (WCAG 2.2.2): a tick every 3.5 seconds, twelve ticks, the last a fade back to the first words,
  * then still for good (src/lib/hero-words.ts); still at once on the first pointerdown, keydown or focusin inside #search, the hero's
- * section, so nothing moves while the visitor works the picker; paused while the page is hidden; under reduced motion the first
- * words, still. The server renders the first words. It schedules with window.setTimeout, which tests/home/hero_words.test.ts swaps
- * for a clock it drives.
+ * section, so nothing moves while the visitor works the picker (and from the start when a field there was focused before the page
+ * hydrated, which fires no focusin anyone hears); paused while the page is hidden; under reduced motion the first words, still. The
+ * server renders the first words. It schedules with window.setTimeout, which tests/home/hero_words.test.ts swaps for a clock it drives.
  *
  * THE TWO WORDS ARE HIS H1'S RED, NOT AN ACCENT (the plan's amendment 1): --terra-text became #991600, the red these words have always
  * printed (text-atlas-700), so the accent walk (scripts/lib/accent_walk.mjs) would count both as accents and the home would read over
@@ -65,6 +65,10 @@ export function HeroWords({ lead, middle, businesses, cities }: { lead: string; 
       } else schedule();
     };
     const host = document.getElementById("search");
+    /* A field focused before the page hydrated fired its focusin when nothing was listening (the server's HTML takes input before
+       React is there), so the visitor is already at the picker and the words stay where they are. Nothing is set up: no listener,
+       no timer. */
+    if (host?.contains(document.activeElement)) return;
     const acts = ["pointerdown", "keydown", "focusin"] as const;
     for (const a of acts) host?.addEventListener(a, stop);
     document.addEventListener("visibilitychange", onVisibility);

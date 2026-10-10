@@ -19,6 +19,9 @@ type Props = {
   onChange: (value: string) => void;
   disabled?: boolean;
   required?: boolean;
+  /** The options are on their way (the home picker loads its lists on first use). An open field draws one "Loading…" row and no list,
+   *  whatever is typed, and keeps typed words in the field on Enter, instead of filtering the little it holds and saying "No match". */
+  loading?: boolean;
 };
 
 /* NO `tooltip` PROP, AND IT IS NOT COMING BACK BY ACCIDENT.
@@ -51,10 +54,14 @@ type Props = {
    768 so a phone does not zoom; an ink ring whenever focus is inside, so a field that was picked from or escaped still shows where
    focus is; the list's rows 44px, the highlighted row the soft fill with an ink bar, the examples in the muted grey, the card's own
    shadow; a row that says when nothing matches, and says it to a screen reader through a polite live region; on focus the label
-   stays and is selected, so typing replaces it and a tap never blanks the field. The brown and the terracotta left the field. */
+   stays and is selected, so typing replaces it and a tap never blanks the field. The brown and the terracotta left the field.
+   A field told `loading` says "Loading…" in that same row and region until its options arrive (the Task 2 review: typing before the
+   home picker's lists came filtered the one option it held, and "No match" flashed). */
 
 /** The card's two drops (CARD_SURFACE in src/components/spine/kit.tsx), written here so this client file never carries the kit. */
 const CARD_SHADOW = "shadow-[0_1px_1px_rgba(43,28,22,0.04),0_8px_24px_-12px_rgba(43,28,22,0.10)]";
+/** The one-line row under the field that says "No match for ‘x’" or "Loading…". */
+const NOTE_ROW = `absolute z-20 mt-2 w-full rounded-xl border border-[var(--c-line-strong)] bg-white px-4 py-3 text-sm leading-5 text-[var(--c-ink2)] ${CARD_SHADOW}`;
 
 /**
  * ComboField: a single field that's a dropdown AND a search-as-you-type filter.
@@ -71,6 +78,7 @@ export function ComboField({
   onChange,
   disabled = false,
   required = false,
+  loading = false,
 }: Props) {
   const [open, setOpen] = React.useState(false);
   /* What the reader has typed, or null while they have typed nothing since the field last settled: then the field shows the picked
@@ -92,24 +100,28 @@ export function ComboField({
   const listboxId = `${id}-listbox`;
   const optionId = (i: number) => `${id}-option-${i}`;
 
-  // Filter options by query
+  // Filter options by query. While the options are on their way there is nothing to filter, and no row can be lit or chosen.
   const q = (query ?? "").trim().toLowerCase();
-  const filtered = !q
-    ? options
-    : options.filter((o) => {
-        if (o.label.toLowerCase().includes(q)) return true;
-        if (o.examples?.some((e) => e.toLowerCase().includes(q))) return true;
-        if (o.keywords?.some((k) => k.toLowerCase().includes(q))) return true;
-        return false;
-      });
+  const filtered = loading
+    ? []
+    : !q
+      ? options
+      : options.filter((o) => {
+          if (o.label.toLowerCase().includes(q)) return true;
+          if (o.examples?.some((e) => e.toLowerCase().includes(q))) return true;
+          if (o.keywords?.some((k) => k.toLowerCase().includes(q))) return true;
+          return false;
+        });
 
   /* The popup is only "expanded" when there is something in it. An
      aria-expanded of true over an empty list tells a screen reader to go
      looking for options that are not there. */
   const expanded = open && filtered.length > 0;
   /* Nothing matches what was typed: one row says so, and the live region says it to a screen reader. */
-  const noMatch = open && q !== "" && filtered.length === 0;
+  const noMatch = open && !loading && q !== "" && filtered.length === 0;
   const noMatchLine = `No match for ‘${(query ?? "").trim()}’`;
+  /* The options are still coming: the same row and region say so, in place of a list or of "No match". */
+  const waiting = open && loading;
 
   /* KEEP THE HIGHLIGHTED OPTION ON SCREEN.
      listRef was declared and attached to the <ul> and then never read, so the
@@ -171,9 +183,9 @@ export function ComboField({
       setFocusIdx((i) => Math.max(i - 1, 0));
     } else if (e.key === "Enter") {
       /* The lit row is chosen whatever is typed: the arrow keys alone reach a row, and the Enter that was stopped for it picked
-         nothing while the query was empty (the Task 2 review). With words typed and no row lit, the top match. Over "No match" the
-         Enter stays in the field, so the form never sends the previous pick for words that matched nothing. Any other Enter is the
-         form's own submit. */
+         nothing while the query was empty (the Task 2 review). With words typed and no row lit, the top match. Over "No match", or
+         over "Loading…" with words typed, the Enter stays in the field, so the form never sends the previous pick for words that
+         matched nothing yet or ever. Any other Enter is the form's own submit. */
       const lit = focusIdx >= 0 ? filtered[focusIdx] : undefined;
       if (lit) {
         e.preventDefault();
@@ -181,7 +193,7 @@ export function ComboField({
       } else if (q && filtered.length > 0) {
         e.preventDefault();
         choose(filtered[0]);
-      } else if (noMatch) {
+      } else if (noMatch || (waiting && q !== "")) {
         e.preventDefault();
       }
     } else if (e.key === "Escape") {
@@ -333,16 +345,17 @@ export function ComboField({
         </ul>
       )}
       {noMatch ? (
-        <div
-          aria-hidden="true"
-          data-no-match=""
-          className={`absolute z-20 mt-2 w-full rounded-xl border border-[var(--c-line-strong)] bg-white px-4 py-3 text-sm leading-5 text-[var(--c-ink2)] ${CARD_SHADOW}`}
-        >
+        <div aria-hidden="true" data-no-match="" className={NOTE_ROW}>
           {noMatchLine}
         </div>
       ) : null}
+      {waiting ? (
+        <div aria-hidden="true" data-loading="" className={NOTE_ROW}>
+          Loading…
+        </div>
+      ) : null}
       <p role="status" aria-live="polite" className="sr-only">
-        {noMatch ? noMatchLine : ""}
+        {waiting ? "Loading…" : noMatch ? noMatchLine : ""}
       </p>
     </div>
   );

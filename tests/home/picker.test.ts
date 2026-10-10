@@ -7,15 +7,19 @@
  * action; the examples' line in ink2 under the row; a failure said in the card; "Loading…" with its ellipsis; no static import of
  * the taxonomy, the cascade, the destination, the regions or the city tables, its lists loaded with import() on first use, and its
  * first paint from the server's seed, whose labels are the lists' own.
- * ComboField is rendered on the server and mounted in jsdom, and steered with the keys (the Task 2 fix round: Enter chooses the lit
- * row whatever is typed, and keeps the visitor in the field over "No match"). NavigatorForm needs Next's router to render, so its markup is read from
- * the home's render (tests/trust/home_shape.test.ts, the hero's checks) and its source here, comments stripped.
+ * ComboField is rendered on the server and mounted in jsdom, and steered with the keys (the Task 2 fix rounds: Enter chooses the lit
+ * row whatever is typed and keeps the visitor in the field over "No match" or "Loading…"; leaving the field closes its list; a field
+ * told its lists are coming draws one "Loading…" row). NavigatorForm is mounted inside the app router's context, the module cache the
+ * instrument for its lazy load (no list module before a pointer, a focus or a key); its source is read here too, comments stripped,
+ * and its markup in the home's render (tests/trust/home_shape.test.ts, the hero's checks).
  * Run: npx tsx tests/home/picker.test.ts
  */
 import { readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
+/* A type only: it loads nothing, which the lazy-load proof below depends on. */
+import type { PickerSeed } from "../../src/lib/home/picker";
 
 const dom = new JSDOM("<!doctype html><html><body><div id='root'></div></body></html>", { pretendToBeVisual: true });
 (globalThis as any).window = dom.window;
@@ -37,10 +41,10 @@ const check = (label: string, ok: boolean, file: string, remedy = REMEDY) => { i
 async function main() {
   const React = (await import("react")).default;
   const { act } = await import("react");
-  const { createRoot } = await import("react-dom/client");
-  const { renderToStaticMarkup } = await import("react-dom/server");
+  const { createRoot, hydrateRoot } = await import("react-dom/client");
+  const { renderToStaticMarkup, renderToString } = await import("react-dom/server");
   const { ComboField } = await import("../../src/components/ComboField");
-  const P = await import("../../src/lib/home/picker");
+  /* The picker module is imported further down, where the seed is read: the lazy-load proof needs the module cache clean of the lists. */
   (globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
 
   /* A FIELD, AS THE SERVER RENDERS IT. */
@@ -92,14 +96,17 @@ async function main() {
 
   /* A FIELD IN A PARENT'S SHAPE, MOUNTED: its value follows each pick as the form's state does, every pick is logged, and the keys are
      cancelable events, so an Enter the field took for itself can be told from one left to submit the form. */
-  async function mountField(start: string) {
+  async function mountField(start: string, loadingAtStart = false) {
     const box = document.createElement("div");
     document.body.appendChild(box);
     const r = createRoot(box);
     const log: string[] = [];
+    let setWaiting: (b: boolean) => void = () => {};
     const Parent = () => {
       const [v, setV] = React.useState(start);
-      return React.createElement(ComboField, { ...props, value: v, onChange: (x: string) => { log.push(x); setV(x); } });
+      const [loading, setLoading] = React.useState(loadingAtStart);
+      setWaiting = setLoading;
+      return React.createElement(ComboField, { ...props, value: v, loading, onChange: (x: string) => { log.push(x); setV(x); } });
     };
     await act(async () => { r.render(React.createElement(Parent)); });
     const input = box.querySelector("input")!;
@@ -113,7 +120,8 @@ async function main() {
       const setter = Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype, "value")!.set!;
       await act(async () => { setter.call(input, v); input.dispatchEvent(new dom.window.Event("input", { bubbles: true })); });
     };
-    return { box, input, log, rowsOf, press, typeIn, unmount: async () => { await act(async () => { r.unmount(); }); box.remove(); } };
+    const setLoading = async (b: boolean) => { await act(async () => { setWaiting(b); }); };
+    return { box, input, log, rowsOf, press, typeIn, setLoading, unmount: async () => { await act(async () => { r.unmount(); }); box.remove(); } };
   }
 
   /* ENTER ON A HIGHLIGHTED ROW (the Task 2 review's Important finding). The arrow keys alone reach a row, with nothing typed; the Enter
@@ -157,10 +165,56 @@ async function main() {
   check(`a row lit before the field was left is not lit when it is entered again, so that Enter is the form's (rows lit ${litAfterVisit}, picked [${keys.log.join(",")}], Enter kept by the field ${enterAfterVisit.defaultPrevented})`, litAfterVisit === 0 && keys.log.length === 0 && !enterAfterVisit.defaultPrevented, FIELD, "reset the highlight when the field is left without a pick (the blur path in src/components/ComboField.tsx), because Enter chooses the lit row");
   await keys.unmount();
 
+  /* LEAVING THE FIELD (the review's missing test; the same field serves /compare, /you and the activity pages). Blur closes the list and
+     gives the field its picked label back; words that match nothing are dropped with it; words that match pick the top match, which is
+     the Berlin-nightclubs fix the field carries (a typed value always lands somewhere usable). */
+  const blurs = await mountField("GB");
+  await act(async () => { blurs.input.focus(); });
+  const openRows = blurs.rowsOf().length;
+  await act(async () => { blurs.input.blur(); });
+  check(`leaving the field closes its list and the field reads the picked label (${openRows} rows open, ${blurs.rowsOf().length} after, expanded ${blurs.input.getAttribute("aria-expanded")}, reads "${blurs.input.value}", picked [${blurs.log.join(",")}])`, openRows === 3 && blurs.rowsOf().length === 0 && blurs.input.getAttribute("aria-expanded") === "false" && blurs.input.value === "United Kingdom" && blurs.log.length === 0, FIELD, "close the list on blur and give the field the picked label back (onBlur in src/components/ComboField.tsx)");
+  await act(async () => { blurs.input.focus(); });
+  await blurs.typeIn("zz");
+  const rowShown = !!blurs.box.querySelector("[data-no-match]");
+  await act(async () => { blurs.input.blur(); });
+  const rowLeft = blurs.box.querySelector("[data-no-match]")?.textContent ?? "";
+  const regionLeft = blurs.box.querySelector('[role="status"]')?.textContent ?? "";
+  check(`leaving the field over words that match nothing drops them: the row and the live region clear and the field reads the picked label (row shown ${rowShown}, then "${rowLeft}", region "${regionLeft}", reads "${blurs.input.value}", picked [${blurs.log.join(",")}])`, rowShown && rowLeft === "" && regionLeft === "" && blurs.input.value === "United Kingdom" && blurs.log.length === 0, FIELD, "on blur drop words that match nothing and close the list (onBlur in src/components/ComboField.tsx)");
+  await act(async () => { blurs.input.focus(); });
+  await blurs.typeIn("fra");
+  await act(async () => { blurs.input.blur(); });
+  check(`leaving the field over words that match picks the top match (picked [${blurs.log.join(",")}], reads "${blurs.input.value}", ${blurs.rowsOf().length} rows)`, blurs.log.join() === "FR" && blurs.input.value === "France" && blurs.rowsOf().length === 0, FIELD, "commit the top match on blur (commitTopMatch in src/components/ComboField.tsx)");
+  await blurs.unmount();
+
+  /* THE LISTS ARE STILL COMING (the review: typing before the home picker's lists arrive filtered the one seeded option, and "No match"
+     flashed). A field told it is loading shows one row, "Loading…", and no options, whatever is typed; keeps typed words in the field on
+     Enter (the form would otherwise send the previous pick); and answers the words once the lists are in. */
+  const wait = await mountField("GB", true);
+  await act(async () => { wait.input.focus(); });
+  const waitNote = () => wait.box.querySelector("[data-loading]")?.textContent ?? "";
+  const waitRegion = () => wait.box.querySelector('[role="status"]')?.textContent ?? "";
+  const LOADING_REMEDY = "pass loading to the fields until the lists are in (src/components/NavigatorForm.tsx) and let the field draw one \"Loading…\" row, with the same words in its role=\"status\" region, in place of a list or \"No match\", keeping typed words in the field on Enter (src/components/ComboField.tsx)";
+  check(`while the lists are coming an open field shows one row, "Loading…", and no options (row "${waitNote()}", ${wait.rowsOf().length} options, expanded ${wait.input.getAttribute("aria-expanded")}, region "${waitRegion()}")`, waitNote() === "Loading…" && wait.rowsOf().length === 0 && wait.input.getAttribute("aria-expanded") === "false" && waitRegion() === "Loading…", FIELD, LOADING_REMEDY);
+  await wait.typeIn("fra");
+  check(`words typed before the lists arrive get "Loading…" and never "No match" (row "${waitNote()}", no-match row ${!!wait.box.querySelector("[data-no-match]")}, region "${waitRegion()}")`, waitNote() === "Loading…" && !wait.box.querySelector("[data-no-match]") && waitRegion() === "Loading…", FIELD, LOADING_REMEDY);
+  const enterWhileWaiting = await wait.press("Enter");
+  check(`Enter with words typed over "Loading…" keeps the visitor in the field, so the form does not send the previous pick (kept by the field ${enterWhileWaiting.defaultPrevented}, picked [${wait.log.join(",")}], reads "${wait.input.value}")`, enterWhileWaiting.defaultPrevented && wait.log.length === 0 && wait.input.value === "fra", FIELD, LOADING_REMEDY);
+  await wait.setLoading(false);
+  const answered = wait.rowsOf().map((r) => r.textContent).join("|");
+  check(`when the lists arrive the typed words are answered: France is the one row and "Loading…" is gone (rows [${answered}], row "${waitNote()}")`, answered === "France" && waitNote() === "", FIELD, LOADING_REMEDY);
+  await wait.setLoading(true);
+  await act(async () => { wait.input.blur(); });
+  await act(async () => { wait.input.focus(); });
+  const noteAtRest = waitNote();
+  const enterWaitingAtRest = await wait.press("Enter");
+  check(`Enter with nothing typed over "Loading…" is left to the form's own submit (row "${noteAtRest}", kept by the field ${enterWaitingAtRest.defaultPrevented})`, noteAtRest === "Loading…" && !enterWaitingAtRest.defaultPrevented, FIELD, LOADING_REMEDY);
+  await wait.unmount();
+
   /* THE FORM, FROM ITS SOURCE (comments stripped). */
   const code = stripCommentLines(readFileSync(FORM, "utf8").split("\n")).join("\n");
   check("the form imports no list statically: not the taxonomy, the cascade, the destination, the picker, the regions or the city tables", !/^import (?!type\b)[^\n]*from "@\/lib\/(taxonomy|regions\/[^"]*|cities\/[^"]*|home\/(search_cascade|destination|picker))";/m.test(code), FORM, "import those modules as types only; the lists come with import(\"@/lib/home/picker\") on first use");
-  check("its lists load with import() when a pointer enters the form or focus lands in it", /loading\.current = import\("@\/lib\/home\/picker"\)\.then\(/.test(code) && /onPointerEnter=\{loadLists\}/.test(code) && /onFocus=\{loadLists\}/.test(code), FORM);
+  check("its lists load with import() when a pointer enters the form, focus lands in it or a key is pressed in it", /loading\.current = import\("@\/lib\/home\/picker"\)\.then\(/.test(code) && /onPointerEnter=\{loadLists\}/.test(code) && /onFocus=\{loadLists\}/.test(code) && /onKeyDown=\{loadLists\}/.test(code), FORM);
+  check("each of the three fields is told it is loading until the lists are in", (code.match(/loading=\{loadingLists\}/g) ?? []).length === 3 && /const loadingLists = !lists && !failed;/.test(code), FORM, LOADING_REMEDY);
   check("a press before the lists load is the browser's own submit to /api/go", /if \(!lists\) return;\s*e\.preventDefault\(\);/.test(code) && /action="\/api\/go"/.test(code), FORM);
   check("any failure says so in the card, never a trip to /random", !/\/random/.test(code) && /role="alert"/.test(code), FORM, "show an inline role=\"alert\" message on a failed load or submit instead of sending the visitor to /random");
   check("\"Loading…\" with the ellipsis character", code.includes("Loading…") && !code.includes("Loading..."), FORM);
@@ -171,7 +225,90 @@ async function main() {
   check("the footer strip and its divider are gone, and no brown, terracotta or warm paper class is left", !/rounded-b-2xl|border-t border-paper|\b(?:atlas|cocoa|paper)-\d/.test(code), FORM);
   check("the examples' line stands under the row at 14px in ink2, \"Or try\", its links underlined in the strong line and ink on hover", /<p data-try="" className="text-sm leading-5 text-\[var\(--c-ink2\)\][^"]*">\s*Or try\{" "\}/.test(code) && /className="underline decoration-\[var\(--c-line-strong\)\] underline-offset-2 transition-colors hover:text-\[var\(--c-ink\)\] hover:decoration-\[var\(--c-ink\)\]"/.test(code), FORM);
 
+  /* THE FORM, MOUNTED IN THE APP ROUTER'S CONTEXT: WHAT THE PAGE LOADS, AND WHAT TYPING BEFORE IT ARRIVES DOES (the review: the source
+     check above says what the file contains, not what the page fetches). The module cache is the instrument: it holds every module this
+     process has loaded, so a list module in it before the first pointer, focus or key means the lists came with the form. BLIND SPOTS,
+     stated: the cache cannot tell a module the browser would fetch from one a server rendered with, which is why the form is mounted
+     here and not rendered; it sees the first load in a process only; and it says nothing of how long the import takes, so the
+     "Loading…" state is read before the first await. */
+  const { AppRouterContext } = await import("next/dist/shared/lib/app-router-context.shared-runtime");
+  const { NavigatorForm } = await import("../../src/components/NavigatorForm");
+  const LIST_MODULES = ["/src/lib/taxonomy", "/src/lib/regions/", "/src/lib/cities/", "/src/lib/home/search_cascade", "/src/lib/home/destination", "/src/lib/home/picker"];
+  const isList = (k: string) => LIST_MODULES.some((m) => k.replace(/\\/g, "/").includes(m));
+  const cached = () => Object.keys(require.cache).filter(isList).map((k) => k.replace(/\\/g, "/").replace(/^.*\/src\//, "src/"));
+  const LAZY_REMEDY = "load the lists only with import(\"@/lib/home/picker\") from the form's loadLists, started by a pointer entering the form, focus landing in it or a key pressed in it (src/components/NavigatorForm.tsx), and keep every list module out of its static imports";
+  const SEED: PickerSeed = { country: { value: "GB", label: "United Kingdom" }, city: { value: "london", label: "London" }, business: { value: "restaurants", label: "Restaurants" }, hidden: { country: "gb", region: "", subdivision: "london", industry: "restaurants" }, tries: [], tryCity: "London" };
+  const router = { push() {}, replace() {}, back() {}, forward() {}, refresh() {}, prefetch() {} };
+  /* The type argument is named because the form's own signature has a default parameter, which createElement cannot infer from. */
+  const tree = () => React.createElement(AppRouterContext.Provider, { value: router as any }, React.createElement<{ seed?: PickerSeed }>(NavigatorForm, { seed: SEED }));
+  const mountForm = async () => {
+    const box = document.createElement("div");
+    document.body.appendChild(box);
+    const r = createRoot(box);
+    await act(async () => { r.render(tree()); });
+    return { box, form: box.querySelector("form")!, country: box.querySelector<HTMLInputElement>("#country")!, unmount: async () => { await act(async () => { r.unmount(); }); box.remove(); } };
+  };
+  /* Wait, in React's own turns, until the page shows what the test is waiting for (3 s at the most), then one turn more. */
+  const until = async (done: () => boolean) => {
+    for (let i = 0; i < 300 && !done(); i++) await act(async () => { await new Promise((res) => setTimeout(res, 10)); });
+    await act(async () => { await new Promise((res) => setTimeout(res, 10)); });
+  };
+  const listsIn = () => { const c = cached(); return c.includes("src/lib/home/picker.ts") && c.some((k) => k.startsWith("src/lib/taxonomy")); };
+
+  const byPointer = await mountForm();
+  const coldPointer = cached();
+  check(`mounted, the form has loaded none of its lists: not the taxonomy, the cascade, the destination, the picker, the regions or the city tables (${coldPointer.length} in the module cache${coldPointer[0] ? `, e.g. ${coldPointer[0]}` : ""})`, coldPointer.length === 0, FORM, LAZY_REMEDY);
+  await act(async () => { byPointer.form.dispatchEvent(new dom.window.PointerEvent("pointerover", { bubbles: true })); });
+  await until(listsIn);
+  check(`a pointer entering the form loads them (the picker and the taxonomy are in the module cache now: ${listsIn()}, ${cached().length} list modules)`, listsIn(), FORM, LAZY_REMEDY);
+  await act(async () => { byPointer.country.focus(); });
+  const countryRows = byPointer.box.querySelectorAll("#country-listbox [role=\"option\"]").length;
+  check(`and the country field then lists every country (${countryRows} rows)`, countryRows > 100, FORM, LAZY_REMEDY);
+  await byPointer.unmount();
+
+  /* From here the lists are in the module system for good: a second import() is served from the loader's own map and does not touch
+     the cache (BLIND SPOT: the cache sees the first load only), so the next two triggers are read in the page. A field says "Loading…"
+     until its form has taken the lists in, and lists them after. */
+  const byFocus = await mountForm();
+  act(() => { byFocus.country.focus(); });
+  const noteFocus = byFocus.box.querySelector("[data-loading]")?.textContent ?? "";
+  await until(() => byFocus.box.querySelectorAll('[role="option"]').length > 1);
+  const rowsFocus = byFocus.box.querySelectorAll('[role="option"]').length;
+  check(`focus landing in the form loads them: the open field says "Loading…" first (row "${noteFocus}") and lists every country once they are in (${rowsFocus} rows)`, noteFocus === "Loading…" && rowsFocus > 100, FORM, LAZY_REMEDY);
+  await byFocus.unmount();
+
+  /* A field focused before the page hydrated heard no focus (the server's HTML takes input before React is there), so the first key is
+     what must start the load, and the words typed in the meantime meet "Loading…" and not "No match". */
+  const hosted = document.createElement("div");
+  document.body.appendChild(hosted);
+  hosted.innerHTML = renderToString(tree());
+  const early = hosted.querySelector<HTMLInputElement>("#country")!;
+  early.focus();
+  let hydrated!: ReturnType<typeof hydrateRoot>;
+  await act(async () => { hydrated = hydrateRoot(hosted, tree()); });
+  const heard = !!hosted.querySelector("[data-loading]") || !!hosted.querySelector('[role="listbox"]');
+  check(`a field focused before the page hydrated is heard by nothing: it holds focus and its list is shut (focus kept ${document.activeElement === early}, a list or "Loading…" drawn: ${heard})`, document.activeElement === early && !heard, FORM, LAZY_REMEDY);
+  const keystroke = new dom.window.KeyboardEvent("keydown", { key: "f", bubbles: true, cancelable: true });
+  const enterEarly = new dom.window.KeyboardEvent("keydown", { key: "Enter", bubbles: true, cancelable: true });
+  /* One synchronous stretch, no await, so the import the key starts cannot have landed when the rows are read. */
+  act(() => {
+    early.dispatchEvent(keystroke);
+    Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype, "value")!.set!.call(early, "fra");
+    early.dispatchEvent(new dom.window.Event("input", { bubbles: true }));
+  });
+  const earlyNote = hosted.querySelector("[data-loading]")?.textContent ?? "";
+  const earlyNoMatch = hosted.querySelector("[data-no-match]")?.textContent ?? "";
+  const earlyOptions = hosted.querySelectorAll('[role="option"]').length;
+  act(() => { early.dispatchEvent(enterEarly); });
+  check(`typing before the lists arrive: the open list is one "Loading…" row and never "No match" (row "${earlyNote}", no-match row "${earlyNoMatch}", ${earlyOptions} options), and the Enter stays in the field (kept ${enterEarly.defaultPrevented})`, earlyNote === "Loading…" && earlyNoMatch === "" && earlyOptions === 0 && enterEarly.defaultPrevented, FORM, LOADING_REMEDY);
+  await until(() => hosted.querySelectorAll('[role="option"]').length > 0);
+  const answeredEarly = [...hosted.querySelectorAll('[role="option"]')].map((r) => r.textContent);
+  check(`the first key started the load, and once the lists are in the typed words are answered (rows include France: ${answeredEarly.includes("France")}, "Loading…" row left: ${!!hosted.querySelector("[data-loading]")})`, answeredEarly.includes("France") && !hosted.querySelector("[data-loading]"), FORM, LAZY_REMEDY);
+  await act(async () => { hydrated.unmount(); });
+  hosted.remove();
+
   /* THE SEED: THE FIRST PAINT, THE LISTS' OWN LABELS. */
+  const P = await import("../../src/lib/home/picker");
   const seed = P.homePickerSeed();
   check(`the seed paints the form's own case (${seed.country.label}, ${seed.city.label}, ${seed.business.label})`, JSON.stringify([seed.country, seed.city, seed.business]) === JSON.stringify([{ value: "GB", label: "United Kingdom" }, { value: "london", label: "London" }, { value: "restaurants", label: "Restaurants" }]), PICKER);
   const label = (list: Array<{ value: string; label: string }>, value: string) => list.find((o) => o.value === value)?.label;

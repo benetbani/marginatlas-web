@@ -3181,7 +3181,8 @@
       "reads": [
         "src/components/ComboField.tsx",
         "src/components/NavigatorForm.tsx",
-        "src/lib/home/picker.ts"
+        "src/lib/home/picker.ts",
+        "src/lib/taxonomy"
       ],
       "claims": []
     },
