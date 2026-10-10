@@ -636,7 +636,7 @@ export function RangeStripStories({ instances = pickRangeStripInstances(), city 
             <Box id={`spread-cell-${c.key}`}>
               <Rail icon="spread" kicker={COPY.tradeSpread.kicker} sample={d.sample} />
               {d.marks.length > 0 ? (
-                <RangeStrip marks={d.marks} scale="linear" fmt={usd} basis={d.basis ?? ""} />
+                <RangeStrip marks={d.marks} scale="log" fmt={usd} basis={d.basis ?? ""} decades />
               ) : (
                 <p data-withheld-line="spread" className="mt-2 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{d.withheld}</p>
               )}

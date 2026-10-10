@@ -12,7 +12,8 @@
  *   - The copy gate reads a card's title from a Rail's h2 where the card has one, else from its h3.
  *   - (plan 2026-10-10, home reform, Task 3) StepMark the numeral alone, 16 semibold in the muted grey, no tile; a Rail's chip a circle
  *     by its own class; RangeStrip's `headless` (a mark with no figure), `oneRow` (the names never step) and `decades` (a log track's
- *     powers of ten as round values); CountUnits' `fine` (2px apart under 1024, 4 from it). Each off by default.
+ *     powers of ten as round values, none within 4 percent of the track of any mark, so no figure is printed twice side by side);
+ *     CountUnits' `fine` (2px apart under 1024, 4 from it). Each off by default.
  *
  * Run: npx tsx tests/spine/home_forms.test.ts
  */
@@ -66,6 +67,17 @@ check(`oneRow keeps the three names on one row (tops ${tops(homeStrip).join(", "
 check(`decades prints the powers of ten inside a log range as round values (${scaleLabels(homeStrip).join(", ")})`, JSON.stringify(scaleLabels(homeStrip)) === JSON.stringify([usd(100_000), usd(1_000_000)]) && (homeStrip.match(/data-scale-tick="true"/g) ?? []).length === 2, STRIP, "RangeStrip decades: each power of ten strictly inside the range, a 6px tick under the track and its figure at the micro rung, on a log track only");
 check("decades draws nothing on a linear track", scaleLabels(stripOf({ scale: "linear", decades: true })).length === 0, STRIP, "RangeStrip decades: on a log track only");
 check("a headless mark keeps its tick and its name and draws no figure", !/data-mark="typical"/.test(homeStrip) && /data-mark-label="typical"/.test(homeStrip) && (homeStrip.match(/data-mark="/g) ?? []).length === 2, STRIP, "RangeStrip headless: no figure over the mark's tick");
+/* A ROUND VALUE BESIDE A MARK IS NOT DRAWN (fix round 2b of the hero and picker task; the Task 2 re-review). The London pharmacies' typical
+   is $1.04M, which prints as "$1.0M", and the power of ten 10^6 stands 1.1 percent of the track from its tick: the strip drew "$1.0M"
+   twice. A round value within 4 percent of the track of ANY mark is skipped, on either side of it, not only near the end marks. */
+const REMEDY_ROUND = "RangeStrip decades (src/components/spine/archetypes/RangeStrip.tsx): skip a power of ten within 4 percent of the track of any mark, so no figure is printed twice side by side";
+const pharmacies = stripOf({ scale: "log", decades: true, marks: [{ key: "p10", label: "Bottom tenth", value: 171_000 }, { key: "typical", label: "Typical", value: 1_040_000, lead: true }, { key: "p90", label: "Top tenth", value: 3_720_000 }] });
+const times = (h: string, figure: string) => (h.match(new RegExp(`>${figure.replace("$", "\\$")}<`, "g")) ?? []).length;
+check(`a typical of $1.04M draws "$1.0M" once, over its own tick, and no round value beside it (the text ${times(pharmacies, "$1.0M")} times, round values [${scaleLabels(pharmacies).join(", ")}], over the typical's tick ${/data-mark="typical"[^>]*><span[^>]*>\$1\.0M<\/span>/.test(pharmacies)})`, times(pharmacies, "$1.0M") === 1 && scaleLabels(pharmacies).length === 0 && /data-mark="typical"[^>]*><span[^>]*>\$1\.0M<\/span>/.test(pharmacies), STRIP, REMEDY_ROUND);
+/* The edge of the rule, on a track from 10^5 to 10^7 where the power of ten 10^6 stands at 50 percent of it (6 percent of padding each end, 88 of track): a middle mark d percent of the track from it. */
+const middleAt = (d: number) => 10 ** (5 + 2 * ((44 + d) / 88));
+const roundsBeside = (d: number) => scaleLabels(stripOf({ scale: "log", decades: true, marks: [{ key: "low", label: "Low", value: 100_000 }, { key: "mid", label: "Middle", value: middleAt(d) }, { key: "high", label: "High", value: 10_000_000 }] }));
+check(`a round value within 4 percent of the track of a middle mark is skipped on either side, and one 4 or more percent away stays (3.9 left [${roundsBeside(-3.9).join(", ")}], 3.9 right [${roundsBeside(3.9).join(", ")}], 4.1 left [${roundsBeside(-4.1).join(", ")}], 4.1 right [${roundsBeside(4.1).join(", ")}])`, roundsBeside(-3.9).length === 0 && roundsBeside(3.9).length === 0 && roundsBeside(-4.1).join() === "$1.0M" && roundsBeside(4.1).join() === "$1.0M", STRIP, REMEDY_ROUND);
 const UNITS = "src/components/spine/archetypes/BentoBand.tsx";
 const unitsClass = (props: Record<string, unknown>) => /data-units="100"[^>]*class="([^"]*)"/.exec(renderToStaticMarkup(React.createElement(CountUnits, { whole: 100, filled: 32, columns: 25, aria: "32 of 100", ...props })))?.[1] ?? "";
 check("fine units stand 2px apart under 1024 and 4 from it; without it 4px as before", /^grid gap-\[2px\] lg:gap-\[4px\]$/.test(unitsClass({ fine: true })) && /^grid gap-\[4px\]$/.test(unitsClass({})), UNITS, "CountUnits fine: grid gap-[2px] lg:gap-[4px]");

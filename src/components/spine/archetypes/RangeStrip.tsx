@@ -50,20 +50,26 @@
  * the city's stories at 375 before the thresholds were set. Fewer than two
  * marks and the lead is the same 30 alone, a figure with its label.
  *
- * THREE OPT-IN PROPS FOR THE HOME'S WORKED EXAMPLE (plan 2026-10-10, the home
- * reformed to ship, Task 3; the critique's P0.5), each off by default, so every
- * other strip draws exactly what it drew. `headless` on a mark draws its tick
- * and its name and no figure, for a card that prints that mark's figure on a
- * line of its own above the strip (a figure is never printed twice, clause
- * 66); a headless lead shifts nothing. `oneRow` keeps every name on one row,
- * for marks that stand far apart (on a log track the London restaurant's
- * typical sits at 46 percent, its neighbours at 6 and 94). `decades`, on a log
+ * THREE OPT-IN PROPS, FOR THE HOME'S WORKED EXAMPLE AND THE TRADE PAGES' SALES
+ * STRIP (plan 2026-10-10, the home reformed to ship, Task 3; the critique's
+ * P0.5), each off by default, so every other strip draws exactly what it
+ * drew. `headless` on a mark draws its tick and its name and no figure, for a
+ * card that prints that mark's figure on a line of its own above the strip (a
+ * figure is never printed twice, clause 66); a headless lead shifts nothing.
+ * `oneRow` keeps every name on one row, for marks that stand far apart (on a
+ * log track the London restaurant's typical sits at 46 percent, its
+ * neighbours at 6 and 94); only the home's strip passes it, because a trade
+ * page's marks may stand close and its names must step. `decades`, on a log
  * track only, prints every power of ten strictly inside the range as a 6px
  * tick under the track with its figure under it, in grey (MODEL 10.8: "a log
  * track prints its round values ... so its distances are not read as even"),
- * none within 4 percent of the track of an end mark, and steps the names 14
- * lower to clear them. The figure is at the micro rung, not the mark rung:
- * the readability harness's READ SIZE reds any text under 12px in a card.
+ * none within 4 percent of the track of any mark (the London pharmacies'
+ * typical, $1.04M, stands 1.1 percent from the round $1.0M, and the strip
+ * printed that figure twice), and steps the names 14 lower to clear them. The
+ * home's strip and every trade page's sales strip (cell-view.tsx `Spread`)
+ * pass it with scale="log". The figure is at the micro rung, not the mark
+ * rung: the readability harness's READ SIZE reds any text under 12px in a
+ * card.
  */
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
@@ -140,12 +146,14 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
   const twoRows = rows.some((r) => r === 1);
   /* THE LEAD'S SHIFT: a lead figure is 30 tall where a body figure is 14, so the track and everything under it sit 12 lower (the header says why). A headless lead prints no figure and shifts nothing. */
   const shift = live.some((m) => m.lead && !m.headless) ? 12 : 0;
-  /* THE ROUND VALUES (`decades`, MODEL 10.8): every power of ten strictly inside a log range, none within 4 percent of the track of an end mark. */
+  /* THE ROUND VALUES (`decades`, MODEL 10.8): every power of ten strictly inside a log range, none within 4 percent of the track of any
+     mark, an end mark or a middle one (a round value that close would stand against the mark's own tick, and when the mark's figure
+     rounds to the same words, as the London pharmacies' $1.04M and the 10^6 round value do, the strip would print them twice). */
   const rounds: number[] = [];
   if (useLog && decades) {
     for (let e = Math.ceil(Math.log10(lo)); e <= Math.floor(Math.log10(hi)); e++) {
       const v = 10 ** e;
-      if (v > lo && v < hi && pos(v) - PAD >= 4 && 100 - PAD - pos(v) >= 4) rounds.push(v);
+      if (v > lo && v < hi && placed.every((p) => Math.abs(p.x - pos(v)) >= 4)) rounds.push(v);
     }
   }
   const scaleRow = rounds.length ? SCALE_ROW : 0;

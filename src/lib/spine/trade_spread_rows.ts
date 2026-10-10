@@ -2,12 +2,14 @@
  * src/lib/spine/trade_spread_rows.ts
  *
  * A YEAR'S TAKINGS, the trade page's `01 spread` (MODEL.md 8.6; plan step
- * 33's first dispatch, 2026-09-18): the range strip, three marks, linear,
- * the bottom tenth, the typical and the top tenth of a year's turnover, the
- * typical the card's one 30 in ink (the site's strip law, M3; the city
- * strip's precedent, `lead`), the outer marks at 14, no accent (the
- * opening's accent is spent on `00`). Synchronous over the seed the adapter
- * builds, the way the masthead's facts are.
+ * 33's first dispatch, 2026-09-18): the range strip, three marks, on a log
+ * track with its round values (plan 2026-10-10, home reform: cell-view.tsx
+ * `Spread` passes scale="log" and `decades`, and RangeStrip keeps a spread
+ * under three times linear), the bottom tenth, the typical and the top tenth
+ * of a year's turnover, the typical the card's one 30 in ink (the site's
+ * strip law, M3; the city strip's precedent, `lead`), the outer marks at 14,
+ * no accent (the opening's accent is spent on `00`). Synchronous over the
+ * seed the adapter builds, the way the masthead's facts are.
  *
  * THE FIGURES: `headline.rev_p10_usd / rev_p50_usd / rev_p90_usd`, the
  * adapter's rounding of `cellView.masthead.spread` (cell_view.ts). Two
