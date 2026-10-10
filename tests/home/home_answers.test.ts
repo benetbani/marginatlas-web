@@ -113,7 +113,7 @@ if (ex && hero && strip) {
    and the rest in the soft grey (P1.5); the numerals alone (P2.2), the wallet glyph on "Does it pay?" (P2.1), the doors in ink with
    their arrows (P1.7). A red here is HomeExample.tsx's to put right. */
 const EXAMPLE_VIEW = "src/components/spine/home/HomeExample.tsx";
-const DRAWN_AT = { file: EXAMPLE_VIEW, remedy: "draw the halves as HomeExample holds them: every step its numeral and name, its figure flush left, its line, its drawing; step 2's figure at 30 on its own line over the log strip (oneRow, decades, the typical headless); step 3 the page's one 40 in the accent with its share as 100 units in 25 columns (fine), the 32 in the accent; every figure stamped; the doors in ink at 14, weight 500, an arrow after, underlined on hover only" };
+const DRAWN_AT = { file: EXAMPLE_VIEW, remedy: "draw the halves as HomeExample holds them: every step its numeral and name, its figure flush left, its line, its drawing; step 2's figure at 30 on its own line over the log strip (oneRow, decades, namesAbove, the typical printing its value at 14 over its tick); step 3 the page's one 40 in the accent with its share as 100 units in 25 columns (fine), the 32 in the accent; every figure stamped; the doors in ink at 14, weight 500, an arrow after, underlined on hover only" };
 if (ex) {
   const place = renderToStaticMarkup(React.createElement(HomePlace, { ex }));
   const pays = renderToStaticMarkup(React.createElement(HomePays, { ex }));
@@ -121,12 +121,13 @@ if (ex) {
   check(`the steps run 1 and 2 on the left, 3 and 4 on the right (${steps(place)} | ${steps(pays)})`, steps(place) === "12" && steps(pays) === "34", DRAWN_AT);
   check(`each half's title is its own h2 ("${ex.place.title}", "${ex.pays.title}")`, new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(ex.place.title))}</h2>`).test(place) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${reEsc(esc(ex.pays.title))}</h2>`).test(pays), DRAWN_AT);
   const figs = (h: string) => [...h.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure on the left says where it came from (${figs(place).length}: the count, step 2's figure and the strip's two ends)`, figs(place).length === 4 && figs(place).every((f) => /data-src="uk\/registers\/turnover\.json:restaurants:E12000007"/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
+  check(`every figure on the left says where it came from (${figs(place).length}: the count, step 2's figure and the strip's three marks)`, figs(place).length === 5 && figs(place).every((f) => /data-src="uk\/registers\/turnover\.json:restaurants:E12000007"/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
   check(`every figure on the right says where it came from (${figs(pays).length}: break-even, its share, the insolvencies)`, figs(pays).length === 3 && figs(pays).every((f) => /data-src="/.test(f) && /data-kind="/.test(f)), DRAWN_AT);
   /* EACH FIGURE AS DRAWN IS THE BUILDER'S (fix round B), by its text, its data-src and its data-kind, against the seven triples the builder
      holds: the count, the strip's three marks, break-even, its share, the insolvencies. A figure stamped with another figure's source, or
      with a kind the builder did not give it, passes the two checks above; it does not pass this one. Since plan 2026-10-10 the strip's
-     typical is drawn as step 2's own figure line, the same triple. */
+     typical is step 2's own figure line too, the same triple, and since critique pass 2 (P0.2, its Q2) the strip prints it again at 14
+     over its tick, as its two neighbours print theirs, with the same stamp. */
   const drawn = (h: string) => [...h.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>[^<]*/g)].map((m) => `${m[0].slice(m[0].lastIndexOf(">") + 1)} | ${/data-src="([^"]*)"/.exec(m[0])?.[1]} | ${/data-kind="([^"]*)"/.exec(m[0])?.[1]}`).sort();
   const held = (steps: Array<[string, Provenance]>) => steps.map(([t, v]) => `${t} | ${v.src} | ${v.kind}`).sort();
   const wantL = held([[ex.place.registered.figure, ex.place.registered.prov], ...ex.place.strip.map((m): [string, Provenance] => [usd(m.value), m.prov])]);
@@ -166,14 +167,18 @@ if (ex) {
      row, the powers of ten inside the range as round values, read off the strip's own data. */
   const sales = ex.place.sales.figure;
   const salesTimes = (place.match(new RegExp(`>${reEsc(sales)}<`, "g")) ?? []).length;
-  check(`step 2's figure stands at 30 on a line of its own, and the strip prints it no second time (${salesTimes})`, new RegExp(`data-step-block="2"[\\s\\S]*?--t-focal\\)\\] leading-none text-\\[var\\(--c-ink\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(sales)}<`).test(place) && salesTimes === 1 && !/data-mark="typical"/.test(place), DRAWN_AT);
+  /* THE TYPICAL TWICE, AT TWO RUNGS (critique pass 2, P0.2 and its Q2, ruled yes): step 2's figure at 30 on its line is the section's
+     figure; the strip's typical prints the same value at 14 over its tick like its two neighbours, because a label on a drawing is its
+     key and a gap where every other mark has a number reads as a fault. Both carry the builder's stamp (the checks above). */
+  const typicalFig = new RegExp(`data-mark="typical"[^>]*><span class="([^"]*)" data-src="[^"]+" data-kind="worked out">${reEsc(sales)}<`).exec(place);
+  check(`step 2's figure stands at 30 on a line of its own, and the strip prints the typical a second time at 14 over its tick, stamped alike (${salesTimes} times, the strip's at ${typicalFig?.[1] ?? "none"})`, new RegExp(`data-step-block="2"[\\s\\S]*?--t-focal\\)\\] leading-none text-\\[var\\(--c-ink\\)\\]" data-src="[^"]+" data-kind="worked out">${reEsc(sales)}<`).test(place) && salesTimes === 2 && !!typicalFig && /--t-body/.test(typicalFig[1]) && !/--t-focal/.test(typicalFig[1]) && /font-semibold/.test(typicalFig[1]), DRAWN_AT);
   const values = ex.place.strip.map((m) => m.value);
   const lo = Math.min(...values), hi = Math.max(...values);
   const decades: number[] = [];
   for (let e = Math.ceil(Math.log10(lo)); e <= Math.floor(Math.log10(hi)); e++) if (10 ** e > lo && 10 ** e < hi) decades.push(10 ** e);
-  const nameTops = [...place.matchAll(/data-mark-label="(?:p10|typical|p90)"[^>]*top:(\d+)px/g)].map((m) => m[1]);
+  const nameTops = [...place.matchAll(/data-mark-label="(?:p10|typical|p90)"[^>]*top:(\d+)(?:px)?/g)].map((m) => m[1]);
   const rounds = [...place.matchAll(/data-scale-label="true"[^>]*>([^<]*)</g)].map((m) => m[1]);
-  check(`the sales on a log strip of three marks, its names on one row (tops ${nameTops.join(", ")}), its round values ${rounds.join(" and ")}`, /data-archetype="range-strip" data-idea="I12" data-marks="3" data-scale="log"/.test(place) && nameTops.length === 3 && new Set(nameTops).size === 1 && decades.length === 2 && JSON.stringify(rounds) === JSON.stringify(decades.map(usd)), DRAWN_AT);
+  check(`the sales on a log strip of three marks, its names above the track on one row (tops ${nameTops.join(", ")}), its round values ${rounds.join(" and ")} alone under it`, /data-archetype="range-strip" data-idea="I12" data-marks="3" data-scale="log" data-names="above"/.test(place) && nameTops.length === 3 && new Set(nameTops).size === 1 && decades.length === 2 && JSON.stringify(rounds) === JSON.stringify(decades.map(usd)), DRAWN_AT);
   /* THE UNITS (P1.5): 100 in 25 columns, 2px apart under 1024 and 4 from it, the share in the accent (fills follow their figure, PART 6),
      the rest in the soft grey; the head the figure at 16 semibold in ink, then the words at 14 in ink2. */
   const unitsTag = /<div data-units="(\d+)"[^>]*class="([^"]*)"[^>]*style="([^"]*)"/.exec(pays);

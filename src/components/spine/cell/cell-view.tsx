@@ -240,7 +240,7 @@ function Spread({ d }: { d: any }) {
            strip and its basis stood at the top and the spare height gathered at the foot (48px, clause 52); centred, the air
            stands above and below it, the metric cells' idiom. */
         <div className="flex flex-1 flex-col justify-center">
-          <RangeStrip marks={s.marks} scale="log" fmt={usd} basis={s.basis ?? ""} decades />
+          <RangeStrip marks={s.marks} scale="log" fmt={usd} basis={s.basis ?? ""} decades namesAbove />
         </div>
       ) : (
         <p data-withheld-line="spread" className="mt-2 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{s.withheld}</p>

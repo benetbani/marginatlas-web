@@ -53,11 +53,8 @@
  * THREE OPT-IN PROPS, FOR THE HOME'S WORKED EXAMPLE AND THE TRADE PAGES' SALES
  * STRIP (plan 2026-10-10, the home reformed to ship, Task 3; the critique's
  * P0.5), each off by default, so every other strip draws exactly what it
- * drew. `headless` on a mark draws its tick and its name and no figure, for a
- * card that prints that mark's figure on a line of its own above the strip (a
- * figure is never printed twice, clause 66); a headless lead shifts nothing.
- * `oneRow` keeps every name on one row, for marks that stand far apart (on a
- * log track the London restaurant's typical sits at 46 percent, its
+ * drew. `oneRow` keeps every name on one row, for marks that stand far apart
+ * (on a log track the London restaurant's typical sits at 46 percent, its
  * neighbours at 6 and 94); only the home's strip passes it, because a trade
  * page's marks may stand close and its names must step. `decades`, on a log
  * track only, prints every power of ten strictly inside the range as a 6px
@@ -69,13 +66,32 @@
  * home's strip and every trade page's sales strip (cell-view.tsx `Spread`)
  * pass it with scale="log". The figure is at the micro rung, not the mark
  * rung: the readability harness's READ SIZE reds any text under 12px in a
- * card.
+ * card. (`headless`, a mark with no figure, went when the home's typical began
+ * to print its figure: nothing passes it now.)
+ *
+ * `namesAbove`, THE DATA ABOVE THE TRACK AND THE SCALE ALONE BELOW IT (plan
+ * 2026-10-10, the home reformed to ship, critique pass 2, P0.2; the home and
+ * every trade page's sales strip pass it with `decades`), off by default. With
+ * the names under the track the column under the bottom tenth's tick read
+ * "$76K, $100K, Bottom tenth", and a reader took the bottom tenth for $100K
+ * (it is $76K). Now every mark is one block over its tick: its name (12, muted)
+ * with its figure (14 semibold ink, or the lead's 30) directly under it, then
+ * the track, and under the track only the round values, each a 6px tick in
+ * ink2 with its figure at 12 in muted under it. The blocks stand on the figure
+ * line, so the lead's name stands above the others'. Marks that step (three or
+ * more, unless `oneRow`) step as they did, the stepped block the lower, nearer
+ * the track, and the upper blocks' ticks reach up to them on a hairline, so
+ * every block stays tied to its tick. A mark's own figure stands a name's
+ * height under it; the nearest figure that is not its own, a round value
+ * under the track, is more than 48px from any name in its column (the
+ * critique's done-when, held by the browser probe). The end labels' inward
+ * rule (`align`) is unchanged.
  */
 import * as React from "react";
 import { Fig } from "@/components/spine/kit";
 import type { Provenance } from "@/lib/spine/provenance";
 
-export type StripMark = { key: string; label: string; value: number; accent?: boolean; lead?: boolean; sub?: string; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance; /** No figure over the tick: the card prints this mark's figure on its own line above the strip (plan 2026-10-10, home reform, Task 3). */ headless?: boolean };
+export type StripMark = { key: string; label: string; value: number; accent?: boolean; lead?: boolean; sub?: string; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance };
 export type RangeStripProps = {
   marks: StripMark[];
   scale?: "log" | "linear";
@@ -96,13 +112,29 @@ export type RangeStripProps = {
   oneRow?: boolean;
   /** On a log track, every power of ten inside the range as a small tick with its figure (MODEL 10.8; plan 2026-10-10, home reform, Task 3). Off by default. */
   decades?: boolean;
+  /** Every mark's name and figure above the track, the round values alone under it (plan 2026-10-10, home reform, critique pass 2, P0.2). Off by default. */
+  namesAbove?: boolean;
 };
 
 const PAD = 6; // percent of the track kept clear at each end so end labels stay inside the box
 /* THE ROUND VALUES' ROW: a 6px tick under the track, its figure 9px under the track's line at the micro rung (12 tall), the names 14 lower. */
 const SCALE_ROW = 14;
+/* NAMES ABOVE (`namesAbove`), in px. A mark's block is its name (the micro rung, 12 on 12) and, 6 under it, its figure (the body rung, 14 on 14, or the lead's 30 on 30). */
+const NAME_H = 12;
+const NAME_GAP = 6;
+const FIG_H = 14;
+const LEAD_H = 30;
+/* The block's bottom to the mark's tick top, the tick's reach above the track, and the gap between a stepped block and the block over it. */
+const BLOCK_TO_TICK = 10;
+const TICK_UP = 6;
+const ROW_GAP = 6;
+/* Under the track: the round value's tick (6px, from the track's line) and the gap to its figure (6px), the figure 12 tall; with no round value, the room the marks' ticks take. */
+const ROUND_TICK = 6;
+const ROUND_GAP = 6;
+const BELOW_ROUNDS = 1 + ROUND_TICK + ROUND_GAP + NAME_H + 2;
+const BELOW_BARE = 12;
 
-export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, oneRow = false, decades = false }: RangeStripProps) {
+export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, oneRow = false, decades = false, namesAbove = false }: RangeStripProps) {
   const live = marks.filter((m) => Number.isFinite(m.value));
   if (live.length === 0) return null;
   if (live.length === 1) {
@@ -144,8 +176,8 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
   /* `oneRow` keeps them on one row: the caller's marks stand far apart (the header says when). */
   const rows = placed.map((_, i) => (live.length >= 3 && !oneRow ? i % 2 : 0));
   const twoRows = rows.some((r) => r === 1);
-  /* THE LEAD'S SHIFT: a lead figure is 30 tall where a body figure is 14, so the track and everything under it sit 12 lower (the header says why). A headless lead prints no figure and shifts nothing. */
-  const shift = live.some((m) => m.lead && !m.headless) ? 12 : 0;
+  /* THE LEAD'S SHIFT: a lead figure is 30 tall where a body figure is 14, so the track and everything under it sit 12 lower (the header says why). */
+  const shift = live.some((m) => m.lead) ? 12 : 0;
   /* THE ROUND VALUES (`decades`, MODEL 10.8): every power of ten strictly inside a log range, none within 4 percent of the track of any
      mark, an end mark or a middle one (a round value that close would stand against the mark's own tick, and when the mark's figure
      rounds to the same words, as the London pharmacies' $1.04M and the 10^6 round value do, the strip would print them twice). */
@@ -157,15 +189,60 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
     }
   }
   const scaleRow = rounds.length ? SCALE_ROW : 0;
+  const figClass = (m: StripMark) => `block font-semibold leading-none ${m.lead ? "text-[length:var(--t-focal)]" : m.accent ? "text-[length:var(--t-head)]" : "text-[length:var(--t-body)]"} ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`;
+  if (namesAbove) {
+    /* THE DATA ABOVE THE TRACK, THE SCALE ALONE BELOW IT (the header says why). A mark is one block, its name over its figure, the
+       blocks of a row bottom-aligned on one figure line, so the lead's name stands above the others'. Row 0 is the upper row; a
+       stepped mark (row 1) stands a row lower, nearer the track, and the upper blocks' ticks reach up to them on a hairline. */
+    const blockH = (m: StripMark) => NAME_H + NAME_GAP + (m.lead ? LEAD_H : FIG_H);
+    const rowH = (r: number) => Math.max(0, ...placed.filter((_, i) => rows[i] === r).map((p) => blockH(p.m)));
+    const h0 = rowH(0), h1 = rowH(1);
+    const base = twoRows ? h0 + ROW_GAP + h1 : h0;
+    const track = base + BLOCK_TO_TICK + TICK_UP;
+    const blockTop = (i: number) => (rows[i] === 1 ? h0 + ROW_GAP + (h1 - blockH(placed[i].m)) : h0 - blockH(placed[i].m));
+    return (
+      <div data-archetype="range-strip" data-idea="I12" data-marks={String(live.length)} data-scale={useLog ? "log" : "linear"} data-names="above">
+        <div className="relative" style={{ height: track + (rounds.length ? BELOW_ROUNDS : BELOW_BARE) }}>
+          {/* each mark's name, then its figure under it, both over the tick */}
+          {placed.map((p, i) => (
+            <React.Fragment key={p.m.key}>
+              <div data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) }}>{p.m.label}</div>
+              <div data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) + NAME_H + NAME_GAP }}>
+                <Fig className={figClass(p.m)} prov={p.m.prov}>{fmt(p.m.value)}</Fig>
+              </div>
+            </React.Fragment>
+          ))}
+          {/* the track and the ticks: each stands at its place on the track, which `pos` keeps inside the padded track, and says so by its clamp (the scale-end gate reads the placement) */}
+          <div aria-hidden className="absolute inset-x-0 h-px bg-[var(--c-line-strong)]" style={{ top: track }} />
+          {placed.map((p, i) => (
+            <React.Fragment key={`t-${p.m.key}`}>
+              {twoRows && rows[i] === 0 ? <div aria-hidden data-mark-leader className="absolute w-px -translate-x-1/2 bg-[var(--c-line-strong)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, p.x))}%`, top: h0 + 2, height: base + BLOCK_TO_TICK - h0 - 2 }} /> : null}
+              <div aria-hidden className="absolute w-px -translate-x-1/2" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, p.x))}%`, top: track - TICK_UP, height: 13, background: p.m.accent ? "var(--terra)" : "var(--c-ink)" }} />
+            </React.Fragment>
+          ))}
+          {/* the round values of a log track, the scale alone under the track: a 6px tick in ink2 hanging from it and its figure under that */}
+          {rounds.map((v) => (
+            <React.Fragment key={`r-${v}`}>
+              <div aria-hidden data-scale-tick className="absolute w-px -translate-x-1/2 bg-[var(--c-ink2)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1, height: ROUND_TICK }} />
+              <div aria-hidden data-scale-label className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1 + ROUND_TICK + ROUND_GAP }}>{fmt(v)}</div>
+            </React.Fragment>
+          ))}
+        </div>
+        {basis ? <p className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+        {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
+        {extra ? <Extra extra={extra} /> : null}
+      </div>
+    );
+  }
   return (
     <div data-archetype="range-strip" data-idea="I12" data-marks={String(live.length)} data-scale={useLog ? "log" : "linear"}>
       <div className="relative" style={{ height: (twoRows ? 104 : 72) + shift + scaleRow }}>
-        {/* the figures, over their ticks; a headless mark's figure stands on the card's own line above the strip */}
-        {placed.map((p, i) => (p.m.headless ? null : (
+        {/* the figures, over their ticks */}
+        {placed.map((p, i) => (
           <div key={p.m.key} data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x, !!p.m.lead), top: rows[i] === 1 ? 18 : 0 }}>
-            <Fig className={`block font-semibold leading-none ${p.m.lead ? "text-[length:var(--t-focal)]" : p.m.accent ? "text-[length:var(--t-head)]" : "text-[length:var(--t-body)]"} ${p.m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={p.m.prov}>{fmt(p.m.value)}</Fig>
+            <Fig className={figClass(p.m)} prov={p.m.prov}>{fmt(p.m.value)}</Fig>
           </div>
-        )))}
+        ))}
         {/* the track and the ticks */}
         <div aria-hidden className="absolute inset-x-0 h-px bg-[var(--c-line-strong)]" style={{ top: (twoRows ? 48 : 36) + shift }} />
         {placed.map((p) => (

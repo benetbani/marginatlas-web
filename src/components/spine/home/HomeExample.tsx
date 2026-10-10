@@ -77,9 +77,10 @@ function Door({ href, words }: { href: string; words: string }) {
 
 export function HomePlace({ ex }: { ex: WorkedExample }) {
   const P = ex.place;
-  /* THE TYPICAL IS PRINTED ONCE (P0.5; clause 66): step 2's figure line holds it at 30, so its mark keeps its tick and its name and
-     draws no figure. */
-  const marks = P.strip.map((m) => (m.key === "typical" ? { ...m, headless: true } : m));
+  /* THE TYPICAL PRINTS ITS VALUE ON THE STRIP AT 14, AS ITS TWO NEIGHBOURS DO (critique pass 2, P0.2 and its Q2, ruled yes: a label on
+     a drawing is its key, not a second statement; the London trade page prints its typical on its strip too): step 2's line above holds
+     the section's figure at 30, so the strip's mark is no lead here. */
+  const marks = P.strip.map((m) => (m.key === "typical" ? { ...m, lead: false } : m));
   return (
     <Box id="place" className="flex flex-col">
       <Rail icon="trade-restaurant" kicker={P.title} level={2} />
@@ -88,7 +89,7 @@ export function HomePlace({ ex }: { ex: WorkedExample }) {
         {/* THE STRIP CENTRED IN THE HEIGHT THE LEVEL LENDS (the trade page's `01 spread`): beside the taller "Does it pay?" the air stands
             above and below the strip, never in one block at the card's foot. */}
         <div className="flex flex-1 flex-col justify-center pt-4">
-          <RangeStrip marks={marks} scale="log" fmt={usd} basis="" oneRow decades />
+          <RangeStrip marks={marks} scale="log" fmt={usd} basis="" oneRow decades namesAbove />
         </div>
       </Step>
       <div className="pt-4">

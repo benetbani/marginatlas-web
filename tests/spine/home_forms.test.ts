@@ -11,9 +11,11 @@
  *     ink2); without it the accent's gradient.
  *   - The copy gate reads a card's title from a Rail's h2 where the card has one, else from its h3.
  *   - (plan 2026-10-10, home reform, Task 3) StepMark the numeral alone, 16 semibold in the muted grey, no tile; a Rail's chip a circle
- *     by its own class; RangeStrip's `headless` (a mark with no figure), `oneRow` (the names never step) and `decades` (a log track's
- *     powers of ten as round values, none within 4 percent of the track of any mark, so no figure is printed twice side by side);
- *     CountUnits' `fine` (2px apart under 1024, 4 from it). Each off by default.
+ *     by its own class; RangeStrip's `oneRow` (the names never step) and `decades` (a log track's powers of ten as round values, none
+ *     within 4 percent of the track of any mark, so no figure is printed twice side by side); CountUnits' `fine` (2px apart under
+ *     1024, 4 from it). Each off by default. (`headless`, a mark with no figure, is gone: the home's typical prints its figure.)
+ *   - (plan 2026-10-10, home reform, critique pass 2, P0.2) RangeStrip's `namesAbove`: every mark's name over its figure above the
+ *     track, the round values alone under it, so no column holds two figures one under the other; off by default.
  *   - (the closing cleanup of the same plan) MonthBars `prov`: the drawing's root stamped with where its twelve counts came from
  *     (data-src, data-kind); without it the drawing is what it was.
  *
@@ -65,14 +67,50 @@ const STRIP = "src/components/spine/archetypes/RangeStrip.tsx";
 const MARKS = [{ key: "p10", label: "Bottom tenth", value: 76_300 }, { key: "typical", label: "Typical", value: 374_000, lead: true }, { key: "p90", label: "Top tenth", value: 2_550_000 }];
 const stripOf = (props: Record<string, unknown>) => renderToStaticMarkup(React.createElement(RangeStrip, { marks: MARKS, fmt: usd, basis: "", ...props }));
 const plainStrip = stripOf({ scale: "log" });
-const homeStrip = stripOf({ scale: "log", oneRow: true, decades: true, marks: MARKS.map((m) => (m.key === "typical" ? { ...m, headless: true } : m)) });
+const homeStrip = stripOf({ scale: "log", oneRow: true, decades: true });
 const tops = (h: string) => [...h.matchAll(/data-mark-label="[^"]+"[^>]*top:(\d+)px/g)].map((m) => Number(m[1]));
 const scaleLabels = (h: string) => [...h.matchAll(/data-scale-label="true"[^>]*>([^<]*)</g)].map((m) => m[1]);
-check("without the new props a strip of three steps its middle name, draws every figure and no round value", new Set(tops(plainStrip)).size === 2 && scaleLabels(plainStrip).length === 0 && /data-mark="typical"/.test(plainStrip), STRIP, "RangeStrip: headless, oneRow and decades off by default");
+check("without the new props a strip of three steps its middle name, draws every figure, no round value and its names under the track", new Set(tops(plainStrip)).size === 2 && scaleLabels(plainStrip).length === 0 && /data-mark="typical"/.test(plainStrip) && !/data-names=/.test(plainStrip), STRIP, "RangeStrip: oneRow, decades and namesAbove off by default");
 check(`oneRow keeps the three names on one row (tops ${tops(homeStrip).join(", ")})`, tops(homeStrip).length === 3 && new Set(tops(homeStrip)).size === 1, STRIP, "RangeStrip oneRow: every name on the first row");
 check(`decades prints the powers of ten inside a log range as round values (${scaleLabels(homeStrip).join(", ")})`, JSON.stringify(scaleLabels(homeStrip)) === JSON.stringify([usd(100_000), usd(1_000_000)]) && (homeStrip.match(/data-scale-tick="true"/g) ?? []).length === 2, STRIP, "RangeStrip decades: each power of ten strictly inside the range, a 6px tick under the track and its figure at the micro rung, on a log track only");
 check("decades draws nothing on a linear track", scaleLabels(stripOf({ scale: "linear", decades: true })).length === 0, STRIP, "RangeStrip decades: on a log track only");
-check("a headless mark keeps its tick and its name and draws no figure", !/data-mark="typical"/.test(homeStrip) && /data-mark-label="typical"/.test(homeStrip) && (homeStrip.match(/data-mark="/g) ?? []).length === 2, STRIP, "RangeStrip headless: no figure over the mark's tick");
+/* NOTHING PASSES `headless` ANY MORE (critique pass 2, P0.2 and its Q2: the home's typical prints its figure at 14 over its tick). The
+   prop and its branches are gone, as FactRows' `step` went when nothing passed one: a mark handed it anyway draws its figure. */
+const handedHeadless = stripOf({ scale: "log", decades: true, marks: MARKS.map((m) => (m.key === "typical" ? { ...m, headless: true } : m)) as never });
+const stripCode = stripCommentLines(readFileSync(STRIP, "utf8").split("\n")).join("\n");
+check("RangeStrip takes no headless: a mark handed one draws its figure, and the file's code names no such prop", /data-mark="typical"/.test(handedHeadless) && !/headless/.test(stripCode), STRIP, "delete RangeStrip's headless prop and its branches: nothing passes one since the home's typical prints its figure (HomeExample.tsx)");
+
+/* NAMES ABOVE (plan 2026-10-10, home reform, critique pass 2, P0.2). The strip under step 2 printed "$76K" over the bottom tenth's tick
+   and, straight under that tick, "$100K" and then "Bottom tenth", the same size and the same grey: a reader took $100K for the bottom
+   tenth. Now each mark is one block over its tick, its name (12, muted) with its figure under it, the track, and under the track only
+   the round values, each a 6px tick in ink2 with its figure at 12. Read from the markup's own positions: the page measure (a browser
+   probe, scratchpad/home-reform/c1-strip-probe.mjs) reads the same in boxes. */
+const topOf = (el: Element | null | undefined) => Number(/\btop:\s*(-?[\d.]+)/.exec(el?.getAttribute("style") ?? "")?.[1] ?? NaN);
+const heightOf = (el: Element | null | undefined) => Number(/\bheight:\s*(-?[\d.]+)/.exec(el?.getAttribute("style") ?? "")?.[1] ?? NaN);
+const dom = (html: string) => new JSDOM(`<body>${html}</body>`).window.document;
+const HOME_MARKS = MARKS.map((m) => (m.key === "typical" ? { ...m, lead: false } : m));
+const homeAbove = stripOf({ scale: "log", oneRow: true, decades: true, namesAbove: true, marks: HOME_MARKS });
+const tradeAbove = stripOf({ scale: "log", decades: true, namesAbove: true });
+const geometry = (html: string) => {
+  const d = dom(html);
+  const track = [...d.querySelectorAll("div[aria-hidden]")].find((e) => /\bh-px\b/.test(e.getAttribute("class") ?? ""));
+  const names = [...d.querySelectorAll("[data-mark-label]")];
+  const figures = [...d.querySelectorAll("[data-mark]")];
+  const ticks = [...d.querySelectorAll("[data-scale-tick]")];
+  const labels = [...d.querySelectorAll("[data-scale-label]")];
+  const leaders = d.querySelectorAll("[data-mark-leader]").length;
+  return { d, track: topOf(track), names, figures, ticks, labels, leaders };
+};
+const home = geometry(homeAbove), trade = geometry(tradeAbove);
+const key = (e: Element) => e.getAttribute("data-mark-label") ?? e.getAttribute("data-mark");
+const aboveTrack = (g: ReturnType<typeof geometry>) => [...g.names, ...g.figures].every((e) => topOf(e) < g.track) && [...g.ticks, ...g.labels].every((e) => topOf(e) > g.track);
+const nameThenFigure = (g: ReturnType<typeof geometry>) => g.names.length === 3 && g.names.every((n) => { const f = g.figures.find((x) => key(x) === key(n)); return !!f && topOf(f) - (topOf(n) + 12) === 6; });
+const nearestForeign = (g: ReturnType<typeof geometry>) => Math.min(...g.labels.flatMap((l) => g.names.map((n) => topOf(l) - (topOf(n) + 12))));
+check(`names above: every name and figure stands over the track and every round value under it (home: track ${home.track}, names ${home.names.map(topOf).join(", ")}, figures ${home.figures.map(topOf).join(", ")}, round values ${home.labels.map(topOf).join(", ")})`, home.names.length === 3 && home.figures.length === 3 && home.labels.length === 2 && aboveTrack(home) && /data-names="above"/.test(homeAbove), STRIP, "RangeStrip namesAbove: the marks' names and figures above the track, only the round values below it");
+check("names above: each name is the mark's own, 6px over its figure, 12 muted, and the figure 14 semibold ink with its stamp (the home's typical prints its value like its neighbours)", nameThenFigure(home) && home.d.querySelectorAll("[data-mark-label]").length === 3 && home.figures.every((f) => /--t-body/.test(f.innerHTML) && /font-semibold/.test(f.innerHTML) && /--c-ink\)/.test(f.innerHTML)) && home.names.every((n) => /--t-micro/.test(n.getAttribute("class") ?? "") && /--c-muted/.test(n.getAttribute("class") ?? "")) && /data-mark="typical"[^>]*><span[^>]*>\$374K</.test(homeAbove), STRIP, "RangeStrip namesAbove: the name (12, leading-none, --c-muted) at the block's top, the figure 6px under it at the body rung, semibold, ink");
+check(`names above: the one row of the home's three names (tops ${home.names.map(topOf).join(", ")}) and the nearest figure that is not a mark's own, a round value, is ${nearestForeign(home)}px under a name (more than 48)`, new Set(home.names.map(topOf)).size === 1 && nearestForeign(home) > 48, STRIP, "RangeStrip namesAbove: leave more than 48px from any name to the round values under the track (the critique's done-when)");
+check(`names above: the round values are 6px ticks in ink2 hanging from the track, their figures 12 muted under them (${home.ticks.map((t) => `${topOf(t)}+${heightOf(t)}`).join(", ")} | ${home.labels.map(topOf).join(", ")})`, home.ticks.length === 2 && home.ticks.every((t) => heightOf(t) === 6 && topOf(t) === home.track + 1 && /--c-ink2/.test(t.getAttribute("class") ?? "")) && home.labels.every((l) => /--t-micro/.test(l.getAttribute("class") ?? "") && /--c-muted/.test(l.getAttribute("class") ?? "") && topOf(l) === home.track + 13) && JSON.stringify(home.labels.map((l) => l.textContent)) === JSON.stringify([usd(100_000), usd(1_000_000)]), STRIP, "RangeStrip namesAbove: each round value's tick h 6 in --c-ink2 from the track's line, its figure 6px under the tick at the micro rung in --c-muted");
+check(`names above on a trade page's strip (the typical the lead, 30): its three blocks stand over the track, the typical's name over its 30 (tops ${trade.names.map((n) => `${key(n)} ${topOf(n)}`).join(", ")}), the end blocks keep a leader hairline down to their ticks (${trade.leaders}) and a one-row strip draws none (${home.leaders})`, aboveTrack(trade) && nameThenFigure(trade) && topOf(trade.names.find((n) => key(n) === "typical")) >= topOf(trade.names.find((n) => key(n) === "p10")) + 12 + 6 + 14 + 6 && /--t-focal/.test(trade.figures.find((f) => key(f) === "typical")?.innerHTML ?? "") && trade.leaders === 2 && home.leaders === 0 && nearestForeign(trade) > 48, STRIP, "RangeStrip namesAbove: a stepped mark's block a row lower, the upper blocks' ticks reaching up to them on a --c-line-strong hairline (data-mark-leader), and none when every name stands on one row");
 /* A ROUND VALUE BESIDE A MARK IS NOT DRAWN (fix round 2b of the hero and picker task; the Task 2 re-review). The London pharmacies' typical
    is $1.04M, which prints as "$1.0M", and the power of ten 10^6 stands 1.1 percent of the track from its tick: the strip drew "$1.0M"
    twice. A round value within 4 percent of the track of ANY mark is skipped, on either side of it, not only near the end marks. */
