@@ -13,9 +13,13 @@
  *    o'clock, the rest in the accent's tint; a share over the whole (a day
  *    that does not clear its costs) fills the ring and the figure says the
  *    number past a hundred, never a second lap.
- *  - THE FIGURE inside the ring at the focal rung; `accent` puts it in the
- *    accent text colour (the seat's declared loud moment), else ink. One
- *    caption under the ring at the micro rung, in grey.
+ *  - THE FIGURE inside the ring at the focal rung (`size="focal"`, the default,
+ *    a 144px ring); `accent` puts it in the accent text colour (the seat's
+ *    declared loud moment), else ink. One caption under the ring at the micro
+ *    rung, in grey.
+ *  - `size="lead"`: the figure at the lead rung (16px semibold, var(--t-lead))
+ *    in a 96px ring, so a ring beside a card's focal figure is never a second
+ *    30.
  *  - `data-archetype="ring"`, `data-visual="1"`, `data-share` the whole
  *    percent. No second hue.
  *
