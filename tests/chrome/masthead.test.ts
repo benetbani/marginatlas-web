@@ -295,6 +295,10 @@ async function main() {
   check("Search holds its slot on the home, unseen and out of reach: invisible, aria-hidden, tabindex -1", !!homeSearch && /\binvisible\b/.test(homeSearch.tag) && /aria-hidden="true"/.test(homeSearch.tag) && /tabindex="-1"/.test(homeSearch.tag));
   check("Search shows on every other page, a 44 by 44 target with no box", !!blogSearch && !/\binvisible\b|aria-hidden|tabindex/.test(blogSearch.tag) && /min-h-11/.test(blogSearch.tag) && /min-w-11/.test(blogSearch.tag) && !/\bborder\b/.test(blogSearch.tag));
   check("the bar's row is 8px above and below its controls under 768, 24px from (the 60px phone bar)", /<div class="max-w-content mx-auto px-6 py-2 md:py-6 /.test(o.header));
+  /* AIR BETWEEN THE WORDMARK AND THE NAMES (plan 2026-10-10 Task 9). Photographed at 1280 with accounts and Pricing both on, the names at
+     24px apart filled the bar's 1072px to the pixel and "Atlas" touched "Countries" (0px measured, 9px with "Sign in"); at 20 the names
+     and the group leave 35px at the tightest. A pin on the two classes, not a measurement: this file runs no browser. */
+  check("the names stand 20px apart and the bar's items 20px from 1280, so the wordmark keeps air with accounts and Pricing both on", /<nav aria-label="Primary" class="hidden xl:flex items-center gap-5 /.test(o.bar) && /<div class="flex items-center gap-5 md:gap-6 xl:gap-5 /.test(o.header), { file: "src/components/NavLinks.tsx", remedy: "keep the nav at gap-5 and SiteChrome's group at xl:gap-5: the wordmark, seven names at 24, Search, Account and the Pricing pill fill the bar's 1072px to the pixel" });
 
   /* The switches. */
   const noPro = (h: string) => !/Pricing|href="\/pricing"/.test(h);

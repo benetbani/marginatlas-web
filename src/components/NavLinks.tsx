@@ -17,7 +17,11 @@ import { NAV, NAV_CURRENT, NAV_IDLE, currentNav } from "@/lib/nav";
 export function NavLinks() {
   const current = currentNav(usePathname());
   return (
-    <nav aria-label="Primary" className="hidden xl:flex items-center gap-6 text-base">
+    /* 20px BETWEEN NAMES, NOT 24 (plan 2026-10-10 Task 9, the masthead photographed at 1280 with both switches on): the bar's content is
+       1072 wide at every width from 1280, and the wordmark, the seven names at 24, Search, Account (the entry holds the longer word) and
+       the Pricing pill filled it to the pixel, so "Atlas" touched "Countries" (measured 0px between them; 9px with "Sign in"). At 20 the
+       six gaps free 24px, and SiteChrome's group gap at xl frees 12 more: 36px of air at the tightest. */
+    <nav aria-label="Primary" className="hidden xl:flex items-center gap-5 text-base">
       {NAV.map((item) => (
         <Link
           key={item.href}

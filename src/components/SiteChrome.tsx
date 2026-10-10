@@ -115,7 +115,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <span className="inline-flex md:hidden"><PhoneLockup /></span>
               <span className="hidden md:inline-flex"><LogoWordmark size={40} labeled={false} /></span>
             </Link>
-            <div className="flex items-center gap-5 md:gap-6 max-[359px]:gap-3">
+            <div className="flex items-center gap-5 md:gap-6 xl:gap-5 max-[359px]:gap-3">
               {/* THE ORDER (the spec's section 3): the seven names, Search, the account link while accounts are on, Pricing while the
                   paywall is on, then the menu under 1280. Nothing in the bar is terracotta; a hover is ink.
 
