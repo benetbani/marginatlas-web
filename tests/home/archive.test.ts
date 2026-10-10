@@ -47,11 +47,16 @@ if (held && d) {
   check(`the register copies are days, in order, none twice (${copies.join(", ")})`, copies.length > 0 && copies.every((c, i) => /^\d{4}-\d{2}-\d{2}$/.test(c) && !Number.isNaN(Date.parse(c)) && (i === 0 || c > copies[i - 1])));
   /* THE YEAR THE FAILURE RATES READ (method.json's source line names it: "published 2025-10-01 to 2026-09-30"): the archive's months
      of that year hold exactly the notices those rates read, so the archive is the joins' own year, kept. */
-  const method = JSON.parse(readFileSync("data/home/method.json", "utf8")) as { notices: number; source: string };
-  const span = /published (\d{4}-\d{2})-\d{2} to (\d{4}-\d{2})-\d{2}/.exec(method.source);
-  const year = span ? months.filter((m) => m.month >= span[1] && m.month <= span[2]) : [];
-  const sum = year.reduce((s, m) => s + m.notices, 0);
-  check(`the months of the joins' year (${span ? `${span[1]} to ${span[2]}` : "not named"}) hold the ${method.notices.toLocaleString("en-US")} notices the failure rates read (${sum.toLocaleString("en-US")})`, !!span && year.length === 12 && sum === method.notices, { file: "data/home/method.json", remedy: "re-run python -P scripts/data/home/export_home.py method and archive, so both read the archive's year" });
+  const METHOD_AT = { file: "data/home/method.json", remedy: "re-run python -P scripts/data/home/export_home.py method" };
+  let method: { notices: number; source: string } | null = null;
+  try { method = JSON.parse(readFileSync("data/home/method.json", "utf8")) as { notices: number; source: string }; } catch { /* a missing or truncated file: the check below is this gate's own red for it, not a stack */ }
+  check("the failure rates' file reads, and holds the notices they read and the dates they were published (data/home/method.json)", !!method && Number.isInteger(method.notices) && typeof method.source === "string", METHOD_AT);
+  if (method) {
+    const span = /published (\d{4}-\d{2})-\d{2} to (\d{4}-\d{2})-\d{2}/.exec(method.source);
+    const year = span ? months.filter((m) => m.month >= span[1] && m.month <= span[2]) : [];
+    const sum = year.reduce((s, m) => s + m.notices, 0);
+    check(`the months of the joins' year (${span ? `${span[1]} to ${span[2]}` : "not named"}) hold the ${method.notices.toLocaleString("en-US")} notices the failure rates read (${sum.toLocaleString("en-US")})`, !!span && year.length === 12 && sum === method.notices, { file: "data/home/method.json", remedy: "re-run python -P scripts/data/home/export_home.py method and archive, so both read the archive's year" });
+  }
 
   /* THE LOG, READ AGAIN, where it is on this machine (a build server holds no archive: the holder deferred it above). */
   const src = held.entry.sources.find((s) => s.key === "archive");

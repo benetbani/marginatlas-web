@@ -413,6 +413,9 @@ def method() -> None:
 ARCHIVE_LOG = "E:/atlas/archive/uk/ARCHIVE.json"
 MONTH = re.compile(r"\d{4}-\d{2}")
 REGISTER_DAY = re.compile(r"BasicCompanyData(?:AsOneFile)?-(\d{4}-\d{2}-\d{2})")
+# A whole month holds one file for each of the four kinds of notice the archive reads: administration, members' voluntary and
+# creditors' voluntary liquidation, winding-up order (registers/uk/archive_monthly.py, the Gazette's CODES).
+NOTICE_FILES = 4
 
 
 def next_month(ym: str) -> str:
@@ -428,12 +431,15 @@ def archive() -> None:
     the days of the company register copies it holds. A month is the archive's own: the monthly run names it
     by the UK date of its notices, the seed by its notices' own stamps (archive/uk/README.md says so); nothing printed rests on a
     month's count. A file is added once, in one run's `added`; a month a run lists as already held must be one a run added. A gap in
-    the months, a count that is not whole, or no register copy is a refusal."""
+    the months, a count that is not whole, or no register copy is a refusal; so is a month the log cannot vouch for whole: the last
+    run of the Gazette left months pending (a partial run), a month holds fewer than four distinct notice files, or a file was
+    added twice (a short or a doubled month would pass every other check)."""
     log = json.loads(Path(ARCHIVE_LOG).read_text(encoding="utf-8"))
     runs = log.get("runs")
     if log.get("archive") != "uk" or not isinstance(runs, list) or not runs:
         refuse("the archive's log holds no runs of the UK archive")
     notices: dict[str, int] = {}
+    files: dict[str, list[str]] = {}
     held: set[str] = set()
     days: set[str] = set()
     for r in runs:
@@ -443,7 +449,10 @@ def archive() -> None:
             if isinstance(month, str) and MONTH.fullmatch(month):
                 if not isinstance(n, int) or isinstance(n, bool) or n < 0:
                     refuse(f"the run of {r.get('run_at')} adds {month} with no whole count of notices")
+                if not isinstance(a.get("file"), str) or not a["file"]:
+                    refuse(f"the run of {r.get('run_at')} adds {month} with no file name")
                 notices[month] = notices.get(month, 0) + n
+                files.setdefault(month, []).append(a["file"])
         for h in g.get("already_held") or []:
             if isinstance(h, str) and MONTH.fullmatch(h):
                 held.add(h)
@@ -456,6 +465,18 @@ def archive() -> None:
     stray = sorted(held - set(notices))
     if stray:
         refuse(f"the log lists {', '.join(stray)} as held, and no run added it")
+    # A MONTH THE LOG CANNOT VOUCH FOR WHOLE: a partial run, a doubled file, a short month. Each would pass every check below.
+    gazette_runs = [r["gazette"] for r in runs if r.get("gazette")]
+    left = (gazette_runs[-1] if gazette_runs else {}).get("pending") or []
+    if left:
+        months_left = ", ".join(str(p.get("month")) if isinstance(p, dict) else str(p) for p in left)
+        refuse(f"the archive's last run of the Gazette left {months_left} pending, so a month may be short; finish that run first")
+    twice = sorted(m for m, fs in files.items() if len(fs) != len(set(fs)))
+    if twice:
+        refuse(f"the log adds a notice file twice in {', '.join(twice)}")
+    short = sorted(m for m, fs in files.items() if len(set(fs)) < NOTICE_FILES)
+    if short:
+        refuse(f"fewer than {NOTICE_FILES} distinct notice files in {', '.join(short)}")
     months = sorted(notices)
     want, cur = [], months[0]
     while cur <= months[-1]:
