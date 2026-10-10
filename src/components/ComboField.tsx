@@ -136,21 +136,28 @@ export function ComboField({
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  // Commit on Enter (or blur) even when nothing is
-  // focused. Founder reported "Show me the numbers" button unclickable
-  // on Berlin nightclubs: root cause was ComboField never committing
-  // a typed value to state unless the user explicitly clicked an
-  // option. Now: pressing Enter or blurring auto-selects the top match
-  // when the query is non-empty and the filtered list has at least one
-  // entry, so typed input always lands somewhere usable.
+  /* Choose an option: the parent hears it, the list closes, what was typed is dropped and the highlight goes. */
+  function choose(o: ComboOption) {
+    onChange(o.value);
+    setOpen(false);
+    setQuery(null);
+    setFocusIdx(-1);
+  }
+
+  // Commit on blur even when nothing is lit. Founder reported "Show me
+  // the numbers" button unclickable on Berlin nightclubs: root cause was
+  // ComboField never committing a typed value to state unless the user
+  // explicitly clicked an option. Now: blurring auto-selects the lit row,
+  // or the top match, when the query is non-empty and the filtered list
+  // has at least one entry, so typed input always lands somewhere usable.
+  // Only blur keeps the empty-query guard: leaving a field with nothing
+  // typed must never pick the row the mouse last crossed. Enter has its
+  // own branch in onKey.
   function commitTopMatch(): boolean {
     if (!q || filtered.length === 0) return false;
     const candidate = focusIdx >= 0 ? filtered[focusIdx] : filtered[0];
     if (!candidate) return false;
-    onChange(candidate.value);
-    setOpen(false);
-    setQuery(null);
-    setFocusIdx(-1);
+    choose(candidate);
     return true;
   }
 
@@ -163,12 +170,19 @@ export function ComboField({
       e.preventDefault();
       setFocusIdx((i) => Math.max(i - 1, 0));
     } else if (e.key === "Enter") {
-      // Commit the focused option, or fall back to the top match for
-      // the current query. Only block default if we actually commit;
-      // otherwise allow the form's normal Enter-to-submit behavior.
-      if (focusIdx >= 0 || (q && filtered.length > 0)) {
+      /* The lit row is chosen whatever is typed: the arrow keys alone reach a row, and the Enter that was stopped for it picked
+         nothing while the query was empty (the Task 2 review). With words typed and no row lit, the top match. Over "No match" the
+         Enter stays in the field, so the form never sends the previous pick for words that matched nothing. Any other Enter is the
+         form's own submit. */
+      const lit = focusIdx >= 0 ? filtered[focusIdx] : undefined;
+      if (lit) {
         e.preventDefault();
-        commitTopMatch();
+        choose(lit);
+      } else if (q && filtered.length > 0) {
+        e.preventDefault();
+        choose(filtered[0]);
+      } else if (noMatch) {
+        e.preventDefault();
       }
     } else if (e.key === "Escape") {
       setOpen(false);
@@ -253,10 +267,13 @@ export function ComboField({
             // Auto-commit the top match if the user typed something but
             // never picked an option. Fixes the Berlin-nightclubs button
             // (founder QA, 2026-05-22). Typed words that match nothing
-            // give way to the picked option's label again.
+            // give way to the picked option's label again, and a row lit
+            // on the way past does not stay lit for the next visit (Enter
+            // chooses the lit row, so a stale one would be chosen unseen).
             if (!commitTopMatch()) {
               setQuery(null);
               setOpen(false);
+              setFocusIdx(-1);
             }
           }}
           placeholder={placeholder}
@@ -296,10 +313,7 @@ export function ComboField({
               aria-selected={focusIdx === i}
               onMouseDown={(e) => {
                 e.preventDefault();
-                onChange(o.value);
-                setOpen(false);
-                setQuery(null);
-                setFocusIdx(-1);
+                choose(o);
               }}
               onMouseEnter={() => setFocusIdx(i)}
               className={`cursor-pointer border-l-2 px-4 py-3 text-sm leading-5 transition-colors ${

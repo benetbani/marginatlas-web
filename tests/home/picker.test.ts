@@ -7,7 +7,8 @@
  * action; the examples' line in ink2 under the row; a failure said in the card; "Loading…" with its ellipsis; no static import of
  * the taxonomy, the cascade, the destination, the regions or the city tables, its lists loaded with import() on first use, and its
  * first paint from the server's seed, whose labels are the lists' own.
- * ComboField is rendered on the server and mounted in jsdom. NavigatorForm needs Next's router to render, so its markup is read from
+ * ComboField is rendered on the server and mounted in jsdom, and steered with the keys (the Task 2 fix round: Enter chooses the lit
+ * row whatever is typed, and keeps the visitor in the field over "No match"). NavigatorForm needs Next's router to render, so its markup is read from
  * the home's render (tests/trust/home_shape.test.ts, the hero's checks) and its source here, comments stripped.
  * Run: npx tsx tests/home/picker.test.ts
  */
@@ -88,6 +89,73 @@ async function main() {
   await act(async () => { field.dispatchEvent(new dom.window.KeyboardEvent("keydown", { key: "Enter", bubbles: true })); });
   check(`Enter commits the top match of what was typed (picked "${picked}")`, picked === "FR", FIELD);
   await act(async () => { root.unmount(); });
+
+  /* A FIELD IN A PARENT'S SHAPE, MOUNTED: its value follows each pick as the form's state does, every pick is logged, and the keys are
+     cancelable events, so an Enter the field took for itself can be told from one left to submit the form. */
+  async function mountField(start: string) {
+    const box = document.createElement("div");
+    document.body.appendChild(box);
+    const r = createRoot(box);
+    const log: string[] = [];
+    const Parent = () => {
+      const [v, setV] = React.useState(start);
+      return React.createElement(ComboField, { ...props, value: v, onChange: (x: string) => { log.push(x); setV(x); } });
+    };
+    await act(async () => { r.render(React.createElement(Parent)); });
+    const input = box.querySelector("input")!;
+    const rowsOf = () => [...box.querySelectorAll('[role="option"]')];
+    const press = async (name: string) => {
+      const ev = new dom.window.KeyboardEvent("keydown", { key: name, bubbles: true, cancelable: true });
+      await act(async () => { input.dispatchEvent(ev); });
+      return ev;
+    };
+    const typeIn = async (v: string) => {
+      const setter = Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype, "value")!.set!;
+      await act(async () => { setter.call(input, v); input.dispatchEvent(new dom.window.Event("input", { bubbles: true })); });
+    };
+    return { box, input, log, rowsOf, press, typeIn, unmount: async () => { await act(async () => { r.unmount(); }); box.remove(); } };
+  }
+
+  /* ENTER ON A HIGHLIGHTED ROW (the Task 2 review's Important finding). The arrow keys alone reach a row, with nothing typed; the Enter
+     branch stopped the browser's default for it and then asked the top-match commit, which gives up on an empty query: nothing was
+     picked and the Enter was lost. The keys now choose the row that is lit, whatever is typed, and an Enter over "No match" stays in
+     the field, so the form never sends the previous pick for words the visitor typed. */
+  const ENTER_REMEDY = "in src/components/ComboField.tsx onKey, Enter commits filtered[focusIdx] whatever the query (the arrow keys alone reach a row), commits the top match when a query is typed with no row lit, keeps the visitor in the field over \"No match\", and leaves every other Enter to the form";
+  const keys = await mountField("GB");
+  await act(async () => { keys.input.focus(); });
+  await keys.press("ArrowDown");
+  await keys.press("ArrowDown");
+  const lit = keys.rowsOf()[1];
+  const litSecond = !!lit && lit.getAttribute("aria-selected") === "true" && keys.input.getAttribute("aria-activedescendant") === lit.id;
+  const enterOnSecond = await keys.press("Enter");
+  check(`ArrowDown, ArrowDown, Enter with nothing typed picks the second row, France, and closes the list (second row lit ${litSecond}, picked [${keys.log.join(",")}], Enter kept by the field ${enterOnSecond.defaultPrevented}, field reads "${keys.input.value}", ${keys.rowsOf().length} rows left, expanded ${keys.input.getAttribute("aria-expanded")})`, litSecond && keys.log.join() === "FR" && enterOnSecond.defaultPrevented && keys.input.value === "France" && keys.rowsOf().length === 0 && keys.input.getAttribute("aria-expanded") === "false", FIELD, ENTER_REMEDY);
+  keys.log.length = 0;
+  await keys.typeIn("a");
+  await keys.press("ArrowDown");
+  const enterOnTop = await keys.press("Enter");
+  check(`ArrowDown, Enter with "a" typed picks the highlighted row (picked [${keys.log.join(",")}], Enter kept by the field ${enterOnTop.defaultPrevented}, field reads "${keys.input.value}")`, keys.log.join() === "FR" && enterOnTop.defaultPrevented && keys.input.value === "France" && keys.rowsOf().length === 0, FIELD, ENTER_REMEDY);
+  keys.log.length = 0;
+  await keys.typeIn("a");
+  await keys.press("ArrowDown");
+  await keys.press("ArrowDown");
+  const enterBelowTop = await keys.press("Enter");
+  check(`ArrowDown, ArrowDown, Enter with "a" typed picks the lit row, Spain, not the top match (picked [${keys.log.join(",")}], Enter kept by the field ${enterBelowTop.defaultPrevented}, field reads "${keys.input.value}")`, keys.log.join() === "ES" && enterBelowTop.defaultPrevented && keys.input.value === "Spain" && keys.rowsOf().length === 0, FIELD, ENTER_REMEDY);
+  keys.log.length = 0;
+  await keys.typeIn("zz");
+  const enterOnNone = await keys.press("Enter");
+  check(`Enter over "No match" keeps the visitor in the field: nothing is picked, the Enter does not submit the previous pick, the words and the row stay, focus stays (picked [${keys.log.join(",")}], Enter kept by the field ${enterOnNone.defaultPrevented}, field reads "${keys.input.value}", row "${keys.box.querySelector("[data-no-match]")?.textContent ?? ""}", focus ${document.activeElement === keys.input})`, keys.log.length === 0 && enterOnNone.defaultPrevented && keys.input.value === "zz" && keys.box.querySelector("[data-no-match]")?.textContent === "No match for ‘zz’" && document.activeElement === keys.input, FIELD, ENTER_REMEDY);
+  await keys.press("Escape");
+  const enterAtRest = await keys.press("Enter");
+  check(`Enter with nothing typed and no row lit is left to the form's own submit (picked [${keys.log.join(",")}], Enter kept by the field ${enterAtRest.defaultPrevented})`, keys.log.length === 0 && !enterAtRest.defaultPrevented, FIELD, ENTER_REMEDY);
+  /* A row lit on the way past is not lit at the next visit: the Enter chooses the lit row, so a stale one would be chosen unseen. */
+  await keys.press("ArrowDown");
+  await keys.press("ArrowDown");
+  await act(async () => { keys.input.blur(); });
+  await act(async () => { keys.input.focus(); });
+  const litAfterVisit = keys.rowsOf().filter((r) => r.getAttribute("aria-selected") === "true").length;
+  const enterAfterVisit = await keys.press("Enter");
+  check(`a row lit before the field was left is not lit when it is entered again, so that Enter is the form's (rows lit ${litAfterVisit}, picked [${keys.log.join(",")}], Enter kept by the field ${enterAfterVisit.defaultPrevented})`, litAfterVisit === 0 && keys.log.length === 0 && !enterAfterVisit.defaultPrevented, FIELD, "reset the highlight when the field is left without a pick (the blur path in src/components/ComboField.tsx), because Enter chooses the lit row");
+  await keys.unmount();
 
   /* THE FORM, FROM ITS SOURCE (comments stripped). */
   const code = stripCommentLines(readFileSync(FORM, "utf8").split("\n")).join("\n");
