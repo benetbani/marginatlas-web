@@ -36,7 +36,9 @@
  *    the whole in the soft grey with a 1px edge in --c-line-strong so the whole is visible against a white card (the soft grey alone
  *    is 1.19 to 1 on it). One 12px bar, 3px radius, clipped, with no padding of its own (the card sets its distance from the line); under it the two names in `part` and `rest`, each already holding its
  *    figure ("Tax 18%", "You keep 82%"), at the micro rung in muted. The cells' comb said the 18 a second time and showed nothing of
- *    the rules behind it; the parts are the rules, and the rows beside the bar are its key. `data-form` stays "split".
+ *    the rules behind it; the parts are the rules, and the rows beside the bar are its key. `data-form` stays "split". A PART CARRIES `data-bar-part`,
+ *    NOT `data-part-key`: the key is the hook of the linked parts that Marks listens to (the interact gate reds one outside a listening
+ *    drawing), and this bar is not interactive, so its parts are named for the tests and nothing else (fix round C2's follow-up to C1).
  *  - THE BARE FORM (`bare`, 2026-09-24): no label row, for a bar drawn right
  *    under the figure it pictures (the country hero's tax on profit, a
  *    city's typical pay among the cities), where a label row would print
@@ -54,7 +56,7 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
       <div data-archetype="segment-bar" data-visual="1" data-form="split" data-bare="1" data-continuous="1" data-bar-parts={String(parts.length)} role="img" aria-label={label}>
         <div className="flex h-3 w-full overflow-hidden rounded-[3px]" aria-hidden="true">
           {parts.map((p) => (
-            <span key={p.key} data-part-key={p.key} className="h-full shrink-0" style={{ width: `${Math.round((Math.max(0, p.value) / total) * 10000) / 100}%`, background: p.fill }} />
+            <span key={p.key} data-bar-part={p.key} className="h-full shrink-0" style={{ width: `${Math.round((Math.max(0, p.value) / total) * 10000) / 100}%`, background: p.fill }} />
           ))}
           <span data-rest-fill="" className="h-full min-w-0 flex-1" style={{ background: "var(--c-soft2)", boxShadow: "inset 0 0 0 1px var(--c-line-strong)" }} />
         </div>

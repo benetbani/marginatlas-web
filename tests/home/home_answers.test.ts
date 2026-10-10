@@ -259,7 +259,7 @@ if (proofs && uk) {
      ink, National Insurance's in ink2, the rest in the soft grey with its 1px edge in --c-line-strong, the tax named at its left end ("Tax
      18%") and what is kept at its right ("You keep 82%"). */
   const bar = html.slice(html.indexOf('data-archetype="segment-bar"'));
-  const partStyles = [...bar.matchAll(/<span data-part-key="([^"]+)" class="h-full shrink-0" style="width:([\d.]+)%;background:([^"]*)"/g)].map((m) => `${m[1]} ${m[2]}% ${m[3]}`);
+  const partStyles = [...bar.matchAll(/<span data-bar-part="([^"]+)" class="h-full shrink-0" style="width:([\d.]+)%;background:([^"]*)"/g)].map((m) => `${m[1]} ${m[2]}% ${m[3]}`);
   const wantParts = t.rows.map((r) => `${r.key} ${r.percent}% ${INK[r.key]}`);
   check(`its line is drawn as the card's one small line ("${t.line}")`, html.includes(`>${esc(t.line)}</p>`), PROOF_AT);
   check(`its bar draws income tax ${t.rows[0].percent}% in ink and National Insurance ${t.rows[1].percent}% in ink2, then the rest in the soft grey with its edge, the tax named at the left and what is kept at the right (${partStyles.join(", ")})`, JSON.stringify(partStyles) === JSON.stringify(wantParts) && INK["income-tax"] === "var(--c-ink)" && INK["class-4"] === "var(--c-ink2)" && /<span data-rest-fill="" class="h-full min-w-0 flex-1" style="background:var\(--c-soft2\);box-shadow:inset 0 0 0 1px var\(--c-line-strong\)"><\/span>/.test(bar) && !/background:var\(--terra/.test(bar) && !!t.bar.part && !!t.bar.rest && html.includes(`<span data-part="true">${esc(t.bar.part)}</span>`) && html.includes(`<span data-rest="true">${esc(t.bar.rest)}</span>`), PROOF_AT);
