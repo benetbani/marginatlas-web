@@ -1626,6 +1626,7 @@
         "scratchpad/harness/pages/cell-gb-london-restaurants.html",
         "scratchpad/harness/pages/country-GB.html",
         "scratchpad/harness/pages/home-gb.html",
+        "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/home/HomeExample.tsx",
         "src/components/spine/home/HomeProofs.tsx",
         "src/lib/hero-words.ts",

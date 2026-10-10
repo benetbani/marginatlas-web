@@ -57,9 +57,9 @@ function Step({ step, rung, className = "", children }: { step: ExampleStep; run
         <Fig className="mt-2 block text-[length:var(--t-lead)] font-semibold leading-5 text-[var(--c-ink)]" prov={step.prov}>{step.figure}</Fig>
       )}
       {rung === "lead" ? (
-        <p className="mt-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-muted)]">{step.line}</p>
+        <p className="mt-1 text-pretty text-[length:var(--t-micro)] leading-4 text-[var(--c-muted)]">{step.line}</p>
       ) : (
-        <p data-focal-words="" className="mt-2 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{step.line}</p>
+        <p data-focal-words="" className="mt-2 text-pretty text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{step.line}</p>
       )}
       {children}
     </div>

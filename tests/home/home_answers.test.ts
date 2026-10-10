@@ -149,6 +149,13 @@ if (ex) {
   const third = [lineOf(block(place, "1"), ex.place.registered.line), lineOf(block(pays, "4"), ex.pays.insolvent.line)];
   const body = [lineOf(block(place, "2"), ex.place.sales.line), lineOf(block(pays, "3"), ex.pays.breakEven.line)];
   check("steps 1 and 4 carry their line at the third rung (12, muted, no focal words); steps 2 and 3 at 14 in ink2", third.every((m) => !!m && !m[1] && /--t-micro/.test(m[2]) && /text-\[var\(--c-muted\)\]/.test(m[2])) && body.every((m) => !!m && !!m[1] && /--t-body/.test(m[2]) && /text-\[var\(--c-ink2\)\]/.test(m[2])), DRAWN_AT);
+  /* NO ORPHANS (the Task 3 review): step 3's line left "restaurant." alone on a second line at 1024, and step 1's broke between "March"
+     and "2026." at 768 and on a 360px phone. Every step's line asks the browser to balance its last line (text-pretty, as the quotes in
+     src/components/kit/blocks/OperatorVoices.tsx do), and step 1 writes its month with a no-break space, so a month and its year never
+     part. */
+  const pretty = [...third, ...body].filter((m) => !!m && /\btext-pretty\b/.test(m[2])).length;
+  const joined = /[A-Z][a-z]+\u00A0\d{4}\.$/.test(ex.place.registered.line);
+  check(`every step's line asks for a balanced last line (text-pretty on ${pretty} of 4), and step 1 writes its month and year with a no-break space (${joined ? "joined" : `"${ex.place.registered.line}" may break between them`})`, pretty === 4 && joined, { file: EXAMPLE_VIEW, remedy: "add text-pretty to both lines' <p> in HomeExample.tsx's Step, and write the month in src/lib/home/worked_example.ts with a no-break space at the {month} splice (month.replace(\" \", \"\\u00A0\"))" });
   const ruled = (h: string, n: string) => new RegExp(`data-step-block="${n}" class="[^"]*\\bborder-t\\b`).test(h);
   const underTitle = (h: string, n: string) => h.slice(h.indexOf('data-rail=""'), h.indexOf(`data-step-block="${n}"`));
   check("a hairline between steps 1 and 2 and between steps 3 and 4, none under the titles", ruled(place, "2") && ruled(pays, "4") && !ruled(place, "1") && !ruled(pays, "3") && !/border-t/.test(underTitle(place, "1")) && !/border-t/.test(underTitle(pays, "3")), DRAWN_AT);
@@ -226,6 +233,19 @@ if (ex && homeR && cellR) {
      figure, the home runs the same words after its own. */
   const aboveLabel = hero?.cells.find((c) => c.key === "above")?.label ?? "";
   check(`London restaurants' page reads "${aboveLabel}" and the home "${ex.pays.above.label}", the same words`, aboveLabel !== "" && cellT.includes(`|${aboveLabel}|`) && pays.includes(`|${ex.pays.above.label}|`) && aboveLabel.toLowerCase() === ex.pays.above.label.toLowerCase());
+  /* THE SALES STRIP ON BOTH PAGES (the Task 3 review; the critique's P0.5: "the London page's 01 spread takes the same scale, so the two
+     pages read alike"): the home draws the London page's three marks on a log track, so the page's own strip stands on the same track
+     and each tick on both stands at the same place along it. Read off the two renders: the strip's scale, and the left edge of its three
+     ticks, which RangeStrip places by one function. */
+  const stripOf = (h: string, id: string) => {
+    const at = h.indexOf(`id="${id}"`);
+    const from = at < 0 ? -1 : h.indexOf('data-archetype="range-strip"', at);
+    if (from < 0) return null;
+    const s = h.slice(from, from + 8000);
+    return { scale: /data-scale="(log|linear)"/.exec(s)?.[1] ?? "", ticks: [...s.matchAll(/class="absolute w-px -translate-x-1\/2" style="left:([0-9.]+)%/g)].slice(0, 3).map((m) => m[1]) };
+  };
+  const onHome = stripOf(homeR, "place"), onCell = stripOf(cellR, "spread");
+  check(`the London page's sales strip stands on the home's log track (${onCell?.scale ?? "no strip"} | ${onHome?.scale ?? "no strip"}; ticks at ${onCell?.ticks.join(", ") ?? "none"} | ${onHome?.ticks.join(", ") ?? "none"} percent, the typical's the middle one)`, !!onHome && !!onCell && onHome.scale === "log" && onCell.scale === "log" && onHome.ticks.length === 3 && onHome.ticks.join() === onCell.ticks.join(), { file: "src/components/spine/cell/cell-view.tsx", remedy: "draw the trade page's `01 spread` strip with scale=\"log\" and decades (cell-view.tsx Spread), as HomeExample.tsx draws the same three marks, so the typical stands where a log scale puts it on both pages" });
 }
 if (proofs && homeR && gbR) {
   const answerAt = gbR.indexOf('data-answer="1"');

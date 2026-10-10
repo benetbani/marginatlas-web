@@ -213,9 +213,13 @@ export const LOUD_SEATS = [
 /* ================= THE OPENING BAND, `01 spread | 02 suits` ================= */
 /**
  * A year's takings, `01 spread` (MODEL.md 8.6; plan step 33's first dispatch,
- * 2026-09-18): the range strip, three marks, linear, the typical the card's
- * one 30 in ink (the strip's `lead`, the city strip's precedent, M3), the
- * outer marks at 14, no accent (the opening's accent is spent on `00`). The
+ * 2026-09-18): the range strip, three marks, on a LOG track with its round
+ * values (plan 2026-10-10, home reform, the critique's P0.5 and MODEL 10.8: a
+ * spread of many times goes on a log track, which RangeStrip keeps linear
+ * under three times; the home draws the same three marks the same way, so the
+ * typical stands where a log scale puts it on both pages), the typical the
+ * card's one 30 in ink (the strip's `lead`, the city strip's precedent, M3),
+ * the outer marks at 14, no accent (the opening's accent is spent on `00`). The
  * marks come from trade_spread_rows.ts off the seed's `headline`: on London
  * the three are fixed multipliers of the typical (0.5, 1, 1.8), a modelled
  * shape, and the basis says so in 8.6's own words; on a trusted local cell
@@ -236,7 +240,7 @@ function Spread({ d }: { d: any }) {
            strip and its basis stood at the top and the spare height gathered at the foot (48px, clause 52); centred, the air
            stands above and below it, the metric cells' idiom. */
         <div className="flex flex-1 flex-col justify-center">
-          <RangeStrip marks={s.marks} scale="linear" fmt={usd} basis={s.basis ?? ""} />
+          <RangeStrip marks={s.marks} scale="log" fmt={usd} basis={s.basis ?? ""} decades />
         </div>
       ) : (
         <p data-withheld-line="spread" className="mt-2 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{s.withheld}</p>

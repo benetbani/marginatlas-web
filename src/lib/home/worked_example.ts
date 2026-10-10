@@ -88,7 +88,9 @@ export function buildWorkedExample(slug: string = EXAMPLE_TRADE, insolvent: numb
     href: ukTradePagePath(slug),
     place: {
       title: C.placeTitle.replace("{trade}", trade),
-      registered: { n: "1", label: firms.label, figure: String(firms.value), line: C.registered.replace("{month}", month), prov: firms.prov },
+      /* THE MONTH AND ITS YEAR NEVER PART (the Task 3 review): written with a no-break space, the line could not break "March / 2026."
+         at 768 or on a 360px phone, where it left the year alone on a second line. */
+      registered: { n: "1", label: firms.label, figure: String(firms.value), line: C.registered.replace("{month}", month.replace(/ /g, "\u00A0")), prov: firms.prov },
       sales: { n: "2", label: COPY.londonTrade.salesLabel, figure: usd(typical.value), line: C.sales, prov: typical.prov },
       strip: strip.marks,
       door: C.placeDoor.replace("{trade}", trade.toLowerCase()),
