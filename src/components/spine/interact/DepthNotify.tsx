@@ -60,6 +60,10 @@ export function DepthNotify({ source = "", words, choices }: { source?: string; 
       </form>
     );
   }
+  /* THE THIN PAGE'S FORM STACKS UNDER 640 (fix round F2, item F1-notify; the F1 report's concern 1 and the final review's M11): the label, then the address field on a row of its
+     own, then the button under it, each as wide as the column. The field was `flex-1`, a flex item with a basis of 0, so at 375 it never forced a wrap and shared the label's row at about
+     56px (about "Your"), the button wrapping under it. `w-full flex-none` makes its basis the whole row, and `min-w-0` (as the footer's newsletter bar keeps its field inside the screen at
+     320) lets it shrink with the column and never push past it. From 640 it is the row it was: the field takes the leftover up to `max-w-xs`, the button its own width. */
   return (
     <form data-depth-notify="" data-page-foot onSubmit={submit} className="flex flex-wrap items-center gap-3 pt-6 pb-6">
       <label htmlFor="depth-notify-email" className="text-[length:var(--t-body)] text-[var(--c-ink)]">{words.label}</label>
@@ -70,9 +74,9 @@ export function DepthNotify({ source = "", words, choices }: { source?: string; 
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder={words.placeholder}
-        className="min-h-11 min-w-0 flex-1 rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-3 text-[length:var(--t-body)] text-[var(--c-ink)] sm:max-w-xs"
+        className="min-h-11 w-full min-w-0 flex-none rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-3 text-[length:var(--t-body)] text-[var(--c-ink)] sm:w-auto sm:max-w-xs sm:flex-1"
       />
-      <button type="submit" disabled={state === "sending"} className={button}>
+      <button type="submit" disabled={state === "sending"} className={`${button} w-full sm:w-auto`}>
         {words.button}
       </button>
       {failed}
