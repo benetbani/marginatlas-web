@@ -11,9 +11,10 @@
  *  - Obstacles (src/components/spine/sections/Obstacles.tsx): in the column form every column's share stands over its bar, the
  *    longest included, with room above the plot for it; in the row form every row prints its share, the top row included; the top's
  *    bar is flat --terra in both forms, with no gradient (the others are grey);
- *  - SurvivalCurve (src/components/spine/interact/SurvivalCurve.tsx): every point after the start prints its share, the last
- *    (the terracotta dot) too, pinned inside the plot's right edge;
- *  - the source carries no guard that takes the focal mark's label away (`o === top ? null`, `!isLast`);
+ *  - SurvivalCurve (src/components/spine/interact/SurvivalCurve.tsx): every point prints its share, the last (the terracotta dot)
+ *    too, pinned inside the plot's right edge, and since critique pass 3, fix round D2, item P2.8 the start too (the whole cohort,
+ *    the curve's own first point, never a typed "100%"), pinned inside the plot's left edge;
+ *  - the source carries no guard that takes a mark's label away (`o === top ? null`, `!isLast`, a label behind `i > 0`);
  *  - /gb's render draws all of it in chapter 04.
  * BLIND SPOT: the source guards are read as text, so a label taken away by another route (a class that hides it) is seen only on the
  * render's markup, which counts the label elements and never measures that they are visible: the browser gates (page laws, holes,
@@ -34,7 +35,7 @@ import { red, redSummary } from "../../scripts/lib/red";
 const RULE = "focal-values";
 const OBSTACLES = "src/components/spine/sections/Obstacles.tsx";
 const CURVE = "src/components/spine/interact/SurvivalCurve.tsx";
-const REMEDY = "print the focal mark's value on the drawing as its neighbours print theirs: Obstacles' top column and top row take their share (the top bar flat --terra), SurvivalCurve labels the last point; the section's figure stays the large one above";
+const REMEDY = "print the focal mark's value on the drawing as its neighbours print theirs: Obstacles' top column and top row take their share (the top bar flat --terra), SurvivalCurve labels the start and the last point; the section's figure stays the large one above";
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? OBSTACLES, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
@@ -72,17 +73,30 @@ if (sv) {
   const words = { focal: COPY.firstYears.focalWords, focalIn: COPY.firstYears.focalWordsIn, start: COPY.firstYears.start, year: COPY.firstYears.year, regions: COPY.firstYears.regions, choose: COPY.firstYears.choose, country: "The UK", kicker: COPY.firstYears.kicker };
   const html = renderToStaticMarkup(React.createElement(SurvivalCurve, { id: "first-years", country: sv.points, regions: sv.regionCurves, best: sv.regions?.best ?? null, worst: sv.regions?.worst ?? null, words }));
   const labels = [...html.matchAll(/<span data-mark-label="true"[^>]*>(\d+)%<\/span>/g)].map((m) => Number(m[1]));
-  const want = sv.points.map((p) => Math.round(p.pct));
-  check(`every point after the start prints its share, the last (the terracotta dot, ${want[want.length - 1]}%) included (${labels.length} labels for ${sv.points.length} points: ${labels.join(", ")})`, labels.length === sv.points.length && JSON.stringify(labels) === JSON.stringify(want), { file: CURVE });
-  const lastLabel = [...html.matchAll(/<span data-mark-label="true" class="([^"]*)" style="([^"]*)">(\d+)%<\/span>/g)].pop();
+  /* THE START IS THE WHOLE COHORT, BY DEFINITION (critique pass 3, fix round D2, item P2.8): the curve begins at year 0 with every firm
+     still trading, and the file's own series begins at year 1, so the start's share is not one the builder gives. It is the oracle
+     stated here, independent of the component, which reads the share off the drawn series' own first point and never types it as a label. */
+  const START_SHARE = 100;
+  const want = [START_SHARE, ...sv.points.map((p) => Math.round(p.pct))];
+  check(`every point prints its share, the start (${want[0]}%) and the last (the terracotta dot, ${want[want.length - 1]}%) included (${labels.length} labels for ${sv.points.length + 1} points: ${labels.join(", ")})`, labels.length === sv.points.length + 1 && JSON.stringify(labels) === JSON.stringify(want), { file: CURVE });
+  const marked = [...html.matchAll(/<span data-mark-label="true" class="([^"]*)" style="([^"]*)">(\d+)%<\/span>/g)];
+  const lastLabel = marked[marked.length - 1];
   check("the last point's label is held inside the plot's right edge (right-aligned to it), and is the same ink and weight as the others", !!lastLabel && /left:100%/.test(lastLabel[2]) && /(^| )-translate-x-full( |$)/.test(lastLabel[1]) && /font-semibold/.test(lastLabel[1]) && /text-\[var\(--c-ink2\)\]/.test(lastLabel[1]), { file: CURVE });
+  /* THE PICKER ROW STANDS 32PX ABOVE THE PLOT: the start's label stands at the plot's top, above its point, in a box 26px tall (an 18px line
+     and `pb-2`). Under the 24px the first year's label had (its point 10px lower) the start's box reached 2px into the picker row's band and
+     its text 1px, hanging against the "Region" word (probed at 1280, 768, 375 and 320); 32 clears the row by 6px, 7 to the text, about 10 to
+     the glyph. BLIND SPOT: this reads the class, not the pixels; the probe in the round's evidence measures the gap in a browser. */
+  check("the picker row stands 32px above the plot (mb-8), so the start's label, which stands at the plot's top, clears the row", /<div class="mb-8 flex items-center gap-3"><label/.test(html), { file: CURVE, remedy: "give SurvivalCurve's picker row mb-8 (it was mb-6, 24px, which the first year's label cleared and the start's, a point higher, did not)" });
+  const firstLabel = marked[0];
+  check("the start's label is held inside the plot's left edge (left-aligned to it, no shift left of it), above its point, and is the same ink and weight as the others", !!firstLabel && /left:0%/.test(firstLabel[2]) && /top:0%/.test(firstLabel[2]) && !/(^| )-?translate-x-/.test(firstLabel[1]) && /(^| )-translate-y-full( |$)/.test(firstLabel[1]) && /font-semibold/.test(firstLabel[1]) && /text-\[var\(--c-ink2\)\]/.test(firstLabel[1]), { file: CURVE });
 }
 
 /* THE SOURCE CARRIES NO GUARD THAT TAKES THE FOCAL MARK'S LABEL AWAY (read as text, comments stripped). */
 const code = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
 const oSrc = code(OBSTACLES), cSrc = code(CURVE);
 check("Obstacles holds no `o === top ? null` guard on a share, and its fill takes no lead", !/o === top\s*\?\s*null/.test(oSrc) && !/const fill = \(lead/.test(oSrc), { file: OBSTACLES });
-check("SurvivalCurve labels every point after the start and holds no `!isLast` guard on a label", !/!isLast/.test(cSrc), { file: CURVE });
+const curveLabels = [...cSrc.matchAll(/<span data-mark-label[\s\S]*?<\/span>/g)].map((m) => m[0]);
+check("SurvivalCurve labels every point, the start too: no `!isLast` guard on a label, none behind an index test (`i > 0 ?`, the guard that took the start's away), and its one label element prints `Math.round(p.pct)` read from its own point, never a typed share", !/!isLast/.test(cSrc) && !/\bi\s*(>|!==?)\s*0\s*\?[\s\S]{0,80}data-mark-label/.test(cSrc) && curveLabels.length === 1 && /\{Math\.round\(p\.pct\)\}%<\/span>$/.test(curveLabels[0]), { file: CURVE });
 
 /* THE RENDER, where the harness wrote it: /gb's chapter 04 draws both. */
 const GB = "scratchpad/harness/pages/country-GB.html";
@@ -98,7 +112,7 @@ if (existsSync(GB)) {
   const svPart = at("first-years", 'id="obstacles"');
   const pts = Number(/data-archetype="survival-curve"[^>]*data-points="(\d+)"/.exec(svPart)?.[1] ?? 0);
   const ptLabels = (svPart.match(/<span data-mark-label="true"[^>]*>\d+%<\/span>/g) ?? []).length;
-  check(`/gb's render labels every point after the start (${ptLabels} labels for ${pts} points)`, pts > 0 && ptLabels === pts, { file: "src/components/spine/country/country-view.tsx", remedy: "render the UK page (bash scratchpad/reform/render_some.sh \"country GB\") after SurvivalCurve labels its last point" });
+  check(`/gb's render labels every point, the start too (${ptLabels} labels for ${pts} points and the start)`, pts > 0 && ptLabels === pts + 1, { file: "src/components/spine/country/country-view.tsx", remedy: "render the UK page (bash scratchpad/reform/render_some.sh \"country GB\") after SurvivalCurve labels its start and its last point" });
 } else console.log(`DEFER  ${GB} is not rendered here; the render checks did not run`);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

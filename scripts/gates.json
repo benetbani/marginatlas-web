@@ -1916,6 +1916,7 @@
         "data/home/new_companies.json",
         "scratchpad/harness/pages/home-gb.html",
         "scratchpad/harness/pages/openings-world.html",
+        "src/components/spine/archetypes/MarkList.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/components/spine/openings/NewCompanies.tsx",
         "src/components/spine/openings/openings-view.tsx"

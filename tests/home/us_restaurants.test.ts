@@ -142,6 +142,10 @@ if (built) {
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
   const heads = [[COPY.home.usRestaurants.added, String(built.from), String(built.to)], [COPY.home.usRestaurants.lost, String(built.from), String(built.to)]];
   check(`each table's heads are its name, ${built.from} and ${built.to} (${tables.map((t) => spans(t, "data-head").join(" | ")).join("; ")})`, tables.length === 2 && tables.every((t, i) => JSON.stringify(spans(t, "data-head")) === JSON.stringify(heads[i].map(esc))), DRAWN_AT);
+  /* THE VALUE HEADS KEEP TO ONE LINE (critique pass 3, fix round D2, item P2.8): a figures table's two value heads (a year, a unit) sit in
+     columns of 60 to 88px, and a head that wraps there breaks a column's one-line register; `whitespace-nowrap` on both. */
+  const valueHeads = tables.map((t) => [...t.matchAll(/<span data-head="true" class="([^"]*)"[^>]*>[^<]*<\/span>/g)].slice(1).map((m) => m[1]));
+  check(`each table's two value heads keep to one line (whitespace-nowrap on ${valueHeads.flat().filter((c) => /(^| )whitespace-nowrap( |$)/.test(c)).length} of ${tables.length * 2})`, tables.length === 2 && valueHeads.every((cls) => cls.length === 2 && cls.every((c) => /(^| )whitespace-nowrap( |$)/.test(c))), { file: "src/components/spine/archetypes/TiersTable.tsx", remedy: "give FiguresTable's two value heads (heads.a and heads.b) `whitespace-nowrap`" });
   check(`the drawn rows are the builder's, in its order (${tables.map((t) => spans(t, "data-label").join(", ")).join("; ")})`, tables.length === 2 && JSON.stringify(spans(tables[0], "data-label")) === JSON.stringify(built.added.map((r) => esc(r.name))) && JSON.stringify(spans(tables[1], "data-label")) === JSON.stringify(built.lost.map((r) => esc(r.name))), DRAWN_AT);
   check("Detroit, held out of the ranking by plan decision 12, is not drawn", !html.includes("Detroit"), DRAWN_AT);
   const accents = html.match(/(?:^|[\s"])text-\[var\(--terra-text\)\]/g) ?? [];

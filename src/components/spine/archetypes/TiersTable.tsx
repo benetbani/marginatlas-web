@@ -283,8 +283,9 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
         {nameHead ? <span data-head className={HEAD}>{nameHead}</span> : <span aria-hidden />}
         {/* The two FIGURE columns' heads are tabular like the figures under them (ART-DIRECTION F1): the home's years, "2019" and
             "2023", are digits and a head that stacks over its column must not set them proportional; a word's head is unchanged. */}
-        <span data-head className={`text-right tabular-nums ${HEAD}`}>{heads.a}</span>
-        <span data-head className={`text-right tabular-nums ${HEAD}`}>{heads.b}</span>
+        {/* The two value heads keep to one line (critique pass 3, fix round D2, item P2.8): the columns are 60 to 88px, and a head that wraps there breaks their one-line register. */}
+        <span data-head className={`text-right tabular-nums whitespace-nowrap ${HEAD}`}>{heads.a}</span>
+        <span data-head className={`text-right tabular-nums whitespace-nowrap ${HEAD}`}>{heads.b}</span>
       </div>
       <div data-idea="I5" className={fill ? "flex flex-1 flex-col divide-y divide-[var(--c-border)]" : "divide-y divide-[var(--c-border)]"}>
         {figures.map((r, i) => (

@@ -7,8 +7,11 @@
  * curve kept as a thin reference line while a region is shown, the card's figure and its words following the choice, and the
  * region's place marked on the best-to-worst strip under the curve.
  *
- * EVERY POINT AFTER THE START PRINTS ITS SHARE, the last (the terracotta dot) too (critique pass 2, fix round C2, item P1.5): the
- * card's figure stays the large one above the plot and the label is the drawing's key.
+ * EVERY POINT PRINTS ITS SHARE, the last (the terracotta dot) too (critique pass 2, fix round C2, item P1.5) and the start too (critique
+ * pass 3, fix round D2, item P2.8: the start alone stood without one, where the reader meets the whole cohort first): the card's figure
+ * stays the large one above the plot and the label is the drawing's key. The start's share is read off the drawn series' own first
+ * point (START, below) like every other point's, never typed as a label; the last label is held inside the plot's right edge and
+ * the start's inside its left, so neither leaves the box.
  *
  * THE LAW (M3): the default is the country, the curve the card printed; a region's figures are the table's own, rounded as the
  * country's are; nothing is computed but the plot's geometry. The choice is a native select, so a phone opens its own picker and
@@ -19,6 +22,11 @@ import * as React from "react";
 export type CurvePoint = { year: number; pct: number };
 export type RegionCurveData = { key: string; name: string; inName: string; points: CurvePoint[] };
 export type SurvivalWords = { focal: string; focalIn: string; start: string; year: string; regions: string; choose: string; country: string; kicker: string };
+
+/** A COHORT AT ITS START IS THE WHOLE: the curve's first point, year 0 with every firm still trading, by definition and not a share the
+ *  file holds (its series begins at year 1). The line is drawn from it and the drawing prints its share like every other point's,
+ *  read from this point (critique pass 3, fix round D2, item P2.8). */
+const START: CurvePoint = { year: 0, pct: 100 };
 
 export function SurvivalCurve({ id, country, regions, best, worst, words }: {
   id: string;
@@ -38,10 +46,10 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
   const x = (year: number) => (year / maxYear) * 100;
   const floor = Math.max(0, Math.floor((lowest - 20) / 10) * 10);
   const y = (pct: number) => ((100 - pct) / (100 - floor)) * 100;
-  const path = (pts: CurvePoint[]) => [{ year: 0, pct: 100 }, ...pts].map((p, i) => `${i ? "L" : "M"}${x(p.year).toFixed(2)},${y(p.pct).toFixed(2)}`).join(" ");
+  const path = (pts: CurvePoint[]) => [START, ...pts].map((p, i) => `${i ? "L" : "M"}${x(p.year).toFixed(2)},${y(p.pct).toFixed(2)}`).join(" ");
   const line = path(shown);
   const area = `${line} L100,100 L0,100 Z`;
-  const pts = [{ year: 0, pct: 100 }, ...shown];
+  const pts = [START, ...shown];
   const gid = `${id}-area-fill`;
   /* A share placed on the regions' strip: 0 at the lowest region, 100 at the highest, held 2 inside each end. */
   const span = (v: number) => (best && worst && best.pct > worst.pct ? Math.min(98, Math.max(2, ((v - worst.pct) / (best.pct - worst.pct)) * 100)) : 50);
@@ -52,8 +60,9 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
         <div data-focal="1" aria-live="polite" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{Math.round(last.pct)}%</div>
         <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{region ? W.focalIn.replace("{n}", String(maxYear)).replace("{region}", region.inName) : W.focal.replace("{n}", String(maxYear))}</p>
       </div>
-      {/* 24 under the picker (the design review, 2026-10-04: the first year's "95%" stands above its point and touched the picker). */}
-      <div className="mb-6 flex items-center gap-3">
+      {/* 32 under the picker (the design review, 2026-10-04: the first year's "95%" stands above its point and touched the picker, so 24; the
+          start's "100%" stands above the plot's very top, a point higher, so 32: critique pass 3, fix round D2, item P2.8). */}
+      <div className="mb-8 flex items-center gap-3">
         <label htmlFor={`${id}-region`} className="text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{W.choose}</label>
         <select
           id={`${id}-region`}
@@ -79,14 +88,13 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
             <path d={line} fill="none" stroke="var(--terra)" strokeWidth="2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
           </svg>
           {pts.map((p, i) => {
+            const isFirst = i === 0;
             const isLast = i === pts.length - 1;
             return (
               <React.Fragment key={p.year}>
                 <span aria-hidden data-point={p.year} className={`absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] ${isLast ? "h-3.5 w-3.5" : ""}`} style={{ left: `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%`, background: isLast ? "var(--terra)" : "var(--c-ink2)" }} />
-                {/* EVERY POINT AFTER THE START PRINTS ITS SHARE, THE LAST TOO (critique pass 2, fix round C2, item P1.5; the card's figure stays the large 38%): the last label is right-aligned to the plot's edge so it never leaves the box. */}
-                {i > 0 ? (
-                  <span data-mark-label className={`absolute ${isLast ? "-translate-x-full" : "-translate-x-1/2"} -translate-y-full pb-2 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]`} style={{ left: isLast ? "100%" : `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }}>{Math.round(p.pct)}%</span>
-                ) : null}
+                {/* EVERY POINT PRINTS ITS SHARE, THE START AND THE LAST TOO (critique pass 2, fix round C2, item P1.5; pass 3, fix round D2, item P2.8; the card's figure stays the large 38%): read from the point, like every other. The last label is right-aligned to the plot's edge and the start's left-aligned to it, so neither leaves the box. */}
+                <span data-mark-label className={`absolute ${isLast ? "-translate-x-full" : isFirst ? "" : "-translate-x-1/2"} -translate-y-full pb-2 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]`} style={{ left: isLast ? "100%" : isFirst ? "0%" : `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }}>{Math.round(p.pct)}%</span>
               </React.Fragment>
             );
           })}

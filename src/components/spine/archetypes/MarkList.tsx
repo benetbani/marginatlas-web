@@ -469,7 +469,8 @@ function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, grou
               {marks ? <span aria-hidden="true" /> : null}
               <div className="col-span-2 flex items-baseline justify-between gap-x-3">
                 <span className={HEAD_CLS}>{g.name}</span>
-                <span className={HEAD_CLS}>{head.value}</span>
+                {/* THE UNIT HEAD KEEPS ITS WIDTH AND ITS LINE (critique pass 3, fix round D2, item P2.8): with a long group name ("Latin America and the Caribbean") both words of this flex row shrank and "Per 1,000" broke onto two lines at 768; the name wraps in its own span instead. */}
+                <span className={`${HEAD_CLS} shrink-0 whitespace-nowrap`}>{head.value}</span>
               </div>
               {doors ? <span aria-hidden="true" /> : null}
             </div>
