@@ -18,7 +18,7 @@ import { mayPublish, needsThinMarketNote } from "@/lib/taxonomy/presence";
 import { ThinMarketNote } from "@/components/kit/ThinMarketNote";
 import { INDUSTRIES, industryToSlug, isExcludedFromDiscovery } from "@/lib/taxonomy";
 import { computeBreakeven } from "@/lib/economics/breakeven";
-import { getCityTier, getCityPopulation, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
+import { cityOfCountry, getCityTier, getCityPopulation, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { iso2ToName } from "@/lib/countries";
 // RevenueTiles / RevenueDistribution / NetProfitWaterfall retired (WS3): the
 // content-map stack (AnswerFirstMasthead + CellDecisionStack) replaces them.
@@ -548,7 +548,7 @@ async function CellPageBody({
   // multi-part opportunity strip (computeScores / scoreSet) no longer feeds this
   // page's masthead, so it is not recomputed here; the computeScores module
   // itself is untouched and still serves the surfaces that use it.
-  const cityTier = getCityTier(geo);
+  const cityTier = getCityTier(cityOfCountry(country, geo));
 
   // Top-of-page dashboard inputs. Hoisted here so each is computed ONCE and
   // reused both in the dashboard and in the deeper sections below (the
@@ -572,11 +572,11 @@ async function CellPageBody({
     cell.payroll_per_employee ?? estimateWagePerEmployee(country, cell.industry_id, geo);
   // City population (residents) when the geo slug is a known city; null for
   // state/region slugs. Drives the market-density read.
-  const cityPopulation = getCityPopulation(geo);
+  const cityPopulation = getCityPopulation(cityOfCountry(country, geo));
   // City cost-of-living index (NYC = 100) when the geo slug is a known city;
   // null for state/region slugs. Place-adjusts the modeled "Cost to open"
   // figure so the same business reads higher in a costly metro.
-  const cityCostOfLivingIndex = getCityCostOfLivingIndex(geo);
+  const cityCostOfLivingIndex = getCityCostOfLivingIndex(cityOfCountry(country, geo));
 
   // The masthead atmosphere image was retired with BoardHero (WS3): the
   // AnswerFirstMasthead carries the faint survey-grid motif instead, and the

@@ -174,3 +174,9 @@ export function getCityIdentity(
   if (!geoSlug) return null;
   return IDENTITY_BY_SLUG.get(geoSlug.toLowerCase()) ?? null;
 }
+
+/** THE PAGE'S OWN COUNTRY'S CITY, OR NONE (plan 2026-10-11): the maps key a city by slug alone and /gb/boston is not Massachusetts; a page-place read passes here first, as page_targets.ts compares the country. */
+export function cityOfCountry(iso2: string | null | undefined, geoSlug: string | null | undefined): string | null {
+  const slug = (geoSlug ?? "").toLowerCase();
+  return iso2 && slug && IDENTITY_BY_SLUG.get(slug)?.iso2.toUpperCase() === iso2.toUpperCase() ? slug : null;
+}

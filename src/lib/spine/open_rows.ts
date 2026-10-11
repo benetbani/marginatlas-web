@@ -81,7 +81,7 @@ import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import type { Companion } from "@/components/spine/archetypes/BentoBand";
 import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
 import { placeFactor, startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
-import { getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
+import { cityOfCountry, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
 import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
@@ -207,11 +207,11 @@ export function openForm(open: OpenData): OpenForm {
 
 /* THE KEYED FIGURE AT THE PLACE'S PRICES (plan 06, task A6, 2026-10-04): the archetype table is a New York index (cost of
    living 100), and the trade page printed it unadjusted on every city (a London barbershop at New York's 60,000). Where the
-   page's city holds a cost-of-living index, the figure takes the place factor (London's 75: 0.75), rounded once to three
+   page's city, one of its own country (cityOfCountry), holds a cost-of-living index, the figure takes the place factor (London's 75: 0.75), rounded once to three
    figures, and the basis says it is an estimate at that city's prices; a page with no city index keeps the keyed figure and
    its empty basis. Never `placeAdjustedStartupCapital`, which answers the 80,000 default for a trade the table does not key. */
-export function placeCostFactor(meta: { geo?: unknown } | null | undefined): number | null {
-  const index = getCityCostOfLivingIndex(typeof meta?.geo === "string" ? meta.geo : null);
+export function placeCostFactor(meta: { iso2?: unknown; geo?: unknown } | null | undefined): number | null {
+  const index = getCityCostOfLivingIndex(cityOfCountry(typeof meta?.iso2 === "string" ? meta.iso2 : null, typeof meta?.geo === "string" ? meta.geo : null));
   return index != null ? placeFactor({ costOfLivingIndex: index }) : null;
 }
 

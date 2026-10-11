@@ -171,7 +171,7 @@ export function londonTradeHero(slug: string): LondonTradeHero | null {
  *  state word stands (three trades on 2026-10-04). Sales a year are the register's alone, above. */
 export function londonTradeFallbackAnswer(slug: string): LondonTradeHero["answer"] | null {
   const keyed = startupCapitalArchetypeKeyed(slug);
-  const factor = placeCostFactor({ geo: "london" });
+  const factor = placeCostFactor({ iso2: "GB", geo: "london" });
   if (keyed != null && factor != null) {
     return {
       label: C().openLabel,

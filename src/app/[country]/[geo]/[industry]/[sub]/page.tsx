@@ -50,7 +50,7 @@ import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
 import { computeBreakeven } from "@/lib/economics/breakeven";
-import { getCityTier } from "@/lib/cities/city_tier";
+import { cityOfCountry, getCityTier } from "@/lib/cities/city_tier";
 import industryMarginsJson from "@/lib/finance/industry_margins.json";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
@@ -302,7 +302,7 @@ async function NeighborhoodCellPageBody({
   });
 
   // Break-even orders/day, place-adjusted by city tier.
-  const cityTier = getCityTier(city);
+  const cityTier = getCityTier(cityOfCountry(country, city));
   const be = cell.industry_id
     ? computeBreakeven(
         cell.industry_id,

@@ -56,7 +56,7 @@ import {
 } from "@/lib/markets/opening_archetypes";
 import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
 import { displayDensityPer10k } from "@/lib/finance/margin_floor";
-import { getCityCostOfLivingIndex, getCityPopulation } from "@/lib/cities/city_tier";
+import { cityOfCountry, getCityCostOfLivingIndex, getCityPopulation } from "@/lib/cities/city_tier";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { getLondonEntry } from "@/lib/scores/cell_board";
 import {
@@ -387,7 +387,7 @@ export function breakInForCell(
   densityPer10k: number;
 } | null {
   const industryId = cell.industry_id ?? null;
-  const costOfLivingIndex = getCityCostOfLivingIndex(geo);
+  const costOfLivingIndex = getCityCostOfLivingIndex(cityOfCountry(cell.country, geo));
   const avgYearlySalary = isNum(annualIncome) ? annualIncome : null;
 
   // Owner take-home: London prefers its curated figure (matching the cell board),
@@ -421,7 +421,7 @@ export function breakInForCell(
   // archetype is the safe place-level fallback for a London read here.
   let realPer10k: number | null = null;
   if (london == null) {
-    const pop = getCityPopulation(geo);
+    const pop = getCityPopulation(cityOfCountry(cell.country, geo));
     if (isTrustedLocalCell(cell) && isNum(cell.n_enterprises) && isNum(pop) && pop > 0) {
       realPer10k = displayDensityPer10k(
         Math.round((cell.n_enterprises / (pop / 10_000)) * 10) / 10,

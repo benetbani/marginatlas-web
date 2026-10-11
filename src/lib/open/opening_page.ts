@@ -64,6 +64,7 @@ import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import {
+  cityOfCountry,
   getCityCostOfLivingIndex,
   getCityPopulation,
 } from "@/lib/cities/city_tier";
@@ -414,8 +415,8 @@ function scoreCellLikeBoard(peer: Cell): { score: number | null; band: BreakInBa
   const th = pageTakeHome(peer, country, geo);
   const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
   const peerGeoSlug = peer.geo_name ? slugForGeo(peer) : null;
-  const cityCostOfLivingIndex = getCityCostOfLivingIndex(peerGeoSlug);
-  const cityPopulation = getCityPopulation(peerGeoSlug);
+  const cityCostOfLivingIndex = getCityCostOfLivingIndex(cityOfCountry(country, peerGeoSlug));
+  const cityPopulation = getCityPopulation(cityOfCountry(country, peerGeoSlug));
 
   const { breakInRating } = buildCellBoard({
     cell: peer,
@@ -523,8 +524,8 @@ export async function buildOpeningPage(
 
   // 3. Place signals, resolved exactly as the page resolves them.
   const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
-  const cityCostOfLivingIndex = getCityCostOfLivingIndex(geo);
-  const cityPopulation = getCityPopulation(geo);
+  const cityCostOfLivingIndex = getCityCostOfLivingIndex(cityOfCountry(country, geo));
+  const cityPopulation = getCityPopulation(cityOfCountry(country, geo));
   const countryWageProxy =
     econSnap && isNum(econSnap.avgMonthlySalary)
       ? econSnap.avgMonthlySalary * 12

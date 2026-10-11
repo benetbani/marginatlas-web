@@ -26,7 +26,7 @@ import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
-import { getCityPopulation } from "@/lib/cities/city_tier";
+import { cityOfCountry, getCityPopulation } from "@/lib/cities/city_tier";
 import {
   estimateWagePerEmployee,
   estimateEmployeesFromFirms,
@@ -255,7 +255,7 @@ export async function GET(req: NextRequest) {
   // national firm count, not a local one, so suppress it under a city title.
   // A London cell with modeled economics overrides this with the real London
   // firm count and the per-10k density on London's resident population.
-  const cityPopulation = getCityPopulation(regionSlug);
+  const cityPopulation = getCityPopulation(cityOfCountry(country, regionSlug));
   const isLocalCell = LE != null || cell.geo_level !== "country";
   const competitors = LE
     ? LE.firms

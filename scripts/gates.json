@@ -2232,6 +2232,10 @@
       "browser": false,
       "asserts": "The cost to open at the city's prices and no licence list in another country's terms on a UK page (plan 06, task A6).",
       "reads": [
+        "src/lib/cities/city_tier.ts",
+        "src/lib/home/beats.ts",
+        "src/lib/markets/across_cities.ts",
+        "src/lib/spine/adapt_country.ts",
         "src/lib/spine/open_rows.ts"
       ],
       "claims": []

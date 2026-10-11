@@ -44,7 +44,7 @@ import { londonTradeFallbackAnswer, londonTradeHero, londonTradeStrip } from "./
 import { buildCellRelatedLinks, fetchCellSiblings } from "@/lib/cells/related_links";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { computeBreakeven } from "@/lib/economics/breakeven";
-import { getCityTier } from "@/lib/cities/city_tier";
+import { cityOfCountry, getCityTier } from "@/lib/cities/city_tier";
 import { iso2ToName } from "@/lib/countries";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
@@ -165,7 +165,7 @@ export async function loadCellView(
     annualIncome,
   });
 
-  const cityTier = getCityTier(geo);
+  const cityTier = getCityTier(cityOfCountry(country, geo));
   const be = cell.industry_id
     ? computeBreakeven(cell.industry_id, cell.revenue_per_firm ?? cell.rev_p50 ?? null, cityTier)
     : null;
