@@ -5,12 +5,19 @@
  * is carried over from the page this replaces, including the canonical, which
  * matters: 29 routes were repaired that week and this is one of them.
  *
- * WHY IT SITS OUTSIDE `(site)`. Everything in that route group is wrapped in
- * <SiteChrome>, which is the previous generation's masthead and footer. This
- * page carries its own. A route group does not appear in the URL, so moving the
- * folder out changes what wraps the page and never changes its path. The
- * `[country]` tree already resolves the same tension the other way round, by
- * rendering <SiteChrome> itself.
+ * IT DRAWS THE SITE'S CHROME, LIKE EVERY PAGE (truth-fixes round 3C,
+ * 2026-10-12). It was promoted out of `(site)` to carry a masthead and a
+ * footer of its own, so it showed no skip link, no seven-name bar, no sheet,
+ * no newsletter bar and not the site's footer. It draws <SiteChrome> itself
+ * now, as the `[country]` tree does, and writes no masthead, no <main> and no
+ * footer: SiteChrome's <main id="main"> is the page's one landmark. The v2
+ * ground (`.av2`) stays and is the column's first child, so the rule in
+ * globals.css (THE ZONES, round 3C) lets it meet the bar and the foot.
+ * tests/chrome/masthead.test.ts draws this route and reads its markup.
+ *
+ * WHY IT STILL SITS OUTSIDE `(site)`. A route group does not appear in the
+ * URL, so moving the folder out changed what wraps the page and never its
+ * path, and moving it back would change nothing a reader sees now.
  *
  * THE DATA IS THE SAME DATA. `buildWorldAtlas` already exists, already groups
  * covered countries by region ordered broadest first, and already refuses to
@@ -34,12 +41,12 @@ import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import * as React from "react";
 import { CountryFlag } from "@/components/CountryFlag";
+import { SiteChrome } from "@/components/SiteChrome";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { getCoverageReport } from "@/lib/quality/coverage-report";
 import { getCoverageRows } from "@/lib/coverage/report";
 import { buildWorldAtlas } from "@/lib/scores/world_atlas";
 import { Place } from "@/components/spine2/Place";
-import { SiteFooter } from "@/components/spine2/SiteFooter";
 import { citiesByCountry } from "@/lib/home/front_page_figures";
 import { countryPageTarget } from "@/lib/geo/page_targets";
 
@@ -134,7 +141,7 @@ function CountryLink({ iso2, name }: { iso2: string; name: string }) {
   );
 }
 
-export default async function WorldPage() {
+function WorldBody() {
   const report = getCoverageReport();
 
   /* Only real ISO2 codes from the taxonomy may render. The coverage report has
@@ -166,29 +173,6 @@ export default async function WorldPage() {
     <div className="av2" style={{ position: "relative" }}>
       <Place />
       <div className="wrap">
-        <header className="mast">
-          <div className="in">
-            <span className="brand">
-              <span className="m" />
-              Margin Atlas
-            </span>
-            <nav className="lat" aria-label="Where you are">
-              <a href="/">Home</a>
-              <span className="s">&rsaquo;</span>
-              <a href="/world">The world</a>
-            </nav>
-          </div>
-        </header>
-
-        {/* THE MAIN LANDMARK, ADDED 2026-08-09. This page was promoted out of
-            <SiteChrome>, which is where <main> lives for every other route, and
-            nothing replaced it. Measured on production: /world, /industries and
-            the v2 cell page were the only three shipping pages emitting no main
-            landmark, so a screen reader had no content region to jump to and a
-            skip link had nothing to skip to. It closes before the footer, which
-            is chrome and belongs outside the main region. */}
-        <main>
-
         {/* 1 , THE OPENING. A title card is not a page opening. This states
             what the page is for, and carries the figure that makes the list
             below worth scrolling: most of the map is not filled, and the
@@ -368,11 +352,17 @@ export default async function WorldPage() {
             </p>
           </section>
         )}
-
-        </main>
-
-        <SiteFooter />
       </div>
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited (the same shape as the `[country]` tree): the bar and its sheet, the one <main>, the newsletter bar
+   and the footer are SiteChrome's, and the body above is the page. */
+export default async function WorldPage() {
+  return (
+    <SiteChrome>
+      <WorldBody />
+    </SiteChrome>
   );
 }

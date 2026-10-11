@@ -1226,6 +1226,24 @@ main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > 
   border-image-width: 0;
   border-image-outset: 1rem 100vmax 0.5rem;
 }
+/* THE v2 PAGES MEET THE BAR, THE EDGES AND THE FOOT TOO (truth-fixes round 3C, 2026-10-12): /industries and /world stand on the older v2
+   ground (`.av2`, src/styles/atlas-spine.css: glass and panel cards on paper), not on the zones, and drew a masthead and a footer of their own
+   until they drew SiteChrome like every page. Drawn inside <main>'s column that ground is a box: the 16px of <main>'s padding white under the
+   bar's hairline, the gutters white either side, and under the last card only the newsletter bar's hairline (the v2 footer's band had been the
+   room). The page root, when it is the column's first rendered child, takes the zones' own bleed in the tint, as the trail does: a border
+   image's outset of 1rem above (<main>'s pt-4), 100vmax to either side and none below, and 3rem of padding of its own, so the last card stands
+   off the newsletter bar as it stood off the footer's band. It moves no box (the opening card and every section stay where they were), and the
+   root's own overflow-x hidden clips what stands inside it and not its own border image, as the trail's overflow-hidden does. `.av2` is
+   atlas-spine.css's scope class and that file is left alone: this selector needs `main >` and the first rendered child, so the workshop pages
+   that draw `.av2` bare are not matched. IN LONGHAND, as the rules above: the production build's CSS minimizer parses as SCSS. */
+main > .av2:nth-child(1 of :not(script, link, style, noscript)) {
+  background: var(--zone-tint);
+  border-image-source: conic-gradient(var(--zone-tint) 0 0);
+  border-image-slice: 0 fill;
+  border-image-width: 0;
+  border-image-outset: 1rem 100vmax 0;
+  padding-bottom: 3rem;
+}
 /* EDGE TO EDGE WITHOUT A CLIP (the code review of 2026-10-04): the spread shadow needed a clip-path to keep it off its neighbours,
    and the clip cut whatever stood out of the zone (a "?" tip near its top opening upward). A border image's outset paints the
    band's colour 100vmax to either side and none above or below; like the shadow it is ink overflow, so nothing scrolls sideways.

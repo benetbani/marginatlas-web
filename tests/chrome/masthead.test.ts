@@ -154,6 +154,19 @@ async function main() {
   check("a page that opens with its trail paints the strip too: the trail, when it is the shell's first child, takes the tint and a border image's outset of 1rem 100vmax 0.5rem (<main>'s padding above it, its own margin below it), in longhand and with no double slash",
     trailRule !== "" && TRAIL_LONGHANDS.every((l) => trailRule.includes(l)) && !/\bborder-image\s*:/.test(trailRule) && !/\/\//.test(trailRule),
     { file: CSS, remedy: "in THE ZONES, after the rule above, add main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > nav[data-crumbs]:first-child { background: var(--zone-tint); border-image-source: conic-gradient(var(--zone-tint) 0 0); border-image-slice: 0 fill; border-image-width: 0; border-image-outset: 1rem 100vmax 0.5rem; }" });
+  /* THE v2 PAGES MEET THE BAR, THE EDGES AND THE FOOT TOO (truth-fixes round 3C). /industries and /world stand on the older v2 ground (.av2, in
+     src/styles/atlas-spine.css: glass and panel cards on paper), not on the zones, and drew a masthead and a footer of their own until they drew
+     SiteChrome like every page. Inside <main>'s column that ground is a box: the 16px of <main>'s padding white under the bar's hairline, the
+     gutters white either side, and under the last card only the newsletter bar's hairline (the v2 footer's band had been the room). The page
+     root, when it opens the column, takes the zones' own bleed in the tint, in longhand as the rules above: a border image's outset of 1rem above
+     (<main>'s pt-4), 100vmax either side and none below, and 3rem of padding of its own, so the last card stands off the newsletter bar as it stood
+     off the v2 footer's band. It moves no box. BLIND SPOT: this reads the stylesheet's text; the pixels under the hairline, at the edges and above
+     the newsletter bar are the browser's (the round's frames). */
+  const v2Rule = (/main\s*>\s*\.av2:nth-child\(1 of :not\([^)]*\bscript\b[^)]*\)\)\s*\{([^}]*)\}/.exec(css)?.[1] ?? "").replace(/\s+/g, " ");
+  const V2_LONGHANDS = ["background: var(--zone-tint);", "border-image-source: conic-gradient(var(--zone-tint) 0 0);", "border-image-slice: 0 fill;", "border-image-width: 0;", "border-image-outset: 1rem 100vmax 0;", "padding-bottom: 3rem;"];
+  check("a v2 page (the Trades page, the world page) that opens the column meets the bar as the zones do: its root, when it is <main>'s first rendered child, takes the tint, a border image's outset of 1rem 100vmax 0 and 3rem of padding under it, in longhand and with no double slash",
+    v2Rule !== "" && V2_LONGHANDS.every((l) => v2Rule.includes(l)) && !/\bborder-image\s*:/.test(v2Rule) && !/\/\//.test(v2Rule),
+    { file: CSS, remedy: "in THE ZONES, after the trail's rule, add main > .av2:nth-child(1 of :not(script, link, style, noscript)) { background: var(--zone-tint); border-image-source: conic-gradient(var(--zone-tint) 0 0); border-image-slice: 0 fill; border-image-width: 0; border-image-outset: 1rem 100vmax 0; padding-bottom: 3rem; }" });
 
   /* THE ANCHORS (fix round 1, group 1; widened in the closing cleanup of plan 2026-10-10, item 2). The scroll-padding-top above is the
      bar's whole height and 8px of air, and a browser ADDS an element's own scroll-margin-top to it, so an offset written before the
@@ -388,18 +401,90 @@ async function main() {
      newsletter bar and the footer, the page being read marked Countries, and the real trail drawn first in the shell with the body root
      after it, where the stylesheet's trail rule reaches it (the seam above, for the real page). BLIND SPOT: markup, not pixels: the first
      zone meeting the bar under the hairline is the round's frames (scratchpad/tf). */
+  /* A ROUTE IS DRAWN HERE AS NEXT DRAWS IT, AND A THROW IS A RED ON THE FILE THAT THREW (the review of round 1, Minor 1). The how-to route calls
+     notFound() when buildHowTo("GB") answers nothing, and that throw, awaited bare, reached main()'s catch: one red filed against SiteChrome with
+     the chrome's own remedy, and the checks after the how-to block (89 of 119) never ran. drawRoute turns a throw into a red on the named file and
+     hands back "", so the rest of the test runs; the how-to builder is asked first, so a missing answer is a red on src/lib/spine/howto_rows.ts. */
+  const drawRoute = async (what: string, pathname: string, page: () => unknown, at: { file: string; remedy: string }): Promise<string> => {
+    process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
+    process.env.NEXT_PUBLIC_PAYWALL = "";
+    try {
+      return renderToStaticMarkup(React.createElement(PathnameContext.Provider, { value: pathname }, (await page()) as React.ReactElement));
+    } catch (e) {
+      failed++;
+      red({ rule: RULE, file: at.file, detail: `${what} could not be drawn: ${e instanceof Error ? e.message : String(e)}`, remedy: at.remedy });
+      return "";
+    }
+  };
+  const { buildHowTo } = (await import("../../src/lib/spine/howto_rows")) as typeof import("../../src/lib/spine/howto_rows");
+  const howtoGB = buildHowTo("GB");
+  check(`the how-to builder answers for GB, so its route has a page to draw (${howtoGB ? `"${howtoGB.title}"` : "it answers nothing"})`, !!howtoGB, { file: "src/lib/spine/howto_rows.ts", remedy: "restore GB's forms in the how-to builder: the route calls notFound() when buildHowTo(\"GB\") answers nothing, so it has no page to draw and every check below that reads the page is skipped" });
   const HowToPage = (await import("../../src/app/[country]/how-to-open/page")).default as (p: { params: Promise<{ country: string }> }) => Promise<React.ReactElement>;
-  const howto = renderToStaticMarkup(React.createElement(PathnameContext.Provider, { value: "/gb/how-to-open" }, await HowToPage({ params: Promise.resolve({ country: "gb" }) })));
-  const hp = parts(howto);
-  const howtoMains = howto.match(/<main\b/g)?.length ?? 0;
-  const howtoNewsletter = howto.includes('id="atlas-newsletter-line"');
-  check(`the how-to route draws the chrome: the bar with its sheet, one <main id="main">, the newsletter bar and the footer (header ${!!hp.header}, sheet ${!!hp.sheet}, ${howtoMains} main, newsletter ${howtoNewsletter}, footer ${!!hp.footer})`,
-    !!hp.header && !!hp.sheet && howtoMains === 1 && /\bid="main"/.test(hp.main) && howtoNewsletter && !!hp.footer && /^<a href="#main"/.test(howto),
-    { file: "src/app/[country]/how-to-open/page.tsx", remedy: "draw the page's body inside <SiteChrome> as the other spine routes do (<SiteChrome><SpineShell><HowToBody /></SpineShell></SiteChrome>) and write no <main> of its own: SiteChrome's is the page's one landmark" });
-  const howtoCountries = anchors(slice(hp.bar, /<nav aria-label="Primary"/, "</nav>")).find((n) => n.href === "/countries");
-  check("on the how-to page the bar marks Countries as the page being read", !!howtoCountries && /aria-current="page"/.test(howtoCountries.tag), { file: "src/app/[country]/how-to-open/page.tsx", remedy: "draw the how-to route inside <SiteChrome>, whose bar reads the address through Next's pathname and marks a country's pages Countries" });
-  const howtoTrail = trailNav(howto);
-  check(`the how-to page's trail is the shell's first child and its body root follows it, so the stylesheet's trail rule reaches the real page (${howtoTrail ? howtoTrail.getAttribute("aria-label") : "no trail reached"})`, !!howtoTrail && howtoTrail.nextElementSibling?.hasAttribute("data-spine-body") === true, { file: "src/components/spine/country/how-to-view.tsx", remedy: "draw the trail (<Crumbs>) as the first child of the shell and the body root (<div data-spine-body>) right after it, the page being the shell's only content, with no wrapper round either (THE ZONES, item P2.1)" });
+  const howto = howtoGB ? await drawRoute("the how-to route for GB", "/gb/how-to-open", () => HowToPage({ params: Promise.resolve({ country: "gb" }) }), { file: "src/app/[country]/how-to-open/page.tsx", remedy: "the route's page function threw: read the message above, and keep the route to <SiteChrome><SpineShell><HowToBody /></SpineShell></SiteChrome>" }) : "";
+  if (howto) {
+    const hp = parts(howto);
+    const howtoMains = howto.match(/<main\b/g)?.length ?? 0;
+    const howtoNewsletter = howto.includes('id="atlas-newsletter-line"');
+    check(`the how-to route draws the chrome: the bar with its sheet, one <main id="main">, the newsletter bar and the footer (header ${!!hp.header}, sheet ${!!hp.sheet}, ${howtoMains} main, newsletter ${howtoNewsletter}, footer ${!!hp.footer})`,
+      !!hp.header && !!hp.sheet && howtoMains === 1 && /\bid="main"/.test(hp.main) && howtoNewsletter && !!hp.footer && /^<a href="#main"/.test(howto),
+      { file: "src/app/[country]/how-to-open/page.tsx", remedy: "draw the page's body inside <SiteChrome> as the other spine routes do (<SiteChrome><SpineShell><HowToBody /></SpineShell></SiteChrome>) and write no <main> of its own: SiteChrome's is the page's one landmark" });
+    const howtoCountries = anchors(slice(hp.bar, /<nav aria-label="Primary"/, "</nav>")).find((n) => n.href === "/countries");
+    check("on the how-to page the bar marks Countries as the page being read", !!howtoCountries && /aria-current="page"/.test(howtoCountries.tag), { file: "src/app/[country]/how-to-open/page.tsx", remedy: "draw the how-to route inside <SiteChrome>, whose bar reads the address through Next's pathname and marks a country's pages Countries" });
+    const howtoTrail = trailNav(howto);
+    check(`the how-to page's trail is the shell's first child and its body root follows it, so the stylesheet's trail rule reaches the real page (${howtoTrail ? howtoTrail.getAttribute("aria-label") : "no trail reached"})`, !!howtoTrail && howtoTrail.nextElementSibling?.hasAttribute("data-spine-body") === true, { file: "src/components/spine/country/how-to-view.tsx", remedy: "draw the trail (<Crumbs>) as the first child of the shell and the body root (<div data-spine-body>) right after it, the page being the shell's only content, with no wrapper round either (THE ZONES, item P2.1)" });
+  }
+
+  /* THE TRADES AND WORLD PAGES DRAW THE CHROME (truth-fixes round 3C; the review of round 1, Important 1). /industries, the bar's Trades, and
+     /world drew their own v2 masthead (<header class="mast">), their own <main> and the v2 footer (src/components/spine2/SiteFooter.tsx), and no
+     SiteChrome: a reader who pressed Trades met no skip link, no seven-name bar, no sheet, no newsletter bar and not the site's footer, and the
+     route contract passed both pages on the word SiteChrome standing in a comment. Each page's own function is called as Next calls it and its
+     element drawn: the site's bar with its sheet (the sticky white header, not the v2 masthead), ONE <main id="main"> (never a second inside it),
+     the newsletter bar, the site's black footer (not the v2 band), the skip link first, and none of the v2 pieces left; the page's body stays (its
+     one h1 and its doors). The page root, the v2 ground (.av2), must be <main>'s first rendered child, where the stylesheet's rule for it reaches
+     it (THE ZONES, held above as text). Both pages import atlas-spine.css, which Node reads as script and chokes on, so a no-op loader for .css goes
+     in before the first import, as scripts/spikes/stub_next_font.cjs installs one. BLIND SPOT: markup, not pixels: the ground meeting the bar's
+     hairline, the edges and the foot above the newsletter bar are the round's frames. */
+  (require as unknown as { extensions: Record<string, () => void> }).extensions[".css"] = () => {};
+  const IndustriesPage = (await import("../../src/app/industries/page")).default as () => unknown;
+  const WorldPage = (await import("../../src/app/world/page")).default as () => unknown;
+  const v2Root = (html: string) => {
+    const doc = new SeamDom(`<!doctype html><body>${html}</body>`).window.document;
+    const first = [...(doc.querySelector("main")?.children ?? [])].find((el) => !["SCRIPT", "LINK", "STYLE", "NOSCRIPT"].includes(el.tagName));
+    return first && first.tagName === "DIV" && first.classList.contains("av2") ? first : null;
+  };
+  /* `mark` is the bar's name for the page being read, where the bar has one (the world page is none of the seven). */
+  const V2_PAGES: Array<{ name: string; route: string; file: string; page: () => unknown; mark: { href: string; name: string } | null }> = [
+    { name: "the Trades page", route: "/industries", file: "src/app/industries/page.tsx", page: IndustriesPage, mark: { href: "/industries", name: "Trades" } },
+    { name: "the world page", route: "/world", file: "src/app/world/page.tsx", page: WorldPage, mark: null },
+  ];
+  for (const v of V2_PAGES) {
+    const DRAW = `draw the page inside <SiteChrome> as the other routes do (<SiteChrome><div className="av2">...</div></SiteChrome>) and write no masthead, <main> or footer of its own: SiteChrome's are the page's bar, its one landmark and its footer`;
+    const html = await drawRoute(`${v.name} (${v.route})`, v.route, v.page, { file: v.file, remedy: "the page's function threw: read the message above" });
+    if (!html) continue;
+    const vp = parts(html);
+    const siteHeader = /^<header class="[^"]*\bsticky\b/.test(vp.header);
+    const siteFooter = /^<footer class="relative bg-black\b/.test(vp.footer);
+    const mains = html.match(/<main\b/g)?.length ?? 0;
+    const newsletter = html.includes('id="atlas-newsletter-line"');
+    check(`${v.name} (${v.route}) draws the chrome: the site's bar with its sheet, one <main id="main">, the newsletter bar, the site's footer and the skip link first (header ${siteHeader}, sheet ${!!vp.sheet}, ${mains} main, newsletter ${newsletter}, footer ${siteFooter}, skip link ${/^<a href="#main"/.test(html)})`,
+      siteHeader && !!vp.sheet && mains === 1 && /\bid="main"/.test(vp.main) && newsletter && siteFooter && /^<a href="#main"/.test(html),
+      { file: v.file, remedy: DRAW });
+    const headers = html.match(/<header\b/g)?.length ?? 0, footers = html.match(/<footer\b/g)?.length ?? 0;
+    check(`${v.name} (${v.route}) draws no masthead or footer of its own: no class="mast" (found ${/class="mast"/.test(html)}), no class="sitefoot" (found ${/class="sitefoot"/.test(html)}), ${headers} header and ${footers} footer in all (the chrome's one each)`,
+      !/class="mast"/.test(html) && !/class="sitefoot"/.test(html) && headers === 1 && footers === 1,
+      { file: v.file, remedy: DRAW });
+    const root = v2Root(html);
+    check(`${v.name} (${v.route}) stands on the v2 ground as <main>'s first rendered child, so the stylesheet's rule for the ground reaches the real page, and <main> opens with pt-4 (${root ? `<${root.tagName.toLowerCase()} class="${root.getAttribute("class")}">` : "no ground reached"})`,
+      !!root && root.parentElement?.tagName === "MAIN" && /\bpt-4\b/.test(vp.main),
+      { file: v.file, remedy: "keep the page's root the <div className=\"av2\"> that opens <SiteChrome>'s <main> (scripts aside), or move the ground's rule in globals.css (THE ZONES, round 3C) with it" });
+    const h1s = html.match(/<h1\b/g)?.length ?? 0;
+    const doors = anchors(slice(html, /<main\b/, "</main>")).length;
+    check(`${v.name} (${v.route}) keeps its body under the chrome: one <h1> and ${doors} links in <main>`, h1s === 1 && doors > 20, { file: v.file, remedy: "the chrome wraps the page and does not replace its body: keep the opening card and the lists of doors, and draw one <h1>" });
+    if (v.mark) {
+      const marked = anchors(slice(vp.bar, /<nav aria-label="Primary"/, "</nav>")).find((n) => n.href === v.mark!.href);
+      check(`on ${v.name} (${v.route}) the bar marks ${v.mark.name} as the page being read`, !!marked && /aria-current="page"/.test(marked.tag), { file: v.file, remedy: "draw the page inside <SiteChrome>, whose bar reads the address through Next's pathname and marks the name that holds it" });
+    }
+  }
 
   /* The skip link and the landmark. */
   check("a skip link is the first thing in the chrome, to #main", /^<a href="#main"[^>]*>Skip to content<\/a>/.test(off));

@@ -2665,8 +2665,10 @@
         "src/app/[country]/how-to-open/page.tsx",
         "src/app/dev",
         "src/app/globals.css",
+        "src/app/industries/page.tsx",
         "src/app/layout.tsx",
         "src/app/not-found.tsx",
+        "src/app/world/page.tsx",
         "src/components/HeaderAuth.tsx",
         "src/components/HeaderSearch.tsx",
         "src/components/MobileNav.tsx",
@@ -2683,6 +2685,7 @@
         "src/components/spine/shell.tsx",
         "src/lib/nav.ts",
         "src/lib/spine/door_look.ts",
+        "src/lib/spine/howto_rows.ts",
         "src/styles/v0-tokens.css"
       ],
       "claims": []

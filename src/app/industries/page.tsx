@@ -5,10 +5,20 @@
  * metadata is carried over from the page this replaces, including the
  * canonical.
  *
- * WHY IT SITS OUTSIDE `(site)`. Everything in that route group is wrapped in
- * <SiteChrome>, the previous generation's masthead and footer, and this page
- * carries its own. A route group does not appear in the URL, so moving the
- * index out changes what wraps it and never changes its path.
+ * IT DRAWS THE SITE'S CHROME, LIKE EVERY PAGE (truth-fixes round 3C,
+ * 2026-10-12). It was promoted out of `(site)` to carry a masthead and a
+ * footer of its own, and a reader who pressed Trades in the bar landed on a
+ * page with no skip link, no seven-name bar, no sheet, no newsletter bar and
+ * not the site's footer. It draws <SiteChrome> itself now, as the country and
+ * trade routes outside the group do, and writes no masthead, no <main> and no
+ * footer: SiteChrome's <main id="main"> is the page's one landmark. The v2
+ * ground (`.av2`) stays and is the column's first child, so the rule in
+ * globals.css (THE ZONES, round 3C) lets it meet the bar and the foot.
+ * tests/chrome/masthead.test.ts draws this route and reads its markup.
+ *
+ * WHY IT STILL SITS OUTSIDE `(site)`. A route group does not appear in the
+ * URL, so moving the index out changed what wraps it and never its path, and
+ * moving it back would change nothing a reader sees now.
  *
  * ONLY THE INDEX MOVED. `/industries/[industry]` and its `across` child are
  * still on the older generation and still want <SiteChrome>, so they stay in
@@ -33,10 +43,10 @@
  */
 import * as React from "react";
 
+import { SiteChrome } from "@/components/SiteChrome";
 import { GlyphIcon } from "@/components/spine2/GlyphIcon";
 import type { GlyphId } from "@/components/spine2/glyphs";
 import { Place } from "@/components/spine2/Place";
-import { SiteFooter } from "@/components/spine2/SiteFooter";
 import { sectorGroups, visibleTradeCount, notableNotes } from "@/lib/trades/trade_index";
 
 import "@/styles/atlas-spine.css";
@@ -50,7 +60,7 @@ export const metadata = {
   alternates: { canonical: "/industries" },
 };
 
-export default function IndustriesIndex() {
+function IndustriesBody() {
   const groups = sectorGroups();
   const total = visibleTradeCount();
   const notes = notableNotes(6);
@@ -59,29 +69,6 @@ export default function IndustriesIndex() {
     <div className="av2" style={{ position: "relative" }}>
       <Place />
       <div className="wrap">
-        <header className="mast">
-          <div className="in">
-            <span className="brand">
-              <span className="m" />
-              Margin Atlas
-            </span>
-            <nav className="lat" aria-label="Where you are">
-              <a href="/">Home</a>
-              <span className="s">&rsaquo;</span>
-              <a href="/industries">Trades</a>
-            </nav>
-          </div>
-        </header>
-
-        {/* THE MAIN LANDMARK, ADDED 2026-08-09. This page was promoted out of
-            <SiteChrome>, which is where <main> lives for every other route, and
-            nothing replaced it. Measured on production: /world, /industries and
-            the v2 cell page were the only three shipping pages emitting no main
-            landmark, so a screen reader had no content region to jump to and a
-            skip link had nothing to skip to. It closes before the footer, which
-            is chrome and belongs outside the main region. */}
-        <main>
-
         {/* 1 , THE OTHER DOOR. Stated as what it is for, not as what it
             contains. A reader arrives with a trade in mind, not with a wish to
             browse a taxonomy. */}
@@ -236,11 +223,17 @@ export default function IndustriesIndex() {
             ))}
           </div>
         </section>
-
-        </main>
-
-        <SiteFooter />
       </div>
     </div>
+  );
+}
+
+/* Chrome is opted into, not inherited (the same shape as the country and trade routes outside `(site)`): the bar and its sheet, the one
+   <main>, the newsletter bar and the footer are SiteChrome's, and the body above is the page. */
+export default function IndustriesIndex() {
+  return (
+    <SiteChrome>
+      <IndustriesBody />
+    </SiteChrome>
   );
 }
