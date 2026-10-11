@@ -10,11 +10,14 @@
  *     header's mark by one shared drawing; the manifest naming the site, its definition and the icon1 and icon2 addresses; none of
  *     the files writes the cream-named white hex;
  *   - the share card's words the home's definition (COPY.home.definition), its warm tint gone; the home's title at 51 characters;
- *   - a missing blog post (fix round F1, group G8; corrected in fix round F2, item I1): the post page's generateMetadata throws Next's
- *     not-found error for it, so the metadata stops there, and answers a post that exists with its own title and canonical; and the route
- *     is `dynamicParams = false` over a generateStaticParams that lists every file of content/blog, so the router answers any other slug 404
- *     before the page renders. The throw alone does not set the status (the metadata streams inside the root loading boundary: src/middleware.ts
- *     says so beside its place rule); the router's 404 does, and the status on the wire is the build's, seen with curl;
+ *   - a missing blog post (fix round F1, group G8; F2, item I1; taken back in fix round F4): the post page's generateMetadata throws Next's
+ *     not-found error for it, so the metadata stops there, and answers a post that exists with its own title and canonical; the route does
+ *     not set `dynamicParams` to false (an explicit true or none at all passes) and its generateStaticParams lists every file of content/blog.
+ *     Nothing in the route sets the status of a missing post. The throw does not (the metadata streams inside the root loading boundary:
+ *     src/middleware.ts says so beside its place rule), and `dynamicParams = false`, which round F2 set for it, made Next decline a slug the
+ *     list does not hold, so the request fell through to /[country]/[geo], which answered 200 with an indexable title, worse than the page's
+ *     own soft 404 (measured on the build of 83fd5f99, 2026-10-11). The status for a missing post is the edge's, a queued item (QUEUE
+ *     site:route-folder-fallthrough), and no check here reads it;
  *   - every JSON-LD block escaped so a "<" cannot close its script;
  *   - the auth client imported only behind the accounts switch, and the session read once for the bar and the sheet; Sentry started
  *     when the browser is idle; one Geist; the home's h1 still from its first frame; no `transition-all` left in the hero's word or
@@ -180,19 +183,26 @@ async function main() {
   check(`the root's Twitter card holds only the card and the image with its alt (${Object.keys(tw).join(", ")})`, JSON.stringify(Object.keys(tw).sort()) === JSON.stringify(["card", "images"]) && tw.card === "summary_large_image" && JSON.stringify(tw.images) === JSON.stringify([{ url: "/og/default", alt: def }]));
   check(`the viewport: white theme, light only, device width at scale 1 (${JSON.stringify(layout.viewport ?? null)})`, JSON.stringify(layout.viewport ?? null) === JSON.stringify({ width: "device-width", initialScale: 1, themeColor: "white", colorScheme: "light" }));
 
-  /* ---------------- A MISSING BLOG POST: THE THROW, AND THE ROUTER'S 404 (fix round F1, group G8; corrected in fix round F2, item I1) ---------------- */
+  /* ---------------- A MISSING BLOG POST: THE THROW, AND dynamicParams NOT FALSE (fix round F1, group G8; F2, item I1; taken back in fix round F4) ---------------- */
   /* The post page called notFound() only in the page, which runs inside the root loading boundary after the status line is sent, so
      /blog/<no such post> answered 200 with the loading skeleton and drew its 404 in the browser: a soft 404, probed on the built page
      (.superpowers/sdd/hr-p16-report.md). Round F1 added a notFound() to generateMetadata, believing the metadata sets the status as /[country]'s
      does for /zz. It does not: the metadata streams inside the same root loading boundary (src/middleware.ts says so beside its place rule:
      "Moving the call into generateMetadata does not help either"), and /zz's 404 is the middleware's, not its metadata's, so a missing post still
-     answered 200 (the final review's I1). What answers 404 is the ROUTER: `export const dynamicParams = false` over a generateStaticParams that lists
-     every post, which is every .md file of content/blog (a retired or moved slug is a next.config.js redirect, and redirects run first), so any
-     other slug never reaches the page. Here: the metadata throws Next's own not-found error (its digest, NEXT_HTTP_ERROR_FALLBACK;404) for a post
-     that does not exist, so it draws no title of its own for one, and still answers a post that does with its own title and canonical (the throw
-     only: nothing in this file claims the status); and the route is dynamicParams false over a list equal to the files. BLIND SPOT: this reads the
-     route's exports and runs its metadata; that the router answers a slug no file holds with 404 on the wire is Next's, and the built page is where
-     it is seen (curl on /blog/no-such-post, once with no user agent and once with a browser's). */
+     answered 200 (the final review's I1). Round F2 then set `export const dynamicParams = false` over a generateStaticParams that lists every
+     post, which is every .md file of content/blog, expecting the router to answer any other slug 404. The build of 83fd5f99 (2026-10-11) showed
+     it does not: /blog/no-such-post still answered 200 and, worse, with the blog route declining the slug the request fell through to
+     /[country]/[geo] (country "blog"), whose page answered 200 with the title "no-such-post: small-business benchmarks | Margin Atlas", robots
+     index and follow, the loading skeleton and a client-side 404. That is worse than the page's own soft 404, so round F4 took `dynamicParams`
+     back to true and this test pins any value but false. (The fall-through is already on production under any route folder with no dynamic
+     child: /pricing/xyz and /about/xyz answer 200, "xyz: small-business benchmarks", index and follow.) The status for a missing post is set at
+     the EDGE, by a queued item (QUEUE site:route-folder-fallthrough: a generated blog-slug table judged in the middleware as /industries and
+     /cities are, and the route-folder fall-through closed), not by the route and not by this test. Here: the metadata throws Next's own
+     not-found error (its digest, NEXT_HTTP_ERROR_FALLBACK;404) for a post that does not exist, so it draws no title of its own for one, and still
+     answers a post that does with its own title and canonical (the throw only: nothing in this file claims the status); the route does not set
+     dynamicParams to false; and its list equals the files. BLIND SPOT: this reads the route's exports and runs its metadata, so it cannot tell a
+     404 from the 200 a fall-through answers; the status on the wire is the build's and then the edge's, and the built page is where it is seen
+     (curl on /blog/no-such-post, once with no user agent and once with a browser's). */
   type BlogMeta = { title?: string; alternates?: { canonical?: string } };
   const blogPage = await tryImport<{ generateMetadata: (a: { params: Promise<{ slug: string }> }) => Promise<BlogMeta>; dynamicParams?: boolean; generateStaticParams?: () => Promise<Array<{ slug: string }>> }>(() => import("../../src/app/(site)/blog/[slug]/page"));
   const { getAllPosts } = await import("../../src/lib/blog");
@@ -202,12 +212,15 @@ async function main() {
   };
   const missingPost = blogPage ? await metaOf("no-such-post-zz") : null;
   const presentPost = blogPage && realPost ? await metaOf(realPost.slug) : null;
-  const BLOG_AT = { file: "src/app/(site)/blog/[slug]/page.tsx", remedy: "call notFound() (next/navigation) in generateMetadata when getPost(slug) finds no post, so the metadata stops there and draws no title of its own for one; it does not set the status (the metadata streams inside the root loading boundary), the router's dynamicParams = false does" };
+  const BLOG_AT = { file: "src/app/(site)/blog/[slug]/page.tsx", remedy: "call notFound() (next/navigation) in generateMetadata when getPost(slug) finds no post, so the metadata stops there and draws no title of its own for one; it does not set the status (the metadata streams inside the root loading boundary), and neither does dynamicParams = false (Next declines the slug and the request falls through to /[country]/[geo], an indexable 200): the status for a missing post is the edge's, QUEUE site:route-folder-fallthrough" };
   check(`a post that does not exist answers with Next's not-found error from generateMetadata (digest ${missingPost?.threw?.digest ?? "none, it returned " + JSON.stringify(missingPost?.got ?? null)}): the metadata stops there, the throw only and not the status`, !!missingPost && missingPost.got === null && missingPost.threw?.digest === "NEXT_HTTP_ERROR_FALLBACK;404", BLOG_AT);
   check(`a post that exists still answers its own title and canonical (${presentPost?.got?.title ?? "none"})`, !!presentPost && !!realPost && presentPost.threw === null && presentPost.got?.title === `${realPost.title} | Margin Atlas` && presentPost.got?.alternates?.canonical === `/blog/${realPost.slug}`, BLOG_AT);
   const postFiles = readdirSync("content/blog").filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, "")).sort();
   const listedPosts = blogPage?.generateStaticParams ? (await blogPage.generateStaticParams()).map((p) => p.slug).sort() : [];
-  check(`the blog route is dynamicParams false over a generateStaticParams that lists every file of content/blog (${blogPage?.dynamicParams === false ? "false" : String(blogPage?.dynamicParams)}; ${listedPosts.length} listed of ${postFiles.length} files), so the router answers any other slug 404 before the page renders`, !!blogPage && blogPage.dynamicParams === false && postFiles.length > 0 && JSON.stringify(listedPosts) === JSON.stringify(postFiles), { ...BLOG_AT, remedy: "export const dynamicParams = false in src/app/(site)/blog/[slug]/page.tsx, over generateStaticParams listing every file of content/blog: the router then answers any other slug with 404 before the page renders (a metadata notFound() cannot set the status: it streams inside the root loading boundary, as src/middleware.ts says); a retired or moved slug is a next.config.js redirect and runs first" });
+  /* THE PIN: ANY VALUE BUT FALSE (fix round F4). `undefined` passes, because Next reads a route that exports no dynamicParams as true. */
+  const dynParams = !blogPage ? "the page did not load" : blogPage.dynamicParams === undefined ? "not exported, which is true" : String(blogPage.dynamicParams);
+  check(`the blog route does not set dynamicParams to false (${dynParams}): false made Next decline a slug the list does not hold, and the request fell through to /[country]/[geo], an indexable 200 worse than the page's own soft 404 (the build of 83fd5f99, 2026-10-11); a missing post's status is the edge's (QUEUE site:route-folder-fallthrough), not this route's`, !!blogPage && blogPage.dynamicParams !== false, { ...BLOG_AT, remedy: "export const dynamicParams = true in src/app/(site)/blog/[slug]/page.tsx (or leave it out): with false Next declines a slug generateStaticParams does not list and the request falls through to /[country]/[geo], which answers 200 with an indexable title (measured on the build of 83fd5f99, 2026-10-11), worse than the page's own soft 404; set the status of a missing post at the edge (QUEUE site:route-folder-fallthrough), never with dynamicParams false" });
+  check(`generateStaticParams lists every file of content/blog (${listedPosts.length} listed of ${postFiles.length} files), so every post is built with the site and none waits for its first request`, !!blogPage && postFiles.length > 0 && JSON.stringify(listedPosts) === JSON.stringify(postFiles), { ...BLOG_AT, remedy: "have generateStaticParams in src/app/(site)/blog/[slug]/page.tsx return one { slug } for every .md file of content/blog (getAllPosts() reads them): a post it leaves out is built on its first request instead of with the site" });
 
   /* ---------------- THE ICONS AND THE MANIFEST ---------------- */
   /* THREE NUMBERED FILES, NOT ONE FILE WITH generateImageMetadata (the Task 7 review, fix round 7). A file that exports
