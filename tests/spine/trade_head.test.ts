@@ -33,6 +33,15 @@
  * a code the country list holds no name for leaves the cell's own name, and the popular-name table no longer names England London.
  * The every-word check below states its counts: the words named by a label of the tables, by the country, and those that print the code.
  *
+ * AND AN INTERNAL WORD NEVER REACHES A READER (truth-fixes round 3B, 2026-10-11; the first review's "Seen in passing"). /gb/boston, /gb/gb,
+ * /gb/england and /de/de restaurants printed "Estimates for a typical restaurant, from wave5_extrapolation.": the source line is authored in
+ * the data (the extrapolated rows' coverage_source) and sanitiseProvenance (src/lib/spine/adapt_cell.ts) cut only a key:value token after a
+ * pipe. A word holding an underscore, or two or more letters run into digits, is a pipeline's and no reader's: the line that holds one is
+ * cut, and where nothing readable is left the sentence drops its "from" clause and names no source, never an invented one. Two kinds of
+ * check below: the function over the real source strings, and the seed and the hero's foot over the stub that holds the rows as the
+ * database held them.
+ * BLIND SPOT, stated: the strings are those of the rows read on 2026-10-11, so a source this has not seen passes if it holds no such word.
+ *
  * Run: npx tsx tests/spine/trade_head.test.ts
  */
 import Module from "node:module";
@@ -56,6 +65,7 @@ const R_SEED = "name the place in loadCellView with placeNameOf(country, geo, ce
 const R_CARD = "name the place in the share card through headPlaceOf(country, geo, cell), as the page's head does: its label in the title, its figureIn beside the figure, and no figure when its figureIn is null";
 const R_ARTICLE = "drop Czech from the start-of-name rule in src/lib/spine/place_names.ts: Czechia takes no article, and the Czech Republic still takes it from Republic";
 const R_ENGLAND = "name England England in src/lib/geo/popular_place_overrides.json (gb/england), the table geoNameFromSlug and getCellBySlug answer first: a nation is never named by its capital, so a page's label is the place the word names, then the place table is generated again (scripts/gen_place_slugs.ts) and holds no word fewer";
+const R_SOURCE = "cut a pipeline's word (one holding an underscore, or two or more letters run into digits) from the source line where the data enters the seed, sanitiseProvenance in src/lib/spine/adapt_cell.ts; where nothing readable is left the sentence drops its \"from\" clause (\"Estimates for a typical restaurant.\"), never an invented source and never an agency";
 const CRUMBS = "src/lib/spine/crumb_rows.ts";
 const R_CRUMB = "drop a place crumb whose label equals the country crumb's label in src/lib/spine/crumb_rows.ts (placeCrumb takes the country crumb, for the trade page and the district pages alike), so a trail never says one place twice";
 const sameLabel = (a: string, b: string): boolean => a.trim().toLowerCase() === b.trim().toLowerCase();
@@ -238,7 +248,9 @@ async function main(): Promise<void> {
   (globalThis as { React?: unknown }).React = reactNs.default ?? reactNs;
   type Meta ={ title: string; description: string; openGraph?: { title?: string; description?: string }; twitter?: { title?: string; description?: string } };
   const { generateMetadata } = (await import("../../src/app/[country]/[geo]/[industry]/page")) as { generateMetadata: (a: { params: Promise<{ country: string; geo: string; industry: string }> }) => Promise<Meta> };
-  const { buildSpineCellSeed } = await import("../../src/lib/spine/adapt_cell");
+  const adaptCell = (await import("../../src/lib/spine/adapt_cell")) as { buildSpineCellSeed: (c: string, g: string, i: string) => Promise<any>; sanitiseProvenance?: (line: string | null | undefined) => string | null };
+  const { buildSpineCellSeed } = adaptCell;
+  const { tradeHeroFacts } = await import("../../src/lib/spine/trade_hero_facts");
   const { buildCellCrumbs, buildHoodCrumbs } = await import("../../src/lib/spine/crumb_rows");
   const { COPY } = await import("../../src/lib/spine/copy");
   const cardMod = await tryImport<{ GET?: (r: Request) => Promise<unknown> }>(() => import("../../src/app/og/cell/route"));
@@ -301,6 +313,51 @@ async function main(): Promise<void> {
     ["control, the district pages of London keep the city", trail(buildHoodCrumbs("london", null)), `United Kingdom / London / ${COPY.crumbs.districts}`],
   ];
   for (const [label, got, want] of builders) check(`${label}: the trail reads "${want}" (got "${got}")`, got === want, { file: CRUMBS, remedy: R_CRUMB });
+
+  /* (2c) AN INTERNAL WORD NEVER REACHES A READER. The function first, over the strings the rows hold (the first five are what live pages printed on
+     2026-10-11, the sixth is the lookup's own default for a row with none, the rest are shapes the function must keep or cut), then the seed's
+     source line and the hero's foot at the addresses that printed it. */
+  type Sanitise = (line: string | null | undefined) => string | null;
+  check("src/lib/spine/adapt_cell.ts exports sanitiseProvenance", typeof adaptCell.sanitiseProvenance === "function", { file: SEED, remedy: R_SOURCE });
+  const S: Sanitise = adaptCell.sanitiseProvenance ?? (() => "(sanitiseProvenance is not exported)");
+  const internalIn = (text: string): string[] => (text.match(/[A-Za-z0-9_]+/g) ?? []).filter((w) => w.includes("_") || /[A-Za-z]{2,}\d/.test(w));
+  const sources: Array<[string, string | null | undefined, string | null]> = [
+    ["the extrapolated rows' real source (the United Kingdom's and Germany's, 2026-10-11): a pipeline's name, nothing readable is left", "wave5_extrapolation", null],
+    ["the regional rows' real source stays", "National business statistics", "National business statistics"],
+    ["the statistics rows' real source stays", "european business statistics", "european business statistics"],
+    ["the census rows' real source stays: SUSB 2021 is a reader's words", "Census SUSB 2021", "Census SUSB 2021"],
+    ["a synthetic cell's own words stay", "Estimated from country and industry averages", "Estimated from country and industry averages"],
+    ["the default of an extrapolated row with no source stays", "Estimated from regional patterns", "Estimated from regional patterns"],
+    ["letters run into digits are a pipeline's: wave5 alone", "wave5", null],
+    ["a word holding an underscore is a pipeline's: cafes_coffee", "cafes_coffee", null],
+    ["a pipeline's word after a pipe is cut, the prose before it stays", "Estimated from regional patterns | wave5_extrapolation", "Estimated from regional patterns"],
+    ["a key:value marker after a pipe is cut as before", "Estimated from regional patterns | scrub:revenue-cap-2026-05-31", "Estimated from regional patterns"],
+    ["a prose part after a pipe stays as before", "Estimated from regional patterns | see note", "Estimated from regional patterns | see note"],
+    ["a licence's version is a reader's word: v3.0", "Open Government Licence v3.0", "Open Government Licence v3.0"],
+    ["no source stays no source", null, null],
+    ["an empty source stays no source", "", null],
+  ];
+  for (const [label, line, want] of sources) {
+    const got = S(line);
+    check(`${label}: sanitiseProvenance(${JSON.stringify(line)}) is ${JSON.stringify(want)} (got ${JSON.stringify(got)})`, got === want, { file: SEED, remedy: R_SOURCE });
+  }
+  /* The seed and the hero's foot, as the page prints them. The four internal-source addresses drop the clause; the controls keep their words exactly. */
+  type FootCase = { country: string; geo: string; industry: string; foot: string };
+  const feet: FootCase[] = [
+    { country: "gb", geo: "boston", industry: "restaurants", foot: "Estimates for a typical restaurant." },
+    { country: "gb", geo: "gb", industry: "restaurants", foot: "Estimates for a typical restaurant." },
+    { country: "gb", geo: "england", industry: "restaurants", foot: "Estimates for a typical restaurant." },
+    { country: "de", geo: "de", industry: "restaurants", foot: "Estimates for a typical restaurant." },
+    { country: "gb", geo: "liverpool", industry: "restaurants", foot: "Estimates for a typical restaurant, from national business statistics." },
+    { country: "us", geo: "california", industry: "restaurants", foot: "Estimates for a typical restaurant, from census." },
+  ];
+  for (const f of feet) {
+    const addr = `/${f.country}/${f.geo}/${f.industry}`;
+    const seed = await buildSpineCellSeed(f.country, f.geo, f.industry);
+    const footText: string | null = seed ? tradeHeroFacts(seed)?.foot?.text ?? null : null;
+    const line = String(seed?.meta?.provenance_line ?? "");
+    check(`${addr}: the seed's source line holds no internal word (${JSON.stringify(line)}) and the hero's foot reads "${f.foot}" (got ${JSON.stringify(footText)})`, internalIn(line).length === 0 && footText === f.foot, { file: SEED, remedy: R_SOURCE });
+  }
 
   /* (3) THE SHARE CARD, read from the element tree the route hands to ImageResponse (stubbed above): the title block and the figure block. */
   type Props = Record<string, unknown>;

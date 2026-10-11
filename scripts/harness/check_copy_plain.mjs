@@ -24,12 +24,27 @@
  *   LINE LONG    a supporting line over twelve words;
  *   SEMICOLON    a supporting line holding a semicolon (a line is one
  *                sentence).
+ *   INTERNAL     a pipeline's own word anywhere in the page's visible text
+ *                (truth-fixes round 3B, 2026-10-11: "Estimates for a typical
+ *                restaurant, from wave5_extrapolation." printed on /gb/boston,
+ *                /gb/gb and /de/de): a word holding an underscore, or two or
+ *                more letters run straight into digits (the licence's own
+ *                "v3.0" is one letter and a reader's word). Read over all of
+ *                main, a card or not, once per card and word. NOT a ratchet: no
+ *                baseline absorbs it, and it is never written to one, because
+ *                a reader is never given a pipeline's name for a source or a
+ *                field.
  *
  * A per-page ratchet (copy_plain_baseline.json), seeded at the first
- * measurement and falling only; the rewrite drives it to zero.
+ * measurement and falling only; the rewrite drives it to zero. INTERNAL stands
+ * outside it.
  *
  * BLIND SPOT: it reads words and counts, not meaning; a plain line that says
  * nothing passes. What a line should say is COPY-STYLE.md's, and the rewrite's.
+ * INTERNAL reads the rendered words, so it cannot tell a pipeline's token from
+ * a real acronym that holds a digit after two letters (a reader's "CO2" would red too); it reads
+ * only the pages it is given (the listed pages, or the files named), so a page
+ * outside the list is read when its render is named on the command line.
  *
  *   node scripts/harness/check_copy_plain.mjs --list [--write-baseline]
  */
@@ -65,6 +80,11 @@ function inPage() {
     ["worked from", /\bworked from\b/i],
   ];
   const TITLE_MAX = 4, LINE_MAX = 12, MICRO_MAX = 13.5;
+  /* INTERNAL: a token no reader says. A word holding an underscore (wave5_extrapolation, cafes_coffee) or letters run straight into
+     digits (wave5): a pipeline's name for a source or a field. A word is a run of letters, digits and underscores. TWO LETTERS OR
+     MORE before the digit, because the one-letter reading ("v3") reds the Open Government Licence line, "Licence v3.0", the licence's
+     own name, which every United Kingdom page must print (measured 2026-10-11: 8 of the 11 listed pages, that word alone). */
+  const isInternal = (word) => word.includes("_") || /[A-Za-z]{2,}\d/.test(word);
   const CARD = "main [data-card]";
   const cards = [...document.querySelectorAll(CARD)].filter((c) => c.getClientRects().length && !c.parentElement.closest(CARD));
   const idOf = (card) => card.id || card.querySelector("[id]")?.id || (card.querySelector("h1,h2,h3")?.textContent || "").trim().toLowerCase().slice(0, 30) || "card";
@@ -90,6 +110,26 @@ function inPage() {
       const t = p.textContent.trim();
       if (words(t) > LINE_MAX) red(id, "LINE LONG", `${words(t)} words: "${t.slice(0, 70)}"`);
       if (t.includes(";")) red(id, "SEMICOLON", `"${t.slice(0, 70)}"`);
+    }
+  }
+  /* THE INTERNAL WORD, over all of main (a foot, a note, a caption: not only a card's own lines), once per card and word. The
+     card named is the outermost one the text sits in, else "page". */
+  const main = document.querySelector("main");
+  if (main) {
+    const seen = new Set();
+    const walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const el = n.parentElement;
+      if (!el || hidden(el)) continue;
+      for (const word of n.textContent.match(/[A-Za-z0-9_]+/g) ?? []) {
+        if (!isInternal(word)) continue;
+        let top = el.closest(CARD);
+        while (top && top.parentElement && top.parentElement.closest(CARD)) top = top.parentElement.closest(CARD);
+        const id = top ? idOf(top) : "page";
+        if (seen.has(id + "\u0000" + word)) continue;
+        seen.add(id + "\u0000" + word);
+        red(id, "INTERNAL", `"${word}" in "${n.textContent.trim().replace(/\s+/g, " ").slice(0, 70)}"`);
+      }
     }
   }
   return { reds, cards: cards.length };
@@ -118,11 +158,18 @@ for (const r of reds) byRule[r.rule] = (byRule[r.rule] ?? 0) + 1;
 console.log(`copy plain: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s) (${Object.entries(byRule).map(([k, v]) => `${k} ${v}`).join(", ") || "none"})`);
 for (const r of reds) console.log(`  ${r.page}@${r.w} #${r.id}: ${r.rule}: ${r.msg}`);
 
+/* THE INTERNAL WORD STANDS OUTSIDE THE RATCHET: no baseline holds it, because headroom under a page's allowance would hide it. */
+const internal = reds.filter((r) => r.rule === "INTERNAL");
+if (internal.length) {
+  const pages = [...new Set(internal.map((r) => r.page))];
+  console.log(`copy plain INTERNAL: ${internal.length} pipeline word(s) in the visible text of ${pages.length} page(s): ${pages.join(", ")}. Remedy: strip the word where the data enters the page (a source line goes through sanitiseProvenance in src/lib/spine/adapt_cell.ts) and let the sentence name no source; never print a pipeline's name for a source or a field, never invent a source, never name an agency`);
+}
+
 /* THE PER-PAGE RATCHET: seeded at the first measurement, falling only. */
 const BASELINE = "scripts/harness/copy_plain_baseline.json";
 const WRITE_BASELINE = args.includes("--write-baseline");
 const byPage = {};
-for (const r of reds) byPage[r.page] = (byPage[r.page] ?? 0) + 1;
+for (const r of reds) if (r.rule !== "INTERNAL") byPage[r.page] = (byPage[r.page] ?? 0) + 1;
 let base = null;
 try { base = JSON.parse(readFileSync(BASELINE, "utf8")); } catch { base = null; }
 const seeding = base === null;
@@ -133,7 +180,7 @@ for (const name of files.map((f) => basename(f, ".html"))) {
   if (have > allowed) over.push(`${name}: ${have} against a baseline of ${allowed}`);
   else if (have < allowed) under.push(`${name}: ${have}, baseline ${allowed} can fall`);
 }
-let exit = 0;
+let exit = internal.length ? 1 : 0;
 if (over.length && !(WRITE_BASELINE && seeding)) { console.log(`copy plain RATCHET: ${over.length} page(s) over their baseline: ${over.join("; ")}. Remedy: rewrite the card to COPY-STYLE.md; never raise the entry`); exit = 1; }
 if (WRITE_BASELINE) {
   for (const name of files.map((f) => basename(f, ".html"))) { const have = byPage[name] ?? 0; if (seeding || !(name in base) || have < base[name]) base[name] = have; }

@@ -333,12 +333,25 @@ function breakInWord(score: number | null): "Manageable" | "Demanding" | "Brutal
  * like, and leaves prose alone: "Estimated from regional patterns | see note"
  * keeps its second half, "Estimated from regional patterns | scrub:x-2026-05-31"
  * loses it.
+ *
+ * A PIPELINE'S OWN WORD IS CUT TOO (truth-fixes round 3B, 2026-10-11). The extrapolated rows hold "wave5_extrapolation" in their source
+ * column, a name the pipeline gave its wave, and /gb/boston, /gb/gb and /de/de printed "Estimates for a typical restaurant, from
+ * wave5_extrapolation." because it is not a key:value token and so was never cut. A part that holds a word with an underscore, or two or
+ * more letters run into digits, is the pipeline's and no reader's, so it goes the way a key:value marker goes. What is left is the
+ * readable part, or null where nothing is: the caller then names no source, since a source the data did not give is never invented.
  */
-function sanitiseProvenance(line: string | null | undefined): string | null {
+export function sanitiseProvenance(line: string | null | undefined): string | null {
   if (!line) return null;
   const parts = String(line).split("|").map((p) => p.trim()).filter(Boolean);
-  const kept = parts.filter((p) => !/^[a-z][\w-]*:[\w.\-/]+$/i.test(p));
+  const kept = parts.filter((p) => !/^[a-z][\w-]*:[\w.\-/]+$/i.test(p) && !holdsInternalWord(p));
   return kept.length ? kept.join(" | ") : null;
+}
+
+/** A word no reader says: one holding an underscore (wave5_extrapolation, cafes_coffee) or two or more letters run straight into digits
+ *  (wave5). A licence's "v3.0" is one letter and a reader's word. The same reading as the plain-copy check's INTERNAL rule
+ *  (scripts/harness/check_copy_plain.mjs), which reads the rendered page. */
+function holdsInternalWord(part: string): boolean {
+  return (part.match(/[A-Za-z0-9_]+/g) ?? []).some((w) => w.includes("_") || /[A-Za-z]{2,}\d/.test(w));
 }
 
 export async function buildSpineCellSeed(
@@ -387,8 +400,10 @@ export async function buildSpineCellSeed(
        scrub:revenue-cap-2026-05-31" to a reader. That token is an internal
        marker, and the gate that catches internal notes scans SOURCE, so a note
        carried in a database field walks straight past it. Anything after a pipe
-       that looks like an internal key is cut, and the sentence keeps its meaning. */
-    provenance_line: sanitiseProvenance(cell.coverage_source) || "Modeled from national business statistics.",
+       that looks like an internal key is cut, and the sentence keeps its meaning.
+       A source that was nothing but a pipeline's word (wave5_extrapolation) leaves the EMPTY line, and the sentence names no source;
+       only a cell that holds no source at all gets the plain default. */
+    provenance_line: sanitiseProvenance(cell.coverage_source) ?? (String(cell.coverage_source ?? "").trim() ? "" : "Modeled from national business statistics."),
     /* THE MONEY GATE ON THE SEED (plan step 33's first dispatch, 2026-09-18):
        cell_view.ts's `moneyShown`, so the masthead's facts and the spread's
        builder (trade_hero_facts.ts, trade_spread_rows.ts) can say which state
