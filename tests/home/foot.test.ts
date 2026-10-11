@@ -171,6 +171,14 @@ if (gb) {
      from 768, where the row's right edge is its mark, and the eighth cell keeps its own at every width (it has no picture to be the door's mark). */
   const rowArrows = rowTexts.map((t) => t.arrow);
   check(`under 768 the photo cells carry no arrow and from 768 each row's stands at its edge (hidden and md:block on ${rowArrows.filter((c) => c.includes("hidden") && c.includes("md:block")).length} of ${gb.cards.length}), and the eighth cell keeps its own at every width`, rowArrows.length === gb.cards.length && rowArrows.every((c) => c.includes("hidden") && c.includes("md:block")) && !!all && !(all[3] ?? "").split(" ").includes("hidden") && !(all[3] ?? "").split(" ").some((k) => k.startsWith("md:hidden")), { remedy: "give each row's arrow `hidden` and `md:block` (the cell is the door under 768), and leave the All UK cities cell's arrow shown at every width" });
+  /* THE EIGHTH CELL'S ARROW IS THE ROWS' FROM 768 (critique pass 4, fix round F2, item P2.3): it took its cell's 20 semibold and measured 20 by 8px
+     beside the seven rows' 14 by 5 (2.6 times their ink, 52 dark pixels to 20), a bolder mark that meant nothing more, standing under seven light ones.
+     From 768, where it stands under them, it takes the rows' own arrow: the size and the leading read from the rendered rows (not typed here), and
+     the normal weight; on a phone it keeps its 20 beside its 20px words, no other arrow in that grid. BLIND SPOT: classes as written; the ink
+     measured at 768, 1024 and 1280 is the browser's (f2_p23_probe.mjs). */
+  const ROW_ARROW_TYPE = (rowArrows[0] ?? []).filter((k) => /^(text-\[length:var\(--t-body\)\]|leading-none)$/.test(k));
+  const allArrow = (all?.[3] ?? "").split(" ");
+  check(`from 768 the eighth cell's arrow is the rows' own, "${ROW_ARROW_TYPE.join(" ")}" at a normal weight (${ROW_ARROW_TYPE.filter((k) => allArrow.includes(`md:${k}`)).length} of ${ROW_ARROW_TYPE.length} with md:, md:font-normal ${allArrow.includes("md:font-normal")}), and under 768 it keeps its cell's 20 (no unprefixed size, weight or leading on it)`, ROW_ARROW_TYPE.length === 2 && ROW_ARROW_TYPE.every((k) => allArrow.includes(`md:${k}`)) && allArrow.includes("md:font-normal") && !allArrow.some((k) => /^(text-\[length:var\(--t-body\)\]|font-normal|leading-none)$/.test(k)), { remedy: "give the All UK cities cell's arrow md:text-[length:var(--t-body)] md:font-normal md:leading-none, the rows' own arrow size from 768, and no unprefixed size, weight or leading: under 768 it keeps the 20px of its words" });
   /* AT EVERY WIDTH (critique pass 2, fix round C2, item P1.3): the door to every city was a phone's (md:hidden) and from 768 the half held
      seven cities beside the doors' eight. From 768 it is a row with no picture, in the slot after Edinburgh: its words at 20 semibold in
      ink, the arrow at the edge, the edge it always had. */

@@ -14,7 +14,9 @@
  *    hairline above it as the doors are ruled: the 72 by 48 thumbnail, the name in a column of 22ch (underlined on hover), the
  *    figure in the very next column, the leftover absorbed, the arrow at the right edge (PART 5's row). The "All UK cities" cell
  *    stands at every width: its words at 20 semibold in ink and its arrow at every width, and from 768 it is the eighth slot, a row with
- *    no picture (its edge), beside the doors' eighth. The rows' arrows show from 768 only.
+ *    no picture (its edge), beside the doors' eighth. The rows' arrows show from 768 only. From 768 its arrow is the rows' own, 14 at a
+ *    normal weight (critique pass 4, fix round F2, item P2.3: at its cell's 20 semibold it was 2.6 times their ink, under seven light
+ *    ones); on a phone it keeps the 20 beside its 20px words, the only arrow in that grid.
  *
  * THE PICTURE IN GREY (the spec's decision 2): each city's small copy (480 by 360, about 25KB, public/cities/thumbs) in grey and with
  * no terracotta wash, so the band above and the cities never read as one salmon wall. Under 768 it is the cell's ground under a
@@ -62,7 +64,7 @@ export function CityRows({ cards, basis, allHref, allLabel, unit, headed = false
         ))}
         <a href={allHref} data-all-cities="" className="group tap-y flex min-h-16 items-center justify-between gap-2 rounded-[12px] border border-[var(--c-line-strong)] px-3 py-2 text-[length:var(--t-head)] font-semibold leading-[1.15] tracking-tight text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)] md:my-1 md:min-h-0 md:py-0">
           <span>{allLabel}</span>
-          <span aria-hidden className="shrink-0 transition-transform group-hover:translate-x-0.5">&#8594;</span>
+          <span aria-hidden className="shrink-0 transition-transform group-hover:translate-x-0.5 md:text-[length:var(--t-body)] md:font-normal md:leading-none">&#8594;</span>
         </a>
       </div>
       <p className={`mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${headed ? " md:hidden" : ""}`}>{basis}</p>
