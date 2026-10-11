@@ -25,7 +25,9 @@
  *   - no per-anchor offset that repeats the bar: a browser adds an element's scroll-margin-top to the page's scroll-padding-top (the
  *     bar's height and 8px of air), so src holds no numeric scroll-mt-<n>, no scroll-margin property other than zero, and no
  *     arbitrary scroll-mt-[...] but the ones OTHER_STICKY names for a second sticky element above the target (the legacy cell page's
- *     106px; the workshop, src/app/dev, is outside the rule).
+ *     106px; the workshop, src/app/dev, is outside the rule);
+ *   - the watch dock SiteChrome mounts: every control of the open dock rings with the floor's ink and the kind dots draw no brown
+ *     (fix round F2, item P2.6; mounted in jsdom with one item of each kind).
  * HOW: SiteChrome rendered server-side, the switches set per render in process.env (src/lib/feature_flags.ts reads them at render, as
  * tests/legal/pro_legal.test.ts sets them) and the page's address handed in through Next's own pathname context; the sheet mounted in
  * jsdom and pressed. BLIND SPOT, stated: this reads classes and a mounted tree, never pixels: the bar's measured heights, the sheet's
@@ -771,6 +773,35 @@ async function main() {
   process.env.NEXT_PUBLIC_AUTH_ENABLED = "";
   const accountEntry = anchors(signedInHtml).find((n) => n.href === "/account");
   check("accounts on, the read says signed in: the entry is Account, a link to /account, in ink at weight 500 from 1280, and Sign in is gone", !!accountEntry && accountEntry.text === "Account" && /hidden xl:inline-flex/.test(accountEntry.tag) && /\bfont-medium\b/.test(accountEntry.tag) && /text-\[var\(--c-ink\)\]/.test(accountEntry.tag) && !/Sign in|href="\/signin"/.test(signedInHtml), { file: "src/components/HeaderAuth.tsx", remedy: "AuthLink draws the Account link at state in, with the same NAV_ENTRY class as the Sign in link" });
+
+  /* ---------------- 3d. THE WATCH DOCK (critique pass 4, fix round F2, item P2.6) ---------------- */
+  /* SiteChrome mounts the dock on every page, and it draws once a reader has a shortlist. It kept two things the floor and the palette had retired: its own
+     focus ring, `ring-atlas-500/40` at 2px with a 2px offset, the very constant the ship audit measured at 1.93:1 (the floor's :focus-visible cannot reach a
+     control that sets outline-none and draws a ring of its own), and a brown dot (`bg-cocoa-500`, #87745d) for a place. The ring is the floor's ink now
+     (`ring-[var(--c-ink)]`, 2px, 2px off) and the three kinds' dots part on terracotta, a mid grey and ink. Mounted here in the jsdom the sheet was pressed in,
+     with the store's own key seeded with one item of each kind and its pill pressed open, so every control of the open dock is read. BLIND SPOT: this reads
+     classes; the ring's pixels on a Tab are the browser's (f2_p26_probe.mjs), and the shortlist seeded here is a reader's, never the site's. */
+  const WATCH = "src/components/kit/WatchTray.tsx";
+  doc.defaultView!.localStorage.setItem("atlas:watch:v1", JSON.stringify([
+    { kind: "cell", slug: "gb-london-restaurants", label: "Restaurants, London", href: "/gb/london/restaurants", sub: "Greater London", compare: { country: "GB", industry: "restaurants", region: "london" }, addedAt: 3 },
+    { kind: "city", slug: "london", label: "London", href: "/cities/london", sub: "United Kingdom", addedAt: 2 },
+    { kind: "industry", slug: "restaurants", label: "Restaurants", href: "/industries/restaurants", addedAt: 1 },
+  ]));
+  const { WatchTray } = await import("../../src/components/kit/WatchTray");
+  const root3 = createRoot(doc.getElementById("root")!);
+  await act(async () => { root3.render(React.createElement(WatchTray)); });
+  const dockPill = doc.querySelector("button[aria-expanded]") as HTMLButtonElement | null;
+  if (dockPill) await act(async () => { dockPill.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); });
+  const dockRoot = dockPill?.parentElement ?? null;
+  const dockHtml = dockRoot?.outerHTML ?? "";
+  const dockDots = [...(dockRoot?.querySelectorAll('li span[aria-hidden="true"].rounded-full') ?? [])].map((d) => (d.getAttribute("class") ?? "").split(" ").filter((k) => k.startsWith("bg-")).join(" "));
+  check(`the open dock holds one item of each kind, and their dots part on terracotta, a mid grey and ink, no brown (${dockDots.join(" | ") || "no dots drawn"})`, dockDots.length === 3 && JSON.stringify(dockDots) === JSON.stringify(["bg-atlas-500", "bg-[var(--c-ink2)]", "bg-ink-900"]) && !/\bbg-cocoa-/.test(dockHtml), { file: WATCH, remedy: "KindDot's tones are bg-atlas-500 for a business, bg-[var(--c-ink2)] for a place and bg-ink-900 for an activity: no bg-cocoa-* (#87745d is a brown)" });
+  const dockControls = [...(dockRoot?.querySelectorAll("button, a") ?? [])];
+  const RING_TOKENS = ["focus-visible:outline-none", "focus-visible:ring-2", "focus-visible:ring-[var(--c-ink)]", "focus-visible:ring-offset-2"];
+  const offRing = dockControls.filter((c) => { const k = (c.getAttribute("class") ?? "").split(" "); return !RING_TOKENS.every((t) => k.includes(t)) || k.some((t) => /ring-atlas|ring-cocoa|ring-parchment/.test(t)); });
+  check(`every control of the open dock rings with the floor's ink, 2px and 2px off, and none with its own terracotta (${dockControls.length - offRing.length} of ${dockControls.length} controls: the pill, Clear all, Close, three rows and their removers, Compare these)`, dockControls.length === 10 && offRing.length === 0, { file: WATCH, remedy: "write RING as \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] focus-visible:ring-offset-2\": the floor's own ink ring (:focus-visible in globals.css), not ring-atlas-500/40, which the ship audit measured at 1.93:1" });
+  await act(async () => { root3.unmount(); });
+  doc.defaultView!.localStorage.removeItem("atlas:watch:v1");
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("chrome/masthead: all pass");

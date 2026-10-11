@@ -103,19 +103,24 @@ function CompareIcon({ className }: { className?: string }) {
 /* Shared focus ring (the house interactive ring).                     */
 /* ================================================================== */
 
+/* THE FLOOR'S INK, NOT A RING OF ITS OWN (critique pass 4, fix round F2, item P2.6): the site's floor (`:focus-visible` in globals.css) draws a 2px ink
+   outline 2px off, and it cannot reach a control that sets outline-none and draws a ring itself. This was `ring-atlas-500/40`, the very constant the ship
+   audit measured at 1.93:1, on every control of a dock SiteChrome mounts on every page. The ring is the same 2px of ink at the same 2px offset now. */
 const RING =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/40 focus-visible:ring-offset-2";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] focus-visible:ring-offset-2";
 
 /** A tiny token-colored dot keyed to the item kind, a quiet second read on the
  *  kind label printed beside it. City was moss-500 until 2026-08-17, which is
- *  banned; the three kinds now separate on the terracotta-to-ink ladder rather
- *  than on three hues, and the LABEL is what actually names the kind. */
+ *  banned, and cocoa-500 (a brown) after it until fix round F2
+ *  (critique pass 4, item P2.6); the three kinds now separate on the
+ *  terracotta, mid grey and ink ladder rather than on three hues, and the
+ *  LABEL is what actually names the kind. */
 function KindDot({ kind }: { kind: WatchKind }) {
   const tone =
     kind === "cell"
       ? "bg-atlas-500"
       : kind === "city"
-        ? "bg-cocoa-500"
+        ? "bg-[var(--c-ink2)]"
         : "bg-ink-900";
   return <span aria-hidden="true" className={cn("h-1.5 w-1.5 shrink-0 rounded-full", tone)} />;
 }

@@ -2685,6 +2685,7 @@
         "src/components/NavLinks.tsx",
         "src/components/SiteChrome.tsx",
         "src/components/StructuredData.tsx",
+        "src/components/kit/WatchTray.tsx",
         "src/components/newsletter/NewsletterSignupVariants.tsx",
         "src/components/spine",
         "src/components/spine/Crumbs.tsx",
