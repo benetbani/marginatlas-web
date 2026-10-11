@@ -154,10 +154,16 @@ function rateLimit(ip: string): { allowed: boolean; remaining: number } {
  *   hold, the path is certainly inside the country tree, so the second segment
  *   is judged against that country's own region list.
  *
- * Everything else is left alone, on purpose. A first segment that is not two
- * letters could be any static page, and an UNKNOWN two-letter first segment
- * with a child could be a route namespace rather than a country. Both keep
- * their soft 404 rather than risk a real page answering 404.
+ * Everything else is left alone BY THESE TWO RULES, on purpose: a first segment
+ * that is not two letters could be any static page, and an UNKNOWN two-letter
+ * first segment with a child could be a route namespace rather than a country,
+ * so neither is judged by its length. Tables generated from src/app judge them,
+ * never a guess: TOP_LEVEL_SEGMENTS below (since 2026-08-09, a first segment
+ * that is neither a country we hold nor a route folder is a place we do not
+ * hold), and edgeNotFound (src/lib/routing/edge_not_found.ts), which since
+ * 2026-10-11 holds an address of a route folder against the shapes that folder
+ * serves, so /pricing/xyz and /blog/no-such-post answer 404 and no longer keep
+ * the country route's soft 404.
  *
  * The two lists below are the same two the routes themselves check. Nothing new
  * is invented here, and a place that gains coverage stops 404ing on its own.
@@ -186,7 +192,10 @@ function regionSlugsFor(countrySlug: string, countryName: string): Set<string> {
  * the page it routes to would therefore call notFound() anyway.
  *
  * Expects an already-canonical path: lowercase, no trailing slash. The
- * canonicalization redirect above guarantees that by the time this runs.
+ * canonicalization redirect above guarantees that for the call at 3b' and for
+ * /static at step 4. It skips /api/ and /_next, so step 4's /api/ call can hand
+ * this a capital or a trailing slash, and there it returns false whatever the
+ * case: "api" is a route folder (TOP_LEVEL_SEGMENTS), not a place.
  */
 function isPlaceWeDoNotHold(path: string): boolean {
   const segments = path.split("/").filter(Boolean);

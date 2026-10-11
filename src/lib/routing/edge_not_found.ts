@@ -162,8 +162,10 @@ export function legacyHoodTarget(path: string): string | null {
 }
 
 /** A FILE ONLY IF IT IS ONE (2026-10-06): the address names a file and the site serves no such file. The address exactly as the
- *  middleware has it, canonical by then: Vercel's files are case-sensitive, so `/cities/README.txt` is listed and its lowercase
- *  address, the only one a request reaches, is not. The middleware also asks this alone under the prefixes its rate limit skips. */
+ *  middleware has it, canonical by then outside /api/ and /_next (the canonicalization skips both): Vercel's files are case-sensitive,
+ *  so `/cities/README.txt` is listed and its lowercase address, the only one a request reaches, is not. The middleware asks this first
+ *  under the prefixes its rate limit skips (step 2b): under /_next that is all it asks, and under /static and /api/ it goes on to the
+ *  place rule and edgeNotFound (step 4). */
 export function fileNotServed(path: string): boolean {
   return namesFile(path) && !SERVED_FILES.has(path) && !path.startsWith("/_vercel/");
 }
