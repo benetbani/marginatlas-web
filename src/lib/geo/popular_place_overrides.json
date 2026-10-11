@@ -110,7 +110,7 @@
     "in/uttar-pradesh": "Lucknow",
     "in/rajasthan": "Jaipur",
     "in/kerala": "Kochi",
-    "in/punjab": "Chandigarh",
+    "in/punjab": "Punjab",
 
     "br/sao-paulo": "São Paulo",
     "br/são-paulo": "São Paulo",
@@ -142,9 +142,9 @@
     "au/south-australia": "Adelaide",
 
     "gb/england": "England",
-    "gb/scotland": "Edinburgh",
-    "gb/wales": "Cardiff",
-    "gb/northern-ireland": "Belfast",
+    "gb/scotland": "Scotland",
+    "gb/wales": "Wales",
+    "gb/northern-ireland": "Northern Ireland",
 
     "tr/istanbul": "Istanbul",
     "tr/ankara": "Ankara",
@@ -158,7 +158,7 @@
     "kr/seoul": "Seoul",
     "kr/busan": "Busan",
     "kr/incheon": "Incheon",
-    "kr/gyeonggi": "Seoul",
+    "kr/gyeonggi": "Gyeonggi",
 
     "id/jakarta": "Jakarta",
     "id/dki-jakarta": "Jakarta",
@@ -177,7 +177,7 @@
     "ph/cebu": "Cebu",
 
     "my/kuala-lumpur": "Kuala Lumpur",
-    "my/selangor": "Kuala Lumpur",
+    "my/selangor": "Selangor",
 
     "sg/singapore": "Singapore",
 

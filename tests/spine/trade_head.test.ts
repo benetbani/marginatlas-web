@@ -62,6 +62,14 @@
  * BLIND SPOT, stated: the display rule reads a label's tail only, so a label that holds the code anywhere else still prints it. One does today, "RUP FR - Régions
  * Ultrapériphériques Françaises" (/fr/fry), and the every-word check names that word and no other: a new one reds it.
  *
+ * AND NO REGION IS NAMED BY A PLACE OUTSIDE IT (truth-fixes round 3A2, 2026-10-12; the review's I2 and M2). The popular-name table (src/lib/geo/popular_place_overrides.json) is the
+ * one geoNameFromSlug and every cell's name read first. It named England London (round 3A), Scotland, Wales and Northern Ireland by their capitals, and three regions by a city that
+ * is not in them: Punjab by Chandigarh, Gyeonggi by Seoul, Selangor by Kuala Lumpur. So /gb/scotland was titled "Edinburgh, United Kingdom" over a trail that said Scotland, and
+ * /kr/gyeonggi and /kr/seoul shared one headline against the table's own anchor (never two names for one place). All seven are named by their own English name now, in a table below
+ * and in the route and card lists. The 110 other regions the table names by a city inside them are not touched: their premise (Plan v28 Lane C) is the owner's call.
+ * BLIND SPOT, stated: this reads seven values of a table. It cannot tell, in the 110 left, a region named by a city from one named by itself, and it cannot tell whether a value
+ * adds or drops an address: the place table is built from the values (scripts/gen_place_slugs.ts), and the edge-not-found gate holds the committed table to a fresh generation.
+ *
  * Run: npx tsx tests/spine/trade_head.test.ts
  */
 import Module from "node:module";
@@ -86,7 +94,7 @@ const R_HEAD = "name the place in generateMetadata through headPlaceOf(country, 
 const R_SEED = "name the place in loadCellView with placeNameOf(country, geo, cell.geo_name), so the seed's city, and with it the crumbs and every card, print it";
 const R_CARD = "name the place in the share card through headPlaceOf(country, geo, cell), as the page's head does: its label in the title, its figureIn beside the figure, and no figure when its figureIn is null";
 const R_ARTICLE = "drop Czech from the start-of-name rule in src/lib/spine/place_names.ts: Czechia takes no article, and the Czech Republic still takes it from Republic";
-const R_ENGLAND = "name England England in src/lib/geo/popular_place_overrides.json (gb/england), the table geoNameFromSlug and getCellBySlug answer first: a nation is never named by its capital, so a page's label is the place the word names, then the place table is generated again (scripts/gen_place_slugs.ts) and holds no word fewer";
+const R_NAMED = "set the value of each of gb/england, gb/scotland, gb/wales, gb/northern-ireland, in/punjab, kr/gyeonggi and my/selangor in src/lib/geo/popular_place_overrides.json to the region's own English name (England, Scotland, Wales, Northern Ireland, Punjab, Gyeonggi, Selangor): that table is the one geoNameFromSlug and getCellBySlug answer first, and a region is never named by its capital or by a place outside it; then generate the place table again (scripts/gen_place_slugs.ts, renderPlaceSlugs) and keep every word it holds, since its addresses are built from these values";
 const R_SOURCE = "cut a pipeline's word (one holding an underscore, or two or more letters run into digits) from the source line where the data enters the seed, sanitiseProvenance in src/lib/spine/adapt_cell.ts; where nothing readable is left the sentence drops its \"from\" clause (\"Estimates for a typical restaurant.\"), never an invented source and never an agency";
 const R_STAT = "map a statistics code to the site's country code in one function, siteCountryCode in src/lib/countries.ts (UK to GB, EL to GR), read once where adapt_cell.ts sets the seed's meta.iso2 and by placeNameOf for the country's name and its bare-code test; the coverage report imports it and holds no table of its own; the address keeps the code the route received (meta.address_iso2, which the report foot's path reads)";
 const R_STAMPED = "in placeNameOf (src/lib/cells/place_name.ts), a whole-country word whose stamped name is the lookup's own label for it (geoNameFromSlug: \"All of AF\", \"Danmark\") is the country, named in English, before the cell's own name is kept";
@@ -276,10 +284,24 @@ async function main(): Promise<void> {
     if (n === c.name) byCountry++; else byLabel++;
   }
   check(`${words} place words of ${COUNTRIES.length} held countries, each given its country's code for a name: ${words - bare.length} are named (${byLabel} by a label of the site's tables, ${byCountry} by their country's name), ${holdsCode.length} print the country's code as a word${holdsCode.length ? ` (${holdsCode.slice(0, 4).join(", ")})` : ""} and ${bare.length} print the bare code${bare.length ? ` (${bare.slice(0, 6).join(" ")})` : ""}`, words > 0 && bare.length === 0 && holdsCode.length === 0, { file: NAME, remedy: R_EXPORT });
-  /* /gb/england: the popular-name table named a nation by its capital, and geoNameFromSlug answers that table first for every page. */
+  /* THE FOUR NATIONS AND THREE REGIONS THE POPULAR-NAME TABLE NAMED BY A PLACE OUTSIDE THEM. The table answers first for every page (geoNameFromSlug, and cells.ts stamps
+     its answer on the cell), and it named England London (round 3A), Scotland Edinburgh, Wales Cardiff, Northern Ireland Belfast, and three regions by a city that is not in
+     them (round 3A2, the review's I2 and M2): Punjab by Chandigarh, a union territory, Gyeonggi by Seoul, which is no part of it, and Selangor by Kuala Lumpur, a federal
+     territory. Each is now named by its own English name. The table's own anchor says never two names for one place, and /kr/seoul and /my/kuala-lumpur already name theirs. */
   const { geoNameFromSlug } = await import("../../src/lib/cells/geo");
-  const england = geoNameFromSlug("GB", "england");
-  check(`/gb/england is not named London: the lookup's label for the word is ${JSON.stringify(england)} and the page prints ${JSON.stringify(P("GB", "england", england))}`, england !== "London" && england === "England" && P("GB", "england", england) === "England", { file: "src/lib/geo/popular_place_overrides.json", remedy: R_ENGLAND });
+  const regionNames: Array<[string, string, string, string]> = [
+    ["GB", "england", "England", "London"],
+    ["GB", "scotland", "Scotland", "Edinburgh"],
+    ["GB", "wales", "Wales", "Cardiff"],
+    ["GB", "northern-ireland", "Northern Ireland", "Belfast"],
+    ["IN", "punjab", "Punjab", "Chandigarh"],
+    ["KR", "gyeonggi", "Gyeonggi", "Seoul"],
+    ["MY", "selangor", "Selangor", "Kuala Lumpur"],
+  ];
+  for (const [cc, word, name, was] of regionNames) {
+    const label = geoNameFromSlug(cc, word);
+    check(`/${cc.toLowerCase()}/${word} is named ${name} and never ${was}: the lookup's label for the word is ${JSON.stringify(label)} and the page prints ${JSON.stringify(P(cc, word, label))}`, label !== was && label === name && P(cc, word, label) === name, { file: "src/lib/geo/popular_place_overrides.json", remedy: R_NAMED });
+  }
 
   /* THE SAME WORDS AS THE LIVE PATH READS THEM (truth-fixes round 3A2; the review of round 3A, I1). Each word is given what cells.ts stamps on its cell: the label a
      table holds for it (geoNameFromSlug) where there is one, else the row's own name, which is the country's code in 47 of 195 countries. The counts are stated: the
@@ -349,7 +371,8 @@ async function main(): Promise<void> {
      is set and fetch replaced BEFORE the imports below. The stub answers for the restaurants slug only:
        - extrapolated_cells for the United Kingdom's and Germany's three-letter codes: the rows the database held on 2026-10-11 (their name
          column the country's own code, GB and DE), three size bands each, so a place word no regional row holds reaches the country's row
-         as /gb/boston does on the live site; and, as round 3A2 reads whole-country words, for Afghanistan's and Denmark's;
+         as /gb/boston does on the live site; and, as round 3A2 reads whole-country words and the regions the popular-name table named by another
+         place, for Afghanistan's, Denmark's, India's, South Korea's and Malaysia's;
        - regional_cells for four real places and one statistics row: London, Liverpool and Manchester under their own ids and Boston in
          Massachusetts under its county's (the controls), and a row of the code UK at the level "country" (a country's row of a code the
          country list holds no name for); and the Belgian province BE22, a real regional row whose label ends in its country's code;
@@ -367,6 +390,11 @@ async function main(): Promise<void> {
      "Danmark". Their name column is the bare code, as the 47 countries' rows hold it. */
   const AF_ROWS = [bandRow("AFG", "AF", "TOTAL", 76000), bandRow("AFG", "AF", "0-9", 41000), bandRow("AFG", "AF", "20-49", 380000)];
   const DK_ROWS = [bandRow("DNK", "DK", "TOTAL", 330000), bandRow("DNK", "DK", "0-9", 150000), bandRow("DNK", "DK", "20-49", 2100000)];
+  /* India's, South Korea's and Malaysia's country rows (round 3A2): the three regions the popular-name table named by a city that is not in them read their country's row. */
+  const IN_ROWS = [bandRow("IND", "IN", "TOTAL", 22000), bandRow("IND", "IN", "0-9", 12000), bandRow("IND", "IN", "20-49", 190000)];
+  const KR_ROWS = [bandRow("KOR", "KR", "TOTAL", 137000), bandRow("KOR", "KR", "0-9", 74000), bandRow("KOR", "KR", "20-49", 910000)];
+  const MY_ROWS = [bandRow("MYS", "MY", "TOTAL", 218000), bandRow("MYS", "MY", "0-9", 99000), bandRow("MYS", "MY", "20-49", 1200000)];
+  const EXTRAPOLATED: Record<string, unknown[]> = { GBR: UK_ROWS, DEU: DE_ROWS, AFG: AF_ROWS, DNK: DK_ROWS, IND: IN_ROWS, KOR: KR_ROWS, MYS: MY_ROWS };
   const regionalRow = (country: string, geoId: string, level: string, name: string, usd: number) => ({ country, geo_id: geoId, geo_level: level, geo_name: name, industry_id: "restaurants", size_band: null, year: YEAR, n_enterprises: 5000, n_employees: 40000, revenue_per_firm: usd, rev_p10: usd * 0.4, rev_p25: usd * 0.65, rev_p50: usd, rev_p75: usd * 1.45, rev_p90: usd * 2.1, payroll_per_employee: 30000, quality_score: 80, coverage_tier: "S", coverage_source: "National business statistics", currency: "USD", sub_industry_id: null, sub_industry_source_kind: null, cost_stack: null, setup_costs: null });
   const REGIONAL = [
     regionalRow("GB", "GB-E09000001", "district", "London", 433_000),
@@ -385,7 +413,7 @@ async function main(): Promise<void> {
     const has = (part: string) => url.includes(part);
     const restaurants = /industry_id=in\.\([^)]*restaurants/.test(url);
     let rows: unknown[] = [];
-    if (table === "extrapolated_cells" && restaurants) rows = has("country_iso3=eq.GBR") ? UK_ROWS : has("country_iso3=eq.DEU") ? DE_ROWS : has("country_iso3=eq.AFG") ? AF_ROWS : has("country_iso3=eq.DNK") ? DK_ROWS : [];
+    if (table === "extrapolated_cells" && restaurants) rows = Object.entries(EXTRAPOLATED).find(([iso3]) => has(`country_iso3=eq.${iso3}`))?.[1] ?? [];
     else if (table === "regional_cells" && restaurants) rows = REGIONAL.filter((r) => has(`country=eq.${r.country}&`) && has(`geo_id=eq.${r.geo_id}&`));
     else if (table === "cells_master" && has("country=eq.US") && has("geo_id=eq.US-06") && has("naics_6.like.722")) rows = [CALIFORNIA];
     return new Response(JSON.stringify(rows), { status: 200, headers: { "content-type": "application/json" } });
@@ -426,6 +454,14 @@ async function main(): Promise<void> {
     { country: "gb", geo: "king-s-lynn-and-west-norfolk", industry: "restaurants", titleIn: "King's Lynn and West Norfolk, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Lynn", seedCity: "King's Lynn and West Norfolk" },
     { country: "gb", geo: "gb-e06000004", industry: "restaurants", titleIn: THE_UK, desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), seedCity: "United Kingdom" },
     { country: "gb", geo: "england", industry: "restaurants", titleIn: "England, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "England", seedCity: "England" },
+    /* The other three nations and three regions the popular-name table named by a place outside them (truth-fixes round 3A2, the review's I2 and M2): each is its own name,
+       over its country's figure. Edinburgh, Cardiff, Belfast, Chandigarh, Seoul and Kuala Lumpur are cities the site draws on pages of their own. */
+    { country: "gb", geo: "scotland", industry: "restaurants", titleIn: "Scotland, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Scotland", seedCity: "Scotland" },
+    { country: "gb", geo: "wales", industry: "restaurants", titleIn: "Wales, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Wales", seedCity: "Wales" },
+    { country: "gb", geo: "northern-ireland", industry: "restaurants", titleIn: "Northern Ireland, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Northern Ireland", seedCity: "Northern Ireland" },
+    { country: "in", geo: "punjab", industry: "restaurants", titleIn: "Punjab, India", desc: new RegExp(`^~${AMT} typical revenue for restaurants in India\\.$`), never: "Punjab", seedCity: "Punjab" },
+    { country: "kr", geo: "gyeonggi", industry: "restaurants", titleIn: "Gyeonggi, South Korea", desc: new RegExp(`^~${AMT} typical revenue for restaurants in South Korea\\.$`), never: "Gyeonggi", seedCity: "Gyeonggi" },
+    { country: "my", geo: "selangor", industry: "restaurants", titleIn: "Selangor, Malaysia", desc: new RegExp(`^~${AMT} typical revenue for restaurants in Malaysia\\.$`), never: "Selangor", seedCity: "Selangor" },
     /* A synthetic cell: no row held legal services, so the lookup drew one from country and trade averages. It names the label its
        tables give the word (Liverpool) or else the country, and the head says it holds no figure. */
     { country: "gb", geo: "liverpool", industry: "legal-services", titleIn: "Liverpool", desc: new RegExp(`^Revenue and employment numbers for ${tradeName("legal-services").toLowerCase()} in Liverpool\\.$`) },
@@ -594,6 +630,12 @@ async function main(): Promise<void> {
     { country: "de", geo: "de", industry: "restaurants", title: "Restaurants: Germany", label: "Typical revenue", detail: RANGE },
     { country: "de", geo: "frankfurt-am-main", industry: "restaurants", title: "Restaurants: Frankfurt am Main", label: "Typical revenue in Germany", detail: RANGE, never: "Frankfurt" },
     { country: "gb", geo: "england", industry: "restaurants", title: "Restaurants: England", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "England" },
+    { country: "gb", geo: "scotland", industry: "restaurants", title: "Restaurants: Scotland", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "Scotland" },
+    { country: "gb", geo: "wales", industry: "restaurants", title: "Restaurants: Wales", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "Wales" },
+    { country: "gb", geo: "northern-ireland", industry: "restaurants", title: "Restaurants: Northern Ireland", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "Northern Ireland" },
+    { country: "in", geo: "punjab", industry: "restaurants", title: "Restaurants: Punjab", label: "Typical revenue in India", detail: RANGE, never: "Punjab" },
+    { country: "kr", geo: "gyeonggi", industry: "restaurants", title: "Restaurants: Gyeonggi", label: "Typical revenue in South Korea", detail: RANGE, never: "Gyeonggi" },
+    { country: "my", geo: "selangor", industry: "restaurants", title: "Restaurants: Selangor", label: "Typical revenue in Malaysia", detail: RANGE, never: "Selangor" },
     { country: "gb", geo: "liverpool", industry: "legal-services", title: `${tradeName("legal-services")}: Liverpool`, none: true },
     { country: "gb", geo: "boston", industry: "legal-services", title: `${tradeName("legal-services")}: United Kingdom`, none: true },
     { country: "uk", geo: "uki", industry: "restaurants", title: "Restaurants: London", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "London" },
