@@ -53,7 +53,7 @@
  * code UK at the level "country"; this cannot tell which rows the database holds today.
  *
  * AND A NAME THE LOOKUP STAMPED (truth-fixes round 3A2, 2026-10-12; the review of round 3A, I1). cells.ts stamps geoNameFromSlug(country, word) on every cell whose
- * word a table labels, so the name placeNameOf is given is that label and never the bare code: the every-word check above gave every word its country's code, a
+ * word a table labels, so the name placeNameOf is given is that label and never the bare code: round 3A's every-word check gave every word its country's code, a
  * path the lookup takes for none of the 2,510 words a table labels. Fed as the lookup feeds it, 76 words printed their country's code and 83 whole-country words
  * printed a native name or a placeholder ("All of AF", "Danmark"). A whole-country word whose stamped name is the lookup's own label for it is the country, named in
  * English; a stamped label that ends in the page's own country code or in "(NUTS 2021)" prints without that tail ("Prov. Limburg (BE)" is "Prov. Limburg"), at
@@ -396,7 +396,7 @@ async function main(): Promise<void> {
   const UK_ROWS = [bandRow("GBR", "GB", "TOTAL", 153362.61), bandRow("GBR", "GB", "0-9", 67565.84), bandRow("GBR", "GB", "20-49", 1080132.61)];
   const DE_ROWS = [bandRow("DEU", "DE", "TOTAL", 241000), bandRow("DEU", "DE", "0-9", 118000), bandRow("DEU", "DE", "20-49", 1450000)];
   /* Afghanistan's and Denmark's country rows (round 3A2): the two whole-country words the review read, the first labelled "All of AF" by its region table, the second
-     "Danmark". Their name column is the bare code, as the 47 countries' rows hold it. */
+     "Danmark". Their name column is the bare code, as the United Kingdom's and Germany's rows above hold it. */
   const AF_ROWS = [bandRow("AFG", "AF", "TOTAL", 76000), bandRow("AFG", "AF", "0-9", 41000), bandRow("AFG", "AF", "20-49", 380000)];
   const DK_ROWS = [bandRow("DNK", "DK", "TOTAL", 330000), bandRow("DNK", "DK", "0-9", 150000), bandRow("DNK", "DK", "20-49", 2100000)];
   /* India's, South Korea's and Malaysia's country rows (round 3A2): the three regions the popular-name table named by a city that is not in them read their country's row. */
@@ -464,7 +464,7 @@ async function main(): Promise<void> {
     { country: "gb", geo: "gb-e06000004", industry: "restaurants", titleIn: THE_UK, desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), seedCity: "United Kingdom" },
     { country: "gb", geo: "england", industry: "restaurants", titleIn: "England, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "England", seedCity: "England" },
     /* The other three nations and three regions the popular-name table named by a place outside them (truth-fixes round 3A2, the review's I2 and M2): each is its own name,
-       over its country's figure. Edinburgh, Cardiff, Belfast, Chandigarh, Seoul and Kuala Lumpur are cities the site draws on pages of their own. */
+       over its country's figure. */
     { country: "gb", geo: "scotland", industry: "restaurants", titleIn: "Scotland, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Scotland", seedCity: "Scotland" },
     { country: "gb", geo: "wales", industry: "restaurants", titleIn: "Wales, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Wales", seedCity: "Wales" },
     { country: "gb", geo: "northern-ireland", industry: "restaurants", titleIn: "Northern Ireland, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Northern Ireland", seedCity: "Northern Ireland" },
