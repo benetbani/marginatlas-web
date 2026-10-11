@@ -131,6 +131,12 @@ const nextConfig = {
         destination: post.to,
         permanent: true,
       })),
+      // /FAVICON.ICO BY NAME (critique pass 4, fix round F2, item P2.7): browsers find the site's icons through each page's own links (/icon, /icon1,
+      // /icon2, /apple-icon), but feed readers, some link previews and plain crawlers ask for /favicon.ico by name, and it answered 404. It retires no
+      // published address (it was a 404): it goes, permanently, to /icon, the site icon (src/app/icon.tsx). The platform runs a config redirect before
+      // the middleware, so the middleware's rules never see the address. Nothing is generated and nothing downloaded; tests/routing/redirect_pins.txt
+      // pins the row and tests/routing/metadata_routes.test.ts reads the destination.
+      { source: "/favicon.ico", destination: "/icon", permanent: true },
     ];
   },
 

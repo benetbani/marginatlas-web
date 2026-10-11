@@ -21,6 +21,7 @@
  * Run: npx tsx tests/routing/metadata_routes.test.ts
  *      npx tsx tests/routing/metadata_routes.test.ts --live
  */
+import { resolve } from "node:path";
 import { NextRequest } from "next/server";
 /* The middleware's routing decision (since the checkup of 2026-10-06 the exported `middleware` is async: it adds a session refresh
    that is a no-op with auth off and no session cookie, as here), asked synchronously. */
@@ -149,6 +150,26 @@ for (const name of METADATA_IMAGE_NAMES.filter((n) => !named.has(n))) {
   check(`a metadata name with no file is a made-up first segment too: /${name} ${v}`, v === "pinned to 404", MW, CONTROL_REMEDY);
 }
 
+/* THE FAVICON BY NAME (critique pass 4, fix round F2, item P2.7). Browsers find the site's icons through the page's own links (/icon, /icon1, /icon2 and
+   /apple-icon, each answering 200), but feed readers, some link previews and plain crawlers ask for /favicon.ico by name, and it answered 404: no file holds
+   that address, and a dotted address no file holds is the edge's 404. next.config.js's redirects() sends it, permanently, to /icon (src/app/icon.tsx, the site
+   icon every page links), and the platform runs a config redirect before the middleware, so the middleware's rules never see the address. It retires no
+   published address: it was a 404. This reads the config as Next reads it (the evaluated redirects(), source, destination and status), and asks that the
+   destination is the metadata route the walk found, passed untouched by the middleware, and no redirect of its own. BLIND SPOT: this reads the config and
+   the middleware's verdict; the status on the wire, and the platform running the redirect first, are the build's and production's (`--live` asks). */
+const FAVICON_REMEDY = "in next.config.js's redirects() add { source: \"/favicon.ico\", destination: \"/icon\", permanent: true } (nothing generated, nothing downloaded), and pin the row `config /favicon.ico -> /icon 308` in tests/routing/redirect_pins.txt in the same commit, with the reason in the commit message (it retires no published address: it answered 404)";
+async function faviconByName() {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const config = require(resolve("next.config.js")) as { redirects?: () => Promise<Array<{ source: string; destination: string; permanent?: boolean; statusCode?: number }>> };
+  const rows = config.redirects ? await config.redirects() : [];
+  const row = rows.find((r) => r.source === "/favicon.ico");
+  const status = row ? (typeof row.statusCode === "number" ? row.statusCode : row.permanent ? 308 : 307) : 0;
+  check(`/favicon.ico by name is redirected, permanently, to /icon (${row ? `${row.source} -> ${row.destination} ${status}` : "no redirect holds it"})`, !!row && row.destination === "/icon" && status === 308, "next.config.js", FAVICON_REMEDY);
+  const icon = at("src/app/icon.tsx");
+  const iconVerdict = verdict("/icon");
+  check(`its destination is the site icon the walk found, src/app/icon.tsx at /icon, which the middleware passes and no redirect moves (${icon}, ${iconVerdict}, ${rows.some((r) => r.source === "/icon") ? "redirected" : "not redirected"})`, icon === "/icon" && iconVerdict === "passes" && !rows.some((r) => r.source === "/icon"), "src/app/icon.tsx", ICON_REMEDY);
+}
+
 function finish() {
   if (failed > 0) {
     redSummary(RULE, failed, REMEDY, "checks failed");
@@ -160,6 +181,9 @@ function finish() {
 /* No top-level await: this repo's tsx transform emits CJS and rejects it. */
 if (process.argv.includes("--live")) {
   (async () => {
+    await faviconByName();
+    const fav = await fetch("https://www.marginatlas.com/favicon.ico", { headers: { "user-agent": UA, "accept-language": "en-GB" }, redirect: "manual" });
+    check(`live: /favicon.ico answers ${fav.status} to ${fav.headers.get("location") ?? "nowhere"} on production (308 to /icon)`, fav.status === 308 && /\/icon$/.test(fav.headers.get("location") ?? ""), LIST, LIVE_REMEDY);
     for (const { file, address } of routes) {
       const asked = asRequested(address);
       if (asked === null) continue;
@@ -169,5 +193,8 @@ if (process.argv.includes("--live")) {
     finish();
   })();
 } else {
-  finish();
+  faviconByName().then(finish, (e) => {
+    red({ rule: RULE, file: "next.config.js", detail: `the favicon check could not read the config: ${e instanceof Error ? e.message : String(e)}`, remedy: FAVICON_REMEDY });
+    process.exit(1);
+  });
 }

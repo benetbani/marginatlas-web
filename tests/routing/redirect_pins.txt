@@ -60,6 +60,7 @@ config /blog/why-friendly-medians -> /about-data 308
 config /blog/worlds-smallest-hotel-markets -> /industries 308
 config /blog/what-we-omit -> /about-data#leave-out 308
 config /blog/when-we-extrapolate -> /about-data#estimates 308
+config /favicon.ico -> /icon 308
 vercel.json keys $schema,buildCommand
 next.config redirect-shaping keys none
 retired /industries/aerospace-other-transport-mfg -> /industries
