@@ -72,8 +72,8 @@ export function sayTradeTypical(cards: UkTradeCards, tradeSlug: string | null | 
     /* The mix prints its foot as its one line (its basis is empty), so the foot is the line that says whose figure it is. */
     mix: mix ? { ...mix, foot: T.mix } : mix,
     customers: customers ? { ...customers, basis: T.customers } : customers,
-    /* The cost to open keeps its own lines: its baseline card already carries one (the smaller costs in the total), and a
-       second would break the card's one supporting line; it is not on the audit's list of item 10. */
+    /* The cost to open keeps its own lines: its held card already carries one (the smaller costs in the total), and a
+       second would break the card's one supporting line; whose bill it is stands under its total (open_rows.ts, plan 2026-10-11). */
     open,
     market: market
       ? {

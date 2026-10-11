@@ -270,8 +270,8 @@ export type RankedBarsProps = {
    *  `data-focal`. Under PART 6 the fills follow it: the leader's bar `--terra`
    *  and the rest hatched, exactly as a featured card already draws. */
   /*  `words` (2026-09-23, the country page's `18 spend`): one micro line under
-   *  the figure saying what it is. The cost to open needs none, because its
-   *  card is called "The cost to open" and the focal is that cost; a focal that
+   *  the figure saying what it is. The cost to open's held bill takes one, whose
+   *  estimate it is (open_rows.ts, plan 2026-10-11); a focal that
    *  is NOT what the kicker names has to say what it is, or it is a number
    *  floating over a list. A label, never a sentence (PART 9). */
   focal?: { figure: string; accent?: boolean; words?: string; prov?: Provenance };

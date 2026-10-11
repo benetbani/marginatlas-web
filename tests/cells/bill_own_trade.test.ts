@@ -7,6 +7,7 @@
  * Run: npx tsx tests/cells/bill_own_trade.test.ts
  */
 import { setupItemsFromCell } from "../../src/lib/spine/setup_items";
+import { buildOpen } from "../../src/lib/spine/open_rows";
 import { hasSetupCostData } from "../../src/components/sections/SetupCostBlock";
 import type { Cell } from "../../src/lib/cells";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -39,6 +40,14 @@ const SCOPE = "a bill prints only as its country's estimate: setup_items.ts pass
 const graded = (grade?: string) => ({ ...RESTAURANT_BILL, grade }) as unknown as Cell["setup_costs"];
 check("a grade C bill (US lines in every country) prints no lines", setupItemsFromCell({ setup_costs: graded("C"), country: "GB" }) === undefined, FILE, SCOPE);
 check("a bill with no grade prints no lines", setupItemsFromCell({ setup_costs: graded(), country: "GB" }) === undefined, FILE, SCOPE);
+
+/* THE CARD SAYS WHOSE IT IS (the same plan): the UK's bill under its words on every UK place, every figure stamped an estimate, the card marked modelled. */
+const OPEN = "src/lib/spine/open_rows.ts";
+const seed = (setup: unknown, geo: string, city: string) => ({ meta: { iso2: "GB", geo, city, industry: "restaurants", industry_id: "restaurants" }, setup });
+const placed = [["london", "London"], ["manchester", "Manchester"], ["liverpool", "Liverpool"]].map(([g, c]) => buildOpen(seed(own, g, c)));
+check("London, Manchester, Liverpool: $426K under 'A UK-wide estimate', stamped setup_costs:restaurants:GB, an estimate, marked modelled", placed.every((o) => o?.state === "held" && o.figure === "$426K" && o.focalWords === "A UK-wide estimate" && o.prov?.src === "setup_costs:restaurants:GB" && o.prov.kind === "estimate" && o.rows.every((r) => r.prov?.kind === "estimate") && o.confidence === "modeled" && o.sample), OPEN, SCOPE);
+check("a bill that names no country prints no bill", buildOpen(seed({ items: own?.items }, "liverpool", "Liverpool"))?.state !== "held", OPEN, SCOPE);
+check("a bill of a country with no words prints no bill", buildOpen(seed({ ...own, scope: "FR" }, "liverpool", "Liverpool"))?.state !== "held", OPEN, SCOPE);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("cells/bill_own_trade: all pass");

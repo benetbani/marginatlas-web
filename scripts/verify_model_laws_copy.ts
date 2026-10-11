@@ -730,12 +730,12 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
       if (p.withheld) heads.push([`buildPermits(${id}).withheld`, p.withheld]);
     }
     heads.push(["COPY.tradePermits.basis", COPY.tradePermits.basis], ["COPY.tradePermits.foot", COPY.tradePermits.foot], ["COPY.tradePermits.withheldOne", COPY.tradePermits.withheldOne], ["buildPermits(withheldMany)", COPY.tradePermits.withheldMany.replace("{n}", "2")], ["COPY.tradePermits.foreignOne", COPY.tradePermits.foreignOne], ["buildPermits(foreignMany)", COPY.tradePermits.foreignMany.replace("{n}", "2")]);
-    const lines = { items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }] };
-    const nine = { items: [...lines.items, { name: "Initial inventory", usd: 20000 }, { name: "Pre-opening marketing", usd: 12000 }, { name: "Business registration", usd: 20 }, { name: "Industry licences", usd: 1500 }, { name: "Insurance and bonds", usd: 2000 }, { name: "Certifications", usd: 500 }] };
+    const lines = { scope: "GB", items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }] };
+    const nine = { scope: "GB", items: [...lines.items,{ name: "Initial inventory", usd: 20000 }, { name: "Pre-opening marketing", usd: 12000 }, { name: "Business registration", usd: 20 }, { name: "Industry licences", usd: 1500 }, { name: "Insurance and bonds", usd: 2000 }, { name: "Certifications", usd: 500 }] };
     const openSeeds: Array<[string, any]> = [
       ["held", { meta: { industry: "restaurants", industry_id: "restaurants" }, setup: lines }],
       ["held, nine lines", { meta: { industry: "restaurants", industry_id: "restaurants" }, setup: nine }],
-      ["held, six lines", { meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items.slice(0, 6) } }],
+      ["held, six lines", { meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { ...nine, items: nine.items.slice(0, 6) } }],
       ["held, no shard", { meta: { industry: "restaurants", industry_id: "no_such_trade" }, setup: nine }],
       ["baseline", { meta: { industry: "restaurants", industry_id: "restaurants" } }],
       ["withheld", { meta: { industry: "shoe-repair", industry_id: "shoe_repair" } }],
@@ -748,6 +748,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
       if (o.withheld) heads.push([`buildOpen(${name}).withheld`, o.withheld]);
       if (o.footLine) heads.push([`buildOpen(${name}).footLine`, o.footLine]);
       if (o.tailLine) heads.push([`buildOpen(${name}).tailLine`, o.tailLine]);
+      if (o.focalWords) heads.push([`buildOpen(${name}).focalWords`, o.focalWords]);
       for (const c of o.foot) heads.push([`buildOpen(${name}).foot`, c.words]);
     }
     heads.push(["COPY.tradeOpen.biggest", COPY.tradeOpen.biggest], ["COPY.tradeOpen.footWithheld", COPY.tradeOpen.footWithheld]);

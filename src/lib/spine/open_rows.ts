@@ -6,8 +6,8 @@
  * function returns whichever the cell is in, so the view never composes a
  * state of its own:
  *
- *  HELD, where the cell holds real setup lines (`cell.setup_costs`, real,
- *    through adapt_cell.ts's `setup.items`; item 56 counts the cells): the
+ *  HELD, where the cell holds setup lines that name their country (`cell.setup_costs`
+ *    through setup_items.ts, one bill per country, printed as its estimate; item 56 counts the cells): the
  *    lines as members of one set for RankedBars, biggest first, the total at
  *    30 over them as the card's focal and never as a sum the bars are read
  *    to make (M2: the sum reading is `05`'s), the biggest line the leader
@@ -88,6 +88,7 @@ import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { Provenance } from "@/lib/spine/provenance";
+import { own } from "@/lib/own";
 
 export const OPEN_METRICS = { ramp: "first_year.ramp_to_breakeven_months", payback: "first_year.payback_years" } as const;
 /** The formats' names and their opening cost against the trade's typical, in percent (the shard's own fields). */
@@ -106,8 +107,10 @@ export const DRAWN_LINES_CAP = 5;
 export type OpenData = {
   state: OpenState;
   /** Where the focal figure came from (plan 06, task B5): set on the keyed baseline, an estimate (New York's index, at the page's
-   *  city's prices where the city holds a cost of living). Absent elsewhere. */
+   *  city's prices where the city holds a cost of living) and on the held bill, its country's estimate (plan 2026-10-11). Absent elsewhere. */
   prov?: Provenance;
+  /** HELD ONLY: whose bill it is, the label under the total (COPY.tradeOpen.heldScope). */
+  focalWords?: string;
   /** The setup lines as RankedBars rows (held only): the biggest DRAWN_LINES_CAP of them; RankedBars sorts them. */
   rows: BarRow[];
   /** The lines past the cap (held only): their count and their sum, stated under the basis; null when every line draws. */
@@ -132,7 +135,7 @@ export type OpenData = {
   footLine: string | null;
   /** True in the held and baseline states: the total is the page's second loud moment. */
   accent: boolean;
-  /** True when the printed focal is modelled (baseline); the held total is the cell's own. */
+  /** True when the printed focal is an estimate: the baseline, and the held bill, one figure for a whole country. */
   sample: boolean;
   /** BASELINE ONLY: the format at nought first (the typical under its own name), then the others dearest first; empty elsewhere and where fewer than OPEN_FORMATS_WORKING_MIN others can be worked. */
   formats: OpenFormat[];
@@ -226,10 +229,14 @@ export function buildOpen(seed: any): OpenData | null {
   const foot = buildOpenFoot(industryId);
   const footLine = foot.length > 0 ? COPY.tradeOpen.foot : COPY.tradeOpen.footWithheld;
 
-  /* HELD: the cell's own lines. Rounded once here so the printed figure and the drawn bar are one number. */
-  const items: Array<{ name?: unknown; usd?: unknown }> = Array.isArray(seed?.setup?.items) ? seed.setup.items : [];
+  /* HELD: a bill that names its country, printed as that country's estimate (plan 2026-10-11, uk:held-bill-provenance): one bill for every row of a country,
+     never the place's own; a bill naming no country with words prints nothing. Rounded once here so the printed figure and the drawn bar are one number. */
+  const scope: string | null = typeof seed?.setup?.scope === "string" ? seed.setup.scope : null;
+  const scopeWords = own(COPY.tradeOpen.heldScope, scope);
+  const heldProv: Provenance = { src: `setup_costs:${industryId ?? slug}:${scope}`, kind: "estimate" };
+  const items: Array<{ name?: unknown; usd?: unknown }> = scopeWords && Array.isArray(seed?.setup?.items) ? seed.setup.items : [];
   const rows: BarRow[] = items
-    .map((it, i) => ({ key: `line-${i}-${String(it.name ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, name: String(it.name ?? "").trim(), value: isNum(it.usd) ? Math.round(it.usd) : 0 }))
+    .map((it, i) => ({ key: `line-${i}-${String(it.name ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, name: String(it.name ?? "").trim(), value: isNum(it.usd) ? Math.round(it.usd) : 0, prov: heldProv }))
     .filter((r) => r.name && r.value > 0);
   if (rows.length > 0) {
     const total = rows.reduce((a, r) => a + r.value, 0);
@@ -245,7 +252,8 @@ export function buildOpen(seed: any): OpenData | null {
     const basis = foot.length > 0 ? (tail ? COPY.tradeOpen.basisHeldCapped : COPY.tradeOpen.basisHeld) : (tail ? COPY.tradeOpen.basisHeldCappedAlone : COPY.tradeOpen.basisHeldAlone);
     return {
       state: "held", rows: drawn, tail, tailLine, lines, biggestKey: lines[0].key, figure: usd(total), value: total, withheld: null,
-      basis, foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: false, confidence: "measured",
+      prov: heldProv, focalWords: scopeWords,
+      basis, foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: true, confidence: "modeled",
       formats: [], recover: false,
     };
   }

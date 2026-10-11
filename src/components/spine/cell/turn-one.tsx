@@ -207,7 +207,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
         topLabel={COPY.tradeOpen.biggest}
         fmt={(v) => usd(v)}
         phoneHead={COPY.tradeOpen.phoneHead}
-        focal={open.figure ? { figure: open.figure, accent: open.accent, prov: open.prov } : undefined}
+        focal={open.figure ? { figure: open.figure, accent: open.accent, prov: open.prov, words: open.focalWords } : undefined}
         foot={{ items: open.foot, line: open.footLine }}
       />
     );
