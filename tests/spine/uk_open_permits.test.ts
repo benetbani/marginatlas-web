@@ -11,6 +11,7 @@ import { red, redSummary } from "../../scripts/lib/red";
 import { readdirSync, readFileSync } from "node:fs";
 import { cityOfCountry, getCityIdentity } from "../../src/lib/cities/city_tier";
 import { PLACE_SLUGS_BY_COUNTRY } from "../../src/lib/routing/place_slugs_generated";
+import cityListJson from "../../data/cities/city_list_v1.json";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 
 const RULE = "uk-open-permits";
@@ -20,6 +21,7 @@ const OPEN = "src/lib/spine/open_rows.ts";
 const RIVALS = "src/lib/spine/rivals_rows.ts";
 const ARCHETYPES = "src/lib/markets/startup_capital_archetypes.ts";
 const CITY_TIER = "src/lib/cities/city_tier.ts";
+const CITY_LIST = "data/cities/city_list_v1.json";
 /* The whole rule as one sentence, for the summary line; each red above it carries its own remedy. */
 const REMEDY = "keep the keyed figure at the place's factor with its estimate line, print no shard licence list on a GB page, print neither a keyed figure nor other trades on a UK page whose place holds no city index of its own country, and read the city list for a page's place only through cityOfCountry";
 const R_NO_LIST = "return null from buildPermits for a GB page, in either case, so no shard licence list in another country's terms prints on a UK page";
@@ -34,6 +36,7 @@ const R_RIVALS_BASIS = "say Estimates at the city's prices once in buildRivals: 
 const R_EXPORT = "export cityOfCountry(iso2, geoSlug) from src/lib/cities/city_tier.ts";
 const R_GUARD = "read the city list in placeCostFactor through cityOfCountry, so a city of another country gives a page no factor";
 const R_OWN_CITY = "make cityOfCountry answer a city's slug only where that city's row holds the page's country, and placeCostFactor read no index for any other place word";
+const R_LIST_ROWS = "give each row of data/cities/city_list_v1.json a name and an iso2 beside its slug, so IDENTITY_BY_SLUG in src/lib/cities/city_tier.ts indexes it and cityOfCountry finds it on its own country's page";
 const R_WRAP = "wrap the read: getCityTier(cityOfCountry(country, geo))";
 const R_EARN = "return the earn-it-back state from buildOpen on a UK page whose place holds no city index of its own country: no keyed figure, no provenance, the foot's two figures";
 const R_NO_RIVALS = "return null from buildRivals on a UK page whose place holds no city index of its own country, so the card and its free doors omit themselves";
@@ -76,6 +79,12 @@ for (const [cc, list] of Object.entries(PLACE_SLUGS_BY_COUNTRY)) for (const w of
   if (id && !mine) foreign.push(`/${cc}/${w}`); if (cityOfCountry(cc, w) !== mine || (!mine && placeCostFactor({ iso2: cc.toUpperCase(), geo: w }) !== null)) wrong++;
 }
 check(`${words} place words read their own country's city or none (${foreign.length} name another's: ${foreign.join(" ")})`, wrong === 0, R_OWN_CITY, CITY_TIER);
+/* THE GUARD'S TABLE IS HELD TO THE LIST, NOT TO ITSELF (the final review of 2026-10-11, A-M3): cityOfCountry reads IDENTITY_BY_SLUG, which keeps a row of
+   the city list only when it carries both a name and an iso2, and the loop above takes each word's own country from that same map. A row that lost its
+   name would lose its factor and tier on its own country's page, and the loop would still pass. So each row of the list itself: does the guard answer its slug for its country? */
+const listed = (cityListJson as { cities: Array<{ slug: string; iso2?: string }> }).cities;
+const lost = listed.filter((c) => cityOfCountry(c.iso2, c.slug) !== c.slug.toLowerCase()).map((c) => `${c.iso2 ?? "?"}/${c.slug}`);
+check(`${listed.length - lost.length} of ${listed.length} rows of the city list resolve their own city through cityOfCountry${lost.length ? ` (not: ${lost.join(" ")})` : ""}`, listed.length > 0 && lost.length === 0, R_LIST_ROWS, CITY_LIST);
 const NOT_A_PAGE_PLACE: Record<string, string> = { "src/lib/cities/city_tier.ts": "the accessors", "src/lib/markets/across_cities.ts": "the curated major cities", "src/lib/spine/adapt_country.ts": "the country's own name", "src/lib/home/beats.ts": "three curated cities" };
 const READ = /\b(?:getCityTier|getCityCostOfLivingIndex|getCityPopulation|getCityAveragePayUsd)\(\s*([^)]{0,48})/g;
 const walk = (d: string): string[] => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(`${d}/${e.name}`) : /\.tsx?$/.test(e.name) ? [`${d}/${e.name}`] : []));
