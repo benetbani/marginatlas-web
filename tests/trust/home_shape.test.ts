@@ -111,16 +111,18 @@ check(`the home's h2 rung is set at one tracking, ${railTracking}: Where to next
    pages set one mark two ways. No string value of COPY.home or of the city rows' basis line holds a straight apostrophe.
    THE FREE DOORS TOO (fix round F1, group G3, the final review's M8): /gb's locked page prints the same name over its free doors
    (COPY.freeDoors.cities), and it printed the straight mark there while the home printed the curly one, so the name is walked here as well
-   and held to the home's own string. THE LOCKED CARD'S LINE FOR THE SAME NAME TOO (fix round F2, item P2.2, the F1 report's concern 3):
-   COPY.locked.lines.cities, "The UK's cities, side by side.", kept the straight mark after the free doors' name lost it; it begins with
-   the free doors' own string now, so the two cannot part. BLIND SPOT: only these three objects and that one line are held; the locked
-   cards' other lines (COPY.locked.lines) keep the straight mark their neighbours use. */
+   and held to the home's own string. THE LOCKED CARDS' LINES TOO (fix round F2, items P2.2 and M9; the F1 report's concern 3 and the final
+   review's M9): COPY.locked.lines.cities, "The UK's cities, side by side.", kept the straight mark after the free doors' name lost it, and
+   so did its neighbours ("a first hire's", "your shop's", "The city's", "this trade's"); both draw on /gb on launch day, so one page printed
+   one name with two apostrophes. The whole of COPY.locked is walked now, and the cities line begins with the free doors' own string, so the
+   two cannot part. BLIND SPOT: only these four objects are walked; a line written outside them (a card's own words in a view) is not. */
 const straightApostrophes: string[] = [];
 const walkStrings = (v: unknown, path: string): void => { if (typeof v === "string") { if (v.includes("'")) straightApostrophes.push(`${path}: ${v.slice(0, 40)}`); } else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) walkStrings(x, `${path}.${k}`); };
 walkStrings(COPY.home, "COPY.home");
 walkStrings(COPY.cityCards.plain, "COPY.cityCards.plain");
 walkStrings(COPY.freeDoors, "COPY.freeDoors");
-check(`the home's words and the free doors' print curly apostrophes, never straight (${straightApostrophes.length ? straightApostrophes.join("; ") : "none straight"})`, straightApostrophes.length === 0, "write the typographic apostrophe (U+2019) in every string of COPY.home, COPY.cityCards.plain.basis and COPY.freeDoors, as About the figures does");
+walkStrings(COPY.locked, "COPY.locked");
+check(`the home's words, the free doors' and the locked cards' print curly apostrophes, never straight (${straightApostrophes.length ? straightApostrophes.join("; ") : "none straight"})`, straightApostrophes.length === 0, "write the typographic apostrophe (U+2019) in every string of COPY.home, COPY.cityCards.plain.basis, COPY.freeDoors and COPY.locked (the lock cards' lines), as About the figures does");
 check(`the free doors' title for the UK's cities is the home's own name for them, character for character ("${COPY.freeDoors.cities}")`, COPY.freeDoors.cities === COPY.home.citiesLabel, "COPY.freeDoors.cities (src/lib/spine/copy.ts) is COPY.home.citiesLabel's string: one name, one apostrophe");
 check(`the locked card's line for the UK's cities begins with that same name, so it prints the curly apostrophe too ("${COPY.locked.lines.cities}")`, COPY.locked.lines.cities.startsWith(COPY.freeDoors.cities) && !COPY.locked.lines.cities.includes("'"), "COPY.locked.lines.cities (src/lib/spine/copy.ts) begins with COPY.freeDoors.cities's string, the typographic apostrophe (U+2019) in it, and holds no straight one");
 
