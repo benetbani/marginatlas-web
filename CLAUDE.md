@@ -131,7 +131,11 @@ code puts on the page>`.
 
 ## Latest handoff
 
-- **`docs/handoff/HANDOFF-marginatlas-2026-10-04.md` IS THE CURRENT HANDOFF, READ IT FIRST, starting at its section 0**
+- **`docs/handoff/HANDOFF-marginatlas-2026-10-11.md` IS THE CURRENT HANDOFF, READ IT FIRST, starting at its update note and section 0**
+  (2026-10-11: the move to a new Claude Code account and the home reform's last loop on branch `home-introduction`: critique pass 4
+  at 93/100 with no P0 and no P1, rounds D1, D2, F1 and F2, the built page seen; nothing pushed, his word for the deploy). The
+  2026-10-04 handoff below is the PRIOR one.
+- `docs/handoff/HANDOFF-marginatlas-2026-10-04.md` was the CURRENT HANDOFF until 2026-10-11, starting at its section 0
   (2026-10-06 day: his deep goal DEPLOYED, `main` 50ecd9e5 live with every switch off, proven 23 of 23; section 0)
   (2026-10-06 morning, section 0b: the masterplan night, milestones 2 and 3 built behind their switches on branch `night-2026-10-05`, and his
   nineteen PARKED rulings built; DEPLOYED with every switch off, `main` at 17a2a32c; launch day follows
