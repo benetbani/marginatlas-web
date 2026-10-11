@@ -611,7 +611,8 @@ async function main() {
   const { buildProofs } = await import("../../src/lib/home/proofs");
   const { ProofTax } = await import("../../src/components/spine/home/HomeProofs");
   const arrowsIn = (html: string) => [...html.matchAll(/<span aria-hidden="true" class="([^"]*)">→<\/span>/g)].map((m) => toks(m[1]).filter((k) => !/^mt-/.test(k)).sort());
-  const proofArrows = arrowsIn(renderToStaticMarkup(React.createElement(ProofTax, { p: buildProofs().tax as never })));
+  const builtProofs = buildProofs();
+  const proofArrows = builtProofs ? arrowsIn(renderToStaticMarkup(React.createElement(ProofTax, { p: builtProofs.tax as never }))) : [];
   const doorArrows = doorEls.map((d) => arrowsIn(d.inner));
   const ARROW_AT = { file: "src/lib/spine/door_look.ts", remedy: "export const DOOR_ARROW from src/lib/spine/door_look.ts (the arrow's classes), draw it with `mt-1 ${DOOR_ARROW}` in HomeProofs.tsx's DoorTitle and with DOOR_ARROW in src/app/not-found.tsx, and spell the classes in neither" };
   check(`every door carries the arrow the home's proof doors carry, once, at every width: DOOR_ARROW (${DOOR_ARROW_TOKENS.join(" ") || "not exported"}), the margin aside (${doorArrows.filter((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)).length} of 6 on the 404, ${proofArrows.length} on a proof door)`, DOOR_ARROW_TOKENS.length >= 3 && proofArrows.length === 1 && JSON.stringify(proofArrows[0]) === JSON.stringify(DOOR_ARROW_TOKENS) && doorEls.length === 6 && doorArrows.every((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)), ARROW_AT);
