@@ -45,7 +45,7 @@ const THUMB_H = 360;
  * these same columns, so it stands over the figure at every width by construction. THE FIGURE AND ARROW COLUMNS ARE FIXED LENGTHS, never
  * `auto`: an auto column takes the width of what is in it, the head's grid holds a head where a row holds a figure, and at 768, where the name
  * column gives way to them, two grids would disagree by the difference. 2.25rem holds "$62K" (34.6px at the body rung) and 0.75rem the arrow
- * glyph (12.1px), so at 768 the figure stands 1px from where `auto` put it and from 1024, where the name keeps its 22ch, where it stood.
+ * glyph (12.1px), so at 768 the figure stands 1.3px from where `auto` put it and from 1024, where the name keeps its 22ch, where it stood.
  * A longer figure than the column overflows into the leftover, never into a neighbour.
  */
 const CITY_COLUMNS = "md:grid-cols-[72px_minmax(0,22ch)_2.25rem_1fr_0.75rem] md:gap-x-3";
@@ -77,11 +77,12 @@ export function CityRows({ cards, basis, allHref, allLabel, unit }: { cards: Cit
  * started and the 56px register with Where to next holds. It is the rows' own five columns (CITY_COLUMNS) with its words in the third, so
  * it stands over the figures at every width.
  *
- * ON THE TITLE'S BASELINE, BY A STRUT. The words are 12 in the muted grey, and a 12px text centred in a 28px row would sit its baseline
- * about 2px off the 20px title's. So the third column holds a block of the title's own type (the head rung, a 28px line, semibold) and the
- * words are an inline span inside it at line-height 1: the line box is the strut's, the title's own, and the words stand on its baseline,
- * whatever the face's metrics. `whitespace-nowrap`: the column is 36px and the words 66, so they run on into the leftover, where the title
- * row holds nothing. Under 768 it is not drawn (`hidden`) and the basis line under the grid says the same thing there.
+ * ON THE TITLE'S BASELINE, BY A STRUT. The words are 12 in the muted grey, and a 12px text centred in a 28px row sits its baseline 3px
+ * above the 20px title's (measured in Chromium, 1280 and 768; with the strut the two baselines are the same pixel). So the third column
+ * holds a block of the title's own type (the head rung, a 28px line, semibold) and the words are an inline span inside it at line-height
+ * 1: the line box is the strut's, the title's own, and the words stand on its baseline, whatever the face's metrics. `whitespace-nowrap`:
+ * the column is 36px and the words 64.6, so they run on into the leftover, where the title row holds nothing. Under 768 it is not drawn
+ * (`hidden`) and the basis line under the grid says the same thing there.
  */
 export function CityRowsHead({ children }: { children: React.ReactNode }) {
   return (
