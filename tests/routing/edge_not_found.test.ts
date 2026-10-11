@@ -60,7 +60,7 @@ import { hasRegionalCoverage } from "../../src/lib/coverage/regional";
 import { getAdmin1Regions } from "../../src/lib/coverage/admin1";
 import { buildSetupRows } from "../../src/lib/spine/setup_rows";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
-import { buyOrStartDraws } from "../../src/lib/open/sub_page_gates";
+import { buyOrStartDraws, tradePageHref, subPageHref } from "../../src/lib/open/sub_page_gates";
 
 const RULE = "edge-not-found";
 const FILE = "src/lib/routing/edge_not_found.ts";
@@ -910,9 +910,22 @@ protoCheck("no old district address is a built-in name in the city slot (cityPat
    curated rows the gate refuses (/gb/london/restaurants/opening, probed 2026-10-11), and the opening page linked its buy-or-start companion
    where that page has no take-home or no total to stand on. */
 const LINKS = "draw a door to a /opening or /buy-or-start page only where its route draws it: the across column's `opens` (isTrustedLocalCell, buildOpeningPage's gate) and buyOrStartDraws (buildBuyVsStart's own test)";
-check("the across page draws a column's Cost to open door only where that cost page draws", /\{c\.opens \? \(\s*<Link\s+href=\{openingHref\(c\)\}/.test(codeOf("src/app/(site)/industries/[industry]/across/page.tsx")) && /\bopens: isTrustedLocalCell\(cell, expectIndustryId\),/.test(codeOf("src/lib/markets/across_cities.ts")), "src/app/(site)/industries/[industry]/across/page.tsx", LINKS);
+check("the across page draws a column's Cost to open door only where that cost page draws", /\{c\.opens \? \(\s*<Link\s+href=\{openingHref\(c, activitySlug\)\}/.test(codeOf("src/app/(site)/industries/[industry]/across/page.tsx")) && /\bopens: isTrustedLocalCell\(cell, expectIndustryId\),/.test(codeOf("src/lib/markets/across_cities.ts")), "src/app/(site)/industries/[industry]/across/page.tsx", LINKS);
 check("the opening page draws its buy-or-start door only where that page draws, by buildBuyVsStart's own test", /\{buyOrStartDraws\(page\) \? \(/.test(codeOf("src/components/open/OpeningHero.tsx")) && /if \(!buyOrStartDraws\(opening\)\) return null;/.test(codeOf("src/lib/open/buy_vs_start.ts")), "src/components/open/OpeningHero.tsx", LINKS);
 check("buyOrStartDraws asks a positive take-home and a positive total to open", buyOrStartDraws({ takeHomeUsd: 52_000, totalToOpenUsd: 180_000 }) && !buyOrStartDraws({ takeHomeUsd: null, totalToOpenUsd: 180_000 }) && !buyOrStartDraws({ takeHomeUsd: 52_000, totalToOpenUsd: 0 }), "src/lib/open/sub_page_gates.ts", LINKS);
+/* THE DOORS' ADDRESS (the review of 2026-10-12, I1 and M2). A door is only as good as the address it spells. cellUrl(cell) is built from the cell's
+   display label, and where the label does not slugify back to the geo of the request it is another address: the prerendered flagship
+   /mx/mx-roo/hotels-lodging/opening is labelled "Quintana Roo", so its buy-or-start door opened /mx/quintana-roo/hotels-lodging/buy-or-start, whose
+   lookup falls to the extrapolated row, which the trust gate refuses: a 200 skeleton. A door is spelled from the address its page was asked at (the
+   opening page, as the trade page spells its own: src/app/[country]/[geo]/[industry]/page.tsx) or looked up with (an across column's country and
+   curated slug), so the page it opens is asked the very lookup its own gate was. BLIND SPOT: this holds the builders and the wiring, never the
+   database, so which flagships carry a label that drifts is the built page's to show (/mx/mx-roo/hotels-lodging/opening, then the door it draws). */
+const DOOR_ADDRESS = "Spell a door to a trade's /opening or /buy-or-start page from the address its own page was asked at or looked up with (tradePageHref and subPageHref in src/lib/open/sub_page_gates.ts; OpeningPage.pageHref; CityColumn.country and .slug), never from cellUrl(cell): that address comes from the cell's display label, and where the label does not slugify back to the geo (/mx/mx-roo is labelled Quintana Roo) it is another address, whose lookup falls to the extrapolated row, which the trust gate refuses, so the door opens a 200 skeleton";
+const MX_ROO = "/mx/mx-roo/hotels-lodging";
+check(`a door to a trade's sub-page is spelled from the address its page was asked at: ${MX_ROO} opens ${MX_ROO}/buy-or-start, never /mx/quintana-roo/hotels-lodging/buy-or-start (cellUrl's label spelling)`, quiet(() => subPageHref(tradePageHref("mx", "mx-roo", "hotels-lodging"), "buy-or-start") === `${MX_ROO}/buy-or-start`), "src/lib/open/sub_page_gates.ts", DOOR_ADDRESS);
+check("an across column's door is spelled from its own lookup, lowercased as the canonical hop writes it: London restaurants' cost to open is /gb/london/restaurants/opening", quiet(() => subPageHref(tradePageHref("GB", "London", "Restaurants"), "opening") === "/gb/london/restaurants/opening"), "src/lib/open/sub_page_gates.ts", DOOR_ADDRESS);
+check("the opening page carries the address it was asked at and draws its buy-or-start door from it, never from cellHref", /\bpageHref: tradePageHref\(country, geo, industry\),/.test(codeOf("src/lib/open/opening_page.ts")) && /href=\{subPageHref\(page\.pageHref, "buy-or-start"\)\}/.test(codeOf("src/components/open/OpeningHero.tsx")) && !/cellHref\}\/buy-or-start/.test(codeOf("src/components/open/OpeningHero.tsx")), "src/components/open/OpeningHero.tsx", DOOR_ADDRESS);
+check("the across page spells its Cost to open door from the column's country and curated slug and the page's activity slug, the lookup `opens` was computed on (resolveCity asks getCellBySlug(city.country, city.slug, industrySlug) and keeps city.slug and city.country on the column)", /return subPageHref\(tradePageHref\(col\.country, col\.slug, activitySlug\), "opening"\);/.test(codeOf("src/app/(site)/industries/[industry]/across/page.tsx")) && /getCellBySlug\(city\.country, city\.slug, industrySlug,/.test(codeOf("src/lib/markets/across_cities.ts")) && /\bslug: city\.slug,\s*country: city\.country,/.test(codeOf("src/lib/markets/across_cities.ts")), "src/app/(site)/industries/[industry]/across/page.tsx", DOOR_ADDRESS);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(`routing/edge_not_found: all pass (${folderAsked} real addresses of the route folders asked of the edge and the middleware)`);

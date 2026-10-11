@@ -57,6 +57,7 @@ import {
   type Cell,
 } from "@/lib/cells";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
+import { tradePageHref } from "@/lib/open/sub_page_gates";
 import { clampMargin } from "@/lib/finance/margin_floor";
 import { slugToIndustry } from "@/lib/taxonomy";
 import { iso2ToName } from "@/lib/countries";
@@ -176,6 +177,13 @@ export interface OpeningPage {
   country: string;
   /** Link back to the full cell page for this business-and-place. */
   cellHref: string;
+  /**
+   * THE ADDRESS THIS PAGE WAS ASKED AT, /{country}/{geo}/{industry}, from the request's own three parts (the review of 2026-10-12, I1). A door to
+   * a sibling page (/buy-or-start) is spelled from it, never from `cellHref`: that is cellUrl(cell), built from the cell's display label, and
+   * where the label does not slugify back to the request's geo (/mx/mx-roo is labelled "Quintana Roo") it is another address, whose lookup falls
+   * to the extrapolated row, which the trust gate refuses. Asked the same lookup this page was, the sibling draws where this page's gate passed.
+   */
+  pageHref: string;
   /** True when the cell is a trusted local measurement (always true here; null otherwise). */
   trusted: true;
 
@@ -601,6 +609,7 @@ export async function buildOpeningPage(
     placeName,
     country: country.toLowerCase(),
     cellHref,
+    pageHref: tradePageHref(country, geo, industry),
     trusted: true,
     capital: { value: Math.round(capitalUsd), modeled: capitalModeled },
     permits: { value: Math.round(permitsUsd), modeled: true },

@@ -3059,6 +3059,7 @@
         "src/lib/cells/industry_resolution.ts",
         "src/lib/markets/across_cities.ts",
         "src/lib/open/buy_vs_start.ts",
+        "src/lib/open/opening_page.ts",
         "src/lib/open/sub_page_gates.ts",
         "src/lib/routing/edge_not_found.ts",
         "src/lib/routing/place_words.ts",

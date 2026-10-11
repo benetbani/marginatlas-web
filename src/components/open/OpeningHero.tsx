@@ -19,7 +19,7 @@ import { fmtUSD } from "@/components/board/format";
 import { T_H1 } from "@/lib/ui/typography";
 import { dealbreakerFor } from "@/lib/open/dealbreakers";
 import type { OpeningPage } from "@/lib/open/opening_page";
-import { buyOrStartDraws } from "@/lib/open/sub_page_gates";
+import { buyOrStartDraws, subPageHref } from "@/lib/open/sub_page_gates";
 
 export function OpeningHero({ page }: { page: OpeningPage }) {
   // The one condition that has to be true, for the handful of businesses where a
@@ -71,10 +71,12 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
           See the full economics &rarr;
         </Link>
         {/* The buy-or-start companion, only where it draws (plan 2026-10-11, dynamic 404 remains): without a take-home and a total to open
-            its route answers nothing, and a door there opened a skeleton. */}
+            its route answers nothing, and a door there opened a skeleton. At the address this page was asked at and never cellHref: that is
+            the cell's label spelling (/mx/quintana-roo/... for /mx/mx-roo/...), whose lookup falls to a row the gate refuses (review of
+            2026-10-12, I1). */}
         {buyOrStartDraws(page) ? (
           <Link
-            href={`${page.cellHref}/buy-or-start`}
+            href={subPageHref(page.pageHref, "buy-or-start")}
             className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
           >
             Buy one instead of starting? &rarr;

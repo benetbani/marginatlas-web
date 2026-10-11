@@ -37,6 +37,7 @@ import {
   resolveToMeasuredIndustry,
 } from "@/lib/taxonomy";
 import { buildAcrossCities, type CityColumn, type AcrossMetric } from "@/lib/markets/across_cities";
+import { subPageHref, tradePageHref } from "@/lib/open/sub_page_gates";
 import { CountryFlag } from "@/components/CountryFlag";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { SpreadBar } from "@/components/board/charts/SpreadBar";
@@ -104,13 +105,17 @@ function metricDisplay(metric: AcrossMetric, c: CityColumn): string {
    the score on each column; nothing here prints it. */
 
 /**
- * The cost-to-open page href for a city column. The column href is the cell page
- * (/{country}/{geo}/{activity}); the opening page is that same path plus
- * /opening, the canonical route the site already uses, so this never invents a
- * slug. The column href has no query or hash, so a plain suffix is safe.
+ * The cost-to-open page href for a city column, spelled from the column's own
+ * lookup (the review of 2026-10-12, M2): the country and the curated slug
+ * resolveCity asked getCellBySlug with, and this page's activity slug. The
+ * opening route is then asked the very lookup `opens` was computed on, so the
+ * door draws exactly where the gate passed, by construction. Not
+ * `${col.href}/opening`: col.href is cellUrl(cell), built from the cell's
+ * display label and the row's own country code, which can be another address
+ * than the lookup's (CityColumn.slug says why it is the robust key).
  */
-function openingHref(col: CityColumn): string {
-  return `${col.href}/opening`;
+function openingHref(col: CityColumn, activitySlug: string): string {
+  return subPageHref(tradePageHref(col.country, col.slug, activitySlug), "opening");
 }
 
 export default async function AcrossCitiesPage({
@@ -233,7 +238,7 @@ export default async function AcrossCitiesPage({
                     {/* Quiet cross-link to this place's cost-to-open read, only where that page draws (plan 2026-10-11, dynamic 404 remains). */}
                     {c.opens ? (
                       <Link
-                        href={openingHref(c)}
+                        href={openingHref(c, activitySlug)}
                         className="mt-0.5 block text-[11px] font-medium text-cocoa-500 transition-colors hover:text-atlas-700"
                       >
                         Cost to open
