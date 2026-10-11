@@ -77,6 +77,14 @@ import { cityPathFor } from "@/lib/cities/city_path";
 import { own } from "@/lib/own";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 
+/** NEXT'S ADDRESS FOR ITS PRERENDERED NOT-FOUND PAGE (the plan 2026-10-11, route-folder fall-through, Task 1): the page built from
+ *  src/app/not-found.tsx that Next serves, with the status 404, for an address no route matches (UNDERSCORE_NOT_FOUND_ROUTE,
+ *  next/dist/shared/lib/constants.js). The middleware rewrites every address this module and its place rule judge to nothing onto it, so
+ *  the answer is the site's static 404 in server HTML, its own title and noindex, and not the matched route's loading skeleton with a 404
+ *  drawn in the browser under that route's own head. Written out here and not imported, so the edge bundle carries no more of Next than
+ *  it did; tests/routing/edge_not_found.test.ts holds it equal to Next's constant. */
+export const NOT_FOUND_ROUTE = "/_not-found";
+
 /** The static folders of src/app/[country]/[geo], each a real page at `/{country}/{place}/{name}`; the step's test reads
  *  the filesystem and reds when this set and the folders disagree. */
 export const GEO_STATIC_CHILDREN: ReadonlySet<string> = new Set(["industries"]);

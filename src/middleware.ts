@@ -31,7 +31,7 @@ import { own } from "@/lib/own";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { TOP_LEVEL_SEGMENTS, COUNTRY_STATIC_CHILDREN } from "@/lib/routing/top_level_segments";
 import { cityPathFor } from "@/lib/cities/city_path";
-import { edgeNotFound, fileNotServed, legacyHoodTarget } from "@/lib/routing/edge_not_found";
+import { edgeNotFound, fileNotServed, legacyHoodTarget, NOT_FOUND_ROUTE } from "@/lib/routing/edge_not_found";
 import { SERVED_FILES } from "@/lib/routing/served_files";
 import { ICON_ROUTES } from "@/lib/routing/icon_routes";
 import { proRewrite } from "@/lib/monetization/pro_route";
@@ -129,10 +129,16 @@ function rateLimit(ip: string): { allowed: boolean; remaining: number } {
  * next/dist/server/app-render/create-component-tree.js).
  *
  * Middleware is the one place that runs BEFORE any of that. It cannot render
- * the not-found page itself, but it can rewrite the request back onto the very
- * same path while pinning the status to 404. The page then renders exactly as
- * it does today, calls its own notFound(), and shows the same not-found screen.
- * Nothing about what the reader sees changes. Only the status code does.
+ * the not-found page itself, but it can rewrite the request onto the page Next
+ * itself serves for an address no route matches, /_not-found (prerendered from
+ * src/app/not-found.tsx), while pinning the status to 404 (notFoundAtEdge,
+ * below). The status is set before any shell is flushed, and the body is the
+ * site's not-found page in server HTML: its own title, noindex, "Nothing at
+ * this address". Until 2026-10-11 the request was rewritten back onto the very
+ * same path instead: the matched route then rendered its loading skeleton and
+ * drew its 404 in the browser, under that route's own head, which for an
+ * address a route folder does not hold (/pricing/xyz) was the country route's
+ * indexable one.
  *
  * Scope is deliberately narrow, and the narrowness is the whole safety story.
  * Middleware runs before routing, so it cannot ask Next whether a path belongs
@@ -282,6 +288,17 @@ function cityPathUnderCountry(path: string): string | null {
   if (countryName === undefined || COUNTRY_STATIC_CHILDREN.has(geoSlug)) return null;
   if (regionSlugsFor(countrySlug, countryName).has(geoSlug)) return null;
   return cityPathFor(countrySlug, geoSlug);
+}
+
+/**
+ * The answer for an address that names nothing (the plan 2026-10-11, route-folder fall-through, Task 1): the status pinned to 404
+ * and the request rewritten onto Next's static not-found page, /_not-found (NOT_FOUND_ROUTE), the page Next serves itself for an
+ * address no route matches. Every pin below goes through here, so none can rewrite an address onto itself again, which rendered the
+ * matched route's loading skeleton under that route's own head. `x-pathname` still carries the address asked, for anything that reads
+ * it. The destination is built from the request's own URL, so its origin is the one the request came to and its query is dropped.
+ */
+function notFoundAtEdge(req: NextRequest, path: string): NextResponse {
+  return NextResponse.rewrite(new URL(NOT_FOUND_ROUTE, req.url), { status: 404, request: { headers: withPathname(req, path) } });
 }
 
 function clientIp(req: NextRequest): string {
@@ -452,7 +469,7 @@ export function routeRequest(req: NextRequest): NextResponse {
   // drew its soft 404 at 200 (2026-10-06). Only the file rule here: no API route takes a dotted part, Next's own files never
   // reach the middleware (the matcher) and nothing is served from /static.
   if ((path.startsWith("/_next") || path.startsWith("/static") || path.startsWith("/api/")) && fileNotServed(path)) {
-    return NextResponse.rewrite(req.nextUrl, { status: 404, request: { headers: withPathname(req, path) } });
+    return notFoundAtEdge(req, path);
   }
 
   // 3. Soft rate limit on page navigation (skip _next + api assets)
@@ -469,11 +486,12 @@ export function routeRequest(req: NextRequest): NextResponse {
         },
       });
     }
-    // 3b. A country or region we do not hold. Rewritten onto itself so the
-    // page renders and shows its own not-found screen, with the status pinned
-    // before the streaming shell can flush a 200. Returned here, above the
-    // edge-cache header below, so a wrong URL is never held at the CDN for six
-    // hours; the moment coverage lands, the next request resolves normally.
+    // 3b. A country or region we do not hold. Rewritten onto Next's static
+    // not-found page (notFoundAtEdge), with the status pinned before any
+    // streaming shell can flush a 200 and the body the site's not-found page in
+    // server HTML. Returned here, above the edge-cache header below, so a wrong
+    // URL is never held at the CDN for six hours; the moment coverage lands, the
+    // next request resolves normally.
     // 3a. A city this country holds, under the country's path: `/gb/london`
     // sends the reader to `/cities/london`, permanently, instead of meeting the
     // not-held 404 below (the goal's D4, 2026-09-24; the region route's own
@@ -493,14 +511,10 @@ export function routeRequest(req: NextRequest): NextResponse {
       return NextResponse.redirect(url, 308);
     }
     // 3b'. An address that names nothing (masterplan step 01): a word no trade, city, hub or district answers to, judged
-    // by each route's own resolver after every redirect above has had its turn; pinned like a place we do not hold. And a
-    // file the site does not serve (2026-10-06): a dotted last part that is no file under public/ and none a route writes.
-    if (isPlaceWeDoNotHold(path) || edgeNotFound(path)) {
-      return NextResponse.rewrite(req.nextUrl, {
-        status: 404,
-        request: { headers: withPathname(req, path) },
-      });
-    }
+    // by each route's own resolver after every redirect above has had its turn; pinned like a place we do not hold: the status 404
+    // before any shell, the body Next's static not-found page (notFoundAtEdge). And a file the site does not serve (2026-10-06): a
+    // dotted last part that is no file under public/ and none a route writes.
+    if (isPlaceWeDoNotHold(path) || edgeNotFound(path)) return notFoundAtEdge(req, path);
     // 3c. A signed-in reader of a page the paywall locks (masterplan step 18; src/lib/monetization/pro_route.ts): rewritten to
     // the uncached mirror under /pro, which draws the page open for Pro and locked for anyone else. Below every redirect and
     // not-found pin, so an address that moves or names nothing never reaches it; above the cache header below, and marked

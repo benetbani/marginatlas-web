@@ -11,9 +11,9 @@
  *
  * Run: npx tsx tests/routing/edge_not_found.test.ts
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { NextRequest } from "next/server";
-import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN, TRADE_SUB_PAGES, US_STATES } from "../../src/lib/routing/edge_not_found";
+import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN, TRADE_SUB_PAGES, US_STATES, NOT_FOUND_ROUTE } from "../../src/lib/routing/edge_not_found";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "../../src/lib/routing/hood_slugs";
 import { renderHoodSlugs, HOOD_SLUGS_FILE } from "../../scripts/gen_hood_slugs";
 import { renderServedFiles, SERVED_FILES_FILE } from "../../scripts/gen_served_files";
@@ -32,6 +32,8 @@ import robots from "../../src/app/robots";
 import { routeRequest as middleware, config } from "../../src/middleware";
 /* Next's own matcher compiler, the one `next build` runs on config.matcher; exported at runtime, left out of Next's types. */
 import * as nextStaticInfo from "next/dist/build/analysis/get-page-static-info";
+/* Next's own name for the page it prerenders from src/app/not-found.tsx and serves for an address no route matches. */
+import { UNDERSCORE_NOT_FOUND_ROUTE } from "next/dist/shared/lib/constants";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 import cityListJson from "../../data/cities/city_list_v1.json";
@@ -385,17 +387,27 @@ check(`the middleware holds the text its order checks anchor on (${Object.keys(A
 const { retired: retiredAt, rename: renameAt, hood: hoodAt, place: placeAt, edge: edgeAt } = anchorAt;
 check("the middleware asks legacyHoodTarget after the retired and renamed redirects", hoodAt > 0 && hoodAt > retiredAt && hoodAt > renameAt, MW);
 check("the middleware asks edgeNotFound beside isPlaceWeDoNotHold, after every redirect", edgeAt > 0 && placeAt > 0 && edgeAt > hoodAt && Math.abs(edgeAt - placeAt) < 200, MW);
-check("the 404 for an address for nothing is pinned by a rewrite onto itself", /isPlaceWeDoNotHold\(path\)\s*\|\|\s*edgeNotFound\(path\)\)\s*\{\s*return NextResponse\.rewrite\(req\.nextUrl, \{\s*status: 404/.test(mw), MW);
+/* THE 404 IS THE SITE'S STATIC NOT-FOUND PAGE (the plan 2026-10-11, route-folder fall-through, Task 1). Every pin used to rewrite the request
+   onto its own address with the status pinned, so the matched route rendered its loading skeleton and drew its 404 in the browser, under
+   the head of the route (an indexable one for an address a route folder does not hold: /pricing/xyz). It now rewrites onto /_not-found,
+   Next's prerendered page for an address no route matches, built from src/app/not-found.tsx: the page in server HTML, its own title,
+   noindex. BLIND SPOT: this reads the middleware's source and its answer to a request, so it cannot tell what Next or the platform then
+   serves for the rewrite: the status and the body on the wire are the build's (curl on a built page) and then production's. */
+const NOT_FOUND_REMEDY = "Pin the 404 for an address for nothing with notFoundAtEdge (src/middleware.ts), which rewrites onto NOT_FOUND_ROUTE (src/lib/routing/edge_not_found.ts, Next's /_not-found, the page it prerenders from src/app/not-found.tsx) with the status 404: a rewrite onto the address itself renders the matched route's loading skeleton and draws the 404 in the browser, under that route's own head";
+check(`NOT_FOUND_ROUTE is Next's own address for its prerendered not-found page (${String(NOT_FOUND_ROUTE)} against ${UNDERSCORE_NOT_FOUND_ROUTE})`, NOT_FOUND_ROUTE === UNDERSCORE_NOT_FOUND_ROUTE && NOT_FOUND_ROUTE === "/_not-found", FILE, "export const NOT_FOUND_ROUTE = \"/_not-found\" from src/lib/routing/edge_not_found.ts, the address next/dist/shared/lib/constants calls UNDERSCORE_NOT_FOUND_ROUTE");
+check("the page it serves is built from src/app/not-found.tsx, and no src/app/global-not-found.tsx replaces it", existsSync("src/app/not-found.tsx") && !existsSync("src/app/global-not-found.tsx"), "src/app/not-found.tsx", "keep the site's not-found page at src/app/not-found.tsx and add no src/app/global-not-found.tsx: /_not-found is built from the first, and the second would change what every pinned address answers");
+check("the 404 for an address for nothing rewrites to Next's static not-found page: the pin asks isPlaceWeDoNotHold and edgeNotFound, and notFoundAtEdge rewrites onto NOT_FOUND_ROUTE with the status 404", /isPlaceWeDoNotHold\(path\)\s*\|\|\s*edgeNotFound\(path\)\)\s*return notFoundAtEdge\(req, path\)/.test(mw) && /NextResponse\.rewrite\(new URL\(NOT_FOUND_ROUTE, req\.url\), \{\s*status: 404/.test(mw), MW, NOT_FOUND_REMEDY);
+check("no pin rewrites an address onto itself any more: every 404 goes through notFoundAtEdge", !/NextResponse\.rewrite\(req\.nextUrl, \{\s*status: 404/.test(mw), MW, NOT_FOUND_REMEDY);
 
-/* And the middleware itself, driven with requests: a pinned address comes back 404 with a rewrite onto itself (on Vercel the
-   site's not-found page, as /zz and /gb/atlantis answer); a passed one comes back as next(). Each request from an address of
-   its own, so the rate limit never trips here. */
+/* And the middleware itself, driven with requests: a pinned address comes back 404 with a rewrite onto Next's static not-found page
+   (/_not-found, with the status pinned; /zz and /gb/atlantis answer the same); a passed one comes back as next(). Each request from an
+   address of its own, so the rate limit never trips here. */
 const SITE = "https://www.marginatlas.com";
 const BROWSER = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 let client = 0;
 const send = (path: string, ua = BROWSER) =>
   middleware(new NextRequest(`${SITE}${path}`, { headers: { "user-agent": ua, "accept-language": "en-GB", "x-real-ip": `10.0.${client >> 8}.${client++ & 255}` } }));
-const pinned = (path: string) => { const r = send(path); return r.status === 404 && r.headers.get("x-middleware-rewrite") === `${SITE}${path}`; };
+const pinned = (path: string) => { const r = send(path); return r.status === 404 && r.headers.get("x-middleware-rewrite") === `${SITE}${NOT_FOUND_ROUTE}`; };
 const passed = (path: string) => { const r = send(path); return r.status === 200 && r.headers.get("x-middleware-next") === "1" && !r.headers.get("x-middleware-rewrite"); };
 for (const p of ["/gb/london/restaurants/x.y", "/data/uk/2026.10/nothing.csv", "/zz/x.txt", "/gb/london/x.y", "/x.y", "/sitemap/99.xml"]) {
   check(`the middleware answers 404 for a made-up file: ${p}`, pinned(p), MW);
