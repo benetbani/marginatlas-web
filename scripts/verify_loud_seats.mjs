@@ -205,7 +205,7 @@ for (const entry of PRESENT) {
     const id = loudCardId(s);
     const card = walk.cards[id];
     const label = `seat ${s.seat} ${s.card} (#${id})`;
-    if (!card || !card.present) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and its zone is not on the render ${where}`, remedy: "draw the zone (the home's band draws with three counts or more: run node node_modules/tsx/dist/cli.mjs tests/home/site_counts.test.ts), or correct the declaration's card id" }); seatLines.push(`  ${label}: FIELD declared, zone absent`); continue; }
+    if (!card || !card.present) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and its zone is not on the render ${where}`, remedy: "draw the zone (the home's band draws only with all four counts, SITE_COUNTS_MIN, and nothing with fewer: run node node_modules/tsx/dist/cli.mjs tests/home/site_counts.test.ts), or correct the declaration's card id" }); seatLines.push(`  ${label}: FIELD declared, zone absent`); continue; }
     if (!card.field) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and #${id} is not a terracotta zone ([data-zone][data-tone="terra"]) on ${where}`, remedy: "give the seat's zone data-tone=\"terra\" (globals.css, THE ZONES), or declare the seat LIT on a figure" }); seatLines.push(`  ${label}: FIELD declared, not a terracotta zone`); continue; }
     seatLines.push(`  ${label}: FIELD, lit by its ground (the terracotta zone)`);
   }

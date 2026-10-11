@@ -663,8 +663,8 @@ const GATES: Gate[] = [
   /* The terracotta band, "Read from the record" (plan 2026-10-10, the home reformed to ship, Task 5; the spec's decision 7): its four
      evidence counts recomputed from their sources (the official publishers' items in the sources list, every publisher classed, the
      law's values, the London trade pages that print sales, the trades with a publishable failure rate) and stamped counted, none
-     typed, no slot and no list count, the band drawn with three or
-     more; the drawing a zone in ink on the terracotta. Reads the home's render where the harness wrote it, deferred on a build server. */
+     typed, no slot and no list count, the band drawn only with all four (SITE_COUNTS_MIN) and nothing with fewer; the drawing a zone in ink on
+     the terracotta. Reads the home's render where the harness wrote it, deferred on a build server. */
   { name: "site-counts", script: "tests/home/site_counts.test.ts" },
   /* The shared forms' small props for the home (plan 2026-10-09, home introduction, Task 3): Rail's level, Ring's lead size and its
      label, BarList's quiet, MonthBars' stamp, StepMark's numeral, each byte-identical where not passed; the copy gate reads a Rail's h2. */

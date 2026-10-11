@@ -93,5 +93,13 @@ check(`the h1 asks the example's question first ("a ${HERO_BUSINESSES[0]}" in "$
 check(`the site's definition is one sentence of twelve words at most ("${COPY.home.definition}")`, COPY.home.definition.split(/\s+/).length <= 12 && !COPY.home.definition.includes(";"), { file: "src/lib/spine/copy.ts", remedy: "COPY.home.definition: one sentence of twelve words at most, no semicolon" });
 check("the structured data's Organization description is that definition", /export function Organization\(\)[\s\S]*?description: COPY\.home\.definition/.test(readFileSync("src/components/StructuredData.tsx", "utf8")), { file: "src/components/StructuredData.tsx", remedy: "set Organization()'s description to COPY.home.definition, the site's one definition" });
 
+/* THE REGISTRY NAMES WHAT THE TRADE-SET GATE READS (fix round F1, group G6; the final review's M7, hi-minors 31). scripts/gates.json is generated from the
+   path literals in each gate's script, and verify_trade_set.ts kept a documentation constant naming src/components/NavigatorForm.tsx (the launcher it has
+   exempted since rule 32 v2) long after its Part 3 began to read HOME_TRY from this module, so anything that maps a changed file to its gates missed the
+   one gate that holds the picker's examples to rule 32. BLIND SPOT: the registry is read as written (counts-fresh holds it equal to what the scripts say);
+   a read the gate makes through an import with no path literal is seen only because the script names the file once. */
+const tradeSet = (JSON.parse(readFileSync("scripts/gates.json", "utf8")) as { gates: Array<{ name: string; reads?: string[] }> }).gates.find((g) => g.name === "trade-set");
+check(`the registry lists ${FILE}, which the trade-set gate reads for HOME_TRY, among its reads, and not the launcher it exempts (${(tradeSet?.reads ?? []).join(", ") || "no reads"})`, !!tradeSet && (tradeSet.reads ?? []).includes(FILE) && !(tradeSet.reads ?? []).includes("src/components/NavigatorForm.tsx"), { file: "scripts/verify_trade_set.ts", remedy: "name src/lib/home/destination.ts as a path literal in scripts/verify_trade_set.ts (HOME_TRY_FILE, used in its failure heading), drop the NAVIGATOR_FORM documentation constant, then run node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write" });
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("home/destination: all pass");

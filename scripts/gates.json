@@ -1612,6 +1612,8 @@
       "asserts": "WHERE A HOME SEARCH LANDS (milestone 3, masterplan step 33; his ruling 11 of 2026-09-26: a place-and-trade search, the UK first).",
       "reads": [
         "data/cities/city_list_v1.json",
+        "scripts/gates.json",
+        "scripts/verify_trade_set.ts",
         "src/app/api/go/route.ts",
         "src/components/GlobalSearch.tsx",
         "src/components/HeaderSearch.tsx",
@@ -3858,7 +3860,7 @@
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 32: \"One shared component and interaction kit, and one fixed set of example businesses (restaurant, grocery, pharmacy, salon, gym, auto repair), reused across all page",
       "reads": [
-        "src/components/NavigatorForm.tsx"
+        "src/lib/home/destination.ts"
       ],
       "claims": []
     },

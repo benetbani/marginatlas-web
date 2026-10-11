@@ -114,7 +114,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const record = buildSiteCounts();
   const cities = buildCityCards(data?.iso2 ?? "GB");
   /* Each zone one line, so tests/trust/home_shape.test.ts reads its split, its evenness and its body together. The example and the
-     proofs draw only where their case and their builders are whole; the band only where three of its counts build, drawing its own
+     proofs draw only where their case and their builders are whole; the band only where all four of its counts build (SITE_COUNTS_MIN), drawing its own
      zone on the terracotta (HomeRecord); the foot always draws its doors. */
   const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; cards?: boolean; tone?: "terra"; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },

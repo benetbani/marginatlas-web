@@ -618,14 +618,16 @@ async function itemI(home: string | null): Promise<void> {
   const printed: Record<string, { figure: number; note: string }> = {};
   for (const mm of band.matchAll(/>([\d,]+)<\/div><div[^>]*>(Benchmarks|Countries|Cities|Trades)<\/div><div[^>]*>([^<]*)<\/div>/g)) printed[mm[2]] = { figure: num(mm[1]), note: mm[3].trim() };
   const need = ["Benchmarks", "Countries", "Cities", "Trades"];
-  /* THE REBUILT HOME PRINTS NO COUNTS (his instruction of 2026-10-07, "reform home drastically"): the counts section it carried
+  /* THE REBUILT HOME PRINTS NO LEDGER COUNTS (his instruction of 2026-10-07, "reform home drastically"): the counts section it carried
      (masterplan step 35, each count stamped with the ledger key it read) left it, because its cities count took in the city pages
      outside the UK, which are not indexed. So where the page served is the rebuilt home (the band page's zones) and it prints no
-     count at all, nothing on it can disagree with the ledger, and the item says so; a stamped count found on it is still a red,
-     since no section of the rebuilt home prints one now. The live home's band is read as before. */
+     count the ledger module stamps, nothing on it can disagree with the ledger, and the item says so; a count stamped from the ledger
+     found on it is still a red, since no section of the rebuilt home prints one now. (Its terracotta band does print four evidence
+     counts since plan 2026-10-10, Task 5, each stamped from its own source and held by tests/home/site_counts.test.ts; none carries the
+     ledger module's stamp this item looks for.) The live home's band is read as before. */
   if (need.some((n) => !printed[n]) && at === -1 && /data-composition="zones"/.test(home)) {
     const stamped = /data-src="lib\/home\/atlas_ledger\.ts:/.test(home);
-    record("i", !stamped, stamped ? `the rebuilt home prints a count stamped from the ledger module, and no section of it prints one since 2026-10-07; ${moduleWords}` : `the home page as served is the rebuilt home, which prints no counts (2026-10-07: they took in the city pages outside the UK); ${moduleWords}; ${indexWords}`);
+    record("i", !stamped, stamped ? `the rebuilt home prints a count stamped from the ledger module, and no section of it prints one since 2026-10-07; ${moduleWords}` : `the home page as served is the rebuilt home, which prints no ledger counts (the band's four evidence counts are tests/home/site_counts.test.ts's; the ledger's took in the city pages outside the UK, 2026-10-07); ${moduleWords}; ${indexWords}`);
     return;
   }
   if (need.some((n) => !printed[n])) { record("i", false, `the home page as served carries no readable ledger band ("What the atlas holds" ${at === -1 ? "absent" : "present, the figures unread"}); ${moduleWords}; ${indexWords}`); return; }

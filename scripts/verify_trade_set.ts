@@ -56,7 +56,9 @@ import { HOME_TRY } from "../src/lib/home/destination";
 
 const ROOT = process.cwd();
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");
-const NAVIGATOR_FORM = "src/components/NavigatorForm.tsx";
+/** The module Part 3 reads the picker's examples from (HOME_TRY): named as a path literal so the gate registry, which scripts/counts.ts generates from the
+ *  literals in each gate's script, lists the file the gate reads (it listed the launcher below, which the gate does not read: final review M7). */
+const HOME_TRY_FILE = "src/lib/home/destination.ts";
 
 /* Rule 32 (v2, 2026-07-12): the everyday set is eight, restaurant / grocery /
  * pharmacy / salon / gym / auto repair / cafe / bar, with common synonyms
@@ -205,8 +207,8 @@ for (const abs of walkSeedDir(SEEDS_ROOT)) {
  * (src/components/NavigatorForm.tsx) is EXEMPT. Its job is to show the product
  * spans ANY business, so its input examples (law firms, software, barbers,
  * plumbers) are a deliberate breadth demo, not a spine example slate. It is no
- * longer scanned. `NAVIGATOR_FORM` const retained above for documentation. */
-void NAVIGATOR_FORM;
+ * longer scanned, and no constant here names it: one that did (kept "for documentation") made the gate registry list it as a read the gate
+ * never made, while the module Part 3 does read, HOME_TRY_FILE above, went unlisted (fix round F1, the final review's M7). */
 
 /* PART 3 (plan 2026-10-09, home introduction): the picker's line is no longer a breadth demo. It is the home's three examples, each a
  * link to its London page, and the spec draws them from rule 32's set, so they are held to it, read from the module that prints them
@@ -226,7 +228,7 @@ if (jsonReport.length > 0) {
   for (const line of jsonReport) console.error(`  ${line}`);
 }
 if (triesReport.length > 0) {
-  console.error("\nPicker example offenders (HOME_TRY, src/lib/home/destination.ts):");
+  console.error(`\nPicker example offenders (HOME_TRY, ${HOME_TRY_FILE}):`);
   for (const line of triesReport) console.error(`  ${line}`);
 }
 

@@ -119,8 +119,10 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
      SiteChrome (`<main className="relative max-w-content mx-auto px-4 md:px-6 pt-4">`, the gutter GUTTER holds),
      and the bodies no longer carry a main or a gutter of their own, so the
      render measures the widths a visitor gets (1072 of content at 1280, 720 at
-     768, 327 at 375; the renders read 343 at 375 before, production 295). The
-     how-to route draws no SiteChrome and keeps the main its page file writes. */
+     768, 343 at 375: the one 16px phone gutter of critique pass 3, round D1; the
+     column was 327 at 375 under the old 24px gutter, the renders read 343 at 375
+     before this wrap, production 295). The how-to route draws no SiteChrome and
+     keeps the main its page file writes. */
   const shelled = selfShelled ? inner : React.createElement(SpineShell as any, null, inner);
   const body = renderToStaticMarkup(surface === "howto" ? shelled : React.createElement("main", { className: `relative max-w-content mx-auto ${GUTTER} pt-4` }, shelled));
   mkdirSync("scratchpad/harness/pages", { recursive: true });

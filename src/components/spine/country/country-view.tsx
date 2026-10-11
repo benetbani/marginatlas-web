@@ -1800,9 +1800,9 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
     const shown: typeof zones = [...zones, ...cityDoors, ...tradeDoors];
     return (
       <>
-        {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2: Material, iOS and the NHS hold 16; the site's column holds 24): the
-            zones reach 8px into the column's padding below 768, so a section's content is 343px wide at 375, the width every
-            phone table on the page is laid out for. The bands' colour runs edge to edge either way. */}
+        {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2: Material, iOS and the NHS hold 16): the site's column holds 16 under 768
+            (GUTTER, src/lib/nav.ts; the zones no longer reach into the column's padding, since critique pass 3, round D1), so a section's
+            content is 343px wide at 375, the width every phone table on the page is laid out for. The bands' colour runs edge to edge. */}
         <div data-spine-body data-composition="zones">
           {shown.map((z, i) => (
             <Zone key={z.key} tone={zoneTone(i)} split={z.split} even={z.even} label={z.label} chapter={z.chapter}>

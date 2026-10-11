@@ -13,8 +13,9 @@
  *     names, About the figures and Who runs this, then the account and Pricing rows only while on; no Search row, because the bar
  *     always carries Search, so the open sheet showed it twice), closing on Escape with focus back
  *     on the toggle, on a tap outside, on a row, and when the window reaches 1280; the account entry of the bar and of the sheet reads
- *     the session ONCE between them (one client, one getUser, however many entries stand on the page) and, while it does, holds the
- *     width of the longer of its two words, Account, unseen (plan Task 7, amendment 8c; the Task 1 review's m2);
+ *     the session ONCE between them (one client, one getUser, however many entries stand on the page) and, while it does, draws a
+ *     visible "Sign in" link to /signin that swaps to Account when the read says signed in (plan Task 7, amendment 8c; the Task 1
+ *     review's m2; since critique pass 2, fix round C2, item P2.7 it no longer holds the width of the longer word, Account, unseen);
  *   - the footer: `<nav aria-label="Footer">`, its first column the same seven names, heads in sentence case, 44px rows on a phone,
  *     no version string, the year beside the publisher, Pricing only while the paywall is on; one name per destination across the bar,
  *     the sheet, the footer and the breadcrumbs (no page calls the trades' destination "Activities");

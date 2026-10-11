@@ -363,9 +363,11 @@ if (listArg && args.includes("--render")) {
 /* hood 4 since 2026-10-04 (night): `02 premium`, the visitors a year for every resident, is withheld until measured by his
    interview of 2026-09-26, answer 36 (milestone 1, M6); its district doors moved onto `01 rank`'s rows. 8.8 is four blocks: take,
    rank, character where the district holds notes, close. */
-/* home 5 since masterplan step 37 (2026-10-05): the home page on the band page holds the UK's three answers, its cities and what the
-   atlas holds; the hero is the page's question and its search, a band and not a section, and the notebook and the newsletter are
-   furniture; the Pro band adds a sixth only with the paywall's switch on. */
+/* home 5 since masterplan step 37 (2026-10-05), and a floor only rises: it was set when the band page held the UK's three answers, its
+   cities and what the atlas holds. The home as reformed to ship (plan 2026-10-10) draws six blocks (data-block: the worked example's
+   place and pays, the three proofs, joins, archive and tax, and the cities of the foot; measured 2026-10-11, "6 blocks against a floor of
+   5"); the hero, the terracotta band and where to next are bands and furniture, no block; the Pro band adds one only with the paywall's
+   switch on. The floor stays at 5: a floor is not lowered to fit a page, nor raised to a page's count unless someone means it. */
 /* openings 2 since plan 2026-10-09, home introduction: /new-businesses holds where new companies open and where US restaurants grew and
    shrank; its h1 is a band and not a section, and where to next is furniture (doors, no figure). */
 const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5, openings: 2 };

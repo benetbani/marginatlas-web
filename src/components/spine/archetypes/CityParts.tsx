@@ -2,7 +2,8 @@
  * CityParts, THE CITY CARDS' SHARED PARTS: the photograph's recipe (DuotonePhoto) and the money grammar of a set of cities (moneyFor).
  * Moved out of CityCards.tsx (plan docs/superpowers/plans/2026-10-10-home-reform, Task 6; the ship audit's 3.5) into a file with no
  * client directive, so the home's server rows (CityRows.tsx) and the pager's client cards (CityCards.tsx) draw one recipe, and the
- * home ships no client code for a list that never pages. CityCards re-exports DuotonePhoto for the callers that import it from there.
+ * home ships no client code for a list that never pages. CityCards no longer re-exports DuotonePhoto (cleanup item 21 of that plan): the
+ * callers import it from here.
  *
  * Since that plan the picture also takes the small copy's own size (`width`, `height`, so the browser keeps its box before it
  * decodes), a crop that keeps its landmark in a short frame (`position`, the CSS object-position), a veil of the caller's own
