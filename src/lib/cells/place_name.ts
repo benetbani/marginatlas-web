@@ -21,8 +21,19 @@
  * (af, dk0, cy0, cy00) are the country. They name it in English whatever label a table gives them ("Danmark", "Kýpros", "All of AF"), so
  * the slug of such a label ("danmark", "k-pros", "all-of-af") spells nothing either. A label that holds the code as a word of its own
  * ("All of AF", "Centro (IT)") is no name, from whichever table it comes. A code the country list holds no name for is left to the cell.
+ * That paragraph holds for a cell named by its country's bare code, which is not what the live lookup hands over (the next paragraph).
+ * THE NAME THE LOOKUP STAMPED (truth-fixes round 3A2, 2026-10-12; the review of round 3A, I1). cells.ts gives every cell whose word a table labels
+ * geoNameFromSlug's answer as its name, so for each of the 2,510 labelled words of the 15,685 place words (measured) the name read here is that label and
+ * none of the bare-code rules ran. Read as the lookup feeds it, 68 own-code words printed "All of AF", 15 whole-country words printed a native name
+ * ("Danmark", "Kýpros") and 8 regional rows printed their country's code ("Prov. Limburg (BE)"). Two rules, at the top of placeNameOf. A whole-country
+ * word whose stamped name is the lookup's own label for it (geoNameFromSlug, so a name a row carried itself is kept) is the country, named in English.
+ * And a label is printed without a TAIL that says the classification's vintage ("(NUTS 2021)") or the page's own country again ("(BE)", "(PT)"): at
+ * display only, never at the generator, because the place table builds the address of every label from its slug (scripts/gen_place_slugs.ts), so a
+ * rewritten label would move addresses. Over the 15,685 words the words printing a code go from 76 to 1, and those printing no English name for the
+ * country from 83 to 0.
  * BLIND SPOTS, stated: this cannot tell a place the site holds no label for from one it holds under another word, and a word that is the
- * slug of two labels takes the first the table lists.
+ * slug of two labels takes the first the table lists. The display rule reads a label's tail only, so a label that holds the code anywhere else
+ * still prints it: "RUP FR - Régions Ultrapériphériques Françaises" (/fr/fry) is the one word that does, and the test names it and no other.
  * THE STATISTICS CODES (truth-fixes round 3B; uk:statistics-code-uk-pages): UK and EL are the United Kingdom's and Greece's own spellings, so the
  * country's name and the bare-code test read the site's code for the same country (siteCountryCode, src/lib/countries.ts): a cell named "UK" is
  * named by its place word's label or else "United Kingdom", as a cell named "GB" is. The tables stay keyed by the code the address holds (the
@@ -98,21 +109,44 @@ function spelledBy(iso2: string): ReadonlyMap<string, string> {
   return spelled;
 }
 
+/** A label as a page prints it, at display only (truth-fixes round 3A2, the review's I1). A TAIL that says the classification's vintage ("(NUTS 2021)") or the
+ *  page's own country again ("Prov. Limburg (BE)", "Centro (PT)") is not printed: the tables add the code to tell labels of different countries apart, and on
+ *  that country's own page it says nothing. Only a trailing parenthetical, only those two kinds, the code in capitals as a code is printed: "Centro (IT)" on a
+ *  Portuguese page, a note such as "(Surrey)" and a code inside a name ("RUP FR - ...") stay. The label is never rewritten where the tables hold it: the place
+ *  table builds the address of each label from its slug (scripts/gen_place_slugs.ts), so a rewritten label would move addresses. */
+function plain(label: string, iso2: string): string {
+  const codes = codesOf(iso2);
+  let shown = label;
+  for (;;) {
+    const tail = /^(.*\S)\s*\(([^()]*)\)\s*$/.exec(shown);
+    if (!tail || (tail[2] !== "NUTS 2021" && !codes.includes(tail[2]))) return shown;
+    shown = tail[1];
+  }
+}
+
 /**
  * The name a trade page prints for its place. `country` is the page's country (any case), `geoSlug` its place word as the route
- * received it, `geoName` the cell's own name (`cell.geo_name`). The cell's name stays whenever it is a name; null stays null.
+ * received it, `geoName` the cell's own name (`cell.geo_name`). The cell's name stays whenever it is a name, without a tail that says
+ * the vintage or the country again (plain); null stays null.
  */
 export function placeNameOf(country: string, geoSlug: string, geoName: string | null | undefined): string | null {
   if (typeof geoName !== "string" || !geoName.trim()) return null;
   const iso2 = String(country ?? "").trim().toUpperCase();
-  if (!isBareCode(geoName, iso2)) return geoName;
+  const word = String(geoSlug ?? "").trim().toLowerCase();
   const countryName = heldCountryName(iso2);
+  /* A WHOLE-COUNTRY WORD IS THE COUNTRY WHEN ITS NAME IS ITS TABLE'S OWN LABEL (truth-fixes round 3A2, the review's I1). cells.ts stamps geoNameFromSlug(country,
+     word) on the cell whenever a table labels the word ("All of AF", "Danmark"), so on the live path the name is that label and never the bare code, and the rules
+     below, which read a bare code, did not run for such a word. A stamped name that IS the lookup's own label for the word is no row's name: the word is the
+     country, named in English. A name the lookup did not stamp ("Bahamas, The", read from the row itself) is the cell's own and stays. */
+  if (countryName !== null && isWholeCountryWord(word, iso2) && geoName === geoNameFromSlug(iso2, word)) return countryName;
+  const shown = plain(geoName, iso2);
+  if (!isBareCode(shown, iso2)) return shown;
   /* A code the country list holds no name for (the statistics' own UK and EL) has no English name to give, so the cell's own name stands,
      as the header says: those pages are another question (uk:statistics-code-uk-pages). */
   if (countryName === null) return geoName;
-  const word = String(geoSlug ?? "").trim().toLowerCase();
   if (isWholeCountryWord(word, iso2) || word === slugify(countryName)) return countryName;
-  return named(geoNameFromSlug(iso2, word), iso2) ?? spelledBy(iso2).get(word) ?? countryName;
+  const label = named(geoNameFromSlug(iso2, word), iso2) ?? spelledBy(iso2).get(word);
+  return label ? plain(label, iso2) : countryName;
 }
 
 /** What a trade page's head and its share card print about the place and about the one figure beside it. */

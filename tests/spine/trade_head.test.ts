@@ -52,6 +52,16 @@
  * BLIND SPOT, stated: the stub holds the UK's and Greece's rows in the shapes the database held on 2026-10-11 (levels nuts1 and nuts2), plus one invented row of the
  * code UK at the level "country"; this cannot tell which rows the database holds today.
  *
+ * AND A NAME THE LOOKUP STAMPED (truth-fixes round 3A2, 2026-10-12; the review of round 3A, I1). cells.ts stamps geoNameFromSlug(country, word) on every cell whose
+ * word a table labels, so the name placeNameOf is given is that label and never the bare code: the every-word check above gave every word its country's code, a
+ * path the lookup takes for none of the 2,510 words a table labels. Fed as the lookup feeds it, 76 words printed their country's code and 83 whole-country words
+ * printed a native name or a placeholder ("All of AF", "Danmark"). A whole-country word whose stamped name is the lookup's own label for it is the country, named in
+ * English; a stamped label that ends in the page's own country code or in "(NUTS 2021)" prints without that tail ("Prov. Limburg (BE)" is "Prov. Limburg"), at
+ * display only, never at the generator, whose addresses are the slugs of the labels. Two kinds of check below: the function over stamped names, and every place
+ * word of every held country fed as the lookup feeds it.
+ * BLIND SPOT, stated: the display rule reads a label's tail only, so a label that holds the code anywhere else still prints it. One does today, "RUP FR - Régions
+ * Ultrapériphériques Françaises" (/fr/fry), and the every-word check names that word and no other: a new one reds it.
+ *
  * Run: npx tsx tests/spine/trade_head.test.ts
  */
 import Module from "node:module";
@@ -79,6 +89,8 @@ const R_ARTICLE = "drop Czech from the start-of-name rule in src/lib/spine/place
 const R_ENGLAND = "name England England in src/lib/geo/popular_place_overrides.json (gb/england), the table geoNameFromSlug and getCellBySlug answer first: a nation is never named by its capital, so a page's label is the place the word names, then the place table is generated again (scripts/gen_place_slugs.ts) and holds no word fewer";
 const R_SOURCE = "cut a pipeline's word (one holding an underscore, or two or more letters run into digits) from the source line where the data enters the seed, sanitiseProvenance in src/lib/spine/adapt_cell.ts; where nothing readable is left the sentence drops its \"from\" clause (\"Estimates for a typical restaurant.\"), never an invented source and never an agency";
 const R_STAT = "map a statistics code to the site's country code in one function, siteCountryCode in src/lib/countries.ts (UK to GB, EL to GR), read once where adapt_cell.ts sets the seed's meta.iso2 and by placeNameOf for the country's name and its bare-code test; the coverage report imports it and holds no table of its own; the address keeps the code the route received (meta.address_iso2, which the report foot's path reads)";
+const R_STAMPED = "in placeNameOf (src/lib/cells/place_name.ts), a whole-country word whose stamped name is the lookup's own label for it (geoNameFromSlug: \"All of AF\", \"Danmark\") is the country, named in English, before the cell's own name is kept";
+const R_TAIL = "print a label without a trailing \"(NUTS 2021)\" and without a trailing parenthetical that is the page's own country code, in placeNameOf only (the display: the generator's addresses are the slugs of the labels and must not move)";
 const COUNTRIES_FILE = "src/lib/countries.ts";
 const REPORT = "src/lib/coverage/report.ts";
 const VIEW = "src/components/spine/cell/cell-view.tsx";
@@ -189,11 +201,8 @@ async function main(): Promise<void> {
     ["the UK's statistics code is a bare code of the United Kingdom: its own word names the country", "UK", "uk", "UK", "United Kingdom"],
     ["the page's country in lower case, as a route receives it", "uk", "uk", "UK", "United Kingdom"],
     ["a word no table labels names the country under that code", "UK", "zzzz-not-a-place", "UK", "United Kingdom"],
-    ["a word a table labels keeps the label: the region's id", "UK", "uki", "UK", "London (NUTS 2021)"],
-    ["and the slug of that label", "UK", "london-nuts-2021", "UK", "London (NUTS 2021)"],
     ["Greece's statistics code, likewise: its own word", "EL", "el", "EL", "Greece"],
     ["and a region's id: Attiki", "EL", "el3", "EL", "Attiki"],
-    ["a label the lookup stamped on such a row is the cell's own name and stays", "UK", "uki", "London (NUTS 2021)", "London (NUTS 2021)"],
     ["a name the lookup stamped is never replaced: London", "GB", "london", "London", "London"],
     ["a name the lookup stamped is never replaced: Liverpool", "GB", "liverpool", "Liverpool", "Liverpool"],
     ["a name the lookup stamped is never replaced: Manchester", "GB", "manchester", "Manchester", "Manchester"],
@@ -206,6 +215,51 @@ async function main(): Promise<void> {
   for (const [label, country, word, stored, want] of cases) {
     const got = P(country, word, stored);
     check(`${label}: placeNameOf(${country}, ${word}, ${JSON.stringify(stored)}) is ${JSON.stringify(want)} (got ${JSON.stringify(got)})`, got === want, { file: NAME, remedy: R_EXPORT });
+  }
+  /* A NAME THE LOOKUP STAMPED (truth-fixes round 3A2; the review of round 3A, I1). cells.ts stamps geoNameFromSlug(country, word) on every cell whose word a table
+     labels, so the name placeNameOf is given is that label and not the bare code the rows above feed. A whole-country word whose stamped name is the lookup's own
+     label for it is the country, in English. A name the lookup did not stamp is the row's own and stays. */
+  const wholeCases: Array<[string, string, string, string, string]> = [
+    ["a whole-country word stamped with its table's placeholder is the country: /af/af", "AF", "af", "All of AF", "Afghanistan"],
+    ["and /sg/sg", "SG", "sg", "All of SG", "Singapore"],
+    ["and /gr/gr, a country the place table holds under its own code", "GR", "gr", "All of GR", "Greece"],
+    ["a native label is no English name: /dk/dk0", "DK", "dk0", "Danmark", "Denmark"],
+    ["and its zero-padded forms: /cy/cy0", "CY", "cy0", "Kýpros", "Cyprus"],
+    ["and /cy/cy00", "CY", "cy00", "Kýpros", "Cyprus"],
+    ["and /cz/cz0", "CZ", "cz0", "Česko", "Czechia"],
+    ["and /hr/hr0", "HR", "hr0", "Hrvatska", "Croatia"],
+    ["a table label that is already the English name stays itself: /ie/ie0", "IE", "ie0", "Ireland", "Ireland"],
+    ["a name the lookup did not stamp is the row's own and stays, whatever the word: /bs/bs", "BS", "bs", "Bahamas, The", "Bahamas, The"],
+    ["a label on a word that is not the whole country is a place's and stays: /dk/dk01", "DK", "dk01", "Hovedstaden", "Hovedstaden"],
+  ];
+  for (const [label, country, word, stamped, want] of wholeCases) {
+    const got = P(country, word, stamped);
+    check(`${label}: placeNameOf(${country}, ${word}, ${JSON.stringify(stamped)}) is ${JSON.stringify(want)} (got ${JSON.stringify(got)})`, got === want, { file: NAME, remedy: R_STAMPED });
+  }
+  /* A label's tail that says the page's country again ("(BE)") or the classification's vintage ("(NUTS 2021)") is not printed, at display only. The first seven are
+     the disambiguated labels the live path stamped on real regional rows; the control rows keep what the rule does not name. */
+  const tailCases: Array<[string, string, string, string, string]> = [
+    ["a trailing code of the page's own country is not printed: the Belgian province /be/be22", "BE", "be22", "Prov. Limburg (BE)", "Prov. Limburg"],
+    ["and /be/be34", "BE", "be34", "Prov. Luxembourg (BE)", "Prov. Luxembourg"],
+    ["and /it/iti", "IT", "iti", "Centro (IT)", "Centro"],
+    ["and /es/es4", "ES", "es4", "Centro (ES)", "Centro"],
+    ["and /nl/nl12", "NL", "nl12", "Friesland (NL)", "Friesland"],
+    ["and /nl/nl42", "NL", "nl42", "Limburg (NL)", "Limburg"],
+    ["the code and the vintage together: /pt/pt16", "PT", "pt16", "Centro (PT) (NUTS 2021)", "Centro"],
+    ["the vintage alone: /nl/nl31", "NL", "nl31", "Utrecht (NUTS 2021)", "Utrecht"],
+    ["the statistics code UK, the vintage alone: /uk/uki", "UK", "uki", "London (NUTS 2021)", "London"],
+    ["and with the code before it: /uk/ukj", "UK", "ukj", "South East (UK) (NUTS 2021)", "South East"],
+    ["and /uk/ukn", "UK", "ukn", "Northern Ireland (UK) (NUTS 2021)", "Northern Ireland"],
+    ["a word a table labels reads the same through the bare code: the region's id", "UK", "uki", "UK", "London"],
+    ["and the slug of that label", "UK", "london-nuts-2021", "UK", "London"],
+    ["control, another country's code is not the page's own: Centro (IT) on a Portuguese page", "PT", "pt16", "Centro (IT)", "Centro (IT)"],
+    ["control, a parenthetical that is no code stays", "GB", "kingston-upon-thames", "Kingston (Surrey)", "Kingston (Surrey)"],
+    ["control, a label that is only the tag keeps itself", "NL", "nl31", "(NUTS 2021)", "(NUTS 2021)"],
+    ["control, a code inside the name and not at its tail stays, the stated blind spot: /fr/fry", "FR", "fry", "RUP FR - Régions Ultrapériphériques Françaises", "RUP FR - Régions Ultrapériphériques Françaises"],
+  ];
+  for (const [label, country, word, stamped, want] of tailCases) {
+    const got = P(country, word, stamped);
+    check(`${label}: placeNameOf(${country}, ${word}, ${JSON.stringify(stamped)}) is ${JSON.stringify(want)} (got ${JSON.stringify(got)})`, got === want, { file: NAME, remedy: R_TAIL });
   }
   /* Every place word of every held country, each read as the extrapolated row reads it (the country's own code for a name). A printed name
      is no name when it is the code or holds the code as a word of its own ("All of AF", "Centro (IT)"): the code in capitals, since a
@@ -227,6 +281,33 @@ async function main(): Promise<void> {
   const england = geoNameFromSlug("GB", "england");
   check(`/gb/england is not named London: the lookup's label for the word is ${JSON.stringify(england)} and the page prints ${JSON.stringify(P("GB", "england", england))}`, england !== "London" && england === "England" && P("GB", "england", england) === "England", { file: "src/lib/geo/popular_place_overrides.json", remedy: R_ENGLAND });
 
+  /* THE SAME WORDS AS THE LIVE PATH READS THEM (truth-fixes round 3A2; the review of round 3A, I1). Each word is given what cells.ts stamps on its cell: the label a
+     table holds for it (geoNameFromSlug) where there is one, else the row's own name, which is the country's code in 47 of 195 countries. The counts are stated: the
+     words a table labels, the words named by a label and by the country, the whole-country words that do not print the country's English name, and the words that
+     print the code. The words that still print it are held to the stated blind spot below, exactly: a new one reds, and so does one that stops printing it. */
+  let liveWords = 0, labelled = 0, liveByLabel = 0, liveByCountry = 0, wholeWords = 0;
+  const liveBare: string[] = [];
+  const liveHoldsCode: string[] = [];
+  const wholeNotCountry: string[] = [];
+  for (const c of COUNTRIES) {
+    const cc = c.code.toLowerCase();
+    for (const w of PLACE_SLUGS_BY_COUNTRY[cc] ?? []) {
+      liveWords++;
+      const stamped = geoNameFromSlug(c.code, w) ?? c.code;
+      if (stamped !== c.code) labelled++;
+      const n = P(c.code, w, stamped);
+      const addr = `/${cc}/${w}`;
+      if (w.startsWith(cc) && /^0*$/.test(w.slice(cc.length))) { wholeWords++; if (n !== c.name) wholeNotCountry.push(`${addr} ${JSON.stringify(n)}`); }
+      if (!n || n.trim().toUpperCase() === c.code.toUpperCase()) { liveBare.push(addr); continue; }
+      if (n.split(/[^A-Za-z0-9]+/).includes(c.code.toUpperCase())) liveHoldsCode.push(`${addr} ${JSON.stringify(n)}`);
+      if (n === c.name) liveByCountry++; else liveByLabel++;
+    }
+  }
+  const STAMPED_BLIND = ['/fr/fry "RUP FR - Régions Ultrapériphériques Françaises"'];
+  check(`${liveWords} place words of ${COUNTRIES.length} held countries, each given what the lookup stamps (${labelled} are labelled by a table): ${liveWords - liveBare.length} are named (${liveByLabel} by a label of the site's tables, ${liveByCountry} by their country's name) and ${liveBare.length} print the bare code${liveBare.length ? ` (${liveBare.slice(0, 6).join(" ")})` : ""}`, liveWords > 0 && liveBare.length === 0, { file: NAME, remedy: R_STAMPED });
+  check(`${wholeNotCountry.length} of the ${wholeWords} whole-country words do not print their country's English name when the lookup stamps its own label on them${wholeNotCountry.length ? ` (${wholeNotCountry.slice(0, 4).join(", ")})` : ""}`, wholeWords > 0 && wholeNotCountry.length === 0, { file: NAME, remedy: R_STAMPED });
+  check(`${liveHoldsCode.length} place words print their country's code as a word when the lookup stamps its label, against the ${STAMPED_BLIND.length} the display rule cannot see (${STAMPED_BLIND.join(", ")})${liveHoldsCode.length ? `; printing it: ${liveHoldsCode.slice(0, 4).join(", ")}` : ""}`, liveHoldsCode.length === STAMPED_BLIND.length && STAMPED_BLIND.every((x) => liveHoldsCode.includes(x)), { file: NAME, remedy: R_TAIL });
+
   /* (1b) THE FIGURE'S OWN PLACE, over hand-made cells. Each row: what the case is, the page's country, its place word, the cell as the
      lookup reads it (its name, its level, whether it was synthesised) and what the head and the card print. A country's row carries the
      country's figure, a synthetic cell carries none, and any other row carries the figure of the place it is. */
@@ -244,10 +325,14 @@ async function main(): Promise<void> {
     ["a named-row country's own page: Jamaica", "JM", "jm", { geo_name: "Jamaica", geo_level: "country" }, { label: "Jamaica", titleIn: "Jamaica", figureIn: "Jamaica" }],
     ["a synthetic cell carries no figure of any place", "GB", "liverpool", { geo_name: "Liverpool", geo_level: "region", is_synthetic: true }, { label: "Liverpool", titleIn: "Liverpool", figureIn: null }],
     ["a synthetic cell for the country itself: the article, no figure", "US", "us", { geo_name: "United States", geo_level: "region", is_synthetic: true }, { label: "United States", titleIn: "the United States", figureIn: null }],
-    ["the UK's statistics code on a country's row: the title names the place with the United Kingdom, the figure is the country's", "UK", "uki", { geo_name: "London (NUTS 2021)", geo_level: "country" }, { label: "London (NUTS 2021)", titleIn: "London (NUTS 2021), United Kingdom", figureIn: "the United Kingdom" }],
+    ["the UK's statistics code on a country's row: the title names the place, without its vintage, with the United Kingdom, the figure is the country's", "UK", "uki", { geo_name: "London (NUTS 2021)", geo_level: "country" }, { label: "London", titleIn: "London, United Kingdom", figureIn: "the United Kingdom" }],
     ["the UK's own word under that code takes the article", "UK", "uk", { geo_name: "UK", geo_level: "country" }, { label: "United Kingdom", titleIn: "the United Kingdom", figureIn: "the United Kingdom" }],
     ["Greece's statistics code on a country's row", "EL", "el3", { geo_name: "Attiki", geo_level: "country" }, { label: "Attiki", titleIn: "Attiki, Greece", figureIn: "Greece" }],
-    ["a row of that code at its own level keeps its own figure", "UK", "uki", { geo_name: "London (NUTS 2021)", geo_level: "nuts1" }, { label: "London (NUTS 2021)", titleIn: "London (NUTS 2021)", figureIn: "London (NUTS 2021)" }],
+    ["a row of that code at its own level keeps its own figure, and its name without the vintage", "UK", "uki", { geo_name: "London (NUTS 2021)", geo_level: "nuts1" }, { label: "London", titleIn: "London", figureIn: "London" }],
+    /* THE NAME THE LOOKUP STAMPED (truth-fixes round 3A2, the review's I1): the label a table holds for the word reaches the head and the card as the cell's name. */
+    ["a whole-country word stamped with its table's placeholder: the country, never \"All of AF\"", "AF", "af", { geo_name: "All of AF", geo_level: "country" }, { label: "Afghanistan", titleIn: "Afghanistan", figureIn: "Afghanistan" }],
+    ["a whole-country word stamped with its own-language label: the title never reads \"Danmark, Denmark\"", "DK", "dk0", { geo_name: "Danmark", geo_level: "country" }, { label: "Denmark", titleIn: "Denmark", figureIn: "Denmark" }],
+    ["a real regional row stamped with a label that ends in its own country's code: its name without the code, its own figure", "BE", "be22", { geo_name: "Prov. Limburg (BE)", geo_level: "nuts2" }, { label: "Prov. Limburg", titleIn: "Prov. Limburg", figureIn: "Prov. Limburg" }],
     ["control, a real row: London is its own", "GB", "london", { geo_name: "London", geo_level: "district" }, { label: "London", titleIn: "London", figureIn: "London" }],
     ["control, a real row: Liverpool is its own", "GB", "liverpool", { geo_name: "Liverpool", geo_level: "district" }, { label: "Liverpool", titleIn: "Liverpool", figureIn: "Liverpool" }],
     ["control, a real row: Manchester is its own", "GB", "manchester", { geo_name: "Manchester", geo_level: "district" }, { label: "Manchester", titleIn: "Manchester", figureIn: "Manchester" }],
@@ -264,10 +349,10 @@ async function main(): Promise<void> {
      is set and fetch replaced BEFORE the imports below. The stub answers for the restaurants slug only:
        - extrapolated_cells for the United Kingdom's and Germany's three-letter codes: the rows the database held on 2026-10-11 (their name
          column the country's own code, GB and DE), three size bands each, so a place word no regional row holds reaches the country's row
-         as /gb/boston does on the live site;
+         as /gb/boston does on the live site; and, as round 3A2 reads whole-country words, for Afghanistan's and Denmark's;
        - regional_cells for four real places and one statistics row: London, Liverpool and Manchester under their own ids and Boston in
          Massachusetts under its county's (the controls), and a row of the code UK at the level "country" (a country's row of a code the
-         country list holds no name for);
+         country list holds no name for); and the Belgian province BE22, a real regional row whose label ends in its country's code;
        - cells_master for California, the United States control.
      Every other query answers no rows, so a place with none is synthesised, as the lookup does when it finds nothing. The controls'
      rows are dated at the roll-forward's target year, so no figure of theirs moves with the inflation table. */
@@ -278,6 +363,10 @@ async function main(): Promise<void> {
   const bandRow = (iso3: string, name: string, size: string, usd: number) => ({ country_iso3: iso3, country_name: name, year: 2024, industry_id: "restaurants", size_band: size, predicted_rev_per_firm: usd, coverage_tier: "X", coverage_source: "wave5_extrapolation", quality_score: 30, sub_industry_id: null, sub_industry_source_kind: null, cost_stack: null, setup_costs: null });
   const UK_ROWS = [bandRow("GBR", "GB", "TOTAL", 153362.61), bandRow("GBR", "GB", "0-9", 67565.84), bandRow("GBR", "GB", "20-49", 1080132.61)];
   const DE_ROWS = [bandRow("DEU", "DE", "TOTAL", 241000), bandRow("DEU", "DE", "0-9", 118000), bandRow("DEU", "DE", "20-49", 1450000)];
+  /* Afghanistan's and Denmark's country rows (round 3A2): the two whole-country words the review read, the first labelled "All of AF" by its region table, the second
+     "Danmark". Their name column is the bare code, as the 47 countries' rows hold it. */
+  const AF_ROWS = [bandRow("AFG", "AF", "TOTAL", 76000), bandRow("AFG", "AF", "0-9", 41000), bandRow("AFG", "AF", "20-49", 380000)];
+  const DK_ROWS = [bandRow("DNK", "DK", "TOTAL", 330000), bandRow("DNK", "DK", "0-9", 150000), bandRow("DNK", "DK", "20-49", 2100000)];
   const regionalRow = (country: string, geoId: string, level: string, name: string, usd: number) => ({ country, geo_id: geoId, geo_level: level, geo_name: name, industry_id: "restaurants", size_band: null, year: YEAR, n_enterprises: 5000, n_employees: 40000, revenue_per_firm: usd, rev_p10: usd * 0.4, rev_p25: usd * 0.65, rev_p50: usd, rev_p75: usd * 1.45, rev_p90: usd * 2.1, payroll_per_employee: 30000, quality_score: 80, coverage_tier: "S", coverage_source: "National business statistics", currency: "USD", sub_industry_id: null, sub_industry_source_kind: null, cost_stack: null, setup_costs: null });
   const REGIONAL = [
     regionalRow("GB", "GB-E09000001", "district", "London", 433_000),
@@ -287,6 +376,7 @@ async function main(): Promise<void> {
     regionalRow("UK", "UKI", "country", "UK", 300_000),
     regionalRow("UK", "UKJ", "nuts1", "South East (UK) (NUTS 2021)", 320_000),
     regionalRow("EL", "EL30", "nuts2", "Attiki", 270_000),
+    regionalRow("BE", "BE22", "nuts2", "Prov. Limburg (BE)", 210_000),
   ];
   const CALIFORNIA = { country: "US", geo_id: "US-06", geo_level: "state", naics_6: "722511", naics_4: "7225", industry_description: "Full-Service Restaurants", size_band: null, year: YEAR, n: 9000, total_employment: 270_000, rev_p10: 240_000, rev_p25: 390_000, rev_p50: 600_000, rev_p75: 870_000, rev_p90: 1_260_000, mean_wage_per_employee_usd: 30_000, quality_score: 85, coverage_tier: "A", coverage_source: "Census", currency: "USD" };
   globalThis.fetch = (async (input: RequestInfo | URL) => {
@@ -295,7 +385,7 @@ async function main(): Promise<void> {
     const has = (part: string) => url.includes(part);
     const restaurants = /industry_id=in\.\([^)]*restaurants/.test(url);
     let rows: unknown[] = [];
-    if (table === "extrapolated_cells" && restaurants) rows = has("country_iso3=eq.GBR") ? UK_ROWS : has("country_iso3=eq.DEU") ? DE_ROWS : [];
+    if (table === "extrapolated_cells" && restaurants) rows = has("country_iso3=eq.GBR") ? UK_ROWS : has("country_iso3=eq.DEU") ? DE_ROWS : has("country_iso3=eq.AFG") ? AF_ROWS : has("country_iso3=eq.DNK") ? DK_ROWS : [];
     else if (table === "regional_cells" && restaurants) rows = REGIONAL.filter((r) => has(`country=eq.${r.country}&`) && has(`geo_id=eq.${r.geo_id}&`));
     else if (table === "cells_master" && has("country=eq.US") && has("geo_id=eq.US-06") && has("naics_6.like.722")) rows = [CALIFORNIA];
     return new Response(JSON.stringify(rows), { status: 200, headers: { "content-type": "application/json" } });
@@ -327,7 +417,7 @@ async function main(): Promise<void> {
   const THE_UK = "the United Kingdom";
   /* Each address: the title's place after "in", the description (exact, or its shape), a word the description must not hold (the place
      the address names, when the figure is the country's), and the seed's city where the seed is read too. */
-  type Route = { country: string; geo: string; industry: string; titleIn: string; desc: RegExp | string; never?: string; seedCity?: string };
+  type Route = { country: string; geo: string; industry: string; titleIn: string; desc: RegExp | string; never?: string; seedCity?: string; trail?: string };
   const routes: Route[] = [
     { country: "gb", geo: "boston", industry: "restaurants", titleIn: "Boston, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "Boston", seedCity: "Boston" },
     { country: "gb", geo: "gb", industry: "restaurants", titleIn: THE_UK, desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), seedCity: "United Kingdom" },
@@ -342,9 +432,14 @@ async function main(): Promise<void> {
     { country: "gb", geo: "boston", industry: "legal-services", titleIn: THE_UK, desc: new RegExp(`^Revenue and employment numbers for ${tradeName("legal-services").toLowerCase()} in ${THE_UK}\\.$`) },
     /* THE STATISTICS CODES (truth-fixes round 3B): a row of the code UK or EL at the level "country" is the country's figure, so the title names the place with its
        country and the figure stands beside the country (UKI is stubbed as such a row); a row at its own level (UKJ, EL30) is a place's own, as London's is. */
-    { country: "uk", geo: "uki", industry: "restaurants", titleIn: "London (NUTS 2021), United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "London", seedCity: "London (NUTS 2021)" },
-    { country: "uk", geo: "ukj", industry: "restaurants", titleIn: "South East (UK) (NUTS 2021)", desc: new RegExp(`^~${AMT} typical revenue for restaurants in South East \\(UK\\) \\(NUTS 2021\\)\\.$`), seedCity: "South East (UK) (NUTS 2021)" },
+    { country: "uk", geo: "uki", industry: "restaurants", titleIn: "London, United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "London", seedCity: "London" },
+    { country: "uk", geo: "ukj", industry: "restaurants", titleIn: "South East", desc: new RegExp(`^~${AMT} typical revenue for restaurants in South East\\.$`), seedCity: "South East" },
     { country: "el", geo: "el30", industry: "restaurants", titleIn: "Attiki", desc: new RegExp(`^~${AMT} typical revenue for restaurants in Attiki\\.$`), seedCity: "Attiki" },
+    /* WHAT THE LOOKUP STAMPED (truth-fixes round 3A2, the review's I1): a whole-country word is its country in English whatever label its table holds ("All of AF",
+       "Danmark"), and a real regional row whose label ends in its country's code prints without it ("Prov. Limburg (BE)"). */
+    { country: "af", geo: "af", industry: "restaurants", titleIn: "Afghanistan", desc: new RegExp(`^~${AMT} typical revenue for restaurants in Afghanistan\\.$`), never: "All of", seedCity: "Afghanistan", trail: "Afghanistan / Restaurants" },
+    { country: "dk", geo: "dk0", industry: "restaurants", titleIn: "Denmark", desc: new RegExp(`^~${AMT} typical revenue for restaurants in Denmark\\.$`), never: "Danmark", seedCity: "Denmark", trail: "Denmark / Restaurants" },
+    { country: "be", geo: "be22", industry: "restaurants", titleIn: "Prov. Limburg", desc: new RegExp(`^~${AMT} typical revenue for restaurants in Prov\\. Limburg\\.$`), never: "(BE)", seedCity: "Prov. Limburg", trail: "Belgium / Prov. Limburg / Restaurants" },
     /* The controls, real rows: byte-identical to what the head printed before. */
     { country: "gb", geo: "london", industry: "restaurants", titleIn: "London", desc: "$374K typical yearly sales for restaurants in London, from 7,865 registered businesses.", seedCity: "London" },
     { country: "gb", geo: "liverpool", industry: "restaurants", titleIn: "Liverpool", desc: "~$250K typical revenue for restaurants in Liverpool.", seedCity: "Liverpool" },
@@ -367,6 +462,7 @@ async function main(): Promise<void> {
     const crumbs = seed ? buildCellCrumbs(seed.meta) : [];
     check(`${addr}: no crumb is the bare code (${crumbs.map((c) => c.label).join(" / ")})`, crumbs.length > 0 && crumbs.every((c) => c.label.trim().toUpperCase() !== r.country.toUpperCase()), { file: SEED, remedy: R_SEED });
     check(`${addr}: no two neighbouring crumbs share a label (${crumbs.map((c) => c.label).join(" / ")})`, crumbs.length > 0 && crumbs.every((c, i) => i === 0 || !sameLabel(c.label, crumbs[i - 1].label)), { file: CRUMBS, remedy: R_CRUMB });
+    if (r.trail !== undefined) check(`${addr}: the trail reads "${r.trail}" (got "${crumbs.map((c) => c.label).join(" / ")}")`, crumbs.map((c) => c.label).join(" / ") === r.trail, { file: SEED, remedy: R_SEED });
   }
 
   /* (2b) THE TRAIL'S BUILDERS ON THEIR OWN (src/lib/spine/crumb_rows.ts): a place that says the country's own name is the country said
@@ -500,9 +596,12 @@ async function main(): Promise<void> {
     { country: "gb", geo: "england", industry: "restaurants", title: "Restaurants: England", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "England" },
     { country: "gb", geo: "liverpool", industry: "legal-services", title: `${tradeName("legal-services")}: Liverpool`, none: true },
     { country: "gb", geo: "boston", industry: "legal-services", title: `${tradeName("legal-services")}: United Kingdom`, none: true },
-    { country: "uk", geo: "uki", industry: "restaurants", title: "Restaurants: London (NUTS 2021)", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "London" },
-    { country: "uk", geo: "ukj", industry: "restaurants", title: "Restaurants: South East (UK) (NUTS 2021)", label: "Typical revenue", detail: RANGE },
+    { country: "uk", geo: "uki", industry: "restaurants", title: "Restaurants: London", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "London" },
+    { country: "uk", geo: "ukj", industry: "restaurants", title: "Restaurants: South East", label: "Typical revenue", detail: RANGE },
     { country: "el", geo: "el30", industry: "restaurants", title: "Restaurants: Attiki", label: "Typical revenue", detail: RANGE },
+    { country: "af", geo: "af", industry: "restaurants", title: "Restaurants: Afghanistan", label: "Typical revenue", detail: RANGE },
+    { country: "dk", geo: "dk0", industry: "restaurants", title: "Restaurants: Denmark", label: "Typical revenue", detail: RANGE },
+    { country: "be", geo: "be22", industry: "restaurants", title: "Restaurants: Prov. Limburg", label: "Typical revenue", detail: RANGE },
     { country: "gb", geo: "london", industry: "restaurants", title: "Restaurants: London", label: "Typical revenue", value: "$374K", detail: "7,865 registered businesses in London" },
     { country: "gb", geo: "liverpool", industry: "restaurants", title: "Restaurants: Liverpool", label: "Typical revenue", value: "$250K", detail: RANGE },
     { country: "gb", geo: "manchester", industry: "restaurants", title: "Restaurants: Manchester", label: "Typical revenue", value: "$260K", detail: RANGE },
