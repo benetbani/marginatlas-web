@@ -70,7 +70,9 @@ check(`the new companies' entry says the slice's floor in words (${floor})`, flo
 
 /* THE FOOT */
 const gb = renderToStaticMarkup(React.createElement(SourcesFoot, { iso2: "GB" }));
-check("the foot draws on a UK page with the licence's sentence", gb.includes(OGL_LINE.replace(/'/g, "&#x27;")) && gb.includes("data-sources-foot"));
+/* THE ELEMENT, NOT THE BARE NAME (critique pass 3, fix round D2, item P2.5): every render embeds the stylesheet, which names `[data-sources-foot]`
+   since the foot lines' band, so a search for the bare attribute is true of a page with no licence line at all. */
+check("the foot draws on a UK page with the licence's sentence", gb.includes(OGL_LINE.replace(/'/g, "&#x27;")) && gb.includes("<p data-sources-foot"));
 check("the foot links to the one sources section", gb.includes(`href="${UK_SOURCES_FOOT.href}"`) && UK_SOURCES_FOOT.href === "/about-data#sources");
 check("the foot names no source", UK_SOURCES.every((s) => !gb.includes(s.publisher)));
 check("the foot draws nothing off the UK (Germany)", renderToStaticMarkup(React.createElement(SourcesFoot, { iso2: "DE" })) === "");

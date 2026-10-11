@@ -67,8 +67,9 @@ export function SpineOpeningsBody() {
         ))}
       </div>
       {/* THE SOURCES LINE, THE LINK ALONE: these figures come from the two sources outside the UK that About the figures names; the
-          UK's licence sentence (SourcesFoot) does not cover them. */}
-      <p data-sources-foot className="mt-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+          UK's licence sentence (SourcesFoot) does not cover them. Its 24px under the last zone is padding, as SourcesFoot's is, so the foot
+          lines' band (globals.css, THE ZONES) paints it (critique pass 3, fix round D2, item P2.5). */}
+      <p data-sources-foot className="pt-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
         <a href={UK_SOURCES_FOOT.href} className="tap-y whitespace-nowrap underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)]">
           {UK_SOURCES_FOOT.link}
         </a>

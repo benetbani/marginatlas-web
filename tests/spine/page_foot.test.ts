@@ -14,8 +14,10 @@
  */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { ReportFoot } from "../../src/components/spine/ReportFoot";
+import { SourcesFoot } from "../../src/components/spine/SourcesFoot";
 import { checkedDateForCity, checkedDateForCountry, checkedDateForTrade, REGISTER_BUILT } from "../../src/lib/spine/checked";
 import { reportHref } from "../../src/lib/spine/report";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -92,9 +94,34 @@ for (const p of PAGES) {
 const withDate = renderToStaticMarkup(React.createElement(ReportFoot, { path: "/gb", checked: "2026-10-01" }));
 const without = renderToStaticMarkup(React.createElement(ReportFoot, { path: "/gb", checked: null }));
 check("given a held date, the foot prints it once, as a date", (withDate.match(/data-checked="1"/g) ?? []).length === 1 && /datetime="2026-10-01"/i.test(withDate) && withDate.includes("1 October 2026"));
-check("given none, it prints no checked line", !without.includes("data-checked")); check("the foot stands 24px clear of what follows it, as it stands 24px under the last band (mb-6): the newsletter bar's hairline touched it, 0px, on every spine page (critique pass 2, P0.3, the first photograph of the home inside its chrome)", /<p data-page-foot[^>]*\bmb-6\b/.test(without), FILE, "give ReportFoot's paragraph mb-6, the 24px its mt-6 gives it above, so the last line is not set against the newsletter bar's border");
+check("given none, it prints no checked line", !without.includes("data-checked")); check("the foot stands 24px clear of what follows it, as it stands 24px under the last band, and that 24px is padding inside the band (pb-6), not a margin outside it: the newsletter bar's hairline touched it, 0px, on every spine page (critique pass 2, P0.3, the first photograph of the home inside its chrome), and a margin left the 24px bare white under the band (critique pass 3, fix round D2, item P2.5)", /<p data-page-foot[^>]*\bpb-6\b/.test(without) && !/<p data-page-foot[^>]*\bmb-/.test(without), FILE, "give ReportFoot's paragraph pb-6, the 24px under its line, as padding so the band reaches the newsletter bar; it was mb-6");
 check("the link carries the path, nothing else, and asks crawlers not to follow it", reportHref("/gb/london/restaurants") === "/corrections/new?page=%2Fgb%2Flondon%2Frestaurants" && /rel="nofollow"/.test(without));
 check("a path from elsewhere is never carried", reportHref("https://example.com/x") === "/corrections/new" && reportHref("//evil.example") === "/corrections/new");
+
+/* THE FOOT LINES' BAND (critique pass 3, fix round D2, item P2.5): the licence line and the Report line stand outside the spine body, on the
+   column's grey (--c-ground) with the frame's white at the column's sides (the gutters on a phone), so they read as a grey box with its edges
+   showing. They are painted as one band, edge to edge, with the zones' own bleed (THE ZONES in globals.css: a border image's sideways outset) in
+   the tint, and their spacing is padding inside the band so it runs unbroken from the last zone to the newsletter bar: a margin is a gap the
+   background does not paint. BLIND SPOT: this reads the source; the round's probe reads the pixels at the column's side in a browser. */
+const classesOf = (html: string, hook: string) => (new RegExp(`<p ${hook}[^>]*class="([^"]*)"`).exec(html)?.[1] ?? "").replace(/&amp;/g, "&").split(" ");
+const licenceClasses = classesOf(renderToStaticMarkup(React.createElement(SourcesFoot, { iso2: "GB" })), "data-sources-foot");
+const reportClasses = classesOf(without, "data-page-foot");
+const noMargin = (c: string[]) => !c.some((k) => /^(\[\[data-sources-foot\]\+&\]:)?-?m[tbxylr]?-/.test(k));
+check(`the licence line's spacing is padding inside the band (pt-6, the 24px under the last zone it had as mt-6) and the Report line's is padding too (pt-6 and pb-6, pt-2 straight under the licence line): no margin on either, so no gap is left unpainted (${licenceClasses.filter((k) => /^p[tb]-/.test(k)).join(" ")} | ${reportClasses.filter((k) => /p[tb]-/.test(k)).join(" ")})`, licenceClasses.includes("pt-6") && noMargin(licenceClasses) && reportClasses.includes("pt-6") && reportClasses.includes("pb-6") && reportClasses.includes("[[data-sources-foot]+&]:pt-2") && noMargin(reportClasses), "src/components/spine/SourcesFoot.tsx", "give the licence line pt-6 and the Report line pt-6 pb-6 [[data-sources-foot]+&]:pt-2 in place of their margins, so the band under the last zone is one run of padding and the zones' bleed paints all of it");
+/* EVERY SITE THAT CARRIES A FOOT HOOK, not only the two components: the openings view draws its own licence-link line (the link alone, the UK's
+   licence sentence not covering its two outside sources) with the same `data-sources-foot` hook and a margin of its own, which the band painted
+   around, a white gap under the last zone. The scan reads every .tsx under src for a tag carrying either hook and its class string. BLIND SPOT:
+   it reads a literal className, so a class list built in a variable would not be seen; the three sites hold literals. */
+const tsxUnder = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? tsxUnder(`${dir}/${e.name}`) : e.name.endsWith(".tsx") ? [`${dir}/${e.name}`] : []));
+const footSites = tsxUnder("src").flatMap((f) => [...stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n").matchAll(/<p data-(sources|page)-foot\b[^>]*?className="([^"]*)"/g)].map((m) => ({ file: f, hook: m[1], classes: m[2].split(" ") })));
+const marginSites = footSites.filter((s) => !noMargin(s.classes)).map((s) => `${s.file} (${s.hook})`);
+check(`every tag that carries a foot hook spaces itself with padding, never a margin (${footSites.length} sites: ${footSites.map((s) => s.file.split("/").pop()).join(", ")}${marginSites.length ? `; a margin on ${marginSites.join(", ")}` : ""})`, footSites.length >= 3 && marginSites.length === 0, marginSites[0]?.split(" ")[0] ?? "src/components/spine/openings/openings-view.tsx", "give the openings view's own licence-link line pt-6 in place of its mt-6, as SourcesFoot has it, so the band paints the 24px under the last zone");
+const css = readFileSync("src/app/globals.css", "utf8");
+const band = /\[data-sources-foot\],\s*\[data-page-foot\]\s*\{([^}]*)\}/.exec(css)?.[1] ?? "";
+const bandDecl = Object.fromEntries(band.split(";").map((d) => d.trim()).filter(Boolean).map((d) => [d.slice(0, d.indexOf(":")).trim(), d.slice(d.indexOf(":") + 1).trim()]));
+const CSS_REMEDY = "in THE ZONES (src/app/globals.css) add `[data-sources-foot], [data-page-foot] { background: var(--zone-tint); border-image-source: conic-gradient(var(--zone-tint) 0 0); border-image-slice: 0 fill; border-image-width: 0; border-image-outset: 0 100vmax; }`, the zones' own bleed in the tint";
+check("globals.css paints the foot lines as one band edge to edge with the zones' own bleed in the tint: background --zone-tint, a border image of the same colour (slice 0 fill, width 0) and a sideways outset of 100vmax, none above or below", bandDecl["background"] === "var(--zone-tint)" && bandDecl["border-image-source"] === "conic-gradient(var(--zone-tint) 0 0)" && bandDecl["border-image-slice"] === "0 fill" && bandDecl["border-image-width"] === "0" && bandDecl["border-image-outset"] === "0 100vmax", "src/app/globals.css", CSS_REMEDY);
+check("the band is written in longhand and carries no `//`: the production build's CSS minimizer parses as SCSS, where the border-image shorthand's \"fill 0 // 0 100vmax\" opens a line comment (\"Missed semicolon\", the first deploy of 2026-10-04)", band.length > 0 && !/border-image\s*:/.test(band) && !band.includes("//"), "src/app/globals.css", CSS_REMEDY);
 
 const page = readFileSync("src/app/(site)/corrections/new/page.tsx", "utf8");
 check("the correction page holds the one correction form, open", /<CorrectionForm[^>]*startOpen/.test(page));

@@ -168,7 +168,9 @@ if (render) {
   const figs = [...render.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => ({ tag: m[0], at: m.index ?? 0, text: figText(m[0], (m.index ?? 0) + m[0].length) }));
   const bare = figs.filter((f) => (!/data-src="/.test(f.tag) || !/data-kind="/.test(f.tag)) && !(f.at >= proFrom && f.at < proTo && PRICES.includes(f.text)));
   check(`every figure says where it came from (${figs.length} figures, ${bare.length} without${bare.length ? `: ${bare.map((f) => JSON.stringify(f.text).replace(/\xa0/g, "\\u00a0")).join(", ")}` : ""})`, figs.length > 0 && bare.length === 0, "give the figure its builder's prov (src/lib/spine/provenance.ts provAttrs); a Pro price is exempt only as the plan prints it");
-  check("the licence line and its link, then Report a mistake, under the bands", render.includes(OGL_LINE) && render.includes(`href="${UK_SOURCES_FOOT.href}"`) && render.indexOf("data-sources-foot") > -1 && render.indexOf("data-sources-foot") < render.indexOf("data-page-foot"));
+  /* THE ELEMENTS, NOT THE BARE NAMES (critique pass 3, fix round D2, item P2.5): every render embeds the stylesheet, and since the foot lines' band
+     it names `[data-page-foot],[data-sources-foot]`, so a search for the bare attribute found the selector and read the order of its two names. */
+  check("the licence line and its link, then Report a mistake, under the bands", render.includes(OGL_LINE) && render.includes(`href="${UK_SOURCES_FOOT.href}"`) && render.indexOf("<p data-sources-foot") > -1 && render.indexOf("<p data-sources-foot") < render.indexOf("<p data-page-foot"));
   check("the render prints no picker heading, no counts and no newsletter form", !/Pick a country, a city, and a business\./.test(render) && !/What the atlas holds|atlas_ledger\.ts:/.test(render) && !/Notify me when my city/.test(render));
   check("no re-homed section is on the home", !/id="(answer|years|trades|duel|kitchens|firms-last|new-companies|us-restaurants|how-made)"/.test(render) && !/data-notebook/.test(render));
   check("the render's cities carry no pager", !/aria-label="(Previous cities|More cities)"/.test(render));

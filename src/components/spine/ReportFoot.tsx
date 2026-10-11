@@ -3,7 +3,7 @@
  * close:furniture-lines; the credibility doctrine of 2026-10-02: one "Report a mistake" link on every page, and "Checked [date]"
  * only where a date is held). Under the sources line on a UK page, under the last band elsewhere: the link to the correction page
  * with this page's own path (src/lib/spine/report.ts), and the checked line only when the page's data holds a date
- * (src/lib/spine/checked.ts). At the micro rung, muted, as the sources line; nofollow, since the correction page is a form. 24px under it as above it (critique pass 2, P0.3): drawn inside the chrome, the newsletter bar's border touched it (0px) on every spine page.
+ * (src/lib/spine/checked.ts). At the micro rung, muted, as the sources line; nofollow, since the correction page is a form. 24px under it as above it (critique pass 2, P0.3): drawn inside the chrome, the newsletter bar's border touched it (0px) on every spine page. That 24px, and the 24 above and the 8 under the sources line, are padding and not margins (critique pass 3, fix round D2, item P2.5): globals.css paints the two lines as one band, edge to edge, in the tint, and a margin is a gap its background never paints (the 24px under this line stood bare white).
  */
 import * as React from "react";
 import { COPY } from "@/lib/spine/copy";
@@ -13,7 +13,7 @@ const dateText = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateStrin
 
 export function ReportFoot({ path, checked = null }: { path: string | null | undefined; checked?: string | null }) {
   return (
-    <p data-page-foot className="mt-6 mb-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [[data-sources-foot]+&]:mt-2">
+    <p data-page-foot className="pt-6 pb-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [[data-sources-foot]+&]:pt-2">
       <a data-report="1" href={reportHref(path)} rel="nofollow" className="tap-y whitespace-nowrap underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)]">
         {COPY.pageFoot.report}
       </a>

@@ -1253,6 +1253,20 @@ main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > 
     --c-surface: var(--c-card);
   }
 }
+/* THE FOOT LINES ARE ONE BAND, EDGE TO EDGE (critique pass 3, fix round D2, item P2.5): the licence line and the Report line (SourcesFoot and
+   ReportFoot) stand outside the spine body, so under the last zone they stood on the column's grey (--c-ground) with the frame's white at the
+   column's sides (the gutters, 16 or 24px of white, on a phone): a grey box with its edges showing. They take the zones' own bleed in the tint,
+   a border image's sideways outset (above), and their spacing is padding, so the band runs unbroken from the last zone to the newsletter bar:
+   a margin is a gap the background never paints, and the 24px under the Report line stood bare white. IN LONGHAND, as the bleed above: the
+   production build's CSS minimizer parses as SCSS. */
+[data-sources-foot],
+[data-page-foot] {
+  background: var(--zone-tint);
+  border-image-source: conic-gradient(var(--zone-tint) 0 0);
+  border-image-slice: 0 fill;
+  border-image-width: 0;
+  border-image-outset: 0 100vmax;
+}
 [data-zone] [data-keep-card] {
   --c-soft: var(--soft-card);
   --c-surface: var(--c-card);

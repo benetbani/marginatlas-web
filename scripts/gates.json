@@ -197,13 +197,16 @@
         "scratchpad/harness/pages/${p.file}.html",
         "scripts/harness/pages.json",
         "src/app/(site)/corrections/new/page.tsx",
+        "src/app/globals.css",
         "src/components/spine/ReportFoot.tsx",
+        "src/components/spine/SourcesFoot.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/country/country-view.tsx",
         "src/components/spine/country/how-to-view.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/components/spine/hood/hood-view.tsx",
+        "src/components/spine/openings/openings-view.tsx",
         "src/lib/spine/checked.ts"
       ],
       "claims": []
