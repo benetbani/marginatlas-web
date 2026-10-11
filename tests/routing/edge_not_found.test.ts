@@ -312,8 +312,8 @@ check(`the generator reads a tree as the router does: groups dropped, a dynamic 
 const REFUSED: Array<[string, string, string]> = [
   ["a parallel route's slot", "@modal/page.tsx", "@modal"],
   ["an intercepting route", "blog/(.)photo/page.tsx", "(.)photo"],
-  ["a catch-all", "docs/[...rest]/page.tsx", "[...rest]"],
-  ["an optional catch-all", "docs/[[...rest]]/page.tsx", "[[...rest]]"],
+  ["a catch-all", "guide/[...rest]/page.tsx", "[...rest]"],
+  ["an optional catch-all", "guide/[[...rest]]/page.tsx", "[[...rest]]"],
   ["a second dynamic folder at the root", "[other]/page.tsx", "[other]"],
   ["a second dynamic folder at the root, inside a route group", "(site)/[other]/page.tsx", "[other]"],
 ];
