@@ -79,8 +79,7 @@ function HomeSearch() {
         <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[var(--c-ink)] leading-[1.08]">
           <HeroWords lead={C.h1.lead} middle={C.h1.middle} businesses={HERO_BUSINESSES} cities={HERO_CITIES} />
         </h1>
-        {/* The picker's wrapper. The id was read by the bar's Search while the bar kept it hidden under this card; the bar shows Search from the first paint now (critique pass 3, item P1.2), and tests/trust/home_shape.test.ts pins the id. */}
-        <div id="home-search-anchor" className="relative z-30 mt-4 lg:mt-8 w-full">
+        <div className="relative z-30 mt-4 lg:mt-8 w-full">
           <NavigatorForm showHeading={false} seed={homePickerSeed()} />
         </div>
         {/* WHAT THE SITE IS, ONCE, AT THE HERO'S FOOT (the spec's sections 1, 3 and 7; clause 67, the model's seat for a page's one plain line): straight after the form, so the question, the reader's own case and the definition stand in the first screen. */}

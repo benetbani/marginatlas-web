@@ -645,9 +645,11 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
         </div>
       ) : null}
       <div className={drawBars || drawWide || drawShort ? "mt-3 sm:hidden" : "mt-3"}>
+        {/* THIS HEAD WRAPS IF IT MUST (fix round F2, item M12; the final review): the phone list has the whole row, so its value head takes no whitespace-nowrap, which would let
+            a longer name run past the card instead of wrapping; only the table's head, in a half-width row beside the ceiling's label, needs the rule (above). */}
         <div className="flex items-baseline justify-between pb-2">
           <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
-          <span className="whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
+          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
         </div>
         <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length}>
           {[...sorted].reverse().map((r) => {

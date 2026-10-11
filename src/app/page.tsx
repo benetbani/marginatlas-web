@@ -414,11 +414,7 @@ export default async function HomePage() {
              form (and its ComboField dropdown, which extends below the
              card) above the band that follows so the open list stays
              fully visible and scrollable. */}
-          {/* The id was read by HeaderSearch, which kept the bar's search hidden
-              while this card was on screen; the bar shows its Search from the
-              first paint now (critique pass 3, item P1.2), so nothing reads it. */}
           <div
-            id="home-search-anchor"
             className="relative z-30 mt-4 md:mt-5 max-w-5xl mx-auto"
           >
             {/* THE SEED, AS THE REBUILT HOME PASSES IT (plan 2026-10-10, the home reformed to ship, Task 7, amendment 8b): the
