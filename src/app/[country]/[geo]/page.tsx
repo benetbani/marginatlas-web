@@ -86,6 +86,15 @@ export async function generateStaticParams(): Promise<Params[]> {
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { country, geo } = await params;
   const iso2 = country.toUpperCase();
+  // NO TITLE FOR A FIRST PART THAT IS NO COUNTRY (the plan 2026-10-11, route-folder fall-through, Task 4). The lines below fell back to the
+  // raw words (`iso2ToName(iso2) || iso2`, `regionEntry?.label || geo`) and this route sets no robots key, so /pricing/xyz, a route folder's
+  // name and no country, drew the title "xyz: small-business benchmarks | Margin Atlas" under the root's index, follow. The body's own check
+  // below (`if (!countryMeta) notFound();`) moved up for the head, as src/app/[country]/page.tsx does for its own. DEFENCE IN DEPTH: it sets
+  // no status (the metadata streams inside the root loading boundary, src/middleware.ts says so beside its place rule), the edge does, and
+  // since the route-folder rule (src/lib/routing/edge_not_found.ts) no such address reaches this route. notFound(), not noindex: the region
+  // route sets no robots key (tests/seo/indexable.test.ts holds it to none). No real page changes: each holds a country the site holds, and
+  // the body already answered any other with its own notFound().
+  if (!COUNTRIES.some((c) => c.code === iso2)) notFound();
   const countryName = iso2ToName(iso2) || iso2;
   const regions = getRegionsForCountry(iso2, countryName);
   const regionEntry = regions.find((r) => r.value === geo.toLowerCase());

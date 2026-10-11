@@ -16,8 +16,11 @@
  *     Nothing in the route sets the status of a missing post. The throw does not (the metadata streams inside the root loading boundary:
  *     src/middleware.ts says so beside its place rule), and `dynamicParams = false`, which round F2 set for it, made Next decline a slug the
  *     list does not hold, so the request fell through to /[country]/[geo], which answered 200 with an indexable title, worse than the page's
- *     own soft 404 (measured on the build of 83fd5f99, 2026-10-11). The status for a missing post is the edge's, a queued item (QUEUE
- *     site:route-folder-fallthrough), and no check here reads it;
+ *     own soft 404 (measured on the build of 83fd5f99, 2026-10-11). The status for a missing post is the edge's, by the route-folder rule of
+ *     2026-10-11 (src/lib/routing/edge_not_found.ts judges /blog/<slug> against BLOG_SLUGS, the generated table of
+ *     src/lib/routing/route_shapes.ts; tests/routing/edge_not_found.test.ts holds it), and no check here reads it;
+ *   - the region route's generateMetadata (src/app/[country]/[geo]/page.tsx) throws Next's not-found error for a first part that is no country,
+ *     so /pricing/xyz draws no title of its own (the same plan, Task 4; defence in depth, a text check, since the page cannot be loaded here);
  *   - every JSON-LD block escaped so a "<" cannot close its script;
  *   - the auth client imported only behind the accounts switch, and the session read once for the bar and the sheet; Sentry started
  *     when the browser is idle; one Geist; the home's h1 still from its first frame; no `transition-all` left in the hero's word or
@@ -194,10 +197,12 @@ async function main() {
      it does not: /blog/no-such-post still answered 200 and, worse, with the blog route declining the slug the request fell through to
      /[country]/[geo] (country "blog"), whose page answered 200 with the title "no-such-post: small-business benchmarks | Margin Atlas", robots
      index and follow, the loading skeleton and a client-side 404. That is worse than the page's own soft 404, so round F4 took `dynamicParams`
-     back to true and this test pins any value but false. (The fall-through is already on production under any route folder with no dynamic
-     child: /pricing/xyz and /about/xyz answer 200, "xyz: small-business benchmarks", index and follow.) The status for a missing post is set at
-     the EDGE, by a queued item (QUEUE site:route-folder-fallthrough: a generated blog-slug table judged in the middleware as /industries and
-     /cities are, and the route-folder fall-through closed), not by the route and not by this test. Here: the metadata throws Next's own
+     back to true and this test pins any value but false. (The fall-through was on production under any route folder with no dynamic
+     child: /pricing/xyz and /about/xyz answered 200, "xyz: small-business benchmarks", index and follow, until the route-folder rule of
+     the plan 2026-10-11 closed it at the edge.) The status for a missing post is set at the EDGE, by that rule (src/lib/routing/edge_not_found.ts
+     judges /blog/<slug> against BLOG_SLUGS, the posts of content/blog, in the table src/lib/routing/route_shapes.ts, which
+     scripts/gen_route_shapes.ts writes and tests/routing/edge_not_found.test.ts holds to a fresh generation), not by the route and not by this
+     test. Here: the metadata throws Next's own
      not-found error (its digest, NEXT_HTTP_ERROR_FALLBACK;404) for a post that does not exist, so it draws no title of its own for one, and still
      answers a post that does with its own title and canonical (the throw only: nothing in this file claims the status); the route does not set
      dynamicParams to false; and its list equals the files. BLIND SPOT: this reads the route's exports and runs its metadata, so it cannot tell a
@@ -212,15 +217,36 @@ async function main() {
   };
   const missingPost = blogPage ? await metaOf("no-such-post-zz") : null;
   const presentPost = blogPage && realPost ? await metaOf(realPost.slug) : null;
-  const BLOG_AT = { file: "src/app/(site)/blog/[slug]/page.tsx", remedy: "call notFound() (next/navigation) in generateMetadata when getPost(slug) finds no post, so the metadata stops there and draws no title of its own for one; it does not set the status (the metadata streams inside the root loading boundary), and neither does dynamicParams = false (Next declines the slug and the request falls through to /[country]/[geo], an indexable 200): the status for a missing post is the edge's, QUEUE site:route-folder-fallthrough" };
+  const BLOG_AT = { file: "src/app/(site)/blog/[slug]/page.tsx", remedy: "call notFound() (next/navigation) in generateMetadata when getPost(slug) finds no post, so the metadata stops there and draws no title of its own for one; it does not set the status (the metadata streams inside the root loading boundary), and neither does dynamicParams = false (Next declines the slug and the request falls through to /[country]/[geo], an indexable 200): the status for a missing post is the edge's (edgeNotFound judges /blog/<slug> against BLOG_SLUGS, src/lib/routing/edge_not_found.ts)" };
   check(`a post that does not exist answers with Next's not-found error from generateMetadata (digest ${missingPost?.threw?.digest ?? "none, it returned " + JSON.stringify(missingPost?.got ?? null)}): the metadata stops there, the throw only and not the status`, !!missingPost && missingPost.got === null && missingPost.threw?.digest === "NEXT_HTTP_ERROR_FALLBACK;404", BLOG_AT);
   check(`a post that exists still answers its own title and canonical (${presentPost?.got?.title ?? "none"})`, !!presentPost && !!realPost && presentPost.threw === null && presentPost.got?.title === `${realPost.title} | Margin Atlas` && presentPost.got?.alternates?.canonical === `/blog/${realPost.slug}`, BLOG_AT);
   const postFiles = readdirSync("content/blog").filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, "")).sort();
   const listedPosts = blogPage?.generateStaticParams ? (await blogPage.generateStaticParams()).map((p) => p.slug).sort() : [];
   /* THE PIN: ANY VALUE BUT FALSE (fix round F4). `undefined` passes, because Next reads a route that exports no dynamicParams as true. */
   const dynParams = !blogPage ? "the page did not load" : blogPage.dynamicParams === undefined ? "not exported, which is true" : String(blogPage.dynamicParams);
-  check(`the blog route does not set dynamicParams to false (${dynParams}): false made Next decline a slug the list does not hold, and the request fell through to /[country]/[geo], an indexable 200 worse than the page's own soft 404 (the build of 83fd5f99, 2026-10-11); a missing post's status is the edge's (QUEUE site:route-folder-fallthrough), not this route's`, !!blogPage && blogPage.dynamicParams !== false, { ...BLOG_AT, remedy: "export const dynamicParams = true in src/app/(site)/blog/[slug]/page.tsx (or leave it out): with false Next declines a slug generateStaticParams does not list and the request falls through to /[country]/[geo], which answers 200 with an indexable title (measured on the build of 83fd5f99, 2026-10-11), worse than the page's own soft 404; set the status of a missing post at the edge (QUEUE site:route-folder-fallthrough), never with dynamicParams false" });
+  check(`the blog route does not set dynamicParams to false (${dynParams}): false made Next decline a slug the list does not hold, and the request fell through to /[country]/[geo], an indexable 200 worse than the page's own soft 404 (the build of 83fd5f99, 2026-10-11); a missing post's status is the edge's (edgeNotFound's blog rule), not this route's`, !!blogPage && blogPage.dynamicParams !== false, { ...BLOG_AT, remedy: "export const dynamicParams = true in src/app/(site)/blog/[slug]/page.tsx (or leave it out): with false Next declines a slug generateStaticParams does not list and the request falls through to /[country]/[geo], which answers 200 with an indexable title (measured on the build of 83fd5f99, 2026-10-11), worse than the page's own soft 404; the status of a missing post is the edge's (edgeNotFound's blog rule in src/lib/routing/edge_not_found.ts), never dynamicParams false" });
   check(`generateStaticParams lists every file of content/blog (${listedPosts.length} listed of ${postFiles.length} files), so every post is built with the site and none waits for its first request`, !!blogPage && postFiles.length > 0 && JSON.stringify(listedPosts) === JSON.stringify(postFiles), { ...BLOG_AT, remedy: "have generateStaticParams in src/app/(site)/blog/[slug]/page.tsx return one { slug } for every .md file of content/blog (getAllPosts() reads them): a post it leaves out is built on its first request instead of with the site" });
+
+  /* ---------------- /[country]/[geo]: NO TITLE FOR A FIRST PART THAT IS NO COUNTRY (the plan 2026-10-11, route-folder fall-through, Task 4) ---------------- */
+  /* The region route's generateMetadata never asked whether its first part is a country: `iso2ToName(iso2) || iso2` and `regionEntry?.label || geo`
+     fell back to the raw words, and it sets no robots key, so the root's index, follow stood: /pricing/xyz, a route folder's name and no country,
+     answered 200 with the title "xyz: small-business benchmarks | Margin Atlas", indexable (measured on the build of 83fd5f99, 2026-10-11). Only
+     the page's body asked (its `if (!countryMeta) notFound();`), and its sibling, src/app/[country]/page.tsx, throws in its metadata already.
+     This is DEFENCE IN DEPTH and sets no status: the metadata streams inside the root loading boundary (src/middleware.ts says so beside its place
+     rule), so the status of an address no route holds is the edge's, and since the route-folder rule (src/lib/routing/edge_not_found.ts) no such
+     address reaches this route. notFound(), not noindex: the region route sets no robots key, which tests/seo/indexable.test.ts holds. A TEXT CHECK,
+     because the page imports src/lib/supabase.ts, which builds its client from the environment at import, so this chain cannot load it. BLIND SPOT:
+     it reads the source, not what the page returns; the line is the body's own check moved above the title, and a real page holds a country. */
+  const GEO_PAGE = "src/app/[country]/[geo]/page.tsx";
+  const geoMeta = /export async function generateMetadata\([^)]*\)[^{]*\{([\s\S]*?)\n\}/.exec(code(GEO_PAGE))?.[1] ?? "";
+  const geoIso2At = geoMeta.indexOf("const iso2 = country.toUpperCase();");
+  const geoGuard = /if \(!COUNTRIES\.some\(\(c\) => c\.code === iso2\)\) notFound\(\);/.exec(geoMeta);
+  const geoTitleAt = geoMeta.indexOf("title:");
+  check(
+    "the region route's generateMetadata throws Next's not-found error for a first part that is no country, after iso2 and before any title, so it draws none for /pricing/xyz",
+    geoMeta !== "" && geoIso2At > -1 && !!geoGuard && geoGuard.index > geoIso2At && geoTitleAt > -1 && geoGuard.index < geoTitleAt,
+    { file: GEO_PAGE, remedy: "in generateMetadata of src/app/[country]/[geo]/page.tsx, after `const iso2 = country.toUpperCase();` and before the first title, write `if (!COUNTRIES.some((c) => c.code === iso2)) notFound();` (the body's own check moved up for the head, as src/app/[country]/page.tsx does); never noindex: the region route sets no robots key (tests/seo/indexable.test.ts). It sets no status: the edge does" },
+  );
 
   /* ---------------- THE ICONS AND THE MANIFEST ---------------- */
   /* THREE NUMBERED FILES, NOT ONE FILE WITH generateImageMetadata (the Task 7 review, fix round 7). A file that exports

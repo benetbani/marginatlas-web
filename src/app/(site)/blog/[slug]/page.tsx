@@ -14,8 +14,10 @@ export const revalidate = 86400;
    page answers 200 with the title "no-such-post: small-business benchmarks | Margin Atlas", robots index and follow, the loading skeleton and a client-side
    404. That is worse than this page's own soft 404 (the notFound() below runs inside the root loading boundary after the status line is sent, so a missing
    post answers 200 and draws its 404 in the browser), so the route renders a slug it does not list on demand, as it did before round F2. The status for a
-   missing post is set at the edge, by a queued item (QUEUE site:route-folder-fallthrough: a generated blog-slug table judged in the middleware as /industries
-   and /cities are), not here. */
+   missing post is set at the edge, not here: edgeNotFound (src/lib/routing/edge_not_found.ts) answers 404 for any /blog/<slug> that is no file of
+   content/blog (BLOG_SLUGS, in the table src/lib/routing/route_shapes.ts that scripts/gen_route_shapes.ts writes; the plan 2026-10-11, route-folder
+   fall-through), before any shell, with Next's static not-found page. A new post's file and the regenerated table go in one commit: the edge gate
+   (tests/routing/edge_not_found.test.ts) reds on a table that lacks it. */
 export const dynamicParams = true;
 
 type Params = { slug: string };
@@ -30,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   /* A MISSING POST STOPS THE METADATA (fix round F1, group G8; reworded in fix round F2, item I1, and again in F4): this call draws no title of its own for a
      post that does not exist, which is all it does. It does NOT set the status: the metadata streams inside the root loading boundary, as src/middleware.ts
      says beside its place rule ("Moving the call into generateMetadata does not help either"), and /zz's 404 is the middleware's. The throw stops the
-     metadata and sets no status; the status for a missing post is the edge's, as dynamicParams above says. */
+     metadata and sets no status; the status for a missing post is the edge's (its BLOG_SLUGS rule), as dynamicParams above says. */
   if (!post) notFound();
   // Built from the RESOLVED post, not the raw param, so the canonical is the
   // slug the library actually loaded. Without an `alternates` of its own this
