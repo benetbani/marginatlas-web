@@ -10,8 +10,8 @@
  *
  * FOUR SOURCES, all read from disk, never typed:
  *  - ROUTE_SHAPES: every page.* and route.* file of src/app, at the address its folders make (route groups dropped, a dynamic folder
- *    written "*"), and every metadata route file's dotless address (src/app/icon.tsx at /icon, by Next's own functions:
- *    scripts/lib/metadata_routes.mjs, as the top-level-segments gate reads them);
+ *    written "*"), and every metadata route file's dotless address (src/app/icon.tsx at /icon, a file that exports generateImageMetadata at
+ *    /icon/*, its id any id; by Next's own functions: scripts/lib/metadata_routes.mjs, as the top-level-segments gate reads them);
  *  - BLOG_SLUGS: the .md files of content/blog, which is getPost's own test (src/lib/blog.ts: the file `<slug>.md` exists);
  *  - LEARN_SLUGS: the keys of LEARN_BY_SLUG (src/lib/learn/articles.ts), which the learn route resolves;
  *  - CITY_PAIRS: `<left>-vs-<right>` of each pair of data/cities/city_comparisons_v1.json whose two cities data/cities/city_list_v1.json
@@ -85,8 +85,12 @@ export function routeShapes(root = APP): string[][] {
   /* A metadata route file holds an address as surely as a page does: each dotless one (a dotted one is the file rule's), as the
      top-level-segments gate reads them (scripts/verify_top_level_segments.mjs), the country tree's left to its own rules. */
   for (const { file, address } of metadataRoutes(root)) {
-    const parts = requestedAddress(address).split("/").filter(Boolean);
-    if (parts.length === 0 || parts[parts.length - 1].includes(".")) continue;
+    /* The dot test reads the address as a request carries it (a sitemap's /sitemap/0.xml is dotted, the file rule's). The shape is written from
+       the address itself, where a route that serves one address per id ends in the part `[__metadata_id__]`: any id, so "*" like every dynamic
+       part below, and never the 0 requestedAddress fills in, which held /icon/0 alone (the final review of 2026-10-11, N1). */
+    const asked = requestedAddress(address).split("/").filter(Boolean);
+    if (asked.length === 0 || asked[asked.length - 1].includes(".")) continue;
+    const parts = address.split("/").filter(Boolean);
     if (parts[0] === "[country]") continue;
     if (parts[0].startsWith("[")) {
       throw new Error(`${file}: serves at ${address}, under a dynamic first part; teach scripts/gen_route_shapes.ts and src/lib/routing/edge_not_found.ts this one`);

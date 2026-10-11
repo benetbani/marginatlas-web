@@ -292,23 +292,33 @@ check(
 /* THE GENERATOR'S WALK, on trees of its own. The real src/app holds none of the folder kinds the generator refuses, so without these rows
    the refusals are code no run reaches. A tree is the list of files under a temporary root, removed after. */
 const SHAPES_WALK_REMEDY = "Read a folder kind in routeShapes (scripts/gen_route_shapes.ts) as the router does, or refuse it by throwing with the folder's name: left out, a real address is answered 404 at the edge";
-const withTree = <T>(files: string[], then: (root: string) => T): T => {
+const withTree = <T>(files: string[], then: (root: string) => T, texts: Record<string, string> = {}): T => {
   const root = mkdtempSync(join(tmpdir(), "route-shapes-"));
   try {
     for (const rel of files) {
       mkdirSync(dirname(join(root, rel)), { recursive: true });
-      writeFileSync(join(root, rel), "export default function Page() { return null; }\n");
+      writeFileSync(join(root, rel), texts[rel] ?? "export default function Page() { return null; }\n");
     }
     return then(root);
   } finally {
     try { rmSync(root, { recursive: true, force: true }); } catch { /* a temporary folder left behind is the system's to clear */ }
   }
 };
-const shapesOf = (files: string[]): string => {
-  try { return withTree(files, (root) => routeShapes(root).map((s) => s.join("/")).join(" ")); } catch (e) { return `throws: ${(e as Error).message}`; }
+const shapesOf = (files: string[], texts?: Record<string, string>): string => {
+  try { return withTree(files, (root) => routeShapes(root).map((s) => s.join("/")).join(" "), texts); } catch (e) { return `throws: ${(e as Error).message}`; }
 };
 const WALKED = shapesOf(["page.tsx", "(site)/about/page.tsx", "(site)/blog/page.tsx", "(site)/blog/[slug]/page.tsx", "[country]/page.tsx", "[country]/[geo]/page.tsx", "_private/page.tsx", "api/x/route.ts", "feed.xml/route.ts", "embed/[country]/[geo]/page.tsx", "pro/[country]/page.tsx", "icon.tsx"]);
 check(`the generator reads a tree as the router does: groups dropped, a dynamic folder written *, and the home page, the country tree, a private folder and a dotted route left out (${WALKED})`, WALKED === "about api/x blog blog/* embed/*/* icon pro/*", ROUTE_SHAPES_FILE, SHAPES_WALK_REMEDY);
+/* A METADATA ROUTE THAT SERVES ONE ADDRESS PER ID (the final review of 2026-10-11, N1). An icon or an image file that exports generateImageMetadata is
+   served at /icon/<id> for each id it lists, so its shape ends in "*" as a dynamic folder's does. The walk wrote the 0 that requestedAddress fills a
+   request's id with, the shape held /icon/0 alone, and the edge would have answered 404 for every other id. No image file of src/app exports
+   generateImageMetadata today, so only this tree reaches the path. A sitemap's shard (/sitemap/<id>.xml, src/app/sitemap.ts exports
+   generateSitemaps) is dotted, the file rule's, and is no shape. */
+const WALKED_PER_ID = shapesOf(["icon.tsx", "sitemap.ts"], {
+  "icon.tsx": "export async function generateImageMetadata() { return [{ id: 'small' }, { id: 'large' }]; }\nexport default function Icon() { return null; }\n",
+  "sitemap.ts": "export async function generateSitemaps() { return [{ id: 0 }, { id: 1 }]; }\nexport default function sitemap() { return []; }\n",
+});
+check(`the generator writes the id of a metadata route that serves one address per id as *, never as the 0 a request fills it with, and leaves a sitemap's dotted shard to the file rule (${WALKED_PER_ID})`, WALKED_PER_ID === "icon/*", ROUTE_SHAPES_FILE, "Write the part `[__metadata_id__]` of a metadata route's own address as * in routeShapes (scripts/gen_route_shapes.ts), and use requestedAddress for the dot test alone: written as the 0 a request fills in, every other id of the route is answered 404 at the edge");
 const REFUSED: Array<[string, string, string]> = [
   ["a parallel route's slot", "@modal/page.tsx", "@modal"],
   ["an intercepting route", "blog/(.)photo/page.tsx", "(.)photo"],
