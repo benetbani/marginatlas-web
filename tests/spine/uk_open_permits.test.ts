@@ -57,5 +57,16 @@ const walk = (d: string): string[] => readdirSync(d, { withFileTypes: true }).fl
 const bare = walk("src").filter((f) => !(f in NOT_A_PAGE_PLACE)).flatMap((f) => stripCommentLines(readFileSync(f, "utf8").split(/\r?\n/)).flatMap((l, i) => [...l.matchAll(READ)].filter((m) => !/^(cityOfCountry\(|["'`])/.test(m[1])).map(() => `${f}:${i + 1}`)));
 check(`every read of the city list for a page's place passes cityOfCountry (${bare.length} do not: ${bare.join(" ")}; not a page's place: ${Object.entries(NOT_A_PAGE_PLACE).map(([f, why]) => `${f}, ${why}`).join("; ")})`, bare.length === 0);
 
+/* A UK PLACE WITH NO CITY INDEX OF ITS OWN COUNTRY PRINTS NO NEW YORK FIGURE (plan 2026-10-11): a keyed trade earns it back and the other trades omit themselves; Manchester and the world as before. */
+const sibs = (geo: string) => ({ list: ["restaurants", "legal-services", "real-estate-agencies", "software-development"].map((slug) => ({ name: slug, slug, href: `/gb/${geo}/${slug}` })) });
+for (const [geo, city] of [["liverpool", "Liverpool"], ["sheffield", "Sheffield"], ["birmingham-uk", "Birmingham"], ["gb", "United Kingdom"], ["boston", "Boston"]]) {
+  const o = buildOpen({ meta: { iso2: "GB", geo, city, industry: "barbershops", industry_id: "barbershops" } });
+  check(`/gb/${geo}/barbershops: no keyed figure, the card earns it back`, !!o && o.recover && o.figure === null && o.prov === undefined && o.foot.map((c) => c.figure).join(", ") === "8 months, 2.8 years");
+  check(`/gb/${geo}/barbershops: no other trades card`, buildRivals({ meta: { trade: "Barbershops", iso2: "GB", geo, city }, rivals: sibs(geo) }) === null);
+}
+const mcr = buildOpen({ meta: { iso2: "GB", geo: "manchester", city: "Manchester", industry: "barbershops", industry_id: "barbershops" } }), cal = buildOpen({ meta: { iso2: "US", geo: "california", city: "California", industry: "barbershops", industry_id: "barbershops" } });
+check("Manchester barbershops: $33K, an estimate at Manchester prices", mcr?.figure === "$33K" && mcr.basis === "An estimate at Manchester prices.");
+check("outside the UK a place with no city index keeps the keyed figure", cal?.state === "baseline" && cal.value === 60_000);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/uk_open_permits: all pass");

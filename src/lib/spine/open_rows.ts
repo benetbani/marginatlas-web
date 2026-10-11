@@ -36,7 +36,8 @@
  *    turn, not whether it was measured that day.
  *  WITHHELD, no setup lines and the trade on the 80,000 default (90 of 243;
  *    a fill value is never printed, R11) or a cell whose trade the table and
- *    the shards do not know: no total; the stated line stands where the
+ *    the shards do not know, or, on a UK page, a keyed trade whose place holds no city index of its own country (plan
+ *    2026-10-11): no total; the stated line stands where the
  *    focal would, at 16, so the card's height does not collapse; UNACCENTED,
  *    and turn one goes quiet on those pages, the page carrying two loud
  *    moments (8.6 says so plainly).
@@ -82,6 +83,7 @@ import type { Companion } from "@/components/spine/archetypes/BentoBand";
 import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
 import { placeFactor, startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { cityOfCountry, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
+import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
@@ -209,7 +211,7 @@ export function openForm(open: OpenData): OpenForm {
    living 100), and the trade page printed it unadjusted on every city (a London barbershop at New York's 60,000). Where the
    page's city, one of its own country (cityOfCountry), holds a cost-of-living index, the figure takes the place factor (London's 75: 0.75), rounded once to three
    figures, and the basis says it is an estimate at that city's prices; a page with no city index keeps the keyed figure and
-   its empty basis. Never `placeAdjustedStartupCapital`, which answers the 80,000 default for a trade the table does not key. */
+   its empty basis outside the UK, and none on a UK page. Never `placeAdjustedStartupCapital`, which answers the 80,000 default for a trade the table does not key. */
 export function placeCostFactor(meta: { iso2?: unknown; geo?: unknown } | null | undefined): number | null {
   const index = getCityCostOfLivingIndex(cityOfCountry(typeof meta?.iso2 === "string" ? meta.iso2 : null, typeof meta?.geo === "string" ? meta.geo : null));
   return index != null ? placeFactor({ costOfLivingIndex: index }) : null;
@@ -247,10 +249,10 @@ export function buildOpen(seed: any): OpenData | null {
     };
   }
 
-  /* BASELINE: the trade's keyed figure. WITHHELD: the default, or no key at all. */
-  const keyedNy = startupCapitalArchetypeKeyed(slug);
+  /* BASELINE: the trade's keyed figure. WITHHELD: the default, no key at all, or (plan 2026-10-11) a UK page whose place holds no city index of its own country, where the keyed figure would be New York's. */
+  const factor = placeCostFactor(meta);
+  const keyedNy = factor == null && countryHeldToRegisters(meta.iso2) ? null : startupCapitalArchetypeKeyed(slug);
   if (keyedNy != null) {
-    const factor = placeCostFactor(meta);
     const keyed = factor != null ? honestRound(keyedNy * factor) : keyedNy;
     const city = typeof meta.city === "string" && meta.city ? meta.city : null;
     /* One sentence for the three figures where the companions print (all of them the trade's, modelled); the total's own sentence and the withheld foot where they do not; at a place's prices, the estimate's own line. */

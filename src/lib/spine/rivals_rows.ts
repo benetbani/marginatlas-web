@@ -40,6 +40,7 @@
  *             model's and is imported, not retyped). The line says how many
  *             of the four the list needs hold a figure; where no sibling
  *             resolves at all it says that instead.
+ *  NONE on a UK page whose place holds no city index of its own country (plan 2026-10-11): every row would be New York's.
  *
  * COUNTED 2026-09-18 by this dispatch, with the database up: London
  * restaurants resolve six siblings, four keyed (legal services, software
@@ -63,6 +64,7 @@ import { usd } from "@/components/spine/kit";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { placeCostFactor } from "@/lib/spine/open_rows";
+import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import type { Provenance } from "@/lib/spine/provenance";
 import { honestRound } from "@/lib/uk/present/precision";
 import { COPY } from "@/lib/spine/copy";
@@ -114,6 +116,7 @@ export function buildRivals(seed: any): RivalsData | null {
   let withheld = 0;
   /* At the page's city's prices, as the cost to open is (open_rows.ts placeCostFactor; plan 06, task A6). */
   const factor = placeCostFactor(meta);
+  if (factor == null && countryHeldToRegisters(meta.iso2)) return null; // card and free doors omit themselves
   for (const s of siblings) {
     const ny = startupCapitalArchetypeKeyed(s.slug);
     if (ny == null) { withheld++; continue; }
