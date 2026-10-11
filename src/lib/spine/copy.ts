@@ -2737,6 +2737,10 @@ export const COPY = {
      *  cell under 768, a door to /gb's cities, and the figure's unit said to a screen reader (the basis line says it once for the eye). */
     citiesAll: "All UK cities",
     citiesUnit: "a year",
+    /** THE COLUMN HEAD over the figures, from 768 (critique pass 3, fix round D2, item P2.2): the figures were named only by the basis line
+     *  under the eighth row, "A typical customer's pay, a year.", about 450px below them, so "London $62K" read as a business's takings
+     *  first. From 768 the head stands in the title row over them and the basis line under the rows goes; under 768 the two-up cells keep the line. */
+    citiesHead: "Typical pay",
     /** THE HOME PAGE'S ASK (his interview of 2026-09-26: "notify me when my place reaches this depth"; the checkup of 2026-10-06,
      *  finding 5): in place of a free report nobody is writing, a city to wait for (src/lib/home/depth_places.ts). Drawn by the live
      *  home only since 2026-10-07: the rebuilt home leaves the asking to the footer's bar. */

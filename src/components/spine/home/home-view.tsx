@@ -29,7 +29,7 @@
 import * as React from "react";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { Box, Rail } from "@/components/spine/kit";
-import { CityRows } from "@/components/spine/archetypes/CityRows";
+import { CityRows, CityRowsHead } from "@/components/spine/archetypes/CityRows";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { isPaywallOn } from "@/lib/feature_flags";
 import { ProBand } from "./ProBand";
@@ -95,11 +95,14 @@ function HomeSearch() {
    (the home reformed to ship, Task 6) drawn by CityRows, a server component: the photographs in grey (the spec's decision 2), small
    copies with their landmark crops; two to a row under 768 with an eighth cell, "All UK cities", to /gb's cities (his ruling of
    2026-08-30); from 768 one row each on the doors' 56px pitch (its eighth slot All UK cities), so the two lists meet row for row. Its title an
-   h2, as every section's on the home (one h2 a section). */
+   h2, as every section's on the home (one h2 a section). From 768 a column head, "Typical pay", stands over the figures in the title row (critique
+   pass 3, fix round D2, item P2.2): the Box is `relative` so the head, which is out of flow, is laid over the title row, and the basis line
+   under the rows goes from 768 (CityRows, CityRowsHead). */
 function HomeCities({ cards }: { cards: CityCardsData }) {
   return (
-    <Box id="cities" className="flex flex-col">
+    <Box id="cities" className="relative flex flex-col">
       <Rail icon="best-areas" kicker={COPY.home.citiesLabel} level={2} />
+      <CityRowsHead>{COPY.home.citiesHead}</CityRowsHead>
       <CityRows cards={cards.cards} basis={COPY.cityCards.plain.basis} allHref="/gb#cities" allLabel={COPY.home.citiesAll} unit={COPY.home.citiesUnit} />
     </Box>
   );

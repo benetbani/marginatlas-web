@@ -2043,7 +2043,8 @@
         "src/components/spine/country/country-view.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/lib/home/next_doors.ts",
-        "src/lib/spine/city_cards.ts"
+        "src/lib/spine/city_cards.ts",
+        "src/lib/spine/copy.ts"
       ],
       "claims": []
     },

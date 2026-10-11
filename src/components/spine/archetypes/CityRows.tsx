@@ -39,6 +39,16 @@ export const ROW_VEIL = 0.6;
 /** The small copies' own size (scripts/build_city_images_manifest.ts --thumbs). */
 const THUMB_W = 480;
 const THUMB_H = 360;
+/**
+ * THE ROW'S FIVE COLUMNS FROM 768, ONE TEMPLATE FOR THE ROWS AND THE COLUMN HEAD (critique pass 3, fix round D2, item P2.2): the thumbnail, the
+ * name (up to 22ch, less where the half is narrow), the figure, the leftover, the arrow. The head over the figures (CityRowsHead) is laid in
+ * these same columns, so it stands over the figure at every width by construction. THE FIGURE AND ARROW COLUMNS ARE FIXED LENGTHS, never
+ * `auto`: an auto column takes the width of what is in it, the head's grid holds a head where a row holds a figure, and at 768, where the name
+ * column gives way to them, two grids would disagree by the difference. 2.25rem holds "$62K" (34.6px at the body rung) and 0.75rem the arrow
+ * glyph (12.1px), so at 768 the figure stands 1px from where `auto` put it and from 1024, where the name keeps its 22ch, where it stood.
+ * A longer figure than the column overflows into the leftover, never into a neighbour.
+ */
+const CITY_COLUMNS = "md:grid-cols-[72px_minmax(0,22ch)_2.25rem_1fr_0.75rem] md:gap-x-3";
 
 export function CityRows({ cards, basis, allHref, allLabel, unit }: { cards: CityCard[]; /** One line, said once for the rows: what the figure is, and nothing else. */ basis: string; /** The eighth cell's door, drawn under 768. */ allHref: string; allLabel: string; /** The figure's unit, said to a screen reader ("a year"). */ unit: string }) {
   if (cards.length === 0) return null;
@@ -55,7 +65,30 @@ export function CityRows({ cards, basis, allHref, allLabel, unit }: { cards: Cit
           <span aria-hidden className="shrink-0 transition-transform group-hover:translate-x-0.5">&#8594;</span>
         </a>
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p>
+      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] md:hidden">{basis}</p>
+    </div>
+  );
+}
+
+/**
+ * THE COLUMN HEAD OVER THE FIGURES, FROM 768 (critique pass 3, fix round D2, item P2.2). Drawn by the page over the card's TITLE ROW: the
+ * card's Box is `relative` and this is its child, between the title and the rows, so it is out of flow (`absolute`, pinned to the Box's top
+ * and sides at the title row's own 28px, `h-7`: the Ico tile and the zone's 28px title line) and no row moves; the rows start where they
+ * started and the 56px register with Where to next holds. It is the rows' own five columns (CITY_COLUMNS) with its words in the third, so
+ * it stands over the figures at every width.
+ *
+ * ON THE TITLE'S BASELINE, BY A STRUT. The words are 12 in the muted grey, and a 12px text centred in a 28px row would sit its baseline
+ * about 2px off the 20px title's. So the third column holds a block of the title's own type (the head rung, a 28px line, semibold) and the
+ * words are an inline span inside it at line-height 1: the line box is the strut's, the title's own, and the words stand on its baseline,
+ * whatever the face's metrics. `whitespace-nowrap`: the column is 36px and the words 66, so they run on into the leftover, where the title
+ * row holds nothing. Under 768 it is not drawn (`hidden`) and the basis line under the grid says the same thing there.
+ */
+export function CityRowsHead({ children }: { children: React.ReactNode }) {
+  return (
+    <div data-column-head="" className={`pointer-events-none absolute inset-x-0 top-0 hidden h-7 md:grid md:items-center ${CITY_COLUMNS}`}>
+      <span className="col-start-3 whitespace-nowrap text-[length:var(--t-head)] font-semibold leading-7">
+        <span className="text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]">{children}</span>
+      </span>
     </div>
   );
 }
@@ -71,7 +104,7 @@ function Row({ card, fmt, unit, first }: { card: CityCard; fmt: (v: number) => s
       href={card.href}
       data-card={card.id}
       data-lands={card.lands}
-      className={`group relative grid min-h-16 grid-cols-[minmax(0,1fr)_auto] content-center items-center gap-x-2 gap-y-1 overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)] md:min-h-0 md:grid-cols-[72px_minmax(0,22ch)_auto_1fr_auto] md:gap-x-3 md:gap-y-0 md:overflow-visible md:rounded-none md:border-0 md:border-[var(--c-border)] md:px-0 md:py-0 md:hover:border-[var(--c-border)]${first ? "" : " md:border-t"}`}
+      className={`group relative grid min-h-16 grid-cols-[minmax(0,1fr)_auto] content-center items-center gap-x-2 gap-y-1 overflow-hidden rounded-[12px] border border-transparent px-3 py-2 transition-colors hover:border-[var(--c-ink2)] md:min-h-0 ${CITY_COLUMNS} md:gap-y-0 md:overflow-visible md:rounded-none md:border-0 md:border-[var(--c-border)] md:px-0 md:py-0 md:hover:border-[var(--c-border)]${first ? "" : " md:border-t"}`}
     >
       <span aria-hidden className="absolute inset-0 md:relative md:inset-auto md:block md:h-12 md:w-[72px] md:overflow-hidden md:rounded-[8px] md:[&>[data-veil]]:hidden">
         <DuotonePhoto src={thumb ? thumb.src : card.photo.src} placeholder={card.photo.placeholder} tint={false} veil={ROW_VEIL} position={thumb?.position} width={thumb ? THUMB_W : undefined} height={thumb ? THUMB_H : undefined} />
