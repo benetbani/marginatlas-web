@@ -3389,6 +3389,7 @@
       "browser": false,
       "asserts": "THE UK'S TRADE PAGES AND THE UK'S PAGE PRINT A SOURCED FIGURE, A MARKED ONE, OR NONE (masterplan step 04, 2026-10-05, London's trade pages; plan 2026-10-08, every other UK city's; the labels audit of ",
       "reads": [
+        "data/facts/city",
         "scratchpad/harness/pages/country-GB.html",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/cell/market.tsx",

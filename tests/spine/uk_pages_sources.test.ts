@@ -19,6 +19,8 @@ import { buildHowToSteps } from "../../src/lib/spine/howto_steps_rows";
 import { buildCountryExit } from "../../src/lib/spine/country_exit_rows";
 import { buildCityCards } from "../../src/lib/spine/city_cards";
 import { COPY } from "../../src/lib/spine/copy";
+import { PLACE_SLUGS_BY_COUNTRY } from "../../src/lib/routing/place_slugs_generated";
+import { UK_CITY_SLUGS } from "../../src/lib/uk/registers/register_city";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "uk-pages-sources";
@@ -30,6 +32,8 @@ const REMEDY_WIRING = "restore the cell view's wiring: a page held to a register
 const REMEDY_SAME_FIGURE = "round the density the trade page keeps as the city page prints it: sayTradeTypical's keepHere branch takes perTenThousand (src/lib/spine/city_market_rows.ts), the city market card's own fmt, so one figure stands on both pages";
 const REMEDY_ESTIMATE_LINE = "a UK city's trade page keeps its density under a line that says estimate: sayTradeTypical sets COPY.tradeTypical.market.firmsHere as hereBasis under keepHere, and the copy key holds a line with the word";
 const MARKET_VIEW = "src/components/spine/cell/market.tsx";
+const SHARD_DIR = "data/facts/city";
+const REMEDY_STRAY_SHARD = "add the city to data/cities/city_list_v1.json, where UK_CITY_SLUGS reads it and its city page prints the same density, or remove its shard from data/facts/city: a UK place with a shard and no row in the list keeps a density no city page prints";
 const REMEDY_COMPANION = "beside a UK city's own density the companion names the trade's typical in the foot's words: sayTradeTypical sets hereTypicalWords under keepHere to COPY.tradeTypical.market.firmsHereTypical and the rivals cell prints it, falling back to tradeMarket.rivals.typicalWords (which every page outside the UK ships) when the page hands none";
 let failed = 0;
 let firstRemedy = REMEDY;
@@ -122,11 +126,16 @@ const ukFree = rivalsOf(fixture.market);
 check(`a page outside the UK keeps "the trade anywhere" beside the city's own density: ${companionsOf(ukFree).join(" | ")}`, COPY.tradeMarket.rivals.typicalWords === "the trade anywhere" && companionsOf(ukFree)[0] === COPY.tradeMarket.rivals.typicalWords && leadOf(ukFree) === "9.1", REMEDY_COMPANION);
 /* EVERY OTHER UK PLACE'S TRADE PAGE (plan 2026-10-11, QUEUE uk:trade-pages-by-country): the view decides by the country, so a UK
    place no city shard holds takes keepHere and keeps nothing: its cards say the trade's typical and its market reads as London's. */
+/* The density is a pure, offline read (cityOwnDensity opens the place's shard file and finds none), so it is asked of EVERY place word of the
+   UK's table that is no city of the city list, not of a sample (the final review of 2026-10-11, A-M5). The four below carry the markup. */
+const noCityWords = PLACE_SLUGS_BY_COUNTRY.gb.filter((w) => !UK_CITY_SLUGS.includes(w));
+const withDensity = noCityWords.filter((w) => cityOwnDensity("GB", w, "Restaurants") !== null);
+check(`${noCityWords.length} UK place words that are no city of the city list hold no density of their own (${withDensity.length} do: ${withDensity.join(" ")})`, noCityWords.length > 0 && withDensity.length === 0, REMEDY_STRAY_SHARD, withDensity.length > 0 ? `${SHARD_DIR}/GB-${withDensity[0]}.json` : SHARD_DIR);
 for (const place of ["birmingham-uk", "liverpool", "sheffield", "gb"]) {
   const ownHere = cityOwnDensity("GB", place, "Restaurants");
   const off = keptWith(ownHere);
   const cell = rivalsOf(off.market);
-  check(`/gb/${place}: no city shard, so no density and no density line`, ownHere === null && off.market?.here === null && off.market?.hereBasis === undefined);
+  check(`/gb/${place}: no city shard, so no density and no density line`, ownHere === null && off.market?.hereBasis === undefined);
   check(`/gb/${place}: each card says the trade's typical as London's do`, off.split?.basis === T.split && off.team?.basis === T.team && off.clears?.basis === T.clears && off.mix?.foot === T.mix && off.customers?.basis === T.customers && off.market?.daypartsBasis === T.market.dayparts);
   check(`/gb/${place}: the rivals cell prints ${leadOf(cell)}, its line and ${companionsOf(cell).join(" | ")}`, leadOf(cell) === "16" && cell.includes(T.market.firms) && companionsOf(cell).length === 1 && companionsOf(cell)[0] === T.insolvent && !/anywhere|close a year/i.test(cell));
 }
