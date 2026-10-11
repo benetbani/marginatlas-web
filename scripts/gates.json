@@ -2770,9 +2770,11 @@
       "asserts": "Route chrome contract (2026-08-09).",
       "reads": [
         "src/app",
+        "src/app/(site)/layout.tsx",
         "src/app/_design/monetized/page.tsx",
         "src/app/_design/page.tsx",
         "src/app/_design/v2-review/page.tsx",
+        "src/app/dev",
         "src/app/embed/[country]/[geo]/[industry]/page.tsx"
       ],
       "claims": []
