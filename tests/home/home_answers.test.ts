@@ -193,7 +193,12 @@ if (ex) {
   for (let e = Math.ceil(Math.log10(lo)); e <= Math.floor(Math.log10(hi)); e++) if (10 ** e > lo && 10 ** e < hi) decades.push(10 ** e);
   const nameTops = [...place.matchAll(/data-mark-label="(?:p10|typical|p90)"[^>]*top:(\d+)(?:px)?/g)].map((m) => m[1]);
   const rounds = [...place.matchAll(/data-scale-label="true"[^>]*>([^<]*)</g)].map((m) => m[1]);
-  check(`the sales on a log strip of three marks, its names above the track on one row (tops ${nameTops.join(", ")}), its round values ${rounds.join(" and ")} alone under it`, /data-archetype="range-strip" data-idea="I12" data-marks="3" data-scale="log" data-names="above"/.test(place) && nameTops.length === 3 && new Set(nameTops).size === 1 && decades.length === 2 && JSON.stringify(rounds) === JSON.stringify(decades.map(usd)), DRAWN_AT);
+  /* THE ROUND VALUES PRINT ROUND (critique pass 4, fix round F2, item P2.4; MODEL 10.8): the marks' formatter keeps one decimal for millions because "$2.5M" needs it,
+     so a power of ten read "$1.0M" under the track; the scale prints "$1M", and the marks, the typical and the two tenths, still print through the formatter. BLIND SPOT:
+     the expected form is the formatter's own with a whole value's ".0" dropped, the rule the strip applies, so this holds the drawn text to it and not the rule to a second
+     source; the literal words, "$100K" and "$1M", are held on the strip's own fixture (tests/spine/home_forms.test.ts). */
+  const roundOf = (v: number) => usd(v).replace(/\.0(?=[KMB])/, "");
+  check(`the sales on a log strip of three marks, its names above the track on one row (tops ${nameTops.join(", ")}), its round values ${rounds.join(" and ")} alone under it`, /data-archetype="range-strip" data-idea="I12" data-marks="3" data-scale="log" data-names="above"/.test(place) && nameTops.length === 3 && new Set(nameTops).size === 1 && decades.length === 2 && JSON.stringify(rounds) === JSON.stringify(decades.map(roundOf)) && !rounds.some((t) => /\.0[KMB]/.test(t)), DRAWN_AT);
   /* THE UNITS (P1.5): 100 in 25 columns, 2px apart under 1024 and 4 from it, the share in the accent (fills follow their figure, PART 6),
      the rest in the soft grey; the head the figure at 16 semibold in ink, then the words at 14 in ink2. */
   const unitsTag = /<div data-units="(\d+)"[^>]*class="([^"]*)"[^>]*style="([^"]*)"/.exec(pays);

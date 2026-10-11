@@ -61,8 +61,10 @@
  * tick under the track with its figure under it, in grey (MODEL 10.8: "a log
  * track prints its round values ... so its distances are not read as even"),
  * none within 4 percent of the track of any mark (the London pharmacies'
- * typical, $1.04M, stands 1.1 percent from the round $1.0M, and the strip
- * printed that figure twice), and steps the names 14 lower to clear them. The
+ * typical, $1.04M, stands 1.1 percent from the round $1M, and the strip
+ * printed that figure twice, "$1.0M" under the typical and "$1.0M" under the
+ * track, before the scale's labels were printed round: critique pass 4, item
+ * P2.4), and steps the names 14 lower to clear them. The
  * home's strip and every trade page's sales strip (cell-view.tsx `Spread`)
  * pass it with scale="log". The figure is at the micro rung, not the mark
  * rung: the readability harness's READ SIZE reds any text under 12px in a
@@ -133,6 +135,11 @@ const ROUND_TICK = 6;
 const ROUND_GAP = 6;
 const BELOW_ROUNDS = 1 + ROUND_TICK + ROUND_GAP + NAME_H + 2;
 const BELOW_BARE = 12;
+/* A ROUND VALUE IS PRINTED ROUND (critique pass 4, fix round F2, item P2.4; MODEL 10.8: a log track's round values are there to be round): the marks'
+   formatter keeps one decimal for millions because "$2.5M" needs it, so a whole $1,000,000 came out "$1.0M" under the track and read as a measured
+   figure. The scale's labels take the formatter's words with a whole value's ".0" dropped before its unit (K, M or B): "$100K" and "$1M". Only the
+   scale goes through this: a mark prints through `fmt` as it always did, so the home and the London page still print equal figures. */
+const roundLabel = (fmt: (v: number) => string, v: number) => fmt(v).replace(/\.0(?=[KMB])/, "");
 
 export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, oneRow = false, decades = false, namesAbove = false }: RangeStripProps) {
   const live = marks.filter((m) => Number.isFinite(m.value));
@@ -180,7 +187,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
   const shift = live.some((m) => m.lead) ? 12 : 0;
   /* THE ROUND VALUES (`decades`, MODEL 10.8): every power of ten strictly inside a log range, none within 4 percent of the track of any
      mark, an end mark or a middle one (a round value that close would stand against the mark's own tick, and when the mark's figure
-     rounds to the same words, as the London pharmacies' $1.04M and the 10^6 round value do, the strip would print them twice). */
+     reads as the round value, as the London pharmacies' $1.04M ("$1.0M") and the 10^6 round value ("$1M") do, the strip would print one value twice). */
   const rounds: number[] = [];
   if (useLog && decades) {
     for (let e = Math.ceil(Math.log10(lo)); e <= Math.floor(Math.log10(hi)); e++) {
@@ -224,7 +231,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
           {rounds.map((v) => (
             <React.Fragment key={`r-${v}`}>
               <div aria-hidden data-scale-tick className="absolute w-px -translate-x-1/2 bg-[var(--c-ink2)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1, height: ROUND_TICK }} />
-              <div aria-hidden data-scale-label className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1 + ROUND_TICK + ROUND_GAP }}>{fmt(v)}</div>
+              <div aria-hidden data-scale-label className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1 + ROUND_TICK + ROUND_GAP }}>{roundLabel(fmt, v)}</div>
             </React.Fragment>
           ))}
         </div>
@@ -252,7 +259,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
         {rounds.map((v) => (
           <React.Fragment key={`r-${v}`}>
             <div aria-hidden data-scale-tick className="absolute h-1.5 w-px -translate-x-1/2 bg-[var(--c-line-strong)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: (twoRows ? 48 : 36) + shift + 1 }} />
-            <div aria-hidden data-scale-label className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: (twoRows ? 48 : 36) + shift + 9 }}>{fmt(v)}</div>
+            <div aria-hidden data-scale-label className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: (twoRows ? 48 : 36) + shift + 9 }}>{roundLabel(fmt, v)}</div>
           </React.Fragment>
         ))}
         {/* the names, under their ticks, stepping to a second row when crowded */}

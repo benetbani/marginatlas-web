@@ -11,7 +11,7 @@
  *
  * Left, "Restaurants in London": step 1, the register's count; step 2, the typical yearly sales on a line of their own and the London
  * page's three marks drawn on a LOG strip (P0.5, MODEL 10.8: $76K to $2.5M is 33 times, and on a linear track the typical stood in the
- * left fifth with the names stepping), its names on one row, its round values $100K and $1.0M as small ticks, the typical's figure
+ * left fifth with the names stepping), its names on one row, its round values $100K and $1M as small ticks, the typical's figure
  * not printed twice; the strip centred in the height the level lends; then the door to the London page. Right, "Does it pay?" (the
  * wallet glyph, money in and out, P2.1): step 3, break-even at 40 in the accent, then the share that already takes that much as 100
  * units in 25 columns, the 32 in the accent (fills follow their figure, PART 6) and the rest in the soft grey (P1.5); step 4, the UK's
