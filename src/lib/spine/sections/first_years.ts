@@ -24,10 +24,11 @@ export type Survival = {
   /** The place the country's curve is ("the UK"), and each region's own curve for the same cohort (2026-09-26, the region lever). */
   place: string | null;
   regionCurves: Array<{ key: string; name: string; inName: string; points: StampedPoint[] }>;
-  /** The stamp of the curve's START, year 0 with every firm still trading: no share the file holds (its series begins at year 1) but the
-   *  whole cohort by definition, every share in the file being a share of that cohort's births. It is worked out from the file's
-   *  `cohort` (the method is that division, stated here where the figure is built), and the curve prints the start's label with it. */
-  startProv: Provenance;
+  /** THE COHORT AT ITS START, beside the file's points: year 0 with every firm still trading. It is definitional and no share the file holds
+   *  (its series begins at year 1): a cohort is its births, so at its start the whole of it trades, and every share in the file is a share of it.
+   *  The builder gives it, so the curve is drawn from it and its label printed with it, and the component types no 100 (fix round F1, the D2
+   *  review's Minor 1). Its stamp says "worked out" from the file's `cohort`: the method is that division, stated where the figure is built. */
+  start: StampedPoint;
 };
 /** `prov`: where the share was read (the survey table in data/sections/survival.json, a published count read there), stamped on every
  *  figure that prints it (critique pass 2, fix round C2, item P1.5: the leading obstacle now prints its share too). */
@@ -68,8 +69,12 @@ export function buildSurvival(iso2: string): Survival | null {
     ? c.regionCurves.regions.filter((r) => r.points.length === pts.length && r.points.every((p, i) => p.year === pts[i].year && isPct(p.pct) && (i === 0 || p.pct <= r.points[i - 1].pct)))
     : []
   ).map((r) => ({ ...r, points: r.points.map((p) => ({ ...p, prov: stamp(`regionCurves:${r.key}:${p.year}`) })) }));
-  const startProv: Provenance = { src: `sections/survival.json:${ISO}:curve:cohort`, kind: "worked out" };
-  return { iso2: ISO, cohort: c.curve.cohort, points, last, regions, place: typeof c.place === "string" ? c.place : null, regionCurves, startProv };
+  /* THE START: every firm of a cohort trades at the cohort's start, by definition (a cohort is its births, and every share the file holds is a share
+     of them), so year 0 is the whole of it. The file's series begins at year 1 and holds no year 0, so this is the one share the builder states
+     rather than reads, and it says so in its stamp: "worked out" from the file's `cohort`, the division of the births by themselves. */
+  const WHOLE_COHORT = 100;
+  const start: StampedPoint = { year: 0, pct: WHOLE_COHORT, prov: { src: `sections/survival.json:${ISO}:curve:cohort`, kind: "worked out" } };
+  return { iso2: ISO, cohort: c.curve.cohort, points, last, regions, place: typeof c.place === "string" ? c.place : null, regionCurves, start };
 }
 
 export function buildObstacles(iso2: string): Obstacles | null {

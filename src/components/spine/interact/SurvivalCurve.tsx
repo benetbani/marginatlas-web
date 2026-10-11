@@ -9,12 +9,13 @@
  *
  * EVERY POINT PRINTS ITS SHARE, the last (the terracotta dot) too (critique pass 2, fix round C2, item P1.5) and the start too (critique
  * pass 3, fix round D2, item P2.8: the start alone stood without one, where the reader meets the whole cohort first): the card's figure
- * stays the large one above the plot and the label is the drawing's key. The start's share is read off the drawn series' own first
- * point (START, below) like every other point's, never typed as a label; the last label is held inside the plot's right edge and
- * the start's inside its left, so neither leaves the box. EVERY LABEL SAYS WHERE ITS SHARE WAS READ (fix round F1, group G2, the
- * final review's M2): each point carries the `prov` the builder stamped on it (the survival file's key), the start's label the
- * `startProv` the builder gives it, and the label spreads `provAttrs` of its own point as an obstacle's label does, so a chosen
- * region's labels are stamped as the country's are. The component types no key: a point with no `prov` prints a bare label.
+ * stays the large one above the plot and the label is the drawing's key. The start is the `start` prop, the point the builder gives
+ * beside the file's points (buildSurvival: year 0, the whole cohort, definitional, stamped; fix round F1, the D2 review's Minor 1),
+ * and its share is read off it like every other point's, never typed here as a constant or as a label; the last label is held inside
+ * the plot's right edge and the start's inside its left, so neither leaves the box. EVERY LABEL SAYS WHERE ITS SHARE WAS READ (fix
+ * round F1, group G2, the final review's M2): each point carries the `prov` the builder stamped on it (the survival file's key),
+ * the start's included, and the label spreads `provAttrs` of its own point as an obstacle's label does, so a chosen region's labels
+ * are stamped as the country's are. The component types no key and no share: a point with no `prov` prints a bare label.
  *
  * THE LAW (M3): the default is the country, the curve the card printed; a region's figures are the table's own, rounded as the
  * country's are; nothing is computed but the plot's geometry. The choice is a native select, so a phone opens its own picker and
@@ -28,20 +29,16 @@ export type CurvePoint = { year: number; pct: number; prov?: Provenance };
 export type RegionCurveData = { key: string; name: string; inName: string; points: CurvePoint[] };
 export type SurvivalWords = { focal: string; focalIn: string; start: string; year: string; regions: string; choose: string; country: string; kicker: string };
 
-/** A COHORT AT ITS START IS THE WHOLE: the curve's first point, year 0 with every firm still trading, by definition and not a share the
- *  file holds (its series begins at year 1). The line is drawn from it and the drawing prints its share like every other point's,
- *  read from this point (critique pass 3, fix round D2, item P2.8). */
-const START: CurvePoint = { year: 0, pct: 100 };
-
-export function SurvivalCurve({ id, country, regions, best, worst, words, startProv }: {
+export function SurvivalCurve({ id, country, regions, best, worst, words, start }: {
   id: string;
   country: CurvePoint[];
   regions: RegionCurveData[];
   best: { name: string; pct: number } | null;
   worst: { name: string; pct: number } | null;
   words: SurvivalWords;
-  /** The stamp of the start's label (buildSurvival's `startProv`): the start is no share the file holds, so its stamp is its own. */
-  startProv?: Provenance;
+  /** The curve's first point (buildSurvival's `start`): year 0, the whole cohort, which the file's series does not hold. The line is drawn from it and
+   *  the drawing prints its share like every other point's (critique pass 3, fix round D2, item P2.8; the builder gives it since fix round F1). */
+  start: CurvePoint;
 }) {
   const [key, setKey] = React.useState<string>("");
   const region = regions.find((r) => r.key === key) ?? null;
@@ -53,10 +50,10 @@ export function SurvivalCurve({ id, country, regions, best, worst, words, startP
   const x = (year: number) => (year / maxYear) * 100;
   const floor = Math.max(0, Math.floor((lowest - 20) / 10) * 10);
   const y = (pct: number) => ((100 - pct) / (100 - floor)) * 100;
-  const path = (pts: CurvePoint[]) => [START, ...pts].map((p, i) => `${i ? "L" : "M"}${x(p.year).toFixed(2)},${y(p.pct).toFixed(2)}`).join(" ");
+  const path = (pts: CurvePoint[]) => [start, ...pts].map((p, i) => `${i ? "L" : "M"}${x(p.year).toFixed(2)},${y(p.pct).toFixed(2)}`).join(" ");
   const line = path(shown);
   const area = `${line} L100,100 L0,100 Z`;
-  const pts: CurvePoint[] = [{ ...START, prov: startProv }, ...shown];
+  const pts: CurvePoint[] = [start, ...shown];
   const gid = `${id}-area-fill`;
   /* A share placed on the regions' strip: 0 at the lowest region, 100 at the highest, held 2 inside each end. */
   const span = (v: number) => (best && worst && best.pct > worst.pct ? Math.min(98, Math.max(2, ((v - worst.pct) / (best.pct - worst.pct)) * 100)) : 50);

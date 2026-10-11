@@ -39,7 +39,7 @@ const RULE = "focal-values";
 const OBSTACLES = "src/components/spine/sections/Obstacles.tsx";
 const CURVE = "src/components/spine/interact/SurvivalCurve.tsx";
 const REMEDY = "print the focal mark's value on the drawing as its neighbours print theirs: Obstacles' top column and top row take their share (the top bar flat --terra), SurvivalCurve labels the start and the last point; the section's figure stays the large one above";
-const STAMP_REMEDY = "stamp every point label of SurvivalCurve from the builder, as Obstacles' labels are: buildSurvival (src/lib/spine/sections/first_years.ts) gives each point (and startProv, the start's) a prov under sections/survival.json, FirstYears passes startProv, and the label spreads provAttrs of its point";
+const STAMP_REMEDY = "stamp every point label of SurvivalCurve from the builder, as Obstacles' labels are: buildSurvival (src/lib/spine/sections/first_years.ts) gives each point (and `start`, the whole cohort at year 0, beside them) a prov under sections/survival.json, FirstYears passes start in, and the label spreads provAttrs of its point";
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? OBSTACLES, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
@@ -75,19 +75,22 @@ if (obs) {
 
 if (sv) {
   const words = { focal: COPY.firstYears.focalWords, focalIn: COPY.firstYears.focalWordsIn, start: COPY.firstYears.start, year: COPY.firstYears.year, regions: COPY.firstYears.regions, choose: COPY.firstYears.choose, country: "The UK", kicker: COPY.firstYears.kicker };
-  const html = renderToStaticMarkup(React.createElement(SurvivalCurve, { id: "first-years", country: sv.points, regions: sv.regionCurves, best: sv.regions?.best ?? null, worst: sv.regions?.worst ?? null, words }));
+  const html = renderToStaticMarkup(React.createElement(SurvivalCurve, { id: "first-years", country: sv.points, regions: sv.regionCurves, best: sv.regions?.best ?? null, worst: sv.regions?.worst ?? null, words, start: sv.start }));
   const labels = [...html.matchAll(/<span data-mark-label="true"[^>]*>(\d+)%<\/span>/g)].map((m) => Number(m[1]));
-  /* THE START IS THE WHOLE COHORT, BY DEFINITION (critique pass 3, fix round D2, item P2.8): the curve begins at year 0 with every firm
-     still trading, and the file's own series begins at year 1, so the start's share is not one the builder gives. It is the oracle
-     stated here, independent of the component, which reads the share off the drawn series' own first point and never types it as a label. */
-  const START_SHARE = 100;
-  const want = [START_SHARE, ...sv.points.map((p) => Math.round(p.pct))];
+  /* THE START IS THE WHOLE COHORT, BY DEFINITION (critique pass 3, fix round D2, item P2.8), AND THE BUILDER GIVES IT (fix round F1, the D2 review's
+     Minor 1): the curve begins at year 0 with every firm still trading, and the file's own series begins at year 1, so buildSurvival returns the start
+     beside its points, stamped and said to be definitional where it is built, and the component takes it as a prop: no typed 100 in the component and
+     none here. The labels' oracle is the builder's start and points, read; the start itself is held by relations, not by a literal of mine: it comes
+     before the file's first year and is at least that year's share (a cohort only falls). */
+  const start = sv.start as { year: number; pct: number; prov: { src: string; kind: string } } | undefined;
+  const want = [Math.round(start?.pct ?? NaN), ...sv.points.map((p) => Math.round(p.pct))];
   check(`every point prints its share, the start (${want[0]}%) and the last (the terracotta dot, ${want[want.length - 1]}%) included (${labels.length} labels for ${sv.points.length + 1} points: ${labels.join(", ")})`, labels.length === sv.points.length + 1 && JSON.stringify(labels) === JSON.stringify(want), { file: CURVE });
+  check(`the builder gives the start beside its points: year ${start?.year ?? "none"}, before the file's first year (${sv.points[0].year}), a share (${start?.pct ?? "none"}) at least the first year's (${sv.points[0].pct}) and the cohort whole, and the curve draws no start of its own`, !!start && start.year < sv.points[0].year && start.year === 0 && start.pct >= sv.points[0].pct && start.pct === Math.max(start.pct, ...sv.points.map((p) => p.pct)) && Number.isFinite(start.pct), { file: "src/lib/spine/sections/first_years.ts", remedy: "have buildSurvival return `start` beside `points`: year 0, the whole cohort (definitional, said in a comment where it is built), stamped; FirstYears passes it to SurvivalCurve, which has no START constant of its own" });
   /* EVERY LABEL SAYS WHERE ITS SHARE WAS READ (fix round F1, group G2, the final review's M2): the card's `fig` figure is held to
      the provenance ratchet, the labels (plain spans) are not, so nothing but this check sees a label printed bare. Obstacles' labels
      spread `provAttrs(o.prov)`; the curve's points take their stamp from the builder the same way, the start's too (it is no share the
-     file holds, so it is stamped "worked out" from the file's cohort: every share in the file is of that cohort's births). The
-     oracle is the builder's own stamps, read, and no src is typed here but the file's name. BLIND SPOT: this reads the country's
+     file holds, so its stamp, on `start.prov`, says "worked out" from the file's cohort: every share in the file is of that cohort's
+     births). The oracle is the builder's own stamps, read, and no src is typed here but the file's name. BLIND SPOT: this reads the country's
      curve, the only one static markup draws (a chosen region lives in the component's state); a region's points are held at the
      builder, and the label element's source for the spread, below. */
   const LEDGER_KINDS = ["counted", "worked out", "looked up", "estimate"];
@@ -96,7 +99,7 @@ if (sv) {
   const labelEls = [...card.matchAll(/<span data-mark-label="true"[^>]*>(\d+)%<\/span>/g)].map((m) => ({ src: /data-src="([^"]*)"/.exec(m[0])?.[1], kind: /data-kind="([^"]*)"/.exec(m[0])?.[1] }));
   const labelStamped = labelEls.filter((l) => !!l.src && LEDGER_KINDS.includes(l.kind ?? ""));
   check(`every point label carries data-src and data-kind, the start's too (${labelStamped.length} of ${labelEls.length})`, labelEls.length === sv.points.length + 1 && labelStamped.length === labelEls.length, { file: CURVE, remedy: STAMP_REMEDY });
-  const given = [sv.startProv, ...sv.points.map((p) => p.prov)];
+  const given = [start?.prov, ...sv.points.map((p) => p.prov)];
   check(`each label's stamp is the one the builder gave its point, under sections/survival.json:GB: (the start's worked out from the cohort, the years' looked up), never typed in the component`, labelEls.length === given.length && labelEls.every((l, i) => !!l.src && l.src === given[i]?.src && l.kind === given[i]?.kind && l.src.startsWith("sections/survival.json:GB:")) && given[0]?.kind === "worked out" && given.slice(1).every((g) => g?.kind === "looked up") && new Set(given.map((g) => g?.src)).size === given.length, { file: "src/lib/spine/sections/first_years.ts", remedy: STAMP_REMEDY });
   const regionPoints = sv.regionCurves.flatMap((r) => r.points.map((p) => ({ r, p })));
   check(`every point of every region's curve carries a stamp naming its region and its year (${regionPoints.length} points of ${sv.regionCurves.length} regions), so a chosen region's labels are stamped as the country's are`, regionPoints.length > 0 && regionPoints.every(({ r, p }) => p.prov?.src === `sections/survival.json:GB:regionCurves:${r.key}:${p.year}` && p.prov?.kind === "looked up"), { file: "src/lib/spine/sections/first_years.ts", remedy: STAMP_REMEDY });
@@ -118,7 +121,7 @@ const oSrc = code(OBSTACLES), cSrc = code(CURVE);
 check("Obstacles holds no `o === top ? null` guard on a share, and its fill takes no lead", !/o === top\s*\?\s*null/.test(oSrc) && !/const fill = \(lead/.test(oSrc), { file: OBSTACLES });
 const curveLabels = [...cSrc.matchAll(/<span data-mark-label[\s\S]*?<\/span>/g)].map((m) => m[0]);
 check("SurvivalCurve labels every point, the start too: no `!isLast` guard on a label, none behind an index test (`i > 0 ?`, the guard that took the start's away), and its one label element prints `Math.round(p.pct)` read from its own point, never a typed share", !/!isLast/.test(cSrc) && !/\bi\s*(>|!==?)\s*0\s*\?[\s\S]{0,80}data-mark-label/.test(cSrc) && curveLabels.length === 1 && /\{Math\.round\(p\.pct\)\}%<\/span>$/.test(curveLabels[0]), { file: CURVE });
-check("SurvivalCurve's one label element spreads provAttrs of its own point (`{...provAttrs(p.prov)}`), so a chosen region's labels are stamped as the country's are, and the start's stamp comes in as the `startProv` prop, typed nowhere in the component", curveLabels.length === 1 && curveLabels[0].includes("{...provAttrs(p.prov)}") && /\bstartProv\b/.test(cSrc) && !/sections\/survival\.json/.test(cSrc), { file: CURVE, remedy: STAMP_REMEDY });
+check("SurvivalCurve's one label element spreads provAttrs of its own point (`{...provAttrs(p.prov)}`), so a chosen region's labels are stamped as the country's are, and the start, with its stamp, comes in as the `start` prop: no START constant, no typed `pct: 100`, no survival.json key in the component", curveLabels.length === 1 && curveLabels[0].includes("{...provAttrs(p.prov)}") && /\bstart: CurvePoint\b/.test(cSrc) && !/\bSTART\b/.test(cSrc) && !/\bpct:\s*100\b/.test(cSrc) && !/sections\/survival\.json/.test(cSrc), { file: CURVE, remedy: STAMP_REMEDY });
 
 /* THE RENDER, where the harness wrote it: /gb's chapter 04 draws both. */
 const GB = "scratchpad/harness/pages/country-GB.html";
