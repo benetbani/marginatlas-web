@@ -159,7 +159,10 @@ if (proofs && built) {
      it carries, so the line says that and no more: "Notices by the date on each, October 2025 to September 2026." (eleven words). The critique's
      own string, "...by the month each was published, ...", ran to 72 characters and wrapped to three lines at 1080 beside two cards of two,
      so the cards lent each other 20px of blank (measured: the joins and the tax 60 high at 1080, against 42 with this line). */
-  check(`its line reads "${p.line}": the notices by the date on each, twelve words at most, no semicolon, short enough to stand on two lines in the narrowest card`, COPY.home.proofs.archive.words === "Notices by the date on each, {first} to {last}." && p.line.split(" ").length <= 12 && !p.line.includes(";") && !/a month by their own date/.test(p.line), { file: "src/lib/spine/copy.ts", remedy: "COPY.home.proofs.archive.words: \"Notices by the date on each, {first} to {last}.\"" });
+  /* CRITIQUE PASS 3, FIX ROUND D1, ITEM P2.3: "Notices by the date on each, October 2025 to September 2026." still did not parse at a glance, and
+     the card's title already says "dated" ("Kept and dated"), so the line says what the columns are: "Notices a month, October 2025 to
+     September 2026." (eight words with the months; one line at 1280, two at 1024). */
+  check(`its line reads "${p.line}": the notices a month, twelve words at most, no semicolon, short enough to stand on two lines in the narrowest card`, COPY.home.proofs.archive.words === "Notices a month, {first} to {last}." && p.line.split(" ").length <= 12 && !p.line.includes(";") && !/by the date on each/.test(p.line), { file: "src/lib/spine/copy.ts", remedy: "COPY.home.proofs.archive.words: \"Notices a month, {first} to {last}.\"" });
   check("its figure is the card's 30, its copies a row", new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\][^"]*" data-src="home/archive\\.json:gazette\\.months" data-kind="counted">${p.figure}<`).test(html) && /data-archetype="fact-rows"/.test(html) && /data-row="copies"/.test(html), PROOF_AT);
   /* THE LINE AND THE ROW'S DAYS, AS DRAWN (fix round B): the line stands as the card's one small line, and the row names its days under
      its label (a date's spaces are held unbreakable in the markup, so they are read as spaces here). */

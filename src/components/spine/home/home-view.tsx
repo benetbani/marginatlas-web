@@ -113,11 +113,11 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   /* Each zone one line, so tests/trust/home_shape.test.ts reads its split, its evenness and its body together. The example and the
      proofs draw only where their case and their builders are whole; the band only where three of its counts build, drawing its own
      zone on the terracotta (HomeRecord); the foot always draws its doors. */
-  const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; tone?: "terra"; label: string; body: React.ReactNode[] }> = [
+  const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; cards?: boolean; tone?: "terra"; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     ...(example ? [{ key: "example", split: "1-1" as ZoneSplit, even: true, label: COPY.home.example.label, body: [<HomePlace key="place" ex={example} />, <HomePays key="pays" ex={example} />] }] : []),
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
-    ...(proofs ? [{ key: "proofs", split: "1-1-1" as ZoneSplit, even: true, label: COPY.home.proofs.label, body: [<ProofJoins key="joins" p={proofs.joins} />, <ProofArchive key="archive" p={proofs.archive} />, <ProofTax key="tax" p={proofs.tax} />] }] : []),
+    ...(proofs ? [{ key: "proofs", split: "1-1-1" as ZoneSplit, even: true, cards: true, label: COPY.home.proofs.label, body: [<ProofJoins key="joins" p={proofs.joins} />, <ProofArchive key="archive" p={proofs.archive} />, <ProofTax key="tax" p={proofs.tax} />] }] : []),
     ...(record ? [{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.record.label, body: [<HomeRecord key="record" record={record} />] }] : []),
     { key: "foot", split: "1-1", even: !!cities, label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <WhereNext key="next" pitch title={COPY.home.next.title} doors={nextDoors("/")} />] },
   ];
@@ -131,7 +131,7 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
           z.tone === "terra" ? (
             <React.Fragment key={z.key}>{z.body}</React.Fragment>
           ) : (
-            <Zone key={z.key} tone={zoneTone(toned.indexOf(z))} split={z.split} even={z.even} label={z.label}>
+            <Zone key={z.key} tone={zoneTone(toned.indexOf(z))} split={z.split} even={z.even} cards={z.cards} label={z.label}>
               {z.body}
             </Zone>
           ),

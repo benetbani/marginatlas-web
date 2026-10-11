@@ -58,6 +58,11 @@ const SPLIT_LG: Record<Exclude<ZoneSplit, "wide">, string> = {
 const STACKED = "grid grid-cols-1 items-start gap-y-6 [&>*+*]:border-t [&>*+*]:border-[var(--c-border)] [&>*+*]:pt-6 [&>*+*:has(>[data-keep-card])]:border-t-0 [&>*+*:has(>[data-keep-card])]:pt-0";
 const SIDE_MD = "md:gap-x-12 md:[&>*+*]:border-t-0 md:[&>*+*]:pt-0 lg:gap-x-16";
 const SIDE_LG = "lg:gap-x-16 lg:[&>*+*]:border-t-0 lg:[&>*+*]:pt-0";
+/* ONE GUTTER FOR A LEVEL OF CARDS (`cards`, critique pass 3, fix round D1, item P2.1): a card carries its own edge, so cards need less air between
+   them than open sections do. The home's three proofs stood 64px apart at 1080 with 24 to the screen's edge, so the cards looked pushed outward,
+   and at 768 two gutters in one grid (48 across, 24 down). A level of cards takes 24 from 768 and 32 from 1024; an open level keeps its 48 and 64. */
+const SIDE_MD_CARDS = "md:gap-x-6 md:[&>*+*]:border-t-0 md:[&>*+*]:pt-0 lg:gap-x-8";
+const SIDE_LG_CARDS = "lg:gap-x-8 lg:[&>*+*]:border-t-0 lg:[&>*+*]:pt-0";
 /* A LEVEL LEFT HOLDING ONE SECTION KEEPS THE KIT'S TWO THIRDS (kit.tsx Band, "a band left holding one card takes a deliberate two
    thirds"; PART 9 clause 59, the width follows the information): a section whose partner self-omits stands in the left two thirds,
    and a lean one (`data-lean`, one figure) in the left third, the band's colour running on beside it. */
@@ -90,7 +95,7 @@ export function ChapterHead({ index, heading }: { index: string; heading: string
  * until 1024. A zone with no children draws nothing; a child that RENDERS nothing is still a child here (React cannot see that
  * from outside), so the page passes only sections it knows will draw: an empty cell is the page laws' ZONE SPLIT red.
  */
-export function Zone({ tone, split = "1-1", stack, even, chapter, label, children }: { tone?: ZoneTone; split?: ZoneSplit; stack?: "lg"; even?: boolean; chapter?: { index: string; heading: string }; label?: string; children: React.ReactNode }) {
+export function Zone({ tone, split = "1-1", stack, even, cards, chapter, label, children }: { tone?: ZoneTone; split?: ZoneSplit; stack?: "lg"; even?: boolean; /** The level is cards that keep their boxes: 24 between them from 768 and 32 from 1024, not an open level's 48 and 64. */ cards?: boolean; chapter?: { index: string; heading: string }; label?: string; children: React.ReactNode }) {
   const kids = React.Children.toArray(children).filter(Boolean);
   if (kids.length === 0) return null;
   /* A level of three that draws two (a how-to page whose country has no forms to explain) is a pair of halves, never a third
@@ -107,7 +112,7 @@ export function Zone({ tone, split = "1-1", stack, even, chapter, label, childre
       <div
         data-zone-level=""
         {...(even && pair ? { "data-zone-even": "" } : {})}
-        className={pair && s ? `${STACKED} ${stack === "lg" ? `${SIDE_LG} ${SPLIT_LG[s]}` : `${SIDE_MD} ${SPLIT[s]}`}${even ? ` ${EVEN}` : ""}` : lone ? LONE : "grid grid-cols-1"}
+        className={pair && s ? `${STACKED} ${stack === "lg" ? `${cards ? SIDE_LG_CARDS : SIDE_LG} ${SPLIT_LG[s]}` : `${cards ? SIDE_MD_CARDS : SIDE_MD} ${SPLIT[s]}`}${even ? ` ${EVEN}` : ""}` : lone ? LONE : "grid grid-cols-1"}
       >
         {/* EACH SECTION IN ITS OWN CELL: the hairline between two stacked sections belongs to the level, not to the section, so the
             zone's rule that takes a section's box away (border 0) can never take the level's hairline with it. */}

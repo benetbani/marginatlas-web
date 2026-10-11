@@ -290,6 +290,17 @@ const level = unent(renderToStaticMarkup(React.createElement(Zone, { split: "1-1
 const levelClass = /<div data-zone-level=""[^>]*class="([^"]*)"/.exec(level)?.[1] ?? "";
 check("a stacked level parts kept cards by its gap alone: no hairline and no padding over a cell that holds a kept card", levelClass.includes("gap-y-6") && levelClass.includes("[&>*+*]:border-t ") && levelClass.includes("[&>*+*:has(>[data-keep-card])]:border-t-0") && levelClass.includes("[&>*+*:has(>[data-keep-card])]:pt-0"), { file: "src/components/spine/zones.tsx", remedy: "add [&>*+*:has(>[data-keep-card])]:border-t-0 [&>*+*:has(>[data-keep-card])]:pt-0 to STACKED" });
 
+/* ONE GUTTER FOR A LEVEL OF CARDS (critique pass 3, fix round D1, item P2.1). Cards carry their own edge, so they need less air between them than
+   open sections do. The proofs stood 64px apart at 1080 and 24 from the screen's edge (the cards looked pushed outward), and at 768 two gutters
+   in one grid: 48 across and 24 down. `cards` on a Zone gives the level 24 from 768 and 32 from 1024 where an open level keeps 48 and 64; at 1024
+   the joins' line keeps two lines instead of three. */
+const cardsKids = ["a", "b", "c"].map((k) => React.createElement(Box, { key: k, id: k, keep: true, children: k }));
+const classOfLevel = (props: Record<string, unknown>) => /<div data-zone-level=""[^>]*class="([^"]*)"/.exec(unent(renderToStaticMarkup(React.createElement(Zone, { split: "1-1-1", even: true, label: "Proofs", ...props, children: cardsKids } as never))))?.[1] ?? "";
+const cardsClass = classOfLevel({ cards: true });
+const cardsLgClass = classOfLevel({ cards: true, stack: "lg" });
+const openLgClass = classOfLevel({ stack: "lg" });
+check("a level of cards takes 24 between its cards from 768 and 32 from 1024 (md:gap-x-6 lg:gap-x-8), the stacked-to-1024 form 32 from 1024; an open level keeps 48 and 64", cardsClass.includes("md:gap-x-6") && cardsClass.includes("lg:gap-x-8") && !/gap-x-12|gap-x-16/.test(cardsClass) && cardsLgClass.includes("lg:gap-x-8") && !/gap-x-16/.test(cardsLgClass) && levelClass.includes("md:gap-x-12") && levelClass.includes("lg:gap-x-16") && !/md:gap-x-6|lg:gap-x-8/.test(levelClass) && openLgClass.includes("lg:gap-x-16"), { file: "src/components/spine/zones.tsx", remedy: "Zone takes `cards`: SIDE_MD becomes md:gap-x-6 lg:gap-x-8 and SIDE_LG lg:gap-x-8 for it; open levels keep md:gap-x-12 lg:gap-x-16" });
+
 /* THE RENDERS (Task 10), where the harness wrote them (pages-fresh renders them first in the chain). */
 const homeR = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
 const cellR = existsSync("scratchpad/harness/pages/cell-gb-london-restaurants.html") ? readFileSync("scratchpad/harness/pages/cell-gb-london-restaurants.html", "utf8") : "";

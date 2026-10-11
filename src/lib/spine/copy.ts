@@ -2852,8 +2852,8 @@ export const COPY = {
      *  take a note in the law's own pounds ({rate}, {allowance}, {from} and {to} read from the year's parameters, never typed). */
     proofs: {
       label: "Proofs",
-      joins: { kicker: "Matched by name", words: "Liquidation and administration notices a year, each looked up in the register.", ring: "in 100 names found in the register", names: "Names in notices", found: "Names found" },
-      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices by the date on each, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
+      joins: { kicker: "Matched by name", words: "Liquidation and administration notices a year, each looked up in the register.", ring: "in 100 names found in the register", names: "Different names", found: "Names found" },
+      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices a month, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
       tax: { kicker: "Tax, rule by rule", words: "Total effective tax burden on a sole trader’s {profit} profit, {year} rules.", income: "Income tax", class4: "National Insurance", keep: "You keep", incomeNote: "{rate} above the {allowance} allowance", class4Note: "{rate} from {from} to {to}", aria: "Of 100 of profit: income tax {incomeTax}, National Insurance {class4}, you keep {keep}." },
     },
     /** THE BAND, "READ FROM THE RECORD" (plan 2026-10-10, the home reformed to ship, Task 5; the spec's decision 7 and its critique,
