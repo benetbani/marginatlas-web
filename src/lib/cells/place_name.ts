@@ -17,6 +17,10 @@
  *
  * NOTHING HERE SPELLS A WORD FROM ITS LETTERS. "king-s-lynn-and-west-norfolk" is "King's Lynn and West Norfolk" because a region table
  * holds that label and its slug is that word; a word whose slug no label holds ("gb-e06000004", "ukk1") names the country.
+ * WHOLE-COUNTRY WORDS AND LABELS BUILT FROM A CODE (truth-fixes round 3A, the review's M3). The code and its zero-padded statistics entries
+ * (af, dk0, cy0, cy00) are the country. They name it in English whatever label a table gives them ("Danmark", "Kýpros", "All of AF"), so
+ * the slug of such a label ("danmark", "k-pros", "all-of-af") spells nothing either. A label that holds the code as a word of its own
+ * ("All of AF", "Centro (IT)") is no name, from whichever table it comes. A code the country list holds no name for is left to the cell.
  * BLIND SPOTS, stated: this cannot tell a place the site holds no label for from one it holds under another word, and a word that is the
  * slug of two labels takes the first the table lists. A statistics code the country list does not hold (UK, EL) has no country name to
  * give, so a bare code there stays what the page printed (uk:statistics-code-uk-pages, the final review's I-2, is that page's own question).
@@ -38,9 +42,24 @@ function isBareCode(name: string, iso2: string): boolean {
   return n === iso2 || n === iso2ToIso3(iso2);
 }
 
-/** A label of the site's tables, or undefined when there is none or it is the country's bare code. */
+/** True when a label holds the country's code, in either form, as a word of its own ("All of AF", "Centro (IT)"). The code in capitals
+ *  only, since a code is printed so and "it" or "me" inside a name is a word. Read by splitting the label, never by a pattern built from
+ *  the code: the code comes from the address. */
+function holdsCode(label: string, iso2: string): boolean {
+  const iso3 = iso2ToIso3(iso2);
+  return label.split(/[^A-Za-z0-9]+/).some((token) => token === iso2 || (iso3 !== null && token === iso3));
+}
+
+/** True when a word is the whole country: its code, or the code with the statistics' zero padding (af, dk0, cy0, cy00). Such a word is
+ *  the country itself, whatever label a table gives it. */
+function isWholeCountryWord(word: string, iso2: string): boolean {
+  const cc = iso2.toLowerCase();
+  return word.startsWith(cc) && /^0*$/.test(word.slice(cc.length));
+}
+
+/** A label of the site's tables, or undefined when there is none, it is the country's bare code, or it holds the code as a word. */
 function named(label: string | null | undefined, iso2: string): string | undefined {
-  return label && !isBareCode(label, iso2) ? label : undefined;
+  return label && !isBareCode(label, iso2) && !holdsCode(label, iso2) ? label : undefined;
 }
 
 /** Every label the country's place words carry (geoNameFromSlug, the lookup's own reading), indexed by its slug: "boston" for the label
@@ -52,6 +71,9 @@ function spelledBy(iso2: string): ReadonlyMap<string, string> {
   const words = placeWordsFor(cc);
   const spelled = new Map<string, string>();
   for (const w of words) {
+    /* A whole-country word spells no label: its table label ("Danmark", "Kýpros", "All of AF") is the country in another tongue or in
+       the code, so the slug of that label ("danmark", "k-pros", "all-of-af") names the country in English like the code does. */
+    if (isWholeCountryWord(w, iso2)) continue;
     const label = named(geoNameFromSlug(iso2, w), iso2);
     const spelling = label ? slugify(label) : "";
     if (label && spelling && !spelled.has(spelling)) spelled.set(spelling, label);
@@ -68,9 +90,12 @@ export function placeNameOf(country: string, geoSlug: string, geoName: string | 
   if (typeof geoName !== "string" || !geoName.trim()) return null;
   const iso2 = String(country ?? "").trim().toUpperCase();
   if (!isBareCode(geoName, iso2)) return geoName;
-  const countryName = iso2ToName(iso2);
+  const countryName = heldCountryName(iso2);
+  /* A code the country list holds no name for (the statistics' own UK and EL) has no English name to give, so the cell's own name stands,
+     as the header says: those pages are another question (uk:statistics-code-uk-pages). */
+  if (countryName === null) return geoName;
   const word = String(geoSlug ?? "").trim().toLowerCase();
-  if (word === iso2.toLowerCase() || word === slugify(countryName)) return countryName;
+  if (isWholeCountryWord(word, iso2) || word === slugify(countryName)) return countryName;
   return named(geoNameFromSlug(iso2, word), iso2) ?? spelledBy(iso2).get(word) ?? countryName;
 }
 

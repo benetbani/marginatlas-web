@@ -2215,6 +2215,7 @@
         "src/app/[country]/[geo]/[industry]/page.tsx",
         "src/app/og/cell/route.tsx",
         "src/lib/cells/place_name.ts",
+        "src/lib/geo/popular_place_overrides.json",
         "src/lib/spine/adapt_cell.ts",
         "src/lib/spine/crumb_rows.ts",
         "src/lib/spine/place_names.ts",

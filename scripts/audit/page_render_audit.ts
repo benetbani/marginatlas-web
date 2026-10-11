@@ -42,7 +42,7 @@ const TARGETS: Array<{ path: string; expectedGeo: string; sector: string; label:
   { path: "/jp/kanto/restaurants", expectedGeo: "Tokyo", sector: "food_drink", label: "Tokyo restaurants" },
   { path: "/cn/guangdong/software-development", expectedGeo: "Shenzhen", sector: "software_tech", label: "Shenzhen software" },
   { path: "/in/maharashtra/restaurants", expectedGeo: "Mumbai", sector: "food_drink", label: "Mumbai restaurants" },
-  { path: "/gb/england/legal-services", expectedGeo: "London", sector: "professional_services", label: "London law firms" },
+  { path: "/gb/england/legal-services", expectedGeo: "England", sector: "professional_services", label: "England law firms" },
   { path: "/us/california/restaurants", expectedGeo: "California", sector: "food_drink", label: "California restaurants" },
 ];
 
