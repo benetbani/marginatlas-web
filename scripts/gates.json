@@ -1710,7 +1710,8 @@
         "src/app/(site)/privacy/page.tsx",
         "src/app/api/contact/route.ts",
         "src/app/api/correction/route.ts",
-        "src/app/api/newsletter/route.ts"
+        "src/app/api/newsletter/route.ts",
+        "tests/trust/forms_store_nothing_more.test.ts"
       ],
       "claims": []
     },
@@ -2660,6 +2661,8 @@
       "browser": false,
       "asserts": "THE MASTHEAD, PUBLISHING READY (plan docs/superpowers/plans/2026-10-10-home-reform, Task 1, in the design repo; the spec docs/superpowers/specs/2026-10-10-home-reform-design.md, decisions 4 to 6 and s",
       "reads": [
+        "scripts/harness/render_page.tsx",
+        "scripts/seo/floor_census.tsx",
         "src/app",
         "src/app/(site)",
         "src/app/[country]/[geo]/[industry]/page.tsx",
@@ -2668,10 +2671,14 @@
         "src/app/layout.tsx",
         "src/app/not-found.tsx",
         "src/components/HeaderAuth.tsx",
+        "src/components/HeaderSearch.tsx",
         "src/components/MobileNav.tsx",
         "src/components/NavLinks.tsx",
         "src/components/SiteChrome.tsx",
+        "src/components/StructuredData.tsx",
+        "src/components/spine",
         "src/lib/nav.ts",
+        "src/lib/nav.ts holds the one gutter: GUTTER is px-4 md:px-6 (16 under 768, 24 from)",
         "src/styles/v0-tokens.css"
       ],
       "claims": []
@@ -2989,7 +2996,6 @@
         "src/components/ComboField.tsx",
         "src/components/FAQSchema.tsx",
         "src/components/HeaderAuth.tsx",
-        "src/components/HeaderSearch.tsx",
         "src/components/MobileNav.tsx",
         "src/components/NavLinks.tsx",
         "src/components/RotatingWord.tsx",
