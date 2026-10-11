@@ -70,6 +70,15 @@
  * BLIND SPOT, stated: this reads seven values of a table. It cannot tell, in the 110 left, a region named by a city from one named by itself, and it cannot tell whether a value
  * adds or drops an address: the place table is built from the values (scripts/gen_place_slugs.ts), and the edge-not-found gate holds the committed table to a fresh generation.
  *
+ * AND A DROPPED CRUMB KEEPS ITS LINK (truth-fixes round 3A2, 2026-10-12; the review's M1). Round 3A dropped the place step whenever it said the country's own name, so on the eight
+ * words whose city page or region page bears the country's name (Djibouti, Guatemala, Hong Kong, Luxembourg, Monaco, San Marino, Singapore, Taiwan) the step that went was the one
+ * that linked the place's own page, and the Singapore, Hong Kong and Monaco district pages lost the link to their city page. Now the step that has a page of its own stays and the
+ * country's step goes; where the place has no page the country's step stays, as before. The city page's own repeat ("Singapore / Singapore") is the stated exception and a row pins it.
+ * Two kinds of check: the builders over the eight words, the districts and the controls, and every place word of every held country (no trail says a place twice, and a place with a
+ * page of its own is linked from its trail).
+ * BLIND SPOT, stated: this reads the links the resolvers answer (src/lib/geo/page_targets.ts), which come from the route rules and the lists the routes gate on, not from a fetch, so it
+ * cannot tell whether a linked page renders.
+ *
  * Run: npx tsx tests/spine/trade_head.test.ts
  */
 import Module from "node:module";
@@ -103,7 +112,7 @@ const COUNTRIES_FILE = "src/lib/countries.ts";
 const REPORT = "src/lib/coverage/report.ts";
 const VIEW = "src/components/spine/cell/cell-view.tsx";
 const CRUMBS = "src/lib/spine/crumb_rows.ts";
-const R_CRUMB = "drop a place crumb whose label equals the country crumb's label in src/lib/spine/crumb_rows.ts (placeCrumb takes the country crumb, for the trade page and the district pages alike), so a trail never says one place twice";
+const R_CRUMB = "say a place once in src/lib/spine/crumb_rows.ts, for the trade page and the district pages alike (countryAndPlace): when the place's label equals the country's, keep the step that has a page of its own (the place's city page or region page, the nearer parent) and drop the country's step, else drop the place's step, so a trail never says one place twice and never loses the way to the place's own page; the city page's own trail is the one stated exception, since folding it leaves one step, which draws nothing";
 const sameLabel = (a: string, b: string): boolean => a.trim().toLowerCase() === b.trim().toLowerCase();
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => {
@@ -435,7 +444,7 @@ async function main(): Promise<void> {
   const adaptCell = (await import("../../src/lib/spine/adapt_cell")) as { buildSpineCellSeed: (c: string, g: string, i: string) => Promise<any>; sanitiseProvenance?: (line: string | null | undefined) => string | null };
   const { buildSpineCellSeed } = adaptCell;
   const { tradeHeroFacts } = await import("../../src/lib/spine/trade_hero_facts");
-  const { buildCellCrumbs, buildHoodCrumbs } = await import("../../src/lib/spine/crumb_rows");
+  const { buildCellCrumbs, buildHoodCrumbs, buildCityCrumbs } = await import("../../src/lib/spine/crumb_rows");
   const { COPY } = await import("../../src/lib/spine/copy");
   const cardMod = await tryImport<{ GET?: (r: Request) => Promise<unknown> }>(() => import("../../src/app/og/cell/route"));
   check("the share card's route loads with next/og stubbed", typeof cardMod?.GET === "function", { file: CARD, remedy: R_CARD });
@@ -502,19 +511,61 @@ async function main(): Promise<void> {
   }
 
   /* (2b) THE TRAIL'S BUILDERS ON THEIR OWN (src/lib/spine/crumb_rows.ts): a place that says the country's own name is the country said
-     twice, so its crumb is dropped, by the trade page's builder and the district pages' alike. The place may carry a link of its own
-     (the page of the city Singapore, whose name is its country's): the country's crumb is the one that stays. */
-  const trail = (cs: Array<{ label: string }>) => cs.map((c) => c.label).join(" / ");
+     twice, so one of the two steps is dropped, by the trade page's builder and the district pages' alike. WHICH ONE (truth-fixes round 3A2,
+     the review's M1): where the place has a page of its own (the city page of Singapore, the region page of Luxembourg) its step stays, with
+     its link, because it is the nearer parent and the country's step was the only other one, so the trade page and the district pages never
+     lose the way to the place's own page. Where the place has none, the country's step stays, link and all. Each step is written
+     "label <link>" so a lost link reads. */
+  const steps = (cs: Array<{ label: string; href?: string }>) => cs.map((c) => (c.href ? `${c.label} <${c.href}>` : c.label)).join(" / ");
   const builders: Array<[string, string, string]> = [
-    ["the trade page of a country itself, /gb/gb", trail(buildCellCrumbs({ iso2: "GB", geo: "gb", trade: "Restaurants", city: "United Kingdom" })), "United Kingdom / Restaurants"],
-    ["the same for Germany, /de/de", trail(buildCellCrumbs({ iso2: "DE", geo: "de", trade: "Restaurants", city: "Germany" })), "Germany / Restaurants"],
-    ["an id no table labels, read as the country, /gb/gb-e06000004", trail(buildCellCrumbs({ iso2: "GB", geo: "gb-e06000004", trade: "Restaurants", city: "United Kingdom" })), "United Kingdom / Restaurants"],
-    ["a city whose name is its country's, /sg/singapore", trail(buildCellCrumbs({ iso2: "SG", geo: "singapore", trade: "Restaurants", city: "Singapore" })), "Singapore / Restaurants"],
-    ["the district pages of that city", trail(buildHoodCrumbs("singapore", null)), `Singapore / ${COPY.crumbs.districts}`],
-    ["control, a place that is not its country: /gb/london keeps its crumb", trail(buildCellCrumbs({ iso2: "GB", geo: "london", trade: "Restaurants", city: "London" })), "United Kingdom / London / Restaurants"],
-    ["control, the district pages of London keep the city", trail(buildHoodCrumbs("london", null)), `United Kingdom / London / ${COPY.crumbs.districts}`],
+    ["the trade page of a country itself, /gb/gb: no page for the place, the country's step stays with its link", steps(buildCellCrumbs({ iso2: "GB", geo: "gb", trade: "Restaurants", city: "United Kingdom" })), "United Kingdom </gb> / Restaurants"],
+    ["the same for Germany, /de/de", steps(buildCellCrumbs({ iso2: "DE", geo: "de", trade: "Restaurants", city: "Germany" })), "Germany </de> / Restaurants"],
+    ["an id no table labels, read as the country, /gb/gb-e06000004", steps(buildCellCrumbs({ iso2: "GB", geo: "gb-e06000004", trade: "Restaurants", city: "United Kingdom" })), "United Kingdom </gb> / Restaurants"],
+    ["a city whose name is its country's, /sg/singapore: the city's step stays with the city page's link", steps(buildCellCrumbs({ iso2: "SG", geo: "singapore", trade: "Restaurants", city: "Singapore" })), "Singapore </cities/singapore> / Restaurants"],
+    ["the district pages of that city keep the way to the city page", steps(buildHoodCrumbs("singapore", null)), `Singapore </cities/singapore> / ${COPY.crumbs.districts}`],
+    ["and Hong Kong's", steps(buildHoodCrumbs("hong-kong", null)), `Hong Kong </cities/hong-kong> / ${COPY.crumbs.districts}`],
+    ["and Monaco's", steps(buildHoodCrumbs("monaco", null)), `Monaco </cities/monaco> / ${COPY.crumbs.districts}`],
+    ["control, a place that is not its country: /gb/london keeps both steps", steps(buildCellCrumbs({ iso2: "GB", geo: "london", trade: "Restaurants", city: "London" })), "United Kingdom </gb> / London </cities/london> / Restaurants"],
+    ["control, the district pages of London keep both steps", steps(buildHoodCrumbs("london", null)), `United Kingdom </gb> / London </cities/london> / ${COPY.crumbs.districts}`],
+    /* THE CITY PAGE IS THE STATED EXCEPTION. Its trail is the country's step and the page itself ("Singapore / Singapore"), the page being the last step and never a
+       link: folding the repeat leaves one step, which Crumbs draws as nothing (src/components/spine/Crumbs.tsx, two steps at least), and takes from the page its only way
+       back up to the country page. So the repeat stays, and this pins what it is: stated behaviour, not a rule the other builders follow. */
+    ["the city page of a city named like its country keeps the repeat, the stated exception: /cities/singapore", steps(buildCityCrumbs("singapore")), "Singapore </sg> / Singapore"],
+    ["and /cities/hong-kong", steps(buildCityCrumbs("hong-kong")), "Hong Kong </hk> / Hong Kong"],
+    ["and /cities/monaco", steps(buildCityCrumbs("monaco")), "Monaco </mc> / Monaco"],
+    ["control, a city that is not its country: /cities/london", steps(buildCityCrumbs("london")), "United Kingdom </gb> / London"],
   ];
+  /* The eight place words whose city page or region page bears the country's name (round 3A's measure over the place table): each one's trade page links its own page. */
+  const ownNamePlaces: Array<[string, string, string, string]> = [
+    ["DJ", "djibouti", "Djibouti", "/dj/djibouti"],
+    ["GT", "guatemala", "Guatemala", "/gt/guatemala"],
+    ["HK", "hong-kong", "Hong Kong", "/cities/hong-kong"],
+    ["LU", "luxembourg", "Luxembourg", "/lu/luxembourg"],
+    ["MC", "monaco", "Monaco", "/cities/monaco"],
+    ["SM", "san-marino", "San Marino", "/sm/san-marino"],
+    ["SG", "singapore", "Singapore", "/cities/singapore"],
+    ["TW", "taiwan", "Taiwan", "/tw/taiwan"],
+  ];
+  for (const [iso2, geo, name, href] of ownNamePlaces) builders.push([`the trade page of ${name}, whose place page bears the country's name, /${iso2.toLowerCase()}/${geo}: the way to that page stays`, steps(buildCellCrumbs({ iso2, geo, trade: "Restaurants", city: name })), `${name} <${href}> / Restaurants`]);
   for (const [label, got, want] of builders) check(`${label}: the trail reads "${want}" (got "${got}")`, got === want, { file: CRUMBS, remedy: R_CRUMB });
+  /* Over every place word of every held country: a trade page's trail says no place twice, and a place that has a page of its own is linked from the trail, as its own step
+     or as the step that replaced a repeat of the country's name. The name given is the one the bare-code row reads (placeNameOf), which only the words with no page use. */
+  const { geoPageTarget } = await import("../../src/lib/geo/page_targets");
+  let trailWords = 0, withPage = 0, bearsCountry = 0;
+  const trailRepeats: string[] = [], trailLost: string[] = [];
+  for (const c of COUNTRIES) {
+    for (const w of PLACE_SLUGS_BY_COUNTRY[c.code.toLowerCase()] ?? []) {
+      trailWords++;
+      const cs = buildCellCrumbs({ iso2: c.code, geo: w, trade: "Restaurants", city: P(c.code, w, c.code) ?? c.name });
+      if (cs.some((x, i) => i > 0 && sameLabel(x.label, cs[i - 1].label))) trailRepeats.push(`/${c.code.toLowerCase()}/${w} (${steps(cs)})`);
+      const t = geoPageTarget(c.code, w);
+      if (!t) continue;
+      withPage++;
+      if (sameLabel(t.name, c.name)) bearsCountry++;
+      if (!cs.some((x) => x.href === t.href)) trailLost.push(`/${c.code.toLowerCase()}/${w} (${t.href}; the trail is ${steps(cs)})`);
+    }
+  }
+  check(`${trailWords} place words of ${COUNTRIES.length} held countries: ${withPage} have a city page or a region page of their own, ${bearsCountry} of those bear their country's name, ${trailRepeats.length} trails say a place twice${trailRepeats.length ? ` (${trailRepeats.slice(0, 3).join(", ")})` : ""} and ${trailLost.length} lose the link to the place's own page${trailLost.length ? ` (${trailLost.slice(0, 3).join(", ")})` : ""}`, trailWords > 0 && withPage > 0 && trailRepeats.length === 0 && trailLost.length === 0, { file: CRUMBS, remedy: R_CRUMB });
 
   /* (2c) AN INTERNAL WORD NEVER REACHES A READER. The function first, over the strings the rows hold (the first five are what live pages printed on
      2026-10-11, the sixth is the lookup's own default for a row with none, the rest are shapes the function must keep or cut), then the seed's

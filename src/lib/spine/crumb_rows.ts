@@ -16,6 +16,14 @@
  * THE LAST STEP IS THE PAGE. It carries no href here, and the component
  * refuses one anyway, so the two cannot drift.
  *
+ * NO TRAIL SAYS ONE PLACE TWICE, AND NONE LOSES THE WAY TO A PLACE'S OWN PAGE (truth-fixes rounds 3A and 3A2; the review's M1). A place step whose label is the
+ * country's own is said once, and the step that stays is the one with a page of its own: the place's city page or region page where it has one (Singapore, Hong
+ * Kong, Monaco, Luxembourg and four more words of the place table, whose page bears their country's name), else the country's step. countryAndPlace is the one
+ * function the two builders that pair the steps (the trade page and the district pages) read, so the rule is written once.
+ * THE STATED EXCEPTION IS THE CITY PAGE'S OWN TRAIL (buildCityCrumbs): country, then the page itself, so a city named like its country reads "Singapore /
+ * Singapore". The page is the last step and never a link, so folding the repeat leaves one step, which the component draws as nothing (two steps at least), and the
+ * page would lose its only way back up to the country page. The repeat stays, and a row of tests/spine/trade_head.test.ts pins it as stated behaviour.
+ *
  * WHAT THIS CANNOT SEE, STATED: whether the resolved page RENDERS. The
  * resolvers answer from the route rules and the lists the routes gate on, not
  * from a fetch, and the chain may never reach the network. The link walk
@@ -38,15 +46,20 @@ function countryCrumb(iso2: string): SpineCrumb | null {
   return t ? { label: t.label, href: t.href } : null;
 }
 
-/** The place step: a city page, a region page, or the place's name as text. NONE WHEN IT SAYS THE COUNTRY'S OWN NAME (truth-fixes
- *  round 3A): the country step before it has said that place, and /gb/gb/restaurants read "United Kingdom / United Kingdom /
- *  Restaurants". The place may carry a link of its own (the city Singapore, whose name is its country's), and the country's step is
- *  the one that stays. Every builder that pairs the two steps passes the country's, so the rule is written once. */
-function placeCrumb(iso2: string, geo: string, fallback?: string, country?: SpineCrumb | null): SpineCrumb | null {
+/** THE COUNTRY'S STEP AND THE PLACE'S STEP, as one pair, for every builder that has both (the trade page and the district pages). A place whose
+ *  label says the country's own name is said once (truth-fixes round 3A: /gb/gb/restaurants read "United Kingdom / United Kingdom /
+ *  Restaurants"). WHICH STEP STAYS (round 3A2, the review's M1): where the place has a page of its own, a city page or a region page, its step
+ *  stays with that link, the nearer parent, and the country's step goes, because the step round 3A dropped was the one that carried the way
+ *  to the place's page and the country's carried only the way one level further up. Where the place has no page (/gb/gb, an id no table
+ *  labels) its step goes and the country's stays, link and all. The place's name is its page's own where a page exists, else the fallback
+ *  the caller holds, else the word. The country's step is absent where we publish no page for the country. */
+function countryAndPlace(iso2: string, geo: string, fallback?: string): SpineCrumb[] {
+  const country = countryCrumb(iso2);
   const t = geoPageTarget(iso2, geo);
   const name = t ? t.name : clean(fallback) || clean(geo);
-  if (!name || (country && sameLabel(name, country.label))) return null;
-  return t ? { label: t.name, href: t.href } : { label: name };
+  const place: SpineCrumb | null = !name ? null : t ? { label: t.name, href: t.href } : { label: name };
+  if (country && place && sameLabel(place.label, country.label)) return [place.href ? place : country];
+  return [country, place].filter((step): step is SpineCrumb => step !== null);
 }
 
 /** THE TRADE PAGE: country, place, this trade. */
@@ -54,16 +67,13 @@ export function buildCellCrumbs(meta: { iso2?: string; geo?: string; trade?: str
   const iso2 = clean(meta?.iso2).toUpperCase();
   const trade = clean(meta?.trade);
   if (!iso2 || !trade) return [];
-  const out: SpineCrumb[] = [];
-  const c = countryCrumb(iso2);
-  if (c) out.push(c);
-  const p = placeCrumb(iso2, clean(meta?.geo), clean(meta?.city), c);
-  if (p) out.push(p);
-  out.push({ label: trade });
-  return out;
+  return [...countryAndPlace(iso2, clean(meta?.geo), clean(meta?.city)), { label: trade }];
 }
 
-/** THE CITY PAGE: country, this city. The slug is what the view holds; the identity file answers the name and the country. */
+/** THE CITY PAGE: country, this city. The slug is what the view holds; the identity file answers the name and the country. THE ONE TRAIL THAT MAY SAY A
+ *  PLACE TWICE (truth-fixes round 3A2, the review's M1): a city named like its country reads "Singapore / Singapore" here, and it stays. The page is the last
+ *  step and never a link, so folding the repeat leaves one step, which Crumbs draws as nothing (two steps at least) and takes from the page its only way
+ *  back up to the country's page. A test row pins it as stated behaviour. */
 export function buildCityCrumbs(citySlug: string | undefined): SpineCrumb[] {
   const slug = clean(citySlug).toLowerCase();
   const id = slug ? getCityIdentity(slug) : null;
@@ -77,11 +87,7 @@ export function buildHoodCrumbs(citySlug: string | undefined, focus?: string | n
   const slug = clean(citySlug).toLowerCase();
   const id = slug ? getCityIdentity(slug) : null;
   if (!id) return [];
-  const out: SpineCrumb[] = [];
-  const c = countryCrumb(id.iso2);
-  if (c) out.push(c);
-  const p = placeCrumb(id.iso2, slug, id.name, c);
-  if (p) out.push(p);
+  const out: SpineCrumb[] = countryAndPlace(id.iso2, slug, id.name);
   const district = clean(focus) ? districtPageTarget(slug, clean(focus)) : null;
   const hub = neighbourhoodsHubTarget(slug);
   if (district) {
