@@ -63,7 +63,7 @@ async function render(surface: Surface, slugs: string[]): Promise<Rendered | nul
     let el: React.ReactElement | null = null;
     let label: string | null = null;
     if (surface === "country") { const d = await buildSpineCountrySeed(slugs[0]); el = d ? shelled(React.createElement(SpineCountryBody as any, { data: d })) : null; }
-    if (surface === "howto") el = React.createElement("main", { className: "mx-auto max-w-[1120px] px-4 py-2 md:px-6" }, React.createElement(SpineShell as any, null, React.createElement(HowToBody as any, { iso2: slugs[0].toUpperCase() })));
+    if (surface === "howto") el = shelled(React.createElement(HowToBody as any, { iso2: slugs[0].toUpperCase() }));
     if (surface === "city") { const d = await buildSpineCitySeed(slugs[0]); el = d ? shelled(React.createElement(SpineCityBody as any, { data: d })) : null; }
     if (surface === "industry") { const d = await buildSpineIndustrySeed(slugs[0]); el = d ? shelled(React.createElement(SpineIndustryBody as any, { data: d })) : null; }
     if (surface === "cell") { const d = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); label = d?.meta?.trade ?? null; el = d ? shelled(React.createElement(SpineCellBody as any, { data: d })) : null; }

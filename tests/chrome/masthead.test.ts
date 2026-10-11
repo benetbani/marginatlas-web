@@ -381,6 +381,26 @@ async function main() {
     /\bmb-2\b/.test(trailSeams.plain ?? "") && trailSeams.withScript && !trailSeams.blockAhead && !trailSeams.wrapped && /\bpt-4\b/.test(trailSeams.main),
     { file: "src/components/spine/Crumbs.tsx", remedy: "keep Crumbs a <nav data-crumbs> with mb-2, drawn as the shell's first child by the cell, city, industry and hood views, and <main> on pt-4 (src/components/SiteChrome.tsx), or move the trail's rule in globals.css (THE ZONES, item P2.1) and its outset 1rem 100vmax 0.5rem with them" });
 
+  /* THE HOW-TO ROUTE DRAWS THE CHROME (truth-fixes round 1, item 2). /gb/how-to-open wrote a <main> of its own inside SpineShell and drew no
+     SiteChrome, so production served it with no bar, no sheet, no newsletter bar and no footer (the build of 2026-10-11: header false, footer
+     false, main true), and tests/app/route_chrome_contract.test.ts could not see it (it let SpineShell count). Here the route's own page
+     function is called as Next calls it and its element drawn: the bar and its sheet, ONE <main id="main"> (never a second inside it), the
+     newsletter bar and the footer, the page being read marked Countries, and the real trail drawn first in the shell with the body root
+     after it, where the stylesheet's trail rule reaches it (the seam above, for the real page). BLIND SPOT: markup, not pixels: the first
+     zone meeting the bar under the hairline is the round's frames (scratchpad/tf). */
+  const HowToPage = (await import("../../src/app/[country]/how-to-open/page")).default as (p: { params: Promise<{ country: string }> }) => Promise<React.ReactElement>;
+  const howto = renderToStaticMarkup(React.createElement(PathnameContext.Provider, { value: "/gb/how-to-open" }, await HowToPage({ params: Promise.resolve({ country: "gb" }) })));
+  const hp = parts(howto);
+  const howtoMains = howto.match(/<main\b/g)?.length ?? 0;
+  const howtoNewsletter = howto.includes('id="atlas-newsletter-line"');
+  check(`the how-to route draws the chrome: the bar with its sheet, one <main id="main">, the newsletter bar and the footer (header ${!!hp.header}, sheet ${!!hp.sheet}, ${howtoMains} main, newsletter ${howtoNewsletter}, footer ${!!hp.footer})`,
+    !!hp.header && !!hp.sheet && howtoMains === 1 && /\bid="main"/.test(hp.main) && howtoNewsletter && !!hp.footer && /^<a href="#main"/.test(howto),
+    { file: "src/app/[country]/how-to-open/page.tsx", remedy: "draw the page's body inside <SiteChrome> as the other spine routes do (<SiteChrome><SpineShell><HowToBody /></SpineShell></SiteChrome>) and write no <main> of its own: SiteChrome's is the page's one landmark" });
+  const howtoCountries = anchors(slice(hp.bar, /<nav aria-label="Primary"/, "</nav>")).find((n) => n.href === "/countries");
+  check("on the how-to page the bar marks Countries as the page being read", !!howtoCountries && /aria-current="page"/.test(howtoCountries.tag), { file: "src/app/[country]/how-to-open/page.tsx", remedy: "draw the how-to route inside <SiteChrome>, whose bar reads the address through Next's pathname and marks a country's pages Countries" });
+  const howtoTrail = trailNav(howto);
+  check(`the how-to page's trail is the shell's first child and its body root follows it, so the stylesheet's trail rule reaches the real page (${howtoTrail ? howtoTrail.getAttribute("aria-label") : "no trail reached"})`, !!howtoTrail && howtoTrail.nextElementSibling?.hasAttribute("data-spine-body") === true, { file: "src/components/spine/country/how-to-view.tsx", remedy: "draw the trail (<Crumbs>) as the first child of the shell and the body root (<div data-spine-body>) right after it, the page being the shell's only content, with no wrapper round either (THE ZONES, item P2.1)" });
+
   /* The skip link and the landmark. */
   check("a skip link is the first thing in the chrome, to #main", /^<a href="#main"[^>]*>Skip to content<\/a>/.test(off));
   check(`<main> is the skip link's target: id="main", tabindex -1 (${o.main})`, /\bid="main"/.test(o.main) && /\btabindex="-1"/.test(o.main));

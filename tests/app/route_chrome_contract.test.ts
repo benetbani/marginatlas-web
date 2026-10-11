@@ -21,6 +21,13 @@
  * the route before adding it to the exemption list , the list is for pages that
  * genuinely must not have chrome, and every entry carries its reason.
  *
+ * TIGHTENED 2026-10-11 (truth-fixes round 1, item 2): only SiteChrome counts. The line below let SpineShell count too, on the reasoning
+ * that the v2 pages carried their own masthead and footer; they no longer do (the chrome is SiteChrome's alone, and the shell is one div
+ * that paints the ground), so the clause was a licence nobody revoked, and /gb/how-to-open held it: its page file named SpineShell and
+ * wrote a <main> of its own, and production drew it with no bar, no newsletter bar and no footer (the build of 2026-10-11: header false,
+ * footer false, main true). BLIND SPOT, stated: this reads each page file's text, so a page that names SiteChrome and draws it nowhere
+ * passes; tests/chrome/masthead.test.ts renders the how-to route and reads its markup.
+ *
  * Follows this repository's test idiom: a bare tsx script, PASS/FAIL per case,
  * exit 1 on any failure.
  */
@@ -56,9 +63,9 @@ for (const f of routes) {
   if (f.includes("(site)/")) continue; // the group layout renders SiteChrome for all of these
   if (f in EXEMPT) continue;
   const src = fs.readFileSync(f, "utf8");
-  // SpineShell counts: the v2 pages carry their own masthead and footer, which
-  // is the whole reason chrome had to become opt-in.
-  if (src.includes("SiteChrome") || src.includes("SpineShell")) continue;
+  // Only SiteChrome counts (see the header): SpineShell paints the ground and
+  // draws no bar and no footer.
+  if (src.includes("SiteChrome")) continue;
   offenders.push(f);
 }
 
@@ -66,9 +73,9 @@ if (offenders.length === 0) {
   console.log(`PASS  every shipping route has chrome or is exempt by name (${routes.length} routes scanned)`);
 } else {
   failed++;
-  console.log(`FAIL  ${offenders.length} shipping route(s) render neither SiteChrome nor SpineShell:`);
+  console.log(`FAIL  ${offenders.length} shipping route(s) render no SiteChrome:`);
   for (const f of offenders) console.log(`        ${f}`);
-  console.log("      Read the route before exempting it. If it should have chrome, wrap it.");
+  console.log("      Read the route before exempting it. If it should have chrome, wrap its body in <SiteChrome> as the other spine routes do (SpineShell is the ground, not the chrome) and write no <main> of its own.");
 }
 
 /* The exemption list must not rot. An entry naming a file that no longer exists

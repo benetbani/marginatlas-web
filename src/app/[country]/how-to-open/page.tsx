@@ -6,10 +6,16 @@
  * archetypes (key-value grid, tiers table, note list, terminus) and nothing
  * else. Unknown country: a 404 from generateMetadata, before the shell
  * flushes, for the reason recorded on the country page.
+ *
+ * THE PAGE DRAWS THE SITE'S CHROME, as every other spine route does (the bar and its sheet, the one <main>, the newsletter bar and the
+ * footer: src/components/SiteChrome.tsx). It once wrote a <main> of its own inside the shell and drew none of them, and the build of
+ * 2026-10-11 measured it so (header false, footer false, main true); the route-chrome contract let a route that named SpineShell count
+ * as having chrome, and the shell draws only the ground. tests/chrome/masthead.test.ts draws this route and reads the markup.
  */
 import * as React from "react";
 import { notFound } from "next/navigation";
 import { COUNTRIES } from "@/lib/taxonomy";
+import { SiteChrome } from "@/components/SiteChrome";
 import { SpineShell } from "@/components/spine/shell";
 import { HowToBody } from "@/components/spine/country/how-to-view";
 import { buildHowTo } from "@/lib/spine/howto_rows";
@@ -39,12 +45,13 @@ export default async function HowToOpenPage({ params }: { params: Promise<Params
   const { country } = await params;
   const iso2 = country.toUpperCase();
   if (!buildHowTo(iso2)) notFound();
+  /* SiteChrome's <main id="main"> is the page's one landmark, on the site's gutter and the 16px under the bar that the trail's rule in
+     globals.css (THE ZONES, item P2.1) paints over; the body is the shell's only content, its trail first. */
   return (
-    <SpineShell>
-      {/* The main landmark lives in the page file, where the landmark gate reads it. */}
-      <main className="mx-auto max-w-[1120px] px-4 py-2 md:px-6">
+    <SiteChrome>
+      <SpineShell>
         <HowToBody iso2={iso2} />
-      </main>
-    </SpineShell>
+      </SpineShell>
+    </SiteChrome>
   );
 }

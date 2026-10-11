@@ -102,15 +102,12 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
     default: console.error("unknown surface", surface); process.exit(2);
   }
   if (!data) { console.log(`  ${surface} ${slugs.join("/")}: NO DATA (the adapter returned nothing; this instance does not render)`); return null; }
-  /* The how-to page carries its main landmark in the page file, so the harness
-     render wraps the body the same way; without it the filter would find no
-     section card under main and pass on nothing. */
   /* The hood surface's second slug is the district in focus; the body draws
      the hub with `focus` unset. A district the scheme does not hold renders
      the hub's own cards with the take, the table and the notes self-omitted
      (the builders return null), which the page gates then red, as they should. */
   const inner = surface === "howto"
-    ? React.createElement("main", { className: "mx-auto max-w-[1120px] px-4 py-2 md:px-6" }, React.createElement(C, data))
+    ? React.createElement(C, data)
     : surface === "hood" && slugs[1]
       ? React.createElement(C, { data, focus: slugs[1] })
       : React.createElement(C, { data });
@@ -121,10 +118,11 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
      render measures the widths a visitor gets (1072 of content at 1280, 720 at
      768, 343 at 375: the one 16px phone gutter of critique pass 3, round D1; the
      column was 327 at 375 under the old 24px gutter, the renders read 343 at 375
-     before this wrap, production 295). The how-to route draws no SiteChrome and
-     keeps the main its page file writes. */
+     before this wrap, production 295). The how-to route draws SiteChrome too since
+     2026-10-11 (it wrote a main of its own before), so its body takes this wrap as
+     the others do. */
   const shelled = selfShelled ? inner : React.createElement(SpineShell as any, null, inner);
-  const body = renderToStaticMarkup(surface === "howto" ? shelled : React.createElement("main", { className: `relative max-w-content mx-auto ${GUTTER} pt-4` }, shelled));
+  const body = renderToStaticMarkup(React.createElement("main", { className: `relative max-w-content mx-auto ${GUTTER} pt-4` }, shelled));
   mkdirSync("scratchpad/harness/pages", { recursive: true });
   const out = `scratchpad/harness/pages/${surface}-${slugs.join("-")}.html`;
   writeFileSync(out, mapAssets(page(`${surface} ${slugs.join(" ")}`, body)), "utf8");
