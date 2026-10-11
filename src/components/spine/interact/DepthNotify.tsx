@@ -64,9 +64,15 @@ export function DepthNotify({ source = "", words, choices }: { source?: string; 
      own, then the button under it, each as wide as the column. The field was `flex-1`, a flex item with a basis of 0, so at 375 it never forced a wrap and shared the label's row at about
      56px (about "Your"), the button wrapping under it. `w-full flex-none` makes its basis the whole row, and `min-w-0` (as the footer's newsletter bar keeps its field inside the screen at
      320) lets it shrink with the column and never push past it. From 640 it is the row it was: the field takes the leftover up to `max-w-xs`, the button its own width. */
+  /* THE THIN PAGE'S LABEL AND FIELD ARE THE PICKER'S (fix round F3, item M13; the final review, part 3): round F2 (P2.5) took /compare's and /you's forms to the picker's label and field, and this
+     form stayed on the old system on every thin city and trade page: the field's edge was --c-border (1.29:1 on white, 1.19:1 on the foot band), its type 14px (iOS Safari zooms the page into a field under 16px),
+     its placeholder 2.54:1 and its label the body ink at weight 400. The field takes the picker's field (h-12 w-full rounded-xl border border-[var(--control-line)] bg-white px-4 text-base
+     font-medium text-[var(--c-ink)] hover:border-[var(--c-ink2)] md:text-sm), and /you's placeholder (muted, normal weight) as an input that has one, with NO focus style of its own, so the floor in
+     globals.css draws the 2px ink ring; the layout classes round F2 gave it follow, unchanged. The label takes the picker's own type (text-sm font-medium text-[var(--c-ink2)]) WITHOUT its `mb-2 block`:
+     that pair stacks a label over a field, and this form's own gap-3 and items-center place the label (the margin lifted its middle 4px above the field's from 640 and opened the gap to 20px from 12 under 640). */
   return (
     <form data-depth-notify="" data-page-foot onSubmit={submit} className="flex flex-wrap items-center gap-3 pt-6 pb-6">
-      <label htmlFor="depth-notify-email" className="text-[length:var(--t-body)] text-[var(--c-ink)]">{words.label}</label>
+      <label htmlFor="depth-notify-email" className="text-sm font-medium text-[var(--c-ink2)]">{words.label}</label>
       <input
         id="depth-notify-email"
         type="email"
@@ -74,7 +80,7 @@ export function DepthNotify({ source = "", words, choices }: { source?: string; 
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder={words.placeholder}
-        className="min-h-11 w-full min-w-0 flex-none rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-3 text-[length:var(--t-body)] text-[var(--c-ink)] sm:w-auto sm:max-w-xs sm:flex-1"
+        className="h-12 w-full rounded-xl border border-[var(--control-line)] bg-white px-4 text-base font-medium text-[var(--c-ink)] transition-colors placeholder:font-normal placeholder:text-[var(--c-muted)] hover:border-[var(--c-ink2)] md:text-sm min-w-0 flex-none sm:w-auto sm:max-w-xs sm:flex-1"
       />
       <button type="submit" disabled={state === "sending"} className={`${button} w-full sm:w-auto`}>
         {words.button}

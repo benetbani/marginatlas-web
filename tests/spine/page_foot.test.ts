@@ -19,6 +19,7 @@ import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { ReportFoot } from "../../src/components/spine/ReportFoot";
 import { SourcesFoot } from "../../src/components/spine/SourcesFoot";
 import { DepthNotify } from "../../src/components/spine/interact/DepthNotify";
+import { ComboField } from "../../src/components/ComboField";
 import { COPY } from "../../src/lib/spine/copy";
 import { checkedDateForCity, checkedDateForCountry, checkedDateForTrade, REGISTER_BUILT } from "../../src/lib/spine/checked";
 import { reportHref } from "../../src/lib/spine/report";
@@ -140,6 +141,27 @@ check("the home's ask (the form with a place to choose) is a card's content and 
 const tagClass = (html: string, tag: "input" | "button") => (new RegExp(`<${tag}\\b[^>]*?class="([^"]*)"`).exec(html)?.[1] ?? "").split(" ").filter(Boolean);
 const notifyField = tagClass(notifyIdle, "input"), notifyButton = tagClass(notifyIdle, "button");
 check(`under 640 the thin page's field has a row of its own and the button its own under it, and from 640 they share the row as before (field: ${notifyField.filter((k) => /^(sm:)?(w-|flex-|max-w-|min-w-)/.test(k)).join(" ")}; button: ${notifyButton.filter((k) => /^(sm:)?w-/.test(k)).join(" ")})`, ["w-full", "flex-none", "min-w-0", "sm:w-auto", "sm:flex-1", "sm:max-w-xs"].every((k) => notifyField.includes(k)) && !notifyField.includes("flex-1") && ["w-full", "sm:w-auto"].every((k) => notifyButton.includes(k)), NOTIFY_AT.file, "under 640 give the thin page's address field w-full flex-none min-w-0 (its own row: a flex-1 item has a basis of 0 and shared the label's row at 56px) and the button w-full, and from 640 sm:w-auto sm:flex-1 sm:max-w-xs on the field and sm:w-auto on the button");
+/* THE THIN PAGE'S FIELD AND ITS LABEL TAKE THE PICKER'S (fix round F3, item M13; the final review, part 3). Round F2 (P2.5) took /compare's Region select and /you's labels, select and revenue
+   input to the picker's label and field; this form stayed on the old system on every thin city and trade page: its address field on the --c-border edge (1.29:1 on white, 1.19:1 on the foot band) in 14px type (iOS
+   Safari zooms the page into a field under 16px), its placeholder at 2.54:1, and its label in the body ink. The field takes the field of that round (48px, the card's corner, the control token's 3:1
+   edge, 16px under 768 and 14 from it, an ink hover) and, as an input with a placeholder, the placeholder that round gave /you's revenue input (muted, normal weight), with NO focus style of its
+   own, so the floor in globals.css draws the 2px ink ring. The label takes the picker's own type, read from the rendered ComboField and not typed here, WITHOUT its mb-2 block: that pair stacks a
+   label over a field, and this form lays itself out (a flex row from 640 with items-center, where the margin lifted the label's middle 4px above the field's, measured; stacked under 640 with
+   gap-3, where it opened the label's gap to 20px from 12), so the label carries no margin and the form's gap places it. The layout classes round F2 gave the field stay (the check above reads
+   them). BLIND SPOT: this reads class names in the markup; the edge's contrast, the 16px under 768, the label's middle against the field's and the ring on a Tab are the browser's
+   (scratchpad/home-reform/f3_probe.mjs on a thin city page), and a class that a later rule overrode would read as present. */
+const pickerLabel = /<label for="country" class="([^"]*)"/.exec(renderToStaticMarkup(React.createElement(ComboField, { id: "country", label: "Country", options: [{ value: "GB", label: "United Kingdom" }], value: "GB", onChange: () => {} })))?.[1] ?? "";
+const pickerType = pickerLabel.split(" ").filter((k) => k && k !== "block" && !/^-?m[tbxylr]?-/.test(k));
+const notifyLabel = (/<label for="depth-notify-email" class="([^"]*)"/.exec(notifyIdle)?.[1] ?? "").split(" ").filter(Boolean);
+const labelFaults = [
+  ...pickerType.filter((k) => !notifyLabel.includes(k)).map((k) => `lacks ${k}`),
+  ...notifyLabel.filter((k) => /^-?m[tbxylr]?-|^text-\[length:|^text-\[var\(--c-ink\)\]$/.test(k)).map((k) => `has ${k}`),
+];
+check(`the thin page's label is the picker's own type, "${pickerType.join(" ")}", with no margin of its own, so the form's gap places it (${labelFaults.join("; ") || notifyLabel.join(" ")})`, pickerType.length >= 3 && labelFaults.length === 0, NOTIFY_AT.file, "give the thin page's <label htmlFor=\"depth-notify-email\"> the picker's label type, the class ComboField draws for its own (text-sm font-medium text-[var(--c-ink2)]) and not its mb-2 block, which stack a label over a field and misplace it in this form's row (4px above the field's middle from 640, a 20px gap for 12 under it): the form's own gap-3 and items-center place it");
+const FIELD_TOKENS = ["h-12", "w-full", "rounded-xl", "border", "border-[var(--control-line)]", "bg-white", "px-4", "text-base", "font-medium", "md:text-sm", "text-[var(--c-ink)]", "hover:border-[var(--c-ink2)]", "placeholder:font-normal", "placeholder:text-[var(--c-muted)]"];
+const fieldLacks = FIELD_TOKENS.filter((k) => !notifyField.includes(k)).map((k) => `lacks ${k}`);
+const fieldForeign = notifyField.filter((k) => /^(?:focus|focus-visible|focus-within):|--c-border|--c-card|--t-body|^min-h-|^rounded-(?!xl$)|^px-(?!4$)/.test(k)).map((k) => `has ${k}`);
+check(`the thin page's address field is the picker's field: 48px, the 12px corner, the control token's edge, 16px under 768 and 14 from it, an ink hover, the muted placeholder in normal weight, no focus style of its own and none of the faint field's classes (${[...fieldLacks, ...fieldForeign].join("; ") || `all ${FIELD_TOKENS.length}`})`, notifyField.length > 0 && fieldLacks.length === 0 && fieldForeign.length === 0, NOTIFY_AT.file, "give the thin page's address field the picker's field, h-12 w-full rounded-xl border border-[var(--control-line)] bg-white px-4 text-base font-medium text-[var(--c-ink)] transition-colors placeholder:font-normal placeholder:text-[var(--c-muted)] hover:border-[var(--c-ink2)] md:text-sm, then the form's own layout classes, with no focus: or focus-visible: class of its own (the floor in globals.css draws the 2px ink ring)");
 const css = readFileSync("src/app/globals.css", "utf8");
 const band = /\[data-sources-foot\],\s*\[data-page-foot\]\s*\{([^}]*)\}/.exec(css)?.[1] ?? "";
 const bandDecl = Object.fromEntries(band.split(";").map((d) => d.trim()).filter(Boolean).map((d) => [d.slice(0, d.indexOf(":")).trim(), d.slice(d.indexOf(":") + 1).trim()]));
