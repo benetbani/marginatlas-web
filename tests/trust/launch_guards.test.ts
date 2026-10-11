@@ -238,14 +238,22 @@ async function main() {
   const errorOut = typeof server.beforeSend === "function" ? server.beforeSend(dirty("error"), { originalException: new Error("a page failed") }) : null;
   const errorLeft = errorOut === null ? ["no beforeSend in the config, or it dropped the report"] : leftIn(errorOut);
   check(`a server report leaves the config without cookies, without the reader's place (the edge region too) and without a copy of them (left: ${errorLeft.join(", ") || "nothing"})`, errorLeft.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
-  check("a server report keeps the request's address and its other headers, and the form-field scrub still runs", keptIn(errorOut) && errorOut?.request?.data?.email === "[scrubbed]" && errorOut?.request?.data?.note === "kept", { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check("a server report keeps the request's address and its other headers", keptIn(errorOut), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   check("a server report for Next's own dynamic-render signal is still dropped", typeof server.beforeSend === "function" && server.beforeSend(dirty("error"), { originalException: new Error("Dynamic server usage: cookies") }) === null, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   const traceOut = typeof server.beforeSendTransaction === "function" ? server.beforeSendTransaction(dirty("transaction"), {}) : null;
   const traceLeft = traceOut === null ? ["no beforeSendTransaction in the config, or it dropped the trace"] : leftIn(traceOut);
   check(`a server trace leaves the config without cookies, without the reader's place, without the reader's address and without a copy of the headers (left: ${traceLeft.join(", ") || "nothing"})`, traceLeft.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   check("a server trace keeps its timings' names and the request's address and other headers", keptIn(traceOut), { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  /* FIX ROUND F1, G1 (the final review's M1): the header says a report and a trace leave "without ... any body", and the code used to say
+     less: it dropped a body held as text whole, and in an object body it replaced only the values whose KEY looked like a field name, so
+     the dirty event's `note: "kept"` rode along (and a contact or correction form's `message` would have, had any SDK path or future
+     integration attached an object). The object body leaves whole too, from a report and from a trace, and no text of it is left. */
+  const objectBodyLeft = (out: any): string[] => out === null ? ["no event: the config dropped it"] : [...(out.request?.data !== undefined ? ["request.data"] : []), ...(JSON.stringify(out).includes("kept") ? ["the text of the object body's note"] : [])];
+  const objectBodyReport = objectBodyLeft(errorOut), objectBodyTrace = objectBodyLeft(traceOut);
+  check(`a server report leaves without an object body, whole, not its other fields (left: ${objectBodyReport.join(", ") || "nothing"})`, objectBodyReport.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
+  check(`a server trace leaves without an object body, whole, not its other fields (left: ${objectBodyTrace.join(", ") || "nothing"})`, objectBodyTrace.length === 0, { file: SENTRY_SERVER, remedy: SENTRY_REMEDY });
   /* The Node SDK reads up to 10 KB of any body a route handler reads and attaches it as TEXT, so the contact, correction and
-     newsletter forms' names, emails and messages would ride on a report or a trace; the field-name scrub only reads objects. */
+     newsletter forms' names, emails and messages would ride on a report or a trace; a scrub that reads field names cannot see into text. */
   const textBody = JSON.stringify({ name: "Made Up Reader", email: READER, message: "hello from the test" });
   const withTextBody = (e: any) => ({ ...e, request: { ...e.request, data: textBody } });
   const bodyReport = typeof server.beforeSend === "function" ? server.beforeSend(withTextBody(dirty("error")), { originalException: new Error("a page failed") }) : null;

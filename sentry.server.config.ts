@@ -36,18 +36,10 @@ function keepNoCookiesPlaceOrBody<T extends Sentry.Event>(event: T): T {
         if (lower === "cookie" || lower.startsWith("x-vercel-ip-") || lower === "x-vercel-proxied-for" || lower === "x-vercel-id") delete headers[name];
       }
     }
-    // Drop any captured request body that looks form-shaped.
-    if (request.data && typeof request.data === "object") {
-      const data = request.data as Record<string, unknown>;
-      for (const key of Object.keys(data)) {
-        if (/(email|name|password|phone|address|ssn|token|secret|key)/i.test(key)) {
-          data[key] = "[scrubbed]";
-        }
-      }
-    } else if (typeof request.data === "string") {
-      // The SDK captures a body it read as text, which cannot be searched for field names: drop it whole.
-      delete request.data;
-    }
+    // Drop the request body whole, in whatever shape the SDK holds it: the header's "any body". The SDK captures a body it read as
+    // text, which cannot be searched for field names; and an object's keys that do not look like one (a form's `message`) would go
+    // with the report if only the matching keys were replaced, so no key is read: the body is not kept (fix round F1, final review M1).
+    delete request.data;
   }
   // A trace's root span copies the request's headers onto itself (Next's handleOnSpanStart): the same cookies and place, and the address.
   for (const attributes of [event.contexts?.trace?.data, ...(event.spans ?? []).map((span) => span.data)]) {
