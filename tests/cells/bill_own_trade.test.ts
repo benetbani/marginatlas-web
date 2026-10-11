@@ -49,5 +49,13 @@ check("London, Manchester, Liverpool: $426K under 'A UK-wide estimate', stamped 
 check("a bill that names no country prints no bill", buildOpen(seed({ items: own?.items }, "liverpool", "Liverpool"))?.state !== "held", OPEN, SCOPE);
 check("a bill of a country with no words prints no bill", buildOpen(seed({ ...own, scope: "FR" }, "liverpool", "Liverpool"))?.state !== "held", OPEN, SCOPE);
 
+/* THE US BILL PRINTS NONE FOR NOW (review tf-review-2 I-1; QUEUE us:cells-master-parent-mark): a US state page reads cells_master, and that path never marks a row
+   borrowed from a parent trade (the parent tier of the US match, src/lib/cells.ts), so a sub-niche that lands on the restaurants row would print the full-service
+   bill as "A US-wide estimate", stamped as its own trade. Only the UK's bill has words until the US path marks a parent's row. */
+const COPY_FILE = "src/lib/spine/copy.ts";
+const US_BILL = "keep US out of COPY.tradeOpen.heldScope until the US path marks a row it borrows from a parent trade (cells_master in src/lib/cells.ts, QUEUE us:cells-master-parent-mark): unmarked, a sub-niche such as pizzerias would print the full-service bill as 'A US-wide estimate', stamped as its own trade";
+const usPizzerias = buildOpen({ meta: { iso2: "US", geo: "california", city: "California", industry: "pizzerias", industry_id: "pizzerias" }, setup: { ...own, scope: "US" } });
+check("a US bill prints no held bill, because the US path borrows a parent's row unmarked (QUEUE us:cells-master-parent-mark)", usPizzerias?.state !== "held", COPY_FILE, US_BILL);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("cells/bill_own_trade: all pass");

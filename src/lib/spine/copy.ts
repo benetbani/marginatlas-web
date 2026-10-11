@@ -1734,8 +1734,10 @@ export const COPY = {
     /** The withheld state earns it back (the same day, the goal's A4): the two figures the card holds, no stated line. */
     /** At a city's prices (plan 06, task A6): the keyed New York index times the city's place factor, called an estimate. */
     basisPlace: "An estimate at {city} prices.",
-    /** WHOSE BILL IT IS (plan 2026-10-11): the label under the held total, by the bill's country (setup_items.ts scope); a country with no words here prints no bill. A label, never a sentence. */
-    heldScope: { GB: "A UK-wide estimate", US: "A US-wide estimate" },
+    /** WHOSE BILL IT IS (plan 2026-10-11): the label under the held total, by the bill's country (setup_items.ts scope); a country with no words here prints no bill. A label, never a sentence.
+     *  ONLY GB HAS WORDS (review tf-review-2 I-1; QUEUE us:cells-master-parent-mark): a US state page reads cells_master, whose path never marks a row borrowed from a parent trade, so a
+     *  sub-niche (pizzerias, fast casual) could print the full-service bill as "A US-wide estimate", stamped as its own trade. US takes its words back when that path marks a parent's row. */
+    heldScope: { GB: "A UK-wide estimate" },
     kickerRecover: "Earning it back",
     basisRecover: "",
     withheld: "No cost figures for this trade here yet.",
