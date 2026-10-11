@@ -80,7 +80,11 @@ export async function POST(req: NextRequest) {
         }),
       });
       if (!r.ok && r.status !== 404) {
-        console.error("[correction] supabase error", r.status, await r.text());
+        /* THE STATUS AND THE REPLY'S CODE AND MESSAGE, NEVER ITS BODY (critique pass 3, fix round D2, cleanup item 25): the database's
+           reply to a failed insert can echo the row, `details` holding what the sender typed, and a console line reaches the host's
+           logs and, as a breadcrumb, every error report. As the newsletter route logs its failure (error.code, error.message). */
+        const reply: { code?: string; message?: string } | null = await r.json().catch(() => null);
+        console.error("[correction] supabase error, status:", r.status, "code:", reply?.code ?? "none", "message:", reply?.message ?? "none");
       }
     } catch (e) {
       console.error("[correction] supabase fetch failed", e);

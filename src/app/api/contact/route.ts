@@ -166,7 +166,12 @@ export async function POST(req: NextRequest) {
             "Every sender is being told their message was received.",
         );
       } else if (!r.ok) {
-        console.error("[contact] supabase error", r.status, await r.text());
+        /* THE STATUS AND THE REPLY'S CODE AND MESSAGE, NEVER ITS BODY (critique pass 3, fix round D2, cleanup item 25): the database's
+           reply to a failed insert can echo the row, `details` holding what the sender typed ("Failing row contains (...)"), and a
+           console line reaches the host's logs and, as a breadcrumb, every error report. The newsletter route logs its failure the
+           same way (error.code, error.message); tests/trust/forms_store_nothing_more.test.ts reds on a reply body read in a console call. */
+        const reply: { code?: string; message?: string } | null = await r.json().catch(() => null);
+        console.error("[contact] supabase error, status:", r.status, "code:", reply?.code ?? "none", "message:", reply?.message ?? "none");
       }
     } catch (e) {
       console.error("[contact] supabase fetch failed", e);
