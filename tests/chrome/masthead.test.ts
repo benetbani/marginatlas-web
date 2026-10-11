@@ -466,6 +466,25 @@ async function main() {
      scratchpad/home-reform/p3_door_lines.mjs (Range rectangles per word, Chromium). */
   check("the 404's six door lines are balanced (text-balance), so none ends on a one-word line", (nfMain.match(/<span class="[^"]*\btext-balance\b/g) ?? []).length === 6, { file: NOT_FOUND, remedy: "give each door's line text-balance in src/app/not-found.tsx: unbalanced, 'continent', 'side', 'even' and 'from' stood alone on a last line at seven of eight widths" });
   check("the 404 has one h1", (nfHtml.match(/<h1\b/g) ?? []).length === 1, { file: NOT_FOUND });
+  /* THE DOORS AS ROWS UNDER 640, EACH WITH THE PROOF DOORS' ARROW (critique pass 3, fix round D2, item P2.6). Two-up cards on a phone wrapped their
+     lines to three and left 45 to 60px blank under the short ones (the photograph p3-404-375), and no door of the 404 carried the arrow every other
+     door of the site carries. Under 640 the six doors are rows as Where to next draws its doors: one column, the name at 16 medium over its line,
+     the arrow at the edge, a hairline between rows; from 640 the cards stay as they were (two-up, three-up from 1024). At every width a door
+     carries the arrow the home's proof doors carry, read here from HomeProofs.tsx' own DoorTitle and not typed: the same glyph, size and ink,
+     the margin that sets it on its own title line aside. BLIND SPOT: this reads classes; the round's probe measures the rows, the arrows and the
+     page's width at 320, 375 and 1280 in a browser. */
+  const ROWS_AT = { file: NOT_FOUND, remedy: "draw the 404's list as one column under 640 (grid-cols-1, a hairline between rows, no box) and cards from 640 (sm:), each door's name at 16 medium over its line with the proof doors' arrow at the title row's edge" };
+  const toks = (s: string | undefined) => (s ?? "").replace(/&amp;/g, "&").split(" ").filter(Boolean);
+  const ulClasses = toks(/<ul class="([^"]*)"/.exec(nfMain)?.[1]);
+  check(`the 404's list is one column under 640 and two-up from it, three-up from 1024 (${ulClasses.join(" ")})`, ["grid-cols-1", "sm:grid-cols-2", "lg:grid-cols-3", "sm:gap-3"].every((k) => ulClasses.includes(k)) && !ulClasses.includes("grid-cols-2") && !ulClasses.includes("gap-3"), ROWS_AT);
+  const doorEls = [...nfMain.matchAll(/<li class="([^"]*)"><a class="([^"]*)" href="([^"]+)">([\s\S]*?)<\/a><\/li>/g)].map((m) => ({ li: toks(m[1]), a: toks(m[2]), href: m[3], inner: m[4] }));
+  check(`each of the six doors is a row under 640 with a hairline above it but the first's, no hairline from 640 (${doorEls.length} doors)`, doorEls.length === 6 && doorEls.every((d) => ["border-t", "border-[var(--c-border)]", "first:border-t-0", "sm:border-t-0"].every((k) => d.li.includes(k))), ROWS_AT);
+  check("each door's link has no box under 640 (no border, fill or card padding unprefixed) and is the card from 640 (sm:border, sm:rounded-[12px], sm:bg-white, sm:p-5, the equal height)", doorEls.length === 6 && doorEls.every((d) => d.a.includes("py-3") && !["border", "rounded-[12px]", "bg-white", "p-5", "h-full"].some((k) => d.a.includes(k)) && ["sm:border", "sm:border-[var(--c-border)]", "sm:rounded-[12px]", "sm:bg-white", "sm:p-5", "sm:h-full"].every((k) => d.a.includes(k))), ROWS_AT);
+  const nameClasses = doorEls.map((d) => toks(/<span class="([^"]*)">[^<]*<\/span><span aria-hidden="true"/.exec(d.inner)?.[1]));
+  check(`each door's name is 16 medium in ink (semibold from 640, where the card was) and its line stands under it (${nameClasses.filter((c) => c.includes("text-[length:var(--t-lead)]") && c.includes("font-medium")).length} of 6)`, doorEls.length === 6 && nameClasses.every((c) => ["text-[length:var(--t-lead)]", "font-medium", "text-[var(--c-ink)]", "sm:font-semibold"].every((k) => c.includes(k))) && doorEls.every((d) => d.inner.indexOf("aria-hidden") < d.inner.indexOf("text-balance")), ROWS_AT);
+  const proofArrow = toks(/<span aria-hidden className="([^"]*)">&#8594;<\/span>/.exec(readFileSync("src/components/spine/home/HomeProofs.tsx", "utf8"))?.[1]).filter((k) => !/^mt-/.test(k)).sort();
+  const doorArrows = doorEls.map((d) => [...d.inner.matchAll(/<span aria-hidden="true" class="([^"]*)">→<\/span>/g)].map((m) => toks(m[1]).filter((k) => !/^mt-/.test(k)).sort()));
+  check(`every door carries the arrow the home's proof doors carry, once, at every width: the same glyph, size and ink (${proofArrow.join(" ")}), the margin aside (${doorArrows.filter((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(proofArrow)).length} of 6)`, proofArrow.length >= 3 && doorEls.length === 6 && doorArrows.every((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(proofArrow)), ROWS_AT);
 
   /* ---------------- 3. THE SHEET, PRESSED (jsdom) ---------------- */
   const { JSDOM } = await import("jsdom");

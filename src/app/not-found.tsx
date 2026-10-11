@@ -63,14 +63,22 @@ export default function NotFound() {
           Nothing at this address
         </h1>
         <p className="mt-3 text-[length:var(--t-lead)] text-[var(--c-ink2)]">Check the spelling, or start from one of these.</p>
-        <ul className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-3">
+        {/* THE DOORS: ROWS UNDER 640, CARDS FROM IT (critique pass 3, fix round D2, item P2.6). Two-up cards on a phone wrapped their lines to
+            three and left 45 to 60px blank under the short ones, so under 640 the six doors are rows as Where to next draws its doors: one
+            column, the name at 16 medium over its line, the arrow at the edge, a hairline between rows and no box. From 640 they are the cards
+            they were (two-up, three-up from 1024). At every width each door carries the arrow the home's proof doors carry (HomeProofs.tsx,
+            DoorTitle: `&#8594;` at the body rung in ink2, aria-hidden), in the title row beside the name. */}
+        <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
           {HATCHES.map((h) => (
-            <li key={h.href}>
+            <li key={h.href} className="border-t border-[var(--c-border)] first:border-t-0 sm:border-t-0">
               <Link
                 href={h.href}
-                className="block h-full rounded-[12px] border border-[var(--c-border)] bg-white p-5 transition-colors hover:border-[var(--c-ink2)]"
+                className="group block py-3 sm:h-full sm:rounded-[12px] sm:border sm:border-[var(--c-border)] sm:bg-white sm:p-5 sm:transition-colors sm:hover:border-[var(--c-ink2)]"
               >
-                <span className="block font-semibold text-[var(--c-ink)]">{h.label}</span>
+                <span className="flex items-center justify-between gap-3">
+                  <span className="text-[length:var(--t-lead)] font-medium text-[var(--c-ink)] group-hover:underline sm:font-semibold sm:group-hover:no-underline">{h.label}</span>
+                  <span aria-hidden className="shrink-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">&#8594;</span>
+                </span>
                 <span className="mt-1 block text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{h.desc}</span>
               </Link>
             </li>
