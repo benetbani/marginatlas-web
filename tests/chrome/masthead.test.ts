@@ -409,15 +409,36 @@ async function main() {
   check(`under 768 the sheet is the full-width white panel it was; from 768 its box is transparent, takes no pointer and does not scroll${boxLack.length ? `: lacks ${boxLack.join(" ")}` : ""}`, boxLack.length === 0, { file: SHEET, remedy: PANEL_REMEDY });
   const navLack = missingFrom(navTokens, ["md:ml-auto", "md:w-[22.5rem]", "md:pointer-events-auto", "md:bg-white", "md:border", "md:border-t-0", "md:border-[var(--c-border)]", "md:rounded-b-xl", "md:shadow-card", "md:px-3", "md:max-h-[calc(100dvh_-_var(--atlas-header-h))]", "md:overflow-y-auto", "md:overscroll-contain"]);
   check(`from 768 the <nav> is a 360px panel on the content's right edge: white, a hairline on three sides, 12px under-corners, the card's shadow, scrolling within the viewport${navLack.length ? `: lacks ${navLack.join(" ")}` : ""}`, navLack.length === 0, { file: SHEET, remedy: PANEL_REMEDY });
-  check("the panel is a dropdown, not a dialog: no scrim, no dim, no fixed layer, no modal role, no inert page", !/\bfixed\b|inset-0|backdrop|bg-black|bg-\[var\(--c-ink|aria-modal|role="dialog"|<dialog|\binert\b/.test(o.sheet + p.sheet), { file: SHEET, remedy: "his refusal of modals (2026-09-22): the sheet is a dropdown under its button, with no scrim over the page and no focus trap" });
+  /* The one solid ink fill the sheet may hold is the Pricing row's pill (critique pass 3, fix round D2, item P2.10: an in-flow span inside a link, the
+     bar's own pill), so that element is taken out of the markup the scrim guard reads; the guard itself is unchanged for everything else. */
+  const sheetsWithoutPill = (o.sheet + p.sheet).replace(/<span class="inline-flex [^"]*">Pricing<\/span>/g, "");
+  check("the panel is a dropdown, not a dialog: no scrim, no dim, no fixed layer, no modal role, no inert page", !/\bfixed\b|inset-0|backdrop|bg-black|bg-\[var\(--c-ink|aria-modal|role="dialog"|<dialog|\binert\b/.test(sheetsWithoutPill), { file: SHEET, remedy: "his refusal of modals (2026-09-22): the sheet is a dropdown under its button, with no scrim over the page and no focus trap" });
   const rows = (h: string) => anchors(h).map((n) => n.text || (/>Sign in</.test(n.tag) ? "Sign in" : ""));
-  const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>([^<]*)<\/(?:a|span)>/g)].map((m) => m[1].trim());
+  /* A row's words: the text of the element that carries min-h-12, with a simple child span (the Pricing row's pill, critique pass 3, fix round D2,
+     item P2.10) read as text. */
+  const spanRows = (h: string) => [...h.matchAll(/<(?:a|span)\b[^>]*class="[^"]*min-h-12[^"]*"[^>]*>((?:[^<]|<span\b[^>]*>[^<]*<\/span>)*)<\/(?:a|span)>/g)].map((m) => m[1].replace(/<[^>]*>/g, "").trim());
   const wantOff = [...WANT_NAMES, "About the figures", "Who runs this"];
   check(`the sheet's rows, switches off: ${spanRows(o.sheet).join(", ")}`, JSON.stringify(spanRows(o.sheet)) === JSON.stringify(wantOff));
   /* The server's markup is drawn before the session is read, so the account row is the entry's first state, Sign in (critique pass 2,
      fix round C2, item P2.7); the mounted sheet below swaps it to Account if the read says the reader is signed in. */
   check(`the sheet's rows, both switches on: ${spanRows(p.sheet).join(", ")}`, JSON.stringify(spanRows(p.sheet)) === JSON.stringify([...wantOff, "Sign in", "Pricing"]));
   check("every row of the sheet is 48px (min-h-12)", rows(o.sheet).length === wantOff.length && anchors(o.sheet).every((n) => /min-h-12/.test(n.tag)));
+  /* LAUNCH DAY'S SHEET (critique pass 3, fix round D2, item P2.10). With both switches on, Pricing in the sheet was a plain row like the seven names,
+     where the bar draws it as its one ink pill, so the one action read differently in its two places. The sheet's Pricing row is the bar's pill at
+     the row's left, in the row's own 48px target (the pill is drawn inside the link, never the link's size) and under the site's 2px focus ring
+     (the link keeps the floor's ring: no outline of its own). The pill's look is ONE class constant, PRICING_LOOK in src/lib/nav.ts (a server-safe
+     module: MobileNav is a client file and SiteChrome a server one), read by both and spelled in neither; its sheet form is compared with the bar's
+     as drawn, display classes aside, never against a literal typed here. With the switches off nothing about Pricing draws anywhere (above). */
+  const barPillTokens = (/<a class="([^"]*)" href="\/pricing"/.exec(p.bar)?.[1] ?? "").split(" ").filter((k) => k && !["tap", "hidden", "xl:inline-flex"].includes(k)).sort();
+  const sheetPricing = /<a class="([^"]*)" href="\/pricing"><span class="([^"]*)">Pricing<\/span><\/a>/.exec(p.sheet);
+  const sheetPillTokens = (sheetPricing?.[2] ?? "").split(" ").filter((k) => k && k !== "inline-flex").sort();
+  const PILL_AT = { file: SHEET, remedy: "draw the sheet's Pricing row as the bar's pill: PRICING_LOOK (src/lib/nav.ts) on an inline-flex span inside the link, which keeps ROW (min-h-12, border-l-2, pl-3) and the site's focus ring; the bar's pill is `tap hidden xl:inline-flex` plus the same PRICING_LOOK" };
+  check(`launch day: the sheet's Pricing row is the bar's ink pill at the row's left (${sheetPillTokens.join(" ") || "no pill"} against the bar's ${barPillTokens.join(" ") || "none"})`, !!sheetPricing && barPillTokens.length >= 6 && JSON.stringify(sheetPillTokens) === JSON.stringify(barPillTokens) && sheetPillTokens.includes("bg-[var(--c-ink)]") && sheetPillTokens.includes("rounded-full") && sheetPillTokens.includes("text-white"), PILL_AT);
+  const rowTokens = (sheetPricing?.[1] ?? "").split(" ");
+  check("the Pricing row keeps its 48px target and the focus floor's ring, and the pill stands at its left: min-h-12, a flex row, items-center, no justify, no outline of its own", ["min-h-12", "flex", "items-center", "border-l-2", "pl-3"].every((k) => rowTokens.includes(k)) && !rowTokens.some((k) => /^(justify-|outline|focus:outline|focus-visible:outline|ring)/.test(k)) && anchors(p.sheet).every((n) => /min-h-12/.test(n.tag)), PILL_AT);
+  const navSrc = code(NAVFILE), chromeSrc = code(CHROME), sheetSrc = code(SHEET);
+  const look = /export const PRICING_LOOK\s*=\s*"([^"]+)"/.exec(navSrc)?.[1] ?? "";
+  check(`the pill's look is one constant, PRICING_LOOK in src/lib/nav.ts, imported by the bar and the sheet and spelled in neither (${look ? look.split(" ").length + " classes" : "not exported"})`, look.includes("rounded-full") && look.includes("bg-[var(--c-ink)]") && /import \{[^}]*\bPRICING_LOOK\b[^}]*\} from "@\/lib\/nav"/.test(chromeSrc) && /import \{[^}]*\bPRICING_LOOK\b[^}]*\} from "@\/lib\/nav"/.test(sheetSrc) && !/px-3\.5|py-1\.5/.test(chromeSrc) && !/px-3\.5|py-1\.5/.test(sheetSrc), { file: NAVFILE, remedy: "export const PRICING_LOOK from src/lib/nav.ts, import it in SiteChrome.tsx and MobileNav.tsx, and spell the pill's classes in neither" });
   const sheetCountries = anchors(c.sheet).find((n) => n.href === "/countries");
   check("the sheet marks the page being read as the bar does: aria-current, ink, semibold, a 2px ink rule at the left", !!sheetCountries && /aria-current="page"/.test(sheetCountries.tag) && /border-\[var\(--c-ink\)\]/.test(sheetCountries.tag) && /font-semibold/.test(sheetCountries.tag) && /border-l-2/.test(sheetCountries.tag));
 

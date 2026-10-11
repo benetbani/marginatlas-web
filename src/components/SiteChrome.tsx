@@ -54,14 +54,15 @@ import { MobileNav } from "@/components/MobileNav";
    and with it (until fix round 7) the taxonomy and industries.json. */
 import { WatchTray } from "@/components/kit/WatchTray";
 import { isAuthEnabled, isWarmFrameEnabled, isPaywallOn } from "@/lib/feature_flags";
-import { FREE_DATA, GUTTER, NAV } from "@/lib/nav";
+import { FREE_DATA, GUTTER, NAV, PRICING_LOOK } from "@/lib/nav";
 
 /** The skip link: visually hidden until it takes focus, then an ink pill over the bar's corner (the site's focus floor rings it). */
 const SKIP =
   "sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-2 focus:z-toast focus:rounded-full focus:bg-[var(--c-ink)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white";
-/** Pricing while the paywall is on: the bar's one ink pill, last, from 1280; ink2 on hover (7.36:1 with white), never terracotta. */
-const PRICING_PILL =
-  "tap hidden xl:inline-flex items-center rounded-full bg-[var(--c-ink)] px-3.5 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--c-ink2)]";
+/** Pricing while the paywall is on: the bar's one ink pill, last, from 1280; ink2 on hover (7.36:1 with white), never terracotta. Its look is
+ *  PRICING_LOOK (src/lib/nav.ts), which the sheet's Pricing row draws too (critique pass 3, fix round D2, item P2.10); only the display is
+ *  the bar's own, hidden under 1280 where the sheet takes over. */
+const PRICING_PILL = `tap hidden xl:inline-flex ${PRICING_LOOK}`;
 /** A footer column's head: sentence case, 14 semibold white (it was 12px tracked capitals, which read as texture). */
 const FOOT_HEAD = "mb-3 text-sm font-semibold text-white";
 /** A footer column's rows: 44px tall on a phone, the type's own height from 768. */

@@ -16,7 +16,8 @@
  * (`max-w-content` and the site's one gutter, GUTTER in src/lib/nav.ts; it was max-w-7xl, up to 80px off the wordmark between 1120 and 1279); its height
  * capped at the viewport less the bar and scrollable (a landscape phone and 200 percent zoom cut its last rows off, and the page
  * could not scroll them into reach because the sheet moves with the sticky bar). Rows are 48px: the seven names (src/lib/nav.ts);
- * then, quieter, About the figures and Who runs this; then Sign in or Account and Pricing, each only while its switch is on. No
+ * then, quieter, About the figures and Who runs this; then Sign in or Account and Pricing, each only while its switch is on, Pricing as the
+ * bar's own ink pill at the row's left (PRICING_LOOK, src/lib/nav.ts; critique pass 3, fix round D2, item P2.10). No
  * Search row (critique pass 3, fix round D1, item P1.2): the bar carries Search on every page now, the home from its first paint, so
  * the open sheet showed it twice. The page being read is marked as the bar marks it, `aria-current="page"`, and for the eye: ink,
  * semibold, a 2px ink rule at the row's left.
@@ -29,7 +30,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GUTTER, NAV, SHEET_TRUST, barFrom, currentNav } from "@/lib/nav";
+import { GUTTER, NAV, PRICING_LOOK, SHEET_TRUST, barFrom, currentNav } from "@/lib/nav";
 import { isAuthEnabled } from "@/lib/feature_flags";
 import { AuthLink } from "@/components/HeaderAuth";
 
@@ -156,10 +157,14 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
                     <AuthLink onClick={close} className={`${ROW_MAIN} ${IDLE}`} />
                   </li>
                 ) : null}
+                {/* LAUNCH DAY'S PRICING IS THE BAR'S PILL (critique pass 3, fix round D2, item P2.10): while the paywall is on the bar draws Pricing as its
+                    one ink pill, and the sheet drew it as a plain row like the seven names, so the one action read differently in its two places.
+                    The link stays the 48px row (ROW) with the site's focus ring; the pill, PRICING_LOOK from src/lib/nav.ts (the bar's own look,
+                    one constant), is drawn inside it at the row's left, never the link's size. */}
                 {pricing ? (
                   <li>
-                    <Link href="/pricing" onClick={close} className={`${ROW_MAIN} ${IDLE}`}>
-                      Pricing
+                    <Link href="/pricing" onClick={close} className={`${ROW} border-transparent`}>
+                      <span className={`inline-flex ${PRICING_LOOK}`}>Pricing</span>
                     </Link>
                   </li>
                 ) : null}
