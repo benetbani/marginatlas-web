@@ -10,10 +10,13 @@
  * static export, killing every Vercel deploy of commits 4348a23 + 4680afc + 34b9e61. SiteChrome imports no Phosphor barrel: the
  * newsletter bar takes its three icons from `@phosphor-icons/react/dist/ssr/<Icon>`, and tests/chrome/masthead.test.ts walks
  * SiteChrome's whole import graph and reds on a bare `@phosphor-icons/react`. SiteChrome is also already prerendered on every
- * (site) page of every green deploy, so wrapping this page in it adds no module the export has not built. Imports stay at two.
+ * (site) page of every green deploy, so wrapping this page in it adds no module the export has not built. Imports stay at three, the third
+ * a leaf (src/lib/spine/door_look.ts: the doors' look, one set of constants read here, by Where to next and by the home's proof doors,
+ * and importing nothing itself), and tests/chrome/masthead.test.ts holds both facts.
  */
 import Link from "next/link";
 import { SiteChrome } from "@/components/SiteChrome";
+import { DOOR_NAME } from "@/lib/spine/door_look";
 
 /**
  * The 404 boundary nominates no canonical, and that is the point.
@@ -65,7 +68,8 @@ export default function NotFound() {
         <p className="mt-3 text-[length:var(--t-lead)] text-[var(--c-ink2)]">Check the spelling, or start from one of these.</p>
         {/* THE DOORS: ROWS UNDER 640, CARDS FROM IT (critique pass 3, fix round D2, item P2.6). Two-up cards on a phone wrapped their lines to
             three and left 45 to 60px blank under the short ones, so under 640 the six doors are rows as Where to next draws its doors: one
-            column, the name at 16 medium over its line, the arrow at the edge, a hairline between rows and no box. From 640 they are the cards
+            column, the name at Where to next's own 14 medium over its line (DOOR_NAME: the critique said 16 and the doors measure 14, fix round F1,
+            group G7), the arrow at the edge, a hairline between rows and no box. From 640 they are the cards
             they were (two-up, three-up from 1024). At every width each door carries the arrow the home's proof doors carry (HomeProofs.tsx,
             DoorTitle: `&#8594;` at the body rung in ink2, aria-hidden), in the title row beside the name. */}
         <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
@@ -76,7 +80,7 @@ export default function NotFound() {
                 className="group block py-3 sm:h-full sm:rounded-[12px] sm:border sm:border-[var(--c-border)] sm:bg-white sm:p-5 sm:transition-colors sm:hover:border-[var(--c-ink2)]"
               >
                 <span className="flex items-center justify-between gap-3">
-                  <span className="text-[length:var(--t-lead)] font-medium text-[var(--c-ink)] group-hover:underline sm:font-semibold sm:group-hover:no-underline">{h.label}</span>
+                  <span className={`${DOOR_NAME} text-[var(--c-ink)] group-hover:underline sm:text-[length:var(--t-lead)] sm:font-semibold sm:group-hover:no-underline`}>{h.label}</span>
                   <span aria-hidden className="shrink-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">&#8594;</span>
                 </span>
                 <span className="mt-1 block text-balance text-[length:var(--t-body)] text-[var(--c-ink2)]">{h.desc}</span>

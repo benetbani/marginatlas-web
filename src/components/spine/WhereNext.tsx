@@ -10,6 +10,8 @@
  */
 import * as React from "react";
 import type { NextDoor } from "@/lib/home/next_doors";
+/* A DOOR'S NAME TYPE IS ONE CONSTANT (fix round F1, group G7): 14 at weight 500, read here and by the 404's rows (src/lib/spine/door_look.ts). */
+import { DOOR_NAME } from "@/lib/spine/door_look";
 
 export function WhereNext({ id = "next", title, doors, pitch = false }: { id?: string; title: string; doors: readonly NextDoor[]; /** The page stands this list beside a list of rows on a fixed pitch (the home's cities): from 768 each door is a 56px slot, the list 16px under the heading, so the pairs meet row for row. */ pitch?: boolean }) {
   if (doors.length === 0) return null;
@@ -21,7 +23,7 @@ export function WhereNext({ id = "next", title, doors, pitch = false }: { id?: s
       <ul className={pitch ? "mt-4 grid flex-1 grid-cols-1 md:auto-rows-[56px]" : "mt-3 grid flex-1 grid-cols-1 md:auto-rows-fr"}>
         {doors.map((d, i) => (
           <li key={d.key} className={i > 0 ? "border-t border-[var(--c-border)]" : ""}>
-            <a href={d.href} data-door-key={d.key} className="tap-y flex h-full items-center justify-between gap-3 py-3 text-[length:var(--t-body)] font-medium text-[var(--c-ink2)] no-underline transition-colors hover:text-[var(--c-ink)]">
+            <a href={d.href} data-door-key={d.key} className={`tap-y flex h-full items-center justify-between gap-3 py-3 ${DOOR_NAME} text-[var(--c-ink2)] no-underline transition-colors hover:text-[var(--c-ink)]`}>
               <span>{d.label}</span>
               <span aria-hidden>&#8594;</span>
             </a>

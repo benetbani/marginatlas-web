@@ -15,8 +15,10 @@
  *  - A HAIRLINE BETWEEN ROWS, NONE ABOVE THE FIRST; 12px of padding top and bottom around the glyph's 28px tile, the label's 20px
  *    line centred on it, so a one-line row is 52px and a row with its note 64px.
  *  - A SWATCH FOR A KEY (critique pass 2, P0.1): a row may carry `swatch`, a colour token, drawn as a 10px square (2px radius) before the
- *    label in the glyph's place, centred on the label's first line, so the rows are a drawing's key (the home's tax bar: each rule's
- *    row stands in its part's ink). A row with a glyph draws the glyph; a row with neither draws neither, as before.
+ *    label in the glyph's place, on the label's first line, so the rows are a drawing's key (the home's tax bar: each rule's
+ *    row stands in its part's ink). A row with a glyph draws the glyph; a row with neither draws neither, as before. Its top is
+ *    `mt-2`, the ladder's 8 (fix round F1, group G7): the 9 that centred the square on the 20px line under the label's 4px of top
+ *    padding was the one distance off the ladder (DISTANCES.md section 1), and 8 stands the square 1px above that line's centre.
  *  - NO EMPTY ROW: a fact without a value is not drawn, and no facts draw nothing.
  *  - `data-archetype="fact-rows"`, `data-row` and `data-label` on each, so the harness reads its rows like any other.
  */
@@ -68,7 +70,7 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
             <Ico id={r.icon} tone="terra" />
           </span>
         ) : r.swatch ? (
-          <span aria-hidden data-swatch="" className="mt-[9px] h-2.5 w-2.5 shrink-0 rounded-[2px]" style={r.edged ? { background: r.swatch, boxShadow: "inset 0 0 0 1px var(--c-line-strong)" } : { background: r.swatch }} />
+          <span aria-hidden data-swatch="" className="mt-2 h-2.5 w-2.5 shrink-0 rounded-[2px]" style={r.edged ? { background: r.swatch, boxShadow: "inset 0 0 0 1px var(--c-line-strong)" } : { background: r.swatch }} />
         ) : null}
         <span className="min-w-0">
           {/* THE LABEL'S FIRST LINE IS CENTRED ON THE TILE (28): a 20px line 4px down, and the figure the same, so the glyph, the
