@@ -136,6 +136,10 @@ const PINNED: ReadonlyArray<readonly [string, string]> = [
   ["/admin", "a route folder, but src/app/(site)/admin holds only children (anomalies, data-quality, review): nothing lives at its bare address"],
   ["/embed", "a route folder, but src/app/embed holds only its three-part embed page: nothing lives at its bare address"],
   ["/de/bayern", "a country we hold and no region of it: the site's Bavaria is /de/bavaria, and the region page calls notFound() on bayern"],
+  /* A place's industries hub is a region's (the plan 2026-10-11, dynamic 404 remains): src/app/[country]/[geo]/industries draws an admin-1 region of a
+     country with regional coverage and calls notFound() for any other place, inside a loading boundary, so a city's hub answered 200 with the skeleton
+     (probed 2026-10-11) and is now the edge's 404. This row passed it until then, as "a page of its own". The site changed on purpose. */
+  ["/gb/london/industries", "a city is no region the industries hub draws: its route called notFound() inside a loading boundary, a 200 skeleton"],
 ];
 for (const [p, why] of PINNED) expectVerdict(p, "pinned to 404", why, PIN_REMEDY);
 
@@ -205,7 +209,7 @@ const PASSES: ReadonlyArray<readonly [string, string, string?]> = [
   ["/gb/liverpool/restaurants", "a manual city alias the rivals list links: kept until the inventory gives it its line"],
   ["/us/us-06-037/restaurants", "a county the database holds"],
   ["/gb/london/restaurants/opening", "an opening page of a trade page that exists"],
-  ["/gb/london/industries", "a static child of a place is a page of its own", STATIC_CHILD_REMEDY],
+  ["/gb/england/industries", "a nation's industries hub, a static child of a place its route draws", STATIC_CHILD_REMEDY],
   ["/decide/restaurants/london", "a /decide pair its route draws"],
   ["/de/frankfurt-am-main/restaurants", "the address the across-cities columns link for Frankfurt (cellUrl spells its label)"],
   ["/br/s%c3%a3o-paulo/restaurants", "a place the table spells with an accent, in the percent-encoded form the canonical hop writes (the route receives the decoded word)", ENCODED_REMEDY],
