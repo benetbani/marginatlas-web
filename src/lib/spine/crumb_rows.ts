@@ -29,18 +29,24 @@ import { COPY } from "@/lib/spine/copy";
 
 const clean = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
+/** The same words in two steps, whatever the case: one place said twice. */
+const sameLabel = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
+
 /** The country step, where we publish that country's page. */
 function countryCrumb(iso2: string): SpineCrumb | null {
   const t = countryPageTarget(iso2);
   return t ? { label: t.label, href: t.href } : null;
 }
 
-/** The place step: a city page, a region page, or the place's name as text. */
-function placeCrumb(iso2: string, geo: string, fallback?: string): SpineCrumb | null {
+/** The place step: a city page, a region page, or the place's name as text. NONE WHEN IT SAYS THE COUNTRY'S OWN NAME (truth-fixes
+ *  round 3A): the country step before it has said that place, and /gb/gb/restaurants read "United Kingdom / United Kingdom /
+ *  Restaurants". The place may carry a link of its own (the city Singapore, whose name is its country's), and the country's step is
+ *  the one that stays. Every builder that pairs the two steps passes the country's, so the rule is written once. */
+function placeCrumb(iso2: string, geo: string, fallback?: string, country?: SpineCrumb | null): SpineCrumb | null {
   const t = geoPageTarget(iso2, geo);
-  if (t) return { label: t.name, href: t.href };
-  const name = clean(fallback) || clean(geo);
-  return name ? { label: name } : null;
+  const name = t ? t.name : clean(fallback) || clean(geo);
+  if (!name || (country && sameLabel(name, country.label))) return null;
+  return t ? { label: t.name, href: t.href } : { label: name };
 }
 
 /** THE TRADE PAGE: country, place, this trade. */
@@ -51,7 +57,7 @@ export function buildCellCrumbs(meta: { iso2?: string; geo?: string; trade?: str
   const out: SpineCrumb[] = [];
   const c = countryCrumb(iso2);
   if (c) out.push(c);
-  const p = placeCrumb(iso2, clean(meta?.geo), clean(meta?.city));
+  const p = placeCrumb(iso2, clean(meta?.geo), clean(meta?.city), c);
   if (p) out.push(p);
   out.push({ label: trade });
   return out;
@@ -74,7 +80,7 @@ export function buildHoodCrumbs(citySlug: string | undefined, focus?: string | n
   const out: SpineCrumb[] = [];
   const c = countryCrumb(id.iso2);
   if (c) out.push(c);
-  const p = placeCrumb(id.iso2, slug, id.name);
+  const p = placeCrumb(id.iso2, slug, id.name, c);
   if (p) out.push(p);
   const district = clean(focus) ? districtPageTarget(slug, clean(focus)) : null;
   const hub = neighbourhoodsHubTarget(slug);

@@ -50,6 +50,9 @@ const R_HEAD = "name the place in generateMetadata through headPlaceOf(country, 
 const R_SEED = "name the place in loadCellView with placeNameOf(country, geo, cell.geo_name), so the seed's city, and with it the crumbs and every card, print it";
 const R_CARD = "name the place in the share card through headPlaceOf(country, geo, cell), as the page's head does: its label in the title, its figureIn beside the figure, and no figure when its figureIn is null";
 const R_ARTICLE = "drop Czech from the start-of-name rule in src/lib/spine/place_names.ts: Czechia takes no article, and the Czech Republic still takes it from Republic";
+const CRUMBS = "src/lib/spine/crumb_rows.ts";
+const R_CRUMB = "drop a place crumb whose label equals the country crumb's label in src/lib/spine/crumb_rows.ts (placeCrumb takes the country crumb, for the trade page and the district pages alike), so a trail never says one place twice";
+const sameLabel = (a: string, b: string): boolean => a.trim().toLowerCase() === b.trim().toLowerCase();
 let failed = 0;
 const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => {
   if (ok) { console.log(`PASS  ${label}`); return; }
@@ -206,7 +209,8 @@ async function main(): Promise<void> {
   type Meta ={ title: string; description: string; openGraph?: { title?: string; description?: string }; twitter?: { title?: string; description?: string } };
   const { generateMetadata } = (await import("../../src/app/[country]/[geo]/[industry]/page")) as { generateMetadata: (a: { params: Promise<{ country: string; geo: string; industry: string }> }) => Promise<Meta> };
   const { buildSpineCellSeed } = await import("../../src/lib/spine/adapt_cell");
-  const { buildCellCrumbs } = await import("../../src/lib/spine/crumb_rows");
+  const { buildCellCrumbs, buildHoodCrumbs } = await import("../../src/lib/spine/crumb_rows");
+  const { COPY } = await import("../../src/lib/spine/copy");
   const cardMod = await tryImport<{ GET?: (r: Request) => Promise<unknown> }>(() => import("../../src/app/og/cell/route"));
   check("the share card's route loads with next/og stubbed", typeof cardMod?.GET === "function", { file: CARD, remedy: R_CARD });
 
@@ -249,7 +253,23 @@ async function main(): Promise<void> {
     check(`${addr}: the seed's city is ${r.seedCity} (got ${JSON.stringify(seed?.meta?.city)})`, seed?.meta?.city === r.seedCity, { file: SEED, remedy: R_SEED });
     const crumbs = seed ? buildCellCrumbs(seed.meta) : [];
     check(`${addr}: no crumb is the bare code (${crumbs.map((c) => c.label).join(" / ")})`, crumbs.length > 0 && crumbs.every((c) => c.label.trim().toUpperCase() !== r.country.toUpperCase()), { file: SEED, remedy: R_SEED });
+    check(`${addr}: no two neighbouring crumbs share a label (${crumbs.map((c) => c.label).join(" / ")})`, crumbs.length > 0 && crumbs.every((c, i) => i === 0 || !sameLabel(c.label, crumbs[i - 1].label)), { file: CRUMBS, remedy: R_CRUMB });
   }
+
+  /* (2b) THE TRAIL'S BUILDERS ON THEIR OWN (src/lib/spine/crumb_rows.ts): a place that says the country's own name is the country said
+     twice, so its crumb is dropped, by the trade page's builder and the district pages' alike. The place may carry a link of its own
+     (the page of the city Singapore, whose name is its country's): the country's crumb is the one that stays. */
+  const trail = (cs: Array<{ label: string }>) => cs.map((c) => c.label).join(" / ");
+  const builders: Array<[string, string, string]> = [
+    ["the trade page of a country itself, /gb/gb", trail(buildCellCrumbs({ iso2: "GB", geo: "gb", trade: "Restaurants", city: "United Kingdom" })), "United Kingdom / Restaurants"],
+    ["the same for Germany, /de/de", trail(buildCellCrumbs({ iso2: "DE", geo: "de", trade: "Restaurants", city: "Germany" })), "Germany / Restaurants"],
+    ["an id no table labels, read as the country, /gb/gb-e06000004", trail(buildCellCrumbs({ iso2: "GB", geo: "gb-e06000004", trade: "Restaurants", city: "United Kingdom" })), "United Kingdom / Restaurants"],
+    ["a city whose name is its country's, /sg/singapore", trail(buildCellCrumbs({ iso2: "SG", geo: "singapore", trade: "Restaurants", city: "Singapore" })), "Singapore / Restaurants"],
+    ["the district pages of that city", trail(buildHoodCrumbs("singapore", null)), `Singapore / ${COPY.crumbs.districts}`],
+    ["control, a place that is not its country: /gb/london keeps its crumb", trail(buildCellCrumbs({ iso2: "GB", geo: "london", trade: "Restaurants", city: "London" })), "United Kingdom / London / Restaurants"],
+    ["control, the district pages of London keep the city", trail(buildHoodCrumbs("london", null)), `United Kingdom / London / ${COPY.crumbs.districts}`],
+  ];
+  for (const [label, got, want] of builders) check(`${label}: the trail reads "${want}" (got "${got}")`, got === want, { file: CRUMBS, remedy: R_CRUMB });
 
   /* (3) THE SHARE CARD, read from the element tree the route hands to ImageResponse (stubbed above): the title block and the figure block. */
   type Props = Record<string, unknown>;
