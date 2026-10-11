@@ -105,7 +105,7 @@ export function MobileNav({ pricing = false }: { pricing?: boolean }) {
         aria-expanded={open}
         aria-controls={SHEET_ID}
         onClick={() => setOpen((v) => !v)}
-        className="-mr-3.5 inline-flex h-11 w-11 items-center justify-center rounded-lg text-[var(--c-ink)]"
+        className="-mr-3.5 inline-flex h-11 w-11 items-center justify-center rounded-lg text-[var(--c-ink)] focus-visible:outline-offset-[-2px]"
       >
         {open ? (
           // Close glyph.

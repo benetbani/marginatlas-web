@@ -285,6 +285,43 @@ async function main() {
   process.env.NEXT_PUBLIC_PAYWALL = "";
   const o = parts(off), b = parts(offBlog), a = parts(authOnly), p = parts(allOn), c = parts(country);
 
+  /* THE SEAM THE BAR'S STRIP RESTS ON (fix round F1, group G4, the D1 review's Minor 2). The first zone's 16px upward fill (the rule in THE
+     ZONES, held above as text) needs three facts of the markup it meets: the column's first rendered child, script elements aside, is the
+     spine's shell; the shell's inner div holds the body root FIRST; and the root is marked data-spine-body. Move any one and the white strip
+     under the bar's hairline comes back, and no gate of the chain draws the bar to see it. Here SiteChrome is rendered around the real
+     SpineShell and a body root holding two zones, with and without the JSON-LD script the home and the country page put ahead of the shell,
+     and the selector's path is walked: main > .spine-scope (the first child that is not a script, link, style or noscript) > div >
+     [data-spine-body]:first-child > the root's first [data-zone]. A page that opens with a breadcrumb before its shell must NOT match (the
+     cell, city, hood and industry pages keep their strip clear of it, by design), nor one whose shell opens with something ahead of the
+     root. BLIND SPOT: jsdom's selector engine answers null, with no error, to `:nth-child(1 of S)`, so the path is walked in DOM terms,
+     which is the selector's own meaning; the painted pixel is the browser's (the round's frames). */
+  const { JSDOM: SeamDom } = await import("jsdom");
+  const { SpineShell } = await import("../../src/components/spine/shell");
+  const aroundShell = (lead: React.ReactNode[], shellChildren: React.ReactNode) => {
+    process.env.NEXT_PUBLIC_AUTH_ENABLED = ""; process.env.NEXT_PUBLIC_PAYWALL = "";
+    return renderToStaticMarkup(React.createElement(PathnameContext.Provider, { value: "/" }, React.createElement(SiteChrome, null, ...lead, React.createElement(SpineShell, null, shellChildren))));
+  };
+  const seamZone = (html: string): string | null => {
+    const doc = new SeamDom(`<!doctype html><body>${html}</body>`).window.document;
+    const first = [...(doc.querySelector("main")?.children ?? [])].find((el) => !["SCRIPT", "LINK", "STYLE", "NOSCRIPT"].includes(el.tagName));
+    if (!first || !first.classList.contains("spine-scope")) return null;
+    for (const inner of [...first.children].filter((el) => el.tagName === "DIV")) {
+      const root = inner.firstElementChild;
+      if (root?.hasAttribute("data-spine-body")) return [...root.children].find((z) => z.hasAttribute("data-zone"))?.getAttribute("data-zone") ?? null;
+    }
+    return null;
+  };
+  const seamBody = React.createElement("div", { "data-spine-body": true, "data-composition": "zones" }, React.createElement("section", { "data-zone": "1-1" }, "A"), React.createElement("section", { "data-zone": "wide" }, "B"));
+  const seamScript = React.createElement("script", { type: "application/ld+json", dangerouslySetInnerHTML: { __html: "{}" } });
+  const seams = {
+    plain: seamZone(aroundShell([], seamBody)),
+    withScript: seamZone(aroundShell([seamScript], seamBody)),
+    withCrumb: seamZone(aroundShell([React.createElement("nav", { "aria-label": "Breadcrumb" }, "Home")], seamBody)),
+    shellOpensWithOther: seamZone(aroundShell([], React.createElement(React.Fragment, null, React.createElement("div", null, "ahead"), seamBody))),
+    bodyWrapped: seamZone(aroundShell([], React.createElement("div", null, seamBody))),
+  };
+  check(`the strip's seam holds in the markup: SiteChrome around SpineShell and a data-spine-body root puts the root's first zone where the stylesheet's selector reaches it, with or without a script ahead of the shell, and a breadcrumb ahead of the shell, another block ahead of the root or a wrapper round it cuts it (${JSON.stringify(seams)})`, seams.plain === "1-1" && seams.withScript === "1-1" && seams.withCrumb === null && seams.shellOpensWithOther === null && seams.bodyWrapped === null, { file: "src/components/spine/shell.tsx", remedy: "keep SpineShell's markup as .spine-scope > div > {children}, render each reaching view's body root (<div data-spine-body>) as the shell's first child, and keep <main>'s first rendered child (scripts aside) the shell, or move the selector in globals.css (THE ZONES, item P1.1) with them" });
+
   /* The skip link and the landmark. */
   check("a skip link is the first thing in the chrome, to #main", /^<a href="#main"[^>]*>Skip to content<\/a>/.test(off));
   check(`<main> is the skip link's target: id="main", tabindex -1 (${o.main})`, /\bid="main"/.test(o.main) && /\btabindex="-1"/.test(o.main));
@@ -337,9 +374,18 @@ async function main() {
   ];
   const offGutter = gutterTags.filter(([, t]) => { const c = classOf(t); return !t || !c.includes("px-4") || !c.includes("md:px-6") || bareSix(c); }).map(([n]) => n);
   check(`the chrome's five columns stand on the one gutter, px-4 md:px-6, none on a bare px-6 or a max-[359px] patch${offGutter.length ? `: not on it: ${offGutter.join(", ")}` : ""}`, offGutter.length === 0, { file: CHROME, remedy: GUTTER_REMEDY });
+  /* THE NEGATIVE-MARGIN SCAN SEES A VARIANT-PREFIXED CLASS TOO (fix round F1, group G4, the D1 review's Minor 3): its lookbehind was [\w:-], and the
+     colon in it skipped every variant-prefixed negative margin (max-md:-mx-2, sm:-ml-4), the form a body would take to be pulled back on a
+     phone only. A bare word that merely contains one (item-mx-2) is still not a margin class. BLIND SPOT: only the line that holds the
+     data-spine-body attribute is read, so a margin written on another line of the same tag is not seen. */
+  const NEGATIVE_MARGIN = /(?<![\w-])-m[xlr]?-\d/;
+  const marginHits = (s: string) => NEGATIVE_MARGIN.test(s);
+  check("the negative-margin scan sees what it hunts: -mx-2, -ml-4 and -mr-3 bare and behind a variant (max-md:-mx-2, sm:-ml-4, lg:-mr-3), and not a word that merely contains one (item-mx-2, x-mx-2)",
+    ["-mx-2 md:mx-0", "p-4 -mx-2", "max-md:-mx-2", "sm:-ml-4", "lg:-mr-3", "md:max-lg:-mx-1"].every(marginHits) && !["item-mx-2", "x-mx-2", "mx-2 md:mx-0", "md:mx-2", "-my-2"].some(marginHits),
+    { file: process.argv[1] ?? CHROME, remedy: "keep the lookbehind of NEGATIVE_MARGIN at (?<![\\w-]): a colon before the minus is a variant prefix, which is a negative margin all the same" });
   const bodyWrappers: Array<{ file: string; line: number }> = [];
   let bodiesFound = 0;
-  for (const f of srcFiles) if (f.endsWith(".tsx")) code(f).split("\n").forEach((l, i) => { if (/<div\b[^>]*data-spine-body/.test(l)) { bodiesFound++; if (/(?<![\w:-])-m[xlr]?-\d/.test(l)) bodyWrappers.push({ file: f, line: i + 1 }); } });
+  for (const f of srcFiles) if (f.endsWith(".tsx")) code(f).split("\n").forEach((l, i) => { if (/<div\b[^>]*data-spine-body/.test(l)) { bodiesFound++; if (marginHits(l)) bodyWrappers.push({ file: f, line: i + 1 }); } });
   for (const w of bodyWrappers) red({ rule: RULE, file: w.file, line: w.line, detail: "a spine body takes a negative margin (-mx-2): the page's column is on the one 16px phone gutter, so the body stands on it with none", remedy: GUTTER_REMEDY });
   check(`no spine body takes a negative margin: the column is already on the 16px gutter (${bodiesFound} bodies read, ${bodyWrappers.length} with one)`, bodiesFound >= 9 && bodyWrappers.length === 0, { file: bodyWrappers[0]?.file ?? "src/components/spine", remedy: GUTTER_REMEDY });
   const harnessMains = ["scripts/harness/render_page.tsx", "scripts/seo/floor_census.tsx"].filter((f) => !/\bGUTTER\b/.test(code(f)) || /mx-auto px-6 pt-4/.test(code(f)));
@@ -387,6 +433,12 @@ async function main() {
      14px negative right margin, so the target reaches into the gutter (inside the screen at 320: 304 + 14 is 318) and the ink meets the
      edge, as the word Search does from 768. The measure is the glyph's own pixels, scratchpad/home-reform/d1_probe.mjs (edges). */
   check("the menu's toggle reaches 14px into the gutter (-mr-3.5), so its glyph's ink ends on the content's right edge", /(?<![\w-])-mr-3\.5(?![\w.-])/.test(toggle) && /\bh-11\b/.test(toggle) && /\bw-11\b/.test(toggle), { file: SHEET, remedy: "give the toggle in MobileNav.tsx -mr-3.5 (its 44px box stays; the 22px glyph's ink ends 13.75px inside it)" });
+  /* THE TOGGLE'S RING STAYS ON THE SCREEN (fix round F1, group G4, the D1 review's Minor 1). -mr-3.5 puts the 44px box 2px from the screen's edge
+     at every phone width (its right edge is at 373 at 375), and the site's focus floor draws its 2px ring 2px OUTSIDE the box, so the ring's right
+     band fell wholly off the screen on the one control that opens the only navigation there. The toggle draws its ring inside its box with
+     focus-visible:outline-offset-[-2px] (a utility's two-class selector beats the floor's bare :focus-visible), the glyph centred in it.
+     BLIND SPOT: the class as written; the ring's pixels are the browser's (the f1-* frames of the round). */
+  check("the menu's toggle draws its focus ring inside its box (focus-visible:outline-offset-[-2px]), so the ring of a box 2px from the screen's edge is not cut off", /(?<![\w-])focus-visible:outline-offset-\[-2px\](?![\w.-])/.test(toggle), { file: SHEET, remedy: "give the toggle in MobileNav.tsx focus-visible:outline-offset-[-2px]: the site's floor draws the ring 2px outside the box, and -mr-3.5 leaves 2px between the box and the screen" });
   const panel = /<div id="site-menu"[^>]*>/.exec(o.header)?.[0] ?? "";
   check("the sheet's panel is in the document while shut, hidden", /\bhidden=""/.test(panel));
   check("the panel's height is capped to the viewport less the bar, and it scrolls", /max-h-\[calc\(100dvh_-_var\(--atlas-header-h\)\)\]/.test(panel) && /overflow-y-auto/.test(panel) && /overscroll-contain/.test(panel));
@@ -449,6 +501,27 @@ async function main() {
   check(`the footer's first column is the bar's seven names (${footFirst.map((n) => n.text).join(", ")})`, JSON.stringify(footFirst.map((n) => n.text)) === JSON.stringify(WANT_NAMES) && JSON.stringify(footFirst.map((n) => n.href)) === JSON.stringify(WANT_HREFS));
   check("the footer's heads are sentence case at 14 semibold white, no tracked capitals", !/uppercase|tracking-wide/.test(o.footer) && (o.footer.match(/class="mb-3 text-sm font-semibold text-white"/g) ?? []).length === 4);
   check("every footer row is 44px tall on a phone", anchors(footNav).length > 0 && anchors(footNav).every((n) => /min-h-11/.test(n.tag) && /md:min-h-0/.test(n.tag)));
+  /* THE FOOTER'S LINKS DO NOT PREFETCH (fix round F1, group G4, the final review's recommendation 5). next/link prefetches a link's page when the link
+     scrolls into view, so the footer's twenty links fetched twenty pages the moment the footer appeared (the review measured the bar's seven at about
+     75 KB gzip; the spec asks for those, and does not ask for the footer's). Every Link inside <footer> takes prefetch={false}; the bar's seven names
+     (NavLinks.tsx), the wordmark and the Pricing pill keep next/link's default, which is the spec's. BLIND SPOT: the element tree SiteChrome returns is
+     read, so a Link that a nested component draws inside the footer is not seen (none does: the footer is SiteChrome's own markup), and prefetching is
+     a browser behaviour this file never runs. */
+  const NextLink = (await import("next/link")).default;
+  type El = { type?: unknown; props?: { children?: unknown; prefetch?: unknown } };
+  const linksUnder = (node: unknown, tag: string, within = false): El[] => {
+    if (Array.isArray(node)) return node.flatMap((n) => linksUnder(n, tag, within));
+    if (!node || typeof node !== "object" || !("props" in node)) return [];
+    const el = node as El;
+    const now = within || el.type === tag;
+    return [...(now && el.type === NextLink ? [el] : []), ...linksUnder(el.props?.children, tag, now)];
+  };
+  const chromeTree = (on: boolean) => { process.env.NEXT_PUBLIC_AUTH_ENABLED = on ? "1" : ""; process.env.NEXT_PUBLIC_PAYWALL = on ? "1" : ""; try { return SiteChrome({ children: null }); } finally { process.env.NEXT_PUBLIC_AUTH_ENABLED = ""; process.env.NEXT_PUBLIC_PAYWALL = ""; } };
+  const footLinksOff = linksUnder(chromeTree(false), "footer"), footLinksOn = linksUnder(chromeTree(true), "footer");
+  const barLinksOn = linksUnder(chromeTree(true), "header");
+  const footQuiet = [...footLinksOff, ...footLinksOn].filter((l) => l.props?.prefetch === false).length;
+  check(`every Link in the footer takes prefetch={false} (${footQuiet} of ${footLinksOff.length + footLinksOn.length} over the two renders: ${footLinksOff.length} with the paywall off, ${footLinksOn.length} with it on)`, footLinksOff.length >= 20 && footLinksOn.length === footLinksOff.length + 1 && footQuiet === footLinksOff.length + footLinksOn.length, { file: CHROME, remedy: "give every <Link> inside SiteChrome's <footer> prefetch={false}: next/link prefetches a link's page when it scrolls into view, which fetched about twenty pages as the footer appeared" });
+  check(`the bar keeps next/link's default prefetch: the wordmark and the Pricing pill carry no prefetch prop (${barLinksOn.length} Links), nor do the seven names (NavLinks.tsx)`, barLinksOn.length === 2 && barLinksOn.every((l) => l.props?.prefetch === undefined) && !/\bprefetch\b/.test(code("src/components/NavLinks.tsx")), { file: CHROME, remedy: "leave the bar's links as they are: the seven names, the wordmark and the Pricing pill prefetch as next/link does by default (the spec's), and only the footer's links are quiet" });
   check("no version string in the footer", !/\bv\d+\.\d+\.\d+\b/.test(o.footer));
   /* THE PUBLISHER IS MARGIN ATLAS (his ruling of 2026-10-10: "publisher name is Margin Atlas"; fix round D1). The copyright line reads the year and
      the name and nothing after it (the domain is the page's own address, and the wordmark above the columns says the name too); the Dataset

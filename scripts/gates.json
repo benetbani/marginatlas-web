@@ -2682,6 +2682,7 @@
         "src/components/SiteChrome.tsx",
         "src/components/StructuredData.tsx",
         "src/components/spine",
+        "src/components/spine/shell.tsx",
         "src/lib/nav.ts",
         "src/lib/nav.ts holds the one gutter: GUTTER is px-4 md:px-6 (16 under 768, 24 from)",
         "src/styles/v0-tokens.css"

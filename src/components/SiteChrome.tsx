@@ -227,14 +227,18 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
                 (/api, no page; design/loop3/api/DECISION.md) and the glossary and tax links went for the same reason, and the
                 "Newsletter" link (/#newsletter) went on 2026-10-10: the bar it pointed at stands directly above this footer on every
                 page, and no newsletter is sent (NewsletterSignupVariants.tsx says so). Who runs this, the corrections log and the free
-                data pack are his rulings of 2026-10-05 (PARKED P0.2, P31.1, P0.3); the contact link goes to a real form. */}
+                data pack are his rulings of 2026-10-05 (PARKED P0.2, P31.1, P0.3); the contact link goes to a real form.
+
+                EVERY LINK HERE TAKES prefetch={false} (fix round F1, group G4, the final review's recommendation 5): next/link prefetches a
+                link's page when the link scrolls into view, so the footer's twenty links fetched twenty pages the moment the footer appeared.
+                The bar's seven names, the wordmark and the Pricing pill keep the default, which is the spec's; these are not asked for. */}
             <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4 text-sm text-white/80">
               <div>
                 <div className={FOOT_HEAD}>Browse</div>
                 <ul className={FOOT_LIST}>
                   {NAV.map((item) => (
                     <li key={item.href}>
-                      <Link href={item.href} className={FOOT_LINK}>
+                      <Link href={item.href} prefetch={false} className={FOOT_LINK}>
                         {item.label}
                       </Link>
                     </li>
@@ -244,30 +248,30 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
               <div>
                 <div className={FOOT_HEAD}>Learn</div>
                 <ul className={FOOT_LIST}>
-                  <li><Link href="/about-data#reading" className={FOOT_LINK}>About the figures</Link></li>
-                  <li><Link href="/methodology/key-benchmarks" className={FOOT_LINK}>The one ratio to watch</Link></li>
-                  <li><Link href="/faq" className={FOOT_LINK}>Common questions</Link></li>
-                  <li><Link href="/coverage" className={FOOT_LINK}>Coverage report</Link></li>
-                  <li><Link href="/calculator" className={FOOT_LINK}>Calculator</Link></li>
+                  <li><Link href="/about-data#reading" prefetch={false} className={FOOT_LINK}>About the figures</Link></li>
+                  <li><Link href="/methodology/key-benchmarks" prefetch={false} className={FOOT_LINK}>The one ratio to watch</Link></li>
+                  <li><Link href="/faq" prefetch={false} className={FOOT_LINK}>Common questions</Link></li>
+                  <li><Link href="/coverage" prefetch={false} className={FOOT_LINK}>Coverage report</Link></li>
+                  <li><Link href="/calculator" prefetch={false} className={FOOT_LINK}>Calculator</Link></li>
                 </ul>
               </div>
               <div>
                 <div className={FOOT_HEAD}>Trust</div>
                 <ul className={FOOT_LIST}>
-                  <li><Link href="/about" className={FOOT_LINK}>Who runs this</Link></li>
-                  <li><Link href="/corrections" className={FOOT_LINK}>Corrections</Link></li>
-                  <li><Link href={FREE_DATA.href} className={FOOT_LINK}>{FREE_DATA.label}</Link></li>
-                  <li><Link href="/contact" className={FOOT_LINK}>Contact</Link></li>
+                  <li><Link href="/about" prefetch={false} className={FOOT_LINK}>Who runs this</Link></li>
+                  <li><Link href="/corrections" prefetch={false} className={FOOT_LINK}>Corrections</Link></li>
+                  <li><Link href={FREE_DATA.href} prefetch={false} className={FOOT_LINK}>{FREE_DATA.label}</Link></li>
+                  <li><Link href="/contact" prefetch={false} className={FOOT_LINK}>Contact</Link></li>
                 </ul>
               </div>
               <div>
                 <div className={FOOT_HEAD}>Atlas</div>
                 <ul className={FOOT_LIST}>
-                  {paywallOn ? <li><Link href="/pricing" className={FOOT_LINK}>Pricing</Link></li> : null}
-                  <li><Link href="/status" className={FOOT_LINK}>Status</Link></li>
-                  <li><Link href="/privacy" className={FOOT_LINK}>Privacy</Link></li>
-                  <li><Link href="/terms" className={FOOT_LINK}>Terms</Link></li>
-                  <li><Link href="/cookies" className={FOOT_LINK}>Cookies</Link></li>
+                  {paywallOn ? <li><Link href="/pricing" prefetch={false} className={FOOT_LINK}>Pricing</Link></li> : null}
+                  <li><Link href="/status" prefetch={false} className={FOOT_LINK}>Status</Link></li>
+                  <li><Link href="/privacy" prefetch={false} className={FOOT_LINK}>Privacy</Link></li>
+                  <li><Link href="/terms" prefetch={false} className={FOOT_LINK}>Terms</Link></li>
+                  <li><Link href="/cookies" prefetch={false} className={FOOT_LINK}>Cookies</Link></li>
                 </ul>
               </div>
             </nav>
