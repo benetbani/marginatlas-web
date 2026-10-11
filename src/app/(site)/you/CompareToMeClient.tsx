@@ -108,7 +108,11 @@ export function CompareToMeClient() {
             Your firm
           </div>
           <div>
-            <label htmlFor="cm-industry" className="text-xs text-ink-700/70 mb-1 block">Activity</label>
+            {/* ONE LABEL AND ONE FIELD, THE PICKER'S (critique pass 4, fix round F2, item P2.5): the three labels take the label ComboField draws for
+                its own (mb-2 block text-sm font-medium text-[var(--c-ink2)]) and the select and the input take its field (48px, the 12px corner, the
+                control token's 3:1 edge, 16px under 768) with no focus style of their own, so the floor in globals.css draws the 2px ink ring. They
+                were 12px labels in a brown on 14px fields on a 1.41:1 edge beside the reformed Activity field. */}
+            <label htmlFor="cm-industry" className="mb-2 block text-sm font-medium text-[var(--c-ink2)]">Activity</label>
             <ComboField
               id="cm-industry"
               label=""
@@ -122,12 +126,12 @@ export function CompareToMeClient() {
                 above their controls and were associated with neither, so a
                 screen reader announced an unnamed combo box and an unnamed
                 text field. The visible text does not change. */}
-            <label htmlFor="cm-region" className="text-xs text-ink-700/70 mb-1 block">Region (US)</label>
+            <label htmlFor="cm-region" className="mb-2 block text-sm font-medium text-[var(--c-ink2)]">Region (US)</label>
             <select
               id="cm-region"
               value={region}
               onChange={(e) => setRegion(e.target.value)}
-              className="w-full bg-white border border-paper-350 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
+              className="h-12 w-full rounded-xl border border-[var(--control-line)] bg-white px-4 text-base font-medium text-[var(--c-ink)] transition-colors hover:border-[var(--c-ink2)] md:text-sm"
             >
               {US_REGIONS.map((r) => (
                 <option key={r} value={r}>
@@ -137,7 +141,7 @@ export function CompareToMeClient() {
             </select>
           </div>
           <div>
-            <label htmlFor="cm-revenue" className="text-xs text-ink-700/70 mb-1 block">
+            <label htmlFor="cm-revenue" className="mb-2 block text-sm font-medium text-[var(--c-ink2)]">
               Your yearly revenue (USD)
             </label>
             <input
@@ -147,7 +151,7 @@ export function CompareToMeClient() {
               placeholder="e.g. 750000"
               value={myRevenue}
               onChange={(e) => setMyRevenue(e.target.value)}
-              className="w-full bg-white border border-paper-350 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-atlas-500/30"
+              className="h-12 w-full rounded-xl border border-[var(--control-line)] bg-white px-4 text-base font-medium text-[var(--c-ink)] transition-colors placeholder:font-normal placeholder:text-[var(--c-muted)] hover:border-[var(--c-ink2)] md:text-sm"
             />
           </div>
           <p className="text-xs text-ink-700/60">

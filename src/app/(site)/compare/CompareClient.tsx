@@ -959,9 +959,14 @@ export function CompareClient({
                 const regionOpts = getRegionsForCountry(slot.country, name);
                 return (
                   <div>
+                    {/* ONE LABEL AND ONE FIELD, THE PICKER'S (critique pass 4, fix round F2, item P2.5): Country and Activity above and below this are
+                        ComboField, which the reform rebuilt in the spine's tokens, and this select kept the old system a row away: 11px tracked capitals in a
+                        brown, a 1.28:1 parchment edge, 14px type that zooms iOS Safari, and a ring of its own that replaced the site's ink floor. It takes
+                        ComboField's label (mb-2 block text-sm font-medium text-[var(--c-ink2)]) and its field (48px, the 12px corner, the control token's 3:1
+                        edge, 16px under 768) and NO focus style of its own: the floor in globals.css draws the 2px ink ring. */}
                     <label
                       htmlFor={`region-${idx}`}
-                      className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-cocoa-700"
+                      className="mb-2 block text-sm font-medium text-[var(--c-ink2)]"
                     >
                       Region
                     </label>
@@ -969,7 +974,7 @@ export function CompareClient({
                       id={`region-${idx}`}
                       value={slot.region}
                       onChange={(e) => updateSlot(idx, "region", e.target.value)}
-                      className="w-full rounded-xl border border-parchment bg-white px-3.5 py-2.5 text-sm font-medium text-ink-900 transition-colors hover:border-atlas-300 focus-visible:border-atlas-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlas-500/30"
+                      className="h-12 w-full rounded-xl border border-[var(--control-line)] bg-white px-4 text-base font-medium text-[var(--c-ink)] transition-colors hover:border-[var(--c-ink2)] md:text-sm"
                     >
                       {regionOpts.map((r) => (
                         <option key={r.value || "country-level"} value={r.value}>

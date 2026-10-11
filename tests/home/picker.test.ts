@@ -13,7 +13,8 @@
  * so a reopened list has no row lit; a field told its lists are coming draws one "Loading…" row). NavigatorForm is mounted inside the app router's context, the module cache the instrument for its lazy load (no list module
  * before a pointer, a focus or a key) and a submit event dispatched at it the instrument for its two submits (the browser's own
  * before the lists are in, the page's own after); its source is read here too, comments stripped, and its markup in the home's
- * render (tests/trust/home_shape.test.ts, the hero's checks).
+ * render (tests/trust/home_shape.test.ts, the hero's checks). The field's sister forms are held to its language (fix round F2, item
+ * P2.5): /compare's Region select and /you's three labels, select and revenue input read its label class and its field's tokens.
  * Run: npx tsx tests/home/picker.test.ts
  */
 import { readFileSync } from "node:fs";
@@ -310,6 +311,28 @@ async function main() {
      city alone on the second line; the browser balances the last line when the paragraph asks (text-pretty), as the example's lines and the band
      do. BLIND SPOT: this reads the class; the last line's word count at seven widths is the browser's (f2_p22_probe.mjs). */
   check("the examples' line asks for a balanced last line (text-pretty), so it cannot end on a lone city", /<p data-try="" className="[^"]*\btext-pretty\b[^"]*">\s*Or try\{" "\}/.test(code), FORM, "add text-pretty to the <p data-try=\"\"> of src/components/NavigatorForm.tsx: at 320 it broke \"or cafés in / London.\"");
+
+  /* THE SISTER FORMS SPEAK THE PICKER'S LANGUAGE (critique pass 4, fix round F2, item P2.5). The reform rebuilt the shared field and so split /compare
+     and /you into two control systems one row apart: "Country" and "Activity" in the picker's label (14 medium in ink2) over a 48px field on the control
+     token, then "REGION" in 11px tracked capitals in a brown over a native select on a 1.28:1 parchment edge with 14px type (iOS Safari zooms the page
+     into it) and a focus ring of its own that replaced the site's ink floor; /you did the same with its three labels, its select and its revenue input.
+     The labels now take the picker's own class, read from the rendered field and not typed here, and the select and the input take its field: 48px,
+     the card's 12px corner, the control token's 3:1 edge, 16px under 768 and 14 from it, an ink hover, NO focus style of their own (the floor in
+     globals.css draws the 2px ink ring), no capitals and no brown. BLIND SPOT: this reads class names in the two files' source; the border's contrast
+     on white, the 16px under 768 and the ring on a Tab are the browser's (f2_p25_probe.mjs). */
+  const COMPARE = "src/app/(site)/compare/CompareClient.tsx", YOU = "src/app/(site)/you/CompareToMeClient.tsx";
+  const readCode = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
+  const compareSrc = readCode(COMPARE), youSrc = readCode(YOU);
+  const pickerLabel = /<label for="country" class="([^"]*)"/.exec(html)?.[1] ?? "";
+  const compareLabel = /<label\s+htmlFor=\{`region-\$\{idx\}`\}\s+className="([^"]*)"/.exec(compareSrc)?.[1] ?? "";
+  const youLabels = [...youSrc.matchAll(/<label htmlFor="(cm-(?:industry|region|revenue))" className="([^"]*)"/g)].map((m) => ({ id: m[1], cls: m[2] }));
+  check(`/compare's Region label and /you's three labels are the picker's own, "${pickerLabel}" (Region ${compareLabel === pickerLabel ? "is" : "is not"}, ${youLabels.filter((l) => l.cls === pickerLabel).length} of ${youLabels.length} of /you's)`, pickerLabel.length > 20 && compareLabel === pickerLabel && youLabels.length === 3 && youLabels.every((l) => l.cls === pickerLabel), COMPARE, "give the sister forms' labels the picker's own class, the one ComboField draws (mb-2 block text-sm font-medium text-[var(--c-ink2)]): /compare's Region and /you's Activity, Region (US) and Your yearly revenue");
+  const classAfter = (src: string, tag: "select" | "input") => /\bclassName="([^"]*)"/.exec(src.slice(src.indexOf(`<${tag}`), src.indexOf(`<${tag}`) + 700))?.[1] ?? "";
+  const sisters: Array<[string, string]> = [["/compare's Region select", classAfter(compareSrc, "select")], ["/you's Region select", classAfter(youSrc, "select")], ["/you's revenue input", classAfter(youSrc, "input")]];
+  const FIELD_TOKENS = ["h-12", "w-full", "rounded-xl", "border", "border-[var(--control-line)]", "bg-white", "px-4", "text-base", "md:text-sm", "text-[var(--c-ink)]", "hover:border-[var(--c-ink2)]"];
+  const lacks = sisters.flatMap(([who, cls]) => FIELD_TOKENS.filter((t) => !cls.split(" ").includes(t)).map((t) => `${who} lacks ${t}`));
+  const foreign = sisters.flatMap(([who, cls]) => cls.split(" ").filter((t) => /^(?:focus|focus-visible|focus-within):|parchment|paper-|atlas-|cocoa-|ink-\d|uppercase|tracking-/.test(t)).map((t) => `${who} has ${t}`));
+  check(`the sister forms' select and input are the picker's field: 48px, the 12px corner, the control token's edge, 16px under 768, an ink hover, no focus style of their own and no brown or capitals (${[...lacks, ...foreign].join("; ") || "all three"})`, sisters.every(([, cls]) => cls.length > 0) && lacks.length === 0 && foreign.length === 0, COMPARE, "give /compare's Region select and /you's Region select and revenue input the picker's field: h-12 w-full rounded-xl border border-[var(--control-line)] bg-white px-4 text-base font-medium text-[var(--c-ink)] transition-colors hover:border-[var(--c-ink2)] md:text-sm, with no focus: or focus-visible: class of their own (the floor in globals.css draws the 2px ink ring)");
 
   /* THE FORM, MOUNTED IN THE APP ROUTER'S CONTEXT: WHAT THE PAGE LOADS, AND WHAT TYPING BEFORE IT ARRIVES DOES (the review: the source
      check above says what the file contains, not what the page fetches). The module cache is the instrument: it holds every module this
