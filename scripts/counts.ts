@@ -260,11 +260,14 @@ function firstTestTitle(code: string): string | null {
   return m ? unescape(m[1] ?? m[2] ?? m[3] ?? "") : null;
 }
 
-/** Every repo path literal in the code half, plus the parent-repo tag. */
+/** Every repo path literal in the code half, plus the parent-repo tag. A PATH holds no whitespace and no `${`: a literal that begins with a root is not
+ *  a file a gate reads when it is a sentence the gate prints ("scripts/launch_tools: all pass") or a template that is not yet a path
+ *  ("scratchpad/harness/pages/${p.surface}.html"), and a registry that lists one states a wrong fact (fix round F2, item M10; the final review). */
 function readsOf(codeLines: string[]): string[] {
   const out = new Set<string>();
   for (const line of codeLines) {
     for (const lit of literalsIn(line)) {
+      if (/\s/.test(lit) || lit.includes("${")) continue;
       if (READ_ROOTS.some((root) => lit.startsWith(root + "/"))) out.add(lit);
       if (PARENT_READ.test(lit)) {
         out.add(lit);
@@ -273,6 +276,30 @@ function readsOf(codeLines: string[]): string[] {
     }
   }
   return [...out].sort();
+}
+
+/**
+ * THE READS FILTER, PROVED ON SAMPLES (fix round F2, item M10; the final review's M10). `readsOf` once kept any literal that began with a repo root, so
+ * 37 entries of gates.json's `reads` were not paths: sentences a gate prints that happen to begin with a root ("scripts/launch_tools: all pass",
+ * "data/corrections.json holds a list of corrections") and templates that are not yet a path ("scratchpad/harness/pages/${p.surface}-..."). A registry
+ * that lists them states a wrong fact about what a gate reads, and round F1 had fixed that for one test's labels only. Six samples are fed to it here, on
+ * every --check and --write: a path, two sentences that begin with a root, a template, a path with a route group and a dynamic segment, and a parent-repo
+ * path; only the three paths survive, and the parent-repo path brings its tag. A filter loosened again reds this before a registry is written from it.
+ * BLIND SPOT: six samples written here; a shape they do not name (a literal with a tab, a path with an embedded space) is whatever the filter does with it,
+ * and a literal built at run time is invisible to any reading of source.
+ */
+function readsFilterSelfTest(): string[] {
+  const samples = [
+    'const a = "src/lib/nav.ts";',
+    'const b = "scripts/launch_tools: all pass";',
+    'const c = "data/corrections.json holds a list of corrections";',
+    "const d = `scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html`;",
+    'const e = "src/app/(site)/blog/[slug]/page.tsx";',
+    'const f = "../design/mockups/glyphs.js";',
+  ];
+  const want = ["../design/mockups/glyphs.js", PARENT_REPO_TAG, "src/app/(site)/blog/[slug]/page.tsx", "src/lib/nav.ts"].sort();
+  const got = readsOf(samples);
+  return JSON.stringify(got) === JSON.stringify(want) ? [] : [`readsOf gave ${JSON.stringify(got)} for samples that should give ${JSON.stringify(want)}`];
 }
 
 /** Does this identifier carry a ban token? Split on `_` and camel boundaries. */
@@ -467,6 +494,13 @@ function main() {
     console.log(block);
     console.log(summaryLine(summary));
     return;
+  }
+
+  const filterFaults = readsFilterSelfTest();
+  if (filterFaults.length > 0) {
+    console.error(`[counts] FAIL: the reads filter is wrong: ${filterFaults.join("; ")}`);
+    console.error("Remedy: readsOf (scripts/counts.ts) keeps a literal only if it holds no whitespace and no ${, and begins with a repo root or reaches the parent repo: a sentence or a template is not a file a gate reads");
+    process.exit(1);
   }
 
   const stale: string[] = [];

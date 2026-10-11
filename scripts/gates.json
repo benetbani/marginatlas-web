@@ -53,7 +53,6 @@
       "browser": true,
       "asserts": "THE HARNESS DRIVER (plan step 21, 2026-09-17).",
       "reads": [
-        "scratchpad/harness/pages/${stem(p)}.html",
         "scripts/",
         "scripts/harness/check_archetypes.mjs",
         "scripts/harness/check_page_holes.mjs",
@@ -76,9 +75,7 @@
       "reads": [
         "scratchpad/harness",
         "scratchpad/harness/accents.json",
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scratchpad/harness/shots",
-        "scratchpad/harness/shots/page-${name}${SECTION == null ? \"\" : ",
         "scripts/harness/page_holes_baseline.json",
         "scripts/harness/pages.json"
       ],
@@ -93,7 +90,6 @@
       "browser": true,
       "asserts": "THE PAGE LAWS OF 2026-09-20, held on a rendered page.",
       "reads": [
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/page_laws_baseline.json",
         "scripts/harness/pages.json"
       ],
@@ -108,7 +104,6 @@
       "browser": true,
       "asserts": "check_copy_plain: a card talks plainly (his correction of 2026-09-24, evening; design/loop/build/goal-2026-09-24/COPY-STYLE.md).",
       "reads": [
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/copy_plain_baseline.json",
         "scripts/harness/pages.json"
       ],
@@ -123,7 +118,6 @@
       "browser": true,
       "asserts": "READABILITY, MEASURED (the founder, 2026-09-08: \"the page still has problems in readability\").",
       "reads": [
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/pages.json"
       ],
       "claims": []
@@ -138,7 +132,6 @@
       "browser": true,
       "asserts": "THE MODEL'S THIRTEEN LAWS, MEASURED (task 4, 2026-09-08; FIGURE FACE added 2026-09-11).",
       "reads": [
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/model_laws_baseline.json",
         "scripts/harness/pages.json",
         "scripts/harness/render_page.tsx",
@@ -194,7 +187,6 @@
       "asserts": "THE PAGE FOOT: REPORT A MISTAKE, AND CHECKED ONLY WHERE A DATE IS HELD (milestone 2, masterplan step 31; QUEUE close:furniture-lines; the credibility doctrine of 2026-10-02: the page foot holds \"Repor",
       "reads": [
         "data/uk/registers/manifest.json",
-        "scratchpad/harness/pages/${p.file}.html",
         "scripts/harness/pages.json",
         "src/app/(site)/corrections/new/page.tsx",
         "src/app/globals.css",
@@ -221,7 +213,6 @@
       "browser": false,
       "asserts": "THE PROVENANCE RATCHET (plan 06, task B5, 2026-10-04): on every page in scripts/harness/pages.json, the figures that do not say where they came from, counted, held to a baseline that only falls.",
       "reads": [
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/pages.json",
         "scripts/harness/provenance_baseline.json"
       ],
@@ -236,7 +227,6 @@
       "reads": [
         "data/cities/city_list_v1.json",
         "data/seo/floor_census.json",
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/check_model_laws.mjs",
         "scripts/harness/pages.json"
       ],
@@ -598,7 +588,6 @@
       "browser": true,
       "asserts": "verify_gathered_emptiness , E6.",
       "reads": [
-        "scratchpad/shots-glass/HOLE-${slug}.jpeg",
         "scripts/gathered_emptiness_baseline.json"
       ],
       "claims": []
@@ -699,8 +688,7 @@
       "reads": [
         "E:/atlas/design/ART-DIRECTION.md",
         "parent repo",
-        "scripts/prebuild_all.ts",
-        "scripts/verify_${gate.replace(/-/g, \"_\")}"
+        "scripts/prebuild_all.ts"
       ],
       "claims": []
     },
@@ -739,7 +727,6 @@
       "browser": false,
       "asserts": "THE SECTION CENSUS: PAGES.md's generated block, written from the code, so the loop's map of every page's sections never drifts from the views.",
       "reads": [
-        "src/${spec.slice(2)}",
         "src/components/spine"
       ],
       "claims": []
@@ -964,17 +951,9 @@
       "asserts": "Prebuild guard — assert the render-time data-quality fixes are wired.",
       "reads": [
         "src/lib/cells.ts",
-        "src/lib/cells.ts + top_industries_aggregation.ts: CURRENCY_FX_CORRECTIONS not referenced; at-a-glance row FX correction regressed",
-        "src/lib/cells.ts + top_industries_aggregation.ts: no per-row plausibility ceiling applied; at-a-glance can leak wrong-aggregation values",
-        "src/lib/cells.ts: applyCurrencyCorrection called only ${currencyCallsInNormalize} times, expected >= 3 (normalizeRegionalRow, normalizeRow, getExtrapolatedCell)",
-        "src/lib/cells.ts: applyCurrencyCorrection is not imported or called",
-        "src/lib/cells.ts: applyPlausibilitySuppression called only ${suppressionCallsInNormalize} times, expected >= 3 (normalizeRegionalRow, normalizeRow, getExtrapolatedCell)",
-        "src/lib/cells.ts: applyPlausibilitySuppression is not imported or called",
         "src/lib/cells/top_industries_aggregation.ts",
         "src/lib/qa/currency_corrections.ts",
-        "src/lib/qa/currency_corrections.ts: MX entry missing. Mexico cells regressed to 17x overstatement.",
-        "src/lib/qa/plausibility_suppression.ts",
-        "src/lib/qa/plausibility_suppression.ts: no longer imports REVENUE_PER_FIRM_BOUNDS; per-industry ceilings broken"
+        "src/lib/qa/plausibility_suppression.ts"
       ],
       "claims": []
     },
@@ -1120,7 +1099,6 @@
       "asserts": "THE TERMS OF PRO, DRAFTED FOR HIS APPROVAL (milestone 2, masterplan step 30; his interview of 2026-09-26, ruling 34): the drafts in src/lib/legal/pro_legal.ts are one source for the three legal pages ",
       "reads": [
         "scripts/verify_launch_ready.ts",
-        "src/app/(site)/${k}/page.tsx",
         "src/app/(site)/pricing/page.tsx",
         "src/lib/legal/pro_legal.ts"
       ],
@@ -1451,8 +1429,6 @@
       "asserts": "THE LAUNCH TOOLS SAY WHAT THE CHECKLIST SAYS (2026-10-06).",
       "reads": [
         "scripts/launch_branch.mjs",
-        "scripts/launch_tools: ${failed} failure(s). Remedy: make each FAIL line above pass in the file it names (scripts/lib/watch_args.mjs for the watch flags, scripts/verify_deploy.mjs for the steps, scripts/launch_branch.mjs for the launch branch), then run npx tsx tests/scripts/launch_tools.test.ts",
-        "scripts/launch_tools: all pass",
         "scripts/verify_deploy.mjs"
       ],
       "claims": []
@@ -1670,7 +1646,6 @@
       "asserts": "THE 58 RETIRED BLOG POSTS (his ruling of 2026-10-05 on PARKED P36.1, option (a): keep 2, rewrite 10, retire 58 before the site goes public, each with a permanent redirect to its country page or the ne",
       "reads": [
         "content/blog",
-        "content/blog holds the two kept and the eight rewritten, and nothing else (${onDisk.length} files)",
         "data/blog/moved_posts.json",
         "data/blog/retired_posts.json",
         "src/app",
@@ -1687,7 +1662,6 @@
       "asserts": "EVERY TABLE A MIGRATION CREATES HAS ROW LEVEL SECURITY (the checkup of 2026-10-06, finding 1).",
       "reads": [
         "db/migrations",
-        "db/migrations_rls: all pass",
         "tests/db/migrations_rls.test.ts"
       ],
       "claims": []
@@ -1742,7 +1716,6 @@
       "asserts": "THE BLOG'S FIGURES (P36.1, the rewrites of 2026-10-06; docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4).",
       "reads": [
         "content/blog",
-        "public/data/uk/${PACK_VERSION}",
         "src/app",
         "src/app/(site)",
         "src/app/(site)/about-data/page.tsx",
@@ -1760,7 +1733,6 @@
       "asserts": "THE BLOG'S FIGURES (P36.1, the rewrites of 2026-10-06; docs/superpowers/plans/2026-10-06-blog-rewrites/PLAN.md, D3 and D4).",
       "reads": [
         "content/blog",
-        "public/data/uk/${PACK_VERSION}",
         "src/app",
         "src/app/(site)",
         "src/app/(site)/about-data/page.tsx",
@@ -1776,7 +1748,6 @@
       "asserts": "THE CORRECTIONS PAGE (his ruling of 2026-10-05 on PARKED P31.1, option (a): \"a corrections page from launch day, each correction with its date and 'no corrections yet' as its honest first state, and n",
       "reads": [
         "data/corrections.json",
-        "data/corrections.json holds a list of corrections",
         "src/app/(site)/about-data/changelog",
         "src/app/(site)/about-data/page.tsx",
         "src/app/(site)/changelog",
@@ -1792,7 +1763,6 @@
       "browser": false,
       "asserts": "THE FREE UK DATA PACK AT /data (his ruling of 2026-10-05 on PARKED P0.3, option (a): \"free and public, cited, as the credibility plan proposes\").",
       "reads": [
-        "public/data/uk/${PACK_VERSION}",
         "src/app/(site)/about-data/page.tsx",
         "src/app/(site)/data/page.tsx",
         "src/app/sitemap.ts"
@@ -2037,7 +2007,6 @@
         "data/cities/images_manifest.json",
         "public/cities",
         "public/cities/thumbs",
-        "public/cities/thumbs/${f}",
         "scratchpad/harness/pages/country-GB.html",
         "scratchpad/harness/pages/home-gb.html",
         "src/app/globals.css",
@@ -2164,7 +2133,6 @@
       "browser": false,
       "asserts": "Every recipe keeps the protocol in src/lib/uk/pnl/recipes.ts, and its London figures pass two screens before a page may print them: at least a quarter of the registered businesses reach break-even (a ",
       "reads": [
-        "data/facts/industry/${entity}.json",
         "src/lib/uk/pnl/recipes.ts"
       ],
       "claims": []
@@ -2523,8 +2491,6 @@
       "browser": false,
       "asserts": "A PLACEHOLDER IS NOT A FIGURE, AND NOTHING READS ONE UNASKED (2026-09-23 night, QUEUE sys:placeholder-never-printed).",
       "reads": [
-        "data/facts/${folder}/${name}",
-        "scripts/verify_placeholder_never_printed.ts (the plant)",
         "src/lib/facts/",
         "src/lib/facts/store.ts",
         "src/lib/spine/country_exit_rows.ts",
@@ -2577,7 +2543,6 @@
       "browser": true,
       "asserts": "verify_interact: A DRAWING'S PARTS ANSWER THE READER, AND ONLY WITH THE DRAWING'S OWN DATA (goal 2026-09-26, his message of that afternoon: \"study the potential dynamism of all sections ...",
       "reads": [
-        "scratchpad/harness/pages/${p.surface}-${p.slugs.join(\"-\")}.html",
         "scripts/harness/pages.json",
         "src/components/spine/interact/CoverPicker.tsx",
         "src/components/spine/interact/HireLever.tsx",
@@ -3880,8 +3845,6 @@
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 4 (the honesty gate): \"Anything modeled or sampled carries a visible SampleTag.",
       "reads": [
-        "src/app/dev/spine-${name}",
-        "src/components/spine/${name}",
         "src/components/spine/country/country-view.tsx"
       ],
       "claims": []
