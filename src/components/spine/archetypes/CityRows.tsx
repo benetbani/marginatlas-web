@@ -6,14 +6,15 @@
  *
  * THE FORM, by width:
  *  - UNDER 768, TWO TO A ROW (his ruling of 2026-08-30, standing in FOUNDER-VERDICTS): each city a cell 64px tall, its name at 20
- *    over its figure at 14, the arrow at the right; an eighth cell, "All UK cities", opens /gb's cities, so seven cities and the door
- *    fill four rows (about 280px, where the stack of seven rows stood 356).
+ *    over its figure at 14, no arrow (the cell is the door, and the arrow on the picture's busiest ground nearly disappeared; critique
+ *    pass 3, fix round D2, item P2.7); an eighth cell, "All UK cities", opens /gb's cities, its words at 20 semibold as the names are
+ *    and its own arrow at the right, so seven cities and the door fill four rows (about 280px, where the stack of seven rows stood 356).
  *  - FROM 768, ONE ROW A CITY on a fixed pitch (critique pass 2, fix round C2, items P1.3 and P1.4): each city a slot of 56px
  *    (`md:auto-rows-[56px]`), the doors' own pitch (WhereNext `pitch`), so the foot's two lists meet row for row, on white with a
  *    hairline above it as the doors are ruled: the 72 by 48 thumbnail, the name in a column of 22ch (underlined on hover), the
  *    figure in the very next column, the leftover absorbed, the arrow at the right edge (PART 5's row). The "All UK cities" cell
- *    stands at every width: from 768 it is the eighth slot, a row with no picture (its words at 20 semibold in ink, the arrow at the
- *    edge, its edge), beside the doors' eighth.
+ *    stands at every width: its words at 20 semibold in ink and its arrow at every width, and from 768 it is the eighth slot, a row with
+ *    no picture (its edge), beside the doors' eighth. The rows' arrows show from 768 only.
  *
  * THE PICTURE IN GREY (the spec's decision 2): each city's small copy (480 by 360, about 25KB, public/cities/thumbs) in grey and with
  * no terracotta wash, so the band above and the cities never read as one salmon wall. Under 768 it is the cell's ground under a
@@ -49,7 +50,7 @@ export function CityRows({ cards, basis, allHref, allLabel, unit }: { cards: Cit
         {cards.map((c, i) => (
           <Row key={c.id} card={c} fmt={fmt} unit={unit} first={i === 0} />
         ))}
-        <a href={allHref} data-all-cities="" className="group tap-y flex min-h-16 items-center justify-between gap-2 rounded-[12px] border border-[var(--c-line-strong)] px-3 py-2 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)] md:my-1 md:min-h-0 md:py-0 md:text-[length:var(--t-head)] md:font-semibold md:leading-[1.15] md:tracking-tight">
+        <a href={allHref} data-all-cities="" className="group tap-y flex min-h-16 items-center justify-between gap-2 rounded-[12px] border border-[var(--c-line-strong)] px-3 py-2 text-[length:var(--t-head)] font-semibold leading-[1.15] tracking-tight text-[var(--c-ink)] no-underline transition-colors hover:border-[var(--c-ink2)] md:my-1 md:min-h-0 md:py-0">
           <span>{allLabel}</span>
           <span aria-hidden className="shrink-0 transition-transform group-hover:translate-x-0.5">&#8594;</span>
         </a>
@@ -59,7 +60,7 @@ export function CityRows({ cards, basis, allHref, allLabel, unit }: { cards: Cit
   );
 }
 
-/** ONE CITY, ONE DOOR: under 768 its name across the cell over its figure and the arrow, the picture behind them under its veil; from
+/** ONE CITY, ONE DOOR: under 768 its name across the cell over its figure, the picture behind them under its veil and no arrow (the cell is the door); from
  *  768 the thumbnail, the name, the figure in the next column, the leftover, the arrow at the edge, on white with a hairline above
  *  every row but the first. The row's own height is its tap (64, then the 56px slot), never an invisible box outside it: under 768
  *  the row clips its overflow for the picture. */
@@ -83,7 +84,7 @@ function Row({ card, fmt, unit, first }: { card: CityCard; fmt: (v: number) => s
         {typeof card.payUsd === "number" ? <span className="sr-only">{` ${unit}`}</span> : null}
       </span>
       <span aria-hidden className="hidden md:block" />
-      <span aria-hidden className="relative justify-self-end text-[length:var(--t-body)] leading-none text-[var(--c-ink)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
+      <span aria-hidden className="relative hidden justify-self-end text-[length:var(--t-body)] leading-none text-[var(--c-ink)] transition-transform group-hover:translate-x-0.5 md:block">&#8594;</span>
     </a>
   );
 }
