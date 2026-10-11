@@ -2640,10 +2640,12 @@
       "asserts": "EVERY SHIPPING PAGE NEEDS A MAIN LANDMARK.",
       "reads": [
         "src/app",
+        "src/app/(site)/",
         "src/app/[country]/[geo]/[industry]/page.tsx",
         "src/app/_design/monetized/page.tsx",
         "src/app/_design/page.tsx",
         "src/app/_design/v2-review/page.tsx",
+        "src/app/dev",
         "src/app/embed/[country]/[geo]/[industry]/page.tsx"
       ],
       "claims": []

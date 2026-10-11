@@ -34,11 +34,20 @@
  * elsewhere that renders SiteChrome and writes a <main> of its own may do so on a branch the other never takes (src/app/page.tsx is
  * the case above), which a source scan cannot tell apart.
  *
- * STATED BLIND SPOT: this reads source, so it sees a <main> written in the page
- * file or in a component the page imports one level deep. A landmark rendered
- * three components down is not seen. The production check that found this in
- * the first place is the stronger instrument and it needs the network, which
- * this chain must never require.
+ * STATED BLIND SPOT: this reads source, and it reads the PAGE FILE ONLY: code() is
+ * given each page.tsx and nothing the page imports, a layout included. So a <main>
+ * written in a component, one level down or three, is not seen. A page outside
+ * the (site) group that draws its landmark in a view component reads as having
+ * none (a red to answer in the page, or to exempt below with its reason), and a
+ * page under (site) whose component writes a second <main> passes unseen. Nothing
+ * hides one today: SiteChrome's is the only <main> a component under src/components
+ * writes (git grep, 2026-10-12). The production check that found this in the first
+ * place is the stronger instrument and it needs the network, which this chain must
+ * never require.
+ * TWO NAMES ARE READ BY PATH FROM THE ROOT, NEVER BY A BARE FOLDER NAME (truth-fixes
+ * round 3A2, the review's M4): the (site) group is src/app/(site)/, so a folder that
+ * merely ends in (site) is not it, and src/app/dev is the one folder skipped, so a
+ * page in a folder named dev anywhere else is read like any other.
  *
  *   node scripts/verify_main_landmark.mjs
  */
@@ -46,6 +55,9 @@ import fs from "node:fs";
 import path from "node:path";
 
 const APP = "src/app";
+/** The group whose layout draws SiteChrome, and the one folder of routes that never ship: both by path from the root. */
+const SITE_GROUP = "src/app/(site)/";
+const DEV = "src/app/dev";
 
 /* Pages that legitimately render no main landmark, each with its reason.
    Do NOT add a row here to silence a failure: the point of the list is that
@@ -78,7 +90,7 @@ function pages(dir = APP, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name).replace(/\\/g, "/");
     if (e.isDirectory()) {
-      if (e.name !== "dev") pages(p, out);
+      if (p !== DEV) pages(p, out);
     } else if (e.name === "page.tsx") out.push(p);
   }
   return out;
@@ -93,7 +105,7 @@ for (const page of pages()) {
   if (page in EXEMPT) continue;
   const src = code(page);
   checked++;
-  const inGroup = page.includes("(site)/");
+  const inGroup = page.startsWith(SITE_GROUP);
   const rendersProvider = PROVIDERS.some((p) => new RegExp(`<${p}[\\s>]`).test(src));
   const own = (src.match(/<main[\s>]/g) || []).length;
   if (own === 0 && !inGroup && !rendersProvider) missing.push(page);

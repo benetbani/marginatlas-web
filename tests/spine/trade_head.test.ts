@@ -472,7 +472,11 @@ async function main(): Promise<void> {
     { country: "kr", geo: "gyeonggi", industry: "restaurants", titleIn: "Gyeonggi, South Korea", desc: new RegExp(`^~${AMT} typical revenue for restaurants in South Korea\\.$`), never: "Gyeonggi", seedCity: "Gyeonggi" },
     { country: "my", geo: "selangor", industry: "restaurants", titleIn: "Selangor, Malaysia", desc: new RegExp(`^~${AMT} typical revenue for restaurants in Malaysia\\.$`), never: "Selangor", seedCity: "Selangor" },
     /* A synthetic cell: no row held legal services, so the lookup drew one from country and trade averages. It names the label its
-       tables give the word (Liverpool) or else the country, and the head says it holds no figure. */
+       tables give the word (Liverpool) or else the country, and the head says it holds no figure.
+       THE BOSTON ROW IS STATED BEHAVIOUR, NOT A RULE (truth-fixes round 3A2, the review's M6). It pins what the lookup does for a synthetic cell today: no table labels the
+       word, so the cell is named by its country, and a Boston address reads "the United Kingdom" here while its restaurants page, a country's row, reads "Boston, United
+       Kingdom". That is the old naming of synthetic cells held in place by a check, not a decision that the place an address names may be left off its head. A better name
+       for a synthetic cell would move this row and its card row below without breaking a rule. */
     { country: "gb", geo: "liverpool", industry: "legal-services", titleIn: "Liverpool", desc: new RegExp(`^Revenue and employment numbers for ${tradeName("legal-services").toLowerCase()} in Liverpool\\.$`) },
     { country: "gb", geo: "boston", industry: "legal-services", titleIn: THE_UK, desc: new RegExp(`^Revenue and employment numbers for ${tradeName("legal-services").toLowerCase()} in ${THE_UK}\\.$`) },
     /* THE STATISTICS CODES (truth-fixes round 3B): a row of the code UK or EL at the level "country" is the country's figure, so the title names the place with its
@@ -688,6 +692,7 @@ async function main(): Promise<void> {
     { country: "kr", geo: "gyeonggi", industry: "restaurants", title: "Restaurants: Gyeonggi", label: "Typical revenue in South Korea", detail: RANGE, never: "Gyeonggi" },
     { country: "my", geo: "selangor", industry: "restaurants", title: "Restaurants: Selangor", label: "Typical revenue in Malaysia", detail: RANGE, never: "Selangor" },
     { country: "gb", geo: "liverpool", industry: "legal-services", title: `${tradeName("legal-services")}: Liverpool`, none: true },
+    /* Stated behaviour, not a rule: the synthetic Boston card, as the head's synthetic Boston row above (round 3A2, the review's M6). */
     { country: "gb", geo: "boston", industry: "legal-services", title: `${tradeName("legal-services")}: United Kingdom`, none: true },
     { country: "uk", geo: "uki", industry: "restaurants", title: "Restaurants: London", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "London" },
     { country: "uk", geo: "ukj", industry: "restaurants", title: "Restaurants: South East", label: "Typical revenue", detail: RANGE },

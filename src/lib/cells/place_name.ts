@@ -185,6 +185,12 @@ function heldCountryName(iso2: string): string | null {
  * "Central Bedfordshire" into "the Central Bedfordshire".
  * BLIND SPOT, stated: geo_level and is_synthetic are what the lookup stamped on the cell, so this cannot tell a country's row that was
  * stored under a regional level from a regional row, and a row's figure is taken to belong to the level it says.
+ * NOR CAN IT TELL A REGIONAL ROW THAT CARRIES ANOTHER PLACE'S NAME THROUGH AN ALIAS (the review of round 3A, M3). A place word that an alias
+ * points at a row of a larger region reads that row as its own: the review counted 166 of manual_city_aliases.ts's 180 aliases pointing at a larger
+ * region, and the friendly aliases point a city at its county. So /de/dusseldorf and /de/essen both read the row DEA1 and one figure prints as
+ * Düsseldorf's and as Essen's, /de/frankfurt prints Darmstadt's NUTS-2 figure "in Frankfurt am Main", and /us/boston prints Suffolk County's
+ * figure "in Boston". The row is regional, so its figure is taken to belong to the place the cell is named for, which the alias makes untrue.
+ * That is a ruling about the aliases, not a fix of this function: carried to the owner, outside truth-fixes round 3A2.
  */
 export function headPlaceOf(country: string, geoSlug: string, cell: { geo_name?: string | null; geo_level?: string | null; is_synthetic?: boolean | null }): HeadPlace {
   const iso2 = String(country ?? "").trim().toUpperCase();
