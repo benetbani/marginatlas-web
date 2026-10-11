@@ -2235,8 +2235,11 @@
         "src/lib/cities/city_tier.ts",
         "src/lib/home/beats.ts",
         "src/lib/markets/across_cities.ts",
+        "src/lib/markets/startup_capital_archetypes.ts",
         "src/lib/spine/adapt_country.ts",
-        "src/lib/spine/open_rows.ts"
+        "src/lib/spine/open_rows.ts",
+        "src/lib/spine/permits_rows.ts",
+        "src/lib/spine/rivals_rows.ts"
       ],
       "claims": []
     },

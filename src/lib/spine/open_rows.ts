@@ -209,9 +209,10 @@ export function openForm(open: OpenData): OpenForm {
 
 /* THE KEYED FIGURE AT THE PLACE'S PRICES (plan 06, task A6, 2026-10-04): the archetype table is a New York index (cost of
    living 100), and the trade page printed it unadjusted on every city (a London barbershop at New York's 60,000). Where the
-   page's city, one of its own country (cityOfCountry), holds a cost-of-living index, the figure takes the place factor (London's 75: 0.75), rounded once to three
-   figures, and the basis says it is an estimate at that city's prices; a page with no city index keeps the keyed figure and
-   its empty basis outside the UK, and none on a UK page. Never `placeAdjustedStartupCapital`, which answers the 80,000 default for a trade the table does not key. */
+   page's city, one of its own country (cityOfCountry), holds a cost-of-living index, the figure takes the place factor
+   (London's 75: 0.75), rounded once to three figures, and the basis says it is an estimate at that city's prices; a page
+   with no city index keeps the keyed figure and its empty basis outside the UK, and none on a UK page. Never
+   `placeAdjustedStartupCapital`, which answers the 80,000 default for a trade the table does not key. */
 export function placeCostFactor(meta: { iso2?: unknown; geo?: unknown } | null | undefined): number | null {
   const index = getCityCostOfLivingIndex(cityOfCountry(typeof meta?.iso2 === "string" ? meta.iso2 : null, typeof meta?.geo === "string" ? meta.geo : null));
   return index != null ? placeFactor({ costOfLivingIndex: index }) : null;
