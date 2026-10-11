@@ -42,14 +42,26 @@
  * database held them.
  * BLIND SPOT, stated: the strings are those of the rows read on 2026-10-11, so a source this has not seen passes if it holds no such word.
  *
+ * AND THE STATISTICS CODE READS AS THE SITE'S, AT THE SEED'S DOOR (truth-fixes round 3B, 2026-10-11; round 1's item 3, uk:statistics-code-uk-pages). UK for the
+ * United Kingdom and EL for Greece are the statistics' own spellings of countries the site holds as GB and GR, and /uk/uki/restaurants printed the world's survival,
+ * pay dashes, a United States licence list and a New York cost table because four tests that ask "is this Great Britain" and every lookup keyed by the country read
+ * the seed's meta.iso2, which was "UK". One function (siteCountryCode, src/lib/countries.ts) answers the site's code, the table the coverage report held moved
+ * there so no second one exists, the seed's meta.iso2 takes it once where adapt_cell.ts sets it, and placeNameOf reads it for the country's name and its bare-code
+ * test, so "UK" is a bare code of the United Kingdom. THE ADDRESS DOES NOT MOVE: the seed carries the code the route received (meta.address_iso2), which the report
+ * foot's path reads, and the route, the canonical, the robots tag, the place words and the paywall read the route's own code and never the seed's.
+ * BLIND SPOT, stated: the stub holds the UK's and Greece's rows in the shapes the database held on 2026-10-11 (levels nuts1 and nuts2), plus one invented row of the
+ * code UK at the level "country"; this cannot tell which rows the database holds today.
+ *
  * Run: npx tsx tests/spine/trade_head.test.ts
  */
 import Module from "node:module";
+import { readdirSync, readFileSync } from "node:fs";
 import { tradeHeadFigure } from "../../src/lib/spine/trade_head";
 import { inSentence } from "../../src/lib/spine/place_names";
 import { COUNTRIES, slugToIndustry } from "../../src/lib/taxonomy";
 import { PLACE_SLUGS_BY_COUNTRY } from "../../src/lib/routing/place_slugs_generated";
 import { red, redSummary } from "../../scripts/lib/red";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
 
 const RULE = "trade-head";
 const FILE = "src/lib/spine/trade_head.ts";
@@ -66,6 +78,10 @@ const R_CARD = "name the place in the share card through headPlaceOf(country, ge
 const R_ARTICLE = "drop Czech from the start-of-name rule in src/lib/spine/place_names.ts: Czechia takes no article, and the Czech Republic still takes it from Republic";
 const R_ENGLAND = "name England England in src/lib/geo/popular_place_overrides.json (gb/england), the table geoNameFromSlug and getCellBySlug answer first: a nation is never named by its capital, so a page's label is the place the word names, then the place table is generated again (scripts/gen_place_slugs.ts) and holds no word fewer";
 const R_SOURCE = "cut a pipeline's word (one holding an underscore, or two or more letters run into digits) from the source line where the data enters the seed, sanitiseProvenance in src/lib/spine/adapt_cell.ts; where nothing readable is left the sentence drops its \"from\" clause (\"Estimates for a typical restaurant.\"), never an invented source and never an agency";
+const R_STAT = "map a statistics code to the site's country code in one function, siteCountryCode in src/lib/countries.ts (UK to GB, EL to GR), read once where adapt_cell.ts sets the seed's meta.iso2 and by placeNameOf for the country's name and its bare-code test; the coverage report imports it and holds no table of its own; the address keeps the code the route received (meta.address_iso2, which the report foot's path reads)";
+const COUNTRIES_FILE = "src/lib/countries.ts";
+const REPORT = "src/lib/coverage/report.ts";
+const VIEW = "src/components/spine/cell/cell-view.tsx";
 const CRUMBS = "src/lib/spine/crumb_rows.ts";
 const R_CRUMB = "drop a place crumb whose label equals the country crumb's label in src/lib/spine/crumb_rows.ts (placeCrumb takes the country crumb, for the trade page and the district pages alike), so a trail never says one place twice";
 const sameLabel = (a: string, b: string): boolean => a.trim().toLowerCase() === b.trim().toLowerCase();
@@ -105,6 +121,46 @@ async function main(): Promise<void> {
   const MISSING = "(headPlaceOf is not exported)";
   const H: HeadPlaceOf = mod?.headPlaceOf ?? (() => ({ label: MISSING, titleIn: MISSING, figureIn: MISSING }));
 
+  /* (0) THE ONE FUNCTION (truth-fixes round 3B): a statistics code reads as the site's country code, for the seed's door and for the country's name. */
+  const countriesMod = await tryImport<{ siteCountryCode?: (code: string | null | undefined) => string }>(() => import("../../src/lib/countries"));
+  check(`${COUNTRIES_FILE} exports siteCountryCode`, typeof countriesMod?.siteCountryCode === "function", { file: COUNTRIES_FILE, remedy: R_STAT });
+  const C = countriesMod?.siteCountryCode ?? (() => "(siteCountryCode is not exported)");
+  const codes: Array<[string, string | null | undefined, string]> = [
+    ["the United Kingdom's statistics code reads GB", "UK", "GB"],
+    ["in lower case, as a route holds it", "uk", "GB"],
+    ["Greece's statistics code reads GR", "EL", "GR"],
+    ["with the spaces an input can carry", " el ", "GR"],
+    ["the site's own code for the country is itself", "GB", "GB"],
+    ["Greece's own code is itself", "GR", "GR"],
+    ["a code the site holds is itself, in capitals", "de", "DE"],
+    ["the United States is itself", "US", "US"],
+    ["a code no table knows is itself, never invented", "ZZ", "ZZ"],
+    ["a word that is a key of every object is no alias", "constructor", "CONSTRUCTOR"],
+    ["no code stays none", "", ""],
+    ["a missing code stays none", null, ""],
+  ];
+  for (const [label, code, want] of codes) {
+    const got = C(code);
+    check(`${label}: siteCountryCode(${JSON.stringify(code)}) is ${JSON.stringify(want)} (got ${JSON.stringify(got)})`, got === want, { file: COUNTRIES_FILE, remedy: R_STAT });
+  }
+  /* ONE TABLE: the mapping is held in src/lib/countries.ts and in no other module of src, and the coverage report reads it from there. */
+  const holders: string[] = [];
+  const walkSrc = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) { walkSrc(p); continue; }
+      if (!/\.(ts|tsx)$/.test(e.name)) continue;
+      const text = readFileSync(p, "utf8");
+      if (text.includes("UK") && /\bUK\b["']?\s*:\s*["']GB["']/.test(stripCommentLines(text.split(/\r?\n/)).join("\n"))) holders.push(p.replace(/\\/g, "/"));
+    }
+  };
+  walkSrc("src");
+  check(`the statistics codes' table is held once, in ${COUNTRIES_FILE} (held in: ${holders.join(", ") || "no module"})`, holders.length === 1 && holders[0] === COUNTRIES_FILE, { file: COUNTRIES_FILE, remedy: R_STAT });
+  const reportCode = stripCommentLines(readFileSync(REPORT, "utf8").split(/\r?\n/)).join("\n");
+  check(`${REPORT} reads siteCountryCode and holds no table of its own`, /\bsiteCountryCode\b/.test(reportCode) && !/\bALIASES\b/.test(reportCode), { file: REPORT, remedy: R_STAT });
+  const { getCoverageFor } = await import("../../src/lib/coverage/report");
+  check("the coverage report still folds the statistics codes into the site's countries: GB and GR hold their cells, UK and EL hold none of their own", getCoverageFor("GB") !== null && getCoverageFor("GR") !== null && getCoverageFor("UK") === null && getCoverageFor("EL") === null, { file: REPORT, remedy: R_STAT });
+
   /* (1) THE FUNCTION. Each row: the page's country, its place word, the name the lookup stamped on the cell, and the name the page prints. */
   const cases: Array<[string, string, string, string | null | undefined, string | null]> = [
     ["/gb/boston, whose row says GB, is Boston", "GB", "boston", "GB", "Boston"],
@@ -127,10 +183,16 @@ async function main(): Promise<void> {
     ["and /gr/all-of-gr", "GR", "all-of-gr", "GR", "Greece"],
     ["a label that holds the code as a word of its own is refused, whatever table it comes from: /be/prov-limburg-be", "BE", "prov-limburg-be", "BE", "Belgium"],
     ["and /it/centro-it", "IT", "centro-it", "IT", "Italy"],
-    /* A CODE THE COUNTRY LIST HOLDS NO NAME FOR (the review's M7): the cell's own name stands, as the module's header says. */
-    ["the UK's statistics code: the cell's own name stands, whatever word the page is", "UK", "london-nuts-2021", "UK", "UK"],
-    ["and for the code's own regions", "UK", "uki", "UK", "UK"],
-    ["Greece's statistics code, likewise", "EL", "el3", "EL", "EL"],
+    /* THE STATISTICS CODES ARE THE SITE'S COUNTRIES (truth-fixes round 3B; round 1's item 3): UK is the United Kingdom's bare code and EL Greece's, so a cell named
+       by one is named as a GB or GR cell is, by its place word's label else its country, and the country is named in English. The place words and the labels stay
+       keyed by the code the address holds (the uk and el tables). */
+    ["the UK's statistics code is a bare code of the United Kingdom: its own word names the country", "UK", "uk", "UK", "United Kingdom"],
+    ["the page's country in lower case, as a route receives it", "uk", "uk", "UK", "United Kingdom"],
+    ["a word no table labels names the country under that code", "UK", "zzzz-not-a-place", "UK", "United Kingdom"],
+    ["a word a table labels keeps the label: the region's id", "UK", "uki", "UK", "London (NUTS 2021)"],
+    ["and the slug of that label", "UK", "london-nuts-2021", "UK", "London (NUTS 2021)"],
+    ["Greece's statistics code, likewise: its own word", "EL", "el", "EL", "Greece"],
+    ["and a region's id: Attiki", "EL", "el3", "EL", "Attiki"],
     ["a label the lookup stamped on such a row is the cell's own name and stays", "UK", "uki", "London (NUTS 2021)", "London (NUTS 2021)"],
     ["a name the lookup stamped is never replaced: London", "GB", "london", "London", "London"],
     ["a name the lookup stamped is never replaced: Liverpool", "GB", "liverpool", "Liverpool", "Liverpool"],
@@ -182,7 +244,9 @@ async function main(): Promise<void> {
     ["a named-row country's own page: Jamaica", "JM", "jm", { geo_name: "Jamaica", geo_level: "country" }, { label: "Jamaica", titleIn: "Jamaica", figureIn: "Jamaica" }],
     ["a synthetic cell carries no figure of any place", "GB", "liverpool", { geo_name: "Liverpool", geo_level: "region", is_synthetic: true }, { label: "Liverpool", titleIn: "Liverpool", figureIn: null }],
     ["a synthetic cell for the country itself: the article, no figure", "US", "us", { geo_name: "United States", geo_level: "region", is_synthetic: true }, { label: "United States", titleIn: "the United States", figureIn: null }],
-    ["a code the country list holds no name for, on a country's row: no figure under it", "UK", "uki", { geo_name: "London (NUTS 2021)", geo_level: "country" }, { label: "London (NUTS 2021)", titleIn: "London (NUTS 2021)", figureIn: null }],
+    ["the UK's statistics code on a country's row: the title names the place with the United Kingdom, the figure is the country's", "UK", "uki", { geo_name: "London (NUTS 2021)", geo_level: "country" }, { label: "London (NUTS 2021)", titleIn: "London (NUTS 2021), United Kingdom", figureIn: "the United Kingdom" }],
+    ["the UK's own word under that code takes the article", "UK", "uk", { geo_name: "UK", geo_level: "country" }, { label: "United Kingdom", titleIn: "the United Kingdom", figureIn: "the United Kingdom" }],
+    ["Greece's statistics code on a country's row", "EL", "el3", { geo_name: "Attiki", geo_level: "country" }, { label: "Attiki", titleIn: "Attiki, Greece", figureIn: "Greece" }],
     ["a row of that code at its own level keeps its own figure", "UK", "uki", { geo_name: "London (NUTS 2021)", geo_level: "nuts1" }, { label: "London (NUTS 2021)", titleIn: "London (NUTS 2021)", figureIn: "London (NUTS 2021)" }],
     ["control, a real row: London is its own", "GB", "london", { geo_name: "London", geo_level: "district" }, { label: "London", titleIn: "London", figureIn: "London" }],
     ["control, a real row: Liverpool is its own", "GB", "liverpool", { geo_name: "Liverpool", geo_level: "district" }, { label: "Liverpool", titleIn: "Liverpool", figureIn: "Liverpool" }],
@@ -221,6 +285,8 @@ async function main(): Promise<void> {
     regionalRow("GB", "GB-E08000003", "district", "Manchester", 260_000),
     regionalRow("US", "US-25-025", "county", "Suffolk County", 550_000),
     regionalRow("UK", "UKI", "country", "UK", 300_000),
+    regionalRow("UK", "UKJ", "nuts1", "South East (UK) (NUTS 2021)", 320_000),
+    regionalRow("EL", "EL30", "nuts2", "Attiki", 270_000),
   ];
   const CALIFORNIA = { country: "US", geo_id: "US-06", geo_level: "state", naics_6: "722511", naics_4: "7225", industry_description: "Full-Service Restaurants", size_band: null, year: YEAR, n: 9000, total_employment: 270_000, rev_p10: 240_000, rev_p25: 390_000, rev_p50: 600_000, rev_p75: 870_000, rev_p90: 1_260_000, mean_wage_per_employee_usd: 30_000, quality_score: 85, coverage_tier: "A", coverage_source: "Census", currency: "USD" };
   globalThis.fetch = (async (input: RequestInfo | URL) => {
@@ -274,7 +340,11 @@ async function main(): Promise<void> {
        tables give the word (Liverpool) or else the country, and the head says it holds no figure. */
     { country: "gb", geo: "liverpool", industry: "legal-services", titleIn: "Liverpool", desc: new RegExp(`^Revenue and employment numbers for ${tradeName("legal-services").toLowerCase()} in Liverpool\\.$`) },
     { country: "gb", geo: "boston", industry: "legal-services", titleIn: THE_UK, desc: new RegExp(`^Revenue and employment numbers for ${tradeName("legal-services").toLowerCase()} in ${THE_UK}\\.$`) },
-    { country: "uk", geo: "uki", industry: "restaurants", titleIn: "London (NUTS 2021)", desc: /^Revenue and employment numbers for restaurants in London \(NUTS 2021\)\.$/ },
+    /* THE STATISTICS CODES (truth-fixes round 3B): a row of the code UK or EL at the level "country" is the country's figure, so the title names the place with its
+       country and the figure stands beside the country (UKI is stubbed as such a row); a row at its own level (UKJ, EL30) is a place's own, as London's is. */
+    { country: "uk", geo: "uki", industry: "restaurants", titleIn: "London (NUTS 2021), United Kingdom", desc: new RegExp(`^~${AMT} typical revenue for restaurants in ${THE_UK}\\.$`), never: "London", seedCity: "London (NUTS 2021)" },
+    { country: "uk", geo: "ukj", industry: "restaurants", titleIn: "South East (UK) (NUTS 2021)", desc: new RegExp(`^~${AMT} typical revenue for restaurants in South East \\(UK\\) \\(NUTS 2021\\)\\.$`), seedCity: "South East (UK) (NUTS 2021)" },
+    { country: "el", geo: "el30", industry: "restaurants", titleIn: "Attiki", desc: new RegExp(`^~${AMT} typical revenue for restaurants in Attiki\\.$`), seedCity: "Attiki" },
     /* The controls, real rows: byte-identical to what the head printed before. */
     { country: "gb", geo: "london", industry: "restaurants", titleIn: "London", desc: "$374K typical yearly sales for restaurants in London, from 7,865 registered businesses.", seedCity: "London" },
     { country: "gb", geo: "liverpool", industry: "restaurants", titleIn: "Liverpool", desc: "~$250K typical revenue for restaurants in Liverpool.", seedCity: "Liverpool" },
@@ -359,6 +429,50 @@ async function main(): Promise<void> {
     check(`${addr}: the seed's source line holds no internal word (${JSON.stringify(line)}) and the hero's foot reads "${f.foot}" (got ${JSON.stringify(footText)})`, internalIn(line).length === 0 && footText === f.foot, { file: SEED, remedy: R_SOURCE });
   }
 
+  /* (2d) THE STATISTICS CODE AT THE SEED'S DOOR, AND THE ADDRESS THAT DOES NOT MOVE. The seed names the site's country (UK reads GB, EL reads GR) and carries the code the
+     route received beside it (meta.address_iso2), which the report foot's path reads and nothing else does. The page is drawn from that seed, so the tests that ask "is this
+     Great Britain" and every lookup keyed by the country read GB: the country crumb and the licence foot stand on the page, and the report link keeps the page's own address. */
+  type Door = { country: string; geo: string; industry: string; iso2: string; name: string; address: string };
+  const doors: Door[] = [
+    { country: "uk", geo: "uki", industry: "restaurants", iso2: "GB", name: "United Kingdom", address: "UK" },
+    { country: "uk", geo: "ukj", industry: "restaurants", iso2: "GB", name: "United Kingdom", address: "UK" },
+    { country: "el", geo: "el30", industry: "restaurants", iso2: "GR", name: "Greece", address: "EL" },
+    { country: "gb", geo: "boston", industry: "restaurants", iso2: "GB", name: "United Kingdom", address: "GB" },
+    { country: "gb", geo: "liverpool", industry: "restaurants", iso2: "GB", name: "United Kingdom", address: "GB" },
+    { country: "de", geo: "de", industry: "restaurants", iso2: "DE", name: "Germany", address: "DE" },
+    { country: "us", geo: "california", industry: "restaurants", iso2: "US", name: "United States", address: "US" },
+  ];
+  for (const d of doors) {
+    const seed = await buildSpineCellSeed(d.country, d.geo, d.industry);
+    const m = seed?.meta;
+    check(`/${d.country}/${d.geo}/${d.industry}: the seed's country is ${d.iso2} (${d.name}) and its address keeps ${d.address} (got iso2 ${JSON.stringify(m?.iso2)}, country_name ${JSON.stringify(m?.country_name)}, address_iso2 ${JSON.stringify(m?.address_iso2)})`, m?.iso2 === d.iso2 && m?.country_name === d.name && m?.address_iso2 === d.address, { file: SEED, remedy: R_STAT });
+  }
+  const { renderToStaticMarkup } = await import("react-dom/server");
+  const viewMod = await tryImport<{ SpineCellBody?: (props: { data: unknown }) => unknown }>(() => import("../../src/components/spine/cell/cell-view"));
+  check("the cell view loads, so a page can be drawn from a seed", typeof viewMod?.SpineCellBody === "function", { file: VIEW, remedy: R_STAT });
+  const ReactApi = (reactNs.default ?? reactNs) as typeof import("react");
+  const drawn = async (country: string, geo: string, industry: string): Promise<string> => {
+    const seed = await buildSpineCellSeed(country, geo, industry);
+    const Body = viewMod?.SpineCellBody;
+    return seed && typeof Body === "function" ? renderToStaticMarkup(ReactApi.createElement(Body as never, { data: seed } as never)) : "";
+  };
+  const reportOf = (markup: string): string | null => /href="(\/corrections\/new\?page=[^"]*)"/.exec(markup)?.[1] ?? null;
+  type Drawn = { country: string; geo: string; industry: string; report: string; licence: boolean; gbCrumb: boolean | null };
+  const drawnCases: Drawn[] = [
+    { country: "uk", geo: "uki", industry: "restaurants", report: "/corrections/new?page=%2Fuk%2Fuki%2Frestaurants", licence: true, gbCrumb: true },
+    { country: "el", geo: "el30", industry: "restaurants", report: "/corrections/new?page=%2Fel%2Fel30%2Frestaurants", licence: false, gbCrumb: null },
+    { country: "gb", geo: "boston", industry: "restaurants", report: "/corrections/new?page=%2Fgb%2Fboston%2Frestaurants", licence: true, gbCrumb: true },
+    { country: "de", geo: "de", industry: "restaurants", report: "/corrections/new?page=%2Fde%2Fde%2Frestaurants", licence: false, gbCrumb: false },
+  ];
+  for (const c of drawnCases) {
+    const markup = await drawn(c.country, c.geo, c.industry);
+    const report = reportOf(markup);
+    /* The licence foot is the paragraph that carries the attribute; the attribute name also stands in a class of the report line that sits under it. */
+    const licence = /<p data-sources-foot[ =>]/.test(markup);
+    const gbCrumb = markup.includes('href="/gb"');
+    check(`/${c.country}/${c.geo}/${c.industry}: drawn from its seed, the report link names the page's own address (${report}), the United Kingdom's licence foot ${c.licence ? "stands" : "is absent"} (${licence})${c.gbCrumb === null ? "" : `, and the country crumb to /gb ${c.gbCrumb ? "stands" : "is absent"} (${gbCrumb})`}`, markup.length > 0 && report === c.report && licence === c.licence && (c.gbCrumb === null || gbCrumb === c.gbCrumb), { file: VIEW, remedy: R_STAT });
+  }
+
   /* (3) THE SHARE CARD, read from the element tree the route hands to ImageResponse (stubbed above): the title block and the figure block. */
   type Props = Record<string, unknown>;
   type Node = { type?: unknown; props?: Props };
@@ -386,7 +500,9 @@ async function main(): Promise<void> {
     { country: "gb", geo: "england", industry: "restaurants", title: "Restaurants: England", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "England" },
     { country: "gb", geo: "liverpool", industry: "legal-services", title: `${tradeName("legal-services")}: Liverpool`, none: true },
     { country: "gb", geo: "boston", industry: "legal-services", title: `${tradeName("legal-services")}: United Kingdom`, none: true },
-    { country: "uk", geo: "uki", industry: "restaurants", title: "Restaurants: London (NUTS 2021)", none: true },
+    { country: "uk", geo: "uki", industry: "restaurants", title: "Restaurants: London (NUTS 2021)", label: `Typical revenue in ${THE_UK}`, detail: RANGE, never: "London" },
+    { country: "uk", geo: "ukj", industry: "restaurants", title: "Restaurants: South East (UK) (NUTS 2021)", label: "Typical revenue", detail: RANGE },
+    { country: "el", geo: "el30", industry: "restaurants", title: "Restaurants: Attiki", label: "Typical revenue", detail: RANGE },
     { country: "gb", geo: "london", industry: "restaurants", title: "Restaurants: London", label: "Typical revenue", value: "$374K", detail: "7,865 registered businesses in London" },
     { country: "gb", geo: "liverpool", industry: "restaurants", title: "Restaurants: Liverpool", label: "Typical revenue", value: "$250K", detail: RANGE },
     { country: "gb", geo: "manchester", industry: "restaurants", title: "Restaurants: Manchester", label: "Typical revenue", value: "$260K", detail: RANGE },

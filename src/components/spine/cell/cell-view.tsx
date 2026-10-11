@@ -475,6 +475,10 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
     : cellZones;
   /* The chapter's number and title stand on the first level of the chapter that draws. */
   const headed = new Set<string>();
+  /* THE PAGE'S OWN ADDRESS, for the two feet that carry it (truth-fixes round 3B): the seed's country is the site's (a statistics code reads as GB or GR, so every lookup
+     above is keyed by the country the site holds) and the address keeps the code the route received (meta.address_iso2). A seed without it (the bundled dev seed) has the one code. */
+  const ownIso2 = d.meta?.address_iso2 ?? d.meta?.iso2;
+  const ownPath = ownIso2 && d.meta?.geo && d.meta?.industry ? `/${String(ownIso2).toLowerCase()}/${String(d.meta.geo).toLowerCase()}/${String(d.meta.industry).toLowerCase()}` : null;
   return (
     <>
       {/* NO MAIN AND NO GUTTER OF ITS OWN (the goal's A13, 2026-09-24): every route that draws this body wraps it in SiteChrome. */}
@@ -492,9 +496,9 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
       {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
       <SourcesFoot iso2={d.meta?.iso2} />
       {/* REPORT A MISTAKE, AND CHECKED WHERE A DATE IS HELD (masterplan step 31): the page's own path to the correction page. */}
-      <ReportFoot path={d.meta?.iso2 && d.meta?.geo && d.meta?.industry ? `/${String(d.meta.iso2).toLowerCase()}/${String(d.meta.geo).toLowerCase()}/${String(d.meta.industry).toLowerCase()}` : null} checked={checkedDateForTrade(d.meta?.iso2, d.meta?.geo != null ? String(d.meta.geo) : null, d.meta?.industry != null ? String(d.meta.industry) : null)} />
+      <ReportFoot path={ownPath} checked={checkedDateForTrade(d.meta?.iso2, d.meta?.geo != null ? String(d.meta.geo) : null, d.meta?.industry != null ? String(d.meta.industry) : null)} />
       {/* THE THIN PAGE'S ONE ASK (milestone 1, M9): the notify-me form, only on a page the floor census counted under its floor outside the UK. */}
-      {d.meta?.iso2 && d.meta?.geo && d.meta?.industry ? <DepthNotifyFoot path={`/${String(d.meta.iso2).toLowerCase()}/${String(d.meta.geo).toLowerCase()}/${String(d.meta.industry).toLowerCase()}`} /> : null}
+      {ownPath ? <DepthNotifyFoot path={ownPath} /> : null}
     </>
   );
 }

@@ -22,12 +22,16 @@
  * the slug of such a label ("danmark", "k-pros", "all-of-af") spells nothing either. A label that holds the code as a word of its own
  * ("All of AF", "Centro (IT)") is no name, from whichever table it comes. A code the country list holds no name for is left to the cell.
  * BLIND SPOTS, stated: this cannot tell a place the site holds no label for from one it holds under another word, and a word that is the
- * slug of two labels takes the first the table lists. A statistics code the country list does not hold (UK, EL) has no country name to
- * give, so a bare code there stays what the page printed (uk:statistics-code-uk-pages, the final review's I-2, is that page's own question).
+ * slug of two labels takes the first the table lists.
+ * THE STATISTICS CODES (truth-fixes round 3B; uk:statistics-code-uk-pages): UK and EL are the United Kingdom's and Greece's own spellings, so the
+ * country's name and the bare-code test read the site's code for the same country (siteCountryCode, src/lib/countries.ts): a cell named "UK" is
+ * named by its place word's label or else "United Kingdom", as a cell named "GB" is. The tables stay keyed by the code the address holds (the
+ * place words and the labels of "uk" and "el"), which is the code the route received. A code neither held nor mapped has no country name to give,
+ * so a bare code there stays what the cell was called.
  *
  * headPlaceOf, below, is this module's second rule: which place a figure may be printed beside (truth-fixes round 3A, 2026-10-11).
  */
-import { iso2ToIso3, iso2ToName } from "@/lib/countries";
+import { iso2ToIso3, iso2ToName, siteCountryCode } from "@/lib/countries";
 import { geoNameFromSlug, slugify } from "@/lib/cells/geo";
 import { placeWordsFor } from "@/lib/routing/place_words";
 import { inSentence } from "@/lib/spine/place_names";
@@ -36,18 +40,30 @@ import { inSentence } from "@/lib/spine/place_names";
  *  an address ("constructor") is a key like any other (src/lib/own.ts is for plain objects). */
 const SPELLED = new Map<string, ReadonlyMap<string, string>>();
 
-/** True when a name is the country's own code, in either of its forms (GB, GBR): the one name a page never prints. */
-function isBareCode(name: string, iso2: string): boolean {
-  const n = name.trim().toUpperCase();
-  return n === iso2 || n === iso2ToIso3(iso2);
+/** The codes a country answers to: the one its address holds (UK), the site's code for the same country (GB), and each in its three-letter
+ *  form where it has one (GBR). A statistics code and the site's code are one country (siteCountryCode, src/lib/countries.ts). */
+function codesOf(iso2: string): string[] {
+  const site = siteCountryCode(iso2);
+  const codes = new Set<string>([iso2, site]);
+  for (const code of [iso2, site]) {
+    const three = iso2ToIso3(code);
+    if (three) codes.add(three);
+  }
+  codes.delete("");
+  return [...codes];
 }
 
-/** True when a label holds the country's code, in either form, as a word of its own ("All of AF", "Centro (IT)"). The code in capitals
- *  only, since a code is printed so and "it" or "me" inside a name is a word. Read by splitting the label, never by a pattern built from
- *  the code: the code comes from the address. */
+/** True when a name is one of the country's own codes (UK, GB, GBR): the one name a page never prints. */
+function isBareCode(name: string, iso2: string): boolean {
+  return codesOf(iso2).includes(name.trim().toUpperCase());
+}
+
+/** True when a label holds one of the country's codes as a word of its own ("All of AF", "Centro (IT)", "South East (UK)"). The code in
+ *  capitals only, since a code is printed so and "it" or "me" inside a name is a word. Read by splitting the label, never by a pattern
+ *  built from the code: the code comes from the address. */
 function holdsCode(label: string, iso2: string): boolean {
-  const iso3 = iso2ToIso3(iso2);
-  return label.split(/[^A-Za-z0-9]+/).some((token) => token === iso2 || (iso3 !== null && token === iso3));
+  const codes = codesOf(iso2);
+  return label.split(/[^A-Za-z0-9]+/).some((token) => codes.includes(token));
 }
 
 /** True when a word is the whole country: its code, or the code with the statistics' zero padding (af, dk0, cy0, cy00). Such a word is
@@ -111,10 +127,12 @@ export type HeadPlace = {
   figureIn: string | null;
 };
 
-/** The country's English name as the country list holds it, or null for a code the list holds none for (the statistics' own UK and EL). */
+/** The country's English name as the country list holds it for the site's code (a statistics code reads as its country's: UK is the United
+ *  Kingdom, EL Greece), or null for a code that neither the list holds nor the site maps. */
 function heldCountryName(iso2: string): string | null {
-  const name = iso2ToName(iso2);
-  return name && name.toUpperCase() !== iso2 ? name : null;
+  const site = siteCountryCode(iso2);
+  const name = iso2ToName(site);
+  return name && name.toUpperCase() !== site ? name : null;
 }
 
 /**
@@ -127,8 +145,8 @@ function heldCountryName(iso2: string): string | null {
  *  - titleIn: how the head's question spells it after "in". On a country's row it names the place with its country ("Boston, United
  *    Kingdom"), and where the place is the country it takes the article the site's helper gives ("the United Kingdom").
  *  - figureIn: where the figure belongs, as a sentence reads it. The country on a country's row, the place on its own row, and null
- *    for a synthetic cell and for a country's row of a code the list holds no English name for (UK, EL: the statistics' own codes,
- *    which print no figure until they are mapped), so the printer omits the figure.
+ *    for a synthetic cell and for a country's row of a code that neither the list holds nor the site maps, so the printer omits the figure.
+ *    (The statistics' own UK and EL read as the United Kingdom and Greece since round 3B: siteCountryCode, src/lib/countries.ts.)
  * The article comes from inSentence and only ever on the country's name: its start-of-name rules would turn a place's label such as
  * "Central Bedfordshire" into "the Central Bedfordshire".
  * BLIND SPOT, stated: geo_level and is_synthetic are what the lookup stamped on the cell, so this cannot tell a country's row that was

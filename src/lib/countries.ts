@@ -98,3 +98,21 @@ export function iso2ToName(iso2: string): string {
   const c = COUNTRIES.find((c) => c.code === iso2.toUpperCase());
   return c?.name || iso2;
 }
+
+/**
+ * THE SITE'S COUNTRY CODE FOR A STATISTICS CODE (truth-fixes round 3B, 2026-10-11; QUEUE uk:statistics-code-uk-pages). The data holds
+ * two codes that are the statistical agencies' spellings of countries the site already knows, not errors: UK for the United Kingdom
+ * (GB here) and EL for Greece (GR). The coverage report held this table alone (EL is the only carrier of Greece's 1,733 classified
+ * cells, so without it Greece reads as uncovered); a trade page read its country straight from the address, so a UK-coded page asked
+ * "is this Great Britain" and looked up pay, survival, licences and costs by a code the site holds no table for, and printed the
+ * world's figures and a New York cost table in their place. One function now, read by the report, by the seed's door
+ * (src/lib/spine/adapt_cell.ts) and by the place's name (src/lib/cells/place_name.ts).
+ * Any other code answers itself in capitals, so no country is invented. The address, the canonical, the robots tag, the place words
+ * and the paywall keep the code the route received: this answers which country, never which page.
+ */
+const STATISTICS_CODES: Readonly<Record<string, string>> = { UK: "GB", EL: "GR" };
+
+export function siteCountryCode(code: string | null | undefined): string {
+  const upper = String(code ?? "").trim().toUpperCase();
+  return Object.hasOwn(STATISTICS_CODES, upper) ? STATISTICS_CODES[upper] : upper;
+}

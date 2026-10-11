@@ -45,7 +45,7 @@ import { buildCellRelatedLinks, fetchCellSiblings } from "@/lib/cells/related_li
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { cityOfCountry, getCityTier } from "@/lib/cities/city_tier";
-import { iso2ToName } from "@/lib/countries";
+import { iso2ToName, siteCountryCode } from "@/lib/countries";
 import { placeNameOf } from "@/lib/cells/place_name";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
@@ -205,7 +205,7 @@ export async function loadCellView(
       ? countryProfile.median_wage_full_time_usd
       : null;
   /* THE PLACE'S NAME, NEVER ITS COUNTRY'S CODE (truth-fixes, 2026-10-11): a place word no row holds reads its country's row, whose name can be the bare code (GB), and every crumb and card reads this. */
-  const placeName = placeNameOf(country, geo, cell.geo_name) || iso2ToName(country) || country.toUpperCase();
+  const placeName = placeNameOf(country, geo, cell.geo_name) || iso2ToName(siteCountryCode(country)) || country.toUpperCase();
   const tradeName = cell.industry_name || industry.replace(/-/g, " ");
   const tradeNoun = tradeNounFor(tradeName);
 
@@ -382,13 +382,20 @@ export async function buildSpineCellSeed(
      builders (the suits, the shard readers) never guess it a second time. */
   const industryId: string | undefined = slugToIndustry(industry)?.id ?? cell.industry_id ?? undefined;
 
-  const countryName = iso2ToName(country) || country.toUpperCase();
+  /* THE COUNTRY AS THE SITE HOLDS IT, ONCE, AT THE DOOR (truth-fixes round 3B, 2026-10-11; round 1's item 3). A statistics code in the address (UK, EL) is the same
+     country the site holds as GB or GR, and every lookup the view makes by `meta.iso2` (pay, survival, licences, costs, the sources foot, the tests that ask "is this
+     Great Britain") is keyed by the site's code, so a UK-coded page read the world's figures and a New York cost table. The address keeps the code the route
+     received (`address_iso2`, below, which the report foot's path reads): nothing that names a page reads the site's code. */
+  const siteCountry = siteCountryCode(country);
+  const countryName = iso2ToName(siteCountry) || siteCountry;
 
   /* -- meta ---------------------------------------------------------------- */
   // Provenance from the cell's real coverage_source (NEVER the seed's
   // "illustrative" line). Kept short and agency-name-free by the accessor.
   const meta = {
-    iso2: country.toUpperCase(),
+    iso2: siteCountry,
+    /* The code the route received, for the page's own path (the report foot reads it); `iso2` above is the site's code for the same country. */
+    address_iso2: country.toUpperCase(),
     geo,
     industry,
     city: placeName,

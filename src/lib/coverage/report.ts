@@ -62,7 +62,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import { COUNTRIES } from "../taxonomy";
-import { iso3ToIso2 } from "../countries";
+import { iso3ToIso2, siteCountryCode } from "../countries";
 
 /** A row exactly as the generator writes it, in whatever code system it used. */
 type RawCountry = {
@@ -93,14 +93,12 @@ export type CoverageRow = RawCountry & {
   cellCount: number;
 };
 
-/**
- * Non-ISO codes that mean a country the taxonomy already knows.
- *
- * Both are statistical-agency spellings, not errors: EL for Greece and UK for
- * the United Kingdom. EL is the only carrier of Greece's 1,733 classified
- * cells, so without this line Greece reads as uncovered.
+/*
+ * Non-ISO codes that mean a country the taxonomy already knows (EL for Greece,
+ * UK for the United Kingdom) read through siteCountryCode, src/lib/countries.ts,
+ * the one table of them since truth-fixes round 3B. EL is the only carrier of
+ * Greece's 1,733 classified cells, so without it Greece reads as uncovered.
  */
-const ALIASES: Record<string, string> = { UK: "GB", EL: "GR" };
 
 const NAME_BY_ISO2 = new Map(COUNTRIES.map((c) => [c.code, c.name]));
 
@@ -115,7 +113,7 @@ function classifiedCells(c: RawCountry): number {
  */
 function canonicalIso2(code: string): string | null {
   const upper = (code || "").toUpperCase();
-  const aliased = ALIASES[upper] || upper;
+  const aliased = siteCountryCode(upper);
   const iso2 = aliased.length === 3 ? iso3ToIso2(aliased) : aliased;
   if (!iso2 || !NAME_BY_ISO2.has(iso2)) return null;
   return iso2;

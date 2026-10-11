@@ -2214,7 +2214,10 @@
       "reads": [
         "src/app/[country]/[geo]/[industry]/page.tsx",
         "src/app/og/cell/route.tsx",
+        "src/components/spine/cell/cell-view.tsx",
         "src/lib/cells/place_name.ts",
+        "src/lib/countries.ts",
+        "src/lib/coverage/report.ts",
         "src/lib/geo/popular_place_overrides.json",
         "src/lib/spine/adapt_cell.ts",
         "src/lib/spine/crumb_rows.ts",
