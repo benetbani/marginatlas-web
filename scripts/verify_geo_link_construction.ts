@@ -486,6 +486,19 @@ function buildStaticTopLevel(): Set<string> {
     if (name.startsWith("[") || name.startsWith("_") || name.startsWith("@")) continue;
     if (hasRouteFile(dir)) segs.add(name);
   }
+  /* THE ROOT'S METADATA FILES SERVE ROUTES UNDER THEIR OWN NAMES TOO (Next's file conventions): icon.tsx, icon1.tsx and icon2.tsx answer
+     /icon, /icon1 and /icon2, apple-icon.tsx /apple-icon, manifest.ts /manifest.webmanifest, robots.ts /robots.txt, sitemap.ts
+     /sitemap.xml, a favicon.ico /favicon.ico. Without them the manifest's numbered icons (`/icon1?v=${...}`, fix round 7 and cleanup 2
+     of the home reform) read as one-segment paths into the [country] tree, though Next answers them before that route (the final
+     chain of 2026-10-11 found it). Only these file names count; a directory still needs its own page or route file above. */
+  for (const name of readdirSync(APP)) {
+    const icon = /^(icon|apple-icon|opengraph-image|twitter-image)(\d*)\.(tsx|ts|jsx|js|png|jpe?g|svg|ico)$/.exec(name);
+    if (icon) segs.add(icon[1] + icon[2]);
+    if (/^manifest\.(ts|js|json|webmanifest)$/.test(name)) segs.add("manifest.webmanifest");
+    if (/^robots\.(ts|js|txt)$/.test(name)) segs.add("robots.txt");
+    if (/^sitemap\.(ts|js|xml)$/.test(name)) segs.add("sitemap.xml");
+    if (name === "favicon.ico") segs.add("favicon.ico");
+  }
   return segs;
 }
 
