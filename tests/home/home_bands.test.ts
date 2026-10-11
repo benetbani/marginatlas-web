@@ -3,7 +3,7 @@
  * quiet band after the search and the UK answers: what Pro opens, the price, one button"). The Pro band draws only while the
  * paywall's switch is on, its title an h2 as every section's on the home (plan 2026-10-09), its prices through the plan and the
  * year first, led with as the pricing page leads, "$38 a month, billed yearly" (his decision of 2026-10-09), one button to /pricing;
- * and the launch check's item (i) reads the live home's band and passes the rebuilt home, which prints no counts since his
+ * and the launch check's item (i) reads the live home's band and passes the rebuilt home, which prints no ledger counts since his
  * instruction of 2026-10-07 ("reform home drastically"; tests/trust/home_shape.test.ts holds that).
  *
  * Run: npx tsx tests/home/home_bands.test.ts
@@ -17,7 +17,7 @@ import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-bands";
 const FILE = "src/components/spine/home/home-view.tsx";
-const REMEDY = "draw Pro only with the paywall's switch on, its prices through the plan; keep the launch check reading the live home's band and passing the rebuilt home that prints no counts";
+const REMEDY = "draw Pro only with the paywall's switch on, its prices through the plan; keep the launch check reading the live home's band and passing the rebuilt home that prints no ledger counts (its band's four evidence counts are tests/home/site_counts.test.ts's)";
 let failed = 0;
 /* A check may be a value or a function: a function that throws (a name the plan does not export yet) is a failed check. */
 const check = (label: string, ok: boolean | (() => boolean), at?: { file?: string; remedy?: string }) => {

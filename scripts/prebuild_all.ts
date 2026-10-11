@@ -589,7 +589,7 @@ const GATES: Gate[] = [
      data drawn as the segment bar. Reads the home, London restaurants and /gb renders (masterplan step 34 first held the UK answers). */
   { name: "home-answers", script: "tests/home/home_answers.test.ts" },
   /* Pro said once, only with the paywall's switch on, its title an h2, its prices through the plan and the year first; the launch
-     check's item (i) reading the live home's counts band and passing the rebuilt home, which prints no counts (masterplan step 35;
+     check's item (i) reading the live home's counts band and passing the rebuilt home, which prints no ledger counts (masterplan step 35;
      his ruling 23; his decisions of 2026-10-07 and 2026-10-09). */
   { name: "home-bands", script: "tests/home/home_bands.test.ts" },
   /* The 58 retired blog posts (his ruling of 2026-10-05, PARKED P36.1): none left in content/blog, each redirected by
