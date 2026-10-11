@@ -9,7 +9,12 @@ const SITE = "https://www.marginatlas.com";
 const longDate = (d: string) => new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
 export const revalidate = 86400;
-export const dynamicParams = true;
+/* A POST THAT DOES NOT EXIST IS A 404 AT THE ROUTER (fix round F2, item I1; the final review): the page's own notFound() below runs inside the root
+   loading boundary after the status line is sent, so /blog/<no such post> answered 200 with the loading skeleton and drew its 404 in the browser, a
+   soft 404 (probed on the built page). Every post is a file under content/blog and generateStaticParams lists every one, so no other slug is a page: with
+   `dynamicParams` false the router answers any slug that list does not hold with 404 and renders nothing for it. A retired or moved slug is a
+   next.config.js redirect, and redirects run before routing, so none of them reaches this. A post added later is a file and a deploy, as it always was. */
+export const dynamicParams = false;
 
 type Params = { slug: string };
 
@@ -20,9 +25,10 @@ export async function generateStaticParams(): Promise<Params[]> {
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  /* A POST THAT DOES NOT EXIST IS A 404 AT THE STATUS LINE (fix round F1, group G8; probed on the built page): the page's own notFound() below
-     runs inside the root loading boundary after the status is sent, so /blog/<no such post> answered 200 with the skeleton and drew its 404 in
-     the browser, a soft 404. Next resolves the metadata before it streams, so this call sets the status, as /[country]'s metadata does for /zz. */
+  /* A MISSING POST STOPS THE METADATA (fix round F1, group G8; reworded in fix round F2, item I1): this call draws no title of its own for a post that does
+     not exist, which is all it does. It does NOT set the status: the metadata streams inside the root loading boundary, as src/middleware.ts says beside its
+     place rule ("Moving the call into generateMetadata does not help either"), and /zz's 404 is the middleware's. The status is the router's, through
+     dynamicParams above. */
   if (!post) notFound();
   // Built from the RESOLVED post, not the raw param, so the canonical is the
   // slug the library actually loaded. Without an `alternates` of its own this
