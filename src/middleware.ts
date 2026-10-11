@@ -524,6 +524,10 @@ export function routeRequest(req: NextRequest): NextResponse {
     // before any shell, the body Next's static not-found page (notFoundAtEdge). And a file the site does not serve (2026-10-06): a
     // dotted last part that is no file under public/ and none a route writes.
     if (isPlaceWeDoNotHold(path) || edgeNotFound(path)) return notFoundAtEdge(req, path);
+    // 3b''. An admin page asked without its key (the plan 2026-10-11, dynamic 404 remains): each answers notFound() without one so the address
+    // does not advertise itself, and inside the root loading boundary that was a 200 with the skeleton (/admin/anomalies, probed 2026-10-11).
+    // No key, no page: pinned here, before any shell; a key goes on to the page, which still checks it. No secret is read at the edge.
+    if (path.startsWith("/admin/") && !req.nextUrl.searchParams.get("key")) return notFoundAtEdge(req, path);
     // 3c. A signed-in reader of a page the paywall locks (masterplan step 18; src/lib/monetization/pro_route.ts): rewritten to
     // the uncached mirror under /pro, which draws the page open for Pro and locked for anyone else. Below every redirect and
     // not-found pin, so an address that moves or names nothing never reaches it; above the cache header below, and marked

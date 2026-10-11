@@ -3041,6 +3041,7 @@
         "content/blog",
         "data/cities/city_comparisons_v1.json",
         "public/",
+        "scripts/gen_route_shapes.ts",
         "src/app/[country]/[geo]",
         "src/app/[country]/[geo]/[industry]",
         "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx",
@@ -3056,6 +3057,7 @@
         "src/lib/cells/industry_resolution.ts",
         "src/lib/routing/edge_not_found.ts",
         "src/lib/routing/place_words.ts",
+        "src/lib/spine/howto_rows.ts",
         "src/lib/taxonomy.ts",
         "src/lib/taxonomy/retired.ts",
         "src/middleware.ts"

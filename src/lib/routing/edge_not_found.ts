@@ -15,13 +15,15 @@
  *    spell, every city, district and state alias the cell route reads, the places the trade routes prerender, and the ids the
  *    database holds). The word names nothing when the cell route's own resolver (`resolveDisplayIndustry`: the taxonomy's exact
  *    slug, id, alias, phrase and tight fuzzy match, plus the legacy data crosswalk) finds no live trade, no redirect owns it
- *    (retired, renamed), it is not one of the place's static children (`/gb/london/industries`, a page of its own) or an old
+ *    (retired, renamed), it is not one of the place's static children (`/gb/england/industries`, a page of its own where the place is a region its hub draws) or an old
  *    neighbourhood address (`legacyHoodTarget`, below), and, under a state of the United States, it is no census description the
  *    database holds (that lookup's last step reads them: getCellBySlugRaw in src/lib/cells.ts).
  *  - `/{country}/{place}/{word}/opening` and `/{country}/{place}/{word}/buy-or-start` (TRADE_SUB_PAGES): the same place and trade
  *    word, but not the two exemptions that belong to the three-part address alone. Their route draws a trade, and a static child
  *    (`/gb/london/industries/opening`) or an old neighbourhood address is none.
- *  - `/{country}/{place}/{district}/{trade}`, a district's trade page: its place alone; the rest is its route's.
+ *  - `/{country}/{place}/{district}/{trade}`, a district's trade page: its place, a district its city's scheme names (NEIGHBORHOOD_SLUGS, the scheme the route's getNeighborhood reads) and a trade slugToIndustry names (2026-10-11).
+ *  - `/{country}/{place}/industries`, a place's industries hub: the place is an admin-1 region of a country with regional coverage, the route's resolveRegionName and hasRegionalCoverage (2026-10-11).
+ *  - `/{country}/how-to-open`: a country whose legal forms draw a row, the route's generateStaticParams (HOW_TO_COUNTRIES, generated; 2026-10-11).
  *  - `/industries/{word}` and `/industries/{word}/across`: the industry routes' resolver (`slugToIndustry`) finds nothing.
  *  - `/cities/{slug}`: the city list holds no such city (the generated slug table `cityPathFor` reads).
  *  - `/cities/{slug}/neighborhoods[/{district}]`: no hub (`hasHoodScheme`), or no admitted district (`spineHoodDistrict`,
@@ -41,8 +43,8 @@
  *    src/lib/routing/served_files.ts; the platform's own addresses under `/_vercel/` are Vercel's. No page takes a dotted part
  *    (no country, region, city, trade, district, post or article slug holds a dot; the test reds when one does), so a dotted
  *    address that is no file could only ever have drawn a page's not-found, or worse, a synthesized page at 200.
- * Everything else is left alone: one- and two-part paths of a first part no route folder holds are isPlaceWeDoNotHold's, and an address of
- * three or four parts under a first part nobody holds (`/zz/london/zz`) is its route's, because trade pages are published under statistics
+ * Everything else is left alone: one- and two-part paths of a first part no route folder holds are isPlaceWeDoNotHold's, but for a country's how-to page, a static child that rule passes,
+ * and an address of three or four parts under a first part nobody holds (`/zz/london/zz`) is its route's, because trade pages are published under statistics
  * codes the site does not hold as countries (EL and UK, src/lib/routing/place_words.ts), so the edge cannot call such a first part nothing.
  *
  * THE COUNTRY AND THE PLACE ARE THE ROUTE'S WORDS, EVERY OTHER PART IS AS WRITTEN (the reviews of 2026-10-09). The pathname is
@@ -65,7 +67,7 @@
  * judged, as a file: that lookup's last step (`ilike` on the word, hyphens as wildcards) could match a description with a dot in
  * it, but no published address holds a dot, so such a match could only be a second address for a page the site already publishes.
  * Pure, and small enough for the edge: the taxonomy module the middleware already imports, two small crosswalks and five generated
- * tables; never src/lib/spine/hood_scheme.ts, which pulls the neighbourhood data in.
+ * tables, the admin-1 table the region list already bundles and the 36-key regional coverage file; never src/lib/spine/hood_scheme.ts, which pulls the neighbourhood data in.
  *
  * Next strips an RSC request's `.rsc` ending before the middleware sees the path (normalizeRscURL in
  * next/dist/server/web/adapter.js), so a page's payload is judged as its page. The `.segments/` prefetch addresses of Next's client
@@ -79,7 +81,7 @@ import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 import { CITY_SLUGS_BY_COUNTRY } from "@/lib/routing/city_paths_generated";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "@/lib/routing/hood_slugs";
 import { SERVED_FILES } from "@/lib/routing/served_files";
-import { ROUTE_SHAPES, BLOG_SLUGS, LEARN_SLUGS, CITY_PAIRS } from "@/lib/routing/route_shapes";
+import { ROUTE_SHAPES, BLOG_SLUGS, LEARN_SLUGS, CITY_PAIRS, HOW_TO_COUNTRIES } from "@/lib/routing/route_shapes";
 import { US_DESCRIPTION_SLUGS } from "@/lib/routing/place_slugs_generated";
 import { isHeldPlace, routeWord } from "@/lib/routing/place_words";
 import { namesFile } from "@/lib/routing/names_file";
@@ -87,6 +89,8 @@ import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { cityPathFor } from "@/lib/cities/city_path";
 import { own } from "@/lib/own";
 import { isSpineReformEnabledFor } from "@/lib/feature_flags";
+import { getAdmin1Regions } from "@/lib/coverage/admin1";
+import regionalCoverage from "../../../data/coverage/regional_coverage_v1.json";
 
 /** NEXT'S ADDRESS FOR ITS PRERENDERED NOT-FOUND PAGE (the plan 2026-10-11, route-folder fall-through, Task 1): the page built from
  *  src/app/not-found.tsx that Next serves, with the status 404, for an address no route matches (UNDERSCORE_NOT_FOUND_ROUTE,
@@ -111,6 +115,17 @@ const LISTED_CITIES = new Set(Object.values(CITY_SLUGS_BY_COUNTRY).flat());
  *  from the regions table the middleware already bundles, never from SLUG_TO_GEO_ID (src/lib/cells/geo.ts), whose module pulls the
  *  city alias tables into the edge; the edge test holds the two equal (51 of 51 on 2026-10-09). */
 export const US_STATES: ReadonlySet<string> = new Set(getRegionsForCountry("US", "United States").map((r) => r.value));
+
+/** The countries whose region industries hubs draw: data/coverage/regional_coverage_v1.json, the file hasRegionalCoverage reads with node:fs
+ *  (src/lib/coverage/regional.ts), imported here as JSON for the edge; the edge test holds the two equal. */
+export const HUB_COUNTRIES: ReadonlySet<string> = new Set(Object.entries(regionalCoverage as Record<string, boolean>).filter(([, on]) => on === true).map(([cc]) => cc.toLowerCase()));
+
+/** A place's industries hub draws (src/app/[country]/[geo]/industries/page.tsx: hasRegionalCoverage, then resolveRegionName, an admin-1 region
+ *  by its slug or its ascii name): the plan 2026-10-11, dynamic 404 remains. The admin-1 table is the one the region list already bundles
+ *  into the middleware (src/lib/regions/regions-by-country.ts:21). */
+export function hubHolds(country: string, place: string): boolean {
+  return HUB_COUNTRIES.has(country) && getAdmin1Regions(country.toUpperCase()).some((r) => r.slug.toLowerCase() === place || r.ascii_name.toLowerCase() === place);
+}
 
 /** A redirect earlier in the middleware owns the word: a retired trade, or one renamed to another slug. Every table here is read
  *  for its own entries (src/lib/own.ts), so a word that names a built-in ("constructor", "__proto__") names nothing. */
@@ -216,10 +231,24 @@ export function edgeNotFound(path: string): boolean {
     return slugToIndustry(second) === null || own(NEIGHBORHOOD_SLUGS, third) === undefined;
   }
 
+  /* A HOW-TO PAGE BY ITS ROUTE'S RULE (the plan 2026-10-11, dynamic 404 remains): /{country}/how-to-open draws only for a country whose legal
+     forms draw a row (the route's generateStaticParams; HOW_TO_COUNTRIES, generated from that rule). Elsewhere its notFound() ran inside the
+     loading boundary: /af/how-to-open answered 200 with the skeleton, held at the CDN six hours by the cache header (probed 2026-10-11). */
+  if (segs.length === 2 && second === "how-to-open" && HELD_COUNTRIES.has(first) && !TOP_LEVEL_SEGMENTS.has(first)) return !HOW_TO_COUNTRIES.has(first);
+
   if ((segs.length === 3 || segs.length === 4) && HELD_COUNTRIES.has(first) && !TOP_LEVEL_SEGMENTS.has(first)) {
     if (!isHeldPlace(first, second)) return true;
+    /* THE INDUSTRIES HUB IS A REGION'S (the plan 2026-10-11, dynamic 404 remains): src/app/[country]/[geo]/industries draws an admin-1 region
+       of a country with regional coverage and calls notFound() for any other place, inside the loading boundary: /gb/london/industries, a
+       city, answered 200 with the skeleton and a 404 drawn in the browser (probed 2026-10-11). */
+    if (segs.length === 3 && third === "industries") return !hubHolds(first, second);
     if (segs.length === 3) return legacyHoodTarget(path) === null && !GEO_STATIC_CHILDREN.has(third) && tradeWordNamesNothing(first, second, third);
-    return TRADE_SUB_PAGES.has(fourth) && tradeWordNamesNothing(first, second, third);
+    if (TRADE_SUB_PAGES.has(fourth)) return tradeWordNamesNothing(first, second, third);
+    /* A DISTRICT'S TRADE PAGE BY ITS ROUTE'S RESOLVERS (the same plan): src/app/[country]/[geo]/[industry]/[sub] draws a district its city's
+       scheme names (getNeighborhood over data/cities/neighborhoods_v1.json, the scheme NEIGHBORHOOD_SLUGS holds; the edge test holds the two
+       equal) and a trade slugToIndustry names, and called notFound() for anything else: /gb/london/not-a-district/restaurants answered 200
+       with the skeleton (probed 2026-10-11). A renamed trade never reaches here: the rename hop before this rule moves it. */
+    return !(own(NEIGHBORHOOD_SLUGS, second) ?? []).includes(third) || slugToIndustry(fourth) === null;
   }
 
   return false;

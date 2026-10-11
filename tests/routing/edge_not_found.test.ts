@@ -19,12 +19,12 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { NextRequest } from "next/server";
-import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN, TRADE_SUB_PAGES, US_STATES, NOT_FOUND_ROUTE } from "../../src/lib/routing/edge_not_found";
+import { edgeNotFound, legacyHoodTarget, GEO_STATIC_CHILDREN, TRADE_SUB_PAGES, US_STATES, NOT_FOUND_ROUTE, HUB_COUNTRIES } from "../../src/lib/routing/edge_not_found";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "../../src/lib/routing/hood_slugs";
 import { renderHoodSlugs, HOOD_SLUGS_FILE } from "../../scripts/gen_hood_slugs";
 import { renderServedFiles, SERVED_FILES_FILE } from "../../scripts/gen_served_files";
 import { renderRouteShapes, routeShapes, ROUTE_SHAPES_FILE } from "../../scripts/gen_route_shapes";
-import { ROUTE_SHAPES, BLOG_SLUGS, LEARN_SLUGS, CITY_PAIRS } from "../../src/lib/routing/route_shapes";
+import { ROUTE_SHAPES, BLOG_SLUGS, LEARN_SLUGS, CITY_PAIRS, HOW_TO_COUNTRIES } from "../../src/lib/routing/route_shapes";
 import { TOP_LEVEL_SEGMENTS } from "../../src/lib/routing/top_level_segments";
 import { RETIRED, redirectFor } from "../../src/lib/taxonomy/retired";
 import { TAXONOMY_REDIRECTS } from "../../src/lib/taxonomy/legacy_redirects";
@@ -56,6 +56,10 @@ import { DEFAULT_REGION_BY_COUNTRY } from "../../src/lib/regions/default_region_
 import { geoNameFromSlug, slugify, SLUG_TO_GEO_ID } from "../../src/lib/cells/geo";
 import popularPlaceOverrides from "../../src/lib/geo/popular_place_overrides.json";
 import { own } from "../../src/lib/own";
+import { hasRegionalCoverage } from "../../src/lib/coverage/regional";
+import { getAdmin1Regions } from "../../src/lib/coverage/admin1";
+import { buildSetupRows } from "../../src/lib/spine/setup_rows";
+import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
 
 const RULE = "edge-not-found";
 const FILE = "src/lib/routing/edge_not_found.ts";
@@ -88,7 +92,7 @@ check("London's hub: /cities/london/neighborhoods", nf("/cities/london/neighborh
 check("a district London does not hold: /cities/london/neighborhoods/zz", nf("/cities/london/neighborhoods/zz") === true);
 check("an admitted district: /cities/london/neighborhoods/west-end", nf("/cities/london/neighborhoods/west-end") === false);
 check("a country's static child: /gb/how-to-open", nf("/gb/how-to-open") === false);
-check("a place's static child: /gb/london/industries", nf("/gb/london/industries") === false);
+check("a nation's industries hub, a static child of a place its route draws: /gb/england/industries", nf("/gb/england/industries") === false);
 check("a neighbourhood and trade, the shape published until 2026-08-08: /gb/london/west-end/restaurants (another route's)", nf("/gb/london/west-end/restaurants") === false);
 check("a trade's opening page is left to its route: /gb/london/restaurants/opening", nf("/gb/london/restaurants/opening") === false);
 check("a word under another country is judged the same: /de/berlin/zz-not-a-trade", nf("/de/berlin/zz-not-a-trade") === true);
@@ -99,7 +103,7 @@ check("a word no post holds, under the blog's folder, answers 404 (the plan 2026
 check("an unknown first segment with three parts is left alone: /zz/london/zz", nf("/zz/london/zz") === false);
 check("the home page", nf("/") === false);
 
-/* What the middleware's own place rule pins stays its own: one- and two-part paths are never judged here. */
+/* What the middleware's own place rule pins stays its own: one- and two-part paths are never judged here, but for a country's how-to page, a static child the place rule passes (the plan 2026-10-11, dynamic 404 remains). */
 check("a country the site does not hold, /zz, is isPlaceWeDoNotHold's", nf("/zz") === false);
 check("a region the country does not hold, /gb/atlantis, is isPlaceWeDoNotHold's", nf("/gb/atlantis") === false);
 
@@ -142,11 +146,11 @@ const placeMissed = FIVE.filter((cc) => !nf(`/${cc}/atlantis/restaurants`));
 check(`a made-up place under a live trade answers 404 in five countries${placeMissed.length ? `: not under ${placeMissed.join(", ")}` : ""}`, placeMissed.length === 0);
 check("a made-up place under an opening page, a buy-or-start page and a district's trade page answers 404", nf("/gb/atlantis/restaurants/opening") && nf("/gb/atlantis/restaurants/buy-or-start") && nf("/gb/atlantis/west-end/restaurants"));
 check("a static child of the country is no place: /gb/industries/restaurants, /gb/how-to-open/restaurants", nf("/gb/industries/restaurants") && nf("/gb/how-to-open/restaurants"));
-/* THE REVIEW OF 2026-10-09: the exemption of a place's static child (`/gb/london/industries`, a page of its own) was also given to
-   the trade's sub-pages, where it holds no trade: /gb/london/industries/opening and /buy-or-start passed, and their route cannot draw
+/* THE REVIEW OF 2026-10-09: the exemption of a place's static child (`/gb/england/industries`, a page of its own) was also given to
+   the trade's sub-pages, where it holds no trade: /gb/england/industries/opening and /buy-or-start passed, and their route cannot draw
    them. The exemption is the trade page's own, in the three-part return. */
 const STATIC_CHILD_REMEDY = "Exempt a static child of the place (GEO_STATIC_CHILDREN) from the verdict for its own three-part address only, in edgeNotFound's three-part return, never in tradeWordNamesNothing: the /opening and /buy-or-start routes draw a trade, and a static child is none";
-check("a static child of a place is a page of its own, and no trade for the trade's sub-pages: /gb/london/industries passes, /gb/london/industries/opening and /gb/london/industries/buy-or-start answer 404", !nf("/gb/london/industries") && nf("/gb/london/industries/opening") && nf("/gb/london/industries/buy-or-start"), FILE, STATIC_CHILD_REMEDY);
+check("a static child of a place is a page of its own, and no trade for the trade's sub-pages: /gb/england/industries passes, /gb/england/industries/opening and /gb/england/industries/buy-or-start answer 404", !nf("/gb/england/industries") && nf("/gb/england/industries/opening") && nf("/gb/england/industries/buy-or-start"), FILE, STATIC_CHILD_REMEDY);
 const HELD_PLACES: Array<[string, string]> = [
   ["/gb/gb/restaurants", "the country's own code"],
   ["/gb/england/restaurants", "a nation, a region of the UK"],
@@ -159,7 +163,7 @@ const HELD_PLACES: Array<[string, string]> = [
 ];
 for (const [p, what] of HELD_PLACES) check(`${what} passes: ${p}`, !nf(p));
 check("an opening page follows its trade page: /gb/london/restaurants/opening and /buy-or-start pass, /gb/london/zz-not-a-trade/opening answers 404", !nf("/gb/london/restaurants/opening") && !nf("/gb/london/restaurants/buy-or-start") && nf("/gb/london/zz-not-a-trade/opening"));
-check("a district's trade page is judged by its place alone: /gb/london/west-end/zz goes on to its route", !nf("/gb/london/west-end/zz"));
+check("a district's trade page is judged by its route's resolvers: /gb/london/west-end/zz answers 404 (it went on to its route, which answered 200 with the skeleton; the plan 2026-10-11)", nf("/gb/london/west-end/zz"));
 check("a census description under a county answers 404, only a state's lookup reads one: /us/us-06-037/offices-of-lawyers", nf("/us/us-06-037/offices-of-lawyers"));
 check("a census description under a state passes: /us/mississippi/offices-of-lawyers", !nf("/us/mississippi/offices-of-lawyers"));
 check("a /decide pair its route draws passes: /decide/restaurants/london", !nf("/decide/restaurants/london"));
@@ -168,6 +172,36 @@ check("a /decide pair whose city holds no neighbourhood scheme answers 404: /dec
 const hubCityList = Object.keys(NEIGHBORHOOD_SLUGS);
 const decideCaught = hubCityList.flatMap((city) => live.map((s) => `/decide/${s}/${city}`)).filter(nf);
 check(`every /decide pair of a hub city and a live trade passes (${hubCityList.length * live.length})${decideCaught.length ? `: ${decideCaught.slice(0, 5).join(", ")}` : ""}`, hubCityList.length > 0 && decideCaught.length === 0);
+/* THE ADDRESSES THAT STILL DREW A SKELETON AT 200 (the plan 2026-10-11, dynamic 404 remains; QUEUE site:dynamic-404-skeleton). Each ran its
+   route's notFound() inside a loading boundary, so production answered 200 with the skeleton and drew the 404 in the browser (probed
+   2026-10-11): a district's trade page for a district or a trade its route cannot draw, a place's industries hub where the place is no region
+   the hub draws, a how-to page for a country with no legal forms. The edge judges each by its route's own resolver, and every page of each
+   kind the route draws still passes. */
+const DYN = "answer 404 at the edge for a district trade page, an industries hub or a how-to page its route would draw as nothing, by that route's own resolver (the plan 2026-10-11, dynamic 404 remains)";
+check("a district London's scheme does not name, under a live trade: /gb/london/not-a-district/restaurants", nf("/gb/london/not-a-district/restaurants") === true, FILE, DYN);
+check("a word no trade answers to, under a district London's scheme names: /gb/london/west-end/zz-not-a-trade", nf("/gb/london/west-end/zz-not-a-trade") === true, FILE, DYN);
+const schemes = (neighborhoodsJson as { cities: Record<string, { neighborhoods?: Array<{ slug?: string }> }> }).cities;
+const schemeDrift = Object.keys(schemes).filter((c) => JSON.stringify((schemes[c].neighborhoods ?? []).map((n) => String(n.slug ?? "").toLowerCase()).filter(Boolean)) !== JSON.stringify(own(NEIGHBORHOOD_SLUGS, c) ?? null));
+check(`the districts the edge reads are the ones the district trade route resolves: every city of data/cities/neighborhoods_v1.json, with its districts, in NEIGHBORHOOD_SLUGS (${schemeDrift.slice(0, 5).join(", ") || "all"})`, schemeDrift.length === 0 && Object.keys(NEIGHBORHOOD_SLUGS).length === Object.keys(schemes).length, FILE, "the district trade route reads getNeighborhood over every city of data/cities/neighborhoods_v1.json (src/lib/cities/neighborhoods.ts); where NEIGHBORHOOD_SLUGS, the hub's admitted cities, holds fewer, generate an unfiltered table in scripts/gen_hood_slugs.ts and read that in edgeNotFound");
+const districtTrades = Object.entries(CITY_SLUGS_BY_COUNTRY).flatMap(([cc, cities]) => cities.filter((c) => own(NEIGHBORHOOD_SLUGS, c) && isHeldPlace(cc, c)).flatMap((c) => (own(NEIGHBORHOOD_SLUGS, c) ?? []).map((dist) => `/${cc}/${c}/${dist}/restaurants`)));
+const districtTradesCaught = districtTrades.filter(nf);
+check(`every district trade page its route draws passes (${districtTrades.length})${districtTradesCaught.length ? `: ${districtTradesCaught.slice(0, 5).join(", ")}` : ""}`, districtTrades.length > 0 && districtTradesCaught.length === 0, FILE, DYN);
+check("a city is no region the industries hub draws: /gb/london/industries", nf("/gb/london/industries") === true, FILE, DYN);
+const afRegion = getAdmin1Regions("AF").map((r) => r.slug.toLowerCase()).find((s) => isHeldPlace("af", s));
+check(`a region of a country the hubs do not cover, a place the site holds: /af/${afRegion}/industries`, !!afRegion && !hasRegionalCoverage("AF") && nf(`/af/${afRegion}/industries`) === true, FILE, DYN);
+check("a state's hub passes: /us/california/industries", nf("/us/california/industries") === false, FILE, DYN);
+const hubs = COUNTRIES.map((c) => c.code.toLowerCase()).filter((cc) => hasRegionalCoverage(cc)).flatMap((cc) => getAdmin1Regions(cc.toUpperCase()).filter((r) => isHeldPlace(cc, r.slug)).map((r) => `/${cc}/${r.slug.toLowerCase()}/industries`));
+const hubsCaught = hubs.filter(nf);
+check(`every region hub its route draws passes (${hubs.length})${hubsCaught.length ? `: ${hubsCaught.slice(0, 5).join(", ")}` : ""}`, hubs.length > 0 && hubsCaught.length === 0, FILE, DYN);
+check("a country with no legal forms has no how-to page: /af/how-to-open", nf("/af/how-to-open") === true, FILE, DYN);
+const howTo = (COUNTRIES as Array<{ code: string }>).filter((c) => buildSetupRows(c.code).length > 0).map((c) => c.code.toLowerCase()).sort();
+const howToCaught = howTo.filter((cc) => nf(`/${cc}/how-to-open`));
+check(`every how-to page its route draws passes (${howTo.length})${howToCaught.length ? `: ${howToCaught.join(", ")}` : ""}`, howTo.length > 0 && howToCaught.length === 0, FILE, DYN);
+const coverageDrift = COUNTRIES.filter((c) => HUB_COUNTRIES.has(c.code.toLowerCase()) !== hasRegionalCoverage(c.code)).map((c) => c.code);
+check(`the hub countries the edge reads are hasRegionalCoverage's, for every country the site holds (${coverageDrift.join(", ") || "all agree"})`, coverageDrift.length === 0, FILE, DYN);
+check(`the how-to countries the edge reads are the route's (${howTo.length})`, JSON.stringify([...HOW_TO_COUNTRIES].sort()) === JSON.stringify(howTo), ROUTE_SHAPES_FILE, "run node node_modules/tsx/dist/cli.mjs scripts/gen_route_shapes.ts");
+const howToBody = /export function buildHowTo\([^)]*\)[^{]*\{([\s\S]*?)\n  return \{/.exec(readFileSync("src/lib/spine/howto_rows.ts", "utf8"))?.[1] ?? "";
+check("buildHowTo answers null only for a country the site does not hold or one whose legal forms draw no row, the rule HOW_TO_COUNTRIES is generated by", (howToBody.match(/return null/g) ?? []).length === 2 && /if \(!name\) return null;/.test(howToBody) && /const tiers = buildSetupRows\(code\);/.test(howToBody) && /if \(tiers\.length === 0\) return null;/.test(howToBody), "scripts/gen_route_shapes.ts", "teach howToCountries in scripts/gen_route_shapes.ts any new null exit of buildHowTo (src/lib/spine/howto_rows.ts), then regenerate");
 const PRERENDER_ROUTES: Array<[string, string]> = [
   ["src/app/[country]/[geo]/[industry]/page.tsx", ""],
   ["src/app/[country]/[geo]/[industry]/opening/page.tsx", "/opening"],
@@ -517,7 +551,13 @@ for (const p of ["/data/uk/2026.10/ledger.json", "/data/uk/2026.10/readme.md", "
 }
 check("a training crawler is still refused a file of the data pack, as before (451)", send("/data/uk/2026.10/ledger.json", "GPTBot/1.1").status === 451, MW);
 check("a place the site does not hold still answers 404: /gb/atlantis", pinned("/gb/atlantis"), MW);
-check("a static child of a place has no sub-pages: the middleware pins /gb/london/industries/opening and /gb/london/industries/buy-or-start to 404 and passes /gb/london/industries", pinned("/gb/london/industries/opening") && pinned("/gb/london/industries/buy-or-start") && passed("/gb/london/industries"), MW, STATIC_CHILD_REMEDY);
+check("a static child of a place has no sub-pages: the middleware pins /gb/england/industries/opening and /gb/england/industries/buy-or-start to 404 and passes /gb/england/industries", pinned("/gb/england/industries/opening") && pinned("/gb/england/industries/buy-or-start") && passed("/gb/england/industries"), MW, STATIC_CHILD_REMEDY);
+for (const p of ["/gb/london/not-a-district/restaurants", "/gb/london/west-end/zz-not-a-trade", "/gb/london/industries", "/af/how-to-open", "/admin/anomalies", "/admin/data-quality", "/admin/review"]) {
+  check(`the middleware answers 404 with the static not-found page: ${p} (the plan 2026-10-11, dynamic 404 remains)`, pinned(p), MW, NOT_FOUND_REMEDY);
+}
+for (const p of ["/gb/london/west-end/restaurants", "/gb/england/industries", "/us/california/industries", "/gb/how-to-open", "/admin/anomalies?key=x"]) {
+  check(`the middleware passes to its route: ${p}`, passed(p), MW);
+}
 /* The words the site's own links spell reach their routes (the review of 2026-10-09): the middleware, asked as above, passes each
    address the first table made it answer 404 for, and the ids only the scan holds. */
 for (const [cc, place, what] of LINKED_SAMPLES) tableCheck(`${what} passes the middleware to its route: /${cc}/${place}/restaurants`, passed(`/${cc}/${place}/restaurants`), PLACE_SLUGS_FILE, LINKED_REMEDY);
@@ -743,7 +783,8 @@ for (const [p, why] of PREFIX_MISSES) check(`${why}: ${p} answers 404 through th
 
 /* Every real address of the route folders passes, asked of the edge and of the middleware. */
 const folderPasses = (label: string, addresses: string[], remedy = FOLDER_PASS_REMEDY) => {
-  const missed = addresses.filter((a) => !quiet(() => !nf(a) && passed(a)));
+  /* The edge is asked the pathname alone, as the middleware reads it (req.nextUrl.pathname); the middleware is asked the whole address. */
+  const missed = addresses.filter((a) => !quiet(() => !nf(a.split("?")[0]) && passed(a)));
   folderAsked += addresses.length;
   check(`every ${label} passes the edge and the middleware (${addresses.length})${missed.length ? `: ${missed.slice(0, 5).join(", ")}` : ""}`, addresses.length > 0 && missed.length === 0, FILE, remedy);
 };
@@ -785,7 +826,10 @@ const fillShape = (shape: readonly string[], miss = -1): string | null => {
 };
 const unfilled = ROUTE_SHAPES.filter((s) => fillShape(s) === null).map((s) => s.join("/"));
 check(`every shape of ROUTE_SHAPES has a held value to be asked with${unfilled.length ? `: none for ${unfilled.join(", ")}` : ""}`, unfilled.length === 0, FILE, "add a value the site holds for that shape to HELD_FILL in tests/routing/edge_not_found.test.ts, keyed by the shape, one value for each of its dynamic parts, so a new route is asked as a real address");
-folderPasses("shape of ROUTE_SHAPES, its dynamic parts filled with a value the site holds", ROUTE_SHAPES.map((s) => fillShape(s)).filter((a): a is string => a !== null));
+/* AN ADMIN PAGE'S REAL ADDRESS CARRIES ITS KEY (the plan 2026-10-11, dynamic 404 remains): the middleware pins /admin/<page> asked without `?key=`
+   to 404 (src/middleware.ts, 3b''), so the walk asks each admin shape with one, as its reader does; the page itself still checks the key. */
+const withItsKey = (a: string): string => (a.startsWith("/admin/") ? `${a}?key=x` : a);
+folderPasses("shape of ROUTE_SHAPES, its dynamic parts filled with a value the site holds and an admin page asked with its key", ROUTE_SHAPES.map((s) => fillShape(s)).filter((a): a is string => a !== null).map(withItsKey));
 /* A DYNAMIC SHAPE IS JUDGED AT THE EDGE, PART BY PART, OR NAMED OPEN. The four open ones are routes that are not indexed whatever they draw
    (noindex and nofollow in their own metadata) and that 404 by their own resolvers, so their misses are no index hazard and the edge leaves
    them to the route. The check reads each page for both claims; a dynamic shape that is neither judged nor open reds. */

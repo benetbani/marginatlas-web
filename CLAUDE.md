@@ -37,7 +37,7 @@ website/
 └── content/blog/       # Markdown blog posts
 ```
 
-A new blog post, learn article, city pair or route folder needs `node node_modules/tsx/dist/cli.mjs scripts/gen_route_shapes.ts` in the same commit: the edge answers 404 for any address the route table (`src/lib/routing/route_shapes.ts`) does not hold, and the `edge-not-found` gate's red says so too.
+A new blog post, learn article, city pair or route folder, or a change to a country's legal forms, needs `node node_modules/tsx/dist/cli.mjs scripts/gen_route_shapes.ts` in the same commit: the edge answers 404 for any address the route table (`src/lib/routing/route_shapes.ts`) does not hold, and the `edge-not-found` gate's red says so too.
 
 ## Read these first (in order) for any session
 
