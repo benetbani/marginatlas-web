@@ -37,6 +37,8 @@ website/
 └── content/blog/       # Markdown blog posts
 ```
 
+A new blog post, learn article, city pair or route folder needs `node node_modules/tsx/dist/cli.mjs scripts/gen_route_shapes.ts` in the same commit: the edge answers 404 for any address the route table (`src/lib/routing/route_shapes.ts`) does not hold, and the `edge-not-found` gate's red says so too.
+
 ## Read these first (in order) for any session
 
 0. `docs/verification-protocol.md` — THE DEFINITION OF DONE. Run it before delivering ANY work to the founder: instruction fidelity (do the asked-thing, never silently substitute), gates, data honesty, SEE it (screenshot via the Playwright MCP), honest reporting, ship discipline. This is non-negotiable.
