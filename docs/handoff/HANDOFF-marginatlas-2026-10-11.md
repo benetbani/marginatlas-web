@@ -13,7 +13,8 @@ weekly limit before its report, its typecheck and the remaining P2 items.
 > and no P1, which ends the loop (`home-critique-4.md`); rounds F1 and F2 (12 commits each) fixed every finding of the final
 > whole-branch review's parts 1 and 2, both task reviews and pass 4's seven P2s. HEAD b01d7fcb, 111 commits over main, nothing pushed.
 > Owed before his word: the whole chain with the build on the final head, the final review's part 3, the records (QUEUE N, PAGES,
-> STATE). Next work, planned and not built: `E:/atlas/docs/superpowers/plans/2026-10-11-uk-trade-pages-copy-half.md` and
+> STATE). Queued, not for this deploy: M6 of the final review, /gb chapter 04's lone state from about 14 November 2026 (QUEUE N,
+> `gb:ch04-lone-state`), and the dynamic routes' 404 skeleton (`site:dynamic-404-skeleton`). Next work, planned and not built: `E:/atlas/docs/superpowers/plans/2026-10-11-uk-trade-pages-copy-half.md` and
 > `2026-10-11-uk-cost-to-open-and-place-slugs.md` (launch blockers before the paywall).
 
 > **How to use this document.** Read section 0, then top to bottom once. Then read the files in section 7 in the given order. Do not
@@ -580,9 +581,10 @@ Follow these steps exactly:
 5. Flag any contradiction or gap between the dossier and the actual files (git and the files are ground truth; the dossier is a
    snapshot of 2026-10-11).
 6. The owner has pre-authorized continuing the build ("stop questioning, push forward"; "continue with building, changing, fixes,
-   everything"). So after the checkpoint, state what you are about to do and begin with dossier section 8, Step 1 (commit the verified
-   P2 draft), then continue down section 8 in order. Ask him only for a push, a deploy, a switch or a download. Never push, deploy or
-   merge without his explicit word in chat.
+   everything"). So after the checkpoint, state what you are about to do and continue from the first step still open: the update note
+   at the top of the dossier and the ledger's last lines (`.superpowers/sdd/progress.md`) say where the work stands, and git log is
+   the truth (Steps 1 to 6 of section 8 were done on 2026-10-11; do not redo them). Ask him only for a push, a deploy, a switch or a
+   download. Never push, deploy or merge without his explicit word in chat.
 
 Honor the operator preferences and guardrails in the dossier as if they were given to you directly. If anything in the dossier is
 unclear, ask before acting, but only after you have read everything above.
