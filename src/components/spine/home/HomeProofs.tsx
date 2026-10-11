@@ -46,7 +46,8 @@ const CARD = "relative isolate flex flex-col transition-colors hover:border-[var
 /** THE FOOT: pushed to the card's foot, its rows under a hairline (the rows' own 12px padding stands under it). */
 const FOOT = "mt-auto border-t border-[var(--c-border)]";
 /** The tax bar's three parts and their key's swatches, one ink each: income tax in ink, National Insurance in ink2, what is kept in the soft
- *  grey (the bar's rest, which carries a 1px edge, as the key's swatch does: FactRows). The key names all three (critique pass 3, item P1.5). */
+ *  grey (the bar's rest, which carries a 1px edge, as the key's swatch does: FactRows' `edged`, set below on the kept row). The key names all three
+ *  (critique pass 3, item P1.5). */
 export const TAX_INK: Record<string, string> = { "income-tax": "var(--c-ink)", "class-4": "var(--c-ink2)", keep: "var(--c-soft2)" };
 
 /** THE DOOR'S TITLE ROW: the card's Rail inside the link (passed as the child, so the census still reads each card's kicker off its
@@ -119,7 +120,7 @@ export function ProofTax({ p }: { p: ProofTaxData }) {
           </div>
           <div className="flex flex-col [@container(min-width:600px)]:justify-center">
             <div className={`${FOOT} [@container(min-width:600px)]:-mt-3 [@container(min-width:600px)]:border-t-0`}>
-              <FactRows rows={p.rows.map((r) => ({ key: r.key, label: r.label, value: r.value, note: r.note, swatch: TAX_INK[r.key] ?? "var(--c-ink2)", prov: r.prov }))} />
+              <FactRows rows={p.rows.map((r) => ({ key: r.key, label: r.label, value: r.value, note: r.note, swatch: TAX_INK[r.key] ?? "var(--c-ink2)", edged: r.key === "keep", prov: r.prov }))} />
             </div>
           </div>
         </div>

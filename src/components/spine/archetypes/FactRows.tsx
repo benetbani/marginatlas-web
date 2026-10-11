@@ -33,15 +33,15 @@ export type FactRow = {
   icon?: AtlasIconId;
   /** A colour token for the row's key square, in the glyph's place (critique pass 2, P0.1); a row with an icon draws the icon. */
   swatch?: string;
+  /** The key square carries a 1px inset --c-line-strong edge (fix round F1, group G5, the D1 review's Minor 4): the stacked bar draws what is
+   *  not a named part in the soft grey --c-soft2 with that edge, because the soft grey alone is 1.19 to 1 on a white card, so the key's square
+   *  for that part carries it or it would vanish. The caller says so, once, where it builds the row (the home's tax key, HomeProofs.tsx); the
+   *  archetype compares no colour string the caller also writes, so renaming the token cannot drop the edge in silence. */
+  edged?: boolean;
   confidence?: "measured" | "modeled" | "placeholder";
   /** Where the row's figure came from (src/lib/spine/provenance.ts), stamped on its figure; a row without one stamps nothing. */
   prov?: Provenance | null;
 };
-
-/* THE SOFT GREY KEY TAKES THE EDGE THE DRAWING'S REST CARRIES (critique pass 3, fix round D1, item P1.5): the stacked bar draws what is not a named
-   part in --c-soft2 with a 1px inset --c-line-strong edge, because the soft grey alone is 1.19 to 1 on a white card, so the key's square for that part
-   carries the same edge or it would vanish. */
-const SOFT_SWATCH = "var(--c-soft2)";
 
 /* A DATE NEVER BREAKS OVER TWO LINES (the design review, 2026-10-04: "since 1 / Apr 2026"): a note's "1 Apr 2026" keeps its two
    spaces unbreakable. */
@@ -68,7 +68,7 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
             <Ico id={r.icon} tone="terra" />
           </span>
         ) : r.swatch ? (
-          <span aria-hidden data-swatch="" className="mt-[9px] h-2.5 w-2.5 shrink-0 rounded-[2px]" style={r.swatch === SOFT_SWATCH ? { background: r.swatch, boxShadow: "inset 0 0 0 1px var(--c-line-strong)" } : { background: r.swatch }} />
+          <span aria-hidden data-swatch="" className="mt-[9px] h-2.5 w-2.5 shrink-0 rounded-[2px]" style={r.edged ? { background: r.swatch, boxShadow: "inset 0 0 0 1px var(--c-line-strong)" } : { background: r.swatch }} />
         ) : null}
         <span className="min-w-0">
           {/* THE LABEL'S FIRST LINE IS CENTRED ON THE TILE (28): a 20px line 4px down, and the figure the same, so the glyph, the
