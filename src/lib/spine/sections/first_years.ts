@@ -12,15 +12,22 @@ import { COPY } from "@/lib/spine/copy";
 import type { Provenance } from "@/lib/spine/provenance";
 
 export type SurvivalPoint = { year: number; pct: number };
+/** A point the builder has stamped (fix round F1, group G2, the final review's M2): `prov` names the key of data/sections/survival.json the
+ *  share was read from, so the label that prints it can say so as an obstacle's label does. */
+export type StampedPoint = SurvivalPoint & { prov: Provenance };
 export type Survival = {
   iso2: string;
   cohort: number;
-  points: SurvivalPoint[];
-  last: SurvivalPoint;
+  points: StampedPoint[];
+  last: StampedPoint;
   regions: { best: { name: string; pct: number }; worst: { name: string; pct: number } } | null;
   /** The place the country's curve is ("the UK"), and each region's own curve for the same cohort (2026-09-26, the region lever). */
   place: string | null;
-  regionCurves: Array<{ key: string; name: string; inName: string; points: SurvivalPoint[] }>;
+  regionCurves: Array<{ key: string; name: string; inName: string; points: StampedPoint[] }>;
+  /** The stamp of the curve's START, year 0 with every firm still trading: no share the file holds (its series begins at year 1) but the
+   *  whole cohort by definition, every share in the file being a share of that cohort's births. It is worked out from the file's
+   *  `cohort` (the method is that division, stated here where the figure is built), and the curve prints the start's label with it. */
+  startProv: Provenance;
 };
 /** `prov`: where the share was read (the survey table in data/sections/survival.json, a published count read there), stamped on every
  *  figure that prints it (critique pass 2, fix round C2, item P1.5: the leading obstacle now prints its share too). */
@@ -47,14 +54,22 @@ export function buildSurvival(iso2: string): Survival | null {
   if (!c?.curve || pts.length < 3) return null;
   /* A cohort only falls: a year above the one before it is a stitched curve, and it is not drawn. */
   if (pts.some((p, i) => i > 0 && p.pct > pts[i - 1].pct)) return null;
-  const last = pts[pts.length - 1];
+  /* EVERY POINT SAYS WHERE ITS SHARE WAS READ (fix round F1, group G2): the key of the file it came from, as buildObstacles stamps an
+     obstacle's share, "looked up" because the file's own source line is a published table read on a date. The country's points are
+     keyed by year, a region's by region and year; the key names no entry the file lacks. */
+  const ISO = iso2.toUpperCase();
+  const stamp = (key: string): Provenance => ({ src: `sections/survival.json:${ISO}:${key}`, kind: "looked up" });
+  const points: StampedPoint[] = pts.map((p) => ({ ...p, prov: stamp(`curve:${p.year}`) }));
+  const last = points[points.length - 1];
   const r = c.regions;
   const regions = r && r.year === last.year && isPct(r.best?.pct) && isPct(r.worst?.pct) && r.best.pct > r.worst.pct ? { best: r.best, worst: r.worst } : null;
   /* A region's curve is drawn only as the country's is: the same cohort, the same years, and falling year on year. */
-  const regionCurves = c.regionCurves && c.regionCurves.cohort === c.curve.cohort
+  const regionCurves = (c.regionCurves && c.regionCurves.cohort === c.curve.cohort
     ? c.regionCurves.regions.filter((r) => r.points.length === pts.length && r.points.every((p, i) => p.year === pts[i].year && isPct(p.pct) && (i === 0 || p.pct <= r.points[i - 1].pct)))
-    : [];
-  return { iso2: iso2.toUpperCase(), cohort: c.curve.cohort, points: pts, last, regions, place: typeof c.place === "string" ? c.place : null, regionCurves };
+    : []
+  ).map((r) => ({ ...r, points: r.points.map((p) => ({ ...p, prov: stamp(`regionCurves:${r.key}:${p.year}`) })) }));
+  const startProv: Provenance = { src: `sections/survival.json:${ISO}:curve:cohort`, kind: "worked out" };
+  return { iso2: ISO, cohort: c.curve.cohort, points, last, regions, place: typeof c.place === "string" ? c.place : null, regionCurves, startProv };
 }
 
 export function buildObstacles(iso2: string): Obstacles | null {

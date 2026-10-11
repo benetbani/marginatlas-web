@@ -11,15 +11,20 @@
  * pass 3, fix round D2, item P2.8: the start alone stood without one, where the reader meets the whole cohort first): the card's figure
  * stays the large one above the plot and the label is the drawing's key. The start's share is read off the drawn series' own first
  * point (START, below) like every other point's, never typed as a label; the last label is held inside the plot's right edge and
- * the start's inside its left, so neither leaves the box.
+ * the start's inside its left, so neither leaves the box. EVERY LABEL SAYS WHERE ITS SHARE WAS READ (fix round F1, group G2, the
+ * final review's M2): each point carries the `prov` the builder stamped on it (the survival file's key), the start's label the
+ * `startProv` the builder gives it, and the label spreads `provAttrs` of its own point as an obstacle's label does, so a chosen
+ * region's labels are stamped as the country's are. The component types no key: a point with no `prov` prints a bare label.
  *
  * THE LAW (M3): the default is the country, the curve the card printed; a region's figures are the table's own, rounded as the
  * country's are; nothing is computed but the plot's geometry. The choice is a native select, so a phone opens its own picker and
  * a screen reader reads it; the figure is a polite live region.
  */
 import * as React from "react";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
-export type CurvePoint = { year: number; pct: number };
+/** `prov`: where the share was read, which the point's label says (data-src, data-kind) when the builder gave one. */
+export type CurvePoint = { year: number; pct: number; prov?: Provenance };
 export type RegionCurveData = { key: string; name: string; inName: string; points: CurvePoint[] };
 export type SurvivalWords = { focal: string; focalIn: string; start: string; year: string; regions: string; choose: string; country: string; kicker: string };
 
@@ -28,13 +33,15 @@ export type SurvivalWords = { focal: string; focalIn: string; start: string; yea
  *  read from this point (critique pass 3, fix round D2, item P2.8). */
 const START: CurvePoint = { year: 0, pct: 100 };
 
-export function SurvivalCurve({ id, country, regions, best, worst, words }: {
+export function SurvivalCurve({ id, country, regions, best, worst, words, startProv }: {
   id: string;
   country: CurvePoint[];
   regions: RegionCurveData[];
   best: { name: string; pct: number } | null;
   worst: { name: string; pct: number } | null;
   words: SurvivalWords;
+  /** The stamp of the start's label (buildSurvival's `startProv`): the start is no share the file holds, so its stamp is its own. */
+  startProv?: Provenance;
 }) {
   const [key, setKey] = React.useState<string>("");
   const region = regions.find((r) => r.key === key) ?? null;
@@ -49,7 +56,7 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
   const path = (pts: CurvePoint[]) => [START, ...pts].map((p, i) => `${i ? "L" : "M"}${x(p.year).toFixed(2)},${y(p.pct).toFixed(2)}`).join(" ");
   const line = path(shown);
   const area = `${line} L100,100 L0,100 Z`;
-  const pts = [START, ...shown];
+  const pts: CurvePoint[] = [{ ...START, prov: startProv }, ...shown];
   const gid = `${id}-area-fill`;
   /* A share placed on the regions' strip: 0 at the lowest region, 100 at the highest, held 2 inside each end. */
   const span = (v: number) => (best && worst && best.pct > worst.pct ? Math.min(98, Math.max(2, ((v - worst.pct) / (best.pct - worst.pct)) * 100)) : 50);
@@ -93,8 +100,8 @@ export function SurvivalCurve({ id, country, regions, best, worst, words }: {
             return (
               <React.Fragment key={p.year}>
                 <span aria-hidden data-point={p.year} className={`absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] ${isLast ? "h-3.5 w-3.5" : ""}`} style={{ left: `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%`, background: isLast ? "var(--terra)" : "var(--c-ink2)" }} />
-                {/* EVERY POINT PRINTS ITS SHARE, THE START AND THE LAST TOO (critique pass 2, fix round C2, item P1.5; pass 3, fix round D2, item P2.8; the card's figure stays the large 38%): read from the point, like every other. The last label is right-aligned to the plot's edge and the start's left-aligned to it, so neither leaves the box. */}
-                <span data-mark-label className={`absolute ${isLast ? "-translate-x-full" : isFirst ? "" : "-translate-x-1/2"} -translate-y-full pb-2 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]`} style={{ left: isLast ? "100%" : isFirst ? "0%" : `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }}>{Math.round(p.pct)}%</span>
+                {/* EVERY POINT PRINTS ITS SHARE, THE START AND THE LAST TOO (critique pass 2, fix round C2, item P1.5; pass 3, fix round D2, item P2.8; the card's figure stays the large 38%): read from the point, like every other, and stamped from it (provAttrs, fix round F1, group G2). The last label is right-aligned to the plot's edge and the start's left-aligned to it, so neither leaves the box. */}
+                <span data-mark-label className={`absolute ${isLast ? "-translate-x-full" : isFirst ? "" : "-translate-x-1/2"} -translate-y-full pb-2 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]`} style={{ left: isLast ? "100%" : isFirst ? "0%" : `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }} {...provAttrs(p.prov)}>{Math.round(p.pct)}%</span>
               </React.Fragment>
             );
           })}

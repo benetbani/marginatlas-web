@@ -6,7 +6,8 @@
  *  - THE CARD'S ONE FIGURE is the cohort's share still trading at the curve's last year, and the curve's last point is the one
  *    point drawn in the accent; every point prints its share at its own point, the last too (critique pass 2, fix round C2, item P1.5:
  *    the figure above is the large one and the label on the drawing is its key) and the start too, the whole cohort read off the
- *    curve's own first point (critique pass 3, fix round D2, item P2.8).
+ *    curve's own first point (critique pass 3, fix round D2, item P2.8); every label carries the stamp the builder gave its point
+ *    (data-src, data-kind), the start's `startProv` handed in here (fix round F1, group G2).
  *  - THE CURVE is one cohort followed year by year: a line over an area whose accent gradient fades into the card (his "the
  *    gradient is barely used"), a start at the whole and a point a year. The area is SVG stretched to the box; every mark and
  *    label is HTML placed in percentages, so no text stretches, and a point at either end is pinned inside the box.
@@ -40,6 +41,7 @@ export function FirstYears({ id = "first-years", data }: { id?: string; data: Su
         regions={data.regionCurves}
         best={data.regions?.best ?? null}
         worst={data.regions?.worst ?? null}
+        startProv={data.startProv}
         words={{ focal: C.focalWords, focalIn: C.focalWordsIn, start: C.start, year: C.year, regions: C.regions, choose: C.choose, country: place, kicker: C.kicker }}
       />
     </Box>
