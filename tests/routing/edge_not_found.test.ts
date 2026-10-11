@@ -8,6 +8,10 @@
  * And since 2026-10-06 a file: an address whose last part has a dot names a file, and answers 404 unless the site serves that
  * file (src/lib/routing/served_files.ts); a dot alone used to pass any address through, so `/data/uk/2026.10/nothing.csv` drew a
  * page at 200.
+ * And since 2026-10-11 (the plan route-folder fall-through) an address under a route folder that fits none of the shapes the folder serves
+ * (/pricing/xyz, /about/xyz, /blog/no-such-post): the shapes and the lists the dynamic leaves of four routes resolve are generated into
+ * src/lib/routing/route_shapes.ts (scripts/gen_route_shapes.ts), held to a fresh generation here, and every real address is asked of the
+ * edge and the middleware. Every pin answers with Next's static not-found page (/_not-found), the status pinned.
  *
  * Run: npx tsx tests/routing/edge_not_found.test.ts
  */
@@ -91,7 +95,7 @@ check("a word under another country is judged the same: /de/berlin/zz-not-a-trad
 check("a census description the database holds passes under a state: /us/mississippi/business-support-services", nf("/us/mississippi/business-support-services") === false);
 check("an unknown United States word answers 404 (P1-A): /us/california/zz-not-a-trade", nf("/us/california/zz-not-a-trade") === true);
 check("a file is not a place: /geo/countries-110m.json", nf("/geo/countries-110m.json") === false);
-check("a static first segment is not a country: /blog/zz-post", nf("/blog/zz-post") === false);
+check("a word no post holds, under the blog's folder, answers 404 (the plan 2026-10-11; it was left to its route): /blog/zz-post", nf("/blog/zz-post") === true);
 check("an unknown first segment with three parts is left alone: /zz/london/zz", nf("/zz/london/zz") === false);
 check("the home page", nf("/") === false);
 
@@ -678,6 +682,132 @@ const apiFolders = (dir: string): string[] =>
 const apiDotted = apiFolders("src/app/api").filter((d) => /\[|\./.test(d.slice("src/app/api".length)));
 check(`every API route is a static folder with no dot in its name${apiDotted.length ? `: ${apiDotted.join(", ")}` : ""}`, apiDotted.length === 0, MW);
 
+/* THE ROUTE FOLDERS (the plan 2026-10-11, route-folder fall-through, Task 3). A first part some route folder holds, with an address that fits
+   none of the shapes the folder serves, is an address no route holds, and Next sends it to the country tree's wildcard ([country]/[geo]),
+   which answered 200 with an indexable head, the loading skeleton and a 404 drawn in the browser: /pricing/xyz, /about/xyz, /new-businesses/x
+   and /blog/no-such-post, probed on production on 2026-10-11, and the same under every route folder. The edge judges such an address by the
+   shapes each folder serves and by the closed lists four leaves resolve (src/lib/routing/route_shapes.ts, generated), and pins the answer
+   through the middleware like every other address for nothing. Every real address is asked below, through the edge and through the
+   middleware: each post, article and pair, each country's scorecard, each shape of the table with its dynamic parts filled with a value the
+   site holds (HELD_FILL), each API route. BLIND SPOT: these ask the table's own shapes and lists, so an address a route serves that neither
+   the generator's walk of src/app nor a list can see would pass here and answer 404 at the edge. The walk reads every page and route file and
+   every metadata route, and tests/seo/sitemap_families.test.ts asks every address the sitemap declares. */
+const FOLDER_REMEDY = "Judge an address of a route folder by the shapes the folder serves and the lists its leaves resolve (ROUTE_SHAPES, BLOG_SLUGS, LEARN_SLUGS and CITY_PAIRS in src/lib/routing/route_shapes.ts, read by edgeNotFound in src/lib/routing/edge_not_found.ts), and pin the answer through the middleware (notFoundAtEdge): an address no route holds falls to the country tree's wildcard, which answers 200 with an indexable head";
+const FOLDER_PASS_REMEDY = "Let a real address of a route folder through: run npx tsx scripts/gen_route_shapes.ts in the same commit as the route, post, article or pair, and never edit the table; an address the table misses is a page answered 404 at the edge";
+let folderAsked = 0;
+const FOLDER_MISSES: ReadonlyArray<readonly [string, string]> = [
+  ["/pricing/xyz", "a folder that holds a page and no child"],
+  ["/about/xyz", "a folder that holds a page and no child"],
+  ["/new-businesses/x", "a folder that holds a page and no child"],
+  ["/blog/no-such-post", "a post no file of content/blog holds"],
+  ["/blog/median-vs-average/x", "a child of a post, which has none"],
+  ["/learn/no-such-article", "an article the knowledge base does not hold"],
+  ["/coverage/zz", "a scorecard for a country the site does not hold"],
+  ["/compare/cities", "no page holds the bare folder, only the pairs under it"],
+  ["/compare/cities/x-vs-y", "a pair the comparisons file does not hold"],
+  ["/decide/x", "no page at /decide/<activity>, only the pairs and the guide's own address"],
+  ["/industries/restaurants/x", "a live trade's folder holds its across page only"],
+  ["/cities/london/x", "a listed city's folder holds its neighbourhoods only"],
+  ["/og/x", "an image route no folder holds"],
+  ["/icon/x", "a metadata route holds its own address only"],
+  ["/admin", "a folder with children and no page of its own"],
+  ["/embed", "a folder with one three-part page and none of its own"],
+  ["/api", "a folder of handlers, none at its bare address"],
+  ["/blog/constructor", "a built-in's name is no post"],
+  ["/learn/__proto__", "a built-in's name is no article"],
+  ["/coverage/constructor", "a built-in's name is no country"],
+  ["/compare/cities/constructor", "a built-in's name is no pair"],
+];
+for (const [p, why] of FOLDER_MISSES) check(`${why}: ${p} answers 404 at the edge and through the middleware`, quiet(() => nf(p) === true && pinned(p)), FILE, FOLDER_REMEDY);
+/* The prefixes the rate limit skips ask the place rule and the edge rule too, in a block of their own at the end of the middleware: /api/ and
+   /static. /_next keeps the file rule alone: the dev server's own address (/_next/webpack-hmr) has no dot. /statistics only LOOKS like
+   /static (its prefix is "statis") and meets the ordinary rules; it is asked here as the control that the prefix test is not too wide. */
+const PREFIX_MISSES: ReadonlyArray<readonly [string, string]> = [
+  ["/api/nope", "an API address no handler holds, under a prefix the rate limit skips"],
+  ["/api/stripe/nope", "an address under an API folder that holds no such handler"],
+  ["/static", "a first part no folder holds, under a prefix the rate limit skips"],
+  ["/static/x", "an address under that first part"],
+  ["/statistics", "a first part that only looks like a skipped prefix, met by the ordinary rules"],
+];
+for (const [p, why] of PREFIX_MISSES) check(`${why}: ${p} answers 404 through the middleware`, quiet(() => pinned(p)), MW, FOLDER_REMEDY);
+
+/* Every real address of the route folders passes, asked of the edge and of the middleware. */
+const folderPasses = (label: string, addresses: string[], remedy = FOLDER_PASS_REMEDY) => {
+  const missed = addresses.filter((a) => !quiet(() => !nf(a) && passed(a)));
+  folderAsked += addresses.length;
+  check(`every ${label} passes the edge and the middleware (${addresses.length})${missed.length ? `: ${missed.slice(0, 5).join(", ")}` : ""}`, addresses.length > 0 && missed.length === 0, FILE, remedy);
+};
+folderPasses("post of content/blog", [...BLOG_SLUGS].map((s) => `/blog/${s}`));
+folderPasses("article of the knowledge base", [...LEARN_SLUGS].map((s) => `/learn/${s}`));
+folderPasses("city pair the comparisons file holds", [...CITY_PAIRS].map((s) => `/compare/cities/${s}`));
+folderPasses("country the site holds, as its scorecard", COUNTRIES.map((c) => `/coverage/${c.code.toLowerCase()}`));
+/* THE TABLE'S OWN SHAPES, each asked as a real address: a dynamic part filled with a value the site holds, keyed by the shape; a shape with no
+   value here reds, so a route folder added tomorrow is asked before it ships (as tests/routing/metadata_routes.test.ts asks each metadata route). */
+const HELD_FILL: Readonly<Record<string, readonly string[]>> = {
+  "blog/*": [[...BLOG_SLUGS][0]],
+  "learn/*": [[...LEARN_SLUGS][0]],
+  "coverage/*": ["gb"],
+  "compare/cities/*": [[...CITY_PAIRS][0]],
+  "decide/*/*": ["restaurants", "london"],
+  "industries/*": ["restaurants"],
+  "industries/*/across": ["restaurants"],
+  "cities/*": ["london"],
+  "cities/*/neighborhoods": ["london"],
+  "cities/*/neighborhoods/*": ["london", "west-end"],
+  "embed/*/*/*": ["gb", "london", "restaurants"],
+  "pro/*": ["gb"],
+  "pro/cities/*": ["london"],
+  "pro/*/*/*": ["gb", "london", "restaurants"],
+};
+/** A shape's address with each "*" filled, the `miss`th one (from 0) with a word nobody holds instead; null when HELD_FILL has no value for it. */
+const fillShape = (shape: readonly string[], miss = -1): string | null => {
+  const stars = shape.filter((p) => p === "*").length;
+  const values = stars === 0 ? [] : own(HELD_FILL, shape.join("/")) ?? [];
+  if (values.length !== stars) return null;
+  const parts: string[] = [];
+  let star = 0;
+  for (const p of shape) {
+    if (p !== "*") { parts.push(p); continue; }
+    parts.push(star === miss ? "zz-not-a-word" : values[star]);
+    star++;
+  }
+  return `/${parts.join("/")}`;
+};
+const unfilled = ROUTE_SHAPES.filter((s) => fillShape(s) === null).map((s) => s.join("/"));
+check(`every shape of ROUTE_SHAPES has a held value to be asked with${unfilled.length ? `: none for ${unfilled.join(", ")}` : ""}`, unfilled.length === 0, FILE, "add a value the site holds for that shape to HELD_FILL in tests/routing/edge_not_found.test.ts, keyed by the shape, one value for each of its dynamic parts, so a new route is asked as a real address");
+folderPasses("shape of ROUTE_SHAPES, its dynamic parts filled with a value the site holds", ROUTE_SHAPES.map((s) => fillShape(s)).filter((a): a is string => a !== null));
+/* A DYNAMIC SHAPE IS JUDGED AT THE EDGE, PART BY PART, OR NAMED OPEN. The four open ones are routes that are not indexed whatever they draw
+   (noindex and nofollow in their own metadata) and that 404 by their own resolvers, so their misses are no index hazard and the edge leaves
+   them to the route. The check reads each page for both claims; a dynamic shape that is neither judged nor open reds. */
+const ROUTE_OPEN: Readonly<Record<string, string>> = {
+  "embed/*/*/*": "src/app/embed/[country]/[geo]/[industry]/page.tsx",
+  "pro/*": "src/app/pro/[country]/page.tsx",
+  "pro/cities/*": "src/app/pro/cities/[slug]/page.tsx",
+  "pro/*/*/*": "src/app/pro/[country]/[geo]/[industry]/page.tsx",
+};
+const dynamicShapes = ROUTE_SHAPES.filter((s) => s.includes("*"));
+const unjudged: string[] = [];
+for (const s of dynamicShapes) {
+  if (own(ROUTE_OPEN, s.join("/")) !== undefined) continue;
+  for (let star = 0; star < s.filter((p) => p === "*").length; star++) {
+    const asked = fillShape(s, star);
+    if (asked === null || !quiet(() => nf(asked))) unjudged.push(`${s.join("/")} at its dynamic part ${star + 1}`);
+  }
+}
+const OPEN_REMEDY = "Judge the shape's dynamic part in edgeNotFound (src/lib/routing/edge_not_found.ts) by the resolver its route runs, or, for a route that is noindex and nofollow in its own metadata and 404s by its own resolver, name it in ROUTE_OPEN in tests/routing/edge_not_found.test.ts with its page";
+check(`every dynamic shape of ROUTE_SHAPES is judged at the edge, part by part, or named open (${dynamicShapes.length} shapes, ${Object.keys(ROUTE_OPEN).length} open)${unjudged.length ? `: not judged: ${unjudged.join(", ")}` : ""}`, dynamicShapes.length > 0 && unjudged.length === 0, FILE, OPEN_REMEDY);
+const openStale = Object.keys(ROUTE_OPEN).filter((k) => !dynamicShapes.some((s) => s.join("/") === k));
+const codeOf = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
+const openNotSealed = Object.entries(ROUTE_OPEN).filter(([, file]) => { const src = codeOf(file); return !/robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/.test(src) || !/\bnotFound\(\)/.test(src); }).map(([k]) => k);
+check(`the open shapes are dynamic shapes the table holds, and each page says noindex and nofollow and calls notFound() itself${openStale.length ? `; not in the table: ${openStale.join(", ")}` : ""}${openNotSealed.length ? `; not noindex, nofollow and self-404ing: ${openNotSealed.join(", ")}` : ""}`, openStale.length === 0 && openNotSealed.length === 0, FILE, OPEN_REMEDY);
+/* The platform's own addresses and the dev server's are no route folder's: the file rule exempts /_vercel/ and the prefix block never asks
+   /_next, and neither first part is a route folder (TOP_LEVEL_SEGMENTS). */
+folderPasses(
+  "address of the platform or the dev server (/_next/webpack-hmr, /_vercel/insights/view, /_vercel/speed-insights/vitals)",
+  ["/_next/webpack-hmr", "/_vercel/insights/view", "/_vercel/speed-insights/vitals"],
+  "leave an address the platform or the dev server owns untouched: the file rule exempts /_vercel/, the middleware asks /_next the file rule alone, and the route-folder rule judges only a first part a route folder holds (TOP_LEVEL_SEGMENTS)",
+);
+
 /* A WORD THAT NAMES A BUILT-IN NAMES NOTHING (2026-10-06): every lookup the edge asks reads a plain object, which answers
    "constructor" with the Object function and "__proto__" with Object.prototype unless it is asked for its own entries
    (src/lib/own.ts). Every Object.prototype member, as written and lowercased (the canonical form a request reaches). Five edge
@@ -720,4 +850,4 @@ protoCheck(
 protoCheck("no old district address is a built-in name in the city slot (cityPathFor answers first: no listed city is named so)", protoWrong((k) => legacyHoodTarget(`/gb/${k.toLowerCase()}/central`), null), FILE);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
-console.log("routing/edge_not_found: all pass");
+console.log(`routing/edge_not_found: all pass (${folderAsked} real addresses of the route folders asked of the edge and the middleware)`);

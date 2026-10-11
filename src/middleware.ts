@@ -545,6 +545,13 @@ export function routeRequest(req: NextRequest): NextResponse {
     return res;
   }
 
+  // 4. The prefixes the rate limit skips, asked the place rule and the edge rule too (the plan 2026-10-11, route-folder fall-through). Both
+  // sit inside the block above, which skips /api/ and /static, so /api/nope, /api/stripe/nope, /static and /static/x met neither: they named no
+  // page and fell to the country route's soft 404 at 200. A made-up file under them was pinned at 2b; a real one is never pinned here, because
+  // both rules read a dotted last part as a file. /_next keeps 2b's file rule alone: the dev server's own addresses (/_next/webpack-hmr) have no
+  // dot, and Next's built files never reach the middleware (the matcher).
+  if ((path.startsWith("/static") || path.startsWith("/api/")) && (isPlaceWeDoNotHold(path) || edgeNotFound(path))) return notFoundAtEdge(req, path);
+
   return NextResponse.next({ request: { headers: withPathname(req, path) } });
 }
 

@@ -43,6 +43,11 @@
  * it is stricter than production, never looser. And what a route does with an
  * address the middleware passes.
  *
+ * ROUTE FOLDERS TOO (2026-10-11, the plan route-folder fall-through). An address under a first part some route folder holds is judged by the
+ * shapes that folder serves (src/lib/routing/route_shapes.ts), so /pricing/xyz and /blog/no-such-post answer 404 here as /zz/qq does. The two
+ * folders whose bare address no page holds, /admin and /embed, are PINNED below with /og's reason, and a post, an article and a city pair
+ * are asked among the PASSES.
+ *
  * OFFLINE BY DEFAULT. The prebuild chain must never need the network, so the
  * live sitemap is only fetched when --live is passed. The offline run asks the
  * middleware about a fixed set of paths that covers every shape the site serves.
@@ -65,7 +70,7 @@ const OG = "src/app/og";
 const OR_CORRECT = `, or correct the path's line in ${SELF} when the site changed on purpose`;
 const PIN_REMEDY = `keep the edge's 404 on an address for nothing: isPlaceWeDoNotHold and edgeNotFound in ${MW} judge it after every redirect${OR_CORRECT}`;
 const PASS_REMEDY =
-  "let the middleware pass an address the site serves: a route folder belongs in TOP_LEVEL_SEGMENTS and a static child of [country] in COUNTRY_STATIC_CHILDREN (src/lib/routing/top_level_segments.ts), a trade or a city in its route's resolver (src/lib/routing/edge_not_found.ts)" +
+  "let the middleware pass an address the site serves: a route folder belongs in TOP_LEVEL_SEGMENTS and a static child of [country] in COUNTRY_STATIC_CHILDREN (src/lib/routing/top_level_segments.ts), the shapes its pages serve in the generated route table (npx tsx scripts/gen_route_shapes.ts, src/lib/routing/route_shapes.ts), a trade or a city in its route's resolver (src/lib/routing/edge_not_found.ts)" +
   OR_CORRECT;
 const MOVE_REMEDY = `send the address to its page in one hop (cityPathUnderCountry in ${MW})${OR_CORRECT}`;
 /* The P1-A hops: a retired or renamed trade under a place no table holds is that place's 404, and the two redirects that would move it
@@ -117,7 +122,7 @@ function expectVerdict(path: string, want: string, why: string, remedy: string) 
    answered by next.config.js's redirect to /data, which runs before the middleware; anything else under it is junk. */
 expectVerdict("/download", "pinned to 404", "the /download page left in the checkup's B1", "keep download out of src/lib/routing/top_level_segments.ts; its one redirect lives in next.config.js");
 
-/* PINNED: an address for nothing, rewritten onto itself with the status pinned to 404. */
+/* PINNED: an address for nothing, rewritten onto Next's static not-found page (/_not-found) with the status pinned to 404. */
 const NO_PLACE = "neither a country we hold nor a route folder, so it could only have matched [country]";
 const PINNED: ReadonlyArray<readonly [string, string]> = [
   ["/zz/qq", NO_PLACE],
@@ -125,6 +130,11 @@ const PINNED: ReadonlyArray<readonly [string, string]> = [
   ["/nonsense/thing", NO_PLACE],
   ["/qq", NO_PLACE],
   ["/og", "a route folder, but two letters and no country, and src/app/og holds only children: nothing lives at its bare address"],
+  /* The two route folders whose bare address no page holds joined it on 2026-10-11 (the plan 2026-10-11, route-folder fall-through, Task 3):
+     the edge judges a route folder's addresses by the shapes it serves (src/lib/routing/route_shapes.ts), and these two held children only, so
+     their bare addresses fell to the country wildcard and answered 200 with an indexable head. The site changed on purpose. */
+  ["/admin", "a route folder, but src/app/(site)/admin holds only children (anomalies, data-quality, review): nothing lives at its bare address"],
+  ["/embed", "a route folder, but src/app/embed holds only its three-part embed page: nothing lives at its bare address"],
   ["/de/bayern", "a country we hold and no region of it: the site's Bavaria is /de/bavaria, and the region page calls notFound() on bayern"],
 ];
 for (const [p, why] of PINNED) expectVerdict(p, "pinned to 404", why, PIN_REMEDY);
@@ -183,6 +193,9 @@ const PASSES: ReadonlyArray<readonly [string, string, string?]> = [
   ["/gb/how-to-open", "a static child other than industries, pinned on every deploy until 2026-09-19"],
   ["/cities/london", "a city the list holds, a shape the edge's not-found rule judges"],
   ["/coverage/us", "a child of a route folder"],
+  ["/blog/median-vs-average", "a post of content/blog, a leaf the edge judges by the generated route table (src/lib/routing/route_shapes.ts)"],
+  ["/learn/how-much-does-a-restaurant-make", "an article of the knowledge base, a leaf the route table's list holds"],
+  ["/compare/cities/london-vs-new-york", "a city pair the comparisons file holds, a leaf the route table's list holds"],
   ["/gb/london/restaurants", "a trade under a UK city, a shape the edge's not-found rule judges"],
   ["/us/california/restaurants", "a trade under a state"],
   ["/us/mississippi/offices-of-lawyers", "a census description the database holds (src/lib/routing/place_slugs_generated.ts), under a state"],
@@ -204,7 +217,7 @@ const ROUTE_FOLDERS = [
   "/cities", "/learn", "/compare", "/browse", "/world", "/pricing", "/about-data", "/faq", "/blog", "/you", "/status",
   "/decide", "/extremes", "/tools", "/random", "/margin-index", "/methodology",
   "/privacy", "/terms", "/cookies", "/contact", "/signin", "/account", "/saved",
-  "/check", "/calculator", "/embed", "/industries", "/countries", "/admin", "/dev",
+  "/check", "/calculator", "/industries", "/countries", "/dev",
 ];
 for (const p of ROUTE_FOLDERS) expectVerdict(p, "passes", "a route folder", PASS_REMEDY);
 

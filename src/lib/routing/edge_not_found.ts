@@ -28,12 +28,22 @@
  *    while the neighbourhood spine is on), read from the generated table src/lib/routing/hood_slugs.ts.
  *  - `/decide/{activity}/{city}`: the pair route's own resolvers: no trade for the activity (`slugToIndustry`), or no
  *    neighbourhood scheme for the city (`hasHoodScheme`, the keys of src/lib/routing/hood_slugs.ts).
+ *  - An address of a route folder (a first part in TOP_LEVEL_SEGMENTS) that fits none of the shapes the folder serves (2026-10-11): the
+ *    generated table src/lib/routing/route_shapes.ts holds every page and route file of src/app as a shape (route groups dropped, a
+ *    dynamic folder written "*") and each dotless metadata route, and four leaves resolve a closed list, each by the test its own route
+ *    runs: `/blog/{post}` (a file of content/blog, getPost's own test), `/learn/{article}` (a key of LEARN_BY_SLUG), `/coverage/{iso2}`
+ *    (a country the site holds) and `/compare/cities/{pair}` (a pair of the comparisons file whose two cities the list holds).
+ *    /pricing/xyz, /about/xyz, /new-businesses/x, /admin, /embed and /api name no page, and Next sent each to the country tree's
+ *    wildcard, which answered 200 with an indexable head. The embed and pro shapes are left to their routes: noindex, nofollow pages
+ *    that 404 by their own resolvers (the test names them open).
  *  - Any address whose last part has a dot names a file (2026-10-06), at any depth: it names nothing unless the site serves that
  *    file, a file under public/ or one a route of src/app writes (`/robots.txt`, `/sitemap/0.xml`), read from the generated table
  *    src/lib/routing/served_files.ts; the platform's own addresses under `/_vercel/` are Vercel's. No page takes a dotted part
  *    (no country, region, city, trade, district, post or article slug holds a dot; the test reds when one does), so a dotted
  *    address that is no file could only ever have drawn a page's not-found, or worse, a synthesized page at 200.
- * Everything else is left alone: one- and two-part paths are isPlaceWeDoNotHold's.
+ * Everything else is left alone: one- and two-part paths of a first part no route folder holds are isPlaceWeDoNotHold's, and an address of
+ * three or four parts under a first part nobody holds (`/zz/london/zz`) is its route's, because trade pages are published under statistics
+ * codes the site does not hold as countries (EL and UK, src/lib/routing/place_words.ts), so the edge cannot call such a first part nothing.
  *
  * THE COUNTRY AND THE PLACE ARE THE ROUTE'S WORDS, EVERY OTHER PART IS AS WRITTEN (the reviews of 2026-10-09). The pathname is
  * percent-encoded and the route's params are not, and the place table spells six places with an accent, decoded
@@ -69,6 +79,7 @@ import { TOP_LEVEL_SEGMENTS } from "@/lib/routing/top_level_segments";
 import { CITY_SLUGS_BY_COUNTRY } from "@/lib/routing/city_paths_generated";
 import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "@/lib/routing/hood_slugs";
 import { SERVED_FILES } from "@/lib/routing/served_files";
+import { ROUTE_SHAPES, BLOG_SLUGS, LEARN_SLUGS, CITY_PAIRS } from "@/lib/routing/route_shapes";
 import { US_DESCRIPTION_SLUGS } from "@/lib/routing/place_slugs_generated";
 import { isHeldPlace, routeWord } from "@/lib/routing/place_words";
 import { namesFile } from "@/lib/routing/names_file";
@@ -171,6 +182,22 @@ export function edgeNotFound(path: string): boolean {
   const segs = parts(path);
   if (!segs) return false;
   const [first, second, third, fourth] = segs;
+
+  /* THE ROUTE FOLDERS (the plan 2026-10-11, route-folder fall-through). A first part some route folder holds, with an address that fits none of
+     the shapes the folder serves, is an address no route holds: Next sends it to the country tree's wildcard ([country]/[geo]), which answered
+     200 with an indexable head, the loading skeleton and a 404 drawn in the browser (/pricing/xyz, /about/xyz, /new-businesses/x, /admin,
+     /embed, /api, /blog/no-such-post). A shape fits by its length and by each static part; a dynamic part ("*") takes any word. Four leaves
+     then resolve a closed list, each by the test its own route runs: a post is a file of content/blog, an article a key of LEARN_BY_SLUG, a
+     scorecard a country the site holds and a comparison a pair of the comparisons file whose two cities the list holds. The leaves of
+     /industries, /cities and /decide are judged below by their own resolvers, and the embed and pro shapes are left to their routes:
+     noindex, nofollow pages that 404 by their own resolvers (tests/routing/edge_not_found.test.ts names them open). */
+  if (TOP_LEVEL_SEGMENTS.has(first)) {
+    if (!ROUTE_SHAPES.some((s) => s.length === segs.length && s.every((p, i) => p === "*" || p === segs[i]))) return true;
+    if (first === "blog" && segs.length === 2) return !BLOG_SLUGS.has(second);
+    if (first === "learn" && segs.length === 2) return !LEARN_SLUGS.has(second);
+    if (first === "coverage" && segs.length === 2) return !HELD_COUNTRIES.has(second);
+    if (first === "compare" && second === "cities" && segs.length === 3) return !CITY_PAIRS.has(third);
+  }
 
   if (first === "industries" && (segs.length === 2 || (segs.length === 3 && third === "across"))) {
     return slugToIndustry(second) === null && !ownedByRedirect(second);
