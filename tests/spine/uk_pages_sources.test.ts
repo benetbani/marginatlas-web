@@ -1,7 +1,7 @@
 /**
  * THE UK'S TRADE PAGES AND THE UK'S PAGE PRINT A SOURCED FIGURE, A MARKED ONE, OR NONE (masterplan step 04, 2026-10-05, London's
  * trade pages; plan 2026-10-08, every other UK city's; the labels audit of 2026-10-02, items 10, 17 and 18; QUEUE
- * country:cities-region-line).
+ * country:cities-region-line; plan 2026-10-11, every other UK place's).
  *
  * Run: npx tsx tests/spine/uk_pages_sources.test.ts
  */
@@ -26,7 +26,7 @@ const FILE = "src/lib/spine";
 const REMEDY = "on a UK page print a sourced figure, say in the card's one line whose figure it is, or withhold it";
 /* Where a red is not about a figure's line: the cell view's wiring, and the one rounding the two pages print a density by. */
 const VIEW_FILE = "src/components/spine/cell/cell-view.tsx";
-const REMEDY_WIRING = "restore the cell view's wiring: a page held to a register region (cityRegisterPlace) takes sayTradeTypical(builtCards, tradeSlug), a page held to sources only (cityHeldToSources) takes sayTradeTypical(builtCards, tradeSlug, { keepHere: true }), every other page keeps builtCards, the place slug lowercased once before both";
+const REMEDY_WIRING = "restore the cell view's wiring: a page held to a register region (cityRegisterPlace) takes sayTradeTypical(builtCards, tradeSlug), every other UK page (countryHeldToRegisters) takes sayTradeTypical(builtCards, tradeSlug, { keepHere: true }), a page outside the UK keeps builtCards, the place slug lowercased once before the register predicate";
 const REMEDY_SAME_FIGURE = "round the density the trade page keeps as the city page prints it: sayTradeTypical's keepHere branch takes perTenThousand (src/lib/spine/city_market_rows.ts), the city market card's own fmt, so one figure stands on both pages";
 const REMEDY_ESTIMATE_LINE = "a UK city's trade page keeps its density under a line that says estimate: sayTradeTypical sets COPY.tradeTypical.market.firmsHere as hereBasis under keepHere, and the copy key holds a line with the word";
 const MARKET_VIEW = "src/components/spine/cell/market.tsx";
@@ -120,15 +120,26 @@ const londonCell = rivalsOf(said.market);
 check(`London's cell keeps its one companion, the register's insolvencies: ${companionsOf(londonCell).join(" | ")}`, companionsOf(londonCell).length === 1 && companionsOf(londonCell)[0] === T.insolvent && leadOf(londonCell) === "16", REMEDY_COMPANION);
 const ukFree = rivalsOf(fixture.market);
 check(`a page outside the UK keeps "the trade anywhere" beside the city's own density: ${companionsOf(ukFree).join(" | ")}`, COPY.tradeMarket.rivals.typicalWords === "the trade anywhere" && companionsOf(ukFree)[0] === COPY.tradeMarket.rivals.typicalWords && leadOf(ukFree) === "9.1", REMEDY_COMPANION);
+/* EVERY OTHER UK PLACE'S TRADE PAGE (plan 2026-10-11, QUEUE uk:trade-pages-by-country): the view decides by the country, so a UK
+   place no city shard holds takes keepHere and keeps nothing: its cards say the trade's typical and its market reads as London's. */
+for (const place of ["birmingham-uk", "liverpool", "sheffield", "gb"]) {
+  const ownHere = cityOwnDensity("GB", place, "Restaurants");
+  const off = keptWith(ownHere);
+  const cell = rivalsOf(off.market);
+  check(`/gb/${place}: no city shard, so no density and no density line`, ownHere === null && off.market?.here === null && off.market?.hereBasis === undefined);
+  check(`/gb/${place}: each card says the trade's typical as London's do`, off.split?.basis === T.split && off.team?.basis === T.team && off.clears?.basis === T.clears && off.mix?.foot === T.mix && off.customers?.basis === T.customers && off.market?.daypartsBasis === T.market.dayparts);
+  check(`/gb/${place}: the rivals cell prints ${leadOf(cell)}, its line and ${companionsOf(cell).join(" | ")}`, leadOf(cell) === "16" && cell.includes(T.market.firms) && companionsOf(cell).length === 1 && companionsOf(cell)[0] === T.insolvent && !/anywhere|close a year/i.test(cell));
+}
 for (const w of Object.values(T).flatMap((v) => (typeof v === "string" ? [v] : Object.values(v)))) {
   check(`"${w}" runs twelve words or fewer and never says "anywhere"`, w.split(/\s+/).length <= 12 && !/anywhere/i.test(w));
 }
-/* THE CELL VIEW'S WIRING, THE WHOLE TERNARY IN ITS ORDER: the register branch first (London, its density leaving), then the sources
-   branch with keepHere (the six, their density kept), then the built cards as they are (everywhere else). Two loose patterns passed
-   with the branches swapped, or with the last one gone; the one pattern does not. The place slug is lowercased once before both. */
+/* THE CELL VIEW'S WIRING, THE WHOLE TERNARY IN ITS ORDER: the register branch first (London, its density leaving), then the country
+   branch with keepHere (every other UK place, plan 2026-10-11: a city shard's density kept, none where no shard holds one), then the
+   built cards as they are (outside the UK). Two loose patterns passed with the branches swapped, or with the last one gone; the one
+   pattern does not. The place slug is lowercased once before the register predicate. */
 const view = readFileSync(VIEW_FILE, "utf8");
-check("the cell view takes the register branch, then the sources branch with keepHere, then the built cards", /cityRegisterPlace\(placeIso2, placeGeo\)\s*\?\s*sayTradeTypical\(builtCards, tradeSlug\)\s*:\s*cityHeldToSources\(placeIso2, placeGeo\)\s*\?\s*sayTradeTypical\(builtCards, tradeSlug, \{ keepHere: true \}\)\s*:\s*builtCards\b/.test(view), REMEDY_WIRING, VIEW_FILE);
-check("and lowercases the place slug once, before both predicates", /placeGeo = String\(d\.meta\?\.geo \?\? ""\)\.toLowerCase\(\)/.test(view), REMEDY_WIRING, VIEW_FILE);
+check("the cell view takes the register branch, then the country branch with keepHere, then the built cards", /cityRegisterPlace\(placeIso2, placeGeo\)\s*\?\s*sayTradeTypical\(builtCards, tradeSlug\)\s*:\s*countryHeldToRegisters\(placeIso2\)\s*\?\s*sayTradeTypical\(builtCards, tradeSlug, \{ keepHere: true \}\)\s*:\s*builtCards\b/.test(view), REMEDY_WIRING, VIEW_FILE);
+check("and lowercases the place slug once, before the register predicate", /placeGeo = String\(d\.meta\?\.geo \?\? ""\)\.toLowerCase\(\)/.test(view), REMEDY_WIRING, VIEW_FILE);
 
 /* Item 17: the peers' line says their figures are estimates on the UK's page; elsewhere unchanged. */
 check("the UK's peers say their figures are estimates", buildPeerTable("GB")?.caveat === COPY.peers.caveatEstimates);

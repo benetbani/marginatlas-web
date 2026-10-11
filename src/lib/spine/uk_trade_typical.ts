@@ -13,13 +13,14 @@
  * register does hold, a different measure with its own words: the UK's company insolvencies for the trade in a year, over its
  * live companies (data/uk/registers/failures.json; the notices of 2025-10-01 to 2026-09-30 over the register of 2026-05-01).
  *
- * EVERY OTHER UK CITY'S TRADE PAGE (plan 2026-10-08, uk:cities-sourced-or-marked) takes the same lines with `keepHere`: the cell
- * view calls this on every UK city's trade page, London's without it and the six's with it. Their city's own density stays, since
- * only London's stood over the wrong place. It is the city page's own figure, rounded as it prints there (perTenThousand, one
- * decimal), so the two pages print one figure; its line says it is an estimate, and the companion beside it names the trade's
- * typical in the line's own words and not "the trade anywhere", which would name that figure twice.
+ * EVERY OTHER UK PLACE'S TRADE PAGE (plan 2026-10-08 for the six cities, plan 2026-10-11 for the rest) takes the same lines with
+ * `keepHere`: the cell view calls this on every UK trade page, London's without it and every other place's with it. A city's own
+ * density stays where its shard holds the trade, since only London's stood over the wrong place; a place no city shard holds keeps
+ * none. The kept density is the city page's own figure, rounded as it prints there (perTenThousand, one decimal), so the two
+ * pages print one figure; its line says it is an estimate, and the companion beside it names the trade's typical in the line's
+ * own words and not "the trade anywhere", which would name that figure twice.
  *
- * Pure over the built cards; the cell view calls it on a UK city's trade page and nowhere else.
+ * Pure over the built cards; the cell view calls it on a UK trade page and nowhere else.
  */
 import failuresJson from "../../../data/uk/registers/failures.json";
 import { COPY } from "@/lib/spine/copy";
@@ -55,7 +56,7 @@ export type UkTradeCards = {
 };
 
 /** The same cards, each world-typical line saying so; the market with the UK's insolvencies, and without the city's own density
- *  unless `keepHere` (a UK city held to no register region), where the density stays and its line says it is an estimate. */
+ *  unless `keepHere` (a UK place held to no register region), where the density stays and its line says it is an estimate. */
 export function sayTradeTypical(cards: UkTradeCards, tradeSlug: string | null | undefined, opts: { keepHere?: boolean } = {}): UkTradeCards {
   const T = COPY.tradeTypical;
   const { split, team, clears, mix, customers, open, market } = cards;

@@ -176,7 +176,7 @@ import { SourcesFoot } from "@/components/spine/SourcesFoot";
 import { ReportFoot } from "@/components/spine/ReportFoot";
 import { checkedDateForTrade } from "@/lib/spine/checked";
 import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
-import { cityHeldToSources, cityRegisterPlace } from "@/lib/uk/registers/register_city";
+import { cityRegisterPlace, countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import { sayTradeTypical } from "@/lib/spine/uk_trade_typical";
 
 const X: any = spineCellSeed;
@@ -382,14 +382,15 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
   const customersBuilt = buildTradeCustomers(d.meta?.industry_id);
   /* A PAGE HELD TO A REGISTER REGION (a London trade page; masterplan step 04, the labels audit's item 10): each card printing
      the trade's figure says so in its one line, the market drops the metro density and takes the UK's insolvencies. EVERY OTHER
-     UK CITY'S TRADE PAGE (plan 2026-10-08, uk:cities-sourced-or-marked) says the same and keeps the city's own density, marked an
-     estimate: its city page prints that figure as an estimate. */
+     UK PLACE'S TRADE PAGE (plan 2026-10-08 for the six cities, plan 2026-10-11 for the rest) says the same, decided by the
+     country, not the city list: a city whose shard holds the trade keeps its own density, marked an estimate as its city page
+     prints it, and a place no city shard holds has none. */
   const builtCards = { split: splitBuilt, team: teamBuilt, clears: clearsBuilt, mix: mixBuilt, customers: customersBuilt, open: openBuilt, market: marketBuilt };
-  /* The place slug is lowercased once, here, for both predicates: cityHeldToSources lowercases its own and cityRegisterPlace does not,
-     so a slug in capitals would read as a UK city held to sources while London's register region read it as no region at all. */
+  /* The place slug is lowercased once, here, for cityRegisterPlace, which does not lowercase its own: a slug in capitals would
+     otherwise read London's register region as no region at all. */
   const placeIso2 = String(d.meta?.iso2 ?? ""), placeGeo = String(d.meta?.geo ?? "").toLowerCase();
   const tradeSlug = typeof d.meta?.industry === "string" ? d.meta.industry : null;
-  const { split, team, clears, mix, customers, open, market } = cityRegisterPlace(placeIso2, placeGeo) ? sayTradeTypical(builtCards, tradeSlug) : cityHeldToSources(placeIso2, placeGeo) ? sayTradeTypical(builtCards, tradeSlug, { keepHere: true }) : builtCards;
+  const { split, team, clears, mix, customers, open, market } = cityRegisterPlace(placeIso2, placeGeo) ? sayTradeTypical(builtCards, tradeSlug) : countryHeldToRegisters(placeIso2) ? sayTradeTypical(builtCards, tradeSlug, { keepHere: true }) : builtCards;
   /* A5's two seats: the customers card in the exit only where the spread drew (it moved to the opening otherwise), the worth only as its strip. */
   const exitCustomers = spreadDrawn ? customers : null;
   const worthDrawn = worth && worth.state === "strip" ? worth : null;
