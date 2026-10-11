@@ -2210,6 +2210,10 @@
       "browser": false,
       "asserts": "The trade page's head and share card (plan 06, task A4): a London trade prints the register's median yearly sales (rounded once through its range, in dollars at the site's pound rate) with its count, ",
       "reads": [
+        "src/app/[country]/[geo]/[industry]/page.tsx",
+        "src/app/og/cell/route.tsx",
+        "src/lib/cells/place_name.ts",
+        "src/lib/spine/adapt_cell.ts",
         "src/lib/spine/trade_head.ts"
       ],
       "claims": []

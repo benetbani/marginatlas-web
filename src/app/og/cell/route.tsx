@@ -23,6 +23,7 @@ import { tradeHeadFigure } from "@/lib/spine/trade_head";
 import { isLondonCell } from "@/lib/scores/cell_board";
 import { ImageResponse } from "next/og";
 import { getCellBySlug } from "@/lib/cells";
+import { placeNameOf } from "@/lib/cells/place_name";
 // The canonical tier derivation, the same one the pages and the CSV export use,
 // so a link preview and the page it points at never disagree about how a figure
 // was produced. It reads is_synthetic first, which is the case that matters most
@@ -82,7 +83,7 @@ export async function GET(request: Request) {
   try {
     const cell = await getCellBySlug(country, geo, industry, {});
     const indName = cell.industry_name || cell.industry_description || industry;
-    const geoName = cell.geo_name || geo;
+    const geoName = placeNameOf(country, geo, cell.geo_name) || geo;
     title = `${indName}: ${geoName}`;
 
     // Guard on the FIGURE, never on the formatted string. formatMoney(null)

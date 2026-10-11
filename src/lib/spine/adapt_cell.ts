@@ -46,6 +46,7 @@ import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { computeBreakeven } from "@/lib/economics/breakeven";
 import { cityOfCountry, getCityTier } from "@/lib/cities/city_tier";
 import { iso2ToName } from "@/lib/countries";
+import { placeNameOf } from "@/lib/cells/place_name";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getCountryProfile } from "@/lib/economic_profile";
@@ -203,7 +204,8 @@ export async function loadCellView(
     countryProfile.median_wage_full_time_usd > 0
       ? countryProfile.median_wage_full_time_usd
       : null;
-  const placeName = cell.geo_name || iso2ToName(country) || country.toUpperCase();
+  /* THE PLACE'S NAME, NEVER ITS COUNTRY'S CODE (truth-fixes, 2026-10-11): a place word no row holds reads its country's row, whose name can be the bare code (GB), and every crumb and card reads this. */
+  const placeName = placeNameOf(country, geo, cell.geo_name) || iso2ToName(country) || country.toUpperCase();
   const tradeName = cell.industry_name || industry.replace(/-/g, " ");
   const tradeNoun = tradeNounFor(tradeName);
 

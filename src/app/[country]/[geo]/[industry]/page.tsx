@@ -111,6 +111,7 @@ import { renderCellRoute } from "./cell_spine";
 import { SiteChrome } from "@/components/SiteChrome";
 import { robotsFor } from "@/lib/seo/indexable";
 import { tradeCanonicalPath } from "@/lib/seo/alias_canonical";
+import { placeNameOf } from "@/lib/cells/place_name";
 /**
  * MEASURED COST OF THE IMPORT ABOVE (2026-07-26, Loop 2 I-8). Do not "optimise" it
  * without reading PROPOSALS.md F2 first; the obvious fix does not work.
@@ -265,7 +266,8 @@ export async function generateMetadata({
   });
   if (!cell) return { title: "Page not found" };
   const ind = cell.industry_name || cell.industry_description || industry;
-  const geoName = cell.geo_name || geo;
+  /* A place word no row holds reads its country's row, whose name can be the country's bare code (GB): the head names the place as the site's tables spell it (src/lib/cells/place_name.ts). */
+  const geoName = placeNameOf(country, geo, cell.geo_name) || geo;
   const title = `How much do ${ind.toLowerCase()} earn in ${geoName}? | Margin Atlas`;
   /* THE HEAD'S ONE FIGURE (plan 06, task A4): London's register median, a row's own read revenue elsewhere, or none; never a
      filled revenue (the constant ~$675K stood in the head of 103 London trades) and no percentiles the page does not hold. */
