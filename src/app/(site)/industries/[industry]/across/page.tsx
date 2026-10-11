@@ -230,13 +230,15 @@ export default async function AcrossCitiesPage({
                         {c.name}
                       </span>
                     </Link>
-                    {/* Quiet cross-link to this place's cost-to-open read. */}
-                    <Link
-                      href={openingHref(c)}
-                      className="mt-0.5 block text-[11px] font-medium text-cocoa-500 transition-colors hover:text-atlas-700"
-                    >
-                      Cost to open
-                    </Link>
+                    {/* Quiet cross-link to this place's cost-to-open read, only where that page draws (plan 2026-10-11, dynamic 404 remains). */}
+                    {c.opens ? (
+                      <Link
+                        href={openingHref(c)}
+                        className="mt-0.5 block text-[11px] font-medium text-cocoa-500 transition-colors hover:text-atlas-700"
+                      >
+                        Cost to open
+                      </Link>
+                    ) : null}
                   </th>
                 ))}
               </tr>

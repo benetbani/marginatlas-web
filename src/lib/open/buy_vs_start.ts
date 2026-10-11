@@ -47,6 +47,7 @@
  * fs, no React. Constraint-safe: no em-dashes, no source-agency names, USD-only.
  */
 import { buildOpeningPage } from "@/lib/open/opening_page";
+import { buyOrStartDraws } from "@/lib/open/sub_page_gates";
 import { industryToSlug } from "@/lib/taxonomy";
 
 /** A real, finite, positive number. */
@@ -516,6 +517,7 @@ export async function buildBuyVsStart(
   // trusted local measurement, so we notFound() exactly as that page does.
   const opening = await buildOpeningPage({ country, geo, industry });
   if (!opening) return null;
+  if (!buyOrStartDraws(opening)) return null;
 
   // No-wrong-numbers gate. The BUY price multiplies the owner take-home, so a
   // missing take-home means no defensible sale price: return null rather than

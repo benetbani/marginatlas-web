@@ -19,6 +19,7 @@ import { fmtUSD } from "@/components/board/format";
 import { T_H1 } from "@/lib/ui/typography";
 import { dealbreakerFor } from "@/lib/open/dealbreakers";
 import type { OpeningPage } from "@/lib/open/opening_page";
+import { buyOrStartDraws } from "@/lib/open/sub_page_gates";
 
 export function OpeningHero({ page }: { page: OpeningPage }) {
   // The one condition that has to be true, for the handful of businesses where a
@@ -69,12 +70,16 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
         >
           See the full economics &rarr;
         </Link>
-        <Link
-          href={`${page.cellHref}/buy-or-start`}
-          className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
-        >
-          Buy one instead of starting? &rarr;
-        </Link>
+        {/* The buy-or-start companion, only where it draws (plan 2026-10-11, dynamic 404 remains): without a take-home and a total to open
+            its route answers nothing, and a door there opened a skeleton. */}
+        {buyOrStartDraws(page) ? (
+          <Link
+            href={`${page.cellHref}/buy-or-start`}
+            className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
+          >
+            Buy one instead of starting? &rarr;
+          </Link>
+        ) : null}
       </div>
     </header>
   );

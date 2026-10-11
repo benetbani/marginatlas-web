@@ -60,6 +60,7 @@ import { hasRegionalCoverage } from "../../src/lib/coverage/regional";
 import { getAdmin1Regions } from "../../src/lib/coverage/admin1";
 import { buildSetupRows } from "../../src/lib/spine/setup_rows";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
+import { buyOrStartDraws } from "../../src/lib/open/sub_page_gates";
 
 const RULE = "edge-not-found";
 const FILE = "src/lib/routing/edge_not_found.ts";
@@ -902,6 +903,16 @@ protoCheck(
   FILE,
 );
 protoCheck("no old district address is a built-in name in the city slot (cityPathFor answers first: no listed city is named so)", protoWrong((k) => legacyHoodTarget(`/gb/${k.toLowerCase()}/central`), null), FILE);
+
+/* THE DOORS TO A PAGE THE EDGE LEAVES TO ITS ROUTE (the plan 2026-10-11, dynamic 404 remains). A trade's /opening and /buy-or-start pages
+   draw only where the trust gate passes the live row, which no table here reads, so a miss there keeps its route's 200 and skeleton (left to
+   their route above). The site draws no door to one: the across page linked "Cost to open" under every column, London's included, whose
+   curated rows the gate refuses (/gb/london/restaurants/opening, probed 2026-10-11), and the opening page linked its buy-or-start companion
+   where that page has no take-home or no total to stand on. */
+const LINKS = "draw a door to a /opening or /buy-or-start page only where its route draws it: the across column's `opens` (isTrustedLocalCell, buildOpeningPage's gate) and buyOrStartDraws (buildBuyVsStart's own test)";
+check("the across page draws a column's Cost to open door only where that cost page draws", /\{c\.opens \? \(\s*<Link\s+href=\{openingHref\(c\)\}/.test(codeOf("src/app/(site)/industries/[industry]/across/page.tsx")) && /\bopens: isTrustedLocalCell\(cell, expectIndustryId\),/.test(codeOf("src/lib/markets/across_cities.ts")), "src/app/(site)/industries/[industry]/across/page.tsx", LINKS);
+check("the opening page draws its buy-or-start door only where that page draws, by buildBuyVsStart's own test", /\{buyOrStartDraws\(page\) \? \(/.test(codeOf("src/components/open/OpeningHero.tsx")) && /if \(!buyOrStartDraws\(opening\)\) return null;/.test(codeOf("src/lib/open/buy_vs_start.ts")), "src/components/open/OpeningHero.tsx", LINKS);
+check("buyOrStartDraws asks a positive take-home and a positive total to open", buyOrStartDraws({ takeHomeUsd: 52_000, totalToOpenUsd: 180_000 }) && !buyOrStartDraws({ takeHomeUsd: null, totalToOpenUsd: 180_000 }) && !buyOrStartDraws({ takeHomeUsd: 52_000, totalToOpenUsd: 0 }), "src/lib/open/sub_page_gates.ts", LINKS);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(`routing/edge_not_found: all pass (${folderAsked} real addresses of the route folders asked of the edge and the middleware)`);

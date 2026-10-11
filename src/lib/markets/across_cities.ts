@@ -248,6 +248,13 @@ export interface CityColumn {
   economics: "curated" | "estimator" | null;
   /** True when the margin printed is the clamp's floor and not the estimator's own reading (the take-home is then the floor times the revenue). */
   netMarginFloored: boolean;
+  /**
+   * WHETHER THIS PLACE'S COST-TO-OPEN PAGE DRAWS (plan 2026-10-11, dynamic 404 remains): true where the cell passes the gate buildOpeningPage
+   * applies (isTrustedLocalCell, src/lib/open/opening_page.ts), so `${href}/opening` renders. A column the curated London entry admits does not
+   * pass it (the gate refuses a filled headline), and the across page's "Cost to open" door there opened a 200 skeleton with a 404 drawn in the
+   * browser (/gb/london/restaurants/opening, probed 2026-10-11). Optional, so columns built by hand need no change; absent reads as no.
+   */
+  opens?: boolean;
 }
 
 /**
@@ -481,6 +488,7 @@ async function resolveCity(
     revenueFilled: cell._revenueFilled === true,
     economics,
     netMarginFloored,
+    opens: isTrustedLocalCell(cell, expectIndustryId),
   };
 
   // The single break-in rating, computed from this column's own entry cost,
