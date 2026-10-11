@@ -574,8 +574,12 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
               correctly. */}
           <div className={`${ROW} items-baseline pb-2`} style={GEO}>
             <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
-            <div className="col-span-2 flex items-baseline justify-between gap-x-3">
-              <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
+            <div className="col-span-2 flex items-baseline justify-between gap-x-2">
+              {/* THE VALUE HEAD KEEPS ITS LINE (fix round F1, group G8): in a half-width card (768) this row holds the head and the ceiling's label in 91px,
+                  and the head, the shrinkable one, wrapped ("Of" over "100"); `shrink-0 whitespace-nowrap` as round D2 gave MarkList's unit head, so the
+                  ceiling's label is the one that gives. The gap is 8, not 12: the head (38.5), the label's longest word (42.1) and 12 made the row 92.6
+                  in 91 and spilled the label 2px; with 8 it is 88.6 (justify-between spreads the pair wherever there is room, so the gap only matters tight). */}
+              <span className="shrink-0 whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
               {/* THE CEILING, NAMED ONCE, over the column whose far end it is
                   (ruling 13). Not a column head: it is the same micro muted line
                   the bars form prints beside its hairline, in the same words, so
@@ -643,7 +647,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
       <div className={drawBars || drawWide || drawShort ? "mt-3 sm:hidden" : "mt-3"}>
         <div className="flex items-baseline justify-between pb-2">
           <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
-          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
+          <span className="whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
         </div>
         <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length}>
           {[...sorted].reverse().map((r) => {

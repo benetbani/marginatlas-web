@@ -10,6 +10,8 @@
  *     header's mark by one shared drawing; the manifest naming the site, its definition and the icon1 and icon2 addresses; none of
  *     the files writes the cream-named white hex;
  *   - the share card's words the home's definition (COPY.home.definition), its warm tint gone; the home's title at 51 characters;
+ *   - (fix round F1, group G8) a blog post that does not exist is a 404 and not a soft 200: the post page's generateMetadata throws
+ *     Next's not-found error for it, before the page streams, and answers a post that exists with its own title and canonical;
  *   - every JSON-LD block escaped so a "<" cannot close its script;
  *   - the auth client imported only behind the accounts switch, and the session read once for the bar and the sheet; Sentry started
  *     when the browser is idle; one Geist; the home's h1 still from its first frame; no `transition-all` left in the hero's word or
@@ -174,6 +176,27 @@ async function main() {
   const tw = layout.metadata.twitter ?? {};
   check(`the root's Twitter card holds only the card and the image with its alt (${Object.keys(tw).join(", ")})`, JSON.stringify(Object.keys(tw).sort()) === JSON.stringify(["card", "images"]) && tw.card === "summary_large_image" && JSON.stringify(tw.images) === JSON.stringify([{ url: "/og/default", alt: def }]));
   check(`the viewport: white theme, light only, device width at scale 1 (${JSON.stringify(layout.viewport ?? null)})`, JSON.stringify(layout.viewport ?? null) === JSON.stringify({ width: "device-width", initialScale: 1, themeColor: "white", colorScheme: "light" }));
+
+  /* ---------------- A MISSING BLOG POST IS A 404, NOT A SOFT 200 (fix round F1, group G8; the built page's finding 2) ---------------- */
+  /* The post page called notFound() only in the page, which runs inside the root loading boundary after the status line is sent, so
+     /blog/<no such post> answered 200 with the loading skeleton and drew its 404 in the browser: a soft 404, probed on the built page
+     (.superpowers/sdd/hr-p16-report.md). Next resolves a route's metadata before it streams the page, so a notFound() thrown from
+     generateMetadata sets the 404 status; /[country] does it, which is why /zz answers 404. The post's metadata now throws Next's own
+     not-found error (its digest, NEXT_HTTP_ERROR_FALLBACK;404) for a post that does not exist, and still answers a post that does with
+     its own title and canonical. BLIND SPOT: this runs generateMetadata and reads what it throws; that Next turns the error into a 404
+     status on the wire is Next's, and the built page is where it is seen (the round's build check). */
+  type BlogMeta = { title?: string; alternates?: { canonical?: string } };
+  const blogPage = await tryImport<{ generateMetadata: (a: { params: Promise<{ slug: string }> }) => Promise<BlogMeta> }>(() => import("../../src/app/(site)/blog/[slug]/page"));
+  const { getAllPosts } = await import("../../src/lib/blog");
+  const realPost = getAllPosts()[0];
+  const metaOf = async (slug: string): Promise<{ got: BlogMeta | null; threw: { digest?: string } | null }> => {
+    try { return { got: await blogPage!.generateMetadata({ params: Promise.resolve({ slug }) }), threw: null }; } catch (e) { return { got: null, threw: e as { digest?: string } }; }
+  };
+  const missingPost = blogPage ? await metaOf("no-such-post-zz") : null;
+  const presentPost = blogPage && realPost ? await metaOf(realPost.slug) : null;
+  const BLOG_AT = { file: "src/app/(site)/blog/[slug]/page.tsx", remedy: "call notFound() (next/navigation) in generateMetadata when getPost(slug) finds no post, as the page does: the page's own call runs after the status is sent, which is how a missing post answered 200" };
+  check(`a post that does not exist answers with Next's not-found error from generateMetadata (digest ${missingPost?.threw?.digest ?? "none, it returned " + JSON.stringify(missingPost?.got ?? null)}), so /blog/<no such post> is a 404 and not a soft 200`, !!missingPost && missingPost.got === null && missingPost.threw?.digest === "NEXT_HTTP_ERROR_FALLBACK;404", BLOG_AT);
+  check(`a post that exists still answers its own title and canonical (${presentPost?.got?.title ?? "none"})`, !!presentPost && !!realPost && presentPost.threw === null && presentPost.got?.title === `${realPost.title} | Margin Atlas` && presentPost.got?.alternates?.canonical === `/blog/${realPost.slug}`, BLOG_AT);
 
   /* ---------------- THE ICONS AND THE MANIFEST ---------------- */
   /* THREE NUMBERED FILES, NOT ONE FILE WITH generateImageMetadata (the Task 7 review, fix round 7). A file that exports

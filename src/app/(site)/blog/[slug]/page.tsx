@@ -20,7 +20,10 @@ export async function generateStaticParams(): Promise<Params[]> {
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  if (!post) return { title: "Post not found" };
+  /* A POST THAT DOES NOT EXIST IS A 404 AT THE STATUS LINE (fix round F1, group G8; probed on the built page): the page's own notFound() below
+     runs inside the root loading boundary after the status is sent, so /blog/<no such post> answered 200 with the skeleton and drew its 404 in
+     the browser, a soft 404. Next resolves the metadata before it streams, so this call sets the status, as /[country]'s metadata does for /zz. */
+  if (!post) notFound();
   // Built from the RESOLVED post, not the raw param, so the canonical is the
   // slug the library actually loaded. Without an `alternates` of its own this
   // route inherited the root layout's `canonical: "/"` and every post told a

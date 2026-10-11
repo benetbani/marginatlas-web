@@ -17,6 +17,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { buildDuel, isFresh, FRESH_DAYS } from "../../src/lib/home/duel";
 import { Duel } from "../../src/components/spine/country/Duel";
+import { COPY } from "../../src/lib/spine/copy";
 import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -51,6 +52,18 @@ if (item?.as_of) {
        stood 52px of blank foot at 1280 (the page laws' CARD FOOT BLANK, clause 52). The columns alone stamp `data-bar` on a row. */
     const html = renderToStaticMarkup(React.createElement(Duel, { duel }));
     check("the duel fills its half: its four rows are the table at every width, never the fixed-height columns", /id="duel"/.test(html) && !/data-bar=/.test(html) && (html.match(/data-track="set"/g) ?? []).length === 4, { file: "src/components/spine/country/Duel.tsx", remedy: "draw the duel as Duel holds it, RankedBars with fill, so its four rows are the table at every width from sm and share the height /gb's even level gives it (the columns' fixed height stood 52px of blank foot at 1280)" });
+    /* THE VALUE HEAD KEEPS ITS LINE (fix round F1, group G8; the built page's finding 3, .superpowers/sdd/hr-p16-report.md). "Of 100" wrapped to two
+       lines ("Of" over "100") in the table's head at 768, where the card is half the column: its flex row holds the head and the ceiling's "Highest 2.9",
+       and the head, the shrinkable one, gave. It is the pattern round D2 fixed in MarkList's unit head and FiguresTable's year heads. Both of
+       RankedBars' value heads (the table's and the phone list's) take whitespace-nowrap, the table's also shrink-0, so the ceiling's label gives, never the
+       head. BLIND SPOT: classes as written; that the head stands on one line is Chromium's (the round's probe, scratchpad/home-reform/f1_g8_head.mjs, at 768). */
+    const valueHeads = [...html.matchAll(new RegExp(`<span class="([^"]*)">${COPY.home.duel.phoneValue}</span>`, "g"))].map((m) => m[1].split(" "));
+    /* AND THE ROW LEAVES THE ROOM FOR IT (measured on the first try of this fix): at 768 the head row has 91px for the head (38.5), the ceiling label's longest
+       word, "Highest" (42.1), and the gap between them, and with the head held to one line the old 12px gap made the row 93 wide, the label spilling 2px past
+       it. The row's gap is 8 (gap-x-2): 88.6 of 91. justify-between spreads the pair wherever there is room, so the gap only matters when it is tight. */
+    const headRowGap = new RegExp(`<div class="col-span-2 flex items-baseline justify-between (gap-x-\\d+)"><span class="[^"]*">${COPY.home.duel.phoneValue}</span>`).exec(html)?.[1];
+    check(`the table's head row leaves room for the head and the ceiling's longest word at 768: its gap is gap-x-2 (${headRowGap ?? "no head row found"})`, headRowGap === "gap-x-2", { file: "src/components/spine/archetypes/RankedBars.tsx", remedy: "the head row that holds the value head and the ceiling's label takes gap-x-2 (8px): 38.5 + 8 + 42.1 fits the 91px it has at 768, where 12 spilled the label 2px" });
+    check(`the value head "${COPY.home.duel.phoneValue}" keeps its line in both forms: whitespace-nowrap on both (${valueHeads.filter((c) => c.includes("whitespace-nowrap")).length} of ${valueHeads.length}), shrink-0 on the table's (${valueHeads.filter((c) => c.includes("shrink-0")).length})`, valueHeads.length === 2 && valueHeads.every((c) => c.includes("whitespace-nowrap")) && valueHeads.filter((c) => c.includes("shrink-0")).length === 1, { file: "src/components/spine/archetypes/RankedBars.tsx", remedy: "give RankedBars' two value heads (the table's, beside the ceiling's label, and the phone list's) whitespace-nowrap, the table's also shrink-0: at 768 the head wrapped to two lines in a half-width card" });
   }
   check(`it prints on day ${FRESH_DAYS} and not on day ${FRESH_DAYS + 1} after its data ends`, !!buildDuel(day(FRESH_DAYS)) && buildDuel(day(FRESH_DAYS + 1)) === null);
 }
