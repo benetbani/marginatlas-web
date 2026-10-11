@@ -8,13 +8,12 @@ import type { Cell } from "@/lib/cells";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-/** Build the setup line items from a cell's real setup_costs block. Only called
- * when hasSetupCostData(cell) is true, so at least one line is real. A bill the
- * cell holds from its parent trade's row is none of this trade's (plan 06, task
- * A3): it prints only on the trade it was written for. */
-export function setupItemsFromCell(cell: Pick<Cell, "setup_costs" | "_fromParentIndustry">): { surface_line?: string; items: Array<{ name: string; usd: number }> } | undefined {
+/** Build the setup line items from a cell's setup_costs block. A parent trade's bill is none of this trade's (plan 06, task A3). WHOSE IT IS (plan 2026-10-11,
+ * uk:held-bill-provenance): each writer set ONE bill on every row of a country (scripts/import/deepening/gb/restaurants.sql, a UK estimate, grade B; the us files
+ * the same for the US), so the block carries the row's country as `scope`; the bulk files (grade C) set the same US lines in every country: below B, nothing. */
+export function setupItemsFromCell(cell: Pick<Cell, "setup_costs" | "_fromParentIndustry" | "country">): { surface_line?: string; items: Array<{ name: string; usd: number }>; scope: string } | undefined {
   const setup = cell.setup_costs;
-  if (!setup || cell._fromParentIndustry) return undefined;
+  if (!setup || cell._fromParentIndustry || (setup.grade !== "A" && setup.grade !== "B") || !cell.country) return undefined;
   const items: Array<{ name: string; usd: number }> = [];
   const reg = setup.registration;
   const cap = setup.capital;
@@ -36,5 +35,5 @@ export function setupItemsFromCell(cell: Pick<Cell, "setup_costs" | "_fromParent
     push("Certifications", reg.certifications_initial);
   }
   if (items.length === 0) return undefined;
-  return { items };
+  return { items, scope: cell.country.toUpperCase() };
 }
