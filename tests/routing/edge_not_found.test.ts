@@ -58,7 +58,7 @@ import popularPlaceOverrides from "../../src/lib/geo/popular_place_overrides.jso
 import { own } from "../../src/lib/own";
 import { hasRegionalCoverage } from "../../src/lib/coverage/regional";
 import { getAdmin1Regions } from "../../src/lib/coverage/admin1";
-import { buildSetupRows } from "../../src/lib/spine/setup_rows";
+import { buildHowTo } from "../../src/lib/spine/howto_rows";
 import neighborhoodsJson from "../../data/cities/neighborhoods_v1.json";
 import { buyOrStartDraws, tradePageHref, subPageHref } from "../../src/lib/open/sub_page_gates";
 
@@ -195,7 +195,10 @@ const hubs = COUNTRIES.map((c) => c.code.toLowerCase()).filter((cc) => hasRegion
 const hubsCaught = hubs.filter(nf);
 check(`every region hub its route draws passes (${hubs.length})${hubsCaught.length ? `: ${hubsCaught.slice(0, 5).join(", ")}` : ""}`, hubs.length > 0 && hubsCaught.length === 0, FILE, DYN);
 check("a country with no legal forms has no how-to page: /af/how-to-open", nf("/af/how-to-open") === true, FILE, DYN);
-const howTo = (COUNTRIES as Array<{ code: string }>).filter((c) => buildSetupRows(c.code).length > 0).map((c) => c.code.toLowerCase()).sort();
+/* The countries whose how-to page draws, asked of THE ROUTE'S OWN PREDICATE (the review of 2026-10-12, M5): the route draws a country where buildHowTo
+   answers (src/app/[country]/how-to-open/page.tsx asks it in generateStaticParams, generateMetadata and the page), not where the generator's formula
+   says so (howToCountries in scripts/gen_route_shapes.ts, buildSetupRows(...).length > 0), which the freshness check already holds. */
+const howTo = (COUNTRIES as Array<{ code: string }>).filter((c) => buildHowTo(c.code) !== null).map((c) => c.code.toLowerCase()).sort();
 const howToCaught = howTo.filter((cc) => nf(`/${cc}/how-to-open`));
 check(`every how-to page its route draws passes (${howTo.length})${howToCaught.length ? `: ${howToCaught.join(", ")}` : ""}`, howTo.length > 0 && howToCaught.length === 0, FILE, DYN);
 const coverageDrift = COUNTRIES.filter((c) => HUB_COUNTRIES.has(c.code.toLowerCase()) !== hasRegionalCoverage(c.code)).map((c) => c.code);
@@ -827,9 +830,24 @@ const fillShape = (shape: readonly string[], miss = -1): string | null => {
 };
 const unfilled = ROUTE_SHAPES.filter((s) => fillShape(s) === null).map((s) => s.join("/"));
 check(`every shape of ROUTE_SHAPES has a held value to be asked with${unfilled.length ? `: none for ${unfilled.join(", ")}` : ""}`, unfilled.length === 0, FILE, "add a value the site holds for that shape to HELD_FILL in tests/routing/edge_not_found.test.ts, keyed by the shape, one value for each of its dynamic parts, so a new route is asked as a real address");
-/* AN ADMIN PAGE'S REAL ADDRESS CARRIES ITS KEY (the plan 2026-10-11, dynamic 404 remains): the middleware pins /admin/<page> asked without `?key=`
-   to 404 (src/middleware.ts, 3b''), so the walk asks each admin shape with one, as its reader does; the page itself still checks the key. */
-const withItsKey = (a: string): string => (a.startsWith("/admin/") ? `${a}?key=x` : a);
+/* THE ADMIN PIN'S PREMISE IS A GATE, NOT A PREFIX (the review of 2026-10-12, M1; the plan 2026-10-11, dynamic 404 remains). The middleware pins every
+   /admin/<page> asked without `?key=` to 404 (src/middleware.ts, 3b''), which is right only while each admin page refuses a missing key itself
+   (timingSafeEqualString on the request's key, then notFound()). So an admin page's real address carries its key only where its source holds that
+   gate, and an admin shape whose page does not reds below: a keyless admin page or handler added later is asked as it is, the pin 404s it, and this
+   check and the walk say so, instead of passing it with a key it never asked for. Each page is found by its address (route groups dropped) in a walk
+   of src/app. */
+const codeOf = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
+const KEY_GATE = /timingSafeEqualString\(sp\.key \?\? ""/;
+const adminPages = (readdirSync("src/app", { recursive: true }) as string[])
+  .map((f) => f.split("\\").join("/"))
+  .filter((f) => /(^|\/)page\.tsx$/.test(f))
+  .map((f) => ({ file: `src/app/${f}`, address: `/${f.split("/").filter((p) => !/^\(.*\)$/.test(p)).slice(0, -1).join("/")}` }))
+  .filter((p) => p.address.startsWith("/admin/"));
+const keyedAdmin = new Set(adminPages.filter((p) => KEY_GATE.test(codeOf(p.file))).map((p) => p.address));
+const adminShapes = ROUTE_SHAPES.filter((s) => s[0] === "admin").map((s) => `/${s.join("/")}`);
+const ungatedAdmin = adminShapes.filter((a) => !keyedAdmin.has(a));
+check(`every admin page holds its own key gate, the premise of the edge's pin of an /admin address asked without a key (${adminShapes.length})${ungatedAdmin.length ? `: none in ${ungatedAdmin.join(", ")}` : ""}`, adminShapes.length > 0 && ungatedAdmin.length === 0, "src/middleware.ts", "give each admin page its own key gate (timingSafeEqualString on sp.key against the required key, then notFound(), as src/app/(site)/admin/anomalies/page.tsx does), or, for an admin address that needs no key (a login, a hook), narrow the pin in src/middleware.ts (3b'') to the pages that hold a gate");
+const withItsKey = (a: string): string => (keyedAdmin.has(a) ? `${a}?key=x` : a);
 folderPasses("shape of ROUTE_SHAPES, its dynamic parts filled with a value the site holds and an admin page asked with its key", ROUTE_SHAPES.map((s) => fillShape(s)).filter((a): a is string => a !== null).map(withItsKey));
 /* A DYNAMIC SHAPE IS JUDGED AT THE EDGE, PART BY PART, OR NAMED OPEN. The four open ones are routes that are not indexed whatever they draw
    (noindex and nofollow in their own metadata) and that 404 by their own resolvers, so their misses are no index hazard and the edge leaves
@@ -852,7 +870,6 @@ for (const s of dynamicShapes) {
 const OPEN_REMEDY = "Judge the shape's dynamic part in edgeNotFound (src/lib/routing/edge_not_found.ts) by the resolver its route runs, or, for a route that is noindex and nofollow in its own metadata and 404s by its own resolver, name it in ROUTE_OPEN in tests/routing/edge_not_found.test.ts with its page";
 check(`every dynamic shape of ROUTE_SHAPES is judged at the edge, part by part, or named open (${dynamicShapes.length} shapes, ${Object.keys(ROUTE_OPEN).length} open)${unjudged.length ? `: not judged: ${unjudged.join(", ")}` : ""}`, dynamicShapes.length > 0 && unjudged.length === 0, FILE, OPEN_REMEDY);
 const openStale = Object.keys(ROUTE_OPEN).filter((k) => !dynamicShapes.some((s) => s.join("/") === k));
-const codeOf = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
 const openNotSealed = Object.entries(ROUTE_OPEN).filter(([, file]) => { const src = codeOf(file); return !/robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/.test(src) || !/\bnotFound\(\)/.test(src); }).map(([k]) => k);
 check(`the open shapes are dynamic shapes the table holds, and each page says noindex and nofollow and calls notFound() itself${openStale.length ? `; not in the table: ${openStale.join(", ")}` : ""}${openNotSealed.length ? `; not noindex, nofollow and self-404ing: ${openNotSealed.join(", ")}` : ""}`, openStale.length === 0 && openNotSealed.length === 0, FILE, OPEN_REMEDY);
 /* The platform's own addresses and the dev server's are no route folder's: the file rule exempts /_vercel/ and the prefix block never asks

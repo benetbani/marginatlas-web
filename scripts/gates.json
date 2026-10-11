@@ -3042,6 +3042,7 @@
         "data/cities/city_comparisons_v1.json",
         "public/",
         "scripts/gen_route_shapes.ts",
+        "src/app",
         "src/app/(site)/industries/[industry]/across/page.tsx",
         "src/app/[country]/[geo]",
         "src/app/[country]/[geo]/[industry]",

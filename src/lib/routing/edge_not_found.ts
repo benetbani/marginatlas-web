@@ -21,7 +21,7 @@
  *  - `/{country}/{place}/{word}/opening` and `/{country}/{place}/{word}/buy-or-start` (TRADE_SUB_PAGES): the same place and trade
  *    word, but not the two exemptions that belong to the three-part address alone. Their route draws a trade, and a static child
  *    (`/gb/london/industries/opening`) or an old neighbourhood address is none.
- *  - `/{country}/{place}/{district}/{trade}`, a district's trade page: its place, a district its city's scheme names (NEIGHBORHOOD_SLUGS, the scheme the route's getNeighborhood reads) and a trade slugToIndustry names (2026-10-11).
+ *  - `/{country}/{place}/{district}/{trade}`, a district's trade page: its place, a district its city's scheme names (NEIGHBORHOOD_SLUGS, the scheme the route's getNeighborhood reads) and a trade slugToIndustry names, each read as written like every part but the country and the place (an escaped spelling of either, `west%2dend` or `restaur%61nts`, names nothing here though the route would decode it; no link spells one) (2026-10-11).
  *  - `/{country}/{place}/industries`, a place's industries hub: the place is an admin-1 region of a country with regional coverage, the route's resolveRegionName and hasRegionalCoverage (2026-10-11).
  *  - `/{country}/how-to-open`: a country whose legal forms draw a row, the route's generateStaticParams (HOW_TO_COUNTRIES, generated; 2026-10-11).
  *  - `/industries/{word}` and `/industries/{word}/across`: the industry routes' resolver (`slugToIndustry`) finds nothing.
