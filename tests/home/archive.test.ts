@@ -155,14 +155,15 @@ if (proofs && built) {
   const html = renderToStaticMarkup(React.createElement(ProofArchive, { p }));
   const raw = html.replace(/&gt;/g, ">").replace(/&amp;/g, "&");
   check("it is a door card to About the figures' #archive, its title an h2", /id="archive"/.test(html) && /data-keep-card=""/.test(html) && /<a href="\/about-data#archive"/.test(html) && new RegExp(`<h2 [^>]*data-rail-title=""[^>]*>${COPY.home.proofs.archive.kicker}</h2>`).test(html), PROOF_AT);
-  /* THE LINE IS PLAIN (critique pass 2, P2.4): "Notices a month by their own date" was hard to parse. A notice is counted in the month of the date
-     it carries, so the line says that and no more: "Notices by the date on each, October 2025 to September 2026." (eleven words). The critique's
-     own string, "...by the month each was published, ...", ran to 72 characters and wrapped to three lines at 1080 beside two cards of two,
-     so the cards lent each other 20px of blank (measured: the joins and the tax 60 high at 1080, against 42 with this line). */
-  /* CRITIQUE PASS 3, FIX ROUND D1, ITEM P2.3: "Notices by the date on each, October 2025 to September 2026." still did not parse at a glance, and
-     the card's title already says "dated" ("Kept and dated"), so the line says what the columns are: "Notices a month, October 2025 to
-     September 2026." (eight words with the months; one line at 1280, two at 1024). */
-  check(`its line reads "${p.line}": the notices a month, twelve words at most, no semicolon, short enough to stand on two lines in the narrowest card`, COPY.home.proofs.archive.words === "Notices a month, {first} to {last}." && p.line.split(" ").length <= 12 && !p.line.includes(";") && !/by the date on each/.test(p.line), { file: "src/lib/spine/copy.ts", remedy: "COPY.home.proofs.archive.words: \"Notices a month, {first} to {last}.\"" });
+  /* THE LINE SAYS HOW A MONTH IS COUNTED (spec decision 8: "the card's line says how a month is counted"; hi-minors 3: no task prints per-month
+     counts without that note; fix round F1, group G3, the final review's carry 1). The words, in the order they were tried: pass 2's "Notices by
+     the date on each, October 2025 to September 2026." did not parse at a glance and the critique's own "...by the month each was published, ..."
+     ran to 72 characters and wrapped to three lines at 1080 beside two cards of two (the cards lent each other 20px of blank: the joins and the
+     tax 60 high at 1080, against 42 with a shorter line); round D1's "Notices a month, ..." parsed, and dropped the note, while the final
+     review found two months one apart from the Gazette's UK-date counts (the export cuts each month by each notice's own stamp date), so
+     the cut is not academic. The line is "Notices by date published, October 2025 to September 2026." (nine words with the months, 58 characters), and
+     the check refuses both earlier strings: the pass-2 one by its words, the round-D1 one by its pin. */
+  check(`its line reads "${p.line}": the notices by the date published, which is how a month is counted, twelve words at most, no semicolon, short enough to stand on two lines in the narrowest card`, COPY.home.proofs.archive.words === "Notices by date published, {first} to {last}." && p.line.split(" ").length <= 12 && !p.line.includes(";") && !/by the date on each/.test(p.line) && !/Notices a month/.test(p.line), { file: "src/lib/spine/copy.ts", remedy: "COPY.home.proofs.archive.words: \"Notices by date published, {first} to {last}.\" (the export cuts each month by each notice's own stamp date, and the line says so)" });
   check("its figure is the card's 30, its copies a row", new RegExp(`data-focal="1" class="fig text-\\[length:var\\(--t-focal\\)\\][^"]*" data-src="home/archive\\.json:gazette\\.months" data-kind="counted">${p.figure}<`).test(html) && /data-archetype="fact-rows"/.test(html) && /data-row="copies"/.test(html), PROOF_AT);
   /* THE LINE AND THE ROW'S DAYS, AS DRAWN (fix round B): the line stands as the card's one small line, and the row names its days under
      its label (a date's spaces are held unbreakable in the markup, so they are read as spaces here). */

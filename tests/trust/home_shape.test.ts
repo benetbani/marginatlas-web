@@ -105,12 +105,18 @@ check(`the home's h2 rung is set at one tracking, ${railTracking}: Where to next
 
 /* CURLY APOSTROPHES IN THE HOME'S WORDS (critique pass 2, fix round C2, item P2.3): "The UK's cities", "a sole trader's", "A typical
    customer's pay" and "the register's ten sales bands" printed straight quotes while About the figures prints curly ones, so the two
-   pages set one mark two ways. No string value of COPY.home or of the city rows' basis line holds a straight apostrophe. */
+   pages set one mark two ways. No string value of COPY.home or of the city rows' basis line holds a straight apostrophe.
+   THE FREE DOORS TOO (fix round F1, group G3, the final review's M8): /gb's locked page prints the same name over its free doors
+   (COPY.freeDoors.cities), and it printed the straight mark there while the home printed the curly one, so the name is walked here as well
+   and held to the home's own string. BLIND SPOT: only these three objects are walked; the locked cards' lines (COPY.locked.lines) keep the
+   straight mark their neighbours use. */
 const straightApostrophes: string[] = [];
 const walkStrings = (v: unknown, path: string): void => { if (typeof v === "string") { if (v.includes("'")) straightApostrophes.push(`${path}: ${v.slice(0, 40)}`); } else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) walkStrings(x, `${path}.${k}`); };
 walkStrings(COPY.home, "COPY.home");
 walkStrings(COPY.cityCards.plain, "COPY.cityCards.plain");
-check(`the home's words print curly apostrophes, never straight (${straightApostrophes.length ? straightApostrophes.join("; ") : "none straight"})`, straightApostrophes.length === 0, "write the typographic apostrophe (U+2019) in every string of COPY.home and COPY.cityCards.plain.basis, as About the figures does");
+walkStrings(COPY.freeDoors, "COPY.freeDoors");
+check(`the home's words and the free doors' print curly apostrophes, never straight (${straightApostrophes.length ? straightApostrophes.join("; ") : "none straight"})`, straightApostrophes.length === 0, "write the typographic apostrophe (U+2019) in every string of COPY.home, COPY.cityCards.plain.basis and COPY.freeDoors, as About the figures does");
+check(`the free doors' title for the UK's cities is the home's own name for them, character for character ("${COPY.freeDoors.cities}")`, COPY.freeDoors.cities === COPY.home.citiesLabel, "COPY.freeDoors.cities (src/lib/spine/copy.ts) is COPY.home.citiesLabel's string: one name, one apostrophe");
 
 /* THE RENDER, where the harness wrote it (pages-fresh renders it first in the chain). */
 const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";

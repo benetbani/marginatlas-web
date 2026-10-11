@@ -2857,7 +2857,7 @@ export const COPY = {
     proofs: {
       label: "Proofs",
       joins: { kicker: "Matched by name", words: "Liquidation and administration notices a year, each looked up in the register.", ring: "in 100 names found in the register", names: "Different names", found: "Names found" },
-      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices a month, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
+      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices by date published, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
       tax: { kicker: "Tax, rule by rule", words: "Total effective tax burden on a sole trader’s {profit} profit, {year} rules.", income: "Income tax", class4: "National Insurance", keep: "You keep", incomeNote: "{rate} above the {allowance} allowance", class4Note: "{rate} from {from} to {to}", aria: "Of 100 of profit: income tax {incomeTax}, National Insurance {class4}, you keep {keep}." },
     },
     /** THE BAND, "READ FROM THE RECORD" (plan 2026-10-10, the home reformed to ship, Task 5; the spec's decision 7 and its critique,
@@ -2898,7 +2898,7 @@ export const COPY = {
   /** THE FREE DOORS ON A LOCKED PAGE (his ruling of 2026-10-05 on PARKED P20.1): names only, in the page's free close, so locking
    *  never cuts the site's paths (src/components/spine/FreeDoors.tsx). `{city}` is the trade page's city. */
   freeDoors: {
-    cities: "The UK's cities",
+    cities: "The UK’s cities",
     trades: "Other trades in {city}",
   },
   locked: {
