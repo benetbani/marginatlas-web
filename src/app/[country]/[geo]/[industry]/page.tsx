@@ -111,7 +111,7 @@ import { renderCellRoute } from "./cell_spine";
 import { SiteChrome } from "@/components/SiteChrome";
 import { robotsFor } from "@/lib/seo/indexable";
 import { tradeCanonicalPath } from "@/lib/seo/alias_canonical";
-import { placeNameOf } from "@/lib/cells/place_name";
+import { headPlaceOf } from "@/lib/cells/place_name";
 /**
  * MEASURED COST OF THE IMPORT ABOVE (2026-07-26, Loop 2 I-8). Do not "optimise" it
  * without reading PROPOSALS.md F2 first; the obvious fix does not work.
@@ -266,18 +266,22 @@ export async function generateMetadata({
   });
   if (!cell) return { title: "Page not found" };
   const ind = cell.industry_name || cell.industry_description || industry;
-  /* A place word no row holds reads its country's row, whose name can be the country's bare code (GB): the head names the place as the site's tables spell it (src/lib/cells/place_name.ts). */
-  const geoName = placeNameOf(country, geo, cell.geo_name) || geo;
-  const title = `How much do ${ind.toLowerCase()} earn in ${geoName}? | Margin Atlas`;
+  /* THE PLACE AND THE FIGURE BESIDE IT (truth-fixes round 3A). A place word no row holds reads its country's row, which carries the
+     country's figure and can be named by the country's bare code (GB), and a synthetic cell carries the figure of no place. headPlaceOf
+     (src/lib/cells/place_name.ts) names the place as the site's tables spell it, spells the question's place with its country, and
+     names the place the figure belongs to, or none: the head prints a figure only beside that place. */
+  const place = headPlaceOf(country, geo, cell);
+  const figureIn = place.figureIn;
+  const title = `How much do ${ind.toLowerCase()} earn in ${place.titleIn}? | Margin Atlas`;
   /* THE HEAD'S ONE FIGURE (plan 06, task A4): London's register median, a row's own read revenue elsewhere, or none; never a
      filled revenue (the constant ~$675K stood in the head of 103 London trades) and no percentiles the page does not hold. */
-  const head = tradeHeadFigure({ isLondon: isLondonCell(cell), slug: industry.toLowerCase(), revenuePerFirm: cell.revenue_per_firm, revenueFilled: cell._revenueFilled });
+  const head = figureIn === null ? null : tradeHeadFigure({ isLondon: isLondonCell(cell), slug: industry.toLowerCase(), revenuePerFirm: cell.revenue_per_firm, revenueFilled: cell._revenueFilled });
   const desc =
-    head?.kind === "register"
-      ? `${head.usd !== null ? formatMoney(head.usd) : `${head.open!.side === "below" ? "under" : "over"} ${formatMoney(head.open!.edgeUsd)}`} typical yearly sales for ${head.group ? `a ${head.group}` : ind.toLowerCase()} in ${geoName}, from ${head.enterprises.toLocaleString("en-US")} registered businesses.`
-      : head?.kind === "row"
-        ? `~${formatMoney(head.usd)} typical revenue for ${ind.toLowerCase()} in ${geoName}.`
-        : `Revenue and employment numbers for ${ind.toLowerCase()} in ${geoName}.`;
+    figureIn !== null && head?.kind === "register"
+      ? `${head.usd !== null ? formatMoney(head.usd) : `${head.open!.side === "below" ? "under" : "over"} ${formatMoney(head.open!.edgeUsd)}`} typical yearly sales for ${head.group ? `a ${head.group}` : ind.toLowerCase()} in ${figureIn}, from ${head.enterprises.toLocaleString("en-US")} registered businesses.`
+      : figureIn !== null && head?.kind === "row"
+        ? `~${formatMoney(head.usd)} typical revenue for ${ind.toLowerCase()} in ${figureIn}.`
+        : `Revenue and employment numbers for ${ind.toLowerCase()} in ${place.titleIn}.`;
   const ogPath = `/og/cell?country=${encodeURIComponent(country)}&geo=${encodeURIComponent(geo)}&industry=${encodeURIComponent(industry)}`;
   /* AN ALIAS NAMES ITS LIVE TRADE'S PAGE (P1-C of the page architecture, 2026-10-09): /gb/london/plumber renders the plumbers'
      page and names /gb/london/plumbers, until the alias's redirect ships with the inventory (src/lib/seo/alias_canonical.ts). */

@@ -2216,6 +2216,7 @@
         "src/app/og/cell/route.tsx",
         "src/lib/cells/place_name.ts",
         "src/lib/spine/adapt_cell.ts",
+        "src/lib/spine/place_names.ts",
         "src/lib/spine/trade_head.ts"
       ],
       "claims": []

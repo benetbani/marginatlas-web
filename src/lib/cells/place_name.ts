@@ -20,10 +20,13 @@
  * BLIND SPOTS, stated: this cannot tell a place the site holds no label for from one it holds under another word, and a word that is the
  * slug of two labels takes the first the table lists. A statistics code the country list does not hold (UK, EL) has no country name to
  * give, so a bare code there stays what the page printed (uk:statistics-code-uk-pages, the final review's I-2, is that page's own question).
+ *
+ * headPlaceOf, below, is this module's second rule: which place a figure may be printed beside (truth-fixes round 3A, 2026-10-11).
  */
 import { iso2ToIso3, iso2ToName } from "@/lib/countries";
 import { geoNameFromSlug, slugify } from "@/lib/cells/geo";
 import { placeWordsFor } from "@/lib/routing/place_words";
+import { inSentence } from "@/lib/spine/place_names";
 
 /** The labels of a held country's place words, by the word each label spells; built once per country on first use. A Map, so a word from
  *  an address ("constructor") is a key like any other (src/lib/own.ts is for plain objects). */
@@ -69,4 +72,53 @@ export function placeNameOf(country: string, geoSlug: string, geoName: string | 
   const word = String(geoSlug ?? "").trim().toLowerCase();
   if (word === iso2.toLowerCase() || word === slugify(countryName)) return countryName;
   return named(geoNameFromSlug(iso2, word), iso2) ?? spelledBy(iso2).get(word) ?? countryName;
+}
+
+/** What a trade page's head and its share card print about the place and about the one figure beside it. */
+export type HeadPlace = {
+  /** The place the page is about, as a label: the share card's title ("Boston", "United Kingdom"). */
+  label: string;
+  /** The place as the head's question spells it after "in": the place with its country when the row is the country's ("Boston, United
+   *  Kingdom"), the country with its article when the place is the country ("the United Kingdom"), else the place itself. */
+  titleIn: string;
+  /** The place the figure belongs to, as a sentence reads it after "in" ("the United Kingdom", "London"), or null when the cell holds no
+   *  figure of any place and the head and the card print none. */
+  figureIn: string | null;
+};
+
+/** The country's English name as the country list holds it, or null for a code the list holds none for (the statistics' own UK and EL). */
+function heldCountryName(iso2: string): string | null {
+  const name = iso2ToName(iso2);
+  return name && name.toUpperCase() !== iso2 ? name : null;
+}
+
+/**
+ * THE FIGURE'S OWN PLACE (truth-fixes round 3A, 2026-10-11; the review's I1, M2 and M5). placeNameOf says what the address names. The
+ * figure on the cell may belong to somewhere else: a country's row (geo_level "country") answers any place word no regional row holds,
+ * so its figure is the country's whatever the word, and a synthetic cell is drawn from country and trade averages, so it holds the
+ * figure of no place. Anything that prints a figure beside a place names the place the figure belongs to, and this is the one rule for
+ * it, read by the head (generateMetadata) and the share card (/og/cell):
+ *  - label: the place the page is about, as placeNameOf names it, for a card's title.
+ *  - titleIn: how the head's question spells it after "in". On a country's row it names the place with its country ("Boston, United
+ *    Kingdom"), and where the place is the country it takes the article the site's helper gives ("the United Kingdom").
+ *  - figureIn: where the figure belongs, as a sentence reads it. The country on a country's row, the place on its own row, and null
+ *    for a synthetic cell and for a country's row of a code the list holds no English name for (UK, EL: the statistics' own codes,
+ *    which print no figure until they are mapped), so the printer omits the figure.
+ * The article comes from inSentence and only ever on the country's name: its start-of-name rules would turn a place's label such as
+ * "Central Bedfordshire" into "the Central Bedfordshire".
+ * BLIND SPOT, stated: geo_level and is_synthetic are what the lookup stamped on the cell, so this cannot tell a country's row that was
+ * stored under a regional level from a regional row, and a row's figure is taken to belong to the level it says.
+ */
+export function headPlaceOf(country: string, geoSlug: string, cell: { geo_name?: string | null; geo_level?: string | null; is_synthetic?: boolean | null }): HeadPlace {
+  const iso2 = String(country ?? "").trim().toUpperCase();
+  const word = String(geoSlug ?? "").trim().toLowerCase();
+  const label = placeNameOf(iso2, geoSlug, cell.geo_name) || String(geoSlug ?? "");
+  const countryName = heldCountryName(iso2);
+  /* The place is the country itself when its word is the country's code or its name, or the name the page prints is the country's. */
+  const isCountry = countryName !== null && (word === iso2.toLowerCase() || word === slugify(countryName) || label.trim().toLowerCase() === countryName.toLowerCase());
+  const countryIn = countryName === null ? null : inSentence(countryName);
+  const countryRow = cell.geo_level === "country";
+  const titleIn = isCountry && countryIn !== null ? countryIn : countryRow && countryName !== null ? `${label}, ${countryName}` : label;
+  const figureIn = cell.is_synthetic === true ? null : isCountry || countryRow ? countryIn : label;
+  return { label, titleIn, figureIn };
 }

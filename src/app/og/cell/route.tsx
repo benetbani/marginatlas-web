@@ -23,7 +23,7 @@ import { tradeHeadFigure } from "@/lib/spine/trade_head";
 import { isLondonCell } from "@/lib/scores/cell_board";
 import { ImageResponse } from "next/og";
 import { getCellBySlug } from "@/lib/cells";
-import { placeNameOf } from "@/lib/cells/place_name";
+import { headPlaceOf } from "@/lib/cells/place_name";
 // The canonical tier derivation, the same one the pages and the CSV export use,
 // so a link preview and the page it points at never disagree about how a figure
 // was produced. It reads is_synthetic first, which is the case that matters most
@@ -79,12 +79,18 @@ export async function GET(request: Request) {
   // to an empty provenance is a cell whose revenue was withheld: see the
   // suppression branch.
   let provenance = "";
+  // What the figure block's label says. It names a place only where the figure belongs to somewhere other than the place the title
+  // names (a country's row under a place's name), so a figure never stands beside a place it is not.
+  let figureLabel = "Typical revenue";
 
   try {
     const cell = await getCellBySlug(country, geo, industry, {});
     const indName = cell.industry_name || cell.industry_description || industry;
-    const geoName = placeNameOf(country, geo, cell.geo_name) || geo;
-    title = `${indName}: ${geoName}`;
+    // THE PLACE AND THE FIGURE BESIDE IT (truth-fixes round 3A): the title names the place the page is about, the figure block names
+    // the place the figure belongs to, and a cell that holds the figure of no place (figureIn null) prints none.
+    const place = headPlaceOf(country, geo, cell);
+    const figureIn = place.figureIn;
+    title = `${indName}: ${place.label}`;
 
     // Guard on the FIGURE, never on the formatted string. formatMoney(null)
     // returns "-", which is truthy, so testing `median` would have kept the
@@ -104,15 +110,16 @@ export async function GET(request: Request) {
     // figure, plus one line naming its absence, is the honest floor.
     /* THE HEAD'S ONE FIGURE (plan 06, task A4), the page's own rule: London's register median with its count, a row's read
        revenue elsewhere with its range only where the row holds one, or no figure; never a filled revenue (the constant 675K). */
-    const head = tradeHeadFigure({ isLondon: isLondonCell(cell), slug: industry.toLowerCase(), revenuePerFirm: cell.revenue_per_firm, revenueFilled: cell._revenueFilled });
-    if (head?.kind === "register") {
+    const head = figureIn === null ? null : tradeHeadFigure({ isLondon: isLondonCell(cell), slug: industry.toLowerCase(), revenuePerFirm: cell.revenue_per_firm, revenueFilled: cell._revenueFilled });
+    if (figureIn !== null && head?.kind === "register") {
       subtitle = "Typical yearly sales, registered businesses";
       median = head.usd !== null ? formatMoney(head.usd) : `${head.open!.side === "below" ? "Under" : "Over"} ${formatMoney(head.open!.edgeUsd)}`;
       provenance = "The business register, March 2026";
-      detail = `${head.enterprises.toLocaleString("en-US")} registered businesses in ${geoName}${head.group ? `, every ${head.group}` : ""}`;
-    } else if (head?.kind === "row") {
+      detail = `${head.enterprises.toLocaleString("en-US")} registered businesses in ${figureIn}${head.group ? `, every ${head.group}` : ""}`;
+    } else if (figureIn !== null && head?.kind === "row") {
       subtitle = `Typical revenue, employment & wage`;
       median = formatMoney(head.usd);
+      if (figureIn !== place.titleIn) figureLabel = `Typical revenue in ${figureIn}`;
       // Stated for every tier, not only the weak ones. A card that qualifies
       // itself only when the data is thin teaches readers that an unqualified
       // card is a measurement, which is the same trap by omission.
@@ -120,7 +127,7 @@ export async function GET(request: Request) {
       detail =
         cell.rev_p10 && cell.rev_p90
           ? `Range ${formatMoney(cell.rev_p10)} – ${formatMoney(cell.rev_p90)}`
-          : `${indName} in ${geoName}`;
+          : `${indName} in ${figureIn}`;
     } else {
       subtitle = "Revenue not published for this cell";
     }
@@ -135,7 +142,7 @@ export async function GET(request: Request) {
         <OgTitle title={title} subtitle={subtitle} />
         {median ? (
           <OgFigure
-            label="Typical revenue"
+            label={figureLabel}
             value={median}
             provenance={provenance}
             detail={detail}
