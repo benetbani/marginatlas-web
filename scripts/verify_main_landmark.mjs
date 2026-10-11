@@ -14,7 +14,7 @@
  * navigating by landmark has no content region to jump to, and a skip link has
  * nothing to skip to.
  *
- * IT CHECKS FOR ABSENCE ONLY, AND THE MISSING RULE IS WHY. The first version
+ * IT CHECKS FOR ABSENCE, AND FOR ONE NEST, NOT FOR A SECOND LANDMARK IN GENERAL, AND THE MISSING RULE IS WHY. The first version
  * also refused MORE than one landmark, to catch the nested-main mistake I nearly
  * made by turning SpineShell's wrapper into a main while three pages already
  * nest their own inside it. That rule produced exactly one finding and it was
@@ -26,6 +26,13 @@
  * false positive is not a rule that needs a threshold, and the duplicate-landmark
  * risk is caught properly by counting <main> in the SERVED HTML, which needs the
  * network and therefore cannot live in this chain.
+ *
+ * ONE NARROW NEST IS READ, BECAUSE A SCAN CAN SEE IT (truth-fixes round 3A, 2026-10-11). A page under the (site) group has no branch
+ * that skips its layout: src/app/(site)/layout.tsx draws SiteChrome around whatever the page returns, and SiteChrome's <main> is the
+ * page's landmark. So a <main> written in such a page is a second landmark inside the first, on every request, and the scan reds on
+ * it. src/app/(site)/margin-index/page.tsx wrote one until that day and this gate could not see it. The rule stops at the group: a page
+ * elsewhere that renders SiteChrome and writes a <main> of its own may do so on a branch the other never takes (src/app/page.tsx is
+ * the case above), which a source scan cannot tell apart.
  *
  * STATED BLIND SPOT: this reads source, so it sees a <main> written in the page
  * file or in a component the page imports one level deep. A landmark rendered
@@ -79,6 +86,7 @@ function pages(dir = APP, out = []) {
 
 let failed = 0;
 const missing = [];
+const nested = [];
 let checked = 0;
 
 for (const page of pages()) {
@@ -89,6 +97,8 @@ for (const page of pages()) {
   const rendersProvider = PROVIDERS.some((p) => new RegExp(`<${p}[\\s>]`).test(src));
   const own = (src.match(/<main[\s>]/g) || []).length;
   if (own === 0 && !inGroup && !rendersProvider) missing.push(page);
+  /* Under (site) the layout draws SiteChrome, whose <main> is the landmark: a page's own <main> is a second one, nested inside it. */
+  if (own > 0 && inGroup) nested.push(page);
 }
 
 console.log(`main-landmark: ${checked} shipping page(s) checked, ${Object.keys(EXEMPT).length} exempt by name`);
@@ -103,9 +113,19 @@ if (missing.length) {
   );
 }
 
+if (nested.length) {
+  failed++;
+  console.error(`\nx ${nested.length} page(s) under the (site) group write a <main> of their own, nested inside the one SiteChrome draws:\n`);
+  for (const p of nested) console.error(`  ${p}`);
+  console.error(
+    `\n  Make the page's outer <main> a <div> with the same classes. The (site) layout draws SiteChrome, whose\n` +
+      `  <main> is the page's one landmark, and a second one inside it splits what a screen reader jumps to.`,
+  );
+}
+
 if (failed > 0) {
   console.error(`main-landmark: ${failed} failure(s)`);
   process.exit(1);
 }
-console.log("main-landmark: every shipping page has one");
+console.log("main-landmark: every shipping page has one, and none under (site) writes a second");
 process.exit(0);

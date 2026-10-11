@@ -56,7 +56,8 @@ export default async function MarginIndexPage() {
 
   return (
     <SpineShell>
-      <main className="mx-auto max-w-[1120px] px-4 py-8 md:px-6">
+      {/* A div and not a main element: the (site) layout draws SiteChrome, whose main is this page's one landmark. */}
+      <div className="mx-auto max-w-[1120px] px-4 py-8 md:px-6">
         {/* THE PAGE HAD NO h1. Its only heading came from <Movement>, which
             emits an h2, and Movement lives inside MarginIndexView, so the
             heading existed only when the board resolved. On the fallback path
@@ -139,7 +140,7 @@ export default async function MarginIndexPage() {
             </p>
           </div>
         )}
-      </main>
+      </div>
     </SpineShell>
   );
 }
