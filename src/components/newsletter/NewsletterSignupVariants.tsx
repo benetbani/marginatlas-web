@@ -121,7 +121,7 @@ export function FooterNewsletterBar({ endpoint = "/api/newsletter" }: Props) {
       >
         {/* A HEIGHT THAT GROWS ON A PHONE (2026-10-04, the UK page reform's design review): the bar was 56px tall exactly, and on a
             phone its line and its field wrap to two rows, so the field and the button hung under the bar, half under the footer. */}
-        <p id={LINE_ID} className="flex-1 min-w-0 text-sm sm:text-base text-[var(--c-ink2)]">
+        <p id={LINE_ID} className="flex-1 min-w-0 text-pretty text-sm sm:text-base text-[var(--c-ink2)]">
           {NEWSLETTER_COPY.line}
         </p>
         <div role="status" className={status === "success" ? "" : "sr-only"}>

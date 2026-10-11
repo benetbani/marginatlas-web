@@ -169,6 +169,12 @@ if (ex) {
   const pretty = [...third, ...body].filter((m) => !!m && /\btext-pretty\b/.test(m[2])).length;
   const joined = /[A-Z][a-z]+\u00A0\d{4}\.$/.test(ex.place.registered.line);
   check(`every step's line asks for a balanced last line (text-pretty on ${pretty} of 4), and step 1 writes its month and year with a no-break space (${joined ? "joined" : `"${ex.place.registered.line}" may break between them`})`, pretty === 4 && joined, { file: EXAMPLE_VIEW, remedy: "add text-pretty to both lines' <p> in HomeExample.tsx's Step, and write the month in src/lib/home/worked_example.ts with a no-break space at the {month} splice (month.replace(\" \", \"\\u00A0\"))" });
+  /* THE PLACE STANDS ON ONE LINE (critique pass 4, fix round F2, item P2.2): at 768 step 1's line split the name, "Greater / London". The two
+     words are joined by a no-break space in the copy, as the month and its year are joined in the builder, so the place never parts. BLIND
+     SPOT: this reads the string's characters; whether the line then fits at a width is the browser's (f2_p22_probe.mjs counts the last line's words). */
+  const NBSP = String.fromCharCode(0xa0);
+  const registeredLine = ex.place.registered.line;
+  check(`step 1 names its place with a no-break space between Greater and London, so the name cannot part across lines ("${registeredLine.split(NBSP).join("<nbsp>")}")`, registeredLine.includes(`Greater${NBSP}London`) && !registeredLine.includes("Greater London"), { file: "src/lib/spine/copy.ts", remedy: "write a no-break space (U+00A0, the escape or the character, not a plain space) between Greater and London in COPY.home.example.registered" });
   const ruled = (h: string, n: string) => new RegExp(`data-step-block="${n}" class="[^"]*\\bborder-t\\b`).test(h);
   const underTitle = (h: string, n: string) => h.slice(h.indexOf('data-rail=""'), h.indexOf(`data-step-block="${n}"`));
   check("a hairline between steps 1 and 2 and between steps 3 and 4, none under the titles", ruled(place, "2") && ruled(pays, "4") && !ruled(place, "1") && !ruled(pays, "3") && !/border-t/.test(underTitle(place, "1")) && !/border-t/.test(underTitle(pays, "3")), DRAWN_AT);

@@ -2829,7 +2829,9 @@ export const COPY = {
       label: "Worked example",
       placeTitle: "{trade} in London",
       paysTitle: "Does it pay?",
-      registered: "Counted in the business register, Greater London, {month}.",
+      /** "Greater" and "London" are joined by a no-break space (U+00A0, written as the escape) so the place never splits across two lines (critique pass 4, P2.2);
+       *  the builder joins the month and its year the same way. */
+      registered: "Counted in the business register, Greater\u00A0London, {month}.",
       sales: "Worked out from the register’s ten sales bands.",
       /** One run of words, no comma (plan 2026-10-10, home reform, Task 3; the critique's P2.5); twelve words with the noun. */
       breakEven: "An estimate of the yearly sales that carry an average London {noun}.",
@@ -2917,7 +2919,7 @@ export const COPY = {
       banking: "How customers pay you, and what each payment costs.",
       "age-mix": "Who lives here, by age.",
       "job-market": "How hard it is to find staff here.",
-      cities: "The UK's cities, side by side.",
+      cities: "The UK’s cities, side by side.",
       locals: "Things worth knowing before you open here.",
       spend: "What households here spend their money on.",
       "character-people": "How people here like to do business.",

@@ -269,7 +269,7 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
               register's figures (plan 2026-10-10, the critique's P1.14): the line no longer repeats the case the fields already
               show. A space is text, not margin, so the words read as words to a crawler and a screen reader. */}
           {tries.length > 0 ? (
-            <p data-try="" className="text-sm leading-5 text-[var(--c-ink2)] lg:col-span-4 lg:row-start-2">
+            <p data-try="" className="text-sm leading-5 text-[var(--c-ink2)] text-pretty lg:col-span-4 lg:row-start-2">
               Or try{" "}
               {tries.map((t, i) => (
                 <React.Fragment key={t.href}>

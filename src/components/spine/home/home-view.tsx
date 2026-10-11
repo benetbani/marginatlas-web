@@ -84,7 +84,7 @@ function HomeSearch() {
           <NavigatorForm showHeading={false} seed={homePickerSeed()} />
         </div>
         {/* WHAT THE SITE IS, ONCE, AT THE HERO'S FOOT (the spec's sections 1, 3 and 7; clause 67, the model's seat for a page's one plain line): straight after the form, so the question, the reader's own case and the definition stand in the first screen. */}
-        <p data-definition="" className="mt-4 lg:mt-6 max-w-[min(60ch,var(--measure-half))] text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{C.definition}</p>
+        <p data-definition="" className="mt-4 lg:mt-6 max-w-[min(60ch,var(--measure-half))] text-pretty text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{C.definition}</p>
       </section>
     </div>
   );

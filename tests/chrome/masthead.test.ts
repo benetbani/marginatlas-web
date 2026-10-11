@@ -447,6 +447,11 @@ async function main() {
   check(`no spine body takes a negative margin: the column is already on the 16px gutter (${bodiesFound} bodies read, ${bodyWrappers.length} with one)`, bodiesFound >= 9 && bodyWrappers.length === 0, { file: bodyWrappers[0]?.file ?? "src/components/spine", remedy: GUTTER_REMEDY });
   const harnessMains = ["scripts/harness/render_page.tsx", "scripts/seo/floor_census.tsx"].filter((f) => !/\bGUTTER\b/.test(code(f)) || /mx-auto px-6 pt-4/.test(code(f)));
   check(`the harness' own <main> reads GUTTER, so a render measures the widths a visitor gets${harnessMains.length ? `: ${harnessMains.join(", ")} do not` : ""}`, harnessMains.length === 0, { file: harnessMains[0] ?? "scripts/harness/render_page.tsx", remedy: "import GUTTER from src/lib/nav and write the render's <main> as `relative max-w-content mx-auto ${GUTTER} pt-4`, as SiteChrome does" });
+  /* NO WORD LEFT ALONE ON THE NEWSLETTER LINE (critique pass 4, fix round F2, item P2.2): "Leave your email to hear when new figures / land." at 768,
+     one word alone on the second line of the bar every page ends on. The line asks the browser to balance its last line (text-pretty), as the
+     example's lines and the band do. BLIND SPOT: this reads the class; the last line's word count at seven widths is the browser's (f2_p22_probe.mjs). */
+  const newsletterLine = /<p id="atlas-newsletter-line" class="([^"]*)"/.exec(off)?.[1] ?? "";
+  check(`the newsletter bar's line asks for a balanced last line (text-pretty), so it cannot end on a lone word (${newsletterLine || "the line is not in the chrome"})`, newsletterLine.split(" ").includes("text-pretty"), { file: "src/components/newsletter/NewsletterSignupVariants.tsx", remedy: "add text-pretty to the line's <p id={LINE_ID}> in the newsletter bar: unbalanced, \"land.\" stood alone on its second line at 768" });
   /* AIR BETWEEN THE WORDMARK AND THE NAMES (plan 2026-10-10 Task 9). Photographed at 1280 with accounts and Pricing both on, the names at
      24px apart filled the bar's 1072px to the pixel and "Atlas" touched "Countries" (0px measured, 9px with "Sign in"); at 20 the names
      and the group leave 35px at the tightest. A pin on the two classes, not a measurement: this file runs no browser. */
@@ -616,6 +621,10 @@ async function main() {
      one word at seven of eight widths from 320 to 1440 ("continent", "side", "even", "from"); text-balance evens the lines. The measure is
      scratchpad/home-reform/p3_door_lines.mjs (Range rectangles per word, Chromium). */
   check("the 404's six door lines are balanced (text-balance), so none ends on a one-word line", (nfMain.match(/<span class="[^"]*\btext-balance\b/g) ?? []).length === 6, { file: NOT_FOUND, remedy: "give each door's line text-balance in src/app/not-found.tsx: unbalanced, 'continent', 'side', 'even' and 'from' stood alone on a last line at seven of eight widths" });
+  /* THE 404'S LEAD TOO (critique pass 4, fix round F2, item P2.2): at 320 it broke "... from one of / these.", its last word alone; it asks for a
+     balanced last line (text-pretty) as the door lines ask for theirs. BLIND SPOT: this reads the class; the word count of the last line at seven
+     widths is the browser's (f2_p22_probe.mjs). */
+  check("the 404's lead asks for a balanced last line (text-pretty), so it cannot end on a lone word", /<p class="[^"]*\btext-pretty\b[^"]*">Check the spelling, or start from one of these\.<\/p>/.test(nfMain), { file: NOT_FOUND, remedy: "give the 404's lead <p> text-pretty in src/app/not-found.tsx: unbalanced, \"these.\" stood alone on its last line at 320" });
   check("the 404 has one h1", (nfHtml.match(/<h1\b/g) ?? []).length === 1, { file: NOT_FOUND });
   /* THE DOORS AS ROWS UNDER 640, EACH WITH THE PROOF DOORS' ARROW (critique pass 3, fix round D2, item P2.6). Two-up cards on a phone wrapped their
      lines to three and left 45 to 60px blank under the short ones (the photograph p3-404-375), and no door of the 404 carried the arrow every other

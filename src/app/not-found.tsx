@@ -65,7 +65,7 @@ export default function NotFound() {
         <h1 className="mt-2 font-display text-2xl font-semibold tracking-tight text-[var(--c-ink)]">
           Nothing at this address
         </h1>
-        <p className="mt-3 text-[length:var(--t-lead)] text-[var(--c-ink2)]">Check the spelling, or start from one of these.</p>
+        <p className="mt-3 text-pretty text-[length:var(--t-lead)] text-[var(--c-ink2)]">Check the spelling, or start from one of these.</p>
         {/* THE DOORS: ROWS UNDER 640, CARDS FROM IT (critique pass 3, fix round D2, item P2.6). Two-up cards on a phone wrapped their lines to
             three and left 45 to 60px blank under the short ones, so under 640 the six doors are rows as Where to next draws its doors: one
             column, the name at Where to next's own 14 medium over its line (DOOR_NAME: the critique said 16 and the doors measure 14, fix round F1,
