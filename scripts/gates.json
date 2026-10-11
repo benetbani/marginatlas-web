@@ -206,6 +206,7 @@
         "src/components/spine/country/how-to-view.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/components/spine/hood/hood-view.tsx",
+        "src/components/spine/interact/DepthNotify.tsx",
         "src/components/spine/openings/openings-view.tsx",
         "src/lib/spine/checked.ts"
       ],
@@ -2686,9 +2687,9 @@
         "src/components/StructuredData.tsx",
         "src/components/spine",
         "src/components/spine/WhereNext.tsx",
+        "src/components/spine/home/HomeProofs.tsx",
         "src/components/spine/shell.tsx",
         "src/lib/nav.ts",
-        "src/lib/nav.ts holds the one gutter: GUTTER is px-4 md:px-6 (16 under 768, 24 from)",
         "src/lib/spine/door_look.ts",
         "src/styles/v0-tokens.css"
       ],

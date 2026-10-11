@@ -17,3 +17,11 @@
  * this constant, and its cards from 640 keep the 16 semibold they were by `sm:` classes of their own.
  */
 export const DOOR_NAME = "text-[length:var(--t-body)] font-medium";
+
+/**
+ * The arrow every door carries at its edge (critique pass 3, fix round D2, item P2.6: "each door carries the arrow every other door on the site carries"): the glyph
+ * (&#8594;, aria-hidden) at the body rung in ink2, never shrinking, on the title row's 20px line. The home's proof doors draw it in HomeProofs.tsx's DoorTitle with
+ * `mt-1` on top (the margin that sets it on that title's own line, which is the Rail's), and the 404's doors draw it as it stands; a test compares what each draws
+ * with this constant by import (fix round F1, group G9: the 404 had a copy of these classes, kept in step by a regex over HomeProofs.tsx's source).
+ */
+export const DOOR_ARROW = "shrink-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]";

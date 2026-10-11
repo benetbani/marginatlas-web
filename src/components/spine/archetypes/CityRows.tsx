@@ -50,7 +50,7 @@ const THUMB_H = 360;
  */
 const CITY_COLUMNS = "md:grid-cols-[72px_minmax(0,22ch)_2.25rem_1fr_0.75rem] md:gap-x-3";
 
-export function CityRows({ cards, basis, allHref, allLabel, unit }: { cards: CityCard[]; /** One line, said once for the rows: what the figure is, and nothing else. */ basis: string; /** The eighth cell's door, drawn under 768. */ allHref: string; allLabel: string; /** The figure's unit, said to a screen reader ("a year"). */ unit: string }) {
+export function CityRows({ cards, basis, allHref, allLabel, unit, headed = false }: { cards: CityCard[]; /** One line, said once for the rows: what the figure is, and nothing else. */ basis: string; /** The eighth cell's door, drawn under 768. */ allHref: string; allLabel: string; /** The figure's unit, said to a screen reader ("a year"). */ unit: string; /** The page draws CityRowsHead over the figures from 768 (the home does), which says what the figure is, so the basis line goes from 768; without it the line stays at every width, the figures' only label (fix round F1, group G9: the rows had assumed the head). */ headed?: boolean }) {
   if (cards.length === 0) return null;
   const pays = cards.map((c) => c.payUsd).filter((v): v is number => typeof v === "number");
   const fmt = moneyFor(pays);
@@ -65,7 +65,7 @@ export function CityRows({ cards, basis, allHref, allLabel, unit }: { cards: Cit
           <span aria-hidden className="shrink-0 transition-transform group-hover:translate-x-0.5">&#8594;</span>
         </a>
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] md:hidden">{basis}</p>
+      <p className={`mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${headed ? " md:hidden" : ""}`}>{basis}</p>
     </div>
   );
 }

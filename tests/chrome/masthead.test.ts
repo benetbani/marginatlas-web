@@ -47,6 +47,7 @@ const RULE = "masthead";
 const CHROME = "src/components/SiteChrome.tsx";
 const SHEET = "src/components/MobileNav.tsx";
 const NAVFILE = "src/lib/nav.ts";
+const PROOFS = "src/components/spine/home/HomeProofs.tsx";
 const LAYOUT = "src/app/layout.tsx";
 const CSS = "src/app/globals.css";
 const NOT_FOUND = "src/app/not-found.tsx";
@@ -79,6 +80,14 @@ const slice = (html: string, open: RegExp, close: string): string => {
 
 async function main() {
   /* ---------------- 1. THE LIST, THE TOKEN, THE STYLESHEET, THE GRAPH (source) ---------------- */
+  /* NO CHECK'S LABEL BEGINS WITH A REPO PATH (fix round F1, group G9; the D2 review's Minor 4). scripts/counts.ts generates the gate registry from the string
+     literals of each gate's script that begin with a repo root (src/, tests/, scripts/ and the others it names), so a label that began
+     "src/lib/nav.ts holds the one gutter: ..." was registered in scripts/gates.json as a file this gate reads: a sentence among its reads. A label may name a path
+     anywhere but first. BLIND SPOT: this reads this file's own check( labels, as written, and not a label built from a variable. */
+  const READ_ROOTS_FIRST = /\bcheck\(\s*(["'`])(?:src|data|docs|public|scratchpad|scripts|tests|db|content)\//g;
+  const selfText = process.argv[1] && existsSync(process.argv[1]) ? readFileSync(process.argv[1], "utf8") : "";
+  const pathLabels = [...selfText.matchAll(READ_ROOTS_FIRST)].map((m) => selfText.slice(m.index!, m.index! + 70).replace(/\s+/g, " "));
+  check(`no check label of this file begins with a repo path, so the gate registry registers no sentence as a read (${pathLabels.length ? pathLabels.join("; ") : "none begin so"})`, selfText.length > 10_000 && pathLabels.length === 0, { file: process.argv[1] ?? CHROME, remedy: "start the label with a word (\"the one gutter lives in src/lib/nav.ts: ...\"), never with the path: scripts/counts.ts reads a literal that begins with src/, tests/, scripts/ and the other roots as a file the gate reads, then run node node_modules/tsx/dist/cli.mjs scripts/counts.ts --write" });
   check(`${NAVFILE} exists`, existsSync(NAVFILE), { file: NAVFILE, remedy: "create src/lib/nav.ts with NAV, SHEET_TRUST and currentNav (plan Task 1)" });
   if (!existsSync(NAVFILE)) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   const { NAV, SHEET_TRUST, currentNav, HELD_COUNTRIES, NAV_IDLE, NAV_CURRENT, NAV_ENTRY, FREE_DATA, barFrom, GUTTER } = (await import("../../src/lib/nav")) as typeof import("../../src/lib/nav");
@@ -367,7 +376,7 @@ async function main() {
      reads the same constant, so a render measures the widths a visitor gets. From 768 nothing changes (24 there as before).
      BLIND SPOT: classes as written; the measured left edges at 320, 375 and 414 are scratchpad/home-reform/d1_probe.mjs's (edges). */
   const GUTTER_REMEDY = "write the gutter once: GUTTER = \"px-4 md:px-6\" in src/lib/nav.ts, read by SiteChrome's header row, <main> and footer column, MobileNav's <nav> and the newsletter bar's form; spine bodies carry no negative margin";
-  check("src/lib/nav.ts holds the one gutter: GUTTER is px-4 md:px-6 (16 under 768, 24 from)", GUTTER === "px-4 md:px-6", { file: NAVFILE, remedy: GUTTER_REMEDY });
+  check("the one gutter lives in src/lib/nav.ts: GUTTER is px-4 md:px-6 (16 under 768, 24 from)", GUTTER === "px-4 md:px-6", { file: NAVFILE, remedy: GUTTER_REMEDY });
   const classOf = (tag: string) => (/\bclass="([^"]*)"/.exec(tag)?.[1] ?? "").split(/\s+/);
   const bareSix = (cls: string[]) => cls.includes("px-6") || cls.some((c) => /^max-\[359px\]:px-/.test(c));
   const gutterTags: Array<[string, string]> = [
@@ -593,9 +602,20 @@ async function main() {
   const nameClasses = doorEls.map((d) => toks(/<span class="([^"]*)">[^<]*<\/span><span aria-hidden="true"/.exec(d.inner)?.[1]));
   check(`under 640 each door's name is Where to next's own (DOOR_NAME) in ink, and from 640 the card's 16 semibold, its line under it (${nameClasses.filter((c) => DOOR_NAME_TOKENS.length === 2 && DOOR_NAME_TOKENS.every((k) => c.includes(k))).length} of 6 carry DOOR_NAME)`, DOOR_NAME_TOKENS.length === 2 && doorEls.length === 6 && nameClasses.every((c) => DOOR_NAME_TOKENS.every((k) => c.includes(k)) && ["text-[var(--c-ink)]", "sm:text-[length:var(--t-lead)]", "sm:font-semibold"].every((k) => c.includes(k)) && !c.includes("text-[length:var(--t-lead)]")) && doorEls.every((d) => d.inner.indexOf("aria-hidden") < d.inner.indexOf("text-balance")), NAME_AT);
   check(`Where to next's door links carry DOOR_NAME too (${nextAnchors.length} links), and neither WhereNext.tsx nor the 404 spells its weight: the one constant is read by both`, DOOR_NAME_TOKENS.length === 2 && nextAnchors.length >= 5 && nextAnchors.every((a) => DOOR_NAME_TOKENS.every((k) => a.includes(k))) && !/\bfont-medium\b/.test(code("src/components/spine/WhereNext.tsx")) && !/\bfont-medium\b/.test(code(NOT_FOUND)) && /import \{[^}]*\bDOOR_NAME\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code("src/components/spine/WhereNext.tsx")) && /import \{[^}]*\bDOOR_NAME\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(NOT_FOUND)), NAME_AT);
-  const proofArrow = toks(/<span aria-hidden className="([^"]*)">&#8594;<\/span>/.exec(readFileSync("src/components/spine/home/HomeProofs.tsx", "utf8"))?.[1]).filter((k) => !/^mt-/.test(k)).sort();
-  const doorArrows = doorEls.map((d) => [...d.inner.matchAll(/<span aria-hidden="true" class="([^"]*)">→<\/span>/g)].map((m) => toks(m[1]).filter((k) => !/^mt-/.test(k)).sort()));
-  check(`every door carries the arrow the home's proof doors carry, once, at every width: the same glyph, size and ink (${proofArrow.join(" ")}), the margin aside (${doorArrows.filter((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(proofArrow)).length} of 6)`, proofArrow.length >= 3 && doorEls.length === 6 && doorArrows.every((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(proofArrow)), ROWS_AT);
+  /* ONE ARROW FOR EVERY DOOR, COMPARED BY IMPORT (fix round F1, group G9; the D2 review's Minors 5 and 8). The 404 copied DoorTitle's arrow classes and this
+     test kept the two in step by regex-reading the first &#8594; span of HomeProofs.tsx's source, which also left that file out of the registry's reads (its path
+     stood inline on a line with a regex literal). The classes are DOOR_ARROW in src/lib/spine/door_look.ts, read by DoorTitle and by the 404 and spelled in neither;
+     the test imports the constant, reads the arrow of a home proof door as drawn (ProofTax, from buildProofs, the way tests/home/home_answers.test.ts renders it) and the
+     404's six, and compares them with the margin aside (DoorTitle sets one on its own title line). */
+  const DOOR_ARROW_TOKENS = toks((doorLook as { DOOR_ARROW?: string } | null)?.DOOR_ARROW).sort();
+  const { buildProofs } = await import("../../src/lib/home/proofs");
+  const { ProofTax } = await import("../../src/components/spine/home/HomeProofs");
+  const arrowsIn = (html: string) => [...html.matchAll(/<span aria-hidden="true" class="([^"]*)">→<\/span>/g)].map((m) => toks(m[1]).filter((k) => !/^mt-/.test(k)).sort());
+  const proofArrows = arrowsIn(renderToStaticMarkup(React.createElement(ProofTax, { p: buildProofs().tax as never })));
+  const doorArrows = doorEls.map((d) => arrowsIn(d.inner));
+  const ARROW_AT = { file: "src/lib/spine/door_look.ts", remedy: "export const DOOR_ARROW from src/lib/spine/door_look.ts (the arrow's classes), draw it with `mt-1 ${DOOR_ARROW}` in HomeProofs.tsx's DoorTitle and with DOOR_ARROW in src/app/not-found.tsx, and spell the classes in neither" };
+  check(`every door carries the arrow the home's proof doors carry, once, at every width: DOOR_ARROW (${DOOR_ARROW_TOKENS.join(" ") || "not exported"}), the margin aside (${doorArrows.filter((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)).length} of 6 on the 404, ${proofArrows.length} on a proof door)`, DOOR_ARROW_TOKENS.length >= 3 && proofArrows.length === 1 && JSON.stringify(proofArrows[0]) === JSON.stringify(DOOR_ARROW_TOKENS) && doorEls.length === 6 && doorArrows.every((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)), ARROW_AT);
+  check("DoorTitle and the 404 import DOOR_ARROW from src/lib/spine/door_look.ts and spell its classes in neither", /import \{[^}]*\bDOOR_ARROW\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(PROOFS)) && /import \{[^}]*\bDOOR_ARROW\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(NOT_FOUND)) && !/leading-5 text-\[var\(--c-ink2\)\]/.test(code(PROOFS)) && !/leading-5 text-\[var\(--c-ink2\)\]/.test(code(NOT_FOUND)), ARROW_AT);
 
   /* ---------------- 3. THE SHEET, PRESSED (jsdom) ---------------- */
   const { JSDOM } = await import("jsdom");

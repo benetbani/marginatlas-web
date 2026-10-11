@@ -18,6 +18,8 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { ReportFoot } from "../../src/components/spine/ReportFoot";
 import { SourcesFoot } from "../../src/components/spine/SourcesFoot";
+import { DepthNotify } from "../../src/components/spine/interact/DepthNotify";
+import { COPY } from "../../src/lib/spine/copy";
 import { checkedDateForCity, checkedDateForCountry, checkedDateForTrade, REGISTER_BUILT } from "../../src/lib/spine/checked";
 import { reportHref } from "../../src/lib/spine/report";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -113,9 +115,23 @@ check(`the licence line's spacing is padding inside the band (pt-6, the 24px und
    around, a white gap under the last zone. The scan reads every .tsx under src for a tag carrying either hook and its class string. BLIND SPOT:
    it reads a literal className, so a class list built in a variable would not be seen; the three sites hold literals. */
 const tsxUnder = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? tsxUnder(`${dir}/${e.name}`) : e.name.endsWith(".tsx") ? [`${dir}/${e.name}`] : []));
-const footSites = tsxUnder("src").flatMap((f) => [...stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n").matchAll(/<p data-(sources|page)-foot\b[^>]*?className="([^"]*)"/g)].map((m) => ({ file: f, hook: m[1], classes: m[2].split(" ") })));
+const footSites = tsxUnder("src").flatMap((f) => [...stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n").matchAll(/<(?:p|form)\b[^>]*?\bdata-(sources|page)-foot\b[^>]*?className="([^"]*)"/g)].map((m) => ({ file: f, hook: m[1], classes: m[2].split(" ") })));
 const marginSites = footSites.filter((s) => !noMargin(s.classes)).map((s) => `${s.file} (${s.hook})`);
 check(`every tag that carries a foot hook spaces itself with padding, never a margin (${footSites.length} sites: ${footSites.map((s) => s.file.split("/").pop()).join(", ")}${marginSites.length ? `; a margin on ${marginSites.join(", ")}` : ""})`, footSites.length >= 3 && marginSites.length === 0, marginSites[0]?.split(" ")[0] ?? "src/components/spine/openings/openings-view.tsx", "give the openings view's own licence-link line pt-6 in place of its mt-6, as SourcesFoot has it, so the band paints the 24px under the last zone");
+/* THE THIN PAGE'S NOTIFY FORM IS IN THE BAND TOO (fix round F1, group G9; the D2 review's Minor 2). On a thin page DepthNotifyFoot follows the Report line, and its form stood on a
+   margin (mt-6) on the column's own ground: the band ended above it, so below the Report line the grey narrowed back to the column for 24px and the form, the box with its edges
+   showing that P2.5 had removed. The form and its "sent" line carry the same hook and pad themselves (the 24px that was the form's margin is padding now, and 24px under it
+   as the Report line has under it), so the foot is one band from the last zone to the newsletter bar. The home's ask, the form with a place to choose, is a card's content and
+   no foot, and takes no hook. The scan above reads <p> and <form> tags in any attribute order. BLIND SPOT: the idle form is read from its markup and the sent line from the
+   source (it shows only after a post); the pixels are the round's probe's (scratchpad/home-reform/f1_g9_foot.mjs, a thin city page at 1280 and 375). */
+const notifyWords = { ...COPY.depthNotify, label: COPY.depthNotify.label.replace("{place}", "Abidjan") };
+const notifyIdle = renderToStaticMarkup(React.createElement(DepthNotify, { source: "depth:/cities/abidjan", words: notifyWords }));
+const notifyChoices = renderToStaticMarkup(React.createElement(DepthNotify, { words: notifyWords, choices: [{ label: "London", source: "depth:/cities/london" }] }));
+const notifyClasses = (/<form data-depth-notify="" data-page-foot="[^"]*"[^>]*class="([^"]*)"/.exec(notifyIdle)?.[1] ?? "").split(" ").filter(Boolean);
+const notifySites = footSites.filter((s) => s.file.endsWith("DepthNotify.tsx"));
+const NOTIFY_AT = { file: "src/components/spine/interact/DepthNotify.tsx", remedy: "give the thin page's form and its sent line data-page-foot with pt-6 pb-6 in place of mt-6, so the band that paints the licence and Report lines runs on under them to the newsletter bar; the form with `choices` (the home's ask) takes no hook" };
+check(`the thin page's notify form is in the foot band: data-page-foot, pt-6 and pb-6 and no margin (${notifyClasses.filter((k) => /^(p[tb]|m[tb])-/.test(k)).join(" ") || "no hook found"}), and its sent line is another site of the hook (${notifySites.length} sites in DepthNotify.tsx)`, notifyClasses.includes("pt-6") && notifyClasses.includes("pb-6") && noMargin(notifyClasses) && notifySites.length === 2 && notifySites.every((s) => s.classes.includes("pt-6") && s.classes.includes("pb-6") && noMargin(s.classes)), NOTIFY_AT.file, NOTIFY_AT.remedy);
+check("the home's ask (the form with a place to choose) is a card's content and takes no foot hook", notifyChoices.includes("data-depth-notify") && !notifyChoices.includes("data-page-foot"), NOTIFY_AT.file, NOTIFY_AT.remedy);
 const css = readFileSync("src/app/globals.css", "utf8");
 const band = /\[data-sources-foot\],\s*\[data-page-foot\]\s*\{([^}]*)\}/.exec(css)?.[1] ?? "";
 const bandDecl = Object.fromEntries(band.split(";").map((d) => d.trim()).filter(Boolean).map((d) => [d.slice(0, d.indexOf(":")).trim(), d.slice(d.indexOf(":") + 1).trim()]));

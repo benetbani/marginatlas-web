@@ -103,7 +103,7 @@ function HomeCities({ cards }: { cards: CityCardsData }) {
     <Box id="cities" className="relative flex flex-col">
       <Rail icon="best-areas" kicker={COPY.home.citiesLabel} level={2} />
       <CityRowsHead>{COPY.home.citiesHead}</CityRowsHead>
-      <CityRows cards={cards.cards} basis={COPY.cityCards.plain.basis} allHref="/gb#cities" allLabel={COPY.home.citiesAll} unit={COPY.home.citiesUnit} />
+      <CityRows cards={cards.cards} basis={COPY.cityCards.plain.basis} allHref="/gb#cities" allLabel={COPY.home.citiesAll} unit={COPY.home.citiesUnit} headed />
     </Box>
   );
 }

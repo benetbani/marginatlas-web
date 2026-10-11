@@ -58,9 +58,9 @@ export const GUTTER = "px-4 md:px-6";
  * Pricing is the one action in the masthead and it is an ink pill: the bar draws it from 1280 (SiteChrome.tsx, with `tap hidden
  * xl:inline-flex` in front of this) and the sheet, which is the navigation under 1280, draws its Pricing row as the same pill at the row's
  * left (MobileNav.tsx, an inline-flex span inside the 48px link). Everything that makes it a pill and not a word lives here, so the two
- * places cannot drift; DISPLAY is not part of it, because the bar hides the pill under 1280 and the sheet shows it. White on its hover,
- * ink2, reads 7.36 to 1 (the figure the bar's own comment carried), and it is never terracotta. A server-safe string, as the others here:
- * nothing in this module is client code.
+ * places cannot drift; DISPLAY is not part of it, because the bar hides the pill under 1280 and the sheet shows it. Its white text on the
+ * hover fill, ink2, reads 7.36 to 1 (the figure the bar's own comment carried), and the pill is never terracotta. A server-safe string, as
+ * the others here: nothing in this module is client code.
  */
 export const PRICING_LOOK =
   "items-center rounded-full bg-[var(--c-ink)] px-3.5 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-[var(--c-ink2)]";

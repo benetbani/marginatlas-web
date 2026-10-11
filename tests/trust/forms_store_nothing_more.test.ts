@@ -35,9 +35,12 @@ for (const route of ROUTES) {
    `message`, read from the parsed reply, as the newsletter route logs error.code and error.message. So a console call reds on a body
    read in its arguments (text, json, blob, arrayBuffer, formData, however wrapped or chained), and on a variable that holds a body
    read (a parsed reply) used in it for anything but its `code` and `message`: the whole reply, its `details`, a stringified copy.
-   BLIND SPOT: it reads names and calls, so a reply copied into a variable called something else, or a body read stored by a helper
-   and logged through a logger that is not `console`, would pass; the three routes hold neither today. The scan is held to what it
-   hunts by the samples below, which run it on seven inline sources. */
+   A DESTRUCTURED READ IS A REPLY TOO (fix round F1, group G9; the D2 review's Minor 6): every name an object or array pattern introduces
+   from a body read (`const { details } = await r.json()`) holds the reply or a part of it, a nested pattern and a rest element
+   included; only `code` and `message` pulled out, however renamed, are the allowed form.
+   BLIND SPOT: it reads names and calls, so a reply copied by plain assignment into a variable called something else (`const d = reply.details`),
+   or a body read stored by a helper and logged through a logger that is not `console`, would pass; the three routes hold neither today. The scan
+   is held to what it hunts by the samples below, which run it on inline sources. */
 const TYPED = new Set(["email", "raw", "row", "body", "message", "name"]);
 const BODY_READS = new Set(["text", "json", "blob", "arrayBuffer", "formData"]);
 const REPLY_FIELDS = new Set(["code", "message"]);
@@ -47,7 +50,21 @@ function consoleCallsHoldingSource(file: string, text: string): string[] {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   /* THE VARIABLES THAT HOLD A PARSED REPLY: any declared from an initializer that reads a body (`const reply = await r.json().catch(...)`). */
   const replies = new Set<string>();
-  const collect = (n: ts.Node): void => { if (ts.isVariableDeclaration(n) && ts.isIdentifier(n.name) && n.initializer && holdsBodyRead(n.initializer)) replies.add(n.name.text); ts.forEachChild(n, collect); };
+  /* THE NAMES A BINDING INTRODUCES (fix round F1, group G9; the D2 review's Minor 6): `const { details } = await r.json()` holds a part of the reply in a name of
+     its own, so every identifier an object or array pattern introduces is a reply (nested patterns and a rest element included), except a field the log may
+     carry: `code` or `message` pulled out, however renamed, is the allowed form, as `reply?.code` is. */
+  const bindingNames = (name: ts.BindingName): string[] => {
+    if (ts.isIdentifier(name)) return [name.text];
+    return (name.elements as readonly ts.ArrayBindingElement[]).flatMap((el) => {
+      if (ts.isOmittedExpression(el)) return [];
+      if (ts.isObjectBindingPattern(name) && !el.dotDotDotToken && ts.isIdentifier(el.name)) {
+        const prop = el.propertyName ?? el.name;
+        if ((ts.isIdentifier(prop) || ts.isStringLiteral(prop)) && REPLY_FIELDS.has(prop.text)) return [];
+      }
+      return bindingNames(el.name);
+    });
+  };
+  const collect = (n: ts.Node): void => { if (ts.isVariableDeclaration(n) && n.initializer && holdsBodyRead(n.initializer)) for (const id of bindingNames(n.name)) replies.add(id); ts.forEachChild(n, collect); };
   collect(sf);
   const found: string[] = [];
   const visit = (n: ts.Node): void => {
@@ -88,9 +105,18 @@ const SAMPLES: Array<[string, string, number]> = [
   ["the parsed reply's details", `async function f(r: Response) { const reply = await r.json().catch(() => null); console.error("x", reply?.details); }`, 1],
   ["the parsed reply stringified", `async function f(r: Response) { const reply = await r.json(); console.error("x", JSON.stringify(reply)); }`, 1],
   ["the status, code and message of the parsed reply: the form the routes use", `async function f(r: Response) { const reply = await r.json().catch(() => null); console.error("x", r.status, reply?.code, reply?.message); }`, 0],
+  /* DESTRUCTURED READS (critique pass 3, fix round F1, group G9; the D2 review's Minor 6): `collect` registered a variable only when its name was an
+     identifier, so `const { details } = await r.json(); console.error(details)`, the likeliest way to pull the echoing field out, passed. A binding pattern
+     over a body read registers every name it introduces, but not a field the log may carry: `code` and `message`, however renamed, are the allowed form. */
+  ["a destructured details: const { details } = await r.json()", `async function f(r: Response) { const { details } = await r.json(); console.error("x", details); }`, 1],
+  ["a destructured, renamed details: const { details: d } = await r.json()", `async function f(r: Response) { const { details: d } = await r.json(); console.error("x", d); }`, 1],
+  ["an array destructure of a reply: const [first] = await r.json()", `async function f(r: Response) { const [first] = await r.json(); console.error("x", first); }`, 1],
+  ["a nested destructure: const { error: { details } } = await r.json()", `async function f(r: Response) { const { error: { details } } = await r.json(); console.error("x", details); }`, 1],
+  ["a rest of the reply: const { code, ...rest } = await r.json()", `async function f(r: Response) { const { code, ...rest } = await r.json(); console.error("x", code, rest); }`, 1],
+  ["a destructured code and a renamed message: the allowed fields", `async function f(r: Response) { const { code, message: m } = await r.json().catch(() => ({})); console.error("x", r.status, code, m); }`, 0],
 ];
 const sampled = SAMPLES.map(([label, src, want]) => ({ label, want, got: consoleCallsHoldingSource("sample.ts", src).length }));
-check("tests/trust/forms_store_nothing_more.test.ts", `the console scan sees what it hunts: it reds on ${sampled.filter((s) => s.want > 0).length} sources that log a reply's body, its parsed reply or its details, and passes the status, code and message (${sampled.filter((s) => s.got !== s.want).map((s) => `${s.label}: ${s.got}, wanted ${s.want}`).join("; ") || "all seven as wanted"})`, sampled.every((s) => s.got === s.want), "keep consoleCallsHoldingSource red on a body read inside a console call and on a parsed reply used for anything but its code and message");
+check("tests/trust/forms_store_nothing_more.test.ts", `the console scan sees what it hunts: it reds on ${sampled.filter((s) => s.want > 0).length} sources that log a reply's body, its parsed reply or its details, and passes the status, code and message (${sampled.filter((s) => s.got !== s.want).map((s) => `${s.label}: ${s.got}, wanted ${s.want}`).join("; ") || `all ${sampled.length} as wanted`})`, sampled.every((s) => s.got === s.want), "keep consoleCallsHoldingSource red on a body read inside a console call and on a parsed reply used for anything but its code and message");
 const privacy = readFileSync("src/app/(site)/privacy/page.tsx", "utf8");
 check("src/app/(site)/privacy/page.tsx", "the privacy page still promises what this holds", privacy.includes("what you gave us and nothing more"));
 

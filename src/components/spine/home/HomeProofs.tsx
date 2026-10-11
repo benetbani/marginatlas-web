@@ -39,6 +39,8 @@ import { FactRows } from "@/components/spine/archetypes/FactRows";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
 import { MonthBars } from "@/components/spine/archetypes/MonthBars";
 import type { DoorKind } from "@/lib/spine/door_kinds";
+/* THE DOOR'S ARROW IS ONE CONSTANT (fix round F1, group G9): the 404's doors draw it too (src/lib/spine/door_look.ts). */
+import { DOOR_ARROW } from "@/lib/spine/door_look";
 import type { ProofArchiveData, ProofJoinsData, ProofTaxData } from "@/lib/home/proofs";
 
 /** A door card: its own stacking context for the stretched link, its edge to ink2 on hover, its title at the heading rung (20 on 28). */
@@ -58,7 +60,7 @@ function DoorTitle({ href, lands, children }: { href: string; lands?: DoorKind; 
       <a href={href} {...(lands ? { "data-lands": lands } : {})} className="min-w-0 flex-1 text-[var(--c-ink)] no-underline after:absolute after:inset-0 after:z-10 after:rounded-[12px]">
         {children}
       </a>
-      <span aria-hidden className="mt-1 shrink-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">&#8594;</span>
+      <span aria-hidden className={`mt-1 ${DOOR_ARROW}`}>&#8594;</span>
     </div>
   );
 }

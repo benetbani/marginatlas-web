@@ -7,7 +7,8 @@
  *
  * WITH `choices` (the home page's ask, the checkup of 2026-10-06): a place to choose first, each choice carrying its own tag from
  * the same bounded set (src/lib/home/depth_places.ts); the address is sent only with a place chosen. Without `choices`, the form
- * is the thin page's, unchanged.
+ * is the thin page's, unchanged except that, since fix round F1 (group G9), it stands in the page's foot band (the hook `data-page-foot` and padding, not a margin)
+ * so the band that paints the licence and Report lines runs on under it.
  */
 import * as React from "react";
 
@@ -30,7 +31,10 @@ export function DepthNotify({ source = "", words, choices }: { source?: string; 
       setState("failed");
     }
   }
-  if (state === "sent") return <p data-depth-notify="sent" className="mt-6 text-[length:var(--t-body)] text-[var(--c-ink2)]">{words.sent}</p>;
+  /* THE THIN PAGE'S FORM AND ITS SENT LINE ARE IN THE FOOT BAND (fix round F1, group G9; the D2 review's Minor 2): they carry the hook that paints the licence and Report
+     lines (`data-page-foot`, globals.css THE ZONES) and pad themselves, the 24px that was a margin now padding and 24px under them, so the band runs on from the Report line to
+     the newsletter bar and the grey no longer narrows back to the column for the form. The form with a place to choose (the home's ask) is a card's content and takes none. */
+  if (state === "sent") return <p data-depth-notify="sent" data-page-foot className="pt-6 pb-6 text-[length:var(--t-body)] text-[var(--c-ink2)]">{words.sent}</p>;
   const field = "min-h-11 w-full min-w-0 rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-3 text-[length:var(--t-body)] text-[var(--c-ink)]";
   const button = "tap-y min-h-11 rounded-md bg-[var(--c-ink)] px-4 text-[length:var(--t-body)] font-semibold text-[var(--c-surface)] disabled:opacity-60";
   const failed = state === "failed" ? <p role="alert" className="w-full text-[length:var(--t-micro)] text-[var(--c-muted)]">{words.failed}</p> : null;
@@ -57,7 +61,7 @@ export function DepthNotify({ source = "", words, choices }: { source?: string; 
     );
   }
   return (
-    <form data-depth-notify="" onSubmit={submit} className="mt-6 flex flex-wrap items-center gap-3">
+    <form data-depth-notify="" data-page-foot onSubmit={submit} className="flex flex-wrap items-center gap-3 pt-6 pb-6">
       <label htmlFor="depth-notify-email" className="text-[length:var(--t-body)] text-[var(--c-ink)]">{words.label}</label>
       <input
         id="depth-notify-email"
