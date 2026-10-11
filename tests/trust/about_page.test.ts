@@ -13,6 +13,7 @@ import { existsSync, readFileSync } from "node:fs";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { TOP_LEVEL_SEGMENTS } from "../../src/lib/routing/top_level_segments";
+import { FREE_DATA } from "../../src/lib/nav";
 import { red, redSummary } from "../../scripts/lib/red";
 
 (globalThis as unknown as { React: typeof React }).React = React;
@@ -26,7 +27,9 @@ const check = (label: string, ok: boolean) => { if (ok) { console.log(`PASS  ${l
 check("/about is a known top-level address", TOP_LEVEL_SEGMENTS.has("about"));
 check("the sitemap lists /about", readFileSync("src/app/sitemap.ts", "utf8").includes("/about`"));
 const chrome = readFileSync("src/components/SiteChrome.tsx", "utf8");
-check("the footer leads to /about, /corrections and /data", ['href="/about"', 'href="/corrections"', 'href="/data"'].every((h) => chrome.includes(h)));
+/* The data pack's link is the footer's FREE_DATA row (src/lib/nav.ts, since critique pass 2, fix round C2, item P2.5), so its address is read from the
+   constant and not spelled in the footer: the footer draws href={FREE_DATA.href}, and the constant is /data. It read the literal href="/data" until then. */
+check("the footer leads to /about, /corrections and /data", ['href="/about"', 'href="/corrections"', "href={FREE_DATA.href}"].every((h) => chrome.includes(h)) && FREE_DATA.href === "/data");
 
 (async () => {
   if (!existsSync(FILE)) { check("the page exists at /about", false); }
