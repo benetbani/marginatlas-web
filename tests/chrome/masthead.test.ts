@@ -138,6 +138,20 @@ async function main() {
   check("the first zone of a spine body that opens the column paints 16px up over <main>'s padding: border-image-outset 1rem 100vmax 0, under a selector that needs the spine to be the column's first rendered child",
     /main\s*>\s*\.spine-scope:nth-child\(1 of :not\([^)]*\bscript\b[^)]*\)\)\s*>\s*div\s*>\s*\[data-spine-body\]:first-child\s*>\s*\[data-zone\]:nth-child\(1 of \[data-zone\]\)\s*\{[^}]*border-image-outset:\s*1rem 100vmax 0;/.test(css),
     { file: CSS, remedy: "in THE ZONES, add main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > [data-spine-body]:first-child > [data-zone]:nth-child(1 of [data-zone]) { border-image-outset: 1rem 100vmax 0; }" });
+  /* THE TRAIL MEETS THE BAR TOO (critique pass 4, fix round F2, item P2.1). A page that opens with its breadcrumb (the trade, city, industry and
+     neighbourhood pages, every door the home opens) is not matched by the rule above, its body being the trail's sibling and not the shell's first
+     child, and the built page showed what that left: the 16px of <main>'s padding white under the hairline, then the trail on a column-wide grey box
+     (the shell paints --c-ground on its own root, inside the column) with white beside it, then the tint edge to edge from the first zone: a stepped
+     edge at the top of every one of those pages. The trail, when it opens the column, takes the same longhand bleed the zones and the foot lines
+     take: the tint behind it, and a border image's outset of 1rem above (<main>'s pt-4), 100vmax to either side and 0.5rem below (its own mb-2, so
+     the margin under it is band too, up to the first zone). IN LONGHAND, never the shorthand: the build's CSS minimizer parses as SCSS (the
+     css-minifies gate reads the stylesheet through it). BLIND SPOT: this reads the stylesheet's text; that the trail's own overflow-hidden does not
+     clip its outset, and the pixels, are the browser's (scratchpad/home-reform/f2_p21_probe.mjs measured them). */
+  const trailRule = (/main\s*>\s*\.spine-scope:nth-child\(1 of :not\([^)]*\bscript\b[^)]*\)\)\s*>\s*div\s*>\s*nav\[data-crumbs\]:first-child\s*\{([^}]*)\}/.exec(css)?.[1] ?? "").replace(/\s+/g, " ");
+  const TRAIL_LONGHANDS = ["background: var(--zone-tint);", "border-image-source: conic-gradient(var(--zone-tint) 0 0);", "border-image-slice: 0 fill;", "border-image-width: 0;", "border-image-outset: 1rem 100vmax 0.5rem;"];
+  check("a page that opens with its trail paints the strip too: the trail, when it is the shell's first child, takes the tint and a border image's outset of 1rem 100vmax 0.5rem (<main>'s padding above it, its own margin below it), in longhand and with no double slash",
+    trailRule !== "" && TRAIL_LONGHANDS.every((l) => trailRule.includes(l)) && !/\bborder-image\s*:/.test(trailRule) && !/\/\//.test(trailRule),
+    { file: CSS, remedy: "in THE ZONES, after the rule above, add main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > nav[data-crumbs]:first-child { background: var(--zone-tint); border-image-source: conic-gradient(var(--zone-tint) 0 0); border-image-slice: 0 fill; border-image-width: 0; border-image-outset: 1rem 100vmax 0.5rem; }" });
 
   /* THE ANCHORS (fix round 1, group 1; widened in the closing cleanup of plan 2026-10-10, item 2). The scroll-padding-top above is the
      bar's whole height and 8px of air, and a browser ADDS an element's own scroll-margin-top to it, so an offset written before the
@@ -305,10 +319,10 @@ async function main() {
      under the bar's hairline comes back, and no gate of the chain draws the bar to see it. Here SiteChrome is rendered around the real
      SpineShell and a body root holding two zones, with and without the JSON-LD script the home and the country page put ahead of the shell,
      and the selector's path is walked: main > .spine-scope (the first child that is not a script, link, style or noscript) > div >
-     [data-spine-body]:first-child > the root's first [data-zone]. A page that opens with a breadcrumb before its shell must NOT match (the
-     cell, city, hood and industry pages keep their strip clear of it, by design), nor one whose shell opens with something ahead of the
-     root. BLIND SPOT: jsdom's selector engine answers null, with no error, to `:nth-child(1 of S)`, so the path is walked in DOM terms,
-     which is the selector's own meaning; the painted pixel is the browser's (the round's frames). */
+     [data-spine-body]:first-child > the root's first [data-zone]. A breadcrumb ahead of the SHELL, in <main>, must NOT match, nor a shell
+     that opens with something ahead of the root (a page that opens with its trail INSIDE the shell is the next check's, the trail's own rule,
+     fix round F2, item P2.1). BLIND SPOT: jsdom's selector engine answers null, with no error, to `:nth-child(1 of S)`, so the path is walked
+     in DOM terms, which is the selector's own meaning; the painted pixel is the browser's (the round's frames). */
   const { JSDOM: SeamDom } = await import("jsdom");
   const { SpineShell } = await import("../../src/components/spine/shell");
   const aroundShell = (lead: React.ReactNode[], shellChildren: React.ReactNode) => {
@@ -335,6 +349,35 @@ async function main() {
     bodyWrapped: seamZone(aroundShell([], React.createElement("div", null, seamBody))),
   };
   check(`the strip's seam holds in the markup: SiteChrome around SpineShell and a data-spine-body root puts the root's first zone where the stylesheet's selector reaches it, with or without a script ahead of the shell, and a breadcrumb ahead of the shell, another block ahead of the root or a wrapper round it cuts it (${JSON.stringify(seams)})`, seams.plain === "1-1" && seams.withScript === "1-1" && seams.withCrumb === null && seams.shellOpensWithOther === null && seams.bodyWrapped === null, { file: "src/components/spine/shell.tsx", remedy: "keep SpineShell's markup as .spine-scope > div > {children}, render each reaching view's body root (<div data-spine-body>) as the shell's first child, and keep <main>'s first rendered child (scripts aside) the shell, or move the selector in globals.css (THE ZONES, item P1.1) with them" });
+
+  /* THE TRAIL'S SEAM (fix round F2, item P2.1). The trail's rule (THE ZONES: `main > .spine-scope:nth-child(1 of :not(script, ...)) > div >
+     nav[data-crumbs]:first-child`) needs the same facts and two numbers: the real Crumbs, drawn first in the shell, is the shell's inner div's
+     first child, with or without a script ahead of the shell; a block ahead of it or a wrapper round it cuts the rule; its bottom margin is the
+     mb-2 whose 0.5rem the outset gives back, and <main> opens with the pt-4 whose 1rem the outset covers. Move any one and the white strip or a
+     seam of grey comes back under the bar, and no gate of the chain draws the bar to see it. BLIND SPOT: as above, the path is walked in DOM
+     terms; the painted pixel is the browser's. */
+  const { Crumbs } = await import("../../src/components/spine/Crumbs");
+  const trailNav = (html: string) => {
+    const doc = new SeamDom(`<!doctype html><body>${html}</body>`).window.document;
+    const first = [...(doc.querySelector("main")?.children ?? [])].find((el) => !["SCRIPT", "LINK", "STYLE", "NOSCRIPT"].includes(el.tagName));
+    if (!first || !first.classList.contains("spine-scope")) return null;
+    for (const inner of [...first.children].filter((el) => el.tagName === "DIV")) {
+      const nav = inner.firstElementChild;
+      if (nav && nav.tagName === "NAV" && nav.hasAttribute("data-crumbs")) return nav;
+    }
+    return null;
+  };
+  const trailEl = React.createElement(Crumbs, { items: [{ label: "Trades", href: "/industries" }, { label: "Restaurants" }] });
+  const trailSeams = {
+    plain: trailNav(aroundShell([], React.createElement(React.Fragment, null, trailEl, seamBody)))?.className ?? null,
+    withScript: !!trailNav(aroundShell([seamScript], React.createElement(React.Fragment, null, trailEl, seamBody))),
+    blockAhead: !!trailNav(aroundShell([], React.createElement(React.Fragment, null, React.createElement("div", null, "ahead"), trailEl, seamBody))),
+    wrapped: !!trailNav(aroundShell([], React.createElement("div", null, trailEl, seamBody))),
+    main: /\bclass="([^"]*)"/.exec(o.main)?.[1] ?? "",
+  };
+  check(`the trail's seam holds in the markup: the real Crumbs drawn first in the shell is where the stylesheet's trail rule reaches it, with or without a script ahead of the shell, a block ahead of it or a wrapper round it cuts the rule, its margin is mb-2 (the outset's 0.5rem below) and <main> opens with pt-4 (its 1rem above) (${JSON.stringify(trailSeams)})`,
+    /\bmb-2\b/.test(trailSeams.plain ?? "") && trailSeams.withScript && !trailSeams.blockAhead && !trailSeams.wrapped && /\bpt-4\b/.test(trailSeams.main),
+    { file: "src/components/spine/Crumbs.tsx", remedy: "keep Crumbs a <nav data-crumbs> with mb-2, drawn as the shell's first child by the cell, city, industry and hood views, and <main> on pt-4 (src/components/SiteChrome.tsx), or move the trail's rule in globals.css (THE ZONES, item P2.1) and its outset 1rem 100vmax 0.5rem with them" });
 
   /* The skip link and the landmark. */
   check("a skip link is the first thing in the chrome, to #main", /^<a href="#main"[^>]*>Skip to content<\/a>/.test(off));

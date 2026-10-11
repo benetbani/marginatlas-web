@@ -1204,10 +1204,27 @@
    column began under it, so a white strip ran between the bar's hairline and the grey at every width. The first zone of a spine body that
    is the column's first rendered child paints its fill 16px upward over it, as it paints 100vmax to either side: a border image's top
    outset, which moves no box (the h1 and every zone stay where they were) and draws only in <main>'s own padding. The selector names
-   the column's first child that is not a script, so a page that opens with a breadcrumb or a masthead (the city, the hood and the cell
-   pages) keeps its strip, clear of the thing above it. */
+   the column's first child that is not a script, and the body root as that child's first element, so a page that opens with its
+   breadcrumb (the trade, city, industry and neighbourhood pages) is not matched here: the trail's own rule below paints its strip. */
 main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > [data-spine-body]:first-child > [data-zone]:nth-child(1 of [data-zone]) {
   border-image-outset: 1rem 100vmax 0;
+}
+/* THE TRAIL MEETS THE BAR TOO (critique pass 4, fix round F2, item P2.1): a page that opens with its breadcrumb (every door the home opens: the
+   trade, city, industry and neighbourhood pages) has the trail ahead of its body, so the rule above never reached it, and the built page
+   showed what that left: the 16px of <main>'s padding white under the hairline, the trail on a column-wide grey box (the shell paints
+   --c-ground on its own root, inside the column) with white either side, and the tint edge to edge only from the first zone, a stepped edge
+   at the top of each of those pages. The trail, when it is the shell's first child, takes the zones' own bleed: the tint behind it and a
+   border image's outset of 1rem above (<main>'s pt-4), 100vmax to either side and 0.5rem below (its own mb-2, so the margin under it is band
+   too, up to the first zone). It moves no box (the trail and the h1 stay where they were), and the trail's overflow-hidden, its one-line
+   law, clips what stands inside it and not its own border image's overflow, as a shadow is not clipped by its element. It relies on the
+   first zone being the tint, which it is by its place, the first of its siblings. IN LONGHAND, as the rules around it: the production
+   build's CSS minimizer parses as SCSS. */
+main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > nav[data-crumbs]:first-child {
+  background: var(--zone-tint);
+  border-image-source: conic-gradient(var(--zone-tint) 0 0);
+  border-image-slice: 0 fill;
+  border-image-width: 0;
+  border-image-outset: 1rem 100vmax 0.5rem;
 }
 /* EDGE TO EDGE WITHOUT A CLIP (the code review of 2026-10-04): the spread shadow needed a clip-path to keep it off its neighbours,
    and the clip cut whatever stood out of the zone (a "?" tip near its top opening upward). A border image's outset paints the

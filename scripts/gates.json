@@ -2686,6 +2686,7 @@
         "src/components/SiteChrome.tsx",
         "src/components/StructuredData.tsx",
         "src/components/spine",
+        "src/components/spine/Crumbs.tsx",
         "src/components/spine/WhereNext.tsx",
         "src/components/spine/home/HomeProofs.tsx",
         "src/components/spine/shell.tsx",
