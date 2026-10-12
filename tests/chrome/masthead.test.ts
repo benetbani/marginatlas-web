@@ -167,6 +167,31 @@ async function main() {
   check("a v2 page (the Trades page, the world page) that opens the column meets the bar as the zones do: its root, when it is <main>'s first rendered child, takes the tint, a border image's outset of 1rem 100vmax 0 and 3rem of padding under it, in longhand and with no double slash",
     v2Rule !== "" && V2_LONGHANDS.every((l) => v2Rule.includes(l)) && !/\bborder-image\s*:/.test(v2Rule) && !/\/\//.test(v2Rule),
     { file: CSS, remedy: "in THE ZONES, after the trail's rule, add main > .av2:nth-child(1 of :not(script, link, style, noscript)) { background: var(--zone-tint); border-image-source: conic-gradient(var(--zone-tint) 0 0); border-image-slice: 0 fill; border-image-width: 0; border-image-outset: 1rem 100vmax 0; padding-bottom: 3rem; }" });
+  /* THE v2 PAGES SHARE THE SITE'S ONE GUTTER (truth-fixes round 3D, E2). The bar's row, <main>, the newsletter bar and the footer read one gutter
+     (src/lib/nav.ts, GUTTER: 16 under 768, 24 from) and so share one left edge: the wordmark, the h1 and the foot lines. The v2 ground's `.wrap`
+     (src/styles/atlas-spine.css: a 1060px column with 32px of side padding, 18 under 821) was written for a page that stood alone, and inside
+     <main>'s column it insets the cards a second time: measured in a browser at round 3D (scratchpad/r3d/*_before-1280.json and -375.json), the
+     opening card began at x 142 against the wordmark's 104 at 1280 (38px in) and at 34 against 16 at 375 (18px in), and its right edge stopped
+     as far short of the bar's. The root's `.wrap`, when the root opens the column, takes no maximum width and no side padding, so the cards'
+     edges are the column's: the same selector as the ground's rule above, one child down, in longhand as its neighbours. BLIND SPOT: this
+     reads the stylesheet's text; the edges themselves are element rectangles in a browser (the round's *_after-1280.json and -375.json), and
+     neither page is on scripts/harness/pages.json, so no gate of the chain draws them. */
+  const wrapRule = (/main\s*>\s*\.av2:nth-child\(1 of :not\([^)]*\bscript\b[^)]*\)\)\s*>\s*\.wrap\s*\{([^}]*)\}/.exec(css)?.[1] ?? "").replace(/\s+/g, " ");
+  const WRAP_LONGHANDS = ["max-width: none;", "padding-left: 0;", "padding-right: 0;"];
+  check("a v2 page shares the site's one gutter: under its root (<main>'s first rendered child) the .wrap takes no maximum width and no side padding, so the cards' edges are <main>'s content edges, the wordmark's and the footer's",
+    wrapRule !== "" && WRAP_LONGHANDS.every((l) => wrapRule.includes(l)) && !/\/\//.test(wrapRule),
+    { file: CSS, remedy: "in THE ZONES, after the v2 ground's rule, add main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap { max-width: none; padding-left: 0; padding-right: 0; }" });
+  /* THE ROOT THEN STOPS CLIPPING, AND KEEPS ITS BLOCK FORMATTING CONTEXT (the zoomed frames of round 3D). `.av2` clips sideways (atlas-spine.css:
+     overflow-x hidden) and, as a side effect, is a block formatting context, which is what holds the opening card's 16px top margin INSIDE the
+     root (the root's top is <main>'s padding edge, and the 3C ground's outset covers the 16px above the card). With the cards standing on the
+     root's own edges the clip cut each card's soft shadow dead at the card's side edge: photographed at 4x, a hard vertical end on the shadow
+     between two cards, where before it faded out past the edge. `overflow-x: visible` alone would hand the margin back to <main> and open a
+     second white strip under the bar, so the root says `display: flow-root` (a block formatting context that clips nothing) with it. The
+     page's own `body { overflow-x: hidden }` still holds the viewport. BLIND SPOT: the text of the rule; the shadow's end and the strip are
+     pixels (scratchpad/r3d/zoom_*_corner_bl.png, the *_after-*.json tops). */
+  check("a v2 page's root stops clipping the cards' shadows at the column's edge and keeps its block formatting context: display: flow-root and overflow-x: visible, in the root's rule, so the opening card's top margin stays inside the root",
+    v2Rule.includes("display: flow-root;") && v2Rule.includes("overflow-x: visible;"),
+    { file: CSS, remedy: "in the v2 ground's rule (main > .av2:nth-child(1 of :not(script, link, style, noscript))) add display: flow-root; overflow-x: visible; so the root is a block formatting context that clips nothing" });
 
   /* THE ANCHORS (fix round 1, group 1; widened in the closing cleanup of plan 2026-10-10, item 2). The scroll-padding-top above is the
      bar's whole height and 8px of air, and a browser ADDS an element's own scroll-margin-top to it, so an offset written before the

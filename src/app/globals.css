@@ -1232,10 +1232,14 @@ main > .spine-scope:nth-child(1 of :not(script, link, style, noscript)) > div > 
    bar's hairline, the gutters white either side, and under the last card only the newsletter bar's hairline (the v2 footer's band had been the
    room). The page root, when it is the column's first rendered child, takes the zones' own bleed in the tint, as the trail does: a border
    image's outset of 1rem above (<main>'s pt-4), 100vmax to either side and none below, and 3rem of padding of its own, so the last card stands
-   off the newsletter bar as it stood off the footer's band. It moves no box (the opening card and every section stay where they were), and the
-   root's own overflow-x hidden clips what stands inside it and not its own border image, as the trail's overflow-hidden does. `.av2` is
-   atlas-spine.css's scope class and that file is left alone: this selector needs `main >` and the first rendered child, so the workshop pages
-   that draw `.av2` bare are not matched. IN LONGHAND, as the rules above: the production build's CSS minimizer parses as SCSS. */
+   off the newsletter bar as it stood off the footer's band. It moves no box (the opening card and every section stay where they were).
+   atlas-spine.css makes the root a clipping block formatting context (overflow-x hidden), and the block formatting context is what holds the
+   opening card's 16px top margin inside the root, so the ground's top is <main>'s padding edge. Round 3D keeps the context and drops the clip:
+   `display: flow-root; overflow-x: visible`. With the cards on the root's own edges (the gutter rule below) the clip cut each card's soft
+   shadow dead at the card's side edge (photographed at 4x); `overflow-x: visible` alone would hand the margin back to <main> and open a white
+   strip under the bar again. The page's `body { overflow-x: hidden }` still holds the viewport. `.av2` is atlas-spine.css's scope class and
+   that file is left alone: this selector needs `main >` and the first rendered child, so the workshop pages that draw `.av2` bare are not
+   matched. IN LONGHAND, as the rules above: the production build's CSS minimizer parses as SCSS. */
 main > .av2:nth-child(1 of :not(script, link, style, noscript)) {
   background: var(--zone-tint);
   border-image-source: conic-gradient(var(--zone-tint) 0 0);
@@ -1243,6 +1247,19 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) {
   border-image-width: 0;
   border-image-outset: 1rem 100vmax 0;
   padding-bottom: 3rem;
+  display: flow-root;
+  overflow-x: visible;
+}
+/* THE v2 PAGES SHARE THE SITE'S ONE GUTTER (truth-fixes round 3D, E2, 2026-10-12): the bar's row, <main>, the newsletter bar and the footer read one
+   gutter (src/lib/nav.ts, GUTTER: 16 under 768, 24 from), so the wordmark, the h1 and the foot lines share one left edge. The v2 ground's `.wrap`
+   (atlas-spine.css: a 1060px column with 32px of side padding, 18 under 821) was written for a page that stood alone, and inside <main>'s column it
+   insets the cards a second time: measured in a browser, the opening card began at x 142 against the wordmark's 104 at 1280 and at 34 against 16 at 375.
+   Under the ground's own rule above, the `.wrap` takes no maximum width and no side padding, so the cards' edges are the column's. The same selector
+   one child down, in longhand as the rules around it; atlas-spine.css is left alone and the workshop's bare `.av2` pages are not matched. */
+main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 /* EDGE TO EDGE WITHOUT A CLIP (the code review of 2026-10-04): the spread shadow needed a clip-path to keep it off its neighbours,
    and the clip cut whatever stood out of the zone (a "?" tip near its top opening upward). A border image's outset paints the
