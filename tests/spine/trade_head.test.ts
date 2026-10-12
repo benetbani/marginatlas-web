@@ -117,6 +117,8 @@ const NAME = "src/lib/cells/place_name.ts";
 const PAGE = "src/app/[country]/[geo]/[industry]/page.tsx";
 const SEED = "src/lib/spine/adapt_cell.ts";
 const CARD = "src/app/og/cell/route.tsx";
+/** The printer of the foot sentence (tradeHeroFacts): the file every foot row's red is filed under where the source line is clean, so gates.json routes it to this gate. */
+const HERO_FACTS = "src/lib/spine/trade_hero_facts.ts";
 const REMEDY = "keep the head on the register in London and on a read revenue elsewhere; a filled revenue never reaches a head; a place the lookup holds no row for is named as the site's tables spell it, never by its country's bare code (placeNameOf); a figure is printed beside the place it belongs to (headPlaceOf)";
 const R_EXPORT = "export placeNameOf(country, geoSlug, geoName) from src/lib/cells/place_name.ts: the cell's own name, except where that name is the page country's own code, then the place word as the site's tables spell it, else the country's name";
 const R_PLACE = "export headPlaceOf(country, geoSlug, cell) from src/lib/cells/place_name.ts: the place's label, how a title spells it after \"in\" (the place with its country when the row is the country's, the country with its article when the place is the country), and the place the figure belongs to (the country for a country's row, the place for its own row, null for a synthetic cell and for a code that neither the country list holds nor the site maps)";
@@ -420,7 +422,7 @@ async function main(): Promise<void> {
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "offline";
   delete process.env.SUPABASE_SERVICE_ROLE_KEY;
   const { INFLATION_TARGET_YEAR: YEAR } = await import("../../src/lib/stats/inflation");
-  const bandRow = (iso3: string, name: string, size: string, usd: number) => ({ country_iso3: iso3, country_name: name, year: 2024, industry_id: "restaurants", size_band: size, predicted_rev_per_firm: usd, coverage_tier: "X", coverage_source: "wave5_extrapolation", quality_score: 30, sub_industry_id: null, sub_industry_source_kind: null, cost_stack: null, setup_costs: null });
+  const bandRow = (iso3: string, name: string, size: string, usd: number, source = "wave5_extrapolation") => ({ country_iso3: iso3, country_name: name, year: 2024, industry_id: "restaurants", size_band: size, predicted_rev_per_firm: usd, coverage_tier: "X", coverage_source: source, quality_score: 30, sub_industry_id: null, sub_industry_source_kind: null, cost_stack: null, setup_costs: null });
   const UK_ROWS = [bandRow("GBR", "GB", "TOTAL", 153362.61), bandRow("GBR", "GB", "0-9", 67565.84), bandRow("GBR", "GB", "20-49", 1080132.61)];
   const DE_ROWS = [bandRow("DEU", "DE", "TOTAL", 241000), bandRow("DEU", "DE", "0-9", 118000), bandRow("DEU", "DE", "20-49", 1450000)];
   /* Afghanistan's and Denmark's country rows (round 3A2): the two whole-country words the review read, the first labelled "All of AF" by its region table, the second
@@ -431,7 +433,11 @@ async function main(): Promise<void> {
   const IN_ROWS = [bandRow("IND", "IN", "TOTAL", 22000), bandRow("IND", "IN", "0-9", 12000), bandRow("IND", "IN", "20-49", 190000)];
   const KR_ROWS = [bandRow("KOR", "KR", "TOTAL", 137000), bandRow("KOR", "KR", "0-9", 74000), bandRow("KOR", "KR", "20-49", 910000)];
   const MY_ROWS = [bandRow("MYS", "MY", "TOTAL", 218000), bandRow("MYS", "MY", "0-9", 99000), bandRow("MYS", "MY", "20-49", 1200000)];
-  const EXTRAPOLATED: Record<string, unknown[]> = { GBR: UK_ROWS, DEU: DE_ROWS, AFG: AF_ROWS, DNK: DK_ROWS, IND: IN_ROWS, KOR: KR_ROWS, MYS: MY_ROWS };
+  /* France's country row as a research drop tags it (truth-fixes final fixes; the review of round 3B, M8): scripts/ingest/load_research_drop.ts writes extrapolated rows whose whole
+     source is "research-drop:<id>", a key:value marker with nothing readable in it. The seed cuts it and the foot names no source, never an invented one. */
+  const DROP_SOURCE = "research-drop:fr-2026-10-a1";
+  const FR_ROWS = [bandRow("FRA", "FR", "TOTAL", 198000, DROP_SOURCE), bandRow("FRA", "FR", "0-9", 96000, DROP_SOURCE), bandRow("FRA", "FR", "20-49", 1320000, DROP_SOURCE)];
+  const EXTRAPOLATED: Record<string, unknown[]> = { GBR: UK_ROWS, DEU: DE_ROWS, AFG: AF_ROWS, DNK: DK_ROWS, IND: IN_ROWS, KOR: KR_ROWS, MYS: MY_ROWS, FRA: FR_ROWS };
   const regionalRow = (country: string, geoId: string, level: string, name: string, usd: number) => ({ country, geo_id: geoId, geo_level: level, geo_name: name, industry_id: "restaurants", size_band: null, year: YEAR, n_enterprises: 5000, n_employees: 40000, revenue_per_firm: usd, rev_p10: usd * 0.4, rev_p25: usd * 0.65, rev_p50: usd, rev_p75: usd * 1.45, rev_p90: usd * 2.1, payroll_per_employee: 30000, quality_score: 80, coverage_tier: "S", coverage_source: "National business statistics", currency: "USD", sub_industry_id: null, sub_industry_source_kind: null, cost_stack: null, setup_costs: null });
   const REGIONAL = [
     regionalRow("GB", "GB-E09000001", "district", "London", 433_000),
@@ -716,7 +722,7 @@ async function main(): Promise<void> {
   const adaptCode = stripCommentLines(readFileSync(SEED, "utf8").split(/\r?\n/)).join("\n");
   check("the sanitiser cuts by the one reading (internalWordsIn from ./internal_words) and splits no words of its own", /import \{ internalWordsIn \} from "\.\/internal_words";/.test(adaptCode) && !/\[A-Za-z0-9_\]\+/.test(adaptCode), { file: SEED, remedy: R_READER });
   /* The seed and the hero's foot, as the page prints them. The four internal-source addresses drop the clause; the controls keep their words exactly. */
-  type FootCase = { country: string; geo: string; industry: string; foot: string; at?: { file: string; remedy: string } };
+  type FootCase = { country: string; geo: string; industry: string; foot: string; why?: string; at?: { file: string; remedy: string } };
   const feet: FootCase[] = [
     { country: "gb", geo: "boston", industry: "restaurants", foot: "Estimates for a typical restaurant." },
     { country: "gb", geo: "gb", industry: "restaurants", foot: "Estimates for a typical restaurant." },
@@ -724,16 +730,22 @@ async function main(): Promise<void> {
     { country: "de", geo: "de", industry: "restaurants", foot: "Estimates for a typical restaurant." },
     { country: "gb", geo: "liverpool", industry: "restaurants", foot: "Estimates for a typical restaurant, from national business statistics." },
     { country: "us", geo: "california", industry: "restaurants", foot: "Estimates for a typical restaurant, from census." },
+    /* A KEY:VALUE-ONLY SOURCE (the review of round 3B, M8): "research-drop:<id>" is a marker and nothing else, so the part is cut whole and the sentence says "Estimates for a typical X."
+       and not the "from national business statistics" it used to invent for a source that sanitised to nothing. */
+    { country: "fr", geo: "fr", industry: "restaurants", foot: "Estimates for a typical restaurant.", why: `a source that is only a key:value marker (${DROP_SOURCE}) names no source`, at: { file: SEED, remedy: R_SOURCE } },
     /* A SYNTHETIC CELL (truth-fixes round 3D, E6): no row held legal services, so its source is the lookup's own words, "Estimated from country and industry averages", and the
        foot read "from estimated from country and industry averages". */
-    { country: "gb", geo: "liverpool", industry: "legal-services", foot: `Estimates for a typical ${tradeNounFor(tradeName("legal-services"))}, from country and industry averages.`, at: { file: "src/lib/spine/trade_hero_facts.ts", remedy: R_FOOT } },
+    { country: "gb", geo: "liverpool", industry: "legal-services", foot: `Estimates for a typical ${tradeNounFor(tradeName("legal-services"))}, from country and industry averages.`, at: { file: HERO_FACTS, remedy: R_FOOT } },
   ];
   for (const f of feet) {
     const addr = `/${f.country}/${f.geo}/${f.industry}`;
     const seed = await buildSpineCellSeed(f.country, f.geo, f.industry);
     const footText: string | null = seed ? tradeHeroFacts(seed)?.foot?.text ?? null : null;
     const line = String(seed?.meta?.provenance_line ?? "");
-    check(`${addr}: the seed's source line holds no internal word (${JSON.stringify(line)}) and the hero's foot reads "${f.foot}" (got ${JSON.stringify(footText)})`, internalIn(line).length === 0 && footText === f.foot, f.at ?? { file: SEED, remedy: R_SOURCE });
+    /* THE RED IS FILED UNDER THE FILE AT FAULT (the review of round 3B, M2): a source line that still holds a pipeline's word is the sanitiser's (the seed); a clean line whose foot
+       is wrong is the foot's printer's, which gates.json therefore routes to this gate. */
+    const leaked = internalIn(line).length > 0;
+    check(`${addr}: ${f.why ? `${f.why}: ` : ""}the seed's source line holds no internal word (${JSON.stringify(line)}) and the hero's foot reads "${f.foot}" (got ${JSON.stringify(footText)})`, !leaked && footText === f.foot, f.at ?? (leaked ? { file: SEED, remedy: R_SOURCE } : { file: HERO_FACTS, remedy: R_SOURCE }));
   }
   /* THE FOOT'S COMPOSER ON ITS OWN (truth-fixes round 3D, E6): tradeHeroFacts over a minimal seed, one source line each. A source that begins "Estimated from" reads without that
      opening, as one that begins "Modeled from" does, so the sentence says "from" once; every other source keeps its words; no source drops the clause. */
@@ -750,10 +762,10 @@ async function main(): Promise<void> {
   ];
   for (const [label, line, want] of footCases) {
     const got = footOf(line);
-    check(`${label}: the foot over ${JSON.stringify(line)} reads "${want}" (got ${JSON.stringify(got)})`, got === want, { file: "src/lib/spine/trade_hero_facts.ts", remedy: R_FOOT });
+    check(`${label}: the foot over ${JSON.stringify(line)} reads "${want}" (got ${JSON.stringify(got)})`, got === want, { file: HERO_FACTS, remedy: R_FOOT });
   }
   const doubled = footCases.map(([, line]) => footOf(line) ?? "").filter((t) => /\bfrom estimated\b/i.test(t) || /\bfrom from\b/i.test(t));
-  check(`no foot says "from" twice in a row or "from estimated" (${footCases.length} sources)${doubled.length ? `: ${doubled.join(" | ")}` : ""}`, doubled.length === 0, { file: "src/lib/spine/trade_hero_facts.ts", remedy: R_FOOT });
+  check(`no foot says "from" twice in a row or "from estimated" (${footCases.length} sources)${doubled.length ? `: ${doubled.join(" | ")}` : ""}`, doubled.length === 0, { file: HERO_FACTS, remedy: R_FOOT });
 
   /* (2d) THE STATISTICS CODE AT THE SEED'S DOOR, AND THE ADDRESS THAT DOES NOT MOVE. The seed names the site's country (UK reads GB, EL reads GR) and carries the code the
      route received beside it (meta.address_iso2), which the report foot's path reads and nothing else does. The page is drawn from that seed, so the tests that ask "is this
