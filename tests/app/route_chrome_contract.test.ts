@@ -35,6 +35,12 @@
  * element in the page, or give it a line in EXEMPT with that reason); tests/chrome/masthead.test.ts draws the how-to, trades and world
  * routes and reads their markup.
  *
+ * THE GROUP BY PATH (truth-fixes final fixes, 2026-10-12; the final review's M1). The loop below skipped the (site) group with `f.includes("(site)/")`, a substring: a page in a
+ * folder that merely ends in (site), src/app/legacy(site)/x/page.tsx, has no group layout over it and was skipped unread, the bare-name trap CLAUDE.md records.
+ * scripts/verify_main_landmark.mjs has read the group by path from the root since d0783b3d (its SITE_GROUP), and this reads it the same way. Proved on a scratch fixture tree
+ * (scratchpad/tf-final-fix/fx-chrome, not committed): the substring form passes a chrome-less legacy(site)/x/page.tsx, this form names it and still leaves the group's own
+ * pages alone; and the real tree's verdict does not move.
+ *
  * Follows this repository's test idiom: a bare tsx script, PASS/FAIL per case,
  * exit 1 on any failure.
  */
@@ -46,6 +52,10 @@ import { stripCommentLines } from "../../scripts/lib/strip_comments";
 const code = (f: string) => stripCommentLines(fs.readFileSync(f, "utf8").split("\n")).join("\n");
 /** The element itself, opening tag only, as scripts/verify_main_landmark.mjs reads it. */
 const DRAWS_CHROME = /<SiteChrome[\s>]/;
+
+/** The group whose layout draws SiteChrome around every page inside it, by PATH from the root, as scripts/verify_main_landmark.mjs reads it, and never by the substring
+ *  "(site)/": a folder that merely ends in (site) holds it too, and is not the group. */
+const SITE_GROUP = "src/app/(site)/";
 
 /** Routes that must NOT carry site chrome, each with the reason it is exempt. */
 const EXEMPT: Record<string, string> = {
@@ -74,7 +84,7 @@ const routes = shippingRoutes();
 const offenders: string[] = [];
 
 for (const f of routes) {
-  if (f.includes("(site)/")) continue; // the group layout renders SiteChrome for all of these
+  if (f.startsWith(SITE_GROUP)) continue; // the group layout renders SiteChrome for all of these
   if (f in EXEMPT) continue;
   // Only a drawn <SiteChrome> counts (see the header): the word in a comment or an import draws nothing, and SpineShell paints the
   // ground and draws no bar and no footer.
