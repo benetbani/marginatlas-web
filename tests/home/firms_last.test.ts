@@ -82,6 +82,13 @@ if (built && d) {
   const words = built.lead.words.split(/\s+/).filter(Boolean).length;
   check(`the lead's line is twelve words at most, no semicolon, the cohort and its fifth year in it ("${built.lead.words}")`, words <= 12 && !built.lead.words.includes(";") && built.lead.words.includes(String(d.cohort)) && built.lead.words.includes(String(d.year)) && built.lead.words.startsWith(want[0].name));
   check(`the title is four words at most ("${COPY.home.firmsLast.kicker}")`, COPY.home.firmsLast.kicker.split(/\s+/).length <= 4);
+  /* THE LONE TWO THIRDS' ONE EXPOSURE (plan 2026-10-11 gb-ch04-lone-state): beside the duel the card is a half, under half the page's width,
+     and wraps its lead line; alone it is the column's width at 768 and two thirds from 1024, where the page laws' TEXT WIDE reds a run of
+     sixty characters or more that measures over half the width (scripts/harness/check_page_laws.mjs:275). The lead's line, for the longest
+     city name the slice draws, stays under sixty. */
+  const longest = [...d.cities].sort((a, b) => b.name.length - a.name.length || a.name.localeCompare(b.name))[0];
+  const widest = longest ? COPY.home.firmsLast.words.replace("{city}", longest.name).replace("{cohort}", String(d.cohort)).replace("{year}", String(d.year)) : "";
+  check(`the lead's line stays under sixty characters for the longest city name the slice draws ("${widest}", ${widest.length})`, !!longest && widest.length < 60, { file: "src/lib/spine/copy.ts", remedy: "keep COPY.home.firmsLast.words under sixty characters for the longest city name: alone in its level the card is wide enough for TEXT WIDE to read the line" });
 }
 
 /* THE DRAWING ON THE UK PAGE (plan 2026-10-09, home introduction, Task 4): the bars, plain and filling the half, the lead's bar marked
@@ -118,7 +125,13 @@ if (gbRender && built) {
   const zone = at < 0 ? "" : gbRender.slice(gbRender.lastIndexOf("<section", at), gbRender.indexOf("<section data-zone", at + 1));
   const years = gbRender.indexOf('id="first-years"');
   check("/gb draws where new firms last in a level of chapter 04 after its first, its lead stamped", years > 0 && at > years && /id="firms-last"/.test(zone) && new RegExp(`data-src="home/city_survival\\.json:${built.lead.key}"`).test(zone), VIEW_AT);
-  check("the level is two halves with the duel, even, where the duel is fresh", !/id="duel"/.test(zone) || (/^<section data-zone="1-1"/.test(zone) && /data-zone-even/.test(zone) && zone.indexOf('id="firms-last"') < zone.indexOf('id="duel"')), VIEW_AT);
+  /* ONE LEVEL, TWO STATES (plan 2026-10-11 gb-ch04-lone-state; QUEUE gb:ch04-lone-state; final review M6). While the feed's item is fresh,
+     two even halves, where new firms last first; past its 45 days (from 2026-11-15 for the item of 2026-09-30) the duel leaves and where new
+     firms last stands alone in the zones' LONE two thirds: one cell, no even, no duel in the rail. The render is pages-fresh's, so from that
+     day this reads the lone level the site serves; scripts/harness/fake_today.cjs draws it before then. */
+  const cells = (zone.match(/data-zone-cell=""/g) ?? []).length;
+  if (/id="duel"/.test(zone)) check("the level is two halves with the duel, even, where the duel is fresh", /^<section data-zone="1-1"/.test(zone) && /data-zone-even/.test(zone) && cells === 2 && zone.indexOf('id="firms-last"') < zone.indexOf('id="duel"'), VIEW_AT);
+  else check(`past the duel's window the level is lone: where new firms last in its one cell, no even, no duel in the rail (${cells} cell(s))`, /^<section data-zone="lone"/.test(zone) && !/data-zone-even/.test(zone) && cells === 1 && !gbRender.includes('href="#duel"'), VIEW_AT);
 } else if (!gbRender) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's checks did not run");
 
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer

@@ -13,6 +13,7 @@
  * Run: npx tsx tests/home/duel.test.ts
  */
 import { existsSync, readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { buildDuel, isFresh, FRESH_DAYS } from "../../src/lib/home/duel";
@@ -73,6 +74,23 @@ if (item?.as_of) {
 }
 check("a monthly item with no data date never prints; a yearly one always does", !isFresh({ refresh: "monthly" }, "2026-10-05") && isFresh({ refresh: "yearly" }, "2099-01-01"));
 
+/* THE CLOCK PAST THE WINDOW (plan 2026-10-11 gb-ch04-lone-state; QUEUE gb:ch04-lone-state): scripts/harness/fake_today.cjs moves a render's
+   clock so /gb draws as it will on the 46th day, where new firms last stands alone. Held here so the seam cannot rot between the days it is
+   needed: under the preload the day reads as asked and every other use of Date is as it was; without the variable it changes nothing. The
+   children run with neither the variable nor NODE_OPTIONS of this process, so the test reads the same under any clock. */
+if (item?.as_of) {
+  const SEAM = { file: "scripts/harness/fake_today.cjs", remedy: "with ATLAS_FAKE_TODAY=YYYY-MM-DD move new Date() and Date.now() to noon UTC of that day as an offset; leave a Date with arguments, Date.parse, Date.UTC, Date() and instanceof as they are; change nothing without the variable" };
+  const stale = new Date(Date.parse(item.as_of) + (FRESH_DAYS + 1) * 86_400_000).toISOString().slice(0, 10);
+  const bare = Object.fromEntries(Object.entries(process.env).filter(([k]) => k !== "ATLAS_FAKE_TODAY" && k !== "NODE_OPTIONS"));
+  const probe = "const d=new Date();process.stdout.write([d.toISOString().slice(0,10),new Date(0).toISOString(),String(Date.parse('2026-01-01T00:00:00Z')),typeof Date(),String(d instanceof Date),String(Math.abs(Date.now()-d.getTime())<60000)].join(' '))";
+  const run = (env: Record<string, string | undefined>, preload = true) => spawnSync(process.execPath, [...(preload ? ["--require", "./scripts/harness/fake_today.cjs"] : []), "-e", probe], { encoding: "utf8", env: env as NodeJS.ProcessEnv });
+  const moved = run({ ...bare, ATLAS_FAKE_TODAY: stale });
+  check(`the clock preload reads ${stale}, the duel's first day out, and leaves every other use of Date as it was ("${(moved.stdout ?? "").trim()}")`, moved.status === 0 && (moved.stdout ?? "").trim() === `${stale} 1970-01-01T00:00:00.000Z 1767225600000 string true true`, SEAM);
+  const real = (run(bare, false).stdout ?? "").split(" ")[0];
+  const still = run(bare);
+  check(`without the variable the clock preload changes nothing (${(still.stdout ?? "").split(" ")[0]} against ${real})`, still.status === 0 && real.length === 10 && (still.stdout ?? "").startsWith(`${real} `), SEAM);
+}
+
 /* The same fact, one figure: London restaurants' page prints the restaurants row's rate. */
 const cell = existsSync("scratchpad/harness/pages/cell-gb-london-restaurants.html") ? readFileSync("scratchpad/harness/pages/cell-gb-london-restaurants.html", "utf8").replace(/<[^>]+>/g, "|") : "";
 const r0 = item?.top[0];
@@ -81,7 +99,9 @@ if (cell && r0) check(`London restaurants' page prints ${(Math.round(r0.value) /
 /* ON THE UK PAGE (plan 2026-10-09, home introduction, Task 4): /gb's chapter 04, beside where new firms last, while the item is fresh. */
 const gb = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
 if (gb && buildDuel()) check("/gb's render carries the duel beside where new firms last, its middle stamped from the feed", /id="duel"/.test(gb) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(gb) && gb.indexOf('id="firms-last"') > -1 && gb.indexOf('id="firms-last"') < gb.indexOf('id="duel"'));
-else if (!gb) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's check did not run");
+/* PAST ITS WINDOW (plan 2026-10-11 gb-ch04-lone-state): the duel is gone from /gb, its section, its rail entry and every stamp from its item. */
+else if (gb) check("past its window /gb's render carries no duel: no section, no rail entry, no stamp from the feed's item", !/id="duel"/.test(gb) && !/href="#duel"/.test(gb) && !/data-src="editorial\/editorial_feed\.json:fail-most/.test(gb));
+else console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's check did not run");
 
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer
    draws it. */

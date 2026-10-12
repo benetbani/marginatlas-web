@@ -1828,6 +1828,7 @@
         "scratchpad/harness/pages/cell-gb-london-restaurants.html",
         "scratchpad/harness/pages/country-GB.html",
         "scratchpad/harness/pages/home-gb.html",
+        "scripts/harness/fake_today.cjs",
         "src/components/spine/archetypes/RankedBars.tsx",
         "src/components/spine/country/Duel.tsx",
         "src/components/spine/home/home-view.tsx",
@@ -1863,7 +1864,8 @@
         "scratchpad/harness/pages/home-gb.html",
         "src/components/spine/country/FirmsLast.tsx",
         "src/components/spine/country/country-view.tsx",
-        "src/components/spine/home/home-view.tsx"
+        "src/components/spine/home/home-view.tsx",
+        "src/lib/spine/copy.ts"
       ],
       "claims": []
     },
