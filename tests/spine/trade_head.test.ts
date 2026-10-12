@@ -23,14 +23,14 @@
  * the country) and where the figure belongs (the country, the place itself, or nowhere). Three kinds of check below. The function
  * over hand-made cells. generateMetadata over a stub that holds two country rows (the United Kingdom, Germany), five real rows
  * that are the controls (London, Liverpool, Manchester, Boston in the United States, California) and one United Kingdom statistics
- * row that stands for a code the country list holds no name for. And the share card's own element tree, read through a stub of
+ * row, a country's row of the code UK, which the site reads as the United Kingdom (round 3B: siteCountryCode). And the share card's own element tree, read through a stub of
  * next/og (ImageResponse keeps the element it is given, which is read for its title and its figure block).
  * BLIND SPOT, stated again for the rows: a stub row is a row as the lookup reads it, so this cannot tell which rows the database
  * holds; the controls are real rows here so that the rule is shown to leave them alone.
  *
  * AND A PLACE WORD NEVER PRINTS A CODE (truth-fixes round 3A; the review's M3, M7 and its note on /gb/england). The whole-country words
  * (the code and its zero-padded statistics entries) name the country in English, a label that holds the code as a word is no name,
- * a code the country list holds no name for leaves the cell's own name, and the popular-name table no longer names England London.
+ * a code that neither the country list holds nor the site maps (UK and EL are mapped, to GB and GR, since round 3B) leaves the cell's own name, and the popular-name table no longer names England London.
  * The every-word check below states its counts: the words named by a label of the tables, by the country, and those that print the code.
  *
  * AND AN INTERNAL WORD NEVER REACHES A READER (truth-fixes round 3B, 2026-10-11; the first review's "Seen in passing"). /gb/boston, /gb/gb,
@@ -105,7 +105,7 @@ const SEED = "src/lib/spine/adapt_cell.ts";
 const CARD = "src/app/og/cell/route.tsx";
 const REMEDY = "keep the head on the register in London and on a read revenue elsewhere; a filled revenue never reaches a head; a place the lookup holds no row for is named as the site's tables spell it, never by its country's bare code (placeNameOf); a figure is printed beside the place it belongs to (headPlaceOf)";
 const R_EXPORT = "export placeNameOf(country, geoSlug, geoName) from src/lib/cells/place_name.ts: the cell's own name, except where that name is the page country's own code, then the place word as the site's tables spell it, else the country's name";
-const R_PLACE = "export headPlaceOf(country, geoSlug, cell) from src/lib/cells/place_name.ts: the place's label, how a title spells it after \"in\" (the place with its country when the row is the country's, the country with its article when the place is the country), and the place the figure belongs to (the country for a country's row, the place for its own row, null for a synthetic cell and for a code the country list holds no name for)";
+const R_PLACE = "export headPlaceOf(country, geoSlug, cell) from src/lib/cells/place_name.ts: the place's label, how a title spells it after \"in\" (the place with its country when the row is the country's, the country with its article when the place is the country), and the place the figure belongs to (the country for a country's row, the place for its own row, null for a synthetic cell and for a code that neither the country list holds nor the site maps)";
 const R_HEAD = "name the place in generateMetadata through headPlaceOf(country, geo, cell): its titleIn in the title, its figureIn beside the figure, and no figure when its figureIn is null";
 const R_SEED = "name the place in loadCellView with placeNameOf(country, geo, cell.geo_name), so the seed's city, and with it the crumbs and every card, print it";
 const R_CARD = "name the place in the share card through headPlaceOf(country, geo, cell), as the page's head does: its label in the title, its figureIn beside the figure, and no figure when its figureIn is null";
@@ -196,7 +196,11 @@ async function main(): Promise<void> {
   const reportCode = stripCommentLines(readFileSync(REPORT, "utf8").split(/\r?\n/)).join("\n");
   check(`${REPORT} reads siteCountryCode and holds no table of its own`, /\bsiteCountryCode\b/.test(reportCode) && !/\bALIASES\b/.test(reportCode), { file: REPORT, remedy: R_STAT });
   const { getCoverageFor } = await import("../../src/lib/coverage/report");
-  check("the coverage report still folds the statistics codes into the site's countries: GB and GR hold their cells, UK and EL hold none of their own", getCoverageFor("GB") !== null && getCoverageFor("GR") !== null && getCoverageFor("UK") === null && getCoverageFor("EL") === null, { file: REPORT, remedy: R_STAT });
+  /* WHAT EACH HALF GUARDS (truth-fixes round 3D, E7; the review of round 3B, M3 (b)). The statistics file keys Greece's cells EL, so GR holds them only while the report folds EL into
+     GR through siteCountryCode: that is the check that can fail when the alias breaks. UK and EL holding none of their own is true whatever the alias does, because the report's
+     canonicalIso2 answers taxonomy codes only (src/lib/coverage/report.ts): it is stated behaviour and guards nothing about the fold, which the first check alone does. */
+  check("the coverage report folds the statistics codes into the site's countries: GB and GR hold their cells (the one that fails when the fold breaks: the file keys Greece's cells EL)", getCoverageFor("GB") !== null && getCoverageFor("GR") !== null, { file: REPORT, remedy: R_STAT });
+  check("stated behaviour, which holds whatever the alias does (canonicalIso2 answers taxonomy codes only) and guards nothing about the fold: UK and EL hold no cells of their own in the report", getCoverageFor("UK") === null && getCoverageFor("EL") === null, { file: REPORT, remedy: R_STAT });
 
   /* (1) THE FUNCTION. Each row: the page's country, its place word, the name the lookup stamped on the cell, and the name the page prints. */
   const cases: Array<[string, string, string, string | null | undefined, string | null]> = [
@@ -392,7 +396,7 @@ async function main(): Promise<void> {
          place, for Afghanistan's, Denmark's, India's, South Korea's and Malaysia's;
        - regional_cells for four real places and one statistics row: London, Liverpool and Manchester under their own ids and Boston in
          Massachusetts under its county's (the controls), and a row of the code UK at the level "country" (a country's row of a code the
-         country list holds no name for); and the Belgian province BE22, a real regional row whose label ends in its country's code;
+         site reads as the United Kingdom since round 3B); and the Belgian province BE22, a real regional row whose label ends in its country's code;
        - cells_master for California, the United States control.
      Every other query answers no rows, so a place with none is synthesised, as the lookup does when it finds nothing. The controls'
      rows are dated at the roll-forward's target year, so no figure of theirs moves with the inflation table. */
@@ -674,20 +678,28 @@ async function main(): Promise<void> {
     return seed && typeof Body === "function" ? renderToStaticMarkup(ReactApi.createElement(Body as never, { data: seed } as never)) : "";
   };
   const reportOf = (markup: string): string | null => /href="(\/corrections\/new\?page=[^"]*)"/.exec(markup)?.[1] ?? null;
-  type Drawn = { country: string; geo: string; industry: string; report: string; licence: boolean; gbCrumb: boolean | null };
+  /* THE TRAIL'S OWN FIRST LINK (truth-fixes round 3D, E7; the review of round 3B, M3 (a) and (c)). The country crumb is the first link of the Breadcrumb nav (src/components/spine/Crumbs.tsx),
+     read from that nav and from no other href on the page: "/gb" also stands in the licence line and a rivals row, so a bare `includes('href="/gb"')` could not tell the crumb from them. */
+  const firstCrumbHref = (markup: string): string | null => {
+    const nav = /<nav aria-label="Breadcrumb"[^>]*>([\s\S]*?)<\/nav>/.exec(markup)?.[1];
+    return nav ? /<a [^>]*href="([^"]*)"/.exec(nav)?.[1] ?? null : null;
+  };
+  check("the trail's reader takes the Breadcrumb nav's first link and no other href on the page: a /gb link outside the nav is not the crumb, a nav of plain text has no first link", firstCrumbHref(`<p><a href="/gb">licence</a></p><nav aria-label="Breadcrumb" data-crumbs="3"><a href="/gr">Greece</a><span>/</span><span>Attiki</span></nav>`) === "/gr" && firstCrumbHref(`<a href="/gb">x</a><nav aria-label="Breadcrumb" data-crumbs="2"><span>Only</span><span>text</span></nav>`) === null && firstCrumbHref(`<a href="/gb">x</a>`) === null, { file: VIEW, remedy: R_STAT });
+  type Drawn = { country: string; geo: string; industry: string; report: string; licence: boolean; crumb: string };
   const drawnCases: Drawn[] = [
-    { country: "uk", geo: "uki", industry: "restaurants", report: "/corrections/new?page=%2Fuk%2Fuki%2Frestaurants", licence: true, gbCrumb: true },
-    { country: "el", geo: "el30", industry: "restaurants", report: "/corrections/new?page=%2Fel%2Fel30%2Frestaurants", licence: false, gbCrumb: null },
-    { country: "gb", geo: "boston", industry: "restaurants", report: "/corrections/new?page=%2Fgb%2Fboston%2Frestaurants", licence: true, gbCrumb: true },
-    { country: "de", geo: "de", industry: "restaurants", report: "/corrections/new?page=%2Fde%2Fde%2Frestaurants", licence: false, gbCrumb: false },
+    { country: "uk", geo: "uki", industry: "restaurants", report: "/corrections/new?page=%2Fuk%2Fuki%2Frestaurants", licence: true, crumb: "/gb" },
+    /* The EL half of the alias: Greece's country crumb points at /gr, the page the site holds (it read the dead /el until round 3B). */
+    { country: "el", geo: "el30", industry: "restaurants", report: "/corrections/new?page=%2Fel%2Fel30%2Frestaurants", licence: false, crumb: "/gr" },
+    { country: "gb", geo: "boston", industry: "restaurants", report: "/corrections/new?page=%2Fgb%2Fboston%2Frestaurants", licence: true, crumb: "/gb" },
+    { country: "de", geo: "de", industry: "restaurants", report: "/corrections/new?page=%2Fde%2Fde%2Frestaurants", licence: false, crumb: "/de" },
   ];
   for (const c of drawnCases) {
     const markup = await drawn(c.country, c.geo, c.industry);
     const report = reportOf(markup);
     /* The licence foot is the paragraph that carries the attribute; the attribute name also stands in a class of the report line that sits under it. */
     const licence = /<p data-sources-foot[ =>]/.test(markup);
-    const gbCrumb = markup.includes('href="/gb"');
-    check(`/${c.country}/${c.geo}/${c.industry}: drawn from its seed, the report link names the page's own address (${report}), the United Kingdom's licence foot ${c.licence ? "stands" : "is absent"} (${licence})${c.gbCrumb === null ? "" : `, and the country crumb to /gb ${c.gbCrumb ? "stands" : "is absent"} (${gbCrumb})`}`, markup.length > 0 && report === c.report && licence === c.licence && (c.gbCrumb === null || gbCrumb === c.gbCrumb), { file: VIEW, remedy: R_STAT });
+    const crumb = firstCrumbHref(markup);
+    check(`/${c.country}/${c.geo}/${c.industry}: drawn from its seed, the report link names the page's own address (${report}), the United Kingdom's licence foot ${c.licence ? "stands" : "is absent"} (${licence}), and the trail's first link is the site's country, ${c.crumb} (${crumb})`, markup.length > 0 && report === c.report && licence === c.licence && crumb === c.crumb, { file: VIEW, remedy: R_STAT });
   }
 
   /* (3) THE SHARE CARD, read from the element tree the route hands to ImageResponse (stubbed above): the title block and the figure block. */

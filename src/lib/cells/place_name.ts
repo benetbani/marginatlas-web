@@ -141,8 +141,9 @@ export function placeNameOf(country: string, geoSlug: string, geoName: string | 
   if (countryName !== null && isWholeCountryWord(word, iso2) && geoName === geoNameFromSlug(iso2, word)) return countryName;
   const shown = plain(geoName, iso2);
   if (!isBareCode(shown, iso2)) return shown;
-  /* A code the country list holds no name for (the statistics' own UK and EL) has no English name to give, so the cell's own name stands,
-     as the header says: those pages are another question (uk:statistics-code-uk-pages). */
+  /* A code that neither the country list holds nor the site maps to a country it holds (siteCountryCode, src/lib/countries.ts: the statistics'
+     UK and EL ARE mapped, to GB and GR, since round 3B, so they have their country's name) has no English name to give, so the cell's own name
+     stands, as the header says. */
   if (countryName === null) return geoName;
   if (isWholeCountryWord(word, iso2) || word === slugify(countryName)) return countryName;
   const label = named(geoNameFromSlug(iso2, word), iso2) ?? spelledBy(iso2).get(word);
