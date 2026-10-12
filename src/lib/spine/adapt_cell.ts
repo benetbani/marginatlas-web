@@ -40,6 +40,7 @@ import {
 } from "@/lib/cells";
 import type { Cell } from "@/lib/cells";
 import { setupItemsFromCell } from "./setup_items";
+import { internalWordsIn } from "./internal_words";
 import { londonTradeFallbackAnswer, londonTradeHero, londonTradeStrip } from "./london_trade_hero";
 import { buildCellRelatedLinks, fetchCellSiblings } from "@/lib/cells/related_links";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
@@ -339,6 +340,10 @@ function breakInWord(score: number | null): "Manageable" | "Demanding" | "Brutal
  * wave5_extrapolation." because it is not a key:value token and so was never cut. A part that holds a word with an underscore, or two or
  * more letters run into digits, is the pipeline's and no reader's, so it goes the way a key:value marker goes. What is left is the
  * readable part, or null where nothing is: the caller then names no source, since a source the data did not give is never invented.
+ *
+ * A READER'S WORD IS KEPT (truth-fixes final fixes, 2026-10-12; the review of round 3B, M7). The reading is src/lib/spine/internal_words.ts's: a word on its
+ * allowance list (UK postcode districts, CO2, MP3 and the like, each with its reason) and a word with a letter outside A to Z (Zürich2) are readers', so
+ * "Estimated from London (EC1) city averages" keeps its part where it lost the whole of it.
  */
 export function sanitiseProvenance(line: string | null | undefined): string | null {
   if (!line) return null;
@@ -348,10 +353,11 @@ export function sanitiseProvenance(line: string | null | undefined): string | nu
 }
 
 /** A word no reader says: one holding an underscore (wave5_extrapolation, cafes_coffee) or two or more letters run straight into digits
- *  (wave5). A licence's "v3.0" is one letter and a reader's word. The same reading as the plain-copy check's INTERNAL rule
- *  (scripts/harness/check_copy_plain.mjs), which reads the rendered page. */
+ *  (wave5), unless the allowance list names it (EC1, CO2, MP3) or it holds a letter outside A to Z (Zürich2). A licence's "v3.0" is one
+ *  letter and a reader's word. The reading is src/lib/spine/internal_words.ts's, which the plain-copy check's INTERNAL rule
+ *  (scripts/harness/check_copy_plain.mjs, reading the rendered page) holds the page to, over the same list. */
 function holdsInternalWord(part: string): boolean {
-  return (part.match(/[A-Za-z0-9_]+/g) ?? []).some((w) => w.includes("_") || /[A-Za-z]{2,}\d/.test(w));
+  return internalWordsIn(part).length > 0;
 }
 
 export async function buildSpineCellSeed(

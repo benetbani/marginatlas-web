@@ -27,10 +27,19 @@
  *   INTERNAL     a pipeline's own word anywhere in the page's visible text
  *                (truth-fixes round 3B, 2026-10-11: "Estimates for a typical
  *                restaurant, from wave5_extrapolation." printed on /gb/boston,
- *                /gb/gb and /de/de): a word holding an underscore, or two or
- *                more letters run straight into digits (the licence's own
- *                "v3.0" is one letter and a reader's word). Read over all of
- *                main, a card or not, once per card and word. NOT a ratchet: no
+ *                /gb/gb and /de/de): a word of A to Z, a to z, digits and
+ *                underscores only that holds an underscore, or two or more
+ *                letters run straight into digits (the licence's own "v3.0" is
+ *                one letter and a reader's word), unless the allowance list
+ *                src/lib/spine/reader_words.json names it (UK postcode
+ *                districts, CO2, MP3 and the like, each with its reason; the
+ *                sanitiser reads the same list, in src/lib/spine/internal_words.ts).
+ *                A word with a letter outside A to Z (Zürich2) is a reader's:
+ *                no pipeline names itself so. Read over all of main, a card or
+ *                not, and inside every <details> (a reader opens one in one
+ *                click; the card laws above leave a closed one unread, as they
+ *                judge a card as first drawn), once per card and word. NOT a
+ *                ratchet: no
  *                baseline absorbs it, and it is never written to one, because
  *                a reader is never given a pipeline's name for a source or a
  *                field.
@@ -42,9 +51,11 @@
  * BLIND SPOT: it reads words and counts, not meaning; a plain line that says
  * nothing passes. What a line should say is COPY-STYLE.md's, and the rewrite's.
  * INTERNAL reads the rendered words, so it cannot tell a pipeline's token from
- * a real acronym that holds a digit after two letters (a reader's "CO2" would red too); it reads
- * only the pages it is given (the listed pages, or the files named), so a page
- * outside the list is read when its render is named on the command line.
+ * a reader's acronym that holds a digit after two letters unless the allowance
+ * list names it (a reader's word on no list reds, and the remedy says where to
+ * add it); it reads only the pages it is given (the listed pages, or the files
+ * named), so a page outside the list is read when its render is named on the
+ * command line.
  *
  *   node scripts/harness/check_copy_plain.mjs --list [--write-baseline]
  */
@@ -66,7 +77,11 @@ const listed = listArg ? JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) =>
 const files = [...args.filter((a) => !a.startsWith("--")), ...listed];
 if (files.length === 0) { console.error("usage: node scripts/harness/check_copy_plain.mjs <rendered.html ...> | --list[=pages.json] [--write-baseline]"); process.exit(2); }
 
-function inPage() {
+/* The allowance list of reader's words that run letters into digits (EC1, CO2, MP3), each with its reason: one file, which the sanitiser reads too
+   (src/lib/spine/internal_words.ts). It is passed into the page below, which cannot read a file. */
+const READER = JSON.parse(readFileSync("src/lib/spine/reader_words.json", "utf8"));
+
+function inPage(READER) {
   const BANNED = [
     ["modelled", /\bmodell?ed\b/i],
     ["withheld", /\bwithheld\b/i],
@@ -81,10 +96,16 @@ function inPage() {
   ];
   const TITLE_MAX = 4, LINE_MAX = 12, MICRO_MAX = 13.5;
   /* INTERNAL: a token no reader says. A word holding an underscore (wave5_extrapolation, cafes_coffee) or letters run straight into
-     digits (wave5): a pipeline's name for a source or a field. A word is a run of letters, digits and underscores. TWO LETTERS OR
-     MORE before the digit, because the one-letter reading ("v3") reds the Open Government Licence line, "Licence v3.0", the licence's
-     own name, which every United Kingdom page must print (measured 2026-10-11: 8 of the 11 listed pages, that word alone). */
-  const isInternal = (word) => word.includes("_") || /[A-Za-z]{2,}\d/.test(word);
+     digits (wave5): a pipeline's name for a source or a field. A word is a run of letters (of any script), digits and underscores. TWO
+     LETTERS OR MORE before the digit, because the one-letter reading ("v3") reds the Open Government Licence line, "Licence v3.0", the
+     licence's own name, which every United Kingdom page must print (measured 2026-10-11: 8 of the 11 listed pages, that word alone).
+     A word with a letter outside A to Z is a reader's, since no pipeline names itself so (Zürich2: split on ASCII alone it was "rich2").
+     A word on the allowance list (READER, from src/lib/spine/reader_words.json: UK postcode districts, CO2, MP3, each with its reason)
+     is a reader's too, for the letters-into-digits clause only: no reader says an underscore word. The same reading as
+     src/lib/spine/internal_words.ts, which the sanitiser cuts by. */
+  const READER_WORDS = new Set(READER.map((e) => e.word));
+  const wordsOf = (text) => text.match(/[\p{L}\p{N}_]+/gu) ?? [];
+  const isInternal = (word) => /^[A-Za-z0-9_]+$/.test(word) && (word.includes("_") || (/[A-Za-z]{2,}\d/.test(word) && !READER_WORDS.has(word)));
   const CARD = "main [data-card]";
   const cards = [...document.querySelectorAll(CARD)].filter((c) => c.getClientRects().length && !c.parentElement.closest(CARD));
   const idOf = (card) => card.id || card.querySelector("[id]")?.id || (card.querySelector("h1,h2,h3")?.textContent || "").trim().toLowerCase().slice(0, 30) || "card";
@@ -116,12 +137,15 @@ function inPage() {
      card named is the outermost one the text sits in, else "page". */
   const main = document.querySelector("main");
   if (main) {
+    /* A reader opens a closed <details> in one click, so this walk reads inside them; the card laws above leave a closed one unread, on purpose, and have run.
+       `name` goes first: the kit's grouped <details name> close one another when one opens, which would leave one of a group open. */
+    for (const d of main.querySelectorAll("details")) { d.removeAttribute("name"); d.open = true; }
     const seen = new Set();
     const walker = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
     for (let n = walker.nextNode(); n; n = walker.nextNode()) {
       const el = n.parentElement;
       if (!el || hidden(el)) continue;
-      for (const word of n.textContent.match(/[A-Za-z0-9_]+/g) ?? []) {
+      for (const word of wordsOf(n.textContent)) {
         if (!isInternal(word)) continue;
         let top = el.closest(CARD);
         while (top && top.parentElement && top.parentElement.closest(CARD)) top = top.parentElement.closest(CARD);
@@ -145,7 +169,7 @@ for (const file of files) {
     const page = await ctx.newPage();
     await page.goto(pathToFileURL(file).href, { waitUntil: "load" });
     await page.evaluate(() => document.fonts && document.fonts.ready);
-    const walk = await page.evaluate(inPage);
+    const walk = await page.evaluate(inPage, READER);
     if (walk.cards === 0) reds.push({ page: name, w, id: "page", rule: "NO SECTIONS", msg: "no section card found under main" });
     for (const r of walk.reds) reds.push({ page: name, w, ...r });
     console.log(`${name}@${w}: ${walk.cards} cards, ${walk.reds.length} red(s)`);
@@ -162,7 +186,7 @@ for (const r of reds) console.log(`  ${r.page}@${r.w} #${r.id}: ${r.rule}: ${r.m
 const internal = reds.filter((r) => r.rule === "INTERNAL");
 if (internal.length) {
   const pages = [...new Set(internal.map((r) => r.page))];
-  console.log(`copy plain INTERNAL: ${internal.length} pipeline word(s) in the visible text of ${pages.length} page(s): ${pages.join(", ")}. Remedy: strip the word where the data enters the page (a source line goes through sanitiseProvenance in src/lib/spine/adapt_cell.ts) and let the sentence name no source; never print a pipeline's name for a source or a field, never invent a source, never name an agency`);
+  console.log(`copy plain INTERNAL: ${internal.length} pipeline word(s) in the visible text of ${pages.length} page(s): ${pages.join(", ")}. Remedy: strip the word where the data enters the page (a source line goes through sanitiseProvenance in src/lib/spine/adapt_cell.ts) and let the sentence name no source; if it is a reader's own word (a postcode district, a unit, a product's name), name it with its reason in src/lib/spine/reader_words.json instead; never print a pipeline's name for a source or a field, never invent a source, never name an agency`);
 }
 
 /* THE PER-PAGE RATCHET: seeded at the first measurement, falling only. */

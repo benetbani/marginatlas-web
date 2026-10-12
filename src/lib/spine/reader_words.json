@@ -1,0 +1,14 @@
+[
+  { "word": "EC1", "reason": "a UK postcode district, a place a reader names" },
+  { "word": "EC1A", "reason": "a UK postcode district" },
+  { "word": "SW1A", "reason": "a UK postcode district" },
+  { "word": "SW19", "reason": "a UK postcode district" },
+  { "word": "NW10", "reason": "a UK postcode district" },
+  { "word": "CO2", "reason": "carbon dioxide" },
+  { "word": "NO2", "reason": "nitrogen dioxide" },
+  { "word": "PM10", "reason": "airborne particles of ten microns or less" },
+  { "word": "MP3", "reason": "an audio file format" },
+  { "word": "FY24", "reason": "a financial year, as a reader writes it" },
+  { "word": "COVID19", "reason": "the disease, as a reader writes it without the hyphen" },
+  { "word": "Web3", "reason": "a name for a kind of website and service" }
+]

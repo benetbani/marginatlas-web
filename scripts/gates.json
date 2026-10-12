@@ -105,7 +105,8 @@
       "asserts": "check_copy_plain: a card talks plainly (his correction of 2026-09-24, evening; design/loop/build/goal-2026-09-24/COPY-STYLE.md).",
       "reads": [
         "scripts/harness/copy_plain_baseline.json",
-        "scripts/harness/pages.json"
+        "scripts/harness/pages.json",
+        "src/lib/spine/reader_words.json"
       ],
       "claims": []
     },
@@ -2212,6 +2213,7 @@
       "browser": false,
       "asserts": "The trade page's head and share card (plan 06, task A4): a London trade prints the register's median yearly sales (rounded once through its range, in dollars at the site's pound rate) with its count, ",
       "reads": [
+        "scripts/harness/check_copy_plain.mjs",
         "src/app/[country]/[geo]/[industry]/page.tsx",
         "src/app/og/cell/route.tsx",
         "src/components/spine/cell/cell-view.tsx",
@@ -2221,7 +2223,9 @@
         "src/lib/geo/popular_place_overrides.json",
         "src/lib/spine/adapt_cell.ts",
         "src/lib/spine/crumb_rows.ts",
+        "src/lib/spine/internal_words.ts",
         "src/lib/spine/place_names.ts",
+        "src/lib/spine/reader_words.json",
         "src/lib/spine/trade_head.ts",
         "src/lib/spine/trade_hero_facts.ts"
       ],

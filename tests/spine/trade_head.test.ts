@@ -86,10 +86,24 @@
  * invented. Two kinds of check below: the composer over minimal seeds, and the seed at the address that printed it.
  * BLIND SPOT, stated: the cases are the strings the data holds today and the shapes around them; a source that opens with another verb ("Derived from") would still read doubled.
  *
+ * AND A READER'S WORD IS NOT A PIPELINE'S (truth-fixes final fixes, 2026-10-12; the review of round 3B, M7). Round 3B's reading of "an internal word" (an underscore, or two or more
+ * letters run into digits) was written three times, in the sanitiser, in the plain-copy check and in this test, and it reds words readers use: UK postcode districts (EC1, EC1A,
+ * SW1A, SW19, NW10), CO2, NO2, PM10, MP3, FY24, COVID19, Web3, and "rich2" out of "Zürich2" (the word split read ASCII only, so the ü ended a word and its tail was judged alone).
+ * The sanitiser cut a whole source part for one of them ("Estimated from London (EC1) city averages" gave null), and the chain's INTERNAL rule read nothing inside a closed
+ * <details>, which a reader opens in one click. Now one reading, src/lib/spine/internal_words.ts (the sanitiser's, and this test's), with its allowance list in
+ * src/lib/spine/reader_words.json (each word and its reason), which the plain-copy check reads too. A word with a letter outside A to Z is a reader's, as no pipeline names itself
+ * so, and the check opens every <details> under main before its INTERNAL walk, after the card laws, which judge a card as first drawn. Four kinds of check below: the sanitiser over
+ * source lines, the reading over word lists and the list's own shape, the check's in-page function (read from its source and run on jsdom fixtures, and held to the reading over one
+ * word list, so the two cannot part), and the wiring jsdom cannot see.
+ * BLIND SPOT, stated: jsdom has no layout and no stylesheet, so a fixture marks every element as laid out and hides only what the element's own style hides: this cannot tell what a
+ * browser hides by a stylesheet or an ancestor (the real pages are the chain's browser run, harness-copy-plain). And a list names the words someone thought of: a reader's word on
+ * no list is cut by the sanitiser and red in the check, loudly, and the remedy names where to add it.
+ *
  * Run: npx tsx tests/spine/trade_head.test.ts
  */
 import Module from "node:module";
 import { readdirSync, readFileSync } from "node:fs";
+import { JSDOM } from "jsdom";
 import { tradeHeadFigure } from "../../src/lib/spine/trade_head";
 import { inSentence } from "../../src/lib/spine/place_names";
 import { COUNTRIES, slugToIndustry, tradeNounFor } from "../../src/lib/taxonomy";
@@ -116,6 +130,8 @@ const R_FOOT = "read a source that begins \"Estimated from\" without that openin
 const R_STAT = "map a statistics code to the site's country code in one function, siteCountryCode in src/lib/countries.ts (UK to GB, EL to GR), read once where adapt_cell.ts sets the seed's meta.iso2 and by placeNameOf for the country's name and its bare-code test; the coverage report imports it and holds no table of its own; the address keeps the code the route received (meta.address_iso2, which the report foot's path reads)";
 const R_STAMPED = "in placeNameOf (src/lib/cells/place_name.ts), a whole-country word whose stamped name is the lookup's own label for it (geoNameFromSlug: \"All of AF\", \"Danmark\") is the country, named in English, before the cell's own name is kept";
 const R_TAIL = "print a label without a trailing \"(NUTS 2021)\" and without a trailing parenthetical that is the page's own country code, in placeNameOf only (the display: the generator's addresses are the slugs of the labels and must not move)";
+const R_READER = "read a pipeline's word in one place, src/lib/spine/internal_words.ts: a word of A to Z, a to z, digits and underscores only that holds an underscore, or two or more letters run straight into a digit and is not on the allowance list src/lib/spine/reader_words.json (each word with its reason); the sanitiser cuts by it and the plain-copy check holds the page to it, reading the same list; a word with a letter outside A to Z is a reader's";
+const R_GATE = "in scripts/harness/check_copy_plain.mjs read a pipeline's word over all of main by the same reading: words split on letters of any script, digits and underscores, a word with a letter outside A to Z a reader's, the words of src/lib/spine/reader_words.json (read by the script and passed into the page) allowed, and every <details> under main opened (its name removed first: the kit's grouped details close one another) after the card laws and before the INTERNAL walk";
 const COUNTRIES_FILE = "src/lib/countries.ts";
 const REPORT = "src/lib/coverage/report.ts";
 const VIEW = "src/components/spine/cell/cell-view.tsx";
@@ -589,7 +605,15 @@ async function main(): Promise<void> {
   type Sanitise = (line: string | null | undefined) => string | null;
   check("src/lib/spine/adapt_cell.ts exports sanitiseProvenance", typeof adaptCell.sanitiseProvenance === "function", { file: SEED, remedy: R_SOURCE });
   const S: Sanitise = adaptCell.sanitiseProvenance ?? (() => "(sanitiseProvenance is not exported)");
-  const internalIn = (text: string): string[] => (text.match(/[A-Za-z0-9_]+/g) ?? []).filter((w) => w.includes("_") || /[A-Za-z]{2,}\d/.test(w));
+  /* THE READING, ONE MODULE (truth-fixes final fixes; the review of round 3B, M7): src/lib/spine/internal_words.ts says what a pipeline's word is and holds the allowance list of
+     reader's words; the sanitiser cuts by it, and this test reads the seed's source line by it (it was a third copy of the reading, here). */
+  const IW_FILE = "src/lib/spine/internal_words.ts";
+  const WORDS_FILE = "src/lib/spine/reader_words.json";
+  const GATE = "scripts/harness/check_copy_plain.mjs";
+  type ReaderWord = { word: string; reason: string };
+  const iw = await tryImport<{ READER_WORDS?: readonly ReaderWord[]; internalWordsIn?: (text: string) => string[]; isInternalWord?: (word: string) => boolean }>(() => import("../../src/lib/spine/internal_words"));
+  /** The pipeline's words in a text, by the one reading; none where the module is absent (its export check below reds). */
+  const internalIn = (text: string): string[] => iw?.internalWordsIn?.(text) ?? [];
   const sources: Array<[string, string | null | undefined, string | null]> = [
     ["the extrapolated rows' real source (the United Kingdom's and Germany's, 2026-10-11): a pipeline's name, nothing readable is left", "wave5_extrapolation", null],
     ["the regional rows' real source stays", "National business statistics", "National business statistics"],
@@ -603,6 +627,14 @@ async function main(): Promise<void> {
     ["a key:value marker after a pipe is cut as before", "Estimated from regional patterns | scrub:revenue-cap-2026-05-31", "Estimated from regional patterns"],
     ["a prose part after a pipe stays as before", "Estimated from regional patterns | see note", "Estimated from regional patterns | see note"],
     ["a licence's version is a reader's word: v3.0", "Open Government Licence v3.0", "Open Government Licence v3.0"],
+    /* A READER'S WORD IS NOT A PIPELINE'S (truth-fixes final fixes; the review of round 3B, M7). */
+    ["a reader's postcode district is a reader's word: EC1 keeps its part", "Estimated from London (EC1) city averages", "Estimated from London (EC1) city averages"],
+    ["and a reader's unit: CO2", "Estimated from CO2 emissions data", "Estimated from CO2 emissions data"],
+    ["a reader's word and a pipeline's in separate parts: the pipeline's part is cut, the reader's stays", "Estimated from London (EC1) city averages | wave5_extrapolation", "Estimated from London (EC1) city averages"],
+    ["a reader's word and a pipeline's in one part: the part is the pipeline's and goes whole", "Estimated from London (EC1) wave5 averages", null],
+    ["stated behaviour, the list is exact: a district it does not name is cut, and the remedy is to name it with its reason in src/lib/spine/reader_words.json", "Estimated from London (EC9) city averages", null],
+    ["a word with a letter outside A to Z is a reader's: Zürich2 stays", "Estimated from Zürich2 city averages", "Estimated from Zürich2 city averages"],
+    ["and the ASCII word it used to be read as is a pipeline's: rich2 goes", "Estimated from rich2 city averages", null],
     ["no source stays no source", null, null],
     ["an empty source stays no source", "", null],
   ];
@@ -610,6 +642,79 @@ async function main(): Promise<void> {
     const got = S(line);
     check(`${label}: sanitiseProvenance(${JSON.stringify(line)}) is ${JSON.stringify(want)} (got ${JSON.stringify(got)})`, got === want, { file: SEED, remedy: R_SOURCE });
   }
+  /* (2c-ii) A READER'S WORD IS NOT A PIPELINE'S (truth-fixes final fixes; the review of round 3B, M7). The module and its list, the reading over word lists, the plain-copy check's own
+     in-page function run on jsdom fixtures and held to the same reading over one word list, and the wiring the fixtures cannot see. */
+  check(`${IW_FILE} exports the reading (internalWordsIn, isInternalWord) and its allowance list (READER_WORDS)`, typeof iw?.internalWordsIn === "function" && typeof iw?.isInternalWord === "function" && Array.isArray(iw?.READER_WORDS), { file: IW_FILE, remedy: R_READER });
+  const LIST: readonly ReaderWord[] = iw?.READER_WORDS ?? [];
+  const NAMED = ["EC1", "EC1A", "SW1A", "SW19", "NW10", "CO2", "NO2", "PM10", "MP3", "FY24", "COVID19", "Web3"];
+  const unfit = LIST.filter((e) => !(typeof e?.word === "string" && typeof e?.reason === "string" && e.reason.trim().length > 0 && /^[A-Za-z0-9]+$/.test(e.word) && /[A-Za-z]{2,}\d/.test(e.word)));
+  const twice = LIST.filter((e, i) => LIST.findIndex((x) => x.word === e.word) !== i);
+  const missing = NAMED.filter((w) => !LIST.some((e) => e.word === w));
+  check(`${WORDS_FILE} holds ${LIST.length} words, each with a reason, each one the rule would otherwise cut (two or more letters run into a digit), none twice, and the ${NAMED.length} the review found read (missing: ${missing.join(", ") || "none"}${unfit.length ? `; unfit: ${unfit.map((e) => JSON.stringify(e)).join(", ")}` : ""}${twice.length ? `; twice: ${twice.map((e) => e.word).join(", ")}` : ""})`, LIST.length >= NAMED.length && missing.length === 0 && unfit.length === 0 && twice.length === 0, { file: WORDS_FILE, remedy: R_READER });
+  const READERS = [...NAMED, "Zürich2", "v3", "p50", "Q4", "H1", "2021Q4", "COVID-19", "Stoke-on-Trent", "SUSB", "2021"];
+  const PIPELINES = ["wave5_extrapolation", "wave5", "cafes_coffee", "rev_p50", "n_enterprises", "NUTS2", "UKI3", "EL30", "BRES2022", "rich2", "EC9"];
+  const readerCut = READERS.filter((w) => internalIn(w).length > 0);
+  const pipelineKept = PIPELINES.filter((w) => internalIn(w).length === 0);
+  check(`the reading cuts none of ${READERS.length} reader's words (cut: ${readerCut.join(", ") || "none"}) and keeps none of ${PIPELINES.length} pipeline's (kept: ${pipelineKept.join(", ") || "none"})`, typeof iw?.internalWordsIn === "function" && readerCut.length === 0 && pipelineKept.length === 0, { file: IW_FILE, remedy: R_READER });
+  /* The plain-copy check's in-page function, read from its source and run on jsdom: the same function the browser runs, over a fixture page. jsdom has no layout, so every element is
+     marked as laid out; what an element's own style hides stays hidden. The function takes the allowance list as its argument (the old one took none, and ignores it). */
+  const gateText = readFileSync(GATE, "utf8");
+  const gateFrom = gateText.indexOf("function inPage(");
+  const gateLen = gateFrom === -1 ? -1 : gateText.slice(gateFrom).search(/\r?\n\}\r?\n/);
+  const inPageSrc: string | null = gateFrom === -1 || gateLen === -1 ? null : `${gateText.slice(gateFrom, gateFrom + gateLen)}\n}`;
+  type GateRed = { id: string; rule: string; msg: string };
+  let gateError = "";
+  const runGate = (html: string): GateRed[] | null => {
+    if (inPageSrc === null) return null;
+    try {
+      const dom = new JSDOM(html, { runScripts: "outside-only" });
+      try {
+        const win = dom.window;
+        (win.Element.prototype as unknown as { getClientRects: () => unknown[] }).getClientRects = function () { return [{}]; };
+        const out = (win.eval(`(${inPageSrc})`) as (reader: readonly ReaderWord[]) => { reds: GateRed[] })(LIST);
+        return JSON.parse(JSON.stringify(out.reds)) as GateRed[];
+      } finally { dom.window.close(); }
+    } catch (e) { gateError = String(e); return null; }
+  };
+  const cardPage = (inner: string): string => `<!doctype html><html><body><main><section data-card id="c1"><h3>Costs</h3>${inner}</section></main></body></html>`;
+  const internalOf = (inner: string): string[] | null => runGate(cardPage(inner))?.filter((r) => r.rule === "INTERNAL").map((r) => /^"([^"]*)"/.exec(r.msg)?.[1] ?? r.msg) ?? null;
+  const same = (got: string[] | null, want: string[]): boolean => got !== null && JSON.stringify([...got].sort()) === JSON.stringify([...want].sort());
+  const plainRun = runGate(cardPage("<p>Plain words.</p>"));
+  check(`the plain-copy check's source holds an inPage function the fixtures can run${inPageSrc === null ? " (it holds none)" : plainRun === null ? ` (it threw: ${gateError})` : ""}`, inPageSrc !== null && plainRun !== null, { file: GATE, remedy: R_GATE });
+  const gateRows: Array<[string, string, string[]]> = [
+    ["a pipeline's word inside a closed <details> is found, since a reader opens it in one click", `<p>Plain words.</p><details><summary>The plus</summary><p>Source: wave5_extrapolation.</p></details>`, ["wave5_extrapolation"]],
+    ["two closed <details> that share a name are both read (the kit's grouped details close one another when one opens)", `<details name="plus"><summary>One</summary><p>wave5</p></details><details name="plus"><summary>Two</summary><p>cafes_coffee</p></details>`, ["wave5", "cafes_coffee"]],
+    ["a closed <details> inside a closed one is read", `<details><summary>Outer</summary><details><summary>Inner</summary><p>NUTS2</p></details></details>`, ["NUTS2"]],
+    ["the twelve reader's words that run letters into digits are not red", `<p>${NAMED.join(" ")}</p>`, []],
+    ["a word with a letter outside A to Z is a reader's: Zürich2 is not red", "<p>Zürich2</p>", []],
+    ["and the ASCII word it used to be read as is a pipeline's: rich2 is red", "<p>rich2</p>", ["rich2"]],
+    ["an underscore word is a pipeline's whatever surrounds it", "<p>wave5_extrapolation and cafes_coffee</p>", ["wave5_extrapolation", "cafes_coffee"]],
+    ["letters run into digits are a pipeline's when the list does not name them", "<p>NUTS2 UKI3 EL30 BRES2022 EC9</p>", ["NUTS2", "UKI3", "EL30", "BRES2022", "EC9"]],
+    ["one letter before the digit is a reader's: v3.0, p50, Q4, H1", "<p>Open Government Licence v3.0, p50, Q4 and H1.</p>", []],
+    ["a word is read once per card, however often it stands", "<p>wave5 wave5</p><p>wave5</p>", ["wave5"]],
+    ["text the element's own style hides stays unread, and opening the <details> reveals nothing it hides", `<p style="display:none">wave5</p><p style="visibility:hidden">NUTS2</p><details><summary>x</summary><p style="display:none">cafes_coffee</p></details>`, []],
+  ];
+  for (const [label, inner, want] of gateRows) {
+    const got = internalOf(inner);
+    check(`the plain-copy check's INTERNAL rule: ${label}: ${JSON.stringify(want)} (got ${JSON.stringify(got)}${got === null ? `: ${inPageSrc === null ? "no inPage function in its source" : gateError}` : ""})`, same(got, want), { file: GATE, remedy: R_GATE });
+  }
+  /* The card laws judge a card as first drawn, so the check opens the <details> only after them: a method word in a closed one is still unread there. */
+  const bannedOf = (inner: string): number | null => runGate(cardPage(inner))?.filter((r) => r.rule === "BANNED").length ?? null;
+  const bannedClosed = bannedOf("<details><summary>x</summary><p>A modelled figure.</p></details>");
+  const bannedOpen = bannedOf("<p>A modelled figure.</p>");
+  check(`the card laws still judge a card as first drawn: "modelled" inside a closed <details> is not read (${bannedClosed} red) and the same word in plain view is (${bannedOpen} red)`, bannedClosed === 0 && bannedOpen === 1, { file: GATE, remedy: R_GATE });
+  const PARITY = [...READERS, ...PIPELINES, "Estimated", "from", "London", "city", "averages", "UKI", "ec1", "WEB3", "Zürich", "München2", "x_y", "a1b2"];
+  const gateAll = internalOf(`<p>${PARITY.join(" ")}</p>`);
+  const moduleAll = [...new Set(internalIn(PARITY.join(" ")))];
+  const apart = gateAll === null ? [] : [...gateAll.filter((w) => !moduleAll.includes(w)), ...moduleAll.filter((w) => !gateAll.includes(w))];
+  check(`the check and the module read ${PARITY.length} words alike: the check finds ${gateAll === null ? "nothing (it did not run)" : gateAll.length}, the module ${moduleAll.length}${apart.length ? ` (apart on ${apart.join(", ")})` : ""}`, gateAll !== null && moduleAll.length > 0 && same(gateAll, moduleAll), { file: GATE, remedy: R_GATE });
+  /* The wiring the fixtures cannot see: where the check gets its list, that it opens the <details> in the right place, and that the sanitiser holds no reading of its own. */
+  const gateCode = stripCommentLines(gateText.split(/\r?\n/)).join("\n");
+  const gateAt = (needle: string): number => gateCode.indexOf(needle);
+  check("the plain-copy check reads its allowance list from src/lib/spine/reader_words.json and passes it into the page it walks", /readFileSync\("src\/lib\/spine\/reader_words\.json", "utf8"\)/.test(gateCode) && /page\.evaluate\(inPage, READER\)/.test(gateCode), { file: GATE, remedy: R_GATE });
+  check("the plain-copy check opens every <details> under main, its name removed first, after the card laws and before the INTERNAL walk", /d\.removeAttribute\("name"\);\s*d\.open = true;/.test(gateCode) && gateAt("for (const card of cards)") !== -1 && gateAt("for (const card of cards)") < gateAt("d.open = true") && gateAt("d.open = true") < gateAt("createTreeWalker(main"), { file: GATE, remedy: R_GATE });
+  const adaptCode = stripCommentLines(readFileSync(SEED, "utf8").split(/\r?\n/)).join("\n");
+  check("the sanitiser cuts by the one reading (internalWordsIn from ./internal_words) and splits no words of its own", /import \{ internalWordsIn \} from "\.\/internal_words";/.test(adaptCode) && !/\[A-Za-z0-9_\]\+/.test(adaptCode), { file: SEED, remedy: R_READER });
   /* The seed and the hero's foot, as the page prints them. The four internal-source addresses drop the clause; the controls keep their words exactly. */
   type FootCase = { country: string; geo: string; industry: string; foot: string; at?: { file: string; remedy: string } };
   const feet: FootCase[] = [
