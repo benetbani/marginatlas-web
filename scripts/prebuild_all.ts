@@ -161,6 +161,12 @@ const GATES: Gate[] = [
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
   { name: "provenance", script: "scripts/harness/check_provenance.mjs", args: ["--list"] },
+  /* THE TYPE FLOOR (plan 2026-10-12 rhythm-air-inside, Task 1A; his choice of 2026-10-12, "Air inside only": small text rises to 14px).
+     On every spine render pages-fresh writes, at 1280, characters under 14px outside scripts/harness/type_floor_allow.json are 20% or
+     less of the visible characters, read as R1 read the renders (scripts/lib/type_floor.mjs states its blind spot). No browser. Its
+     reader's fixtures beside it. */
+  { name: "type-floor", script: "scripts/harness/check_type_floor.mjs", args: ["--list"] },
+  { name: "type-floor-reader", script: "tests/spine/type_floor.test.ts" },
   /* THE FLOOR CENSUS IS NOT STALE (milestone 1, M10): every harness render outside the UK counts the blocks the census recorded. No browser. */
   { name: "floor-census-fresh", script: "scripts/harness/check_floor_census.mjs" },
   /* THE LOUD-MOMENTS LEDGER AND THE RENDER AGREE (plan step 40, 2026-09-19;

@@ -1,0 +1,16 @@
+[
+  { "key": "sources-foot", "kind": "source", "places": ["src/components/spine/SourcesFoot.tsx"], "reason": "the licence's own sentence and its link under a UK page's last band: the source and licence line of a page's foot (spec 2026-10-12, section 2.2)" },
+  { "key": "month-axis", "kind": "axis", "places": ["src/components/spine/archetypes/MonthBars.tsx"], "reason": "the month initials and the years under the month bars: a chart's axis labels" },
+  { "key": "strip-scale", "kind": "axis", "places": ["src/components/spine/archetypes/RangeStrip.tsx"], "reason": "a log strip's round values on its line: a chart's tick labels" },
+  { "key": "strip-marks", "kind": "axis", "places": ["src/components/spine/archetypes/RangeStrip.tsx"], "reason": "the names of a strip's marks under their ticks: a chart's axis labels" },
+  { "key": "bars-track-end", "kind": "axis", "places": ["src/components/spine/archetypes/RankedBars.tsx"], "reason": "the figure at the far end of a ranked bars track: a chart's axis label" },
+  { "key": "bars-names", "kind": "axis", "places": ["src/components/spine/archetypes/RankedBars.tsx"], "reason": "the names under vertical bars: a chart's axis labels" },
+  { "key": "segment-ends", "kind": "axis", "places": ["src/components/spine/archetypes/SegmentBar.tsx"], "reason": "the two named ends of a position bar: a chart's axis labels" },
+  { "key": "spectra-poles", "kind": "axis", "places": ["src/components/spine/archetypes/SpectraTable.tsx", "src/components/spine/kit.tsx"], "reason": "a spectrum's two poles at the ends of its track: a chart's axis labels" },
+  { "key": "column-names", "kind": "axis", "places": ["src/components/spine/sections/Obstacles.tsx", "src/components/spine/sections/SpendByIncome.tsx"], "reason": "the category under each column: a chart's axis labels" },
+  { "key": "jobs-axis", "kind": "axis", "places": ["src/components/spine/sections/JobMarket.tsx"], "reason": "the job market track's scale values: a chart's tick labels" },
+  { "key": "survival-axis", "kind": "axis", "places": ["src/components/spine/interact/SurvivalCurve.tsx"], "reason": "the years under the survival curve: a chart's axis labels" },
+  { "key": "world-axis", "kind": "axis", "places": ["src/components/spine/charts/WorldRange.tsx"], "reason": "a world track's scale values: a chart's tick labels" },
+  { "key": "pair-axis", "kind": "axis", "places": ["src/components/spine/charts/RangePair.tsx"], "reason": "a range pair's scale values: a chart's tick labels" },
+  { "key": "scale-ends", "kind": "axis", "places": ["src/components/spine/kit.tsx"], "reason": "the end labels and end values of the kit's scales and strips (EaseScale, Meter, SpreadStrip, PhaseBar): a chart's axis labels" }
+]

@@ -220,6 +220,35 @@
       "claims": []
     },
     {
+      "name": "type-floor",
+      "script": "scripts/harness/check_type_floor.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": false,
+      "asserts": "check_type_floor , NO READER TEXT UNDER 14PX (plan 2026-10-12 rhythm-air-inside, Task 1A; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, section 3 item 1).",
+      "reads": [
+        "scripts/harness/pages.json",
+        "scripts/harness/type_floor_allow.json"
+      ],
+      "claims": []
+    },
+    {
+      "name": "type-floor-reader",
+      "script": "tests/spine/type_floor.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE TYPE FLOOR'S READER (plan 2026-10-12 rhythm-air-inside, Task 1A; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, sections 2.2 and 3 item 1): reader text is 14px or lar",
+      "reads": [
+        "scripts/harness/check_type_floor.mjs",
+        "scripts/harness/type_floor_allow.json",
+        "scripts/lib/type_floor.mjs",
+        "src/app/globals.css",
+        "src/components/spine/"
+      ],
+      "claims": []
+    },
+    {
       "name": "floor-census-fresh",
       "script": "scripts/harness/check_floor_census.mjs",
       "args": [],
