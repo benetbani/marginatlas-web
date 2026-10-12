@@ -2222,7 +2222,8 @@
         "src/lib/spine/adapt_cell.ts",
         "src/lib/spine/crumb_rows.ts",
         "src/lib/spine/place_names.ts",
-        "src/lib/spine/trade_head.ts"
+        "src/lib/spine/trade_head.ts",
+        "src/lib/spine/trade_hero_facts.ts"
       ],
       "claims": []
     },

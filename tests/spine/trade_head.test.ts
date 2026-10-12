@@ -79,13 +79,20 @@
  * BLIND SPOT, stated: this reads the links the resolvers answer (src/lib/geo/page_targets.ts), which come from the route rules and the lists the routes gate on, not from a fetch, so it
  * cannot tell whether a linked page renders.
  *
+ * AND THE FOOT'S SENTENCE READS AS ENGLISH (truth-fixes round 3D, 2026-10-12; the review of round 3B, "seen in passing"). Every synthetic cell's source is "Estimated from country
+ * and industry averages" (src/lib/cells/fill_defaults.ts), and the hero's foot (src/lib/spine/trade_hero_facts.ts) stripped only a leading "Modeled from" before it wrote
+ * ", from {source}.", so every synthetic trade page printed "Estimates for a typical restaurant, from estimated from country and industry averages.". A source that begins
+ * "Estimated from" is read without that opening, as one that begins "Modeled from" is, so the sentence says "from" once and still names the one source the cell holds: no source is
+ * invented. Two kinds of check below: the composer over minimal seeds, and the seed at the address that printed it.
+ * BLIND SPOT, stated: the cases are the strings the data holds today and the shapes around them; a source that opens with another verb ("Derived from") would still read doubled.
+ *
  * Run: npx tsx tests/spine/trade_head.test.ts
  */
 import Module from "node:module";
 import { readdirSync, readFileSync } from "node:fs";
 import { tradeHeadFigure } from "../../src/lib/spine/trade_head";
 import { inSentence } from "../../src/lib/spine/place_names";
-import { COUNTRIES, slugToIndustry } from "../../src/lib/taxonomy";
+import { COUNTRIES, slugToIndustry, tradeNounFor } from "../../src/lib/taxonomy";
 import { PLACE_SLUGS_BY_COUNTRY } from "../../src/lib/routing/place_slugs_generated";
 import { red, redSummary } from "../../scripts/lib/red";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
@@ -105,6 +112,7 @@ const R_CARD = "name the place in the share card through headPlaceOf(country, ge
 const R_ARTICLE = "drop Czech from the start-of-name rule in src/lib/spine/place_names.ts: Czechia takes no article, and the Czech Republic still takes it from Republic";
 const R_NAMED = "set the value of each of gb/england, gb/scotland, gb/wales, gb/northern-ireland, in/punjab, kr/gyeonggi and my/selangor in src/lib/geo/popular_place_overrides.json to the region's own English name (England, Scotland, Wales, Northern Ireland, Punjab, Gyeonggi, Selangor): that table is the one geoNameFromSlug and getCellBySlug answer first, and a region is never named by its capital or by a place outside it; then generate the place table again (scripts/gen_place_slugs.ts, renderPlaceSlugs) and keep every word it holds, since its addresses are built from these values";
 const R_SOURCE = "cut a pipeline's word (one holding an underscore, or two or more letters run into digits) from the source line where the data enters the seed, sanitiseProvenance in src/lib/spine/adapt_cell.ts; where nothing readable is left the sentence drops its \"from\" clause (\"Estimates for a typical restaurant.\"), never an invented source and never an agency";
+const R_FOOT = "read a source that begins \"Estimated from\" without that opening in tradeHeroFacts (src/lib/spine/trade_hero_facts.ts), as one that begins \"Modeled from\" is, so the foot says \"from\" once (\"Estimates for a typical restaurant, from country and industry averages.\"): never an invented source and never an agency";
 const R_STAT = "map a statistics code to the site's country code in one function, siteCountryCode in src/lib/countries.ts (UK to GB, EL to GR), read once where adapt_cell.ts sets the seed's meta.iso2 and by placeNameOf for the country's name and its bare-code test; the coverage report imports it and holds no table of its own; the address keeps the code the route received (meta.address_iso2, which the report foot's path reads)";
 const R_STAMPED = "in placeNameOf (src/lib/cells/place_name.ts), a whole-country word whose stamped name is the lookup's own label for it (geoNameFromSlug: \"All of AF\", \"Danmark\") is the country, named in English, before the cell's own name is kept";
 const R_TAIL = "print a label without a trailing \"(NUTS 2021)\" and without a trailing parenthetical that is the page's own country code, in placeNameOf only (the display: the generator's addresses are the slugs of the labels and must not move)";
@@ -599,7 +607,7 @@ async function main(): Promise<void> {
     check(`${label}: sanitiseProvenance(${JSON.stringify(line)}) is ${JSON.stringify(want)} (got ${JSON.stringify(got)})`, got === want, { file: SEED, remedy: R_SOURCE });
   }
   /* The seed and the hero's foot, as the page prints them. The four internal-source addresses drop the clause; the controls keep their words exactly. */
-  type FootCase = { country: string; geo: string; industry: string; foot: string };
+  type FootCase = { country: string; geo: string; industry: string; foot: string; at?: { file: string; remedy: string } };
   const feet: FootCase[] = [
     { country: "gb", geo: "boston", industry: "restaurants", foot: "Estimates for a typical restaurant." },
     { country: "gb", geo: "gb", industry: "restaurants", foot: "Estimates for a typical restaurant." },
@@ -607,14 +615,36 @@ async function main(): Promise<void> {
     { country: "de", geo: "de", industry: "restaurants", foot: "Estimates for a typical restaurant." },
     { country: "gb", geo: "liverpool", industry: "restaurants", foot: "Estimates for a typical restaurant, from national business statistics." },
     { country: "us", geo: "california", industry: "restaurants", foot: "Estimates for a typical restaurant, from census." },
+    /* A SYNTHETIC CELL (truth-fixes round 3D, E6): no row held legal services, so its source is the lookup's own words, "Estimated from country and industry averages", and the
+       foot read "from estimated from country and industry averages". */
+    { country: "gb", geo: "liverpool", industry: "legal-services", foot: `Estimates for a typical ${tradeNounFor(tradeName("legal-services"))}, from country and industry averages.`, at: { file: "src/lib/spine/trade_hero_facts.ts", remedy: R_FOOT } },
   ];
   for (const f of feet) {
     const addr = `/${f.country}/${f.geo}/${f.industry}`;
     const seed = await buildSpineCellSeed(f.country, f.geo, f.industry);
     const footText: string | null = seed ? tradeHeroFacts(seed)?.foot?.text ?? null : null;
     const line = String(seed?.meta?.provenance_line ?? "");
-    check(`${addr}: the seed's source line holds no internal word (${JSON.stringify(line)}) and the hero's foot reads "${f.foot}" (got ${JSON.stringify(footText)})`, internalIn(line).length === 0 && footText === f.foot, { file: SEED, remedy: R_SOURCE });
+    check(`${addr}: the seed's source line holds no internal word (${JSON.stringify(line)}) and the hero's foot reads "${f.foot}" (got ${JSON.stringify(footText)})`, internalIn(line).length === 0 && footText === f.foot, f.at ?? { file: SEED, remedy: R_SOURCE });
   }
+  /* THE FOOT'S COMPOSER ON ITS OWN (truth-fixes round 3D, E6): tradeHeroFacts over a minimal seed, one source line each. A source that begins "Estimated from" reads without that
+     opening, as one that begins "Modeled from" does, so the sentence says "from" once; every other source keeps its words; no source drops the clause. */
+  const footOf = (provenance: string | null): string | null => tradeHeroFacts({ meta: { trade: "Restaurants", city: "Anywhere", ...(provenance === null ? {} : { provenance_line: provenance }) } })?.foot?.text ?? null;
+  const footCases: Array<[string, string | null, string]> = [
+    ["a synthetic cell's own words, which begin Estimated from", "Estimated from country and industry averages", "Estimates for a typical restaurant, from country and industry averages."],
+    ["the default of an extrapolated row, which begins Estimated from", "Estimated from regional patterns", "Estimates for a typical restaurant, from regional patterns."],
+    ["a source in lower case reads the same", "estimated from regional patterns", "Estimates for a typical restaurant, from regional patterns."],
+    ["a source that begins Modeled from reads without its opening, as before", "Modeled from national business statistics", "Estimates for a typical restaurant, from national business statistics."],
+    ["a register's source keeps its words", "National business statistics", "Estimates for a typical restaurant, from national business statistics."],
+    ["the word estimated later in a source is the source's own", "National statistics, estimated from samples", "Estimates for a typical restaurant, from national statistics, estimated from samples."],
+    ["a source's closing full stop is dropped", "Estimated from country and industry averages.", "Estimates for a typical restaurant, from country and industry averages."],
+    ["no source drops the clause and names none", null, "Estimates for a typical restaurant."],
+  ];
+  for (const [label, line, want] of footCases) {
+    const got = footOf(line);
+    check(`${label}: the foot over ${JSON.stringify(line)} reads "${want}" (got ${JSON.stringify(got)})`, got === want, { file: "src/lib/spine/trade_hero_facts.ts", remedy: R_FOOT });
+  }
+  const doubled = footCases.map(([, line]) => footOf(line) ?? "").filter((t) => /\bfrom estimated\b/i.test(t) || /\bfrom from\b/i.test(t));
+  check(`no foot says "from" twice in a row or "from estimated" (${footCases.length} sources)${doubled.length ? `: ${doubled.join(" | ")}` : ""}`, doubled.length === 0, { file: "src/lib/spine/trade_hero_facts.ts", remedy: R_FOOT });
 
   /* (2d) THE STATISTICS CODE AT THE SEED'S DOOR, AND THE ADDRESS THAT DOES NOT MOVE. The seed names the site's country (UK reads GB, EL reads GR) and carries the code the
      route received beside it (meta.address_iso2), which the report foot's path reads and nothing else does. The page is drawn from that seed, so the tests that ask "is this

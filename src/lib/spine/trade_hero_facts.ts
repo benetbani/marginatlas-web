@@ -114,9 +114,14 @@ export function tradeHeroFacts(seed: any): TradeHeroFacts | null {
      2026-09-24, evening): one plain sentence naming the trade and the source,
      where the cards used to say "modelled" and "typical for the trade anywhere"
      sixteen times. The absent answer already says what is missing, so the
-     withheld line no longer stands here too. */
+     withheld line no longer stands here too.
+
+     THE SOURCE READS WITHOUT ITS OWN "FROM" (truth-fixes round 3D, E6): the sentence writes ", from {source}.", so a source that opens with
+     "Modeled from" or "Estimated from" is read without that opening. Every synthetic cell's source is "Estimated from country and industry
+     averages" (src/lib/cells/fill_defaults.ts), and only the first was stripped, so every synthetic trade page printed "..., from estimated from
+     country and industry averages." The foot now says "from" once and names the one source the cell holds. */
   const noun = tradeNounFor(meta.trade) || "shop";
-  const source = provenance ? provenance.replace(/\.$/, "").replace(/^modell?ed from /i, "").trim() : "";
+  const source = provenance ? provenance.replace(/\.$/, "").replace(/^(?:modell?ed|estimated) from /i, "").trim() : "";
   const footText = source
     ? COPY.tradeHero.honestFrom.replace("{noun}", noun).replace("{source}", source.charAt(0).toLowerCase() + source.slice(1))
     : COPY.tradeHero.honest.replace("{noun}", noun);
