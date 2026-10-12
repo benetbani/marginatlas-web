@@ -909,6 +909,11 @@ const GATES: Gate[] = [
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
   { name: "no-place-words", script: "tests/copy/no_place_words.test.ts" },
+  /* No figure typed into a page's markup (truth-fixes round 3D, E3; the owner's rule, every figure from its builder with its provenance): a bare
+     number between tags ("$618K" and "1" stood on /world as typed tags, the first the takings of an old modelled room and the second a
+     hand-kept constant) has no builder and no provenance. Every .tsx under src/app and src/components outside the workshop, three named
+     exceptions (a status code and two scales' zeros). */
+  { name: "no-typed-figures", script: "tests/copy/no_typed_figures.test.ts" },
   /* Every UK city's page prints an official figure, says in its card's one line that a figure is an estimate, or withholds it:
      London's shop rent from the valuation slice, the survey's pay, no hand-anchored cost of living, no engine district rents
      (masterplan step 03); the six other cities' shard figures each marked an estimate (plan 2026-10-08, uk:cities-sourced-or-marked). */

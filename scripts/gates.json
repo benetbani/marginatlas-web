@@ -3398,6 +3398,26 @@
       "claims": []
     },
     {
+      "name": "no-typed-figures",
+      "script": "tests/copy/no_typed_figures.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO FIGURE IS TYPED INTO A PAGE'S MARKUP (truth-fixes round 3D, E3, 2026-10-12).",
+      "reads": [
+        "src/app",
+        "src/app/_design",
+        "src/app/dev",
+        "src/app/industries/page.tsx",
+        "src/app/not-found.tsx",
+        "src/app/world/page.tsx",
+        "src/components",
+        "src/components/spine/sections/JobMarket.tsx",
+        "src/components/spine2/page/Ch11FirstYear.tsx",
+        "tests/copy/no_typed_figures.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-city-sources",
       "script": "tests/spine/uk_city_sources.test.ts",
       "args": [],

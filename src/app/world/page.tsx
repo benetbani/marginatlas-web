@@ -212,13 +212,11 @@ function WorldBody() {
                     </span>
                     <span className="v">{atlas.activitiesMapped}</span>
                   </div>
-                  <div className="row">
-                    <span className="nm">
-                      Reconciled line by line
-                      <span className="s">restaurants in London, so far</span>
-                    </span>
-                    <span className="v">1</span>
-                  </div>
+                  {/* THE THIRD ROW IS GONE (truth-fixes round 3D, E3). "Reconciled line by line, restaurants in London, so far" printed a
+                      typed 1: the constant `reconciled: 1` in src/lib/home/front_page_figures.ts, which its own comment says is kept by
+                      hand, for a kind of page (the reconciled cell file) that retired with the July page. No builder holds that count
+                      today, so the row has no figure to draw. A figure on this card comes from its builder with its provenance, and
+                      tests/copy/no_typed_figures.test.ts reds one typed between the tags. */}
                 </div>
               </div>
             ) : null}
@@ -325,10 +323,12 @@ function WorldBody() {
                     Every city with a page
                     <span className="g">{Object.values(cityCount).reduce((a, b) => a + b, 0)}</span>
                   </a>
-                  <a href="/gb/london/restaurants">
-                    The one worked example in full
-                    <span className="g">$618K</span>
-                  </a>
+                  {/* NO TAG BESIDE THE WORKED EXAMPLE (truth-fixes round 3D, E3). It carried a typed $618K: the takings of a modelled room
+                      in an old cell file, never the figure the page it opens prints (its title, description and share card read the
+                      register's median, tradeHeadFigure in src/lib/spine/trade_head.ts, $374K when this was written). Drawing that
+                      one here would need the trade and the place typed into a data read, for a tag no label names; the link stays and
+                      the figure stays on the page it belongs to. */}
+                  <a href="/gb/london/restaurants">The one worked example in full</a>
                   <a href="/coverage">
                     What is filled and what is not
                     <span className="g">honest</span>
