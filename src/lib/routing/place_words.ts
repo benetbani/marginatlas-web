@@ -61,14 +61,25 @@ export function isHeldPlace(country: string, place: string): boolean {
   return placeWordsFor(country).has(String(place ?? "").toLowerCase());
 }
 
-/** True for a three- or four-part address under a country the site holds whose place no table holds: the trade pages, their
- *  /opening and /buy-or-start pages and the district trade pages of a place that does not exist. Each part is read as its route
- *  reads it (routeWord). A dotted address is the file rule's (src/lib/routing/edge_not_found.ts). */
+/** A CODE THE EDGE JUDGES PLACES UNDER (truth-fixes round 3D, E5; the review of round 3B, I1): a country the site holds, or a statistics
+ *  code the place table keeps words for (UK for the United Kingdom and EL for Greece, and the row of a word or two each for ER, KP, SS
+ *  and VA). Trade pages are published under all of them, and a page under UK or EL reads the site's GB or GR for its country-keyed
+ *  lookups, so a place word that no table of the code holds (london, athens) drew a synthetic page that borrowed that city at 200: its
+ *  trail linked /cities/london and its foot printed a date. Judged as a country is, a code holds ONLY its own words. A first part that
+ *  no country and no table row holds (/zz/london/zz) stays its route's. The word is the route's (routeWord), lowercased. */
+export function isPlaceCountry(country: string): boolean {
+  const cc = String(country ?? "").toLowerCase();
+  return HELD_COUNTRIES.has(cc) || placeWordsFor(cc).size > 0;
+}
+
+/** True for a three- or four-part address under a country the site holds, or a statistics code the table keeps words for, whose place no
+ *  table holds: the trade pages, their /opening and /buy-or-start pages and the district trade pages of a place that does not exist.
+ *  Each part is read as its route reads it (routeWord). A dotted address is the file rule's (src/lib/routing/edge_not_found.ts). */
 export function placeNotHeldIn(path: string): boolean {
   if (namesFile(path)) return false;
   const segs = String(path ?? "").split("/").filter(Boolean).map(routeWord);
   if (segs.length < 3 || segs.length > 4) return false;
   const [country, place] = segs;
-  if (!HELD_COUNTRIES.has(country) || TOP_LEVEL_SEGMENTS.has(country)) return false;
+  if (!isPlaceCountry(country) || TOP_LEVEL_SEGMENTS.has(country)) return false;
   return !isHeldPlace(country, place);
 }

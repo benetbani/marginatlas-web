@@ -10,7 +10,7 @@
  * middleware is the one place that runs first, so it judges here, and pins the status the same way the place rule does.
  *
  * THE RULE: each shape is judged by the resolver its own route runs, never by a guess.
- *  - `/{country}/{place}/{word}`, a country the site holds: the place names nothing when no table of the site holds the word
+ *  - `/{country}/{place}/{word}`, a country the site holds (or a statistics code, below): the place names nothing when no table of the site holds the word
  *    (src/lib/routing/place_words.ts: the country's own code, its regions, its listed cities and the label addresses their links
  *    spell, every city, district and state alias the cell route reads, the places the trade routes prerender, and the ids the
  *    database holds). The word names nothing when the cell route's own resolver (`resolveDisplayIndustry`: the taxonomy's exact
@@ -43,9 +43,14 @@
  *    src/lib/routing/served_files.ts; the platform's own addresses under `/_vercel/` are Vercel's. No page takes a dotted part
  *    (no country, region, city, trade, district, post or article slug holds a dot; the test reds when one does), so a dotted
  *    address that is no file could only ever have drawn a page's not-found, or worse, a synthesized page at 200.
+ *  - `/{code}/{place}/{word}` and its /opening, /buy-or-start and district shapes under a STATISTICS CODE the place table keeps words for (UK for
+ *    the United Kingdom, EL for Greece, and the row of a word or two each for ER, KP, SS and VA; truth-fixes round 3D, E5, the review of round
+ *    3B, I1): isPlaceCountry (src/lib/routing/place_words.ts) judges such a code as a country, so it holds ONLY its own words. Trade pages are
+ *    published under these codes, and a page under UK or EL reads the site's GB or GR for its country-keyed lookups, so a place word its table
+ *    does not hold (`/uk/london/restaurants`, `/el/athens/restaurants`) borrowed that city, its trail link and its date over a synthetic page at
+ *    200; it answers 404 as `/gb/atlantis/restaurants` does, and every word the table holds passes.
  * Everything else is left alone: one- and two-part paths of a first part no route folder holds are isPlaceWeDoNotHold's, but for a country's how-to page, a static child that rule passes,
- * and an address of three or four parts under a first part nobody holds (`/zz/london/zz`) is its route's, because trade pages are published under statistics
- * codes the site does not hold as countries (EL and UK, src/lib/routing/place_words.ts), so the edge cannot call such a first part nothing.
+ * and an address of three or four parts under a first part nobody holds (`/zz/london/zz`), no country and no row of the place table, is its route's.
  *
  * THE COUNTRY AND THE PLACE ARE THE ROUTE'S WORDS, EVERY OTHER PART IS AS WRITTEN (the reviews of 2026-10-09). The pathname is
  * percent-encoded and the route's params are not, and the place table spells six places with an accent, decoded
@@ -83,7 +88,7 @@ import { HOOD_DISTRICT_SLUGS, NEIGHBORHOOD_SLUGS } from "@/lib/routing/hood_slug
 import { SERVED_FILES } from "@/lib/routing/served_files";
 import { ROUTE_SHAPES, BLOG_SLUGS, LEARN_SLUGS, CITY_PAIRS, HOW_TO_COUNTRIES } from "@/lib/routing/route_shapes";
 import { US_DESCRIPTION_SLUGS } from "@/lib/routing/place_slugs_generated";
-import { isHeldPlace, routeWord } from "@/lib/routing/place_words";
+import { isHeldPlace, isPlaceCountry, routeWord } from "@/lib/routing/place_words";
 import { namesFile } from "@/lib/routing/names_file";
 import { getRegionsForCountry } from "@/lib/regions/regions-by-country";
 import { cityPathFor } from "@/lib/cities/city_path";
@@ -149,7 +154,9 @@ function parts(path: string): string[] | null {
   const segs = written.map((s) => s.toLowerCase());
   if (written.length >= 3 && written.length <= 4) {
     const country = routeWord(written[0]);
-    if (HELD_COUNTRIES.has(country)) {
+    /* A code the edge judges places under: a country the site holds, or a statistics code its place table keeps words for (UK, EL;
+       truth-fixes round 3D, E5), which the route is handed as written (`/u%6b/london/restaurants` reaches it as `uk`). */
+    if (isPlaceCountry(country)) {
       segs[0] = country;
       segs[1] = routeWord(written[1]);
     }
@@ -236,7 +243,12 @@ export function edgeNotFound(path: string): boolean {
      loading boundary: /af/how-to-open answered 200 with the skeleton, held at the CDN six hours by the cache header (probed 2026-10-11). */
   if (segs.length === 2 && second === "how-to-open" && HELD_COUNTRIES.has(first) && !TOP_LEVEL_SEGMENTS.has(first)) return !HOW_TO_COUNTRIES.has(first);
 
-  if ((segs.length === 3 || segs.length === 4) && HELD_COUNTRIES.has(first) && !TOP_LEVEL_SEGMENTS.has(first)) {
+  /* A STATISTICS CODE HOLDS ONLY ITS OWN WORDS (truth-fixes round 3D, E5; the review of round 3B, I1). The code asked is a country the site
+     holds or a statistics code the place table keeps words for (isPlaceCountry): trade pages are published under UK and EL, and a page
+     under either reads the site's GB or GR for its country-keyed lookups, so a place word its own table does not hold (/uk/london/restaurants,
+     /el/athens/restaurants) borrowed that city, its trail link and its date, over a synthetic page at 200. It answers 404 as /gb/atlantis does,
+     and every word the table holds passes. */
+  if ((segs.length === 3 || segs.length === 4) && isPlaceCountry(first) && !TOP_LEVEL_SEGMENTS.has(first)) {
     if (!isHeldPlace(first, second)) return true;
     /* THE INDUSTRIES HUB IS A REGION'S (the plan 2026-10-11, dynamic 404 remains): src/app/[country]/[geo]/industries draws an admin-1 region
        of a country with regional coverage and calls notFound() for any other place, inside the loading boundary: /gb/london/industries, a

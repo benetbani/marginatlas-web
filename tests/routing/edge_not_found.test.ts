@@ -694,6 +694,69 @@ for (const [p, answers404, what] of ESCAPED_COUNTRY) {
    country it takes the one hop it takes under the country. */
 check("an old district address under an escape-spelled country takes the hop it takes under the country: /g%62/london/west-end goes where /gb/london/west-end goes", quiet(() => legacyHoodTarget("/g%62/london/west-end") !== null && legacyHoodTarget("/g%62/london/west-end") === legacyHoodTarget("/gb/london/west-end")), FILE, COUNTRY_REMEDY);
 
+/* A STATISTICS CODE HOLDS ONLY ITS OWN WORDS (truth-fixes round 3D, E5; the review of round 3B, I1). Trade pages are published under codes the
+   site does not hold as countries: UK for the United Kingdom and EL for Greece (the table keeps ER, KP, SS and VA too, a word or two each). Since
+   round 3B a page under UK reads the site's GB, and under EL its GR, for the country-keyed lookups, and the edge asked HELD_COUNTRIES, which holds
+   none of them, so every address under such a code was its route's. The route never returns nothing (getCellBySlug synthesises), so it drew
+   any place word: /uk/london/restaurants borrowed London's city (its trail linked /cities/london and its foot printed "Checked 6 October 2026")
+   over a synthetic hero, as /el/athens/restaurants borrowed Athens. A code the place table keeps words for is now judged as a country is: a
+   place word the table does not hold answers 404 with the static not-found page, as /gb/atlantis/restaurants does, and every word the table
+   holds still passes. BLIND SPOT: these read the table as generated (the database's last scan) and the middleware's answer to a request, never
+   what Next then serves for the rewrite. */
+const STAT_REMEDY = "Judge a code the place table keeps words for (isPlaceCountry in src/lib/routing/place_words.ts: a country the site holds, or a statistics code such as UK and EL) as a country in parts() and edgeNotFound (src/lib/routing/edge_not_found.ts) and in placeNotHeldIn: a place word the table does not hold answers 404 with the static not-found page, every word it holds passes, and the route never borrows a GB or GR city for an address under UK or EL";
+const heldCodes = new Set(COUNTRIES.map((c) => c.code.toLowerCase()));
+const statCodes = Object.keys(PLACE_SLUGS_BY_COUNTRY).filter((cc) => !heldCodes.has(cc)).sort();
+check(`the codes the place table keeps and the site does not hold as countries (${statCodes.join(", ")}) include UK and EL, so the rows below walk both`, statCodes.includes("uk") && statCodes.includes("el"), PLACE_SLUGS_FILE, STAT_REMEDY);
+const STAT_PINNED: Array<[string, string]> = [
+  ["/uk/london/restaurants", "a GB city under the code UK (it borrowed London's city and its date)"],
+  ["/el/athens/restaurants", "a Greek city under the code EL"],
+  ["/uk/london/restaurants/opening", "a GB city under UK, a trade's opening page"],
+  ["/uk/atlantis/restaurants/buy-or-start", "an invented place under UK, a trade's buy-or-start page"],
+  ["/el/atlantis/restaurants", "an invented place under EL"],
+  ["/uk/uki/west-end/restaurants", "a district of a city the UK table holds no scheme for"],
+  ["/uk/uki/zz-not-a-trade", "a word no trade answers to, under a place the UK table holds"],
+  ["/uk/uki/industries", "a hub no route draws under a statistics code"],
+];
+for (const [p, what] of STAT_PINNED) check(`${what} answers 404 at the edge and through the middleware: ${p}`, quiet(() => nf(p) && pinned(p)), FILE, STAT_REMEDY);
+const STAT_PASSED: Array<[string, string]> = [
+  ["/uk/uki/restaurants", "a NUTS region the UK table holds"],
+  ["/el/el30/restaurants", "a Greek region the EL table holds"],
+  ["/el/attiki/restaurants", "a Greek region the EL table holds by its name"],
+  ["/uk/uki/restaurants/opening", "a held UK place, a trade's opening page"],
+  ["/el/el30/restaurants/buy-or-start", "a held EL place, a trade's buy-or-start page"],
+];
+for (const [p, what] of STAT_PASSED) check(`${what} goes on to its route: ${p}`, quiet(() => !nf(p) && passed(p)), FILE, STAT_REMEDY);
+const statWords = statCodes.flatMap((cc) => [...placeWordsFor(cc)].map((w) => [cc, w] as const));
+const statLost = statWords.flatMap(([cc, w]) => ["/restaurants", "/restaurants/opening", "/restaurants/buy-or-start"].map((tail) => `/${cc}/${w}${tail}`)).filter((p) => nf(p));
+check(`every word the table holds under a statistics code still passes, as a trade page, its opening page and its buy-or-start page (${statWords.length} words under ${statCodes.join(", ")})${statLost.length ? `: ${statLost.slice(0, 5).join(", ")}` : ""}`, statWords.length >= placeWordsFor("uk").size + placeWordsFor("el").size && statLost.length === 0, FILE, STAT_REMEDY);
+const statMissed = statCodes.filter((cc) => !(nf(`/${cc}/atlantis/restaurants`) && nf(`/${cc}/atlantis/restaurants/opening`))).map((cc) => `/${cc}/atlantis/restaurants`);
+check(`an invented place answers 404 under every statistics code (${statCodes.length})${statMissed.length ? `: ${statMissed.join(", ")}` : ""}`, statCodes.length >= 2 && statMissed.length === 0, FILE, STAT_REMEDY);
+/* THE BORROWED CITIES, ONE BY ONE: the place the site's own tables list for the country a code reads. London, the other GB cities and the GB regions
+   are no place under UK, nor Athens and the Greek regions under EL, except the words the code's own table also holds (the review: UKK1, UKM8, UKN0
+   and EL3 are the regions' ids both spell). */
+const nameOf = (cc: string) => COUNTRIES.find((c) => c.code === cc)?.name ?? "";
+const borrowed: Array<readonly [string, string]> = [
+  ...(own(CITY_SLUGS_BY_COUNTRY, "gb") ?? []).map((w) => ["uk", w] as const),
+  ...getRegionsForCountry("GB", nameOf("GB")).map((r) => ["uk", r.value] as const),
+  ...(own(CITY_SLUGS_BY_COUNTRY, "gr") ?? []).map((w) => ["el", w] as const),
+  ...getRegionsForCountry("GR", nameOf("GR")).map((r) => ["el", r.value] as const),
+];
+const borrowedWrong = borrowed.filter(([cc, w]) => nf(`/${cc}/${w}/restaurants`) === isHeldPlace(cc, w)).map(([cc, w]) => `/${cc}/${w}/restaurants`);
+check(`a city or a region of the country a statistics code reads (GB for UK, GR for EL) is a place under the code only where the code's own table holds the word (${borrowed.length} words)${borrowedWrong.length ? `: wrong for ${borrowedWrong.slice(0, 5).join(", ")}` : ""}`, borrowed.length > 20 && borrowedWrong.length === 0, FILE, STAT_REMEDY);
+/* The code spelled with an escape reaches the route as the code, so it is judged as the code (parts() decodes the country where it decodes to one the edge judges). */
+for (const [p, answers404, what] of [
+  ["/u%6b/london/restaurants", true, "a GB city under an escape-spelled UK"],
+  ["/e%6c/athens/restaurants", true, "a Greek city under an escape-spelled EL"],
+  ["/u%6b/uki/restaurants", false, "a held UK place under an escape-spelled UK"],
+] as Array<[string, boolean, string]>) {
+  check(`${what} ${answers404 ? "answers 404 at the edge and through the middleware" : "goes on to its route"}: ${p}`, quiet(() => nf(p) === answers404 && (answers404 ? pinned(p) : passed(p))), FILE, STAT_REMEDY);
+}
+/* The guard of the hops before the pin (placeNotHeldIn): a renamed trade under a place no table holds is that place's 404, never a hop to it. */
+const hopTarget = (p: string): string | null => { const r = send(p); return r.status === 308 ? new URL(r.headers.get("location") ?? "", SITE).pathname : null; };
+check("placeNotHeldIn reads a statistics code as a code with places: a GB or Greek city under UK or EL is a place no table holds, a word the table holds is not, and a first part no table holds is no country's place", placeNotHeldIn("/uk/london/restaurants") && placeNotHeldIn("/el/athens/restaurants") && !placeNotHeldIn("/uk/uki/restaurants") && !placeNotHeldIn("/el/el30/restaurants") && !placeNotHeldIn("/zz/london/restaurants"), WORDS_FILE, STAT_REMEDY);
+check("a renamed trade under a place no table holds is that place's 404, never a hop to it, under a statistics code as under a country, and under a place the table holds it takes its hop: /uk/london/media-publishing and /el/athens/media-publishing answer 404, /uk/uki/media-publishing and /gb/london/media-publishing each move once", quiet(() => pinned("/uk/london/media-publishing") && pinned("/el/athens/media-publishing") && hopTarget("/uk/uki/media-publishing") !== null && hopTarget("/gb/london/media-publishing") !== null), MW, STAT_REMEDY);
+check("a first part no country and no table holds is still its route's: /zz/london/restaurants and /zz/uki/restaurants pass the edge", nf("/zz/london/restaurants") === false && nf("/zz/uki/restaurants") === false, FILE, STAT_REMEDY);
+
 /* THE MATCHER (2026-10-06). It skipped every address ending like an image, an icon or a font, and favicon.ico, robots.txt and
    sitemap.xml by name, so a made-up one never reached the rule above: /favicon.ico, /apple-touch-icon.png and /zz/x.png drew the
    country route's soft 404 and /gb/london/x.png a synthesized London page, indexable, all at 200 (production, 2026-10-06).
