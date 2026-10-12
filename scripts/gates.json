@@ -235,6 +235,21 @@
       "claims": []
     },
     {
+      "name": "spacing-pin",
+      "script": "tests/spine/spacing_pin.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SPACING PIN (plan 2026-10-12 rhythm-air-inside, Task 1C; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, sections 2.1 and 3 item 3): inside an open section the title s",
+      "reads": [
+        "src/components/spine/archetypes/FactRows.tsx",
+        "src/components/spine/archetypes/RankedBars.tsx:",
+        "src/components/spine/archetypes/stories.tsx",
+        "src/components/spine/country/how-to-view.tsx",
+        "src/components/spine/kit.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

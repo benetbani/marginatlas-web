@@ -398,7 +398,7 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
      zones, at every width, and each reads the thing he saw rather than a class:
        ZONE TONES    neighbouring zones are not one colour, and every zone is paper (#ffffff) or tint (#f6f6f5), but for the one
                      terracotta zone, the home's band, accepted once and on home-gb only (plan 2026-10-10, Task 5).
-       ZONE PAD      a zone's padding is the ladder's: 40 / 48 / 64 at 375 / 768 / 1024 and up; the first zone 24 / 32 / 48.
+       ZONE PAD      a zone's padding is the ladder's: 40 / 48 / 64 at 375 / 768 / 1024 and up; the first zone 24 / 32 / 48, and its first section stands on that padding's edge (plan 2026-10-12 rhythm-air-inside, Task 1C).
        ZONE SPLIT    a zone that declares a pair draws two cells, and no cell stands empty.
        OPEN SECTION  a section card on a zone stands open (no edge, no fill), and a box that stays on a zone holds something the
                      reader operates (a control, a link): the card he kept for instruments and doors, nothing else.
@@ -431,6 +431,17 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
       const top = Math.round(parseFloat(cs.paddingTop)), bottom = Math.round(parseFloat(cs.paddingBottom));
       const wantTop = i === 0 ? want[0] : want[1];
       if (top !== wantTop || bottom !== want[1]) red(zid, "ZONE PAD", `padding ${top} above and ${bottom} below; the ladder asks ${wantTop} and ${want[1]} at ${width}`);
+      /* THE FIRST SECTION STANDS ON ITS ZONE'S PADDING EDGE (plan 2026-10-12 rhythm-air-inside, Task 1C; spec section 3): ZONE PAD read the
+         padding and nothing inside it, so the kit's hero wrapper's mt-8 stood every spine masthead 32 under it, 96 under the bar at 1024 up
+         against DISTANCES 2.3's 64 (R1 2026-10-12, section 5). With the site column's 16 above the zone the masthead then stands 40 / 48 / 64
+         under the bar where the zone opens the column; a breadcrumb ahead of the zone keeps its own height and the rule reads inside the zone. */
+      if (i === 0) {
+        const first = z.querySelector(":scope > [data-zone-level] > [data-zone-cell] > *");
+        if (first) {
+          const gap = Math.round(first.getBoundingClientRect().top - z.getBoundingClientRect().top);
+          if (gap !== top) red(zid, "ZONE PAD", `the first section stands ${gap} under its zone's top edge, ${gap - top} more than the zone's padding of ${top}; nothing inside the first zone adds to the masthead's 64 under the bar at 1024 up (DISTANCES 2.3)`);
+        }
+      }
       const split = z.getAttribute("data-zone");
       const cells = [...z.querySelectorAll(":scope > [data-zone-level] > [data-zone-cell]")];
       const cellsAsked = split === "wide" || split === "lone" ? 1 : split === "1-1-1" ? 3 : 2;
