@@ -7,6 +7,8 @@
  * rule outside THE ZONES' size rules, one width. scripts/harness/type_floor_allow.json names each place the 12px rung stays (a chart's tick
  * and axis labels, the source and licence line of a page's foot) with its reason; a component marks the place with data-type-allow="<key>",
  * and a key the list does not name is a red. Not a ratchet: the 20% is the law. No browser: it parses the renders pages-fresh writes.
+ * THE SCAN SET IS KNOWN APART FROM WHAT WAS FOUND (the review of Task 1A): a spine surface the list holds no page of is a red too, so a list that
+ * names none of them reads no render and cannot pass; until then it printed "PASS type-floor: 0 render(s)".
  *
  *   node scripts/harness/check_type_floor.mjs --list[=scripts/harness/pages.json]
  */
@@ -20,14 +22,19 @@ preflight({ name: "check_type_floor" });
 
 const RULE = "type-floor";
 const SPINE = ["country", "city", "cell", "industry", "hood"];
+const HARNESS_LIST = "scripts/harness/pages.json";
 const args = process.argv.slice(2);
 const listArg = args.find((a) => a.startsWith("--list"));
-const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : "scripts/harness/pages.json";
+const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : HARNESS_LIST;
 const ALLOW_FILE = "scripts/harness/type_floor_allow.json";
 const allowKeys = new Set(JSON.parse(readFileSync(ALLOW_FILE, "utf8")).map((e) => e.key));
 const pages = JSON.parse(readFileSync(LIST, "utf8")).pages.filter((p) => SPINE.includes(p.surface));
 const REMEDY = `set the text at var(--t-body) with its leading pair (14 on 20); a chart's tick or axis label, or the foot's source line, keeps 12 only under data-type-allow with its key named in ${ALLOW_FILE}`;
 const reds = [];
+/* A SPINE SURFACE THE LIST HOLDS NO PAGE OF (the review of Task 1A): the names in SPINE are the scan set, known apart from the pages found, so a surface
+   with none is a red and zero renders read can never print PASS. */
+const bare = SPINE.filter((s) => !pages.some((p) => p.surface === s));
+for (const s of bare) reds.push({ file: LIST, detail: `no page of the ${s} surface in ${LIST}, so no ${s} render was read`, remedy: `add a page of the ${s} surface to ${HARNESS_LIST}, the list the chain's harness gates read` });
 console.log(`type-floor: ${pages.length} spine render(s) at 1280, read as scripts/lib/type_floor.mjs reads (R1's method; blind to container queries and to stylesheet rules outside THE ZONES' size rules)`);
 for (const p of pages) {
   const name = `${p.surface}-${p.slugs.join("-")}`;
@@ -42,5 +49,10 @@ for (const p of pages) {
   for (const key of r.unknownKeys) reds.push({ file: ALLOW_FILE, detail: `${name}: data-type-allow="${key}" names no entry of the allowance list`, remedy: `name the place with its reason in ${ALLOW_FILE}, or lift the text to 14` });
 }
 for (const f of reds) red({ rule: RULE, ...f });
-if (reds.length) { redSummary(RULE, reds.length, REMEDY, `${pages.length} render(s)`); process.exit(1); }
+if (reds.length) {
+  /* The count line is the one a truncated tail keeps, so it names the remedy of each kind of finding present: the list's when a surface is missing, the text's when a render is over. */
+  const fix = [bare.length ? `add a page of each missing surface (${bare.join(", ")}) to ${HARNESS_LIST}` : "", reds.length > bare.length ? REMEDY : ""].filter(Boolean).join("; ");
+  redSummary(RULE, reds.length, fix, `${pages.length} render(s)`);
+  process.exit(1);
+}
 console.log(`PASS type-floor: ${pages.length} render(s) at or under ${SHARE_MAX * 100}% under ${FLOOR_PX}px.`);

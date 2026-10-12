@@ -241,6 +241,7 @@
       "asserts": "THE TYPE FLOOR'S READER (plan 2026-10-12 rhythm-air-inside, Task 1A; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, sections 2.2 and 3 item 1): reader text is 14px or lar",
       "reads": [
         "scripts/harness/check_type_floor.mjs",
+        "scripts/harness/pages.json",
         "scripts/harness/type_floor_allow.json",
         "scripts/lib/type_floor.mjs",
         "src/app/globals.css",

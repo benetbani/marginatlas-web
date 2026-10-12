@@ -16,6 +16,7 @@ const RULE = "type-floor-reader";
 const LIB = "scripts/lib/type_floor.mjs";
 const LIST = "scripts/harness/type_floor_allow.json";
 const GATE = "scripts/harness/check_type_floor.mjs";
+const PAGES = "scripts/harness/pages.json";
 const REMEDY = "read a render as R1 read it (the header of scripts/lib/type_floor.mjs): visible at 1280, the nearest size, THE ZONES' size rules, non-space characters";
 let failed = 0;
 const check = (label: string, ok: boolean, file = LIB, remedy = REMEDY) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file, detail: label, remedy }); };
@@ -66,6 +67,12 @@ check("the list's one source place is the foot's licence line", list.filter((e) 
 /* THE GATE'S WIRING. */
 const gate = readFileSync(GATE, "utf8");
 check("the gate reads the allowance list and the spine surfaces of the harness list, and parses with jsdom, no browser", /type_floor_allow\.json/.test(gate) && /\["country", "city", "cell", "industry", "hood"\]/.test(gate) && /new JSDOM\(/.test(gate) && !/chromium/.test(gate), GATE, "read scripts/harness/type_floor_allow.json and the country, city, cell, industry and hood surfaces of scripts/harness/pages.json, statically");
+
+/* THE SCAN SET HOLDS A PAGE OF EACH SURFACE (the review of Task 1A): the surfaces are read from the gate's own SPINE, not retyped here, and each must occur in the harness list's pages, so the gate cannot pass having read no render. */
+const spineNames = (/const SPINE = \[([^\]]*)\]/.exec(gate)?.[1] ?? "").split(",").map((s) => s.trim().replace(/^["']|["']$/g, "")).filter(Boolean);
+const harnessPages = (JSON.parse(readFileSync(PAGES, "utf8")) as { pages: Array<{ surface: string }> }).pages;
+const unlisted = spineNames.filter((s) => !harnessPages.some((p) => p.surface === s));
+check(`every spine surface the gate names (${spineNames.join(", ")}) occurs in ${PAGES}'s pages, so the gate cannot pass having read no render (missing: ${unlisted.join(", ") || "none"})`, spineNames.length > 0 && unlisted.length === 0, PAGES, `add a page of each spine surface the gate reads (${spineNames.join(", ")}) to ${PAGES}`);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/type_floor: all pass");
