@@ -1007,5 +1007,35 @@ check("an across column's door is spelled from its own lookup, lowercased as the
 check("the opening page carries the address it was asked at and draws its buy-or-start door from it, never from cellHref", /\bpageHref: tradePageHref\(country, geo, industry\),/.test(codeOf("src/lib/open/opening_page.ts")) && /href=\{subPageHref\(page\.pageHref, "buy-or-start"\)\}/.test(codeOf("src/components/open/OpeningHero.tsx")) && !/cellHref\}\/buy-or-start/.test(codeOf("src/components/open/OpeningHero.tsx")), "src/components/open/OpeningHero.tsx", DOOR_ADDRESS);
 check("the across page spells its Cost to open door from the column's country and curated slug and the page's activity slug, the lookup `opens` was computed on (resolveCity asks getCellBySlug(city.country, city.slug, industrySlug) and keeps city.slug and city.country on the column)", /return subPageHref\(tradePageHref\(col\.country, col\.slug, activitySlug\), "opening"\);/.test(codeOf("src/app/(site)/industries/[industry]/across/page.tsx")) && /getCellBySlug\(city\.country, city\.slug, industrySlug,/.test(codeOf("src/lib/markets/across_cities.ts")) && /\bslug: city\.slug,\s*country: city\.country,/.test(codeOf("src/lib/markets/across_cities.ts")), "src/app/(site)/industries/[industry]/across/page.tsx", DOOR_ADDRESS);
 
+/* THE ECONOMICS LINK (the final review of truth-fixes, 2026-10-12, I1; review 5's I1 named it in the failure scenario of the door above). "See the full economics" on the
+   opening page and on the buy-or-start page read `href={page.cellHref}`, and cellHref is cellUrl(cell): the cell's label spelling. The prerendered flagship
+   /mx/mx-roo/hotels-lodging is labelled "Quintana Roo", so its link opened /mx/quintana-roo/hotels-lodging, a word the popular-name table calls "Cancun" and no regional row holds
+   (read from code by the review, not run): the lookup falls to Mexico's country row, a page about the country under a city's name, for a reader who asked for the full economics
+   behind Quintana Roo's figures. Both links are spelled from the address their page was asked at, as the doors above are: the opening page carries it (OpeningPage.pageHref) and
+   buildBuyVsStart carries the same value onto its data. Each link's href expression is read from the hero's code and EVALUATED on the flagship's page, whose cellHref is the label
+   spelling and whose pageHref is the request's own address, so a link that merely names pageHref somewhere else cannot pass. BLIND SPOT, stated again: this holds the heroes' code and
+   the builders' wiring, never the database, so what a built page draws is for the built page (/mx/mx-roo/hotels-lodging/opening and /mx/mx-roo/hotels-lodging/buy-or-start, then each
+   page's "See the full economics" href). */
+const ECONOMICS = "Spell each hero's \"See the full economics\" link from the address its page was asked at: page.pageHref (OpeningPage.pageHref, which buildBuyVsStart carries onto BuyVsStart), never page.cellHref (cellUrl(cell), built from the cell's display label: /mx/quintana-roo/hotels-lodging for /mx/mx-roo/hotels-lodging, whose lookup falls to Mexico's country row, a page about another place)";
+const OPENING_HERO = "src/components/open/OpeningHero.tsx";
+const BUY_HERO = "src/components/buy/BuyVsStartHero.tsx";
+const BUY_DATA = "src/lib/open/buy_vs_start.ts";
+/** The flagship's page as a hero reads it: cellHref is the label spelling cellUrl gives it, pageHref the address it was asked at. */
+const FLAGSHIP = { cellHref: "/mx/quintana-roo/hotels-lodging", pageHref: tradePageHref("mx", "mx-roo", "hotels-lodging") };
+/** What a hero's "See the full economics" link draws on the flagship's page: the href expression of the <Link> whose label is that sentence, read from the hero's code (comments
+ *  stripped) and evaluated; null where the hero holds no such link or the expression throws. */
+const economicsHref = (hero: string): string | null => {
+  const expr = /<Link\s+href=\{([^}]+)\}[^>]*>\s*See the full economics/.exec(codeOf(hero))?.[1];
+  if (expr === undefined) return null;
+  try { return String(new Function("page", `return ${expr};`)(FLAGSHIP)); } catch { return null; }
+};
+for (const [hero, which] of [[OPENING_HERO, "opening"], [BUY_HERO, "buy-or-start"]] as const) {
+  const href = economicsHref(hero);
+  check(`the ${which} page's "See the full economics" link names the address its page was asked at: ${MX_ROO}'s names ${MX_ROO}, never /mx/quintana-roo/hotels-lodging (cellUrl's label spelling) (got ${JSON.stringify(href)})`, href === MX_ROO, hero, ECONOMICS);
+}
+check("no hero draws an href from cellHref: neither the opening page's nor the buy-or-start page's code holds an `href={...cellHref...}`", [OPENING_HERO, BUY_HERO].every((h) => !/href=\{[^}]*\bcellHref\b[^}]*\}/.test(codeOf(h))), OPENING_HERO, ECONOMICS);
+check("buildBuyVsStart carries the address its page was asked at onto the page's data, read off the opening page it stands on (OpeningPage.pageHref), and BuyVsStart declares it", /^\s*pageHref: opening\.pageHref,\s*$/m.test(codeOf(BUY_DATA)) && /^\s*pageHref: string;\s*$/m.test(codeOf(BUY_DATA)), BUY_DATA, ECONOMICS);
+check(`the buy-or-start page's own cost-to-open address is spelled from that address too (no component reads BuyVsStart.openingHref today, the dry-run audit prints it): ${MX_ROO}/opening for the flagship, never built from cellHref`, quiet(() => subPageHref(FLAGSHIP.pageHref, "opening") === `${MX_ROO}/opening`) && /\bconst openingHref = subPageHref\(opening\.pageHref, "opening"\);/.test(codeOf(BUY_DATA)) && !/cellHref\}\/opening/.test(codeOf(BUY_DATA)), BUY_DATA, ECONOMICS);
+
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log(`routing/edge_not_found: all pass (${folderAsked} real addresses of the route folders asked of the edge and the middleware)`);

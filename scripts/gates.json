@@ -3062,6 +3062,7 @@
         "src/app/pro/[country]/[geo]/[industry]/page.tsx",
         "src/app/pro/[country]/page.tsx",
         "src/app/pro/cities/[slug]/page.tsx",
+        "src/components/buy/BuyVsStartHero.tsx",
         "src/components/open/OpeningHero.tsx",
         "src/lib/cells/industry_resolution.ts",
         "src/lib/markets/across_cities.ts",

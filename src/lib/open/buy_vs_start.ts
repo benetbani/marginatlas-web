@@ -47,7 +47,7 @@
  * fs, no React. Constraint-safe: no em-dashes, no source-agency names, USD-only.
  */
 import { buildOpeningPage } from "@/lib/open/opening_page";
-import { buyOrStartDraws } from "@/lib/open/sub_page_gates";
+import { buyOrStartDraws, subPageHref } from "@/lib/open/sub_page_gates";
 import { industryToSlug } from "@/lib/taxonomy";
 
 /** A real, finite, positive number. */
@@ -382,7 +382,14 @@ export interface BuyVsStart {
   country: string;
   /** Link back to the full cell page for this business-and-place. */
   cellHref: string;
-  /** Link to the cost-to-open page for this business-and-place (the START detail). */
+  /**
+   * THE ADDRESS THIS PAGE WAS ASKED AT, /{country}/{geo}/{industry}, carried from the opening page it stands on (OpeningPage.pageHref: the request's own three parts, the lookup
+   * this page's gate was asked). A link to the trade page is spelled from it and never from `cellHref`: that is cellUrl(cell), built from the cell's display label, and where the
+   * label does not slugify back to the request's geo (/mx/mx-roo is labelled "Quintana Roo") it is another address, whose lookup falls to the extrapolated row (the review of
+   * 2026-10-12, I1).
+   */
+  pageHref: string;
+  /** Link to the cost-to-open page for this business-and-place (the START detail): `pageHref` and /opening, so it draws where this page's own gate passed. */
   openingHref: string;
 
   /** The start-fresh side, the live cost-to-open numbers re-framed. */
@@ -566,9 +573,9 @@ export async function buildBuyVsStart(
   const catches = buildCatches();
   const verdict = buildVerdict(opening.businessName, start, buy);
 
-  // The cost-to-open page lives at the cell's /opening path; link the START
-  // detail there so a reader can drill into the full opening breakdown.
-  const openingHref = `${opening.cellHref}/opening`;
+  // The cost-to-open page lives at this page's own address and /opening, never at cellHref and /opening: that is the cell's label spelling (/mx/quintana-roo/... for
+  // /mx/mx-roo/...), review of 2026-10-12, I1. Link the START detail there so a reader can drill into the full opening breakdown.
+  const openingHref = subPageHref(opening.pageHref, "opening");
 
   return {
     businessName: opening.businessName,
@@ -576,6 +583,7 @@ export async function buildBuyVsStart(
     placeName: opening.placeName,
     country: opening.country,
     cellHref: opening.cellHref,
+    pageHref: opening.pageHref,
     openingHref,
     start,
     buy,

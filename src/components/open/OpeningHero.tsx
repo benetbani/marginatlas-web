@@ -64,8 +64,11 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
       {/* Quiet links: back to the full economics, and across to the buy-or-start
           companion page (would it be smarter to buy an existing one instead). */}
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+        {/* The full economics, at the address this page was asked at (OpeningPage.pageHref) and never cellHref: that is cellUrl(cell), the cell's label
+            spelling, and for the prerendered flagship /mx/mx-roo/hotels-lodging (labelled "Quintana Roo") it is /mx/quintana-roo/hotels-lodging, whose
+            lookup falls to Mexico's country row (review of 2026-10-12, I1). The door below is spelled the same way. */}
         <Link
-          href={page.cellHref}
+          href={page.pageHref}
           className="inline-flex items-center gap-1 text-sm font-medium text-atlas-700 transition-colors hover:text-atlas-900"
         >
           See the full economics &rarr;
