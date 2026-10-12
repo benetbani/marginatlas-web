@@ -148,6 +148,12 @@ const GATES: Gate[] = [
      to design/loop/build/goal-2026-09-24/COPY-STYLE.md. Reads the renders
      pages-fresh wrote. */
   { name: "harness-copy-plain", script: "scripts/harness/check_copy_plain.mjs", args: ["--list"], browser: true },
+  /* EACH FACT PRINTS ONCE (plan 2026-10-12 rhythm-air-inside, Task 1B; MODEL 8.2 row 01's M1 and PART 9 clause 66, unchecked until then).
+     On every spine render, at 1280 and 375, no figure prints twice as one fact (scripts/lib/fact_once.mjs says what counts); a repeat a
+     standing law forces is named in scripts/harness/fact_once_allow.json with the law. A browser gate, one more; its reading's fixtures
+     beside it. */
+  { name: "fact-once", script: "scripts/harness/check_fact_once.mjs", args: ["--list"], browser: true },
+  { name: "fact-once-reader", script: "tests/spine/fact_once.test.ts" },
   /* READABILITY (2026-09-08, wired 2026-10-01): measure, contrast, leading and read size on the same renders, at zero reds. It sat
      outside the chain for three weeks while the legal-form heads and the peers table's phone heads drew at 10px on three pages. */
   { name: "harness-readability", script: "scripts/harness/check_readability.mjs", args: ["--list"], browser: true },

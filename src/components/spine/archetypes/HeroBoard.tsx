@@ -30,6 +30,7 @@
  *    it so.
  *  - `data-answers` is the masthead's declared answer (verify_doors reads it
  *    as the page's promise, the same as AnswerCard's).
+ *  - A ROW'S VALUE CARRIES data-figure (plan 2026-10-12 rhythm-air-inside, Task 1B): it prints a figure in the body face, outside the kit's Fig, so the fact-once gate reads it by that hook.
  *
  * Gated by the archetype harness (stories `hero-board`: the exemplar, a thin
  * country, a country whose pay pair is withheld) and the page laws.
@@ -147,7 +148,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                 <div key={r.key} data-row={r.key} {...(r.placement ? { "data-readout-figure": r.unit ? `${r.value} ${r.unit}` : r.value, "data-readout-words": r.placement } : {})} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
                   <Ico id={r.icon} tone="terra" />
                   <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
-                  <span className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
+                  <span data-figure="" className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
                     {r.value}
                     {/* A real space before the unit, not a margin (2026-09-26): read aloud or copied, "21days" was one word. */}
                     {r.unit ? <>{" "}<span className="text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{r.unit}</span></> : null}

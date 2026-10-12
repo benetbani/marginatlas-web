@@ -111,6 +111,35 @@
       "claims": []
     },
     {
+      "name": "fact-once",
+      "script": "scripts/harness/check_fact_once.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": true,
+      "asserts": "check_fact_once , EACH FACT PRINTS ONCE (plan 2026-10-12 rhythm-air-inside, Task 1B; spec E:/atlas/docs/superpowers/specs/2026-10-12- rhythm-air-inside-design.md, sections 2.3 and 3 item 2).",
+      "reads": [
+        "scripts/harness/fact_once_allow.json",
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
+      "name": "fact-once-reader",
+      "script": "tests/spine/fact_once.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "EACH FACT PRINTS ONCE, THE READING (plan 2026-10-12 rhythm-air-inside, Task 1B; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, sections 2.3 and 3 item 2): scripts/lib/fac",
+      "reads": [
+        "scripts/harness/check_fact_once.mjs",
+        "scripts/harness/fact_once_allow.json",
+        "scripts/harness/pages.json",
+        "scripts/lib/fact_once.mjs",
+        "src/components/spine/archetypes/HeroBoard.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-readability",
       "script": "scripts/harness/check_readability.mjs",
       "args": [
