@@ -186,7 +186,9 @@ export function MixCard({ id = "mix", mix }: { id?: string; mix: MixData | null 
         <Donut parts={mix.parts} />
       )}
       <Basis>{mix.basis}</Basis>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mix.foot}</p>
+      {/* THE FOOT IS THE CARD'S ONE LINE WHEN THE COPY KEEPS NO BASIS (tradeMix.basis and industryMix.basis are ""; the kit's Basis draws nothing for an empty line): a line under the donut
+          stands the group step, 24, under it, and under a basis it keeps its 4 (plan 2026-10-12 rhythm-air-inside, Task 2C). */}
+      <p className={`${mix.basis ? "mt-1" : "mt-6"} text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]`}>{mix.foot}</p>
     </Box>
   );
 }
