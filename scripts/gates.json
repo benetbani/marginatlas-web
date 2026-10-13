@@ -249,6 +249,18 @@
       "claims": []
     },
     {
+      "name": "zone-rhythm",
+      "script": "tests/spine/zone_rhythm.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "ART DIRECTION D3 AND D6 ON THE ZONES (plan 2026-10-12 rhythm-air-inside, Task 1D; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, section 3 item 4).",
+      "reads": [
+        "scripts/lib/zone_rhythm.mjs",
+        "scripts/verify_art_direction.mjs"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

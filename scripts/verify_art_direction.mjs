@@ -36,6 +36,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { eachPage, renderEntries, describeRenders, nameWithKey, missingLine } from "./lib/measure_pages.mjs";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { zoneRhythm, zoneLadder } from "./lib/zone_rhythm.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
    run where chromium is not installed, and trying killed a production deploy on
@@ -310,7 +311,7 @@ const collect = () => {
      than because the label was written once, reads the same here. That distinction
      needs the source, not the page. Three rows minimum keeps the noise down.
 
-  /* D6, THE SPACING LADDER. Chapter gap > band gap > card padding > slot gap, and
+  /* D6, THE SPACING LADDER (on the zones since plan 2026-10-12 rhythm-air-inside, Task 1D: level gap > pair gap > kept box padding, the chapter rung left to the band page's numbered head; scripts/lib/zone_rhythm.mjs). Chapter gap > band gap > card padding > slot gap, and
      no rung may equal or exceed the one outside it. Measured before this rule ran:
      the gap BETWEEN bands, the gap WITHIN a band and a card's own padding were all
      20px, so three of the four rungs were the same number and a reader had nothing
@@ -321,7 +322,7 @@ const collect = () => {
      and picking one to stand for all of them would be a number pretending to be a
      measurement. The three outer rungs are the ones that carry the page's rhythm.
 
-  /* D3, RHYTHM. No band repeats the split of the band immediately before it, and
+  /* D3, RHYTHM (on the zones since plan 2026-10-12 rhythm-air-inside, Task 1D: the split each zone declares, scripts/lib/zone_rhythm.mjs). No band repeats the split of the band immediately before it, and
      never three equal-halves bands in a row. A page of identical halves is as
      monotonous as a page of full widths, just narrower.
 
@@ -365,83 +366,18 @@ const collect = () => {
     }
   }
 
-  const ladder = [];
   const px = (v) => Math.round(parseFloat(v) || 0);
-  const bandSplits = [];
-  /* THE SHAPE THE BAND DRAWS, NOT THE CLASS IT CARRIES, and the difference is not
-     academic. This block used to read the class string, which is what was WRITTEN,
-     while the comment above it claimed to read what the band RENDERS. On three of
-     the four lone-survivor bands in the atlas the two disagree outright: the
-     industry page's `#open` declares 2fr_3fr and draws 1-2, the city page's
-     `#seasonal` declares 3fr_2fr and draws 2-1, the country page's `#cities`
-     declares grid-cols-2 and draws 2-1. `Band` re-templates a lone child through a
-     :has() variant, so no reading of the call site or of the class list can know
-     what the row became. The computed track sizes can, and they also catch a split
-     that failed to compile, which is what the old comment said it was for and what
-     a class match cannot do.
-
-     A LONE SURVIVOR COUNTS, and it used to be skipped on the ground that its
-     partner self-omitting is "a data condition rather than a rhythm choice". Two
-     shipped rows had already ruled the other way, each by hand, because the gate
-     could not: run 7 refused a width for B4 because "the lean band at the foot of
-     the restaurant column counts as a 1-2 for D3 purposes", and run 12 moved a
-     whole band on the city page because cutting a card "silently created two
-     neighbouring 2-1 bands". And the ground is false where it matters most:
-     `adapt_industry.ts` omits those fields on EVERY industry page, so two of that
-     page's five bands are permanent lone survivors rather than this restaurant's
-     luck. A reader sees the shape either way, which is the only test D3 has. */
-  const RATIOS = { "1-1": 1, "1-2": 0.5, "2-1": 2, "2-3": 2 / 3, "3-2": 1.5 };
-  for (const el of document.querySelectorAll("div.grid")) {
-    const cls = String(el.className);
-    if (!/^mt-8 grid grid-cols-1 items-start gap-8/.test(cls)) continue;
-    const tracks = getComputedStyle(el)
-      .gridTemplateColumns.split(" ")
-      .map((v) => parseFloat(v))
-      .filter((v) => !Number.isNaN(v));
-    if (tracks.length !== 2) {
-      /* One track is a band whose split did not compile, or a phone. Named rather
-         than dropped: two of them in a row is a repeat a reader sees. */
-      bandSplits.push("no split");
-      continue;
-    }
-    const r = tracks[0] / tracks[1];
-    let best = "", bd = Infinity;
-    for (const [k, v] of Object.entries(RATIOS)) {
-      const d = Math.abs(r - v);
-      if (d < bd) { bd = d; best = k; }
-    }
-    bandSplits.push(best);
-  }
-  {
-    const bandEls = [...document.querySelectorAll("div.grid")].filter((e) =>
-      /^mt-8 grid grid-cols-1 items-start gap-8/.test(String(e.className)),
-    );
-    const bandGap = Math.max(0, ...bandEls.map((e) => px(getComputedStyle(e).marginTop)));
-    /* Card definition repointed 2026-09-08, fix wave Finding 2 (see the note
-       above `collect`'s own `cards` for the reason). */
-    const cardsAll = [...document.querySelectorAll('main [data-card]')].filter(
-      (c) => c.getClientRects().length && !c.parentElement.closest('[data-card]'),
-    );
-    const outerCards = cardsAll;
-    const maxPad = Math.max(0, ...outerCards.map((e) => px(getComputedStyle(e).paddingTop)));
-    let chapterGap = 0;
-    for (const e of document.querySelectorAll("h2, h3, [data-movement]")) {
-      const m = px(getComputedStyle(e).marginTop);
-      if (m > chapterGap) chapterGap = m;
-    }
-    if (bandGap && maxPad) {
-      if (chapterGap && chapterGap <= bandGap) ladder.push(`chapter gap ${chapterGap} is not larger than the band gap ${bandGap}`);
-      if (bandGap <= maxPad) ladder.push(`band gap ${bandGap} is not larger than the largest card padding ${maxPad}`);
-    }
-  }
-
-  const rhythm = [];
-  for (let i = 1; i < bandSplits.length; i++) {
-    if (bandSplits[i] === bandSplits[i - 1]) rhythm.push(`bands ${i} and ${i + 1} both split ${bandSplits[i]}`);
-  }
-  for (let i = 2; i < bandSplits.length; i++) {
-    if (bandSplits[i] === "1-1" && bandSplits[i - 1] === "1-1" && bandSplits[i - 2] === "1-1") rhythm.push(`bands ${i - 1} to ${i + 1} are three equal halves in a row`);
-  }
+  /* D3 AND D6 READ THE ZONES (plan 2026-10-12 rhythm-air-inside, Task 1D; spec section 3 item 4). Both found a level by the old Band class
+     (`mt-8 grid grid-cols-1 items-start gap-8`), which no live page has carried since the band page of 2026-10-04, so each read nothing
+     and passed on every page. A level is a zone: `main [data-zone]` in page order, its split the attribute the Zone component writes
+     (src/components/spine/zones.tsx: wide, lone, 1-1, 2-1, 1-2, 3-2, 2-3, 1-1-1). D6's rungs on a band page (DISTANCES 2.5): a level to the
+     next, one zone's padding below and the next one's above; two sections side by side, the level's column gap; a kept box, its padding.
+     The judging is scripts/lib/zone_rhythm.mjs's, in node. */
+  const zoneEls = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
+  const zoneSplits = zoneEls.map((z) => z.getAttribute("data-zone") || "");
+  const levelGaps = zoneEls.slice(1).map((z, i) => px(getComputedStyle(zoneEls[i]).paddingBottom) + px(getComputedStyle(z).paddingTop));
+  const pairGaps = zoneEls.map((z) => z.querySelector(":scope > [data-zone-level]")).filter((l) => l && l.children.length > 1).map((l) => px(getComputedStyle(l).columnGap));
+  const keptPads = [...document.querySelectorAll("main [data-zone] [data-keep-card], main [data-zone] [data-instrument], main [data-zone] [data-lever-card]")].filter((e) => e.getClientRects().length).map((e) => px(getComputedStyle(e).paddingTop));
 
   /* F1, TABULAR NUMERALS. Founder, 2026-08-25: every table, chart and visual
      follows written conventions for how its elements render. A column of numbers
@@ -603,7 +539,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals, rhythm, ladder, sameForAll, falseLegends, wideDomains, bandCount: bandSplits.length };
+  return { sections, pageAccents, frontRepeats, looseNumerals, zoneSplits, levelGaps, pairGaps, keptPads, sameForAll, falseLegends, wideDomains };
 };
 
 const RULES = [
@@ -654,13 +590,16 @@ for (const entry of pages) {
   total += result.sameForAll.length;
   for (const x of [...new Set(result.sameForAll)]) lines.push(`  H3  ${x}`);
 
-  now[`${name}:ladder`] = result.ladder.length;
-  total += result.ladder.length;
-  for (const l of result.ladder) lines.push(`  D6  ${l}`);
+  /* D6 AND D3 ON THE ZONES, judged in node from what the page measured (scripts/lib/zone_rhythm.mjs). */
+  const ladder = zoneLadder(result);
+  const rhythm = zoneRhythm(result.zoneSplits);
+  now[`${name}:ladder`] = ladder.length;
+  total += ladder.length;
+  for (const l of ladder) lines.push(`  D6  ${l}`);
 
-  now[`${name}:rhythm`] = result.rhythm.length;
-  total += result.rhythm.length;
-  for (const r of result.rhythm) lines.push(`  D3  ${r}`);
+  now[`${name}:rhythm`] = rhythm.length;
+  total += rhythm.length;
+  for (const r of rhythm) lines.push(`  D3  ${r}`);
 
   now[`${name}:numerals`] = result.looseNumerals;
   total += result.looseNumerals;

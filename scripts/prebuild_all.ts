@@ -167,6 +167,8 @@ const GATES: Gate[] = [
      The kit's shared pieces render the in-section distances (title 24, groups 24, fact rows 16, the focal line 8) and no page in the spine
      hand-rolls an opener, a focal block or a basis line. No browser. */
   { name: "spacing-pin", script: "tests/spine/spacing_pin.test.ts" },
+  /* D3 AND D6 ON THE ZONES, THE JUDGING (plan 2026-10-12 rhythm-air-inside, Task 1D): scripts/lib/zone_rhythm.mjs over fixtures; art-direction applies it to the renders. No browser. */
+  { name: "zone-rhythm", script: "tests/spine/zone_rhythm.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
