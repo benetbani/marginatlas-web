@@ -36,7 +36,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { eachPage, renderEntries, describeRenders, nameWithKey, missingLine } from "./lib/measure_pages.mjs";
 import { requireBrowser } from "./lib/local_only.mjs";
-import { zoneRhythm, zoneLadder } from "./lib/zone_rhythm.mjs";
+import { zoneRhythm, zoneLadder, NO_ZONE_READ } from "./lib/zone_rhythm.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
    run where chromium is not installed, and trying killed a production deploy on
@@ -615,6 +615,18 @@ for (const entry of pages) {
 
 console.log(`\n  ${total} art-direction finding(s) across ${pages.length} page(s).\n`);
 for (const m of missing) console.log(missingLine(RULE, m));
+
+/* A RENDER THAT DREW NO ZONE WAS NOT JUDGED (plan 2026-10-12 rhythm-air-inside, Task 1D; the plan's standing ruling: no gate may pass
+   having read nothing). D3 and D6 find a level by `main [data-zone]`, so a render that holds none gave them nothing to judge, which is how
+   the old reading went blind: it looked for a class no page carried. zoneRhythm already names it under the page; this stops the run, ahead
+   of the baseline's write and its compare, so no baseline can absorb it and none can be written over it. EVERY RENDER THIS GATE READS IS A
+   BAND PAGE (the eight surfaces of scripts/harness/pages.json each draw their levels with Zone: country, howto, city, cell, industry, hood,
+   home, openings), so none is exempt; a surface that draws no zone by design must be exempted here, with its reason, when it joins that list. */
+const unread = pages.filter((p) => !p.result.zoneSplits.length);
+if (unread.length) {
+  for (const p of unread) console.log(`x ${RULE} ${p.path}: ${NO_ZONE_READ}`);
+  process.exit(1);
+}
 
 if (process.argv.includes("--write-baseline")) {
   /* The re-seed history is the record of every baseline raised with its

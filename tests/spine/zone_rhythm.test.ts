@@ -1,7 +1,8 @@
 /**
  * ART DIRECTION D3 AND D6 ON THE ZONES (plan 2026-10-12 rhythm-air-inside, Task 1D; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md,
  * section 3 item 4). Both found a level by the old Band class, which no live page carries, and passed reading nothing. The judging is
- * scripts/lib/zone_rhythm.mjs's: fixtures, among them the zone sequences the chain's renders drew on 2026-10-12, and the gate's wiring.
+ * scripts/lib/zone_rhythm.mjs's: fixtures, among them the zone sequences the chain's renders drew on 2026-10-12, and the gate's wiring, among
+ * it the stop on a render that read no zone (a reading of nothing is a finding, never a pass: the plan's standing ruling).
  * BLIND SPOT, stated: it judges sequences and distances handed to it; the pages are the art-direction gate's, at 1440.
  *
  * Run: node node_modules/tsx/dist/cli.mjs tests/spine/zone_rhythm.test.ts
@@ -29,10 +30,15 @@ check("three equal halves in a row read twice as repeats and once as the run", s
 check("the band page's ladder at 1440 holds: 128 over 64 over 20", same(zoneLadder({ levelGaps: [128, 128], pairGaps: [64, 32], keptPads: [20] }), []));
 check("a level no further from the next than two sections in it is a D6 red", zoneLadder({ levelGaps: [64], pairGaps: [64], keptPads: [20] }).length === 1);
 check("two sections no further apart than a kept box's padding is a D6 red", zoneLadder({ levelGaps: [128], pairGaps: [16], keptPads: [20] }).length === 1);
-check("no zones, no reading, no red", same(zoneLadder({ levelGaps: [], pairGaps: [], keptPads: [] }), []));
+check("no distances read, no D6 finding (a page of one zone has no level to measure; whether any zone was read is zoneRhythm's, next)", same(zoneLadder({ levelGaps: [], pairGaps: [], keptPads: [] }), []));
+const none = zoneRhythm([]);
+check(`a render that reads no zone is one finding that names the zone markup, never a pass (${none.length} finding)`, none.length === 1 && /Remedy: .*src\/components\/spine\/zones\.tsx/.test(none[0]), LIB, "return NO_ZONE_READ for an empty splits array in zoneRhythm: a reading of nothing is a finding, never [], and its remedy names src/components/spine/zones.tsx");
 
 const gate = stripCommentLines(readFileSync(GATE, "utf8").split(/\r?\n/)).join("\n");
 check("the art-direction gate reads the zones, judges them with zone_rhythm.mjs, and no longer looks for the old Band class", /from "\.\/lib\/zone_rhythm\.mjs"/.test(gate) && /querySelectorAll\("main \[data-zone\]"\)/.test(gate) && /zoneRhythm\(result\.zoneSplits\)/.test(gate) && /zoneLadder\(result\)/.test(gate) && !/mt-8 grid grid-cols-1 items-start gap-8/.test(gate), GATE, "read `main [data-zone]` in collect() and judge in node with zoneRhythm and zoneLadder");
+const unreadAt = gate.indexOf("const unread = pages.filter((p) => !p.result.zoneSplits.length);");
+const unreadExit = unreadAt === -1 ? -1 : gate.indexOf("process.exit(1);", unreadAt);
+check("the art-direction gate stops on a render that read no zone, printing NO_ZONE_READ, ahead of the baseline's write and compare", unreadAt !== -1 && unreadExit !== -1 && gate.slice(unreadAt, unreadExit).includes("if (unread.length)") && gate.slice(unreadAt, unreadExit).includes("NO_ZONE_READ") && unreadExit < gate.indexOf('process.argv.includes("--write-baseline")'), GATE, "keep `const unread = pages.filter(...)`, its NO_ZONE_READ line and its process.exit(1) above the --write-baseline branch, so no baseline can absorb a render that was not read");
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/zone_rhythm: all pass");

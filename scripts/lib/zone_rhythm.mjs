@@ -8,14 +8,20 @@
  * box's padding (DISTANCES 2.5: 128, 64 and 20 at 1024 and up). The card page's chapter rung is not read: a band page opens a chapter under
  * the same padding as any level and marks it with its numbered head (MODEL PART 10.2), which the spec keeps.
  * BLIND SPOT, stated: it judges what verify_art_direction.mjs measured at one width (1440) on the chain's renders; a data state no render
- * draws is not judged.
+ * draws is not judged. A render that holds no zone judged nothing, so zoneRhythm names it (NO_ZONE_READ) and the gate stops on it: the
+ * zone attribute renamed, or the render broken, can never make D3 and D6 pass by leaving them nothing to judge.
  */
+
+/** The finding for a reading of nothing, one text wherever it is said: zoneRhythm, the art-direction gate's stop, Task 6's extra renders. */
+export const NO_ZONE_READ = "no zone read: the render holds no `main [data-zone]`, so D3 and D6 judged nothing. Remedy: draw the page's levels with the Zone component (src/components/spine/zones.tsx), which writes data-zone, or, where the page does draw them, fix the render (run node node_modules/tsx/dist/cli.mjs scripts/verify_pages_fresh.mjs and fix what it names)";
 
 /**
  * @param {string[]} splits the split each zone declares, in page order (`main [data-zone]`'s attribute)
- * @returns {string[]} one finding per repeat, then one per run of three equal halves
+ * @returns {string[]} NO_ZONE_READ alone when no zone was read, else one finding per repeat, then one per run of three equal halves
  */
 export function zoneRhythm(splits) {
+  /* A reading of nothing is a finding, not a pass: the header's last sentence. One zone read is a read; only none is not. */
+  if (!splits.length) return [NO_ZONE_READ];
   const out = [];
   for (let i = 1; i < splits.length; i++) {
     if (splits[i] !== "wide" && splits[i] === splits[i - 1]) out.push(`zones ${i} and ${i + 1} both split ${splits[i]}`);
