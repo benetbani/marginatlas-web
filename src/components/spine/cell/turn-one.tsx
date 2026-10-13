@@ -170,7 +170,8 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
         </div>
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
           {open.basis ? <Basis>{open.basis}</Basis> : null}
-          {open.foot.length > 0 ? <div data-foot className="mt-6 [@container(min-width:560px)]:mt-3 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p className="mt-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [@container(min-width:560px)]:mt-3">{open.footLine}</p>}
+          {/* THE FOOT STANDS 12 UNDER THE BASIS (DISTANCES 2.1: the basis line to the foot is 12; the line-rule gate reads a `data-foot` group so): the companion figures, or in the state with none the foot's stated line. */}
+          {open.foot.length > 0 ? <div data-foot className="mt-3 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p data-foot className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.footLine}</p>}
         </div>
       </Box>
     );
