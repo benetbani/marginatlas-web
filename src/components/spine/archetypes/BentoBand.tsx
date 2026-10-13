@@ -109,7 +109,7 @@
  * not from these numbers, because these numbers are the thing under test.
  */
 import * as React from "react";
-import { Box, Fig, Ico, SampleTag, InfoTip } from "@/components/spine/kit";
+import { Box, Fig, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { Provenance } from "@/lib/spine/provenance";
 
@@ -480,14 +480,9 @@ export function BentoMetric({
   if (figure != null && withheld != null) throw new Error(`BentoMetric "${kicker}": a figure and a withheld line together. A line beside a printed figure apologises for nothing; pass one of the two.`);
   return (
     <Box id={id} data-lean={lean ? "1" : undefined} className={`flex h-full flex-col${detail ? " [container-type:inline-size]" : ""}`} data-archetype="bento-metric" data-bento-kind="metric">
-      <div className="mb-2 flex items-center gap-2">
-        {icon ? <Ico id={icon} tone="terra" /> : null}
-        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{kicker}</h3>
-        {/* HIS POP-UP, at the cell's opener (2026-09-22, QUEUE ui:the-gloss). */}
-        {gloss ? <InfoTip gloss={gloss} className="ml-0.5" /> : null}
-        {sample ? <SampleTag /> : null}
-      </div>
-      <div className="flex flex-1 flex-col justify-center py-2">
+      {/* THE KIT'S OPENER (plan 2026-10-12 rhythm-air-inside, Task 2A): its title at the section rung on a zone and 24 above the cell's content; his pop-up rides in it as before (2026-09-22, QUEUE ui:the-gloss). */}
+      <Rail icon={icon} kicker={kicker} gloss={gloss} sample={sample} />
+      <div className="flex flex-1 flex-col justify-center pb-2">
         {figure != null ? (
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={prov}>{figure}</Fig>
         ) : (
@@ -703,12 +698,8 @@ export function BentoCount({
   const isWhole = filled === Math.round(whole);
   return (
     <Box className={`flex h-full flex-col${columnsWide ? " [container-type:inline-size]" : ""}`} data-archetype="bento-count" data-visual="1" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
-      <div className="mb-2 flex items-center gap-2">
-        {icon ? <Ico id={icon} tone="terra" /> : null}
-        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{kicker}</h3>
-        {sample ? <SampleTag /> : null}
-      </div>
-      <div className="flex flex-1 flex-col justify-center py-2">
+      <Rail icon={icon} kicker={kicker} sample={sample} />
+      <div className="flex flex-1 flex-col justify-center pb-2">
         <div className="flex items-baseline gap-2">
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{printed}</Fig>
           {/* THE WHOLE IS SAID AS WELL AS DRAWN. The grid below carries it for

@@ -491,8 +491,11 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
           the two at the half measure stood four lines tall under the opener
           on the country's money card at 768 and left 312 by 120 of air beside
           them (the page filter). One column on a phone, where the card is the
-          page's half. */}
-      <div className={withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
+          page's half. ONLY WHEN BOTH ARE THERE (plan 2026-10-12 rhythm-air-inside,
+          Task 2A): a withheld line alone stood in the left half and left the right
+          half blank, a 243 by 120 hole beside the title at 1280, which is the harness's
+          floor (LONE STAT) once the title stood 24 above its content; alone it takes the width. */}
+      <div className={basis && withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
         {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
         {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)] md:mt-0">{withheldLine}</p> : null}
       </div>

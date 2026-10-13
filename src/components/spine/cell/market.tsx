@@ -45,7 +45,7 @@ import { BentoBand, BentoCount, BentoMetric, CompanionRow, type BentoCell } from
 import { MonthBars } from "@/components/spine/archetypes/MonthBars";
 import { ShareBar } from "@/components/spine/archetypes/ShareBar";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
-import { Box, Fig, Ico, SampleTag } from "@/components/spine/kit";
+import { Box, Fig, Rail } from "@/components/spine/kit";
 import { densityText, type MarketData, type MarketMetric, type MarketCount } from "@/lib/spine/market_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { AtlasIconId } from "@/components/brand/icons";
@@ -122,15 +122,11 @@ export function SwingCell({ market }: { market: MarketData }) {
   if (!("figure" in cell)) return <BentoMetric icon="seasonality" kicker={K.swing} withheld={cell.withheld} />;
   return (
     <Box className="flex h-full flex-col" data-archetype="bento-metric" data-bento-kind="metric" data-visual={market.months ? "1" : undefined}>
-      <div className="mb-2 flex items-center gap-2">
-        <Ico id="seasonality" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{K.swing}</h3>
-        <SampleTag />
-      </div>
+      <Rail icon="seasonality" kicker={K.swing} sample />
       {/* THE FIGURE'S MEANING STANDS UNDER THE FIGURE (2026-10-01, T3; the critics' "the key insight next to the chart"): "25%"
           was read before its line, which stood at the card's foot under the twelve columns; every other card on the page, and the
           city's own calendar card, says what its figure is before the drawing. */}
-      <div className="flex flex-1 flex-col justify-center py-2">
+      <div className="flex flex-1 flex-col justify-center pb-2">
         <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{cell.figure}</Fig>
         {cell.basis ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cell.basis}</p> : null}
         {market.months ? (
@@ -150,12 +146,8 @@ export function DaypartsCell({ market }: { market: MarketData }) {
   if (!market.dayparts) return <BentoMetric icon="daily-takings" kicker={K.dayparts} withheld={COPY.tradeMarket.withheld.dayparts} />;
   return (
     <Box className="flex h-full flex-col" data-archetype="share-bar" data-visual="1">
-      <div className="mb-2 flex items-center gap-2">
-        <Ico id="daily-takings" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{K.dayparts}</h3>
-        <SampleTag />
-      </div>
-      <div className="flex flex-1 flex-col justify-center py-2">
+      <Rail icon="daily-takings" kicker={K.dayparts} sample />
+      <div className="flex flex-1 flex-col justify-center pb-2">
         <ShareBar parts={market.dayparts} />
       </div>
       {(market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis) ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis}</p> : null}

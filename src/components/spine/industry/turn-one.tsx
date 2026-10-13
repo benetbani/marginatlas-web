@@ -73,7 +73,6 @@ import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { BentoBand, BentoCount, BentoMetric, type BentoCell } from "@/components/spine/archetypes/BentoBand";
 import { Ring } from "@/components/spine/archetypes/Ring";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
-import { Ico, SampleTag } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { IndustryOpenData } from "@/lib/spine/industry_open_rows";
 import type { PaysData, PaysMetric, PaysCount } from "@/lib/spine/pays_rows";
@@ -226,12 +225,8 @@ export function PaysShareCell({ share }: { share: PaysMetric }) {
   if (!("figure" in share)) return <BentoMetric icon="break-even" kicker={COPY.tradeClears.kicker} withheld={share.withheld} />;
   return (
     <Box className="flex h-full flex-col [container-type:inline-size]" data-archetype="ring" data-visual="1">
-      <div className="mb-2 flex items-center gap-2">
-        <Ico id="break-even" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{COPY.tradeClears.kicker}</h3>
-        <SampleTag />
-      </div>
-      <div className="grid flex-1 grid-cols-1 items-center gap-4 py-2 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
+      <Rail icon="break-even" kicker={COPY.tradeClears.kicker} sample />
+      <div className="grid flex-1 grid-cols-1 items-center gap-4 pb-2 [@container(min-width:280px)]:grid-cols-[auto_minmax(0,1fr)]">
         <Ring value={share.value} figure={share.figure} caption={COPY.industryPays.shareCaption} />
         <p className="max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{share.basis}</p>
       </div>
@@ -245,12 +240,8 @@ export function PaysFixedCell({ fixed }: { fixed: PaysCount }) {
   if (!("part" in fixed)) return <BentoMetric icon="cost-breakdown" kicker={K.fixed} withheld={fixed.withheld} />;
   return (
     <Box className="flex h-full flex-col" data-archetype="segment-bar" data-visual="1">
-      <div className="mb-2 flex items-center gap-2">
-        <Ico id="cost-breakdown" tone="terra" />
-        <h3 data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{K.fixed}</h3>
-        <SampleTag />
-      </div>
-      <div className="flex flex-1 flex-col justify-center py-2">
+      <Rail icon="cost-breakdown" kicker={K.fixed} sample />
+      <div className="flex flex-1 flex-col justify-center pb-2">
         <SegmentBar label={COPY.industryPays.fixedBar.label} value={fixed.part} total={100} figure={String(fixed.part)} unit={COPY.industryPays.fixedBar.unit} />
         {fixed.variable != null ? <SegmentBar label={COPY.industryPays.fixedBar.variableLabel} value={fixed.variable} total={100} figure={String(fixed.variable)} unit={COPY.industryPays.fixedBar.unit} /> : null}
       </div>

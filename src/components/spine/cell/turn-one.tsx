@@ -256,10 +256,9 @@ export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | 
     <Box id={id} className="flex flex-col">
       {/* Every figure is modelled (R12): the roles are the shard's and the pay an index times the country's median; the mark is on, behind his switch. */}
       <Rail icon="wages" kicker={COPY.tradeTeam.kicker} sample />
-      {/* The rows share the height the split beside gives the card (the goal's B12; TiersTable's `fill`).
-          The -mt-2 hands back the eight the Rail's inner margin adds in a flex column, where it no longer
-          collapses into the Rail's own (measured: 28 plus 8 in the block card, 36 plus 8 here). */}
-      <div className="-mt-2 flex flex-1 flex-col">
+      {/* The rows share the height the split beside gives the card (the goal's B12; TiersTable's `fill`). They take no top
+          margin: the Rail's 24 is the whole head, in a flex column as in a block card (plan 2026-10-12 rhythm-air-inside, Task 2A). */}
+      <div className="flex flex-1 flex-col">
         <TiersTable heads={team.heads} figures={team.rows} fill />
       </div>
       {team.noMedian ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.noMedian}</p> : null}

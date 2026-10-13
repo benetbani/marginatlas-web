@@ -12,8 +12,8 @@
  *    "never justify-between across a card wider than 420px"); under 420px the row is [1fr auto], the only place PART 5 allows.
  *  - 14 ON 20 FOR THE WORDS, 16 FOR THE FIGURE (the lead rung: the section's own figure above holds the 30, and nothing stands
  *    between 16 and 30 under it), 12 ON 16 FOR A NOTE; tabular figures, right-aligned in their column (DISTANCES 5.7, rule 2).
- *  - A HAIRLINE BETWEEN ROWS, NONE ABOVE THE FIRST; 12px of padding top and bottom around the glyph's 28px tile, the label's 20px
- *    line centred on it, so a one-line row is 52px and a row with its note 64px.
+ *  - A HAIRLINE BETWEEN ROWS, NONE ABOVE THE FIRST; 16px of padding top and bottom (plan 2026-10-12 rhythm-air-inside, Task 2A: a
+ *    fact row 16 above and below) around the glyph's 28px tile, the label's 20px line centred on it, so a one-line row is 60px.
  *  - A SWATCH FOR A KEY (critique pass 2, P0.1): a row may carry `swatch`, a colour token, drawn as a 10px square (2px radius) before the
  *    label in the glyph's place, on the label's first line, so the rows are a drawing's key (the home's tax bar: each rule's
  *    row stands in its part's ink). A row with a glyph draws the glyph; a row with neither draws neither, as before. Its top is
@@ -62,7 +62,7 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
     <div
       key={r.key}
       data-row={r.key}
-      className={`col-span-full grid grid-cols-subgrid items-start py-3 ${i > 0 ? "border-t border-[var(--c-border)]" : ""}`}
+      className={`col-span-full grid grid-cols-subgrid items-start py-4 ${i > 0 ? "border-t border-[var(--c-border)]" : ""}`}
     >
       <dt className="flex min-w-0 items-start gap-3">
         {r.icon ? (

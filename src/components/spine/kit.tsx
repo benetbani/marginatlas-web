@@ -628,7 +628,9 @@ export function Band({
      collided with the lead card's padding: cards sitting 24px apart with 28px of
      padding inside them read as merged, because their contents were further from
      their own edges than the cards were from each other. */
-  if (hero) return <div data-hero="1" className="mt-8">{children}</div>;
+  /* THE HERO TAKES NO MARGIN OF ITS OWN (plan 2026-10-12 rhythm-air-inside, Task 2A; spec section 2.1): inside the first zone, whose 48 and the
+     column's 16 are the page's top edge to the masthead (DISTANCES 2.3: 64 at 1024 up), the mt-8 stood every spine hero 96 under the bar. */
+  if (hero) return <div data-hero="1">{children}</div>;
   /* THE RATIO WAITS FOR DESKTOP; TABLET GETS EQUAL HALVES.
      Measured at 768px, the first width where two-up switches on: the small side of
      an uneven band is about 229px, and three of the four pages had a chart in one
@@ -1136,10 +1138,11 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss, level
   void tone;
   void verdict;
   return (
-    // mb-2, the slot rung: same written kit fix as Head above (the spacing
-    // ladder holds no 12). City finding #4 (2026-08-30), S1.
-    <div className="mb-2" data-rail="">
-      <div className="mb-2 flex items-center gap-2">
+    // THE TITLE STANDS 24 ABOVE ITS SECTION'S FIRST CONTENT (plan 2026-10-12 rhythm-air-inside, Task 2A; spec section 2.1; DISTANCES 2.2's
+    // medium range back inside the open section). One margin, on the wrapper: two collapsed to 8 in a block section and added to 16 in a
+    // flex one. What follows a Rail takes no top margin, so the 24 never doubles beside a flex sibling.
+    <div className="mb-6" data-rail="">
+      <div className="flex items-center gap-2">
         {/* THE ICON IS TERRACOTTA ON EVERY CARD (his ruling of 2026-09-19: "the big missed chance is to put it at the icons"); one tile, one tone, site-wide. The accent budget counts text, so the tiles are not accents. */}
         {icon ? <Ico id={icon} tone="terra" /> : null}
         {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
