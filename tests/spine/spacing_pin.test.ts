@@ -2,7 +2,8 @@
  * THE SPACING PIN (plan 2026-10-12 rhythm-air-inside, Task 1C; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, sections 2.1
  * and 3 item 3): inside an open section the title stands 24 above its first content, one group 24 from the next, a fact row 16 above and below, a
  * focal figure 8 above its own line. Read from the kit's shared pieces as they render (Rail, Focal, Basis, FactRows), and the spine read for a page
- * that sets its own: a hand-rolled section opener, focal block or basis line.
+ * that sets its own: a hand-rolled section opener, focal block or basis line. The spine read is scripts/lib/spine_scan.mjs's: every .tsx under
+ * src/components/spine but what it names out with its reason, and its guard is checked here, so no entry goes unread without a word.
  * BLIND SPOT, stated: Tailwind classes as written, at their 4px step; a margin that doubles beside a flex sibling, and a distance an archetype sets
  * inside its own layout, are measured on the renders (the plan's scratchpad/rhythm/gaps.mjs), not here.
  *
@@ -10,10 +11,10 @@
  */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync } from "node:fs";
 import * as kit from "../../src/components/spine/kit";
 import { FactRows } from "../../src/components/spine/archetypes/FactRows";
+import { scanSpine } from "../../scripts/lib/spine_scan.mjs";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -59,12 +60,15 @@ const rows = renderToStaticMarkup(React.createElement(FactRows, { rows: [{ key: 
 const rowCls = [...rows.matchAll(/data-row="[ab]" class="([^"]*)"/g)].map((m) => m[1]);
 check(`a fact row stands 16 above and below its words (${rowCls.map((c) => step(c, "py")).join(", ")})`, rowCls.length === 2 && rowCls.every((c) => step(c, "py") === 16), FACT);
 
-/* NO PAGE SETS ITS OWN: the spine the pages draw, comments stripped. */
-const SCOPE = ["archetypes", "sections", "cell", "city", "country", "industry", "hood", "interact", "charts"].map((d) => `src/components/spine/${d}`);
-const SKIP = new Set(["src/components/spine/archetypes/stories.tsx", "src/components/spine/country/how-to-view.tsx"]);
-const files: string[] = [];
-const walk = (d: string) => { for (const e of readdirSync(d)) { const p = join(d, e).replace(/\\/g, "/"); if (statSync(p).isDirectory()) walk(p); else if (/\.tsx$/.test(p) && !SKIP.has(p)) files.push(p); } };
-SCOPE.forEach(walk);
+/* NO PAGE SETS ITS OWN: the spine the pages draw, comments stripped. THE SCAN SET IS ONE HELPER'S (fix round 1 of this task's review): the pin had walked nine
+   folders it was handed by name, so home/, openings/, a new folder and every file at the root went unread and the test printed PASS about source it had not
+   opened. scripts/lib/spine_scan.mjs returns every .tsx under src/components/spine but what it names out by path with its reason, and its guard reds on any
+   entry neither read nor named, which is checked here. THE KIT'S OWN FILE IS NOT READ FOR A HAND-ROLL: it is where the pieces are defined (its Rail row, its
+   Head row and, from Task 2B, Focal's block carry the very classes these scans look for), and the three checks read "outside the kit". */
+const scan = scanSpine();
+if (scan.findings.length === 0) console.log(`PASS  every entry under src/components/spine is read or named out with its reason (${scan.files.length} .tsx read, ${scan.outFiles.length} named out)`);
+for (const f of scan.findings) { failed++; red({ rule: RULE, file: f.entry, detail: `the scan set: ${f.detail}`, remedy: f.remedy }); }
+const files = scan.files.filter((f) => f !== KIT);
 const hits = (re: RegExp) => files.flatMap((f) => stripCommentLines(readFileSync(f, "utf8").split(/\r?\n/)).map((l, i) => (re.test(l) ? `${f}:${i + 1}` : null)).filter((x): x is string => x !== null));
 const list = (h: string[]) => `${h.length}${h.length ? `: ${h.slice(0, 10).join(", ")}${h.length > 10 ? ", ..." : ""}` : ""}`;
 const openers = hits(/className="mb-2 flex items-center gap-2"/);

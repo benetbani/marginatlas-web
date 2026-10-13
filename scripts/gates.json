@@ -243,8 +243,6 @@
       "reads": [
         "src/components/spine/archetypes/FactRows.tsx",
         "src/components/spine/archetypes/RankedBars.tsx:",
-        "src/components/spine/archetypes/stories.tsx",
-        "src/components/spine/country/how-to-view.tsx",
         "src/components/spine/kit.tsx"
       ],
       "claims": []
