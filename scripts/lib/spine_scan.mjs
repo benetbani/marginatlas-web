@@ -25,6 +25,8 @@
  *   - a name in SPINE_OUT matches no path (renamed or deleted: its line would go on excusing a path that no longer holds it while the file
  *     that took its place was read without a word), names a folder without its trailing slash or a file with one, lies outside the root,
  *     or has no reason.
+ * The fixtures at the end of tests/spine/spacing_pin.test.ts run each of these reds on a temp tree (plan 2026-10-12, Task 1C, fix round 2),
+ * but one: the parenthesis in the second, the walk and the listing disagreeing, needs a runtime whose recursive listing is partial, and no tree reaches it.
  *
  * ITS BLIND SPOT, stated before any number: the guard checks paths, and that a reason exists, not that the reason is still true (a reason says
  * what a file is and who draws it on the day it was written); and it reads names, not imports, so a page that begins to draw a file named out
@@ -32,14 +34,16 @@
  * root is accounted for, by name.
  *
  * INTERFACE, kept small so a test takes it as it is (run from the repo root, as every gate does):
- *   scanSpine({ root, out }?)  ->  { files, outFiles, findings }
+ *   scanSpine({ root, out, skipDir }?)  ->  { files, outFiles, findings }
  *     files     string[]  the .tsx files to read: repo-relative, forward slashes, sorted by path
  *     outFiles  string[]  the .tsx files SPINE_OUT names (each under a named path), sorted
  *     findings  { entry, detail, remedy }[]  the guard's reds; empty when every entry is walked or named out
  *   SPINE_ROOT  the folder scanned, "src/components/spine"
  *   SPINE_OUT   Map of path to reason; a folder's path ends with "/", a file's does not
- * `root` and `out` are for proofs on a scratch tree; a test that reads the real spine passes neither. A test that needs a narrower set of
- * its own (the kit's own file, a file that holds the piece it checks for) filters `files` and says why where it does.
+ * `root`, `out` and `skipDir` are for proofs on a scratch tree; a test that reads the real spine passes none of them. `skipDir(path)` answers
+ * whether the walk keeps out of the folder at `path` (no trailing slash); its default is the SPINE_OUT check, `(p) => out.has(p + "/")`, and
+ * a proof injects one to stand for a walk that drops a folder, which the guard must then name. A test that needs a narrower set of its own
+ * (the kit's own file, a file that holds the piece it checks for) filters `files` and says why where it does.
  */
 import { existsSync, readdirSync, statSync } from "node:fs";
 
@@ -71,10 +75,10 @@ export const SPINE_OUT = new Map([
  */
 
 /**
- * @param {{ root?: string, out?: Map<string, string> }} [options]
+ * @param {{ root?: string, out?: Map<string, string>, skipDir?: (path: string) => boolean }} [options]
  * @returns {{ files: string[], outFiles: string[], findings: SpineFinding[] }}
  */
-export function scanSpine({ root = SPINE_ROOT, out = SPINE_OUT } = {}) {
+export function scanSpine({ root = SPINE_ROOT, out = SPINE_OUT, skipDir = (/** @type {string} */ p) => out.has(`${p}/`) } = {}) {
   /** @type {SpineFinding[]} */
   const findings = [];
   const add = (entry, detail, remedy) => { findings.push({ entry, detail, remedy }); };
@@ -83,7 +87,7 @@ export function scanSpine({ root = SPINE_ROOT, out = SPINE_OUT } = {}) {
     return { files: [], outFiles: [], findings };
   }
 
-  /* THE WALK: from the root, a folder is entered and a .tsx returned unless SPINE_OUT names it by path. */
+  /* THE WALK: from the root, a folder is entered unless `skipDir` says not (by default, unless SPINE_OUT names it by path), and a .tsx is returned unless SPINE_OUT names it. */
   /** @type {string[]} */
   const files = [];
   const entered = new Set();
@@ -91,7 +95,7 @@ export function scanSpine({ root = SPINE_ROOT, out = SPINE_OUT } = {}) {
     entered.add(dir);
     for (const e of readdirSync(dir, { withFileTypes: true })) {
       const p = `${dir}/${e.name}`;
-      if (e.isDirectory()) { if (!out.has(`${p}/`)) walk(p); }
+      if (e.isDirectory()) { if (!skipDir(p)) walk(p); }
       else if (e.name.endsWith(".tsx") && !out.has(p)) files.push(p);
     }
   };

@@ -3,7 +3,8 @@
  * and 3 item 3): inside an open section the title stands 24 above its first content, one group 24 from the next, a fact row 16 above and below, a
  * focal figure 8 above its own line. Read from the kit's shared pieces as they render (Rail, Focal, Basis, FactRows), and the spine read for a page
  * that sets its own: a hand-rolled section opener, focal block or basis line. The spine read is scripts/lib/spine_scan.mjs's: every .tsx under
- * src/components/spine but what it names out with its reason, and its guard is checked here, so no entry goes unread without a word.
+ * src/components/spine but what it names out with its reason, and its guard is checked here, so no entry goes unread without a word; the guard's red
+ * paths (a stale, mis-slashed, outside or reasonless name, an unnamed file at the root, a folder the walk drops) are run at the end of this file on a temp tree.
  * BLIND SPOT, stated: Tailwind classes as written, at their 4px step; a margin that doubles beside a flex sibling, and a distance an archetype sets
  * inside its own layout, are measured on the renders (the plan's scratchpad/rhythm/gaps.mjs), not here.
  *
@@ -11,7 +12,9 @@
  */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
 import * as kit from "../../src/components/spine/kit";
 import { FactRows } from "../../src/components/spine/archetypes/FactRows";
 import { scanSpine } from "../../scripts/lib/spine_scan.mjs";
@@ -63,11 +66,14 @@ check(`a fact row stands 16 above and below its words (${rowCls.map((c) => step(
 /* NO PAGE SETS ITS OWN: the spine the pages draw, comments stripped. THE SCAN SET IS ONE HELPER'S (fix round 1 of this task's review): the pin had walked nine
    folders it was handed by name, so home/, openings/, a new folder and every file at the root went unread and the test printed PASS about source it had not
    opened. scripts/lib/spine_scan.mjs returns every .tsx under src/components/spine but what it names out by path with its reason, and its guard reds on any
-   entry neither read nor named, which is checked here. THE KIT'S OWN FILE IS NOT READ FOR A HAND-ROLL: it is where the pieces are defined (its Rail row, its
-   Head row and, from Task 2B, Focal's block carry the very classes these scans look for), and the three checks read "outside the kit". */
+   entry neither read nor named, which is checked here; the guard's own red paths are run on a temp tree at the end of this file. */
 const scan = scanSpine();
 if (scan.findings.length === 0) console.log(`PASS  every entry under src/components/spine is read or named out with its reason (${scan.files.length} .tsx read, ${scan.outFiles.length} named out)`);
 for (const f of scan.findings) { failed++; red({ rule: RULE, file: f.entry, detail: `the scan set: ${f.detail}`, remedy: f.remedy }); }
+/* THE KIT'S OWN FILE IS NOT READ FOR A HAND-ROLL (ruled at the second review of this task: the exclusion stands). The kit's own pieces define the very patterns these three
+   scans look for: its Rail (the opener row, `mb-2 flex items-center gap-2` until Task 2A), its Head (the same row; Head is drawn only by the /dev pages) and, from Task 2B,
+   its Focal (the `data-focal="1"` block). Read, the kit would red the pin on the definitions themselves, which no page could fix, so the pin could never pass; the three
+   checks read "outside the kit". The helper still returns the kit: a test that reads the kit for another reason (the type floor's sizes) takes it from `scan.files`. */
 const files = scan.files.filter((f) => f !== KIT);
 const hits = (re: RegExp) => files.flatMap((f) => stripCommentLines(readFileSync(f, "utf8").split(/\r?\n/)).map((l, i) => (re.test(l) ? `${f}:${i + 1}` : null)).filter((x): x is string => x !== null));
 const list = (h: string[]) => `${h.length}${h.length ? `: ${h.slice(0, 10).join(", ")}${h.length > 10 ? ", ..." : ""}` : ""}`;
@@ -77,6 +83,56 @@ const focals = hits(/data-focal="1"/).filter((h) => !h.startsWith("src/component
 check(`no focal block is hand-rolled outside the kit's Focal (${list(focals)}; RankedBars' slot is its own: its figure stands beside its basis from 560px of card)`, focals.length === 0, focals[0]?.split(":")[0] ?? KIT, "draw a section's figure and its words with the kit's Focal");
 const bases = hits(/<p\b[^>]*--c-muted[^>]*>\{[^{}]*basis\}<\/p>/i);
 check(`no basis line is hand-rolled outside the kit's Basis (${list(bases)})`, bases.length === 0, bases[0]?.split(":")[0] ?? KIT, "print a section's basis with the kit's Basis, `beside` where it stands beside another group");
+
+/* THE GUARD'S RED PATHS, RUN HERE (fix round 2 of this task's review: "no committed test runs the guard's red paths", so with the guard deleted the pin still printed PASS, and a
+   walk that dropped a folder passed with a smaller count). A spine in miniature is built in the OS temp folder, never under src/, and removed after, as
+   tests/routing/edge_not_found.test.ts builds its trees; scanSpine runs on it with a crafted `out` and, for the walk's own fault, an injected `skipDir`, and each red must be
+   raised on the entry it names. The one red no tree reaches is "the walk returned a file the second listing does not hold": it needs the two enumerations to disagree, as on a
+   runtime whose recursive listing is partial. */
+const SCAN_LIB = "scripts/lib/spine_scan.mjs";
+const SCAN_REMEDY = "keep the guard's red in scripts/lib/spine_scan.mjs: it must name a stale, mis-slashed, outside or reasonless name, an unnamed file at the root and a folder its walk drops, and stay silent on a clean tree";
+type Found = { entry: string; detail: string };
+const withTree = (then: (root: string) => void): void => {
+  const tmp = mkdtempSync(join(tmpdir(), "spine-scan-"));
+  try {
+    const root = tmp.replace(/\\/g, "/");
+    for (const rel of ["a.tsx", "out.tsx", "notes.ts", "sub/b.tsx", "sub/data.ts", "outdir/c.tsx"]) { mkdirSync(dirname(`${root}/${rel}`), { recursive: true }); writeFileSync(`${root}/${rel}`, "export const x = 1;\n"); }
+    mkdirSync(`${root}/empty`);
+    then(root);
+  } finally {
+    try { rmSync(tmp, { recursive: true, force: true }); } catch { /* a temporary folder left behind is the system's to clear */ }
+  }
+};
+withTree((root) => {
+  const rel = (p: string) => (p.startsWith(`${root}/`) ? p.slice(root.length + 1) : p);
+  const say = (f: Found[]) => f.map((x) => `${rel(x.entry)}: ${x.detail.split(root).join("<tree>")}`).join(" | ") || "none";
+  const one = (f: Found[], entry: string, detail: RegExp) => f.length === 1 && f[0].entry === entry && detail.test(f[0].detail);
+  const outOf = (edit: (m: Map<string, string>) => void = () => undefined) => { const m = new Map<string, string>([[`${root}/outdir/`, "a folder named out"], [`${root}/out.tsx`, "a file named out"], [`${root}/notes.ts`, "a root helper with no markup"]]); edit(m); return m; };
+  /* a throw is a red of its own, not a crash: the guard's job is to say what is wrong */
+  const tryScan = (opts: Parameters<typeof scanSpine>[0]) => { try { return scanSpine(opts); } catch (e) { return { files: [] as string[], outFiles: [] as string[], findings: [{ entry: "(threw)", detail: (e as Error).message, remedy: "" }] }; } };
+  const finds = (out: Map<string, string>) => tryScan({ root, out }).findings;
+
+  const clean = tryScan({ root, out: outOf() });
+  check(`a clean tree has no finding: its components are read, its named folder and files left out, its nested .ts and empty folder let be (findings ${say(clean.findings)}; read ${clean.files.map(rel).join(", ")}; named out ${clean.outFiles.map(rel).join(", ")})`, clean.findings.length === 0 && clean.files.map(rel).join() === "a.tsx,sub/b.tsx" && clean.outFiles.map(rel).join() === "out.tsx,outdir/c.tsx", SCAN_LIB, SCAN_REMEDY);
+  const staleFile = finds(outOf((m) => m.set(`${root}/gone.tsx`, "gone")));
+  const staleFolder = finds(outOf((m) => m.set(`${root}/gone/`, "gone")));
+  check(`a stale name reds, a file and a folder named out that are not there (${say(staleFile)}; ${say(staleFolder)})`, one(staleFile, `${root}/gone.tsx`, /no such file/) && one(staleFolder, `${root}/gone/`, /no such folder/), SCAN_LIB, SCAN_REMEDY);
+  const noSlash = finds(outOf((m) => { m.delete(`${root}/outdir/`); m.set(`${root}/outdir`, "a folder"); }));
+  const slash = finds(outOf((m) => { m.delete(`${root}/out.tsx`); m.set(`${root}/out.tsx/`, "a file"); }));
+  check(`a wrong slash reds, a folder named without its slash and a file named with one (${say(noSlash)}; ${say(slash)})`, one(noSlash, `${root}/outdir`, /without its trailing slash/) && one(slash, `${root}/out.tsx/`, /file named with a trailing slash/), SCAN_LIB, SCAN_REMEDY);
+  const outside = finds(outOf((m) => m.set("elsewhere/x.tsx", "not under the spine")));
+  check(`a name outside the spine's folder reds (${say(outside)})`, one(outside, "elsewhere/x.tsx", /lies outside/), SCAN_LIB, SCAN_REMEDY);
+  const emptyReason = finds(outOf((m) => m.set(`${root}/out.tsx`, "")));
+  const blankReason = finds(outOf((m) => m.set(`${root}/out.tsx`, "   ")));
+  check(`a name with no reason reds, an empty one and one of spaces (${say(emptyReason)}; ${say(blankReason)})`, one(emptyReason, `${root}/out.tsx`, /no reason/) && one(blankReason, `${root}/out.tsx`, /no reason/), SCAN_LIB, SCAN_REMEDY);
+  const rootTs = finds(outOf((m) => m.delete(`${root}/notes.ts`)));
+  check(`a file at the root that is not a .tsx reds until it is named out (${say(rootTs)})`, one(rootTs, `${root}/notes.ts`, /not a \.tsx/), SCAN_LIB, SCAN_REMEDY);
+  const keep = outOf();
+  const dropped = tryScan({ root, out: keep, skipDir: (p: string) => p.split("/").pop() === "sub" || keep.has(`${p}/`) });
+  check(`a folder the walk drops by its bare name reds, and so does each .tsx in it, though nothing names them out (${say(dropped.findings)}; read ${dropped.files.map(rel).join(", ")})`, dropped.findings.length === 2 && dropped.findings[0].entry === `${root}/sub` && /neither walked nor named out/.test(dropped.findings[0].detail) && dropped.findings[1].entry === `${root}/sub/b.tsx` && /neither read nor named out/.test(dropped.findings[1].detail), SCAN_LIB, SCAN_REMEDY);
+  const nowhere = tryScan({ root: `${root}/nope`, out: new Map() });
+  check(`a root that is not there reds once and reads nothing (${say(nowhere.findings)}; read ${nowhere.files.length})`, nowhere.files.length === 0 && one(nowhere.findings, `${root}/nope`, /not there/), SCAN_LIB, SCAN_REMEDY);
+});
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/spacing_pin: all pass");
