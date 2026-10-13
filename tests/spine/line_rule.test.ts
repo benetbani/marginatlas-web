@@ -104,9 +104,9 @@ check(`a detail panel under the figure's block stands 12, and passes there (${ru
 r = run(card(focalThen(8, 24, panel)));
 check(`a detail panel at 24 is WORDS BELOW, which wants 12 (${rules(r)})`, rules(r) === "WORDS BELOW:#s:8|24");
 r = run(card(focalThen(8, 24, rows, true)));
-check(`the placement sentence under the words is part of the block: the next group 24 under IT passes, though 48 under the words (${rules(r)})`, r.reds.length === 0);
+check(`the placement sentence under the words is part of the block: the next group 24 under IT passes, though 44 under the words (${rules(r)})`, r.reds.length === 0);
 r = run(card(focalThen(8, 12, rows, true)));
-check(`and 12 under the placement is WORDS BELOW, though 36 under the words (${rules(r)})`, rules(r) === "WORDS BELOW:#s:8|12");
+check(`and 12 under the placement is WORDS BELOW, though 32 under the words (${rules(r)})`, rules(r) === "WORDS BELOW:#s:8|12");
 r = run(card(`<div>${figure()}${words(38)}</div>${rows(0, 58)}`));
 check(`words with the next group beside them (the same vertical range) pass: a row's arrangement gives the distance (${rules(r)})`, r.reds.length === 0);
 r = run(card(focalThen(8, null)));

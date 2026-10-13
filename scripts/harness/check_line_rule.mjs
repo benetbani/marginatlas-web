@@ -38,7 +38,7 @@ const REMEDIES = {
   "BASIS ABOVE": "a basis stands 24 under the group above it: draw it with the kit's Basis (src/components/spine/basis.tsx), whose line takes mt-6, and take any margin or padding above it away",
   "BASIS BELOW": "the group under a basis stands 24 below it, 12 where it is a foot or a detail panel: set that group's own top margin to the step (mt-6, mt-3 for a foot)",
   "FIGURE ABOVE": "draw it as the figure's words (the kit's Focal `words`), 8 under the figure",
-  "EMPTY LINE": "a line with no text draws nothing: the kit's Basis and Focal words return null when their children hold no text, and a caller never keeps a margin for a line that is not there",
+  "EMPTY LINE": "a line with no text draws nothing: the kit's Basis returns null when its children hold no text, a Focal draws no words line unless it is given words, and a caller never keeps a margin for a line that is not there",
 };
 const EMPTY_REMEDY = "make the render draw its lines: a figure's words carry data-focal-words and a basis data-basis, inside a card (scripts/lib/line_rule.mjs), and the render is the page (run node node_modules/tsx/dist/cli.mjs scripts/verify_pages_fresh.mjs and fix what it names)";
 const RENDER_REMEDY = "run node node_modules/tsx/dist/cli.mjs scripts/verify_pages_fresh.mjs and fix what it names";
