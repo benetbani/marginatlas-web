@@ -95,7 +95,7 @@ import { spineCitySeed } from "@/lib/spine-seeds";
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Box, Rail, Ico, SampleTag, usd, Fig } from "@/components/spine/kit";
+import { Basis, Box, Rail, Ico, SampleTag, usd, Fig } from "@/components/spine/kit";
 import { Zone, type ZoneSplit } from "@/components/spine/zones";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
@@ -195,7 +195,7 @@ function Glance({ glance }: { glance: CityGlanceData | null }) {
       <Rail icon="scorecard" kicker={COPY.glance.kicker} sample={glance.confidence !== "measured"} />
       <KvGrid cells={glance.cells} />
       {glance.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.withheld}</p> : null}
-      {glance.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.basis}</p> : null}
+      {glance.basis ? <Basis>{glance.basis}</Basis> : null}
       {glance.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.foot}</p> : null}
     </Box>
   );
@@ -238,7 +238,7 @@ export function AmongCities({ seat, id = "among-cities" }: { seat: CitySeatData 
       {/* No unit after the figure: "of 100" stands on the premises bento's empty-shops cell in the same first screen, and the art-direction gate's H4 reads a phrase twice there; the basis under the bar says the scale's ends. */}
       {living != null ? <SegmentBar label={COPY.runningCosts.rows.living} value={living} figure={String(living)} unit="" /> : null}
       {seat.cells.length > 0 ? <div className={living != null ? "mt-3" : ""}><KvGrid cells={seat.cells} /></div> : null}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.basis}</p>
+      <Basis>{seat.basis}</Basis>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.foot}</p>
     </Box>
   );
@@ -277,7 +277,7 @@ function Living({ living }: { living: CityLivingData | null }) {
       <Rail icon="cost-breakdown" kicker={COPY.cityLiving.kicker} sample={living.confidence !== "measured"} />
       <KvGrid cells={living.cells} />
       {living.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.withheld}</p> : null}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.basis}</p>
+      <Basis>{living.basis}</Basis>
       {living.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.foot}</p> : null}
     </Box>
   );
@@ -337,7 +337,7 @@ export function Runway({ runway, id = "runway" }: { runway: CityRunwayData | nul
         <Rail icon="commercial-rent" kicker={COPY.cityRunway.kicker} sample={runway.confidence !== "measured"} />
         <KvGrid cells={runway.cells} />
         {runway.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.withheld}</p> : null}
-        <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.basis}</p>
+        <Basis>{runway.basis}</Basis>
         {runway.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
       </Box>
     );
@@ -659,7 +659,7 @@ export function Texture({ texture }: { texture: CityTextureData | null }) {
       {/* THE CARD'S ONE FIGURE stands where the spend calendar's swing stands,
           over the drawing and under the opener: a spectrum holds no figure of
           its own, and PART 4 gives every section card exactly one. */}
-      <div className="mb-4">
+      <div className="mb-6">
         <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{texture.visits.label}</div>
         <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{texture.visits.figure}</Fig>
       </div>
@@ -769,13 +769,13 @@ export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCal
           clause 52 reds a card whose ink stops more than 48px above its floor.
           Side by side the head fills the width and the two cards stand level.
           THE CARD'S OWN WIDTH DECIDES, never the window. */}
-      <div className="mb-4 gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start">
+      <div className="mb-6 gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start">
         <div>
           <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.swingLabel}</div>
           <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
         </div>
-        <div className="mt-2 [@container(min-width:560px)]:mt-0">
-          {calendar.basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.basis}</p> : null}
+        <div className="mt-6 [@container(min-width:560px)]:mt-0">
+          {calendar.basis ? <Basis beside>{calendar.basis}</Basis> : null}
           {calendar.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p> : null}
         </div>
       </div>
@@ -804,7 +804,7 @@ export function Season({ season, id = "season" }: { season: CitySeasonData | nul
       ) : null}
       {season.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.withheld}</p> : null}
       {/* The basis sentence is the bar's own words now ("Residents 84% of footfall", "Visitors 16%"); it prints only where the bar does not (his law of labels over sentences). */}
-      {season.basis && !drawn ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.basis}</p> : null}
+      {season.basis && !drawn ? <Basis>{season.basis}</Basis> : null}
       {season.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.foot}</p> : null}
     </Box>
   );

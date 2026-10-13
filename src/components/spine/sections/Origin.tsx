@@ -13,7 +13,7 @@
  *  - `data-archetype="origin"`, `data-visual="1"`, `data-places`.
  */
 import * as React from "react";
-import { Box, Fig, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Rail } from "@/components/spine/kit";
 import { Pie } from "@/components/spine/charts/Pie";
 import { COPY } from "@/lib/spine/copy";
 import type { Origin as OriginData } from "@/lib/spine/sections/people";
@@ -24,10 +24,9 @@ export function Origin({ id = "origin", data }: { id?: string; data: OriginData 
     <Box id={id} className="flex flex-col">
       <Rail icon="tourist" kicker={O.kicker} />
       <div className="[container-type:inline-size]">
-        <div className="grid items-center gap-x-10 gap-y-5 [@container(min-width:440px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:720px)]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+        <div className="grid items-center gap-x-10 gap-y-6 [@container(min-width:440px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:720px)]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
           <div className="[@container(min-width:440px)]:col-span-2 [@container(min-width:720px)]:col-span-1">
-            <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.figure}</div>
-            <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.words}</p>
+            <Focal figure={data.figure} words={data.words} beside />
           </div>
           <div data-archetype="origin" data-visual="1" data-places={String(data.places.length)} className="flex items-end gap-x-8">
             {data.places.map((p) => (

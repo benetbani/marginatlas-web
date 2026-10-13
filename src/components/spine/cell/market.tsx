@@ -45,7 +45,7 @@ import { BentoBand, BentoCount, BentoMetric, CompanionRow, type BentoCell } from
 import { MonthBars } from "@/components/spine/archetypes/MonthBars";
 import { ShareBar } from "@/components/spine/archetypes/ShareBar";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
-import { Box, Fig, Rail } from "@/components/spine/kit";
+import { Basis, Box, Focal, Rail } from "@/components/spine/kit";
 import { densityText, type MarketData, type MarketMetric, type MarketCount } from "@/lib/spine/market_rows";
 import { COPY } from "@/lib/spine/copy";
 import type { AtlasIconId } from "@/components/brand/icons";
@@ -127,12 +127,11 @@ export function SwingCell({ market }: { market: MarketData }) {
           was read before its line, which stood at the card's foot under the twelve columns; every other card on the page, and the
           city's own calendar card, says what its figure is before the drawing. */}
       <div className="flex flex-1 flex-col justify-center pb-2">
-        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{cell.figure}</Fig>
-        {cell.basis ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{cell.basis}</p> : null}
+        <Focal figure={cell.figure} words={cell.basis} beside />
         {market.months ? (
-          <div className="mt-3">
+          <div className="mt-6">
             <MonthBars points={market.months} />
-            {COPY.tradeMarket.monthsBasis ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.tradeMarket.monthsBasis}</p> : null}
+            {COPY.tradeMarket.monthsBasis ? <Basis>{COPY.tradeMarket.monthsBasis}</Basis> : null}
           </div>
         ) : null}
       </div>
@@ -147,10 +146,10 @@ export function DaypartsCell({ market }: { market: MarketData }) {
   return (
     <Box className="flex h-full flex-col" data-archetype="share-bar" data-visual="1">
       <Rail icon="daily-takings" kicker={K.dayparts} sample />
-      <div className="flex flex-1 flex-col justify-center pb-2">
+      <div className="flex flex-1 flex-col justify-center">
         <ShareBar parts={market.dayparts} />
       </div>
-      {(market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis) ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis}</p> : null}
+      {(market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis) ? <Basis>{market.daypartsBasis ?? COPY.tradeMarket.daypartsBasis}</Basis> : null}
     </Box>
   );
 }

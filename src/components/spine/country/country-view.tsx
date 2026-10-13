@@ -41,7 +41,7 @@ import { buildHireAllIn } from "@/lib/spine/sections/hire_all_in";
 import { lockedLevelKeys } from "@/lib/monetization/levels";
 import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { FreeDoors } from "@/components/spine/FreeDoors";
-import { Box, Fig, Ico, Rail, SampleTag, usd } from "@/components/spine/kit";
+import { Basis, Box, Fig, Ico, Rail, SampleTag, usd } from "@/components/spine/kit";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { AnswerCard } from "@/components/spine/archetypes/AnswerCard";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
@@ -651,7 +651,7 @@ function FinancingRanged({ iso2, card, cells = null }: { iso2: string; card: Dep
     <Box id="financing" className="flex flex-col">
       <Rail icon="raise-money" kicker={COPY.financing.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
-      {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} headless ends={COPY.ranged.ends} /></div> : null}
+      {rows.length ? <div className="mb-4"><WorldRangeRows rows={rows} headless ends={COPY.ranged.ends} /></div> : null}
       <FactRows rows={rest} />
       {/* THE LOAN'S MONTHLY COST (goal 2026-09-26, M3): the start-up loan's own amounts, rate and term, the repayment a month. */}
       {card.loan ? <LoanLever min={card.loan.min} max={card.loan.max} rate={card.loan.rate} termMin={COPY.financing.startupTerm.min} termMax={COPY.financing.startupTerm.max} words={COPY.financing.loan} /> : null}
@@ -810,7 +810,7 @@ function SpendBar({ spend }: { spend: CountrySpendData }) {
           monstrosity", the treemap): the seven parts of a household's spending along one bar, eating out and groceries first and
           alone in colour, so the focal is read off the bar as eating out's share of the coloured food block. Since 2026-10-05 the
           UK's parts are the survey's own lines, each stamped (PARKED P04.1). */}
-      <div className="mt-1 flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col">
         {/* THE FOOD MONEY BRACKETED (goal 2026-09-26, M6): the figure is eating out's share of the food money, so the two parts
             that make the food money carry a bracket named "Food". */}
         <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value, prov: r.prov }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill bracket={COPY.countrySpend.bracket} />
@@ -895,9 +895,8 @@ function EntryBill({ bill, steps, licences }: { bill: EntryBillData | null; step
     return (
       <Box id="entry-bill" data-visual="1" className="flex flex-col">
         <Rail icon="startup-cost" kicker={COPY.entryBill.kicker} />
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{bill.figure}</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{oneFee ? (localFee ? COPY.entryBill.focalWordsLocalFee.replace("{fee}", localFee).replace("{n}", String(free.length)) : COPY.entryBill.focalWordsOneFee.replace("{n}", String(free.length))) : COPY.entryBill.focalWords}</p>
-        <div className="mt-5 flex-1">
+        <Focal figure={bill.figure} words={oneFee ? (localFee ? COPY.entryBill.focalWordsLocalFee.replace("{fee}", localFee).replace("{n}", String(free.length)) : COPY.entryBill.focalWordsOneFee.replace("{n}", String(free.length))) : COPY.entryBill.focalWords} />
+        <div className="flex-1">
           <Stepper steps={steps.steps} compact />
         </div>
         {licences && licences.length >= 2 ? <DetailPanel name="entry-bill-licences" summary={COPY.entryBill.licences.summary} rows={licences} /> : null}
@@ -995,7 +994,7 @@ function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
         </div>
       )}
       {costs.withheld.length > 0 && !bare ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.withheld.join(" ")}</p> : null}
-      {costs.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.basis}</p> : null}
+      {costs.basis ? <Basis>{costs.basis}</Basis> : null}
       {costs.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.foot}</p> : null}
     </Box>
   );
@@ -1338,7 +1337,7 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
           {exit.climate ? <p className="text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{exit.climate}</p> : null}
         </div>
       ) : null}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.basis}</p>
+      <Basis>{exit.basis}</Basis>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.foot}</p>
     </Box>
   );

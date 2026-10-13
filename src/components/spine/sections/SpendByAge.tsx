@@ -14,7 +14,7 @@
  */
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
-import { Box, Rail } from "@/components/spine/kit";
+import { Box, Focal, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { AgeBandShare, SpendByAge as SpendByAgeData } from "@/lib/spine/sections/spend_by_age";
 
@@ -35,10 +35,7 @@ export function SpendByAge({ id = "spend-by-age", data }: { id?: string; data: S
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="spending-power" kicker={C.kicker} />
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.figure}</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.words}</p>
-      </div>
+      <Focal figure={data.figure} words={data.words} />
       {/* A BAND READS ITS SHARE, AND A BAND OR ITS LEGEND ENTRY LIGHTS THAT AGE IN BOTH BARS (goal 2026-09-26, M1 and M2). */}
       <Marks label={`${C.kicker}: ${data.words}`} data-archetype="spend-by-age" data-visual="1" data-bars={String(bars.length)} data-wedges={String(data.bands.length)} className="grid flex-1 content-between gap-4">
         {bars.map((bar) => (

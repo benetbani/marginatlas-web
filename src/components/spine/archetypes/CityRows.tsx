@@ -32,6 +32,7 @@
  */
 import * as React from "react";
 import { provAttrs } from "@/lib/spine/provenance";
+import { Basis } from "@/components/spine/basis";
 import { cityThumb } from "@/lib/cities/city_images";
 import type { CityCard } from "@/lib/spine/city_cards";
 import { DuotonePhoto, moneyFor } from "./CityParts";
@@ -67,7 +68,7 @@ export function CityRows({ cards, basis, allHref, allLabel, unit, headed = false
           <span aria-hidden className="shrink-0 transition-transform group-hover:translate-x-0.5 md:text-[length:var(--t-body)] md:font-normal md:leading-none">&#8594;</span>
         </a>
       </div>
-      <p className={`mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${headed ? " md:hidden" : ""}`}>{basis}</p>
+      <Basis className={headed ? "md:hidden" : undefined}>{basis}</Basis>
     </div>
   );
 }

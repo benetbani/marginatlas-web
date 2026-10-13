@@ -10,7 +10,7 @@
  *  - `data-archetype="customers-come"`, `data-visual="1"`.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Box, Focal, Rail } from "@/components/spine/kit";
 import { Pie } from "@/components/spine/charts/Pie";
 import { ShareBar } from "@/components/spine/archetypes/ShareBar";
 import { COPY } from "@/lib/spine/copy";
@@ -22,11 +22,8 @@ export function CustomersCome({ id = "customers-come", data }: { id?: string; da
     <Box id={id} className="flex flex-col">
       <Rail icon="footfall" kicker={C.kicker} />
       <div data-archetype="customers-come" data-visual="1" className="flex flex-col">
-        <div className="mb-5 flex items-center gap-5">
-          <div>
-            <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.figure}</div>
-            <p className="mt-2 max-w-[24ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.words}</p>
-          </div>
+        <div className="mb-6 flex items-center gap-5">
+          <Focal figure={data.figure} words={data.words} wordsClassName="max-w-[24ch]" beside />
           <Pie share={data.online / 100} tone="ink" aria={`${data.figure} ${data.words}`} className="h-20 w-20" />
         </div>
         <div className="mb-2 text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.trips.replace("{place}", data.tripsPlace)}</div>

@@ -14,6 +14,7 @@
  */
 import * as React from "react";
 import { usd } from "@/lib/spine/money";
+import { Focal } from "@/components/spine/kit";
 
 export type Cover = { key: string; label: string; usd: number; required: boolean };
 export type CoverWords = { focal: string; required: string; minimum: string | null; aYear: string; tick: string };
@@ -26,10 +27,7 @@ export function CoverPicker({ covers, words, fill = false }: { covers: Cover[]; 
   const toggle = (key: string) => setTicked((prev) => { const next = new Set(prev); if (next.has(key)) next.delete(key); else next.add(key); return next; });
   return (
     <div data-lever-card="covers" className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
-      <div className="mb-5">
-        <div data-focal="1" aria-live="polite" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{usd(total)}</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words.focal}</p>
-      </div>
+      <Focal figure={usd(total)} words={words.focal} live />
       <fieldset className={`m-0 min-w-0 border-0 p-0 ${fill ? "flex flex-1 flex-col" : ""}`}>
         <legend className="sr-only">{words.tick}</legend>
         <ol data-archetype="bar-list" data-visual="1" data-look="plain" data-rows={String(sorted.length)} className={`m-0 grid list-none items-center gap-x-3 p-0 grid-cols-[auto_minmax(0,1fr)_auto] [@container(min-width:420px)]:grid-cols-[auto_minmax(0,24ch)_auto_minmax(0,1fr)] ${fill ? "flex-1 gap-y-0" : "gap-y-5"}`}>

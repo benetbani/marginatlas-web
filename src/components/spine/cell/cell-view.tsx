@@ -134,7 +134,7 @@ import { lockedLevelKeys } from "@/lib/monetization/levels";
 import { FreeDoors } from "@/components/spine/FreeDoors";
 import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { spineCellSeed } from "@/lib/spine-seeds";
-import { Box, Rail, usd } from "@/components/spine/kit";
+import { Basis, Box, Rail, usd } from "@/components/spine/kit";
 import { Zone, type ZoneSplit } from "@/components/spine/zones";
 import { Masthead } from "./masthead";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "./turn-one";
@@ -274,7 +274,7 @@ function Suits({ d }: { d: any }) {
     <Box id="suits">
       <Rail icon="who-for" kicker={COPY.tradeSuits.kicker} sample />
       <NoteList notes={s.rows} columns={2} />
-      {s.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{s.basis}</p> : null}
+      {s.basis ? <Basis>{s.basis}</Basis> : null}
     </Box>
   );
 }

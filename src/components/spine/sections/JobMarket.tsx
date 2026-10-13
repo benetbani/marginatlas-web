@@ -11,7 +11,7 @@
  *  - `data-archetype="job-market"`, `data-visual="1"`, `data-rows`; `data-row` and `data-label` on each rate.
  */
 import * as React from "react";
-import { Box, Fig, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { JobMarket as JobMarketData } from "@/lib/spine/sections/market_jobs";
 
@@ -25,10 +25,7 @@ export function JobMarket({ id = "job-market", data }: { id?: string; data: JobM
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="hiring" kicker={J.kicker} />
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{all.pct}%</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{J.focalWords}</p>
-      </div>
+      <Focal figure={`${all.pct}%`} words={J.focalWords} />
       <div data-archetype="job-market" data-visual="1" data-rows={String(rows.length)} className="flex flex-col gap-4">
         {rows.map((r) => (
           <div key={r.key} data-row={r.key}>

@@ -23,6 +23,7 @@
  */
 import * as React from "react";
 import { provAttrs, type Provenance } from "@/lib/spine/provenance";
+import { Focal } from "@/components/spine/kit";
 
 /** `prov`: where the share was read, which the point's label says (data-src, data-kind) when the builder gave one. */
 export type CurvePoint = { year: number; pct: number; prov?: Provenance };
@@ -60,10 +61,7 @@ export function SurvivalCurve({ id, country, regions, best, worst, words, start 
   const W = words;
   return (
     <>
-      <div className="mb-3">
-        <div data-focal="1" aria-live="polite" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{Math.round(last.pct)}%</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{region ? W.focalIn.replace("{n}", String(maxYear)).replace("{region}", region.inName) : W.focal.replace("{n}", String(maxYear))}</p>
-      </div>
+      <Focal figure={`${Math.round(last.pct)}%`} words={region ? W.focalIn.replace("{n}", String(maxYear)).replace("{region}", region.inName) : W.focal.replace("{n}", String(maxYear))} live />
       {/* 32 under the picker (the design review, 2026-10-04: the first year's "95%" stands above its point and touched the picker, so 24; the
           start's "100%" stands above the plot's very top, a point higher, so 32: critique pass 3, fix round D2, item P2.8). */}
       <div className="mb-8 flex items-center gap-3">

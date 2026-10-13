@@ -38,7 +38,7 @@
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
 import { CountryFlag } from "@/components/CountryFlag";
-import { Band, Box, Ico } from "@/components/spine/kit";
+import { Band, Basis, Box, Ico } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { HeroBoardData } from "@/lib/spine/hero_board";
 import { SegmentBar } from "@/components/spine/archetypes/SegmentBar";
@@ -161,7 +161,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                 </div>
               ))}
             </RowsFrame>
-            <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.levelBasis ?? COPY.heroBoard.levelBasis}</p>
+            <Basis>{board.levelBasis ?? COPY.heroBoard.levelBasis}</Basis>
           </div>
         </div>
       </Box>

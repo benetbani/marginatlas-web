@@ -79,7 +79,7 @@
  * 49) retired into this card; neither ever drew on the live route.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Basis, Box, Rail } from "@/components/spine/kit";
 import { WorkedFigure } from "@/components/spine/archetypes/WorkedFigure";
 import { Donut } from "@/components/spine/archetypes/Donut";
 import { Ring } from "@/components/spine/archetypes/Ring";
@@ -157,7 +157,7 @@ export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; 
         {/* THE SHARE DRAWN (his law of 2026-09-19, "a share of a whole is drawn"; the goal's B14, 2026-09-24): in the list form, beside the benchmark's taller card, the hundred that open as a hundred units and the five-year share of them filled, where the figure had stood centred in 150 of air above and 100 below. The foot says what the units are ("Out of every 100 that open."). */}
         {list ? <CountUnits className="mt-auto pt-5" whole={100} filled={lasts.values.yr5} columns={20} columnsWide={50} aria={`${lasts.values.yr5} ${COPY.tradeLasts.drawn}`} /> : null}
       </div>
-      {lasts.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.basis}</p> : null}
+      {lasts.basis ? <Basis>{lasts.basis}</Basis> : null}
       {lasts.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.foot}</p> : null}
     </Box>
   );
@@ -185,7 +185,7 @@ export function MixCard({ id = "mix", mix }: { id?: string; mix: MixData | null 
            to be replicated, which is the click the catalogue waited on. */
         <Donut parts={mix.parts} />
       )}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mix.basis}</p>
+      <Basis>{mix.basis}</Basis>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{mix.foot}</p>
     </Box>
   );

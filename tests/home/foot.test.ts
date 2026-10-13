@@ -126,7 +126,7 @@ if (gb) {
   /* THE BASIS LINE GOES ONLY WHERE A HEAD SAYS IT (fix round F1, group G9; the D2 review's Minor 7a). CityRows hid its basis line from 768 on the assumption that its
      page draws CityRowsHead over the figures, which only the home does, so a second consumer without the head would have lost the figures' only label from 768. The
      caller now says it draws the head (`headed`, passed by HomeCities); without it the line stays at every width. BLIND SPOT: classes as written. */
-  const basisOf = (props: Record<string, unknown>) => /<p class="([^"]*)">A basis line\.<\/p>/.exec(renderToStaticMarkup(React.createElement(CityRows, { cards: gb.cards, basis: "A basis line.", allHref: "/gb#cities", allLabel: "All", unit: "a year", ...props })))?.[1].split(" ") ?? [];
+  const basisOf = (props: Record<string, unknown>) => /<p data-basis="" class="([^"]*)">A basis line\.<\/p>/.exec(renderToStaticMarkup(React.createElement(CityRows, { cards: gb.cards, basis: "A basis line.", allHref: "/gb#cities", allLabel: "All", unit: "a year", ...props })))?.[1].split(" ") ?? [];
   const basisAlone = basisOf({}), basisHeaded = basisOf({ headed: true });
   check(`CityRows hides its basis line from 768 only when told its page draws the column head (headed): alone it keeps it at every width (${basisAlone.includes("md:hidden") ? "md:hidden" : "no md:hidden"}), headed it goes from 768 (${basisHeaded.includes("md:hidden") ? "md:hidden" : "no md:hidden"})`, basisAlone.length > 1 && !basisAlone.includes("md:hidden") && basisHeaded.includes("md:hidden"), { file: "src/components/spine/archetypes/CityRows.tsx", remedy: "give CityRows a `headed` prop (default false) and put md:hidden on the basis line only when it is true; HomeCities passes headed, since it draws CityRowsHead over the figures" });
   const doors = [...html.matchAll(/<a href="([^"]+)" data-card="([^"]+)" data-lands="([^"]+)"/g)];
@@ -259,7 +259,7 @@ if (home) {
   const strutClasses = (headEl?.[2] ?? "").split(" "), wordClasses = (headEl?.[3] ?? "").split(" ");
   check("the head is 12 in the muted grey on the h2's baseline: its words at the micro rung, semibold, muted, line-height 1, inside a strut of the title's own type (the head rung, a 28px line, semibold) in the third column, so the line box is the title's and the baseline is its", ["text-[length:var(--t-micro)]", "font-semibold", "text-[var(--c-muted)]", "leading-none"].every((k) => wordClasses.includes(k)) && ["col-start-3", "whitespace-nowrap", "text-[length:var(--t-head)]", "leading-7", "font-semibold"].every((k) => strutClasses.includes(k)), HEAD_AT);
   const basisWords = COPY.cityCards.plain.basis;
-  const basisEl = new RegExp(`<p class="([^"]*)">${basisWords.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</p>`).exec(foot);
+  const basisEl = new RegExp(`<p data-basis="" class="([^"]*)">${basisWords.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</p>`).exec(foot);
   check(`the basis line, "${basisWords}", stays under the grid under 768 and goes from 768 (md:hidden), where the head says it`, !!basisEl && basisEl[1].split(" ").includes("md:hidden"), HEAD_AT);
   const homeCode = stripCommentLines(view.split("\n")).join("\n");
   const homeCities = /function HomeCities[\s\S]*?\n\}\r?\n/.exec(homeCode)?.[0] ?? "";

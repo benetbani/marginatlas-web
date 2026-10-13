@@ -12,7 +12,7 @@
  *  - `data-archetype="thresholds"`, `data-rows`; `data-row` and `data-label` on each line.
  */
 import * as React from "react";
-import { Box, Fig, Ico, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Ico, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { Thresholds as ThresholdsData } from "@/lib/spine/sections/thresholds";
 
@@ -33,10 +33,7 @@ export function Thresholds({ id = "thresholds", data, fill = false }: { id?: str
       <Rail icon="taxes" kicker={COPY.thresholds.kicker} />
       <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
       <div className={`grid gap-x-10 [@container(min-width:900px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] ${fill ? "flex-1 grid-rows-[auto_minmax(0,1fr)] [@container(min-width:900px)]:grid-rows-none" : ""}`}>
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.lead.figure}</div>
-        <p className="mt-2 max-w-[32ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.lead.words}</p>
-      </div>
+      <Focal figure={data.lead.figure} words={data.lead.words} wordsClassName="max-w-[32ch]" className="[@container(min-width:900px)]:mb-0" />
       <ol data-archetype="thresholds" data-rows={String(data.rows.length)} className={`m-0 grid list-none p-0 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-8 [@container(min-width:900px)]:grid-cols-1`}>
         {/* `max-w-none` on each row: globals.css gives every list item under main the prose measure (360px at a 768 window), and a
             row there stopped 312px short of the card's edge (the page filter's WHITE SPACE on the trade page at 768, 2026-09-25). */}

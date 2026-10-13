@@ -22,7 +22,7 @@
  *  - `data-archetype="local-apps"`, `data-visual="1"` (the flags draw), `data-jobs`; `data-row` and `data-label` on each app.
  */
 import * as React from "react";
-import { Box, Fig, Ico, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Ico, Rail } from "@/components/spine/kit";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COPY } from "@/lib/spine/copy";
 import type { LocalApps as LocalAppsData } from "@/lib/spine/sections/local_apps";
@@ -32,12 +32,7 @@ export function LocalApps({ id = "local-apps", data }: { id?: string; data: Loca
     <Box id={id} className="flex flex-col">
       <Rail icon="supplier" kicker={COPY.localApps.kicker} />
       {data.localCount > 0 ? (
-        <div className="mb-5">
-          <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">
-            {data.localCount} <span className="text-[var(--c-muted)]">{COPY.localApps.of}</span> {data.total}
-          </div>
-          <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.localApps.focalWords}</p>
-        </div>
+        <Focal figure={<>{data.localCount} <span className="text-[var(--c-muted)]">{COPY.localApps.of}</span> {data.total}</>} words={COPY.localApps.focalWords} />
       ) : null}
       <div className="[container-type:inline-size]">
         <div data-archetype="local-apps" data-visual="1" data-jobs={String(data.jobs.length)} className="gap-x-8 [@container(min-width:480px)]:columns-2 [@container(min-width:900px)]:columns-3">

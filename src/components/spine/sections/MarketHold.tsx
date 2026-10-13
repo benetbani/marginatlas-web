@@ -13,7 +13,7 @@
  */
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
-import { Box, Fig, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { MarketHold as MarketHoldData, HoldPart } from "@/lib/spine/sections/market_jobs";
 
@@ -30,10 +30,7 @@ export function MarketHold({ id = "market-hold", data }: { id?: string; data: Ma
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="competition" kicker={M.kicker} />
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{Math.round(data.bigShare)}%</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{M.focalWords.replace("{market}", data.label).replace("{n}", String(data.bigCount))}</p>
-      </div>
+      <Focal figure={`${Math.round(data.bigShare)}%`} words={M.focalWords.replace("{market}", data.label).replace("{n}", String(data.bigCount))} />
       <div className="[container-type:inline-size]">
         {/* `data-wedges`, never `data-parts`: the page laws read `data-parts` as parts kept behind a plus (clause 58), and the
             card shows every part at once by design (its first seat, 2026-09-25); the donut stamps the same word for the same reason. */}

@@ -24,7 +24,7 @@
  * trades); the view seats the band on both, a survivor alone at two thirds.
  */
 import * as React from "react";
-import { Box, Rail, Fig } from "@/components/spine/kit";
+import { Basis, Box, Rail, Fig } from "@/components/spine/kit";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
@@ -40,7 +40,7 @@ export function GatesCard({ id = "gates", gates }: { id?: string; gates: CityGat
     <Box id={id} data-text-form="table" className="flex h-full flex-col">
       <Rail icon="licence-specific" kicker={C.kicker} sample={gates.sample} />
       {gates.totalCost != null ? (
-        <div className="mb-3">
+        <div className="mb-6">
           <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.focalLabel}</div>
           <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{usd(gates.totalCost)}</Fig>
         </div>
@@ -48,7 +48,7 @@ export function GatesCard({ id = "gates", gates }: { id?: string; gates: CityGat
       <div className="flex-1">
         <TiersTable heads={gates.heads} figures={gates.rows} />
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{gates.basis}</p>
+      <Basis>{gates.basis}</Basis>
       {gates.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{gates.foot}</p> : null}
     </Box>
   );

@@ -118,7 +118,7 @@
  * page at 1280, 768 and 375: the four rows one height, nothing overflows.
  */
 import * as React from "react";
-import { Box, Fig, Rail } from "@/components/spine/kit";
+import { Basis, Box, Fig, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import { CompanionRow, type Companion } from "./BentoBand";
@@ -296,7 +296,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
         <div className={HEAD_CLS}>{headline.label}</div>
         <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]" prov={headline.prov}>{fmt(headline.value)}</Fig>
       </div>
-      {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+      {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
       {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS: the same `GEO`, an
           empty cell over the marks, and then one span across the name and
           figure columns holding the two heads at its ends. The value head is
@@ -461,7 +461,7 @@ function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, grou
         <div className={HEAD_CLS}>{headline.label}</div>
         <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]" prov={headline.prov}>{fmt(headline.value)}</Fig>
       </div>
-      {basis ? <p className="mt-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+      {basis ? <Basis>{basis}</Basis> : null}
       {groups.map((g) => (
         <div key={g.key} data-group={g.key} className="mt-4">
           <div className="grid" data-expect-rows={g.rows.length} data-columns="1">

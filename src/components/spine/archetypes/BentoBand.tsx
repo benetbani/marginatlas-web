@@ -109,7 +109,7 @@
  * not from these numbers, because these numbers are the thing under test.
  */
 import * as React from "react";
-import { Box, Fig, Rail } from "@/components/spine/kit";
+import { Basis, Box, Fig, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { Provenance } from "@/lib/spine/provenance";
 
@@ -482,7 +482,7 @@ export function BentoMetric({
     <Box id={id} data-lean={lean ? "1" : undefined} className={`flex h-full flex-col${detail ? " [container-type:inline-size]" : ""}`} data-archetype="bento-metric" data-bento-kind="metric">
       {/* THE KIT'S OPENER (plan 2026-10-12 rhythm-air-inside, Task 2A): its title at the section rung on a zone and 24 above the cell's content; his pop-up rides in it as before (2026-09-22, QUEUE ui:the-gloss). */}
       <Rail icon={icon} kicker={kicker} gloss={gloss} sample={sample} />
-      <div className="flex flex-1 flex-col justify-center pb-2">
+      <div className={`flex flex-1 flex-col justify-center${second || !basis ? " pb-2" : ""}`}>
         {figure != null ? (
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={prov}>{figure}</Fig>
         ) : (
@@ -491,7 +491,7 @@ export function BentoMetric({
         {label ? <div className="mt-2 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
       {second ? (
-        <div data-second className="mb-3 border-t border-[var(--c-border)] pt-3">
+        <div data-second className={`${basis ? "" : "mb-3 "}border-t border-[var(--c-border)] pt-3`}>
           {Array.isArray(second) ? (
             <CompanionRow items={second} />
           ) : "figure" in second ? (
@@ -519,14 +519,14 @@ export function BentoMetric({
       {detail && (basis || foot) ? (
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [@container(min-width:560px)]:items-baseline [@container(min-width:560px)]:gap-x-8">
           <div>
-            {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
+            {basis ? <Basis>{basis}</Basis> : null}
             {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           </div>
           <div>{detail}</div>
         </div>
       ) : (
         <>
-          {basis ? <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
+          {basis ? <Basis>{basis}</Basis> : null}
           {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           {detail}
         </>
@@ -699,7 +699,7 @@ export function BentoCount({
   return (
     <Box className={`flex h-full flex-col${columnsWide ? " [container-type:inline-size]" : ""}`} data-archetype="bento-count" data-visual="1" data-bento-kind="count" data-count-whole={isWhole ? "1" : undefined}>
       <Rail icon={icon} kicker={kicker} sample={sample} />
-      <div className="flex flex-1 flex-col justify-center pb-2">
+      <div className={`flex flex-1 flex-col justify-center${basis ? "" : " pb-2"}`}>
         <div className="flex items-baseline gap-2">
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`}>{printed}</Fig>
           {/* THE WHOLE IS SAID AS WELL AS DRAWN. The grid below carries it for
@@ -710,7 +710,7 @@ export function BentoCount({
         <CountUnits className="mt-3" whole={units.length} filled={filled} accent={accent} columns={columns} columnsWide={columnsWide} aria={isWhole ? `${printed}, ${label ?? kicker}` : `${printed} out of ${Math.round(whole)}, ${label ?? kicker}`} />
         {label ? <div className="mt-3 text-[length:var(--t-body)] text-[var(--c-ink2)]">{label}</div> : null}
       </div>
-      {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+      {basis ? <Basis>{basis}</Basis> : null}
     </Box>
   );
 }

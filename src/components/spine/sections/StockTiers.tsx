@@ -20,7 +20,7 @@
  *    the model laws read the figures on their row's line.
  */
 import * as React from "react";
-import { Box, Fig, Ico, InlineDisclosure, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Ico, InlineDisclosure, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { StockKit, StockTierKey } from "@/lib/spine/sections/stock_kit";
 
@@ -93,12 +93,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="startup-cost" kicker={S.kicker} />
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">
-          {dollars(kit.low)} <span className="text-[var(--c-muted)]">{S.spanJoin}</span> {dollars(kit.high)}
-        </div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{S.spanWords.replace("{shop}", kit.shop)}</p>
-      </div>
+      <Focal figure={<>{dollars(kit.low)} <span className="text-[var(--c-muted)]">{S.spanJoin}</span> {dollars(kit.high)}</>} words={S.spanWords.replace("{shop}", kit.shop)} />
       <div className="[container-type:inline-size]">
         <div data-archetype="stock-tiers" data-visual="1" data-tiers={String(kit.tiers.length)} data-rows={String(rows.length)}>
           {/* THE TABLE, from 760px of section. */}

@@ -155,7 +155,7 @@
  * gets a section built from that file, not a lookup dressed as knowledge.
  */
 import * as React from "react";
-import { Box, Rail, Fig, Ico } from "@/components/spine/kit";
+import { Basis, Box, Rail, Fig, Ico } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import type { Provenance } from "@/lib/spine/provenance";
@@ -473,6 +473,10 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
   /* AND ONLY WITH SOMETHING TO STAND BESIDE IT (2026-10-05, the home page's duel): a card with a labelled focal and no basis or
      withheld line drew the two-up grid with its right half empty, 465 by 126 of nothing at 768 (the page filter). */
   const headTwoUp = Boolean(focal?.words) && Boolean(basis || withheldLine);
+  /* THE DRAWING STANDS 24 UNDER THE HEAD, AND ONLY UNDER ONE (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1): the drawing's three forms take
+     the group step as a top margin, and a flex card does not collapse it into the opener's 24, so a card whose head holds nothing (no figure, no basis, no
+     stated line) would stand 48 under its title instead of 24. */
+  const drawTop = focal || basis || withheldLine ? "mt-6" : "mt-0";
   return (
     <Box id={id} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
       <Rail icon={icon} kicker={kicker} sample={tagged} gloss={gloss} />
@@ -481,9 +485,9 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
           above 16, and the only one that may wear the accent (see the prop). */}
       {focal ? (
         /* The slot is a div because the kit's Fig carries no data attributes; the checkers read `[data-focal]` on the slot. */
-        <div data-focal="1" className="mb-2">
+        <div data-focal="1" className={basis || withheldLine ? (headTwoUp ? "mb-6 [@container(min-width:560px)]:mb-0" : "mb-6") : undefined}>
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={focal.prov}>{focal.figure}</Fig>
-          {focal.words ? <span className="mt-1 block max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
+          {focal.words ? <span className="mt-2 block max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
         </div>
       ) : null}
       {/* THE BASIS AND THE WITHHELD LINE SIDE BY SIDE FROM md (his clause 51,
@@ -496,11 +500,11 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
           half blank, a 243 by 120 hole beside the title at 1280, which is the harness's
           floor (LONE STAT) once the title stood 24 above its content; alone it takes the width. */}
       <div className={basis && withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
-        {basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+        {basis ? <Basis beside>{basis}</Basis> : null}
         {withheldLine ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)] md:mt-0">{withheldLine}</p> : null}
       </div>
       </div>
-      {drawBars ? <div className="relative mt-3 hidden lg:block" data-idea="I2">
+      {drawBars ? <div className={`relative ${drawTop} hidden lg:block`} data-idea="I2">
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-border)]" style={{ top: PILL }} />
         {/* THE CEILING'S NAME STANDS AT THE END NO MEMBER TOUCHES (plan step 33's
             second dispatch, 2026-09-18, the first bars card with a SET ceiling:
@@ -552,7 +556,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
         </ol>
       </div> : null}
       {drawWide || drawMidTable || drawShort ? (
-        <div className={drawWide || drawShort ? "mt-3 hidden flex-1 flex-col sm:flex" : "mt-3 hidden flex-1 flex-col sm:flex lg:hidden"} data-idea="I2">
+        <div className={drawWide || drawShort ? `${drawTop} hidden flex-1 flex-col sm:flex` : `${drawTop} hidden flex-1 flex-col sm:flex lg:hidden`} data-idea="I2">
           {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS (task 13
               alignment fix): same `GEO`, so its first two cells begin exactly
               where every name and every figure below them begins. Its own two
@@ -647,7 +651,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
           </div>
         </div>
       ) : null}
-      <div className={drawBars || drawWide || drawShort ? "mt-3 sm:hidden" : "mt-3"}>
+      <div className={drawBars || drawWide || drawShort ? `${drawTop} sm:hidden` : drawTop}>
         {/* THIS HEAD WRAPS IF IT MUST (fix round F2, item M12; the final review): the phone list has the whole row, so its value head takes no whitespace-nowrap, which would let
             a longer name run past the card instead of wrapping; only the table's head, in a half-width row beside the ceiling's label, needs the rule (above). */}
         <div className="flex items-baseline justify-between pb-2">

@@ -1189,6 +1189,29 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss, level
   );
 }
 
+/** THE FOCAL BLOCK (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1; MODEL PART 4: one figure at 30 a section): the section's
+ *  figure, the words that say what it is 8 under it (DISTANCES 4: a line 8 under its figure belongs to the figure), the placement sentence
+ *  where the figure stands among the countries (PART 6), and 24 to the next group. `beside`: the block stands beside another (a drawing, a
+ *  column of rows) whose arrangement gives the distance, so it takes no margin; `className` adds to the wrapper (a margin a container query
+ *  drops); `live` announces a figure a control changes; `accent` (plan 2026-10-08) the figure in --terra-text for a declared loud moment. A
+ *  figure with a source stamps it (src/lib/spine/provenance.ts). Moved here from country/focal.tsx, which re-exports it. */
+export function Focal({ figure, words, placement, prov, accent = false, live = false, beside = false, className = "", wordsClassName = "" }: { figure: React.ReactNode; words?: React.ReactNode; placement?: string | null; prov?: Provenance | null; accent?: boolean; live?: boolean; beside?: boolean; className?: string; wordsClassName?: string }) {
+  const wrap = [beside ? "" : "mb-6", className].filter(Boolean).join(" ");
+  return (
+    <div className={wrap || undefined}>
+      <div data-focal="1" {...(live ? { "aria-live": "polite" as const } : {})} className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</div>
+      {words ? <p data-focal-words="" className={`mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${wordsClassName ? ` ${wordsClassName}` : ""}`}>{words}</p> : null}
+      {/* The site's one placement sentence (placement.ts), under the figure's words, where the figure stands on a scale of the countries (PART 6, "Higher than {n} countries in ten."). */}
+      {placement ? <p data-placement="" className="mt-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">{placement}</p> : null}
+    </div>
+  );
+}
+
+/** THE BASIS LINE (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1; MODEL PART 7: what the figure is and in what unit, never what it means): one line under a section's
+ *  rows or drawing, 24 from them, the group step, the one piece a section prints its basis with. It is defined in ./basis.tsx, a module with no import but React, because the home's
+ *  server rows (archetypes/CityRows.tsx) must reach no client module and this file's closure does; the kit exports it as every other file imports it. */
+export { Basis } from "./basis";
+
 /* Stat , one figure with a locked scale contract. focal vs support keeps a >=1.6
  * type-scale contrast so the focal always dominates. Terracotta only on the focal. */
 export function Stat({ value, label, sub, size = "support", accent = false }: { value: React.ReactNode; label?: string; sub?: string; size?: "focal" | "support"; accent?: boolean }) {

@@ -81,7 +81,7 @@
  * sortable client island with the four invented UK cities) retired with it.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Basis, Box, Rail } from "@/components/spine/kit";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { WorkedFigure, WORKING_MIN } from "@/components/spine/archetypes/WorkedFigure";
 import { RankedBars } from "@/components/spine/archetypes/RankedBars";
@@ -130,7 +130,7 @@ export function PermitsCard({ id = "permits", permits, top = false }: { id?: str
           under the basis left a 312 by 120 blank beside them (the filter). */}
       <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
         <div>
-          {permits.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.basis}</p> : null}
+          {permits.basis ? <Basis>{permits.basis}</Basis> : null}
           {permits.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p> : null}
         </div>
         {/* THE WITHHELD LINE STANDS IN THE RIGHT COLUMN, over the plus where
@@ -169,7 +169,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
           <WorkedFigure list accent={open.accent} label={lead.name} figure={open.figure ?? lead.figure} prov={open.figure ? open.prov : undefined} working={rest.map((f) => ({ figure: f.figure, words: f.name }))} />
         </div>
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
-          {open.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.basis}</p> : null}
+          {open.basis ? <Basis>{open.basis}</Basis> : null}
           {open.foot.length > 0 ? <div data-foot className="mt-3 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.footLine}</p>}
         </div>
       </Box>
@@ -262,7 +262,7 @@ export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | 
         <TiersTable heads={team.heads} figures={team.rows} fill />
       </div>
       {team.noMedian ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.noMedian}</p> : null}
-      {team.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.basis}</p> : null}
+      {team.basis ? <Basis>{team.basis}</Basis> : null}
       {team.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.foot}</p> : null}
     </Box>
   );

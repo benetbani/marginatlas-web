@@ -12,7 +12,7 @@
  *  - `data-archetype="age-mix"`, `data-visual="1"`, `data-bars`; `data-row` on each bar.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Box, Focal, Rail } from "@/components/spine/kit";
 import { Marks } from "@/components/spine/interact/Marks";
 import { COPY } from "@/lib/spine/copy";
 import type { AgeMix as AgeMixData } from "@/lib/spine/sections/people";
@@ -31,10 +31,7 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="who-for" kicker={A.kicker} />
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.figure}</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.words}</p>
-      </div>
+      <Focal figure={data.figure} words={data.words} />
       {/* THE BARS AND THE LEGEND SHARE A LENT HEIGHT (2026-09-26, beside the job market on the United Kingdom's page): the legend
           stood 55px above the card's floor; now the first bar keeps its place under the figure, the legend sits on the floor and
           the air is shared between them. Without a lent height the gap is 16px, as before. */}

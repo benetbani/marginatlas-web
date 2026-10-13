@@ -51,7 +51,7 @@
  * door and the pricing pill) retired into this card.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Basis, Box, Rail } from "@/components/spine/kit";
 import { MarkList } from "@/components/spine/archetypes/MarkList";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { RangeStrip } from "@/components/spine/archetypes/RangeStrip";
@@ -152,8 +152,8 @@ export function WorthCard({ id = "worth", worth }: { id?: string; worth: WorthDa
           drawn here because the strip is centred above them; in the other two
           states the line above says everything and the foot is empty. */}
       {worth.state === "strip" && worth.basis ? (
-        <div className="mt-3">
-          {worth.basis ? <p className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{worth.basis}</p> : null}
+        <div>
+          {worth.basis ? <Basis>{worth.basis}</Basis> : null}
           {worth.note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{worth.note}</p> : null}
         </div>
       ) : null}
@@ -186,7 +186,7 @@ export function CustomersCard({ id = "customers", customers }: { id?: string; cu
       <div className="flex flex-1 flex-col justify-center">
         <WorkedFigure label={C.yearLabel} figure={customers.year.figure} working={customers.cells.map((c) => ({ figure: String(c.value), words: c.label }))} />
       </div>
-      {customers.basis ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.basis}</p> : null}
+      {customers.basis ? <Basis>{customers.basis}</Basis> : null}
       {customers.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.foot}</p> : null}
     </Box>
   );

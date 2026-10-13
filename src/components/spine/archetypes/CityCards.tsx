@@ -90,6 +90,7 @@
  */
 import * as React from "react";
 import { provAttrs } from "@/lib/spine/provenance";
+import { Basis } from "@/components/spine/kit";
 import type { CityCard } from "@/lib/spine/city_cards";
 import { DuotonePhoto, moneyFor } from "./CityParts";
 
@@ -174,7 +175,7 @@ export function CityCards({
       <div className={`${rows ? "grid grid-cols-1 items-stretch auto-rows-fr" : tall} ${fill ? `flex-1${rows ? "" : " auto-rows-fr"}` : ""}`}>
         {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} index={0} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p>
+      <Basis>{basis}</Basis>
       {allLabel && allHref ? (
         <div className="mt-2 text-right">
           <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>

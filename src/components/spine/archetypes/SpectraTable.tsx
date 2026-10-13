@@ -22,7 +22,7 @@
  *  - Fewer than two rows is not a table and draws nothing.
  */
 import * as React from "react";
-import { Fig } from "@/components/spine/kit";
+import { Basis, Fig } from "@/components/spine/kit";
 
 export type SpectraRow = { key: string; name: string; left: string; right: string; position: number };
 export type SpectraTableProps = {
@@ -111,7 +111,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis, 
           wide with the quick reads' foot, a flex row wrapped the whole label under
           the figure and left a lone "1" on a line of its own; inline, the words
           wrap after the figure and the figure keeps its first words beside it. */}
-      {basis ? <p data-basis className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{basis}</p> : null}
+      {basis ? <Basis>{basis}</Basis> : null}
       {foot ? (
         <div data-foot className={`${basis ? "mt-3 " : ""}border-t border-[var(--c-border)] pt-3 leading-snug`}>
           <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{foot.value}</Fig>{" "}

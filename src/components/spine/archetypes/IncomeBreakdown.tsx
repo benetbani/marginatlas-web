@@ -54,7 +54,7 @@
  *    every future caller to honour it).
  */
 import * as React from "react";
-import { Box, Fig, GREY_RAMP, Rail } from "@/components/spine/kit";
+import { Basis, Box, Fig, GREY_RAMP, Rail } from "@/components/spine/kit";
 import { Marks } from "@/components/spine/interact/Marks";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "@/lib/spine/copy";
@@ -206,7 +206,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
               <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
             </div>
-            {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+            {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
           </div>
           {/* THE WITHHELD STATE: the stated line at the lead rung where the
               bar would stand (the cost-to-open card's own idiom), so the seat
@@ -230,7 +230,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
               <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
             </div>
-            {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+            {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
             <div className="mt-4 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={ariaLabel}>
               {mixLive.map((s, i) => (
                 <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} data-part-key={s.key} data-readout-figure={`${mixRounded[s.key]}%`} data-readout-words={`${s.label}, ${COPY.incomeBreakdown.ofCosts}`} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
@@ -279,7 +279,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
             <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
             <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
           </div>
-          {basis ? <p className="mt-2 max-w-[46ch] text-[length:var(--t-micro)] text-[var(--c-muted)]">{basis}</p> : null}
+          {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
           {/* THE BAR: one track, full width, cost segments in the builder's
               descending order, net pinned last. `data-expect-rows` on the track
               plus `data-row` on every child is the site's existing rows-cut

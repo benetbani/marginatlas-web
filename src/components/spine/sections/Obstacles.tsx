@@ -21,7 +21,7 @@
  */
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
-import { Box, Fig, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Rail } from "@/components/spine/kit";
 import { provAttrs } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
 import type { Obstacles as ObstaclesData } from "@/lib/spine/sections/first_years";
@@ -45,10 +45,7 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
     <Box id={id} className="flex flex-col">
       {/* "watch", not "safety": the insurance card on the same page opens on the shield (2026-09-25). */}
       <Rail icon="watch" kicker={C.obstaclesKicker} />
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{top.pct}%</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{C.obstaclesWords.replace("{item}", top.label.toLowerCase())}</p>
-      </div>
+      <Focal figure={`${top.pct}%`} words={C.obstaclesWords.replace("{item}", top.label.toLowerCase())} />
       {/* EACH OBSTACLE READS ITS SHARE (goal 2026-09-26, M1), the leading column too (item P1.5), its label held inside the plot by the 20px above the bars. */}
       <Marks label={C.obstaclesKicker} data-archetype="obstacles" data-visual="1" data-cols={String(items.length)} className="flex flex-1 flex-col [container-type:inline-size]">
         <div className="hidden flex-1 flex-col [@container(min-width:480px)]:flex">

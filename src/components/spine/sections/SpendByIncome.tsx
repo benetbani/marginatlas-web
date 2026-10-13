@@ -13,7 +13,7 @@
  */
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
-import { Box, Rail, usdCents } from "@/components/spine/kit";
+import { Box, Focal, Rail, usdCents } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { SpendByIncome as SpendByIncomeData } from "@/lib/spine/sections/spend_by_income";
 
@@ -32,10 +32,7 @@ export function SpendByIncome({ id = "spend-by-income", data }: { id?: string; d
   return (
     <Box id={id} className="flex flex-col">
       <Rail icon="spending-power" kicker={C.kicker} />
-      <div className="mb-5">
-        <div data-focal="1" className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{data.figure}</div>
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{data.words}</p>
-      </div>
+      <Focal figure={data.figure} words={data.words} />
       {/* EACH TENTH READS ITS WEEK (goal 2026-09-26, M1): under 480px of card the ten values are not printed, and a tap reads one.
           240 TALL FROM 1024 (2026-10-04, the band page): the columns took the height the apps' directory lent them inside the bento's
           equal cards; open on a band they kept their 144 floor beside a directory of 588, the level's one drawing at a quarter of it. */}

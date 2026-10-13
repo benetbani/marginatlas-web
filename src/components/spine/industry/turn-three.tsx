@@ -45,7 +45,7 @@
  * fall). The census reads NoteList, KvGrid and Terminus.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Basis, Box, Rail } from "@/components/spine/kit";
 import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
@@ -61,7 +61,7 @@ export function KnowCard({ id = "know", know }: { id?: string; know: KnowData | 
     <Box id={id}>
       <Rail icon="who-for" kicker={COPY.industryKnow.kicker} sample={know.sample} />
       <NoteList notes={know.rows} columns={2} />
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{know.basis}</p>
+      <Basis>{know.basis}</Basis>
     </Box>
   );
 }
@@ -135,7 +135,7 @@ export function FieldCard({ id = "field", market }: { id?: string; market: Marke
       {fieldWithheld(market).map((line) => (
         <p key={line} className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{line}</p>
       ))}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.industryField.basis}</p>
+      <Basis>{COPY.industryField.basis}</Basis>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.industryField.foot}</p>
     </Box>
   );

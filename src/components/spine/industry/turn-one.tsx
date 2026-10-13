@@ -67,7 +67,7 @@
  * address its cells by that id.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Basis, Box, Rail } from "@/components/spine/kit";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { BentoBand, BentoCount, BentoMetric, type BentoCell } from "@/components/spine/archetypes/BentoBand";
@@ -134,7 +134,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: IndustryOpe
       {open.withheldLines.map((line) => (
         <p key={line} className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{line}</p>
       ))}
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.basis}</p>
+      <Basis>{open.basis}</Basis>
       <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.foot}</p>
       {open.detail ? <DetailPanel name={`detail-${id}`} summary={open.detail.summary} rows={open.detail.rows} withheldLine={open.detail.withheldLine} /> : null}
     </Box>
@@ -241,11 +241,11 @@ export function PaysFixedCell({ fixed }: { fixed: PaysCount }) {
   return (
     <Box className="flex h-full flex-col" data-archetype="segment-bar" data-visual="1">
       <Rail icon="cost-breakdown" kicker={K.fixed} sample />
-      <div className="flex flex-1 flex-col justify-center pb-2">
+      <div className="flex flex-1 flex-col justify-center">
         <SegmentBar label={COPY.industryPays.fixedBar.label} value={fixed.part} total={100} figure={String(fixed.part)} unit={COPY.industryPays.fixedBar.unit} />
         {fixed.variable != null ? <SegmentBar label={COPY.industryPays.fixedBar.variableLabel} value={fixed.variable} total={100} figure={String(fixed.variable)} unit={COPY.industryPays.fixedBar.unit} /> : null}
       </div>
-      <p className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{fixed.variable != null ? COPY.industryPays.fixedBar.basisPair : fixed.basis}</p>
+      <Basis>{fixed.variable != null ? COPY.industryPays.fixedBar.basisPair : fixed.basis}</Basis>
     </Box>
   );
 }

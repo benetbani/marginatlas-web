@@ -1742,9 +1742,9 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
             cols: 1,
             rows: 2,
             node: (
-              <Box className="h-full">
+              <Box className="flex h-full flex-col">
                 <Rail icon="who-for" kicker={COPY.character.people.kicker} sample />
-                <SpectraTable rows={people.rows} dot={people.dot} foot={people.foot} />
+                <SpectraTable rows={people.rows} dot={people.dot} foot={people.foot} fill />
               </Box>
             ),
           },
@@ -1760,7 +1760,7 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
             rows: 1,
             /* THE CLUSTER'S ONE LOUD CELL, and the only one: PART 6 allows one
                loud card per band and this cluster is the band. */
-            node: <BentoCount icon="honest-take" kicker={COPY.bento.everydayTrades.kicker} part={tradesPart} whole={EVERYDAY_TRADES.size} basis={COPY.bento.everydayTrades.basis} />,
+            node: <BentoCount icon="honest-take" kicker={COPY.bento.everydayTrades.kicker} part={tradesPart} whole={EVERYDAY_TRADES.size} columns={EVERYDAY_TRADES.size} basis={COPY.bento.everydayTrades.basis} />,
           },
         ],
       };
