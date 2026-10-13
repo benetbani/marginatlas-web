@@ -767,7 +767,7 @@ function PaymentsRing({ iso2, card }: { iso2: string; card: PaymentsCard }) {
             (shop sales) and the row's "Cash, all payments 8%" still read as one figure twice (the design review); read first, the
             caption says what the ring counts before the eye reaches a share. */}
         <div className="min-w-0">
-          <p data-basis="" className="mb-3 text-[length:var(--t-micro)] font-medium leading-4 text-[var(--c-ink2)]">{P.basis.replace("{period}", card.period)}</p>
+          <p data-basis="" className="mb-6 text-[length:var(--t-micro)] font-medium leading-4 text-[var(--c-ink2)]">{P.basis.replace("{period}", card.period)}</p>
           <DonutStat parts={card.parts} center={pct(lead.share)} centerWords={P.centerWords.replace("{part}", lead.name.toLowerCase())} aria={`${COPY.banking.donut}: ${card.parts.map((p) => `${p.name} ${p.share}%`).join(", ")}`} />
         </div>
         <FactRows rows={rows} />
