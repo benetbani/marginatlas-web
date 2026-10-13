@@ -652,7 +652,9 @@ function FinancingRanged({ iso2, card, cells = null }: { iso2: string; card: Dep
       <Rail icon="raise-money" kicker={COPY.financing.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
       {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} headless ends={COPY.ranged.ends} /></div> : null}
-      <FactRows rows={rest} />
+      {/* THE ONE-ROW LIST STANDS UNDER A HAIRLINE, as the running costs' list does (plan 2026-10-12 rhythm-air-inside, Task 2B review, ruling C2): a
+          lone row leaves its right strip open, and under the headless track that strip was a 137 by 132 blank at 1280 and above (gathered-emptiness E6). */}
+      <FactRows rows={rest} className="border-t border-[var(--c-border)]" />
       {/* THE LOAN'S MONTHLY COST (goal 2026-09-26, M3): the start-up loan's own amounts, rate and term, the repayment a month. */}
       {card.loan ? <LoanLever min={card.loan.min} max={card.loan.max} rate={card.loan.rate} termMin={COPY.financing.startupTerm.min} termMax={COPY.financing.startupTerm.max} words={COPY.financing.loan} /> : null}
     </Box>
