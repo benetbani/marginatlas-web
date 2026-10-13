@@ -176,8 +176,10 @@ export function CityCards({
         {slice.map((c, i) => (rows ? <Row key={c.id} card={c} fmt={fmt} index={0} /> : <Card key={c.id} card={c} fmt={fmt} index={i} />))}
       </div>
       <Basis>{basis}</Basis>
+      {/* THE WAY OUT IS A GROUP OF ITS OWN, 24 UNDER THE BASIS (plan 2026-10-12 rhythm-air-inside, Task 2C; DISTANCES 4: a line 8 under another belongs to it, 24 under it belongs to
+          the card): the all-link is the card's door, not part of the basis line; the line-rule gate reads the group under a basis at 24. */}
       {allLabel && allHref ? (
-        <div className="mt-2 text-right">
+        <div className="mt-6 text-right">
           <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
         </div>
       ) : null}
