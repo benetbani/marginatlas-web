@@ -140,6 +140,34 @@
       "claims": []
     },
     {
+      "name": "line-rule",
+      "script": "scripts/harness/check_line_rule.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": true,
+      "asserts": "check_line_rule , EVERY SUPPORTING LINE STANDS WHERE ITS STRUCTURE PUTS IT (plan 2026-10-12 rhythm-air-inside, Task 2C; spec E:/atlas/docs/superpowers/specs/2026-10-12- rhythm-air-inside-design.md, se",
+      "reads": [
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
+      "name": "line-rule-reader",
+      "script": "tests/spine/line_rule.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE LINE RULE, THE READING (plan 2026-10-12 rhythm-air-inside, Task 2C; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, section 2.1; DISTANCES.md section 4's positional te",
+      "reads": [
+        "scripts/harness/check_line_rule.mjs",
+        "scripts/harness/pages.json",
+        "scripts/lib/line_rule.mjs",
+        "scripts/prebuild_all.ts",
+        "tests/spine/line_rule.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-readability",
       "script": "scripts/harness/check_readability.mjs",
       "args": [

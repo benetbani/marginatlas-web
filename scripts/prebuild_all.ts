@@ -154,6 +154,13 @@ const GATES: Gate[] = [
      beside it. */
   { name: "fact-once", script: "scripts/harness/check_fact_once.mjs", args: ["--list"], browser: true },
   { name: "fact-once-reader", script: "tests/spine/fact_once.test.ts" },
+  /* THE LINE RULE (plan 2026-10-12 rhythm-air-inside, Task 2C; DISTANCES.md section 4's positional test, ruled 2026-10-13: "the distance above a thing says what it
+     belongs to"). On every spine render, at 1280, 768 and 375, a figure's own line stands 8 under it and the next group 24 under the block, a basis stands 24 under the
+     group above it and the next group 24 below it, a foot or a detail panel 12 under a line, a basis never draws a figure's own line in the wrong face, and no line is
+     empty (scripts/lib/line_rule.mjs says what a line is, the tolerance and its blind spot). The spacing pin reads source classes and stayed green through five head
+     lines 24 under their figure and 16 over their drawing, which is why this reads the page. A browser gate, one more; its reading's fixtures beside it. */
+  { name: "line-rule", script: "scripts/harness/check_line_rule.mjs", args: ["--list"], browser: true },
+  { name: "line-rule-reader", script: "tests/spine/line_rule.test.ts" },
   /* READABILITY (2026-09-08, wired 2026-10-01): measure, contrast, leading and read size on the same renders, at zero reds. It sat
      outside the chain for three weeks while the legal-form heads and the peers table's phone heads drew at 10px on three pages. */
   { name: "harness-readability", script: "scripts/harness/check_readability.mjs", args: ["--list"], browser: true },
