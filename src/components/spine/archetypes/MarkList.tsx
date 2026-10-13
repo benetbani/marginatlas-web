@@ -116,9 +116,12 @@
  * does not, shows in the photograph). The figures keep one right edge
  * either way; only the arrow column sits past them. Measured on the trade
  * page at 1280, 768 and 375: the four rows one height, nothing overflows.
+ *
+ * THE LINE UNDER THE HEADLINE IS THE HEADLINE'S OWN (plan 2026-10-12 rhythm-air-inside, Task 2B review; DISTANCES 4's positional test): directly under the
+ * figure and over the rows it stands 8 under it as the kit's Focal words, and the rows stand 24 below it.
  */
 import * as React from "react";
-import { Basis, Box, Fig, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Rail } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import { CompanionRow, type Companion } from "./BentoBand";
@@ -294,9 +297,8 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
       {/* THE HEADLINE: the set's middle, at the focal rung, in ink. Clause 3. */}
       <div data-answer="1">
         <div className={HEAD_CLS}>{headline.label}</div>
-        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]" prov={headline.prov}>{fmt(headline.value)}</Fig>
+        <Focal figure={fmt(headline.value)} words={basis} prov={headline.prov} wordsClassName="max-w-[46ch]" beside />
       </div>
-      {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
       {/* THE HEAD STANDS ON THE SAME COLUMNS AS THE ROWS: the same `GEO`, an
           empty cell over the marks, and then one span across the name and
           figure columns holding the two heads at its ends. The value head is
@@ -383,7 +385,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           );
         };
         return (
-          <div className={oneColumn ? "mt-4 flex flex-1 flex-col [container-type:inline-size]" : "mt-4 [container-type:inline-size]"}>
+          <div className={oneColumn ? "mt-6 flex flex-1 flex-col [container-type:inline-size]" : "mt-6 [container-type:inline-size]"}>
             <div
               className={twoCols ? "grid [@container(min-width:600px)]:grid-flow-col [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-6 [@container(min-width:600px)]:grid-rows-[auto_repeat(var(--ml-rows),2.75rem)]" : oneColumn ? "grid flex-1" : "grid"}
               style={twoCols ? ({ "--ml-rows": String(perCol) } as React.CSSProperties) : oneColumn ? { gridTemplateRows: "auto", gridAutoRows: "minmax(2.75rem,1fr)" } : undefined}
@@ -459,11 +461,10 @@ function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, grou
       <Rail icon={icon} kicker={kicker} sample={tagged} />
       <div data-answer="1">
         <div className={HEAD_CLS}>{headline.label}</div>
-        <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]" prov={headline.prov}>{fmt(headline.value)}</Fig>
+        <Focal figure={fmt(headline.value)} words={basis} prov={headline.prov} beside />
       </div>
-      {basis ? <Basis>{basis}</Basis> : null}
-      {groups.map((g) => (
-        <div key={g.key} data-group={g.key} className="mt-4">
+      {groups.map((g, gi) => (
+        <div key={g.key} data-group={g.key} className={gi === 0 ? "mt-6" : "mt-4"}>
           <div className="grid" data-expect-rows={g.rows.length} data-columns="1">
             <div className={`${ROW} items-baseline pb-2`} style={GEO}>
               {marks ? <span aria-hidden="true" /> : null}

@@ -651,7 +651,7 @@ function FinancingRanged({ iso2, card, cells = null }: { iso2: string; card: Dep
     <Box id="financing" className="flex flex-col">
       <Rail icon="raise-money" kicker={COPY.financing.kicker} />
       <Focal figure={card.focal.figure} words={card.focal.words} />
-      {rows.length ? <div className="mb-4"><WorldRangeRows rows={rows} headless ends={COPY.ranged.ends} /></div> : null}
+      {rows.length ? <div className="mb-5"><WorldRangeRows rows={rows} headless ends={COPY.ranged.ends} /></div> : null}
       <FactRows rows={rest} />
       {/* THE LOAN'S MONTHLY COST (goal 2026-09-26, M3): the start-up loan's own amounts, rate and term, the repayment a month. */}
       {card.loan ? <LoanLever min={card.loan.min} max={card.loan.max} rate={card.loan.rate} termMin={COPY.financing.startupTerm.min} termMax={COPY.financing.startupTerm.max} words={COPY.financing.loan} /> : null}

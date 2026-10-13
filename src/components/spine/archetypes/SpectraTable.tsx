@@ -113,7 +113,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis, 
           wrap after the figure and the figure keeps its first words beside it. */}
       {basis ? <Basis>{basis}</Basis> : null}
       {foot ? (
-        <div data-foot className={`${basis ? "mt-3 " : ""}border-t border-[var(--c-border)] pt-3 leading-snug`}>
+        <div data-foot className={`${basis ? "mt-6 " : ""}border-t border-[var(--c-border)] pt-3 leading-snug`}>
           <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{foot.value}</Fig>{" "}
           <span className={scale === "body" || scale === "lead" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-micro)] text-[var(--c-muted)]"}>{foot.label}</span>
         </div>

@@ -52,9 +52,12 @@
  *  - Fewer than two segments and the section self-omits (the builder's own
  *    honest minimum; this component repeats the guard rather than trusting
  *    every future caller to honour it).
+ *  - The line under the net figure is the figure's own (plan 2026-10-12 rhythm-air-inside, Task 2B review; DISTANCES 4's positional
+ *    test): directly under the figure and over the bar, it stands 8 under it as the kit's Focal words and the bar stands 24 below
+ *    it, not a basis 24 under the figure and 16 over the bar.
  */
 import * as React from "react";
-import { Basis, Box, Fig, GREY_RAMP, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, GREY_RAMP, Rail } from "@/components/spine/kit";
 import { Marks } from "@/components/spine/interact/Marks";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { COPY } from "@/lib/spine/copy";
@@ -204,14 +207,13 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           <div>
             <div data-answer="1">
               <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
-              <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
+              <Focal figure={`${netShown}%`} words={basis} wordsClassName="max-w-[46ch]" beside />
             </div>
-            {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
           </div>
           {/* THE WITHHELD STATE: the stated line at the lead rung where the
               bar would stand (the cost-to-open card's own idiom), so the seat
               keeps its height and the reader is told why there is no bar. */}
-          <p data-withheld-line={id} className="mt-4 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)] [@container(min-width:560px)]:mt-0">{withheld}</p>
+          <p data-withheld-line={id} className="mt-6 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)] [@container(min-width:560px)]:mt-0">{withheld}</p>
         </div>
       ) : null}
       {withheld && !costsOnly ? (
@@ -228,10 +230,9 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
             <div data-answer="1">
               <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
-              <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
+              <Focal figure={`${netShown}%`} words={basis} wordsClassName="max-w-[46ch]" beside />
             </div>
-            {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
-            <div className="mt-4 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={ariaLabel}>
+            <div className="mt-6 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" data-expect-rows={mixLive.length} role="img" aria-label={ariaLabel}>
               {mixLive.map((s, i) => (
                 <div key={s.key} data-row={s.key} data-mix-key={s.key} data-mix-share={String(s.share)} data-part-key={s.key} data-readout-figure={`${mixRounded[s.key]}%`} data-readout-words={`${s.label}, ${COPY.incomeBreakdown.ofCosts}`} className="h-full border-r border-[var(--c-card)] last:border-r-0" style={{ width: `${s.share}%`, background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
               ))}
@@ -277,16 +278,15 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
           <div data-answer="1">
             <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
-            <Fig className="block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{netShown}%</Fig>
+            <Focal figure={`${netShown}%`} words={basis} wordsClassName="max-w-[46ch]" beside />
           </div>
-          {basis ? <Basis className="max-w-[46ch]">{basis}</Basis> : null}
           {/* THE BAR: one track, full width, cost segments in the builder's
               descending order, net pinned last. `data-expect-rows` on the track
               plus `data-row` on every child is the site's existing rows-cut
               mechanism (RankedBars, PayBars already use it); it is reused here
               rather than reinvented, and it already runs at every width. */}
           <div
-            className="mt-4 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]"
+            className="mt-6 flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]"
             data-expect-rows={live.length + 1}
             role="img"
             aria-label={ariaLabel}

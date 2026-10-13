@@ -774,7 +774,7 @@ export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCal
           <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.swingLabel}</div>
           <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
         </div>
-        <div className="mt-6 [@container(min-width:560px)]:mt-0">
+        <div className="mt-2 [@container(min-width:560px)]:mt-0">
           {calendar.basis ? <Basis beside>{calendar.basis}</Basis> : null}
           {calendar.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p> : null}
         </div>
