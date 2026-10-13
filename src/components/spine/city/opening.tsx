@@ -61,14 +61,17 @@ export function MarketCard({ id = "market", market }: { id?: string; market: Cit
   if (!market) return null;
   const C = COPY.cityMarket;
   const register = market.form === "register";
+  /* THE ONE LINE UNDER THE FOCAL IS THE FIGURE'S OWN (plan 2026-10-12 rhythm-air-inside, Task 2C; DISTANCES 4's positional test): with a focal it is the focal's words, 8 under the
+     figure with the bars 24 below, drawn as every other head line is (the line-rule gate's FIGURE ABOVE); with no focal it is the bars' basis under the opener. */
+  const line = `${market.basis}${market.foot ? ` ${market.foot}` : ""}`;
   return (
     <RankedBars
       id={id}
       kicker={C.kicker}
       icon="competition"
       tagged={market.sample}
-      basis={`${market.basis}${market.foot ? ` ${market.foot}` : ""}`}
-      focal={market.focal ? { figure: market.focal.figure, prov: market.focal.prov } : undefined}
+      basis={market.focal ? undefined : line}
+      focal={market.focal ? { figure: market.focal.figure, prov: market.focal.prov, words: line } : undefined}
       rows={market.rows}
       worldMax={market.worldMax}
       ceiling="set"

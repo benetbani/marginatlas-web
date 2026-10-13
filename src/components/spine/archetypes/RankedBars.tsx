@@ -473,10 +473,13 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
   /* AND ONLY WITH SOMETHING TO STAND BESIDE IT (2026-10-05, the home page's duel): a card with a labelled focal and no basis or
      withheld line drew the two-up grid with its right half empty, 465 by 126 of nothing at 768 (the page filter). */
   const headTwoUp = Boolean(focal?.words) && Boolean(basis || withheldLine);
-  /* THE LINE UNDER A FIGURE WITH NO WORDS IS THE FIGURE'S OWN (plan 2026-10-12 rhythm-air-inside, Task 2B review; DISTANCES 4's positional test: a line 8 under its
-     figure belongs to the figure, the same line 24 under it belongs to the card): where the figure has no words, the basis or the stated line is the only line between
-     it and the drawing, so the slot stands 8 above it and the drawing 24 below it. Where the figure has words they are its line, and the basis is a group of its own,
-     24 under the block, or beside it from 560px of card (`headTwoUp`). */
+  /* A FIGURE'S OWN LINE IS ITS WORDS (plan 2026-10-12 rhythm-air-inside, Task 2B review and Task 2C; DISTANCES 4's positional test: a line 8 under its figure belongs to
+     the figure, the same line 24 under it belongs to the card): a caller whose figure has a line passes it as `focal.words` (the city's market card does), which stands 8 under
+     the figure, carries `data-focal-words` so the zone draws it as every other head line (14 on 20, ink2) and the line-rule gate reads it as the figure's words, with the
+     drawing 24 below it. The basis is a group of its own, 24 under the block, or beside it from 560px of card (`headTwoUp`). The `mb-2` arm below is for a figure with
+     no words and a basis or stated line under it: no card draws one today (benchmark_rows.ts gives a rank its words or neither, open_rows.ts a held bill its words,
+     and the city's market card passes its line as the words, city/opening.tsx), and the gate reads such a line as FIGURE ABOVE, so a caller that comes to draw one passes
+     the line as the words. */
   /* THE DRAWING STANDS 24 UNDER THE HEAD, AND ONLY UNDER ONE (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1): the drawing's three forms take
      the group step as a top margin, and a flex card does not collapse it into the opener's 24, so a card whose head holds nothing (no figure, no basis, no
      stated line) would stand 48 under its title instead of 24. */
@@ -491,7 +494,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
         /* The slot is a div because the kit's Fig carries no data attributes; the checkers read `[data-focal]` on the slot. */
         <div data-focal="1" className={basis || withheldLine ? (headTwoUp ? "mb-6 [@container(min-width:560px)]:mb-0" : "mb-2") : undefined}>
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={focal.prov}>{focal.figure}</Fig>
-          {focal.words ? <span className="mt-2 block max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
+          {focal.words ? <span data-focal-words="" className="mt-2 block max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
         </div>
       ) : null}
       {/* THE BASIS AND THE WITHHELD LINE SIDE BY SIDE FROM md (his clause 51,
