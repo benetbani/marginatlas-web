@@ -30,6 +30,11 @@
  *     virtue of an image or a gradient is not counted.
  *   - It cannot tell a section that is full width BY DESIGN from one that is
  *     full width by neglect. That is what the hero attribute is for.
+ *   - D3 reads the split each zone DECLARES (its data-zone attribute), not the
+ *     tracks the stylesheet draws, so it cannot tell a split that failed to draw
+ *     as declared from one that drew as declared. D6 reads one width (1440) and
+ *     cannot see a margin or an element standing between two zones. Each is said
+ *     again where it is read; the first also in scripts/lib/zone_rhythm.mjs.
  *
  * Usage: node scripts/verify_art_direction.mjs [--write-baseline]
  */
@@ -311,35 +316,58 @@ const collect = () => {
      than because the label was written once, reads the same here. That distinction
      needs the source, not the page. Three rows minimum keeps the noise down.
 
-  /* D6, THE SPACING LADDER (on the zones since plan 2026-10-12 rhythm-air-inside, Task 1D: level gap > pair gap > kept box padding, the chapter rung left to the band page's numbered head; scripts/lib/zone_rhythm.mjs). Chapter gap > band gap > card padding > slot gap, and
-     no rung may equal or exceed the one outside it. Measured before this rule ran:
-     the gap BETWEEN bands, the gap WITHIN a band and a card's own padding were all
-     20px, so three of the four rungs were the same number and a reader had nothing
-     telling them where one band ended and the next began.
+  /* D6, THE SPACING LADDER (on the zones since plan 2026-10-12 rhythm-air-inside, Task 1D; judged by
+     scripts/lib/zone_rhythm.mjs). On a band page the rungs, outermost first, are the distance from one level to
+     the next (one zone's padding below plus the next one's above), the distance between two sections side by
+     side in a level (the level's column gap), and a kept box's padding (a lever, a picker, the sortable table, a
+     door). DISTANCES 2.5 states the three as 128, 64 and 20 at 1024 and up, and no rung may equal or fall under
+     the one inside it. The ladder of the card page, which this replaced, was chapter gap, band gap, card padding,
+     slot gap; its chapter rung is not read here: a band page opens a chapter under the same padding as any level
+     and marks it with its numbered head (MODEL PART 10.2). Measured before the rule ran, on that page: the gap
+     BETWEEN bands, the gap WITHIN a band and a card's own padding were all 20px, so three of the four rungs were
+     the same number and a reader had nothing telling them where one band ended and the next began.
 
-     BLIND SPOT: the slot gap, the space between a card's own anatomy slots, is not
-     measured here. It is set by utility classes on dozens of individual elements
-     and picking one to stand for all of them would be a number pretending to be a
-     measurement. The three outer rungs are the ones that carry the page's rhythm.
+     READ AT ONE WIDTH ON PURPOSE, 1440: the zone padding and the gap between two sections step up with the
+     width (globals.css, THE ZONES; src/components/spine/zones.tsx), and DISTANCES 2.5 states the rungs at 1024
+     and up, so this reads them where they are stated and does not judge the narrower steps.
 
-  /* D3, RHYTHM (on the zones since plan 2026-10-12 rhythm-air-inside, Task 1D: the split each zone declares, scripts/lib/zone_rhythm.mjs). No band repeats the split of the band immediately before it, and
-     never three equal-halves bands in a row. A page of identical halves is as
-     monotonous as a page of full widths, just narrower.
+     BLIND SPOT: the distances inside a section (the title to its content, one group to the next, a fact row to
+     the next, the slot gap between a card's own anatomy slots) are not measured here. They are set by utility
+     classes on dozens of individual elements and picking one to stand for all of them would be a number
+     pretending to be a measurement; the spacing pin holds the kit's shared pieces to the ladder inside a
+     section (tests/spine/spacing_pin.test.ts). The three rungs read here are the ones that carry the page's
+     rhythm. This measurement cannot distinguish a page that draws no kept box from one whose kept box the
+     reading's three selectors do not name (the kept-box rung is judged only where one is found), and it cannot
+     see a margin or an element standing between two zones (the distance from one level to the next is the two
+     paddings and nothing else).
 
-     Read from what each band RENDERS, not from what was written, so a split that
-     silently fails to compile is caught as well as one that was typed twice. The
-     reading is the computed track sizes; see the block that collects them.
+  /* D3, RHYTHM (on the zones since plan 2026-10-12 rhythm-air-inside, Task 1D; judged by
+     scripts/lib/zone_rhythm.mjs). No zone repeats the split of the zone immediately before it, and never three
+     equal-halves zones in a row. A page of identical halves is as monotonous as a page of full widths, just
+     narrower. A wide zone holds no split (the hero, the peers table, the close), so two of them side by side are
+     no repeat; a zone left holding one section is a split of its own, "lone", and two lone zones side by side
+     are one.
 
-     READ AT ONE WIDTH ON PURPOSE, and the width is the law's rather than this
-     file's convenience. D3 governs the SPLIT, and a split is a choice that exists
-     only where the ratio applies. Below `lg` the ratio waits, because `Band`
-     measured an uneven band's small side at 768 as about 229px, narrower than the
-     303px a phone card gets, and D4 hands the width to the content; at 375 there
-     are no columns at all. So a page read at 768 shows equal halves everywhere and
-     a page read at 375 shows one column everywhere, and neither is a page that
-     chose the same split twice. Art direction D3 now states this in the law
-     itself. Do NOT add a second width here to make the tablet fail: what is
-     actually wrong at 768 is content, not rhythm, and it is measured in C21. */
+     READ FROM THE SPLIT EACH ZONE DECLARES, NOT FROM THE TRACKS IT DRAWS. The reading is the data-zone attribute
+     the Zone component writes (src/components/spine/zones.tsx: wide, lone, 1-1, 2-1, 1-2, 3-2, 2-3, 1-1-1) on
+     each visible zone in page order, which is `zoneSplits` below: the split the page asked for and the number of
+     sections it gave, which is what was written, not what the browser laid out. The reading it replaced found a
+     level by the old Band class, which no live page has carried since the band page of 2026-10-04, so it read
+     nothing and passed on every page; it did take the split from the computed track sizes, which the attribute
+     does not give.
+
+     BLIND SPOT: this measurement cannot distinguish a split that silently failed to compile (a column class the
+     stylesheet did not generate, a `:has()` variant that did not apply) from one that drew as declared, and it
+     cannot say how a lone zone's section is drawn (in the left two thirds, or the left third where it is lean):
+     the attribute says "lone" and no more, so two lone zones side by side read as one repeat however each is
+     drawn.
+
+     NO WIDTH TO CHOOSE: the attribute is the same at 1440, 768 and 375, so D3 has no width of its own (D6,
+     above, is the one read at 1440). D3 governs the SPLIT, a choice a page makes, and below `lg` the ratio waits
+     (D4 hands the width to the content), so a level is equal halves or one column there and a narrow render's
+     tracks show the same shape whatever was chosen; the attribute shows the choice at every width. Do NOT add a
+     second width here to make the tablet fail: what is actually wrong at 768 is content, not rhythm, and it is
+     measured in C21. */
   const sameForAll = [];
   /* A REPEATED STRUCTURE IS NOT ONLY A LIST. Written first against ol, ul and
      tbody, this could not see the fault it exists for: the seven district chips

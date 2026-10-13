@@ -8,8 +8,11 @@
  * box's padding (DISTANCES 2.5: 128, 64 and 20 at 1024 and up). The card page's chapter rung is not read: a band page opens a chapter under
  * the same padding as any level and marks it with its numbered head (MODEL PART 10.2), which the spec keeps.
  * BLIND SPOT, stated: it judges what verify_art_direction.mjs measured at one width (1440) on the chain's renders; a data state no render
- * draws is not judged. A render that holds no zone judged nothing, so zoneRhythm names it (NO_ZONE_READ) and the gate stops on it: the
- * zone attribute renamed, or the render broken, can never make D3 and D6 pass by leaving them nothing to judge.
+ * draws is not judged. D3 judges the split each zone DECLARES (the data-zone attribute the Zone component writes from the split the page asks
+ * for and the sections it gives), not the tracks the stylesheet draws: it cannot distinguish a split that silently failed to compile from
+ * one that drew as declared, nor say how a lone zone's section is drawn (the left two thirds, or the left third where it is lean). A render
+ * that holds no zone judged nothing, so zoneRhythm names it (NO_ZONE_READ) and the gate stops on it: the zone attribute renamed, or the
+ * render broken, can never make D3 and D6 pass by leaving them nothing to judge.
  */
 
 /** The finding for a reading of nothing, one text wherever it is said: zoneRhythm, the art-direction gate's stop, Task 6's extra renders. */
