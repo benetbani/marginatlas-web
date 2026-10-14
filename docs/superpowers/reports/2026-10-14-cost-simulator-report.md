@@ -191,3 +191,40 @@ THE BAR LEDGER: two cards, `04 month` and `05 moves`, in two columns of consecut
   page test mounted in jsdom (a currency change redraws and writes nothing), the api test (404, the place switch's body), the door test and
   the London trade render (four doors), and the photographs above. The production probe waits for his deploy word in any case.
 
+## The last code push's GitHub check (ff9e65b7, run 38614817535)
+
+- Typecheck: exit 0 (the full `tsc --noEmit -p .`).
+- Chain: 296 gates, 285 pass, 11 red, every one red on the base too: harness-page-laws, fact-once, harness-laws, harness-links, provenance
+  (cell pages, database fallbacks), type-floor (rhythm's), art-direction (rhythm on other pages), home-answers, uk-city-sources,
+  harness-archetypes TIMEOUT, money-shown-own-rows TIMEOUT. census-fresh, red on the base, is green here (regenerated in Task 4B).
+- The calculator's own lines there: page laws 0 at 1280, 768 and 375; links 2 of floor 2; provenance 51 of 51 stamped; art direction 0;
+  gathered emptiness 0; its one finding is FIGURE FACE on `#page`, the CI runner drawing without the figure face, as on every page (the
+  controller's known CI-only red; the model-laws ratchet counts it 1 over 0 there, 0 on the laptop where the face loads).
+- Every calc gate green: calc-engine, calc-defaults, calc-api, calc-display, calc-page, calc-state, calc-door.
+- Commits after it change only this report.
+
+## Open items
+
+1. THE SIGNAL (the country plan's) is not on the page. When country-page-journey lands: the plan's Task 4B Step 3 (the two measures in
+   owner_direction.ts, signalStateOfShare and signalForShare in signal.ts, the WANT line), the firms row's `placed`/`signal`/`noSignal` and
+   SignalKey in AnswerSection, the same on MarginSection's Focal, and the plan's four signal checks back in tests/simulator/page.test.ts.
+2. AN OWNER'S SEAT NAMED IN BRACKETS IS PAID AS STAFF. Reading 7 takes a role whose name begins "Owner" as the owner's seat; barbershops'
+   "Barber (owner-operator)" does not begin so, stands at 1 head with pay, and Manchester barbershops print a 50.7% loss partly for it. A
+   ruling on the rule (match "owner" anywhere in the role?) is his.
+3. fact-once, type-floor and line-rule read only the five spine surfaces on this base; the calculator's render is outside them. Whether they
+   should read it is the rhythm plan's call.
+4. Not run locally: the production build and the browser probe (memory); the production probe waits for his deploy word.
+5. MODEL.md (the parent repo): the text above for the controller to apply.
+6. Layout decisions taken to clear render laws, for review: the answer and the margin side by side from 768; the money to open it at three
+   fifths from 1024; the levers' card the page's one prose section and the sources' facts short; the month's basis at the end of the
+   switch's tab row (Switch's optional `aside`, unchanged for its other caller, the country page).
+7. Commit hygiene: a237fc59 holds the defaults' city guard and Task 4C's first part; Task 7 landed in two commits (24222f29, 254f56f8).
+   No amend or reset was used to tidy them.
+8. Shared files touched (for the merge): copy.ts (COPY.calculator, tradeClose.runDoor), provenance.ts (StampKind), check_provenance.mjs,
+   london.ts, door_kinds.ts, RankedBars (level), zones.tsx (STACKED exported), NoteList and locals_rows (note_shape.ts), Range, Switch,
+   Terminus, exit.tsx, cell-view.tsx, stories.tsx, close_rows.ts, middleware.ts, loud_seats.ts, the bar budget and four source lists,
+   verify_doors, verify_archetype_copy, verify_launch_ready, verify_art_direction, check_model_laws, check_page_links, render_page,
+   pages.json, page_foot.test.ts, the provenance and model-laws baselines (one calculator line each), the type and width baselines (the two
+   calculator files out), floor_census.json, coverage_exceptions.json, CENSUS.md, gates.json, CLAUDE.md, GUIDELINES.md.
+9. parallel-base has moved to 5e11c768 (the runner installs the fonts); not merged here without a word, so CI still draws without the figure face.
+
