@@ -167,3 +167,52 @@ This file is appended task by task, so a stop loses nothing. Scratch outputs nam
   home-view), subsection-icons, no-bold-display, banned-patterns, bar-budget (home 0 of 2), distance-ladder, counts-fresh: all PASS.
   No home file needed a fix. `tiles-openers` is not on this base (rhythm Task 5), and `type_floor.test.ts` walks its own list, not
   scanSpine (Task 0), so this step changed nothing for either.
+
+## Task 8, the written rules (b38e69c2 for the website part)
+
+- website `docs/design-system/GUIDELINES.md`: the four rows added in 0.2, 0.3 and 0.7 as the plan gives them (0.2's row names
+  `--terra-full` #c11c00, Q1 B). Gates no-em-dashes, no-source-agencies, counts-fresh PASS. No gate reads GUIDELINES.md.
+- Commit message prefix: the plan's `docs:home-gates:` was kept for this commit, where the dispatch asked `home:`; noted, not amended.
+- PARENT-REPO EDITS SKIPPED (the dispatch: no parent-repo file is edited here). The exact texts for the controller, from the plan with
+  Q1 B, Q2 A and Q3 B applied:
+
+  1. `E:/atlas/design/loop/build/briefs/MODEL.md`, PART 4, the paragraph beginning `**WHO HOLDS NO 30, read off this table and PART 8,
+     settled 2026-09-17` (plan :163), appended at its end, after `the finding stays until the data lands.`, on the same line:
+
+     > A HOME CONTENTS DEPARTMENT (the `department` form, 2026-10-13, his choice of quiet editorial: the atlas laid out as a contents page, no charts) is a door to a part of the site: its rows are names, and its one kind of figure is a trade row's own at 16, so it holds no 30 by its own law, as the prose form and the seat form do, and is exempt (`FOCAL_EXEMPT_FORMS` in check_model_laws.mjs, website plan 2026-10-13 home-quiet-editorial, Task 4B).
+
+  2. MODEL.md PART 6, after the bullet `- The trade, industry and neighbourhood lists are in 8.6, 8.7 and 8.8, each with its seat ledger.
+     The spine is the authority and this list describes it (2026-09-17, plan step 3).`, a new bullet:
+
+     > - Home (2026-10-13, his choice of quiet editorial): the band is the one loud moment, lit by its ground (FIELD): the brand terracotta at full strength, white type, one sentence and a link to the method, no figure; the question's two moving words are his h1's red (`data-founder-accent`), never an accent; the contents and the colophon hold none. On the home terracotta stands in four places only: the wordmark, the question's moving words, the positioning line's mark and the band.
+
+  3. MODEL.md PART 6, the paragraph `**TERRACOTTA NEVER APPEARS** on a heading, ...`, appended:
+
+     > One mark is his: the home's positioning line carries the compass mark in the brand terracotta beside its words (2026-10-13), one of the home's four terracotta places.
+
+  4. MODEL.md PART 8, `2. **Form.** No two adjacent sections share a form. The three bar cards sit in three different bands.`, appended:
+
+     > The home's contents (2026-10-13) are six departments inside one section, so the rule reads that section's neighbours (the question above, the band below), never the departments beside each other.
+
+  5. MODEL.md PART 9, clause 11, replaced by:
+
+     > 11. The place named twice on one page, a bold h1, a world median in the masthead, and an eyebrow above any title, but one: the home's positioning line above its h1, his named exception of 2026-10-13, a serious sentence-case line beside the compass mark, never a kicker (website scripts/verify_no_eyebrow.ts holds its form). (2026-08-30, 2026-07-10, 2026-07-11, 2026-10-13.)
+
+  6. MODEL.md PART 10, clause 69, replaced by:
+
+     > 69. A third surface, a stripe per section, or two neighbouring zones in one tone; the one third surface is the home's band, his rulings of 2026-10-10 (one section in terracotta) and 2026-10-13 (one solid statement in the brand terracotta at full strength), gated once and on the home only by the page laws' ZONE TONES.
+
+  7. `E:/atlas/rules/FORM-CATALOG.md`, appended:
+
+     > ## VERSION 10, 2026-10-13: the home's contents department
+     >
+     > **Department** (`src/components/spine/archetypes/Department.tsx`, stamps `data-archetype="department"`): one part of the atlas as a contents entry, his choice of quiet editorial for the home (website plan 2026-10-13 home-quiet-editorial; spec E:/atlas/docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, section 2, item 3). Its number (01 to 06, muted, in the figures' face), its title at the head rung, one plain line, three or four member rows and its door. A member row is one shape everywhere: its mark (a flag, a city's grey photograph, a trade pictogram or a site icon, in ink), its name, a figure only where the model asks for one (a trade row carries its own world net, stamped), the arrow every door carries. No accent, no 30 (MODEL PART 4 names the form). Free of the bar budget (it draws no bar); not a visual form for KIND REPEATED. Six stand in one section on the home, so the adjacency rule reads that section's neighbours.
+
+  8. `E:/atlas/rules/FOUNDER-VERDICTS.md`, appended (his answers to Q1, Q2 and Q3 are the controller's to add under it, verbatim and dated):
+
+     > ## The home, quiet editorial (2026-10-13, in chat)
+     >
+     > His words that day: "The homepage talks about London and fails all the premises of what a homepage should include. Furthermore the terracotta used in the background of that section is very light. Homepage is a total mess." Then: "It fails on establishing brand, not elegant and slaps infographics which is soooo wrong at so many levels." His decisions: the reference is quiet editorial (think FT or Monocle); "The question with moving parts should remain, for the other things do as you choose, but position the page as #1 page on its own niche, above this H1 with moving parts, it is deeply needed."; the band one solid statement, full-width brand terracotta at full strength, white type, one sentence, a link to the method. His pick for the positioning line: "The reference atlas of small-business earnings." The no-eyebrow rule takes one named exception for that line. Spec: E:/atlas/docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md; plan: E:/atlas/docs/superpowers/plans/2026-10-13-home-quiet-editorial.md.
+
+  Also the controller's: the design repo's PAGES.md census block (`census.ts --write` against it; the home's rows are now the six
+  `dept-*` and Pro), QUEUE.md and STATE.md.
