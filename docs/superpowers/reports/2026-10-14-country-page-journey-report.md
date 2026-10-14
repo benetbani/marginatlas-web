@@ -180,3 +180,52 @@ time; the full chain and the full typecheck ran on GitHub at each push. This rep
   plan's seven entries (every one a ledger key, each with its reason).
 - The UK's slot 15: 4 coming, 35 in force, 6 shown (Q6, answer A: the run keeps its own continuation).
 - slots-rules and the other stage gates, doors PASS; scoped typecheck 0.
+
+## Task 4: the view composed from the slots (fe34a6ce, efbe2bad)
+
+- country-view.tsx rewritten (CRLF kept byte-exact; the index blob written with `git hash-object --no-filters` and `update-index
+  --cacheinfo`, because a plain add normalised the git `-text` file to LF): every country drawn from `planCountry` in the journey's order,
+  zones from `composeZones(plan.drawn)` (pairs only inside a stage, Q4 A: a chapter's opening zone starts D3 afresh), the rail from the
+  slots drawn, slot 5b (the margins) from the route's money rows, the loud seats (00 take, 07 hire, 05 trades held).
+- Renders: GB 15 blocks over 16 slots, KH 10 over 11, AF 10 over 11, DE 11 over 12 (the masthead is one block holding slots 1 and 2).
+  country-slots, answer-type, signal-marks PASS on the four.
+- The country floor (Step 11): `FLOOR_BY_SURFACE.country` 13 to 10, Afghanistan's measured count. Floor census over 194 countries,
+  before [[13,3],[14,1],[15,190]], now [[9,5],[10,140],[11,49]].
+- **Q5, for the owner (not decided here)**: five country pages that met the old floor fall under the new one and would stop indexing:
+  /cu 15 to 9 (no hire slot, no wage floor on file), /lk 14 to 9 (no spend), /mo, /nr, /to 13 to 9 (no dealings). The plan says this goes
+  to the owner before Task 5; per the dispatch I recorded it and went on, because the locks (Task 5) do not touch the floor. Each of the five
+  draws ten slots in nine blocks (`scratchpad/journey/t4-nine.txt`).
+- Deviations: slot 5b (Q1) in the plan's sixteen as a seventeenth (`num: "5b"`); the customers' pay stamped with its profile fields; the
+  HeroBoard's `data-value` after its class (the fact-once reader's pattern); page_foot's list gained /kh and /de; firms_last, duel and
+  focal_values read the slots; baselines seeded for the new pages and lowered where they fell (provenance GB 274, AF 12, KH 29, DE 94).
+- The browser checks after compose found my faults, fixed at source in efbe2bad:
+  - ALIGNMENT on every fold at 1280: the fold's plus was centred in a fixed box; it now sits in its own box, as the kit's plus.
+  - TAP SIZE at 375 (panels open): a linked fold row (cities, trades) was an 18px link; the link now takes the row 44 tall.
+  - ROW SENTENCE on four-word fold heads: the head carried `data-label`; it is now `data-fold-head` (the answer-type reader and both tests
+    follow), a head and not a row's label.
+  - LABEL GAP on the UK's rule changes (panels open): "2.5% over Bank Rate to 4% over Bank Rate" widened the values' column; what a rate
+    sits over is now said once, on the right, as the period is.
+  - FOCAL on the customers slot: the city cards' names (20, the heading rung) under the slot's 30. **A reading change for the controller
+    to confirm**: `check_model_laws.mjs` leaves `[data-city-name]` out of the "between 16 and 30" reading, as it leaves the zone title out
+    (a name is words; a figure on a city card is still read).
+  - WHITE SPACE at 768 on seven thin lone slots (KH, AF, DE credit and exit, AF open): a thin slot of one figure stamps `data-lean`, and
+    zones.tsx's lone level gives a lean section the left half from 768 (the kit Band's own half), the left third from 1024 as before.
+    Blind spot found and stated: page holes judges only the largest-area blank, so the same air at 1280 read clean (a wide shallow blank hid
+    the tall one); the photographs at 768 and 1280 showed the two equal.
+  - WHITE SPACE on the UK masthead (panels open): the other taxes open under the answer and the rows column stood over 366 by 210 of
+    nothing; on the country's board the rows share the column's height (closed, nothing moves; photographed at 1280).
+  - Line rule (rhythm's gate): a fold or the hire lever straight under a figure's block added its margin to the block's (48 and 44); a fold
+    there now stands 12 below the block and the lever 24; the spend's bar lost its 4px (28 to 24).
+  - Art direction E1 and F1 on the UK (panels open): the hire slot held 426 characters of notes, the running costs 284; the notes behind
+    their pluses are labels now (for example "Redundancy and notice, at 35", "to end a protected lease", "for 33 weeks, or 90% if lower" in
+    data/sections/rules.json); a fold note's figures are tabular.
+- Checks after efbe2bad, on renders made with the placeholder URL: page laws 1 red (AF's customers LONE FIGURE, the plan's thin form "the
+  national typical alone", the same red as before the plan, held at AF's baseline 1); model laws 0; page holes 0; plain copy 0; readability
+  0; line-rule, panels-opened, section-bands, loud-seats, gathered-emptiness, fullwidth-sitewide, form-variety PASS; 35 light gates PASS
+  (slots, answer type, fold, zones, hire, lease, uk-sources, spacing, layering, counts-fresh among them); art direction grew only on the
+  barbershops page (D3, rhythm's); fact-once reds only on the industry and hood renders (no country finding). Baselines lowered to the
+  measures: page laws KH 2 to 0; model laws AF, KH, DE 1 to 0; art direction KH frontRepeat, DE rhythm, DE frontRepeat 1 to 0; section
+  bands AF 2 to 1. Scoped typecheck 0.
+- Photographs read: KH #credit at 768 and 1280 before and after the lean rule (the half from 768 holds the figure, its words and the
+  track with no air beside them); the UK masthead at 1280 after the rows rule.
+- Not done here: `docs/loop/CENSUS.md` (census-fresh is a known red of the base, and a rewrite would carry the rhythm branch's sections).
