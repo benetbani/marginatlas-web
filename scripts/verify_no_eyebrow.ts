@@ -43,10 +43,21 @@
  * `// allow-eyebrow` line-tail comment on the candidate element's opening
  * tag line.
  *
+ * THE ONE NAMED EXCEPTION (his instruction of 2026-10-13: "position the page as #1 page on its own niche, above this H1 with moving parts,
+ * it is deeply needed"; spec docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, section 2, item 1; plan 2026-10-13
+ * home-quiet-editorial, Task 1D): the home's positioning line, `data-positioning` in src/components/spine/home/home-view.tsx, stands
+ * above the h1 and names the category the site owns. The heuristic above finds an eyebrow by its capitals, so a sentence-case line above a
+ * title passes it unseen; the exception is therefore named and held below to the form the instruction and the spec give it: exactly one
+ * such element on the surfaces, in the home's view, standing in HomeSearch before the question, never in capitals or tracked, at the head
+ * or section rung, its words COPY.home.positioning: sentence case, twelve words or fewer, no rank or credential word (the site holds no
+ * ranking evidence, and the never-list forbids an invented credential). BLIND SPOT: it reads the source and the copy table; the line as
+ * drawn is tests/trust/home_shape.test.ts's.
+ *
  * Run: npx tsx scripts/verify_no_eyebrow.ts
  */
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { COPY } from "../src/lib/spine/copy";
 
 const ROOT = process.cwd();
 
@@ -229,6 +240,31 @@ for (const file of SURFACE_FILES) {
   }
 }
 
+/* THE NAMED EXCEPTION, HELD TO ITS FORM (see the header). */
+const VIEW_FILE = "src/components/spine/home/home-view.tsx";
+const RANK_WORDS = ["#1", "no. 1", "number one", "most trusted", "most used", "best", "leading", "top", "largest", "biggest", "award"];
+const positioningSites = [...new Set(SURFACE_FILES)].flatMap((f) => readFileSync(resolve(ROOT, f), "utf-8").split("\n").map((l, i) => (!isCommentLine(l) && /data-positioning/.test(l) ? `${f}:${i + 1}` : null)).filter((x): x is string => x !== null));
+const viewSrc = existsSync(resolve(ROOT, VIEW_FILE)) ? readFileSync(resolve(ROOT, VIEW_FILE), "utf-8") : "";
+const homeSearch = /function HomeSearch[\s\S]*?\n\}/.exec(viewSrc)?.[0] ?? "";
+const posTag = /<p data-positioning="" className="([^"]*)">([\s\S]*?)<\/p>/.exec(homeSearch);
+const questionAt = [homeSearch.indexOf("<HomeAsk"), homeSearch.indexOf("<h1")].filter((i) => i >= 0);
+const positioning = String((COPY.home as unknown as Record<string, unknown>).positioning ?? "");
+const posWords = positioning.trim().split(/\s+/).filter(Boolean);
+const exceptionFaults: string[] = [];
+if (positioningSites.length !== 1 || !positioningSites[0].startsWith(`${VIEW_FILE}:`)) exceptionFaults.push(`one data-positioning element on the surfaces, in ${VIEW_FILE} (found ${positioningSites.length}: ${positioningSites.join(", ") || "none"})`);
+if (!posTag || questionAt.length === 0 || homeSearch.indexOf("data-positioning") > Math.min(...questionAt)) exceptionFaults.push("the positioning line stands in HomeSearch before the question (<HomeAsk or <h1)");
+if (posTag && /uppercase|tracking-/.test(posTag[1])) exceptionFaults.push(`the positioning line is never in capitals or tracked (class: ${posTag[1]})`);
+if (posTag && !/text-\[length:var\(--t-(?:head|section)\)\]/.test(posTag[1])) exceptionFaults.push("the positioning line stands at the head or section rung, a serious line, never a small kicker");
+if (posTag && !/\{C\.positioning\}/.test(posTag[2])) exceptionFaults.push("the positioning line prints COPY.home.positioning ({C.positioning})");
+if (posWords.length === 0 || posWords.length > 12 || !/^[A-Z]/.test(positioning) || positioning === positioning.toUpperCase()) exceptionFaults.push(`COPY.home.positioning is one sentence-case line of twelve words or fewer ("${positioning}")`);
+const rank = RANK_WORDS.filter((w) => new RegExp(`(^|[^a-z])${w.replace(/[.#]/g, (c) => `\\${c}`)}([^a-z]|$)`, "i").test(positioning));
+if (rank.length) exceptionFaults.push(`COPY.home.positioning claims a rank or a credential the site does not hold (${rank.join(", ")})`);
+for (const f of exceptionFaults) {
+  console.error(`${VIEW_FILE}: the positioning line's named exception: ${f}`);
+  violations++;
+}
+if (exceptionFaults.length) console.error("  Remedy: draw the home's positioning line as plan 2026-10-13 home-quiet-editorial Task 2 gives it, the one exception rule 11 names.");
+
 if (violations > 0) {
   console.error(`\n✗ ${violations} eyebrow violation(s) on the spine/home surfaces.`);
   console.error("  Rulebook v1 rule 11: no eyebrow above a section/masthead title. Delete the");
@@ -237,4 +273,4 @@ if (violations > 0) {
   process.exit(1);
 }
 
-console.log("✓ No hand-rolled eyebrows above a title on the spine/home surfaces.");
+console.log("✓ No hand-rolled eyebrows above a title on the spine/home surfaces; the home's positioning line held to its named exception.");
