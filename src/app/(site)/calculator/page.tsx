@@ -13,8 +13,9 @@ import { calculatorMetadata } from "@/lib/simulator/seo";
 type Search = Promise<Record<string, string | string[] | undefined>>;
 const one = (v: string | string[] | undefined): string | null => (Array.isArray(v) ? v[0] : v) ?? null;
 
+/* The canonical is said here too, the route's own (scripts/verify_canonical_urls.ts reads each route for its alternates; seo.ts holds the same value). */
 export async function generateMetadata({ searchParams }: { searchParams: Search }): Promise<Metadata> {
-  return calculatorMetadata(await searchParams);
+  return { ...calculatorMetadata(await searchParams), alternates: { canonical: "/calculator" } };
 }
 
 export default async function CalculatorPage({ searchParams }: { searchParams: Search }) {
