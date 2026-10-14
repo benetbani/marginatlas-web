@@ -93,6 +93,26 @@ async function main(): Promise<void> {
   check(`the money to open it is built from the city's fit-out where no cell holds a bill (${be.opening.kind}: ${be.opening.lines.map((l) => `${l.key} ${l.amount}`).join(", ")})`, be.opening.kind === "built" && be.opening.lines[0]?.key === "fit-out" && be.opening.lines[0]?.amount === 1100 * 242);
   check(`at most five notes of where figures come from (${be.notes.length}: ${be.notes.map((n) => n.label).join(", ")})`, be.notes.length >= 1 && be.notes.length <= 5);
 
+  /* THE OWNER'S SEAT WHEREVER THE ROLE NAMES THE OWNER (the final review's C1, the controller's ruling): "Barber (owner-operator)" as well as
+     "Owner or general manager"; the seat takes one head off the role's typical count (the owner keeps the profit), the rest stay staff. */
+  const { shardRoles } = await import("../../src/lib/spine/team_rows");
+  const seatFaults: string[] = [];
+  let seats = 0;
+  for (const t of P.simulatorTrades()) {
+    const p = place("de", "berlin", t.slug);
+    if (!p) continue;
+    const b = D.buildBundle(p, { cell: null });
+    for (const r of shardRoles(p.industryId)) {
+      if (!/\bowner\b/i.test(r.role)) continue;
+      seats++;
+      const role = b.roles.find((x) => x.name === r.name && x.sub === r.sub);
+      if (!role || !role.owner || role.heads !== Math.max(0, r.headcount - 1)) seatFaults.push(`${t.slug}: "${r.role}" ${role ? `${role.heads}${role.owner ? "" : " unmarked"}` : "missing"} against ${Math.max(0, r.headcount - 1)}`);
+    }
+  }
+  check(`every one of ${seats} roles naming the owner stands at its count less one and is marked the owner's (${seatFaults.slice(0, 4).join("; ") || "all"})`, seats > 100 && seatFaults.length === 0);
+  const barber = D.buildBundle(place("gb", "manchester", "barbershops")!, { cell: null }).roles.find((r) => /owner/i.test(`${r.name} ${r.sub ?? ""}`));
+  check(`barbershops' "Barber (owner-operator)" stands at nought (${barber?.name} ${barber?.sub}: ${barber?.heads})`, !!barber && barber.owner && barber.heads === 0);
+
   /* REVIEW FOCUS 3, A CITY WITH NO RENT: Berlin's rent taken out of the store, then Germany's. */
   const saved = allFacts();
   loadFacts(saved.filter((f) => !(f.entityId === "DE-berlin" && f.metric === "realestate.rent_secondary_usd_sqm_yr")));

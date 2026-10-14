@@ -115,7 +115,9 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
   const premises = geography ? geographyPremises(place.trade, geography) : null;
   const premisesStamp = (): Stamp => ({ src: `uk/registers/premises.json:${place.trade}:${geography}`, kind: "worked out" });
 
-  /* THE TEAM: the shard's roles at their typical counts, the owner's seat at nought (the owner's pay row stands for it); else the sector's small
+  /* THE TEAM: the shard's roles at their typical counts, the owner's seat one head fewer (a role that names the owner anywhere, "Barber
+     (owner-operator)" as well as "Owner or general manager": the owner keeps the profit and the owner's pay row stands for that head; the final
+     review's C1); else the sector's small
      firm as one role; pay is the role's index times the city's wage, else the country's median. */
   const shard = shardRoles(place.industryId);
   const cityWage = place.city ? pos(getCityAnnualWageUsd(place.city)) : null;
@@ -128,7 +130,7 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
   const key = (k: string) => k.toLowerCase().replace(/[^a-z0-9_]/g, "_");
   const small = sector ? pos(sector.typical_employees_small) : null;
   const roles: SimRole[] = shard.length > 0
-    ? shard.map((r) => { const owner = /^owner\b/i.test(r.role); return { key: key(r.key), name: r.name, sub: r.sub, heads: owner ? 0 : r.headcount, headsStamp: est(`facts/industry/${place.industryId}.json:roles.${r.key}.headcount_typical`), pay: payOf(r.wageIndex), owner }; })
+    ? shard.map((r) => { const owner = /\bowner\b/i.test(r.role); return { key: key(r.key), name: r.name, sub: r.sub, heads: owner ? Math.max(0, r.headcount - 1) : r.headcount, headsStamp: est(`facts/industry/${place.industryId}.json:roles.${r.key}.headcount_typical`), pay: payOf(r.wageIndex), owner }; })
     : small !== null ? [{ key: "staff", name: W.bill.team, sub: null, heads: small, headsStamp: est(`finance/industry_cost_profile_v1.json:${sectorId}.typical_employees_small`), pay: payOf(1), owner: false }] : [];
   const heads = shard.length > 0 ? shard.reduce((a, r) => a + r.headcount, 0) : small ?? 0;
 
