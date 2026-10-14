@@ -931,6 +931,14 @@ const GATES: Gate[] = [
   { name: "home-picker", script: "tests/home/picker.test.ts" },
   /* The home, quiet editorial (his choice of 2026-10-13; plan 2026-10-13 home-quiet-editorial): the positioning line above his h1 and the picker that follows it, the contents, (Pro), the band, the colophon; three seats; nothing the reform retired; every figure stamped; no reader text under 14px. Reads the home's render, which pages-fresh writes first. */
   { name: "home-shape", script: "tests/trust/home_shape.test.ts" },
+  /* The home's contents (plan 2026-10-13 home-quiet-editorial; his choice of 2026-10-13, quiet editorial): six numbered departments, each
+     at most four members chosen by a rule read from the code and recomputed here, a trade row printing its industry page's own figure, a
+     thin state drawing fewer rows and never a placeholder, every member landing; the Department form and the six literal sections; the
+     small copies of the city photographs it draws. Reads the home's render, which pages-fresh writes first. */
+  { name: "home-contents", script: "tests/home/contents.test.ts" },
+  /* The home's band, one solid statement (his decision of 2026-10-13): one sentence true of how every figure is made, one link to the
+     method, no figure and no digit, on the brand terracotta at full strength (--terra-full) in white at AA, ink on paper in print. */
+  { name: "home-band", script: "tests/home/band.test.ts" },
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
   { name: "no-place-words", script: "tests/copy/no_place_words.test.ts" },
