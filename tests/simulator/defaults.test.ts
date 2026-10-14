@@ -87,6 +87,9 @@ async function main(): Promise<void> {
   check(`Berlin's break-even through the files is Task 1's by hand, 1,095,484.12 (${value(br.breakEven)})`, value(br.breakEven) === 1095484.12);
   check(`the ticket is the trade's spend per head times the city tier's multiplier (${be.inputs.ticket.value})`, be.inputs.ticket.value === 22 * getAovCityTierMultiplier("restaurants", getCityTier("berlin")));
   check(`no tax outside the UK, and the bank lending rate as the loan's (${be.tax.law}, ${be.inputs.loanRate.level})`, be.tax.law === "none" && be.inputs.loanRate.level === "country" && be.inputs.loanAmount.value === null);
+  /* The profile's bank_lending_rate_pct holds a fraction (0.045 for Germany; src/lib/spine/adapt_country.ts multiplies it by 100), and the loan lever
+     and the engine take a percent (annualRatePct), as the UK's 7.5 is: found on the Berlin render at 1280, where the lever read "0". */
+  check(`Germany's loan rate is its lending rate in percent, 4.5 (${be.inputs.loanRate.value})`, be.inputs.loanRate.value === 4.5);
   check(`the money to open it is built from the city's fit-out where no cell holds a bill (${be.opening.kind}: ${be.opening.lines.map((l) => `${l.key} ${l.amount}`).join(", ")})`, be.opening.kind === "built" && be.opening.lines[0]?.key === "fit-out" && be.opening.lines[0]?.amount === 1100 * 242);
   check(`at most five notes of where figures come from (${be.notes.length}: ${be.notes.map((n) => n.label).join(", ")})`, be.notes.length >= 1 && be.notes.length <= 5);
 

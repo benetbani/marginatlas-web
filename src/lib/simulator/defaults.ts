@@ -191,9 +191,11 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
   ], W.lines.owner.none);
   const taxed = uk && place.nation !== "scotland";
   const ukRate = uk ? pos(countryFigure("GB", "financing.startup_loan_rate_pct")?.value) : null;
-  const lend = !uk && listCountryProfiles().some((p) => p.iso2 === place.iso2) ? pos(getCountryProfile(place.iso2).bank_lending_rate_pct) : null;
+  /* The profile's bank_lending_rate_pct is a fraction (0.045; adapt_country.ts multiplies it by 100); the loan takes a percent, as the UK's 7.5. */
+  const lendFraction = !uk && listCountryProfiles().some((p) => p.iso2 === place.iso2) ? pos(getCountryProfile(place.iso2).bank_lending_rate_pct) : null;
+  const lend = lendFraction === null ? null : Math.round(lendFraction * 10000) / 100;
   const loanRate = ukRate !== null ? input(ukRate, { src: "facts/country/GB.json:financing.startup_loan_rate_pct", kind: "looked up" }, "country", W.lines.loan.uk)
-    : lend !== null ? input(lend, est(`economic_profile:${place.iso2}.bank_lending_rate_pct`), "country", fill(W.lines.loan.country, { country: inSentence(place.countryName) }))
+    : lend !== null ? input(lend, est(`economic_profile:${place.iso2}.bank_lending_rate_pct x 100`), "country", fill(W.lines.loan.country, { country: inSentence(place.countryName) }))
     : input(null, null, "none", W.lines.loan.noRate);
 
   /* THE MONEY TO OPEN IT: the cell's held bill, else fit-out for this floor space, the deposit and registration, else the trade's archetype at
