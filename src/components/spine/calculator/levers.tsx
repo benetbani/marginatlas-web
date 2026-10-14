@@ -84,14 +84,16 @@ export function TeamRow({ role, W, fmt, heads, headsYours, pay, payYours, effect
   const payProv: Provenance | null = payYours ? { src: `calculator:lever:pay:${role.key}`, kind: "yours" } : role.pay.stamp ? { src: role.pay.stamp.src, kind: role.pay.stamp.kind } : null;
   return (
     <li data-team-row={role.key}>
-      <div className="flex items-center justify-between gap-3">
+      {/* THE STEPPER IN THE NEXT COLUMN, never pushed to the card's far edge (PART 5's row, the model laws' LABEL GAP: no justify-between row on a card
+          over 420px, measured on the card at 768): one fluid column on a phone, the name's 22ch from 768. */}
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 md:grid-cols-[minmax(0,22ch)_auto]">
         <span className="min-w-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">
           {role.name}
           {role.sub ? <span className="block text-[var(--c-muted)]">{role.sub}</span> : null}
         </span>
         <span className="inline-flex shrink-0 items-center gap-2">
           <button type="button" aria-label={`${W.levers.remove}: ${role.name}`} disabled={heads <= 0} onClick={() => onHeads(Math.max(0, heads - 1))} className={STEP}>{"−"}</button>
-          <Fig className="block min-w-8 text-center text-[length:var(--t-lead)] font-semibold tabular-nums text-[var(--c-ink)]" prov={headsProv}>{heads.toLocaleString("en-GB", { maximumFractionDigits: 1 })}</Fig>
+          <Fig className="block min-w-8 text-right text-[length:var(--t-lead)] font-semibold tabular-nums text-[var(--c-ink)]" prov={headsProv}>{heads.toLocaleString("en-GB", { maximumFractionDigits: 1 })}</Fig>
           <button type="button" aria-label={`${W.levers.add}: ${role.name}`} disabled={heads >= HEADS_MAX} onClick={() => onHeads(Math.min(HEADS_MAX, heads + 1))} className={STEP}>+</button>
         </span>
       </div>

@@ -364,6 +364,9 @@
       "browser": false,
       "asserts": "THE COST SIMULATOR'S PAGE (plan 2026-10-13 cost-simulator, Task 4B; spec section 4, the page phone first; Review Focus 2 and 5).",
       "reads": [
+        "scratchpad/harness/pages/calculator-gb-london-restaurants.html",
+        "scripts/harness/check_model_laws.mjs",
+        "scripts/harness/pages.json",
         "scripts/lib/loud_seats.ts",
         "src/components/spine/archetypes/NoteList.tsx",
         "src/components/spine/calculator/CalculatorClient.tsx",

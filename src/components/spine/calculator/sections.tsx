@@ -122,11 +122,14 @@ export function MarginSection({ W, r, fmt, taxed }: { W: CalculatorWords; r: Eng
 }
 
 /** THE INSTRUMENT'S LEVEL (spec section 4: "From 1024 the levers stand left and the answer and the bill right"; on a phone the answer stands above the
- *  levers). One wide zone holds it: the zone's own stacked rhythm under 1024 (STACKED), then two columns, the levers card spanning the three rows the
- *  answer, the margin and the month stand in. */
+ *  levers). One wide zone holds it: the zone's own stacked rhythm on a phone (STACKED); from 768 the answer and your margin side by side over the
+ *  levers and the month, each the width (the page filter's WHITE SPACE: alone on the 720px row the margin's figure left a 360 by 126 blank beside it);
+ *  from 1024 two columns, the levers card spanning the three rows the answer, the margin and the month stand in. */
+const INSTRUMENT_MD = "md:grid-cols-2 md:gap-x-12 md:[&>*:nth-child(2)]:border-t-0 md:[&>*:nth-child(2)]:pt-0 md:[&>*:nth-child(n+3)]:col-span-2";
+const INSTRUMENT_LG = "lg:grid-cols-[2fr_3fr] lg:gap-x-16 lg:[&>*:nth-child(2)]:border-t lg:[&>*:nth-child(2)]:pt-6 lg:[&>*:nth-child(n+3)]:col-span-1 lg:[&>*:nth-child(3)]:col-start-1 lg:[&>*:nth-child(3)]:row-start-1 lg:[&>*:nth-child(3)]:row-span-3 lg:[&>*:not(:nth-child(3))]:col-start-2";
 export function InstrumentGrid({ answer, margin, levers, month }: { answer: React.ReactNode; margin: React.ReactNode; levers: React.ReactNode; month: React.ReactNode }) {
   return (
-    <div data-calc-grid="" className={`${STACKED} lg:grid-cols-[2fr_3fr] lg:gap-x-16 lg:[&>*:nth-child(3)]:col-start-1 lg:[&>*:nth-child(3)]:row-start-1 lg:[&>*:nth-child(3)]:row-span-3 lg:[&>*:not(:nth-child(3))]:col-start-2`}>
+    <div data-calc-grid="" className={`${STACKED} ${INSTRUMENT_MD} ${INSTRUMENT_LG}`}>
       <div className="min-w-0">{answer}</div>
       <div className="min-w-0">{margin}</div>
       <div className="min-w-0">{levers}</div>

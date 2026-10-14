@@ -76,10 +76,12 @@ export function CalculatorClient({ seed }: { seed: CalculatorSeed }) {
   const sources = <SourcesSection key="sources" W={W} notes={notes} />;
   const hasMoves = r.moves.length > 0 && r.perHundred.held;
   const hasOpening = r.paybackMonths.held || r.paybackMonths.reason !== "no-opening";
+  /* THE MONEY TO OPEN IT TAKES THREE FIFTHS FROM 1024 (the model laws' LABEL GAP, measured on the render at 1280): in an even half (504px) its rows' labels
+     stood 168 to 227px from their figures; at three fifths (605px) the rows split into two lists, each label beside its figure. */
   const after: Array<{ key: string; split: ZoneSplit; label: string; body: React.ReactNode[] }> =
-    hasMoves && hasOpening ? [{ key: "moves", split: "2-1", label: W.moves.title, body: [moves] }, { key: "money", split: "1-1", label: W.opening.title, body: [opening, sources] }]
+    hasMoves && hasOpening ? [{ key: "moves", split: "2-1", label: W.moves.title, body: [moves] }, { key: "money", split: "3-2", label: W.opening.title, body: [opening, sources] }]
     : hasMoves ? [{ key: "moves", split: "2-1", label: W.moves.title, body: [moves, sources] }]
-    : hasOpening ? [{ key: "money", split: "1-1", label: W.opening.title, body: [opening, sources] }]
+    : hasOpening ? [{ key: "money", split: "3-2", label: W.opening.title, body: [opening, sources] }]
     : [{ key: "sources", split: "2-1", label: W.sources.title, body: [sources] }];
   const zones: Array<{ key: string; split: ZoneSplit; label: string; body: React.ReactNode[] }> = [
     { key: "head", split: "wide", label: W.title, body: [<Masthead key="head" W={W} place={place} choices={seed.choices} onPick={pick} busy={busy} failed={failed} />] },
