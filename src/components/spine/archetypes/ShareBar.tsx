@@ -82,7 +82,7 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
       {led && bracket ? (
         <div aria-hidden data-bracket className="relative mb-1 h-6">
           <span className="absolute bottom-0 h-2 rounded-t-[2px] border-x-2 border-t-2 border-[var(--c-ink2)]" style={{ left: 0, width: `${((leads[0].share + leads[1].share) / total) * 100}%` }} />
-          <span className="absolute bottom-3 whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]" style={{ left: `${((leads[0].share + leads[1].share) / total) * 50}%`, transform: "translateX(-50%)" }}>{bracket}</span>
+          <span className="absolute bottom-3 whitespace-nowrap text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]" style={{ left: `${((leads[0].share + leads[1].share) / total) * 50}%`, transform: "translateX(-50%)" }}>{bracket}</span>
         </div>
       ) : null}
       {/* A SLIM END ENDS SQUARE (2026-10-05, the page laws' COLUMN ENDS on the UK's household bar once its eating out became the
@@ -99,7 +99,7 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
           <div key={p.key} data-row={p.key} data-part-key={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2 ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] border border-[var(--c-border)]" style={{ background: colourOf(p) }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
-            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]" {...provAttrs(p.prov)}>{Math.round(p.share)}{unit}</span>
+            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink2)]" {...provAttrs(p.prov)}>{Math.round(p.share)}{unit}</span>
           </div>
         ))}
       </div>

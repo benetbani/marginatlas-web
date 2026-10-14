@@ -145,7 +145,7 @@ export function Marks({ label, children, className = "", ...rest }: { label: str
         {open ? (
           <>
             {active!.figure ? <span data-readout-figure-text="" className="fig block text-[length:var(--t-body)] font-semibold">{active!.figure}</span> : null}
-            {active!.words ? <span className="block text-[length:var(--t-micro)] opacity-80">{active!.words}</span> : null}
+            {active!.words ? <span className="block text-[length:var(--t-body)] opacity-80">{active!.words}</span> : null}
           </>
         ) : null}
       </div>

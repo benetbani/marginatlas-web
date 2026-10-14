@@ -48,14 +48,14 @@ export function SpendByAge({ id = "spend-by-age", data }: { id?: string; data: S
                 return (
                   <span key={b.key} data-wedge={b.key} data-part-key={b.key} data-readout-figure={`${Math.round(v)}%`} data-readout-words={`${bar.name}, ${b.label}`} className="relative flex h-full min-w-0.5 items-center justify-center overflow-hidden first:rounded-l-lg last:rounded-r-lg" style={{ width: `${v}%` }}>
                     <span aria-hidden className="absolute inset-0" style={tone(b.key, bar.money)} />
-                    {labelled ? <span className="relative text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]">{Math.round(v)}%</span> : null}
+                    {labelled ? <span className="relative text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink)]">{Math.round(v)}%</span> : null}
                   </span>
                 );
               })}
             </div>
           </div>
         ))}
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-body)] text-[var(--c-muted)]">
           {data.bands.map((b) => (
             <span key={b.key} data-part-key={b.key} className="inline-flex items-center gap-2">
               <span aria-hidden className="relative inline-block h-2.5 w-2.5 overflow-hidden rounded-sm border border-[var(--c-border)]"><span className="absolute inset-0" style={tone(b.key, false)} /></span>

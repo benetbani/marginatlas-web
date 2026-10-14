@@ -84,7 +84,7 @@ export function Ring({ value, figure, caption, accent = false, prov, size = "foc
           <span className={`fig ${lead ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-focal)]"} leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</span>
         </div>
       </div>
-      {caption ? <div data-mark-label className={row ? "max-w-[20ch] text-balance text-left text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]" : `mt-2 max-w-[22ch] text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${lead ? " text-balance" : ""}`}>{caption}</div> : null}
+      {caption ? <div data-mark-label className={row ? "max-w-[20ch] text-balance text-left text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]" : `mt-2 max-w-[22ch] text-center text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]${lead ? " text-balance" : ""}`}>{caption}</div> : null}
     </div>
   );
 }

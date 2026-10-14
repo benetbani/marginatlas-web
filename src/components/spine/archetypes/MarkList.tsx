@@ -229,7 +229,7 @@ const MARK_COL = "2.5rem";
    the order they are written (RankedBars.tsx paid for that lesson first). */
 const ROW = "grid gap-x-3";
 /* Column heads in sentence case (2026-09-25, his capitals ruling). */
-const HEAD_CLS = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
+const HEAD_CLS = "text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]";
 /* `py-0.5` on the name and on the figure alike: a name and a figure reserving
    the same vertical padding hold one row whatever either of them says. */
 const NAME_CLS = "min-w-0 py-0.5 text-[length:var(--t-body)] font-medium text-[var(--c-ink)]";
@@ -369,7 +369,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
                   on every row of a card with doors so the columns hold, and
                   the glyph only where the row has somewhere to go. */}
               {doors ? (
-                <span aria-hidden="true" className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.href ? <>&#8594;</> : null}</span>
+                <span aria-hidden="true" className="text-right text-[length:var(--t-body)] text-[var(--c-muted)]">{r.href ? <>&#8594;</> : null}</span>
               ) : null}
             </>
           );
@@ -405,11 +405,11 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
           and it reads after the list rather than before it. PART 7's fourth
           part is exactly this: "THE FOOT, where earned. One line, a coverage
           statement." */}
-      {withheldLine ? <p data-withheld-line="1" className="mt-3 text-[length:var(--t-micro)] text-[var(--c-muted)]">{withheldLine}</p> : null}
+      {withheldLine ? <p data-line="" data-withheld-line="1" className="mt-3 text-[length:var(--t-body)] text-[var(--c-muted)]">{withheldLine}</p> : null}
       {foot && foot.items.length > 0 ? (
         <div data-foot className="mt-3 border-t border-[var(--c-border)] pt-3">
           <CompanionRow items={foot.items} />
-          {foot.line ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
+          {foot.line ? <p data-line="" className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
         </div>
       ) : null}
     </Box>
@@ -453,7 +453,7 @@ function GroupedMarkList({ id, kicker, icon, tagged, headline, basis, head, grou
       ) : null}
       <span data-label className={NAME_CLS}>{r.name}</span>
       <Fig className="py-0.5 text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" prov={r.prov}>{fmt(r.value)}</Fig>
-      {doors ? <span aria-hidden="true" className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.href ? <>&#8594;</> : null}</span> : null}
+      {doors ? <span aria-hidden="true" className="text-right text-[length:var(--t-body)] text-[var(--c-muted)]">{r.href ? <>&#8594;</> : null}</span> : null}
     </>
   );
   return (

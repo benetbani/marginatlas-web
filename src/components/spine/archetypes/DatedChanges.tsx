@@ -39,7 +39,7 @@ function Row({ r, first }: { r: ChangeRow; first: boolean }) {
   return (
     <li data-row={r.key} className={`col-span-full grid max-w-none grid-cols-subgrid items-baseline gap-y-1 py-3 ${first ? "" : "border-t border-[var(--c-border)]"}`}>
       {/* `!font-normal`: the global .fig rule sets 600 after the utilities, and a date and a value before are read, not stressed. */}
-      <span className="fig col-span-full text-[length:var(--t-micro)] !font-normal leading-4 text-[var(--c-muted)] [@container(min-width:420px)]:col-span-1 [@container(min-width:420px)]:leading-5">{r.dateText}</span>
+      <span className="fig col-span-full text-[length:var(--t-body)] !font-normal leading-5 text-[var(--c-muted)] [@container(min-width:420px)]:col-span-1 [@container(min-width:420px)]:leading-5">{r.dateText}</span>
       <span data-label className="min-w-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">{r.item}</span>
       {/* LONG VALUES TAKE A LINE OF THEIR OWN UNDER THE ITEM ON A NARROW RUN (2026-10-04, the model laws' ROW LINE at 375): "over
           £50,000 to over £30,000" wrapped beside a two-line item, its second figure level with the item's second line; past 22

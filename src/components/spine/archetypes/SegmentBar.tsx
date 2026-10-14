@@ -62,7 +62,7 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
           <span data-rest-fill="" className="h-full min-w-0 flex-1" style={{ background: "var(--c-soft2)", boxShadow: "inset 0 0 0 1px var(--c-line-strong)" }} />
         </div>
         {part || rest ? (
-          <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" aria-hidden="true">
+          <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]" aria-hidden="true">
             <span data-part>{part}</span>
             {rest ? <span data-rest>{rest}</span> : null}
           </div>
@@ -79,7 +79,7 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
         <span className="flex items-center gap-2 whitespace-nowrap">
           <span className="text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
             {figure}
-            <span className="ml-1 text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{unit}</span>
+            <span className="ml-1 text-[length:var(--t-body)] font-normal text-[var(--c-muted)]">{unit}</span>
           </span>
           {chip}
         </span>
@@ -90,16 +90,16 @@ export function SegmentBar({ label, value, total = 100, figure, unit, chip, rest
         ))}
       </div>
       {ends ? (
-        <div data-ends className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+        <div data-ends data-type-allow="segment-ends" className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
           <span>{ends[0]}</span>
           <span>{ends[1]}</span>
         </div>
       ) : part ? (
-        <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+        <div className="mt-1 flex justify-between gap-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">
           <span data-part>{part}</span>
           {rest ? <span data-rest>{rest}</span> : null}
         </div>
-      ) : rest ? <div data-rest className="mt-1 text-right text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{rest}</div> : null}
+      ) : rest ? <div data-rest className="mt-1 text-right text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{rest}</div> : null}
     </div>
   );
 }

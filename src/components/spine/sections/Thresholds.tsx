@@ -42,7 +42,7 @@ export function Thresholds({ id = "thresholds", data, fill = false }: { id?: str
             <Ico id={r.icon} tone="terra" />
             <span className="min-w-0">
               <span data-label className="block text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
-              {r.note ? <span className="block text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{r.note}</span> : null}
+              {r.note ? <span className="block text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{r.note}</span> : null}
             </span>
             <Fig className="text-right text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{r.figure}</Fig>
           </li>

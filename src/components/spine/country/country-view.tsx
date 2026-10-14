@@ -201,7 +201,7 @@ function OnThisPage({ sections, chapters }: { sections: RailSection[]; chapters?
   }
   const link = (s: RailSection) => (
     <li key={s.id}>
-      <a href={`#${s.id}`} className="block max-w-[18ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]">
+      <a href={`#${s.id}`} className="block max-w-[18ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)] transition hover:text-[var(--terra-text)]">
         {s.label}
       </a>
     </li>
@@ -213,7 +213,7 @@ function OnThisPage({ sections, chapters }: { sections: RailSection[]; chapters?
       {groups.map((g, gi) =>
         g.chapter && chapters ? (
           <div key={`${g.chapter}-${gi}`} className="mt-4">
-            <div className="flex max-w-[20ch] gap-2 text-[length:var(--t-micro)] font-semibold leading-snug text-[var(--c-ink)]">
+            <div className="flex max-w-[20ch] gap-2 text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">
               <span className="tabular-nums text-[var(--c-muted)]">{chapters[g.chapter].index}</span>
               <span>{chapters[g.chapter].heading}</span>
             </div>
@@ -767,7 +767,7 @@ function PaymentsRing({ iso2, card }: { iso2: string; card: PaymentsCard }) {
             (shop sales) and the row's "Cash, all payments 8%" still read as one figure twice (the design review); read first, the
             caption says what the ring counts before the eye reaches a share. */}
         <div className="min-w-0">
-          <p data-basis="" className="mb-6 text-[length:var(--t-micro)] font-medium leading-4 text-[var(--c-ink2)]">{P.basis.replace("{period}", card.period)}</p>
+          <p data-basis="" className="mb-6 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink2)]">{P.basis.replace("{period}", card.period)}</p>
           <DonutStat parts={card.parts} center={pct(lead.share)} centerWords={P.centerWords.replace("{part}", lead.name.toLowerCase())} aria={`${COPY.banking.donut}: ${card.parts.map((p) => `${p.name} ${p.share}%`).join(", ")}`} />
         </div>
         <FactRows rows={rows} />
@@ -968,7 +968,7 @@ function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
      yet" line. The rent tiers left for the city page. */
   if (!costs) return null;
   const e = costs.cells.find((c) => c.key === "electricity") ?? null;
-  const level = (l: "high" | "medium" | "low" | null) => (l ? <span data-level={l} className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{COPY.heroBoard.levels[l]}</span> : null);
+  const level = (l: "high" | "medium" | "low" | null) => (l ? <span data-level={l} className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{COPY.heroBoard.levels[l]}</span> : null);
   const bare = !e && costs.livingOnCityScale == null;
   return (
     <Box id="running-costs">
@@ -985,7 +985,7 @@ function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
               <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{COPY.runningCosts.rows.electricity}</span>
               <span className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
                 {e.value}
-                <span className="ml-1 text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{COPY.runningCosts.units.kwh}</span>
+                <span className="ml-1 text-[length:var(--t-body)] font-normal text-[var(--c-muted)]">{COPY.runningCosts.units.kwh}</span>
               </span>
               {level(costs.levels.electricity) ?? <span aria-hidden="true" />}
             </div>
@@ -995,9 +995,9 @@ function RunningCosts({ costs }: { costs: RunningCostsData | null }) {
           ) : null}
         </div>
       )}
-      {costs.withheld.length > 0 && !bare ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.withheld.join(" ")}</p> : null}
+      {costs.withheld.length > 0 && !bare ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{costs.withheld.join(" ")}</p> : null}
       {costs.basis ? <Basis>{costs.basis}</Basis> : null}
-      {costs.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{costs.foot}</p> : null}
+      {costs.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{costs.foot}</p> : null}
     </Box>
   );
 }
@@ -1065,7 +1065,7 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false, rules = null }: {
       {shareAlone ? (
         <span data-pay="employer-share" className="mt-3 flex items-baseline gap-2">
           <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{addPct}%</Fig>
-          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{COPY.pay.employerShare}</span>
+          <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{COPY.pay.employerShare}</span>
         </span>
       ) : null}
       {/* THE LAW BEHIND THE COST (2026-10-04, the UK page reform): the hourly wage floor in the law's own pounds, the allowance off
@@ -1078,13 +1078,13 @@ function Hiring({ hiring, iso2, foot = true, hireCost = false, rules = null }: {
           {isNum(labour) ? (
             <span className="flex items-baseline gap-2">
               <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{labour}%</Fig>
-              <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of adults are in the labour force</span>
+              <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">of adults are in the labour force</span>
             </span>
           ) : null}
           {isNum(informal) ? (
             <span className="flex items-baseline gap-2">
               <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{informal}%</Fig>
-              <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">of the economy runs informal</span>
+              <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">of the economy runs informal</span>
             </span>
           ) : null}
         </div>
@@ -1303,7 +1303,7 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
           </div>
         )}
         <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[var(--c-border)] pt-3">
-          {buyers ? <span data-level="buyers" className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{buyers}</span> : null}
+          {buyers ? <span data-level="buyers" className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{buyers}</span> : null}
         </div>
       </Box>
     );
@@ -1340,7 +1340,7 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
         </div>
       ) : null}
       <Basis>{exit.basis}</Basis>
-      {exit.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.foot}</p> : null}
+      {exit.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{exit.foot}</p> : null}
     </Box>
   );
 }

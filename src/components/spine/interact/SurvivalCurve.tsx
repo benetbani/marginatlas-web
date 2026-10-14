@@ -96,12 +96,12 @@ export function SurvivalCurve({ id, country, regions, best, worst, words, start 
               <React.Fragment key={p.year}>
                 <span aria-hidden data-point={p.year} className={`absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-card)] ${isLast ? "h-3.5 w-3.5" : ""}`} style={{ left: `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%`, background: isLast ? "var(--terra)" : "var(--c-ink2)" }} />
                 {/* EVERY POINT PRINTS ITS SHARE, THE START AND THE LAST TOO (critique pass 2, fix round C2, item P1.5; pass 3, fix round D2, item P2.8; the card's figure stays the large 38%): read from the point, like every other, and stamped from it (provAttrs, fix round F1, group G2). The last label is right-aligned to the plot's edge and the start's left-aligned to it, so neither leaves the box. */}
-                <span data-mark-label className={`absolute ${isLast ? "-translate-x-full" : isFirst ? "" : "-translate-x-1/2"} -translate-y-full pb-2 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]`} style={{ left: isLast ? "100%" : isFirst ? "0%" : `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }} {...provAttrs(p.prov)}>{Math.round(p.pct)}%</span>
+                <span data-mark-label className={`absolute ${isLast ? "-translate-x-full" : isFirst ? "" : "-translate-x-1/2"} -translate-y-full pb-2 text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink2)]`} style={{ left: isLast ? "100%" : isFirst ? "0%" : `${Math.max(2, Math.min(98, x(p.year)))}%`, top: `${y(p.pct)}%` }} {...provAttrs(p.prov)}>{Math.round(p.pct)}%</span>
               </React.Fragment>
             );
           })}
         </div>
-        <div aria-hidden className="relative mt-2 h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        <div aria-hidden data-type-allow="survival-axis" className="relative mt-2 h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]">
           {pts.map((p) => (
             <span key={p.year} className="absolute whitespace-nowrap" style={{ left: `${Math.min(100, Math.max(0, x(p.year)))}%`, transform: `translateX(-${Math.min(100, Math.max(0, x(p.year)))}%)` }}>
               {p.year === 0 ? W.start : W.year.replace("{n}", String(p.year))}
@@ -109,7 +109,7 @@ export function SurvivalCurve({ id, country, regions, best, worst, words, start 
           ))}
         </div>
         {region ? (
-          <div aria-hidden className="mt-2 flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+          <div aria-hidden className="mt-2 flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-muted)]">
             <span className="inline-block w-4 border-t-2 border-dashed border-[var(--c-ink2)]" />
             {W.country}
           </div>
@@ -126,13 +126,13 @@ export function SurvivalCurve({ id, country, regions, best, worst, words, start 
             <span aria-hidden data-tick className="absolute -top-1 h-4 w-0.5 -translate-x-1/2 rounded-full bg-[var(--c-ink)]" style={{ left: `${Math.max(2, Math.min(98, span(country[country.length - 1].pct)))}%` }} />
             {region ? <span aria-hidden data-region-dot className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-surface)] bg-[var(--terra)]" style={{ left: `${Math.max(2, Math.min(98, span(last.pct)))}%` }} /> : null}
           </div>
-          <div className="mt-2 grid grid-cols-2 gap-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-ink2)]">
+          <div className="mt-2 grid grid-cols-2 gap-4 text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">
             <span><span className="fig font-semibold text-[var(--c-ink)]">{Math.round(worst.pct)}%</span> {worst.name}</span>
             <span className="text-right"><span className="fig font-semibold text-[var(--c-ink)]">{Math.round(best.pct)}%</span> {best.name}</span>
           </div>
           {/* THE MARKS NAMED (the goal of 2026-09-26, M6): the tick is the country's year and the dot the chosen region's, and
               nothing said so; the key names them once, in the job market's and the margins card's form. */}
-          <div data-ref-key className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+          <div data-ref-key className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[length:var(--t-body)] text-[var(--c-muted)]">
             <span className="inline-flex items-center gap-2"><span aria-hidden className="h-3 w-0.5 rounded-full bg-[var(--c-ink)]" />{W.country}</span>
             {region ? <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2.5 w-2.5 rounded-full bg-[var(--terra)]" />{region.name}</span> : null}
           </div>

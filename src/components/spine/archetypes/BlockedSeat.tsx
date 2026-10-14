@@ -24,7 +24,7 @@
  *    check_model_laws.mjs's FOCAL, "8.2: a seat holds no figure by its law").
  *  - NO SAMPLE MARK. Nothing here is modelled and nothing is measured; a mark
  *    would assert a figure the card does not print.
- *  - THE FOOT: one line at `--t-micro` under a hairline, naming the
+ *  - THE FOOT: one line at `--t-body` under a hairline, naming the
  *    requirement the seat waits on (DATA-REQUIREMENTS.md, by item). It sits
  *    directly under the line, the way every foot on the site sits under its
  *    content (RangeStrip's extra figure, the spectra tables' foot); the card
@@ -56,7 +56,7 @@ export function BlockedSeat({ id, icon, kicker, line, foot }: { id: string; icon
       <Rail icon={icon} kicker={kicker} />
       <p data-seat-line className="text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{line}</p>
       {/* NO FOOT NAMING OUR WORK QUEUE (his correction of 2026-09-24, evening): "Waits on DATA-REQUIREMENTS item 8" reached readers on every drawn seat; the foot draws only when it has words for a reader. */}
-      {foot ? <div data-foot className="mt-5 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</div> : null}
+      {foot ? <div data-foot className="mt-5 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</div> : null}
     </Box>
   );
 }

@@ -133,10 +133,10 @@ export function FieldCard({ id = "field", market }: { id?: string; market: Marke
       <Rail icon="competition" kicker={COPY.industryField.kicker} sample />
       <KvGrid cells={cells} />
       {fieldWithheld(market).map((line) => (
-        <p key={line} className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{line}</p>
+        <p data-line="" key={line} className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{line}</p>
       ))}
       <Basis>{COPY.industryField.basis}</Basis>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.industryField.foot}</p>
+      <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{COPY.industryField.foot}</p>
     </Box>
   );
 }

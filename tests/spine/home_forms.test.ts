@@ -146,7 +146,7 @@ check("a ring's caption may hold a stamped figure", /data-mark-label="true"[^>]*
 /* THE LEAD RING'S CAPTION BALANCES ITS LINES (fix round 2b; the Task 4 review's concern 1). "in 100 names found in the register" in the
    22ch box broke as "in 100 names found in the" and "register" at every width. Only the lead ring, which only the home's joins draws,
    takes text-balance, so no other ring's caption moves. */
-check("a lead ring's caption balances its lines (text-balance on its element), and a default ring's caption keeps its classes without it", /<div data-mark-label="true" class="[^"]*\btext-balance\b[^"]*">/.test(lead) && /<div data-mark-label="true" class="mt-2 max-w-\[22ch\] text-center text-\[length:var\(--t-micro\)\] leading-snug text-\[var\(--c-muted\)\]">of new firms, after 5 years<\/div>/.test(big), RING, "Ring size lead: text-balance on the caption's element, and nothing added to a default ring's caption");
+check("a lead ring's caption balances its lines (text-balance on its element), and a default ring's caption keeps its classes without it", /<div data-mark-label="true" class="[^"]*\btext-balance\b[^"]*">/.test(lead) && /<div data-mark-label="true" class="mt-2 max-w-\[22ch\] text-center text-\[length:var\(--t-body\)\] leading-snug text-\[var\(--c-muted\)\]">of new firms, after 5 years<\/div>/.test(big), RING, "Ring size lead: text-balance on the caption's element, and nothing added to a default ring's caption");
 
 /* RING'S ROW LAYOUT (critique pass 2, P0.1). The joins' ring stood centred in a left-aligned card with its caption centred under it, and
    the card's spare height opened above it. `layout="row"` draws the 96px ring at the left and the caption beside it, left-aligned at 14

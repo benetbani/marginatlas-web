@@ -123,7 +123,7 @@ export function ClearsCard({ id = "clears", clears }: { id?: string; clears: Cle
         <Ring value={clears.value} figure={clears.figure} accent={clears.accent} />
         <div>
           {clears.basis ? <p className="max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{clears.basis}</p> : null}
-          {clears.foot ? <p className="mt-2 max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{clears.foot}</p> : null}
+          {clears.foot ? <p data-line="" className="mt-2 max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{clears.foot}</p> : null}
         </div>
       </div>
     </Box>
@@ -158,7 +158,7 @@ export function LastsCard({ id = "lasts", lasts, list = false }: { id?: string; 
         {list ? <CountUnits className="mt-auto pt-5" whole={100} filled={lasts.values.yr5} columns={20} columnsWide={50} aria={`${lasts.values.yr5} ${COPY.tradeLasts.drawn}`} /> : null}
       </div>
       {lasts.basis ? <Basis>{lasts.basis}</Basis> : null}
-      {lasts.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{lasts.foot}</p> : null}
+      {lasts.foot ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{lasts.foot}</p> : null}
     </Box>
   );
 }
@@ -188,7 +188,7 @@ export function MixCard({ id = "mix", mix }: { id?: string; mix: MixData | null 
       <Basis>{mix.basis}</Basis>
       {/* THE FOOT IS THE CARD'S ONE LINE WHEN THE COPY KEEPS NO BASIS (tradeMix.basis and industryMix.basis are ""; the kit's Basis draws nothing for an empty line): a line under the donut
           stands the group step, 24, under it, and under a basis it is the foot and stands 12 (plan 2026-10-12 rhythm-air-inside, Task 2C). */}
-      <p data-foot={mix.basis ? "" : undefined} className={`${mix.basis ? "mt-3" : "mt-6"} text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]`}>{mix.foot}</p>
+      <p data-line="" data-foot={mix.basis ? "" : undefined} className={`${mix.basis ? "mt-3" : "mt-6"} text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]`}>{mix.foot}</p>
     </Box>
   );
 }

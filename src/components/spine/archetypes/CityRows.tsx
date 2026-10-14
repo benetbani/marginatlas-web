@@ -91,7 +91,7 @@ export function CityRowsHead({ children }: { children: React.ReactNode }) {
   return (
     <div data-column-head="" className={`pointer-events-none absolute inset-x-0 top-0 hidden h-7 md:grid md:items-center ${CITY_COLUMNS}`}>
       <span className="col-start-3 whitespace-nowrap text-[length:var(--t-head)] font-semibold leading-7">
-        <span className="text-[length:var(--t-micro)] font-semibold leading-none text-[var(--c-muted)]">{children}</span>
+        <span className="text-[length:var(--t-body)] font-semibold leading-none tracking-tight text-[var(--c-muted)]">{children}</span>
       </span>
     </div>
   );

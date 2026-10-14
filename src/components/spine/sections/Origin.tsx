@@ -32,7 +32,7 @@ export function Origin({ id = "origin", data }: { id?: string; data: OriginData 
             {data.places.map((p) => (
               <div key={p.name} data-row={p.name} className="flex flex-col items-center gap-2">
                 <Pie share={p.pct / 100} tone={p.focal ? "terra" : "ink"} aria={`${p.name}: ${p.pct}% born abroad`} className={p.focal ? "h-24 w-24" : "h-16 w-16"} />
-                <span data-label className="text-[length:var(--t-micro)] leading-tight text-[var(--c-ink2)]">
+                <span data-label className="text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">
                   {p.name}
                   {p.focal ? null : <> <Fig className="font-semibold text-[var(--c-ink)]">{p.pct}%</Fig></>}
                 </span>
@@ -45,7 +45,7 @@ export function Origin({ id = "origin", data }: { id?: string; data: OriginData 
                 <div key={v.name}>
                   <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{v.name.charAt(0).toUpperCase() + v.name.slice(1)}</div>
                   <Fig className="mt-1 block text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{v.millions}M</Fig>
-                  <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{v.overnight ? O.overnight : O.visits}</div>
+                  <div className="text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{v.overnight ? O.overnight : O.visits}</div>
                 </div>
               ))}
             </div>

@@ -56,9 +56,9 @@ export function CoverPicker({ covers, words, fill = false }: { covers: Cover[]; 
                 <div className="min-w-0">
                   <label htmlFor={`cover-${i}`} data-label className={`block text-[length:var(--t-body)] leading-tight ${c.required ? "cursor-default" : "cursor-pointer"} ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)]"}`}>
                     {c.label}
-                    {c.required ? <>{" "}<span className="ml-1 rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 align-middle text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{words.required}</span></> : null}
+                    {c.required ? <>{" "}<span className="ml-1 rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 align-middle text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{words.required}</span></> : null}
                   </label>
-                  {c.required && words.minimum ? <span className="mt-1 block text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{words.minimum}</span> : null}
+                  {c.required && words.minimum ? <span className="mt-1 block text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{words.minimum}</span> : null}
                 </div>
                 <span className={`fig text-right text-[length:var(--t-body)] font-semibold ${on ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] line-through decoration-[var(--c-line-strong)]"}`}>{usd(c.usd)} {words.aYear}</span>
                 <span className="relative col-span-full mt-0.5 block h-4 rounded-full [@container(min-width:420px)]:col-span-1" role="img" aria-label={`${c.label}: ${usd(c.usd)} ${words.aYear}`} style={{ opacity: on ? 1 : 0.35 }}>

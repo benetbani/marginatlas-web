@@ -153,7 +153,7 @@ export function CityCards({
     <div data-archetype="city-cards" data-look="field" data-form={rows ? "rows" : "grid"} data-count={cards.length} data-fill={fill ? "1" : undefined} className={fill ? "flex flex-1 flex-col" : undefined}>
       {pages > 1 ? (
         <div className="mb-2 flex items-center justify-end gap-2">
-          <span className="mr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
+          <span className="mr-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
           <button type="button" aria-label={prevLabel} disabled={cur === 0} onClick={() => setPage((p) => Math.max(0, p - 1))} className={btn}><span aria-hidden>&#8592;</span></button>
           <button type="button" aria-label={nextLabel} disabled={cur >= pages - 1} onClick={() => setPage((p) => Math.min(pages - 1, p + 1))} className={btn}><span aria-hidden>&#8594;</span></button>
         </div>
@@ -180,7 +180,7 @@ export function CityCards({
           the card): the all-link is the card's door, not part of the basis line; the line-rule gate reads the group under a basis at 24. */}
       {allLabel && allHref ? (
         <div className="mt-6 text-right">
-          <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
+          <a href={allHref} className="tap-y inline-block text-[length:var(--t-body)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
         </div>
       ) : null}
     </div>
@@ -224,7 +224,7 @@ function Card({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => st
         >
           {card.name}
         </span>
-        {card.region ? <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}
+        {card.region ? <span className="block truncate text-[length:var(--t-body)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}
         <span className="mt-auto" />
         <PayTrack part={card.payOfTop} />
         <span className="flex items-baseline justify-between gap-2 pt-2">
@@ -278,7 +278,7 @@ function Row({ card, fmt, index = 0 }: { card: CityCard; fmt: (v: number) => str
       <Photo card={card} index={index} />
       <span className="relative min-w-0">
         <span data-city-name className="block text-[length:var(--t-head)] font-semibold leading-[1.15] tracking-tight text-[var(--c-ink)]" style={{ overflowWrap: "normal" }}>{card.name}</span>
-        {card.region ? <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}
+        {card.region ? <span className="block truncate text-[length:var(--t-body)] leading-snug text-[var(--c-ink)]">{card.region}</span> : null}
       </span>
       <span className="fig font-serif tabular-figures relative text-[length:var(--t-body)] leading-none text-[var(--c-ink)]" {...provAttrs(card.payProv)}>
         {typeof card.payUsd === "number" ? fmt(card.payUsd) : ""}

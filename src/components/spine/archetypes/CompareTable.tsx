@@ -61,7 +61,7 @@
  *    builder returns null under two rows and the seat there is BlockedSeat).
  *    A one-row table marks no best value (that needs two figures), so the
  *    home row's only marks are its tint and its weight.
- *  - `note`: one line at `--t-micro` in `--c-muted` under the table, before
+ *  - `note`: one line at `--t-body` in `--c-muted` under the table, before
  *    the caveat, for a dash the card has to explain once (PART 5's blanks;
  *    the team card's idiom for its dashed pay column).
  *  - `flags`: off, no flag is drawn and the names sit flush to the card's
@@ -174,11 +174,12 @@ const PHONE_GRID: Record<number, string> = {
   2: "grid-cols-[repeat(2,auto)] justify-between gap-x-3",
   3: "grid-cols-[repeat(3,auto)] justify-between gap-x-3",
   4: "grid-cols-[repeat(4,auto)] justify-between gap-x-3",
-  /* Under 340px of table (a 360 phone, the sheet's 301px card) the gap is 8 and the best figure is underlined in place of its
-     tick (renderCell), so five figures still stand on one line: measured 283px at the narrowest. Under 280 (a card page at 320,
+  /* Under 360px of table the gap is 8 (the heads at 14, the type floor of plan 2026-10-12: five figures under five heads need 351px at a gap of 12
+     and 335 at 8, measured on the UK peers at a phone's 343), and under 340px (a 360 phone) the best figure is underlined in place of its
+     tick (renderCell), so five figures still stand on one line: measured 328px at the narrowest. Under 330 (the sheet's 301px card, a card page at 320,
      about 230px) five cannot stand on one line, so they wrap three and two, each under its head, and nothing scrolls sideways
      (the code review of 2026-10-04 measured the German page 6px over at 320). */
-  5: "grid-cols-[repeat(5,auto)] justify-between gap-x-3 [@container(max-width:339px)]:gap-x-2 [@container(max-width:279px)]:grid-cols-[repeat(3,auto)]",
+  5: "grid-cols-[repeat(5,auto)] justify-between gap-x-3 [@container(max-width:359px)]:gap-x-2 [@container(max-width:329px)]:grid-cols-[repeat(3,auto)]",
   6: "grid-cols-3 gap-x-3",
 };
 /* ON THE BAND PAGE, up to three figures the name keeps the first column (SortTable's nameInline), so the row is a table row; on a
@@ -278,7 +279,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
             {flags ? <CountryFlag iso2={r.iso2} className="w-7 shrink-0" /> : null}
             {r.href ? (
               <a href={r.href} data-row={r.key ?? r.iso2} data-lands={r.lands} className="tap-y min-w-0 no-underline">
-                <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-[3px] after:ml-1.5 after:text-[length:var(--t-micro)] after:text-[var(--c-muted)] after:no-underline after:content-['→'] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
+                <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-[3px] after:ml-1.5 after:text-[length:var(--t-body)] after:text-[var(--c-muted)] after:no-underline after:content-['→'] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
               </a>
             ) : (
               <span data-label className={`min-w-0 break-words leading-tight text-[length:var(--t-body)] text-[var(--c-ink)] ${r.home ? "font-semibold" : ""}`}>{r.name}</span>
@@ -293,17 +294,20 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
       </>
     ),
     /* THE PHONE ROW IS CELLS OF THE TABLE'S ONE GRID (SortTable's phone form): the name across the whole row, then each figure
-       in its own column, so a figure can never drift from the head above it. 14 on 20, tabular, right-aligned. */
+       in its own column, so a figure can never drift from the head above it. 14 on 20, tabular, right-aligned. THE NAME IS THE ROW'S
+       BASELINE (plan 2026-10-12, Task 3): the flag, an image, is the flex row's first item and so was the baseline the figures hung from, 6px
+       under the name's line, and a name that wrapped ("Los / Angeles" in a half-width card) left its figure off the name's first line (the
+       model laws' ROW LINE); the name takes the baseline, the flag stays centred. */
     phone: (
       <>
         <span className={`${inline ? "" : "col-span-full "}flex min-w-0 items-center gap-2`}>
           {flags ? <CountryFlag iso2={r.iso2} className="w-6 shrink-0" /> : null}
           {r.href ? (
-            <a href={r.href} data-row={r.key ?? r.iso2} data-lands={r.lands} className="tap-y no-underline">
-              <span data-label className={`text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-[3px] after:ml-1.5 after:text-[length:var(--t-micro)] after:text-[var(--c-muted)] after:no-underline after:content-['→'] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+            <a href={r.href} data-row={r.key ?? r.iso2} data-lands={r.lands} className="tap-y self-baseline no-underline">
+              <span data-label className={`text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] underline decoration-[var(--c-line-strong)] underline-offset-[3px] after:ml-1.5 after:text-[length:var(--t-body)] after:text-[var(--c-muted)] after:no-underline after:content-['→'] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
             </a>
           ) : (
-            <span data-label className={`text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
+            <span data-label className={`self-baseline text-[length:var(--t-body)] leading-5 text-[var(--c-ink)] ${r.home ? "font-semibold" : "font-medium"}`}>{r.name}</span>
           )}
         </span>
         {columns.map((c) => (
@@ -335,8 +339,8 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
         </div>
         {/* The stated line for the rows the table does not hold, at the lead rung where those rows would stand (the header's SEATED TABLE). */}
         {withheld ? <p data-withheld-line="rows" className="mt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{withheld}</p> : null}
-        {note ? <p className="mt-3 text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
-        {caveat ? <p className={`${note ? "mt-1" : "mt-3"} text-balance text-[length:var(--t-micro)] text-[var(--c-muted)]`}>{caveat}</p> : null}
+        {note ? <p data-line="" className="mt-3 text-balance text-[length:var(--t-body)] text-[var(--c-muted)]">{note}</p> : null}
+        {caveat ? <p data-line="" className={`${note ? "mt-1" : "mt-3"} text-balance text-[length:var(--t-body)] text-[var(--c-muted)]`}>{caveat}</p> : null}
       </Box>
     </div>
   );

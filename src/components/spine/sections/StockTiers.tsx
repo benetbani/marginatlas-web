@@ -36,7 +36,7 @@ const MARKS: Record<StockTierKey, number> = { budget: 1, mid: 2, premium: 3, lux
 function PriceMark({ tier }: { tier: StockTierKey }) {
   const n = MARKS[tier];
   return (
-    <span aria-hidden data-price-mark className="text-[length:var(--t-micro)] font-semibold tracking-wide">
+    <span aria-hidden data-price-mark className="text-[length:var(--t-body)] font-semibold tracking-wide">
       {[1, 2, 3, 4].map((i) => (
         <span key={i} style={{ color: i <= n ? "var(--c-ink2)" : "var(--c-line-strong)" }}>$</span>
       ))}
@@ -75,7 +75,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
           <Ico id={r.icon} tone="terra" />
           <span className="min-w-0">
             <span data-label className="block truncate text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
-            <span className="block text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">&times;{r.qty}</span>
+            <span className="block text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">&times;{r.qty}</span>
           </span>
         </span>
         {kit.tiers.map((t) => {
@@ -83,7 +83,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
           return (
             <span key={t.key} className="min-w-0">
               <Fig className="block text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{dollars(l.usd)}</Fig>
-              <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" title={l.name}>{l.name}</span>
+              <span className="block truncate text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]" title={l.name}>{l.name}</span>
             </span>
           );
         })}
@@ -150,7 +150,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                   <Ico id={l.icon} tone="terra" />
                   <span className="min-w-0">
                     <span data-label className="block text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{l.label} <span className="text-[var(--c-muted)]">&times;{l.qty}</span></span>
-                    <span className="block truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{l.name}</span>
+                    <span className="block truncate text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{l.name}</span>
                   </span>
                   <Fig className="text-right text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{dollars(l.usd)}</Fig>
                 </li>

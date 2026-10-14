@@ -33,14 +33,14 @@ export function LoanLever({ min, max, rate, termMin, termMax, words }: { min: nu
         <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{W.label}</span>
         {/* The lead rung, 16, under the card's figure at 30 (PART 4: nothing between 16 and 30 in a card that holds a 30). */}
         <span aria-live="polite" className="fig text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{usd(monthly)}</span>
-        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{W.perMonth}</span>
+        <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{W.perMonth}</span>
       </div>
       {/* THE TOTAL IS A FIGURE, NOT A SENTENCE (2026-09-26, the plain-copy law of one supporting line a card, which the sentence
           "$40K repaid over 5 years" broke): what the years cost in all, under the month's figure, so a longer term reads at once as a
           smaller month and a larger total, the trade the lever exists to show. */}
       <div className="mt-1 flex items-baseline gap-2">
         <span data-loan-total className="fig text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{usd(monthly * n)}</span>
-        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{W.total}</span>
+        <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{W.total}</span>
       </div>
       </div>
       <div className="flex flex-col gap-3">
@@ -62,13 +62,13 @@ export function LoanLever({ min, max, rate, termMin, termMax, words }: { min: nu
                   if (e.key === "ArrowRight" || e.key === "ArrowUp") { e.preventDefault(); setYears(terms[Math.min(terms.length - 1, i + 1)]); }
                   else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { e.preventDefault(); setYears(terms[Math.max(0, i - 1)]); }
                 }}
-                className={`tap-y min-h-6 min-w-8 rounded-sm px-2 py-1 text-[length:var(--t-micro)] font-semibold tabular-nums focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${t === years ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-subtle" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
+                className={`tap-y min-h-6 min-w-8 rounded-sm px-2 py-1 text-[length:var(--t-body)] font-semibold tabular-nums focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${t === years ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-subtle" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
               >
                 {t}
               </button>
             ))}
           </div>
-          <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{W.yearsUnit}</span>
+          <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{W.yearsUnit}</span>
         </div>
       </div>
       </div>

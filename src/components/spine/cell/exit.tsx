@@ -154,7 +154,7 @@ export function WorthCard({ id = "worth", worth }: { id?: string; worth: WorthDa
       {worth.state === "strip" && worth.basis ? (
         <div>
           {worth.basis ? <Basis>{worth.basis}</Basis> : null}
-          {worth.note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{worth.note}</p> : null}
+          {worth.note ? <p data-line="" className="mt-0.5 text-[length:var(--t-body)] text-[var(--c-muted)]">{worth.note}</p> : null}
         </div>
       ) : null}
     </Box>
@@ -187,7 +187,7 @@ export function CustomersCard({ id = "customers", customers }: { id?: string; cu
         <WorkedFigure label={C.yearLabel} figure={customers.year.figure} working={customers.cells.map((c) => ({ figure: String(c.value), words: c.label }))} />
       </div>
       {customers.basis ? <Basis>{customers.basis}</Basis> : null}
-      {customers.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{customers.foot}</p> : null}
+      {customers.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{customers.foot}</p> : null}
     </Box>
   );
 }

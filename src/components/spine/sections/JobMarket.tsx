@@ -40,14 +40,14 @@ export function JobMarket({ id = "job-market", data }: { id?: string; data: JobM
             </div>
           </div>
         ))}
-        <div aria-hidden className="flex justify-between text-[length:var(--t-micro)] tabular-nums text-[var(--c-muted)]">
+        <div aria-hidden data-type-allow="jobs-axis" className="flex justify-between text-[length:var(--t-micro)] tabular-nums text-[var(--c-muted)]">
           <span>0%</span>
           <span>{top}%</span>
         </div>
         {/* THE TICK NAMED (the goal of 2026-09-26, M6): every track carries the whole country's rate as a tick, and nothing said so;
             the key says it once, in the margins card's form (BarList's reference key), with the rate's own label, never its figure
             again (the figure is the card's). */}
-        <div data-ref-key className="flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        <div data-ref-key className="flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-muted)]">
           <span aria-hidden className="h-3 w-0.5 rounded-full bg-[var(--c-ink)]" />
           {all.label}
         </div>
@@ -57,7 +57,7 @@ export function JobMarket({ id = "job-market", data }: { id?: string; data: JobM
           <div>
             <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{s.label}</div>
             <Fig className="mt-1 block text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{s.vacancies}</Fig>
-            <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{J.vacancies}</div>
+            <div className="text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{J.vacancies}</div>
           </div>
           <div>
             <div aria-hidden className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">&nbsp;</div>
@@ -65,7 +65,7 @@ export function JobMarket({ id = "job-market", data }: { id?: string; data: JobM
               <span aria-hidden className="mr-1 text-[var(--c-ink2)]">{s.payrollChange < 0 ? "↓" : "↑"}</span>
               {Math.abs(s.payrollChange)}%
             </Fig>
-            <div className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{J.payroll}</div>
+            <div className="text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{J.payroll}</div>
           </div>
         </div>
       ) : null}

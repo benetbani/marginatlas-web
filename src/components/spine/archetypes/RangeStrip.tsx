@@ -151,7 +151,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
         <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{m.label}</div>
         <Fig className={`mt-1 block font-semibold leading-none ${m.lead ? "text-[length:var(--t-focal)]" : "text-[length:var(--t-head)]"} ${m.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={m.prov}>{fmt(m.value)}</Fig>
         {basis ? <Basis>{basis}</Basis> : null}
-        {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
+        {note ? <p data-line="" className="mt-0.5 text-[length:var(--t-body)] text-[var(--c-muted)]">{note}</p> : null}
         {extra ? <Extra extra={extra} /> : null}
       </div>
     );
@@ -213,7 +213,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
           {/* each mark's name, then its figure under it, both over the tick */}
           {placed.map((p, i) => (
             <React.Fragment key={p.m.key}>
-              <div data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) }}>{p.m.label}</div>
+              <div data-mark-label={p.m.key} data-type-allow="strip-marks" className="absolute whitespace-nowrap text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) }}>{p.m.label}</div>
               <div data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) + NAME_H + NAME_GAP }}>
                 <Fig className={figClass(p.m)} prov={p.m.prov}>{fmt(p.m.value)}</Fig>
               </div>
@@ -231,12 +231,12 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
           {rounds.map((v) => (
             <React.Fragment key={`r-${v}`}>
               <div aria-hidden data-scale-tick className="absolute w-px -translate-x-1/2 bg-[var(--c-ink2)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1, height: ROUND_TICK }} />
-              <div aria-hidden data-scale-label className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1 + ROUND_TICK + ROUND_GAP }}>{roundLabel(fmt, v)}</div>
+              <div aria-hidden data-scale-label data-type-allow="strip-scale" className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: track + 1 + ROUND_TICK + ROUND_GAP }}>{roundLabel(fmt, v)}</div>
             </React.Fragment>
           ))}
         </div>
         {basis ? <Basis>{basis}</Basis> : null}
-        {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
+        {note ? <p data-line="" className="mt-0.5 text-[length:var(--t-body)] text-[var(--c-muted)]">{note}</p> : null}
         {extra ? <Extra extra={extra} /> : null}
       </div>
     );
@@ -259,16 +259,16 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
         {rounds.map((v) => (
           <React.Fragment key={`r-${v}`}>
             <div aria-hidden data-scale-tick className="absolute h-1.5 w-px -translate-x-1/2 bg-[var(--c-line-strong)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: (twoRows ? 48 : 36) + shift + 1 }} />
-            <div aria-hidden data-scale-label className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: (twoRows ? 48 : 36) + shift + 9 }}>{roundLabel(fmt, v)}</div>
+            <div aria-hidden data-scale-label data-type-allow="strip-scale" className="absolute -translate-x-1/2 whitespace-nowrap text-[length:var(--t-micro)] leading-none tabular-nums text-[var(--c-muted)]" style={{ left: `${Math.min(100 - PAD, Math.max(PAD, pos(v)))}%`, top: (twoRows ? 48 : 36) + shift + 9 }}>{roundLabel(fmt, v)}</div>
           </React.Fragment>
         ))}
         {/* the names, under their ticks, stepping to a second row when crowded */}
         {placed.map((p, i) => (
-          <div key={`l-${p.m.key}`} data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ ...align(p.x), top: (twoRows ? 60 : 48) + shift + scaleRow + rows[i] * 18 }}>{p.m.label}</div>
+          <div key={`l-${p.m.key}`} data-mark-label={p.m.key} data-type-allow="strip-marks" className="absolute whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ ...align(p.x), top: (twoRows ? 60 : 48) + shift + scaleRow + rows[i] * 18 }}>{p.m.label}</div>
         ))}
       </div>
       {basis ? <Basis>{basis}</Basis> : null}
-      {note ? <p className="mt-0.5 text-[length:var(--t-micro)] text-[var(--c-muted)]">{note}</p> : null}
+      {note ? <p data-line="" className="mt-0.5 text-[length:var(--t-body)] text-[var(--c-muted)]">{note}</p> : null}
       {extra ? <Extra extra={extra} /> : null}
     </div>
   );
@@ -278,7 +278,7 @@ function Extra({ extra }: { extra: { value: string; label: string } }) {
   return (
     <div className="mt-3 flex flex-wrap items-baseline gap-x-2 border-t border-[var(--c-border)] pt-3">
       <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{extra.value}</Fig>
-      <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{extra.label}</span>
+      <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{extra.label}</span>
     </div>
   );
 }

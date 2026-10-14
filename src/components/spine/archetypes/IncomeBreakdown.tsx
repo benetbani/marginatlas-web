@@ -218,7 +218,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
       ) : null}
       {withheld && !costsOnly ? (
         <>
-          {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+          {foot ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           {detail}
         </>
       ) : costsOnly ? (
@@ -240,10 +240,10 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           </div>
           <div className="mt-3 [container-type:inline-size] [@container(min-width:640px)]:col-start-2 [@container(min-width:640px)]:row-span-2 [@container(min-width:640px)]:row-start-1 [@container(min-width:640px)]:mt-0 [@container(min-width:640px)]:max-w-[18rem]">
             {/* The legend's head says whose shares these are (a label, the tables' head style): of the costs, never of sales. */}
-            <div data-mix-head className="mb-2 text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{COPY.incomeBreakdown.costsHead}</div>
+            <div data-mix-head className="mb-2 text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{COPY.incomeBreakdown.costsHead}</div>
             <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
               {mixLive.map((s, i) => (
-                <span key={s.key} data-mix-legend-key={s.key} data-part-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+                <span key={s.key} data-mix-legend-key={s.key} data-part-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-body)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
                   <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
                   <span data-label className="truncate">{s.label}</span>
                   <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{mixRounded[s.key]}%</Fig>
@@ -253,7 +253,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           </div>
           {foot || detail ? (
             <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-2">
-              {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+              {foot ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
               {detail}
             </div>
           ) : null}
@@ -338,13 +338,13 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               measured). */}
           <div className="grid grid-cols-1 gap-x-4 divide-y divide-[var(--c-border)] [@container(min-width:360px)]:grid-cols-2 [@container(min-width:360px)]:gap-y-1.5 [@container(min-width:360px)]:divide-y-0">
             {live.map((s, i) => (
-              <span key={s.key} data-legend-key={s.key} data-part-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+              <span key={s.key} data-legend-key={s.key} data-part-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-body)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
                 <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
                 <span data-label className="truncate">{s.label}</span>
                 <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
               </span>
             ))}
-            <span data-legend-key={NET_KEY} data-part-key={NET_KEY} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-micro)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
+            <span data-legend-key={NET_KEY} data-part-key={NET_KEY} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-body)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
               <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: "var(--c-ink)" }} />
               <span data-label className="truncate">{netLabel}</span>
               <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[NET_KEY]}%</Fig>
@@ -353,7 +353,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           </div>
           {foot || detail ? (
             <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-2">
-              {foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+              {foot ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
               {detail}
             </div>
           ) : null}

@@ -132,10 +132,10 @@ export function OpenCard({ id = "open", open }: { id?: string; open: IndustryOpe
           is the reserve's one condition. */}
       <KvGrid cells={open.cells} labelReserve="row" />
       {open.withheldLines.map((line) => (
-        <p key={line} className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{line}</p>
+        <p data-line="" key={line} className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{line}</p>
       ))}
       <Basis>{open.basis}</Basis>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.foot}</p>
+      <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{open.foot}</p>
       {open.detail ? <DetailPanel name={`detail-${id}`} summary={open.detail.summary} rows={open.detail.rows} withheldLine={open.detail.withheldLine} /> : null}
     </Box>
   );

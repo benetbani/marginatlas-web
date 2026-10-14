@@ -47,14 +47,14 @@ export function AgeMix({ id = "age-mix", data }: { id?: string; data: AgeMixData
                 return (
                   <span key={b.key} data-wedge={b.key} data-part-key={b.key} data-readout-figure={`${Math.round(b.pct)}%`} data-readout-words={`${bar.name.charAt(0).toUpperCase() + bar.name.slice(1)}, ${b.label}`} className="relative flex h-full min-w-0.5 items-center justify-center overflow-hidden first:rounded-l-lg last:rounded-r-lg" style={{ width: `${b.pct}%` }}>
                     <span aria-hidden className="absolute inset-0" style={tone(b.key, bar.focal)} />
-                    {labelled ? <span className="relative text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink)]">{Math.round(b.pct)}%</span> : null}
+                    {labelled ? <span className="relative text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink)]">{Math.round(b.pct)}%</span> : null}
                   </span>
                 );
               })}
             </div>
           </div>
         ))}
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[length:var(--t-body)] text-[var(--c-muted)]">
           {legend.map((b) => (
             <span key={b.key} data-part-key={b.key} className="inline-flex items-center gap-2">
               {/* The swatch keeps a hairline edge, so the palest band still reads as a mark on the card's white. */}

@@ -45,7 +45,7 @@ export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pen
         {/* 16 UNDER THE CARD'S 30 (PART 4's rung; milestone 1, M3 gave the staff card its one figure at 30, the wage floor's year):
             a 20 between the two is the size the model laws' FOCAL refuses in a card that already holds a 30. */}
         <span aria-live="polite" className="fig text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{usd(total)}</span>
-        <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{W.unit}</span>
+        <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{W.unit}</span>
       </div>
       <div
         className="mt-3 flex h-3 w-full overflow-hidden rounded-full"
@@ -68,7 +68,7 @@ export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pen
           <span aria-hidden style={{ width: `${(onCost / total) * 100}%`, backgroundColor: "var(--c-ink2)", backgroundImage: "linear-gradient(90deg, var(--c-muted), var(--c-ink2))" }} />
         )}
       </div>
-      <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+      <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[length:var(--t-body)] text-[var(--c-muted)]">
         <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-line-strong)" }} />{W.salary}</span>
         {parts ? (
           <>
@@ -83,7 +83,7 @@ export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pen
         <Range id="hire-pay" label={W.lever} min={floor} max={ceiling} step={step} value={value} onChange={setValue} format={usd} unit={W.unit} />
       </div>
       {notes && notes.length ? (
-        <dl className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 gap-y-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+        <dl className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] gap-x-2 gap-y-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">
           {notes.map((n) => (
             <div key={n.label} className="contents">
               <dt className="font-medium text-[var(--c-ink2)]">{n.label}</dt>
@@ -92,7 +92,7 @@ export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pen
           ))}
         </dl>
       ) : threshold > 0 ? (
-        <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{W.rule.replace("{rate}", `${rate}%`).replace("{threshold}", usd(threshold))}</p>
+        <p data-line="" className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{W.rule.replace("{rate}", `${rate}%`).replace("{threshold}", usd(threshold))}</p>
       ) : null}
     </div>
   );

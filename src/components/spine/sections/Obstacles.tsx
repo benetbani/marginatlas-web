@@ -54,14 +54,14 @@ export function Obstacles({ id = "obstacles", data }: { id?: string; data: Obsta
               <div key={o.key} data-col={o.key} data-readout-figure={`${o.pct}%`} data-readout-words={o.label} className="relative min-w-0 flex-1">
                 <span aria-hidden className="absolute inset-0 rounded-t-[2px] bg-[var(--c-soft2)]" />
                 <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-[2px]" style={{ height: `${h(o.pct)}%`, ...(o === top ? FLAT_TERRA : fill(0)) }}>
-                  <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 text-center text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]" {...provAttrs(o.prov)}>{o.pct}%</span>
+                  <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 text-center text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink2)]" {...provAttrs(o.prov)}>{o.pct}%</span>
                 </span>
               </div>
             ))}
           </div>
           <div className="mt-2 flex gap-2">
             {items.map((o) => (
-              <span key={o.key} data-mark-label className="min-w-0 flex-1 text-center text-[length:var(--t-micro)] leading-tight text-[var(--c-ink2)]">{o.label}</span>
+              <span key={o.key} data-mark-label data-type-allow="column-names" className="min-w-0 flex-1 text-center text-[length:var(--t-micro)] leading-tight text-[var(--c-ink2)]">{o.label}</span>
             ))}
           </div>
         </div>

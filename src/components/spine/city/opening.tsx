@@ -49,7 +49,7 @@ export function GatesCard({ id = "gates", gates }: { id?: string; gates: CityGat
         <TiersTable heads={gates.heads} figures={gates.rows} />
       </div>
       <Basis>{gates.basis}</Basis>
-      {gates.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{gates.foot}</p> : null}
+      {gates.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{gates.foot}</p> : null}
     </Box>
   );
 }

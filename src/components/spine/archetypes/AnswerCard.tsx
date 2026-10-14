@@ -195,7 +195,7 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
         {/* A FOOT IS ITS WORDS (2026-09-26): with its words emptied by the plain-copy correction of 2026-09-24, the district hero
             still drew the half-filled mark alone at its foot, a glyph with nothing to say. */}
         {foot && foot.text ? (
-          <div data-foot className="mt-4 flex items-start gap-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+          <div data-foot className="mt-4 flex items-start gap-2 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">
             {foot.modeled ? <AtlasMark id="modeled" size={14} className="mt-0.5 shrink-0" /> : null}
             {/* A block, on the prose measure (his clause 51, 2026-09-20): the old `max-w-[56ch]` sat on an inline span, where a max-width does nothing, so the foot ran 434px at 768 on the city's masthead; the measure is the site's one token, 68ch or half the page, whichever is smaller. */}
             <span className="block [max-width:var(--measure-prose)]">{foot.text}</span>

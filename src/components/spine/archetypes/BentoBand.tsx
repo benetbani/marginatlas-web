@@ -380,7 +380,7 @@ export function BentoBand({ id, cols, cells }: { id?: string; cols: BentoCols; c
  *
  *  THE FOOT, `foot`, is PART 7's own fourth part ("where earned, one line, a
  *  coverage statement or one companion figure, never a verdict"), at
- *  `--t-micro` under the basis; the bill's is the exclusion the reader needs
+ *  `--t-body` under the basis; the bill's is the exclusion the reader needs
  *  ("Share capital, where the law asks for one, is not in the bill."). And
  *  the BASIS is optional for exactly one case: a card that prints no figure
  *  at all (both slots withheld) has no unit to say, because a basis
@@ -520,14 +520,14 @@ export function BentoMetric({
         <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [@container(min-width:560px)]:items-baseline [@container(min-width:560px)]:gap-x-8">
           <div>
             {basis ? <Basis>{basis}</Basis> : null}
-            {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+            {foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           </div>
           <div>{detail}</div>
         </div>
       ) : (
         <>
           {basis ? <Basis>{basis}</Basis> : null}
-          {foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+          {foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
           {detail}
         </>
       )}

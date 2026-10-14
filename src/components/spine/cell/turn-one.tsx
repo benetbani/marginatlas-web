@@ -131,7 +131,7 @@ export function PermitsCard({ id = "permits", permits, top = false }: { id?: str
       <div className="[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
         <div>
           {permits.basis ? <Basis>{permits.basis}</Basis> : null}
-          {permits.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.foot}</p> : null}
+          {permits.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{permits.foot}</p> : null}
         </div>
         {/* THE WITHHELD LINE STANDS IN THE RIGHT COLUMN, over the plus where
             there is one (the goal's A9, 2026-09-24): stacked over the basis on
@@ -142,7 +142,7 @@ export function PermitsCard({ id = "permits", permits, top = false }: { id?: str
             plus. */}
         {permits.withheld || plus ? (
           <div className="[@container(min-width:560px)]:pl-6">
-            {permits.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{permits.withheld}</p> : null}
+            {permits.withheld ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{permits.withheld}</p> : null}
             {plus ? <DetailPanel name={`${id}-fees`} summary={COPY.tradePermits.feeSummary} rows={fees} /> : null}
           </div>
         ) : null}
@@ -171,7 +171,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
         <div className="[@container(min-width:560px)]:mt-6 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
           {open.basis ? <Basis className="[@container(min-width:560px)]:mt-0">{open.basis}</Basis> : null}
           {/* THE FOOT STANDS 12 UNDER THE BASIS (DISTANCES 2.1: the basis line to the foot is 12; the line-rule gate reads a `data-foot` group so): the companion figures, or in the state with none the foot's stated line. */}
-          {open.foot.length > 0 ? <div data-foot className="mt-3 [@container(min-width:560px)]:mt-0 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p data-foot className="mt-3 [@container(min-width:560px)]:mt-0 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{open.footLine}</p>}
+          {open.foot.length > 0 ? <div data-foot className="mt-3 [@container(min-width:560px)]:mt-0 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p data-line="" data-foot className="mt-3 [@container(min-width:560px)]:mt-0 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{open.footLine}</p>}
         </div>
       </Box>
     );
@@ -262,9 +262,9 @@ export function TeamCard({ id = "team", team }: { id?: string; team: TeamData | 
       <div className="flex flex-1 flex-col">
         <TiersTable heads={team.heads} figures={team.rows} fill />
       </div>
-      {team.noMedian ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.noMedian}</p> : null}
+      {team.noMedian ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{team.noMedian}</p> : null}
       {team.basis ? <Basis>{team.basis}</Basis> : null}
-      {team.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{team.foot}</p> : null}
+      {team.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{team.foot}</p> : null}
     </Box>
   );
 }

@@ -103,10 +103,10 @@ export function WorldRangeRows({ rows, headless = false, ends, showEnds = true }
               <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.label}</span>
               <span className="whitespace-nowrap">
                 <Fig className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{r.display}</Fig>
-                {r.unit ? <span className="ml-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.unit}</span> : null}
+                {r.unit ? <span className="ml-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{r.unit}</span> : null}
               </span>
               {r.level ? (
-                <span data-level={r.level} className="ml-auto rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{r.level}</span>
+                <span data-level={r.level} className="ml-auto rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{r.level}</span>
               ) : null}
             </div>}
             {range ? <Track r={r} range={range} scale={scale} headless={headless || !!r.headless} ends={ends} showEnds={showEnds} /> : null}
@@ -159,7 +159,7 @@ function Track({ r, range, scale, headless, ends, showEnds }: { r: WorldRangeRow
               </div>
             ) : null}
             {showEnds ? (
-              <div className={`relative ${scale === "log" ? "mt-0.5" : "mt-2"} h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]`}>
+              <div data-type-allow="world-axis" className={`relative ${scale === "log" ? "mt-0.5" : "mt-2"} h-4 text-[length:var(--t-micro)] text-[var(--c-muted)]`}>
                 <span data-end="low" className="absolute left-0 tabular-nums">{low}</span>
                 {scale === "log"
                   ? logTicks(range).map((v) => (
@@ -174,25 +174,25 @@ function Track({ r, range, scale, headless, ends, showEnds }: { r: WorldRangeRow
                 the drawing, so it is drawn as the site's other keys are (the survival strip's, the job market's), not as a line of
                 copy under the figure. */}
             {r.peers && r.peers.length ? (
-              <div data-peers-key="" className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">
+              <div data-peers-key="" className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">
                 <span className="inline-flex items-center gap-1">
                   <span aria-hidden className="inline-block h-3 w-3 rounded-full border-2 border-[var(--c-ink2)] bg-[var(--c-surface)]" />
                   {r.peersWord ?? "Peers"}
                 </span>
                 {r.peers.map((p) => (
                   <span key={p.name} className="whitespace-nowrap">
-                    {p.name} <Fig className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{r.fmt(p.value)}</Fig>
+                    {p.name} <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.fmt(p.value)}</Fig>
                   </span>
                 ))}
               </div>
             ) : null}
             {/* THE REFERENCE NAMED ONCE, under the peers, with its glyph and its figure (a key, not a sentence). */}
             {r.refs && r.refs.length ? (
-              <div data-refs-key="" className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">
+              <div data-refs-key="" className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">
                 {r.refs.map((x) => (
                   <span key={x.key} className="inline-flex items-center gap-1 whitespace-nowrap">
                     <span aria-hidden className="inline-block h-0 w-0 border-x-[5px] border-t-[6px] border-x-transparent border-t-[var(--c-ink)]" />
-                    {x.label} <Fig className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{x.display ?? r.fmt(x.value)}</Fig>
+                    {x.label} <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{x.display ?? r.fmt(x.value)}</Fig>
                   </span>
                 ))}
               </div>

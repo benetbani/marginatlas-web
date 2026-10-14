@@ -44,7 +44,7 @@ export type SpectraTableProps = {
   /** ONE BASIS LINE, PART 7's third part, between the rows and the foot (the
    *  city's people table since plan step 32's sixth dispatch, 2026-09-18: it
    *  says whose the reads are and that they are modelled, because the sample
-   *  mark is off site-wide). At most fourteen words, `--t-micro`, muted; the
+   *  mark is off site-wide). At most fourteen words, `--t-body`, muted; the
    *  country's tables pass none and draw as before. */
   basis?: string | null;
   /** `fill` (2026-09-26, London's people card beside the peers table at 768): the rows share the height the card is lent, each
@@ -73,7 +73,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis, 
           const lean = pct < 50 ? r.left : pct > 50 ? r.right : null;
           return (
             <div key={r.key} data-spectrum-row={r.key} className={fill ? "flex flex-col justify-center py-2" : "py-2"}>
-              <div data-label className={scale === "lead" ? "truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]" : scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-micro)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
+              <div data-label className={scale === "lead" ? "truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]" : scale === "body" ? "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]" : "truncate text-[length:var(--t-body)] font-medium leading-tight text-[var(--c-ink)]"}>{r.name}</div>
               {/* THE TRACK DECLARES WHAT ITS FAR END IS (plan step 12, 2026-09-17).
                   A spectrum runs between two poles; neither end is a maximum,
                   so it is neither a world track nor a set's own heaviest
@@ -99,7 +99,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis, 
                   style={{ left: `calc(${DOT / 2}px + (100% - ${DOT}px) * ${pos})`, width: DOT, height: DOT, background: dotBg, boxShadow: "0 0 0 1px var(--c-border)" }}
                 />
               </div>
-              <div className={scale === "body" || scale === "lead" ? "mt-1 flex justify-between gap-3 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]" : "mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]"}>
+              <div data-type-allow="spectra-poles" className={scale === "body" || scale === "lead" ? "mt-1 flex justify-between gap-3 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]" : "mt-1 flex justify-between gap-3 text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)]"}>
                 <span data-pole="left">{r.left}</span>
                 <span data-pole="right" className="text-right">{r.right}</span>
               </div>
@@ -115,7 +115,7 @@ export function SpectraTable({ rows, dot = "ink", foot, scale = "micro", basis, 
       {foot ? (
         <div data-foot className={`${basis ? "mt-3 " : ""}border-t border-[var(--c-border)] pt-3 leading-snug`}>
           <Fig className="text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{foot.value}</Fig>{" "}
-          <span className={scale === "body" || scale === "lead" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-micro)] text-[var(--c-muted)]"}>{foot.label}</span>
+          <span className={scale === "body" || scale === "lead" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-body)] text-[var(--c-muted)]"}>{foot.label}</span>
         </div>
       ) : null}
     </div>

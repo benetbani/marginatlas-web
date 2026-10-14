@@ -76,12 +76,12 @@ export function Stepper({ steps, compact = false }: { steps: Step[]; compact?: b
               {/* The rail is on every row and hidden on the last, so every row holds the same children in the same order and the
                   days and the costs are one column each to anything that reads the rows by position (the page laws' ALIGNMENT). */}
               <span aria-hidden className={last ? "hidden" : "absolute left-3 top-6 h-[calc(100%-16px)] w-px bg-[var(--c-border)]"} />
-              <span aria-hidden className="tabular-figures relative z-[1] flex h-6 w-6 items-center justify-center self-start rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">
+              <span aria-hidden className="tabular-figures relative z-[1] flex h-6 w-6 items-center justify-center self-start rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">
                 {i + 1}
               </span>
               <div className="min-w-0">
                 <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink)]">{s.name}</div>
-                {s.how ? <div data-step-how className="text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{s.how}</div> : null}
+                {s.how ? <div data-step-how className="text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{s.how}</div> : null}
               </div>
               <span data-step-days className="text-right">{s.days ? <Fig className="text-[length:var(--t-body)] font-semibold leading-none text-[var(--c-ink)]">{s.days}</Fig> : null}</span>
               <span data-step-cost className="text-right">{s.cost ? <Fig className="text-[length:var(--t-body)] font-semibold leading-none text-[var(--c-ink)]">{s.cost}</Fig> : null}</span>
@@ -102,7 +102,7 @@ export function Stepper({ steps, compact = false }: { steps: Step[]; compact?: b
             {!last ? <span aria-hidden className="absolute left-3 top-6 h-[calc(100%-16px)] w-px bg-[var(--c-border)]" /> : null}
             <span
               aria-hidden
-              className="tabular-figures relative z-[1] flex h-6 w-6 items-center justify-center rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]"
+              className="tabular-figures relative z-[1] flex h-6 w-6 items-center justify-center rounded-full border border-[var(--c-line-strong)] bg-[var(--c-card)] text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]"
             >
               {i + 1}
             </span>
@@ -118,7 +118,7 @@ export function Stepper({ steps, compact = false }: { steps: Step[]; compact?: b
               <span data-step-cost className="[@container(min-width:520px)]:text-right">
                 {s.cost ? <Fig className="text-[length:var(--t-lead)] font-semibold leading-none text-[var(--c-ink)]">{s.cost}</Fig> : null}
               </span>
-              <span data-step-how className="text-[length:var(--t-micro)] text-[var(--c-muted)] [@container(min-width:520px)]:text-right">{s.how ?? ""}</span>
+              <span data-step-how className="text-[length:var(--t-body)] text-[var(--c-muted)] [@container(min-width:520px)]:text-right">{s.how ?? ""}</span>
             </div>
           </li>
         );

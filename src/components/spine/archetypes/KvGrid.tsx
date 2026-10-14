@@ -191,7 +191,7 @@ export function KvGrid({ cells, className = "", labelReserve = "two-lines", stac
                     <Fig className={`${under ? "text-[length:var(--t-lead)] font-semibold" : "text-[length:var(--t-head)]"} leading-none text-[var(--c-ink)]`} prov={c.prov}>{c.value}</Fig>
                     {c.confidence && c.confidence !== "measured" ? <SampleTag /> : null}
                   </div>
-                  {c.note ? <div className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]" style={{ textWrap: "balance" }}>{c.note}</div> : null}
+                  {c.note ? <div className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]" style={{ textWrap: "balance" }}>{c.note}</div> : null}
                 </div>
               );
               if (!ruledRows) {

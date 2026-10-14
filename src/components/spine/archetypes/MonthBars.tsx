@@ -139,7 +139,7 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts, p
           {drawn.map((p, i) => (
             <span key={p.month} className="flex min-w-0 flex-1 justify-center" {...(i === peak ? { "data-peak-label": "", "data-mark-label": "" } : {})}>
               {i === peak ? (
-                <Fig prov={prov} className="shrink-0 whitespace-nowrap text-[length:var(--t-micro)] font-semibold leading-none tabular-nums text-[var(--c-ink)]">
+                <Fig prov={prov} className="shrink-0 whitespace-nowrap text-[length:var(--t-body)] font-semibold leading-none tabular-nums text-[var(--c-ink)]">
                   {count(p.value)}
                 </Fig>
               ) : null}
@@ -165,7 +165,7 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts, p
           />
         ))}
       </div>
-      <div className="mt-2 flex w-full gap-1 text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
+      <div data-type-allow="month-axis" className="mt-2 flex w-full gap-1 text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
         {months.map((m, i) => (
           <span key={i} data-month={i} data-mark-label className={`min-w-0 flex-1 text-center ${i === peak ? "font-semibold text-[var(--c-ink2)]" : ""}`}>
             {m}
@@ -175,7 +175,7 @@ export function MonthBars({ points, unit = "", start, tone = "accent", counts, p
       {/* THE YEARS OF A DATED ORDER, on the columns' grid: under the first column where three or more of its months are drawn, and under
           every January; a year near the right end stands against it, so it never runs past the drawing. */}
       {from ? (
-        <div data-years="" className="mt-1 grid w-full grid-cols-12 gap-1 text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
+        <div data-years="" data-type-allow="month-axis" className="mt-1 grid w-full grid-cols-12 gap-1 text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" aria-hidden="true">
           {drawn.map((p, i) =>
             p.month === 0 || (i === 0 && MONTH_BAR_POINTS - first >= 3) ? (
               <span key={i} data-year={String(yearOf(i))} className="whitespace-nowrap tabular-nums" style={{ gridColumn: `${i + 1} / span ${Math.min(3, MONTH_BAR_POINTS - i)}`, ...(MONTH_BAR_POINTS - i < 3 ? { justifySelf: "end" } : {}) }}>

@@ -59,15 +59,15 @@ export function TierPanel({ explainer, paperwork }: { explainer?: string; paperw
   if (!explainer && !paperwork) return null;
   return (
     <div className="mt-2 rounded-[8px] bg-[var(--c-soft)] p-4">
-      {explainer ? <p className="text-[length:var(--t-micro)] leading-relaxed text-[var(--c-ink2)]">{explainer}</p> : null}
-      {paperwork ? <p className={"text-[length:var(--t-micro)] leading-relaxed text-[var(--c-muted)]" + (explainer ? " mt-2" : "")}>{paperwork}</p> : null}
+      {explainer ? <p data-line="" className="text-[length:var(--t-body)] leading-relaxed text-[var(--c-ink2)]">{explainer}</p> : null}
+      {paperwork ? <p data-line="" className={"text-[length:var(--t-body)] leading-relaxed text-[var(--c-muted)]" + (explainer ? " mt-2" : "")}>{paperwork}</p> : null}
     </div>
   );
 }
 
 /* Column heads in sentence case too (2026-09-25, his capitals ruling; shadcn's table heads the same): capitals were the one
    exception left, and a head of three words ("Payroll on staff") read as texture like any label. */
-const HEAD = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
+const HEAD = "text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]";
 /* name | fee | time | dots and the plus, from 480px of table; the widths are the file's own extremes, a $12,000 fee and a
    90-day wait, not the exemplar's. From 480px the last column holds five dots (56px), a gap and the plus (20px): 5.25rem. */
 /* ON A PHONE THE NAME KEEPS ITS COLUMN (2026-10-04, the UK page reform; research R2, 3.2): name | fee 56 | time 60 | dots and the
@@ -77,9 +77,9 @@ const GRID = "grid grid-cols-[minmax(0,1fr)_3.5rem_3.75rem_5.25rem] gap-x-3 [@co
 /* name | fee | time, the registering shape with the dots off. */
 const GRID_NO_DOTS = "grid grid-cols-[minmax(0,1fr)_3.5rem_3.75rem] gap-x-3 [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_5.5rem_5rem]";
 /* name | a | b, the figures shape: a count and a year's pay ("$44K", "$8,500"). From 330px of table the name keeps its column, the
-   two readings narrowed to 60 and 68 until 480 (a wait of "120 days", a fee of "$12,000", "Pay a year" in one line), which leaves
-   the name 178 to 327px: "Skilled tradesperson and foreman" in two lines at a phone's 343. */
-const GRID_FIGURES = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3 [@container(min-width:330px)]:grid-cols-[minmax(0,1fr)_3.75rem_4.25rem] [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_4.5rem_5.5rem]";
+   two readings narrowed to 72 and 72 until 480 (the heads at 14, "How many" and "Pay a year", are 69px nowrap: the type floor, plan 2026-10-12), which leaves
+   the name 162 to 311px: "Skilled tradesperson and foreman" in two lines at a phone's 343. */
+const GRID_FIGURES = "grid grid-cols-[minmax(0,1fr)_4.5rem_5.5rem] gap-x-3 [@container(min-width:330px)]:grid-cols-[minmax(0,1fr)_4.5rem_4.5rem] [@container(min-width:480px)]:grid-cols-[minmax(0,1fr)_4.5rem_5.5rem]";
 const DASH = <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>;
 
 /** `tone`: the table's dots are the reading and carry the accent; the legend's dots only say what one and five dots mean, so they
@@ -202,7 +202,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
                   the name's 107px (Mexico's "Sociedad de Responsabilidad Limitada (S. de R.L. de C.V.)" ran to six lines there, and
                   the rows stopped being one height, the harness's UNEQUAL). Never cut; every row reserves the same lines for it (two
                   where any local name passes 36 characters, one otherwise); 12 on the snug leading, over the readability floor. */}
-              <span className={`col-span-full block break-words text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [grid-row:2] [@container(min-width:480px)]:col-span-1 [@container(min-width:480px)]:col-start-1 ${longTerm ? "min-h-[2.75em]" : "min-h-[1.375em]"}`}>{localTerm ?? " "}</span>
+              <span className={`col-span-full block break-words text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] [grid-row:2] [@container(min-width:480px)]:col-span-1 [@container(min-width:480px)]:col-start-1 ${longTerm ? "min-h-[2.75em]" : "min-h-[1.375em]"}`}>{localTerm ?? " "}</span>
             </span>
           );
           return (
@@ -221,14 +221,14 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
       {/* THE LEGEND DRAWN (2026-09-25, his word that night: "symbols ... can be used to replace words"): one dot and five, each
           with its words, where a sentence said the same ("More dots, more paperwork: one is an online form, five a lawyer"). */}
       {anyDots ? (
-        <div data-legend="dots" className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+        <div data-legend="dots" className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1 border-t border-[var(--c-border)] pt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">
           <span className="inline-flex items-center gap-2"><Dots n={1} tone="ink" />{COPY.tiers.legendEnds.one}</span>
           <span className="inline-flex items-center gap-2"><Dots n={5} tone="ink" />{COPY.tiers.legendEnds.five}</span>
         </div>
       ) : null}
       {door && howTo ? (
         <div className="mt-3 text-right">
-          <a href={howTo.href} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{howTo.label} <span aria-hidden>&#8594;</span></a>
+          <a href={howTo.href} className="tap-y inline-block text-[length:var(--t-body)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{howTo.label} <span aria-hidden>&#8594;</span></a>
         </div>
       ) : null}
     </div>
@@ -237,7 +237,7 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
 
 /**
  * THE FIGURES SHAPE: a name block and two figure columns under the caller's
- * heads, at PART 5's sizes (the heads at `--t-micro`, said once, on a phone
+ * heads, at PART 5's sizes (the heads at `--t-body`, said once, on a phone
  * too; every figure at `--t-body`, 14, a table figure never larger), no
  * dots, no panel, no door, no crowned row, no accent. A null figure prints
  * an en dash; the caller says once what a dash means. Rows are the direct
@@ -306,7 +306,7 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
                   {r.sub ? (
                     <>
                       <span data-label className="block truncate text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{r.name}</span>
-                      <span className="block min-h-[1.3em] truncate text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{r.sub}</span>
+                      <span className="block min-h-[1.3em] truncate text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{r.sub}</span>
                     </>
                   ) : (
                     <span data-label className="line-clamp-2 text-[length:var(--t-lead)] font-medium leading-tight text-[var(--c-ink)]">{r.name}</span>

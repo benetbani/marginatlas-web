@@ -71,7 +71,7 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
         <dl className="mt-2 grid gap-2">
           {rows.map((r, i) => (
             <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
-              <dt data-label className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.label}</dt>
+              <dt data-label className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{r.label}</dt>
               {/* A FIGURE IS A `Fig`, NOT A HAND-ROLLED CELL (2026-09-11).
                   This `dd` carried `font-medium tabular-nums` and no `.fig`,
                   which is how it stayed in the body sans on the day every
@@ -80,12 +80,12 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
                   card beside them drew Space Grotesk. `Fig` carries the face,
                   the tabular lining numerals and the weight, so both utilities
                   it used to spell out are redundant and gone with it. */}
-              <dd className="text-[length:var(--t-micro)] text-[var(--c-ink)]"><Fig prov={r.prov}>{r.value}</Fig></dd>
+              <dd className="text-[length:var(--t-body)] text-[var(--c-ink)]"><Fig prov={r.prov}>{r.value}</Fig></dd>
               {/* THE dl'S OWN LAW (review finding 4): a div directly inside a
                   dl may hold only dt/dd, so the note is a second dd , a `p`
                   here rendered live, invalid HTML, since one story's row
                   carries one. col-span-2 still puts it on its own line. */}
-              {r.note ? <dd className="col-span-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">{r.note}</dd> : null}
+              {r.note ? <dd className="col-span-2 text-[length:var(--t-body)] text-[var(--c-muted)]">{r.note}</dd> : null}
             </div>
           ))}
         </dl>
@@ -95,11 +95,11 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
             hold. Its one consequence, declared: check_archetypes.mjs walks
             the opened panel from `det.querySelector("dl")`, so this line is
             outside that walk. Nothing is lost by it, because the line is
-            --t-micro (already on the ladder every row in here uses) and
+            --t-body (already on the ladder every row in here uses) and
             --c-muted (never the accent the walk counts), and a `p` wraps
             rather than overflowing. A line that ever needs measuring belongs
             inside the walk, and that is a harness change, not a class here. */}
-        {withheldLine ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{withheldLine}</p> : null}
+        {withheldLine ? <p data-line="" className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{withheldLine}</p> : null}
       </InlineDisclosure>
     </div>
   );

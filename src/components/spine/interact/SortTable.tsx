@@ -29,7 +29,7 @@ export type SortWords = { said: string; low: string; high: string };
 export type SortRow = { key: string; home?: boolean; values: Record<string, number | null>; cells: React.ReactNode; phone: React.ReactNode };
 type Dir = "asc" | "desc";
 
-const HEAD = "text-[length:var(--t-micro)] font-semibold";
+const HEAD = "text-[length:var(--t-body)] font-semibold";
 const held = (v: number | null | undefined): v is number => typeof v === "number" && Number.isFinite(v);
 
 /** Two chevrons, up and down: both faint on a head not sorted, the one of the direction alone in ink on the sorted head. */
@@ -127,7 +127,7 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
   return (
     <>
       <div className={wideClass}>
-        <Table className="table-fixed text-[length:var(--t-micro)]">
+        <Table className="table-fixed text-[length:var(--t-body)]">
           <caption className="sr-only">{label}</caption>
           {/* THE NAME'S COLUMN IS 10rem; the figure columns share what is left equally (a fixed table's rule for columns with no
               width). A share with a floor, max(9.5rem, 19%), is not a width a table column takes: a column mixing a length and a

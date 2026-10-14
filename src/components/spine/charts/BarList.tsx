@@ -51,7 +51,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
             <span data-label className="min-w-0 truncate text-[length:var(--t-body)] leading-tight">
               {name}
               {/* The badge is the page's one chip shape (the level pill on the ranges, the buyers on the sale card), 2026-09-26. */}
-              {i.badge ? <>{" "}<span className="ml-1 rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 align-middle text-[length:var(--t-micro)] font-semibold text-[var(--c-ink2)]">{i.badge}</span></> : null}
+              {i.badge ? <>{" "}<span className="ml-1 rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 align-middle text-[length:var(--t-body)] font-semibold text-[var(--c-ink2)]">{i.badge}</span></> : null}
             </span>
             <Fig className="text-right text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" prov={i.prov}>{i.display}</Fig>
             <span className={`relative col-span-full block rounded-full [@container(min-width:420px)]:col-span-1 ${look === "icons" ? "h-2.5" : "h-4"}`} role="img" aria-label={`${i.label}: ${i.display}${ariaUnit}`}>
@@ -65,7 +65,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
       })}
     </ol>
     {reference ? (
-      <div data-ref-key className="mt-3 flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-muted)]">
+      <div data-ref-key className="mt-3 flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-muted)]">
         <span aria-hidden className="h-3 w-0.5 rounded-full bg-[var(--c-ink2)]" />
         {reference.label}
       </div>

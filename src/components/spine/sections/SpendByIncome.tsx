@@ -43,12 +43,12 @@ export function SpendByIncome({ id = "spend-by-income", data }: { id?: string; d
             <div key={t.tenth} data-col={t.tenth} data-readout-figure={usdCents(t.usd)} data-readout-words={C.readout.replace("{n}", String(t.tenth))} className="relative min-w-0 flex-1">
               <span aria-hidden className="absolute inset-0 rounded-t-[2px] bg-[var(--c-soft2)]" />
               <span aria-hidden data-bar className="absolute inset-x-0 bottom-0 rounded-t-[2px]" style={{ height: `${h(t.usd)}%`, ...fill(t.rich) }}>
-                <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 hidden text-center text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)] [@container(min-width:480px)]:block">{usdCents(t.usd)}</span>
+                <span data-mark-label className="absolute inset-x-0 bottom-full mb-1 hidden text-center text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink2)] [@container(min-width:480px)]:block">{usdCents(t.usd)}</span>
               </span>
             </div>
           ))}
         </div>
-        <div className="mt-2 flex items-start justify-between gap-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+        <div data-type-allow="column-names" className="mt-2 flex items-start justify-between gap-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
           <span>
             {C.poorest}
             <span className="tabular-nums text-[var(--c-ink2)] [@container(min-width:480px)]:hidden"> {usdCents(first.usd)}</span>

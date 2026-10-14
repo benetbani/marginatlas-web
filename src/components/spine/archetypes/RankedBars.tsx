@@ -494,7 +494,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
         /* The slot is a div because the kit's Fig carries no data attributes; the checkers read `[data-focal]` on the slot. */
         <div data-focal="1" className={basis || withheldLine ? (headTwoUp ? "mb-6 [@container(min-width:560px)]:mb-0" : "mb-2") : undefined}>
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${focal.accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={focal.prov}>{focal.figure}</Fig>
-          {focal.words ? <span data-focal-words="" className="mt-2 block max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
+          {focal.words ? <span data-focal-words="" className="mt-2 block max-w-[28ch] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{focal.words}</span> : null}
         </div>
       ) : null}
       {/* THE BASIS AND THE WITHHELD LINE SIDE BY SIDE FROM md (his clause 51,
@@ -508,7 +508,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
           floor (LONE STAT) once the title stood 24 above its content; alone it takes the width. */}
       <div className={basis && withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
         {basis ? <Basis beside>{basis}</Basis> : null}
-        {withheldLine ? <p className={`${basis ? "mt-0.5 " : ""}text-[length:var(--t-micro)] text-[var(--c-muted)] md:mt-0`}>{withheldLine}</p> : null}
+        {withheldLine ? <p data-line="" className={`${basis ? "mt-0.5 " : ""}text-[length:var(--t-body)] text-[var(--c-muted)] md:mt-0`}>{withheldLine}</p> : null}
       </div>
       </div>
       {drawBars ? <div className={`relative ${drawTop} hidden lg:block`} data-idea="I2">
@@ -521,7 +521,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
             biggest line $250K"); the leader stands at the right for "max" and
             at the left for "min", so the name takes the other end. A world
             ceiling keeps the right, since no member stands on it. */}
-        <div className={`absolute ${ceiling === "set" && best === "max" ? "left-0" : "right-0"} text-[length:var(--t-micro)] text-[var(--c-muted)]`} style={{ top: 8 }}>{topLabel ?? COPY.margin.worldBest} {fmt(top)}</div>
+        <div data-type-allow="bars-track-end" className={`absolute ${ceiling === "set" && best === "max" ? "left-0" : "right-0"} text-[length:var(--t-micro)] text-[var(--c-muted)]`} style={{ top: 8 }}>{topLabel ?? COPY.margin.worldBest} {fmt(top)}</div>
         <div aria-hidden="true" className="absolute inset-x-0 h-px bg-[var(--c-line-strong)]" style={{ top: H + PILL }} />
         <ol className="grid" data-expect-rows={sorted.length} style={{ listStyle: "none", margin: 0, padding: 0, gridAutoFlow: "column", gridAutoColumns: "minmax(0,1fr)", columnGap: 8 }}>
           {sorted.map((r) => {
@@ -551,7 +551,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                 {/* THE UNDERLINE IS A LINK'S, so a name with no door wears none (the
                     district photograph of run 25 showed seven underlined names and
                     no destination, a promise the card could not keep). */}
-                <div data-label data-mark-label data-self={r.key === selfKey ? "1" : undefined} className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.key === selfKey ? "font-semibold" : ""} ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
+                <div data-label data-mark-label data-type-allow="bars-names" data-self={r.key === selfKey ? "1" : undefined} className={`text-center text-[length:var(--t-micro)] leading-snug text-[var(--c-ink)] ${r.key === selfKey ? "font-semibold" : ""} ${r.href ? "underline decoration-[var(--c-line-strong)] decoration-1 underline-offset-[3px]" : ""}`} style={{ paddingTop: 7, minHeight: NAME_H }}>{r.name}</div>
               </>
             );
             return (
@@ -587,19 +587,19 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
               carries neither. Put a figure in this head and the rule fires,
               correctly. */}
           <div className={`${ROW} items-baseline pb-2`} style={GEO}>
-            <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
-            <div className="col-span-2 flex items-baseline justify-between gap-x-2">
+            <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
+            <div className="col-span-2 flex flex-wrap items-baseline justify-between gap-x-2">
               {/* THE VALUE HEAD KEEPS ITS LINE (fix round F1, group G8): in a half-width card (768) this row holds the head and the ceiling's label in 91px,
                   and the head, the shrinkable one, wrapped ("Of" over "100"); `shrink-0 whitespace-nowrap` as round D2 gave MarkList's unit head, so the
                   ceiling's label is the one that gives. The gap is 8, not 12: the head (38.5), the label's longest word (42.1) and 12 made the row 92.6
                   in 91 and spilled the label 2px; with 8 it is 88.6 (justify-between spreads the pair wherever there is room, so the gap only matters tight). */}
-              <span className="shrink-0 whitespace-nowrap text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
+              <span className="shrink-0 whitespace-nowrap text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
               {/* THE CEILING, NAMED ONCE, over the column whose far end it is
                   (ruling 13). Not a column head: it is the same micro muted line
                   the bars form prints beside its hairline, in the same words, so
                   the two forms say the ceiling identically. Right aligned,
                   because the ceiling is the right end of every track below. */}
-              {drawShort ? null : <span className="text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{topLabel ?? COPY.margin.worldBest} {fmt(top)}</span>}
+              {drawShort ? null : <span data-type-allow="bars-track-end" className="ml-auto text-right text-[length:var(--t-micro)] text-[var(--c-muted)]">{topLabel ?? COPY.margin.worldBest} {fmt(top)}</span>}
             </div>
           </div>
           <div className={`grid ${drawShort ? "" : "flex-1 "}divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]`} data-expect-rows={sorted.length} style={{ gridAutoRows: drawShort ? "minmax(2.5rem,auto)" : "minmax(2.5rem,1fr)" }}>
@@ -617,7 +617,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                       the name: the model laws' DISTRICT ADJECTIVE reads any
                       span nested in a district's name as free text about the
                       district, and a glyph is not a word. */}
-                  <span data-label data-self={r.key === selfKey ? "1" : undefined} className={`${r.key === selfKey ? selfName(NAME_CLS) : NAME_CLS}${r.icon ? " flex items-center gap-2" : ""}${r.href ? " after:ml-1.5 after:text-[length:var(--t-micro)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.icon ? <Ico id={r.icon} tone="terra" /> : null}{r.name}</span>
+                  <span data-label data-self={r.key === selfKey ? "1" : undefined} className={`${r.key === selfKey ? selfName(NAME_CLS) : NAME_CLS}${r.icon ? " flex items-center gap-2" : ""}${r.href ? " after:ml-1.5 after:text-[length:var(--t-body)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.icon ? <Ico id={r.icon} tone="terra" /> : null}{r.name}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share
@@ -662,8 +662,8 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
         {/* THIS HEAD WRAPS IF IT MUST (fix round F2, item M12; the final review): the phone list has the whole row, so its value head takes no whitespace-nowrap, which would let
             a longer name run past the card instead of wrapping; only the table's head, in a half-width row beside the ceiling's label, needs the rule (above). */}
         <div className="flex items-baseline justify-between pb-2">
-          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
-          <span className="text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
+          <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{phoneHead.name}</span>
+          <span className="text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{phoneHead.value}</span>
         </div>
         <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={sorted.length}>
           {[...sorted].reverse().map((r) => {
@@ -707,7 +707,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
       {foot && foot.items.length > 0 ? (
         <div data-foot className="mt-3 border-t border-[var(--c-border)] pt-3">
           <CompanionRow items={foot.items} />
-          {foot.line ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
+          {foot.line ? <p data-line="" className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot.line}</p> : null}
         </div>
       ) : foot && foot.line ? (
         <p data-foot className="mt-3 border-t border-[var(--c-border)] pt-3 text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{foot.line}</p>

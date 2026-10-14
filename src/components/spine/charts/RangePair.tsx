@@ -28,7 +28,7 @@ export function RangePair({ spans, max, fmt, ticks, unit, aria, fill = false }: 
           <div className={`mb-2 flex items-baseline gap-3 ${fill ? "relative w-fit bg-[var(--c-surface)] pr-2" : ""}`}>
             <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{s.label}</span>
             {s.quiet ? null : <Fig className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{`${fmt(s.lo)} to ${fmt(s.hi)}`}</Fig>}
-            {unit && !s.quiet ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{unit}</span> : null}
+            {unit && !s.quiet ? <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{unit}</span> : null}
           </div>
           <div className="relative h-4 rounded-full">
             <span aria-hidden className="absolute inset-0 rounded-full bg-[var(--c-soft2)]" />
@@ -39,7 +39,7 @@ export function RangePair({ spans, max, fmt, ticks, unit, aria, fill = false }: 
       </div>
       {/* THE AXIS, so the spans read against a scale and not against each other alone. */}
       {ticks && ticks.length > 1 ? (
-        <div aria-hidden className={`relative h-4 text-[length:var(--t-micro)] text-[var(--c-muted)] ${fill ? "mt-2" : "-mt-2"}`}>
+        <div aria-hidden data-type-allow="pair-axis" className={`relative h-4 text-[length:var(--t-micro)] text-[var(--c-muted)] ${fill ? "mt-2" : "-mt-2"}`}>
           {ticks.map((t) => (
             /* The ends align inward, so the axis never runs past its card; on the plot a middle label is centred on its hairline. */
             <span key={t} className="absolute whitespace-nowrap tabular-nums" style={{ left: `${at(t)}%`, transform: `translateX(-${fill && at(t) > 0 && at(t) < 100 ? 50 : at(t)}%)` }}>{t}</span>

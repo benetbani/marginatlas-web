@@ -67,7 +67,7 @@ export const COPY = {
     absentNote: "we have no small-business tax regime for this country yet",
   },
   cells: {
-    payroll: { label: "Payroll on wages", note: "charged on wages, on top of the rate on profit" },
+    payroll: { label: "Payroll on wages", note: "on wages, on top of profit tax" },
     salesTax: { label: "Sales tax", note: "carried by the customer" },
     /** Founder verbatim, ruling 1 of 2026-09-04: the cells are the LLC's. */
     llcGroup: "To register an LLC",
@@ -1103,7 +1103,7 @@ export const COPY = {
       /** The valuation's own date: the rateable value estimates the rent at 1 April 2021. */
       rentValued: "A square metre of shop space, a year, at 2021 values",
       /** The fit-out on a page that prints a sourced figure or a marked one: no source holds it or its rent-free months, so the line says both are estimates. */
-      fitOutEstimate: "Estimates: a square metre fitted out, and the rent-free months",
+      fitOutEstimate: "Estimates: a square metre fitted out",
       /** The six UK cities held to sources and to no register region (plan 2026-10-08, uk:cities-sourced-or-marked): the shard's
        *  figures, each cell's one line saying they are estimates; "Estimates" covers the cell's details and its companion. */
       rentEstimate: "Estimates: a square metre of prime shop space, a year",

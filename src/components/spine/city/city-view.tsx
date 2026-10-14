@@ -194,9 +194,9 @@ function Glance({ glance }: { glance: CityGlanceData | null }) {
     <Box id="glance">
       <Rail icon="scorecard" kicker={COPY.glance.kicker} sample={glance.confidence !== "measured"} />
       <KvGrid cells={glance.cells} />
-      {glance.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.withheld}</p> : null}
+      {glance.withheld ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{glance.withheld}</p> : null}
       {glance.basis ? <Basis>{glance.basis}</Basis> : null}
-      {glance.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{glance.foot}</p> : null}
+      {glance.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{glance.foot}</p> : null}
     </Box>
   );
 }
@@ -239,7 +239,7 @@ export function AmongCities({ seat, id = "among-cities" }: { seat: CitySeatData 
       {living != null ? <SegmentBar label={COPY.runningCosts.rows.living} value={living} figure={String(living)} unit="" /> : null}
       {seat.cells.length > 0 ? <div className={living != null ? "mt-3" : ""}><KvGrid cells={seat.cells} /></div> : null}
       <Basis>{seat.basis}</Basis>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{seat.foot}</p>
+      <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{seat.foot}</p>
     </Box>
   );
 }
@@ -276,9 +276,9 @@ function Living({ living }: { living: CityLivingData | null }) {
     <Box id="living">
       <Rail icon="cost-breakdown" kicker={COPY.cityLiving.kicker} sample={living.confidence !== "measured"} />
       <KvGrid cells={living.cells} />
-      {living.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.withheld}</p> : null}
+      {living.withheld ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{living.withheld}</p> : null}
       <Basis>{living.basis}</Basis>
-      {living.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{living.foot}</p> : null}
+      {living.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{living.foot}</p> : null}
     </Box>
   );
 }
@@ -336,9 +336,9 @@ export function Runway({ runway, id = "runway" }: { runway: CityRunwayData | nul
       <Box id={id}>
         <Rail icon="commercial-rent" kicker={COPY.cityRunway.kicker} sample={runway.confidence !== "measured"} />
         <KvGrid cells={runway.cells} />
-        {runway.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.withheld}</p> : null}
+        {runway.withheld ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{runway.withheld}</p> : null}
         <Basis>{runway.basis}</Basis>
-        {runway.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
+        {runway.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
       </Box>
     );
   }
@@ -351,7 +351,7 @@ export function Runway({ runway, id = "runway" }: { runway: CityRunwayData | nul
         {/* THE INCOME LEFT THE CARD (2026-09-24, the goal's A18 and its NEVER list, "print one figure twice"): the typical income beside the ring was the page's answer a third time (the masthead, `07 earnings`, the peers' home row); the ring says the share and the one line what it is a share of. */}
         <div>
           <p className="max-w-[30ch] text-[length:var(--t-body)] leading-snug text-[var(--c-ink2)]">{runway.basis}</p>
-          {runway.foot ? <p className="mt-1 max-w-[30ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
+          {runway.foot ? <p data-line="" className="mt-1 max-w-[30ch] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{runway.foot}</p> : null}
         </div>
       </div>
     </Box>
@@ -524,11 +524,11 @@ function TradesHere({ d }: { d: any }) {
           >
             <Ico id={TRADE_ICON[t.slug] ?? "high-street"} />
             <span data-label className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.name}</span>
-            <span aria-hidden="true" className="pr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">&#8594;</span>
+            <span aria-hidden="true" className="pr-1 text-[length:var(--t-body)] text-[var(--c-muted)]">&#8594;</span>
           </a>
         ))}
       </div>
-      <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{foot}</p>
+      <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p>
     </Box>
   );
 }
@@ -723,7 +723,7 @@ function Neighbourhoods({ hoods }: { hoods: CityNeighbourhoodsData | null }) {
     <Box id="neighbourhoods">
       <Rail icon="neighborhood" kicker={COPY.cityNeighbourhoods.kicker} />
       <CardPager cards={hoods.cards} allHref={hoods.allHref} allLabel={COPY.cityNeighbourhoods.allLabel} prevLabel={COPY.cityNeighbourhoods.prev} nextLabel={COPY.cityNeighbourhoods.next} images="none" />
-      {hoods.foot ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{hoods.foot}</p> : null}
+      {hoods.foot ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{hoods.foot}</p> : null}
     </Box>
   );
 }
@@ -775,7 +775,7 @@ export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCal
           <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
         </div>
         {calendar.basis ? <FocalWords className="[@container(min-width:560px)]:mt-0">{calendar.basis}</FocalWords> : null}
-        {calendar.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [@container(min-width:560px)]:col-start-2">{calendar.foot}</p> : null}
+        {calendar.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] [@container(min-width:560px)]:col-start-2">{calendar.foot}</p> : null}
       </div>
       <MonthBars points={calendar.months} />
     </Box>
@@ -800,10 +800,10 @@ export function Season({ season, id = "season" }: { season: CitySeasonData | nul
       {drawn ? (
         <SegmentBar label={COPY.citySeason.cells.residents} value={r} figure={`${Math.round(r)}%`} unit={COPY.citySeason.unit} rest={`${COPY.citySeason.cells.visitors} ${Math.round(v)}%`} />
       ) : null}
-      {season.withheld ? <p className="mt-3 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.withheld}</p> : null}
+      {season.withheld ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{season.withheld}</p> : null}
       {/* The basis sentence is the bar's own words now ("Residents 84% of footfall", "Visitors 16%"); it prints only where the bar does not (his law of labels over sentences). */}
       {season.basis && !drawn ? <Basis>{season.basis}</Basis> : null}
-      {season.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{season.foot}</p> : null}
+      {season.foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{season.foot}</p> : null}
     </Box>
   );
 }

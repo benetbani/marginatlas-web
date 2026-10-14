@@ -2535,7 +2535,7 @@ export function ThresholdsStories() {
 const FACT_TOPICS: Array<{ topic: string; kicker: string; keys: Array<{ key: string; icon: AtlasIconId }>; why: string }> = [
   { topic: "employing", kicker: "The rules behind the cost", keys: [{ key: "minimum-wage-21", icon: "min-wage" }, { key: "employment-allowance", icon: "hiring" }, { key: "pension-employer", icon: "wages" }, { key: "pension-total", icon: "wages" }], why: "four rows, two lists from 600px" },
   { topic: "insurance", kicker: "Insurance", keys: [{ key: "employers-liability-fine", icon: "red-tape" }, { key: "certificate-fine", icon: "filings" }], why: "two rows, one list" },
-  { topic: "filings", kicker: "Legal and admin costs", keys: [{ key: "accounts-deadline", icon: "filings" }, { key: "tax-return-deadline", icon: "filings" }, { key: "corporation-tax-payment", icon: "taxes" }, { key: "vat-return-deadline", icon: "taxes" }, { key: "payroll-report", icon: "wages" }], why: "five rows, a value in words among the figures" },
+  { topic: "filings", kicker: "Legal and admin costs", keys: [{ key: "accounts-deadline", icon: "filings" }, { key: "tax-return-deadline", icon: "filings" }, { key: "payroll-report", icon: "wages" }, { key: "corporation-tax-payment", icon: "taxes" }, { key: "vat-return-deadline", icon: "taxes" }], why: "five rows, a value in words among the figures" },
 ];
 export function pickFactRowsInstances(): Instance[] {
   return listRuleCountries().flatMap((c) => FACT_TOPICS.filter((t) => ruleRows(c, t.topic, t.keys)).map((t) => ({ iso2: `${c}:${t.topic}`, why: t.why })));

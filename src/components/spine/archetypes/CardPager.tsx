@@ -54,7 +54,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
     <div data-archetype="card-pager" data-images={images}>
       {pages > 1 ? (
         <div className="mb-2 flex items-center justify-end gap-2">
-          <span className="mr-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
+          <span className="mr-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{cur + 1} of {pages}</span>
           <button type="button" aria-label={prevLabel} disabled={cur === 0} onClick={() => setPage((p) => Math.max(0, p - 1))} className={btn}><span aria-hidden>&#8592;</span></button>
           <button type="button" aria-label={nextLabel} disabled={cur >= pages - 1} onClick={() => setPage((p) => Math.min(pages - 1, p + 1))} className={btn}><span aria-hidden>&#8594;</span></button>
         </div>
@@ -78,7 +78,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
             <span className="flex min-w-0 flex-1 items-center gap-2">
             <span className="min-w-0 flex-1">
               <span className="block text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink)]" style={{ overflowWrap: "normal" }}>{c.name}</span>
-              {c.sub ? <span className="block truncate text-[length:var(--t-micro)] text-[var(--c-muted)]">{c.sub}</span> : null}
+              {c.sub ? <span className="block truncate text-[length:var(--t-body)] text-[var(--c-muted)]">{c.sub}</span> : null}
             </span>
             <span aria-hidden className="shrink-0 text-[length:var(--t-body)] text-[var(--c-muted)] transition-transform group-hover:translate-x-0.5">&#8594;</span>
             </span>
@@ -86,7 +86,7 @@ export function CardPager({ cards, allHref, allLabel, prevLabel = "Previous", ne
         ))}
       </div>
       <div className="mt-3 text-right">
-        <a href={allHref} className="tap-y inline-block text-[length:var(--t-micro)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
+        <a href={allHref} className="tap-y inline-block text-[length:var(--t-body)] text-[var(--c-ink2)] transition-colors hover:text-[var(--c-ink)]">{allLabel} <span aria-hidden>&#8594;</span></a>
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ export function DonutStat({ parts, center, centerWords, aria }: { parts: DonutSl
           {/* THE WORDS STAY INSIDE THE HOLE (2026-10-04, the ring at 375 in Geist): the hole is 85px across in the 128px ring and 106 in
               the 160px one, and 12ch of Geist let "pay by debit card" run one line of 93px over the ring; two balanced lines of at
               most 76px (96 in the larger ring) stand inside it. */}
-          <span className="mt-1 max-w-[4.75rem] text-[length:var(--t-micro)] leading-tight text-[var(--c-muted)] [text-wrap:balance] [@container(min-width:420px)]:max-w-[6rem]">{centerWords}</span>
+          <span className="mt-1 max-w-[4.75rem] text-[length:var(--t-body)] leading-tight text-[var(--c-muted)] [text-wrap:balance] [@container(min-width:420px)]:max-w-[6rem]">{centerWords}</span>
         </div>
       </div>
       <ul className="m-0 min-w-0 flex-1 list-none divide-y divide-[var(--c-border)] p-0">

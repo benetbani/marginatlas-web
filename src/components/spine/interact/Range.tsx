@@ -62,7 +62,7 @@ export function Range({ id, label, min, max, step, value, onChange, format, unit
           onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }}
           className="fig w-24 rounded-sm border border-[var(--c-line-strong)] bg-[var(--c-card)] px-2 py-1 text-right text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)]"
         />
-        {unit ? <span className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{unit}</span> : null}
+        {unit ? <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{unit}</span> : null}
       </span>
     </div>
   );

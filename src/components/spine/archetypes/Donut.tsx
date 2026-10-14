@@ -75,7 +75,7 @@ export function Donut({ parts, unit = "%" }: { parts: DonutPart[]; unit?: string
           <div key={p.key} data-row={p.key} data-part-key={p.key} className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 py-2">
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px]" style={{ background: tones[i].c, opacity: tones[i].o }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
-            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>
+            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] px-2 py-0.5 text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink2)]">{Math.round(p.share)}{unit}</span>
           </div>
         ))}
       </div>

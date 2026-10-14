@@ -42,11 +42,11 @@ export function DepthNotify({ source = "", words, choices }: { source?: string; 
      copy, and that variant's name is a struck word. The button is the field's own height, min-h-12: at min-h-11 it stood 2px inside the field's edges in the thin page's row and 4px short of it stacked. */
   const field = "h-12 w-full min-w-0 rounded-xl border border-[var(--control-line)] bg-white px-4 text-base font-medium text-[var(--c-ink)] transition-colors hover:border-[var(--c-ink2)] md:text-sm";
   const button = "tap-y min-h-12 rounded-md bg-[var(--c-ink)] px-4 text-[length:var(--t-body)] font-semibold text-[var(--c-surface)] disabled:opacity-60";
-  const failed = state === "failed" ? <p role="alert" className="w-full text-[length:var(--t-micro)] text-[var(--c-muted)]">{words.failed}</p> : null;
+  const failed = state === "failed" ? <p data-line="" role="alert" className="w-full text-[length:var(--t-body)] text-[var(--c-muted)]">{words.failed}</p> : null;
   /* WITH A PLACE TO CHOOSE, STACKED (photographed 2026-10-06): a label over each field and each field the column's width; in
      one wrapping row beside its label the city's list shrank to its arrow and the address to "you", at 1280 and at 375 alike. */
   if (choices) {
-    const label = "text-[length:var(--t-micro)] font-semibold text-[var(--c-muted)]";
+    const label = "text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]";
     return (
       <form data-depth-notify="" onSubmit={submit} className="grid gap-2">
         <label htmlFor="depth-notify-place" className={label}>{words.choose ?? "Place"}</label>
