@@ -40,6 +40,17 @@ jobs:
         run: npm ci
       - name: Browser
         run: npx playwright install --with-deps chromium
+      # The harness renders name Geist and Space Grotesk as installed faces (scripts/harness/render_page.tsx), as the laptop has them;
+      # without them every figure draws a fallback and the FIGURE FACE law reds. The faces come from the Google Fonts repository.
+      - name: Faces
+        run: |
+          mkdir -p ~/.local/share/fonts
+          base=https://github.com/google/fonts/raw/main/ofl
+          curl -fsSL -o ~/.local/share/fonts/SpaceGrotesk.ttf "$base/spacegrotesk/SpaceGrotesk%5Bwght%5D.ttf"
+          curl -fsSL -o ~/.local/share/fonts/Geist.ttf "$base/geist/Geist%5Bwght%5D.ttf"
+          curl -fsSL -o ~/.local/share/fonts/GeistMono.ttf "$base/geistmono/GeistMono%5Bwght%5D.ttf"
+          fc-cache -f
+          fc-list | grep -iE "geist|grotesk"
       - name: Gate chain
         run: |
           set +e
