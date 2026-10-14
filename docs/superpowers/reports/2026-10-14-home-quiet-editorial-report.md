@@ -134,3 +134,26 @@ This file is appended task by task, so a stop loses nothing. Scratch outputs nam
 - band test all pass; home_shape's two colophon checks PASS. Gates pages-fresh, harness-page-laws, harness-readability, page-foot,
   dead-anchors, uk-sources, home-band PASS; harness-links red on the two cell pages (database links), home-gb 43 links against 11.
 - Photographs read (`shots/t6-colophon-*`): tint band, licence line, hairline, four links on one line at 1280, two lines at 375.
+
+## Task 7A, the old sections leave (3d9417c5)
+
+- home-view.tsx replaced whole (Q3 B form: no `ask`, no `checkedDateForTrade`, `<HomeColophon />`). Removed: HomeExample, HomeProofs,
+  CityRows, worked_example.ts, proofs.ts, home_answers.ts, tests home_answers and foot, chain entries home-answers and home-foot.
+  COPY.home's lines, citiesLabel, citiesAll, citiesUnit, citiesHead, example and proofs pruned (no remaining reader in src or scripts).
+  WhereNext's `pitch` gone. Comments made true in CityCards, CityParts, door_look, verify_archetype_coverage (CityRows out of the list),
+  and, beyond the plan's list, src/app/not-found.tsx and src/lib/home/archive.ts. archive, how_made, masthead (arrow read from Department,
+  "From the blog" moved in) and home_forms rewritten as the plan gives them. CENSUS written (home: six dept rows; Pro not drawn).
+- Left as is, named for a later pass: comments that still name the retired files in shared pieces the rhythm branch is changing
+  (src/components/spine/kit.tsx:1212, src/components/spine/basis.tsx:10, src/components/spine/archetypes/FactRows.tsx:40), the
+  masthead test's 404 comment "THE PROOF DOORS' ARROW", and a stale `HomeProofs.tsx` entry in scripts/width_discipline_baseline.json
+  (the gate passes; caps shrank 205 to 201).
+- After render (`t7a-measure.txt`): zones `wide/tint "Search" | wide/paper "The atlas" | wide/terra "How figures are made"`; h1 1, h2 6,
+  h3 0; 4 figures, all stamped (the trade rows); 2 digits outside a figure ("v3.0" in the licence line); terracotta classes 3 (the
+  positioning mark and the h1's two words); 31 distinct internal links; 0 characters under 14px.
+- Tests: home_shape 32 PASS (exit 0), contents 67, band 15, no_counts 12, how_made 24, masthead 133, home_forms 42, all exit 0.
+  archive: 25 PASS and one red, "on this machine its source archive is the file it was exported from": the laptop's archive log hash no
+  longer matches the export's (data drift on the laptop since the export; my edits removed only the card checks; CI defers it).
+- Gates (non-browser, run locally): page-foot, archetype-coverage, census-fresh, dead-anchors, dead-links, counts-fresh, width-discipline,
+  home-bands, home-duel, home-kitchens, home-firms-last, home-new-companies, home-us-restaurants, home-how-made, home-forms, uk-sources,
+  masthead, home-shape, home-contents, home-band, home-no-counts, layering, no-eyebrow, trade-set PASS; home-archive red as above.
+  Browser gates for this task are read from the GitHub run (the controller's rule: heavy checks on GitHub). Scoped tsc 0 (both configs).
