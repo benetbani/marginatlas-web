@@ -531,7 +531,7 @@ export const COPY = {
     /** Where one step is the only one that costs money (the bill is that fee): the line says the rest are free. */
     focalWordsOneFee: "limited company, all in: the other {n} steps are free",
     focalWordsLocalFee: "limited company, all in: the {fee} online fee, the other {n} steps free",
-    licences: { summary: "Licences by trade", noWait: "0 days", noLicence: "No licence needed" },
+    licences: { summary: "Licences by trade", noWait: "0 days", noLicence: "No licence needed", /** A shard's trade name over three words, as a row label (ROW SENTENCE; plan 2026-10-13 country-page-journey, Task 3D). */ short: { "Bar / restaurant (alcohol)": "Selling alcohol", "Taxi / private hire": "Taxi or minicab", "Most retail and online": "Retail and online" } as Record<string, string> },
     detailRows: { form: "The form here", fee: "Government fee", filing: "Filing time", paperwork: "Paperwork" },
     /** The one line: the bill's where it prints, the days' otherwise (entry_bill_rows.ts). */
     basisBill: "Fees and a first licence, not share capital.",
@@ -3035,6 +3035,10 @@ export const COPY = {
     adminNote: "Last published in 2020.",
     /** The board's rows (slot 2), each label carrying its unit within three words (spec section 3; ROW SENTENCE). The two registering rows
      *  stand until the rhythm plan's Task 4 takes them to the registering table (fact-once). */
+    /** Slot 6's own row: the days until trading (the shard's total), its unit in its label. */
+    openRows: { trading: "Until trading, days" },
+    /** The UK's walls from abroad behind slot 6's plus: the founder route's fees, the decision's wait, a fee that buys a stay. */
+    abroad: { founder: "Founder visa fees", founderNote: "For {years} years, per person", decision: "Visa decision", decisionNote: "Applying from outside the UK", forTime: "Fee and surcharge for {time}" },
     boardRows: { clean: "Clean dealing /100", admin: "Admin ease /100", salary: "Monthly salary", living: "Living cost /100", llcDays: "Days to register", llcCost: "Cost to register" },
     /** The UK's charge on a director's loan, a tax, standing in the other taxes of slot 1. */
     directorsLoan: { label: "Director's loan charge", note: "Company pays, until repaid" },

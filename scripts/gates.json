@@ -427,6 +427,18 @@
       "claims": []
     },
     {
+      "name": "slots-open",
+      "script": "tests/spine/slots_open.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 3, TO OPEN (plan 2026-10-13 country-page-journey, Task 3D; spec sections 2 and 3; R5 section 5, slot 6): one slot, \"Forms, fees and days\": the bill at 30 (its own shard figure, stamped), the leg",
+      "reads": [
+        "src/components/spine/country/slots/StageOpen.tsx",
+        "src/lib/spine/slots/open.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

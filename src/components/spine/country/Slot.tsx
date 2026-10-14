@@ -19,7 +19,7 @@ export function Slot({ model, children }: { model: SlotModel<unknown>; children?
   const stage = stageOfSlot(model.id);
   return (
     <Box id={def.domId} data-slot={def.id} data-stage={String(stage.n)} data-answer={def.type} className="flex flex-col">
-      <Rail icon={def.icon ?? undefined} kicker={def.heading} />
+      <Rail icon={def.icon ?? undefined} kicker={def.heading} gloss={model.gloss ?? undefined} />
       {model.lead ? (
         <Focal figure={model.lead.figure} words={model.lead.words} placement={model.lead.placement ?? null} prov={model.lead.prov ?? null} placed={model.lead.placed ?? null} signal={model.lead.signal ?? null} noSignal={model.lead.noSignal ?? null} />
       ) : null}

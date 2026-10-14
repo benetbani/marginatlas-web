@@ -12,7 +12,7 @@ import type { MeasureKey } from "@/lib/spine/owner_direction";
 export type SlotRow = { key: string; label: string; value: string; note?: string | null; prov?: Provenance | null; href?: string; placed?: MeasureKey | null; signal?: Signalled | null; noSignal?: "set" | "fill" | null };
 export type SlotList = { key: string; head: string; type: AnswerType; rows: SlotRow[] };
 export type SlotLead = { figure: string; words: string; prov?: Provenance | null; placement?: string | null; placed?: MeasureKey | null; signal?: Signalled | null; noSignal?: "set" | "fill" | null };
-export type SlotModel<D = null> = { id: SlotId; lead: SlotLead | null; rows: SlotList | null; more: SlotList[]; drawing: D; thin: boolean };
+export type SlotModel<D = null> = { id: SlotId; lead: SlotLead | null; rows: SlotList | null; more: SlotList[]; drawing: D; thin: boolean; /** A term the slot's title uses, glossed in the opener (the Rail's gloss). */ gloss?: string | null };
 
 export const FOLD_MIN = 2;
 export const FOLD_MAX = 8;

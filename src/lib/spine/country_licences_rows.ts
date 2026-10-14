@@ -9,7 +9,7 @@
  * lead_time): the United Kingdom alone holds it today, 1 of 198 shards, so the
  * plus draws there and nowhere else.
  *
- * One row a trade: the trade as the label, the wait as the value (a duration,
+ * One row a trade: the trade as the label (a name over three words in its short form, COPY.entryBill.licences.short), the wait as the value (a duration,
  * "0 days" where no licence is needed, never a word where the figure goes), the
  * licence as its note. Two rows at least, or none. The UK's café row was
  * corrected on 2026-09-25 to the Food Standards Agency's rule (register with
@@ -40,7 +40,7 @@ export function buildCountryLicences(iso2: string): DetailRow[] | null {
   for (const r of byRow.values()) {
     if (!r.trade || !r.wait) continue;
     const none = !r.licence || /^none$/i.test(r.licence);
-    rows.push({ label: r.trade.replace(/\s*\/\s*/g, " or "), value: none ? L.noWait : r.wait, note: none ? L.noLicence : r.licence });
+    rows.push({ label: L.short[r.trade] ?? r.trade.replace(/\s*\/\s*/g, " or "), value: none ? L.noWait : r.wait, note: none ? L.noLicence : r.licence });
   }
   return rows.length >= 2 ? rows : null;
 }
