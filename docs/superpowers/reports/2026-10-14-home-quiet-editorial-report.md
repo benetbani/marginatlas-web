@@ -216,3 +216,65 @@ This file is appended task by task, so a stop loses nothing. Scratch outputs nam
 
   Also the controller's: the design repo's PAGES.md census block (`census.ts --write` against it; the home's rows are now the six
   `dept-*` and Pro), QUEUE.md and STATE.md.
+
+## Task 9, verification (the spec's section 5)
+
+- Before against after, each read from its render with `measure_home.mjs` (`before/measure.txt`, `after/measure.txt`):
+
+  | measure | before | after |
+  |---|---|---|
+  | zones | wide Search, 1-1 Worked example, 1-1-1 Proofs, wide/terra Read from the record, 1-1 The UK's cities | wide Search, wide The atlas, wide/terra How figures are made |
+  | h1 / h2 / h3 | 1 / 8 / 0 | 1 / 6 / 0 |
+  | figures (unstamped) | 32 (0) | 4 (0), the trade rows |
+  | digits outside a figure | 69 | 2 ("v3.0" in the licence line) |
+  | terracotta classes | 3 | 3 (the positioning mark, the h1's two words) |
+  | distinct internal links | 25 | 31 |
+  | characters under 14px | 370 of 1,596 | 0 of 1,003 |
+
+- Browser checks, one at a time (`before/*.txt`, `after/*.txt`): page laws before 6 reds, after 0 (the before reds are this branch's
+  ZONE TONES reading `--terra-full` on a render whose inline stylesheet predates the token, and the old pale band); page holes 0 and 0;
+  model laws 0 and 0 (after: BLOCK FLOOR 6 against 5); copy plain 0 and 0; readability 0 and 0. No rule has more reds after than before.
+- The fold (the spec's section 1 measure, `after/fold.txt`): at 1280 by 800 the six department doors end at 1,343px with a 64px bar;
+  the second screen ends at 1,600px: within.
+- Photographs read: `shots/after-page-1280` (the whole home), `after-top-*`, `after-contents-*`, `after-band-*`, `after-colophon-*`,
+  `before-page-1280`, `before-top-*`. The category is nameable from the first screen (the positioning line above the h1); no chart, no
+  single city's story, no run of figures; terracotta in the four places only with the paywall off. At 375 every part is one column.
+- The paywall's form (`after/home-gb-pro.html`, NEXT_PUBLIC_PAYWALL=1 and NEXT_PUBLIC_AUTH_ENABLED=1): home_shape all pass against it
+  (zones search, contents, Pro, band; h2 7 of 7; Pro's prices exempt); no_counts all pass; model laws 0; page laws 0 when the file
+  carries the home's own name (named home-gb-pro it reds ZONE TONES "on home-gb-pro", the law's page check, an artifact of the file
+  name). The render was then redone with the switches off. Read in `shots/after-pro-page-1280`: Pro stands after the contents and
+  before the band. Noted: Pro's Rail draws its icon on a terracotta tile, a fifth terracotta place while the paywall is on (the rhythm
+  branch's bare-glyph change may answer it). `check_paywall.mjs` (it renders three locked pages) was left to GitHub's `paywall-shape`.
+- Step 5 (the full typecheck, `npm run verify:deploy`, the build, `next start`) and step 6 (deploy) are the controller's and the
+  owner's; GitHub's run stands in for the chain and the typecheck here (below). No final code review was dispatched from this session.
+
+## GitHub check runs
+
+- Run 38614668533 on 93ef6522 (Task 8's report push, code as of Task 8): typecheck exit 0; chain 278 pass, 11 fail. Every home gate
+  passed (home-shape, home-contents, home-band, home-no-counts, home-picker, hero-words, home-destination, page-foot, masthead, loud-seats,
+  census-fresh among them). The eleven: trade-row-names (MINE: it read the everyday set's literal out of adapt_city.ts, which Task 4A
+  moved; fixed in 6cd23d24, the gate now reads src/lib/spine/everyday_trades.ts and passes locally); uk-city-sources (a known base red,
+  the rhythm branch's); harness-page-laws (country-GB #duel TEXT OUT OF BOX, country-AF LONE FIGURE; home-gb 0); fact-once and type-floor
+  (spine pages, rhythm Tasks 1A and 1B red by design; no home finding); art-direction (country, cell and industry rhythm; home 0);
+  harness-links (the two cell pages' database links; home-gb 31 against 11); provenance (the two cell pages; home-gb 4 of 4 stamped);
+  harness-laws (FIGURE FACE on every page, Linux fonts in CI, the controller's known CI-only red); harness-archetypes and
+  money-shown-own-rows (timeouts, known). The run on the last push is given in the final reply.
+- Run 38492860642 on 4ba9ccf4 (Task 3): typecheck 0; its reds are listed under Task 3.
+
+## Open items
+
+1. Comments that still name the retired home files in shared pieces the rhythm branch is changing: src/components/spine/kit.tsx:1212,
+   src/components/spine/basis.tsx:10, src/components/spine/archetypes/FactRows.tsx:40; also the masthead test's 404 comment "THE PROOF
+   DOORS' ARROW" and a stale `HomeProofs.tsx` entry in scripts/width_discipline_baseline.json (the gate passes).
+2. With the paywall on, Pro's Rail icon sits on a terracotta tile: a fifth terracotta place on the home (the spec says four).
+3. The pharmacies row draws the scissors pictogram, the same as hairdressers (industryPictogramId's mapping for health and beauty stores).
+4. At 375 the positioning line breaks at the hyphen of "small-business"; his words were kept as they are.
+5. tests/home/archive.test.ts reds on this laptop only: the archive log's hash no longer matches data/home/archive.json's export (a
+   re-export, `python -P scripts/data/home/export_home.py archive`, is the controller's call; nothing in this branch touched the data).
+6. Not run here, the controller's: the full local typecheck at 4 GB, `npm run verify:deploy`, the build, `next start` and its
+   photographs, `check_paywall.mjs` locally, a final code review, the parent-repo texts of Task 8, PAGES.md, QUEUE.md and STATE.md.
+7. Merge watch with rhythm-air-inside: this branch touched shared files the rhythm branch also changes: NavigatorForm.tsx, HeroWords.tsx,
+   globals.css (`--terra-full`, `--band-ink`, the terracotta zone, `.ma-mono`), copy.ts, check_page_laws.mjs (TERRA), check_model_laws.mjs
+   (FOCAL exemption), spine_scan.mjs and the five surface gates, adapt_city.ts (EVERYDAY_TRADES moved out), docs/loop/CENSUS.md
+   (generated: regenerate after the merge) and scripts/gates.json with CLAUDE.md's counts (regenerate after the merge). ReportFoot.tsx
+   and SourcesFoot.tsx were left untouched.
