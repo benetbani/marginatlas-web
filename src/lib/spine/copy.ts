@@ -3008,7 +3008,7 @@ export const COPY = {
       leaseTerms: "The lease, its terms",
       leaseCosts: "The lease, its costs",
       peersPower: "Peers' electricity",
-      loans: "Start-up loans",
+      loans: "Loans and grants",
       pay: "How customers pay",
       lands: "When money lands",
       filingCosts: "Filing costs",
@@ -3045,6 +3045,15 @@ export const COPY = {
     hire: { leadShare: "a full-time year at the minimum wage, plus {share} from the employer", employer: "Employer's share", hourly: "Hourly minimum wage", hour: "One worked hour", vacancies: "Vacancies per 100", payroll: "Payroll change", over: "on pay over {amount} a year" },
     /** The rules of employing, a time each, its unit in its label (spec section 3: "units sit in the label"). */
     employ: { holiday: "Paid holiday, days", week: "Longest week, hours", dismissal: "Unfair dismissal, months", maternity: "Maternity pay, weeks", notice: "Notice, weeks", sick: "Sick pay, weeks", bankHolidays: "Bank holidays, days" },
+    /** Slot 8's own row and the UK's three premises rules, their labels as the page printed them. */
+    run: { diesel: "Diesel per litre" },
+    premises: { relief: "Full rates relief", rates: "Business rates", retail: "Shops and cafés" },
+    /** The UK's lease, split by answer type: its rules' states, its terms with their units, its costs. */
+    lease: { notice: "Landlord notice, months", optOut: "Opting out, days", request: "Renewal request, months", newLease: "New lease, years", short: "Short leases, months", registered: "Registered over, years", exempt: "Exempt", compensated: "Compensated" },
+    /** Slot 9: the lead's words, the UK's loan rate row, the waits' labels. */
+    credit: { words: "a year, the average rate on a business bank loan", loanRate: "Start-up loan rate", payouts: "Card payouts, days", terms: "Payment terms, days", agreed: "Agreed limit, days" },
+    /** Slot 10: the UK's deadlines, a time each, its unit in its label. */
+    filings: { taxReturn: "Tax return, months", taxPayment: "Tax payment, months", vatReturn: "VAT return, months", andDays: "and {n} days, {note}", andDay: "and 1 day, {note}" },
     abroad: { founder: "Founder visa fees", founderNote: "For {years} years, per person", decision: "Visa decision", decisionNote: "Applying from outside the UK", forTime: "Fee and surcharge for {time}" },
     boardRows: { clean: "Clean dealing /100", admin: "Admin ease /100", salary: "Monthly salary", living: "Living cost /100", llcDays: "Days to register", llcCost: "Cost to register" },
     /** The UK's charge on a director's loan, a tax, standing in the other taxes of slot 1. */

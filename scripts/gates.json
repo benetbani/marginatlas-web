@@ -452,6 +452,18 @@
       "claims": []
     },
     {
+      "name": "slots-run",
+      "script": "tests/spine/slots_run.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 4, SLOTS 8 TO 11 (plan 2026-10-13 country-page-journey, Task 3F; spec sections 2 to 4; R5 section 5, slots 8 to 11): running costs (electricity at 30, placed with its signal, diesel a row; the U",
+      "reads": [
+        "src/components/spine/country/slots/StageRun.tsx",
+        "src/lib/spine/slots/run.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [
