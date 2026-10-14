@@ -31,14 +31,15 @@ function Group({ id, title, children }: { id: string; title: string; children: R
   );
 }
 
-/** WHAT THE LEVER JUST DID (spec section 7: "the answer stands above the levers and each lever shows its effect beside it"): under the lever the reader
+/** WHAT THE LEVER JUST DID (spec section 7: "the answer stands above the levers and each lever shows its effect beside it"; no live region: the answer
+ *  alone announces, the final review's M2): under the lever the reader
  *  last moved, the break-even as it now stands, or the reason it cannot be worked out. Only the lever in hand carries it, so the page prints the answer
  *  twice only while the reader is moving something, never on arrival. */
 export type Effect = { figure: string; prov: Provenance | null } | { words: string } | null;
 function EffectLine({ effect, W }: { effect: Effect; W: CalculatorWords }) {
   if (!effect) return null;
   return (
-    <p data-effect="" aria-live="polite" className="mt-1 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">
+    <p data-effect="" className="mt-1 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">
       {"figure" in effect ? (
         <>
           {W.levers.effect} <Fig className="font-semibold" prov={effect.prov}>{effect.figure}</Fig> {W.levers.effectTail}
@@ -127,7 +128,7 @@ export function LeversCard({ W, bundle, state, r, fmt, set, active = null, onAct
        unless it is the page's one exempt section; where figures come from keeps its facts to short phrases for this). */
     <Box id="levers" keep data-archetype="sim-levers" data-editorial="1">
       <Rail icon="calculator" kicker={W.levers.title} level={2} />
-      {r.fixedYear.held ? <Focal figure={fmt.money(r.fixedYear.value / 12)} words={withYours(W.levers.fixed, r.fixedYear, W)} prov={{ src: "calculator:fixed-costs-a-month", kind: r.fixedYear.kind }} live /> : <Reason o={r.fixedYear} W={W} />}
+      {r.fixedYear.held ? <Focal figure={fmt.money(r.fixedYear.value / 12)} words={withYours(W.levers.fixed, r.fixedYear, W)} prov={{ src: "calculator:fixed-costs-a-month", kind: r.fixedYear.kind }} /> : <Reason o={r.fixedYear} W={W} />}
       <Group id="team" title={W.levers.groups.team}>
         {bundle.path === "uk-model" ? (
           <li data-team-note="">

@@ -83,6 +83,7 @@ export function AnswerSection({ W, r, fmt, taxed }: { W: CalculatorWords; r: Eng
   return (
     <Box id="answer" data-archetype="sim-answer" data-level="page" data-answers={SURFACE_ANSWERS.calculator} data-sim-answer="">
       <Rail icon="break-even" kicker={W.answer.title} level={2} />
+      {/* THE PAGE'S ONE LIVE REGION (the final review's M2): every lever moves the answer, and only the answer is announced. */}
       <div aria-live="polite">
         {be.held ? (
           <div data-sim-figure="">
@@ -111,7 +112,6 @@ export function MarginSection({ W, r, fmt, taxed }: { W: CalculatorWords; r: Eng
           words={withYours(taxed ? W.margin.words : W.margin.wordsNoTax, m, W)}
           placement={r.salesRank.held ? fill(W.margin.placement, { pct: fmt.percent(r.salesRank.value, 0) }) : null}
           prov={prov(m, "margin-before-tax")}
-          live
         />
       ) : (
         <Reason o={m} W={W} />
@@ -201,7 +201,7 @@ export function MonthSection({ W, r, fmt, sales, bundle, teamHeads }: { W: Calcu
   return (
     <Box id="month">
       <Rail icon="cost-breakdown" kicker={W.month.title} level={2} />
-      {p.held ? <Focal figure={fmt.money(p.value / 12)} words={withYours(p.value < 0 ? W.month.loss : W.month.profit, p, W)} prov={prov(p, "profit-a-month")} live /> : <Reason o={p} W={W} />}
+      {p.held ? <Focal figure={fmt.money(p.value / 12)} words={withYours(p.value < 0 ? W.month.loss : W.month.profit, p, W)} prov={prov(p, "profit-a-month")} /> : <Reason o={p} W={W} />}
       {S !== null ? <MonthBar W={W} variable={variable} fixed={fixed} sales={S} breakEven={r.breakEven.held ? r.breakEven.value : null} /> : null}
       <Switch
         id="month-span"
@@ -256,7 +256,7 @@ export function OpeningSection({ W, r, fmt, bundle, state, taxed }: { W: Calcula
   return (
     <Box id="opening">
       <Rail icon="startup-cost" kicker={W.opening.title} level={2} />
-      {pb.held ? <Focal figure={pb.value.toLocaleString("en-GB")} words={withYours(taxed ? W.opening.monthsUk : W.opening.months, pb, W)} prov={prov(pb, "months-to-pay-back")} live /> : <Reason o={pb} W={W} />}
+      {pb.held ? <Focal figure={pb.value.toLocaleString("en-GB")} words={withYours(taxed ? W.opening.monthsUk : W.opening.months, pb, W)} prov={prov(pb, "months-to-pay-back")} /> : <Reason o={pb} W={W} />}
       <FactRows rows={rows} className="mt-6" />
       {pb.held ? <Basis>{bundle.opening.line}</Basis> : null}
     </Box>
