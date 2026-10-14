@@ -23,6 +23,11 @@ jobs:
     env:
       ATLAS_BROWSER_GATES: "1"
       NEXT_TELEMETRY_DISABLED: "1"
+      # src/lib/supabase.ts builds its client at import, so the renders need a URL. With no repository secret set, a closed local port:
+      # every query fails at once and falls back (withBudget), so only what the database feeds (related links) draws differently from
+      # the laptop's renders. That is this run's blind spot until the two public values are set as repository secrets.
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'http://127.0.0.1:54321' }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'ci-placeholder' }}
     steps:
       - uses: actions/checkout@v4
         with:
