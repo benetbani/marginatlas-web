@@ -3454,6 +3454,7 @@
         "src/components/spine/archetypes/CityParts.tsx",
         "src/components/spine/archetypes/Department.tsx",
         "src/components/spine/home/HomeContents.tsx",
+        "src/lib/brand/industry_pictogram.ts",
         "src/lib/home/contents.ts",
         "src/lib/home/destination.ts",
         "src/lib/home/list_counts.ts",
