@@ -36,7 +36,8 @@ async function main(): Promise<void> {
   check("every base figure comes back to itself through every currency", true);
   check("a UK figure in pounds is the law's pounds exactly", D.toDisplay(31551.16, "GBP", "GBP") === 31551.16 && D.money(31551.16, "GBP", "GBP") === "£31,551");
   check(`a UK figure in dollars is at fx.ts's pound rate, the trade page's dollars (${D.toDisplay(556017.36, "GBP", "USD")})`, near(D.toDisplay(556017.36, "GBP", "USD"), 556017.36 * 1.3265));
-  check(`a dollar figure in pounds is at the display rate (${D.toDisplay(1000, "USD", "GBP")})`, near(D.toDisplay(1000, "USD", "GBP"), 743.5));
+  /* One pound rate on the page (the final review's M4): a dollar place in pounds takes fx.ts's pound, the rate a UK figure's dollars take. */
+  check(`a dollar figure in pounds is at fx.ts's pound rate, the one a UK figure uses (${D.toDisplay(1000, "USD", "GBP")})`, near(D.toDisplay(1000, "USD", "GBP"), 1000 / 1.3265) && near(D.fromDisplay(1000 / 1.3265, "USD", "GBP"), 1000));
   check(`typing 2,000 dollars on a UK view keeps 2,000 / 1.3265 pounds (${D.fromDisplay(2000, "GBP", "USD")})`, near(D.fromDisplay(2000, "GBP", "USD"), 2000 / 1.3265));
 
   /* REVIEW FOCUS 1, THE SIGN: a loss is a true minus before the symbol. */

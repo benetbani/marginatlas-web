@@ -2,7 +2,7 @@
  * src/lib/simulator/display.ts , THE MONEY IN THE READER'S CURRENCY (plan 2026-10-13 cost-simulator, Task 4A; spec section 4: "the money in the reader's
  * display currency through the site's existing switch"; the plan's Reading 14). The engine counts in the base currency, pounds for a UK place (the
  * law's own) and dollars elsewhere. A figure shows exactly in its base; a UK figure in dollars at the site's pound rate (fx.ts, the trade page's own
- * dollars); any other through dollars at the display rates (currency.ts). A typed figure goes back the same way, so the base never moves when the
+ * dollars), and so is a dollar figure shown in pounds; any other through dollars at the display rates (currency.ts). A typed figure goes back the same way, so the base never moves when the
  * currency does. A loss prints a true minus (U+2212) before the symbol, "−$12K", never spine/money.ts's "$-12,000".
  */
 import { CURRENCIES, convertFromUsd, type CurrencyCode } from "@/lib/currency";
@@ -15,12 +15,13 @@ export const MINUS = String.fromCharCode(0x2212);
 export function toDisplay(x: number, base: Base, show: CurrencyCode): number {
   if (show === base) return x;
   const usd = base === "USD" ? x : (convertToUsd("GBP", x) as number);
-  return show === "USD" ? usd : convertFromUsd(usd, show);
+  /* Pounds always at fx.ts's rate, the one a UK figure's dollars take, so the page holds one pound rate (the final review's M4). */
+  return show === "USD" ? usd : show === "GBP" ? (convertUsdTo("GBP", usd) as number) : convertFromUsd(usd, show);
 }
 
 export function fromDisplay(x: number, base: Base, show: CurrencyCode): number {
   if (show === base) return x;
-  const usd = show === "USD" ? x : x / convertFromUsd(1, show);
+  const usd = show === "USD" ? x : show === "GBP" ? (convertToUsd("GBP", x) as number) : x / convertFromUsd(1, show);
   return base === "USD" ? usd : (convertUsdTo("GBP", usd) as number);
 }
 
