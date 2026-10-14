@@ -258,7 +258,7 @@ function doorsOf(page: string, html: string): { doors: Walked[]; termini: Array<
   const termini = [...doc.querySelectorAll('[data-archetype="terminus"]')].map((t) => ({ card: cardOf(t), labels: [...t.querySelectorAll("a[data-door]")].map((a) => text(a)) }));
   const tableAnchors = [...doc.querySelectorAll('[data-archetype="compare-table"]:not([data-doors="1"]) a[href]')].map((a) => ({ card: cardOf(a), href: a.getAttribute("href") ?? "" }));
   /* The country's masthead is the hero board since 2026-09-20 (HeroBoard.tsx, his design); it declares its answer and its markers the way the answer card does. */
-  const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"], [data-archetype="hero-board"][data-level="page"]')].map((m) => ({ card: `${m.getAttribute("data-archetype")}#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div")) }));
+  const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"], [data-archetype="hero-board"][data-level="page"], [data-archetype="sim-answer"][data-level="page"]')].map((m) => ({ card: `${m.getAttribute("data-archetype")}#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div, [data-sim-figure] .fig, [data-sim-label]")) }));
   return { doors, termini, tableAnchors, mastheads };
 }
 
@@ -274,6 +274,8 @@ function expectedAnswer(surface: string, slugs: string[]): DoorKind | null {
     case "home": return null;
     /* /new-businesses answers no one place (plan 2026-10-09, home introduction): its rows are doors to the country pages that do. */
     case "openings": return null;
+    /* /calculator answers the sales to break even (plan 2026-10-13 cost-simulator): its answer section is the page's masthead. */
+    case "calculator": return SURFACE_ANSWERS.calculator;
     default: return null;
   }
 }

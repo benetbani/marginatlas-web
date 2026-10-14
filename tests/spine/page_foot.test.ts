@@ -44,6 +44,7 @@ const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
   { file: "hood-london-city-of-london", path: "/cities/london/neighborhoods/city-of-london", dated: false },
   { file: "home-gb", path: "/", dated: true },
   { file: "openings-world", path: "/new-businesses", dated: false },
+  { file: "calculator-gb-london-restaurants", path: "/calculator", dated: false }, // the tool's own sources section dates its figures; no checked line
 ];
 const listed = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages.map((p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`);
 check(`the test reads every page the harness lists (${listed.length})`, listed.length === PAGES.length && listed.every((f: string) => PAGES.some((p) => p.file === f)));

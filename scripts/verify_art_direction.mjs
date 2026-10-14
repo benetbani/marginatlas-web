@@ -648,8 +648,8 @@ for (const m of missing) console.log(missingLine(RULE, m));
    having read nothing). D3 and D6 find a level by `main [data-zone]`, so a render that holds none gave them nothing to judge, which is how
    the old reading went blind: it looked for a class no page carried. zoneRhythm already names it under the page; this stops the run, ahead
    of the baseline's write and its compare, so no baseline can absorb it and none can be written over it. EVERY RENDER THIS GATE READS IS A
-   BAND PAGE (the eight surfaces of scripts/harness/pages.json each draw their levels with Zone: country, howto, city, cell, industry, hood,
-   home, openings), so none is exempt; a surface that draws no zone by design must be exempted here, with its reason, when it joins that list. */
+   BAND PAGE (the nine surfaces of scripts/harness/pages.json each draw their levels with Zone: country, howto, city, cell, industry, hood,
+   home, openings, calculator), so none is exempt; a surface that draws no zone by design must be exempted here, with its reason, when it joins that list. */
 const unread = pages.filter((p) => !p.result.zoneSplits.length);
 if (unread.length) {
   for (const p of unread) console.log(`x ${RULE} ${p.path}: ${NO_ZONE_READ}`);

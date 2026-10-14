@@ -30,7 +30,7 @@ import { getCityAnnualWageUsd } from "@/lib/economic_profile/city_wages";
 import { getCountryProfile, listCountryProfiles } from "@/lib/economic_profile";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getAovCityTierMultiplier } from "@/lib/economics/breakeven";
-import { getCityTier } from "@/lib/cities/city_tier";
+import { cityOfCountry, getCityTier } from "@/lib/cities/city_tier";
 import { getCountryTaxRates, hasCountrySpecificRates } from "@/lib/tax";
 import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { honestRound } from "@/lib/uk/present/precision";
@@ -178,7 +178,8 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
     : tenths && cell?.firms ? { kind: "tenths", p10: money(tenths.p10) as number, p25: money(tenths.p25) as number, p50: money(tenths.p50) as number, p75: money(tenths.p75) as number, p90: money(tenths.p90) as number, firms: cell.firms, stamp: est(`${cell.src}:rev_p10+rev_p90`) }
     : null;
   const sph = pos(industryFigure(place.industryId, "demand.spend_per_head_usd")?.value);
-  const mult = getAovCityTierMultiplier(place.industryId, place.city ? getCityTier(place.city) : null);
+  /* The city list read through cityOfCountry, as every read for a page's place is (tests/spine/uk_open_permits.test.ts). */
+  const mult = getAovCityTierMultiplier(place.industryId, getCityTier(cityOfCountry(place.iso2, place.city)));
   const ticket = sph !== null ? input(money(sph * mult), est(`facts/industry/${place.industryId}.json:demand.spend_per_head_usd${mult !== 1 ? ` x ${mult}` : ""}`), "trade", mult !== 1 ? W.lines.ticket.tier : W.lines.ticket.trade) : input(null, null, "none", W.lines.ticket.none);
 
   /* YOU AND THE LOAN. */

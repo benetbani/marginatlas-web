@@ -166,6 +166,19 @@ async function main(): Promise<void> {
   check(`the rent's typed figure follows the currency and nothing is written (${typedUsd} then ${typedGbp}, ${writes} writes)`, typedUsd === "480" && typedGbp === "362" && writes === 0, "src/components/spine/calculator/levers.tsx");
   await act(async () => { rowRoot.unmount(); });
 
+  /* THE CHAIN'S RENDER (Task 4C): the bare page as pages-fresh draws it, its masthead declared, its seven parts, every figure stamped. */
+  const RENDER = "scratchpad/harness/pages/calculator-gb-london-restaurants.html";
+  const listed = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages.some((p: { surface: string; slugs: string[] }) => p.surface === "calculator" && p.slugs.join("-") === "gb-london-restaurants");
+  check("the harness lists the calculator's page", listed, "scripts/harness/pages.json");
+  check("the model laws hold a floor of seven for it", /calculator: 7/.test(readFileSync("scripts/harness/check_model_laws.mjs", "utf8")), "scripts/harness/check_model_laws.mjs");
+  if (!existsSync(RENDER)) check(`a render to read (run the pages-fresh gate): ${RENDER}`, false, RENDER);
+  else {
+    const rd = new JSDOM(readFileSync(RENDER, "utf8").replace(/<style[^>]*>[\s\S]*?<\/style>/g, "")).window.document;
+    check("the render draws the seven parts and its masthead answers the break-even", ids.every((id) => rd.getElementById(id)) && !!rd.querySelector('[data-archetype="sim-answer"][data-level="page"][data-answers="break-even"] [data-sim-figure] .fig'), RENDER);
+    const silent = [...rd.querySelectorAll("main .fig")].filter((el) => !el.getAttribute("data-src") || !KINDS.has(el.getAttribute("data-kind") ?? ""));
+    check(`every figure on the render says where it came from (${silent.length} silent)`, silent.length === 0, RENDER);
+  }
+
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("simulator/page: all pass");
   process.exit(0);

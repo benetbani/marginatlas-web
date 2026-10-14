@@ -66,6 +66,7 @@ const surfaceOf = (name) =>
   name.startsWith("hood-") ? "hood" :
   name.startsWith("home-") ? "home" :
   name.startsWith("openings-") ? "openings" :
+  name.startsWith("calculator-") ? "calculator" :
   name.startsWith("howto-") ? "howto" : "other";
 
 /* THE ROUTES, from src/app: every directory holding a page or a route handler.
