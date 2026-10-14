@@ -405,6 +405,8 @@ const collect = () => {
      The judging is scripts/lib/zone_rhythm.mjs's, in node. */
   const zoneEls = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
   const zoneSplits = zoneEls.map((z) => z.getAttribute("data-zone") || "");
+  /* A zone that opens a chapter starts D3 afresh (plan 2026-10-13 country-page-journey, Q4's answer A; scripts/lib/zone_rhythm.mjs). */
+  const zoneStarts = zoneEls.map((z) => !!z.querySelector(":scope > [data-chapter-head]"));
   const levelGaps = zoneEls.slice(1).map((z, i) => px(getComputedStyle(zoneEls[i]).paddingBottom) + px(getComputedStyle(z).paddingTop));
   const pairGaps = zoneEls.map((z) => z.querySelector(":scope > [data-zone-level]")).filter((l) => l && l.children.length > 1).map((l) => px(getComputedStyle(l).columnGap));
   const keptPads = [...document.querySelectorAll("main [data-zone] [data-keep-card], main [data-zone] [data-instrument], main [data-zone] [data-lever-card]")].filter((e) => e.getClientRects().length).map((e) => px(getComputedStyle(e).paddingTop));
@@ -569,7 +571,7 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals, zoneSplits, levelGaps, pairGaps, keptPads, sameForAll, falseLegends, wideDomains };
+  return { sections, pageAccents, frontRepeats, looseNumerals, zoneSplits, zoneStarts, levelGaps, pairGaps, keptPads, sameForAll, falseLegends, wideDomains };
 };
 
 const RULES = [
@@ -617,7 +619,7 @@ function judge(result) {
 
   /* D6 AND D3 ON THE ZONES, judged in node from what the page measured (scripts/lib/zone_rhythm.mjs). */
   const ladder = zoneLadder(result);
-  const rhythm = zoneRhythm(result.zoneSplits);
+  const rhythm = zoneRhythm(result.zoneSplits, result.zoneStarts);
   counts.ladder = ladder.length;
   for (const l of ladder) lines.push(`  D6  ${l}`);
 

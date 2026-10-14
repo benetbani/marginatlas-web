@@ -3,7 +3,10 @@
  * E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, section 3 item 4).
  * D3: no zone repeats the split of the zone before it, and never three equal-halves zones in a row. A "wide" zone (the hero, the peers table,
  * the close: full-width levels, which section-bands counts) holds no split, so two wide neighbours are no repeat; "lone" is a split (a level
- * whose partner self-omits), so two lone neighbours are one, whichever side each stands (the attribute does not say the side).
+ * whose partner self-omits), so two lone neighbours are one, whichever side each stands (the attribute does not say the side). A zone that
+ * opens a chapter (it holds the chapter's numbered head) starts the comparison afresh: it is compared with no zone before it, and no run of
+ * three equal halves crosses it (plan 2026-10-13 country-page-journey, Q4's answer A: two stages each drawing one slot stand as two lone
+ * zones, and the chapter head between them is the break).
  * D6: on a band page a level stands further from the next than two sections in a level stand from each other, and they further than a kept
  * box's padding (DISTANCES 2.5: 128, 64 and 20 at 1024 and up). The card page's chapter rung is not read: a band page opens a chapter under
  * the same padding as any level and marks it with its numbered head (MODEL PART 10.2), which the spec keeps.
@@ -20,16 +23,19 @@ export const NO_ZONE_READ = "no zone read: the render holds no `main [data-zone]
 
 /**
  * @param {string[]} splits the split each zone declares, in page order (`main [data-zone]`'s attribute)
+ * @param {boolean[]} [starts] true for a zone that opens a chapter (it holds `[data-chapter-head]`)
  * @returns {string[]} NO_ZONE_READ alone when no zone was read, else one finding per repeat, then one per run of three equal halves
  */
-export function zoneRhythm(splits) {
+export function zoneRhythm(splits, starts = []) {
   /* A reading of nothing is a finding, not a pass: the header's last sentence. One zone read is a read; only none is not. */
   if (!splits.length) return [NO_ZONE_READ];
   const out = [];
   for (let i = 1; i < splits.length; i++) {
+    if (starts[i]) continue;
     if (splits[i] !== "wide" && splits[i] === splits[i - 1]) out.push(`zones ${i} and ${i + 1} both split ${splits[i]}`);
   }
   for (let i = 2; i < splits.length; i++) {
+    if (starts[i] || starts[i - 1]) continue;
     if (splits[i] === "1-1" && splits[i - 1] === "1-1" && splits[i - 2] === "1-1") out.push(`zones ${i - 1} to ${i + 1} are three equal halves in a row`);
   }
   return out;
