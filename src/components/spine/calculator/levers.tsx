@@ -123,7 +123,9 @@ export function LeversCard({ W, bundle, state, r, fmt, set, active = null, onAct
     <LeverRow key={k} id={k} W={W} input={bundle.inputs[k]} value={valueOf(k)} yours={has(state.levers, k)} kind={kind} unit={unit} fmt={fmt} effect={effectOf(k)} onChange={(x) => setLever(k, x)} onClear={() => setLever(k, null)} onReset={() => reset(k)} />
   );
   return (
-    <Box id="levers" keep data-archetype="sim-levers">
+    /* THE PAGE'S ONE PROSE SECTION (art direction E1: a source line under every lever, 681 characters on the render at 1440, over the 220 a card holds
+       unless it is the page's one exempt section; where figures come from keeps its facts to short phrases for this). */
+    <Box id="levers" keep data-archetype="sim-levers" data-editorial="1">
       <Rail icon="calculator" kicker={W.levers.title} level={2} />
       {r.fixedYear.held ? <Focal figure={fmt.money(r.fixedYear.value / 12)} words={withYours(W.levers.fixed, r.fixedYear, W)} prov={{ src: "calculator:fixed-costs-a-month", kind: r.fixedYear.kind }} live /> : <Reason o={r.fixedYear} W={W} />}
       <Group id="team" title={W.levers.groups.team}>

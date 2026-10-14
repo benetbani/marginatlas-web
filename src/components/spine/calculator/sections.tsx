@@ -267,7 +267,9 @@ export function SourcesSection({ W, notes }: { W: CalculatorWords; notes: Array<
   return (
     <Box id="sources">
       <Rail icon="methodology" kicker={W.sources.title} level={2} />
-      <NoteList notes={notes} />
+      {/* NOT THE PAGE'S PROSE SECTION (art direction E1, measured on the render: one section a page is exempt from the 220-character prose budget, and the
+          levers' source lines are that section): each note's fact stays a short phrase with its date. */}
+      <NoteList notes={notes} editorial={false} />
     </Box>
   );
 }
