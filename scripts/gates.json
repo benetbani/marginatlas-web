@@ -3556,6 +3556,20 @@
       "claims": []
     },
     {
+      "name": "home-no-counts",
+      "script": "tests/home/no_counts.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO COUNT ON THE HOME (his ruling of 2026-10-07: no country, city or trade-list count on the home; plan docs/superpowers/plans/2026-10-13-home-quiet-editorial.md, Task 1C; spec docs/superpowers/specs/2",
+      "reads": [
+        "scratchpad/harness/pages/home-gb.html",
+        "src/lib/home/list_counts.ts",
+        "src/lib/spine/copy.ts",
+        "tests/home/no_counts.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "no-place-words",
       "script": "tests/copy/no_place_words.test.ts",
       "args": [],

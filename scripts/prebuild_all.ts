@@ -939,6 +939,9 @@ const GATES: Gate[] = [
   /* The home's band, one solid statement (his decision of 2026-10-13): one sentence true of how every figure is made, one link to the
      method, no figure and no digit, on the brand terracotta at full strength (--terra-full) in white at AA, ink on paper in print. */
   { name: "home-band", script: "tests/home/band.test.ts" },
+  /* No country, city or trade-list count on the home, in figures or in words (his ruling of 2026-10-07), no figure but a trade row's and
+     Pro's, no digit on the band: read on the home's render, block by block, never passing having read nothing. */
+  { name: "home-no-counts", script: "tests/home/no_counts.test.ts" },
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
   { name: "no-place-words", script: "tests/copy/no_place_words.test.ts" },
