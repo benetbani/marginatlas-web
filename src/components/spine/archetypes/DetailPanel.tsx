@@ -115,26 +115,32 @@ export function DetailPanel({ name, summary, rows, withheldLine, type }: { name:
  * in the figure face; a row with a page of its own links its label and carries the arrow after its value. No drawing, no fold inside a
  * fold, no terracotta on hover; the browser's own marker is hidden, the signal being the page's one triangle. Every other page keeps the
  * panel above until its own pass (spec section 9).
+ * THE PLUS IS LEFT IN ITS OWN BOX, THE KIT'S PLUS (Task 4's page laws, ALIGNMENT): centred in a fixed box it read as centred text on
+ * every fold at 1280; the glyph's own width is its box, so it turns in place. A LINKED ROW IS A THUMB'S TAP (TAP SIZE at 375, panels
+ * open): its label's link takes the row 44 tall, so a list that links carries no gap between its rows, the height being its air.
+ * STRAIGHT UNDER A FIGURE'S BLOCK it adds no margin: the block keeps 12 above a fold (Slot.tsx), DISTANCES 2.1's figure to its panel.
  */
 function AnswerFold({ name, summary, rows, type }: { name: string; summary: string; rows: DetailRow[]; type: AnswerType }) {
   const words = type === "state";
+  const linked = rows.some((r) => r.href);
   return (
-    <div data-archetype="detail-panel" data-rows={rows.length} data-fold="answer" data-answer={type} className="mt-6 border-t border-[var(--c-border)]">
+    <div data-archetype="detail-panel" data-rows={rows.length} data-fold="answer" data-answer={type} className="mt-6 border-t border-[var(--c-border)] [:has(>[data-focal-words])+&]:mt-0">
       <details name={name} className="group">
         <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 py-2.5 [&::-webkit-details-marker]:hidden">
-          <span data-label className="min-w-0 flex-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{summary}</span>
+          <span data-fold-head="" className="min-w-0 flex-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{summary}</span>
           <span data-fold-count className="tabular-nums text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{rows.length}</span>
-          <span aria-hidden="true" className="w-4 text-center text-[length:var(--t-lead)] leading-5 text-[var(--c-muted)] transition-transform group-open:rotate-45">+</span>
+          <span aria-hidden="true" className="text-[length:var(--t-lead)] leading-5 text-[var(--c-muted)] transition-transform group-open:rotate-45">+</span>
         </summary>
-        <dl className="grid gap-2 pb-3">
+        <dl className={`grid pb-3 ${linked ? "" : "gap-2"}`}>
           {rows.map((r, i) => (
             <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3">
-              <dt data-label className="min-w-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{r.href ? <a href={r.href} className="underline-offset-2 hover:underline">{r.label}</a> : r.label}</dt>
+              <dt data-label className="min-w-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{r.href ? <a href={r.href} className="flex min-h-11 items-center underline-offset-2 hover:underline">{r.label}</a> : r.label}</dt>
               <dd className="flex items-baseline justify-end gap-2 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">
                 <span data-value="">{words ? <span className="font-medium">{r.value}</span> : <Fig prov={r.prov}>{r.value}</Fig>}</span>
                 {r.href ? <span aria-hidden="true" className="text-[var(--c-muted)]">→</span> : null}
               </dd>
-              {r.note ? <dd className="col-span-2 text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{r.note}</dd> : null}
+              {/* A note's figures stack down the fold as the values do (the loans' law pounds under their dollars), so they are tabular (F1). */}
+              {r.note ? <dd className="col-span-2 text-[length:var(--t-body)] leading-5 tabular-nums text-[var(--c-muted)]">{r.note}</dd> : null}
             </div>
           ))}
         </dl>

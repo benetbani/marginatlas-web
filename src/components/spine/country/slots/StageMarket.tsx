@@ -30,7 +30,7 @@ export function SpendSlot({ model }: { model: SlotModel<SpendDrawing> }) {
   const spend = model.drawing.spend;
   return (
     <Slot model={model}>
-      <div className="mt-1 flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col">
         <ShareBar parts={spend.rows.map((r) => ({ key: r.key, name: r.name, share: r.value, prov: r.prov }))} lead={[SPEND_FOOD_OUT, SPEND_FOOD_IN]} residualKey={SPEND_RESIDUAL} tall fill bracket={COPY.countrySpend.bracket} />
       </div>
     </Slot>

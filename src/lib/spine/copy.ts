@@ -821,7 +821,7 @@ export const COPY = {
     focalWords: "out of work and looking",
     leaveWords: "paid holiday a year, bank holidays included",
     cells: { leave: "Paid leave", out: "Unemployed", week: "Longest week", sick: "Sick pay", dismissal: "Unfair dismissal", maternity: "Maternity pay" },
-    notes: { leave: "a year, bank holidays included", out: "", week: "opt-out allowed", sick: "a week, from day one", dismissal: "of service before a claim", maternity: "at the statutory rate" },
+    notes: { leave: "a year, with bank holidays", out: "", week: "opt-out allowed", sick: "a week, from day one", dismissal: "of service before a claim", maternity: "at the statutory rate" },
   },
   /** THE RULES THAT CHANGED AND THE ONES COMING (2026-10-04, the UK page reform; DatedChanges.tsx, country_rules.ts). */
   changes: { kicker: "Changes to the rules", comingKicker: "Rule changes coming", madeKicker: "Recent rule changes", more: "{n} more changes", moreOne: "1 more change" },
@@ -2723,8 +2723,8 @@ export const COPY = {
     kicker: "An hour, all in",
     words: "One worked hour at the minimum wage, with the allowance.",
     parting: { 1: "Parting, 1 year", 3: "Parting, 3 years", 10: "Parting, 10 years" },
-    partingNote: "Redundancy and notice, aged 35",
-    partingNoteNotice: "Notice only, no redundancy yet",
+    partingNote: "Redundancy and notice, at 35",
+    partingNoteNotice: "Notice only, no redundancy",
   },
   /** THE LOCKED SECTION (masterplan step 15; his interview of 2026-09-26: 18, half of every UK chapter behind Pro; 22, "title
    *  and icon, the drawing blurred behind, one line, one button; no pop-up"). One button, and one line for every section id a UK
@@ -3049,7 +3049,7 @@ export const COPY = {
     run: { diesel: "Diesel per litre" },
     premises: { relief: "Full rates relief", rates: "Business rates", retail: "Shops and cafés" },
     /** The UK's lease, split by answer type: its rules' states, its terms with their units, its costs. */
-    lease: { notice: "Landlord notice, months", optOut: "Opting out, days", request: "Renewal request, months", newLease: "New lease, years", short: "Short leases, months", registered: "Registered over, years", exempt: "Exempt", compensated: "Compensated" },
+    lease: { notice: "Landlord notice, months", noticeNote: "to end a protected lease", optOut: "Opting out, days", request: "Renewal request, months", newLease: "New lease, years", short: "Short leases, months", registered: "Registered over, years", exempt: "Exempt", compensated: "Compensated" },
     /** Slot 9: the lead's words, the UK's loan rate row, the waits' labels. */
     credit: { words: "a year, the average rate on a business bank loan", loanRate: "Start-up loan rate", payouts: "Card payouts, days", terms: "Payment terms, days", agreed: "Agreed limit, days" },
     /** Slot 10: the UK's deadlines, a time each, its unit in its label. */

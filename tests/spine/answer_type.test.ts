@@ -22,7 +22,7 @@ const check = (label: string, ok: boolean, file = LIB, remedy = REMEDY) => { if 
 const doc = (inner: string) => new JSDOM(`<!doctype html><html><body><main>${inner}</main></body></html>`).window.document;
 const row = (label: string, value: string, extra = "") => `<div data-row="r"${extra}><dt data-label>${label}</dt><dd data-value>${value}</dd></div>`;
 const list = (type: string, rows: string) => `<div data-archetype="fact-rows" data-answer="${type}"><dl>${rows}</dl></div>`;
-const fold = (type: string, head: string, rows: string) => `<div data-archetype="detail-panel" data-fold="answer" data-answer="${type}"><details><summary><span data-label>${head}</span></summary><dl>${rows.replace(/data-row="r"/g, "data-detail-row")}</dl></details></div>`;
+const fold = (type: string, head: string, rows: string) => `<div data-archetype="detail-panel" data-fold="answer" data-answer="${type}"><details><summary><span data-fold-head>${head}</span></summary><dl>${rows.replace(/data-row="r"/g, "data-detail-row")}</dl></details></div>`;
 const found = (inner: string, opts: { requireDeclared?: boolean } = {}) => readAnswerTypes(doc(inner), opts).findings.map((f: { rule: string }) => f.rule).sort().join(",");
 
 check("money: a dollar figure and a pound figure are one class", found(list("money", row("Fee", "$133") + row("Wage floor, an hour", "£12.71"))) === "");

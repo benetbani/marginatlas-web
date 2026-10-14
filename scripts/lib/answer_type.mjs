@@ -6,7 +6,7 @@
  *
  * A LIST is an element carrying `data-answer` (money, share, time, position, state, dated-pair, table, doors); its ROWS are the elements
  * carrying `data-value` whose nearest `data-answer` ancestor is the list. A row's CLASS is read from its value's text and, for a bare
- * number, from its label (the row's `[data-label]`) or the fold's head (`summary [data-label]`), because the unit lives there (spec
+ * number, from its label (the row's `[data-label]`) or the fold's head (`summary [data-fold-head]`), because the unit lives there (spec
  * section 3: "units sit in the label or the column head, never in the cell"):
  *   position  a row carrying `data-placed` (a figure placed among the countries), whatever its unit;
  *   state     no digit in the value;
@@ -67,7 +67,7 @@ export function readAnswerTypes(doc, { requireDeclared = false } = {}) {
   for (const list of lists) {
     const type = list.getAttribute("data-answer");
     if (!LIST_TYPES.includes(type)) { findings.push({ rule: "WRONG TYPE", where: where(list), detail: `a list declares "${type}", not one of ${LIST_TYPES.join(", ")}` }); continue; }
-    const head = list.matches('[data-fold="answer"]') ? list.querySelector("summary [data-label]")?.textContent ?? "" : "";
+    const head = list.matches('[data-fold="answer"]') ? list.querySelector("summary [data-fold-head]")?.textContent ?? "" : "";
     const values = [...list.querySelectorAll("[data-value]")].filter((v) => v.parentElement?.closest("[data-answer]") === list);
     for (const v of values) {
       rowsRead++;

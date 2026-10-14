@@ -101,7 +101,11 @@ export function buildRuleChanges(iso2: string, today: string, lead: string[] = [
   if (!c || !Array.isArray(c.changes)) return null;
   const row = (x: FileChange): ChangeRow | null => {
     const d = dateText(x.date);
-    const before = lawValue(x.before, !!x.from.per && x.from.per === x.before.per);
+    /* WHAT A RATE SITS OVER IS SAID ONCE, ON THE RIGHT, as the period is (plan 2026-10-13 country-page-journey, Task 4's model laws:
+       "2.5% over Bank Rate to 4% over Bank Rate" was the run's one long pair, and it widened the values' column until every short pair
+       stood a third of the card from its item, LABEL GAP). */
+    const overBoth = x.before.above != null && x.before.above === x.from.above;
+    const before = lawValue(overBoth ? { ...x.before, above: undefined } : x.before, !!x.from.per && x.from.per === x.before.per);
     const from = lawValue(x.from);
     if (!d || !before || !from) return null;
     return { key: `${x.key}-${x.date}`, item: x.item, dateText: d, iso: x.date, before, from };

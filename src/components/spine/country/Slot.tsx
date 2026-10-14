@@ -17,11 +17,18 @@ export const toFactRow = (r: SlotRow): FactRow => ({ key: r.key, label: r.label,
 export function Slot({ model, children, after }: { model: SlotModel<unknown>; children?: React.ReactNode; /** An instrument under the slot's rows, open (plan 2026-10-13 country-page-journey, Q2, answer A): the hire's and the loan's levers. */ after?: React.ReactNode }) {
   const def = slotDef(model.id);
   const stage = stageOfSlot(model.id);
+  /* A THIN SLOT OF ONE FIGURE IS LEAN (Task 4's page holes, 768): its figure, its track or one row, nothing behind a plus. Standing alone
+     on a level it took the column and left half the card blank beside its words; `data-lean` is the zones' own flag (zones.tsx LONE), so
+     the air stands outside the card's edge: a half from 768, a third from 1024. Beside a partner the flag changes nothing. */
+  const lean = model.thin && model.more.length === 0 && (model.rows?.rows.length ?? 0) <= 1 && !after;
   return (
-    <Box id={def.domId} data-slot={def.id} data-stage={String(stage.n)} data-answer={def.type} className="flex flex-col">
+    <Box id={def.domId} data-slot={def.id} data-stage={String(stage.n)} data-answer={def.type} {...(lean ? { "data-lean": "1" } : {})} className="flex flex-col">
       <Rail icon={def.icon ?? undefined} kicker={def.heading} gloss={model.gloss ?? undefined} />
       {model.lead ? (
-        <Focal figure={model.lead.figure} words={model.lead.words} placement={model.lead.placement ?? null} prov={model.lead.prov ?? null} placed={model.lead.placed ?? null} signal={model.lead.signal ?? null} noSignal={model.lead.noSignal ?? null} />
+        /* A PLUS STRAIGHT UNDER THE FIGURE'S BLOCK STANDS 12 BELOW IT (DISTANCES 2.1, the line rule's WORDS BELOW; Task 4): the block keeps
+           12 where the next thing drawn is a fold, which then adds nothing (DetailPanel.tsx AnswerFold), so a slot whose drawing renders
+           nothing is read by what the page draws. */
+        <Focal figure={model.lead.figure} words={model.lead.words} placement={model.lead.placement ?? null} prov={model.lead.prov ?? null} placed={model.lead.placed ?? null} signal={model.lead.signal ?? null} noSignal={model.lead.noSignal ?? null} className="[&:has(+[data-archetype='detail-panel'])]:mb-3" />
       ) : null}
       {children}
       {model.rows ? <FactRows answer={model.rows.type} rows={model.rows.rows.map(toFactRow)} /> : null}

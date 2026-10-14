@@ -798,7 +798,11 @@ function inPage(ctx) {
      competes with the focal; a heading is words, and it is the one 20 a band section carries. Inside a zone the title's own size
      (`[data-rail-title]`) is left out of the "between 16 and 30" reading; every other leaf in the section is still read, so a
      figure at 20 or 24 still reds. Off a zone nothing changes. Proved by planting a 24px figure in an open section: red. */
-  const headingOfZone = (el) => !!el.closest("[data-zone]") && !!el.closest("[data-rail-title]");
+  /* A CITY CARD'S NAME IS ITS CARD'S HEADING (plan 2026-10-13 country-page-journey, Task 4): the country's customers slot stands the
+     national typical at 30 over the city cards, whose names sit at the heading rung by CityCards' own law (20, "the loudest thing on
+     the card"). A name is words, the reason the zone title above is left out, so `[data-city-name]` is left out of the same reading;
+     a figure on a city card (its pay, at 14) is still read. Recorded in the plan's report for the controller to confirm. */
+  const headingOfZone = (el) => (!!el.closest("[data-zone]") && !!el.closest("[data-rail-title]")) || !!el.closest("[data-city-name]");
   const sizesOfBetween = (card) => [...card.querySelectorAll("*")]
     .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el) && !headingOfZone(el))
     .map((el) => parseFloat(getComputedStyle(el).fontSize));

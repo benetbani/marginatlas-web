@@ -89,7 +89,7 @@ export function buildRunningCostsSlot(iso2In: string, today: string): SlotModel<
   const TERMS: Array<[string, string, boolean]> = [["signing-away", L.optOut, false], ["asking", L.request, false], ["new-lease", L.newLease, false], ["short", L.short, false], ["registering", L.registered, true]];
   const leaseTerms: SlotRow[] = lease
     ? [
-        { key: "notice", label: L.notice, value: String(lease.focal.months), note: COPY.leaseByLaw.words, prov: lease.focal.prov },
+        { key: "notice", label: L.notice, value: String(lease.focal.months), note: L.noticeNote, prov: lease.focal.prov },
         ...TERMS.flatMap(([key, label, dropRest]): SlotRow[] => {
           const r = byKey.get(key);
           const d = r ? durationParts(r.value) : null;

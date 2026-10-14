@@ -65,8 +65,10 @@ const SIDE_MD_CARDS = "md:gap-x-6 md:[&>*+*]:border-t-0 md:[&>*+*]:pt-0 lg:gap-x
 const SIDE_LG_CARDS = "lg:gap-x-8 lg:[&>*+*]:border-t-0 lg:[&>*+*]:pt-0";
 /* A LEVEL LEFT HOLDING ONE SECTION KEEPS THE KIT'S TWO THIRDS (kit.tsx Band, "a band left holding one card takes a deliberate two
    thirds"; PART 9 clause 59, the width follows the information): a section whose partner self-omits stands in the left two thirds,
-   and a lean one (`data-lean`, one figure) in the left third, the band's colour running on beside it. */
-const LONE = "grid grid-cols-1 lg:grid-cols-[2fr_1fr] [&:has(>[data-zone-cell]>[data-lean])]:lg:grid-cols-[1fr_2fr]";
+   and a lean one (`data-lean`, one figure) in the left third, the band's colour running on beside it. FROM 768 A LEAN ONE TAKES
+   THE LEFT HALF (plan 2026-10-13 country-page-journey, Task 4: the country's thin slots, one figure and its track, took the column
+   at 768 and left 360 by 156 blank beside their words, the page holes' WHITE SPACE), the kit Band's own half at 768 (kit.tsx). */
+const LONE = "grid grid-cols-1 lg:grid-cols-[2fr_1fr] [&:has(>[data-zone-cell]>[data-lean])]:md:grid-cols-2 [&:has(>[data-zone-cell]>[data-lean])]:lg:grid-cols-[1fr_2fr]";
 /* A LEVEL OF DOORS ENDS LEVEL (`even`, masterplan step 37; PART 10.5, "chosen so the two columns end level"; ruling 7 of 2026-09-04,
    cards in one row share one height): where every section of a level keeps its box (the home page's three answers, each a door),
    the boxes stand side by side from 768, so each is stretched to the row's height there. The level asks it; a box's own readings

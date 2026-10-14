@@ -74,8 +74,8 @@ export function buildHireAllIn(opts: { gross?: number; allowance: boolean }): Hi
     /* The law's own amounts the page prints nowhere else: /gb already prints the sick-pay rate (its rule changes), the paid
        holiday (the employment card) and the pension minimum (the staff card), so they are not repeated here. */
     extras: [
-      { key: "right-to-work", icon: "red-tape", label: "Right-to-work fine", value: gbpText(L.rightToWork.penaltyFirst), note: `Per worker, ${gbpText(L.rightToWork.penaltyRepeat)} if repeated`, prov: { src: "uk/law/params_2026_27.ts:rightToWork.penaltyFirst", kind: "looked up" } },
-      { key: "redundancy-cap", icon: "wages", label: "Redundancy at most", value: gbpText(redundancyCap), note: "Twenty years, all at 41 or over", prov: { src: "uk/law/redundancy.ts:statutoryRedundancyPay:the cap", kind: "worked out" } },
+      { key: "right-to-work", icon: "red-tape", label: "Right-to-work fine", value: gbpText(L.rightToWork.penaltyFirst), note: `Per worker, ${gbpText(L.rightToWork.penaltyRepeat)} on repeat`, prov: { src: "uk/law/params_2026_27.ts:rightToWork.penaltyFirst", kind: "looked up" } },
+      { key: "redundancy-cap", icon: "wages", label: "Redundancy at most", value: gbpText(redundancyCap), note: "20 years, all at 41 or over", prov: { src: "uk/law/redundancy.ts:statutoryRedundancyPay:the cap", kind: "worked out" } },
     ],
   };
 }

@@ -146,7 +146,10 @@ export function HeroBoard({ id = "take", board, answers, slotted = false }: { id
             {/* THE MARKS SAY WHAT THEY MEAN (goal 2026-09-26, M1): a row read by the pointer, the keyboard or a tap shows its figure
                 and where it stands among the countries in the site's one placement sentence; the key under the column stays for a
                 reader who never touches the board. The whole row is the target, not the small mark. */}
-            <RowsFrame readable={rows.some((r) => r.placement || r.readout)} className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+            {/* THE ROWS TAKE THE COLUMN'S HEIGHT ON THE COUNTRY'S BOARD (plan 2026-10-13 country-page-journey, Task 4's page holes, panels
+                open): the other taxes open under the answer, the picture fills the height they set, and the rows stood at the column's top
+                over 366 by 210 of nothing (clause 52). Equal rows share the height; closed, the rows set it and nothing moves. */}
+            <RowsFrame readable={rows.some((r) => r.placement || r.readout)} className={`grid grid-cols-[auto_minmax(0,1fr)_auto_auto] divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]${slotted ? " flex-1 auto-rows-fr" : ""}`}>
               {rows.map((r) => (
                 <div key={r.key} data-row={r.key} {...(r.placement || r.readout ? { "data-readout-figure": r.unit ? `${r.value} ${r.unit}` : r.value, "data-readout-words": r.readout ?? r.placement } : {})} {...(r.placed ? { "data-placed": r.placed } : {})} {...(r.noSignal ? { "data-no-signal": r.noSignal } : {})} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
                   <Ico id={r.icon} tone="terra" />
