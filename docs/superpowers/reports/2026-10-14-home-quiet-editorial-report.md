@@ -157,3 +157,13 @@ This file is appended task by task, so a stop loses nothing. Scratch outputs nam
   home-bands, home-duel, home-kitchens, home-firms-last, home-new-companies, home-us-restaurants, home-how-made, home-forms, uk-sources,
   masthead, home-shape, home-contents, home-band, home-no-counts, layering, no-eyebrow, trade-set PASS; home-archive red as above.
   Browser gates for this task are read from the GitHub run (the controller's rule: heavy checks on GitHub). Scoped tsc 0 (both configs).
+
+## Task 7B, the home's source joins the scans (see the commit "home:scans-read-home")
+
+- spine_scan.mjs: the `home/` exclusion deleted with a dated comment in its place; WhereNext's reason now names /new-businesses alone.
+  verify_no_eyebrow, verify_subsection_icons, verify_no_bold_display, verify_banned_patterns read `...tsxIn("src/components/spine/home")`;
+  verify_bar_budget's home entry reads the folder. counts written.
+- Gates: spacing-pin (100 .tsx read, 11 named out, no finding in home/), type-floor-reader, no-eyebrow (one data-positioning, in
+  home-view), subsection-icons, no-bold-display, banned-patterns, bar-budget (home 0 of 2), distance-ladder, counts-fresh: all PASS.
+  No home file needed a fix. `tiles-openers` is not on this base (rhythm Task 5), and `type_floor.test.ts` walks its own list, not
+  scanSpine (Task 0), so this step changed nothing for either.
