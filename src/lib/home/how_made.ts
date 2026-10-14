@@ -48,7 +48,7 @@ export function buildJoins(): Joins | null {
 export type PagesRead = { printing: number; served: number; prov: Provenance };
 
 /** The trade pages served: the taxonomy's trade slugs that are not retired, the list the sitemap and the home's search go by. The one
- *  list every count of "of the pages served" stands against (londonPagesRead here, the band's two trade counts in site_counts.ts). */
+ *  list every count of "of the pages served" stands against (londonPagesRead here). */
 export function servedTrades(): string[] {
   return Object.keys(SLUG_TO_INDUSTRY).filter((s) => !hasOwn(RETIRED, s));
 }

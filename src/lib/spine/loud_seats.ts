@@ -41,8 +41,9 @@
  *   FIELD                the seat is lit by its ground, not by a figure: its
  *                        card is a zone painted the band's terracotta
  *                        (`[data-zone][data-tone="terra"]`, globals.css THE
- *                        ZONES; the home's "Read from the record"), its words
- *                        and figures in ink. The walk counts that zone as the
+ *                        ZONES; the home's band, one solid statement since
+ *                        plan 2026-10-13), its words in the band's ink
+ *                        (`--band-ink`). The walk counts that zone as the
  *                        seat's moment and never as an accent figure; an
  *                        accent inside it, a missing zone, or a terracotta
  *                        zone no FIELD seat names is the gate's red. It names

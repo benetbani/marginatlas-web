@@ -36,10 +36,9 @@ import { isPaywallOn } from "@/lib/feature_flags";
 import { ProBand } from "./ProBand";
 import { HomePlace, HomePays } from "./HomeExample";
 import { ProofJoins, ProofArchive, ProofTax } from "./HomeProofs";
-import { HomeRecord } from "./HomeRecord";
+import { HomeBand } from "./HomeBand";
 import { buildWorkedExample } from "@/lib/home/worked_example";
 import { buildProofs } from "@/lib/home/proofs";
-import { buildSiteCounts } from "@/lib/home/site_counts";
 import { WhereNext } from "@/components/spine/WhereNext";
 import { nextDoors } from "@/lib/home/next_doors";
 import { HomeAsk } from "./HomeAsk";
@@ -62,7 +61,7 @@ import type { LoudSeat } from "@/lib/spine/loud_seats";
  */
 export const LOUD_SEATS = [
   { seat: 1, card: "pays", id: "pays", figure: "the sales a London restaurant needs a year to break even, step 3 of the worked example, at 40", state: "LIT", condition: "plan 2026-10-09, home introduction (the spec's section 5): his ruling 3 of 2026-10-04, break-even leads a London trade page; the figure /gb/london/restaurants' masthead prints (londonTradeHero), `--terra-text` at 40, the page's only 40" },
-  { seat: 2, card: "record", id: "record", figure: "the band Read from the record, four counts of what the UK pages draw on, in ink on its terracotta zone", state: "FIELD", condition: "plan 2026-10-10, the home reformed to ship (the spec's decision 7, critique section 4): his request of 2026-10-10 for one section in terracotta; the zone is the seat's moment, its figures in ink and never an accent; the tax proof went quiet so that three quiet cards stand between seat 1 and this one" },
+  { seat: 2, card: "band", id: "band", figure: "the band, one solid statement on the brand terracotta, its words white", state: "FIELD", condition: "plan 2026-10-13, home quiet editorial (the spec's section 2, item 4): his decision of 2026-10-13, one solid statement in the brand terracotta at full strength; the zone is the seat's moment and holds no figure" },
   { seat: 3, card: "foot", figure: "none: the foot holds doors", state: "NO HONEST CANDIDATE", condition: "plan 2026-10-09, home introduction (the spec's section 5): the UK's cities and where to next are doors with no figure lit (his ruling of 2026-10-07: no counts); the page ends quiet" },
 ] as const satisfies readonly LoudSeat[];
 
@@ -107,19 +106,18 @@ function HomeCities({ cards }: { cards: CityCardsData }) {
 export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null } = {}) {
   const example = buildWorkedExample();
   const proofs = buildProofs();
-  const record = buildSiteCounts();
   const cities = buildCityCards(data?.iso2 ?? "GB");
   const contents = buildContents();
   /* Each zone one line, so tests/trust/home_shape.test.ts reads its split, its evenness and its body together. The example and the
-     proofs draw only where their case and their builders are whole; the band only where all four of its counts build (SITE_COUNTS_MIN), drawing its own
-     zone on the terracotta (HomeRecord); the foot always draws its doors. */
+     proofs draw only where their case and their builders are whole; the band always, drawing its own zone on the terracotta (HomeBand); the foot always
+     draws its doors. */
   const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; cards?: boolean; tone?: "terra"; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
     { key: "contents", split: "wide", label: COPY.home.contents.label, body: [<HomeContents key="contents" contents={contents} />] },
     ...(example ? [{ key: "example", split: "1-1" as ZoneSplit, even: true, label: COPY.home.example.label, body: [<HomePlace key="place" ex={example} />, <HomePays key="pays" ex={example} />] }] : []),
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
     ...(proofs ? [{ key: "proofs", split: "1-1-1" as ZoneSplit, even: true, cards: true, label: COPY.home.proofs.label, body: [<ProofJoins key="joins" p={proofs.joins} />, <ProofArchive key="archive" p={proofs.archive} />, <ProofTax key="tax" p={proofs.tax} />] }] : []),
-    ...(record ? [{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.record.label, body: [<HomeRecord key="record" record={record} />] }] : []),
+    { key: "band", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.band.label, body: [<HomeBand key="band" />] },
     { key: "foot", split: "1-1", even: !!cities, label: COPY.home.citiesLabel, body: [...(cities ? [<HomeCities key="cities" cards={cities} />] : []), <WhereNext key="next" pitch title={COPY.home.next.title} doors={nextDoors("/")} />] },
   ];
   /* THE TONES ALTERNATE OVER THE ZONES THAT ARE NOT THE BAND (critique section 7): the band draws its own zone on the terracotta, so

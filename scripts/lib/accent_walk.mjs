@@ -33,9 +33,10 @@
  * 243), and BentoMetric throws on a cell with neither a figure nor a line.
  *
  * A ZONE LIT BY ITS GROUND (plan 2026-10-10, the home reformed to ship, Task
- * 5; the spec's decision 7): the home's band is a zone painted the terracotta
- * fill (`[data-zone][data-tone="terra"]`) whose words and figures are ink, a
- * loud moment with no accent text on it. The walk lists every such zone under
+ * 5; the spec's decision 7): the home's band is a zone painted the brand
+ * terracotta (`[data-zone][data-tone="terra"]`, `--terra-full` since plan
+ * 2026-10-13) whose words are the band's ink, white, a loud moment with no
+ * accent text on it. The walk lists every such zone under
  * `fields` and says of each card in `ids` whether it is one (`field`), so the
  * loud-seats gate holds a FIELD seat to its zone. A zone is never an accent
  * figure: `accents` counts what it counted before, and so does the page

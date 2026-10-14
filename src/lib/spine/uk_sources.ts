@@ -18,8 +18,8 @@
  * so in its first line.
  *
  * An entry is a publisher, what the pages print from it (a label, plain words), each dataset or page read (its title as published,
- * its link where the records hold one), its attribution line, and whether its publisher is official (a public body), the class the
- * home's band counts by (plan 2026-10-10, Task 5; tests/home/site_counts.test.ts holds every entry to one). The test (tests/spine/uk_sources.test.ts) holds the list to the
+ * its link where the records hold one), its attribution line, and whether its publisher is official (a public body), the class About
+ * the figures marks (a note under each publisher that is not official; tests/spine/uk_sources.test.ts holds every entry to one). The test (tests/spine/uk_sources.test.ts) holds the list to the
  * records: every section file's publisher maps to an entry, every register slice a page reads maps to one, and no attribution line
  * is anything but the two the ledger states.
  */
@@ -43,8 +43,8 @@ export type UkSource = {
   key: string;
   publisher: string;
   /** Whether the publisher is a public body (a department, an agency, a regulator, a public corporation, the official record), so its
-   *  datasets are official; false for a trade body, a commercial panel or a seller's own page. The home's band counts the official
-   *  ones (plan 2026-10-10, the home reformed to ship, Task 5); tests/home/site_counts.test.ts holds every entry to a class. */
+   *  datasets are official; false for a trade body, a commercial panel or a seller's own page. About the figures marks the ones that
+   *  are not official; tests/spine/uk_sources.test.ts holds every entry to a class. */
   official: boolean;
   /** The names the repository's files use for this publisher (a section file's `publisher` starts with one of them). */
   names: string[];

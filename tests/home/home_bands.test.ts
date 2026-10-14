@@ -17,7 +17,7 @@ import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-bands";
 const FILE = "src/components/spine/home/home-view.tsx";
-const REMEDY = "draw Pro only with the paywall's switch on, its prices through the plan; keep the launch check reading the live home's band and passing the rebuilt home that prints no ledger counts (its band's four evidence counts are tests/home/site_counts.test.ts's)";
+const REMEDY = "draw Pro only with the paywall's switch on, its prices through the plan; keep the launch check reading the live home's band and passing the rebuilt home that prints no ledger counts";
 let failed = 0;
 /* A check may be a value or a function: a function that throws (a name the plan does not export yet) is a failed check. */
 const check = (label: string, ok: boolean | (() => boolean), at?: { file?: string; remedy?: string }) => {

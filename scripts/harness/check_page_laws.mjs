@@ -397,7 +397,7 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
      the design in docs/superpowers/specs/2026-10-04-uk-page-reform-design.md, sections 3 to 5). They run only where a page draws
      zones, at every width, and each reads the thing he saw rather than a class:
        ZONE TONES    neighbouring zones are not one colour, and every zone is paper (#ffffff) or tint (#f6f6f5), but for the one
-                     terracotta zone, the home's band, accepted once and on home-gb only (plan 2026-10-10, Task 5).
+                     terracotta zone, the home's band, accepted once and on home-gb only (plan 2026-10-10, Task 5), its colour --terra-full read from the stylesheet (plan 2026-10-13, Task 5).
        ZONE PAD      a zone's padding is the ladder's: 40 / 48 / 64 at 375 / 768 / 1024 and up; the first zone 24 / 32 / 48, and its first section stands on that padding's edge (plan 2026-10-12 rhythm-air-inside, Task 1C).
        ZONE SPLIT    a zone that declares a pair draws two cells, and no cell stands empty.
        OPEN SECTION  a section card on a zone stands open (no edge, no fill), and a box that stays on a zone holds something the
@@ -410,10 +410,13 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
   const zones = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
   if (zones.length) {
     const PAPER = "rgb(255, 255, 255)", TINT = "rgb(246, 246, 245)";
-    /* THE ONE TERRACOTTA ZONE (plan 2026-10-10, the home reformed to ship, Task 5; his request of 2026-10-10: "add 1 section in
-       terracotta background to signify some stats for the site"; the spec's section 5 bends PART 10 clause 69 for it and gates the
-       bend): the home's band, `--terra`, accepted once and only on home-gb; on any other page, or a second time on the home, a red. */
-    const TERRA = "rgb(251, 132, 105)", TERRA_PAGE = "home-gb";
+    /* THE ONE TERRACOTTA ZONE (his request of 2026-10-10 for one section in terracotta; his decision of 2026-10-13, one solid statement on
+       the brand terracotta at full strength; plan 2026-10-13 home-quiet-editorial, Task 5): the home's band, accepted once and only on
+       home-gb; on any other page, or a second time on the home, a red. Its colour is read from the token, never typed, so the token's value
+       stays one line in globals.css; a token that does not resolve probes as transparent and is a red of its own, or a band left unpainted
+       would match it and pass. */
+    const TERRA = (() => { const d = document.createElement("div"); d.style.backgroundColor = "var(--terra-full)"; document.body.appendChild(d); const c = getComputedStyle(d).backgroundColor; d.remove(); return c; })(), TERRA_PAGE = "home-gb";
+    if (/^rgba\(0, 0, 0, 0\)$|^transparent$/.test(TERRA)) red("page", "ZONE TONES", "the band's colour --terra-full does not resolve; the one terracotta zone cannot be told from an unpainted one");
     let terra = 0;
     const want = width >= 1024 ? [48, 64] : width >= 768 ? [32, 48] : [24, 40];
     let prev = null;
