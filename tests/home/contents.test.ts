@@ -33,7 +33,7 @@ import { getCoverageRows } from "../../src/lib/coverage/report";
 import { buildWorldAtlas } from "../../src/lib/scores/world_atlas";
 import { buildCityCards } from "../../src/lib/spine/city_cards";
 import { cityThumb } from "../../src/lib/cities/city_images";
-import { EVERYDAY_TRADES } from "../../src/lib/spine/adapt_city";
+import { EVERYDAY_TRADES } from "../../src/lib/spine/everyday_trades";
 import { industryHeroFacts } from "../../src/lib/spine/industry_hero_facts";
 import { resolveTradeNet } from "../../src/lib/spine/trade_net";
 import { LEARN_BY_FAMILY } from "../../src/lib/learn/articles";

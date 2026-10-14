@@ -2735,6 +2735,25 @@ export const COPY = {
      *  category the site owns, said above his h1 beside the compass mark; a statement, never a rank (no ranking evidence is held). The one
      *  exception the no-eyebrow rule names (scripts/verify_no_eyebrow.ts). */
     positioning: "The reference atlas of small-business earnings.",
+    /** THE ATLAS AS A CONTENTS PAGE (plan 2026-10-13 home-quiet-editorial, Task 4A; the spec's section 2, item 3): the zone's name (a data
+     *  attribute, not a printed word); each department's title (four words at most), its one line (twelve words at most, true of every
+     *  member its rule can draw) and its door; the tools', the tracks' and the method's member names (the sources' name is the foot's own,
+     *  UK_SOURCES_FOOT.link); the trade figure's unit, said to a screen reader (the trades' line says it once for the eye). */
+    contents: {
+      label: "The atlas",
+      depts: {
+        countries: { title: "Countries", line: "What it takes to run a business, country by country.", door: "All countries" },
+        cities: { title: "Cities", line: "What a typical customer earns, city by city.", door: "All cities" },
+        trades: { title: "Trades", line: "What each trade keeps from its sales, after all costs.", door: "Every trade" },
+        tools: { title: "Tools", line: "Put the figures to work on your own plan.", door: "All tools" },
+        reading: { title: "Reading", line: "Plain guides to revenue and margins, and how to read a figure.", door: "All reading" },
+        method: { title: "How it is made", line: "Where each figure comes from, and every correction made.", door: "About the figures" },
+      },
+      tools: { decide: "Decide", check: "Check", calculator: "Calculator", compare: "Compare" },
+      tracks: { A: "Revenue by trade", B: "What owners keep", C: "Reading the numbers" },
+      method: { corrections: "Corrections", coverage: "Coverage report" },
+      unit: "of sales kept",
+    },
     searchLabel: "Search",
     /** THE ANSWERS' SHORT LINES (his instruction of 2026-10-07: one short line a card). The same facts /gb's masthead and curve state
      *  at length ("on $52K of profit, a sole trader under Self Assessment"; "of new firms still trading after 5 years"), said in

@@ -100,6 +100,7 @@ import { cityPeerListRow } from "@/lib/spine/city_peer_list";
 import { COPY } from "@/lib/spine/copy";
 import { inSentence } from "@/lib/spine/place_names";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
+import { EVERYDAY_TRADES } from "@/lib/spine/everyday_trades";
 import { usd } from "@/components/spine/kit";
 
 /* ------------------------------------------------------------------------- */
@@ -170,10 +171,9 @@ const LONDON_DISTRICTS: Array<{ slug: string; name: string }> = [
  * underscores from a sibling module's naming and matched nothing at all. Read
  * off the real data, not inferred.
  */
-export const EVERYDAY_TRADES: ReadonlySet<string> = new Set([
-  "restaurants", "grocery-stores", "pharmacies", "hairdressers-beauty",
-  "sports-fitness", "auto-repair-shops", "cafes-coffee-shops", "bars-nightclubs",
-]);
+/* The set itself stands in src/lib/spine/everyday_trades.ts since plan 2026-10-13 (home, quiet editorial), so a reader of the set alone
+   need not load this adapter and its database client; this module reads it from there and re-exports it. */
+export { EVERYDAY_TRADES };
 
 function isNum(v: number | null | undefined): v is number {
   return v != null && Number.isFinite(v);

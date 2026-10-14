@@ -4088,7 +4088,9 @@
       "args": [],
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 32: \"One shared component and interaction kit, and one fixed set of example businesses (restaurant, grocery, pharmacy, salon, gym, auto repair), reused across all page",
-      "reads": [],
+      "reads": [
+        "src/lib/home/contents.ts"
+      ],
       "claims": []
     },
     {
