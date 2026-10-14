@@ -35,8 +35,9 @@ import { stripCommentLines } from "./strip_comments";
 
 export const SPINE_ROOT = "src/components/spine";
 /* "home" since masterplan step 32 (src/components/spine/home/home-view.tsx, the home page on the band page); "openings" since plan
-   2026-10-09, home introduction (src/components/spine/openings/openings-view.tsx, /new-businesses). */
-export const SPINE_PAGES = ["country", "howto", "city", "hood", "cell", "industry", "home", "openings"] as const;
+   2026-10-09, home introduction (src/components/spine/openings/openings-view.tsx, /new-businesses); "calculator" since plan 2026-10-13 cost-simulator
+   (src/components/spine/calculator/calculator-view.tsx, /calculator). */
+export const SPINE_PAGES = ["country", "howto", "city", "hood", "cell", "industry", "home", "openings", "calculator"] as const;
 export type SpinePage = (typeof SPINE_PAGES)[number];
 const SKIP_DIRS = new Set(["archetypes"]);
 const SKIP_FILES = new Set(["kit.tsx", "shell.tsx", "marks.tsx", "forms-v2.tsx", "motion.tsx"]);

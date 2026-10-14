@@ -8,7 +8,8 @@
 import { getCellBySlug, withBudget } from "@/lib/cells";
 import { cellFacts, type CellFacts } from "./cell_facts";
 import { buildBundle } from "./defaults";
-import type { Place } from "./place";
+import { resolvePlace, type Place } from "./place";
+import { seedOf, type CalculatorSeed } from "./seed";
 import type { SimBundle } from "./bundle";
 
 const CELL_BUDGET_MS = 1500;
@@ -21,4 +22,11 @@ export async function loadSimulatorCell(place: Place): Promise<CellFacts | null>
 
 export async function loadPlaceBundle(place: Place): Promise<SimBundle> {
   return buildBundle(place, { cell: await loadSimulatorCell(place) });
+}
+
+/** The page's seed for the place its three words name, or null where they name none (the page answers 404). */
+export async function buildCalculatorSeed(q: { country?: string | null; city?: string | null; trade?: string | null }): Promise<CalculatorSeed | null> {
+  const place = resolvePlace(q);
+  if (!place) return null;
+  return seedOf(place, await loadPlaceBundle(place));
 }

@@ -58,6 +58,8 @@
  *                        declare something true rather than nothing, or not
  *                        be drawn. The controller ratifies the kind or rules
  *                        the door away.
+ *   break-even           /calculator's masthead, the sales a business needs
+ *                        to break even (plan 2026-10-13 cost-simulator).
  */
 export const DOOR_KINDS = [
   "customer-pay",
@@ -70,6 +72,7 @@ export const DOOR_KINDS = [
   "trades-index",
   "districts",
   "region-cities",
+  "break-even",
 ] as const;
 
 export type DoorKind = (typeof DOOR_KINDS)[number];
@@ -96,7 +99,8 @@ export type LandingSurface =
   | "region"
   | "compare"
   | "pricing"
-  | "trades-index";
+  | "trades-index"
+  | "calculator";
 
 export const SURFACE_ANSWERS: Record<LandingSurface, DoorKind> = {
   country: "government-take",
@@ -110,4 +114,5 @@ export const SURFACE_ANSWERS: Record<LandingSurface, DoorKind> = {
   compare: "compare",
   pricing: "pricing",
   "trades-index": "trades-index",
+  calculator: "break-even", // /calculator (plan 2026-10-13 cost-simulator): the sales to break even a month
 };

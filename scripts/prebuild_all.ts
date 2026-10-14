@@ -192,6 +192,10 @@ const GATES: Gate[] = [
   /* THE MONEY AND THE WORDS (plan 2026-10-13 cost-simulator, Task 4A): every currency's round trip, the pound's two rates as the site holds them, a
      loss with a true minus, the lever empty and stamped, every calculator string inside the copy rules. */
   { name: "calc-display", script: "tests/simulator/display.test.ts" },
+  /* THE COST SIMULATOR'S PAGE (plan 2026-10-13 cost-simulator, Task 4B): the seven parts, the one 40, one 30 a section, every figure stamped, the bar
+     outside the switch, each missing figure's reason (Review Focus 2), the loud seats, no server module in the browser, and a currency
+     change that writes no lever (Review Focus 5). Offline: bundles built from the shards; jsdom. */
+  { name: "calc-page", script: "tests/simulator/page.test.ts" },
   /* THE TYPE FLOOR (plan 2026-10-12 rhythm-air-inside, Task 1A; his choice of 2026-10-12, "Air inside only": small text rises to 14px).
      On every spine render pages-fresh writes, at 1280, characters under 14px outside scripts/harness/type_floor_allow.json are 20% or
      less of the visible characters, read as R1 read the renders (scripts/lib/type_floor.mjs states its blind spot). No browser. Its

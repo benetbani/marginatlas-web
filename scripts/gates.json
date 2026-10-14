@@ -358,6 +358,91 @@
       "claims": []
     },
     {
+      "name": "calc-page",
+      "script": "tests/simulator/page.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COST SIMULATOR'S PAGE (plan 2026-10-13 cost-simulator, Task 4B; spec section 4, the page phone first; Review Focus 2 and 5).",
+      "reads": [
+        "scripts/lib/loud_seats.ts",
+        "src/components/spine/archetypes/NoteList.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/lib/cells.ts",
+        "src/lib/facts/store.ts",
+        "src/lib/simulator/defaults.ts",
+        "src/lib/simulator/load.ts",
+        "src/lib/simulator/place.ts",
+        "src/lib/simulator/seed.ts",
+        "src/lib/spine/door_kinds.ts",
+        "src/lib/spine/locals_rows.ts",
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": [
+        {
+          "kind": "bans",
+          "string": "src/lib/cells.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/uk/pnl/london.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/defaults.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/load.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/seed.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/place.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/facts/store.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/spine/locals_rows.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "builtin:fs",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "builtin:node:fs",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        }
+      ]
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [
@@ -3940,6 +4025,7 @@
         "src/app/[country]/page.tsx",
         "src/app/dev/spine/page.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
@@ -3958,6 +4044,10 @@
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
@@ -3979,6 +4069,10 @@
         "src/app/dev/spine-industry",
         "src/app/dev/spine/page.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
       ],
@@ -4046,6 +4140,10 @@
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
@@ -4064,6 +4162,10 @@
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home/home-view.tsx",
