@@ -201,6 +201,9 @@ const GATES: Gate[] = [
   /* THE JOURNEY'S SHARED PIECES (plan 2026-10-13 country-page-journey, Task 3A; spec section 5): the answer fold, the declared list, the
      focal's signal, the slot's frame. No browser. */
   { name: "answer-fold", script: "tests/spine/answer_fold.test.ts" },
+  /* STAGE 1, ORIENT (plan 2026-10-13 country-page-journey, Task 3B): slot 1 answers on every country, slot 2's placed figures carry their
+     signals. No browser. */
+  { name: "slots-orient", script: "tests/spine/slots_orient.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

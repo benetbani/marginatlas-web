@@ -352,7 +352,7 @@ export const COPY = {
     hireEase: { easy: "Easy", moderate: "Moderate", hard: "Hard" },
     /** The plus under the answer: its name, and the notes and fallback labels of its rows. */
     taxes: { summary: "The other taxes" },
-    taxNotes: { vatFrom: "once sales pass {amount} a year", salesTax: "Sales tax", companyTax: "Tax on company profit" },
+    taxNotes: { vatFrom: "once sales pass {amount} a year", salesTax: "Sales tax", /* Three words, a row label (ROW SENTENCE, read behind the plus since plan 2026-10-13, Task 1E). */ companyTax: "Company profit tax" },
     /* FEWER WORDS, THE SAME MEANING (2026-09-25, his word that night: "symbols ... can be used to replace words in our sections
        that are soooo verbose"): "/100" and "/mo" for "of 100" and "a month", no "all in" (the row names the company), and the
        levels drawn as a three-step mark, their key four words. */
@@ -3026,13 +3026,18 @@ export const COPY = {
     hiringWords: { easy: "Easy", moderate: "Moderate", hard: "Hard", deep: "Deep", fair: "Fair", thin: "Thin" } as Record<string, string>,
     /** A step's label from a closed list, by the words its shard's name holds (src/lib/spine/slots/open.ts, stepLabel); the shard's own words stand under it as its note. */
     stepLabels: { name: "Name check", register: "Registration", tax: "Tax number", vat: "Sales tax", bank: "Bank account", licence: "Licence", social: "Social insurance", notary: "Notary", seal: "Company seal", other: "Other step" },
-    signal: { key: "Up is easier for an owner, down is harder.", words: { 1: "Very good", 2: "Good", 3: "Middle", 4: "Poor", 5: "Very poor" } },
+    signal: { key: "Up is easier for an owner, down is harder.", words: { 1: "Very good", 2: "Good", 3: "Middle", 4: "Poor", 5: "Very poor" }, /** A placed row's readout: the state's word, then its placement sentence. */ readout: "{word} for an owner." },
     buyers: { active: "with plenty of buyers", steady: "with some buyers", thin: "with few buyers" } as Record<string, string>,
     exitWords: "to sell a business here",
     views: { state: "With the state", people: "With people" },
     runs: { coming: "Coming", recent: "Recent" },
     /** The admin index's year, said in the board row's readout once its label carries the unit (the plan's Reading 8). */
     adminNote: "Last published in 2020.",
+    /** The board's rows (slot 2), each label carrying its unit within three words (spec section 3; ROW SENTENCE). The two registering rows
+     *  stand until the rhythm plan's Task 4 takes them to the registering table (fact-once). */
+    boardRows: { clean: "Clean dealing /100", admin: "Admin ease /100", salary: "Monthly salary", living: "Living cost /100", llcDays: "Days to register", llcCost: "Cost to register" },
+    /** The UK's charge on a director's loan, a tax, standing in the other taxes of slot 1. */
+    directorsLoan: { label: "Director's loan charge", note: "Company pays, until repaid" },
   },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the

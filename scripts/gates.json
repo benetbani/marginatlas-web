@@ -403,6 +403,18 @@
       "claims": []
     },
     {
+      "name": "slots-orient",
+      "script": "tests/spine/slots_orient.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 1, ORIENT (plan 2026-10-13 country-page-journey, Task 3B; spec sections 3 and 4; R5 section 5, slots 1 and 2): his masthead holds slot 1 (the tax on profit, its thin state the company rate under",
+      "reads": [
+        "src/components/spine/archetypes/HeroBoard.tsx",
+        "src/lib/spine/hero_board.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

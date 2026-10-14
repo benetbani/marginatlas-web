@@ -33,10 +33,7 @@
  *    a first licence, all in, never the government fee alone), 91 of 195
  *    printed; the sixth figure by the controller's proposal (his yes or no
  *    owed, reversible).
- *  - how easy it is to hire: NO ROW TODAY. The unemployment rate has no
- *    country field (DATA-REQUIREMENTS item 40); it is drawn the day the field
- *    exists, never from the city file and never as a "not gathered yet" line
- *    (his word of 2026-09-19).
+ *  - how easy it is to hire: slot 7's plus since 2026-10-13 (spec section 3).
  *
  * THE LEVEL is the placement builder's rank (placement.ts, R2: a tie is not
  * lower, the set is the countries holding the figure), read as thirds: the
@@ -44,6 +41,9 @@
  * level says where the figure stands and nothing about good or bad: a low
  * registration time is quick and a low salary is not, and the reader knows
  * which. A figure with no honest set (under twenty members) gets no level.
+ * On the country board the level gave way to the signal (plan 2026-10-13 country-page-journey, Task 3B; spec section 4, his ruling): a
+ * placed figure whose measure has an owner direction carries the triangle, and a row's unit stands in its label; the city board keeps
+ * its levels.
  *
  * THE IMAGE is a placeholder by his word ("put a placeholder at this moment,
  * or maybe the only image that we have"): the one photograph the repository
@@ -67,6 +67,12 @@ import type { AtlasIconId } from "@/components/brand/icons";
 import { queryFacts } from "@/lib/facts/store";
 import { loadCountryShard, countryEntityId } from "@/lib/facts/country_shard";
 import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
+import { signalFor, type Signalled } from "@/lib/spine/signal";
+import type { MeasureKey } from "@/lib/spine/owner_direction";
+/* The living cost from its own builder, not from running_costs_rows.ts, which imports levelOf from this file. */
+import { getCountryCostOfLivingIndex, costOfLivingOnCityScale, allCountryCostOfLivingIndices } from "@/lib/economics/country_metrics";
+import { ruleValue } from "@/lib/spine/sections/country_rules";
+import { IF_IT_FAILS } from "@/lib/spine/sections/if_it_fails";
 
 export type HeroLevel = "high" | "medium" | "low";
 
@@ -84,6 +90,12 @@ export type HeroBoardRow = {
   /** Where the figure stands among the countries, in the site's one placement sentence (placement.ts), for the row's readout
    *  (goal 2026-09-26, M1): the words behind the marks the footnote only names. Null where the row draws no mark. */
   placement?: string | null;
+  /** The measure of a figure placed among the countries (plan 2026-10-13 country-page-journey): the mark rule reads it. */
+  placed?: MeasureKey | null;
+  signal?: Signalled | null;
+  noSignal?: "set" | "fill" | null;
+  /** The row's readout words where they are more than its placement sentence (the state's word, an index's year, a scale). */
+  readout?: string | null;
 };
 
 export type HeroBoardData = {
@@ -159,6 +171,15 @@ export function heroImageFor(iso2: string): HeroBoardData["image"] {
   return { src: "/spine/_skyline.jpeg", alt: "", placeholder: true };
 }
 
+/** A country row placed among the countries (plan 2026-10-13 country-page-journey, Task 3B; spec sections 3 and 4): its unit in its label, no
+ *  level (the signal says which way is easier where its measure has a direction), its readout the state's word then its placement. */
+function placedRow(base: { key: string; icon: AtlasIconId; label: string; value: string; confidence: HeroBoardRow["confidence"]; placement: string | null }, measure: MeasureKey, raw: number, set: readonly number[], extra: string | null = null): HeroBoardRow {
+  const { signal, noSignal } = signalFor(measure, raw, set);
+  const word = signal ? COPY.journey.signal.readout.replace("{word}", COPY.journey.signal.words[signal.state]) : null;
+  const readout = [word, base.placement, extra].filter(Boolean).join(" ") || null;
+  return { ...base, unit: "", level: null, placed: measure, signal, noSignal, readout };
+}
+
 export function buildHeroBoard(iso2In: string): HeroBoardData {
   const iso2 = iso2In.toUpperCase();
   const facts = buildHeroFacts(iso2);
@@ -170,35 +191,40 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
 
   if (profileHeld && isNum(profile.corruption_perception_index)) {
     const v = Math.round(profile.corruption_perception_index);
-    rows.push({ key: "clean", icon: "corruption", label: COPY.heroBoard.rows.clean, value: String(v), unit: COPY.heroBoard.units.of100, level: levelOf(profile.corruption_perception_index, s.clean), confidence: profileConfidence, placement: placementOf(profile.corruption_perception_index, s.clean, "countries") });
+    rows.push(placedRow({ key: "clean", icon: "corruption", label: COPY.journey.boardRows.clean, value: String(v), confidence: profileConfidence, placement: placementOf(profile.corruption_perception_index, s.clean, "countries") }, "clean-dealing", profile.corruption_perception_index, s.clean));
   }
   if (profileHeld && isNum(profile.ease_of_doing_business_index)) {
     const v = Math.round(profile.ease_of_doing_business_index);
-    rows.push({ key: "admin", icon: "ease-of-business", label: COPY.heroBoard.rows.admin, value: String(v), unit: COPY.heroBoard.units.of100, level: levelOf(profile.ease_of_doing_business_index, s.admin), confidence: profileConfidence, placement: placementOf(profile.ease_of_doing_business_index, s.admin, "countries") });
+    rows.push(placedRow({ key: "admin", icon: "ease-of-business", label: COPY.journey.boardRows.admin, value: String(v), confidence: profileConfidence, placement: placementOf(profile.ease_of_doing_business_index, s.admin, "countries") }, "admin-ease", profile.ease_of_doing_business_index, s.admin, COPY.journey.adminNote));
   }
   const bill = buildEntryBill(iso2);
-  const hiring = hireEase(iso2);
   /* DAYS TO REGISTER, THE COMPANY'S (plan 06, task B1; his ruling of 2026-09-20: "cost and time to register are the LLC's, always"):
      the formation file's LLC row, the days the "registering, by legal form" table prints. The row read the shard's days to
      trade, which on the United Kingdom is the bank account's 21 days, no official figure, under a label that promised the whole. */
   if (bill?.table && isPos(bill.table.days)) {
     const d = bill.table.days;
-    rows.push({ key: "llc-days", icon: "red-tape", label: COPY.heroBoard.rows.llcDays, value: String(d), unit: d === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(d, s.llcDays), confidence: "measured", placement: placementOf(d, s.llcDays, "countries") });
+    /* Placed with its signal (plan 2026-10-13 country-page-journey, Task 3B): the rhythm plan's Task 4 takes this row to the registering table. */
+    rows.push(placedRow({ key: "llc-days", icon: "red-tape", label: COPY.journey.boardRows.llcDays, value: String(d), confidence: "measured", placement: placementOf(d, s.llcDays, "countries") }, "register-days", d, s.llcDays));
   }
-  /* HOW EASY IT IS TO HIRE (his hero list of 2026-09-20: "how easy it is to hire ... definitely an aspect"; 2026-09-25). The shard's
-     word for the country (`people_pay.hiring.hire_ease`: easy on 25, moderate on 168, hard on 4 of 198), printed as the row's value;
-     the word IS the level, so the row draws no chip beside it. */
-  if (hiring) rows.push({ key: "hiring", icon: "hiring", label: COPY.heroBoard.rows.hiring, value: hiring, unit: "", level: null, confidence: "modeled" });
   const pay = buildPayBars(iso2);
   const avg = pay && pay.withheld == null ? pay.rows.find((r) => r.key === "average") ?? null : null;
   if (avg && isPos(avg.value)) {
     const month = Math.round(avg.value / 12);
     const set = worldPaySets().averages.map((a) => a / 12);
-    rows.push({ key: "salary-month", icon: "wages", label: COPY.heroBoard.rows.salaryMonth, value: usd(month), unit: COPY.heroBoard.units.aMonth, level: levelOf(month, set), confidence: pay!.confidence === "measured" ? "measured" : "modeled", placement: placementOf(month, set, "countries") });
+    rows.push(placedRow({ key: "salary-month", icon: "wages", label: COPY.journey.boardRows.salary, value: usd(month), confidence: pay!.confidence === "measured" ? "measured" : "modeled", placement: placementOf(month, set, "countries") }, "salary", month, set));
+  }
+  /* THE LIVING COST ON THE CITY SCALE (plan 2026-10-13 country-page-journey, Task 3B; Reading 9): the running costs printed it where the
+     country's rules hold no premises tax. It is a position on his scale (cheapest covered city 1, dearest 100, his ruling of 2026-09-20),
+     not a price, so it stands here, placed among the countries, no mark (Q3, ruled 2026-10-13). The UK keeps its premises rules instead. */
+  const livingIndex = getCountryCostOfLivingIndex(iso2);
+  const living = livingIndex != null && livingIndex > 0 ? costOfLivingOnCityScale(livingIndex) : null;
+  if (living != null && livingIndex != null && !ruleValue(iso2, "premises", "full-relief-limit")) {
+    rows.push(placedRow({ key: "living", icon: "spending-power", label: COPY.journey.boardRows.living, value: String(living), confidence: "modeled", placement: placementOf(livingIndex, allCountryCostOfLivingIndices(), "countries") }, "cost-of-living", livingIndex, allCountryCostOfLivingIndices(), COPY.runningCosts.basisLiving));
   }
   if (bill?.verdict.bill.state === "printed" && isNum(bill.verdict.bill.value)) {
     const c = bill.verdict.bill.value;
-    rows.push({ key: "llc-cost", icon: "register-cost", label: COPY.heroBoard.rows.llcCost, value: usd(c), unit: COPY.heroBoard.units.allIn, level: levelOf(c, s.llcCost), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled", placement: placementOf(c, s.llcCost, "countries") });
+    /* Placed with its signal (plan 2026-10-13 country-page-journey, Task 3B): the rhythm plan's Task 4 takes this row to the registering table. */
+    rows.push(placedRow({ key: "llc-cost", icon: "register-cost", label: COPY.journey.boardRows.llcCost, value: usd(c), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled", placement: placementOf(c, s.llcCost, "countries") }, "register-cost", c, s.llcCost));
   }
 
   /* THE UNITED KINGDOM'S TAX ON PROFIT, WORKED OUT (plan 06, task B1): the hero printed a typed 20% under "total effective tax
@@ -207,23 +233,24 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
      words under the figure say so. Other countries keep their regime's rate. */
   const uk = iso2 === "GB" ? ukTaxOnProfit() : null;
   if (uk && facts.answer) facts.answer = { ...facts.answer, value: `${uk.percent}%`, share: uk.share, confidence: "measured", prov: { src: "uk/law/take_home.ts:sole trader:median full-time pay", kind: "worked out" } };
+  /* SLOT 1'S THIN STATE (plan 2026-10-13 country-page-journey, Task 3B; spec section 3: "the company tax rate under its own label (198 of 198
+     countries), never 'Not known yet'"): where no small-business regime is held, the answer is the profile's combined rate on company profit,
+     under its own label and words, and the other taxes leave it out. */
+  let thin = false;
+  if (!facts.answer && profileHeld && isPos(profile.corporate_income_tax_combined_pct)) {
+    const ct = profile.corporate_income_tax_combined_pct;
+    facts.answer = { label: COPY.journey.thinTax.label, value: `${Math.round(ct * 1000) / 10}%`, regime: null, confidence: profileConfidence, share: ct, prov: { src: "economic_indicators/country_profile_v2.json:corporate_income_tax_combined_pct", kind: profile.tier === "A" ? "looked up" : "estimate" } };
+    thin = true;
+  }
   const share = facts.answer && isNum(facts.answer.share) && facts.answer.share > 0 && facts.answer.share < 1 ? facts.answer.share : null;
   const answerBar = share != null && facts.answer ? { value: share * 100, part: COPY.heroBoard.share.part, rest: COPY.heroBoard.share.rest, aria: `${facts.answer.value} ${COPY.heroBoard.share.of}` } : null;
-  return { iso2, name: facts.name, answer: facts.answer, ...(uk ? { answerBasis: COPY.answer.basisUk.replace("{profit}", usd(uk.profitUsd)) } : {}), subtitle: facts.subtitle, answerBar, rows, taxes: heroTaxes(iso2), image: heroImageFor(iso2) };
+  return { iso2, name: facts.name, answer: facts.answer, ...(uk ? { answerBasis: COPY.answer.basisUk.replace("{profit}", usd(uk.profitUsd)) } : thin ? { answerBasis: COPY.journey.thinTax.words } : {}), subtitle: facts.subtitle, answerBar, rows, taxes: heroTaxes(iso2, { company: !thin }), image: heroImageFor(iso2) };
 }
 
 
-/** The shard's word for how easy hiring is, as the board prints it, or null. */
-function hireEase(iso2: string): string | null {
-  const code = countryEntityId(iso2);
-  if (!code || !loadCountryShard(code)) return null;
-  const f = queryFacts({ entityId: code, metrics: ["people_pay.hiring.hire_ease"], rowKey: "" })[0];
-  if (!f || f.tag === "placeholder" || typeof f.value !== "string") return null;
-  return (COPY.heroBoard.hireEase as Record<string, string>)[f.value.trim().toLowerCase()] ?? null;
-}
 
 /** THE TAXES BEHIND THE RATE (see `taxes` on the type): the shard's national taxes where it lists them, else the profile's two rates. */
-function heroTaxes(iso2: string): Array<DetailRow & { key: string }> | null {
+function heroTaxes(iso2: string, { company = true }: { company?: boolean } = {}): Array<DetailRow & { key: string }> | null {
   const code = countryEntityId(iso2);
   const rows: Array<DetailRow & { key: string }> = [];
   if (code && loadCountryShard(code)) {
@@ -250,8 +277,12 @@ function heroTaxes(iso2: string): Array<DetailRow & { key: string }> | null {
     const profile = getCountryProfile(iso2);
     if (profile.iso2.toUpperCase() === iso2.toUpperCase()) {
       if (isPos(profile.vat_gst_standard_pct)) rows.push({ key: "sales_tax", label: COPY.heroBoard.taxNotes.salesTax, value: `${Math.round(profile.vat_gst_standard_pct * 1000) / 10}%` });
-      if (isPos(profile.corporate_income_tax_combined_pct)) rows.push({ key: "company_tax", label: COPY.heroBoard.taxNotes.companyTax, value: `${Math.round(profile.corporate_income_tax_combined_pct * 1000) / 10}%` });
+      if (company && isPos(profile.corporate_income_tax_combined_pct)) rows.push({ key: "company_tax", label: COPY.heroBoard.taxNotes.companyTax, value: `${Math.round(profile.corporate_income_tax_combined_pct * 1000) / 10}%` });
     }
   }
+  /* THE UK'S CHARGE ON A DIRECTOR'S LOAN (plan 2026-10-13 country-page-journey, Task 3B): a tax and a share, the one share among "if it
+     fails"'s rows, so it stands with the other taxes and the failing slot (Task 3G) prints its time, money and state rows alone. */
+  const loan = iso2.toUpperCase() === "GB" ? (IF_IT_FAILS.fields.directors_loan_charge_pct?.value as { from_2026?: number } | undefined) : undefined;
+  if (rows.length >= 2 && typeof loan?.from_2026 === "number") rows.push({ key: "directors_loan", label: COPY.journey.directorsLoan.label, value: `${loan.from_2026}%`, note: COPY.journey.directorsLoan.note });
   return rows.length >= 2 ? rows : null;
 }
