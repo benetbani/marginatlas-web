@@ -228,3 +228,43 @@ THE BAR LEDGER: two cards, `04 month` and `05 moves`, in two columns of consecut
    calculator files out), floor_census.json, coverage_exceptions.json, CENSUS.md, gates.json, CLAUDE.md, GUIDELINES.md.
 9. parallel-base has moved to 5e11c768 (the runner installs the fonts); not merged here without a word, so CI still draws without the figure face.
 
+## Fix round 1 (the final review, .superpowers/sdd/cost-simulator-final-review.md, with the controller's rulings)
+
+Each fix test first where a test could see it, one commit each:
+
+- C1 (5036c823): a role naming the owner anywhere (`/\bowner\b/i`) is the owner's seat, one head fewer (`Math.max(0, headcount - 1)`).
+  The defaults test holds all 119 such roles across the offered trades in Berlin and barbershops' "Barber (owner-operator)" at 0 (red
+  first: 1 unmarked).
+- I1 (7460d6cb): off the recipes the cost of goods is the shard's own goods or supplies driver (`cost_structure.cost_drivers`, names such as
+  "Materials and parts", "Cost of goods sold", "Ingredients and packaging"; a name that mixes in pay or overhead is not one); 90 trades take
+  it. 1 - gross margin only where no such driver exists, its line now "What the gross margin leaves, which may include direct labour."
+  Plumbers in Berlin: goods 20% (was 60%), break-even $495,533 a year (was $1,294,781). Red first: plumbers read 0.6.
+- I2 (f609b772): the owner's pay outside a city defaults to the country's median pay (`countryMedianPay`, the team's own), never
+  country_metrics' GDP share ladder; the line reads "The country's median pay."; the no-fill sweep reds an owner's stamp on country_metrics
+  (red first on Afghanistan, every trade).
+- I3 (075248b6): the address keeps four decimals; a round trip of goods 0.325 and employer charges 0.195 (red first: 0.33 and 0.2).
+- M1 (ca2a7640): "Past a £500,000 rateable value, rates take a higher rule."
+- M2 (088b37d3): the answer is the page's one polite live region; `live` off the four section figures and the effect line.
+- M3 (d3ecf55c): the firms' note says "Local firms of the trade" on a trusted cell's tenths, "Registered firms in the place" on the
+  register's bands; the page test holds both (red first).
+- M4 (b40cc16d): a dollar place shown in pounds takes fx.ts's pound rate (1 / 1.3265), the one a UK figure's dollars take; the display test
+  holds it both ways (red first at 743.5).
+- M5 (9228f92d): London at the anchor with a 40,000 loan at 7.5% over five years and 300,000 to open, by hand: 9,618.24 a year in F, profit
+  16,892.81, the year's principal 6,850.55 taxed, 13,987.74 after tax, 258 months to pay back. The engine already held it (green on first
+  run).
+- M6 (8ddfacf1): the bare /calculator in the upper sitemap; data-pack, sitemap-no-redirects, junk-url-rule, metadata-routes, indexable,
+  sitemap-families and layering pass.
+- Merged origin/parallel-base 5e11c768 (the runner's fonts) as 9af8a1a4.
+
+Manchester barbershops at their defaults (the register's mean sales £122,356.94): before the round, margin −50.7% before and after tax
+(F £159,910.29, the owner-barber paid as staff); after C1, −20.8% (F £123,325.90, the barber's seat at 0, break-even £154,157.38); after I1
+unchanged at −20.8%, since barbershops take their goods from the UK recipe's supplies line (8%), which already left the commission out.
+
+Local checks: calc-engine, calc-defaults, calc-api, calc-display, calc-page, calc-state, archetype-copy, uk-open-permits, counts-fresh
+pass. Not re-rendered locally (memory); the check run renders.
+
+The check run on 9af8a1a4 (38648069793): typecheck exit 0; chain 285 of 296, the same 11 base reds as before (harness-page-laws, fact-once,
+harness-laws, harness-links, provenance, type-floor, art-direction, home-answers, uk-city-sources, harness-archetypes and
+money-shown-own-rows timeouts). The calculator there: page laws 0, links 2 of 2, provenance 51 of 51, art direction 0, its one finding
+FIGURE FACE (the runner still draws without the face after the merge).
+
