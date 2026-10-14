@@ -162,3 +162,32 @@ parallel-base while the others run and not to build the signal. Built without th
 
 THE BAR LEDGER: two cards, `04 month` and `05 moves`, in two columns of consecutive bands (the instrument's right column, the next band's left two thirds); no third (Q4 answer A: the team rows are steppers, the opening bill is rows, no phase bar). THE THREE LOUD MOMENTS: `01 answer` LIT, `05 moves` LIT, the third NO HONEST CANDIDATE (`calculator-view.tsx` LOUD_SEATS). THE DOORS: the page draws none; every trade page's close carries "Run your own numbers" to it (8.6 `15 close`). A block with nothing to draw is not drawn, and the zones close up so no two lone zones stand together. Gates: `calc-engine`, `calc-defaults`, `calc-api`, `calc-display`, `calc-page`, `calc-state`, `calc-door`, and every render law over `calculator-gb-london-restaurants`.
 ```
+
+## CI reds met after Task 7, and their fixes
+
+- canonical-urls (on 254f56f8): the route's source named no `alternates` once its metadata moved to seo.ts; generateMetadata now spreads
+  calculatorMetadata and says `alternates: { canonical: "/calculator" }` itself (e17872c8). canonical-urls and calc-state pass.
+
+## Task 9, verification (no code but the fixes it found)
+
+- Renders, one at a time, each exit 0 (`scratchpad/calc/after/`): calculator gb london restaurants (the chain's), de berlin restaurants, gb
+  manchester barbershops, gb anywhere restaurants. Plain copy on the three ad hoc views: 0 reds at 1280 and 375 (anywhere in the UK draws
+  six cards: no fit-out without a city and no archetype on a UK page without a city index, so the money to open it is not drawn, as the
+  plan's rule says).
+- Photographs read (full page; `scratchpad/calc/shots/full-*.jpeg`): London at 375, 768 and 1280 (the answer above the levers on a phone;
+  from 1024 the levers left of the answer, the margin and the month; no sideways scroll at any width, scrollWidth equal to the viewport),
+  Berlin at 375, 768 and 1280, Manchester barbershops at 375 and 1280; the London levers card and answer section at 375, 768 and 1280.
+  - London, by hand against the page: £556,017.36 a year, £46,334.78 a month, printed $61,463 in dollars (x 1.3265) and £46,335 after the
+    currency event; a day $2,021; firms above it 32%; margin 4.4%, after tax 3.8%; fixed costs $39,336 a month; the month's profit $2,931.
+  - Berlin: $1,095,484.12 a year, printed $91,290 a month; margin, month and payback show "Type your sales to see this."; no rates line.
+    The photograph showed the loan's interest rate as 0: the profiles' `bank_lending_rate_pct` holds a fraction (0.045), the lever and the
+    engine take a percent. Fixed with a defaults check first (red at 0.045, green at 4.5), ff9e65b7.
+  - Manchester barbershops (England's rows off the model): a loss printed as losses with the true minus (margin −50.7%, month −$6,856),
+    "No payback while the month runs at a loss.", business rates $0 (full small business relief at a rateable value of £9,576), the
+    fallback lines "Manchester holds none. This is England's.", no staff line.
+- Not run, and why: the local production build (`npm run verify:deploy -- --build`) and the browser probe against `npm run start`. The build
+  and its typecheck need a 4 GB heap and the laptop held 300 to 1,200 MB free beside three agents; the controller's note says heavy checks go
+  to GitHub. What the probe would have watched is held instead by: the state test (the address, clamps, noindex, replaceState wiring), the
+  page test mounted in jsdom (a currency change redraws and writes nothing), the api test (404, the place switch's body), the door test and
+  the London trade render (four doors), and the photographs above. The production probe waits for his deploy word in any case.
+
