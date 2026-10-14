@@ -58,6 +58,9 @@ export async function requireBrowser(gate, notChecked) {
      failure there is a real fault that must surface loudly rather than be mistaken
      for an absent browser.
      It is also faster: a build server never starts a browser at all. */
-  if (!existsSync(DESIGN_REPO)) skip(gate, `the design repo (${DESIGN_REPO})`, notChecked);
+  /* A CHECK SERVER THAT HAS A BROWSER SAYS SO (2026-10-14, his word to run the checks off the laptop, in parallel): the GitHub check
+     run installs chromium and sets ATLAS_BROWSER_GATES=1, so the browser gates run there as they do here, and a launch failure there is
+     a real fault. Vercel sets nothing and still skips. A gate that also reads the design repo still skips that read, loudly. */
+  if (process.env.ATLAS_BROWSER_GATES !== "1" && !existsSync(DESIGN_REPO)) skip(gate, `the design repo (${DESIGN_REPO})`, notChecked);
   await import("playwright");
 }
