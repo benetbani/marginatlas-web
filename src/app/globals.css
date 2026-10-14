@@ -2775,6 +2775,11 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
      #c2410c, the orange he turned down on the old navigator button (the palette gate's header; hue 17.5 against the brand's 8.6).
      --terra stays the fill of drawn answers and the band; #e62200 is the wordmark's alone. One line reverts it. */
   --terra-text: #991600;
+  /* THE BRAND TERRACOTTA AT FULL STRENGTH (plan 2026-10-13 home-quiet-editorial, Task 2; the spec's sections 2 and 3, his decision of
+     2026-10-13: the band "full-width brand terracotta at full strength", the positioning line's mark beside it; his pick of the plan's
+     Q1: "Deep terracotta #c11c00", atlas-600). One step deeper than the wordmark's red; the home's band and the positioning line's mark
+     take it, and nothing else on the site. White on it reads 6.12 to 1. */
+  --terra-full: #c11c00;
   --terra-soft: #fff1ed;
   --terra-border: #ffc7ba;
   /* THE GROUND (his answer, 2026-09-07: "some sort of a gray and the cards

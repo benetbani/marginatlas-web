@@ -29,6 +29,7 @@
 import * as React from "react";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
 import { Box, Rail } from "@/components/spine/kit";
+import { LogoMark } from "@/components/brand/LogoMark";
 import { CityRows, CityRowsHead } from "@/components/spine/archetypes/CityRows";
 import { buildCityCards, type CityCards as CityCardsData } from "@/lib/spine/city_cards";
 import { isPaywallOn } from "@/lib/feature_flags";
@@ -76,6 +77,11 @@ function HomeSearch() {
   return (
     <div data-hero="1">
       <section id="search" className="flex flex-col">
+        {/* THE POSITIONING LINE (plan 2026-10-13 home-quiet-editorial, Task 2; the spec's section 2, item 1): his pick, the category the site owns, at the head rung beside the compass mark in the brand terracotta; never a small capitals kicker (the no-eyebrow rule's one named exception). 16 under it to the question, 24 from 1024. */}
+        <p data-positioning="" className="mb-4 flex items-center gap-3 text-[length:var(--t-head)] font-semibold leading-7 text-[var(--c-ink)] lg:mb-6">
+          <LogoMark size={24} className="shrink-0 text-[var(--terra-full)]" />
+          <span>{C.positioning}</span>
+        </p>
         <h1 className="font-display text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[var(--c-ink)] leading-[1.08]">
           <HeroWords lead={C.h1.lead} middle={C.h1.middle} businesses={HERO_BUSINESSES} cities={HERO_CITIES} />
         </h1>

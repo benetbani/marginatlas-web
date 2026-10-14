@@ -2731,6 +2731,10 @@ export const COPY = {
    *  2026-08-16, its business and city rotating between the words). */
   home: {
     h1: { lead: "How much does a", middle: "make in" },
+    /** THE POSITIONING LINE (plan 2026-10-13 home-quiet-editorial, Task 2; the spec's section 2, item 1): his pick of 2026-10-13, the
+     *  category the site owns, said above his h1 beside the compass mark; a statement, never a rank (no ranking evidence is held). The one
+     *  exception the no-eyebrow rule names (scripts/verify_no_eyebrow.ts). */
+    positioning: "The reference atlas of small-business earnings.",
     searchLabel: "Search",
     /** THE ANSWERS' SHORT LINES (his instruction of 2026-10-07: one short line a card). The same facts /gb's masthead and curve state
      *  at length ("on $52K of profit, a sole trader under Self Assessment"; "of new firms still trading after 5 years"), said in
