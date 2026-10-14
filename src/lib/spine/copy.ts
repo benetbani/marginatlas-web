@@ -2738,8 +2738,8 @@ export const COPY = {
     positioning: "The reference atlas of small-business earnings.",
     /** THE ATLAS AS A CONTENTS PAGE (plan 2026-10-13 home-quiet-editorial, Task 4A; the spec's section 2, item 3): the zone's name (a data
      *  attribute, not a printed word); each department's title (four words at most), its one line (twelve words at most, true of every
-     *  member its rule can draw) and its door; the tools', the tracks' and the method's member names (the sources' name is the foot's own,
-     *  UK_SOURCES_FOOT.link); the trade figure's unit, said to a screen reader (the trades' line says it once for the eye). */
+     *  member its rule can draw) and its door; the tools' and the method's member names (the sources' name is the foot's own,
+     *  UK_SOURCES_FOOT.link; the tracks' are the learn page's own titles, src/lib/learn/tracks.ts); the trade figure's unit, said to a screen reader (the trades' line says it once for the eye). */
     contents: {
       label: "The atlas",
       depts: {
@@ -2751,7 +2751,6 @@ export const COPY = {
         method: { title: "How it is made", line: "Where each figure comes from, and every correction made.", door: "About the figures" },
       },
       tools: { decide: "Decide", check: "Check", calculator: "Calculator", compare: "Compare" },
-      tracks: { A: "Revenue by trade", B: "What owners keep", C: "Reading the numbers" },
       method: { corrections: "Corrections", coverage: "Coverage report" },
       unit: "of sales kept",
     },

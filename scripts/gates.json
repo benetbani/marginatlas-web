@@ -3438,6 +3438,7 @@
       "browser": false,
       "asserts": "THE ATLAS AS A CONTENTS PAGE (plan docs/superpowers/plans/2026-10-13-home-quiet-editorial.md, Tasks 1B, 4A and 4B; spec docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, section 2, ite",
       "reads": [
+        "data/cities/city_list_v1.json",
         "data/cities/images_credits.json",
         "data/cities/images_manifest.json",
         "public/cities",

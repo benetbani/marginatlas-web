@@ -3,9 +3,9 @@
  * docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, section 2, item 3). Six numbered departments in one section,
  * each its number, its marks, a title of four words or fewer, one line of twelve words or fewer, at most four members and its door. Holds:
  *  - THE RULES, recomputed here from the modules each rule names and never from the builder's own reading: 01 the countries held to the
- *    registers, then the world page's broadest; 02 the cities held to sources, each with its own figure and small photograph; 03 rule 32's
+ *    registers, then the world page's broadest; 02 one city for each 01 country, its largest with its own figure, never two of one country; 03 rule 32's
  *    trades whose world net is their own, each printing its industry page's answer; 04 the four tools; 05 the tracks that hold an article
- *    and the newest post whose title counts nothing; 06 the method's three pages and About the figures;
+ *    and the newest post whose title counts nothing and names no place; 06 the method's three pages and About the figures;
  *  - THIN STATES (Review Focus 3): each builder fed an empty or odd source draws fewer rows, never a placeholder, and keeps its door;
  *  - A TRADE'S OWN FIGURE (Review Focus 4): a trade whose net is its sector profile's residual is left out, never printed as the trade's;
  *  - A POST THAT COUNTS (Review Focus 5): the reading department passes over a title holding a list count;
@@ -26,7 +26,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { posix } from "node:path";
 import { JSDOM } from "jsdom";
 import { COUNTRIES, INDUSTRIES, INDUSTRY_BY_ID, industryToSlug, slugToIndustry, tradeRowName } from "../../src/lib/taxonomy";
-import { countryHeldToRegisters, cityHeldToSources } from "../../src/lib/uk/registers/register_city";
+import { countryHeldToRegisters } from "../../src/lib/uk/registers/register_city";
 import { countryPageTarget } from "../../src/lib/geo/page_targets";
 import { getCoverageReport } from "../../src/lib/quality/coverage-report";
 import { getCoverageRows } from "../../src/lib/coverage/report";
@@ -37,6 +37,7 @@ import { EVERYDAY_TRADES } from "../../src/lib/spine/everyday_trades";
 import { industryHeroFacts } from "../../src/lib/spine/industry_hero_facts";
 import { resolveTradeNet } from "../../src/lib/spine/trade_net";
 import { LEARN_BY_FAMILY } from "../../src/lib/learn/articles";
+import { LEARN_TRACKS } from "../../src/lib/learn/tracks";
 import { getAllPosts } from "../../src/lib/blog";
 import { SHEET_TRUST } from "../../src/lib/nav";
 import { UK_SOURCES_FOOT } from "../../src/lib/spine/uk_sources";
@@ -122,9 +123,13 @@ async function main(): Promise<void> {
     const deepest = buildWorldAtlas({ ...report, countries: getCoverageRows() } as Parameters<typeof buildWorldAtlas>[0], new Set(COUNTRIES.map((c) => c.code)), (iso2) => COUNTRIES.find((c) => c.code === iso2)?.name || iso2, report?.totals?.industries_covered ?? 0).deepest.map((c) => c.iso2);
     const wantCountries = [...new Set([...COUNTRIES.filter((c) => countryHeldToRegisters(c.code)).map((c) => c.code), ...deepest])].filter((c) => countryPageTarget(c)).slice(0, 4);
     check(`01: the countries held to the registers, then the world page's broadest, each with a page (${contents.countries.members.map((m: { key: string }) => m.key).join(", ")}; recomputed ${wantCountries.join(", ")})`, JSON.stringify(contents.countries.members.map((m: { key: string }) => m.key.toUpperCase())) === JSON.stringify(wantCountries) && contents.countries.members.every((m: { key: string; name: string; href: string; mark: { kind: string }; figure: unknown }) => m.mark.kind === "flag" && m.figure === null && m.href === countryPageTarget(m.key)?.href && m.name === countryPageTarget(m.key)?.label));
-    /* 02: the cities held to sources, largest metro first, each printing its own figure on its page and holding its small photograph. */
-    const wantCities = COUNTRIES.filter((c) => countryHeldToRegisters(c.code)).flatMap((c) => (buildCityCards(c.code)?.cards ?? []).filter((card) => cityHeldToSources(c.code, card.id) && typeof card.payUsd === "number" && !!cityThumb(card.id)).map((card) => card.id)).slice(0, 4);
-    check(`02: the cities held to sources, largest first, each with its own figure and small photograph, names only (${contents.cities.members.map((m: { key: string }) => m.key).join(", ")}; recomputed ${wantCities.join(", ")})`, JSON.stringify(contents.cities.members.map((m: { key: string }) => m.key)) === JSON.stringify(wantCities) && contents.cities.members.every((m: { key: string; href: string; mark: { kind: string }; figure: unknown }) => m.mark.kind === "photo" && m.figure === null && m.href === `/cities/${m.key}`));
+    /* 02: one city for each country 01 lists, in its order: the first of the country's cards (largest metro first) that prints its own figure;
+       its small photograph where the site holds one, else its country's flag (fix round 1, the final review's I3). */
+    const cityCountry = new Map<string, string>();
+    const wantCities = contents.countries.members.map((m: { key: string }) => m.key.toUpperCase()).flatMap((code: string) => { const card = (buildCityCards(code)?.cards ?? []).find((c) => typeof c.payUsd === "number"); if (card) cityCountry.set(card.id, code); return card ? [card.id] : []; }).slice(0, 4);
+    check(`02: one city for each country of 01, its largest with its own figure, names only (${contents.cities.members.map((m: { key: string }) => m.key).join(", ")}; recomputed ${wantCities.join(", ")})`, JSON.stringify(contents.cities.members.map((m: { key: string }) => m.key)) === JSON.stringify(wantCities) && contents.cities.members.every((m: { key: string; href: string; mark: { kind: string; iso2?: string }; figure: unknown }) => m.figure === null && m.href === `/cities/${m.key}` && (cityThumb(m.key) ? m.mark.kind === "photo" : m.mark.kind === "flag" && m.mark.iso2 === cityCountry.get(m.key))));
+    const cityCountries = contents.cities.members.map((m: { key: string }) => cityCountry.get(m.key) ?? "?");
+    check(`02: no two city rows share a country (${cityCountries.join(", ")})`, cityCountries.length > 0 && new Set(cityCountries).size === cityCountries.length && !cityCountries.includes("?"));
     /* 03: rule 32's trades in its order whose world net is the trade's own (the shard branch), each the industry page's answer. */
     const everyday = [...new Set([...EVERYDAY_TRADES].map((s) => slugToIndustry(s)?.id).filter((x): x is string => !!x))];
     const wantTrades = everyday.filter((id) => resolveTradeNet(id, { moneyShown: false, netMarginPct: null })?.branch === "shard").slice(0, 4);
@@ -141,11 +146,18 @@ async function main(): Promise<void> {
     const L = await import(SPEC_LIST_COUNTS).catch(() => null);
     check("the count words are there (src/lib/home/list_counts.ts, Task 1C)", !!L, "src/lib/home/list_counts.ts");
     const tracksHeld = (["A", "B", "C"] as const).filter((f) => LEARN_BY_FAMILY(f).length > 0);
-    const newest = L ? getAllPosts().find((p) => p.title.trim() !== "" && !L.holdsListCount(p.title)) : undefined;
+    /* The places a title can name, read again here from the code's own lists: every country's name and every covered city's, whole and in case. */
+    const cityNames = (JSON.parse(read("data/cities/city_list_v1.json") || "{\"cities\":[]}") as { cities: Array<{ name: string }> }).cities.map((c) => c.name.replace(/\s*\([^)]*\)\s*$/, ""));
+    const placeNames = [...COUNTRIES.map((c) => c.name), ...cityNames].filter((n) => n.trim() !== "");
+    const titledPlace = (t: string) => placeNames.some((n) => { const at = t.indexOf(n); return at >= 0 && !/\p{L}/u.test(t[at - 1] ?? " ") && !/\p{L}/u.test(t[at + n.length] ?? " "); });
+    const newest = L ? getAllPosts().find((p) => p.title.trim() !== "" && !L.holdsListCount(p.title) && !titledPlace(p.title)) : undefined;
     const wantReading = [...tracksHeld.map((f) => `/learn#track-${f}`), ...(newest ? [`/blog/${newest.slug}`] : [])];
-    check(`05: the knowledge base's tracks that hold an article, then the newest post whose title counts nothing (${contents.reading.members.map((m: { href: string }) => m.href).join(", ")}; recomputed ${wantReading.join(", ")})`, JSON.stringify(contents.reading.members.map((m: { href: string }) => m.href)) === JSON.stringify(wantReading));
+    check(`05: the knowledge base's tracks that hold an article, then the newest post whose title counts nothing and names no place (${contents.reading.members.map((m: { href: string }) => m.href).join(", ")}; recomputed ${wantReading.join(", ")})`, JSON.stringify(contents.reading.members.map((m: { href: string }) => m.href)) === JSON.stringify(wantReading));
     const counted = B.contentsReading([{ slug: "a", title: "The 12 cities where rent fell" }, { slug: "b", title: "What a pharmacy keeps" }], () => false);
     check(`a post whose title counts a list is passed over for the next (${counted.members.map((m: { href: string }) => m.href).join(", ") || "none"})`, counted.members.map((m: { href: string }) => m.href).join() === "/blog/b");
+    const placed = B.contentsReading([{ slug: "a", title: "Hairdressing and beauty businesses in each London borough" }, { slug: "b", title: "What a pharmacy keeps" }], () => false);
+    check(`a post whose title names a place (London) is passed over for the next, so the home tells no one city's story (${placed.members.map((m: { href: string }) => m.href).join(", ") || "none"})`, placed.members.map((m: { href: string }) => m.href).join() === "/blog/b");
+    check(`05: each track is named by the learn page's own heading (${contents.reading.members.filter((m: { key: string }) => m.key.startsWith("track-")).map((m: { name: string }) => m.name).join(" | ")})`, contents.reading.members.filter((m: { key: string }) => m.key.startsWith("track-")).every((m: { key: string; name: string }) => m.name === LEARN_TRACKS.find((t) => `track-${t.family}` === m.key)?.title));
     const about = SHEET_TRUST.find((n) => n.href.startsWith("/about-data"));
     check("06: Sources and licences, the corrections log, the coverage report; its door About the figures, the sheet's own name and address for it", JSON.stringify(contents.method.members.map((m: { href: string }) => m.href)) === JSON.stringify([UK_SOURCES_FOOT.href, "/corrections", "/coverage"]) && contents.method.members[0]?.name === UK_SOURCES_FOOT.link && !!about && contents.method.door.label === about.label && contents.method.door.href === about.href && B.ABOUT_THE_FIGURES.label === about.label && B.ABOUT_THE_FIGURES.href === about.href);
     /* THIN AND ODD STATES (Review Focus 3). */
@@ -155,10 +167,11 @@ async function main(): Promise<void> {
     check(`a country twice, or one with no page, is drawn once or not at all (${oddC.members.map((m: { key: string }) => m.key).join(", ")})`, oddC.members.map((m: { key: string }) => m.key).join() === "gb,fr");
     check(`a long list is cut at four (${B.contentsCountries(COUNTRIES.map((c) => c.code)).members.length})`, B.contentsCountries(COUNTRIES.map((c) => c.code)).members.length === 4);
     const london = buildCityCards("GB")?.cards.find((c) => c.id === "london");
+    const manchester = buildCityCards("GB")?.cards.find((c) => c.id === "manchester");
     const thinCity = B.contentsCities([]);
     const noPay = london ? B.contentsCities([{ iso2: "GB", card: { ...london, payUsd: undefined } }]) : null;
-    const unheld = london ? B.contentsCities([{ iso2: "GB", card: { ...london, id: "atlantis" } }]) : null;
-    check("no city card, a city with no figure of its own, or a city no source holds leaves the department its door and no such row (the photograph's condition is the recomputed rule's, above)", thinCity.members.length === 0 && thinCity.door.href === "/cities" && !!noPay && noPay.members.length === 0 && !!unheld && unheld.members.length === 0);
+    const twoOfOne = manchester && london ? B.contentsCities([{ iso2: "GB", card: london }, { iso2: "GB", card: manchester }]) : null;
+    check(`no city card or a city with no figure of its own leaves the department its door and no such row; two cities of one country draw one row (${twoOfOne ? twoOfOne.members.map((m: { key: string }) => m.key).join(", ") : "not run"})`, thinCity.members.length === 0 && thinCity.door.href === "/cities" && !!noPay && noPay.members.length === 0 && !!twoOfOne && twoOfOne.members.map((m: { key: string }) => m.key).join() === "london");
     const thinT = B.contentsTrades([]);
     const oddT = B.contentsTrades(["restaurants", "restaurants", "no-such-trade"]);
     check(`no trade leaves the door alone; a trade twice or no trade at all is drawn once or not at all (${oddT.members.map((m: { key: string }) => m.key).join(", ")})`, thinT.members.length === 0 && thinT.door.href === "/industries" && oddT.members.length <= 1 && oddT.members.every((m: { key: string }) => m.key === "restaurants"));

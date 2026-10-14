@@ -8,20 +8,23 @@
  *
  *   01 Countries      the countries held to the registers (countryHeldToRegisters: the UK), then the world page's broadest coverage
  *                     (buildWorldAtlas's `deepest`, its "where the map goes furthest"), each with a page (countryPageTarget); a flag
- *   02 Cities         the cities held to sources (cityHeldToSources), largest metro first (buildCityCards), each printing its own figure on
- *                     its page (`payUsd`, the city's own typical pay) and holding its small photograph (cityThumb); names only
+ *   02 Cities         one city for each country 01 lists, in 01's order: the country's largest city (buildCityCards, largest metro first)
+ *                     that prints its own figure on its page (`payUsd`, the city's own typical pay); its small photograph where the site
+ *                     holds one (cityThumb), else its country's flag; names only (fix round 1 of plan 2026-10-13, the final review's I3:
+ *                     four cities of one country made the home talk about one place)
  *   03 Trades         rule 32's everyday trades (EVERYDAY_TRADES, in its order), each whose world net is the trade's own (resolveTradeNet's
  *                     shard branch, never the sector profile's residual), printing the figure its industry page prints (industryHeroFacts)
  *   04 Tools          the four tools: Decide, Check, Calculator, Compare
- *   05 Reading        the knowledge base's tracks that hold an article (LEARN_BY_FAMILY), then the newest post whose title holds no list
- *                     count (getAllPosts is newest first; src/lib/home/list_counts.ts)
+ *   05 Reading        the knowledge base's tracks that hold an article (LEARN_BY_FAMILY), each by the learn page's own title (LEARN_TRACKS),
+ *                     then the newest post whose title holds no list count (getAllPosts is newest first; src/lib/home/list_counts.ts) and
+ *                     names no place (a country's name or a covered city's: namesPlace; fix round 1, the final review's I3)
  *   06 How it is made Sources and licences, the corrections log, the coverage report; its door About the figures, the method
  *
  * Each builder takes its source as an argument with the real one as its default, so tests/home/contents.test.ts feeds it thin and odd
  * states. Server only: it reads the shards, the coverage report and the blog's files.
  */
 import { COUNTRIES, industryToSlug, slugToIndustry, tradeRowName } from "@/lib/taxonomy";
-import { countryHeldToRegisters, cityHeldToSources } from "@/lib/uk/registers/register_city";
+import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import { countryPageTarget } from "@/lib/geo/page_targets";
 import { getCoverageReport } from "@/lib/quality/coverage-report";
 import { getCoverageRows } from "@/lib/coverage/report";
@@ -32,6 +35,8 @@ import { EVERYDAY_TRADES } from "@/lib/spine/everyday_trades";
 import { industryHeroFacts } from "@/lib/spine/industry_hero_facts";
 import { industryPictogramId } from "@/lib/brand/industry_pictogram";
 import { LEARN_BY_FAMILY } from "@/lib/learn/articles";
+import { LEARN_TRACKS } from "@/lib/learn/tracks";
+import cityListJson from "../../../data/cities/city_list_v1.json";
 import { getAllPosts } from "@/lib/blog";
 import { UK_SOURCES_FOOT } from "@/lib/spine/uk_sources";
 import { holdsListCount } from "@/lib/home/list_counts";
@@ -84,19 +89,22 @@ export function contentsCountries(broadest: readonly string[] = worldBroadest())
   return dept("countries", members);
 }
 
-/** The city cards of every country held to the registers, in the cards' own order (largest metro first). */
-export function heldCityCards(): Array<{ iso2: string; card: CityCard }> {
-  return COUNTRIES.filter((c) => countryHeldToRegisters(c.code)).flatMap((c) => (buildCityCards(c.code)?.cards ?? []).map((card) => ({ iso2: c.code, card })));
+/** The city cards of each country 01 lists, in 01's order, each country's cards in their own order (largest metro first). */
+export function departmentCityCards(countries: readonly string[] = contentsCountries().members.map((m) => m.key.toUpperCase())): Array<{ iso2: string; card: CityCard }> {
+  return countries.flatMap((iso2) => (buildCityCards(iso2)?.cards ?? []).map((card) => ({ iso2, card })));
 }
 
-/** 02: the cities held to sources, each printing its own figure on its page and holding its small photograph; names only. */
-export function contentsCities(cards: ReadonlyArray<{ iso2: string; card: CityCard }> = heldCityCards()): ContentsDepartment {
+/** 02: one city a country, each the first of its country's cards that prints its own figure on its page; its small photograph where the
+ *  site holds one, else its country's flag; names only. */
+export function contentsCities(cards: ReadonlyArray<{ iso2: string; card: CityCard }> = departmentCityCards()): ContentsDepartment {
+  const taken = new Set<string>();
   const members: ContentsMember[] = [];
   for (const { iso2, card } of cards) {
-    if (!cityHeldToSources(iso2, card.id) || typeof card.payUsd !== "number") continue;
+    if (taken.has(iso2) || typeof card.payUsd !== "number") continue;
+    taken.add(iso2);
     const thumb = cityThumb(card.id);
-    if (!thumb) continue;
-    members.push({ key: card.id, name: card.name, href: card.href, mark: { kind: "photo", src: thumb.src, position: thumb.position }, figure: null });
+    const mark: MemberMark = thumb ? { kind: "photo", src: thumb.src, position: thumb.position } : { kind: "flag", iso2 };
+    members.push({ key: card.id, name: card.name, href: card.href, mark, figure: null });
   }
   return dept("cities", members);
 }
@@ -137,18 +145,31 @@ export function contentsTools(): ContentsDepartment {
   return dept("tools", TOOLS.map((t) => ({ key: t.key, name: COPY.home.contents.tools[t.key], href: t.href, mark: { kind: "icon", id: t.icon }, figure: null })));
 }
 
-/* The learn page's three tracks, each at its section's own anchor (src/app/(site)/learn/page.tsx, id={`track-${track.family}`}); a track
-   with no article self-omits there, so its member is drawn only when it holds one. */
+/* The learn page's three tracks, each at its section's own anchor (src/app/(site)/learn/page.tsx, id={`track-${track.family}`}) and named
+   by its heading there (LEARN_TRACKS); a track with no article self-omits there, so its member is drawn only when it holds one. */
 const TRACKS: ReadonlyArray<{ family: "A" | "B" | "C"; href: string; icon: AtlasIconId }> = [
   { family: "A", href: "/learn#track-A", icon: "revenue" },
   { family: "B", href: "/learn#track-B", icon: "owner-keeps" },
   { family: "C", href: "/learn#track-C", icon: "range" },
 ];
 
-/** 05: the tracks that hold an article, then the newest post whose title holds no list count. */
+/* THE PLACES A TITLE CAN NAME, read from the code's lists: every country's name (COUNTRIES) and every covered city's (the city list,
+   data/cities/city_list_v1.json, its parenthesis dropped), each matched whole and in its own case. BLIND SPOT: a demonym ("British"), a
+   district or borough name the list does not hold, and a lower-case place are not seen; a title that opens on a city's name used as a word
+   ("Nice") is passed over, which only draws the next post. */
+const PLACE_NAMES = [...new Set([...COUNTRIES.map((c) => c.name), ...(cityListJson as { cities: Array<{ name: string }> }).cities.map((c) => String(c.name).replace(/\s*\([^)]*\)\s*$/, ""))])].filter((n) => n.trim() !== "").sort((a, b) => b.length - a.length);
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, (c) => `\\${c}`);
+const PLACE_RE = new RegExp(`(?:^|[^\\p{L}])(?:${PLACE_NAMES.map(escapeRe).join("|")})(?=[^\\p{L}]|$)`, "u");
+
+/** Whether a text names a country or a covered city (the home speaks for the atlas, never for one place: the final review's I3). */
+export function namesPlace(text: string): boolean {
+  return PLACE_RE.test(String(text ?? ""));
+}
+
+/** 05: the tracks that hold an article, then the newest post whose title holds no list count and names no place. */
 export function contentsReading(posts: ReadonlyArray<{ slug: string; title: string }> = getAllPosts(), tracksHeld: (family: "A" | "B" | "C") => boolean = (f) => LEARN_BY_FAMILY(f).length > 0): ContentsDepartment {
-  const members: ContentsMember[] = TRACKS.filter((t) => tracksHeld(t.family)).map((t) => ({ key: `track-${t.family}`, name: COPY.home.contents.tracks[t.family], href: t.href, mark: { kind: "icon", id: t.icon }, figure: null }));
-  const post = posts.find((p) => p.title.trim() !== "" && !holdsListCount(p.title));
+  const members: ContentsMember[] = TRACKS.filter((t) => tracksHeld(t.family)).map((t) => ({ key: `track-${t.family}`, name: LEARN_TRACKS.find((x) => x.family === t.family)?.title ?? "", href: t.href, mark: { kind: "icon", id: t.icon }, figure: null })).filter((m) => m.name !== "");
+  const post = posts.find((p) => p.title.trim() !== "" && !holdsListCount(p.title) && !namesPlace(p.title));
   if (post) members.push({ key: `post-${post.slug}`, name: post.title, href: `/blog/${post.slug}`, mark: { kind: "icon", id: "bookmark" }, figure: null });
   return dept("reading", members);
 }
