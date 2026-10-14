@@ -68,6 +68,12 @@ async function main(): Promise<void> {
   const lum = (hex: string) => { const [r, g, b] = [1, 3, 5].map((i) => { const s = parseInt(hex.slice(i, i + 2), 16) / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
   const ratio = full.length === 1 ? 1.05 / (lum(full[0]) + 0.05) : 0;
   check(`white on --terra-full reads ${ratio.toFixed(2)} to 1, AA for every size the band sets (4.5 or more)`, ratio >= 4.5, CSS, "keep --terra-full dark enough for white type at 4.5 to 1 (Q1's three choices all are)");
+  /* THE FOCUS RING ON THE BAND (the final review's I1, fix round 1): the site's ring is ink (globals.css, THE FOCUS FLOOR), 2.82 to 1 on
+     --terra-full, under the 3 to 1 a focus indicator needs (WCAG 1.4.11); on the band it takes the band's ink, white, the black footer's move.
+     BLIND SPOT: the ratio is computed from the tokens as written; a browser's own ring styles are the photographs'. */
+  const ink = /--c-ink:\s*(#[0-9a-fA-F]{6})\s*;/.exec(css)?.[1] ?? "";
+  const inkRatio = full.length === 1 && ink ? (Math.max(lum(ink), lum(full[0])) + 0.05) / (Math.min(lum(ink), lum(full[0])) + 0.05) : 0;
+  check(`a focus ring on the band is the band's ink, white at ${ratio.toFixed(2)} to 1 (3 or more), where the site's ink ring would read ${inkRatio.toFixed(2)}`, /\[data-zone\]\[data-tone="terra"\] :focus-visible \{\s*outline-color:\s*var\(--band-ink\);\s*\}/.test(css) && ratio >= 3, CSS, "add [data-zone][data-tone=\"terra\"] :focus-visible { outline-color: var(--band-ink); } after the terracotta zone's rule in globals.css");
   const laws = read("scripts/harness/check_page_laws.mjs");
   check("the page laws read the band's colour from --terra-full, never a typed value", /var\(--terra-full\)/.test(laws) && !/rgb\(251, 132, 105\)/.test(laws), "scripts/harness/check_page_laws.mjs", "read TERRA in check_page_laws.mjs by probing var(--terra-full), as plan 2026-10-13 Task 5 gives it");
   const render = read(RENDER);

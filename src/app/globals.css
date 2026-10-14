@@ -279,7 +279,8 @@
   }
 
   /* THE FOCUS FLOOR (plan 2026-10-10, Task 1; the ship audit's 1.8, the critique's P0.8): every element that takes keyboard focus
-     shows a 2px ink ring 2px off its edge (17.24:1 on white, 15.94 on the tint zone, 7.06 on the terracotta fill), so a component
+     shows a 2px ink ring 2px off its edge (17.24:1 on white, 15.94 on the tint zone; on the home's band it turns white, below the
+     terracotta zone's rule), so a component
      that draws no ring of its own can no longer draw none at all. The menu's ring read 1.93:1 (atlas-500 at 40 percent). In the base
      layer on purpose: a component's own focus style still wins, which is how the range thumb keeps its ring. */
   :focus-visible {
@@ -1305,6 +1306,12 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
   --zone-bg: var(--terra-full);
   --c-surface: var(--terra-full);
   color: var(--band-ink);
+}
+/* THE BAND'S FOCUS RING (the final review's I1, fix round 1 of plan 2026-10-13): the site's ink ring reads 2.82:1 on --terra-full, under
+   the 3:1 a focus indicator needs; on the band it takes the band's ink, white, 6.12:1, as the black footer's ring turns white. In print
+   --band-ink is ink. */
+[data-zone][data-tone="terra"] :focus-visible {
+  outline-color: var(--band-ink);
 }
 /* ON PAPER THE BAND IS INK ON WHITE (critique P2.11 of plan 2026-10-10): no fill in print, so a printed home stays legible. */
 @media print {
