@@ -340,6 +340,18 @@
       "claims": []
     },
     {
+      "name": "signal-marks",
+      "script": "tests/spine/signal_marks.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SIGNAL'S MARK RULE (plan 2026-10-13 country-page-journey, Task 1D; spec section 4, and section 8: \"the signal's direction table read for every mark printed\").",
+      "reads": [
+        "scripts/harness/pages.json",
+        "src/components/spine/country/country-view.tsx"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

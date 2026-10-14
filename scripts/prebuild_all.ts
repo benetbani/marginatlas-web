@@ -188,6 +188,9 @@ const GATES: Gate[] = [
      folds of two to eight rows (scripts/lib/answer_type.mjs). Static; its reading's fixtures beside it. */
   { name: "answer-type", script: "scripts/harness/check_answer_type.mjs", args: ["--list"] },
   { name: "answer-type-reader", script: "tests/spine/answer_type.test.ts" },
+  /* THE SIGNAL'S MARK RULE (plan 2026-10-13 country-page-journey, Task 1D; spec section 4): every mark on a country render names a directed
+     measure of the direction table, every placed figure follows it, the page carries its one key. Static. */
+  { name: "signal-marks", script: "tests/spine/signal_marks.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
