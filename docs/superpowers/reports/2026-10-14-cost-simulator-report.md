@@ -127,3 +127,38 @@ parallel-base while the others run and not to build the signal. Built without th
   per-file chCaps rise); kept only the two calculator files' removal, totals lowered by exactly their counts (type ladder 850 to 843, width
   remCaps 205 to 197, smPairings 41 to 38). Both gates pass (measured 837 and 193).
 - tools/page.tsx and admin1.ts comments say what stands; money.ts's past-tense mention stays.
+
+## Task 8, the written rules (076923cb; MODEL.md skipped, its text below)
+
+- The seven gates exist (calc-engine, calc-defaults, calc-api, calc-display, calc-page, calc-state, calc-door).
+- GUIDELINES.md 0.7 gained the plan's four rows, as written.
+- SKIPPED, the parent repo (E:/atlas/design/loop/build/briefs/MODEL.md is not in this repo). The text for the controller, the plan's Step 2
+  and Step 3 as built (where the build differs from the plan's text, the build's fact is written and marked "built:"):
+  - The `15 close` row: `` `Terminus`: three doors (its cap), the pill last (M21): `` becomes `` `Terminus`: four doors since 2026-10-13
+    (the cap the trade close alone raises; plan 2026-10-13 cost-simulator, Q3), the pill last (M21): ``, and after `up to the city page,
+    "Opening a business in {city}";` insert ` to the calculator, "Run your own numbers", with the page's place and trade
+    (`/calculator?country=..&city=..&trade=..`, landing on the sales to break even; a region's or a council's page carries its country
+    alone);`.
+  - THE DOORS paragraph: `and the compare pill (`/compare`).` in its `15 close` sentence becomes `the calculator with the page's place and
+    trade ("Run your own numbers", landing on the sales to break even, since 2026-10-13), and the compare pill (`/compare`).`
+  - PART 10, the line beginning `- **A figure says where it came from**:`: `(counted, worked out, looked up, estimate, the register ledger's
+    words)` becomes `(counted, worked out, looked up, estimate, the register ledger's words; and "yours", a figure the reader set on
+    /calculator, since 2026-10-13, never one of the four)`.
+  - Before `## PART 9. WHAT THE MODEL FORBIDS`, insert:
+
+```markdown
+### 8.10 The cost simulator, /calculator. Seven blocks since 2026-10-13 (plan 2026-10-13 cost-simulator; spec docs/superpowers/specs/2026-10-13-cost-simulator-design.md, section 4), this order, every place and trade the calculator resolves
+
+| Row | Block | What it holds | Seat |
+|---|---|---|---|
+| `00 masthead` | What your business costs | The h1 and three native pickers on 48px fields: the country, the city or anywhere in it, the trade. A band, no block. | the first zone, wide |
+| `01 answer` | Sales to break even | The page's one 40, the sales to break even a month, `--terra-text`; a day, customers a day, the firms above it (built: no signal yet, the country plan's signal joins it where twenty firms or more are placed); the sales for the reader's profit goal when set; one basis. Its reason in its place where an input is empty. | the instrument: from 768 beside the margin, from 1024 the right column, first |
+| `02 margin` | Your margin | The margin at the reader's sales before tax at 30, placed by those sales among the place's firms ("Your sales top 70% of firms here."; built: the signal waits for the country plan); after tax in the UK. "Type your sales to see this." where none are held. | the instrument: from 768 beside the answer, from 1024 the right column, second |
+| `03 numbers` | Your numbers | The page's one card (the reader operates it, 10.4) and the page's one prose section (art direction E1: a source line under every lever): the fixed costs a month at 30; Team (steppers), Premises, Sales, You, Loan, each lever a slider beside a typed figure with its line, the lever in hand showing the break-even beside it. | the instrument: the full width at 768, from 1024 the left column spanning its three rows |
+| `04 month` | Your month | The profit a month at 30; one bar (costs per sale, fixed costs, profit, the break-even ticked, the costs running past the sales at a loss) and its key; the bill as fact rows in a switch for a month or a year, words and figures only, the basis at the end of the switch's tab row. | the instrument: the full width at 768, from 1024 the right column, third |
+| `05 moves` | What moves it most | RankedBars: each input up a tenth or one more hire, the five largest rises, the leader's bar `--terra`; its focal the sales each 100 of fixed costs needs, `--terra-text`. | the next band, its left two thirds |
+| `06 opening` | Money to open it | The months to pay back at 30, none at a loss; the opening bill as fact rows (the cell's held bill, else fit-out, deposit and registration, else the trade's archetype at the city's prices). | the last band, its left three fifths from 1024 |
+| `07 sources` | Where figures come from | NoteList, five notes at most, each fact a short phrase with its date, "Your figures" first once the reader sets one. | the last band, its right two fifths from 1024 |
+
+THE BAR LEDGER: two cards, `04 month` and `05 moves`, in two columns of consecutive bands (the instrument's right column, the next band's left two thirds); no third (Q4 answer A: the team rows are steppers, the opening bill is rows, no phase bar). THE THREE LOUD MOMENTS: `01 answer` LIT, `05 moves` LIT, the third NO HONEST CANDIDATE (`calculator-view.tsx` LOUD_SEATS). THE DOORS: the page draws none; every trade page's close carries "Run your own numbers" to it (8.6 `15 close`). A block with nothing to draw is not drawn, and the zones close up so no two lone zones stand together. Gates: `calc-engine`, `calc-defaults`, `calc-api`, `calc-display`, `calc-page`, `calc-state`, `calc-door`, and every render law over `calculator-gb-london-restaurants`.
+```
