@@ -57,7 +57,7 @@ check(`the UK's pluses: ${gb.more.map((l) => l.key).join(", ")}`, JSON.stringify
 check("the UK: one step costs money, so the bill's words say the rest are free and no costs plus draws", !key(gb, "costs") && (gb.lead?.words ?? "") !== COPY.entryBill.focalWords);
 check("the UK: the bank's wait has no source, so its row prints the dash and no days-until-trading row stands", key(gb, "steps")?.rows.find((r) => r.label === COPY.journey.stepLabels.bank)?.value === "–" && gb.rows === null);
 check(`the UK's licences: waits in days, their short labels (${JSON.stringify(key(gb, "licences")?.rows.map((r) => `${r.label}=${r.value}`))})`, JSON.stringify(key(gb, "licences")?.rows.map((r) => r.value)) === JSON.stringify(["28", "42 to 70", "91 to 122", "28 to 56", "0"]));
-check("the UK's walls from abroad: a state each, from the closed list", (key(gb, "abroad")?.rows ?? []).length >= 2 && (key(gb, "abroad")?.rows ?? []).every((r) => Object.values(COPY.fromAbroad.state).includes(r.value)));
+check("the UK's walls from abroad: a state each, from the closed list", (key(gb, "abroad")?.rows ?? []).length >= 2 && (key(gb, "abroad")?.rows ?? []).every((r) => (Object.values(COPY.fromAbroad.state) as string[]).includes(r.value)));
 const kh = buildOpenSlot("KH", TODAY)!;
 check("Cambodia: three steps cost money, so their costs stand behind their own plus; its days until trading a row", !!key(kh, "costs") && key(kh, "costs")!.type === "money" && kh.rows?.type === "time" && kh.rows.rows.length === 1);
 const af = buildOpenSlot("AF", TODAY)!;
