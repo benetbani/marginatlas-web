@@ -286,3 +286,34 @@ This file is appended task by task, so a stop loses nothing. Scratch outputs nam
   design), art-direction (country, cell, industry), harness-links and provenance (the two cell pages' database fallbacks), harness-laws
   (FIGURE FACE, CI fonts; on home-gb its only finding), harness-archetypes and money-shown-own-rows (timeouts). None is a home finding
   but the CI-only FIGURE FACE. The commit that adds this paragraph changes this file alone.
+
+## Fix round 1 (the final review, .superpowers/sdd/home-quiet-editorial-final-review.md, with the controller's rulings)
+
+- Merged origin/parallel-base 5e11c768 (the runner installs Geist and Space Grotesk): 95f556da.
+- I1, the band's focus ring (f9a18af2): `[data-zone][data-tone="terra"] :focus-visible { outline-color: var(--band-ink); }` after the
+  terracotta zone's rule; band.test holds the rule and the ratio (white 6.12 on #c11c00, where the ink ring read 2.82). The focus floor's
+  comment that said "7.06 on the terracotta fill" made true.
+- I2, no terracotta tile in Pro (cdc5891b): ProBand's Rail draws no icon (`allow-no-icon` with the reason); home_bands holds Pro with the
+  switch on to no terracotta and no icon tile.
+- I3, the home stops talking about London (b07368ec): Cities takes one city for each country the Countries department lists, the first of
+  its cards (largest metro first) that prints its own figure, never two of one country: London, New York, Toronto, Mexico City. Only the
+  UK's seven hold a photograph, so the other three draw their country's flag (the row keeps its one shape). Reading passes over a post whose
+  title names a country or a covered city (COUNTRIES and data/cities/city_list_v1.json, whole words in case; blind spot stated in the code):
+  the newest post is now "Do most new restaurants close within five years?". Tests: the 02 rule recomputed, no two city rows share a country,
+  two cities of one country draw one row, a London-titled post is passed over. Typing fix d72609bf.
+- I4, pharmacies (af6d2c52): `health_beauty_stores: "pharmacy"` in DIRECT; contents.test holds each trade row to its own mark.
+- M1 (with I3, b07368ec): the learn page's tracks moved to src/lib/learn/tracks.ts; the learn page and the reading department read the one
+  list, so the doors print the headings they open; COPY.home.contents.tracks removed.
+- M2 and M5 (3c103cc6): "small-business" held in a no-wrap span (keepCompounds, his words unchanged; home_shape and the eyebrow exception read
+  the new form, and home_shape checks every hyphenated word is held); the stale globals.css comment on --terra; the HomeProofs.tsx entry
+  deleted from width_discipline_baseline.json (a lowering; width-discipline PASS).
+- Left as ruled: the band's sentence and the three reds on the first screen (the owner's call).
+- Local checks: render (waited for 800 MB), contents 71 PASS, no_counts 12, home_shape 33, band 16, home_bands, all exit 0; gates no-eyebrow,
+  subsection-icons, home-bands, bar-budget, width-discipline, css-minifies, palette-membership, token-contrast, no-cream PASS; scoped
+  typechecks 0. Photograph read (`shots/fr1-page-375`): the positioning line breaks "The reference atlas of / small-business earnings.";
+  Cities London (photograph), New York, Toronto, Mexico City (flags); the pharmacy mark; Reading names the learn page's three headings.
+- GitHub run 38649702805 on d72609bf: typecheck exit 0; chain 278 pass, 11 fail. Mine: counts-fresh (the registry missed that the contents
+  test now names src/lib/brand/industry_pictogram.ts), fixed in 893b8b9b and PASS locally. The other ten are the known ones (uk-city-sources;
+  page laws on country-GB and country-AF; fact-once and type-floor on spine pages; art-direction off the home; harness-links and provenance on
+  the two cell pages; the two timeouts) plus harness-laws' FIGURE FACE on every page, still drawn after the runner-fonts merge (the CI's,
+  not a home file). Every home gate passed.
