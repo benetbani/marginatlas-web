@@ -1,199 +1,148 @@
 /**
- * THE HOME AS AN INTRODUCTION (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, approved as
- * written on 2026-10-09; plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 10). His words that led to it: the home "is
- * vastly problematic and not serving as an elegant introduction of the concept but rather: here is what we have". In this order and
- * nothing else: the hero (his h1, still, "restaurant" first among its words, the picker with no heading, its three examples links, the
- * one line that says what the site is, after the form), the worked example (two halves, even), Pro only while the paywall is on, the
- * three proofs (a level of three, even), the band of the site's own counts (its own zone on the terracotta; plan 2026-10-10, Task 5),
- * the foot (the UK's cities, still, beside where to next, even); then the licence line and Report a mistake. Two wide zones, the
- * hero's and the band's, by name. Three seats: step 3 lit, the band a field, the foot none. No ledger counts (the band's four
- * evidence counts are tests/home/site_counts.test.ts's), no newsletter band,
- * no picker heading, no section the plan re-homed. One h2 a section and none skipped. Every figure carries its stamp, but for Pro's
- * three prices as the plan prints them (src/lib/monetization/plan.ts): an offer, no statistic. Read from src/components/spine/home/home-view.tsx,
- * src/app/page.tsx, src/components/NavigatorForm.tsx and src/components/StructuredData.tsx, and from the harness render
- * scratchpad/harness/pages/home-gb.html where it exists.
- * Run: npx tsx tests/trust/home_shape.test.ts
+ * THE HOME, QUIET EDITORIAL (plan docs/superpowers/plans/2026-10-13-home-quiet-editorial.md, Task 1A; spec
+ * docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, approved 2026-10-13). His words that led to it: the home
+ * "fails all the premises of what a homepage should include", and "fails on establishing brand, not elegant and slaps infographics". In
+ * this order and nothing else: the search zone (the positioning line beside the compass mark, above his h1 with its two moving words, and
+ * the picker that follows the h1's case), the contents (six numbered departments in one wide zone), Pro only while the paywall is on, the
+ * band (one solid statement on the brand terracotta), then the colophon. Three wide zones by name; three seats: the band a field, the
+ * contents and the colophon none; no worked example, proofs, counts band, city rows or where-to-next list; one h2 a department and none
+ * skipped; every figure stamped but Pro's prices; no reader text under 14px. The colophon prints no checked date (the plan's Q3, ruled B:
+ * src/lib/spine/checked.ts prints a date only on a page whose figures that data backs, and the home prints no register figure). Read from
+ * src/components/spine/home/home-view.tsx, src/components/spine/home/HomeAsk.tsx, src/app/page.tsx, src/components/NavigatorForm.tsx,
+ * src/components/StructuredData.tsx and src/components/spine/archetypes/Department.tsx, and from the harness render
+ * scratchpad/harness/pages/home-gb.html, which pages-fresh writes first in the chain: a missing render is a red, so the render's half never
+ * passes having read nothing.
+ * Run: node node_modules/tsx/dist/cli.mjs tests/trust/home_shape.test.ts
  */
-import * as React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
 import { existsSync, readFileSync } from "node:fs";
-import { CityRows } from "../../src/components/spine/archetypes/CityRows";
-import { buildCityCards } from "../../src/lib/spine/city_cards";
+import { JSDOM } from "jsdom";
 import { HERO_BUSINESSES, HERO_CITIES } from "../../src/lib/hero-words";
-import { homeTryLinks, homeTryCityLabel } from "../../src/lib/home/destination";
 import { COPY } from "../../src/lib/spine/copy";
 import { priceLine, yearlyHeadline } from "../../src/lib/monetization/plan";
 import { OGL_LINE, UK_SOURCES_FOOT } from "../../src/lib/spine/uk_sources";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
+import { readTypeFloor } from "../../scripts/lib/type_floor.mjs";
+import { red, redSummary } from "../../scripts/lib/red";
 
-let failed = 0;
-let deferred = 0;
-const check = (name: string, ok: boolean, remedy?: string) => { if (!ok) failed++; console.log(`${ok ? "PASS" : "FAIL"}  ${name}`); if (!ok && remedy) console.log(`      Remedy: ${remedy}`); };
+const RULE = "home-shape";
 const VIEW = "src/components/spine/home/home-view.tsx";
-const view = readFileSync(VIEW, "utf8");
-/* JSX COMMENTS GO FIRST, WHOLE (fix round B): one that runs over two lines leaves its `{` and its `}` for stripCommentLines to hand back,
-   the closing one at column 0, and the slices below that end at the first line starting with `}` would stop there, early. Tempered,
-   so a match never runs past the end of its own comment: a plain lazy match could start at a brace that opens a comment in code and
-   end at a later JSX comment, deleting the code between (the re-review of fix round B). */
-const code = stripCommentLines(view.replace(/\{\s*\/\*(?:(?!\*\/)[\s\S])*\*\/\s*\}/g, "").split("\n")).join("\n");
-const live = readFileSync("src/app/page.tsx", "utf8");
-const picker = readFileSync("src/components/NavigatorForm.tsx", "utf8");
-const sd = readFileSync("src/components/StructuredData.tsx", "utf8");
+const ASK = "src/components/spine/home/HomeAsk.tsx";
+const RENDER = "scratchpad/harness/pages/home-gb.html";
+const REMEDY = `keep ${VIEW} to plan 2026-10-13 home-quiet-editorial: zones search (the positioning line, then HomeAsk), contents (HomeContents), (pro behind isPaywallOn), band (HomeBand on the terracotta tone); seats contents none, band FIELD, colophon none; then HomeColophon`;
+let failed = 0;
+const check = (label: string, ok: boolean, file = VIEW, remedy = REMEDY) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file, detail: label, remedy }); };
+const read = (f: string) => (existsSync(f) ? readFileSync(f, "utf8") : "");
+/** A COPY.home string by its path, or "" where the key has not landed yet (each lands with its task; a missing one is a red, never a crash). */
+const copyAt = (path: string): string => { let v: unknown = COPY.home; for (const k of path.split(".")) v = v && typeof v === "object" ? (v as Record<string, unknown>)[k] : undefined; return typeof v === "string" ? v : ""; };
 
-/* THE ZONE ORDER, as the body lists its zones (each `key:` inside the `zones` array of SpineHomeBody), and each zone's line. */
+/* JSX COMMENTS GO FIRST, WHOLE (kept from the test this replaces): one that runs over two lines leaves its braces to stripCommentLines, and a
+   slice ending at the first line that starts with `}` would stop early; tempered, so a match never runs past its own comment. */
+const view = read(VIEW);
+const code = stripCommentLines(view.replace(/\{\s*\/\*(?:(?!\*\/)[\s\S])*\*\/\s*\}/g, "").split("\n")).join("\n");
+const askCode = stripCommentLines(read(ASK).replace(/\{\s*\/\*(?:(?!\*\/)[\s\S])*\*\/\s*\}/g, "").split("\n")).join("\n");
+const live = read("src/app/page.tsx");
+const picker = read("src/components/NavigatorForm.tsx");
+const sd = read("src/components/StructuredData.tsx");
+
+/* THE ZONE ORDER, as the body lists its zones (each `key:` inside SpineHomeBody's `zones` array), and each zone's line. */
 const body = /const zones[\s\S]*?\n  \];/.exec(code)?.[0] ?? "";
 const keys = [...body.matchAll(/\bkey: "([a-z-]+)"/g)].map((m) => m[1]);
-check(`the zones run the hero, the worked example, the proofs, the band, then the foot (read: ${keys.join(", ") || "none"})`, JSON.stringify(keys.filter((k) => k !== "pro")) === JSON.stringify(["search", "example", "proofs", "record", "foot"]), `keep SpineHomeBody's zones (${VIEW}) search, example, (pro), proofs, record, foot`);
+check(`the zones run the search, the contents, then the band (read: ${keys.join(", ") || "none"})`, JSON.stringify(keys.filter((k) => k !== "pro")) === JSON.stringify(["search", "contents", "band"]));
 const pro = keys.indexOf("pro");
-check("Pro, where it is listed, stands after the example and before the proofs, behind the paywall's switch", pro === -1 || (pro > keys.indexOf("example") && pro < keys.indexOf("proofs") && /isPaywallOn\(\) \? \[\{ key: "pro"/.test(body)));
+check("Pro, where it is listed, stands after the contents and before the band, behind the paywall's switch", pro === -1 || (pro > keys.indexOf("contents") && pro < keys.indexOf("band") && /isPaywallOn\(\) \? \[\{ key: "pro"/.test(body)));
 const zoneLine = (key: string) => new RegExp(`\\{ key: "${key}", split: "([^"]+)"[^\\n]*`).exec(body);
 const split = (key: string) => zoneLine(key)?.[1];
-const even = (key: string) => /even: (true|!!cities)/.test(zoneLine(key)?.[0] ?? "");
-check(`the splits: the hero wide, the example 1-1 even, the proofs 1-1-1 even, the band wide, the foot 1-1 even (read: ${["search", "example", "proofs", "record", "foot"].map((k) => `${k} ${split(k)}${even(k) ? " even" : ""}`).join(", ")})`, split("search") === "wide" && split("example") === "1-1" && even("example") && split("proofs") === "1-1-1" && even("proofs") && split("record") === "wide" && !even("record") && split("foot") === "1-1" && even("foot") && (body.match(/split: "wide"/g) ?? []).length === 2, "the hero and the band are the only wide zones (the spec's section 5: the band's four siblings cannot be halved); the example and the foot are halves, the proofs thirds, each even");
-check("the proofs are cards: their zone asks for the cards' gutter (cards: true, 24 between them from 768 and 32 from 1024), the example and the foot do not", /cards: true/.test(zoneLine("proofs")?.[0] ?? "") && !/cards: true/.test((zoneLine("example")?.[0] ?? "") + (zoneLine("foot")?.[0] ?? "")) && /<Zone key=\{z\.key\}[^>]*cards=\{z\.cards\}/.test(code), `in ${VIEW} give the proofs' zone cards: true and pass cards={z.cards} to its <Zone>`);
-check("the example is two halves, the place then whether it pays", /<HomePlace key="place"[^\n]*<HomePays key="pays"/.test(zoneLine("example")?.[0] ?? ""));
-check("the proofs are three doors, the joins, the archive, then the tax", /<ProofJoins key="joins"[^\n]*<ProofArchive key="archive"[^\n]*<ProofTax key="tax"/.test(zoneLine("proofs")?.[0] ?? ""));
-check("the foot is the UK's cities, still, then where to next", /<HomeCities key="cities"[^\n]*<WhereNext key="next"/.test(zoneLine("foot")?.[0] ?? "") && /<CityRows\b/.test(code));
+check(`three full widths and no other split but Pro's: the search, the contents and the band (read: ${["search", "contents", "band"].map((k) => `${k} ${split(k) ?? "none"}`).join(", ")})`, split("search") === "wide" && split("contents") === "wide" && split("band") === "wide" && (body.match(/split: "wide"/g) ?? []).length === 3 && (body.match(/split: "/g) ?? []).length === 4);
+check("the contents zone draws HomeContents from buildContents, under the zone name the copy gives it", /\{ key: "contents", split: "wide", label: COPY\.home\.contents\.label, body: \[<HomeContents key="contents" contents=\{contents\} \/>\] \}/.test(body) && /const contents = buildContents\(\);/.test(code), VIEW, `list it as { key: "contents", split: "wide", label: COPY.home.contents.label, body: [<HomeContents key="contents" contents={contents} />] } with const contents = buildContents();`);
+check("the band is HomeBand, its own zone on the terracotta tone the alternation skips", /\{ key: "band", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY\.home\.band\.label, body: \[<HomeBand key="band" \/>\] \}/.test(body) && /const toned = zones\.filter\(\(z\) => z\.tone !== "terra"\);/.test(code) && /zoneTone\(toned\.indexOf\(z\)\)/.test(code));
 
-/* THE BAND (plan 2026-10-10, the home reformed to ship, Task 5): HomeRecord from its builder, listed only when all four counts build, its
-   own zone on the terracotta, and the tones given by the zones that are not the band, so the foot keeps its tone. */
-check("the band is HomeRecord from buildSiteCounts, listed only when it builds, on the terracotta tone the alternation skips", /\.\.\.\(record \? \[\{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY\.home\.record\.label, body: \[<HomeRecord key="record" record=\{record\} \/>\] \}\] : \[\]\)/.test(body) && /const record = buildSiteCounts\(\);/.test(code) && /const toned = zones\.filter\(\(z\) => z\.tone !== "terra"\);/.test(code) && /zoneTone\(toned\.indexOf\(z\)\)/.test(code), `list the band in ${VIEW} as ...(record ? [{ key: "record", split: "wide" as ZoneSplit, tone: "terra" as const, label: COPY.home.record.label, body: [<HomeRecord key="record" record={record} />] }] : []) and give the tones by the zones that are not the band`);
-
-/* NOTHING THE PLAN RE-HOMED OR RETIRED, AND NO LEDGER COUNTS OR NEWSLETTER (the band's four evidence counts are tests/home/site_counts.test.ts's). */
-const RETIRED = ["HomeDuel", "HomeKitchens", "HomeFirmsLast", "HomeNewCompanies", "HomeUsRestaurants", "HomeHowMade", "Notebook", "buildNotebook", "AnswerDoor", "TaxAnswer", "TradesAnswer", "YearsAnswer", "buildHomeAnswers", "buildDuel", "buildKitchens", "buildFirmsLast", "buildNewCompanies", "buildUsRestaurants", "buildHowMade", "HomeNewsletter", "AtlasHolds", "buildAtlasHolds", "getAtlasLedger"];
-const still = RETIRED.filter((n) => new RegExp(`\\b${n}\\b`).test(code));
-check(`no section the plan re-homed or retired is drawn (${still.join(", ") || "none"})`, still.length === 0, "the duel and where new firms last stand on /gb, new companies and the US restaurants on /new-businesses, the join on the first proof, the kitchens list and the notebook off the home");
-check("no ledger counts zone and no newsletter band", !/atlas_ledger|What the atlas holds|COPY\.home\.atlas\b/.test(code));
-
-/* THE SEATS (plan 2026-10-10, the home reformed to ship, Task 5: the spec's decision 7, critique section 4): step 3 lit, the band lit by
-   its ground (FIELD), the foot none; the tax proof quiet. */
+/* THE SEATS (the spec's section 4: the band the one loud seat; the question's moving words his h1's red, never a seat). */
 const seats = /export const LOUD_SEATS = \[[\s\S]*?\] as const/.exec(code)?.[0] ?? "";
-check("three seats: step 3 lit, the band a field, the foot none, the tax proof quiet", (seats.match(/state: "LIT"/g) ?? []).length === 1 && /seat: 1, card: "pays", id: "pays"[^\n]*state: "LIT"/.test(seats) && /seat: 2, card: "record", id: "record"[^\n]*state: "FIELD"/.test(seats) && /seat: 3, card: "foot"[^\n]*state: "NO HONEST CANDIDATE"/.test(seats) && !/id: "tax"/.test(seats), `declare LOUD_SEATS in ${VIEW}: seat 1 pays LIT, seat 2 record FIELD, seat 3 foot NO HONEST CANDIDATE`);
+check("three seats: the contents none, the band a field, the colophon none; no seat lit by a figure", !/state: "LIT"/.test(seats) && /seat: 1, card: "contents"[^\n]*state: "NO HONEST CANDIDATE"/.test(seats) && /seat: 2, card: "band", id: "band"[^\n]*state: "FIELD"/.test(seats) && /seat: 3, card: "colophon"[^\n]*state: "NO HONEST CANDIDATE"/.test(seats));
 
-/* THE HERO (the spec's sections 3 and 5; plan 2026-10-10, home reform, Task 2: the h1 on set lines with both words on one timer, the
-   picker's first paint from the server's seed, the spacing and the definition of the reform's spec, decision 3 and critique P1.13). */
-check("the rebuilt home renders the picker without its heading, its first paint from the server's seed", /<NavigatorForm showHeading=\{false\} seed=\{homePickerSeed\(\)\} \/>/.test(code), `in ${VIEW} HomeSearch renders <NavigatorForm showHeading={false} seed={homePickerSeed()} />`);
-/* The flag-off home passes the same seed (plan 2026-10-10, Task 7, amendment 8b): without it the form's first paint was three blank fields
-   and a no-script submit sent empty fields to /api/go. It keeps its heading. */
-check("the live home renders the picker with its heading, its first paint from the server's seed", /^import \{ homePickerSeed \} from "@\/lib\/home\/picker";/m.test(live) && /<NavigatorForm seed=\{homePickerSeed\(\)\} \/>/.test(live) && !/<NavigatorForm[^>]*showHeading=\{false\}/.test(live), "in src/app/page.tsx import { homePickerSeed } from \"@/lib/home/picker\" and render <NavigatorForm seed={homePickerSeed()} /> in the flag-off branch, as the rebuilt home does");
-check("the picker's heading is drawn by default and only when asked", /showHeading = true/.test(picker) && /\{showHeading \? \(/.test(picker) && /Pick a country, a city, and a business\./.test(picker));
+/* THE SEARCH (the spec's section 2, items 1 and 2). */
 const search = /function HomeSearch[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
-check("the definition stands once, straight after the form, at the hero's foot", search.indexOf("<NavigatorForm") > -1 && search.indexOf("data-definition") > search.indexOf("<NavigatorForm") && (code.match(/\.definition\b/g) ?? []).length === 1);
-check(`the h1's first words ask the example's question ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}")`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London");
-check("the h1 holds the two words on one timer (HeroWords) with the question's own words, and no bare \"?\"", /<h1 [^>]*>\s*<HeroWords lead=\{C\.h1\.lead\} middle=\{C\.h1\.middle\} businesses=\{HERO_BUSINESSES\} cities=\{HERO_CITIES\} \/>\s*<\/h1>/.test(search) && !/<RotatingWord/.test(search), `in ${VIEW} HomeSearch's h1 holds only <HeroWords lead={C.h1.lead} middle={C.h1.middle} businesses={HERO_BUSINESSES} cities={HERO_CITIES} />`);
-/* NO WORD LEFT ALONE ON THE HERO'S LINE TOO (critique pass 4, fix round F2, item P2.2): the definition broke "... and its owner / keeps." at 1024, the
-   one line a laptop's width reads first, because it alone of the home's lines lacked the browser's balanced last line; it takes text-pretty as the
-   example's lines and the band do. BLIND SPOT: this reads the class; the last line's word count at seven widths is the browser's (f2_p22_probe.mjs). */
-check("32px from the h1 to the picker from 1024 and 16 on a phone (12px more room under the definition at 375: item P2.9); the definition at the lead rung in ink2 with a balanced last line (text-pretty), at most 60ch and never past half the page, 24px under the picker from 1024 and 16 below", /<div className="relative z-30 mt-4 lg:mt-8 w-full">/.test(search) && /<p data-definition="" className="mt-4 lg:mt-6 max-w-\[min\(60ch,var\(--measure-half\)\)\] text-pretty text-\[length:var\(--t-lead\)\] leading-snug text-\[var\(--c-ink2\)\]">/.test(search), `in ${VIEW} HomeSearch: the picker's wrapper "relative z-30 mt-4 lg:mt-8 w-full" with no id; the definition "mt-4 lg:mt-6 max-w-[min(60ch,var(--measure-half))] text-pretty text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]"`);
-/* NO ANCHOR NOBODY READS (fix round F2, item M12; the final review): the picker's wrapper carried id="home-search-anchor" for the bar's Search, which kept itself
-   hidden while the picker was on screen and read the id; the bar shows Search from the first paint now (critique pass 3, item P1.2), so nothing has read the id since, and
-   the pin that kept it was the only thing holding it. It is gone from the rebuilt home and from the flag-off home. BLIND SPOT: this reads the two files for the id's name;
-   that the bar reads no such anchor is the masthead test's (HeaderSearch keeps no observer and no read of the home's anchor). */
-check("the picker's wrapper carries no id nobody reads, on the rebuilt home or the flag-off one: no home-search-anchor in either file", !/home-search-anchor/.test(view) && !/home-search-anchor/.test(live), "drop id=\"home-search-anchor\" from the picker's wrapper in src/components/spine/home/home-view.tsx and in src/app/page.tsx, with the comments that explain it: nothing reads it since the bar shows Search from the first paint");
-/* Each function's own text, to the next export: the WebSite comes before the Organization, so a lazy scan from the one would run on into the other. */
+const posAt = search.indexOf("<p data-positioning");
+check("the positioning line stands first in the search, the compass mark in the brand terracotta beside its words, at the head rung, before the question", posAt > -1 && posAt < search.indexOf("<HomeAsk") && /<p data-positioning="" className="mb-4 flex items-center gap-3 text-\[length:var\(--t-head\)\] font-semibold leading-7 text-\[var\(--c-ink\)\] lg:mb-6">\s*<LogoMark size=\{24\} className="shrink-0 text-\[var\(--terra-full\)\]" \/>\s*<span>\{C\.positioning\}<\/span>\s*<\/p>/.test(search));
+check("the question and its picker are HomeAsk, handed the h1's words and the cases the picker follows; no h1, picker or definition of the view's own", /<HomeAsk lead=\{C\.h1\.lead\} middle=\{C\.h1\.middle\} businesses=\{HERO_BUSINESSES\} cities=\{HERO_CITIES\} cases=\{homePickerCases\(\)\} \/>/.test(search) && !/<h1\b|<NavigatorForm|data-definition|\.definition\b/.test(search));
+check("HomeAsk holds the h1 on its words' one timer, told the index, and under it the picker that follows that index, with no heading", /<h1 className="font-display text-\[1\.75rem\] sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-\[var\(--c-ink\)\] leading-\[1\.08\]">\s*<HeroWords lead=\{lead\} middle=\{middle\} businesses=\{businesses\} cities=\{cities\} onIndex=\{setAt\} \/>\s*<\/h1>/.test(askCode) && /<div className="relative z-30 mt-4 lg:mt-8 w-full">\s*<NavigatorForm showHeading=\{false\} cases=\{cases\} caseIndex=\{at\} \/>\s*<\/div>/.test(askCode), ASK, "write src/components/spine/home/HomeAsk.tsx as plan 2026-10-13 Task 3 gives it");
+check("the live home renders the picker with its heading, its first paint from the server's seed", /^import \{ homePickerSeed \} from "@\/lib\/home\/picker";/m.test(live) && /<NavigatorForm seed=\{homePickerSeed\(\)\} \/>/.test(live) && !/<NavigatorForm[^>]*showHeading=\{false\}/.test(live), "src/app/page.tsx");
+check("the picker's heading is drawn by default and only when asked", /showHeading = true/.test(picker) && /\{showHeading \? \(/.test(picker) && /Pick a country, a city, and a business\./.test(picker), "src/components/NavigatorForm.tsx");
+check(`the h1's first words ask the case the picker opens on ("a ${HERO_BUSINESSES[0]}" in "${HERO_CITIES[0]}")`, HERO_BUSINESSES[0] === "restaurant" && HERO_CITIES[0] === "London", "src/lib/hero-words.ts");
 const sdFn = (name: string) => { const at = sd.indexOf(`export function ${name}(`); if (at < 0) return ""; const next = sd.indexOf("\nexport function ", at + 1); return sd.slice(at, next < 0 ? undefined : next); };
-check("the WebSite's and the Organization's descriptions in the structured data are both the definition, so the home states it once", /description:\s*COPY\.home\.definition/.test(sdFn("WebSite")) && /description:\s*COPY\.home\.definition/.test(sdFn("Organization")), "in src/components/StructuredData.tsx set WebSite()'s description to COPY.home.definition, as Organization()'s is");
-check("under the bands: the licence line, then Report a mistake with the London restaurant page's checked date", /<SourcesFoot iso2="GB" \/>\s*<ReportFoot path="\/" checked=\{example \? checkedDateForTrade\("GB", "london", example\.trade\) : null\} \/>/.test(code));
+check("the WebSite's and the Organization's descriptions in the structured data are the site's one definition", /description:\s*COPY\.home\.definition/.test(sdFn("WebSite")) && /description:\s*COPY\.home\.definition/.test(sdFn("Organization")), "src/components/StructuredData.tsx");
 
-/* THE UK'S CITIES HELD STILL (his refusal of carousels and pagination, 2026-09-22), in the foot's half: CityRows since plan 2026-10-10
-   (the home reformed to ship, Task 6), a server component, every city once as a row and one door to every UK city under 768. */
-const cities = /function HomeCities[\s\S]*?\n\}/.exec(code)?.[0] ?? "";
-check("the cities draw CityRows, a Rail at level 2, no pager labels", /<CityRows\b/.test(cities) && /<Rail [^>]*level=\{2\}/.test(cities) && !/prevLabel|nextLabel|CardPager|[Cc]arousel/.test(cities));
-const gb = buildCityCards("GB");
-const rows = gb ? renderToStaticMarkup(React.createElement(CityRows, { cards: gb.cards, basis: "basis", allHref: "/gb#cities", allLabel: COPY.home.citiesAll, unit: COPY.home.citiesUnit })) : "";
-check("CityRows draws every city once, as a row (one door a city), and one door to every UK city, no tall card and no button", !!gb && (rows.match(/<a [^>]*data-card=/g) ?? []).length === gb.cards.length && (rows.match(/<a /g) ?? []).length === gb.cards.length + 1 && !/data-still=/.test(rows) && !/<button/.test(rows) && /data-form="rows"/.test(rows));
+/* THE COLOPHON (the spec's section 2, item 5; the plan's Q3, ruled B): one block in place of the two foot lines, and no checked date. */
+check("the colophon closes the page, with no checked date, and the two foot lines are gone", /<HomeColophon \/>/.test(code) && !/<SourcesFoot\b|<ReportFoot\b/.test(code));
 
-/* ONE TRACKING FOR THE HOME'S H2 RUNG (critique pass 2, fix round C2, item P2.2): the section titles (Rail, at 20 on a zone) take -0.01em
-   from globals.css, "Where to next" took none and "Read from the record" took tracking-tight (-0.025em), so three 20px headings were set
-   three ways. The two hand-set h2s now say -0.01em in their own class, the value the stylesheet gives every Rail title. */
-const railTracking = /\[data-zone\] \.spine-card:not\(\[data-keep-card\]\) \[data-rail-title\] \{[^}]*letter-spacing:\s*(-?[\d.]+em)/.exec(readFileSync("src/app/globals.css", "utf8"))?.[1] ?? "none";
-const h2Class = (f: string) => /<h2[^>]*className="([^"]*)"/.exec(readFileSync(f, "utf8"))?.[1] ?? "";
-const nextH2 = h2Class("src/components/spine/WhereNext.tsx"), recordH2 = h2Class("src/components/spine/home/HomeRecord.tsx");
-check(`the home's h2 rung is set at one tracking, ${railTracking}: Where to next and Read from the record both take tracking-[${railTracking}] and no tracking-tight`, railTracking === "-0.01em" && nextH2.includes(`tracking-[${railTracking}]`) && recordH2.includes(`tracking-[${railTracking}]`) && !/tracking-tight/.test(nextH2 + recordH2), "WhereNext.tsx's h2 and HomeRecord.tsx's h2 take tracking-[-0.01em], the letter-spacing globals.css gives every Rail title on a zone");
+/* NOTHING THE REFORM RETIRED (the spec's section 2, "Removed", and the plans before it). */
+const RETIRED = ["HomePlace", "HomePays", "HomeExample", "ProofJoins", "ProofArchive", "ProofTax", "HomeProofs", "HomeRecord", "buildSiteCounts", "buildWorkedExample", "buildProofs", "CityRows", "CityRowsHead", "HomeCities", "WhereNext", "nextDoors", "HomeDuel", "HomeKitchens", "HomeFirmsLast", "HomeNewCompanies", "HomeUsRestaurants", "HomeHowMade", "Notebook", "buildNotebook", "AnswerDoor", "TaxAnswer", "TradesAnswer", "YearsAnswer", "buildHomeAnswers", "HomeNewsletter", "AtlasHolds", "buildAtlasHolds", "getAtlasLedger"];
+const still = RETIRED.filter((n) => new RegExp(`\\b${n}\\b`).test(code));
+check(`no section the reform retired is drawn (${still.join(", ") || "none"})`, still.length === 0);
 
-/* CURLY APOSTROPHES IN THE HOME'S WORDS (critique pass 2, fix round C2, item P2.3): "The UK's cities", "a sole trader's", "A typical
-   customer's pay" and "the register's ten sales bands" printed straight quotes while About the figures prints curly ones, so the two
-   pages set one mark two ways. No string value of COPY.home or of the city rows' basis line holds a straight apostrophe.
-   THE FREE DOORS TOO (fix round F1, group G3, the final review's M8): /gb's locked page prints the same name over its free doors
-   (COPY.freeDoors.cities), and it printed the straight mark there while the home printed the curly one, so the name is walked here as well
-   and held to the home's own string. THE LOCKED CARDS' LINES TOO (fix round F2, items P2.2 and M9; the F1 report's concern 3 and the final
-   review's M9): COPY.locked.lines.cities, "The UK's cities, side by side.", kept the straight mark after the free doors' name lost it, and
-   so did its neighbours ("a first hire's", "your shop's", "The city's", "this trade's"); both draw on /gb on launch day, so one page printed
-   one name with two apostrophes. The whole of COPY.locked is walked now, and the cities line begins with the free doors' own string, so the
-   two cannot part. BLIND SPOT: only these four objects are walked; a line written outside them (a card's own words in a view) is not. */
-const straightApostrophes: string[] = [];
-const walkStrings = (v: unknown, path: string): void => { if (typeof v === "string") { if (v.includes("'")) straightApostrophes.push(`${path}: ${v.slice(0, 40)}`); } else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) walkStrings(x, `${path}.${k}`); };
+/* CURLY APOSTROPHES (kept from the test this replaces, critique pass 2, P2.3; fix rounds F1 and F2): no string of COPY.home, the city rows'
+   basis, the free doors or the locked cards prints a straight apostrophe, and the locked cities line begins with the free doors' own name. */
+const straight: string[] = [];
+const walkStrings = (v: unknown, path: string): void => { if (typeof v === "string") { if (v.includes("'")) straight.push(`${path}: ${v.slice(0, 40)}`); } else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) walkStrings(x, `${path}.${k}`); };
 walkStrings(COPY.home, "COPY.home");
 walkStrings(COPY.cityCards.plain, "COPY.cityCards.plain");
 walkStrings(COPY.freeDoors, "COPY.freeDoors");
 walkStrings(COPY.locked, "COPY.locked");
-check(`the home's words, the free doors' and the locked cards' print curly apostrophes, never straight (${straightApostrophes.length ? straightApostrophes.join("; ") : "none straight"})`, straightApostrophes.length === 0, "write the typographic apostrophe (U+2019) in every string of COPY.home, COPY.cityCards.plain.basis, COPY.freeDoors and COPY.locked (the lock cards' lines), as About the figures does");
-check(`the free doors' title for the UK's cities is the home's own name for them, character for character ("${COPY.freeDoors.cities}")`, COPY.freeDoors.cities === COPY.home.citiesLabel, "COPY.freeDoors.cities (src/lib/spine/copy.ts) is COPY.home.citiesLabel's string: one name, one apostrophe");
-check(`the locked card's line for the UK's cities begins with that same name, so it prints the curly apostrophe too ("${COPY.locked.lines.cities}")`, COPY.locked.lines.cities.startsWith(COPY.freeDoors.cities) && !COPY.locked.lines.cities.includes("'"), "COPY.locked.lines.cities (src/lib/spine/copy.ts) begins with COPY.freeDoors.cities's string, the typographic apostrophe (U+2019) in it, and holds no straight one");
+check(`the home's, the free doors' and the locked cards' words print curly apostrophes (${straight.length ? straight.join("; ") : "none straight"})`, straight.length === 0, "src/lib/spine/copy.ts", "write the typographic apostrophe (U+2019) in every string of COPY.home, COPY.cityCards.plain, COPY.freeDoors and COPY.locked");
+check(`the locked card's line for the UK's cities begins with the free doors' name for them ("${COPY.locked.lines.cities}")`, COPY.locked.lines.cities.startsWith(COPY.freeDoors.cities) && !COPY.locked.lines.cities.includes("'"), "src/lib/spine/copy.ts", "COPY.locked.lines.cities begins with COPY.freeDoors.cities's string, the typographic apostrophe in it");
 
-/* THE RENDER, where the harness wrote it (pages-fresh renders it first in the chain). */
-const render = existsSync("scratchpad/harness/pages/home-gb.html") ? readFileSync("scratchpad/harness/pages/home-gb.html", "utf8") : "";
-if (render) {
-  const labels = [...render.matchAll(/<section data-zone="[^"]*"(?: data-tone="[^"]*")? data-zone-label="([^"]*)"/g)].map((m) => m[1].replace(/&#x27;/g, "'"));
-  check(`the render's zones run in that order (${labels.join(" | ")})`, JSON.stringify(labels.filter((l) => l !== COPY.home.pro.kicker)) === JSON.stringify([COPY.home.searchLabel, COPY.home.example.label, COPY.home.proofs.label, COPY.home.record.label, COPY.home.citiesLabel]));
-  const zoneRange = (label: string): [number, number] => { const at = render.indexOf(`data-zone-label="${label.replace(/'/g, "&#x27;")}"`); if (at < 0) return [0, 0]; const next = render.indexOf("<section data-zone", at + 1); return [render.lastIndexOf("<section", at), next < 0 ? render.length : next]; };
-  const zoneOf = (label: string) => render.slice(...zoneRange(label));
-  const ex = zoneOf(COPY.home.example.label), pr = zoneOf(COPY.home.proofs.label), ft = zoneOf(COPY.home.citiesLabel);
-  check("the example: two halves, even, the place then whether it pays", /^<section data-zone="1-1"/.test(ex) && /data-zone-even/.test(ex) && ex.indexOf('id="place"') > 0 && ex.indexOf('id="pays"') > ex.indexOf('id="place"'));
-  check("the proofs: a level of three, even, the joins, the archive, the tax", /^<section data-zone="1-1-1"/.test(pr) && /data-zone-even/.test(pr) && pr.indexOf('id="joins"') > 0 && pr.indexOf('id="archive"') > pr.indexOf('id="joins"') && pr.indexOf('id="tax"') > pr.indexOf('id="archive"'));
-  check("the foot: the UK's cities, then where to next, even", /^<section data-zone="1-1"/.test(ft) && /data-zone-even/.test(ft) && ft.indexOf('id="cities"') > 0 && ft.indexOf("data-next=") > ft.indexOf('id="cities"'));
-  /* TWO FULL WIDTHS, BY NAME (plan 2026-10-10, Task 5; the spec's section 5): the hero's zone, then the band's on the terracotta. */
-  const wides = [...render.matchAll(/<section data-zone="wide"[^>]*>/g)];
-  const wideLabel = (m: RegExpMatchArray) => (/data-zone-label="([^"]*)"/.exec(m[0])?.[1] ?? "").replace(/&#x27;/g, "'");
-  const afterHero = wides[0] ? render.slice((wides[0].index ?? 0) + wides[0][0].length, (wides[0].index ?? 0) + wides[0][0].length + 240) : "";
-  check(`the wide zones are the hero's and the band's, by name (${wides.map(wideLabel).join(" | ") || "none"})`, wides.length === 2 && wideLabel(wides[0]) === COPY.home.searchLabel && afterHero.includes("data-hero") && wideLabel(wides[1]) === COPY.home.record.label && /data-tone="terra"/.test(wides[1][0]) && /id="record"/.test(wides[1][0]), "the hero and the band are the home's two full widths (the spec's section 5); every other level is halves or thirds");
-  check(`the terracotta tone is the band's alone (${(render.match(/data-tone="terra"/g) ?? []).length} zones)`, (render.match(/data-tone="terra"/g) ?? []).length === 1, "one terracotta zone on the home, the band (ZONE TONES accepts it once, on home-gb)");
-  const form = render.indexOf("<form");
-  check("the definition stands once in the render, after the form", form > -1 && render.indexOf(COPY.home.definition) > form && render.split(COPY.home.definition).length === 2);
-  const links = homeTryLinks();
-  check(`the picker's three examples are links (${links.map((l) => l.href).join(", ")})`, links.length === 3 && links.every((l) => render.includes(`href="${l.href}"`)));
-  /* THE LINE READS AS WORDS (fix round B: a reader of the markup once got "Tryrestaurants"), and since plan 2026-10-10 it offers three
-     other trades than the case: "Or try {a}, {b} or {c} in {city}." Read the line's text, the tags taken out. */
-  const tryAt = render.indexOf("<p data-try");
-  const tryRead = tryAt < 0 ? "" : render.slice(tryAt, render.indexOf("</p>", tryAt)).replace(/<[^>]*>/g, "");
-  const tryWant = `Or try ${links.map((l, i) => (i === 0 ? "" : i === links.length - 1 ? " or " : ", ") + l.word).join("")} in ${homeTryCityLabel()}.`;
-  check(`the picker's line reads as words ("${tryRead}", want "${tryWant}")`, tryRead === tryWant, `in src/components/NavigatorForm.tsx keep the line <p data-try=""> "Or try {a}, {b} or {c} in {city}." with its spaces as text`);
-  /* THE HERO AS THE SERVER DRAWS IT (plan 2026-10-10, home reform, Task 2): the h1 on set lines, each word ending its line, the "?"
-     against the city; the picker's case and its no-script fields on the first paint; sentence-case labels and the ink action. Each of
-     the two words' wrappers carries data-founder-accent (his h1, the red it has always printed: the accent walk does not count it). */
+/* A DEPARTMENT'S TITLE IS SET AS EVERY SECTION TITLE ON A ZONE (the critique's P2.2 of plan 2026-10-10: one tracking for the h2 rung). */
+const railTracking = /\[data-zone\] \.spine-card:not\(\[data-keep-card\]\) \[data-rail-title\] \{[^}]*letter-spacing:\s*(-?[\d.]+em)/.exec(read("src/app/globals.css"))?.[1] ?? "none";
+const deptH2 = /<h2[^>]*className="([^"]*)"/.exec(read("src/components/spine/archetypes/Department.tsx"))?.[1] ?? "";
+check(`a department's title takes the zone title's tracking, ${railTracking}, and no tracking-tight (read: ${deptH2 || "no Department.tsx"})`, railTracking === "-0.01em" && deptH2.includes(`tracking-[${railTracking}]`) && !/tracking-tight/.test(deptH2), "src/components/spine/archetypes/Department.tsx", "give Department's h2 tracking-[-0.01em], the letter-spacing globals.css gives every Rail title on a zone");
+
+/* THE RENDER, where pages-fresh wrote it. */
+const render = read(RENDER);
+if (!render) check("the home's render is there to read", false, RENDER, "run the pages-fresh gate (GATES --only=pages-fresh), which renders home gb first in the chain");
+else {
+  const doc = new JSDOM(render.replace(/<style[^>]*>[\s\S]*?<\/style>/g, "").replace(/<script[\s\S]*?<\/script>/g, "")).window.document;
+  const main = doc.querySelector("main") ?? doc.body;
+  const zones = [...main.querySelectorAll("[data-zone]")];
+  const labels = zones.map((z) => z.getAttribute("data-zone-label") ?? "");
+  check(`the render's zones run the search, the contents, then the band (${labels.join(" | ")})`, copyAt("contents.label") !== "" && copyAt("band.label") !== "" && JSON.stringify(labels.filter((l) => l !== COPY.home.pro.kicker)) === JSON.stringify([COPY.home.searchLabel, copyAt("contents.label"), copyAt("band.label")]), RENDER);
+  const wides = zones.filter((z) => z.getAttribute("data-zone") === "wide");
+  const band = doc.getElementById("band");
+  check(`three full widths by name, the search, the contents and the band (${wides.map((z) => z.getAttribute("data-zone-label")).join(" | ") || "none"}), the band the one terracotta zone`, wides.length === 3 && !!wides[0].querySelector("[data-hero]") && !!wides[1].querySelector("[data-contents]") && wides[2] === band && band?.getAttribute("data-tone") === "terra" && main.querySelectorAll('[data-tone="terra"]').length === 1, RENDER);
+  const searchEl = doc.getElementById("search");
+  const pos = searchEl?.querySelector("[data-positioning]") ?? null;
+  const h1El = searchEl?.querySelector("h1") ?? null;
+  check(`the positioning line stands in the search before the question, in its own words, beside the mark, never in capitals ("${pos?.textContent?.trim() ?? ""}")`, !!pos && !!h1El && (pos.compareDocumentPosition(h1El) & 4) !== 0 && copyAt("positioning") !== "" && pos.textContent?.trim() === copyAt("positioning") && !!pos.querySelector("svg") && !/uppercase|tracking-/.test(pos.getAttribute("class") ?? ""), RENDER);
+  /* THE HERO AS THE SERVER DRAWS IT (kept from the test this replaces): the h1 on set lines, the picker's case and its no-script fields. */
   const h1At = render.indexOf("<h1");
   const h1 = h1At < 0 ? "" : render.slice(h1At, render.indexOf("</h1>", h1At) + 5);
   const h1Text = h1.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
-  check(`the h1 reads as one question ("${h1Text}")`, h1Text === `${COPY.home.h1.lead} ${HERO_BUSINESSES[0]} ${COPY.home.h1.middle} ${HERO_CITIES[0]}?`);
-  check("the h1 stands on set lines: a phone's break after the lead, a break after the business, each word ending its line", /^<h1 [^>]*>How much does a <br class="sm:hidden"\/><span class="text-atlas-700" data-founder-accent="">[\s\S]*?data-w="restaurant"[\s\S]*?<\/span><\/span><\/span> <br\/>make in <span class="text-atlas-700" data-founder-accent="">[\s\S]*?data-w="Shanghai\?"/.test(h1), "render HeroWords' lines: the lead, <br className=\"sm:hidden\" />, the business slot, a space and <br />, the middle, the city slot, each slot's wrapper carrying data-founder-accent");
-  check("the \"?\" stands inside the city's slot against its word, no space before it", h1.includes(`>${HERO_CITIES[0]}<span class="text-[var(--c-ink)]">?</span></span>`) && !/<\/span>\s*\?/.test(h1));
+  check(`the h1 reads as one question ("${h1Text}")`, h1Text === `${COPY.home.h1.lead} ${HERO_BUSINESSES[0]} ${COPY.home.h1.middle} ${HERO_CITIES[0]}?`, RENDER);
+  check("the h1 stands on set lines: a phone's break after the lead, a break after the business, each word ending its line", /^<h1 [^>]*>How much does a <br class="sm:hidden"\/><span class="text-atlas-700" data-founder-accent="">[\s\S]*?data-w="restaurant"[\s\S]*?<\/span><\/span><\/span> <br\/>make in <span class="text-atlas-700" data-founder-accent="">[\s\S]*?data-w="Shanghai\?"/.test(h1), RENDER);
+  check("the \"?\" stands inside the city's slot against its word, no space before it", h1.includes(`>${HERO_CITIES[0]}<span class="text-[var(--c-ink)]">?</span></span>`) && !/<\/span>\s*\?/.test(h1), RENDER);
   const formAt = render.indexOf("<form");
   const formHtml = formAt < 0 ? "" : render.slice(formAt, render.indexOf("</form>", formAt) + 7);
-  check("the picker paints its case on the first paint, and its no-script fields hold it", ["United Kingdom", "London", "Restaurants"].every((v) => formHtml.includes(`value="${v}"`)) && ['name="country" value="gb"', 'name="subdivision" value="london"', 'name="industry" value="restaurants"'].every((v) => formHtml.includes(v)), "pass NavigatorForm the server's seed (homePickerSeed, src/lib/home/picker.ts), so the first paint carries the three labels and the no-script fields");
-  check("the picker's labels read in sentence case, and its one action is the ink button", ["Country", "City", "Business"].every((l) => new RegExp(`<label for="[a-z]+" class="[^"]*">${l}</label>`).test(formHtml)) && !/uppercase|tracking-/.test(formHtml) && /<button type="submit"[^>]*class="[^"]*bg-\[var\(--c-ink\)\][^"]*">Show me the numbers /.test(formHtml), "draw ComboField's labels as their words (no capitals) and NavigatorForm's button in bg-[var(--c-ink)]");
-  const h = (tag: string) => (render.match(new RegExp(`<${tag}\\b`, "g")) ?? []).length;
-  /* Eight sections with a title (the place, whether it pays, the three proofs, the band, the cities, where to next), and Pro's where
-     the paywall's switch is on in the render's environment. */
-  const sections = 8 + (labels.includes(COPY.home.pro.kicker) ? 1 : 0);
-  check(`one h1 and one h2 a section, none skipped (h1 ${h("h1")}, h2 ${h("h2")} of ${sections}, h3 ${h("h3")})`, h("h1") === 1 && h("h2") === sections && h("h3") === 0);
-  /* A PRO PRICE IS THE SITE'S OWN OFFER, NOT A STATISTIC (his decision of 2026-10-09): none of the four kinds (counted, worked out,
-     looked up, estimate) is true of it, so with the paywall on the band's three prices carry no stamp. The one exemption: a figure
-     INSIDE THE PRO ZONE whose text is one of the plan's own price strings, as the band prints them (ProBand holds the lead's last two
-     words with a no-break space). Every other figure, in Pro or out of it, and a price anywhere else, still counts. */
+  check("the picker paints the h1's first case on the first paint, and its no-script fields hold it", ["United Kingdom", "London", "Restaurants"].every((v) => formHtml.includes(`value="${v}"`)) && ['name="country" value="gb"', 'name="subdivision" value="london"', 'name="industry" value="restaurants"'].every((v) => formHtml.includes(v)), RENDER);
+  check("the picker's labels read in sentence case, and its one action is the ink button", ["Country", "City", "Business"].every((l) => new RegExp(`<label for="[a-z]+" class="[^"]*">${l}</label>`).test(formHtml)) && !/uppercase|tracking-/.test(formHtml) && /<button type="submit"[^>]*class="[^"]*bg-\[var\(--c-ink\)\][^"]*">Show me the numbers /.test(formHtml), RENDER);
+  check("the picker draws no examples' line and the page no definition line (the positioning line says what the site is)", !/<p data-try/.test(render) && !/data-definition/.test(render) && !(main.textContent ?? "").includes(COPY.home.definition), RENDER);
+  /* One h1, one h2 a department (and Pro's where the switch is on in the render's environment), none skipped. */
+  const count = (sel: string) => main.querySelectorAll(sel).length;
+  const proOn = labels.includes(COPY.home.pro.kicker);
+  check(`one h1 and one h2 a department, none skipped (h1 ${count("h1")}, h2 ${count("h2")} of ${6 + (proOn ? 1 : 0)}, h3 ${count("h3")})`, count("h1") === 1 && count("h2") === 6 + (proOn ? 1 : 0) && count("h3") === 0, RENDER);
+  /* A PRO PRICE IS THE SITE'S OWN OFFER, NOT A STATISTIC (his decision of 2026-10-09): exempt only inside the Pro zone, as the band prints it. */
   const PRICES = [priceLine("year"), priceLine("month"), yearlyHeadline().replace(/ (?=\S+$)/, "\xa0")];
-  const [proFrom, proTo] = zoneRange(COPY.home.pro.kicker);
-  /* A figure's text: what stands between its opening tag and its own closing tag, the tags inside taken out. */
-  const figText = (open: string, from: number) => { const end = render.indexOf(`</${/^<(\w+)/.exec(open)?.[1] ?? "span"}>`, from); return render.slice(from, end < 0 ? from : end).replace(/<[^>]*>/g, ""); };
-  const figs = [...render.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => ({ tag: m[0], at: m.index ?? 0, text: figText(m[0], (m.index ?? 0) + m[0].length) }));
-  const bare = figs.filter((f) => (!/data-src="/.test(f.tag) || !/data-kind="/.test(f.tag)) && !(f.at >= proFrom && f.at < proTo && PRICES.includes(f.text)));
-  check(`every figure says where it came from (${figs.length} figures, ${bare.length} without${bare.length ? `: ${bare.map((f) => JSON.stringify(f.text).replace(/\xa0/g, "\\u00a0")).join(", ")}` : ""})`, figs.length > 0 && bare.length === 0, "give the figure its builder's prov (src/lib/spine/provenance.ts provAttrs); a Pro price is exempt only as the plan prints it");
-  /* THE ELEMENTS, NOT THE BARE NAMES (critique pass 3, fix round D2, item P2.5): every render embeds the stylesheet, and since the foot lines' band
-     it names `[data-page-foot],[data-sources-foot]`, so a search for the bare attribute found the selector and read the order of its two names. */
-  check("the licence line and its link, then Report a mistake, under the bands", render.includes(OGL_LINE) && render.includes(`href="${UK_SOURCES_FOOT.href}"`) && render.indexOf("<p data-sources-foot") > -1 && render.indexOf("<p data-sources-foot") < render.indexOf("<p data-page-foot"));
-  check("the render prints no picker heading, no counts and no newsletter form", !/Pick a country, a city, and a business\./.test(render) && !/What the atlas holds|atlas_ledger\.ts:/.test(render) && !/Notify me when my city/.test(render));
-  check("no re-homed section is on the home", !/id="(answer|years|trades|duel|kitchens|firms-last|new-companies|us-restaurants|how-made)"/.test(render) && !/data-notebook/.test(render));
-  check("the render's cities carry no pager", !/aria-label="(Previous cities|More cities)"/.test(render));
-} else { deferred++; console.log("DEFER  scratchpad/harness/pages/home-gb.html is not rendered here; the render's checks did not run"); }
+  const proZone = zones.find((z) => z.getAttribute("data-zone-label") === COPY.home.pro.kicker) ?? null;
+  const figs = [...main.querySelectorAll(".fig")];
+  const bare = figs.filter((f) => (!f.hasAttribute("data-src") || !f.hasAttribute("data-kind")) && !(proZone?.contains(f) && PRICES.includes(f.textContent ?? "")));
+  check(`every figure says where it came from (${figs.length} figures, ${bare.length} without${bare.length ? `: ${bare.map((f) => JSON.stringify(f.textContent)).join(", ")}` : ""})`, bare.length === 0, RENDER, "give the figure its builder's prov (provAttrs, src/lib/spine/provenance.ts); a Pro price is exempt only as the plan prints it");
+  const colophon = doc.getElementById("colophon");
+  check("the colophon closes the page after the band: the licence line, Sources and licences, Report a mistake, the corrections log and status, no checked date, and no foot line beside it", !!colophon && !!band && (band.compareDocumentPosition(colophon) & 4) !== 0 && (colophon.textContent ?? "").includes(OGL_LINE) && !!colophon.querySelector(`a[href="${UK_SOURCES_FOOT.href}"]`) && !!colophon.querySelector('a[data-report="1"]') && !!colophon.querySelector('a[href="/corrections"]') && !!colophon.querySelector('a[href="/status"]') && !colophon.querySelector("[data-checked]") && main.querySelectorAll("[data-sources-foot]").length === 0, RENDER);
+  /* THE TYPE FLOOR ON THE HOME (the spec's section 4: reader text 14 or larger, though the type-floor gate reads the spine pages): read as
+     scripts/lib/type_floor.mjs reads (its blind spot is stated there); the home holds no chart and no 12px foot line, so it allows nothing. */
+  const allow = new Set((JSON.parse(read("scripts/harness/type_floor_allow.json") || "[]") as Array<{ key: string }>).map((e) => e.key));
+  const tf = readTypeFloor(doc, allow);
+  check(`no reader text under 14px on the home, and no 12px place to allow (${tf.small} small and ${tf.allowed} allowed of ${tf.chars} characters${tf.runs.length ? `; ${tf.runs.slice(0, 4).map(([at, c]: [string, number]) => `${at} ${c}`).join("; ")}` : ""})`, tf.chars > 0 && tf.small === 0 && tf.allowed === 0, RENDER, "set every line of the home at var(--t-body) or larger: the colophon's licence line is 14 too, so nothing on the home needs an allowance");
+  check("no retired section is on the home", !/id="(answer|years|trades|duel|kitchens|firms-last|new-companies|us-restaurants|how-made|place|pays|joins|archive|tax|record|cities|next)"/.test(render) && !/data-notebook|data-next=/.test(render), RENDER);
+}
 
-if (failed > 0) { console.error(`trust/home_shape: ${failed} failure(s). Remedy: keep ${VIEW} to the zones search (wide, the hero: his h1, the picker with no heading, the definition after it), example [<HomePlace> | <HomePays>] 1-1 even, (pro behind isPaywallOn), proofs [<ProofJoins> | <ProofArchive> | <ProofTax>] 1-1-1 even, record [<HomeRecord>] wide on the terracotta tone, foot [<HomeCities> | <WhereNext>] 1-1 even; seats pays LIT, record FIELD, foot NO HONEST CANDIDATE; then <SourcesFoot iso2="GB" /> and <ReportFoot path="/" checked={example ? checkedDateForTrade("GB", "london", example.trade) : null} />; every Rail on the home at level 2; then render the home (bash scratchpad/reform/render_some.sh "home gb") and run npx tsx tests/trust/home_shape.test.ts`); process.exit(1); }
-console.log(deferred ? `trust/home_shape: all pass, ${deferred} deferred (render: not rendered here)` : "trust/home_shape: all pass");
+if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
+console.log("trust/home_shape: all pass");

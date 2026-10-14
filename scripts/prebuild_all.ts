@@ -929,7 +929,7 @@ const GATES: Gate[] = [
      and an ink focus ring, 16px type on a phone, a "No match" row, the one ink action, its lists loaded on first use and its first
      paint from the server's seed. */
   { name: "home-picker", script: "tests/home/picker.test.ts" },
-  /* The home as an introduction (his yes of 2026-10-09; plan 2026-10-09, home introduction): the hero (his h1, still, the picker with no heading, its examples links, the definition), the worked example, (Pro), the three proofs, the UK's cities beside where to next; no counts, no newsletter band, nothing the plan re-homed. */
+  /* The home, quiet editorial (his choice of 2026-10-13; plan 2026-10-13 home-quiet-editorial): the positioning line above his h1 and the picker that follows it, the contents, (Pro), the band, the colophon; three seats; nothing the reform retired; every figure stamped; no reader text under 14px. Reads the home's render, which pages-fresh writes first. */
   { name: "home-shape", script: "tests/trust/home_shape.test.ts" },
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
