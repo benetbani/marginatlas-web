@@ -59,6 +59,7 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { eachPageAtWidths, renderEntries, describeRenders, nameWithKey, missingLine } from "./lib/measure_pages.mjs";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { OPENED } from "./lib/open_panels.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
    run where chromium is not installed, and trying killed a production deploy on
@@ -274,14 +275,16 @@ let measured = 0;
 
 /* ONE BROWSER FOR BOTH WIDTHS. Two calls launched two, to render the same four
    files twice. */
-for (const { width, result: pages } of await eachPageAtWidths(WIDTHS, measure)) {
+for (const { width, result: pages } of await eachPageAtWidths(WIDTHS, measure, { opened: true })) {
   runs.push({ width, pages });
   for (const entry of pages) {
     /* The baseline key carries the page's OLD name (`key`); the lines print the harness's name with it beside. */
     const { key, result } = entry;
+    const openedOnly = (entry.openedResult ?? []).filter((o) => o.hole && !result.some((c) => c.label === o.label && c.hole)).map((o) => ({ ...o, label: `${o.label}${OPENED}` }));
     const name = nameWithKey(entry);
     let holes = 0;
-    for (const s of result) {
+    /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E): a hole only the open page holds is judged too, named so. */
+    for (const s of [...result, ...openedOnly]) {
       measured++;
       if (s.blank) {
         unjudgeable++;

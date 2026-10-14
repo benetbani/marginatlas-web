@@ -24,6 +24,7 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 import { pageRenders } from "./page_renders.mjs";
+import { openPanels } from "./open_panels.mjs";
 
 export { describeRenders, nameWithKey, missingLine } from "./page_renders.mjs";
 
@@ -32,8 +33,8 @@ export function renderEntries() {
   return pageRenders({ kinds: ["fresh"] });
 }
 
-export async function eachPage(width, fn) {
-  return (await eachPageAtWidths([width], fn))[0].result;
+export async function eachPage(width, fn, opts = {}) {
+  return (await eachPageAtWidths([width], fn, opts))[0].result;
 }
 
 /**
@@ -49,8 +50,9 @@ export async function eachPage(width, fn) {
  * Returns [{ width, result: [{ name, key, kind, path, result }] }], newest
  * measurement last. A render that is missing on disk is left out of `result`;
  * the gate reports it from renderEntries().
+ * With { opened: true } each page also carries `openedResult`, the same measurement with every plus open (null where the page holds none).
  */
-export async function eachPageAtWidths(widths, fn) {
+export async function eachPageAtWidths(widths, fn, { opened = false } = {}) {
   const entries = renderEntries().filter((e) => e.exists);
   const b = await chromium.launch();
   const out = [];
@@ -63,7 +65,11 @@ export async function eachPageAtWidths(widths, fn) {
           await p.goto(pathToFileURL(resolve(e.path)).href);
           await p.evaluate(() => document.fonts.ready);
           await p.waitForTimeout(400);
-          perPage.push({ name: e.name, key: e.key, kind: e.kind, path: e.path, result: await p.evaluate(fn) });
+          const result = await p.evaluate(fn);
+          /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E): with `opened`, the page is read again with every plus open
+             (scripts/lib/open_panels.mjs), and the gate judges both readings. */
+          const openedResult = opened && (await p.evaluate(openPanels)) ? await p.evaluate(fn) : null;
+          perPage.push({ name: e.name, key: e.key, kind: e.kind, path: e.path, result, openedResult });
         } finally {
           await p.close();
         }

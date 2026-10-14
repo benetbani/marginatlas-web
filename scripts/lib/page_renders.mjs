@@ -51,6 +51,8 @@
  * A gate keys its `now` by entry.key and prints entry.name (with the key beside
  * it when the two differ), so a reader of its output sees both.
  *
+ * HARNESS_PAGES_LIST, when set, names another list (scripts/harness/check_panels_opened.mjs points it at a planted page; the chain never sets it).
+ *
  * WHAT THIS CANNOT TELL: whether a fresh render was drawn from live rows or
  * from the adapters' fallbacks. That is stated, with what is measured about
  * it, in verify_pages_fresh.mjs's header.
@@ -98,7 +100,7 @@ const FROZEN = ["countries-list"];
  * @returns {Array<{ name: string, key: string, kind: "fresh" | "frozen", path: string,
  *   surface?: string, slugs?: string[], date?: string, exists: boolean, mtime: Date | null, bytes: number }>}
  */
-export function pageRenders({ kinds = ["fresh", "frozen"], list = HARNESS_LIST } = {}) {
+export function pageRenders({ kinds = ["fresh", "frozen"], list = process.env.HARNESS_PAGES_LIST || HARNESS_LIST } = {}) {
   const out = [];
   if (kinds.includes("fresh")) {
     const pages = JSON.parse(readFileSync(list, "utf8")).pages;

@@ -347,7 +347,27 @@
       "asserts": "THE SIGNAL'S MARK RULE (plan 2026-10-13 country-page-journey, Task 1D; spec section 4, and section 8: \"the signal's direction table read for every mark printed\").",
       "reads": [
         "scripts/harness/pages.json",
-        "src/components/spine/country/country-view.tsx"
+        "src/components/spine/country/country-view.tsx",
+        "src/lib/spine/signal.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "panels-opened",
+      "script": "scripts/harness/check_panels_opened.mjs",
+      "args": [],
+      "browser": true,
+      "asserts": "check_panels_opened , EVERY BROWSER CHECK READS INSIDE A CLOSED PLUS (plan 2026-10-13 country-page-journey, Task 1E; spec section 5: \"every browser check that reads a section's content opens the panel",
+      "reads": [
+        "scratchpad/harness/pages",
+        "scratchpad/journey/panels",
+        "scripts/harness/check_model_laws.mjs",
+        "scripts/harness/check_page_holes.mjs",
+        "scripts/harness/check_page_laws.mjs",
+        "scripts/harness/probe_page.mjs",
+        "scripts/verify_art_direction.mjs",
+        "scripts/verify_full_width_sitewide.mjs",
+        "scripts/verify_gathered_emptiness.mjs"
       ],
       "claims": []
     },
@@ -3001,6 +3021,7 @@
         "scripts/palette_baseline.json",
         "src/app",
         "src/components",
+        "src/components/spine/signal/tokens.ts",
         "src/lib",
         "src/styles"
       ],

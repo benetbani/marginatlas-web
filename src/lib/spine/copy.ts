@@ -2450,6 +2450,9 @@ export const COPY = {
       /* The goal's A9b: a licence named for a United States jurisdiction, not listed at the world altitude. */
       usNamedOne: "1 US-only licence left out.",
       usNamedMany: "{n} US-only licences left out.",
+      /** A licence whose shard name runs past three words takes its kind as the row's label, its name as the row's note (plan 2026-10-13
+       *  country-page-journey, Task 1E: ROW SENTENCE, read behind the plus for the first time). A closed list, read in industry_open_rows.ts. */
+      kinds: { alcohol: "Alcohol licence", foodSafety: "Food safety", food: "Food licence", tax: "Tax registration", insurance: "Insurance", health: "Health permit", environment: "Environment permit", premises: "Premises permit", vehicle: "Vehicle licence", customs: "Customs registration", certificate: "Certification", accreditation: "Accreditation", checks: "Staff checks", compliance: "Compliance", registration: "Registration", licence: "Trade licence", other: "Other requirement" },
     },
     withheld: {
       licences: "No licence list for this trade yet.",

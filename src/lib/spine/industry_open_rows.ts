@@ -78,6 +78,40 @@ export type IndustryOpenData = {
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
+/** A licence's kind from the closed list (COPY.industryOpen.detail.kinds), by the words its shard's name holds, read in this order so the
+ *  more particular wins (food handler certification is food safety, not a certificate). */
+const LICENCE_WORDS: ReadonlyArray<readonly [keyof typeof COPY.industryOpen.detail.kinds, RegExp]> = [
+  ["alcohol", /\balcohol|\bliquor\b|\bspirits?\b|\bwine\b|\bbeer\b/i],
+  ["foodSafety", /\bfood[- ]?handler|\bfood (hygiene|safety)\b/i],
+  ["food", /\bfood\b|\bkitchen\b|\bcatering\b/i],
+  ["tax", /\btax\b|\bvat\b|\bresale\b|\bseller\b/i],
+  ["insurance", /\binsurance\b|\bbond(ing)?\b|\bliability\b|\bcover\b/i],
+  ["health", /\bhealth\b|\bsanitation\b|\bhygiene\b/i],
+  ["environment", /\bwaste\b|\bhazardous\b|\benvironment|\bemission|\brefrigerant\b|\bair permit\b/i],
+  ["premises", /\bfire\b|\boccupancy\b|\bzon(e|ed|ing)\b|\bpremises\b|\bbuilding\b|\bsign(age)?\b|\bplanning\b/i],
+  ["vehicle", /\bvehicle\b|\bmotor\b|\btaxi\b|\bdriver|\bair operator\b/i],
+  ["customs", /\bimport\b|\bcustoms\b|\bexport\b/i],
+  ["certificate", /\bcertif|\bqualification|\btraining\b/i],
+  ["accreditation", /\baccredit|\bauthori[sz]|\bapproval\b/i],
+  ["checks", /\bbackground\b|\bchecks\b|\bclearances?\b/i],
+  ["compliance", /\bcomplian/i],
+  ["registration", /\bregist/i],
+  ["licence", /\blicen[cs]|\bpermits?\b/i],
+];
+function licenceKind(name: string): string {
+  for (const [key, re] of LICENCE_WORDS) if (re.test(name)) return COPY.industryOpen.detail.kinds[key];
+  return COPY.industryOpen.detail.kinds.other;
+}
+/** Labels made distinct: the second of a label takes " 2", the third " 3". */
+function uniqueLabels(labels: string[]): string[] {
+  const seen = new Map<string, number>();
+  return labels.map((l) => {
+    const n = (seen.get(l) ?? 0) + 1;
+    seen.set(l, n);
+    return n === 1 ? l : `${l} ${n}`;
+  });
+}
+
 export function buildIndustryOpen(industryId: string | undefined): IndustryOpenData | null {
   if (!industryId) return null;
   /* AT THE WORLD ALTITUDE (the goal's A9b, 2026-09-24): a licence named for a
@@ -105,8 +139,11 @@ export function buildIndustryOpen(industryId: string | undefined): IndustryOpenD
   if (rampMonths != null) cells.push({ key: "breakEven", label: L.breakEven, value: monthsFigure(rampMonths), confidence: "modeled" });
   else { withheld.push("breakEven"); withheldLines.push(W.breakEven); }
 
-  /* THE PLUS: the permits' own cells as rows, the longest wait first as the permits builder orders them; the zero-day licence is the panel's withheld line, counted. */
-  const rows: DetailRow[] = (permits?.cells ?? []).map((c) => ({ label: c.label, value: typeof c.value === "string" ? c.value : String(c.value ?? "") })).filter((r) => r.label && r.value);
+  /* THE PLUS: the permits' own cells as rows, the longest wait first as the permits builder orders them; the zero-day licence is the panel's withheld line, counted.
+     A name over three words stands as the row's note under its kind (licenceKind), so the label stays a label (plan 2026-10-13 country-page-journey, Task 1E). */
+  const named = (permits?.cells ?? []).map((c) => ({ name: c.label, value: typeof c.value === "string" ? c.value : String(c.value ?? "") })).filter((r) => r.name && r.value);
+  const kinds = uniqueLabels(named.map((r) => (r.name.trim().split(/\s+/).length > 3 ? licenceKind(r.name) : r.name)));
+  const rows: DetailRow[] = named.map((r, i) => (kinds[i] === r.name ? { label: r.name, value: r.value } : { label: kinds[i], value: r.value, note: r.name }));
   const zero = permits ? permits.zeroDay : 0;
   const usNamed = permits ? permits.usNamed : 0;
   const zeroLine = zero <= 0 ? null : zero === 1 ? COPY.industryOpen.detail.withheldOne : COPY.industryOpen.detail.withheldMany.replace("{n}", String(zero));

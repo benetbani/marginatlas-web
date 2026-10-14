@@ -72,6 +72,7 @@
  *                         cluster, or on neighbouring levels (his words on
  *                         the market bento, 2026-09-20 night: "two similar
  *                         graphics should have a considerable distance")
+ *                         (a level is a zone on a band page, since plan 2026-10-13)
  *   -- ALIGNMENT        centred text that is not a mark's label, a sentence on
  *                         the right, or a column of figures with more than one
  *                         right edge (his ruling of 2026-09-23)
@@ -111,6 +112,7 @@ import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
+import { openPanels, OPENED } from "../lib/open_panels.mjs";
 
 await requireBrowser("harness-page-laws", "the page laws of 2026-09-20 (levels, text measure, card feet, the hero's side, overlap, repeated kinds, parts) on every page in scripts/harness/pages.json");
 preflight({ browser: true, name: "check_page_laws" });
@@ -125,7 +127,7 @@ if (files.length === 0) { console.error("usage: node scripts/harness/check_page_
 
 /* THE IN-PAGE WALK. Everything below runs inside the browser; it takes the
    viewport width so the level and measure rules know whether they apply. */
-function inPage({ width, pageName }) {
+function inPage({ width, pageName, opened = false }) {
   /* The four chart forms of 2026-09-25 (src/components/spine/charts/: a figure on the world's range, a bar list, a ring with its
      centre figure, a country's span against the world's) draw, so they are visual kinds like the rest. */
   /* The page-agnostic sections of the same night (src/components/spine/sections/) that draw: a cohort's curve, columns, a scale of
@@ -149,8 +151,8 @@ function inPage({ width, pageName }) {
   const reds = [];
   const red = (id, rule, msg) => reds.push({ id, rule, msg });
 
-  /* THE LEVELS, at 1280 only. */
-  if (width >= 1280) {
+  /* THE LEVELS, at 1280 only, on the closed reading (plan 2026-10-13, Task 1E). */
+  if (width >= 1280 && !opened) {
     const bands = [...document.querySelectorAll("main [data-band], main [data-hero]")].filter((b) => b.getClientRects().length);
     for (const band of bands) {
       /* A BENTO CLUSTER IS ONE CARD (the spec's blind spot, stated): the
@@ -304,13 +306,17 @@ function inPage({ width, pageName }) {
     if (width >= 1280 && parts > 1 && !card.querySelector("details, [role='tablist'], [data-popup]")) red(id, "PARTS NOT REVEALED", `the card declares ${parts} parts and shows them all at once; no plus, tab or popup inside it (clause 58)`);
   }
 
-  /* THE PAGE, once at 1280: kinds, twins and distance. */
-  if (width >= 1280) {
+  /* THE PAGE, once at 1280: kinds, twins and distance; on the closed reading (plan 2026-10-13, Task 1E). */
+  if (width >= 1280 && !opened) {
     const byKind = new Map();
     for (const card of cards) { if (!isVisual(card)) continue; const k = archetypeOf(card); if (!byKind.has(k)) byKind.set(k, []); byKind.get(k).push(card); }
     /* THE LEVELS IN ORDER, so "neighbouring" is a fact of the page and not of the DOM's depth: a card's level is its nearest band or hero; a bento's cells share their cluster's level. */
-    const levels = [...document.querySelectorAll("main [data-band], main [data-hero]")].filter((b) => b.getClientRects().length && !b.parentElement.closest("[data-band], [data-hero]"));
-    const levelOf = (card) => card.closest("[data-band], [data-hero]");
+    /* A ZONE IS A LEVEL (plan 2026-10-13 country-page-journey, Task 1E; MODEL PART 10 keeps clause 64 on a band page): the old reading found a
+       level by [data-band] or [data-hero] alone, which no zone carries, so on a band page it compared the hero and nothing else. A card's level
+       is its outermost zone, band or hero; the levels are those, in page order. */
+    const LEVEL = "[data-zone], [data-band], [data-hero]";
+    const levels = [...document.querySelectorAll("main [data-zone], main [data-band], main [data-hero]")].filter((b) => b.getClientRects().length && !b.parentElement.closest(LEVEL));
+    const levelOf = (card) => { let l = card.closest(LEVEL); while (l && l.parentElement && l.parentElement.closest(LEVEL)) l = l.parentElement.closest(LEVEL); return l; };
     for (const [kind, list] of byKind) {
       if (kind === "kit") continue;
       if (list.length > 2) red(list.map(idOf).join(" | "), "KIND REPEATED", `${kind} on ${list.length} cards; two is the cap (clause 55)`);
@@ -410,7 +416,8 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
      Their blind spots, stated: a row drawn without `data-row` inside a phone table, or a figure cell without `data-col`, is not
      read by SPLIT ROW; a band painted by something other than a zone is not a zone. */
   const zones = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
-  if (zones.length) {
+  /* The zones are read closed (plan 2026-10-13 country-page-journey, Task 1E): a plus a reader opened is his. */
+  if (zones.length && !opened) {
     const PAPER = "rgb(255, 255, 255)", TINT = "rgb(246, 246, 245)";
     /* THE ONE TERRACOTTA ZONE (plan 2026-10-10, the home reformed to ship, Task 5; his request of 2026-10-10: "add 1 section in
        terracotta background to signify some stats for the site"; the spec's section 5 bends PART 10 clause 69 for it and gates the
@@ -519,6 +526,13 @@ for (const file of files) {
     const walk = await page.evaluate(inPage, { width: w, pageName: name });
     if (walk.cards === 0) reds.push({ page: name, w, id: "page", rule: "NO SECTIONS", msg: "no section card found under main; the render or the landmark is broken" });
     for (const r of walk.reds) reds.push({ page: name, w, ...r });
+    /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): the card rules read again with every plus open; a red
+       only the open page makes is the plus's, named so. Levels, zones and the page's kinds are read closed (a plus a reader opened is his). */
+    if (await page.evaluate(openPanels)) {
+      const ow = await page.evaluate(inPage, { width: w, pageName: name, opened: true });
+      const said = new Set(walk.reds.map((r) => `${r.id}␟${r.rule}`));
+      for (const r of ow.reds) if (!said.has(`${r.id}␟${r.rule}`)) reds.push({ page: name, w, ...r, msg: `${r.msg}${OPENED}` });
+    }
     console.log(`${name}@${w}: ${walk.cards} cards, ${walk.reds.length} red(s)`);
     await ctx.close();
   }

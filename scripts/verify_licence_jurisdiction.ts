@@ -72,7 +72,8 @@ for (const ind of INDUSTRIES) {
   /* 5. The world altitude: the plus lists none, its line counts them, the count keeps them. */
   const world = buildIndustryOpen(ind.id);
   const plus = world?.detail?.rows ?? [];
-  for (const r of plus) if (isUsJurisdictionLicence(String(r.label))) fail(`${ind.id} at the world altitude lists "${r.label}" in its plus, a licence named for the United States`, "build the industry card's licences at WORLD, which withholds US-named ones");
+  /* A long name stands as the row's note under its kind since plan 2026-10-13 (country-page-journey, Task 1E), so the name is read there. */
+  for (const r of plus) { const n = String(r.note ?? r.label); if (isUsJurisdictionLicence(n)) fail(`${ind.id} at the world altitude lists "${n}" in its plus, a licence named for the United States`, "build the industry card's licences at WORLD, which withholds US-named ones"); }
   if (ours.length && world?.detail) {
     const want = ours.length === 1 ? COPY.industryOpen.detail.usNamedOne : COPY.industryOpen.detail.usNamedMany.replace("{n}", String(ours.length));
     if (!(world.detail.withheldLine ?? "").includes(want)) fail(`${ind.id} at the world altitude leaves ${ours.length} US-named licence(s) out of its plus and its line reads "${world.detail.withheldLine ?? ""}"`, "state the count in the plus's withheld line (COPY.industryOpen.detail.usNamedOne or usNamedMany)");

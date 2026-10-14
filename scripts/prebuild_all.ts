@@ -191,6 +191,9 @@ const GATES: Gate[] = [
   /* THE SIGNAL'S MARK RULE (plan 2026-10-13 country-page-journey, Task 1D; spec section 4): every mark on a country render names a directed
      measure of the direction table, every placed figure follows it, the page carries its one key. Static. */
   { name: "signal-marks", script: "tests/spine/signal_marks.test.ts" },
+  /* EVERY BROWSER CHECK READS INSIDE A CLOSED PLUS (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): seven checks read each page
+     again with its panels open (scripts/lib/open_panels.mjs), proved on planted pages, and KIND ADJACENT reads zones. A browser gate. */
+  { name: "panels-opened", script: "scripts/harness/check_panels_opened.mjs", browser: true },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

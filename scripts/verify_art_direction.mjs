@@ -41,6 +41,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { eachPage, renderEntries, describeRenders, nameWithKey, missingLine } from "./lib/measure_pages.mjs";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { OPENED } from "./lib/open_panels.mjs";
 import { zoneRhythm, zoneLadder, NO_ZONE_READ } from "./lib/zone_rhythm.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
@@ -61,6 +62,7 @@ const collect = () => {
      RENDERS. Declared inside the collector because this function is serialised
      into the page and cannot see anything from this file's scope. */
   const TERRA = ["rgb(251, 132, 105)", "rgb(194, 65, 12)"];
+  /* The first reading's rule; since plan 2026-10-13 (Task 1E) the page is judged again with every plus open. */
   const inDeadDetails = (e) => {
     const d = e.closest("details");
     return !!d && !d.open && !e.closest("summary");
@@ -579,14 +581,14 @@ const RULES = [
   { key: "nested", rule: "A5", why: "a bordered box inside the card", test: (s) => s.nestedBoxes > 0, show: (s) => `${s.nestedBoxes} nested` },
 ];
 
-const pages = await eachPage(1440, collect);
+const pages = await eachPage(1440, collect, { opened: true });
 const now = {};
 let total = 0;
 
-for (const entry of pages) {
-  /* The baseline is keyed by the page's OLD name (`key`); the line below prints
-     the harness's name with the key beside it when they differ. */
-  const { key: name, result } = entry;
+/* ONE PAGE'S FINDINGS, judged from one reading: each rule's count and its lines. Moved out of the loop unchanged but for the counts, which
+   it returns instead of writing (plan 2026-10-13 country-page-journey, Task 1E), so the closed and the opened reading are judged alike. */
+function judge(result) {
+  const counts = {};
   const lines = [];
   /* ONE EDITORIAL SECTION PER PAGE. A page that declares two does not have an
      editorial section, it has a habit, so every one after the first is counted. */
@@ -594,49 +596,55 @@ for (const entry of pages) {
   editorials.slice(1).forEach((x) => (x.editorial = false));
   for (const r of RULES) {
     const bad = result.sections.filter(r.test);
-    now[`${name}:${r.key}`] = bad.length;
-    total += bad.length;
+    counts[r.key] = bad.length;
     for (const s of bad) lines.push(`  ${r.rule}  ${r.why.padEnd(34)} ${r.show(s).padEnd(16)} "${s.label}"`);
   }
   /* THE PAGE BUDGET IS ITS SECTION COUNT, not a flat number. C1 asks every
      section to mark its answer, so a flat cap would force sections to stop doing
      that to satisfy a figure nobody chose for a reason. */
   const budget = result.sections.length;
-  now[`${name}:pageAccents`] = result.pageAccents > budget ? 1 : 0;
-  total += now[`${name}:pageAccents`];
+  counts.pageAccents = result.pageAccents > budget ? 1 : 0;
   if (result.pageAccents > budget) lines.push(`  C2  ${String(result.pageAccents).padStart(2)} accent marks over ${budget} sections`);
 
-  now[`${name}:wideDomain`] = result.wideDomains.length;
-  total += result.wideDomains.length;
+  counts.wideDomain = result.wideDomains.length;
   for (const x of result.wideDomains) lines.push(`  G6  ${x}`);
 
-  now[`${name}:falseLegend`] = result.falseLegends.length;
-  total += result.falseLegends.length;
+  counts.falseLegend = result.falseLegends.length;
   for (const x of result.falseLegends) lines.push(`  C4  ${x}`);
 
-  now[`${name}:sameForAll`] = result.sameForAll.length;
-  total += result.sameForAll.length;
+  counts.sameForAll = result.sameForAll.length;
   for (const x of [...new Set(result.sameForAll)]) lines.push(`  H3  ${x}`);
 
   /* D6 AND D3 ON THE ZONES, judged in node from what the page measured (scripts/lib/zone_rhythm.mjs). */
   const ladder = zoneLadder(result);
   const rhythm = zoneRhythm(result.zoneSplits);
-  now[`${name}:ladder`] = ladder.length;
-  total += ladder.length;
+  counts.ladder = ladder.length;
   for (const l of ladder) lines.push(`  D6  ${l}`);
 
-  now[`${name}:rhythm`] = rhythm.length;
-  total += rhythm.length;
+  counts.rhythm = rhythm.length;
   for (const r of rhythm) lines.push(`  D3  ${r}`);
 
-  now[`${name}:numerals`] = result.looseNumerals;
-  total += result.looseNumerals;
+  counts.numerals = result.looseNumerals;
   if (result.looseNumerals) lines.push(`  F1  ${String(result.looseNumerals).padStart(2)} figure(s) without tabular numerals`);
 
-  now[`${name}:frontRepeat`] = result.frontRepeats.length;
-  total += result.frontRepeats.length;
+  counts.frontRepeat = result.frontRepeats.length;
   for (const f of result.frontRepeats) lines.push(`  H4  repeated in the first screen         ${f}`);
+  return { counts, lines };
+}
 
+for (const entry of pages) {
+  /* The baseline is keyed by the page's OLD name (`key`); the line below prints the harness's name with the key beside it when they differ. */
+  const { key: name, result } = entry;
+  /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): each rule judged on the page as it arrives and with
+     every plus open; a rule's count is the larger of the two, and a finding only the open page makes is named so. */
+  const closed = judge(result);
+  const open = entry.openedResult ? judge(entry.openedResult) : { counts: {}, lines: [] };
+  for (const k of new Set([...Object.keys(closed.counts), ...Object.keys(open.counts)])) {
+    const v = Math.max(closed.counts[k] ?? 0, open.counts[k] ?? 0);
+    now[`${name}:${k}`] = v;
+    total += v;
+  }
+  const lines = [...closed.lines, ...open.lines.filter((l) => !closed.lines.includes(l)).map((l) => `${l}${OPENED}`)];
   console.log(`\n  ${nameWithKey(entry)}   ${lines.length} finding(s)`);
   lines.forEach((l) => console.log("   " + l));
 }

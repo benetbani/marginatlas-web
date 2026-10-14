@@ -52,6 +52,7 @@ import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
 import { accentWalk } from "../lib/accent_walk.mjs";
+import { openPanels, OPENED } from "../lib/open_panels.mjs";
 
 /* THE GROUND FIRST (sys:harness-preflight, run 24): the site root, the browser on disk, free memory printed; a wrong ground stops here with the remedy. */
 /* A BUILD SERVER HAS NO BROWSER (scripts/lib/local_only.mjs, the rule every
@@ -153,7 +154,7 @@ function inPage() {
          hiddenFromSight and the art-direction gate's inDeadDetails already
          skip them; this filter now does the same. This measurement cannot
          distinguish a hidden row from a drawn one by rects alone, only by
-         the details' open state. */
+         the details' open state. The first reading's rule; the opened reading (plan 2026-10-13, Task 1E) reads the plus's content as ink. */
       { const d = el.closest("details"); if (d && !d.open) { const sum = d.querySelector(":scope > summary"); if (!sum || !sum.contains(el)) continue; } }
       const es = getComputedStyle(el);
       const b0 = el.getBoundingClientRect();
@@ -265,6 +266,21 @@ for (const file of files) {
     if (shots) {
       mkdirSync("scratchpad/harness/shots", { recursive: true });
       await page.screenshot({ path: `scratchpad/harness/shots/page-${name}${SECTION == null ? "" : `-only-${SECTION}`}-${w}.jpeg`, type: "jpeg", quality: 80, fullPage: true });
+    }
+    /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): the card rules read again with every plus open; a red
+       only the open page makes is the plus's, named so. The accents, the sideways scroll and NO SECTIONS were read on the closed page, and
+       the photographs above were taken before the panels opened, so they show the page as it arrives. */
+    if (await page.evaluate(openPanels)) {
+      const ow = await page.evaluate(inPage);
+      const ruleOf = (msg) => msg.split(":")[0];
+      const said = new Set(reds.filter((r) => r.page === name && r.w === w).map((r) => `${r.id}␟${ruleOf(r.msg)}`));
+      const sayOpen = (id, msg) => { if (!said.has(`${id}␟${ruleOf(msg)}`)) red(name, w, id, `${msg}${OPENED}`); };
+      for (const c of SECTION == null ? ow.cut : ow.cut.filter((x) => x.id === SECTION)) sayOpen(c.id, `ROWS CUT: the chart declares ${c.expect} rows and draws ${c.drawn}`);
+      if (w === WIDTHS[0]) for (const h of SECTION == null ? ow.hierarchy : ow.hierarchy.filter((x) => x.id === SECTION)) sayOpen(h.id, `${h.rule}: ${h.detail}`);
+      for (const c of SECTION == null ? ow.out : ow.out.filter((x) => x.id === SECTION)) {
+        const minW = Math.max(120, c.cardW / 4), minH = Math.max(120, c.cardH / 4);
+        if (c.holeW >= minW && c.holeH >= minH) sayOpen(c.id, `WHITE SPACE: a blank rectangle ${c.holeW}x${c.holeH} inside a ${c.cardW}x${c.cardH} card${c.siblings > 1 ? ` (one of ${c.siblings} in its band)` : ""}`);
+      }
     }
     console.log(`${name}@${w}${SECTION == null ? "" : ` #${SECTION}`}: ${out.length} section card${out.length === 1 ? "" : "s"}, ${out.filter((c) => c.holeW >= Math.max(120, c.cardW / 4) && c.holeH >= Math.max(120, c.cardH / 4)).length} with a hole`);
     await ctx.close();

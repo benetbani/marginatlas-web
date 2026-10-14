@@ -270,6 +270,7 @@ import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
+import { openPanels, OPENED } from "../lib/open_panels.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER (scripts/lib/local_only.mjs, the rule every
    browser gate follows since 2026-08-27): Vercel clones website/ alone and
@@ -409,7 +410,8 @@ function inPage(ctx) {
      gate's own inDeadDetails; the archetype checker still opens every panel
      and reads what it holds, which is that instrument's law. Planted and
      watched: with the panel opened in the render the four rows fire, closed
-     they do not. */
+     they do not. Since plan 2026-10-13 (country-page-journey, Task 1E) the file reads every page a second time with its panels open and
+     reports what only that reading finds with " (panels open)"; this skip is the first reading's. */
   const hiddenFromSight = (el) => {
     let n = el;
     while (n && n !== document.documentElement) {
@@ -1012,6 +1014,13 @@ for (const file of files) {
        data-URI fixture image needs no network for this and still benefits. */
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
     const { found, unmeasured: um, blocks, floor: pageFloor } = await page.evaluate(inPage, { floor, wide: w === WIDTHS[0], noAnswerRelief: name.startsWith("cell-") ? 2 : 0 });
+    /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): the rules read the page again with every plus open;
+       a finding only the open page makes is the plus's, named so. The page's counts (BLOCK FLOOR, LONE CARD, EDGE) are read once, closed. */
+    if (await page.evaluate(openPanels)) {
+      const again = await page.evaluate(inPage, { floor, wide: false, noAnswerRelief: name.startsWith("cell-") ? 2 : 0 });
+      const had = new Set(found.map((f) => `${f.id}␟${f.rule}␟${f.detail}`));
+      for (const f of again.found) if (!had.has(`${f.id}␟${f.rule}␟${f.detail}`)) found.push({ ...f, detail: `${f.detail}${OPENED}` });
+    }
     if (blocks != null) { blocksAtWide = blocks; floorAtWide = pageFloor; }
     const countThisWidth = new Map();
     for (const f of found) {
