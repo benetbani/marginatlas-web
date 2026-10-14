@@ -188,7 +188,8 @@ function inPage(storySelector) {
     }
     r.state = card.querySelector("[data-state]")?.getAttribute("data-state") || "";
     r.level = card.getAttribute("data-level") || ""; r.h1 = card.querySelectorAll("h1").length;
-    const ans = card.querySelector("[data-answer] .fig");
+    /* The answer's marker is `data-answer="1"`: a list's declared answer type (plan 2026-10-13 country-page-journey, Task 1C) is not it. */
+    const ans = card.querySelector('[data-answer="1"] .fig');
     if (ans) r.answerSizes.push(parseFloat(getComputedStyle(ans).fontSize));
     const grid = card.querySelector("[data-archetype='kv-grid']");
     if (grid) {

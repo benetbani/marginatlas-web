@@ -183,6 +183,11 @@ const GATES: Gate[] = [
   /* THE PROGRAMMATIC PROMISE (plan 2026-10-13 country-page-journey, Task 1B; spec section 8): /gb, /kh, /af and /de draw their slots in the
      model's order and types, no seat, the index landing on what is drawn. Static, over the renders pages-fresh writes. */
   { name: "country-slots", script: "tests/spine/country_slots.test.ts" },
+  /* ONE ANSWER TYPE A LIST (plan 2026-10-13 country-page-journey, Task 1C; his words of 2026-10-13, "in a declarative section you cannot
+     switch from words to numbers"): every list on a country render declares its type and holds that type alone, units out of the cells,
+     folds of two to eight rows (scripts/lib/answer_type.mjs). Static; its reading's fixtures beside it. */
+  { name: "answer-type", script: "scripts/harness/check_answer_type.mjs", args: ["--list"] },
+  { name: "answer-type-reader", script: "tests/spine/answer_type.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

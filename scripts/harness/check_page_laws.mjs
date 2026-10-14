@@ -382,7 +382,9 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
       const tips = [...card.querySelectorAll(TIP)];
       if (tips.length > 1) red(idOf(card), "GLOSS", `${tips.length} glosses on one card; one card, one word explained`);
       for (const t of tips) {
-        if (t.closest(".fig") || t.closest("[data-answer]")) red(idOf(card), "GLOSS", "a gloss on a figure or on the page's answer; it belongs beside the words, not the number");
+        /* The page's answer is `data-answer="1"`; since plan 2026-10-13 (country-page-journey, Task 1C) a slot or a list declares its
+           answer type in `data-answer` too, and a gloss beside a slot's title is no gloss on the answer. */
+        if (t.closest(".fig") || t.closest('[data-answer="1"]')) red(idOf(card), "GLOSS", "a gloss on a figure or on the page's answer; it belongs beside the words, not the number");
       }
     }
     for (const card of cards) {

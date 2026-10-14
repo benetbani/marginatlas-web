@@ -315,6 +315,31 @@
       "claims": []
     },
     {
+      "name": "answer-type",
+      "script": "scripts/harness/check_answer_type.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": false,
+      "asserts": "check_answer_type , ONE ANSWER TYPE A LIST (plan 2026-10-13 country-page-journey, Task 1C; spec sections 3 and 6).",
+      "reads": [
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
+      "name": "answer-type-reader",
+      "script": "tests/spine/answer_type.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "ONE ANSWER TYPE A LIST, THE READING (plan 2026-10-13 country-page-journey, Task 1C; spec sections 3 and 6): scripts/lib/answer_type.mjs over jsdom fixtures: the value classes, the unit in a cell, the ",
+      "reads": [
+        "scripts/harness/check_answer_type.mjs",
+        "scripts/lib/answer_type.mjs"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [
