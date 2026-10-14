@@ -8,20 +8,18 @@ import { notFound } from "next/navigation";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineCalculatorBody } from "@/components/spine/calculator/calculator-view";
 import { buildCalculatorSeed } from "@/lib/simulator/load";
-import { COPY } from "@/lib/spine/copy";
+import { calculatorMetadata } from "@/lib/simulator/seo";
 
 type Search = Promise<Record<string, string | string[] | undefined>>;
 const one = (v: string | string[] | undefined): string | null => (Array.isArray(v) ? v[0] : v) ?? null;
 
-export const metadata: Metadata = {
-  title: COPY.calculator.metaTitle,
-  description: COPY.calculator.metaDescription,
-  alternates: { canonical: "/calculator" },
-};
+export async function generateMetadata({ searchParams }: { searchParams: Search }): Promise<Metadata> {
+  return calculatorMetadata(await searchParams);
+}
 
 export default async function CalculatorPage({ searchParams }: { searchParams: Search }) {
   const q = await searchParams;
-  const seed = await buildCalculatorSeed({ country: one(q.country), city: one(q.city), trade: one(q.trade) });
+  const seed = await buildCalculatorSeed({ country: one(q.country), city: one(q.city), trade: one(q.trade), v: one(q.v) });
   if (!seed) notFound();
   return (
     <SpineShell>

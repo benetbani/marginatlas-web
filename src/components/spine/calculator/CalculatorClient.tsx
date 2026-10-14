@@ -18,6 +18,7 @@ import type { CurrencyCode } from "@/lib/currency";
 import { simulate } from "@/lib/simulator/engine";
 import { FRESH, toEngine, type SimBundle, type SimState } from "@/lib/simulator/bundle";
 import { makeFormat } from "@/lib/simulator/display";
+import { ADDRESS_DEBOUNCE_MS, calculatorHref } from "@/lib/simulator/state";
 import type { Place } from "@/lib/simulator/place";
 import type { CalculatorSeed } from "@/lib/simulator/seed";
 import { AnswerSection, InstrumentGrid, MarginSection, Masthead, MonthSection, MovesSection, OpeningSection, SourcesSection } from "./sections";
@@ -41,6 +42,16 @@ export function CalculatorClient({ seed }: { seed: CalculatorSeed }) {
     window.addEventListener("atlas:currency-change", on);
     return () => window.removeEventListener("atlas:currency-change", on);
   }, []);
+
+  /* THE ADDRESS FOLLOWS (spec section 3): the place and the changed levers, written with replaceState once the reader pauses, so a drag writes one entry
+     and Back leaves the page as it came. */
+  React.useEffect(() => {
+    const href = calculatorHref(place, state, bundle);
+    const t = window.setTimeout(() => {
+      if (window.location.pathname + window.location.search !== href) window.history.replaceState(window.history.state, "", href);
+    }, ADDRESS_DEBOUNCE_MS);
+    return () => window.clearTimeout(t);
+  }, [place, state, bundle]);
 
   const inputs = React.useMemo(() => toEngine(bundle, state), [bundle, state]);
   const r = React.useMemo(() => simulate(inputs), [inputs]);

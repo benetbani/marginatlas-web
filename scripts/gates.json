@@ -446,6 +446,21 @@
       ]
     },
     {
+      "name": "calc-state",
+      "script": "tests/simulator/state.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE ADDRESS (plan 2026-10-13 cost-simulator, Task 5; spec section 3: \"State in the address: country, city and trade, and only the levers that differ from the defaults ...",
+      "reads": [
+        "src/app/(site)/calculator/page.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/lib/simulator/seo.ts",
+        "src/lib/simulator/state.ts",
+        "src/middleware.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [

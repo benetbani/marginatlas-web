@@ -594,7 +594,8 @@ const CACHEABLE_PATTERNS: RegExp[] = [
   /^\/learn($|\/[a-z0-9-]+$)/,
   /^\/world$/,
   /^\/pricing$/,
-  /^\/calculator$/,
+  /* /calculator REMOVED (plan 2026-10-13 cost-simulator, Task 5): the cost simulator reads its address (the place and the reader's changes), so it is
+     the kind of page the note below keeps out, as /decide and /contact are. */
   /* /status REMOVED. It is the uptime dashboard: it declares
      `export const dynamic = "force-dynamic"` AND calls noStore(), because it
      pings each dependency at request time and its only value is being current.
