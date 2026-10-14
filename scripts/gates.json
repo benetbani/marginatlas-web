@@ -388,6 +388,21 @@
       "claims": []
     },
     {
+      "name": "answer-fold",
+      "script": "tests/spine/answer_fold.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SHARED PIECES OF THE JOURNEY (plan 2026-10-13 country-page-journey, Task 3A; spec sections 3 and 5): DetailPanel's answer fold (closed, the head, the count and the plus at the row's end, a 44px ro",
+      "reads": [
+        "src/components/spine/archetypes/DetailPanel.tsx",
+        "src/components/spine/archetypes/FactRows.tsx",
+        "src/components/spine/country/Slot.tsx",
+        "src/components/spine/kit.tsx",
+        "src/lib/spine/slots/types.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

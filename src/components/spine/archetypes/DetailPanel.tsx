@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Fig, InlineDisclosure } from "@/components/spine/kit";
 import type { Provenance } from "@/lib/spine/provenance";
+import type { AnswerType } from "@/lib/spine/country_slots";
 
 /**
  * THE FOUNDER'S PLUS (2026-09-08, his words): "the click and show button was
@@ -52,7 +53,7 @@ import type { Provenance } from "@/lib/spine/provenance";
  *
  * `prov` (plan 2026-10-08, home sections): where the row's figure came from, stamped on it; a row with none stamps nothing.
  */
-export type DetailRow = { label: string; value: string; note?: string; prov?: Provenance | null };
+export type DetailRow = { label: string; value: string; note?: string; prov?: Provenance | null; /** A row with a page of its own links its label (the answer fold only). */ href?: string };
 
 /**
  * `name` is passed straight to the native `<details name>` attribute (review
@@ -63,8 +64,9 @@ export type DetailRow = { label: string; value: string; note?: string; prov?: Pr
  * accident; two panels are meant to open independently unless a caller wants
  * the accordion behaviour on purpose.
  */
-export function DetailPanel({ name, summary, rows, withheldLine }: { name: string; summary: string; rows: DetailRow[]; withheldLine?: string | null }) {
+export function DetailPanel({ name, summary, rows, withheldLine, type }: { name: string; summary: string; rows: DetailRow[]; withheldLine?: string | null; /** The answer fold's type (plan 2026-10-13 country-page-journey): given, the country page's fold; absent, the panel every other page draws. */ type?: AnswerType }) {
   if (!rows || rows.length < 2) return null;
+  if (type) return <AnswerFold name={name} summary={summary} rows={rows} type={type} />;
   return (
     <div data-archetype="detail-panel" data-rows={rows.length}>
       <InlineDisclosure name={name} summary={summary} className="group mt-3 [&>summary]:py-2.5">
@@ -101,6 +103,42 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
             inside the walk, and that is a harness change, not a class here. */}
         {withheldLine ? <p className="mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{withheldLine}</p> : null}
       </InlineDisclosure>
+    </div>
+  );
+}
+
+/**
+ * THE ANSWER FOLD (plan 2026-10-13 country-page-journey, Task 3A; spec section 5; R6 2.3): the country page's plus. Closed on arrival; the
+ * whole summary row a 44px target: the list's head as its label, the count of its rows as its figure ("their count", so no figure shown
+ * closed repeats inside), the plus at the row's end, hidden from a screen reader so the summary's words are its name. Open, two to eight
+ * rows of one type in place, each value stamped data-value for the answer-type gate, a word list (state) in the body face and a figure list
+ * in the figure face; a row with a page of its own links its label and carries the arrow after its value. No drawing, no fold inside a
+ * fold, no terracotta on hover; the browser's own marker is hidden, the signal being the page's one triangle. Every other page keeps the
+ * panel above until its own pass (spec section 9).
+ */
+function AnswerFold({ name, summary, rows, type }: { name: string; summary: string; rows: DetailRow[]; type: AnswerType }) {
+  const words = type === "state";
+  return (
+    <div data-archetype="detail-panel" data-rows={rows.length} data-fold="answer" data-answer={type} className="mt-6 border-t border-[var(--c-border)]">
+      <details name={name} className="group">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 py-2.5 [&::-webkit-details-marker]:hidden">
+          <span data-label className="min-w-0 flex-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{summary}</span>
+          <span data-fold-count className="tabular-nums text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{rows.length}</span>
+          <span aria-hidden="true" className="w-4 text-center text-[length:var(--t-lead)] leading-5 text-[var(--c-muted)] transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <dl className="grid gap-2 pb-3">
+          {rows.map((r, i) => (
+            <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3">
+              <dt data-label className="min-w-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{r.href ? <a href={r.href} className="underline-offset-2 hover:underline">{r.label}</a> : r.label}</dt>
+              <dd className="flex items-baseline justify-end gap-2 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">
+                <span data-value="">{words ? <span className="font-medium">{r.value}</span> : <Fig prov={r.prov}>{r.value}</Fig>}</span>
+                {r.href ? <span aria-hidden="true" className="text-[var(--c-muted)]">→</span> : null}
+              </dd>
+              {r.note ? <dd className="col-span-2 text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{r.note}</dd> : null}
+            </div>
+          ))}
+        </dl>
+      </details>
     </div>
   );
 }

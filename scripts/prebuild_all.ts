@@ -198,6 +198,9 @@ const GATES: Gate[] = [
      fifths, the triangle at its five angles, the five colours in one file the palette gate names, and no other triangle on a country page.
      No browser. */
   { name: "signal", script: "tests/spine/signal.test.ts" },
+  /* THE JOURNEY'S SHARED PIECES (plan 2026-10-13 country-page-journey, Task 3A; spec section 5): the answer fold, the declared list, the
+     focal's signal, the slot's frame. No browser. */
+  { name: "answer-fold", script: "tests/spine/answer_fold.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
