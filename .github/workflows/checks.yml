@@ -1,0 +1,79 @@
+# THE CHECK SERVER (2026-10-14, his word: "Yes, branches only"): every push of a work branch runs the whole gate chain and the full
+# typecheck on GitHub's machine instead of the 8 GB laptop, browser gates included (ATLAS_BROWSER_GATES=1, scripts/lib/local_only.mjs).
+# main is never pushed from a work session and deploys stay his word; this file deploys nothing.
+# BLIND SPOT, stated: gates that read the design repo (E:/atlas/design, not on GitHub) skip loudly here, so a green run here cannot
+# distinguish "those gates pass" from "those gates were not run"; the design machine still runs them before a deploy. Text is drawn by
+# Linux fonts here, so a gate measuring a few pixels from a threshold can read differently than on Windows: a red seen only here is
+# re-read locally before it is acted on.
+name: checks
+
+on:
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      ATLAS_BROWSER_GATES: "1"
+      NEXT_TELEMETRY_DISABLED: "1"
+      # src/lib/supabase.ts builds its client at import, so the renders need a URL. With no repository secret set, a closed local port:
+      # every query fails at once and falls back (withBudget), so only what the database feeds (related links) draws differently from
+      # the laptop's renders. That is this run's blind spot until the two public values are set as repository secrets.
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'http://127.0.0.1:54321' }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'ci-placeholder' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Browser
+        run: npx playwright install --with-deps chromium
+      # The harness renders name Geist and Space Grotesk as installed faces (scripts/harness/render_page.tsx), as the laptop has them;
+      # without them every figure draws a fallback and the FIGURE FACE law reds. The faces come from the Google Fonts repository.
+      - name: Faces
+        run: |
+          mkdir -p ~/.local/share/fonts
+          base=https://github.com/google/fonts/raw/main/ofl
+          curl -fsSL -o ~/.local/share/fonts/SpaceGrotesk.ttf "$base/spacegrotesk/SpaceGrotesk%5Bwght%5D.ttf"
+          curl -fsSL -o ~/.local/share/fonts/Geist.ttf "$base/geist/Geist%5Bwght%5D.ttf"
+          curl -fsSL -o ~/.local/share/fonts/GeistMono.ttf "$base/geistmono/GeistMono%5Bwght%5D.ttf"
+          fc-cache -f
+          fc-list | grep -iE "geist|grotesk"
+      - name: Gate chain
+        run: |
+          set +e
+          node node_modules/tsx/dist/cli.mjs scripts/prebuild_all.ts --concurrency=2 --no-bail > chain.txt 2>&1
+          code=$?
+          echo "exit $code" >> chain.txt
+          { echo '### Gate chain'; echo '```'; tail -60 chain.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $code
+      - name: Typecheck
+        if: always()
+        run: |
+          set +e
+          node --max-old-space-size=8192 node_modules/typescript/bin/tsc --noEmit -p . > tsc.txt 2>&1
+          code=$?
+          echo "exit $code" >> tsc.txt
+          { echo '### Typecheck'; echo '```'; tail -40 tsc.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $code
+      - name: Keep the outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: check-outputs
+          path: |
+            chain.txt
+            tsc.txt
+          retention-days: 14
