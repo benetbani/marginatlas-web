@@ -501,6 +501,19 @@
       "claims": []
     },
     {
+      "name": "country-locks",
+      "script": "tests/spine/country_locks.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE LOCKS FOLLOW THE SLOTS (plan 2026-10-13 country-page-journey, Task 5; spec section 8: \"his ruling 18 by analogy: each stage's first slot open, every later slot of the stage locked when the paywall",
+      "reads": [
+        "src/components/spine/country/country-view.tsx",
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/slots/locks.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

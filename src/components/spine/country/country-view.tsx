@@ -10,8 +10,9 @@
  * page does not draw. A slot without its data omits itself: no seat, no "Not known yet". Under the zones, the UK's sources line, the report
  * line and the thin page's notify ask, as before.
  *
- * `locked` (the paywall's form of the page) is not read here: the page draws open, and scripts/harness/check_paywall.mjs reds on it until
- * the locks follow the slots.
+ * `locked`, the paywall's form of the page (UK pages alone, his ruling 27): every slot after its stage's first draws as its LockedSection,
+ * the slot's stamps on it (src/lib/spine/slots/locks.ts), and where the trades' slot locks, its trade pages stand as free doors after the
+ * close (his ruling of 2026-10-05 on PARKED P20.1), so locking cuts no path.
  * SampleTag stays imported: scripts/verify_sample_tags.ts reads this file's source for the honesty marker of the country seeds' group.
  * No em-dashes, no raw hex, tokens only.
  */
@@ -22,6 +23,9 @@ import { STAGES, slotDef, stageOfSlot } from "@/lib/spine/country_slots";
 import { planCountry, type PlannedSlot } from "@/lib/spine/slots/plan";
 import { composeZones } from "@/lib/spine/slots/zones";
 import { marginCardFromRows } from "@/lib/spine/margin_rows";
+import { lockedSlots, lockLineKey, SLOT_STAND_IN } from "@/lib/spine/slots/locks";
+import { LockedSection } from "@/components/spine/LockedSection";
+import { FreeDoors } from "@/components/spine/FreeDoors";
 import { MastheadSlots } from "./slots/StageOrient";
 import { CustomersSlot, SpendSlot, TradesSlot, MarginsSlot } from "./slots/StageMarket";
 import { OpenSlot } from "./slots/StageOpen";
@@ -122,12 +126,12 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
   const name: string | undefined = d.meta?.country_name;
   const iso2: string | undefined = typeof d.meta?.iso2 === "string" ? d.meta.iso2 : undefined;
   if (!name || !iso2) return null;
-  void locked;
   /* The page's own address from the resolver the country route checks (geo-link-construction): the notify ask's key. */
   const ownPath = countryPageTarget(iso2)?.href ?? null;
   /* THE TRADES' MARGINS FROM THE SEED (slot 5b, the controller's ruling on Q1): the money block's live rows, as the margin card read them. */
   const margins = { card: marginCardFromRows(Array.isArray(d.money?.list) ? d.money.list : []), tagged: typeof d.money?._meta?.confidence === "string" && d.money._meta.confidence !== "measured" };
   const plan = planCountry(iso2, name, todayIso(), margins);
+  const locks = locked ? lockedSlots(plan.drawn) : null;
   const zones = composeZones(plan.drawn);
   const byId = new Map(plan.slots.map((s) => [s.id as string, s]));
   const chapters = Object.fromEntries(STAGES.filter((g) => g.index && g.heading).map((g) => [g.index as string, { index: g.index as string, heading: g.heading as string }]));
@@ -140,10 +144,28 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
           <Zone key={z.key} tone={zoneTone(i)} split={z.split === "lone" ? "2-1" : z.split} label={z.label} chapter={z.chapter ?? undefined}>
             {z.slots.filter((id) => id !== "where-it-stands").map((id) => {
               const slot = byId.get(id);
-              return slot ? <SlotView key={id} slot={slot} iso2={iso2} /> : null;
+              if (!slot) return null;
+              const def = slotDef(id);
+              return locks?.has(id) ? (
+                <LockedSection key={id} id={def.domId} title={def.heading} icon={def.icon ?? "change"} kind={SLOT_STAND_IN[id]} lineKey={lockLineKey(id)} stamp={{ "data-slot": def.id, "data-stage": String(stageOfSlot(id).n), "data-answer": def.type }} />
+              ) : (
+                <SlotView key={id} slot={slot} iso2={iso2} />
+              );
             })}
           </Zone>
         ))}
+        {/* THE TRADES' PAGES, FREE (his ruling of 2026-10-05 on PARKED P20.1): where the trades' slot locks, every London trade page its bars and
+            its plus open stands by name after the close, outside the chapters. */}
+        {(() => {
+          const trades = plan.slots.find((s) => s.id === "trades");
+          if (!locks?.has("trades") || !trades || trades.id !== "trades") return null;
+          const doors = [...trades.model.drawing.drawn.map((r) => ({ name: r.name, href: r.href ?? "" })), ...trades.model.more.flatMap((l) => l.rows).map((r) => ({ name: r.label, href: r.href ?? "" }))].filter((door) => door.href);
+          return (
+            <Zone key="trade-doors" tone={zoneTone(zones.length)} split="wide" label={COPY.londonSales.kicker}>
+              <FreeDoors id="trades" title={COPY.londonSales.kicker} doors={doors} />
+            </Zone>
+          );
+        })()}
       </div>
       {/* THE UK'S SOURCES, ONE LINE UNDER THE BANDS (plan 06, task B4): the licence's sentence and the link to the one sources page; nothing off the UK. */}
       <SourcesFoot iso2={iso2} />

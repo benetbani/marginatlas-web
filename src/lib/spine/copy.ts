@@ -2929,6 +2929,14 @@ export const COPY = {
       cities: "The UK’s cities, side by side.",
       locals: "Things worth knowing before you open here.",
       spend: "What households here spend their money on.",
+      /* The country page's slots that lock (plan 2026-10-13 country-page-journey, Task 5): spend, running-costs and peers hold their lines above. */
+      /* Keyed apart from the city page's "trades" line below (src/lib/spine/slots/locks.ts, lockLineKey). */
+      "london-trades": "What London’s trades take in a year.",
+      margins: "What share of each sale the trades keep.",
+      credit: "What borrowing costs, and how customers pay you.",
+      filings: "What you must file, and when it is due.",
+      exit: "What failing costs you, and how long it takes.",
+      changes: "What changed in the rules, and what is coming.",
       "character-people": "How people here like to do business.",
       gates: "The permits this city asks for before you open.",
       market: "Who already trades here, and how crowded it is.",

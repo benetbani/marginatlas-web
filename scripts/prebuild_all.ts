@@ -225,6 +225,9 @@ const GATES: Gate[] = [
   /* THE COMPOSITION (plan 2026-10-13 country-page-journey, Task 4; spec section 6): every set of the slots composes into zones that pair only
      two neighbouring slots of one stage, with D3 clean, and the four countries plan the slots the replicability gate expects. No browser. */
   { name: "country-zones", script: "tests/spine/country_zones.test.ts" },
+  /* THE LOCKS FOLLOW THE SLOTS (plan 2026-10-13 country-page-journey, Task 5; his ruling 18 by analogy): each stage's first slot open, every
+     later one its LockedSection, the trades' pages free. No browser. */
+  { name: "country-locks", script: "tests/spine/country_locks.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
