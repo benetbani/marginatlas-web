@@ -186,6 +186,9 @@ const GATES: Gate[] = [
   /* THE COST SIMULATOR'S DEFAULTS (plan 2026-10-13 cost-simulator, Task 2): R7 4.1 row for row, city then country then none with its line, the
      no-fill sweep, a city with no rent (Review Focus 3), London's and England's break-even on model.ts. Offline: the shards and the slices. */
   { name: "calc-defaults", script: "tests/simulator/defaults.test.ts" },
+  /* THE PLACE SWITCH'S ROUTE (plan 2026-10-13 cost-simulator, Task 3): 404 on an unknown place, the defaults whole over the wire, the route
+     rate-limited and reading the place alone, the edge's table holding it. Offline: a stub loader and the shards. */
+  { name: "calc-api", script: "tests/simulator/api.test.ts" },
   /* THE TYPE FLOOR (plan 2026-10-12 rhythm-air-inside, Task 1A; his choice of 2026-10-12, "Air inside only": small text rises to 14px).
      On every spine render pages-fresh writes, at 1280, characters under 14px outside scripts/harness/type_floor_allow.json are 20% or
      less of the visible characters, read as R1 read the renders (scripts/lib/type_floor.mjs states its blind spot). No browser. Its

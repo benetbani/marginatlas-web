@@ -331,6 +331,19 @@
       "claims": []
     },
     {
+      "name": "calc-api",
+      "script": "tests/simulator/api.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PLACE SWITCH'S ROUTE (plan 2026-10-13 cost-simulator, Task 3; spec section 3: \"a place switch fetches its defaults from one API route ...",
+      "reads": [
+        "src/app/api/calculator/route.ts",
+        "src/lib/routing/route_shapes.ts",
+        "src/lib/simulator/respond.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [
