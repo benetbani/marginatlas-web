@@ -489,6 +489,18 @@
       "claims": []
     },
     {
+      "name": "country-zones",
+      "script": "tests/spine/country_zones.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COMPOSITION (plan 2026-10-13 country-page-journey, Task 4; spec section 6: \"The stage order is the phone's one column; a desktop pair joins only two neighbouring slots of one stage\"; section 3: \"A",
+      "reads": [
+        "src/lib/spine/slots/plan.ts",
+        "src/lib/spine/slots/zones.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [
@@ -2176,9 +2188,9 @@
         "scratchpad/harness/pages/country-GB.html",
         "scratchpad/harness/pages/home-gb.html",
         "src/components/spine/country/FirmsLast.tsx",
-        "src/components/spine/country/country-view.tsx",
         "src/components/spine/home/home-view.tsx",
-        "src/lib/spine/copy.ts"
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/slots/last.ts"
       ],
       "claims": []
     },
@@ -2193,7 +2205,8 @@
         "src/components/spine/country/country-view.tsx",
         "src/components/spine/interact/SurvivalCurve.tsx",
         "src/components/spine/sections/Obstacles.tsx",
-        "src/lib/spine/sections/first_years.ts"
+        "src/lib/spine/sections/first_years.ts",
+        "src/lib/spine/slots/last.ts"
       ],
       "claims": []
     },

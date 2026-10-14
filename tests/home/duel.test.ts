@@ -98,9 +98,9 @@ if (cell && r0) check(`London restaurants' page prints ${(Math.round(r0.value) /
 
 /* ON THE UK PAGE (plan 2026-10-09, home introduction, Task 4): /gb's chapter 04, beside where new firms last, while the item is fresh. */
 const gb = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
-if (gb && buildDuel()) check("/gb's render carries the duel beside where new firms last, its middle stamped from the feed", /id="duel"/.test(gb) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(gb) && gb.indexOf('id="firms-last"') > -1 && gb.indexOf('id="firms-last"') < gb.indexOf('id="duel"'));
-/* PAST ITS WINDOW (plan 2026-10-11 gb-ch04-lone-state): the duel is gone from /gb, its section, its rail entry and every stamp from its item. */
-else if (gb) check("past its window /gb's render carries no duel: no section, no rail entry, no stamp from the feed's item", !/id="duel"/.test(gb) && !/href="#duel"/.test(gb) && !/data-src="editorial\/editorial_feed\.json:fail-most/.test(gb));
+if (gb && buildDuel()) check("/gb's render carries the duel's rows behind slot 12's plus, its middle stamped from the feed", gb.slice(gb.indexOf('data-slot="lasting"')).includes(`>${COPY.journey.more.failMost}<`) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(gb));
+/* PAST ITS WINDOW (plan 2026-10-11 gb-ch04-lone-state; plan 2026-10-13 country-page-journey, Task 4): no plus of it, no stamp from its item. */
+else if (gb) check("past its window /gb's render carries no duel: no plus of it, no stamp from the feed's item", !gb.includes(`>${COPY.journey.more.failMost}<`) && !/data-src="editorial\/editorial_feed\.json:fail-most/.test(gb));
 else console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's check did not run");
 
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer

@@ -116,22 +116,14 @@ if (built) {
   check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
 }
 
-/* THE UK PAGE'S RENDER (pages-fresh renders it first in the chain): the level after chapter 04's first, where new firms last beside which
-   trades fail most. */
-const VIEW_AT = { file: "src/components/spine/country/country-view.tsx", remedy: "seat FirmsLast in the zone keyed lasts after chapter 04's first level: split 1-1, even while both draw, FirmsLast then Duel" };
+/* THE UK PAGE'S RENDER (plan 2026-10-13 country-page-journey, Task 4): where new firms last stands behind slot 12's plus, "By city", each city
+   a row that opens its page, the lead stamped. */
+const VIEW_AT = { file: "src/lib/spine/slots/last.ts", remedy: "keep where new firms last behind slot 12's plus as one row a city, stamped, each a door to its page" };
 const gbRender = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
 if (gbRender && built) {
-  const at = gbRender.indexOf(`data-zone-label="${COPY.home.firmsLast.kicker}"`);
-  const zone = at < 0 ? "" : gbRender.slice(gbRender.lastIndexOf("<section", at), gbRender.indexOf("<section data-zone", at + 1));
-  const years = gbRender.indexOf('id="first-years"');
-  check("/gb draws where new firms last in a level of chapter 04 after its first, its lead stamped", years > 0 && at > years && /id="firms-last"/.test(zone) && new RegExp(`data-src="home/city_survival\\.json:${built.lead.key}"`).test(zone), VIEW_AT);
-  /* ONE LEVEL, TWO STATES (plan 2026-10-11 gb-ch04-lone-state; QUEUE gb:ch04-lone-state; final review M6). While the feed's item is fresh,
-     two even halves, where new firms last first; past its 45 days (from 2026-11-15 for the item of 2026-09-30) the duel leaves and where new
-     firms last stands alone in the zones' LONE two thirds: one cell, no even, no duel in the rail. The render is pages-fresh's, so from that
-     day this reads the lone level the site serves; scripts/harness/fake_today.cjs draws it before then. */
-  const cells = (zone.match(/data-zone-cell=""/g) ?? []).length;
-  if (/id="duel"/.test(zone)) check("the level is two halves with the duel, even, where the duel is fresh", /^<section data-zone="1-1"/.test(zone) && /data-zone-even/.test(zone) && cells === 2 && zone.indexOf('id="firms-last"') < zone.indexOf('id="duel"'), VIEW_AT);
-  else check(`past the duel's window the level is lone: where new firms last in its one cell, no even, no duel in the rail (${cells} cell(s))`, /^<section data-zone="lone"/.test(zone) && !/data-zone-even/.test(zone) && cells === 1 && !gbRender.includes('href="#duel"'), VIEW_AT);
+  const slot = gbRender.slice(gbRender.indexOf('data-slot="lasting"'), gbRender.indexOf('data-slot="exit"'));
+  const fold = slot.slice(slot.indexOf(`>${COPY.journey.more.byCity}<`));
+  check("/gb draws where new firms last behind slot 12's plus, one row a city, the lead stamped, each a door", slot.length > 0 && fold.length > 0 && new RegExp(`data-src="home/city_survival\\.json:${built.lead.key}"`).test(fold) && built.rows.every((r) => fold.includes(`href="${r.href}"`)), VIEW_AT);
 } else if (!gbRender) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's checks did not run");
 
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer

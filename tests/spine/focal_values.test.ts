@@ -129,12 +129,13 @@ if (existsSync(GB)) {
   const page = readFileSync(GB, "utf8");
   /* A card's markup: from its id to the next card's id (the survival card stands before the obstacles card) or the next zone. */
   const at = (id: string, until: string) => { const i = page.indexOf(`id="${id}"`); if (i < 0) return ""; const j = page.indexOf(until, i + 1); return page.slice(i, j < 0 ? undefined : j); };
-  const obsPart = at("obstacles", "<section data-zone");
-  const cols = (obsPart.match(/data-col="/g) ?? []).length;
-  const colLabels = (obsPart.match(/<span data-mark-label="true"[^>]*>\d+%<\/span>/g) ?? []).length;
-  const rowLabels = [...obsPart.matchAll(/<li data-row="[^"]*"[\s\S]*?<\/li>/g)].filter((m) => />\d+%<\/span>/.test(m[0])).length;
-  check(`/gb's render prints every obstacle's share in both forms (${colLabels} column labels of ${cols}, ${rowLabels} rows)`, cols > 0 && colLabels === cols && rowLabels === cols, { file: "src/components/spine/country/country-view.tsx", remedy: "render the UK page (bash scratchpad/reform/render_some.sh \"country GB\") after Obstacles prints every share" });
-  const svPart = at("first-years", 'id="obstacles"');
+  /* THE OBSTACLES BEHIND SLOT 12'S PLUS (plan 2026-10-13 country-page-journey, Task 4): one row each, its share printed. */
+  const lasting = page.slice(page.indexOf('data-slot="lasting"'), page.indexOf('data-slot="exit"'));
+  const back = lasting.slice(lasting.indexOf(`>${COPY.journey.more.back}<`));
+  const shares = (obs?.items ?? []).filter((o) => back.includes(`>${o.pct}%<`)).length;
+  check(`/gb's render prints every obstacle's share behind slot 12's plus, one row each (${shares} of ${obs?.items.length ?? 0})`, !!obs && shares === obs.items.length, { file: "src/lib/spine/slots/last.ts", remedy: "keep every obstacle a row of slot 12's plus, its share printed" });
+  /* The curve before the slot's first plus. */
+  const svPart = lasting.slice(0, lasting.indexOf('data-fold="answer"'));
   const pts = Number(/data-archetype="survival-curve"[^>]*data-points="(\d+)"/.exec(svPart)?.[1] ?? 0);
   const ptLabels = (svPart.match(/<span data-mark-label="true"[^>]*>\d+%<\/span>/g) ?? []).length;
   check(`/gb's render labels every point, the start too (${ptLabels} labels for ${pts} points and the start)`, pts > 0 && ptLabels === pts + 1, { file: "src/components/spine/country/country-view.tsx", remedy: "render the UK page (bash scratchpad/reform/render_some.sh \"country GB\") after SurvivalCurve labels its start and its last point" });

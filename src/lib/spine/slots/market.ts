@@ -12,6 +12,8 @@ import { buildCountrySpend, type CountrySpendData } from "@/lib/spine/country_sp
 import { buildAgeMix, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildLondonTradeSales, londonMiddleSales } from "@/lib/spine/country_depth_rows";
 import type { MarginCard } from "@/lib/spine/margin_rows";
+import { getCountryProfile } from "@/lib/economic_profile";
+import type { Provenance } from "@/lib/spine/provenance";
 import { FOLD_MAX, list, present, type SlotModel, type SlotRow } from "./types";
 
 const J = COPY.journey;
@@ -34,10 +36,14 @@ export function buildCustomersSlot(iso2: string): SlotModel<CustomersDrawing> | 
   const cards = buildCityCards(iso2);
   const shown = cards ? cardsShown(cards.cards.length) : 0;
   const past: SlotRow[] = (cards?.cards ?? []).slice(shown).filter((c) => typeof c.payUsd === "number" && c.payUsd > 0).map((c) => ({ key: c.id, label: c.name, value: usd(c.payUsd as number), prov: c.payProv ?? null, href: c.href }));
-  const tenths: SlotRow[] = strip.marks.filter((m) => m.key !== "typical").map((m) => ({ key: m.key, label: m.label, value: usd(m.value) }));
+  /* Each pay stamped with the profile field it is read from (the customers strip's own fields, range_rows.ts). */
+  const tier = getCountryProfile(iso2).tier;
+  const prov = (field: string): Provenance => ({ src: `economic_indicators/country_profile_v2.json:${field}`, kind: tier === "A" ? "looked up" : "estimate" });
+  const FIELD: Record<string, string> = { p10: "wage_p10_usd", p90: "wage_p90_usd" };
+  const tenths: SlotRow[] = strip.marks.filter((m) => m.key !== "typical").map((m) => ({ key: m.key, label: m.label, value: usd(m.value), prov: FIELD[m.key] ? prov(FIELD[m.key]) : null }));
   return {
     id: "customers",
-    lead: { figure: usd(typical.value), words: J.slots.customers.words },
+    lead: { figure: usd(typical.value), words: J.slots.customers.words, prov: prov("median_wage_full_time_usd") },
     rows: null,
     more: present([list("cities", J.more.cities, "money", past), list("tenths", J.more.tenths, "money", tenths)]),
     drawing: { cards: cards ? { ...cards, cards: cards.cards.slice(0, shown) } : null },

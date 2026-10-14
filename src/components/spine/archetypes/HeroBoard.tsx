@@ -151,7 +151,7 @@ export function HeroBoard({ id = "take", board, answers, slotted = false }: { id
                 <div key={r.key} data-row={r.key} {...(r.placement || r.readout ? { "data-readout-figure": r.unit ? `${r.value} ${r.unit}` : r.value, "data-readout-words": r.readout ?? r.placement } : {})} {...(r.placed ? { "data-placed": r.placed } : {})} {...(r.noSignal ? { "data-no-signal": r.noSignal } : {})} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
                   <Ico id={r.icon} tone="terra" />
                   <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
-                  <span data-figure="" data-value="" className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
+                  <span data-figure="" className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]" data-value="">
                     {r.value}
                     {/* A real space before the unit, not a margin (2026-09-26): read aloud or copied, "21days" was one word. */}
                     {r.unit ? <>{" "}<span className="text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{r.unit}</span></> : null}
