@@ -13,7 +13,7 @@ const dateText = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateStrin
 
 export function ReportFoot({ path, checked = null }: { path: string | null | undefined; checked?: string | null }) {
   return (
-    <p data-page-foot className="pt-6 pb-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [[data-sources-foot]+&]:pt-2">
+    <p data-page-foot data-line="" className="pt-6 pb-6 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)] [[data-sources-foot]+&]:pt-2">
       <a data-report="1" href={reportHref(path)} rel="nofollow" className="tap-y whitespace-nowrap underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)]">
         {COPY.pageFoot.report}
       </a>

@@ -132,7 +132,7 @@ export function Gauge({ value, sub, endLabels, w = 150 }: { value: number; sub?:
         </>) : null}
         <text x={cx} y={118} textAnchor="middle" fill="#1a1a1a" fontSize={24} style={{ fontFamily: "var(--font-num)", fontWeight: 600 }}>{v}</text>
       </svg>
-      {sub ? <div className="-mt-1 text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</div> : null}
+      {sub ? <div className="-mt-1 text-[length:var(--t-body)] text-[var(--c-muted)]">{sub}</div> : null}
     </div>
   );
 }
@@ -298,6 +298,10 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
      the whole bar exists to deliver and the sibling page labels it at 7%. */
   const hNum = Number((h.match(/h-(\d+)/) || [])[1] || 0);
   const onBar = hNum >= 7;
+  /* THE KEPT SLICE'S FLOOR, AT THE TYPE FLOOR (plan 2026-10-12 rhythm-air-inside, Task 3): the on-bar figure is reader text now (14, where it drew at 10), and a one-digit figure at 14
+     is about 21px wide. 4% of a phone's bar is 12px, so the figure was clipped by its own segment; from 8% it stands, and under it the legend carries the figure, as it already
+     does for every segment this rule leaves bare. */
+  const KEPT_MIN = 8;
   const share = (s: StackSeg) => (normalize ? (s.pct / sum) * 100 : s.pct);
   /* White on a dark segment, ink on a light one, from the segment's own colour. */
   const lightOn = (hex: string) => {
@@ -313,7 +317,7 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
       <div data-idea="I3" className={`flex ${h} overflow-hidden ${rounded} border border-[var(--c-border)]${className ? " " + className : ""}`} role="img" aria-label={ariaLabel}>
         {ordered.map((s) => {
           const pctOfBar = share(s);
-          const show = onBar && (pctOfBar >= 12 || (isKept(s) && pctOfBar >= 4));
+          const show = onBar && (pctOfBar >= 12 || (isKept(s) && pctOfBar >= KEPT_MIN));
           return (
             <div
               key={s.label}
@@ -324,7 +328,7 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
               {show ? (
                 <span
                   aria-hidden
-                  className="fig whitespace-nowrap text-[length:var(--t-mark)] font-semibold leading-none"
+                  className="fig whitespace-nowrap text-[length:var(--t-body)] font-semibold leading-none"
                   style={{ color: lightOn(s.color) ? "#fff" : "var(--c-ink)" }}
                 >
                   {s.pct}%
@@ -348,9 +352,9 @@ export function StackBar({ segments, sort = true, keptLabel, h = "h-8", rounded 
           exactly where the bar failed to show it. */}
       {legend ? (
         <div className={legendClassName}>{ordered.map((s) => {
-          const labelled = onBar && (share(s) >= 12 || (isKept(s) && share(s) >= 4));
+          const labelled = onBar && (share(s) >= 12 || (isKept(s) && share(s) >= KEPT_MIN));
           return (
-            <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+            <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]">
               <span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />
               {s.label}
               {labelled ? null : <> <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig></>}
@@ -393,14 +397,14 @@ export function ShareStack({ segments }: { segments: ShareSeg[] }) {
       <div className="flex h-8 overflow-hidden rounded-lg border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
         {colored.map((s) => (
           <div key={s.label} className="flex h-full items-center justify-center overflow-hidden border-r border-white/70 px-2 last:border-0" style={{ width: `${(s.pct / sum) * 100}%`, background: s.color }}>
-            {inline ? <span className="truncate text-[length:var(--t-micro)] font-semibold text-[var(--c-ink)]">{s.label} <Fig>{s.pct}%</Fig></span> : null}
+            {inline ? <span className="truncate text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]">{s.label} <Fig>{s.pct}%</Fig></span> : null}
           </div>
         ))}
       </div>
       {!inline ? (
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
           {colored.map((s) => (
-            <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+            <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]">
               <span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />
               {s.label} <Fig className="text-[var(--c-ink)]">{s.pct}%</Fig>
             </span>
@@ -462,7 +466,7 @@ export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: n
           why the gate never flagged it, but it is given the same class for the
           same reason its neighbours now carry it: three figures reading down (or
           across) a strip like this are exactly what tabular numerals are for. */}
-      <div className="mt-1 flex flex-wrap justify-between gap-x-3 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span className="fig">{fmt(p10)}</span><span className="fig font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span className="fig">{fmt(p90)}</span></div>
+      <div data-type-allow="scale-ends" className="mt-1 flex flex-wrap justify-between gap-x-3 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span className="fig">{fmt(p10)}</span><span className="fig font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span className="fig">{fmt(p90)}</span></div>
     </div>
   );
 }
@@ -776,12 +780,12 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
       {endLabels ? (
         <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
           <span />
-          <div className="flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
+          <div data-type-allow="scale-ends" className="flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
         </div>
       ) : null}
       {rows.map(([label, pos, word, sub]) => (
       <div key={label} className="hov -mx-2 grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 rounded-md px-2 py-2 sm:grid-cols-[150px_1fr]">
-        <span className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[length:var(--t-micro)] text-[var(--c-muted)]">{sub}</span> : null}</span>
+        <span className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[length:var(--t-body)] text-[var(--c-muted)]">{sub}</span> : null}</span>
         <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: TRACK }}>
           <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
             <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
@@ -789,7 +793,7 @@ export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, st
           {/* TABULAR NUMERALS. Art direction F1: these values stack vertically down
               the scale, one per row, and proportional numerals make 3/10 and 8/10
               sit at visibly different widths so the column reads as ragged. */}
-          <span className="fig absolute -top-5 whitespace-nowrap text-[length:var(--t-micro)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%`, transform: `translateX(${anchor(pos)})` }}>{word}</span>
+          <span className="fig absolute -top-5 whitespace-nowrap text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%`, transform: `translateX(${anchor(pos)})` }}>{word}</span>
         </div>
       </div>))}
     </div>
@@ -803,7 +807,7 @@ export function Meter({ value, left, right }: { value: number; left: string; rig
         <div className="h-full rounded-full" style={{ width: `${value}%`, background: TERRA }} />
         <div className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${value}%`, background: "#1a1a1a" }} />
       </div>
-      <div className="mt-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{left}</span><span>{right}</span></div>
+      <div data-type-allow="scale-ends" className="mt-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{left}</span><span>{right}</span></div>
     </div>
   );
 }
@@ -830,8 +834,8 @@ export function SampleTag({ note }: { note?: string }) {
   return (
     <span className="inline-flex items-center gap-2 rounded-full border border-dashed border-[var(--c-line-strong)] bg-[var(--c-soft)] px-2 py-0.5">
       <AtlasMark id="sample" size={12} />
-      <span className="text-[length:var(--t-micro)] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span>
-      {note ? <span className="text-[length:var(--t-micro)] normal-case tracking-normal text-[var(--c-muted)]">{note}</span> : null}
+      <span className="text-[length:var(--t-body)] font-semibold uppercase tracking-wider text-[var(--c-muted)]">sample</span>
+      {note ? <span className="text-[length:var(--t-body)] normal-case tracking-normal text-[var(--c-muted)]">{note}</span> : null}
     </span>
   );
 }
@@ -919,8 +923,8 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
      words alone are not enough; the trait name leads, the explanatory poles
      sit under the track's ends). Rows without a name keep the compact form. */
   const dotBg = dot === "terra" ? "var(--terra)" : "var(--c-ink)";
-  const nameCls = scale === "body" ? "text-[length:var(--t-body)]" : "text-[length:var(--t-micro)]";
-  const poleCls = scale === "body" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-micro)] text-[var(--c-muted)]";
+  const nameCls = "text-[length:var(--t-body)]";
+  const poleCls = scale === "body" ? "text-[length:var(--t-body)] text-[var(--c-ink2)]" : "text-[length:var(--t-body)] text-[var(--c-muted)]";
   return (
     <div data-idea="I1" className="divide-y divide-[var(--c-border)]">
       {rows.map((r: any, i: number) => {
@@ -960,12 +964,12 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
         }
         return (
           <div key={i} className="hov -mx-2 grid grid-cols-[130px_1fr_118px] items-center gap-2 rounded-md px-2 py-2">
-            <span className={`flex items-center text-[length:var(--t-micro)] leading-tight ${gradient ? "text-[var(--c-muted)]" : "text-[var(--c-ink2)]"}`}>
+            <span data-type-allow="spectra-poles" className={`flex items-center text-[length:var(--t-micro)] leading-tight ${gradient ? "text-[var(--c-muted)]" : "text-[var(--c-ink2)]"}`}>
               {gloss ? <InfoTip gloss={gloss} className="mr-2" /> : null}
               {r.left_label}
             </span>
             {track}
-            <span className={`text-right text-[length:var(--t-micro)] leading-tight ${gradient ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{r.right_label}</span>
+            <span data-type-allow="spectra-poles" className={`text-right text-[length:var(--t-micro)] leading-tight ${gradient ? "font-medium text-[var(--c-ink)]" : "text-[var(--c-ink2)]"}`}>{r.right_label}</span>
           </div>
         );
       })}
@@ -977,7 +981,7 @@ export function SpectraTable({ rows, gradient = false, glossFor, dot = "ink", mi
  * neutral variant onto the spine CSS vars via tailwind-merge. */
 export function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <Pill variant="neutral" className="border-[color:var(--c-border)] bg-[color:var(--c-soft)] px-2 py-0.5 text-[length:var(--t-micro)] font-normal text-[color:var(--c-ink2)]">
+    <Pill variant="neutral" className="border-[color:var(--c-border)] bg-[color:var(--c-soft)] px-2 py-0.5 text-[length:var(--t-body)] font-normal text-[color:var(--c-ink2)]">
       {children}
     </Pill>
   );
@@ -1118,7 +1122,7 @@ export function Narrow({ children }: { children: React.ReactNode }) {
 }
 export function Spectrum({ rows }: { rows: any[] }) {
   return <div data-idea="I1" className="space-y-3">{rows.map((r: any, i: number) => (
-    <div key={i}><div className="mb-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span>{r.left_label}</span><span>{r.right_label}</span></div>
+    <div key={i}><div data-type-allow="spectra-poles" className="mb-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span>{r.left_label}</span><span>{r.right_label}</span></div>
       <div className="relative h-1.5 rounded-full" role="img" aria-label={`${r.left_label} to ${r.right_label}`} style={{ background: "linear-gradient(90deg,#fb8469,#d4d4d4 52%,#737373)" }}><div className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[var(--c-ink)]" style={{ left: `${Math.round((r.position_0_1 || 0) * 100)}%`, boxShadow: "0 0 0 1px #e3e3e3" }} /></div></div>))}</div>;
 }
 export function CatRows({ rows }: { rows: Array<[string, any]> }) {
@@ -1192,7 +1196,7 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss, level
 /** THE FIGURE'S WORDS (plan 2026-10-12 rhythm-air-inside, Task 2C fix round 1): the line that says what a figure is, 8 under it (DISTANCES 4), marked `data-focal-words` so the line-rule gate reads it as the figure's own. Focal draws it; a head that
  *  stands the figure beside its words (the spend calendar's, from 560px of card) places it itself and `className` drops the 8 there. */
 export function FocalWords({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <p data-focal-words="" className={`mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${className ? ` ${className}` : ""}`}>{children}</p>;
+  return <p data-focal-words="" className={`mt-2 text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]${className ? ` ${className}` : ""}`}>{children}</p>;
 }
 
 /** THE FOCAL BLOCK (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1; MODEL PART 4: one figure at 30 a section): the section's
@@ -1208,7 +1212,7 @@ export function Focal({ figure, words, placement, prov, accent = false, live = f
       <div data-focal="1" {...(live ? { "aria-live": "polite" as const } : {})} className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</div>
       {words ? <FocalWords className={wordsClassName}>{words}</FocalWords> : null}
       {/* The site's one placement sentence (placement.ts), under the figure's words, where the figure stands on a scale of the countries (PART 6, "Higher than {n} countries in ten."). */}
-      {placement ? <p data-placement="" className="mt-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">{placement}</p> : null}
+      {placement ? <p data-placement="" className="mt-1 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{placement}</p> : null}
     </div>
   );
 }
@@ -1236,7 +1240,7 @@ export function Stat({ value, label, sub, size = "support", accent = false }: { 
           focal branch; the support branch sits on the body rung and needs no
           opt-out. City finding #3 (2026-08-30), T1. */}
       <div data-typography={focal ? "custom" : undefined} className={`fig leading-none ${focal ? "text-[38px] md:text-[42px]" : "text-[length:var(--t-body)]"}`} style={{ color: accent ? "var(--terra-text)" : "var(--c-ink)" }}>{value}</div>
-      {sub ? <div className={`text-[var(--c-muted)] ${focal ? "mt-2 text-[length:var(--t-body)]" : "mt-0.5 text-[length:var(--t-micro)]"}`}>{sub}</div> : null}
+      {sub ? <div className={`text-[var(--c-muted)] ${focal ? "mt-2 text-[length:var(--t-body)]" : "mt-0.5 text-[length:var(--t-body)]"}`}>{sub}</div> : null}
     </div>
   );
 }
@@ -1445,7 +1449,7 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
       {legendItems.length > 0 ? (
         <ol className="mt-2 hidden grid-cols-2 gap-x-6 gap-y-1 sm:grid">
           {legendItems.map((p) => (
-            <li key={`lg-${p.i}`} className="flex items-baseline gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]">
+            <li key={`lg-${p.i}`} className="flex items-baseline gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]">
               <span className="fig shrink-0 text-[var(--c-muted)]">{p.legend}.</span>
               <span className="min-w-0">{p.n.label} <span className="text-[var(--c-muted)]">({uLabel(p.n.at)})</span></span>
             </li>
@@ -1462,11 +1466,11 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
               <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full border-2 border-white" style={{ background: be ? TERRA : "#1b1b1a", boxShadow: be ? "0 0 0 2px rgba(251,132,105,0.35)" : "0 0 0 1px #e7e2df" }} />
               <div className="flex items-baseline justify-between gap-2">
                 <span className={`text-[length:var(--t-body)] ${be ? "font-semibold text-[var(--terra-text)]" : "font-medium text-[var(--c-ink)]"}`}>{n.label}</span>
-                <span className="fig shrink-0 text-[length:var(--t-micro)] text-[var(--c-muted)]">{uLabel(n.at)}</span>
+                <span className="fig shrink-0 text-[length:var(--t-body)] text-[var(--c-muted)]">{uLabel(n.at)}</span>
               </div>
               {/* the right-aligned fig already states the time , a sub that merely repeats
                   it ("day 1" twice on one row) is suppressed on this mobile rail */}
-              {n.sub && n.sub.trim().toLowerCase() !== uLabel(n.at).toLowerCase() ? <div className="text-[length:var(--t-micro)] text-[var(--c-muted)]">{n.sub}</div> : null}
+              {n.sub && n.sub.trim().toLowerCase() !== uLabel(n.at).toLowerCase() ? <div className="text-[length:var(--t-body)] text-[var(--c-muted)]">{n.sub}</div> : null}
             </li>
           );
         })}
@@ -1562,10 +1566,10 @@ export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openW
         {/* BOTH ENDS OF A RULER ARE WRITTEN ALIKE. This one read "0" at the left and
             "WEEK 52" at the right, one bare and one carrying its unit, so a reader
             had to work out that the bare end was also weeks. Notation N6. */}
-        <div className="mt-2 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
+        <div data-type-allow="scale-ends" className="mt-2 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
       </div>
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2">
-        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-micro)] text-[var(--c-ink2)]"><span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
+        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]"><span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
       </div>
     </div>
   );

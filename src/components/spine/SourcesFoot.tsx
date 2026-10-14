@@ -16,7 +16,7 @@ import { UK_SOURCES_FOOT } from "@/lib/spine/uk_sources";
 export function SourcesFoot({ iso2 }: { iso2: string | null | undefined }) {
   if (String(iso2 ?? "").toUpperCase() !== "GB") return null;
   return (
-    <p data-sources-foot className="pt-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
+    <p data-sources-foot data-type-allow="sources-foot" className="pt-6 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">
       {UK_SOURCES_FOOT.line}{" "}
       {/* The link's three words keep to one line: the paragraph measure (about 440px at 12px) broke it after "Sources". */}
       <a href={UK_SOURCES_FOOT.href} className="tap-y whitespace-nowrap underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)]">

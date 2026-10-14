@@ -24,5 +24,5 @@ function hasText(node: React.ReactNode): boolean {
 
 export function Basis({ children, beside = false, className = "" }: { children: React.ReactNode; beside?: boolean; className?: string }) {
   if (!hasText(children)) return null;
-  return <p data-basis="" className={`${beside ? "" : "mt-6 "}text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${className ? ` ${className}` : ""}`}>{children}</p>;
+  return <p data-basis="" className={`${beside ? "" : "mt-6 "}text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]${className ? ` ${className}` : ""}`}>{children}</p>;
 }

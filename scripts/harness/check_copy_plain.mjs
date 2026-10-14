@@ -16,7 +16,9 @@
  *                the trade anywhere", "the model", placeholder, "as on the
  *                opening card", "worked from" (one per word per card);
  *   LINES        more than one small supporting line under the figure (a line
- *                is a paragraph at the micro rung, 13px or less; the notes of
+ *                is a paragraph at the micro rung, 13px or less; or one the
+ *                type floor lifted to 14, marked data-line, data-basis or
+ *                data-placement; the notes of
  *                a prose card are its content and are not counted), one red
  *                per line past the first;
  *   TITLE LONG   a card title over four words (its h3, or a Rail's h2 where the section is the page's own level, the home's
@@ -123,7 +125,10 @@ function inPage(READER) {
     for (const [name, re] of BANNED) if (re.test(text)) red(id, "BANNED", `"${name}" in the card's text`);
     const title = card.querySelector("h2[data-rail-title]") ?? card.querySelector("h3");
     if (title && !hidden(title) && words(title.textContent) > TITLE_MAX) red(id, "TITLE LONG", `"${title.textContent.trim()}", ${words(title.textContent)} words`);
-    const lines = [...card.querySelectorAll("p")].filter((p) => !hidden(p) && !p.closest("table,li,dl,[role='table'],[data-note]") && parseFloat(getComputedStyle(p).fontSize) <= MICRO_MAX && p.textContent.trim());
+    /* A LIFTED LINE IS STILL A LINE (plan 2026-10-12 rhythm-air-inside, Task 3): the type floor raised supporting lines to 14, and a test by
+       size alone would read none of them; the floor marks each one it lifts (data-line; the kit's Basis and Focal's placement carry their own
+       marks), so the law reads the same lines it read before. */
+    const lines = [...card.querySelectorAll("p")].filter((p) => !hidden(p) && !p.closest("table,li,dl,[role='table'],[data-note]") && (parseFloat(getComputedStyle(p).fontSize) <= MICRO_MAX || p.matches("[data-line], [data-basis], [data-placement]")) && p.textContent.trim());
     /* The page's hero is two or three columns, and a line under the figure and one under the rows do not stand in one place: it may hold two. */
     const cap = card.getAttribute("data-level") === "page" ? 2 : 1;
     lines.slice(cap).forEach((p) => red(id, "LINES", `a supporting line past the ${cap === 2 ? "hero's two" : "first"}: "${p.textContent.trim().slice(0, 70)}"`));

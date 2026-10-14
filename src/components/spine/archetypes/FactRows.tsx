@@ -11,7 +11,7 @@
  *    its figure (the model laws' LABEL GAP; a right-aligned value in a 28ch row measured 220px from a short label) (PART 5,
  *    "never justify-between across a card wider than 420px"); under 420px the row is [1fr auto], the only place PART 5 allows.
  *  - 14 ON 20 FOR THE WORDS, 16 FOR THE FIGURE (the lead rung: the section's own figure above holds the 30, and nothing stands
- *    between 16 and 30 under it), 12 ON 16 FOR A NOTE; tabular figures, right-aligned in their column (DISTANCES 5.7, rule 2).
+ *    between 16 and 30 under it), 14 ON 20 FOR A NOTE (the type floor, plan 2026-10-12); tabular figures, right-aligned in their column (DISTANCES 5.7, rule 2).
  *  - A HAIRLINE BETWEEN ROWS, NONE ABOVE THE FIRST; 16px of padding top and bottom (plan 2026-10-12 rhythm-air-inside, Task 2A: a
  *    fact row 16 above and below) around the glyph's 28px tile, the label's 20px line centred on it, so a one-line row is 60px.
  *  - A SWATCH FOR A KEY (critique pass 2, P0.1): a row may carry `swatch`, a colour token, drawn as a 10px square (2px radius) before the
@@ -80,7 +80,7 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
             {r.label}
             {r.confidence && r.confidence !== "measured" ? <SampleTag /> : null}
           </span>
-          {r.note ? <span className="block text-[length:var(--t-micro)] leading-4 text-[var(--c-muted)]">{keepDates(r.note)}</span> : null}
+          {r.note ? <span className="block text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{keepDates(r.note)}</span> : null}
         </span>
       </dt>
       <dd className="text-right [@container(min-width:420px)]:text-left">

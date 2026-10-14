@@ -7,10 +7,15 @@
  *
  * Run: node node_modules/tsx/dist/cli.mjs tests/spine/type_floor.test.ts
  */
-import { readFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { JSDOM } from "jsdom";
 import { readTypeFloor, ZONE_SIZES, FLOOR_PX, SHARE_MAX } from "../../scripts/lib/type_floor.mjs";
 import { red, redSummary } from "../../scripts/lib/red";
+import { scanSpine } from "../../scripts/lib/spine_scan.mjs";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
 
 const RULE = "type-floor-reader";
 const LIB = "scripts/lib/type_floor.mjs";
@@ -73,6 +78,72 @@ const spineNames = (/const SPINE = \[([^\]]*)\]/.exec(gate)?.[1] ?? "").split(",
 const harnessPages = (JSON.parse(readFileSync(PAGES, "utf8")) as { pages: Array<{ surface: string }> }).pages;
 const unlisted = spineNames.filter((s) => !harnessPages.some((p) => p.surface === s));
 check(`every spine surface the gate names (${spineNames.join(", ")}) occurs in ${PAGES}'s pages, so the gate cannot pass having read no render (missing: ${unlisted.join(", ") || "none"})`, spineNames.length > 0 && unlisted.length === 0, PAGES, `add a page of each spine surface the gate reads (${spineNames.join(", ")}) to ${PAGES}`);
+
+/* THE FLOOR IN THE SOURCE (Task 3): in the spine the pages draw, comments stripped, a size under 14 sits only on an element the allowance
+   list names, on the same line as its key. THE SCAN SET IS ONE HELPER'S (Task 1C, scripts/lib/spine_scan.mjs: every .tsx under src/components/spine but what
+   SPINE_OUT names by path, so basis.tsx and any file added later are read from their first commit; the hand-kept folder list of the brief missed both).
+   BLIND SPOT: an SVG `fontSize` attribute is not read here (the gate reads it on the renders), and a class split from its key across two lines reds here and
+   is joined, never exempted. */
+const scan = scanSpine();
+check(`every entry under src/components/spine is read or named out with its reason (${scan.files.length} .tsx read, ${scan.outFiles.length} named out; findings: ${scan.findings.length})`, scan.findings.length === 0, scan.findings[0]?.entry ?? "src/components/spine", scan.findings[0]?.remedy ?? "name the entry in SPINE_OUT (scripts/lib/spine_scan.mjs) with the reason it is not read");
+const scoped = scan.files;
+const codeLines = (f: string) => stripCommentLines(readFileSync(f, "utf8").split(/\r?\n/));
+const SMALL = /text-\[length:var\(--t-(?:micro|mark)\)\]|(?:^|[\s"'`])text-xs(?=[\s"'`])|text-\[(?:9|10|11|12|13)(?:\.5)?px\]/;
+const tooSmall = scoped.flatMap((f) => codeLines(f).map((l, i) => (SMALL.test(l) && !/data-type-allow="[a-z0-9-]+"/.test(l) ? `${f}:${i + 1}` : null)).filter((x): x is string => x !== null));
+check(`no reader text under 14px in the spine's source outside the allowance list (${tooSmall.length}${tooSmall.length ? `: ${tooSmall.slice(0, 12).join(", ")}${tooSmall.length > 12 ? ", ..." : ""}` : ""})`, tooSmall.length === 0, tooSmall[0]?.split(":")[0] ?? LIST, "set reader text at var(--t-body) with its leading pair (14 on 20; leading-4 becomes leading-5); a chart's tick or axis label, or the foot's source line, carries data-type-allow with its key on the same line");
+const usedKeys = new Map<string, Set<string>>();
+for (const f of scoped) for (const l of codeLines(f)) for (const m of l.matchAll(/data-type-allow="([a-z0-9-]+)"/g)) { if (!usedKeys.has(m[1])) usedKeys.set(m[1], new Set()); usedKeys.get(m[1])!.add(f); }
+const notListed = [...usedKeys.keys()].filter((k) => !list.some((e) => e.key === k));
+const notUsed = list.filter((e) => !usedKeys.has(e.key)).map((e) => e.key);
+const wrongPlace = list.filter((e) => usedKeys.has(e.key) && [...usedKeys.get(e.key)!].some((f) => !e.places.includes(f))).map((e) => e.key);
+check(`every key the source uses is listed with its files, and every listed key is used (not listed: ${notListed.join(", ") || "none"}; not used: ${notUsed.join(", ") || "none"}; files not named: ${wrongPlace.join(", ") || "none"})`, notListed.length === 0 && notUsed.length === 0 && wrongPlace.length === 0, LIST, "name each data-type-allow key with its files and reason in scripts/harness/type_floor_allow.json, and drop a key no component carries");
+const unmarked = scoped.flatMap((f) => codeLines(f).map((l, i) => (/<p\b/.test(l) && /--t-body/.test(l) && /--c-muted/.test(l) && !/data-(?:line|basis|placement|focal-words)=/.test(l) ? `${f}:${i + 1}` : null)).filter((x): x is string => x !== null));
+check(`every muted paragraph at 14 says what it is: a lifted supporting line (data-line), a basis (data-basis), a placement (data-placement), or the words of a section's figure (data-focal-words, which the law never counts) (${unmarked.length}${unmarked.length ? `: ${unmarked.slice(0, 8).join(", ")}` : ""})`, unmarked.length === 0, unmarked[0]?.split(":")[0] ?? LIST, "mark the paragraph data-line=\"\" (no muted paragraph stood at 14 before the floor, so each one now is a supporting line the plain-copy law reads)");
+
+/* THE PLAIN-COPY LAW STILL READS A LIFTED LINE (Review Focus 1): the check's own inPage, read from its source and run in jsdom. */
+const copyText = readFileSync("scripts/harness/check_copy_plain.mjs", "utf8");
+const copyFrom = copyText.indexOf("function inPage(");
+const copyLen = copyFrom === -1 ? -1 : copyText.slice(copyFrom).search(/\r?\n\}\r?\n/);
+const copySrc = copyFrom === -1 || copyLen === -1 ? null : `${copyText.slice(copyFrom, copyFrom + copyLen)}\n}`;
+const linesRed = (inner: string): number | null => {
+  if (copySrc === null) return null;
+  const dom = new JSDOM(`<!doctype html><html><body><main><section data-card id="c1"><h3>Costs</h3>${inner}</section></main></body></html>`, { runScripts: "outside-only" });
+  try {
+    const win = dom.window as unknown as { eval: (s: string) => unknown; Element: { prototype: { getClientRects: () => unknown[] } } };
+    win.Element.prototype.getClientRects = function () { return [{}]; };
+    const out = (win.eval(`(${copySrc})`) as (reader: unknown[]) => { reds: Array<{ rule: string }> })([]);
+    return out.reds.filter((x) => x.rule === "LINES").length;
+  } finally { dom.window.close(); }
+};
+const COPY_FILE = "scripts/harness/check_copy_plain.mjs";
+const COPY_REMEDY = "a supporting line is a paragraph at the micro rung (13.5px or less) or one the floor lifted to 14, which carries data-line, data-basis or data-placement: the law reads the same lines after the floor as before";
+check("two lifted lines (14px, data-line) are a card's two supporting lines: one LINES red", linesRed('<p style="font-size:14px" data-line="">One line.</p><p style="font-size:14px" data-line="">Two lines.</p>') === 1, COPY_FILE, COPY_REMEDY);
+check("a basis and a placement at 14 are supporting lines too", linesRed('<p style="font-size:14px" data-basis="">Basis.</p><p style="font-size:14px" data-placement="">Higher than five countries in ten.</p>') === 1, COPY_FILE, COPY_REMEDY);
+check("a 14px paragraph the floor did not lift (body text beside a drawing) is not a line", linesRed('<p style="font-size:14px">Body.</p><p style="font-size:14px">Body two.</p>') === 0, COPY_FILE, COPY_REMEDY);
+check("below 13.5px the law is unchanged", linesRed('<p style="font-size:12px">One.</p><p style="font-size:12px">Two.</p>') === 1, COPY_FILE, COPY_REMEDY);
+check("the words of a section's figure at 14 are no supporting line (data-focal-words): the figure's own line, as on every zone today", linesRed('<p style="font-size:14px" data-focal-words="">What it is.</p><p style="font-size:14px" data-basis="">Basis.</p>') === 0, COPY_FILE, COPY_REMEDY);
+
+/* THE GATE NEVER PASSES HAVING READ NOTHING (the standing empty-scan ruling, Task 1A's review): a render with no visible character at 1280 is a red, since
+   a share over no characters is 0 and would pass. The gate runs on a temp tree (--dir the renders, --list the pages): five renders, one a page that drew
+   nothing, then the same five with text. BLIND SPOT: this proves the gate's own refusal on a planted render, not that a real render of the chain holds text. */
+const tmp = mkdtempSync(join(tmpdir(), "type-floor-gate-"));
+const runGate = (renders: Record<string, string>) => {
+  const dir = join(tmp, "pages");
+  rmSync(dir, { recursive: true, force: true });
+  mkdirSync(dir, { recursive: true });
+  const surfaces = ["country", "city", "cell", "industry", "hood"];
+  for (const s of surfaces) writeFileSync(join(dir, `${s}-x.html`), renders[s] ?? `<!doctype html><html><body><main><p class="${B}">A visible line of reader text.</p></main></body></html>`);
+  const listFile = join(tmp, "pages.json");
+  writeFileSync(listFile, JSON.stringify({ pages: surfaces.map((s) => ({ surface: s, slugs: ["x"] })) }));
+  const r = spawnSync(process.execPath, [GATE, `--list=${listFile}`, `--dir=${dir}`], { encoding: "utf8" });
+  return { status: r.status, out: `${r.stdout}\n${r.stderr}` };
+};
+try {
+  const empty = runGate({ cell: "<!doctype html><html><body><main></main></body></html>" });
+  check(`a render that read no visible character is a red, not a pass (exit ${empty.status}; says so: ${/no visible character/.test(empty.out)})`, empty.status === 1 && /no visible character/.test(empty.out), GATE, "red a render with no visible character at 1280: nothing was measured, so nothing can be said to hold");
+  const full = runGate({});
+  check(`the same five renders with text pass (exit ${full.status})`, full.status === 0 && /PASS type-floor: 5 render/.test(full.out), GATE, "a render with text under the share passes; only an empty one is red");
+} finally { rmSync(tmp, { recursive: true, force: true }); }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/type_floor: all pass");

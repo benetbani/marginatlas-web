@@ -106,7 +106,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                   )}
                 </p>
               </div>
-              {board.subtitle ? <p className="max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.subtitle}</p> : null}
+              {board.subtitle ? <p data-line="" className="max-w-[28ch] text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{board.subtitle}</p> : null}
               {board.taxes && board.taxes.length >= 2 ? (
                 <div data-hero-taxes className="max-w-[34ch]">
                   <DetailPanel name="hero-taxes" summary={COPY.heroBoard.taxes.summary} rows={board.taxes} />
@@ -130,7 +130,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                 <p data-subtitle className="mt-1 max-w-[28ch] text-[length:var(--t-lead)] leading-snug text-[var(--c-ink2)]">{COPY.answer.absent}</p>
               </div>
               <ImageCell image={board.image} grow />
-              {board.subtitle ? <p className="max-w-[28ch] text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{board.subtitle}</p> : null}
+              {board.subtitle ? <p data-line="" className="max-w-[28ch] text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{board.subtitle}</p> : null}
             </div>
           )}
           <div data-hero-rows="" className={`flex flex-col ${board.answer ? "md:col-span-2 lg:col-span-1" : ""}`}>
@@ -151,7 +151,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                   <span data-figure="" className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
                     {r.value}
                     {/* A real space before the unit, not a margin (2026-09-26): read aloud or copied, "21days" was one word. */}
-                    {r.unit ? <>{" "}<span className="text-[length:var(--t-micro)] font-normal text-[var(--c-muted)]">{r.unit}</span></> : null}
+                    {r.unit ? <>{" "}<span className="text-[length:var(--t-body)] font-normal text-[var(--c-muted)]">{r.unit}</span></> : null}
                   </span>
                   {r.level ? (
                     <LevelMark level={r.level} />
@@ -208,7 +208,7 @@ function ImageCell({ image, grow = false }: { image: HeroBoardData["image"]; gro
         // eslint-disable-next-line @next/next/no-img-element
         <img src={image.src} alt={image.alt} data-hero-image className="aspect-[4/3] w-full rounded-lg object-cover md:absolute md:inset-0 md:aspect-auto md:h-full" />
       )}
-      {image.placeholder ? <div data-overlay="1" className="absolute bottom-2 left-2 rounded-md bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{COPY.heroBoard.placeholder}</div> : null}
+      {image.placeholder ? <div data-overlay="1" className="absolute bottom-2 left-2 rounded-md bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{COPY.heroBoard.placeholder}</div> : null}
     </div>
   );
 }

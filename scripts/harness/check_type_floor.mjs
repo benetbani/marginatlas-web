@@ -10,7 +10,11 @@
  * THE SCAN SET IS KNOWN APART FROM WHAT WAS FOUND (the review of Task 1A): a spine surface the list holds no page of is a red too, so a list that
  * names none of them reads no render and cannot pass; until then it printed "PASS type-floor: 0 render(s)".
  *
- *   node scripts/harness/check_type_floor.mjs --list[=scripts/harness/pages.json]
+ * A RENDER THAT READ NO CHARACTER IS A RED TOO (Task 3, the standing empty-scan ruling): a share over no characters is 0 and would pass, so a render
+ * with no visible character at 1280 says "no visible character read, so nothing was measured". `--dir=<folder>` names the renders' folder (default
+ * scratchpad/harness/pages), which tests/spine/type_floor.test.ts uses to plant an empty render on a temp tree.
+ *
+ *   node scripts/harness/check_type_floor.mjs --list[=scripts/harness/pages.json] [--dir=scratchpad/harness/pages]
  */
 import { existsSync, readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
@@ -23,6 +27,8 @@ preflight({ name: "check_type_floor" });
 const RULE = "type-floor";
 const SPINE = ["country", "city", "cell", "industry", "hood"];
 const HARNESS_LIST = "scripts/harness/pages.json";
+const dirArg = process.argv.slice(2).find((a) => a.startsWith("--dir="));
+const PAGES_DIR = dirArg ? dirArg.slice("--dir=".length) : "scratchpad/harness/pages";
 const args = process.argv.slice(2);
 const listArg = args.find((a) => a.startsWith("--list"));
 const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : HARNESS_LIST;
@@ -38,10 +44,11 @@ for (const s of bare) reds.push({ file: LIST, detail: `no page of the ${s} surfa
 console.log(`type-floor: ${pages.length} spine render(s) at 1280, read as scripts/lib/type_floor.mjs reads (R1's method; blind to container queries and to stylesheet rules outside THE ZONES' size rules)`);
 for (const p of pages) {
   const name = `${p.surface}-${p.slugs.join("-")}`;
-  const file = `scratchpad/harness/pages/${name}.html`;
+  const file = `${PAGES_DIR}/${name}.html`;
   if (!existsSync(file)) { reds.push({ file, detail: `${name}: no render`, remedy: "run node node_modules/tsx/dist/cli.mjs scripts/verify_pages_fresh.mjs and fix what it names" }); continue; }
   const doc = new JSDOM(readFileSync(file, "utf8").replace(/<style[^>]*>[\s\S]*?<\/style>/g, "")).window.document;
   const r = readTypeFloor(doc, allowKeys);
+  if (!r.chars) { reds.push({ file, detail: `${name}: no visible character read at 1280, so nothing was measured`, remedy: "the render drew no text under main (or none visible at 1280): run node node_modules/tsx/dist/cli.mjs scripts/verify_pages_fresh.mjs and fix what it names" }); continue; }
   const pct = (100 * r.share).toFixed(1);
   console.log(`  ${name}: ${r.small} of ${r.chars} visible characters under ${FLOOR_PX}px outside the allowance (${pct}%); ${r.allowed} allowed; raw ${(100 * r.raw).toFixed(1)}% (R1's figure)`);
   for (const [at, c] of r.runs.slice(0, 8)) console.log(`      ${String(c).padStart(5)}  ${at}`);
