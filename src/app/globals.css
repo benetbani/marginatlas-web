@@ -2789,7 +2789,8 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
   /* ONE TEXT RED (the spec's decision 1, his question Q1 answered by his standing ruling of 2026-10-07): every red word and figure
      on the site reads #991600 (atlas-700), the value his h1 words already use, 8.50:1 on white and 7.86 on the tint zone. It was
      #c2410c, the orange he turned down on the old navigator button (the palette gate's header; hue 17.5 against the brand's 8.6).
-     --terra stays the fill of drawn answers and the band; #e62200 is the wordmark's alone. One line reverts it. */
+     --terra stays the fill of drawn answers; the home's band stands on --terra-full (below, plan 2026-10-13); #e62200 is the
+     wordmark's alone. One line reverts it. */
   --terra-text: #991600;
   /* THE BRAND TERRACOTTA AT FULL STRENGTH (plan 2026-10-13 home-quiet-editorial, Task 2; the spec's sections 2 and 3, his decision of
      2026-10-13: the band "full-width brand terracotta at full strength", the positioning line's mark beside it; his pick of the plan's

@@ -255,7 +255,7 @@ if (positioningSites.length !== 1 || !positioningSites[0].startsWith(`${VIEW_FIL
 if (!posTag || questionAt.length === 0 || homeSearch.indexOf("data-positioning") > Math.min(...questionAt)) exceptionFaults.push("the positioning line stands in HomeSearch before the question (<HomeAsk or <h1)");
 if (posTag && /uppercase|tracking-/.test(posTag[1])) exceptionFaults.push(`the positioning line is never in capitals or tracked (class: ${posTag[1]})`);
 if (posTag && !/text-\[length:var\(--t-(?:head|section)\)\]/.test(posTag[1])) exceptionFaults.push("the positioning line stands at the head or section rung, a serious line, never a small kicker");
-if (posTag && !/\{C\.positioning\}/.test(posTag[2])) exceptionFaults.push("the positioning line prints COPY.home.positioning ({C.positioning})");
+if (posTag && !/\{(?:keepCompounds\()?C\.positioning\)?\}/.test(posTag[2])) exceptionFaults.push("the positioning line prints COPY.home.positioning ({C.positioning}, or {keepCompounds(C.positioning)}, which holds a hyphenated compound on one line)");
 if (posWords.length === 0 || posWords.length > 12 || !/^[A-Z]/.test(positioning) || positioning === positioning.toUpperCase()) exceptionFaults.push(`COPY.home.positioning is one sentence-case line of twelve words or fewer ("${positioning}")`);
 const rank = RANK_WORDS.filter((w) => new RegExp(`(^|[^a-z])${w.replace(/[.#]/g, (c) => `\\${c}`)}([^a-z]|$)`, "i").test(positioning));
 if (rank.length) exceptionFaults.push(`COPY.home.positioning claims a rank or a credential the site does not hold (${rank.join(", ")})`);

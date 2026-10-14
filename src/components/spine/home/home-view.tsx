@@ -52,6 +52,12 @@ export const LOUD_SEATS = [
  *  rung beside the compass mark in the brand terracotta, never a small capitals kicker (scripts/verify_no_eyebrow.ts names it the rule's one
  *  exception); 16 under it to the question, 24 from 1024. THE QUESTION IS ASKED ONCE (his instruction of 2026-10-07): the h1 asks it, so
  *  the picker draws no heading, and its fields follow the h1's case. */
+/** His words with each hyphenated compound held on one line (the final review's M2: at 375 the line broke "small-|business"); the words
+ *  and their order are unchanged, only the break is held. */
+function keepCompounds(text: string): React.ReactNode[] {
+  return text.split(/(\S+-\S+)/).filter((part) => part !== "").map((part, i) => (/\S-\S/.test(part) ? <span key={i} className="whitespace-nowrap">{part}</span> : part));
+}
+
 function HomeSearch() {
   const C = COPY.home;
   return (
@@ -59,7 +65,7 @@ function HomeSearch() {
       <section id="search" className="flex flex-col">
         <p data-positioning="" className="mb-4 flex items-center gap-3 text-[length:var(--t-head)] font-semibold leading-7 text-[var(--c-ink)] lg:mb-6">
           <LogoMark size={24} className="shrink-0 text-[var(--terra-full)]" />
-          <span>{C.positioning}</span>
+          <span>{keepCompounds(C.positioning)}</span>
         </p>
         <HomeAsk lead={C.h1.lead} middle={C.h1.middle} businesses={HERO_BUSINESSES} cities={HERO_CITIES} cases={homePickerCases()} />
       </section>
