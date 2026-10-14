@@ -2849,8 +2849,9 @@ export const COPY = {
       placeDoor: "See London {trade}",
       paysDoor: "Try your own",
     },
-    /** WHAT THE SITE IS, ONCE (plan 2026-10-09, home introduction; the spec's sections 1 and 7, DRAFT approved as written): the hero's
-     *  one plain line under the picker, and the Organization's description in the structured data (src/components/StructuredData.tsx). */
+    /** WHAT THE SITE IS, ONCE (plan 2026-10-09, home introduction): the site's one sentence for the head's description, the manifest, the
+     *  share card and the structured data (src/app/layout.tsx, manifest.ts, og/default/route.tsx, src/components/StructuredData.tsx). The
+     *  home no longer prints it since plan 2026-10-13: the positioning line says what the site is. */
     definition: "Margin Atlas shows what a small business earns and its owner keeps.",
     /** THE THREE PROOFS (plan 2026-10-09, home introduction; the spec's section 4, DRAFT approved as written): the level's name (a data
      *  attribute, not a printed word), each proof's title, its one line, the ring's caption, the archive's figure and row. No boast

@@ -32,13 +32,10 @@
  *      data, deliberately diverse , `best_trades` is the real adapter's
  *      (adapt_hood.ts) ranking from the live per-city trade catalog, never
  *      a fixed set, the opposite of rule 32's "one reused set".
- *   2. PART 3 (plan 2026-10-09, home introduction): the picker's three
- *      examples, HOME_TRY in src/lib/home/destination.ts , the words of
- *      "Or try gyms, salons or cafés in London." (plan 2026-10-10, home
- *      reform), each a link to its London page. The spec draws them from
- *      rule 32's set, so each word is held to it, read from the module
- *      that prints them and never from the form's text; its failures print
- *      under their own heading.
+ *   2. PART 3: the picker's examples' line was held here from plan
+ *      2026-10-09; it left the home with plan 2026-10-13
+ *      home-quiet-editorial, Task 3, and Task 4A of that plan gives Part 3
+ *      the home's trades.
  *      (The form's own placeholder text, "Type a business: ...", is not
  *      scanned: Part 2, which grepped the form, was removed on
  *      2026-07-12 , see below.)
@@ -52,13 +49,9 @@
  */
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { HOME_TRY } from "../src/lib/home/destination";
 
 const ROOT = process.cwd();
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");
-/** The module Part 3 reads the picker's examples from (HOME_TRY): named as a path literal so the gate registry, which scripts/counts.ts generates from the
- *  literals in each gate's script, lists the file the gate reads (it listed the launcher below, which the gate does not read: final review M7). */
-const HOME_TRY_FILE = "src/lib/home/destination.ts";
 
 /* Rule 32 (v2, 2026-07-12): the everyday set is eight, restaurant / grocery /
  * pharmacy / salon / gym / auto repair / cafe / bar, with common synonyms
@@ -208,28 +201,13 @@ for (const abs of walkSeedDir(SEEDS_ROOT)) {
  * spans ANY business, so its input examples (law firms, software, barbers,
  * plumbers) are a deliberate breadth demo, not a spine example slate. It is no
  * longer scanned, and no constant here names it: one that did (kept "for documentation") made the gate registry list it as a read the gate
- * never made, while the module Part 3 does read, HOME_TRY_FILE above, went unlisted (fix round F1, the final review's M7). */
-
-/* PART 3 (plan 2026-10-09, home introduction): the picker's line is no longer a breadth demo. It is the home's three examples, each a
- * link to its London page, and the spec draws them from rule 32's set, so they are held to it, read from the module that prints them
- * (src/lib/home/destination.ts HOME_TRY), never from the form's text. */
-const triesReport: string[] = [];
-for (const t of HOME_TRY) {
-  if (isAllowedTrade(t.word)) continue;
-  triesReport.push(`"${t.word}" (${t.trade}) , outside the rule-32 set`);
-  violations++;
-}
-console.log(`verify_trade_set: the picker's examples , ${HOME_TRY.map((t) => t.word).join(", ")}`);
+ * never made, while the module Part 3 then read went unlisted (fix round F1, the final review's M7). */
 
 console.log(`verify_trade_set: allowed set , ${ALLOWED_RAW.join(", ")}`);
 
 if (jsonReport.length > 0) {
   console.error("\nSeed slate offenders:");
   for (const line of jsonReport) console.error(`  ${line}`);
-}
-if (triesReport.length > 0) {
-  console.error(`\nPicker example offenders (HOME_TRY, ${HOME_TRY_FILE}):`);
-  for (const line of triesReport) console.error(`  ${line}`);
 }
 
 if (violations > 0) {

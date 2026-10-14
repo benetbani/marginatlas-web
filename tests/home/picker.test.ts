@@ -4,9 +4,10 @@
  * aria-required in its place; 48px tall, the card's 12px corner, the control token's edge, 16px type under 768, an ink ring whenever
  * focus is inside; on focus its label kept and selected; a row and a polite live region that say "No match for 'x'"; 44px rows, the
  * soft fill and an ink bar on the highlighted one, the examples muted. The form: the spine's card, kept on the band; one solid ink
- * action; the examples' line in ink2 under the row; a failure said in the card; "Loading…" with its ellipsis; no static import of
+ * action; no examples' line (plan 2026-10-13 home-quiet-editorial, Task 3: the fields follow the h1's case instead); a failure said in the card; "Loading…" with its ellipsis; no static import of
  * the taxonomy, the cascade, the destination, the regions or the city tables, its lists loaded with import() on first use, and its
- * first paint from the server's seed, whose labels are the lists' own.
+ * first paint from the server's seed, whose labels are the lists' own. On the rebuilt home the form follows the cases it is handed (cases,
+ * caseIndex) until a pointer, a press, a focus or a key reaches it, and a null case keeps the case on screen (Review Focus 2).
  * ComboField is rendered on the server and mounted in jsdom, and steered with the keys (the Task 2 fix rounds: Enter chooses the lit
  * row whatever is typed, and only while its list is open, and keeps the visitor in the field over "No match" or "Loading…"; ArrowUp
  * opens a shut list as ArrowDown does; leaving the field closes its list; a press outside closes it and drops the highlight with it,
@@ -296,7 +297,7 @@ async function main() {
   /* THE FORM, FROM ITS SOURCE (comments stripped). */
   const code = stripCommentLines(readFileSync(FORM, "utf8").split("\n")).join("\n");
   check("the form imports no list statically: not the taxonomy, the cascade, the destination, the picker, the regions or the city tables", !/^import (?!type\b)[^\n]*from "@\/lib\/(taxonomy|regions\/[^"]*|cities\/[^"]*|home\/(search_cascade|destination|picker))";/m.test(code), FORM, "import those modules as types only; the lists come with import(\"@/lib/home/picker\") on first use");
-  check("its lists load with import() when a pointer enters the form, focus lands in it or a key is pressed in it", /loading\.current = import\("@\/lib\/home\/picker"\)\.then\(/.test(code) && /onPointerEnter=\{loadLists\}/.test(code) && /onFocus=\{loadLists\}/.test(code) && /onKeyDown=\{loadLists\}/.test(code), FORM);
+  check("its lists load with import() when the reader reaches the form: a pointer enters it, a press or a focus lands in it, or a key is pressed in it (reach, which also stops the fields following the h1)", /loading\.current = import\("@\/lib\/home\/picker"\)\.then\(/.test(code) && /const reach = React\.useCallback\(\(\) => \{\s*touched\.current = true;\s*loadLists\(\);/.test(code) && ["onPointerEnter", "onPointerDown", "onFocus", "onKeyDown"].every((h) => new RegExp(`${h}=\\{reach\\}`).test(code)), FORM);
   check("each of the three fields is told it is loading until the lists are in", (code.match(/loading=\{loadingLists\}/g) ?? []).length === 3 && /const loadingLists = !lists && !failed;/.test(code), FORM, LOADING_REMEDY);
   check("a press before the lists load is the browser's own submit to /api/go", /if \(!lists\) return;\s*e\.preventDefault\(\);/.test(code) && /action="\/api\/go"/.test(code), FORM);
   check("any failure says so in the card, never a trip to /random", !/\/random/.test(code) && /role="alert"/.test(code), FORM, "show an inline role=\"alert\" message on a failed load or submit instead of sending the visitor to /random");
@@ -304,13 +305,9 @@ async function main() {
   check("the card is the spine's, kept on the band", code.includes('data-keep-card=""') && code.includes('className="spine-card relative rounded-xl border border-[var(--c-line-strong)] p-5 md:p-6"'), FORM);
   const button = /<button[\s\S]*?className="([^"]*)"/.exec(code)?.[1] ?? "";
   check(`the one action is solid ink, white 16px semibold on one line, 48px, the 12px corner, ink2 on hover, full width on a phone (read: ${button})`, ["bg-[var(--c-ink)]", "text-white", "text-base", "font-semibold", "whitespace-nowrap", "h-12", "rounded-xl", "hover:bg-[var(--c-ink2)]", "w-full", "md:w-auto", "transition-colors"].every((c) => button.split(" ").includes(c)), FORM);
-  check("from 1024 the action is the row's fourth column at its own width, its foot on the fields' foot; from 768 under the fields at the right, the line beside it", code.includes("lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]") && code.includes('className="flex flex-col gap-3 md:col-span-3 md:flex-row-reverse md:items-center md:justify-between md:gap-6 lg:contents"') && code.includes('className="lg:col-start-4 lg:row-start-1 lg:self-end"') && /<p data-try="" className="[^"]*lg:col-span-4 lg:row-start-2"/.test(code), FORM);
+  check("from 1024 the action is the row's fourth column at its own width, its foot on the fields' foot; from 768 under the fields at the right", code.includes("lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]") && code.includes('className="flex flex-col gap-3 md:col-span-3 md:flex-row-reverse md:items-center md:justify-between md:gap-6 lg:contents"') && code.includes('className="lg:col-start-4 lg:row-start-1 lg:self-end"'), FORM);
   check("the footer strip and its divider are gone, and no brown, terracotta or warm paper class is left", !/rounded-b-2xl|border-t border-paper|\b(?:atlas|cocoa|paper)-\d/.test(code), FORM);
-  check("the examples' line stands under the row at 14px in ink2, \"Or try\", its links underlined in the strong line and ink on hover", /<p data-try="" className="text-sm leading-5 text-\[var\(--c-ink2\)\][^"]*">\s*Or try\{" "\}/.test(code) && /className="underline decoration-\[var\(--c-line-strong\)\] underline-offset-2 transition-colors hover:text-\[var\(--c-ink\)\] hover:decoration-\[var\(--c-ink\)\]"/.test(code), FORM);
-  /* NO WORD LEFT ALONE ON THE EXAMPLES' LINE (critique pass 4, fix round F2, item P2.2): at 320 the line broke "... or cafés in / London.", its
-     city alone on the second line; the browser balances the last line when the paragraph asks (text-pretty), as the example's lines and the band
-     do. BLIND SPOT: this reads the class; the last line's word count at seven widths is the browser's (f2_p22_probe.mjs). */
-  check("the examples' line asks for a balanced last line (text-pretty), so it cannot end on a lone city", /<p data-try="" className="[^"]*\btext-pretty\b[^"]*">\s*Or try\{" "\}/.test(code), FORM, "add text-pretty to the <p data-try=\"\"> of src/components/NavigatorForm.tsx: at 320 it broke \"or cafés in / London.\"");
+  check("the examples' line is gone (plan 2026-10-13: the fields follow the h1's case instead): no data-try, no tries, no city of its own", !/data-try|tries|tryCity|homeTryLinks/.test(code), FORM);
 
   /* THE SISTER FORMS SPEAK THE PICKER'S LANGUAGE (critique pass 4, fix round F2, item P2.5). The reform rebuilt the shared field and so split /compare
      and /you into two control systems one row apart: "Country" and "Activity" in the picker's label (14 medium in ink2) over a 48px field on the control
@@ -346,7 +343,7 @@ async function main() {
   const isList = (k: string) => LIST_MODULES.some((m) => k.replace(/\\/g, "/").includes(m));
   const cached = () => Object.keys(require.cache).filter(isList).map((k) => k.replace(/\\/g, "/").replace(/^.*\/src\//, "src/"));
   const LAZY_REMEDY = "load the lists only with import(\"@/lib/home/picker\") from the form's loadLists, started by a pointer entering the form, focus landing in it or a key pressed in it (src/components/NavigatorForm.tsx), and keep every list module out of its static imports";
-  const SEED: PickerSeed = { country: { value: "GB", label: "United Kingdom" }, city: { value: "london", label: "London" }, business: { value: "restaurants", label: "Restaurants" }, hidden: { country: "gb", region: "", subdivision: "london", industry: "restaurants" }, tries: [], tryCity: "London" };
+  const SEED: PickerSeed = { country: { value: "GB", label: "United Kingdom" }, city: { value: "london", label: "London" }, business: { value: "restaurants", label: "Restaurants" }, hidden: { country: "gb", region: "", subdivision: "london", industry: "restaurants" } };
   /* Every push through the router is logged: a submit the page took for itself is told from one it left to the browser by the push. */
   const pushed: string[] = [];
   const router = { push(path: string) { pushed.push(path); }, replace() {}, back() {}, forward() {}, refresh() {}, prefetch() {} };
@@ -389,6 +386,33 @@ async function main() {
   await act(async () => { byPointer.form.dispatchEvent(scriptedSubmit); });
   check(`a submit once the lists are in is the page's own: the form stops the browser's and pushes the destination through the router (default prevented ${scriptedSubmit.defaultPrevented}, pushed [${pushed.join(",")}])`, scriptedSubmit.defaultPrevented && pushed.join() === "/gb/london/restaurants", FORM, SUBMIT_REMEDY);
   await byPointer.unmount();
+
+  /* THE FIELDS FOLLOW THE CASES THEY ARE HANDED, AND A NULL CASE KEEPS THE ONE ON SCREEN (plan 2026-10-13 home-quiet-editorial, Task 3;
+     Review Focus 2): three cases, the middle one null, the index moved by re-rendering; the hidden fields are what a submit sends before
+     the lists load. Once a pointer reaches the form, a new index moves nothing. */
+  const FOLLOW_REMEDY = "follow cases[caseIndex] into the three fields and the shown case while the reader has not reached the form, keep the case on screen for a null case, and hold the fields once reached";
+  const A: PickerSeed = { country: { value: "GB", label: "United Kingdom" }, city: { value: "london", label: "London" }, business: { value: "restaurants", label: "Restaurants" }, hidden: { country: "gb", region: "", subdivision: "london", industry: "restaurants" } };
+  const Bc: PickerSeed = { country: { value: "FR", label: "France" }, city: { value: "paris", label: "Paris" }, business: { value: "bakeries_retail", label: "Bakeries (retail)" }, hidden: { country: "fr", region: "", subdivision: "paris", industry: "bakeries-retail" } };
+  const casesTree = (i: number) => React.createElement(AppRouterContext.Provider, { value: router as any }, React.createElement<{ cases?: ReadonlyArray<PickerSeed | null>; caseIndex?: number }>(NavigatorForm, { cases: [A, null, Bc], caseIndex: i }));
+  const followBox = document.createElement("div");
+  document.body.appendChild(followBox);
+  const followRoot = createRoot(followBox);
+  const sendsOf = () => [...new dom.window.FormData(followBox.querySelector("form")!).entries()].map(([k, v]) => `${k}=${v}`).join("&");
+  await act(async () => { followRoot.render(casesTree(0)); });
+  const atA = sendsOf();
+  await act(async () => { followRoot.render(casesTree(1)); });
+  const atNull = sendsOf();
+  await act(async () => { followRoot.render(casesTree(2)); });
+  const atB = sendsOf();
+  const countryShown = followBox.querySelector<HTMLInputElement>("#country")?.value ?? "";
+  await act(async () => { followBox.querySelector("form")!.dispatchEvent(new dom.window.PointerEvent("pointerover", { bubbles: true })); });
+  await act(async () => { followRoot.render(casesTree(0)); });
+  const afterReach = sendsOf();
+  check(`the fields follow the cases: the first, the first kept over a null case, the third; once reached, a new index moves nothing (${[atA, atNull, atB, afterReach].join(" | ")}; country "${countryShown}")`, atA === "country=gb&region=&subdivision=london&industry=restaurants" && atNull === atA && atB === "country=fr&region=&subdivision=paris&industry=bakeries-retail" && countryShown === "France" && afterReach === atB, FORM, FOLLOW_REMEDY);
+  await act(async () => { followRoot.unmount(); });
+  followBox.remove();
+  check("HomeAsk imports the picker's types only, so its lists still load on first use", /^import type \{[^}]*\bPickerSeed\b[^}]*\} from "@\/lib\/home\/picker";/m.test(readFileSync("src/components/spine/home/HomeAsk.tsx", "utf8")) && !/^import (?!type\b)[^\n]*from "@\/lib\/home\/(picker|picker_cases|destination)";/m.test(readFileSync("src/components/spine/home/HomeAsk.tsx", "utf8")), "src/components/spine/home/HomeAsk.tsx");
+  check("the lazy lists carry no route table: src/lib/home/picker.ts imports nothing from src/lib/routing", !/from "@\/lib\/routing\//.test(readFileSync(PICKER, "utf8")), PICKER, "keep the edge's route table in src/lib/home/picker_cases.ts, a server module, never in picker.ts");
 
   /* From here the lists are in the module system for good: a second import() is served from the loader's own map and does not touch
      the cache (BLIND SPOT: the cache sees the first load only), so the next two triggers are read in the page. A field says "Loading…"
@@ -438,7 +462,7 @@ async function main() {
   const label = (list: Array<{ value: string; label: string }>, value: string) => list.find((o) => o.value === value)?.label;
   check("each seeded label is its list's own", label(P.countryOptions(), seed.country.value) === seed.country.label && label(P.cityOptions(seed.country.value), seed.city.value) === seed.city.label && label(P.businessOptions({ revealMixed: false, revealCorp: false }), seed.business.value) === seed.business.label, PICKER);
   check(`the seed's no-script fields are the lists' own, and land where the scripted form does (${JSON.stringify(seed.hidden)})`, JSON.stringify(seed.hidden) === JSON.stringify(P.hiddenFields(seed.country.value, seed.city.value, seed.business.value)) && JSON.stringify(seed.hidden) === JSON.stringify({ country: "gb", region: "", subdivision: "london", industry: "restaurants" }) && P.homeDestination({ country: seed.hidden.country, city: seed.hidden.subdivision, trade: seed.hidden.industry }) === "/gb/london/restaurants", PICKER);
-  check("the seed's examples are the destination's links, in London", JSON.stringify(seed.tries) === JSON.stringify(P.homeTryLinks()) && seed.tryCity === "London", PICKER);
+  check("the seed carries the case alone: no examples' links", !("tries" in seed) && !("tryCity" in seed), PICKER);
   check(`the loaded lists are whole (${P.countryOptions().length} countries, ${P.cityOptions("GB").length - 1} UK cities, ${P.businessOptions({}).length} businesses)`, P.countryOptions().length > 100 && P.cityOptions("GB").length === 8 && P.businessOptions({}).length > 100, PICKER);
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

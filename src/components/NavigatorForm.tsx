@@ -17,7 +17,7 @@ import type { PickerHidden, PickerSeed } from "@/lib/home/picker";
  *    and size are gone from the UI. The region is resolved behind the scenes: a
  *    picked city slug IS the URL geo, and "Anywhere in {country}" resolves to
  *    that country's curated default region, so the result link still works.
- *  - The form opens on one real example, restaurants in London, and holds it.
+ *  - The form opens on one real example, restaurants in London; on the rebuilt home it follows the h1's case until the reader reaches it, then holds what it shows.
  *  - Business is NOT narrowed by city (activities are not city-specific in the
  *    data), so the full forgiving activity list stays available.
  *
@@ -25,14 +25,15 @@ import type { PickerHidden, PickerSeed } from "@/lib/home/picker";
  * ship audit's 1b.5 and 3.2): the card is the spine's (radius 12, the strong edge, the card's shadow, 24 of padding) and stays a card
  * on the hero's band (data-keep-card: a picker is an instrument); the action is the page's one solid ink button, the fourth column of
  * the field row from 1024, under the fields at the right from 768, full width on a phone; the footer strip and its divider are gone,
- * and the examples' line stands under the row in ink2. Any failure says so in the card instead of sending the visitor to a random
- * page. THE LISTS LOAD ON FIRST USE: the server passes `seed`, the three labels and the no-script fields the first paint needs
- * (src/lib/home/picker.ts homePickerSeed), and the 195 countries, the activities and the city lists arrive with import() when a
- * pointer enters the form, focus lands in it or a key is pressed in it (a field focused before the page hydrated fires no focus
- * that React hears, so its first key starts the load). Until they are in, an open field says "Loading…" in place of a list or of
- * "No match" (ComboField's `loading`, the Task 2 review: typing then filtered the one seeded option alone), and its Enter keeps
- * typed words in the field. A press that comes before them is the browser's own submit to /api/go, which answers through the same
- * destination.
+ * and so is the examples' line (plan 2026-10-13 home-quiet-editorial, Task 3: the fields follow the h1's case instead). Any failure
+ * says so in the card instead of sending the visitor to a random page. THE LISTS LOAD ON FIRST USE: the server passes `seed`
+ * (src/lib/home/picker.ts homePickerSeed) or `cases`, one a tick of the h1's words (src/lib/home/picker_cases.ts), with the three
+ * labels and the no-script fields the first paint needs, and the 195 countries, the activities and the city lists arrive with import()
+ * when the reader reaches the form: a pointer enters it, a press or a focus lands in it, or a key is pressed in it (a field focused
+ * before the page hydrated fires no focus that React hears, so its first key starts the load). Until they are in, an open field says
+ * "Loading…" in place of a list or of "No match" (ComboField's `loading`, the Task 2 review: typing then filtered the one seeded option
+ * alone), and its Enter keeps typed words in the field. A press that comes before them is the browser's own submit to /api/go, which
+ * answers through the same destination.
  */
 
 /** Client-side gate read. Matches lib/audience.ts on the server. */
@@ -57,38 +58,27 @@ const NO_HIDDEN: PickerHidden = { country: "", region: "", subdivision: "", indu
 
 /** `showHeading={false}` drops the card's own heading where the page's h1 already asks the question (the rebuilt home, his
  *  instruction of 2026-10-07: "reform home drastically"); the live home keeps it. `seed` is what the first paint draws, from the
- *  server; without it (the live home behind its switch) the form loads its lists at once and opens on the same case. */
-export function NavigatorForm({ showHeading = true, seed }: { showHeading?: boolean; seed?: PickerSeed } = {}) {
+ *  server; with neither it nor `cases` the form loads its lists at once and opens on the same case. `cases` and `caseIndex` (the
+ *  rebuilt home, HomeAsk): the h1's case at each tick, the first `cases[0]`, the form's own seed; null where the picker cannot show a
+ *  case, which keeps the case on screen. */
+export function NavigatorForm({ showHeading = true, seed, cases, caseIndex = 0 }: { showHeading?: boolean; seed?: PickerSeed; cases?: ReadonlyArray<PickerSeed | null>; caseIndex?: number } = {}) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const [failed, setFailed] = React.useState(false);
-  /* THE PRE-FILL NO LONGER ROTATES, and the reason is the same ruling that
-     took the rotating words out of the h1 one band above this card.
-
-     It cycled all three fields through CASCADE_PREFILLS every four seconds
-     until the reader touched something. The h1's two rotating words were
-     removed on the grounds that "motion in the headline competes with the
-     search for the eye, and the search is the instrument". This was motion
-     INSIDE the instrument, which is the same argument only worse.
-
-     And it was not only a matter of taste. Submit reads state, so the values
-     on screen were live: a reader who saw "restaurants in Barcelona", decided,
-     and reached for the button could land on legal services in the UK because
-     the interval fired on the way. A form that changes its own answer while
-     you are deciding is a defect, not a demonstration.
-
-     It also demonstrated very little. Six of the eight prefills are
-     restaurants, so the carousel mostly showed one trade in different cities,
-     while the examples' line under this card's fields already names three
-     genuinely different examples and holds still while it does it.
-
-     One real example, kept, because the design intent it served is right: the
-     form should never read blank. CASCADE_PREFILLS[0] is restaurants in
-     London, the home's worked example (plan 2026-10-09, home introduction);
-     the seed carries it from the server. */
-  const [country, setCountry] = React.useState(seed?.country.value ?? "");
-  const [city, setCity] = React.useState(seed?.city.value ?? "");
-  const [business, setBusiness] = React.useState(seed?.business.value ?? "");
+  /* THE FIELDS FOLLOW THE QUESTION ON SCREEN, AND STOP WHEN THE READER REACHES THEM (plan 2026-10-13 home-quiet-editorial, Task 3; the
+     spec's section 2, item 2). The rebuilt home passes `cases`, one per tick of the h1's words (src/lib/home/picker_cases.ts), and
+     `caseIndex`, the tick on screen (HomeAsk), so the three fields show the h1's own case and the form names no city of its own. The first
+     pointer over the form, a press, a focus or a key in it is the reader reaching for it (`reach`): from then the fields hold what they
+     show, and the h1's words stop at the same moment (HeroWords stops on a pointer over the form), so a submit sends the case on screen. A
+     case the picker cannot show whole is null, and the case on screen stays. The values never move once a hand is near: the defect an
+     earlier rotating prefill had (a submit reading values that changed while the reader decided) cannot happen. Without `cases` (the live
+     home, and any form handed `seed` alone) the form opens on the seed and holds it. */
+  const first = seed ?? cases?.[0] ?? null;
+  const [shown, setShown] = React.useState<PickerSeed | null>(first);
+  const [country, setCountry] = React.useState(first?.country.value ?? "");
+  const [city, setCity] = React.useState(first?.city.value ?? "");
+  const [business, setBusiness] = React.useState(first?.business.value ?? "");
+  const touched = React.useRef(false);
   const [gate, setGate] = React.useState<Gate>({ revealMixed: false, revealCorp: false });
   const [lists, setLists] = React.useState<PickerModule | null>(null);
   const loading = React.useRef<Promise<void> | null>(null);
@@ -114,30 +104,43 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
     );
   }, []);
 
-  /* No seed: load at once, and open on the case once the lists are in. */
+  /* The reader's hand is at the form: the fields stop following the h1, and the lists load. */
+  const reach = React.useCallback(() => {
+    touched.current = true;
+    loadLists();
+  }, [loadLists]);
+
+  /* Follow the h1's case until the reader reaches the form; a null case keeps the case on screen. */
   React.useEffect(() => {
-    if (!seed) loadLists();
-  }, [seed, loadLists]);
+    if (!cases || cases.length === 0 || touched.current) return;
+    const next = cases[((caseIndex % cases.length) + cases.length) % cases.length];
+    if (!next) return;
+    setShown(next);
+    setCountry(next.country.value);
+    setCity(next.city.value);
+    setBusiness(next.business.value);
+  }, [cases, caseIndex]);
+
+  /* Nothing to paint first (no seed and no cases): load at once, and open on the case once the lists are in. */
   React.useEffect(() => {
-    if (!lists || seed || country) return;
+    if (!first) loadLists();
+  }, [first, loadLists]);
+  React.useEffect(() => {
+    if (!lists || first || country) return;
     const p = lists.CASCADE_PREFILLS[0];
     setCountry(p.country);
     setCity(p.city);
     setBusiness(p.business);
-  }, [lists, seed, country]);
+  }, [lists, first, country]);
 
-  /* Before the lists arrive each field holds its seeded option alone, so it shows its label; after, the whole list. */
-  const countryOptions = React.useMemo(() => (lists ? lists.countryOptions() : seed ? [seed.country] : []), [lists, seed]);
-  const cityOptions = React.useMemo(() => (lists ? lists.cityOptions(country) : seed ? [seed.city] : []), [lists, seed, country]);
-  const businessOptions = React.useMemo(() => (lists ? lists.businessOptions(gate) : seed ? [seed.business] : []), [lists, seed, gate]);
+  /* Before the lists arrive each field holds the shown case's option alone, so it shows its label; after, the whole list. */
+  const countryOptions = React.useMemo(() => (lists ? lists.countryOptions() : shown ? [shown.country] : []), [lists, shown]);
+  const cityOptions = React.useMemo(() => (lists ? lists.cityOptions(country) : shown ? [shown.city] : []), [lists, shown, country]);
+  const businessOptions = React.useMemo(() => (lists ? lists.businessOptions(gate) : shown ? [shown.business] : []), [lists, shown, gate]);
   /* Until the lists are in (and unless loading them failed, which the card says), an open field says "Loading…" and filters nothing. */
   const loadingLists = !lists && !failed;
   /* The no-script fields mirror the state for the native submit (action="/api/go"). */
-  const hidden = lists ? lists.hiddenFields(country, city, business) : (seed?.hidden ?? NO_HIDDEN);
-  /* The line's three examples and their city, from the destination's one list (src/lib/home/destination.ts, HOME_TRY), so a link and a
-     search for the same words land on one page. */
-  const tries = seed?.tries ?? (lists ? lists.homeTryLinks() : []);
-  const tryCity = seed?.tryCity ?? (lists ? lists.homeTryCityLabel() : "");
+  const hidden = lists ? lists.hiddenFields(country, city, business) : (shown?.hidden ?? NO_HIDDEN);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     /* Before the lists load, the browser sends the form itself: the hidden fields hold the case on screen and /api/go answers
@@ -166,9 +169,10 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
       action="/api/go"
       method="get"
       onSubmit={onSubmit}
-      onPointerEnter={loadLists}
-      onFocus={loadLists}
-      onKeyDown={loadLists}
+      onPointerEnter={reach}
+      onPointerDown={reach}
+      onFocus={reach}
+      onKeyDown={reach}
       data-keep-card=""
       className="spine-card relative rounded-xl border border-[var(--c-line-strong)] p-5 md:p-6"
     >
@@ -192,10 +196,9 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
         </div>
       ) : null}
 
-      {/* The field row: Country, then City, then Business, then the action; the examples' line under it. One column on a phone
-          (the action full width under the fields, the line under it), three from 768 (the line and the action on one row under the
-          fields, the action at the right), four from 1024 (the action the row's last column, its foot on the fields' foot, the line
-          under the row: the row's inner wrapper steps out of the way there, `lg:contents`). The fields' columns may shrink to
+      {/* The field row: Country, then City, then Business, then the action. One column on a phone (the action full width under the
+          fields), three from 768 (the action under the fields at the right), four from 1024 (the action the row's last column, its foot
+          on the fields' foot: the row's inner wrapper steps out of the way there, `lg:contents`). The fields' columns may shrink to
           nothing (minmax(0,1fr)), so the action's column keeps the button's own width and its words stay on one line. */}
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
         {/* PLACEHOLDERS THAT SAY SOMETHING, which is the half of the founder's
@@ -265,23 +268,6 @@ export function NavigatorForm({ showHeading = true, seed }: { showHeading?: bool
               )}
             </button>
           </div>
-          {/* THE EXAMPLES ARE LINKS (plan 2026-10-09, home introduction), three other London trades whose pages print the
-              register's figures (plan 2026-10-10, the critique's P1.14): the line no longer repeats the case the fields already
-              show. A space is text, not margin, so the words read as words to a crawler and a screen reader. */}
-          {tries.length > 0 ? (
-            <p data-try="" className="text-sm leading-5 text-[var(--c-ink2)] text-pretty lg:col-span-4 lg:row-start-2">
-              Or try{" "}
-              {tries.map((t, i) => (
-                <React.Fragment key={t.href}>
-                  {i === 0 ? null : i === tries.length - 1 ? " or " : ", "}
-                  <a href={t.href} className="underline decoration-[var(--c-line-strong)] underline-offset-2 transition-colors hover:text-[var(--c-ink)] hover:decoration-[var(--c-ink)]">
-                    {t.word}
-                  </a>
-                </React.Fragment>
-              ))}
-              {` in ${tryCity}.`}
-            </p>
-          ) : null}
         </div>
       </div>
       {failed ? (

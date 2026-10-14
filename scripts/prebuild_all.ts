@@ -604,9 +604,9 @@ const GATES: Gate[] = [
   { name: "industry-resolution", script: "tests/cells/industry_resolution.test.ts" },
   { name: "search-cascade", script: "tests/home/search_cascade.test.ts" },
   /* Where a home search lands: only pages that exist, the UK first, never /gb/gb/...; the search page lists pages that exist;
-     no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). Since plan 2026-10-09, home
-     introduction: the picker's three examples are links to the London pages that answer them, each word its trade's; the h1 asks
-     the example's question first; the site's one definition is the structured data's. */
+     no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). Since plan 2026-10-13 (home, quiet
+     editorial): every case of the h1 the picker follows lands on a page the edge serves, the first the form's own seed; the h1 asks
+     restaurants in London first; the site's one definition is the structured data's. */
   { name: "home-destination", script: "tests/home/destination.test.ts" },
   /* The worked example and the third proof on the home (plan 2026-10-09, home introduction, Tasks 6, 7, 8 and 10): the picker's own
      case, restaurants in London, in four steps, each figure the London page's own from the same builder, under the same name, with
@@ -922,12 +922,14 @@ const GATES: Gate[] = [
   /* His ruling of 2026-10-07: the home's hero holds still (the rotating word fades in place, both together; the h1 fades in). */
   { name: "hero-still", script: "tests/trust/hero_still.test.ts" },
   /* The hero's two words on one timer (plan 2026-10-10, home reform, Task 2; WCAG 2.2.2): twelve ticks of 3.5 s, the last back to
-     "restaurant" and "London", then still for good; still at once on a touch, a key or a focus inside the search; paused while hidden;
-     the h1 on set lines, each slot as wide as its widest word drawn, the "?" against the city. */
+     "restaurant" and "London", then still for good; still at once on a touch, a key or a focus inside the search, or a pointer over the
+     picker; paused while hidden; the index told to the picker, which follows it (HomeAsk, plan 2026-10-13); the h1 on set lines, each
+     slot as wide as its widest word drawn, the "?" against the city. */
   { name: "hero-words", script: "tests/home/hero_words.test.ts" },
   /* The home picker in the spine's tokens (plan 2026-10-10, home reform, Task 2): sentence-case labels, 48px fields with a 3:1 edge
-     and an ink focus ring, 16px type on a phone, a "No match" row, the one ink action, its lists loaded on first use and its first
-     paint from the server's seed. */
+     and an ink focus ring, 16px type on a phone, a "No match" row, the one ink action, its lists loaded on first use, its first paint
+     from the server's seed or the h1's first case, its fields following the h1's case until the reader reaches them (plan 2026-10-13),
+     no examples' line. */
   { name: "home-picker", script: "tests/home/picker.test.ts" },
   /* The home, quiet editorial (his choice of 2026-10-13; plan 2026-10-13 home-quiet-editorial): the positioning line above his h1 and the picker that follows it, the contents, (Pro), the band, the colophon; three seats; nothing the reform retired; every figure stamped; no reader text under 14px. Reads the home's render, which pages-fresh writes first. */
   { name: "home-shape", script: "tests/trust/home_shape.test.ts" },

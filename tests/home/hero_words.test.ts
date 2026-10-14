@@ -1,7 +1,9 @@
 /**
  * THE HERO'S WORDS (plan docs/superpowers/plans/2026-10-10-home-reform, Task 2; the spec's decision 3; the critique's P0.2 and P0.3;
  * the ship audit's 3.6, 3.7 and 4.1, WCAG 2.2.2). One timer for both words: twelve ticks of 3.5 seconds, the last a fade back to
- * "restaurant" and "London", then still for good; still at once on the first pointerdown, keydown or focusin inside #search; paused
+ * "restaurant" and "London", then still for good; still at once on the first pointerdown, keydown or focusin inside #search; still at
+ * once on a pointer over the picker's form (plan 2026-10-13 home-quiet-editorial, Task 3); the index on screen told after each change
+ * (onIndex), and HomeAsk's picker following it until the reader reaches it, a submit then sending the case on screen; paused
  * while the page is hidden; still from the start under reduced motion. The h1 on set lines: a phone's break after "How much does a"
  * (hidden from 640), a break after the business; each word at its slot's left; the "?" inside the city's slot against its word; each
  * slot as wide as its widest word DRAWN, measured here from the font's advances; the motion opacity only.
@@ -100,7 +102,7 @@ async function main() {
     timers = [];
     root = createRoot(container);
     await act(async () => {
-      root.render(React.createElement("section", { id: "search" }, React.createElement("h1", null, React.createElement(HeroWords, props)), React.createElement("input", { id: "probe", "aria-label": "probe" })));
+      root.render(React.createElement("section", { id: "search" }, React.createElement("h1", null, React.createElement(HeroWords, props)), React.createElement("form", null, React.createElement("input", { id: "probe", "aria-label": "probe" }))));
     });
   };
   const advance = async (ms: number) => {
@@ -135,6 +137,7 @@ async function main() {
     ["pointerdown", () => { document.getElementById("search")!.dispatchEvent(new dom.window.Event("pointerdown", { bubbles: true })); }],
     ["keydown", () => { document.getElementById("probe")!.dispatchEvent(new dom.window.KeyboardEvent("keydown", { key: "a", bubbles: true })); }],
     ["focusin", () => { (document.getElementById("probe") as HTMLInputElement).focus(); }],
+    ["pointer over the picker's form", () => { document.querySelector("#search form")!.dispatchEvent(new dom.window.PointerEvent("pointerover", { bubbles: true })); }],
   ];
   for (const [name, fire] of acts) {
     await mount();
@@ -143,6 +146,13 @@ async function main() {
     await advance(60_000);
     check(`a ${name} inside #search stops the words at once, where they are (${words()}, ${timers.length} timer)`, words() === "bakery / Paris" && timers.length === 0, HERO);
   }
+
+  /* A POINTER OVER THE QUESTION ALONE MOVES NOTHING (plan 2026-10-13 home-quiet-editorial, Task 3): only the form is the picker. */
+  await mount();
+  await advance(TICK);
+  await act(async () => { document.querySelector("#search h1")!.dispatchEvent(new dom.window.PointerEvent("pointerover", { bubbles: true })); });
+  await advance(TICK);
+  check(`a pointer over the question alone stops nothing: the words go on (${words()})`, words() === "pharmacy / Istanbul", HERO);
 
   await mount();
   await advance(W.HERO_TICK_MS);
@@ -183,6 +193,59 @@ async function main() {
   await advance(TICK);
   check(`a field focused before the page hydrated stops the words at once: no timer is set and they stay where they are (focus kept ${heldFocus}, ${waiting} timer after hydration, then ${words()}, ${timers.length} timer)`, heldFocus && waiting === 0 && words() === "restaurant / London" && timers.length === 0, HERO, "in HeroWords' effect, return before the timer is set when #search already contains document.activeElement");
   await act(async () => { hydrated.unmount(); });
+
+  /* THE INDEX ON SCREEN IS TOLD AFTER EACH CHANGE (onIndex): 0 at mount, then each tick's, never twice for one tick (a fade is no change). */
+  const told: number[] = [];
+  const onIndex = (i: number) => { told.push(i); };
+  const toldRoot = createRoot(container);
+  timers = [];
+  await act(async () => { toldRoot.render(React.createElement("section", { id: "search" }, React.createElement("h1", null, React.createElement(HeroWords, { ...props, onIndex })))); });
+  await advance(TICK * 2);
+  check(`the index on screen is told after each change (${told.join(", ")})`, told.join() === "0,1,2", HERO, "call onIndex(heroIndexAt(tick)) in an effect on [tick, onIndex]");
+  await act(async () => { toldRoot.unmount(); });
+
+  /* THE PICKER FOLLOWS THE CASE ON SCREEN (Review Focus 1): HomeAsk holds the h1's words and the picker on one index; each tick moves the
+     fields to the h1's case, a pointer reaching the form stops both where they are, and a submit then sends the case on screen, the
+     browser's own before the lists load and the page's own after. BLIND SPOT: jsdom proves the mechanism and the fields the form holds; the
+     labels' paint is the photographs'. */
+  const { AppRouterContext } = await import("next/dist/shared/lib/app-router-context.shared-runtime");
+  const { HomeAsk } = await import("../../src/components/spine/home/HomeAsk");
+  const { homePickerCases } = await import("../../src/lib/home/picker_cases");
+  const { homeDestination } = await import("../../src/lib/home/destination");
+  const ASK = "src/components/spine/home/HomeAsk.tsx";
+  const FOLLOW = "keep the picker on the h1's index (HomeAsk passes HeroWords' onIndex to NavigatorForm's caseIndex), stop both when a pointer reaches the form (HeroWords' pointerover on the form, NavigatorForm's reach), and send the case on screen";
+  const cases = homePickerCases();
+  const pushed: string[] = [];
+  const router = { push(p: string) { pushed.push(p); }, replace() {}, back() {}, forward() {}, refresh() {}, prefetch() {} };
+  const settle = async (done: () => boolean) => { for (let i = 0; i < 300 && !done(); i++) await act(async () => { await new Promise((r) => setTimeout(r, 10)); }); };
+  const at = cases.findIndex((c, i) => i > 0 && c !== null);
+  check(`the picker can follow a case after the first (${at > 0 ? `${W.HERO_BUSINESSES[at % W.HERO_BUSINESSES.length]} in ${W.HERO_CITIES[at % W.HERO_CITIES.length]}, tick ${at}` : "none"})`, at > 0 && cases[0] !== null, "src/lib/home/picker_cases.ts", FOLLOW);
+  if (at > 0 && cases[0]) {
+    const askRoot = createRoot(container);
+    timers = [];
+    await act(async () => { askRoot.render(React.createElement(AppRouterContext.Provider, { value: router as never }, React.createElement("section", { id: "search" }, React.createElement(HomeAsk, { ...props, cases })))); });
+    const form = () => container.querySelector("form")!;
+    const sends = () => [...new dom.window.FormData(form()).entries()].map(([k, v]) => `${k}=${v}`).join("&");
+    const hiddenOf = (c: NonNullable<(typeof cases)[number]>) => `country=${c.hidden.country}&region=${c.hidden.region}&subdivision=${c.hidden.subdivision}&industry=${c.hidden.industry}`;
+    const want = cases[at]!;
+    check(`at mount the fields hold the h1's first case (${sends()})`, sends() === hiddenOf(cases[0]), ASK, FOLLOW);
+    await advance(TICK * at);
+    const wordsAt = words();
+    check(`after ${at} tick(s) the fields hold the case the h1 shows, ${wordsAt} (${sends()})`, sends() === hiddenOf(want), ASK, FOLLOW);
+    const native = new dom.window.Event("submit", { bubbles: true, cancelable: true });
+    await act(async () => { form().dispatchEvent(new dom.window.PointerEvent("pointerover", { bubbles: true })); form().dispatchEvent(native); });
+    const sentNative = sends();
+    await advance(TICK * 3);
+    check(`a pointer over the form stops the words and the fields at once, where they are (${words()} against ${wordsAt}; ${timers.length} timer; ${sends()})`, words() === wordsAt && timers.length === 0 && sends() === hiddenOf(want), ASK, FOLLOW);
+    check(`a submit at that moment is the browser's own and sends the case on screen (default prevented ${native.defaultPrevented}; ${sentNative})`, !native.defaultPrevented && sentNative === hiddenOf(want) && pushed.length === 0, ASK, FOLLOW);
+    await act(async () => { (container.querySelector("#country") as HTMLInputElement).focus(); });
+    await settle(() => container.querySelectorAll('[role="option"]').length > 1);
+    const scripted = new dom.window.Event("submit", { bubbles: true, cancelable: true });
+    await act(async () => { form().dispatchEvent(scripted); });
+    const path = homeDestination({ country: want.country.value, city: want.city.value, trade: want.business.value });
+    check(`once the lists are in, a submit is the page's own and pushes the case on screen, ${path} (pushed ${pushed.join(", ") || "nothing"})`, scripted.defaultPrevented && pushed.join() === path, ASK, FOLLOW);
+    await act(async () => { askRoot.unmount(); });
+  }
 
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("home/hero_words: all pass");

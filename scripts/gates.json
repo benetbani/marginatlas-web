@@ -1703,8 +1703,6 @@
       "asserts": "WHERE A HOME SEARCH LANDS (milestone 3, masterplan step 33; his ruling 11 of 2026-09-26: a place-and-trade search, the UK first).",
       "reads": [
         "data/cities/city_list_v1.json",
-        "scripts/gates.json",
-        "scripts/verify_trade_set.ts",
         "src/app/api/go/route.ts",
         "src/components/GlobalSearch.tsx",
         "src/components/HeaderSearch.tsx",
@@ -1712,6 +1710,7 @@
         "src/components/StructuredData.tsx",
         "src/lib/hero-words.ts",
         "src/lib/home/destination.ts",
+        "src/lib/home/picker_cases.ts",
         "src/lib/spine/copy.ts"
       ],
       "claims": []
@@ -3468,7 +3467,9 @@
       "reads": [
         "src/components/RotatingWord.tsx",
         "src/components/spine/home/HeroWords.tsx",
-        "src/lib/hero-words.ts"
+        "src/components/spine/home/HomeAsk.tsx",
+        "src/lib/hero-words.ts",
+        "src/lib/home/picker_cases.ts"
       ],
       "claims": []
     },
@@ -3483,6 +3484,7 @@
         "src/app/(site)/you/CompareToMeClient.tsx",
         "src/components/ComboField.tsx",
         "src/components/NavigatorForm.tsx",
+        "src/components/spine/home/HomeAsk.tsx",
         "src/lib/home/picker.ts",
         "src/lib/taxonomy"
       ],
@@ -4086,9 +4088,7 @@
       "args": [],
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 32: \"One shared component and interaction kit, and one fixed set of example businesses (restaurant, grocery, pharmacy, salon, gym, auto repair), reused across all page",
-      "reads": [
-        "src/lib/home/destination.ts"
-      ],
+      "reads": [],
       "claims": []
     },
     {

@@ -64,29 +64,3 @@ export function homeDestination({ country, city = "", trade = "" }: { country: s
   const geo = place || getDefaultRegionForCountry(cc) || cl;
   return `/${cl}/${geo}/${industryToSlug(String(trade))}`;
 }
-
-/* THE PICKER'S EXAMPLES, EACH THE PAGE THAT ANSWERS IT (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 9; the
-   home's spec of 2026-10-09, section 3: each trade a link to its London page, from rule 32's set, each printing register figures).
-   THREE OTHER TRADES SINCE 2026-10-10 (plan 2026-10-10, home reform, Task 2; the critique's P1.14, the spec's decision 9): the line read
-   "Try restaurants, gyms or salons in London" under fields that already show restaurants in London, so it repeated the case; it reads
-   "Or try gyms, salons or cafés in London." now. Each London page prints the register's figures (read 2026-10-10 through
-   londonTradeHero: gyms the break-even of an average London gym, salons and cafés the register's typical yearly sales); "cafés" is
-   spelled as the page it opens names itself ("Cafés & coffee shops"). The trade ids and the words the line prints; the city is the one
-   the form opens on. Each link is this file's own answer to the search its words describe, so a link and the form never disagree. The
-   words live here and not in the copy table: the form is a client component, and the table is the whole site's. */
-export const HOME_TRY_CITY = "london";
-export const HOME_TRY: ReadonlyArray<{ trade: string; word: string }> = [
-  { trade: "sports_fitness", word: "gyms" },
-  { trade: "hairdressers_beauty", word: "salons" },
-  { trade: "cafes_coffee", word: "cafés" },
-];
-
-/** The examples as the links the line prints: each the page a search for it lands on. */
-export function homeTryLinks(): Array<{ word: string; href: string }> {
-  return HOME_TRY.map((t) => ({ word: t.word, href: homeDestination({ country: "GB", city: HOME_TRY_CITY, trade: t.trade }) }));
-}
-
-/** The examples' city as the form names it (the city list's label). */
-export function homeTryCityLabel(): string {
-  return UK_CITIES.find((c) => c.slug === HOME_TRY_CITY)?.label ?? "";
-}
