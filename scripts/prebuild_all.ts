@@ -219,6 +219,9 @@ const GATES: Gate[] = [
   /* STAGE 5, TO LAST (plan 2026-10-13 country-page-journey, Task 3G): how many last, selling or failing, one type a list, the time to sell
      placed with its signal. No browser. */
   { name: "slots-last", script: "tests/spine/slots_last.test.ts" },
+  /* STAGES 6 AND 7 (plan 2026-10-13 country-page-journey, Task 3H): how dealings go, the rule changes, where to next, and every coming or
+     recent change dated on its row or named as printed on none. No browser. */
+  { name: "slots-rules", script: "tests/spine/slots_rules.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

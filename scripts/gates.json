@@ -476,6 +476,19 @@
       "claims": []
     },
     {
+      "name": "slots-rules",
+      "script": "tests/spine/slots_rules.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGES 6 AND 7 (plan 2026-10-13 country-page-journey, Task 3H; spec sections 2 and 3; R5 section 5, slots 14 to 16): how dealings go (the state's and the people's spectra under one switch, their two f",
+      "reads": [
+        "src/components/spine/country/slots/StageRules.tsx",
+        "src/lib/spine/slots/dated.ts",
+        "src/lib/spine/slots/rules.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

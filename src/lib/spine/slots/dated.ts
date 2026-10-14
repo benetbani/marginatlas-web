@@ -12,6 +12,18 @@ import { COPY } from "@/lib/spine/copy";
 /** How long a change in force stays news on its row: the changes slot's recent window (buildRuleChanges' `recentDays`). */
 export const DATED_RECENT_DAYS = 120;
 
+/** A change the ledger holds that no row of a country page prints, and why: its date stands in the changes slot alone (stage 6). A coming or
+ *  recent change neither dated on a row nor named here is a red of the slots-rules gate. */
+export const UNDATED: Record<string, string> = {
+  "unfair-dismissal-cap-2027": "the cap on an unfair dismissal award prints on no row of the country page",
+  "unfair-dismissal-cap-2026": "the cap on an unfair dismissal award prints on no row of the country page",
+  "digital-tax-records-2027": "a sole trader's digital tax records print on no row of the country page",
+  "digital-tax-records-2028": "a sole trader's digital tax records print on no row of the country page",
+  "digital-tax-records-2026": "a sole trader's digital tax records print on no row of the country page",
+  "tribunal-time-limit": "the time limit for a tribunal claim prints on no row of the country page",
+  "week-pay-cap": "the cap on a week's pay for statutory awards prints on no row of the country page",
+};
+
 export type Dated = { value: string; note: string | null; change: string };
 
 const daysBetween = (from: string, to: string) => Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000);

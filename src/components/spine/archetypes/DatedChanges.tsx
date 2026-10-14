@@ -15,6 +15,7 @@
  *  - A RUN SHOWS ITS `shown` ROWS, the rest behind the plus in the same form, newest first, counted as changes (a rate and its
  *    threshold are one change in two rows) (clause 58, parts on a click).
  *  - `data-archetype="dated-changes"`: a sibling-figure form, like a table (no one figure at 30; its figures are equals).
+ *  - The run declares its answer type (plan 2026-10-13 country-page-journey, Task 3H): a dated pair, each row's date read by the answer-type gate.
  */
 import * as React from "react";
 import { Fig, InlineDisclosure } from "@/components/spine/kit";
@@ -48,7 +49,7 @@ function Row({ r, first }: { r: ChangeRow; first: boolean }) {
         <Fig className="!font-normal text-[var(--c-ink2)]">{r.before}</Fig>
         <span aria-hidden className="text-[var(--c-muted)]">&rarr;</span>
         <span className="sr-only">to</span>
-        <Fig className="text-[var(--c-ink)]">{r.from}</Fig>
+        <span data-value=""><Fig className="text-[var(--c-ink)]">{r.from}</Fig></span>
       </span>
     </li>
   );
@@ -73,7 +74,7 @@ export function ChangeRun({ rows, shown, more, moreOne }: { rows: ChangeRow[]; s
   const n = new Set(rest.map((r) => r.key.replace(/-(rate|threshold)$/, ""))).size;
   const summary = n === 1 && moreOne ? moreOne : (more ?? "").replace("{n}", String(n));
   return (
-    <div data-archetype="dated-changes" data-rows={String(rows.length)} className="[container-type:inline-size]">
+    <div data-archetype="dated-changes" data-answer="dated-pair" data-rows={String(rows.length)} className="[container-type:inline-size]">
       <ol className={RUN_GRID}>
         {visible.map((r, i) => (
           <Row key={r.key} r={r} first={i === 0} />
