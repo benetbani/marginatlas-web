@@ -1340,7 +1340,7 @@ function ExitCard({ exit, closing, lean = false }: { exit: CountryExitData | nul
         </div>
       ) : null}
       <Basis>{exit.basis}</Basis>
-      <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.foot}</p>
+      {exit.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{exit.foot}</p> : null}
     </Box>
   );
 }

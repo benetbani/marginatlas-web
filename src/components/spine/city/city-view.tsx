@@ -95,7 +95,7 @@ import { spineCitySeed } from "@/lib/spine-seeds";
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Basis, Box, Rail, Ico, SampleTag, usd, Fig } from "@/components/spine/kit";
+import { Basis, Box, Rail, Ico, SampleTag, usd, Fig, FocalWords } from "@/components/spine/kit";
 import { Zone, type ZoneSplit } from "@/components/spine/zones";
 import type { AtlasIconId } from "@/components/brand/icons";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
@@ -774,10 +774,8 @@ export function SpendCalendar({ calendar, id = "calendar" }: { calendar: CityCal
           <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{C.swingLabel}</div>
           <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{calendar.swing.figure}</Fig>
         </div>
-        <div className="mt-2 [@container(min-width:560px)]:mt-0">
-          {calendar.basis ? <Basis beside>{calendar.basis}</Basis> : null}
-          {calendar.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{calendar.foot}</p> : null}
-        </div>
+        {calendar.basis ? <FocalWords className="[@container(min-width:560px)]:mt-0">{calendar.basis}</FocalWords> : null}
+        {calendar.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)] [@container(min-width:560px)]:col-start-2">{calendar.foot}</p> : null}
       </div>
       <MonthBars points={calendar.months} />
     </Box>

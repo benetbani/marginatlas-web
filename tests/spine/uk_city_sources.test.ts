@@ -318,7 +318,7 @@ for (const slug of SIX) {
 const cityViewSrc = readFileSync(CITY_VIEW_FILE, "utf8");
 check("the split card prints its foot", /\{season\.foot \? <p/.test(cityViewSrc), REMEDY_VIEW, CITY_VIEW_FILE);
 check("the spend card prints its basis", /basis=\{demand\.basis \?\? undefined\}/.test(cityViewSrc), REMEDY_VIEW, CITY_VIEW_FILE);
-check("the calendar card prints its basis", /\{calendar\.basis \? <(?:p|Basis)\b[^>]*>\{calendar\.basis\}<\/(?:p|Basis)>/.test(cityViewSrc), REMEDY_VIEW, CITY_VIEW_FILE);
+check("the calendar card prints its basis", /\{calendar\.basis \? <(?:p|Basis|FocalWords)\b[^>]*>\{calendar\.basis\}<\/(?:p|Basis|FocalWords)>/.test(cityViewSrc), REMEDY_VIEW, CITY_VIEW_FILE);
 
 if (failed > 0) { redSummary(RULE, failed, firstRemedy, "checks failed"); process.exit(1); }
 console.log("spine/uk_city_sources: all pass");

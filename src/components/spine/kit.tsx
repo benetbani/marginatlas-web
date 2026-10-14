@@ -1189,6 +1189,12 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss, level
   );
 }
 
+/** THE FIGURE'S WORDS (plan 2026-10-12 rhythm-air-inside, Task 2C fix round 1): the line that says what a figure is, 8 under it (DISTANCES 4), marked `data-focal-words` so the line-rule gate reads it as the figure's own. Focal draws it; a head that
+ *  stands the figure beside its words (the spend calendar's, from 560px of card) places it itself and `className` drops the 8 there. */
+export function FocalWords({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <p data-focal-words="" className={`mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${className ? ` ${className}` : ""}`}>{children}</p>;
+}
+
 /** THE FOCAL BLOCK (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1; MODEL PART 4: one figure at 30 a section): the section's
  *  figure, the words that say what it is 8 under it (DISTANCES 4: a line 8 under its figure belongs to the figure), the placement sentence
  *  where the figure stands among the countries (PART 6), and 24 to the next group. `beside`: the block stands beside another (a drawing, a
@@ -1200,7 +1206,7 @@ export function Focal({ figure, words, placement, prov, accent = false, live = f
   return (
     <div className={wrap || undefined}>
       <div data-focal="1" {...(live ? { "aria-live": "polite" as const } : {})} className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</div>
-      {words ? <p data-focal-words="" className={`mt-2 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]${wordsClassName ? ` ${wordsClassName}` : ""}`}>{words}</p> : null}
+      {words ? <FocalWords className={wordsClassName}>{words}</FocalWords> : null}
       {/* The site's one placement sentence (placement.ts), under the figure's words, where the figure stands on a scale of the countries (PART 6, "Higher than {n} countries in ten."). */}
       {placement ? <p data-placement="" className="mt-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">{placement}</p> : null}
     </div>
