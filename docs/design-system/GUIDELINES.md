@@ -60,6 +60,7 @@ files.
 | The accent is derived from the value and a stated threshold at render time, never accepted as a hand-set flag from data. | `derived-accents` | 2026-07-26 |
 | A figure drawn against a world track carries one placement line beside it, one fixed wording, one direction, and the track's end is never labelled with whose figure it is. | `check_model_laws.mjs: PLACEMENT` | 2026-09-08 (the ruling behind it is 2026-09-07) |
 | Terracotta never appears on a heading, kicker, h1, border, hover state, link at rest, control, pill, icon stroke, or table cell. | not machine-checkable because no gate reads which UI role a color declaration is attached to; the spine's known offenders were corrected by hand and are named in MODEL.md PART 6 | 2026-09-07 |
+| On the home, terracotta stands in four places only: the wordmark, the question's moving words, the positioning line's mark and the band (the brand terracotta at full strength, `--terra-full` #c11c00, white type, one sentence). | `home-band` (the band's colour, ink and one statement), `home-shape` (the positioning line's mark), `loud-seats` (the band its one FIELD seat) | 2026-10-13 |
 | At most one loud card per band, no two loud cards on one horizontal level, at least two quiet cards between two loud ones. | not machine-checkable because judging a card's loudness and a page's pacing is a reading of the whole page, not a countable property; `art-direction`'s own section J marks pacing as judgment, not machine-checkable | 2026-08-25 |
 
 ### 0.3 Layout, rhythm and full width
@@ -70,6 +71,7 @@ files.
 | No lone card in a band; a band with one child is a fault. | `check_model_laws.mjs: LONE CARD` | 2026-09-08 (the ruling is 2026-09-07) |
 | Rows of equivalent elements are the same height, to the pixel, by construction. | `check_archetypes.mjs: UNEQUAL` (card-pager, city-cards, tiers-table, spectra-table, kv-grid, compare-table, mark-list rows) | 2026-09-04 (ruling 7) |
 | A page's block count clears its page type's floor: 21 country, 17 city, 16 trade, 12 industry, 7 neighbourhood (provisional). | `check_model_laws.mjs: BLOCK FLOOR` | 2026-09-08, five floors since 2026-09-17 |
+| The home's catalog is one contents section of six numbered departments, each a title of four words or fewer, one line, at most four members chosen by a rule read from the code, and its door; a department is never padded. | `home-contents`; FOCAL names the `department` form (`check_model_laws.mjs`) | 2026-10-13 |
 | The largest empty rectangle inside a card stays under a quarter of the card each way, floored at 120px. Equal heights are fixed by pairing or filling content, never by unstretching a card. | `gathered-emptiness` (static artefacts), `check_page_holes.mjs: WHITE SPACE` (a live page), `check_archetypes.mjs: LONE STAT` (a story) | 2026-08-25 |
 | A card with no order for the eye (no text size at least 1.4x its own median) is a fault, except the four forms a ruling makes even: `compare-table`, `card-pager`, `pay-bars`, `terminus`. | `check_page_holes.mjs: NO LEAD` | 2026-09-07 |
 | A card's text density stays under 0.55 characters per pixel of width per 100 pixels of height; past that it is a wall of prose. | `check_page_holes.mjs: WALL` | 2026-09-07 (ruling 15) |
@@ -139,6 +141,8 @@ files.
 | Rule | Enforced by | Since |
 |---|---|---|
 | No em dashes in user-visible source; period, comma or colon instead. Already stated in section 7.3 above. | `no-em-dashes` | (undated in the gate's own comment; Plan v16 Block G) |
+| No eyebrow above a title (rulebook rule 11), with one named exception, his of 2026-10-13: the home's positioning line, a serious sentence-case line beside the compass mark above the question, twelve words at most, no rank word. | `no-eyebrow` | 2026-07-10; the exception 2026-10-13 |
+| The home prints no country, city or trade-list count, in figures or in words, and no figure but a trade row's and the Pro band's. | `home-no-counts` | his ruling of 2026-10-07; gated 2026-10-13 |
 | No source-agency name (a national statistics body, a named index provider) in user-facing copy; a public export emits a derived coverage tier, never a raw provenance field. | `no-source-agencies`, `export-columns` | (undated; Plan v18 / R-002) for the copy ban, 2026-07-31 for the export |
 | No banned trade jargon in rendered copy: "turnover," "covers," "percentage points," and "net margin" specifically at city or country altitude. | `banned-vocabulary` | 2026-07-27 |
 | A sentence already found false and deleted may not reappear elsewhere on the page. | `retired-claims` | (undated; found twice in one session) |
