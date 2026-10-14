@@ -3054,6 +3054,10 @@ export const COPY = {
     credit: { words: "a year, the average rate on a business bank loan", loanRate: "Start-up loan rate", payouts: "Card payouts, days", terms: "Payment terms, days", agreed: "Agreed limit, days" },
     /** Slot 10: the UK's deadlines, a time each, its unit in its label. */
     filings: { taxReturn: "Tax return, months", taxPayment: "Tax payment, months", vatReturn: "VAT return, months", andDays: "and {n} days, {note}", andDay: "and 1 day, {note}" },
+    /** Slot 12's pluses: the first row's note in each, the duel's middle trade. */
+    lastRows: { cohort: "born in {cohort}, still trading in {year}", insolvent: "of companies insolvent a year", middle: "Middle trade", ofTrades: "the middle of {n} trades" },
+    /** Slot 13 on the UK: its times, each unit in its label. */
+    exit: { liquidation: "Liquidation, months", ban: "Director ban, years", strikeNotice: "Strike-off notice, months", noTrading: "No-trading period, months" },
     abroad: { founder: "Founder visa fees", founderNote: "For {years} years, per person", decision: "Visa decision", decisionNote: "Applying from outside the UK", forTime: "Fee and surcharge for {time}" },
     boardRows: { clean: "Clean dealing /100", admin: "Admin ease /100", salary: "Monthly salary", living: "Living cost /100", llcDays: "Days to register", llcCost: "Cost to register" },
     /** The UK's charge on a director's loan, a tax, standing in the other taxes of slot 1. */

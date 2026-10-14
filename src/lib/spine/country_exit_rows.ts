@@ -136,6 +136,12 @@ function worldExit(): WorldExit | null {
   return WORLD;
 }
 
+/** The slow ends of every shard's sale time, lowest first, the set the placement reads (plan 2026-10-13 country-page-journey, Task 3G: the
+ *  signal reads the same set), or null where the scan read too little. */
+export function worldExitHighs(): number[] | null {
+  return worldExit()?.highs ?? null;
+}
+
 function word(iso2: string, metric: string): string | null {
   if (!loadCountryShard(iso2)) return null;
   const f = queryFacts({ entityId: countryEntityId(iso2), metrics: [metric], rowKey: "" })[0];

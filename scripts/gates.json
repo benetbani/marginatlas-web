@@ -464,6 +464,18 @@
       "claims": []
     },
     {
+      "name": "slots-last",
+      "script": "tests/spine/slots_last.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 5, TO LAST (plan 2026-10-13 country-page-journey, Task 3G; spec sections 2 and 3; R5 section 5, slots 12 and 13): how many last (the UK's survival curve with its figure at 30 and its region leve",
+      "reads": [
+        "src/components/spine/country/slots/StageLast.tsx",
+        "src/lib/spine/slots/last.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [
