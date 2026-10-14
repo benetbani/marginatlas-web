@@ -138,6 +138,9 @@ async function main(): Promise<void> {
       const answer = industryHeroFacts(m.key)?.answer?.value;
       check(`03 ${m.name}: the industry page's own figure, "${m.figure?.text}" against its answer "${answer}", stamped from the trade's shard`, !!m.figure && m.figure.text === answer && m.figure.prov.src === `facts/industry/${m.key}.json:margin_ladder.net_margin_pct` && m.figure.prov.kind === "estimate" && m.name === tradeRowName(m.key, INDUSTRY_BY_ID[m.key]?.name ?? "") && m.href === `/industries/${industryToSlug(m.key)}` && m.mark.kind === "pictogram");
     }
+    /* EACH TRADE ITS OWN MARK (the final review's I4, fix round 1): pharmacies drew the salon's scissors, the hairdressers' mark too. */
+    const tradeMarks = contents.trades.members.map((m: { mark: { id?: string } }) => m.mark.id ?? "");
+    check(`no two trade rows draw one mark (${tradeMarks.join(", ")})`, new Set(tradeMarks).size === tradeMarks.length && !tradeMarks.includes(""), "src/lib/brand/industry_pictogram.ts", "give the trade its own pictogram in DIRECT (src/lib/brand/industry_pictogram.ts)");
     const profileId = INDUSTRIES.map((i) => i.id).find((id) => resolveTradeNet(id, { moneyShown: false, netMarginPct: null })?.branch === "profile" && slugToIndustry(industryToSlug(id))?.id === id);
     const viaProfile = profileId ? B.contentsTrades([industryToSlug(profileId)]) : null;
     check(`a trade whose net is its sector's residual is left out, never printed under its name (${profileId ?? "no such trade found"}: ${viaProfile ? viaProfile.members.length : "not run"} member(s), figure ${profileId ? JSON.stringify(B.tradeOwnFigure(profileId)) : "none"})`, !!profileId && !!viaProfile && viaProfile.members.length === 0 && B.tradeOwnFigure(profileId) === null && viaProfile.door.href === "/industries");
