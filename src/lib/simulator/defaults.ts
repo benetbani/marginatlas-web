@@ -19,7 +19,7 @@
 import icpJson from "../../../data/finance/industry_cost_profile_v1.json";
 import { cityFigure } from "@/lib/facts/city_shard";
 import { countryFigure } from "@/lib/facts/country_shard";
-import { industryFigure } from "@/lib/facts/industry_shard";
+import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
 import { countryMedianPay, shardRoles } from "@/lib/spine/team_rows";
 import { shardLadderNet } from "@/lib/spine/trade_net";
 import { placeCostFactor } from "@/lib/spine/open_rows";
@@ -60,6 +60,25 @@ const pos = (x: number | null | undefined): number | null => (typeof x === "numb
 const input = (value: number | null, stamp: Stamp | null, level: Level, line: string): SimInput => (value === null || stamp === null ? { value: null, stamp: null, level: "none", line } : { value, stamp, level, line });
 
 type Step = { level: Level; value: number | null; src: string; kind: ProvenanceKind; line: string };
+
+/** A cost driver that is goods or supplies ("Materials and parts", "Cost of goods sold", "Ingredients and packaging"), and not one that mixes in pay
+ *  or overhead ("Labor and materials", "Insurance, security and supplies", "Marketing, platform fees, and packaging"). */
+const GOODS_DRIVER = /\b(supplies|supply|products?|materials?|food|stock|ingredients?|goods|inventory|merchandise|parts|cogs|consumables|substrates|garments|packaging)\b/i;
+const NOT_GOODS = /\b(pay|wages?|labou?r|commissions?|staff|salar(y|ies)|payroll|insurance|rent|marketing|admin|fees|utilities|overhead)\b/i;
+
+/** The shard's goods and supplies drivers (cost_structure.cost_drivers), each a share of sales; empty where the shard holds none. */
+function goodsDrivers(industryId: string): Array<{ rowKey: string; name: string; pct: number }> {
+  const rows = new Map<string, { name?: string; pct?: number }>();
+  for (const f of industryRows(industryId, "cost_structure.cost_drivers.")) {
+    const r = rows.get(f.rowKey) ?? {};
+    if (f.metric.endsWith(".name") && typeof f.value === "string") r.name = f.value;
+    if (f.metric.endsWith(".pct_of_revenue") && typeof f.value === "number" && Number.isFinite(f.value)) r.pct = f.value;
+    rows.set(f.rowKey, r);
+  }
+  return [...rows.entries()]
+    .filter(([, r]) => r.name && typeof r.pct === "number" && r.pct > 0 && r.pct < 100 && GOODS_DRIVER.test(r.name) && !NOT_GOODS.test(r.name))
+    .map(([rowKey, r]) => ({ rowKey, name: r.name as string, pct: r.pct as number }));
+}
 
 /** The first level that holds the figure; past the first, a city's row says it holds none and whose figure stands ("Berlin holds none. This is Germany's."). */
 function stepDown(place: Place, steps: Array<Step | null>, noneLine: string): SimInput {
@@ -150,18 +169,23 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
     : hasCountrySpecificRates(place.iso2) ? input(getCountryTaxRates(place.iso2).employer_social, est(`tax/country_rates_2024.json:${place.iso2}.employer_social`), "country", fill(W.lines.oncost.country, { country: inSentence(place.countryName) }))
     : input(null, null, "none", W.lines.oncost.none);
 
-  /* EACH SALE: the recipe's goods (no commission), else what the gross margin leaves (never the 42/10/5 ladder), else the sector's share; the
-     running costs as a share of sales, the recipe's lines that pay no staff, else the sector's six running shares. */
+  /* EACH SALE: the recipe's goods (no commission), else the shard's own supplies or goods drivers, else what the gross margin leaves (never the
+     42/10/5 ladder; its line says it may hold direct labour, which the team already pays), else the sector's share; the running costs as a share
+     of sales, the recipe's lines that pay no staff, else the sector's six running shares. The drivers' rule is the final review's I1 (ruled
+     2026-10-15): plumbers' goods are their "Materials and parts" 20%, not the 60% their 40% gross margin leaves. */
   const recipeGoods = recipe ? recipe.variable.filter((s) => !COMMISSION.test(s.driver) && !COMMISSION.test(s.key)) : [];
+  const driverGoods = recipeGoods.length > 0 ? [] : goodsDrivers(place.industryId);
   const ladder = shardLadderNet(place.industryId);
   const gross = ladder && !ladder.fill ? industryFigure(place.industryId, "margin_ladder.gross_margin_pct")?.value ?? null : null;
-  const from: "recipe" | "margin" | "sector" | null = recipeGoods.length > 0 ? "recipe" : gross !== null && gross >= 0 && gross <= 100 ? "margin" : sector && pos(sector.cogs_share) !== null ? "sector" : null;
+  const from: "recipe" | "driver" | "margin" | "sector" | null = recipeGoods.length > 0 ? "recipe" : driverGoods.length > 0 ? "driver" : gross !== null && gross >= 0 && gross <= 100 ? "margin" : sector && pos(sector.cogs_share) !== null ? "sector" : null;
   const variable: Share[] | null = from === "recipe" ? recipeGoods.map((s) => ({ key: s.key, share: s.shareOfSales, stamp: est(`uk/pnl/recipes.ts:${place.trade}:${s.key}`) }))
+    : from === "driver" ? driverGoods.map((d) => ({ key: d.name, share: d.pct / 100, stamp: est(`facts/industry/${place.industryId}.json:cost_structure.cost_drivers.${d.rowKey}.pct_of_revenue`) }))
     : from === "margin" ? [{ key: "goods", share: 1 - (gross as number) / 100, stamp: est(`facts/industry/${place.industryId}.json:margin_ladder.gross_margin_pct`) }]
     : from === "sector" && sector ? [{ key: "goods", share: sector.cogs_share, stamp: est(`finance/industry_cost_profile_v1.json:${sectorId}.cogs_share`) }]
     : null;
-  const goodsLine = from === "recipe" ? W.lines.goods.recipe : from === "margin" ? W.lines.goods.margin : from === "sector" ? W.lines.goods.sector : W.lines.goods.none;
-  const goods = variable ? input(variable.reduce((a, s) => a + s.share, 0), variable.length === 1 ? variable[0].stamp : est(`uk/pnl/recipes.ts:${place.trade}:${variable.map((s) => s.key).join("+")}`), from === "sector" ? "sector" : "trade", goodsLine) : input(null, null, "none", goodsLine);
+  const goodsLine = from === "recipe" ? W.lines.goods.recipe : from === "driver" ? W.lines.goods.driver : from === "margin" ? W.lines.goods.margin : from === "sector" ? W.lines.goods.sector : W.lines.goods.none;
+  const goodsStamp = (v: Share[]): Stamp => (v.length === 1 ? v[0].stamp : from === "recipe" ? est(`uk/pnl/recipes.ts:${place.trade}:${v.map((s) => s.key).join("+")}`) : est(v.map((s) => s.stamp.src).join(" + ")));
+  const goods = variable ? input(variable.reduce((a, s) => a + s.share, 0), goodsStamp(variable), from === "sector" ? "sector" : "trade", goodsLine) : input(null, null, "none", goodsLine);
   const recipeRun = recipe ? recipe.sized.filter((s) => !STAFF_DRIVER.test(s.driver)) : [];
   const sectorRun = sector ? RUNNING_KEYS.reduce((a, k) => a + (pos(sector[k]) ?? 0), 0) : 0;
   const runShare = recipeRun.length > 0 ? input(recipeRun.reduce((a, s) => a + s.shareOfSales, 0), est(`uk/pnl/recipes.ts:${place.trade}:${recipeRun.map((s) => s.key).join("+")}`), "trade", W.lines.running.recipe)

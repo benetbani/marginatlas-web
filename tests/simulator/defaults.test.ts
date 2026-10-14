@@ -113,6 +113,21 @@ async function main(): Promise<void> {
   const barber = D.buildBundle(place("gb", "manchester", "barbershops")!, { cell: null }).roles.find((r) => /owner/i.test(`${r.name} ${r.sub ?? ""}`));
   check(`barbershops' "Barber (owner-operator)" stands at nought (${barber?.name} ${barber?.sub}: ${barber?.heads})`, !!barber && barber.owner && barber.heads === 0);
 
+  /* THE COST OF GOODS OFF THE RECIPES (the final review's I1, the controller's ruling): the shard's own supplies or goods driver where it holds one,
+     never 1 - gross margin then (a service trade's gross margin leaves its direct labour inside, which the team already pays); 1 - gross margin
+     only where no such driver exists, its line saying the share may include direct labour. */
+  const { b: plumbers } = at("de", "berlin", "plumbers");
+  check(`plumbers' goods are their "Materials and parts" driver, 20% (${plumbers.inputs.goods.value}, ${plumbers.inputs.goods.stamp?.src}, "${plumbers.inputs.goods.line}")`, plumbers.inputs.goods.value === 0.2 && /cost_structure\.cost_drivers\./.test(plumbers.inputs.goods.stamp?.src ?? "") && plumbers.inputs.goods.line === W.lines.goods.driver);
+  const marginLines: string[] = [];
+  let onDrivers = 0;
+  for (const t of P.simulatorTrades()) {
+    const b = D.buildBundle(place("de", "berlin", t.slug)!, { cell: null });
+    const src = b.inputs.goods.stamp?.src ?? "";
+    if (/cost_structure\.cost_drivers\./.test(src)) onDrivers++;
+    if (/margin_ladder/.test(src) && b.inputs.goods.line !== W.lines.goods.margin) marginLines.push(`${t.slug}: "${b.inputs.goods.line}"`);
+  }
+  check(`the goods of ${onDrivers} trades rest on their own drivers, and every share left by the gross margin says it may hold direct labour (${marginLines.slice(0, 3).join("; ") || "all"})`, onDrivers > 60 && marginLines.length === 0 && /direct labour/.test(W.lines.goods.margin));
+
   /* REVIEW FOCUS 3, A CITY WITH NO RENT: Berlin's rent taken out of the store, then Germany's. */
   const saved = allFacts();
   loadFacts(saved.filter((f) => !(f.entityId === "DE-berlin" && f.metric === "realestate.rent_secondary_usd_sqm_yr")));
