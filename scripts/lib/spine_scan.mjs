@@ -55,11 +55,11 @@ export const SPINE_ROOT = "src/components/spine";
  * @type {Map<string, string>}
  */
 export const SPINE_OUT = new Map([
+  /* src/components/spine/home/ IS READ since plan 2026-10-13 home-quiet-editorial, Task 7B: the home's project is built, so its source holds the spine's distances, type floor and tiles rules like every page the kit draws. */
   /* PAGES THE SPEC DOES NOT NAME (its scope: country, city, trade, industry and district pages). */
-  [`${SPINE_ROOT}/home/`, "the homepage's own view, project 3 of the owner's design goals of 2026-10-12: the spec changes it only where it shares a kit piece, and the pin reads those pieces where the kit defines them"],
   [`${SPINE_ROOT}/openings/`, "the /new-businesses page's view (new companies, US restaurants): not a country, city, trade, industry or district page, so outside the spec's scope"],
   [`${SPINE_ROOT}/country/how-to-view.tsx`, "the how-to-open page's view (/[country]/how-to-open), an appendix to the country page that the spec's scope does not name"],
-  [`${SPINE_ROOT}/WhereNext.tsx`, "the where-to-next doors of the home and the openings page, both named out here: no country, city, trade, industry or district page draws it"],
+  [`${SPINE_ROOT}/WhereNext.tsx`, "the where-to-next doors of the /new-businesses page, named out with its view (openings/): no country, city, trade, industry or district page draws it, and the home has not drawn it since plan 2026-10-13"],
   /* DEV AND INDEX SURFACES, drawn on no page the spec names. */
   [`${SPINE_ROOT}/archetypes/stories.tsx`, "the archetype stories: each archetype drawn on data-chosen instances for the /dev/archetypes page and the archetype harness, so no page of the site draws them"],
   [`${SPINE_ROOT}/atlas-index.tsx`, "the AtlasIndex browse and list shell (cities, world and extremes), drawn by the /dev/index-cities, /dev/index-countries and /dev/index-world pages alone"],

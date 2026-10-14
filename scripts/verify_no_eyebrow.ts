@@ -90,7 +90,7 @@ const SURFACE_FILES: string[] = [
   "src/components/spine/industry/industry-view.tsx",
   "src/components/spine/NeighborhoodExplorer.tsx",
   "src/components/spine/NeighborhoodExplorer.tsx",
-  "src/components/spine/home/home-view.tsx", // the home page on the band page (masterplan step 32), after home2-view
+  ...tsxIn("src/components/spine/home"), // the home's view and every piece it draws (plan 2026-10-13 home-quiet-editorial, Task 7B: the folder, so a new piece is read from its first commit)
   "src/components/spine/openings/openings-view.tsx", // /new-businesses (plan 2026-10-09, home introduction)
   "src/components/NavigatorForm.tsx",
 ].filter((f) => existsSync(resolve(ROOT, f)));

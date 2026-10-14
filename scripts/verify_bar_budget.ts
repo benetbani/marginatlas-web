@@ -92,7 +92,7 @@ const GROUPS: Group[] = [
     budget: 2,
     files: ["src/components/spine/NeighborhoodExplorer.tsx"],
   },
-  { name: "home", budget: 2, files: ["src/components/spine/home/home-view.tsx"] }, // masterplan step 32, after home2-view
+  { name: "home", budget: 2, files: tsxIn("src/components/spine/home") }, // the home's folder (plan 2026-10-13 home-quiet-editorial, Task 7B)
   { name: "openings", budget: 2, files: ["src/components/spine/openings/openings-view.tsx"] }, // /new-businesses, plan 2026-10-09
 ];
 

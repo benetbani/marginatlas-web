@@ -3871,7 +3871,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
       ],
@@ -3889,7 +3889,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
       ],
@@ -3908,7 +3908,7 @@
         "src/app/dev/spine-industry",
         "src/app/dev/spine/page.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": [
@@ -3977,6 +3977,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/home/home-view.tsx",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
@@ -3995,7 +3996,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
       ],
