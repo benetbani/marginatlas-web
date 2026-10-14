@@ -415,6 +415,18 @@
       "claims": []
     },
     {
+      "name": "slots-market",
+      "script": "tests/spine/slots_market.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 2, THE MARKET (plan 2026-10-13 country-page-journey, Task 3C; spec sections 2 and 3; R5 section 5, slots 3 to 5, and 5b by the controller's ruling on Q1): customers city by city (the national ty",
+      "reads": [
+        "src/components/spine/country/slots/StageMarket.tsx",
+        "src/lib/spine/slots/market.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

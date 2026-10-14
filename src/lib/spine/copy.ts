@@ -2972,7 +2972,7 @@ export const COPY = {
       spend: { heading: "What households spend on" },
       trades: { heading: "What trades take", words: "typical yearly sales of the middle London trade" },
       /* Slot 5b, the controller's ruling on Q1 (2026-10-13): the trades' net margins, a share, where the country holds them. */
-      margins: { heading: "What trades keep" },
+      margins: { heading: "What trades keep", words: "of sales the middle trade keeps as profit" },
       open: { heading: "Forms, fees and days" },
       hire: { heading: "What a hire costs" },
       "running-costs": { heading: "Running costs" },

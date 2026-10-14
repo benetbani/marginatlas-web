@@ -204,6 +204,9 @@ const GATES: Gate[] = [
   /* STAGE 1, ORIENT (plan 2026-10-13 country-page-journey, Task 3B): slot 1 answers on every country, slot 2's placed figures carry their
      signals. No browser. */
   { name: "slots-orient", script: "tests/spine/slots_orient.test.ts" },
+  /* STAGE 2, THE MARKET (plan 2026-10-13 country-page-journey, Task 3C): customers city by city, what households spend on, what trades take,
+     and what they keep where the seed holds their margins (5b, the controller's ruling on Q1). No browser. */
+  { name: "slots-market", script: "tests/spine/slots_market.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
