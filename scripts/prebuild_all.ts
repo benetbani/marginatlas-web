@@ -199,6 +199,9 @@ const GATES: Gate[] = [
   /* THE ADDRESS (plan 2026-10-13 cost-simulator, Task 5): only the changes in v, read back clamped (Review Focus 4), unknown keys ignored, canonical
      /calculator and noindex with parameters, the edge never caching it, the client writing it with replaceState. */
   { name: "calc-state", script: "tests/simulator/state.test.ts" },
+  /* THE DOOR (plan 2026-10-13 cost-simulator, Task 6; Q3 answer A): every trade page's close carries "Run your own numbers" with its place and trade,
+     before the pill, four doors on the trade close alone. */
+  { name: "calc-door", script: "tests/simulator/door.test.ts" },
   /* THE TYPE FLOOR (plan 2026-10-12 rhythm-air-inside, Task 1A; his choice of 2026-10-12, "Air inside only": small text rises to 14px).
      On every spine render pages-fresh writes, at 1280, characters under 14px outside scripts/harness/type_floor_allow.json are 20% or
      less of the visible characters, read as R1 read the renders (scripts/lib/type_floor.mjs states its blind spot). No browser. Its

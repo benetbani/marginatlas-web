@@ -26,6 +26,7 @@ import type { IndustryPlacesData } from "@/lib/spine/industry_places_rows";
 import type { BenchmarkData } from "@/lib/spine/benchmark_rows";
 import { hoodCity, spineHoodDistricts, HOOD_BENCHMARK_TRADE } from "@/lib/spine/hood_scheme";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
+import { cityOfCountry, resolvePlace } from "@/lib/simulator/place";
 
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
 
@@ -153,6 +154,14 @@ export function buildHoodCloseDoors(citySlug: string, focus: string | null = nul
  *  names under a hairline are NOT built: no fact on any shard carries a
  *  year and no correction route exists (the city's sixth dispatch found the
  *  same on its page), and both wait on the controller. */
+/** The calculator's address for a trade page's place and trade: its city where the city list holds it for the country, else anywhere in the country (a
+ *  region, a council); null where the calculator names no such place or trade (a trade it does not offer). */
+function runDoorHref(iso2: string, geo: string, tradeSlug: string | null): string | null {
+  if (iso2.length !== 2 || !tradeSlug) return null;
+  const place = resolvePlace({ country: iso2.toLowerCase(), city: cityOfCountry(iso2, geo), trade: tradeSlug });
+  return place ? `/calculator?country=${place.country}${place.city ? `&city=${place.city}` : ""}&trade=${place.trade}` : null;
+}
+
 export function buildTradeCloseDoors(seed: any): Door[] {
   const meta = seed?.meta ?? {};
   const trade = String(meta.trade ?? "").trim();
@@ -170,6 +179,10 @@ export function buildTradeCloseDoors(seed: any): Door[] {
   const place = iso2.length === 2 && geo ? geoPageTarget(iso2, geo) : null;
   /* A city place lands on customer pay; a region place (California) on the region's cities, the resolver's own answer. */
   if (place) doors.push({ key: "place", label: fill(COPY.tradeClose.cityDoor, { city: place.name }), href: place.href, kind: "link", lands: place.answers });
+  /* THE RUN DOOR (plan 2026-10-13 cost-simulator, Task 6; spec section 3; Q3 answered A): the calculator with this page's place and trade, before the
+     pill; it lands on the calculator's masthead, the sales to break even. */
+  const run = runDoorHref(iso2, geo, industrySlug);
+  if (run) doors.push({ key: "run", label: COPY.tradeClose.runDoor, href: run, kind: "link", lands: SURFACE_ANSWERS.calculator });
   doors.push({ key: "compare", label: fill(COPY.tradeClose.compareDoor, { trade: tradeInSentence }), href: "/compare", kind: "pill", lands: SURFACE_ANSWERS.compare });
   return doors;
 }

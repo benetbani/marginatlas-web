@@ -192,11 +192,11 @@ export function CustomersCard({ id = "customers", customers }: { id?: string; cu
   );
 }
 
-export function CloseCard({ id = "close", doors }: { id?: string; doors: Door[] }) {
+export function CloseCard({ id = "close", doors, cap }: { id?: string; doors: Door[]; cap?: number }) {
   if (doors.length === 0) return null;
   return (
     <Box id={id}>
-      <Terminus kicker={COPY.close.kicker} doors={doors} />
+      <Terminus kicker={COPY.close.kicker} doors={doors} cap={cap} />
     </Box>
   );
 }

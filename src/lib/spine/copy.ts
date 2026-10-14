@@ -2321,11 +2321,13 @@ export const COPY = {
    *  M21's own words. Across to the industry page, up to the city page (the
    *  city masthead's own idiom, "Opening a business in"), and the compare
    *  pill last. Three first words, none shared; no pricing door, no sibling
-   *  door (`13` is that door on every row). */
+   *  door (`13` is that door on every row).
+   *  The run door since plan 2026-10-13 cost-simulator (Q3, answer A): the calculator with the page's place and trade, before the pill, a fourth door. */
   tradeClose: {
     industryDoor: "See {trade} in other cities",
     cityDoor: "Opening a business in {city}",
     compareDoor: "Compare {trade} across cities",
+    runDoor: "Run your own numbers",
   },
   /** THE INDUSTRY PAGE'S `00 take` (MODEL.md 8.7; plan step 34's first
    *  dispatch, 2026-09-18): the answer label is the trade's keep in four

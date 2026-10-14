@@ -461,6 +461,23 @@
       "claims": []
     },
     {
+      "name": "calc-door",
+      "script": "tests/simulator/door.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE DOOR (plan 2026-10-13 cost-simulator, Task 6; spec section 3: \"Each trade-in-place page gains a door, 'Run your own numbers', carrying its three place parameters\"; Q3 answered as written, A).",
+      "reads": [
+        "scratchpad/harness/pages/cell-gb-london-restaurants.html",
+        "scripts/verify_archetype_copy.ts",
+        "scripts/verify_doors.ts",
+        "src/components/spine/archetypes/Terminus.tsx",
+        "src/components/spine/cell/cell-view.tsx",
+        "src/lib/spine/close_rows.ts",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [

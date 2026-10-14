@@ -72,7 +72,7 @@ import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildRunningCosts } from "@/lib/spine/running_costs_rows";
 import { buildHowTo } from "@/lib/spine/howto_rows";
 import { buildCityDistrictBars, rentMult, countWord } from "@/lib/spine/district_rows";
-import { DOOR_CAP } from "@/components/spine/archetypes/Terminus";
+import { DOOR_CAP, TRADE_CLOSE_CAP } from "@/components/spine/archetypes/Terminus";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { SEAT_LINE_WORDS_CAP } from "@/components/spine/archetypes/BlockedSeat";
 import { buildCityCards, CITY_CARDS_CAP, CITY_CARD_LANDS, CITY_CARD_PLACEHOLDER_IMAGE, UK_NATION } from "@/lib/spine/city_cards";
@@ -196,8 +196,8 @@ function routePatterns(): RegExp[] {
 }
 const ROUTES = routePatterns();
 const resolves = (href: string) => ROUTES.some((re) => re.test(href.split("?")[0].split("#")[0]));
-function checkDoors(iso2: string, doors: ReturnType<typeof buildCloseDoors>, page: string) {
-  if (doors.length > DOOR_CAP) reds.push(`${iso2} ${page}: ${doors.length} doors, over ${DOOR_CAP}`);
+function checkDoors(iso2: string, doors: ReturnType<typeof buildCloseDoors>, page: string, cap = DOOR_CAP) {
+  if (doors.length > cap) reds.push(`${iso2} ${page}: ${doors.length} doors, over ${cap}`);
   if (doors.filter((d) => d.kind === "pill").length > 1) reds.push(`${iso2} ${page}: more than one pill door`);
   const firsts = doors.map((d) => d.label.split(/\s+/)[0].toLowerCase());
   if (new Set(firsts).size !== firsts.length) reds.push(`${iso2} ${page}: doors share a first word (${firsts.join(", ")})`);
@@ -1782,10 +1782,12 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
    string (clause 15). THE DOORS on three fixture seeds through the
    country's own `checkDoors` (the cap, one pill, distinct first words,
    every href a route in the app folder, no "with Pro", no banned word):
-   London (three doors, the city page), California (three, the state page),
-   and a place with no page of its own (two doors, the industry page and
-   the pill; a door to a page that does not exist is never drawn); the pill
-   last on every one; no pricing door and no sibling door on any. */
+   London (four doors, the city page), California (four, the state page),
+   and a place with no page of its own (three doors, the industry page, the
+   calculator and the pill; a door to a page that does not exist is never drawn);
+   the run door before the pill since plan 2026-10-13 cost-simulator (the trade
+   close's cap of four), the pill last on every one; no pricing door and no
+   sibling door on any. */
 {
   const ban = (where: string, texts: string[]) => {
     for (const t of texts) {
@@ -1860,18 +1862,19 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (bases.other !== otherLines) reds.push(`worth: ${otherLines} shards took the operating-earnings line against ${bases.other} whose basis word is not SDE`);
   if (buildWorth({ meta: { industry_id: "no_such_trade", money_shown: true }, owner: { take_home_usd: 36000 } })) reds.push("worth: a trade with no shard draws a card");
   const tradeCloseSeeds: Array<[string, any, number, string]> = [
-    ["London", { meta: { trade: "Restaurants", iso2: "GB", geo: "london", industry: "restaurants", industry_id: "restaurants", city: "London" } }, 3, "/cities/london"],
-    ["California", { meta: { trade: "Restaurants", iso2: "US", geo: "california", industry: "restaurants", industry_id: "restaurants", city: "California" } }, 3, "/us/california"],
-    ["a place with no page", { meta: { trade: "Cafés & coffee shops", iso2: "GB", geo: "gb-e06000043", industry: "cafes-coffee-shops", industry_id: "cafes_coffee", city: "Portsmouth" } }, 2, ""],
+    ["London", { meta: { trade: "Restaurants", iso2: "GB", geo: "london", industry: "restaurants", industry_id: "restaurants", city: "London" } }, 4, "/cities/london"],
+    ["California", { meta: { trade: "Restaurants", iso2: "US", geo: "california", industry: "restaurants", industry_id: "restaurants", city: "California" } }, 4, "/us/california"],
+    ["a place with no page", { meta: { trade: "Cafés & coffee shops", iso2: "GB", geo: "gb-e06000043", industry: "cafes-coffee-shops", industry_id: "cafes_coffee", city: "Portsmouth" } }, 3, ""],
   ];
   let tradeTermini = 0;
   for (const [name, seed, expected, placeHref] of tradeCloseSeeds) {
     const doors = buildTradeCloseDoors(seed);
     if (doors.length !== expected) { reds.push(`trade close (${name}): ${doors.length} doors, expected ${expected}`); continue; }
     tradeTermini++;
-    checkDoors(name, doors, "trade close");
+    checkDoors(name, doors, "trade close", TRADE_CLOSE_CAP);
     if (doors[doors.length - 1].kind !== "pill" || doors[doors.length - 1].href !== "/compare") reds.push(`trade close (${name}): the compare pill is not last, or does not go to /compare`);
     if (doors[0].key !== "industry" || !doors[0].href.startsWith("/industries/")) reds.push(`trade close (${name}): the first door is not the industry page's`);
+    if (doors[doors.length - 2]?.key !== "run" || !doors[doors.length - 2].href.startsWith("/calculator?country=")) reds.push(`trade close (${name}): the run door does not stand before the pill`);
     if (placeHref && doors[1].href !== placeHref) reds.push(`trade close (${name}): the place door goes to ${doors[1].href}, not ${placeHref}`);
     if (doors.some((d) => d.href === "/pricing" || /instead$/.test(d.label))) reds.push(`trade close (${name}): a pricing door or a sibling door is drawn`);
   }
