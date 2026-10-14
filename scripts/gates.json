@@ -317,6 +317,20 @@
       "claims": []
     },
     {
+      "name": "calc-defaults",
+      "script": "tests/simulator/defaults.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COST SIMULATOR'S DEFAULTS (plan 2026-10-13 cost-simulator, Task 2; spec section 3: \"a fallback test pins city to country to none with its line; a no-fill test reds any of the known fills reaching ",
+      "reads": [
+        "src/lib/simulator/bundle.ts",
+        "src/lib/simulator/defaults.ts",
+        "src/lib/simulator/place.ts",
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [

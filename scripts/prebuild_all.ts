@@ -183,6 +183,9 @@ const GATES: Gate[] = [
   /* THE COST SIMULATOR'S ARITHMETIC (plan 2026-10-13 cost-simulator, Task 1): F / (1 - v) on London's three money trades against model.ts, on
      hand-worked London and Berlin cases, a loss, no sales, a sale that costs all it brings, extremes. Offline: the register slices and fixtures. */
   { name: "calc-engine", script: "tests/simulator/engine.test.ts" },
+  /* THE COST SIMULATOR'S DEFAULTS (plan 2026-10-13 cost-simulator, Task 2): R7 4.1 row for row, city then country then none with its line, the
+     no-fill sweep, a city with no rent (Review Focus 3), London's and England's break-even on model.ts. Offline: the shards and the slices. */
+  { name: "calc-defaults", script: "tests/simulator/defaults.test.ts" },
   /* THE TYPE FLOOR (plan 2026-10-12 rhythm-air-inside, Task 1A; his choice of 2026-10-12, "Air inside only": small text rises to 14px).
      On every spine render pages-fresh writes, at 1280, characters under 14px outside scripts/harness/type_floor_allow.json are 20% or
      less of the visible characters, read as R1 read the renders (scripts/lib/type_floor.mjs states its blind spot). No browser. Its
