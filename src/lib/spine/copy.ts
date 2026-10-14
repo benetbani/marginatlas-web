@@ -2956,6 +2956,81 @@ export const COPY = {
       duel: "Which trades see the most companies fail.",
     },
   },
+  /** THE COUNTRY PAGE BY THE VISITOR'S JOURNEY (plan 2026-10-13 country-page-journey; spec E:/atlas/docs/superpowers/specs/2026-10-13-
+   *  country-page-journey-design.md; his direction of 2026-10-13). The chapters' titles are the spec's stage names; a slot's heading is
+   *  four words at most and its line twelve at most; a plus's head is a label, its unit said there where its rows are bare numbers; the
+   *  signal's five words are its accessible names and its key is the page's one line about it. Read aloud, every one. */
+  journey: {
+    stages: { market: "The market", open: "To open", run: "To run", last: "To last", rules: "The rules" },
+    slots: {
+      "tax-on-profit": { heading: "Tax on profit" },
+      "where-it-stands": { heading: "Where it stands" },
+      customers: { heading: "Customers, city by city", words: "typical full-time pay, a year, nationwide" },
+      spend: { heading: "What households spend on" },
+      trades: { heading: "What trades take", words: "typical yearly sales of the middle London trade" },
+      /* Slot 5b, the controller's ruling on Q1 (2026-10-13): the trades' net margins, a share, where the country holds them. */
+      margins: { heading: "What trades keep" },
+      open: { heading: "Forms, fees and days" },
+      hire: { heading: "What a hire costs" },
+      "running-costs": { heading: "Running costs" },
+      credit: { heading: "Credit and card fees" },
+      filings: { heading: "Filing deadlines", words: "after the year end, to file the accounts" },
+      peers: { heading: "Against the peers" },
+      lasting: { heading: "How many last" },
+      exit: { heading: "Selling or failing" },
+      dealings: { heading: "How dealings go" },
+      changes: { heading: "Rule changes" },
+      close: { heading: "Where to next" },
+    },
+    more: {
+      cities: "Customer pay by city",
+      tenths: "Bottom and top tenth",
+      trades: "More London trades",
+      steps: "The steps, in days",
+      stepsHow: "How each step goes",
+      stepCosts: "Each step's cost",
+      licenceWaits: "Licence waits, in days",
+      abroad: "From abroad",
+      abroadCosts: "From abroad, costs",
+      abroadWaits: "From abroad, in days",
+      employing: "Rules of employing",
+      hiring: "How hiring goes",
+      adds: "What the employer adds",
+      hour: "An hour, all in",
+      jobs: "The job market",
+      premises: "Premises tax",
+      insurance: "Insurance by law",
+      lease: "The lease, by law",
+      leaseTerms: "The lease, its terms",
+      leaseCosts: "The lease, its costs",
+      peersPower: "Peers' electricity",
+      loans: "Start-up loans",
+      pay: "How customers pay",
+      lands: "When money lands",
+      filingCosts: "Filing costs",
+      back: "What holds firms back",
+      byCity: "By city",
+      failMost: "Trades that fail most",
+      failCosts: "Costs of failing",
+      failReach: "What failing reaches",
+      whoTrades: "Who trades here",
+    },
+    /** A people file's bands of ages, headed by its place: "London by age". */
+    ageOf: "{place} by age",
+    /** Slot 1's thin state (spec section 3): the company tax rate under its own label, never "Not known yet". */
+    thinTax: { label: "Tax on company profit", words: "the headline rate on a company's profit" },
+    hiringRows: { hire: "Taking on staff", contracts: "Contracts", fire: "Letting go", depth: "People to hire" },
+    hiringWords: { easy: "Easy", moderate: "Moderate", hard: "Hard", deep: "Deep", fair: "Fair", thin: "Thin" } as Record<string, string>,
+    /** A step's label from a closed list, by the words its shard's name holds (src/lib/spine/slots/open.ts, stepLabel); the shard's own words stand under it as its note. */
+    stepLabels: { name: "Name check", register: "Registration", tax: "Tax number", vat: "Sales tax", bank: "Bank account", licence: "Licence", social: "Social insurance", notary: "Notary", seal: "Company seal", other: "Other step" },
+    signal: { key: "Up is easier for an owner, down is harder.", words: { 1: "Very good", 2: "Good", 3: "Middle", 4: "Poor", 5: "Very poor" } },
+    buyers: { active: "with plenty of buyers", steady: "with some buyers", thin: "with few buyers" } as Record<string, string>,
+    exitWords: "to sell a business here",
+    views: { state: "With the state", people: "With people" },
+    runs: { coming: "Coming", recent: "Recent" },
+    /** The admin index's year, said in the board row's readout once its label carries the unit (the plan's Reading 8). */
+    adminNote: "Last published in 2020.",
+  },
   /** Words that must never appear in an archetype's copy: the corporate register.
    *  "world's highest" joined 2026-09-08 (task 9), after his ruling that the
    *  pay bars' edge must never name the country and figure that hold it: a

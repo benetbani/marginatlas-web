@@ -289,6 +289,19 @@
       "claims": []
     },
     {
+      "name": "country-model",
+      "script": "tests/spine/country_model.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COUNTRY PAGE'S MODEL (plan 2026-10-13 country-page-journey, Task 1A; spec E:/atlas/docs/superpowers/specs/2026-10-13-country-page-journey-design.md, sections 2 to 4; R5 section 5, adopted row for ",
+      "reads": [
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/country_slots.ts",
+        "src/lib/spine/owner_direction.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [
