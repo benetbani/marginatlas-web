@@ -11,18 +11,20 @@
  *
  * PROGRESSIVE: the server renders every panel, the first shown and the others `hidden`, so a page without script shows the first
  * view whole and the harness measures what a reader first sees.
+ *
+ * ASIDE (plan 2026-10-13 cost-simulator): words that stand at the end of the tab row (the calculator's month: the sales its bill is at), so the row's
+ * empty end is not a gathered hole; without it the row is drawn exactly as before.
  */
 import * as React from "react";
 
 export type SwitchView = { key: string; label: string; panel: React.ReactNode };
 
-export function Switch({ id, label, views, className = "", panelClassName = "" }: { id: string; label: string; views: SwitchView[]; className?: string; panelClassName?: string }) {
+export function Switch({ id, label, views, className = "", panelClassName = "", aside = null }: { id: string; label: string; views: SwitchView[]; className?: string; panelClassName?: string; aside?: React.ReactNode }) {
   const [active, setActive] = React.useState(0);
   const tabs = React.useRef<Array<HTMLButtonElement | null>>([]);
   const go = (i: number) => { const n = (i + views.length) % views.length; setActive(n); tabs.current[n]?.focus(); };
-  return (
-    <div data-switch={id} className={`flex flex-col ${className}`}>
-      <div role="tablist" aria-label={label} className="mb-4 inline-flex self-start rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] p-0.5">
+  const tablist = (
+      <div role="tablist" aria-label={label} className={`${aside ? "" : "mb-4 "}inline-flex self-start rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] p-0.5`}>
         {views.map((v, i) => (
           <button
             key={v.key}
@@ -46,6 +48,10 @@ export function Switch({ id, label, views, className = "", panelClassName = "" }
           </button>
         ))}
       </div>
+  );
+  return (
+    <div data-switch={id} className={`flex flex-col ${className}`}>
+      {aside ? <div data-switch-row="" className="mb-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">{tablist}{aside}</div> : tablist}
       {views.map((v, i) => (
         <div
           key={v.key}

@@ -191,6 +191,8 @@ function billRows(r: EngineResult, b: SimBundle, W: CalculatorWords, fmt: Format
   ].filter((x): x is FactRow => x !== null);
 }
 
+/* THE MONTH'S BASIS STANDS AT THE END OF THE SWITCH'S TAB ROW (the gathered-emptiness gate, E6, measured on the render at 1280: the row's empty end and the
+   right list's first row made one 164 by 144 hole); on a phone it wraps under the tabs. */
 export function MonthSection({ W, r, fmt, sales, bundle, teamHeads }: { W: CalculatorWords; r: EngineResult; fmt: Format; sales: number | null; bundle: SimBundle; teamHeads: number }) {
   const p = r.profit;
   const variable = r.bill.filter((b) => b.part === "variable").reduce((a, b) => a + b.year, 0);
@@ -205,12 +207,12 @@ export function MonthSection({ W, r, fmt, sales, bundle, teamHeads }: { W: Calcu
         id="month-span"
         label={W.month.span}
         className="mt-6"
+        aside={p.held && S !== null ? <Basis beside>{fill(W.month.basis, { sales: fmt.money(S) })}</Basis> : null}
         views={[
           { key: "month", label: W.month.monthTab, panel: <FactRows rows={billRows(r, bundle, W, fmt, 12, teamHeads)} /> },
           { key: "year", label: W.month.yearTab, panel: <FactRows rows={billRows(r, bundle, W, fmt, 1, teamHeads)} /> },
         ]}
       />
-      {p.held && S !== null ? <Basis>{fill(W.month.basis, { sales: fmt.money(S) })}</Basis> : null}
     </Box>
   );
 }
