@@ -344,6 +344,20 @@
       "claims": []
     },
     {
+      "name": "calc-display",
+      "script": "tests/simulator/display.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE MONEY AND THE WORDS (plan 2026-10-13 cost-simulator, Task 4A; spec section 4: \"the money in the reader's display currency through the site's existing switch\"; Review Focus 1, a loss with a true mi",
+      "reads": [
+        "src/components/spine/interact/Range.tsx",
+        "src/lib/simulator/bounds.ts",
+        "src/lib/simulator/display.ts",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [
