@@ -439,6 +439,19 @@
       "claims": []
     },
     {
+      "name": "slots-hire",
+      "script": "tests/spine/slots_hire.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 4, SLOT 7, WHAT A HIRE COSTS, AND THE DATED ROW (plan 2026-10-13 country-page-journey, Task 3E; spec sections 2 and 3; R5 section 5, slot 7; Review Focus 3).",
+      "reads": [
+        "src/components/spine/country/slots/StageHire.tsx",
+        "src/lib/spine/slots/dated.ts",
+        "src/lib/spine/slots/hire.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

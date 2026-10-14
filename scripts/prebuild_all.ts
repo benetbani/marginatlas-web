@@ -210,6 +210,9 @@ const GATES: Gate[] = [
   /* STAGE 3, TO OPEN (plan 2026-10-13 country-page-journey, Task 3D): the bill, the legal forms and the days, the steps, licences and walls from
      abroad behind the plus, one type a list. No browser. */
   { name: "slots-open", script: "tests/spine/slots_open.test.ts" },
+  /* STAGE 4, SLOT 7, AND THE DATED ROW (plan 2026-10-13 country-page-journey, Task 3E; Review Focus 3): what a hire costs, one type a list,
+     and a dated rule's value and note switching together on the change's day. No browser. */
+  { name: "slots-hire", script: "tests/spine/slots_hire.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

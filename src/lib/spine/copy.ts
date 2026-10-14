@@ -3001,6 +3001,7 @@ export const COPY = {
       adds: "What the employer adds",
       hour: "An hour, all in",
       jobs: "The job market",
+      statutory: "Statutory pay a week",
       premises: "Premises tax",
       insurance: "Insurance by law",
       lease: "The lease, by law",
@@ -3038,6 +3039,12 @@ export const COPY = {
     /** Slot 6's own row: the days until trading (the shard's total), its unit in its label. */
     openRows: { trading: "Until trading, days" },
     /** The UK's walls from abroad behind slot 6's plus: the founder route's fees, the decision's wait, a fee that buys a stay. */
+    /** A rule the changes ledger dates, on its own row (spec section 2; slots/dated.ts): the coming value and its day, or the day it began. */
+    dated: { coming: "{to} from {date}", since: "since {date}" },
+    /** Slot 7: the share riding the lead where it stands alone (Reading 15), the rows' labels the file's own are too long for. */
+    hire: { leadShare: "a full-time year at the minimum wage, plus {share} from the employer", employer: "Employer's share", hourly: "Hourly minimum wage", hour: "One worked hour", vacancies: "Vacancies per 100", payroll: "Payroll change", over: "on pay over {amount} a year" },
+    /** The rules of employing, a time each, its unit in its label (spec section 3: "units sit in the label"). */
+    employ: { holiday: "Paid holiday, days", week: "Longest week, hours", dismissal: "Unfair dismissal, months", maternity: "Maternity pay, weeks", notice: "Notice, weeks", sick: "Sick pay, weeks", bankHolidays: "Bank holidays, days" },
     abroad: { founder: "Founder visa fees", founderNote: "For {years} years, per person", decision: "Visa decision", decisionNote: "Applying from outside the UK", forTime: "Fee and surcharge for {time}" },
     boardRows: { clean: "Clean dealing /100", admin: "Admin ease /100", salary: "Monthly salary", living: "Living cost /100", llcDays: "Days to register", llcCost: "Cost to register" },
     /** The UK's charge on a director's loan, a tax, standing in the other taxes of slot 1. */
