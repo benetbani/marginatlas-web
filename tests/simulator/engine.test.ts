@@ -148,6 +148,14 @@ async function main(): Promise<void> {
   const bt = run({ ...berlin(), targetProfit: v(50000, mine("target")) });
   check(`outside the UK the target stands before tax: (569,651.74 + 50,000) / 0.52 = 1,191,637.96 (${value(bt.targetSales)})`, value(bt.targetSales) === 1191637.96);
 
+  /* A UK LOAN AND A PAYBACK (the final review's M5), London restaurants at the anchor's sales, by hand: 40,000 at 7.5% over 5 years repays 801.52
+     a month, 9,618.24 a year, in F; the profit falls from 26,511.05 to 16,892.81; the year's principal, 40,000 less the balance after twelve
+     payments, is 6,850.55, taxed though no cost: the sole trader keeps st(23,743.36) = 20,838.29, less the principal, 13,987.74 after tax; the
+     300,000 to open comes back in 300,000 / (13,987.74 / 12) = 257.4, so 258 months. */
+  const ll = run({ ...london, sales: v(597440.87, won("anchor")), loan: { amount: v(40000, mine("loanAmount")), ratePct: v(7.5, mine("loanRate")), years: v(5, mine("loanYears")) }, openingCost: v(300000, mine("opening")) });
+  check(`London with a loan: 9,618.24 a year in F, profit 16,892.81, after tax 13,987.74, payback 258 months (${ll.bill.find((x) => x.key === "loan")?.year}, ${value(ll.profit)}, ${value(ll.profitAfterTax)}, ${value(ll.paybackMonths)})`, ll.bill.find((x) => x.key === "loan")?.year === 9618.24 && value(ll.profit) === 16892.81 && value(ll.profitAfterTax) === 13987.74 && value(ll.paybackMonths) === 258);
+  check(`the after-tax payback rests on the law and the reader's figures (${ll.paybackMonths.held ? `${ll.paybackMonths.kind}, ${ll.paybackMonths.yours}` : "withheld"})`, ll.paybackMonths.held && ll.paybackMonths.kind === "estimate" && ll.paybackMonths.yours);
+
   /* WHAT MOVES IT MOST: each input up a tenth or one more hire, the five largest rises. */
   check(`Berlin: a second head chef moves it most, 634,433.38 / 0.52 - 1,095,484.12 = 124,580.07 (${b.moves[0]?.key} ${b.moves[0]?.rise})`, b.moves[0]?.key === "hire:head_chef_or_kitchen_lead" && b.moves[0]?.rise === 124580.07);
   check("no role at nought heads is a move, at most five moves, largest first", !b.moves.some((x) => x.key === "hire:owner_or_general_manager") && b.moves.length <= E.MOVES_MAX && b.moves.every((x, k) => k === 0 || b.moves[k - 1].rise >= x.rise));
