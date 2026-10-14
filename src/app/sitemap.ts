@@ -60,6 +60,8 @@ function upperSitemap(): MetadataRoute.Sitemap {
   const staticUrls: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/`, changeFrequency: "daily", priority: 1.0 },
     { url: `${BASE_URL}/compare`, changeFrequency: "monthly", priority: 0.7 },
+    /* The cost simulator, the bare page alone (plan 2026-10-13 cost-simulator): a view with parameters is noindex and stands in no sitemap. */
+    { url: `${BASE_URL}/calculator`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/world`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE_URL}/coverage`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/pricing`, changeFrequency: "monthly", priority: 0.7 },
