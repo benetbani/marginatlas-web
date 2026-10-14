@@ -38,6 +38,9 @@ async function main(): Promise<void> {
   const v = St.encodeState(s, bb);
   const back = St.decodeState(v, bb);
   check(`a state goes out and comes back whole (${v})`, v === `area:250,rent:410.5,sales:,owner:52000,target:on,team:${chef}-2.${cook}-4.5,pay:${chef}-61000` && JSON.stringify(back) === JSON.stringify({ levers: { area: 250, rent: 410.5, sales: null, owner: 52000 }, on: { owner: true, target: true }, heads: { [chef]: 2, [cook]: 4.5 }, pay: { [chef]: 61000 }, form: null }));
+  /* The final review's I3: a share steps by 0.005, so the address keeps four decimals, or 32.5% would reload as 33%. */
+  const shares = { ...B.FRESH, levers: { goods: 0.325, oncost: 0.195 } };
+  check(`a share comes back to the half percent (${St.encodeState(shares, bb)})`, St.encodeState(shares, bb) === "oncost:0.195,goods:0.325" && JSON.stringify(St.decodeState(St.encodeState(shares, bb), bb).levers) === JSON.stringify({ oncost: 0.195, goods: 0.325 }));
   check("the legal form travels in the UK alone", St.encodeState({ ...B.FRESH, form: "company" }, lb) === "form:company" && St.decodeState("form:company", lb).form === "company" && St.decodeState("form:company", bb).form === null);
 
   /* REVIEW FOCUS 4, THE ADDRESS'S HALF: clamped, ignored, never thrown. */

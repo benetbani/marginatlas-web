@@ -2,7 +2,7 @@
  * src/lib/simulator/state.ts , THE READER'S CHANGES IN THE ADDRESS (plan 2026-10-13 cost-simulator, Task 5; spec section 3: "only the levers that differ
  * from the defaults (?country=gb&city=london&trade=restaurants&v=...) ... an unknown lever is ignored, one out of range clamped"; R7 4.4's form).
  *
- * THE FORM. `v` is pairs `key:value` joined by commas: a lever and its base figure (two decimals at most, shares as decimals; an empty value is a field
+ * THE FORM. `v` is pairs `key:value` joined by commas: a lever and its base figure (four decimals at most, shares as decimals; an empty value is a field
  * the reader cleared), `team:` role-heads pairs joined by dots, `pay:` role-amount pairs joined by dots, `owner:on` or `owner:<figure>` (the same for
  * `target`), `form:company` or `form:sole`. A role is the bundle's own key, [a-z0-9_], so a dot before a letter parts two pairs and a dot before a
  * digit is a decimal point. Every character is one a query string carries as it is. Pure: the server decodes, the browser encodes.
@@ -14,7 +14,8 @@ import type { Place } from "./place";
 export const ADDRESS_DEBOUNCE_MS = 250;
 const NUM = /^-?\d+(?:\.\d+)?$/;
 const MAX_V = 2000;
-const num = (x: number) => String(Math.round(x * 100) / 100);
+/* Four decimals: a share steps by 0.005 (32.5% is 0.325), and a money figure keeps its pennies (the final review's I3). */
+const num = (x: number) => String(Math.round(x * 10000) / 10000);
 const has = (o: object, k: string) => Object.prototype.hasOwnProperty.call(o, k);
 
 export function encodeState(s: SimState, b: SimBundle): string | null {
