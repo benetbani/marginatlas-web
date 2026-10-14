@@ -23,14 +23,17 @@
  * TOLERANCE: a distance is rounded to the pixel and may stand 1px off the rule's value, so a line box of 16.5px, a baseline alignment or any other subpixel layout never
  * reds, and no value on the distance ladder (0, 2, 4, 8, 12, 16, 20, 24 ...) is taken for another of the rule's three (8, 12, 24).
  * NEVER A RED: a figure's words with nothing before them (no figure to stand under), a line that is the last thing in its card, a figure's words whose next group stands
- * beside them, a basis in a ROW: any basis that stands beside another group, on either side (a two-up head, a plus beside a basis), is in a row whose arrangement gives its
- * distances, so BASIS ABOVE, BASIS BELOW and FIGURE ABOVE read nothing for it (EMPTY LINE still does), and a group of no height (an empty paragraph keeping 4px of margin).
+ * beside them, the side of a line that stands beside another group, and a group of no height (an empty paragraph keeping 4px of margin). A ROW passes per side only: a line
+ * with a group beside it is in a row whose arrangement gives the distance to that neighbour, so that side is not read, and FIGURE ABOVE reads nothing for it; the OPEN
+ * side is read from the row's own edge, the far edge of the neighbour beside the line (a basis beside the figure's block, or the figure's words beside the figure: the
+ * distance below is measured from the taller of the two, above from the higher of the two), because box to box would otherwise measure to the shorter line.
  * ITS BLIND SPOT, stated: this measurement cannot distinguish a gap made of margin from a gap that is padding inside the neighbouring box (box to box, so a wrapper's own
- * padding is part of the gap it prints); it cannot distinguish a row 24 under the group above it from a row 16 under it (a basis beside another group is not read against
- * the groups above and below); it cannot distinguish a figure drawn at the focal rung from any other run of 30px or more (FIGURE ABOVE reads the last line's size, not the
+ * padding is part of the gap it prints); it cannot distinguish the arrangement of a row from any other (the gap between a line and the neighbour beside it is never read, and a
+ * neighbour that stands beside a line by a CSS order or a grid row is read as beside); it cannot distinguish a figure drawn at the focal rung from any other run of 30px or more (FIGURE ABOVE reads the last line's size, not the
  * markup); it cannot distinguish a line drawn with neither marker (a hand-rolled foot, a link row under a basis, a caption) from no line at all, nor an empty paragraph
- * from nothing; it cannot distinguish a later sibling that a CSS order stands above an earlier one from a neighbour beside the line, and reads both as beside; a closed
- * <details>, a display:none twin and an element with display:contents have no box, so they are skipped and what is inside them is not climbed into. One width per call,
+ * from nothing; it cannot distinguish a later sibling that a CSS order stands above an earlier one from a neighbour beside the line, and reads both as beside; a display:none
+ * twin, an element with display:contents and the content of a closed <details> have no box (the details has one, its content does not), so they are skipped and what is
+ * inside them is not climbed into. One width per call,
  * so the gate opens 1280, 768 and 375.
  */
 export function lineRuleInPage() {
@@ -107,11 +110,12 @@ export function lineRuleInPage() {
     const bb = box(el);
     const flag = (rule, read, got, want) => reds.push({ rule, section: nameOf(card), line: isBasis ? "basis" : "words", text: text.slice(0, 40), read, got, want });
     if (!isBasis) {
-      const fig = el.previousElementSibling;
-      const above = fig && isGroup(fig) ? (box(fig).bottom > bb.top + 1 ? "beside" : px(bb.top - box(fig).bottom)) : "-";
+      const fig = sibling(el, -1);
+      const figBeside = !!fig && box(fig).bottom > bb.top + 1;
+      const above = fig ? (figBeside ? "beside" : px(bb.top - box(fig).bottom)) : "-";
       const next = el.nextElementSibling;
       const last = next && next.hasAttribute("data-placement") && isGroup(next) ? next : el;
-      const lastBottom = box(last).bottom;
+      const lastBottom = figBeside ? Math.max(box(last).bottom, box(fig).bottom) : box(last).bottom;
       const dn = climb(last, card, 1);
       const below = dn ? (box(dn).top < lastBottom - 1 ? "beside" : px(box(dn).top - lastBottom)) : "-";
       const read = `${above}|${below}`;
@@ -125,13 +129,14 @@ export function lineRuleInPage() {
     const dn = climb(el, card, 1);
     const upBeside = !!up && box(up).bottom > bb.top + 1;
     const dnBeside = !!dn && box(dn).top < bb.bottom - 1;
-    const above = up ? (upBeside ? "beside" : px(bb.top - box(up).bottom)) : "-";
-    const below = dn ? (dnBeside ? "beside" : px(box(dn).top - bb.bottom)) : "-";
+    const rowTop = dnBeside ? Math.min(bb.top, box(dn).top) : bb.top;
+    const rowBottom = upBeside ? Math.max(bb.bottom, box(up).bottom) : bb.bottom;
+    const above = up ? (upBeside ? "beside" : px(rowTop - box(up).bottom)) : "-";
+    const below = dn ? (dnBeside ? "beside" : px(box(dn).top - rowBottom)) : "-";
     const read = `${above}|${below}`;
     if (!text) { flag("EMPTY LINE", read, null, null); continue; }
-    if (upBeside || dnBeside) continue;
     const toFoot = !!dn && startsWith(dn, FOOT_OR_PANEL);
-    if (up && dn && !toFoot && endsInFigure(up)) { flag("FIGURE ABOVE", read, null, null); continue; }
+    if (!upBeside && !dnBeside && up && dn && !toFoot && endsInFigure(up)) { flag("FIGURE ABOVE", read, null, null); continue; }
     if (typeof above === "number" && off(above, GROUP)) flag("BASIS ABOVE", read, above, GROUP);
     const want = toFoot ? STEP : GROUP;
     if (typeof below === "number" && off(below, want)) flag("BASIS BELOW", read, below, want);

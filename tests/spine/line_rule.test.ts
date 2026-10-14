@@ -160,13 +160,29 @@ check(`a figure with its unit on the same line is a group that ends in a figure 
 r = run(card(`<div${at(0, 30)}><span${at(0, 30)} style="font-size:29px">$42</span></div>${basis(54)}${rows(94)}`));
 check(`a figure under the focal rung (30px) is not a focal figure (${rules(r)})`, r.reds.length === 0);
 
-/* A ROW: A LINE STANDING BESIDE ANOTHER GROUP IS IN A ROW, WHOSE ARRANGEMENT GIVES ITS DISTANCES. */
+/* A ROW PASSES PER SIDE ONLY: THE SIDE WHERE THE NEIGHBOUR STANDS IS THE ROW'S ARRANGEMENT AND IS NOT READ; THE OPEN SIDE IS READ FROM THE ROW'S OWN EDGE (Task 2C fix round 1). */
 r = run(card(`<div><div>${figure()}${words(38)}</div>${basis(0)}</div>${rows(82)}`));
-check(`a two-up head, the figure's block with the basis beside it and the drawing 24 under the taller block (66 under the basis), passes (${rules(r)}; ${r.lines} lines read)`, r.reds.length === 0 && r.lines === 2);
+check(`a two-up head, the figure's block with the basis beside it and the drawing 24 under the taller block (66 under the basis), passes: the open side is measured from the row's far edge (${rules(r)}; ${r.lines} lines read)`, r.reds.length === 0 && r.lines === 2);
+r = run(card(`<div><div>${figure()}${words(38)}</div>${basis(0)}</div>${rows(98)}`));
+check(`the same head with its drawing 40 under the row is BASIS BELOW: a row excuses the side its neighbour stands on, never the open side (${rules(r)})`, rules(r) === "BASIS BELOW:#s:beside|40");
 r = run(card(`<div>${figure()}${words(38)}</div>${basis(82)}${rows(122)}`));
 check(`the same head stacked, the basis 24 under the block and the drawing 24 under the basis, passes (${rules(r)})`, r.reds.length === 0);
 r = run(card(`${rows(0, 100)}<div><div${at(127, 193)}>${basis(127)}</div><div${at(124, 168)} style="font-size:14px">The plus</div></div>`));
-check(`a basis whose cell stands beside the plus, 27 under the group above (24 and 3 of baseline alignment), is in a row: its distance to the group above is the row's and is never read (${rules(r)})`, r.reds.length === 0);
+check(`a basis whose cell stands beside the plus, 27 under the group above (24 and 3 of baseline alignment), passes: the group above is measured from the higher of the two, 24 (${rules(r)})`, r.reds.length === 0);
+r = run(card(`${rows(0, 100)}<div><div${at(119, 185)}>${basis(119)}</div><div${at(116, 160)} style="font-size:14px">The plus</div></div>`));
+check(`the same row 16 under the group above is BASIS ABOVE, 16 from the higher of the two (${rules(r)})`, rules(r) === "BASIS ABOVE:#s:16|beside");
+r = run(card(`${rows(0, 100)}${basis(124)}<div${at(124, 168)} style="font-size:14px">The plus</div>`));
+check(`a basis with the plus beside it on its right is read from the plus's top: 24 under the group above passes (${rules(r)})`, r.reds.length === 0);
+r = run(card(`<div>${figure()}${basis(0)}</div>${rows(54)}`));
+check(`a basis beside the figure, with the drawing 24 under the row, reads no FIGURE ABOVE: the row is the arrangement (${rules(r)})`, r.reds.length === 0);
+r = run(card(`<div data-focal="1"${at(0, 56)} style="font-size:30px">$42</div>${words(0)}${rows(80)}`));
+check(`a figure's words beside the figure (a two-up head): the group under is measured from the taller of the two, 24, and passes (${rules(r)})`, r.reds.length === 0);
+r = run(card(`<div data-focal="1"${at(0, 56)} style="font-size:30px">$42</div>${words(0)}${rows(96)}`));
+check(`and 40 under the figure is WORDS BELOW, the words' own bottom never the measure (${rules(r)})`, rules(r) === "WORDS BELOW:#s:beside|40");
+r = run(card(`<div>${figure()}<div${at(30, 30)}></div>${words(54)}</div>${rows(98)}`));
+check(`words 24 under the figure with an empty block between them are still WORDS ABOVE: the figure is the nearest group, the empty block is skipped (${rules(r)})`, rules(r) === "WORDS ABOVE:#s:24|24");
+r = run(card(`<div>${figure()}<div${at(30, 30)}></div>${words(38)}</div>${rows(82)}`));
+check(`and 8 under the figure past an empty block passes (${rules(r)})`, r.reds.length === 0);
 
 /* AN EMPTY LINE IS 24 OF AIR HOLDING NOTHING. */
 r = run(card(`${rows(0, 100)}<p data-basis=""${at(124, 124)}></p>`));
