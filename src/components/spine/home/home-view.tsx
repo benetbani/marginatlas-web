@@ -47,9 +47,7 @@ import { buildContents } from "@/lib/home/contents";
 import { homePickerCases } from "@/lib/home/picker_cases";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { COPY } from "@/lib/spine/copy";
-import { SourcesFoot } from "@/components/spine/SourcesFoot";
-import { ReportFoot } from "@/components/spine/ReportFoot";
-import { checkedDateForTrade } from "@/lib/spine/checked";
+import { HomeColophon } from "./HomeColophon";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 
 /**
@@ -136,9 +134,8 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
           ),
         )}
       </div>
-      {/* THE LICENCE LINE AND ITS LINK (MODEL 10.8c: the home prints UK register figures), THEN REPORT A MISTAKE (masterplan step 31). */}
-      <SourcesFoot iso2="GB" />
-      <ReportFoot path="/" checked={example ? checkedDateForTrade("GB", "london", example.trade) : null} />
+      {/* THE COLOPHON (plan 2026-10-13 home-quiet-editorial, Task 6; the spec's section 2, item 5): the licence line and the page's links, and no checked date (the plan's Q3, ruled B: the home prints no register figure, src/lib/spine/checked.ts). */}
+      <HomeColophon />
     </>
   );
 }

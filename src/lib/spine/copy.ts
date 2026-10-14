@@ -2897,6 +2897,12 @@ export const COPY = {
       label: "How figures are made",
       line: "Each figure is counted, worked out, looked up or estimated.",
     },
+    /** THE COLOPHON (plan 2026-10-13 home-quiet-editorial, Task 6; the spec's section 2, item 5): its name to a screen reader and the
+     *  status page's link; the rest are the foot's own words (COPY.pageFoot, UK_SOURCES_FOOT) and the corrections log's (contents.method). */
+    colophon: {
+      label: "Sources and corrections",
+      status: "Status",
+    },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */
     pro: {
