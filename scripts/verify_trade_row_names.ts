@@ -24,7 +24,9 @@
  *      harness snapshot;
  *   5. the city page's trade doors print through the helper, read off
  *      adapt_city.ts' source (the adapter pulls a database client in at
- *      import), and each of its everyday slugs' row name keeps the law;
+ *      import), and each of its everyday slugs' row name keeps the law (the
+ *      set read from src/lib/spine/everyday_trades.ts, its own module since
+ *      plan 2026-10-13 home-quiet-editorial, which imports nothing);
  *   6. no URL moves: the slug of a trade with a short name is its full name's.
  *
  * BLIND SPOT: a card that prints a trade's name as a row without the helper is
@@ -106,11 +108,15 @@ for (const iso2 of countries) {
 }
 
 /* 5. The city doors, read as source: adapt_city.ts pulls a database client in
-   at import, and a gate must never need a secret (CLAUDE.md), so the set is
-   read off the file's own literal and the door's label off its map. */
+   at import, and a gate must never need a secret (CLAUDE.md), so the door's
+   label is read off the adapter's map, and the set off the literal in its own
+   module (src/lib/spine/everyday_trades.ts since plan 2026-10-13), which the
+   adapter imports and re-exports. */
 const cityAdapter = readFileSync("src/lib/spine/adapt_city.ts", "utf8");
-const everyday = [...(cityAdapter.match(/EVERYDAY_TRADES[^=]*=\s*new Set\(\[([\s\S]*?)\]\)/)?.[1] ?? "").matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-if (everyday.length === 0) fail("the city adapter's EVERYDAY_TRADES literal was not found", "keep the set a literal in adapt_city.ts, or point this gate at its new home");
+const everydaySource = readFileSync("src/lib/spine/everyday_trades.ts", "utf8");
+const everyday = [...(everydaySource.match(/EVERYDAY_TRADES[^=]*=\s*new Set\(\[([\s\S]*?)\]\)/)?.[1] ?? "").matchAll(/"([^"]+)"/g)].map((m) => m[1]);
+if (everyday.length === 0) fail("the EVERYDAY_TRADES literal was not found in src/lib/spine/everyday_trades.ts", "keep the set a literal in src/lib/spine/everyday_trades.ts, or point this gate at its new home");
+if (!/import \{ EVERYDAY_TRADES \} from "@\/lib\/spine\/everyday_trades";/.test(cityAdapter)) fail("the city adapter does not read EVERYDAY_TRADES from src/lib/spine/everyday_trades.ts", "import the set in adapt_city.ts from @/lib/spine/everyday_trades, so the doors and this gate read one set");
 if (!/name:\s*tradeRowName\(/.test(cityAdapter)) fail("the city adapter's trade doors do not print through tradeRowName", "name the door through tradeRowName (adapt_city.ts, trades_here)");
 for (const slug of everyday) {
   const ind = SLUG_TO_INDUSTRY[slug] ?? INDUSTRY_BY_ID[slug];

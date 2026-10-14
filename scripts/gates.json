@@ -2642,6 +2642,7 @@
       "asserts": "verify_trade_row_names: a trade's name printed as a row is a label, three words or fewer and no parenthetical (the goal's A11, 2026-09-24; DATA-REQUIREMENTS item 71).",
       "reads": [
         "src/lib/spine/adapt_city.ts",
+        "src/lib/spine/everyday_trades.ts",
         "src/lib/taxonomy/industries.json"
       ],
       "claims": []
