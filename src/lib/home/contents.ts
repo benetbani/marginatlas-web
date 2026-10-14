@@ -168,7 +168,7 @@ export function namesPlace(text: string): boolean {
 
 /** 05: the tracks that hold an article, then the newest post whose title holds no list count and names no place. */
 export function contentsReading(posts: ReadonlyArray<{ slug: string; title: string }> = getAllPosts(), tracksHeld: (family: "A" | "B" | "C") => boolean = (f) => LEARN_BY_FAMILY(f).length > 0): ContentsDepartment {
-  const members: ContentsMember[] = TRACKS.filter((t) => tracksHeld(t.family)).map((t) => ({ key: `track-${t.family}`, name: LEARN_TRACKS.find((x) => x.family === t.family)?.title ?? "", href: t.href, mark: { kind: "icon", id: t.icon }, figure: null })).filter((m) => m.name !== "");
+  const members: ContentsMember[] = TRACKS.filter((t) => tracksHeld(t.family)).map((t): ContentsMember => ({ key: `track-${t.family}`, name: LEARN_TRACKS.find((x) => x.family === t.family)?.title ?? "", href: t.href, mark: { kind: "icon", id: t.icon }, figure: null })).filter((m) => m.name !== "");
   const post = posts.find((p) => p.title.trim() !== "" && !holdsListCount(p.title) && !namesPlace(p.title));
   if (post) members.push({ key: `post-${post.slug}`, name: post.title, href: `/blog/${post.slug}`, mark: { kind: "icon", id: "bookmark" }, figure: null });
   return dept("reading", members);
