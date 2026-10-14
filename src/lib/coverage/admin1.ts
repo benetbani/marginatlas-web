@@ -10,7 +10,7 @@
 // Static JSON import (no node:fs) so this module is safe to import from client
 // components too. regions-by-country.ts now sources its top-level region list
 // from here, and that module is pulled into client bundles via the homepage
-// NavigatorForm and the CalculatorForm. A node:fs read would break the client
+// NavigatorForm (the calculator's old form imported it too until 2026-10-13). A node:fs read would break the client
 // build (UnhandledSchemeError); a bundled JSON import does not.
 import admin1Json from "../../../data/coverage/admin1_regions_v1.json";
 

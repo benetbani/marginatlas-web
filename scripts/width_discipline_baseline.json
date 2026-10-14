@@ -1,8 +1,8 @@
 {
   "total": {
-    "remCaps": 205,
+    "remCaps": 197,
     "chCaps": 43,
-    "smPairings": 41
+    "smPairings": 38
   },
   "byFile": {
     "src/app/(site)/about-data/page.tsx": {
@@ -44,11 +44,6 @@
       "remCaps": 1,
       "chCaps": 0,
       "smPairings": 0
-    },
-    "src/app/(site)/calculator/page.tsx": {
-      "remCaps": 2,
-      "chCaps": 0,
-      "smPairings": 1
     },
     "src/app/(site)/check/page.tsx": {
       "remCaps": 3,
@@ -289,11 +284,6 @@
       "remCaps": 1,
       "chCaps": 0,
       "smPairings": 0
-    },
-    "src/components/CalculatorForm.tsx": {
-      "remCaps": 6,
-      "chCaps": 0,
-      "smPairings": 2
     },
     "src/components/CellFallbackBanner.tsx": {
       "remCaps": 1,

@@ -179,6 +179,11 @@ async function main(): Promise<void> {
     check(`every figure on the render says where it came from (${silent.length} silent)`, silent.length === 0, RENDER);
   }
 
+  /* THE CIRCULAR FORM LEAVES (Task 7): its file, its baselines' entries and every import of it. */
+  const gone = !existsSync("src/components/CalculatorForm.tsx");
+  const named = ["scripts/type_ladder_baseline.json", "scripts/width_discipline_baseline.json", "src/app/(site)/calculator/page.tsx", "src/lib/coverage/admin1.ts"].filter((f) => readFileSync(f, "utf8").includes("CalculatorForm"));
+  check(`the circular form is deleted and nothing names it as present (${named.join(", ") || "none"})`, gone && named.length === 0, "src/components/CalculatorForm.tsx");
+
   if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
   console.log("simulator/page: all pass");
   process.exit(0);
