@@ -3010,7 +3010,7 @@ export const COPY = {
       ticket: { trade: "Spend per customer for the trade.", tier: "Spend per customer, set for a city this size.", none: "No spend per customer is held. Type yours." },
       goods: { recipe: "The trade's cost of goods, a share of each sale.", driver: "The trade's goods and supplies, a share of each sale.", margin: "What the gross margin leaves, which may include direct labour.", sector: "The sector's cost of goods. The trade holds none.", none: "No cost of goods is held. Type yours." },
       running: { recipe: "Utilities, supplies and running costs, a share of sales.", sector: "The sector's energy, marketing, software and insurance.", none: "No running costs are held. Type yours." },
-      owner: { off: "None by default. You keep the profit.", city: "Typical income in {city}.", country: "The country's average pay.", none: "No income figure is held here. Type yours." },
+      owner: { off: "None by default. You keep the profit.", city: "Typical income in {city}.", country: "The country's median pay.", none: "No income figure is held here. Type yours." },
       target: { uk: "The profit you want each year, after tax.", world: "The profit you want each year, before tax." },
       loan: { amount: "None by default. Type a loan if you take one.", uk: "The UK start-up loan rate.", country: "{country}'s bank lending rate.", noRate: "No lending rate is held here. Type yours.", years: "Type the years to repay." },
       opening: { held: "The trade's opening bill for {country}.", built: "Fit-out for this space, the deposit and registration.", archetype: "The trade's usual cost to open, at {city} prices.", archetypeBare: "The trade's usual cost to open.", none: "No cost to open is held for this trade." },

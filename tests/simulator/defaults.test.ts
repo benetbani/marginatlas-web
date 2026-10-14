@@ -161,6 +161,8 @@ async function main(): Promise<void> {
     if (p.iso2 !== "GB" && b.inputs.oncost.value !== null && !hasCountrySpecificRates(p.iso2)) faults.push(`${where}: the tax table's fallback rate reached the employer charges`);
     if (p.iso2 !== "GB" && b.inputs.loanRate.value !== null && !profiles.has(p.iso2)) faults.push(`${where}: the profile's fallback row reached the loan rate`);
     if (b.roles.some((r) => r.pay.value !== null && !r.pay.stamp)) faults.push(`${where}: a pay with no stamp`);
+    /* The final review's I2: country_metrics' avgMonthlySalary is GDP times a typed share for a country with fewer than two cities, a fill. */
+    if (b.inputs.owner.stamp && /country_metrics/.test(b.inputs.owner.stamp.src)) faults.push(`${where}: the owner's pay rests on the GDP share ladder`);
   }
   check(`no fill reaches an input on ${bundles} bundles of ${trades.length} trades (${faults.slice(0, 6).join("; ") || "none"})`, bundles === trades.length * 3 && faults.length === 0);
 

@@ -28,7 +28,6 @@ import { registerSrc } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
 import { getCityAnnualWageUsd } from "@/lib/economic_profile/city_wages";
 import { getCountryProfile, listCountryProfiles } from "@/lib/economic_profile";
-import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
 import { getAovCityTierMultiplier } from "@/lib/economics/breakeven";
 import { cityOfCountry, getCityTier } from "@/lib/cities/city_tier";
 import { getCountryTaxRates, hasCountrySpecificRates } from "@/lib/tax";
@@ -210,10 +209,10 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
 
   /* YOU AND THE LOAN. */
   const ownerMonth = city("owner_col.median_salary_usd_mo");
-  const avg = pos(getCountryEconomicsSnapshot(place.iso2).avgMonthlySalary);
   const owner = stepDown(place, [
     place.city ? { level: "city", value: ownerMonth === null ? null : money(ownerMonth * 12), src: `${csrc("owner_col.median_salary_usd_mo")} x 12`, kind: "estimate", line: fill(W.lines.owner.city, { city: place.cityName ?? "" }) } : null,
-    { level: "country", value: avg === null ? null : money(avg * 12), src: `economics/country_metrics:${place.iso2}.avgMonthlySalary x 12`, kind: "estimate", line: W.lines.owner.country },
+    /* The country's median pay, the team's own (the final review's I2: country_metrics' average is GDP times a typed share where a country holds under two cities). */
+    { level: "country", value: median === null ? null : money(median), src: `economic_profile:${place.iso2}.median_wage_full_time_usd`, kind: "estimate", line: W.lines.owner.country },
   ], W.lines.owner.none);
   const taxed = uk && place.nation !== "scotland";
   const ukRate = uk ? pos(countryFigure("GB", "financing.startup_loan_rate_pct")?.value) : null;
