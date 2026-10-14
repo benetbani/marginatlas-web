@@ -153,7 +153,7 @@ export function LeversCard({ W, bundle, state, r, fmt, set, active = null, onAct
             onPayReset={() => { const pay = { ...state.pay }; delete pay[role.key]; touch(`team:${role.key}`, { ...state, pay }); }}
           />
         ))}
-        {bundle.ukLaw ? <li><p data-line="" className={LINE}>{W.lines.team.ukLaw}</p></li> : row("oncost", "share", U.pay)}
+        {bundle.ukLaw ? <li><p data-line="" className={LINE}>{W.lines.team.ukLaw}</p></li> : row("oncost", "share", `${U.pct} ${U.pay}`)}
       </Group>
       <Group id="premises" title={W.levers.groups.premises}>
         {row("area", "count", U.m2)}
@@ -163,8 +163,8 @@ export function LeversCard({ W, bundle, state, r, fmt, set, active = null, onAct
       <Group id="sales" title={W.levers.groups.sales}>
         {row("sales", "money", U.year)}
         {row("ticket", "money", U.head)}
-        {row("goods", "share", U.share)}
-        {bundle.path === "world" ? row("runShare", "share", U.share) : null}
+        {row("goods", "share", `${U.pct} ${U.share}`)}
+        {bundle.path === "world" ? row("runShare", "share", `${U.pct} ${U.share}`) : null}
       </Group>
       <Group id="you" title={W.levers.groups.you}>
         <li data-lever-row="owner-on">
