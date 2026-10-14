@@ -23,6 +23,30 @@
   "country-AF:rhythm": 0,
   "country-AF:numerals": 0,
   "country-AF:frontRepeat": 0,
+  "country-KH:prose": 1,
+  "country-KH:ink": 0,
+  "country-KH:accents": 1,
+  "country-KH:nested": 0,
+  "country-KH:pageAccents": 0,
+  "country-KH:wideDomain": 0,
+  "country-KH:falseLegend": 0,
+  "country-KH:sameForAll": 0,
+  "country-KH:ladder": 0,
+  "country-KH:rhythm": 0,
+  "country-KH:numerals": 0,
+  "country-KH:frontRepeat": 1,
+  "country-DE:prose": 1,
+  "country-DE:ink": 0,
+  "country-DE:accents": 1,
+  "country-DE:nested": 0,
+  "country-DE:pageAccents": 0,
+  "country-DE:wideDomain": 0,
+  "country-DE:falseLegend": 0,
+  "country-DE:sameForAll": 0,
+  "country-DE:ladder": 0,
+  "country-DE:rhythm": 1,
+  "country-DE:numerals": 0,
+  "country-DE:frontRepeat": 1,
   "howto-GB:prose": 2,
   "howto-GB:ink": 0,
   "howto-GB:accents": 1,
@@ -117,6 +141,11 @@
       "page": "country-AF:prose",
       "date": "2026-09-18",
       "reason": "First measurement, not a regression. Afghanistan joined scripts/harness/pages.json at 32db62cf as the thin-country exemplar with only its model-laws baseline seeded, so this gate read its every key as 0 and was red on the very next run (plan step 31's seventh dispatch found it so at HEAD, before its own change). Live: prose 1, the at-a-glance card at 252 characters, because on a country holding two of its five cells the withheld line names three cells and the basis and foot follow it; a real finding against the glance card's own copy (the second dispatch's card), not against the seats this dispatch drew, and file 04's work. Every other AF key is 0, including ink: the four thin-country seats measured at 1440 carry 72 (setup, at the seated band's 2-3) and 83 percent (locals) of ink stretched, and the peers seat stands at its own height. May fall and never rise."
+    },
+    {
+      "page": "country-KH and country-DE",
+      "date": "2026-10-14",
+      "reason": "First measurement, not a regression (plan 2026-10-13 country-page-journey, Task 1B): Cambodia and Germany joined scripts/harness/pages.json for the spec's replicability test, so this gate read their every key as 0. Live on the page of that day: KH prose 1 (the bill card, 271 characters), accents 1 (three accent marks on the registering card), frontRepeat 1 (its bill twice in the first screen); DE prose 1 (232 characters), accents 1 (five accent marks on the registering card), rhythm 1 (zones 6 and 7 both split 1-1), frontRepeat 1. Every other key 0. Written by hand because --write-baseline would also write other pages' counts that grew under the rhythm branch's D3 (country-gb-new, country-AF, the thin trade, the industry page), which are not this plan's and are never raised here. The country pages are rebuilt by Tasks 3 and 4 of the same plan; may fall and never rise."
     }
   ]
 }

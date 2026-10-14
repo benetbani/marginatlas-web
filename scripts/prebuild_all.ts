@@ -180,6 +180,9 @@ const GATES: Gate[] = [
      order and type, for every country): the sixteen slots and the ruled 5b in seven stages, their words within the copy rules, the
      direction table the spec's. No browser. */
   { name: "country-model", script: "tests/spine/country_model.test.ts" },
+  /* THE PROGRAMMATIC PROMISE (plan 2026-10-13 country-page-journey, Task 1B; spec section 8): /gb, /kh, /af and /de draw their slots in the
+     model's order and types, no seat, the index landing on what is drawn. Static, over the renders pages-fresh writes. */
+  { name: "country-slots", script: "tests/spine/country_slots.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

@@ -16,6 +16,20 @@
       "since": "plan step 31, 2026-09-18: the thin-country exemplar (no legal form, no regime, no covered city), so the composition is measured where the data is thinnest, never on GB alone"
     },
     {
+      "surface": "country",
+      "slugs": [
+        "KH"
+      ],
+      "since": "plan 2026-10-13 country-page-journey, Task 1B: the spec's replicability test reads Cambodia (his question of 2026-10-13: if the same page is done for Cambodia, would you fill it roughly the same?)"
+    },
+    {
+      "surface": "country",
+      "slugs": [
+        "DE"
+      ],
+      "since": "plan 2026-10-13 country-page-journey, Task 1B: Germany, a country with a regime, legal forms, peers and the margins card, the fourth of the spec's replicability renders"
+    },
+    {
       "surface": "howto",
       "slugs": [
         "GB"

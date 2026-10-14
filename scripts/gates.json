@@ -302,6 +302,19 @@
       "claims": []
     },
     {
+      "name": "country-slots",
+      "script": "tests/spine/country_slots.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PROGRAMMATIC PROMISE (plan 2026-10-13 country-page-journey, Task 1B; spec section 8: \"a replicability test that /gb, /kh, /af and /de draw their slots in the model's order and types\"; his question",
+      "reads": [
+        "scripts/harness/pages.json",
+        "src/components/spine/country/country-view.tsx",
+        "tests/spine/country_slots.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [
