@@ -278,3 +278,11 @@ This file is appended task by task, so a stop loses nothing. Scratch outputs nam
    (FOCAL exemption), spine_scan.mjs and the five surface gates, adapt_city.ts (EVERYDAY_TRADES moved out), docs/loop/CENSUS.md
    (generated: regenerate after the merge) and scripts/gates.json with CLAUDE.md's counts (regenerate after the merge). ReportFoot.tsx
    and SourcesFoot.tsx were left untouched.
+
+## The last completed GitHub run
+
+- Run 38618025246 on 3dd119c8 (all code of this branch): typecheck exit 0; chain 279 pass, 10 fail. trade-row-names now passes. The ten:
+  uk-city-sources (known base red), harness-page-laws (country-GB, country-AF), fact-once and type-floor (spine pages, rhythm reds by
+  design), art-direction (country, cell, industry), harness-links and provenance (the two cell pages' database fallbacks), harness-laws
+  (FIGURE FACE, CI fonts; on home-gb its only finding), harness-archetypes and money-shown-own-rows (timeouts). None is a home finding
+  but the CI-only FIGURE FACE. The commit that adds this paragraph changes this file alone.
