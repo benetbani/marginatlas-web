@@ -194,6 +194,10 @@ const GATES: Gate[] = [
   /* EVERY BROWSER CHECK READS INSIDE A CLOSED PLUS (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): seven checks read each page
      again with its panels open (scripts/lib/open_panels.mjs), proved on planted pages, and KIND ADJACENT reads zones. A browser gate. */
   { name: "panels-opened", script: "scripts/harness/check_panels_opened.mjs", browser: true },
+  /* THE SIGNAL (plan 2026-10-13 country-page-journey, Task 2; his ruling of 2026-10-13, "Green to red, only in the signal"): the state's
+     fifths, the triangle at its five angles, the five colours in one file the palette gate names, and no other triangle on a country page.
+     No browser. */
+  { name: "signal", script: "tests/spine/signal.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

@@ -42,7 +42,7 @@ export type WorldRangeRow = {
   /** The key line's first word ("Peers"). */
   peersWord?: string;
   /** A REFERENCE ON THE TRACK (2026-10-04): a rate of the country's own that the figure is read against (the central bank's rate
-   *  under the small-business loan rate), a small ink triangle above the track at its value, named in the key line with its
+   *  under the small-business loan rate), a short ink bar above the track at its value, named in the key line with its
    *  figure. Above the track, so it never sits on a peer's ring or the country's dot. */
   refs?: Array<{ key: string; label: string; value: number; /** As the source states it ("3.75%": a rate set in quarter points is never "3.8%"). */ display?: string }> | null;
   /** What the range is the range of, for the track's spoken label, where it is not the world (the home page's "London's trades"). */
@@ -144,8 +144,9 @@ function Track({ r, range, scale, headless, ends, showEnds }: { r: WorldRangeRow
               {(r.peers ?? []).filter((p) => Math.abs(Math.max(2, Math.min(98, pos(p.value, range, scale))) - Math.max(2, Math.min(98, at))) >= PEER_CLEAR).map((p) => (
                 <span key={p.name} aria-hidden data-mark="peer" className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[var(--c-ink2)] bg-[var(--c-surface)]" style={{ left: `${Math.max(2, Math.min(98, pos(p.value, range, scale)))}%` }} />
               ))}
+              {/* THE REFERENCE IS A TICK (plan 2026-10-13 country-page-journey, Task 2): a triangle on a country page is the signal's alone, so the central bank's rate stands as a short ink bar above the track, and its key draws the same bar. */}
               {(r.refs ?? []).map((x) => (
-                <span key={x.key} aria-hidden data-mark="reference" className="absolute -top-2.5 h-0 w-0 -translate-x-1/2 border-x-[5px] border-t-[6px] border-x-transparent border-t-[var(--c-ink)]" style={{ left: `${Math.max(2, Math.min(98, pos(x.value, range, scale)))}%` }} />
+                <span key={x.key} aria-hidden data-mark="reference" className="absolute -top-2 h-2 w-0.5 -translate-x-1/2 rounded-sm bg-[var(--c-ink)]" style={{ left: `${Math.max(2, Math.min(98, pos(x.value, range, scale)))}%` }} />
               ))}
               {/* THE DOT PINNED INSIDE ITS TRACK (the chain's scale-end clamp, 2026-09-25): centred on its own value, a country at the
                   world's highest or lowest hung half off the card's edge (the United Kingdom's electricity is the world's dearest). */}
@@ -191,7 +192,7 @@ function Track({ r, range, scale, headless, ends, showEnds }: { r: WorldRangeRow
               <div data-refs-key="" className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[length:var(--t-micro)] leading-4 text-[var(--c-ink2)]">
                 {r.refs.map((x) => (
                   <span key={x.key} className="inline-flex items-center gap-1 whitespace-nowrap">
-                    <span aria-hidden className="inline-block h-0 w-0 border-x-[5px] border-t-[6px] border-x-transparent border-t-[var(--c-ink)]" />
+                    <span aria-hidden className="inline-block h-2.5 w-0.5 rounded-sm bg-[var(--c-ink)]" />
                     {x.label} <Fig className="text-[length:var(--t-micro)] text-[var(--c-ink)]">{x.display ?? r.fmt(x.value)}</Fig>
                   </span>
                 ))}

@@ -372,6 +372,22 @@
       "claims": []
     },
     {
+      "name": "signal",
+      "script": "tests/spine/signal.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SIGNAL (plan 2026-10-13 country-page-journey, Task 2; spec section 4): the state's arithmetic (src/lib/spine/signal.ts) on fixtures and on the UK's electricity; the triangle (src/components/spine/",
+      "reads": [
+        "scripts/harness/pages.json",
+        "scripts/verify_palette_membership.mjs",
+        "src/components/spine/charts/WorldRange.tsx",
+        "src/components/spine/signal/Signal.tsx",
+        "src/components/spine/signal/tokens.ts",
+        "src/lib/spine/signal.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "provenance",
       "script": "scripts/harness/check_provenance.mjs",
       "args": [

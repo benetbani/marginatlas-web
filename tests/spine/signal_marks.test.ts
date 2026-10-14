@@ -7,7 +7,8 @@
  *           mark, unless it says why not (data-no-signal: "set", under 20 countries hold it; "fill", the file's stand-in value); where the
  *           measure has none, no mark;
  *   KEY     a page that draws a mark carries the one-line key ([data-signal-key]) once;
- *   READ    each country render holds at least one placed figure (a rule that reads nothing is no rule).
+ *   READ    each country render holds at least one placed figure (a rule that reads nothing is no rule);
+ *   STATE   the state of each mark whose measure this file can read from the files (electricity, the lending rate, clean dealing), recomputed.
  * BLIND SPOT, stated: it reads the stamps the builders write, not the arithmetic; Task 2's STATE checks recompute the states printed for
  * the measures they can read from the files.
  *
@@ -15,7 +16,10 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
-import { OWNER_DIRECTION } from "../../src/lib/spine/owner_direction";
+import { OWNER_DIRECTION, directionOf, type MeasureKey } from "../../src/lib/spine/owner_direction";
+import { signalState } from "../../src/lib/spine/signal";
+import { worldValues } from "../../src/lib/spine/world_stats";
+import { getCountryProfile, listCountryProfiles } from "../../src/lib/economic_profile";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "signal-marks";
@@ -50,6 +54,18 @@ for (const name of pages) {
   check(`${name} PLACED: every placed figure follows the table (${faults.join("; ") || "all"})`, faults.length === 0);
   const keys = main.querySelectorAll("[data-signal-key]").length;
   check(`${name} KEY: ${marks.length ? "one key line for its marks" : "no mark, so no key is owed"} (${keys})`, marks.length === 0 ? keys <= 1 : keys === 1);
+  /* STATE (plan 2026-10-13 country-page-journey, Task 2): the marks this file can recompute from the files. */
+  const FIELD: Record<string, string> = { electricity: "electricity_usd_per_kwh_commercial", "lending-rate": "bank_lending_rate_pct", "clean-dealing": "corruption_perception_index" };
+  const iso2 = name.slice("country-".length);
+  for (const m of marks) {
+    const measure = m.getAttribute("data-measure") ?? "";
+    const field = FIELD[measure];
+    if (!field) continue;
+    const value = (getCountryProfile(iso2) as unknown as Record<string, number>)[field];
+    const values = measure === "clean-dealing" ? listCountryProfiles().map((p) => (p as unknown as Record<string, number>)[field]).filter((v) => Number.isFinite(v)) : worldValues(field);
+    const want = signalState(value, values, directionOf(measure as MeasureKey));
+    check(`${name} STATE: ${measure} prints ${m.getAttribute("data-signal")}, the arithmetic gives ${want}`, String(want) === m.getAttribute("data-signal"), "src/lib/spine/signal.ts");
+  }
 }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
