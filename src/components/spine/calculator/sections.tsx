@@ -72,12 +72,13 @@ export function Masthead({ W, place, choices, onPick, busy, failed }: { W: Calcu
   );
 }
 
-export function AnswerSection({ W, r, fmt, taxed }: { W: CalculatorWords; r: EngineResult; fmt: Format; taxed: boolean }) {
+/** `cellSpread`: the firms are a trusted cell's tenths, not the register's bands, so their note says local firms (the final review's M3). */
+export function AnswerSection({ W, r, fmt, taxed, cellSpread = false }: { W: CalculatorWords; r: EngineResult; fmt: Format; taxed: boolean; cellSpread?: boolean }) {
   const be = r.breakEven;
   const rows: FactRow[] = [
     ...(be.held ? [{ key: "day", label: W.answer.day, value: fmt.money(be.value / 365), prov: prov(be, "break-even-a-day") }] : []),
     ...(r.customersADay.held ? [{ key: "customers", label: W.answer.customers, note: W.answer.customersNote, value: Math.round(r.customersADay.value).toLocaleString("en-GB"), prov: prov(r.customersADay, "customers-a-day") }] : []),
-    ...(r.shareAbove.held ? [{ key: "firms", label: W.answer.firms, note: W.answer.firmsNote, value: fmt.percent(r.shareAbove.value, 0), prov: prov(r.shareAbove, "firms-above-break-even") }] : []),
+    ...(r.shareAbove.held ? [{ key: "firms", label: W.answer.firms, note: cellSpread ? W.answer.firmsNoteCell : W.answer.firmsNote, value: fmt.percent(r.shareAbove.value, 0), prov: prov(r.shareAbove, "firms-above-break-even") }] : []),
     ...(r.targetSales.held ? [{ key: "goal", label: W.answer.goal, note: taxed ? W.answer.goalNote : W.answer.goalNoteWorld, value: fmt.money(r.targetSales.value / 12), prov: prov(r.targetSales, "sales-for-your-goal") }] : []),
   ];
   return (

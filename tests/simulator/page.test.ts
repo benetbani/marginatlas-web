@@ -124,6 +124,13 @@ async function main(): Promise<void> {
   check("Berlin: the break-even still prints, in dollars, and no rates line stands in its bill", !!bd.querySelector("#answer [data-sim-figure]") && (bd.querySelector("#answer [data-sim-figure] .fig")?.textContent ?? "").startsWith("$") && !bd.querySelector('#month [data-row="rates"]'));
   check("Berlin: the sales field stands empty with its line", bd.querySelector('[data-lever-row="sales"] [data-empty]') !== null && (bd.querySelector('[data-lever-row="sales"] p[data-line]')?.textContent ?? "") === W.lines.sales.none);
 
+  /* THE FIRMS' NOTE SAYS WHOSE FIRMS (the final review's M3): the register's bands are registered firms; a trusted cell's tenths are the trade's
+     local firms, no register. */
+  const tenthsSeed = S.seedOf(bp, { ...bb, spread: { kind: "tenths", p10: 500000, p25: 800000, p50: 1000000, p75: 1500000, p90: 2000000, firms: 40, stamp: { src: "cells:de:berlin:restaurants:rev_p10+rev_p90", kind: "estimate" } } });
+  const td = draw(tenthsSeed);
+  const firmsNote = (d: Document) => d.querySelector('#answer [data-row="firms"]')?.textContent ?? "";
+  check(`the firms' note follows the spread: the register's on London, the local firms' on a cell's tenths ("${firmsNote(ld)}", "${firmsNote(td)}")`, firmsNote(ld).includes(W.answer.firmsNote) && firmsNote(td).includes(W.answer.firmsNoteCell) && !firmsNote(td).includes(W.answer.firmsNote));
+
   /* EACH LEVER SHOWS ITS EFFECT BESIDE IT (spec section 7): the lever in hand carries the break-even as it now stands; none on arrival. */
   const Eng = await import("../../src/lib/simulator/engine");
   const Bn = await import("../../src/lib/simulator/bundle");

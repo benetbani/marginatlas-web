@@ -2968,7 +2968,7 @@ export const COPY = {
     metaDescription: "The sales your business needs to break even, with every cost shown.",
     yoursTail: ", with your figures",
     pick: { label: "Place and trade", country: "Country", city: "City", trade: "Trade", anywhere: "Anywhere in {country}", failed: "That place did not load. Try again." },
-    answer: { title: "Sales to break even", month: "Each month must take this much to cover every cost.", day: "A day", customers: "Customers a day", customersNote: "Every day of the year", firms: "Firms above it", firmsNote: "Registered firms in the place", goal: "For your goal", goalNote: "A month, after tax", goalNoteWorld: "A month, before tax", basis: "Fixed costs over what each sale keeps.", basisYours: "Fixed costs over what each sale keeps, with your figures." },
+    answer: { title: "Sales to break even", month: "Each month must take this much to cover every cost.", day: "A day", customers: "Customers a day", customersNote: "Every day of the year", firms: "Firms above it", firmsNote: "Registered firms in the place", firmsNoteCell: "Local firms of the trade", goal: "For your goal", goalNote: "A month, after tax", goalNoteWorld: "A month, before tax", basis: "Fixed costs over what each sale keeps.", basisYours: "Fixed costs over what each sale keeps, with your figures." },
     margin: { title: "Your margin", words: "of each sale you keep, before tax", wordsNoTax: "of each sale you keep, before any tax", after: "After tax", placement: "Your sales top {pct} of firms here." },
     levers: {
       title: "Your numbers",

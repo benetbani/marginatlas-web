@@ -103,7 +103,7 @@ export function CalculatorClient({ seed }: { seed: CalculatorSeed }) {
       body: [
         <InstrumentGrid
           key="grid"
-          answer={<AnswerSection W={W} r={r} fmt={fmt} taxed={taxed} />}
+          answer={<AnswerSection W={W} r={r} fmt={fmt} taxed={taxed} cellSpread={bundle.spread?.kind === "tenths"} />}
           margin={<MarginSection W={W} r={r} fmt={fmt} taxed={taxed} />}
           levers={<LeversCard W={W} bundle={bundle} state={state} r={r} fmt={fmt} set={setState} active={active} onActive={setActive} />}
           month={<MonthSection W={W} r={r} fmt={fmt} sales={sales} bundle={bundle} teamHeads={teamHeads} />}
