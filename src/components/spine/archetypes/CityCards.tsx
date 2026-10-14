@@ -4,9 +4,9 @@
  * PHOTOGRAPH UNDER A TERRACOTTA WASH.
  *
  * THE PAGER'S FILE SINCE 2026-10-10 (plan docs/superpowers/plans/2026-10-10-home-reform, Task 6; the ship audit's 3.5): the home's
- * still rows left for CityRows.tsx, a server component (the home never pages, so it ships no client code and no cards in its payload
- * for them), and the picture's recipe and the money grammar moved to CityParts.tsx, which both files read. This file keeps the pager
- * and its two forms: the tall cards, and the row form for a set under four.
+ * still rows (CityRows.tsx) drew the UK's cities on the home until plan 2026-10-13 retired them, and the picture's recipe and the money
+ * grammar moved to CityParts.tsx, which this file and the home's contents read. This file keeps the pager and its two forms: the tall
+ * cards, and the row form for a set under four.
  *
  * ONE LOOK SINCE 2026-10-02. Three were built on 2026-09-10 for him to choose
  * between (the field, the plate, the column); the field went live with the
@@ -114,7 +114,7 @@ export function CityCards({
   fill = false,
 }: {
   cards: CityCard[];
-  /** Where the link to every covered city goes; only read with `allLabel` (the home's rows draw their own door, CityRows). */
+  /** Where the link to every covered city goes; only read with `allLabel` (a caller that draws its own door passes neither). */
   allHref?: string;
   /** The link to every covered city under the row; none is drawn without it and without `allHref`. */
   allLabel?: string;

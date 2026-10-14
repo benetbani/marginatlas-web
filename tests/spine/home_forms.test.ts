@@ -1,6 +1,8 @@
 /**
  * THE SHARED FORMS' SMALL PROPS FOR THE HOME (plan docs/superpowers/plans/2026-10-09-home-introduction.md, Task 3): each does what the
  * home needs where it is passed and changes nothing where it is not.
+ * Since plan 2026-10-13 (home, quiet editorial, Task 7A) the home draws none of these forms; the props stay on the shared components, each off
+ * by default, and are held here until a page uses them or a plan retires them.
  *   - Rail `level={2}`: the title an h2 (the home's outline, one h2 a section and none skipped), with the classes and the
  *     data-rail-title the zones' title rule and the model laws read; without it the h3 as before.
  *   - (FactRows took a `step` here until the closing cleanup of plan 2026-10-10, item 1: nothing passed one, the worked example draws
@@ -183,9 +185,9 @@ check("without parts the bar is the cells it was: 25 cells, no continuous form",
    carries one, since the soft grey alone is 1.19 to 1 on a white card), and the bar's continuous form draws no caption row unless it is handed
    words for one. */
 /* THE EDGE IS ONE KEY, NOT A STRING COMPARED IN TWO FILES (fix round F1, group G5, the D1 review's Minor 4). FactRows drew the soft grey's edge when
-   `r.swatch === "var(--c-soft2)"`, a literal that HomeProofs' TAX_INK writes too, so renaming the token in one file dropped the edge in silence. A row now
-   says it carries the edge: `edged`, set where the tax key builds its kept row (HomeProofs.tsx), and the colour decides nothing. Nothing drawn changes: the
-   home's key still draws the kept swatch edged (tests/home/home_answers.test.ts renders it). */
+   `r.swatch === "var(--c-soft2)"`, a literal the home's tax key wrote too, so renaming the token in one file dropped the edge in silence. A row now
+   says it carries the edge: `edged`, and the colour decides nothing. The home's tax key set it until plan 2026-10-13 retired that card; nothing
+   passes it today. */
 const softKey = renderToStaticMarkup(React.createElement(FactRows, { rows: [{ key: "keep", label: "You keep", value: "82%", swatch: "var(--c-soft2)", edged: true }, { key: "tax", label: "Income tax", value: "14%", swatch: "var(--c-ink)" }, { key: "soft", label: "Not the bar's rest", value: "3%", swatch: "var(--c-soft2)" }, { key: "inkEdged", label: "Edged ink", value: "4%", swatch: "var(--c-ink)", edged: true }] }));
 const EDGE = ";box-shadow:inset 0 0 0 1px var(--c-line-strong)";
 const swatchStyle = (k: string) => /data-swatch="" class="[^"]*" style="([^"]*)"/.exec(rowOf(softKey, k))?.[1] ?? "(none)";

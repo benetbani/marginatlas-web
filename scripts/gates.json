@@ -1716,29 +1716,6 @@
       "claims": []
     },
     {
-      "name": "home-answers",
-      "script": "tests/home/home_answers.test.ts",
-      "args": [],
-      "browser": false,
-      "asserts": "THE WORKED EXAMPLE AND THE THIRD PROOF ON THE HOME PAGE (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, sections 2 and 4, approved as written on 2026-10-09;",
-      "reads": [
-        "scratchpad/harness/pages/cell-gb-london-restaurants.html",
-        "scratchpad/harness/pages/country-GB.html",
-        "scratchpad/harness/pages/home-gb.html",
-        "src/components/spine/cell/cell-view.tsx",
-        "src/components/spine/home/HomeExample.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
-        "src/components/spine/zones.tsx",
-        "src/lib/hero-words.ts",
-        "src/lib/home/proofs.ts",
-        "src/lib/home/search_cascade.ts",
-        "src/lib/home/worked_example.ts",
-        "src/lib/spine/copy.ts",
-        "src/lib/spine/uk_tax_on_profit.ts"
-      ],
-      "claims": []
-    },
-    {
       "name": "home-bands",
       "script": "tests/home/home_bands.test.ts",
       "args": [],
@@ -2042,14 +2019,8 @@
       "reads": [
         "data/home/method.json",
         "data/uk/registers/failures.json",
-        "scratchpad/harness/pages/home-gb.html",
         "src/app/(site)/about-data/page.tsx",
-        "src/components/spine/archetypes/Ring.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
-        "src/components/spine/home/home-view.tsx",
-        "src/lib/home/how_made.ts",
-        "src/lib/home/proofs.ts",
-        "src/lib/spine/copy.ts"
+        "src/lib/home/how_made.ts"
       ],
       "claims": []
     },
@@ -2062,14 +2033,8 @@
       "reads": [
         "data/home/archive.json",
         "data/home/method.json",
-        "scratchpad/harness/pages/home-gb.html",
         "src/app/(site)/about-data/page.tsx",
-        "src/components/spine/archetypes/MonthBars.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
-        "src/components/spine/home/home-view.tsx",
-        "src/lib/home/archive.ts",
-        "src/lib/home/proofs.ts",
-        "src/lib/spine/copy.ts"
+        "src/lib/home/archive.ts"
       ],
       "claims": []
     },
@@ -2089,34 +2054,6 @@
         "src/components/spine/archetypes/SegmentBar.tsx",
         "src/components/spine/charts/BarList.tsx",
         "src/components/spine/kit.tsx"
-      ],
-      "claims": []
-    },
-    {
-      "name": "home-foot",
-      "script": "tests/home/foot.test.ts",
-      "args": [],
-      "browser": false,
-      "asserts": "THE HOME'S FOOT (plan docs/superpowers/plans/2026-10-10-home-reform, Task 6; the spec's decisions 2 and 5; the critique's P1.10, P1.11, P1.12 and P2.7; the ship audit's 3.3, 3.5, 4.4 and 5.8).",
-      "reads": [
-        "data/cities/images_credits.json",
-        "data/cities/images_manifest.json",
-        "public/cities",
-        "public/cities/thumbs",
-        "scratchpad/harness/pages/country-GB.html",
-        "scratchpad/harness/pages/home-gb.html",
-        "src/app/globals.css",
-        "src/app/layout.tsx",
-        "src/app/page.tsx",
-        "src/components/spine/WhereNext.tsx",
-        "src/components/spine/archetypes/CityCards.tsx",
-        "src/components/spine/archetypes/CityParts.tsx",
-        "src/components/spine/archetypes/CityRows.tsx",
-        "src/components/spine/country/country-view.tsx",
-        "src/components/spine/home/home-view.tsx",
-        "src/lib/home/next_doors.ts",
-        "src/lib/spine/city_cards.ts",
-        "src/lib/spine/copy.ts"
       ],
       "claims": []
     },
@@ -2780,9 +2717,10 @@
         "src/components/spine",
         "src/components/spine/Crumbs.tsx",
         "src/components/spine/WhereNext.tsx",
+        "src/components/spine/archetypes/Department.tsx",
         "src/components/spine/country/how-to-view.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
         "src/components/spine/shell.tsx",
+        "src/lib/home/next_doors.ts",
         "src/lib/nav.ts",
         "src/lib/spine/door_look.ts",
         "src/lib/spine/howto_rows.ts",

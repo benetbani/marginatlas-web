@@ -2,8 +2,8 @@
  * src/lib/spine/door_look.ts
  *
  * THE LOOK OF A DOOR, IN ONE PLACE (fix round F1 of the plan "The home, reformed to ship": group G7 for the name's type, group G9 for the
- * arrow). A door is a link whose name stands with an arrow at its edge: the home's three proof doors, Where to next's rows and the
- * 404's six. Their classes were copied from file to file and kept in step by a test that read one file's source from another's test;
+ * arrow). A door is a link whose name stands with an arrow at its edge: the home's department rows (Department.tsx, since plan
+ * 2026-10-13), Where to next's rows and the 404's six. Their classes were copied from file to file and kept in step by a test that read one file's source from another's test;
  * they are constants here, read by each, so one edit moves them all and the test compares by import.
  *
  * A LEAF ON PURPOSE: this module imports nothing. The 404 reads it, and the 404's static export is the thing a heavy import killed
@@ -20,8 +20,8 @@ export const DOOR_NAME = "text-[length:var(--t-body)] font-medium";
 
 /**
  * The arrow every door carries at its edge (critique pass 3, fix round D2, item P2.6: "each door carries the arrow every other door on the site carries"): the glyph
- * (&#8594;, aria-hidden) at the body rung in ink2, never shrinking, on the title row's 20px line. The home's proof doors draw it in HomeProofs.tsx's DoorTitle with
- * `mt-1` on top (the margin that sets it on that title's own line, which is the Rail's), and the 404's doors draw it as it stands; a test compares what each draws
+ * (&#8594;, aria-hidden) at the body rung in ink2, never shrinking, on the title row's 20px line. The home's department rows and their doors draw it as it stands
+ * (Department.tsx, since plan 2026-10-13; the home's proof doors drew it before), and so do the 404's doors; a test compares what each draws
  * with this constant by import (fix round F1, group G9: the 404 had a copy of these classes, kept in step by a regex over HomeProofs.tsx's source).
  */
 export const DOOR_ARROW = "shrink-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]";

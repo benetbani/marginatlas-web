@@ -70,8 +70,8 @@ export default function NotFound() {
             three and left 45 to 60px blank under the short ones, so under 640 the six doors are rows as Where to next draws its doors: one
             column, the name at Where to next's own 14 medium over its line (DOOR_NAME: the critique said 16 and the doors measure 14, fix round F1,
             group G7), the arrow at the edge, a hairline between rows and no box. From 640 they are the cards
-            they were (two-up, three-up from 1024). At every width each door carries the arrow the home's proof doors carry: DOOR_ARROW
-            (src/lib/spine/door_look.ts), the one constant HomeProofs.tsx's DoorTitle draws too (`&#8594;` at the body rung in ink2,
+            they were (two-up, three-up from 1024). At every width each door carries the arrow the home's department rows carry: DOOR_ARROW
+            (src/lib/spine/door_look.ts), the one constant Department.tsx draws too (`&#8594;` at the body rung in ink2,
             aria-hidden), in the title row beside the name. */}
         <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
           {HATCHES.map((h) => (

@@ -608,11 +608,6 @@ const GATES: Gate[] = [
      editorial): every case of the h1 the picker follows lands on a page the edge serves, the first the form's own seed; the h1 asks
      restaurants in London first; the site's one definition is the structured data's. */
   { name: "home-destination", script: "tests/home/destination.test.ts" },
-  /* The worked example and the third proof on the home (plan 2026-10-09, home introduction, Tasks 6, 7, 8 and 10): the picker's own
-     case, restaurants in London, in four steps, each figure the London page's own from the same builder, under the same name, with
-     its kind; the case whole; the one 40 is step 3; the tax proof is /gb's masthead figure under its own name, its bar the masthead's
-     data drawn as the segment bar. Reads the home, London restaurants and /gb renders (masterplan step 34 first held the UK answers). */
-  { name: "home-answers", script: "tests/home/home_answers.test.ts" },
   /* Pro said once, only with the paywall's switch on, its title an h2, its prices through the plan and the year first; the launch
      check's item (i) reading the live home's counts band and passing the rebuilt home, which prints no ledger counts (masterplan step 35;
      his ruling 23; his decisions of 2026-10-07 and 2026-10-09). */
@@ -678,20 +673,16 @@ const GATES: Gate[] = [
      two counts a row; on /new-businesses, where its first loud seat stands. */
   { name: "home-us-restaurants", script: "tests/home/us_restaurants.test.ts" },
   /* Section 4, how figures are made, is the join now: a year of notices matched by name to the register, the notices, the names and
-     the names found, and the London trade pages read from the band counts. The home's first proof draws the join behind a door to
-     About the figures' #failures; the pages read are a line of its #reading. */
+     the names found, and the London trade pages read from the band counts. About the figures prints the join in its #failures and the
+     pages read in its #reading (the home's proof card of them left with plan 2026-10-13). */
   { name: "home-how-made", script: "tests/home/how_made.test.ts" },
   /* The archive, kept and dated (plan 2026-10-09, home introduction, proof 2): data/home/archive.json is the archive's own months of
      notices and register copies, read from its log by scripts/data/home/export_home.py archive; read again where the log is on this
-     machine, its source deferred on a build server. */
+     machine, its source deferred on a build server. About the figures prints it in #archive. */
   { name: "home-archive", script: "tests/home/archive.test.ts" },
   /* The shared forms' small props for the home (plan 2026-10-09, home introduction, Task 3): Rail's level, Ring's lead size and its
      label, BarList's quiet, MonthBars' stamp, StepMark's numeral, each byte-identical where not passed; the copy gate reads a Rail's h2. */
   { name: "home-forms", script: "tests/spine/home_forms.test.ts" },
-  /* The home's foot (plan 2026-10-10, the home reformed to ship, Task 6; the spec's decisions 2 and 5): the cities as grey rows of
-     480 by 360 small copies with their landmark crops, two to a row under 768 with "All UK cities", a server component; "From the
-     blog"; the foot's checked date, London restaurants'. Reads the home's and /gb's renders where the harness wrote them. */
-  { name: "home-foot", script: "tests/home/foot.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },
