@@ -147,3 +147,36 @@ time; the full chain and the full typecheck ran on GitHub at each push. This rep
   are deposits of share capital, articles and statutes, e-signatures and one-stop filings (AZ, BG, CG, CH, CI, DK, EE, FR, GM, GT, ID, IE,
   IL, IN, IS, MA, ME, MN, MT).
 - slots-open, slots-market, slots-orient, answer-fold, home-forms PASS; scoped typecheck 0.
+
+## Task 3E: stage 4, slot 7 and the dated row (5a8b4113)
+
+- slots/dated.ts, slots/hire.ts, StageHire.tsx (HireCost moved from country-view.tsx unchanged; the view imports it until Task 4,
+  byte-exact edit: CRLF 1965 to 1908 lines, the two stray CRs kept), changeAround / ruleRaw / ruleRow in country_rules.ts, SlotRow.change,
+  Slot's `after`. Red (no copy), then PASS, including Review Focus 3 (the minimum wage on 31 Mar and 1 Apr 2026; unfair dismissal 24 with
+  "6 months from 1 Jan 2027" on 31 Dec 2026, 6 with "since 1 Jan 2027" the next day).
+- Deviation: the UK's employer rate is dated as its share alone ("15%"), its threshold in the note ("on pay over £5,000 a year", from the
+  rules file's employer-ni-threshold), because "15% over £5,000" read as money in a share list (the answer-type gate found it).
+- slots-hire, slots-open, answer-fold, interact PASS; scoped typecheck 0 (with country-view.tsx).
+
+## Task 3F: stage 4, slots 8 to 11 (8f725d62)
+
+- slots/run.ts, StageRun.tsx, CompareTable `stamp`. Red (no copy), then PASS.
+- Deviation: the lease's fact rows carry node values, so run.ts reads them as text (the scoped typecheck found it).
+- Peers' electricity names (Step 8): GB France, Netherlands, Germany, Ireland; DE Poland, France, Netherlands, Austria; none over three
+  words.
+- slots-run, slots-hire, signal, answer-fold, world-range-no-median PASS; scoped typecheck 0.
+
+## Task 3G: stage 5 (dd5b3703)
+
+- slots/last.ts, StageLast.tsx, worldExitHighs. Red (no copy), then PASS: KH 8 to 18 months, AF 12 to 36, DE 8 to 14, each placed with
+  its signal; the UK's failure law by type (four times, costs, reach), the director's loan charge left for slot 1.
+- slots-last, slots-run, placeholder-never-printed PASS; scoped typecheck 0.
+
+## Task 3H: stages 6 and 7 (f410fe5a)
+
+- slots/rules.ts, StageRules.tsx, DatedChanges declaring a dated pair, UNDATED. Red, then PASS.
+- Coverage read before the map was written: on 2026-10-13 and on the run's day the undated coming or recent changes were
+  tribunal-time-limit, unfair-dismissal-cap-2027, digital-tax-records-2027 and -2028, none printed on a country row; the map holds the
+  plan's seven entries (every one a ledger key, each with its reason).
+- The UK's slot 15: 4 coming, 35 in force, 6 shown (Q6, answer A: the run keeps its own continuation).
+- slots-rules and the other stage gates, doors PASS; scoped typecheck 0.
