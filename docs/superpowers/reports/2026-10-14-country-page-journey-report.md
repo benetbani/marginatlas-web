@@ -229,3 +229,22 @@ time; the full chain and the full typecheck ran on GitHub at each push. This rep
 - Photographs read: KH #credit at 768 and 1280 before and after the lean rule (the half from 768 holds the figure, its words and the
   track with no air beside them); the UK masthead at 1280 after the rows rule.
 - Not done here: `docs/loop/CENSUS.md` (census-fresh is a known red of the base, and a rewrite would carry the rhythm branch's sections).
+
+## Check server catch-up (8d7f91b8)
+
+- The check server's typecheck had been red since the 3E to 3H push (it passed at 3C). Its output goes to an artifact I do not download,
+  so I typechecked locally in two scoped halves (every test and script this branch changed or that imports a changed module; every other
+  importer of the changed modules): one error, `tests/spine/slots_open.test.ts` (TS2345, an `as const` closed list asked to include a
+  string). Fixed; both halves 0.
+
+## Task 5: the locks follow the slots (4d987124)
+
+- slots/locks.ts (`SLOT_STAND_IN`, `lockedSlots` over lockedLevelKeys: stages 1 and 7 outside, each of 2 to 6 a chapter), LockedSection
+  `stamp`, the view drawing each locked slot as its LockedSection with the slot's stamps and the trades' pages as free doors after the close,
+  gate `country-locks` wired after country-zones, counts regenerated.
+- Red first (the view drew no lock: 2 findings), then all PASS.
+- Deviations: the copy's line for the trades' slot is keyed `london-trades` (`lockLineKey`), because `COPY.locked.lines.trades` is the
+  city page's line ("trades" was a duplicate key); slot 5b (margins) has its stand-in and line, as every slot that can lock does.
+- Locks: the UK eight (spend, trades, running-costs, credit, filings, peers, exit, changes), Cambodia three (spend, running-costs, credit).
+- paywall-shape now PASS for the UK (red since Task 1F): "country-gb: 8 locked section(s); internal links 31 open, 32 locked (0 lost)".
+  country-locks, paywall-levels, paywall-flag, locked-data, country-zones, doors, counts-fresh PASS; scoped typecheck 0.
