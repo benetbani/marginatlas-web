@@ -677,6 +677,16 @@
     fill: var(--terra-text);
     stroke: none;
   }
+  /* A MARK IN ITS OWN INK (plan 2026-10-13 home-quiet-editorial, Task 4B; the spec's section 3: on the home, terracotta in four places
+     only): the home's contents draw the site's icons and trade pictograms as member marks in ink2, so the glyph's accent follows its ink
+     here, as the section icon's does above. */
+  .spine-scope .ma-glyph.ma-mono .a {
+    stroke: currentColor;
+  }
+  .spine-scope .ma-glyph.ma-mono .af {
+    fill: currentColor;
+    stroke: none;
+  }
 
   /* AtlasSpot (Fable P1-07): the thin secondary ink lines in the spot
      illustrations ride a lighter stroke weight than the main line. */

@@ -43,6 +43,8 @@ import { buildSiteCounts } from "@/lib/home/site_counts";
 import { WhereNext } from "@/components/spine/WhereNext";
 import { nextDoors } from "@/lib/home/next_doors";
 import { HomeAsk } from "./HomeAsk";
+import { HomeContents } from "./HomeContents";
+import { buildContents } from "@/lib/home/contents";
 import { homePickerCases } from "@/lib/home/picker_cases";
 import { HERO_BUSINESSES, HERO_CITIES } from "@/lib/hero-words";
 import { COPY } from "@/lib/spine/copy";
@@ -107,11 +109,13 @@ export function SpineHomeBody({ data = null }: { data?: { iso2?: string } | null
   const proofs = buildProofs();
   const record = buildSiteCounts();
   const cities = buildCityCards(data?.iso2 ?? "GB");
+  const contents = buildContents();
   /* Each zone one line, so tests/trust/home_shape.test.ts reads its split, its evenness and its body together. The example and the
      proofs draw only where their case and their builders are whole; the band only where all four of its counts build (SITE_COUNTS_MIN), drawing its own
      zone on the terracotta (HomeRecord); the foot always draws its doors. */
   const zones: Array<{ key: string; split: ZoneSplit; even?: boolean; cards?: boolean; tone?: "terra"; label: string; body: React.ReactNode[] }> = [
     { key: "search", split: "wide", label: COPY.home.searchLabel, body: [<HomeSearch key="search" />] },
+    { key: "contents", split: "wide", label: COPY.home.contents.label, body: [<HomeContents key="contents" contents={contents} />] },
     ...(example ? [{ key: "example", split: "1-1" as ZoneSplit, even: true, label: COPY.home.example.label, body: [<HomePlace key="place" ex={example} />, <HomePays key="pays" ex={example} />] }] : []),
     ...(isPaywallOn() ? [{ key: "pro", split: "2-1" as ZoneSplit, label: COPY.home.pro.kicker, body: [<ProBand key="pro" />] }] : []),
     ...(proofs ? [{ key: "proofs", split: "1-1-1" as ZoneSplit, even: true, cards: true, label: COPY.home.proofs.label, body: [<ProofJoins key="joins" p={proofs.joins} />, <ProofArchive key="archive" p={proofs.archive} />, <ProofTax key="tax" p={proofs.tax} />] }] : []),
