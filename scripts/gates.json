@@ -303,6 +303,20 @@
       "claims": []
     },
     {
+      "name": "calc-engine",
+      "script": "tests/simulator/engine.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COST SIMULATOR'S ARITHMETIC (plan 2026-10-13 cost-simulator, Task 1; spec docs/superpowers/specs/2026-10-13-cost-simulator-design.md, section 3, Gates: \"a new engine test pins the break-even arith",
+      "reads": [
+        "src/lib/simulator/engine.ts",
+        "src/lib/simulator/uk_model.ts",
+        "src/lib/uk/pnl/inputs.ts",
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [
