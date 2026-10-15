@@ -303,6 +303,186 @@
       "claims": []
     },
     {
+      "name": "calc-engine",
+      "script": "tests/simulator/engine.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COST SIMULATOR'S ARITHMETIC (plan 2026-10-13 cost-simulator, Task 1; spec docs/superpowers/specs/2026-10-13-cost-simulator-design.md, section 3, Gates: \"a new engine test pins the break-even arith",
+      "reads": [
+        "src/lib/simulator/engine.ts",
+        "src/lib/simulator/uk_model.ts",
+        "src/lib/uk/pnl/inputs.ts",
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "calc-defaults",
+      "script": "tests/simulator/defaults.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COST SIMULATOR'S DEFAULTS (plan 2026-10-13 cost-simulator, Task 2; spec section 3: \"a fallback test pins city to country to none with its line; a no-fill test reds any of the known fills reaching ",
+      "reads": [
+        "src/lib/simulator/bundle.ts",
+        "src/lib/simulator/defaults.ts",
+        "src/lib/simulator/place.ts",
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "calc-api",
+      "script": "tests/simulator/api.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PLACE SWITCH'S ROUTE (plan 2026-10-13 cost-simulator, Task 3; spec section 3: \"a place switch fetches its defaults from one API route ...",
+      "reads": [
+        "src/app/api/calculator/route.ts",
+        "src/lib/routing/route_shapes.ts",
+        "src/lib/simulator/respond.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "calc-display",
+      "script": "tests/simulator/display.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE MONEY AND THE WORDS (plan 2026-10-13 cost-simulator, Task 4A; spec section 4: \"the money in the reader's display currency through the site's existing switch\"; Review Focus 1, a loss with a true mi",
+      "reads": [
+        "src/components/spine/interact/Range.tsx",
+        "src/lib/simulator/bounds.ts",
+        "src/lib/simulator/display.ts",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "calc-page",
+      "script": "tests/simulator/page.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COST SIMULATOR'S PAGE (plan 2026-10-13 cost-simulator, Task 4B; spec section 4, the page phone first; Review Focus 2 and 5).",
+      "reads": [
+        "scratchpad/harness/pages/calculator-gb-london-restaurants.html",
+        "scripts/harness/check_model_laws.mjs",
+        "scripts/harness/pages.json",
+        "scripts/lib/loud_seats.ts",
+        "scripts/type_ladder_baseline.json",
+        "scripts/width_discipline_baseline.json",
+        "src/app/(site)/calculator/page.tsx",
+        "src/components/CalculatorForm.tsx",
+        "src/components/spine/archetypes/NoteList.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/lib/cells.ts",
+        "src/lib/coverage/admin1.ts",
+        "src/lib/facts/store.ts",
+        "src/lib/simulator/defaults.ts",
+        "src/lib/simulator/load.ts",
+        "src/lib/simulator/place.ts",
+        "src/lib/simulator/seed.ts",
+        "src/lib/spine/door_kinds.ts",
+        "src/lib/spine/locals_rows.ts",
+        "src/lib/uk/pnl/london.ts"
+      ],
+      "claims": [
+        {
+          "kind": "bans",
+          "string": "src/lib/cells.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/uk/pnl/london.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/defaults.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/load.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/seed.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/simulator/place.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/facts/store.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "src/lib/spine/locals_rows.ts",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "builtin:fs",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        },
+        {
+          "kind": "bans",
+          "string": "builtin:node:fs",
+          "source": "inferred",
+          "via": "FORBIDDEN"
+        }
+      ]
+    },
+    {
+      "name": "calc-state",
+      "script": "tests/simulator/state.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE ADDRESS (plan 2026-10-13 cost-simulator, Task 5; spec section 3: \"State in the address: country, city and trade, and only the levers that differ from the defaults ...",
+      "reads": [
+        "src/app/(site)/calculator/page.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/lib/simulator/seo.ts",
+        "src/lib/simulator/state.ts",
+        "src/middleware.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "calc-door",
+      "script": "tests/simulator/door.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE DOOR (plan 2026-10-13 cost-simulator, Task 6; spec section 3: \"Each trade-in-place page gains a door, 'Run your own numbers', carrying its three place parameters\"; Q3 answered as written, A).",
+      "reads": [
+        "scratchpad/harness/pages/cell-gb-london-restaurants.html",
+        "scripts/verify_archetype_copy.ts",
+        "scripts/verify_doors.ts",
+        "src/components/spine/archetypes/Terminus.tsx",
+        "src/components/spine/cell/cell-view.tsx",
+        "src/lib/spine/close_rows.ts",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "type-floor",
       "script": "scripts/harness/check_type_floor.mjs",
       "args": [
@@ -3875,6 +4055,7 @@
         "src/app/[country]/page.tsx",
         "src/app/dev/spine/page.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home",
@@ -3893,6 +4074,10 @@
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home",
@@ -3914,6 +4099,10 @@
         "src/app/dev/spine-industry",
         "src/app/dev/spine/page.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/home",
         "src/components/spine/openings/openings-view.tsx"
       ],
@@ -3981,6 +4170,10 @@
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home",
@@ -4000,6 +4193,10 @@
         "src/app/dev/spine/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
+        "src/components/spine/calculator/CalculatorClient.tsx",
+        "src/components/spine/calculator/calculator-view.tsx",
+        "src/components/spine/calculator/levers.tsx",
+        "src/components/spine/calculator/sections.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
         "src/components/spine/home",
