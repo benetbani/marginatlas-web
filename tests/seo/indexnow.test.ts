@@ -48,16 +48,19 @@ const holds = (fn: () => boolean): boolean => {
 };
 const firstFew = (list: string[]) => (list.length ? `: ${list.slice(0, 5).join("; ")}` : "");
 
-/** Phase 1's list as it stands on 2026-10-09, set by set. It moves when the census or a place table does. */
+/** Phase 1's list as it stands on 2026-10-09, set by set. It moves when the census or a place table does. The United States set
+ * moved 125 to 1 on 2026-10-15 with the census re-run on the live database (516fe7c0): since main's P1-D the 124 other description
+ * pages draw 5 blocks, under their floor, and production already serves them noindex by P1-B, so IndexNow is not asked to crawl them
+ * (the controller's ruling: the pin follows the census's measured set, a lowering to the measure). */
 const PINNED: ReadonlyArray<readonly [string, number]> = [
   ["the country industries hubs", 195],
   ["the region industries hubs", 871],
   ["the UK trade pages off London", 1518],
-  ["the United States pages named by a census description", 125],
+  ["the United States pages named by a census description", 1],
   ["the /decide pairs", 34776],
 ];
-const PINNED_TOTAL = 37485;
-const PINNED_POSTS = [10000, 10000, 10000, 7485];
+const PINNED_TOTAL = 37361;
+const PINNED_POSTS = [10000, 10000, 10000, 7361];
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 let caller = 0;
