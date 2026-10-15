@@ -725,8 +725,11 @@
         "scratchpad/harness/pages/cell-gb-london-restaurants.html",
         "scripts/verify_archetype_copy.ts",
         "scripts/verify_doors.ts",
+        "src/app/(site)/account/AccountPreview.tsx",
         "src/components/spine/archetypes/Terminus.tsx",
+        "src/components/spine/archetypes/stories.tsx",
         "src/components/spine/cell/cell-view.tsx",
+        "src/components/spine/cell/exit.tsx",
         "src/lib/spine/close_rows.ts",
         "src/lib/spine/copy.ts"
       ],
