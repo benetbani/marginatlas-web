@@ -36,8 +36,10 @@
 import * as React from "react";
 import { Marks } from "@/components/spine/interact/Marks";
 import { partTones } from "@/components/spine/charts/part_tones";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
-export type DonutPart = { key: string; name: string; share: number };
+/** `prov`: where the share was read from (src/lib/spine/provenance.ts); the leader's, stamped on the ring's centre figure, makes it a fact of its own beside another that prints alike. */
+export type DonutPart = { key: string; name: string; share: number; prov?: Provenance };
 
 /* The parts' tones are the shared ramp (charts/part_tones.ts, 2026-09-26): ink2 and muted, this ring's third and fourth, read as one grey. */
 
@@ -67,7 +69,7 @@ export function Donut({ parts, unit = "%" }: { parts: DonutPart[]; unit?: string
           {arcs}
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]">{Math.round(leader.share)}{unit}</span>
+          <span className="fig text-[length:var(--t-focal)] leading-none text-[var(--c-ink)]" {...provAttrs(leader.prov)}>{Math.round(leader.share)}{unit}</span>
         </div>
       </div>
       <div className="divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]" data-expect-rows={live.length}>

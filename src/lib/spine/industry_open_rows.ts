@@ -52,6 +52,7 @@ import { industryFigure } from "@/lib/facts/industry_shard";
 import { buildPermits, PERMITS_METRICS, WORLD } from "@/lib/spine/permits_rows";
 import { monthsFigure, OPEN_METRICS } from "@/lib/spine/open_rows";
 import { daysFigure } from "@/lib/spine/entry_bill_rows";
+import { buildPays } from "@/lib/spine/pays_rows";
 import { COPY } from "@/lib/spine/copy";
 
 export const INDUSTRY_OPEN_METRICS = { name: PERMITS_METRICS.name, days: PERMITS_METRICS.days, ramp: OPEN_METRICS.ramp } as const;
@@ -66,6 +67,8 @@ export type IndustryOpenData = {
   cells: KvCell[];
   /** The figures behind the cells, for the gates: the licence count, the slowest wait in days, the months to break even; null where not on file. */
   values: { licences: number | null; slowestDays: number | null; rampMonths: number | null };
+  /** The keys whose figure the page prints once, in the section that explains it (plan 2026-10-12 rhythm-air-inside, Task 4; spec 2.3): the months to break even are the payback card's companion figure, so this card leaves them there. */
+  printedElsewhere: IndustryOpenCellKey[];
   /** The keys whose figure is not on file, each with its stated line under the grid. */
   withheld: IndustryOpenCellKey[];
   withheldLines: string[];
@@ -98,12 +101,17 @@ export function buildIndustryOpen(industryId: string | undefined): IndustryOpenD
   const cells: KvCell[] = [];
   const withheld: IndustryOpenCellKey[] = [];
   const withheldLines: string[] = [];
+  const printedElsewhere: IndustryOpenCellKey[] = [];
+  /* The payback card (pays_rows.ts) prints the same shard field as its companion figure, so the months are said there, once. */
+  const paysPrintsMonths = buildPays(industryId)?.ramp != null;
   if (licences != null) cells.push({ key: "licences", label: L.licences, value: String(licences), confidence: "modeled" });
   else { withheld.push("licences"); withheldLines.push(W.licences); }
   if (slowestDays != null) cells.push({ key: "slowest", label: L.slowest, value: daysFigure(slowestDays), confidence: "modeled" });
   else { withheld.push("slowest"); withheldLines.push(W.slowest); }
-  if (rampMonths != null) cells.push({ key: "breakEven", label: L.breakEven, value: monthsFigure(rampMonths), confidence: "modeled" });
-  else { withheld.push("breakEven"); withheldLines.push(W.breakEven); }
+  if (rampMonths != null) {
+    if (paysPrintsMonths) printedElsewhere.push("breakEven");
+    else cells.push({ key: "breakEven", label: L.breakEven, value: monthsFigure(rampMonths), confidence: "modeled" });
+  } else { withheld.push("breakEven"); withheldLines.push(W.breakEven); }
 
   /* THE PLUS: the permits' own cells as rows, the longest wait first as the permits builder orders them; the zero-day licence is the panel's withheld line, counted. */
   const rows: DetailRow[] = (permits?.cells ?? []).map((c) => ({ label: c.label, value: typeof c.value === "string" ? c.value : String(c.value ?? "") })).filter((r) => r.label && r.value);
@@ -118,6 +126,7 @@ export function buildIndustryOpen(industryId: string | undefined): IndustryOpenD
     industryId,
     cells,
     values: { licences, slowestDays, rampMonths: isNum(rampMonths) ? rampMonths : null },
+    printedElsewhere,
     withheld,
     withheldLines,
     detail,
@@ -134,7 +143,7 @@ export function countIndustryOpen(ids: string[]): { total: number; cards: number
     const o = buildIndustryOpen(id);
     if (!o) continue;
     out.cards++;
-    if (o.cells.length === 3) out.threeCells++;
+    if (o.cells.length + o.printedElsewhere.length === 3) out.threeCells++;
     out.withheldCells += o.withheld.length;
     if (o.detail) { out.plusRows[o.detail.rows.length] = (out.plusRows[o.detail.rows.length] ?? 0) + 1; if (o.detail.withheldLine) out.zeroDay++; } else out.noPlus++;
   }

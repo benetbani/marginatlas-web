@@ -341,7 +341,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               <span key={s.key} data-legend-key={s.key} data-part-key={s.key} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-body)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">
                 <span aria-hidden className="h-3 w-3 shrink-0 rounded-sm border border-[var(--c-border)]" style={{ background: GREY_RAMP[Math.min(i, GREY_RAMP.length - 1)], backgroundImage: HATCH[i % HATCH.length] }} />
                 <span data-label className="truncate">{s.label}</span>
-                <Fig className="ml-auto shrink-0 text-[var(--c-ink)]">{rounded[s.key]}%</Fig>
+                <Fig className="ml-auto shrink-0 text-[var(--c-ink)]" prov={s.prov}>{rounded[s.key]}%</Fig>
               </span>
             ))}
             <span data-legend-key={NET_KEY} data-part-key={NET_KEY} className="inline-flex min-w-0 items-center gap-2 py-1 text-[length:var(--t-body)] text-[var(--c-ink2)] [@container(min-width:360px)]:py-0">

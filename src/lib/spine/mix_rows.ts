@@ -59,6 +59,7 @@ import { industryRows } from "@/lib/facts/industry_shard";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import type { LastsAltitude } from "@/lib/spine/lasts_rows";
 import { COPY } from "@/lib/spine/copy";
+import type { Provenance } from "@/lib/spine/provenance";
 
 /** Where the card stands: "place" on a trade in a city (the basis says what is not this city's), "world" on the industry page (no city to name). The survival card's own type, so the two cards cannot spell an altitude two ways. */
 export type MixAltitude = LastsAltitude;
@@ -69,7 +70,7 @@ export const MIX_METRICS = { name: "channel_mix.channels.*.name", share: "channe
 export const MIX_WHOLE = 100;
 export const MIX_SUM_TOLERANCE = 5;
 
-export type MixPart = { key: string; name: string; share: number };
+export type MixPart = { key: string; name: string; share: number; prov: Provenance };
 
 export type MixData = {
   industryId: string;
@@ -100,7 +101,7 @@ export function buildMix(industryId: string | undefined, altitude: MixAltitude =
     const name = typeof n.value === "string" ? n.value.trim() : "";
     const share = shares.get(n.rowKey);
     if (!name || !isNum(share) || share <= 0) continue;
-    parts.push({ key: n.rowKey, name, share });
+    parts.push({ key: n.rowKey, name, share, prov: { src: `data/facts/industry/${industryId}.json:channel_mix.channels.${n.rowKey}.pct_of_revenue`, kind: "estimate" } });
   }
   if (parts.length === 0) return null;
   const sum = parts.reduce((a, p) => a + p.share, 0);

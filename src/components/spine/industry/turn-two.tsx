@@ -92,10 +92,10 @@ export function FormatsCard({ id = "formats", formats, oneColumn = false }: { id
         icon="subtype"
         kicker={formats.kicker}
         tagged={formats.sample}
-        headline={{ label: formats.middleLabel, value: formats.middle }}
+        headline={{ label: formats.middleLabel, value: formats.middle, prov: formats.rows.find((r) => r.value === formats.middle)?.prov }}
         basis={formats.basis}
         head={formats.head}
-        rows={formats.rows.map((r) => ({ key: r.key, name: r.name, value: r.value }))}
+        rows={formats.rows.map((r) => ({ key: r.key, name: r.name, value: r.value, prov: r.prov }))}
         fmt={formats.fmt}
         withheld={0}
         withheldLine={null}

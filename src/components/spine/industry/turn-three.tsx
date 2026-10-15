@@ -51,7 +51,8 @@ import { KvGrid, type KvCell } from "@/components/spine/archetypes/KvGrid";
 import { BentoMetric } from "@/components/spine/archetypes/BentoBand";
 import { COPY } from "@/lib/spine/copy";
 import type { KnowData } from "@/lib/spine/know_rows";
-import type { MarketData } from "@/lib/spine/market_rows";
+import { MARKET_METRICS, type MarketData } from "@/lib/spine/market_rows";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export { CloseCard } from "@/components/spine/cell/exit";
 
@@ -75,9 +76,11 @@ export function fieldCells(market: MarketData): KvCell[] {
   const N = COPY.industryField.notes;
   const firms = market.firms, chains = market.chains, swing = market.swing;
   const cells: KvCell[] = [];
-  if ("figure" in firms) cells.push({ key: "firms", label: K.firms, value: firms.figure, confidence: "modeled" });
-  if ("part" in chains) cells.push({ key: "chains", label: K.chains, value: `${chains.part}%`, note: N.chains, confidence: "modeled" });
-  if ("figure" in swing) cells.push({ key: "swing", label: K.swing, value: swing.figure, note: N.swing, confidence: "modeled" });
+  /* EACH FIGURE SAYS WHERE IT WAS READ (plan 2026-10-12 rhythm-air-inside, Task 4): two figures that print alike on the page are two facts only when each carries its own source. */
+  const from = (metric: string): Provenance => ({ src: `data/facts/industry/${market.industryId}.json:${metric}`, kind: "estimate" });
+  if ("figure" in firms) cells.push({ key: "firms", label: K.firms, value: firms.figure, confidence: "modeled", prov: from(MARKET_METRICS.firms) });
+  if ("part" in chains) cells.push({ key: "chains", label: K.chains, value: `${chains.part}%`, note: N.chains, confidence: "modeled", prov: from(MARKET_METRICS.chains) });
+  if ("figure" in swing) cells.push({ key: "swing", label: K.swing, value: swing.figure, note: N.swing, confidence: "modeled", prov: from(MARKET_METRICS.swing) });
   return cells;
 }
 
@@ -112,7 +115,7 @@ export function FieldCard({ id = "field", market }: { id?: string; market: Marke
     const C = COPY.industryField.companions;
     const companions = cells
       .filter((c) => c.key !== "firms")
-      .map((c) => ({ figure: String(c.value), words: c.key === "chains" ? C.chains : C.swing }));
+      .map((c) => ({ figure: String(c.value), words: c.key === "chains" ? C.chains : C.swing, prov: c.prov }));
     return (
       <BentoMetric
         id={id}
@@ -120,6 +123,7 @@ export function FieldCard({ id = "field", market }: { id?: string; market: Marke
         kicker={COPY.industryField.kicker}
         sample
         figure={String(firms.value)}
+        prov={firms.prov}
         label={COPY.tradeMarket.kickers.firms}
         second={companions.length > 0 ? companions : undefined}
         basis={COPY.industryField.basis}
