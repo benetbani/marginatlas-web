@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "page": "city-london",
+    "figure": "$62K",
+    "where": "city-take and earnings",
+    "law": "MODEL 8.3 row 07 earnings: \"the typical is the card's 30 in ink, the site's strip law (M3)\"; PART 4: \"Every section card now takes exactly one focal at 30\"",
+    "reason": "The board keeps $62K as the page's answer. The earnings strip's typical mark is that card's one focal at 30, and the typical IS the customers' typical pay, so the law makes it print the same figure."
+  },
+  {
+    "page": "city-london",
+    "figure": "$62K",
+    "where": "city-take and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The peers table's own row (London) prints its real typical pay beside the other cities' in the same column, as a comparison table must; the board keeps $62K as the page's answer."
+  },
+  {
+    "page": "city-london",
+    "figure": "$62K",
+    "where": "earnings and peers",
+    "law": "MODEL 8.3 row 07 earnings (the strip's typical is the card's 30, M3) and PART 5, THE HOME ROW (\"It prints its real figures like every other row.\")",
+    "reason": "Both second printings are forced by their own law: the strip's typical is the earnings card's focal, and the home row of the peers table prints the same pay the answer states."
+  },
+  {
+    "page": "city-london",
+    "figure": "$3,050",
+    "where": "crew",
+    "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
+    "reason": "The crew list's headline is the middle of its five roles, which is the Supervisor row's own figure, so the focal and the row it sums print the same pay."
+  }
+]

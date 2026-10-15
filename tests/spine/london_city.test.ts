@@ -64,6 +64,10 @@ async function main() {
   const row = (key: string) => hero?.rows.find((r) => r.key === key);
   check("London's visitors are the sourced 20.9M (2024), not the list's 16.0M", row("visitors")?.value === "20.9M");
   check("London's visitors carry a level among the cities", !!row("visitors")?.level);
+  /* EACH FACT PRINTS ONCE (plan 2026-10-12 rhythm-air-inside, Task 4; spec 2.3): the visits are printed by the peers table's home row
+     and the longest wait by the permits section, so the board's two rows say only where London stands among the cities. */
+  check("London's visitors row prints no figure (the peers table's home row prints 20.9M)", row("visitors")?.unprinted === true && row("visitors")?.level != null);
+  check("London's permit row prints no figure (a row of the permits section prints the wait)", row("permits")?.unprinted === true && row("permits")?.level != null);
   check("London's hero has no density over the metro's residents", row("density") === undefined);
   check("London's hero has no metro GDP", row("gdp") === undefined);
   /* The cost of living left London's hero in masterplan step 03 (2026-10-05, the labels audit's items 22 and 24): a hand-anchored

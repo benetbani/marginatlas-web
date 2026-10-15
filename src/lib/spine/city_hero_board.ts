@@ -54,6 +54,7 @@ import cityListJson from "../../../data/cities/city_list_v1.json";
 import { cityFigure, loadCityShard } from "@/lib/facts/city_shard";
 import { cityTypicalIncome } from "@/lib/spine/city_income";
 import { cityVisitorsM } from "@/lib/spine/city_glance_rows";
+import { buildCityGates } from "@/lib/spine/city_gates_rows";
 import { cityHeldToSources, cityRegisterPlace } from "@/lib/uk/registers/register_city";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
 import { levelOf, heroImageFor, LEVEL_SET_FLOOR, type HeroBoardData, type HeroBoardRow } from "@/lib/spine/hero_board";
@@ -124,7 +125,11 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
 
   const seen = cityVisitorsM(city);
   if (seen != null) {
-    rows.push({ key: "visitors", icon: "tourist", label: C.rows.visitors, value: visitorsM(seen), unit: C.units.aYear, level: levelOf(seen, s.visitors), confidence: "measured" });
+    /* THE FIGURE PRINTS ONCE (plan 2026-10-12 rhythm-air-inside, Task 4; spec 2.3): the peers table's home row prints this count
+       through the same resolver (city_peer_list.ts; MODEL PART 5, the home row prints its real figures), so the board says only
+       where it stands among the cities. */
+    const seenLevel = levelOf(seen, s.visitors);
+    rows.push({ key: "visitors", icon: "tourist", label: C.rows.visitors, value: visitorsM(seen), unit: C.units.aYear, level: seenLevel, confidence: "measured", unprinted: seenLevel != null });
   }
   /* A city held to a register region prints no metro row (the header). */
   const metroRows = cityRegisterPlace(iso2, slug) === null;
@@ -142,7 +147,12 @@ export function buildCityHeroBoard(slug: string): HeroBoardData | null {
   const days = cityFigure(iso2, slug, "reg.total_local_days");
   if (days) {
     const v = Math.round(days.value);
-    rows.push({ key: "permits", icon: "red-tape", label: sourcedOnly || marked ? C.rows.permitsLongest : C.rows.permits, value: String(v), unit: v === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: levelOf(days.value, s.days), confidence: days.tag === "held" && !sourcedOnly && !marked ? "measured" : "modeled" });
+    /* THE FIGURE PRINTS ONCE (plan 2026-10-12 rhythm-air-inside, Task 4; spec 2.3): where a row of the permits section prints this
+       very wait, the section is its home and the board says only where it stands among the cities. */
+    const gateText = `${v} ${v === 1 ? COPY.cityGates.units.day : COPY.cityGates.units.days}`;
+    const gateSays = (buildCityGates(slug)?.rows ?? []).some((g) => g.a === gateText);
+    const daysLevel = levelOf(days.value, s.days);
+    rows.push({ key: "permits", icon: "red-tape", label: sourcedOnly || marked ? C.rows.permitsLongest : C.rows.permits, value: String(v), unit: v === 1 ? COPY.heroBoard.units.day : COPY.heroBoard.units.days, level: daysLevel, confidence: days.tag === "held" && !sourcedOnly && !marked ? "measured" : "modeled", unprinted: gateSays && daysLevel != null });
   }
   const density = metroRows ? cityFigure(iso2, slug, "comp.density_per_10k") : null;
   if (density && density.value > 0) {
