@@ -29,12 +29,12 @@ export const INDUSTRY_FAILURE_MODES: Record<string, FailureMode[]> = {
   restaurants: [
     {
       label: "Lease terms misjudged",
-      explanation: "Owner signed a 10-year lease with annual escalators based on opening-month projections; rent compounds past what the operation can support by year 3-4.",
+      explanation: "Owner signed a 10-year lease with annual escalators set on opening-month projections. Rent outgrows what the operation can support by year 3-4.",
       when: "Year 2-4",
     },
     {
       label: "Owner-as-only-cook burnout",
-      explanation: "The chef-owner can't take a day off; after 18 months of 14-hour shifts, quality slips, staff turns over, the owner quits.",
+      explanation: "The chef-owner can't take a day off. After 18 months of 14-hour shifts, quality slips and staff leave. Then the owner quits.",
       when: "Month 12-24",
     },
     {
