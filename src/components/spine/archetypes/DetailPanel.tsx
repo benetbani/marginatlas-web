@@ -64,13 +64,16 @@ export type DetailRow = { label: string; value: string; note?: string; prov?: Pr
  * accident; two panels are meant to open independently unless a caller wants
  * the accordion behaviour on purpose.
  */
-export function DetailPanel({ name, summary, rows, withheldLine, type }: { name: string; summary: string; rows: DetailRow[]; withheldLine?: string | null; /** The answer fold's type (plan 2026-10-13 country-page-journey): given, the country page's fold; absent, the panel every other page draws. */ type?: AnswerType }) {
+export function DetailPanel({ name, summary, rows, withheldLine, type, split }: { name: string; summary: string; rows: DetailRow[]; withheldLine?: string | null; /** Two lists side by side from 640px of the card (FactRows' rule of 2026-10-04; final review I4): the first half of the rows on the left, the rest on the right, one list under 640. */ split?: boolean; /** The answer fold's type (plan 2026-10-13 country-page-journey): given, the country page's fold; absent, the panel every other page draws. */ type?: AnswerType }) {
   if (!rows || rows.length < 2) return null;
   if (type) return <AnswerFold name={name} summary={summary} rows={rows} type={type} />;
   return (
     <div data-archetype="detail-panel" data-rows={rows.length}>
       <InlineDisclosure name={name} summary={summary} className="group mt-3 [&>summary]:py-2.5">
-        <dl className="mt-2 grid gap-2">
+        <dl
+          className={`mt-2 grid gap-2${split ? " [@container(min-width:640px)]:grid-flow-col [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:gap-x-8 [@container(min-width:640px)]:[grid-template-rows:repeat(var(--detail-rows),auto)]" : ""}`}
+          style={split ? ({ "--detail-rows": Math.ceil(rows.length / 2) } as React.CSSProperties) : undefined}
+        >
           {rows.map((r, i) => (
             <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
               <dt data-label className="text-[length:var(--t-micro)] text-[var(--c-ink2)]">{r.label}</dt>
