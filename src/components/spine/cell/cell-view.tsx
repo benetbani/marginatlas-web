@@ -443,7 +443,7 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
   const cellZonesAll: CellZone[] = [
     { key: "take", split: "wide", label: "The answer", outside: true, body: [<Masthead key="take" d={d} />] },
     { key: "opening", split: "1-2", stack: "lg", label: "Is the money in it", outside: true, body: opening },
-    { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne ? keep([permits ? <PermitsCard key="permits" permits={permits} /> : null, open ? <OpenCard key="open" open={open} /> : null]) : [] },
+    { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne ? keep([permits ? <PermitsCard key="permits" permits={permits} /> : null, open ? <OpenCard key="open" open={open} lean={!permits} /> : null]) : [] },
     {
       key: "stock",
       split: kit && lines ? "3-2" : "2-3",

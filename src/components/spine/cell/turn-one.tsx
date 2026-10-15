@@ -151,7 +151,9 @@ export function PermitsCard({ id = "permits", permits }: { id?: string; permits:
   );
 }
 
-export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | null }) {
+/** `lean`: the card stands alone in its level (a UK page prints no licence card beside it), so the earn-back figure takes the kit's lean lone
+ *  form, the narrow column with the band running on beside it (zones.tsx LONE), never two thirds of air (fix round 1, ruling 5). */
+export function OpenCard({ id = "open", open, lean = false }: { id?: string; open: OpenData | null; lean?: boolean }) {
   if (!open) return null;
   /* ONE ANSWER FOR THE FORM (open_rows.ts `openForm`), the one the view seats by. */
   const form = openForm(open);
@@ -166,6 +168,7 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
         figure={open.foot[0].figure}
         prov={open.foot[0].prov}
         stateWithheld
+        lean={lean}
         label={open.foot[0].words}
         second={open.foot.slice(1)}
         basis={open.basis ?? undefined}
