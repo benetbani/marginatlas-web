@@ -103,7 +103,7 @@ export function buildRunningCostsSlot(iso2In: string, today: string): SlotModel<
   const leaseCosts: SlotRow[] = (lease?.tax ?? []).flatMap((t, i): SlotRow[] => (t.usd == null ? [] : [{ key: `tax-${t.years}`, label: COPY.leaseByLaw.taxLabel[t.years], value: usd(t.usd), note: i > 0 && t.dueDays != null ? COPY.leaseByLaw.taxNoteDue.replace("{days}", String(t.dueDays)) : COPY.leaseByLaw.taxNote, prov: t.prov }]));
   /* THE PEERS' ELECTRICITY (Reading 9): the peers the track marked, as rows without doors (Reading 20: this slot locks, and a locked slot
      keeps no link a free reader would lose). */
-  const peers: SlotRow[] = kwh != null ? (peerMarks(iso2, F) ?? []).map((m) => ({ key: m.iso2, label: m.name, value: usdCents(m.value) })) : [];
+  const peers: SlotRow[] = kwh != null ? (peerMarks(iso2, F) ?? []).map((m) => ({ key: m.iso2, label: m.name, value: usdCents(m.value), prov: m.prov })) : [];
 
   const M = J.more;
   return {
@@ -185,7 +185,8 @@ export function buildFilingsSlot(iso2In: string, today: string): SlotModel<null>
     const note = ruleRow(iso2, "filings", key)?.note ?? "";
     if (!v || typeof v.months !== "number") return null;
     const days = typeof v.days === "number" ? v.days : 0;
-    return { key, label, value: String(v.months), note: days === 0 ? note || null : (days === 1 ? F.andDay : F.andDays.replace("{n}", String(days))).replace("{note}", note) };
+    /* Stamped like the lead (each fact says where it was read: plan 2026-10-12 rhythm-air-inside, Task 4). */
+    return { key, label, value: String(v.months), note: days === 0 ? note || null : (days === 1 ? F.andDay : F.andDays.replace("{n}", String(days))).replace("{note}", note), prov: { src: `sections/rules.json:${iso2}:filings:${key}`, kind: "looked up" } };
   };
   const rows = present([monthsRow("tax-return-deadline", F.taxReturn), monthsRow("corporation-tax-payment", F.taxPayment), monthsRow("vat-return-deadline", F.vatReturn)]);
   const lateLow = ruleValue(iso2, "filings", "late-accounts-1");

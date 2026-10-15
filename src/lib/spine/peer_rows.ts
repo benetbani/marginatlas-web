@@ -16,17 +16,21 @@
 import { ukTaxOnProfit } from "@/lib/spine/uk_tax_on_profit";
 import { COUNTRIES } from "@/lib/taxonomy";
 import { PEER_GROUPS } from "@/lib/countries/country_view";
-import { getCountryRates } from "@/lib/tax/country_rates";
+import { getCountryRates, getFormationRows } from "@/lib/tax/country_rates";
 import { getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { COPY } from "@/lib/spine/copy";
 import { costOfLivingOnCityScale } from "@/lib/economics/country_metrics";
 import { cityHeldToSources, cityRegisterPlace, countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
 import { buildPayBars } from "@/lib/spine/pay_rows";
+import { getCountryProfile } from "@/lib/economic_profile";
+import { ENTRY_BILL_METRICS } from "@/lib/spine/entry_bill_rows";
+import type { Provenance } from "@/lib/spine/provenance";
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-export type PeerRow = { iso2: string; key?: string; name: string; home: boolean; values: Record<string, number | null> };
+/** `provs`: where each figure was read from, by column (the country table's; the city table passes none). A cell the page prints elsewhere in the section that explains it carries that section's own stamp, so the repeat reads as one fact; every other cell carries its own country's. */
+export type PeerRow = { iso2: string; key?: string; name: string; home: boolean; values: Record<string, number | null>; provs?: Record<string, Provenance | null> };
 export type PeerColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "per"; best: "min" | "max" | "none" };
 
 export const PEER_COLUMNS: PeerColumn[] = [
@@ -43,6 +47,16 @@ function nameOf(iso2: string): string | null {
   const hit = (COUNTRIES as Array<{ code: string; name: string }>).find((c) => c.code === iso2);
   return hit ? hit.name : null;
 }
+
+/** The formation file's first LLC row of a country, as the registering table prints it (the same row: `getFormationRowByTier`'s pick), by its place in the file. */
+export const formationDaysSrc = (iso2: string, tier: string): string | null => {
+  const i = getFormationRows(iso2).findIndex((r) => r.tier === tier);
+  return i < 0 ? null : `legal/business_formation_costs_v1.json:countries.${iso2.toUpperCase()}.${i}.setup_days`;
+};
+const llcDaysProv = (pc: string): Provenance | null => {
+  const src = formationDaysSrc(pc, "LLC");
+  return src ? { src, kind: "looked up" } : null;
+};
 
 /** Null when the country has no peer group or fewer than two rows resolve. */
 export function buildPeerTable(iso2In: string): PeerTable | null {
@@ -74,6 +88,17 @@ export function buildPeerTable(iso2In: string): PeerTable | null {
         /* The company's registration days, as the hero's row (his ruling of 2026-09-20: time to register is the LLC's). */
         llc_days: bill?.table && isNum(bill.table.days) && bill.table.days > 0 ? Math.round(bill.table.days) : null,
         salary_usd: isNum(avg) && avg > 0 ? Math.round(avg) : null,
+      },
+      /* EACH FIGURE SAYS WHERE IT WAS READ (plan 2026-10-12 rhythm-air-inside, Task 4; spec 2.3: two figures that print alike are two facts only when each
+         carries its own source). The home row mirrors the sections that print the same figure and carries their stamps: the UK's tax the hero's worked
+         figure, the bill the registering slot's, the salary the customers slot's national figure (the profile's field, no country in its key). A peer's
+         cell names its own country in the key. */
+      provs: {
+        effective_tax_pct: pc === "GB" && ukTax ? { src: "uk/law/take_home.ts:sole trader:median full-time pay", kind: "worked out" } : regime && isNum(regime.effective_rate) ? { src: `tax/smb_effective_rates.ts:${pc}:effective_rate`, kind: "estimate" } : null,
+        payroll_pct: isNum(rates.employerSocial) && rates.employerSocial > 0 ? { src: `tax/country_rates_2024.json:rates.${pc}.employer_social`, kind: "looked up" } : null,
+        llc_cost_usd: bill?.verdict.bill.state === "printed" ? { src: `facts/country/${pc}.json:${ENTRY_BILL_METRICS.bill}`, kind: bill.verdict.bill.tag === "held" ? "looked up" : "estimate" } : null,
+        llc_days: llcDaysProv(pc),
+        salary_usd: isNum(avg) && avg > 0 ? { src: pc === code ? "economic_indicators/country_profile_v2.json:median_wage_full_time_usd" : `economic_indicators/country_profile_v2.json:median_wage_full_time_usd:${pc}`, kind: getCountryProfile(pc).tier === "A" ? "looked up" : "estimate" } : null,
       },
     });
   }

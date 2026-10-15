@@ -19,15 +19,18 @@
 import * as React from "react";
 import { usd } from "@/lib/spine/money";
 import { Range } from "@/components/spine/interact/Range";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 
 export type HireLeverWords = { label: string; unit: string; salary: string; onCost: string; rule: string; lever: string; pension?: string; ni?: string };
 /** The employer's minimum pension: `rate` percent of the pay between `lower` and `upper`, owed once the pay passes `trigger`. */
 export type HirePension = { rate: number; lower: number; upper: number; trigger: number };
+/** Where each printed figure is worked out from (src/lib/spine/provenance.ts), stamped on it: a sum or a share the lever recomputes at any pay says which rules it applies, so a figure that prints alike elsewhere on the page reads as a fact of its own (plan 2026-10-12 rhythm-air-inside, Task 4). */
+export type HireLeverProvs = { total?: Provenance | null; pension?: Provenance | null; ni?: Provenance | null; onCost?: Provenance | null };
 
 /** `notes`: the rules under the lever as the server wrote them, each a label and its terms in the law's own currency ("Employer
  *  NI", "15% above £5,000, less the £10,500 allowance"), drawn as a short list (they are rules, not a sentence under the figure:
  *  COPY-STYLE's one supporting line); without them the one rule line prints from `words.rule` in the lever's dollars. */
-export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pension = null, notes = null }: { pay: number; min: number; rate: number; threshold: number; words: HireLeverWords; allowance?: number; pension?: HirePension | null; notes?: Array<{ label: string; text: string }> | null }) {
+export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pension = null, notes = null, provs = null }: { pay: number; min: number; rate: number; threshold: number; words: HireLeverWords; allowance?: number; pension?: HirePension | null; notes?: Array<{ label: string; text: string }> | null; provs?: HireLeverProvs | null }) {
   const step = 500;
   const floor = Math.max(step, Math.ceil(min / step) * step);
   const ceiling = Math.max(floor + step, Math.round((pay * 3) / 1000) * 1000);
@@ -46,7 +49,7 @@ export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pen
         <span className="text-[length:var(--t-body)] text-[var(--c-ink)]">{W.label}</span>
         {/* 16 UNDER THE CARD'S 30 (PART 4's rung; milestone 1, M3 gave the staff card its one figure at 30, the wage floor's year):
             a 20 between the two is the size the model laws' FOCAL refuses in a card that already holds a 30. */}
-        <span aria-live="polite" className="fig text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{usd(total)}</span>
+        <span aria-live="polite" className="fig text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]" {...provAttrs(provs?.total)}>{usd(total)}</span>
         <span className="text-[length:var(--t-body)] text-[var(--c-muted)]">{W.unit}</span>
       </div>
       <div
@@ -74,11 +77,11 @@ export function HireLever({ pay, min, rate, threshold, words, allowance = 0, pen
         <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-line-strong)" }} />{W.salary}</span>
         {parts ? (
           <>
-            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink2)" }} /><span className="fig font-semibold text-[var(--c-ink)]">{usd(pensionCost)}</span> {W.pension}</span>
-            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink)" }} /><span className="fig font-semibold text-[var(--c-ink)]">{usd(ni)}</span> {W.ni}</span>
+            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink2)" }} /><span className="fig font-semibold text-[var(--c-ink)]" {...provAttrs(provs?.pension)}>{usd(pensionCost)}</span> {W.pension}</span>
+            <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink)" }} /><span className="fig font-semibold text-[var(--c-ink)]" {...provAttrs(provs?.ni)}>{usd(ni)}</span> {W.ni}</span>
           </>
         ) : (
-          <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink2)" }} /><span className="fig font-semibold text-[var(--c-ink)]">{usd(onCost)}</span> {W.onCost}</span>
+          <span className="inline-flex items-center gap-2"><span aria-hidden className="h-2 w-2 rounded-[2px]" style={{ background: "var(--c-ink2)" }} /><span className="fig font-semibold text-[var(--c-ink)]" {...provAttrs(provs?.onCost)}>{usd(onCost)}</span> {W.onCost}</span>
         )}
       </div>
       <div className="mt-4">

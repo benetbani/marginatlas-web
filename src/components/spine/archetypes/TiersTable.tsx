@@ -45,7 +45,8 @@ import { Fig, usd } from "@/components/spine/kit";
 import { COPY } from "./copy";
 import type { Provenance } from "@/lib/spine/provenance";
 
-export type TierRow = { tier: string; local_term?: string; cost_usd?: number; days?: number; complexity_1_5?: number };
+/** `costProv`, `daysProv`: where each figure was read from (the registering slot's formation file), stamped on it; a row that passes none stamps nothing. */
+export type TierRow = { tier: string; local_term?: string; cost_usd?: number; days?: number; complexity_1_5?: number; costProv?: Provenance | null; daysProv?: Provenance | null };
 /** A row of the figures shape: the name block's two lines and the two figures as printed (null prints an en dash). `aProv`, `bProv`
  *  (plan 2026-10-08, home sections): where each figure came from, stamped on it (the provenance ratchet); a row that passes none
  *  stamps nothing, as before. */
@@ -186,10 +187,10 @@ export function TiersTable(props: RegisteringProps | FiguresProps) {
               </span>
               <span className={`col-start-2 text-right [grid-row:1] ${stackCell}`} data-col="fee">
                 {/* A zero fee prints "$0" in this column of figures (COPY.free's note, 2026-09-25). */}
-                {isNum(t.cost_usd) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{usd(t.cost_usd)}</Fig> : DASH}
+                {isNum(t.cost_usd) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]" prov={t.costProv}>{usd(t.cost_usd)}</Fig> : DASH}
               </span>
               <span className={`col-start-3 text-right [grid-row:1] ${stackCell}`} data-col="time">
-                {isNum(t.days) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{t.days} {t.days === 1 ? "day" : "days"}</Fig> : DASH}
+                {isNum(t.days) ? <Fig className="text-[length:var(--t-body)] text-[var(--c-ink2)]" prov={t.daysProv}>{t.days} {t.days === 1 ? "day" : "days"}</Fig> : DASH}
               </span>
               {dots ? (
                 <span className={`col-start-4 flex items-center justify-end gap-2 [grid-row:1] ${stackCell}`}>

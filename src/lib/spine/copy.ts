@@ -2975,7 +2975,7 @@ export const COPY = {
     /** Slot 13 on the UK: its times, each unit in its label. */
     exit: { liquidation: "Liquidation, months", ban: "Director ban, years", strikeNotice: "Strike-off notice, months", noTrading: "No-trading period, months" },
     abroad: { founder: "Founder visa fees", founderNote: "For {years} years, per person", decision: "Visa decision", decisionNote: "Applying from outside the UK", forTime: "Fee and surcharge for {time}" },
-    boardRows: { clean: "Clean dealing /100", admin: "Admin ease /100", salary: "Monthly salary", living: "Living cost /100", llcDays: "Days to register", llcCost: "Cost to register" },
+    boardRows: { clean: "Clean dealing /100", admin: "Admin ease /100", salary: "Monthly salary", living: "Living cost /100" },
     /** The UK's charge on a director's loan, a tax, standing in the other taxes of slot 1. */
     directorsLoan: { label: "Director's loan charge", note: "Company pays, until repaid" },
   },

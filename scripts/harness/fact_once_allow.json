@@ -124,5 +124,82 @@
     "where": "formats",
     "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
     "reason": "The list's headline is the middle of its five formats, which is the Cafe / bistro row's own figure, so the focal and the row it sums print alike."
+  },
+  {
+    "page": "country-GB",
+    "figure": "18%",
+    "where": "peers and take",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The board keeps 18% as the page's answer, the UK's total effective tax burden on a stated profit. The peers table's own row prints that same worked figure, from the same builder, in its column of effective tax."
+  },
+  {
+    "page": "country-GB",
+    "figure": "$52K",
+    "where": "cities and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The customers slot states the national typical full-time pay beside the cities'. The peers table's own row prints the same profile field in its salary column."
+  },
+  {
+    "page": "country-GB",
+    "figure": "$133",
+    "where": "open and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The registering slot keeps the bill to register as its focal. The peers table's own row prints the same all-in bill, from the same shard field, in its LLC column."
+  },
+  {
+    "page": "country-GB",
+    "figure": "1 day",
+    "where": "open and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The registering slot's legal forms table prints the LLC's filing days. The peers table's own row prints the same formation-file row in its days column."
+  },
+  {
+    "page": "country-GB",
+    "figure": "15%",
+    "where": "changes and peers",
+    "law": "MODEL PART 10.7, Dated changes: \"two absolutes\"; PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The rule changes ledger prints the employer's National Insurance from 13.8% to 15%, a value before and a value from, and the peers table's own row prints the 15% it charges now in its payroll column."
+  },
+  {
+    "page": "country-GB",
+    "figure": "38%",
+    "where": "lasting",
+    "law": "tests/spine/focal_values.test.ts (gate focal-values), \"A DRAWING'S FOCAL MARK PRINTS ITS VALUE, SMALL, AS ITS NEIGHBOURS DO\" (critique pass 2, fix round C2, item P1.5; the controller's decision on the critique's Q2, YES)",
+    "reason": "The slot's figure is the share still trading at year five. The survival curve beneath it labels every point, the terracotta year-five dot too, so the focal and the drawing's last label print one share under one source. The ruling is the gate's, not a MODEL clause."
+  },
+  {
+    "page": "country-DE",
+    "figure": "27%",
+    "where": "peers and take",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The board keeps 27% as the page's answer, Germany's effective tax on a small business. The peers table's own row prints the same regime rate in its column of effective tax."
+  },
+  {
+    "page": "country-DE",
+    "figure": "$49K",
+    "where": "cities and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The customers slot states the national typical full-time pay beside the cities'. The peers table's own row prints the same profile field in its salary column."
+  },
+  {
+    "page": "country-DE",
+    "figure": "13%",
+    "where": "margins",
+    "law": "MODEL PART 4: \"Every section card now takes exactly one focal at 30\"; PART 5, which \"binds every table, tier list, ranked list\", A LABEL NEVER STANDS WHERE A NUMBER GOES: \"Every row carries its own figure.\"",
+    "reason": "The card's focal is the middle of the trades it ranks, and the lower median is a figure one row holds, so the focal and the Cafés row print one margin."
+  },
+  {
+    "page": "country-DE",
+    "figure": "$1,150",
+    "where": "open and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The registering slot keeps the bill to register as its focal. The peers table's own row prints the same all-in bill, from the same shard field, in its LLC column."
+  },
+  {
+    "page": "country-DE",
+    "figure": "14 days",
+    "where": "open and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The registering slot's legal forms table prints the first LLC row's filing days. The peers table's own row prints the same formation-file row in its days column."
   }
 ]

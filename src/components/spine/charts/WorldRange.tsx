@@ -14,6 +14,7 @@ import * as React from "react";
 import { Fig, Ico } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { WorldRange } from "@/lib/spine/world_stats";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export type WorldRangeRow = {
   key: string;
@@ -38,7 +39,7 @@ export type WorldRangeRow = {
   hairlines?: number[];
   /** THE PAGE'S PEERS ON THE TRACK (research R4, pattern P2; peer_marks.ts): hollow marks, named once in a key line under the
    *  track in the order they stand, with their figures. Three at the least, or none. */
-  peers?: Array<{ name: string; value: number }> | null;
+  peers?: Array<{ name: string; value: number; /** Where the peer's figure was read from, stamped on it. */ prov?: Provenance }> | null;
   /** The key line's first word ("Peers"). */
   peersWord?: string;
   /** A REFERENCE ON THE TRACK (2026-10-04): a rate of the country's own that the figure is read against (the central bank's rate
@@ -182,7 +183,7 @@ function Track({ r, range, scale, headless, ends, showEnds }: { r: WorldRangeRow
                 </span>
                 {r.peers.map((p) => (
                   <span key={p.name} className="whitespace-nowrap">
-                    {p.name} <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.fmt(p.value)}</Fig>
+                    {p.name} <Fig className="text-[length:var(--t-body)] text-[var(--c-ink)]" prov={p.prov}>{r.fmt(p.value)}</Fig>
                   </span>
                 ))}
               </div>

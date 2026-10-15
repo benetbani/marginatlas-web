@@ -19,8 +19,10 @@ import { COUNTRIES } from "@/lib/taxonomy";
 import { PEER_GROUPS } from "@/lib/countries/country_view";
 import { listCountryProfiles } from "@/lib/economic_profile";
 import { isFieldFill } from "@/lib/spine/world_stats";
+import type { Provenance } from "@/lib/spine/provenance";
 
-export type PeerMark = { iso2: string; name: string; value: number };
+/** `prov`: the profile field and the peer's country the value was read from, stamped on its printed figure (plan 2026-10-12 rhythm-air-inside, Task 4: a peer whose figure equals the country's own is a fact of its own). */
+export type PeerMark = { iso2: string; name: string; value: number; prov: Provenance };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
@@ -40,7 +42,8 @@ export function peerMarks(iso2: string, field: string): PeerMark[] | null {
     const v = profiles.get(pc)?.[field];
     const name = nameOf(pc);
     if (!name || !isNum(v) || v <= 0 || isFieldFill(field, v)) continue;
-    out.push({ iso2: pc, name, value: v });
+    const tier = (profiles.get(pc) as { tier?: string } | undefined)?.tier;
+    out.push({ iso2: pc, name, value: v, prov: { src: `economic_indicators/country_profile_v2.json:${field}:${pc}`, kind: tier === "A" ? "looked up" : "estimate" } });
   }
   return out.length >= 3 ? out.sort((a, b) => a.value - b.value) : null;
 }

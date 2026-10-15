@@ -83,6 +83,7 @@
  */
 import * as React from "react";
 import { Box, Rail, Fig, usd } from "@/components/spine/kit";
+import type { Provenance } from "@/lib/spine/provenance";
 import { StateMark } from "@/components/spine/forms-v2";
 import { TableCell } from "@/components/ui/table";
 import { SortTable, type SortRow } from "@/components/spine/interact/SortTable";
@@ -121,6 +122,8 @@ import { rentMult } from "@/lib/spine/district_rows";
 export type CompareColumn = { key: string; head: string; unit: "pct" | "usd" | "days" | "m" | "mult" | "per"; best: "min" | "max" | "none" };
 /** `iso2` draws the flag; `key` names the row when two rows share a flag (two cities in one country). */
 export type CompareRow = { iso2: string; key?: string; name: string; home?: boolean; values: Record<string, number | null>;
+  /** Where each figure of the row was read from, by column key (src/lib/spine/provenance.ts), stamped on its printed figure; a column with none stamps nothing. Two figures that print alike are two facts only when each carries its own source (plan 2026-10-12 rhythm-air-inside, Task 4). */
+  provs?: Record<string, Provenance | null>;
   /** A row that is a door (his interview of 2026-09-26, answer 35: the industry page's places table links each place to that trade's
    *  page there; milestone 1, M5): its name links with the list rows' arrow, and `lands` says what the target's masthead answers
    *  (door_kinds.ts), stamped as `data-lands` for the doors gate. Every other table's rows stay a reading (M23). */
@@ -249,7 +252,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
    *  gap on one, which is what keeps four figures inside 327px on a phone
    *  (a first attempt that always drew the icon, ink or none, reserved the
    *  gap too and overflowed the four-column table before this one). */
-  const renderCell = (c: CompareColumn, v: number | null, phone = false) => {
+  const renderCell = (c: CompareColumn, v: number | null, phone = false, prov?: Provenance | null) => {
     const best = isBestVal(c, v);
     const inner = !isNum(v) ? (
       <span aria-label="not held" className="text-[length:var(--t-body)] text-[var(--c-muted)]">&ndash;</span>
@@ -260,10 +263,10 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
         </span>
         {/* WHERE THE TICK IS HIDDEN THE BEST FIGURE IS UNDERLINED (the code review of 2026-10-04): every figure is set at 600 (the
             global .fig rule), so without its tick the best one differed by its ink alone, a colour-only mark. */}
-        <Fig className="text-[length:var(--t-body)] font-semibold [@container(max-width:339px)]:underline [@container(max-width:339px)]:decoration-2 [@container(max-width:339px)]:underline-offset-4">{print(c, v, phone)}</Fig>
+        <Fig className="text-[length:var(--t-body)] font-semibold [@container(max-width:339px)]:underline [@container(max-width:339px)]:decoration-2 [@container(max-width:339px)]:underline-offset-4" prov={prov}>{print(c, v, phone)}</Fig>
       </span>
     ) : (
-      <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`}>{print(c, v, phone)}</Fig>
+      <Fig className={`text-[length:var(--t-body)] ${cellClass(c, v)}`} prov={prov}>{print(c, v, phone)}</Fig>
     );
     return <span className="inline-flex min-h-4 items-center justify-end align-middle">{inner}</span>;
   };
@@ -290,7 +293,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
         </TableCell>
         {columns.map((c) => (
           <TableCell key={c.key} data-col={c.key} className="px-2 py-0 text-right align-middle whitespace-nowrap">
-            {renderCell(c, r.values[c.key])}
+            {renderCell(c, r.values[c.key], false, r.provs?.[c.key])}
           </TableCell>
         ))}
       </>
@@ -314,7 +317,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
         </span>
         {columns.map((c) => (
           <span key={c.key} data-col={c.key} className="text-right leading-5 whitespace-nowrap">
-            {renderCell(c, r.values[c.key], true)}
+            {renderCell(c, r.values[c.key], true, r.provs?.[c.key])}
           </span>
         ))}
       </>

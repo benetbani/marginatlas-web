@@ -58,8 +58,6 @@ import countryImagesJson from "../../../data/cities/country_images_manifest.json
 import { buildPayBars, worldPaySets } from "@/lib/spine/pay_rows";
 import { placementRank, placementOf } from "@/lib/spine/placement";
 import { getCountryProfile, listCountryProfiles } from "@/lib/economic_profile";
-import { buildEntryBill } from "@/lib/spine/entry_bill_rows";
-import { COUNTRIES } from "@/lib/taxonomy";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import { ukTaxOnProfit } from "@/lib/spine/uk_tax_on_profit";
@@ -141,25 +139,17 @@ export function levelOf(value: number, values: readonly number[]): HeroLevel | n
 }
 
 /* THE SWEEPS, once per process: the profiles' two scores over every country
-   holding a row, and the LLC's cost and days over every country whose
-   formation file holds the tier. */
-let sweep: { clean: number[]; admin: number[]; llcDays: number[]; llcCost: number[] } | null = null;
+   holding a row. (The LLC's cost and days left the board with the rhythm plan's Task 4, each fact once: the registering
+   slot prints them, and the peers table's home row.) */
+let sweep: { clean: number[]; admin: number[] } | null = null;
 function sweeps() {
   if (sweep) return sweep;
-  const clean: number[] = [], admin: number[] = [], llcDays: number[] = [], llcCost: number[] = [];
+  const clean: number[] = [], admin: number[] = [];
   for (const p of listCountryProfiles()) {
     if (isNum(p.corruption_perception_index)) clean.push(p.corruption_perception_index);
     if (isNum(p.ease_of_doing_business_index)) admin.push(p.ease_of_doing_business_index);
   }
-  const list: any = COUNTRIES;
-  const codes: string[] = Array.isArray(list) ? list.map((c: any) => String(c.iso2 ?? c.code ?? "").toUpperCase()).filter(Boolean) : Object.keys(list).map((k) => k.toUpperCase());
-  for (const iso2 of codes) {
-    const bill = buildEntryBill(iso2);
-    /* The company's own registration days, the formation file's LLC row (his ruling of 2026-09-20: time to register is the LLC's). */
-    if (bill?.table && isPos(bill.table.days)) llcDays.push(bill.table.days);
-    if (bill?.verdict.bill.state === "printed") llcCost.push(bill.verdict.bill.value);
-  }
-  sweep = { clean, admin, llcDays, llcCost };
+  sweep = { clean, admin };
   return sweep;
 }
 
@@ -202,15 +192,10 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
     const v = Math.round(profile.ease_of_doing_business_index);
     rows.push(placedRow({ key: "admin", icon: "ease-of-business", label: COPY.journey.boardRows.admin, value: String(v), confidence: profileConfidence, placement: placementOf(profile.ease_of_doing_business_index, s.admin, "countries") }, "admin-ease", profile.ease_of_doing_business_index, s.admin, COPY.journey.adminNote));
   }
-  const bill = buildEntryBill(iso2);
-  /* DAYS TO REGISTER, THE COMPANY'S (plan 06, task B1; his ruling of 2026-09-20: "cost and time to register are the LLC's, always"):
-     the formation file's LLC row, the days the "registering, by legal form" table prints. The row read the shard's days to
-     trade, which on the United Kingdom is the bank account's 21 days, no official figure, under a label that promised the whole. */
-  if (bill?.table && isPos(bill.table.days)) {
-    const d = bill.table.days;
-    /* Placed with its signal (plan 2026-10-13 country-page-journey, Task 3B): the rhythm plan's Task 4 takes this row to the registering table. */
-    rows.push(placedRow({ key: "llc-days", icon: "red-tape", label: COPY.journey.boardRows.llcDays, value: String(d), confidence: "measured", placement: placementOf(d, s.llcDays, "countries") }, "register-days", d, s.llcDays));
-  }
+  /* NO "DAYS TO REGISTER" AND NO "COST TO REGISTER" ROW (plan 2026-10-12 rhythm-air-inside, Task 4; spec 2.3: the hero keeps a figure only where
+     the hero is its home): the company's registration days and its fee are the registering slot's (the bill's focal, the legal forms table)
+     and the peers table's home row prints them again by its own law. They left the board (not unprinted: a country row carries a signal, no
+     level), so a country board keeps its scores, the salary and, where held, the living cost. */
   const pay = buildPayBars(iso2);
   const avg = pay && pay.withheld == null ? pay.rows.find((r) => r.key === "average") ?? null : null;
   if (avg && isPos(avg.value)) {
@@ -225,11 +210,6 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
   const living = livingIndex != null && livingIndex > 0 ? costOfLivingOnCityScale(livingIndex) : null;
   if (living != null && livingIndex != null && !ruleValue(iso2, "premises", "full-relief-limit")) {
     rows.push(placedRow({ key: "living", icon: "spending-power", label: COPY.journey.boardRows.living, value: String(living), confidence: "modeled", placement: placementOf(livingIndex, allCountryCostOfLivingIndices(), "countries") }, "cost-of-living", livingIndex, allCountryCostOfLivingIndices(), COPY.runningCosts.basisLiving));
-  }
-  if (bill?.verdict.bill.state === "printed" && isNum(bill.verdict.bill.value)) {
-    const c = bill.verdict.bill.value;
-    /* Placed with its signal (plan 2026-10-13 country-page-journey, Task 3B): the rhythm plan's Task 4 takes this row to the registering table. */
-    rows.push(placedRow({ key: "llc-cost", icon: "register-cost", label: COPY.journey.boardRows.llcCost, value: usd(c), confidence: bill.verdict.bill.tag === "held" ? "measured" : "modeled", placement: placementOf(c, s.llcCost, "countries") }, "register-cost", c, s.llcCost));
   }
 
   /* THE UNITED KINGDOM'S TAX ON PROFIT, WORKED OUT (plan 06, task B1): the hero printed a typed 20% under "total effective tax

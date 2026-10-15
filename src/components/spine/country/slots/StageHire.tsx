@@ -56,6 +56,17 @@ export function HireCost({ iso2, pay, rate }: { iso2: string; pay: NonNullable<R
   const eaGbp = lb("employing", "employment-allowance");
   const lowGbp = lb("employing", "pension-band-lower");
   const highGbp = lb("employing", "pension-band-upper");
+  /* EACH FIGURE SAYS WHICH RULES IT IS WORKED OUT FROM (plan 2026-10-12 rhythm-air-inside, Task 4): the average pay (the profile's field), the employer's rate and threshold, the allowance and the pension band, each where it is read. */
+  const payField = "economic_indicators/country_profile_v2.json:median_wage_full_time_usd";
+  const rateField = `tax/country_rates_2024.json:rates.${iso2}.employer_social`;
+  const niRules = `${rateField} + facts/country/${iso2}.json:employment.employer_ni_threshold_usd${(allowance ?? 0) > 0 ? ` + sections/rules.json:${iso2}:employing:employment-allowance` : ""}`;
+  const pensionRules = `sections/rules.json:${iso2}:employing:pension-employer + pension-band-lower + pension-band-upper + pension-trigger`;
+  const provs = {
+    total: { src: `${payField} + ${niRules}${pension ? ` + ${pensionRules}` : ""}`, kind: "worked out" as const },
+    pension: pension ? { src: `${payField} + ${pensionRules}`, kind: "worked out" as const } : null,
+    ni: first ? { src: `${payField} + ${niRules}`, kind: "worked out" as const } : null,
+    onCost: !first ? { src: `${payField} + ${niRules}`, kind: "worked out" as const } : null,
+  };
   const notes = first
     ? [
         ...(niGbp && eaGbp ? [{ label: H.niLabel, text: H.niRule.replace("{rate}", `${rate}%`).replace("{threshold}", niGbp).replace("{allowance}", eaGbp) }] : []),
@@ -73,6 +84,7 @@ export function HireCost({ iso2, pay, rate }: { iso2: string; pay: NonNullable<R
       allowance={allowance ?? 0}
       pension={pension}
       notes={notes}
+      provs={provs}
       words={{ label: first ? H.labelFirst : H.label, unit: H.unit, salary: H.salary, onCost: H.onCost, rule: H.rule, lever: H.lever, pension: H.pension, ni: H.ni }}
     />
   );

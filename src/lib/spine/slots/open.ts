@@ -85,7 +85,7 @@ export function buildOpenSlot(iso2In: string, today: string): SlotModel<OpenDraw
   /* THE DAYS UNTIL TRADING, a row: the shard's total where the guard prints it, never where a step's wait has no source (the UK's bank
      account, howto_steps_rows.ts UNSOURCED_WAITS, takes the total with it). */
   const days = bill?.figures.days ?? null;
-  const tradingRows: SlotRow[] = days != null && !(steps && steps.totalDays == null) ? [{ key: "trading", label: J.openRows.trading, value: String(Math.round(days)), note: E.basisDays }] : [];
+  const tradingRows: SlotRow[] = days != null && !(steps && steps.totalDays == null) ? [{ key: "trading", label: J.openRows.trading, value: String(Math.round(days)), note: E.basisDays, prov: bill?.verdict.days.state === "printed" ? { src: `facts/country/${iso2}.json:${ENTRY_BILL_METRICS.days}`, kind: bill.verdict.days.tag === "held" ? "looked up" : "estimate" } : null }] : [];
 
   const labels = uniqueLabels(all.map((s) => stepLabel(s.name)));
   const stepRows: SlotRow[] = all.map((s, i) => ({ key: s.key, label: labels[i], value: inDays(s.days) ?? "–", note: s.name }));
