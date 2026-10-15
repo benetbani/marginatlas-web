@@ -63,6 +63,3 @@ export function buildJobMarket(iso2: string): JobMarket | null {
 export function listMarketCountries(): string[] {
   return Object.keys(holdJson as unknown as Record<string, unknown>).filter((k) => !k.startsWith("_"));
 }
-export function listJobCountries(): string[] {
-  return Object.keys(jobsJson as unknown as Record<string, unknown>).filter((k) => !k.startsWith("_"));
-}

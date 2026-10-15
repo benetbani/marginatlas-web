@@ -245,7 +245,7 @@ export function SplitCard({ id = "split", split }: { id?: string; split: SplitDa
       basis={split.basis}
       withheld={split.withheld}
       foot={split.foot}
-      detail={split.detail ? <DetailPanel name={`detail-${id}`} summary={split.detail.summary} rows={split.detail.rows} /> : null}
+      detail={split.detail ? <DetailPanel name={`detail-${id}`} summary={split.detail.summary} rows={split.detail.rows} split /> : null}
       mix={split.mix.length ? { basis: COPY.tradeSplit.mixBasis, segments: split.mix } : null}
     />
   );

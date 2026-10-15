@@ -105,7 +105,7 @@ function tsxIn(dir: string): string[] {
  * tsxIn() returns [] for a directory that does not exist, so a folder retiring
  * later costs nothing here.
  */
-function resolveRenderGroup(seedRelPath: string): { label: string; files: string[] } | null {
+function resolveRenderGroup(seedRelPath: string): { label: string; files: string[]; wiredBy?: RegExp } | null {
   const parts = seedRelPath.split("/");
   const dir = parts[parts.length - 2];
   const base = parts[parts.length - 1];
@@ -126,9 +126,14 @@ function resolveRenderGroup(seedRelPath: string): { label: string; files: string
     // Finding C1b (2026-08-28 review round). Points at the real body,
     // src/components/spine/country/country-view.tsx, not the workshop preview
     // that used to sit here. See the header note above for why the swap.
+    /* THE COUNTRY PAGE DRAWS EVERY SECTION THROUGH ONE FRAME since plan 2026-10-13 country-page-journey: Slot.tsx's Rail takes the slot
+       model's `sample`, which each slot builder sets from its source's tag or confidence, and the kit's Rail draws SampleTag from it. The
+       group reads that frame, and a Rail handed its `sample` is the wiring (final review I2, 2026-10-15: the view's `void SampleTag`
+       kept this gate green on a reference nothing drew). Its blind spot is the gate's own: a wired frame whose builders all pass false. */
     return {
       label: "spine (country)",
-      files: ["src/components/spine/country/country-view.tsx"],
+      files: ["src/components/spine/country/country-view.tsx", "src/components/spine/country/Slot.tsx"],
+      wiredBy: /<Rail\b[^>]*\bsample=\{model\.sample/,
     };
   }
   return null;
@@ -192,7 +197,7 @@ for (const abs of walkSeedDir(SEEDS_ROOT)) {
     const fAbs = resolve(ROOT, f);
     if (!existsSync(fAbs)) continue;
     const content = readFileSync(fAbs, "utf-8");
-    if (content.includes("SampleTag")) hasSampleTag = true;
+    if (content.includes("SampleTag") || (group.wiredBy && group.wiredBy.test(content))) hasSampleTag = true;
     const exemptMatch = /allow-unmarked:\s*(.+)/.exec(content);
     if (exemptMatch) {
       hasExemption = true;

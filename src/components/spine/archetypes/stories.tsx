@@ -43,7 +43,6 @@ import { buildChecks } from "@/lib/spine/checks_rows";
 import { Terminus, TRADE_CLOSE_CAP } from "./Terminus";
 import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor, buildTradeCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
-import { buildCitiesSeat, cutCitiesSeatTables, CITIES_SEAT_NAMES_CAP } from "@/lib/spine/country_cities_seat";
 import { PayBars } from "./PayBars";
 import { buildPayBars } from "@/lib/spine/pay_rows";
 import { buildGlance } from "@/lib/spine/glance_rows";
@@ -70,15 +69,12 @@ import { tradeHeroFacts, cellServes, type CellHeroInstance } from "@/lib/spine/t
 import { buildPermits } from "@/lib/spine/permits_rows";
 import { StockTiers } from "@/components/spine/sections/StockTiers";
 import { buildStockKit, listStockKits } from "@/lib/spine/sections/stock_kit";
-import { FirstYears } from "@/components/spine/sections/FirstYears";
-import { Obstacles } from "@/components/spine/sections/Obstacles";
 import { SpendByIncome } from "@/components/spine/sections/SpendByIncome";
 import { buildSpendByIncome, listSpendByIncome } from "@/lib/spine/sections/spend_by_income";
 import { SpendByAge } from "@/components/spine/sections/SpendByAge";
 import { buildSpendByAge, listSpendByAge } from "@/lib/spine/sections/spend_by_age";
 import { LocalApps } from "@/components/spine/sections/LocalApps";
 import { MarketHold } from "@/components/spine/sections/MarketHold";
-import { JobMarket } from "@/components/spine/sections/JobMarket";
 import { Thresholds } from "@/components/spine/sections/Thresholds";
 import { AgeMix } from "@/components/spine/sections/AgeMix";
 import { CustomersCome } from "@/components/spine/sections/CustomersCome";
@@ -86,9 +82,11 @@ import { Origin } from "@/components/spine/sections/Origin";
 import { LockedSection, type StandInKind } from "@/components/spine/LockedSection";
 import { buildAgeMix, buildCustomersCome, buildOrigin, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildThresholds, listThresholdCountries } from "@/lib/spine/sections/thresholds";
-import { buildSurvival, buildObstacles, listSurvivalCountries } from "@/lib/spine/sections/first_years";
+import { buildSurvival, listSurvivalCountries } from "@/lib/spine/sections/first_years";
+import { LastingSlot } from "@/components/spine/country/slots/StageLast";
+import { buildLastingSlot } from "@/lib/spine/slots/last";
 import { buildLocalApps, listLocalAppsCountries } from "@/lib/spine/sections/local_apps";
-import { buildMarketHold, buildJobMarket, listMarketCountries, listJobCountries } from "@/lib/spine/sections/market_jobs";
+import { buildMarketHold, listMarketCountries } from "@/lib/spine/sections/market_jobs";
 import { buildOpen } from "@/lib/spine/open_rows";
 import { PermitsCard, OpenCard, SplitCard, TeamCard, PeersCard } from "@/components/spine/cell/turn-one";
 import { ClearsCard, LastsCard, WatchSeat, MixCard } from "@/components/spine/cell/turn-two";
@@ -134,11 +132,9 @@ import { buildHoodPremium } from "@/lib/spine/hood_premium_rows";
 import { buildHoodCompare } from "@/lib/spine/hood_compare_rows";
 import { buildHoodCharacter } from "@/lib/spine/hood_character_rows";
 import { HoodTake, RankCard, PremiumCard, CompareCard, WorksSeat, CharacterCard, HoodClose } from "@/components/spine/hood/blocks";
-import { buildCountrySpend } from "@/lib/spine/country_spend_rows";
 import { buildCityCrew } from "@/lib/spine/city_crew_rows";
 import { buildCityTexture } from "@/lib/spine/city_texture_rows";
 import { Crew, Texture } from "@/components/spine/city/city-view";
-import { SpendCard } from "@/components/spine/country/country-view";
 
 export type Instance = { iso2: string; why: string };
 
@@ -452,17 +448,6 @@ export function RankedBarsStories({ instances = pickRankedBarsInstances(), city 
         const h = i.iso2.slice("hood:".length, -":rank".length);
         const r = buildHoodRank(HOOD_INSTANCES[h].city);
         return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{r ? <div style={{ maxWidth: 693 }}><RankCard id={`rank-hood-${h}`} rank={r} /></div> : null}</Story>;
-      })}
-      {/* WHAT HOUSEHOLDS SPEND ON (country_spend_rows.ts, 2026-09-23), at the
-          full width the country page gives it. This family is where the two
-          laws the card brought are locked: the residual drawn LAST however big
-          it is, and a ceiling that is the whole the parts divide rather than a
-          world maximum or the set's own heaviest member. Four countries, each
-          picked for what it proves (pickCountrySpendInstances). */}
-      {pickCountrySpendInstances().map((i) => {
-        const iso = i.iso2.slice(0, -":spend".length);
-        const d = buildCountrySpend(iso);
-        return <Story kind="ranked-bars" key={i.iso2} iso2={i.iso2} why={i.why}>{d ? <div style={{ maxWidth: 1072 }}><SpendCard spend={d} /></div> : null}</Story>;
       })}
     </div>
   );
@@ -2118,63 +2103,6 @@ export function MarkListStories({ instances = pickMarkListInstances(), cell = []
   );
 }
 
-/* THE DRAWN BLOCKED SEATS (MODEL.md 8.2; plan step 31, 2026-09-17 and
-   2026-09-18). A seat's words are the same on every country (it holds no
-   figure, so there is no data-poor case and no extreme name): what varies is
-   which block it holds and which country's data leaves the block seated.
-   Two seats stand on every country, `07 workforce` and `11 easiest`, so their
-   stories are keyed on the exemplar, "GB:workforce" and "GB:easiest". Four
-   stand only where the drawn card's own floor is not met (8.2's "THE THIN
-   COUNTRY, SEATED"), so their keys come OFF THE BUILDERS: the thin country
-   is AF wherever the builder says AF needs the seat, and otherwise the first
-   country in the taxonomy that does, and the `why` states the builder's own
-   verdict, so a story can never draw a seat on a country whose card would
-   draw. Each is drawn at the width its seat takes on the page at 1280 (the
-   column is 1072 inside the main's padding, minus the band's 32 gap: 520 for
-   07's half of a 1-1, 347 for 11's third of a 2-1, 624 for 03's wide side of
-   the 3-2 and 16's wide side of the 2-3, 416 for 12's narrow side of the
-   2-3, 1072 for 09's full width), so the line's wrap is the page's. */
-type SeatBlock = "setup" | "peers" | "money" | "locals";
-const SEAT_FORM: Record<SeatBlock | "workforce" | "easiest" | "cities", { icon: "staffing-rota" | "where-it-pays" | "register-cost" | "benchmark" | "owner-keeps" | "locals-know" | "best-areas"; maxWidth: number }> = {
-  workforce: { icon: "staffing-rota", maxWidth: 520 },
-  easiest: { icon: "where-it-pays", maxWidth: 347 },
-  setup: { icon: "register-cost", maxWidth: 624 },
-  peers: { icon: "benchmark", maxWidth: 1072 },
-  money: { icon: "owner-keeps", maxWidth: 416 },
-  locals: { icon: "locals-know", maxWidth: 624 },
-  /* THE CITIES SEAT (plan step 49, 2026-09-19): the cards' band stands alone
-     at the survivor's two thirds, 693 at 1280, so the seat draws there. */
-  cities: { icon: "best-areas", maxWidth: 693 },
-};
-/* THE CITIES SEAT'S THREE LINES (MODEL.md 8.2's FLOOR bracket; plan step 49,
-   2026-09-19), keyed "<iso2>:cities" for the live line and "<iso2>:cities-two"
-   and "<iso2>:cities-none" for the two forms no live region reaches (every
-   region holds twelve covered cities or more, so the line names three on all
-   90 seated countries): those two are drawn on the country's own region cut
-   to its two largest covered cities and to none, real rows from the list and
-   nothing invented, so the fewer-than-three composition and the none line are
-   on the sheet and measured. The live key is AF wherever the builder seats
-   AF, else the first seated country in the taxonomy. */
-const CITIES_SEAT_CUTS: Record<"cities" | "cities-two" | "cities-none", number | null> = { cities: null, "cities-two": CITIES_SEAT_NAMES_CAP - 1, "cities-none": 0 };
-function citiesSeatFor(iso2: string, block: keyof typeof CITIES_SEAT_CUTS) {
-  const cut = CITIES_SEAT_CUTS[block];
-  const live = buildCitiesSeat(iso2);
-  if (!live || cut == null) return live;
-  return buildCitiesSeat(iso2, cutCitiesSeatTables(live.region, cut));
-}
-/** Whether a country's data leaves the block seated, by the builder the drawn card reads (the view's own floors). */
-const SEATED: Record<SeatBlock, (iso2: string) => string | null> = {
-  setup: (c) => (buildSetupRows(c).length === 0 ? "no legal form on file" : null),
-  peers: (c) => (buildPeerTable(c) == null ? "no peer table resolves" : null),
-  money: (c) => { const m = marginCardFromSnapshot(c); return !m || m.rows.length < 2 ? `${m ? m.rows.length : 0} credible margin(s), under the card's two` : null; },
-  locals: (c) => (buildLocalsNotes(c) == null ? "no authored notes" : null),
-};
-const SEAT_WHY: Record<SeatBlock, string> = {
-  setup: "block 03, the seat beside the bill to register; item 10 not gathered",
-  peers: "block 09, the seat at the table's full width; item 57 not gathered",
-  money: "block 12, the seat beside what locals know; item 8 not gathered",
-  locals: "block 16, the seat beside the net profit margin; item 6 not gathered",
-};
 /* THE CITY'S TWO SEATS (MODEL.md 8.3; plan step 32's sixth dispatch,
    2026-09-18), keyed "city:<slug>:<block>": `13 locals` on the exemplar, the
    same three strings as the country's seat (M19), at the 1-1 card's 520; and
@@ -2188,8 +2116,6 @@ const CITY_SEAT_FORM: Record<"locals" | "neighbourhoods", { icon: "locals-know" 
 };
 export function pickBlockedSeatInstances(industry: IndustryPlacesInstance[] = []): Instance[] {
   const out: Instance[] = [
-    { iso2: "GB:workforce", why: "block 07, the seat beside what staff cost; items 40 and 17 not gathered" },
-    { iso2: "GB:easiest", why: "block 11, the seat beside the footing; item 8's addendum not gathered" },
     /* THE INDUSTRY PAGE'S SEATED TABLE (MODEL.md 8.7 `06 places`; plan step
        34's third dispatch, 2026-09-19), keyed industry:<handle>:places off
        the slate the sheet resolves (the database), drawn by the page's own
@@ -2201,20 +2127,8 @@ export function pickBlockedSeatInstances(industry: IndustryPlacesInstance[] = []
        two, grocery stores at one, pet training at none). */
     ...pickIndustryPlacesInstances(industry, "blocked-seat"),
   ];
-  for (const block of ["setup", "peers", "money", "locals"] as SeatBlock[]) {
-    const c = ["AF", ...codes()].find((x) => SEATED[block](x) != null);
-    if (c) out.push({ iso2: `${c}:${block}`, why: `${SEAT_WHY[block]} (${SEATED[block](c)})` });
-  }
-  /* The cities seat, block 10, at the cards' band's two thirds: the live line
-     on the thin country, then the two-name and the none line on the same
-     country's region cut (CITIES_SEAT_CUTS above). */
-  const citiesSeated = ["AF", ...codes()].find((x) => buildCitiesSeat(x) != null);
-  if (citiesSeated) {
-    const live = buildCitiesSeat(citiesSeated)!;
-    out.push({ iso2: `${citiesSeated}:cities`, why: `block 10, the seat in the cards' band; no covered city here, the three largest of its region named (${live.region}, ${live.regionCovered} covered); item 82 not gathered` });
-    out.push({ iso2: `${citiesSeated}:cities-two`, why: `block 10's line where a region holds two covered cities: no live region does (the fewest holds twelve), so ${live.region} is cut to its two largest` });
-    out.push({ iso2: `${citiesSeated}:cities-none`, why: `block 10's line where a region holds no covered city: no live region does, so ${live.region} is cut to none` });
-  }
+  /* THE COUNTRY'S SEATS LEFT THE SHEET (final review M5, 2026-10-15): since plan 2026-10-13 country-page-journey a slot without its data
+     omits itself, so no country page seats a block; BlockedSeat stays for the city, trade, industry and hood seats below. */
   out.push({ iso2: "city:london:locals", why: "city block 13 on the exemplar: the seat beside the people table; item 6 not gathered for any city" });
   const placeholder = citiesWithScheme().sort().find((slug) => buildCityNeighbourhoods(slug)?.cards == null);
   if (placeholder) out.push({ iso2: `city:${placeholder}:neighbourhoods`, why: "city block 14 on a placeholder scheme: the seat at the band's wide side, its line naming the city; item 30 not gathered" });
@@ -2279,25 +2193,7 @@ export function BlockedSeatStories({ instances = pickBlockedSeatInstances(), ind
           }
           return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
         }
-        if (parts[1] in CITIES_SEAT_CUTS) {
-          /* The cities seat's line is composed per country, never COPY's template; the sheet draws what the page draws. */
-          const seat = citiesSeatFor(parts[0], parts[1] as keyof typeof CITIES_SEAT_CUTS);
-          const el = seat ? (
-            <div style={{ maxWidth: SEAT_FORM.cities.maxWidth }}>
-              <BlockedSeat id={`seat-${parts[0].toLowerCase()}-${parts[1]}`} icon={SEAT_FORM.cities.icon} kicker={COPY.blocked.cities.kicker} line={seat.line} foot={COPY.blocked.cities.foot} />
-            </div>
-          ) : null;
-          return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
-        }
-        const block = parts[1] as keyof typeof SEAT_FORM;
-        const form = SEAT_FORM[block];
-        const copy = (COPY.blocked as Record<string, { kicker: string; line: string; foot: string }>)[block];
-        const el = form && copy ? (
-          <div style={{ maxWidth: form.maxWidth }}>
-            <BlockedSeat id={`seat-${block}`} icon={form.icon} kicker={copy.kicker} line={copy.line} foot={copy.foot} />
-          </div>
-        ) : null;
-        return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{el}</Story>;
+        return <Story kind="blocked-seat" key={i.iso2} iso2={i.iso2} why={i.why}>{null}</Story>;
       })}
     </div>
   );
@@ -2358,27 +2254,6 @@ export function pickCityTextureInstances(): Instance[] {
   }
   return out;
 }
-/** THE COUNTRY'S HOUSEHOLD BUDGET (country_spend_rows.ts, 2026-09-23, brief row
- *  C5), keyed <ISO2>:spend. Four countries, each for what it proves: the
- *  exemplar; the thin country the page filter also renders; the shard where
- *  eating out takes the largest share of the food money on the whole bank; and
- *  the one shard that holds a zero there, which draws no card at all. The whys
- *  are composed from the builder, so a caption cannot drift from the card. */
-export function pickCountrySpendInstances(): Instance[] {
-  const spendOf = (iso2: string) => buildCountrySpend(iso2);
-  const out: Instance[] = [];
-  const seen = new Set<string>();
-  const take = (iso2: string, why: string) => { if (!seen.has(iso2)) { seen.add(iso2); out.push({ iso2: `${iso2}:spend`, why }); } };
-  const said = (iso2: string) => {
-    const d = spendOf(iso2);
-    return d ? `${d.rows.length} parts of a hundred, ${d.rows[0].name.toLowerCase()} the biggest at ${d.rows[0].value} and the leftover last at ${d.rows[d.rows.length - 1].value}, ${d.out.figure} of the food money eaten out` : "no card: a category unnamed, a sum off a hundred, or a zero on either half of the food question";
-  };
-  take("GB", `the exemplar, ${said("GB")}`);
-  take("AF", `the thin country, ${said("AF")}`);
-  take("SG", `the bank's highest share eaten out, ${said("SG")}`);
-  take("LK", `self-omits: ${said("LK")}`);
-  return out;
-}
 export function pickHoodRankInstances(): Instance[] {
   return hoodHandles().filter((h) => hoodServes(h, "rank")).map((h) => ({ h, r: buildHoodRank(HOOD_INSTANCES[h].city) })).filter((x) => x.r).map(({ h, r }) => ({ iso2: hoodKey(h, "rank"), why: `hood block 01: ${r!.districts} districts by rent against ${r!.cheapest}, the cheapest first printing its own figure, nobody featured, the set's dearest the ceiling${r!.clipped.length ? `, ${r!.clipped.join(", ")} on the model's bound with the line` : ""}` }));
 }
@@ -2421,32 +2296,18 @@ export function StockTiersStories() {
 }
 
 /** THE OTHER PAGE-AGNOSTIC SECTIONS OF 2026-09-25 (sections/*.tsx), one story a country the section's file holds, each at a full
- *  card's width: who is still trading and what gets in the way, the apps a shop runs on, who holds the market, the job market. */
+ *  card's width: who is still trading, the apps a shop runs on, who holds the market. WHO IS STILL TRADING is drawn as the country
+ *  page's slot 12 draws it since plan 2026-10-13 country-page-journey, Task 6 (its card, FirstYears, and what holds firms back,
+ *  Obstacles, left with the page's old sections; the obstacles stand behind the slot's plus as rows, and the job market behind slot 7's). */
 export function pickSurvivalInstances(): Instance[] {
-  return listSurvivalCountries().filter((c) => buildSurvival(c)).map((c) => ({ iso2: c, why: "one cohort's years and the regions" }));
+  return listSurvivalCountries().filter((c) => buildSurvival(c) && buildLastingSlot(c, new Date().toISOString().slice(0, 10))).map((c) => ({ iso2: c, why: "one cohort's years and the regions" }));
 }
 export function SurvivalCurveStories() {
   return (
     <div data-stories="survival-curve">
       {pickSurvivalInstances().map((i) => (
         <Story kind="survival-curve" key={i.iso2} iso2={i.iso2} why={i.why}>
-          <FirstYears id={`first-years-${i.iso2.toLowerCase()}`} data={buildSurvival(i.iso2)!} />
-        </Story>
-      ))}
-    </div>
-  );
-}
-/** WHAT HOLDS SMALL FIRMS BACK (sections/Obstacles.tsx): the columns from 480px of card, the rows under it; the sheet's three widths
- *  draw both forms. */
-export function pickObstaclesInstances(): Instance[] {
-  return listSurvivalCountries().filter((c) => buildObstacles(c)).map((c) => ({ iso2: c, why: "the obstacles as columns, the most named as the figure" }));
-}
-export function ObstaclesStories() {
-  return (
-    <div data-stories="obstacles">
-      {pickObstaclesInstances().map((i) => (
-        <Story kind="obstacles" key={i.iso2} iso2={i.iso2} why={i.why}>
-          <Obstacles id={`obstacles-${i.iso2.toLowerCase()}`} data={buildObstacles(i.iso2)!} />
+          <LastingSlot model={buildLastingSlot(i.iso2, new Date().toISOString().slice(0, 10))!} />
         </Story>
       ))}
     </div>
@@ -2475,20 +2336,6 @@ export function MarketHoldStories() {
       {pickMarketHoldInstances().map((i) => (
         <Story kind="market-hold" key={i.iso2} iso2={i.iso2} why={i.why}>
           <MarketHold id={`market-hold-${i.iso2.toLowerCase()}`} data={buildMarketHold(i.iso2)!} />
-        </Story>
-      ))}
-    </div>
-  );
-}
-export function pickJobMarketInstances(): Instance[] {
-  return listJobCountries().filter((c) => buildJobMarket(c)).map((c) => ({ iso2: c, why: "the rates on one scale, the trade's sector" }));
-}
-export function JobMarketStories() {
-  return (
-    <div data-stories="job-market">
-      {pickJobMarketInstances().map((i) => (
-        <Story kind="job-market" key={i.iso2} iso2={i.iso2} why={i.why}>
-          <JobMarket id={`job-market-${i.iso2.toLowerCase()}`} data={buildJobMarket(i.iso2)!} />
         </Story>
       ))}
     </div>
@@ -2705,7 +2552,7 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
   return {
     "answer-card": [...pickAnswerCardInstances(), ...pickCellTakeInstances(cellHero), ...pickIndustryTakeInstances(), ...pickHoodTakeInstances()],
     "hero-board": pickHeroBoardInstances(),
-    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars"), ...pickHoodRankInstances(), ...pickCountrySpendInstances()],
+    "ranked-bars": [...pickRankedBarsInstances(), ...pickCityDistrictInstances(cityHero).map((c) => ({ iso2: `${c.slug}:districts`, why: c.why })), ...pickCellOpenInstances(cellHero, "ranked-bars"), ...pickIndustryBenchmarkInstances("ranked-bars"), ...pickHoodRankInstances()],
     "compare-table": [...pickCompareTableInstances(), ...pickCityPeerInstances(cityHero).map((c) => ({ iso2: `${c.slug}:peers`, why: c.why })), ...pickCellPeersInstances(cellHero), ...pickIndustryPlacesInstances(industryPlaces, "compare-table"), ...pickHoodCompareInstances()],
     "card-pager": pickCardPagerInstances(),
     "city-cards": pickCityCardsInstances(),
@@ -2732,10 +2579,8 @@ export function pickAllInstances(cityHero: CityHeroInstance[], cellHero: CellHer
     "city-hero": cityHero.map((c) => ({ iso2: c.slug, why: c.why })),
     "stock-tiers": pickStockTiersInstances(),
     "survival-curve": pickSurvivalInstances(),
-    "obstacles": pickObstaclesInstances(),
     "local-apps": pickLocalAppsInstances(),
     "market-hold": pickMarketHoldInstances(),
-    "job-market": pickJobMarketInstances(),
     "thresholds": pickThresholdsInstances(),
     "fact-rows": pickFactRowsInstances(),
     "dated-changes": pickChangeRunInstances(),

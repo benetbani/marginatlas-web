@@ -28,6 +28,9 @@ import { Pill } from "@/components/ui/pill";
 import { AtlasMark } from "./marks";
 import { areSampleMarksVisible } from "@/lib/feature_flags";
 import { provAttrs, type Provenance } from "@/lib/spine/provenance";
+import { Signal } from "@/components/spine/signal/Signal";
+import type { Signalled } from "@/lib/spine/signal";
+import type { MeasureKey } from "@/lib/spine/owner_direction";
 
 export const TERRA = "#fb8469"; // atlas-300 soft terracotta , the only fill color
 export const TRACK = "#e6e6e6";
@@ -1204,12 +1207,24 @@ export function FocalWords({ children, className = "" }: { children: React.React
  *  where the figure stands among the countries (PART 6), and 24 to the next group. `beside`: the block stands beside another (a drawing, a
  *  column of rows) whose arrangement gives the distance, so it takes no margin; `className` adds to the wrapper (a margin a container query
  *  drops); `live` announces a figure a control changes; `accent` (plan 2026-10-08) the figure in --terra-text for a declared loud moment. A
- *  figure with a source stamps it (src/lib/spine/provenance.ts). Moved here from country/focal.tsx, which re-exports it. */
-export function Focal({ figure, words, placement, prov, accent = false, live = false, beside = false, className = "", wordsClassName = "" }: { figure: React.ReactNode; words?: React.ReactNode; placement?: string | null; prov?: Provenance | null; accent?: boolean; live?: boolean; beside?: boolean; className?: string; wordsClassName?: string }) {
+ *  figure with a source stamps it (src/lib/spine/provenance.ts). Moved here from country/focal.tsx, which re-exports it. `placed`, `signal`
+ *  and `noSignal` (plan 2026-10-13 country-page-journey): a figure placed among the countries stamps its measure and draws its signal
+ *  beside it. */
+export function Focal({ figure, words, placement, prov, accent = false, live = false, beside = false, className = "", wordsClassName = "", placed = null, signal = null, noSignal = null }: { figure: React.ReactNode; words?: React.ReactNode; placement?: string | null; prov?: Provenance | null; accent?: boolean; live?: boolean; beside?: boolean; className?: string; wordsClassName?: string; placed?: MeasureKey | null; signal?: Signalled | null; noSignal?: "set" | "fill" | null }) {
   const wrap = [beside ? "" : "mb-6", className].filter(Boolean).join(" ");
+  const fig = (
+    <div data-focal="1" {...(live ? { "aria-live": "polite" as const } : {})} className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</div>
+  );
   return (
     <div className={wrap || undefined}>
-      <div data-focal="1" {...(live ? { "aria-live": "polite" as const } : {})} className={`fig text-[length:var(--t-focal)] leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} {...provAttrs(prov)}>{figure}</div>
+      {/* A PLACED FIGURE AND ITS SIGNAL (plan 2026-10-13 country-page-journey, Task 3A; spec section 4: 20px beside a 30px figure, its own box
+          right after it): the row carries the measure for the mark rule; a figure placed nowhere renders exactly as before. */}
+      {placed ? (
+        <div data-focal-row="" data-placed={placed} {...(noSignal ? { "data-no-signal": noSignal } : {})} className="flex items-center gap-2">
+          {fig}
+          {signal ? <Signal state={signal.state} measure={signal.measure} size="focal" /> : null}
+        </div>
+      ) : fig}
       {words ? <FocalWords className={wordsClassName}>{words}</FocalWords> : null}
       {/* The site's one placement sentence (placement.ts), under the figure's words, where the figure stands on a scale of the countries (PART 6, "Higher than {n} countries in ten."). */}
       {placement ? <p data-placement="" className="mt-1 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{placement}</p> : null}

@@ -1,25 +1,24 @@
 {
  "why": "The floor census (milestone 1, M10; his interview of 2026-09-26, answer 6): each spine page outside the United Kingdom with its block count, read by src/lib/seo/indexable.ts. A page indexes when its count meets its type's floor (`floors`, the model laws' FLOOR_BY_SURFACE); UK pages index by his rule and are not counted. label_misses lists the United States trade pages whose printed trade does not read as their address's word (P1-D, 2026-10-09). Written by scripts/seo/floor_census.tsx; never edited by hand.",
- "generated_at": "2026-10-14T01:01:03.960Z",
+ "generated_at": "2026-10-14T22:46:27.941Z",
  "floors": {
-  "country": 13,
+  "country": 10,
   "city": 16,
   "cell": 15,
   "industry": 11,
   "hood": 4,
   "howto": 7,
   "home": 5,
-  "openings": 2,
-  "calculator": 7
+  "openings": 2
  },
  "pages": {
   "/ad": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ae": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ae/how-to-open": {
    "surface": "howto",
@@ -27,15 +26,15 @@
   },
   "/af": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ag": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/al": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/al/how-to-open": {
    "surface": "howto",
@@ -43,7 +42,7 @@
   },
   "/am": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/am/how-to-open": {
    "surface": "howto",
@@ -51,7 +50,7 @@
   },
   "/ao": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ao/how-to-open": {
    "surface": "howto",
@@ -59,7 +58,7 @@
   },
   "/ar": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ar/how-to-open": {
    "surface": "howto",
@@ -67,7 +66,7 @@
   },
   "/at": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/at/at1/metal-products-mfg": {
    "surface": "cell",
@@ -123,7 +122,7 @@
   },
   "/au": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/au/how-to-open": {
    "surface": "howto",
@@ -131,7 +130,7 @@
   },
   "/az": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/az/how-to-open": {
    "surface": "howto",
@@ -139,7 +138,7 @@
   },
   "/ba": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ba/how-to-open": {
    "surface": "howto",
@@ -147,11 +146,11 @@
   },
   "/bb": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bd": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bd/how-to-open": {
    "surface": "howto",
@@ -159,7 +158,7 @@
   },
   "/be": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/be/how-to-open": {
    "surface": "howto",
@@ -167,7 +166,7 @@
   },
   "/bf": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bf/how-to-open": {
    "surface": "howto",
@@ -175,7 +174,7 @@
   },
   "/bg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/bg/how-to-open": {
    "surface": "howto",
@@ -183,7 +182,7 @@
   },
   "/bh": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bh/how-to-open": {
    "surface": "howto",
@@ -191,7 +190,7 @@
   },
   "/bi": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bi/how-to-open": {
    "surface": "howto",
@@ -199,7 +198,7 @@
   },
   "/bj": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bj/how-to-open": {
    "surface": "howto",
@@ -207,7 +206,7 @@
   },
   "/bn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bn/how-to-open": {
    "surface": "howto",
@@ -215,7 +214,7 @@
   },
   "/bo": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bo/how-to-open": {
    "surface": "howto",
@@ -223,7 +222,7 @@
   },
   "/br": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/br/how-to-open": {
    "surface": "howto",
@@ -231,15 +230,15 @@
   },
   "/bs": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bt": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/bw/how-to-open": {
    "surface": "howto",
@@ -247,7 +246,7 @@
   },
   "/by": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/by/how-to-open": {
    "surface": "howto",
@@ -255,11 +254,11 @@
   },
   "/bz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ca": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ca/how-to-open": {
    "surface": "howto",
@@ -267,7 +266,7 @@
   },
   "/cd": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/cd/how-to-open": {
    "surface": "howto",
@@ -275,11 +274,11 @@
   },
   "/cf": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/cg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/cg/how-to-open": {
    "surface": "howto",
@@ -287,7 +286,7 @@
   },
   "/ch": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ch/how-to-open": {
    "surface": "howto",
@@ -295,7 +294,7 @@
   },
   "/ci": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ci/how-to-open": {
    "surface": "howto",
@@ -1283,7 +1282,7 @@
   },
   "/cl": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/cl/how-to-open": {
    "surface": "howto",
@@ -1291,7 +1290,7 @@
   },
   "/cm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/cm/how-to-open": {
    "surface": "howto",
@@ -1299,11 +1298,11 @@
   },
   "/cn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/co": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/co/how-to-open": {
    "surface": "howto",
@@ -1311,7 +1310,7 @@
   },
   "/cr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/cr/how-to-open": {
    "surface": "howto",
@@ -1319,11 +1318,11 @@
   },
   "/cu": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 9
   },
   "/cv": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/cv/how-to-open": {
    "surface": "howto",
@@ -1331,7 +1330,7 @@
   },
   "/cy": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/cy/how-to-open": {
    "surface": "howto",
@@ -1339,7 +1338,7 @@
   },
   "/cz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/cz/how-to-open": {
    "surface": "howto",
@@ -1347,7 +1346,7 @@
   },
   "/de": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/de/dea2/management-consulting": {
    "surface": "cell",
@@ -1399,7 +1398,7 @@
   },
   "/dj": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/dj/how-to-open": {
    "surface": "howto",
@@ -1407,7 +1406,7 @@
   },
   "/dk": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/dk/dk0/plastics-rubber-products": {
    "surface": "cell",
@@ -1439,11 +1438,11 @@
   },
   "/dm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/do": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/do/how-to-open": {
    "surface": "howto",
@@ -1451,7 +1450,7 @@
   },
   "/dz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/dz/how-to-open": {
    "surface": "howto",
@@ -1459,7 +1458,7 @@
   },
   "/ec": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ec/how-to-open": {
    "surface": "howto",
@@ -1467,7 +1466,7 @@
   },
   "/ee": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ee/ee0/plastics-rubber-products": {
    "surface": "cell",
@@ -1483,7 +1482,7 @@
   },
   "/eg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/eg/how-to-open": {
    "surface": "howto",
@@ -1559,7 +1558,7 @@
   },
   "/es": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/es/es1/management-consulting": {
    "surface": "cell",
@@ -1719,7 +1718,7 @@
   },
   "/et": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/et/how-to-open": {
    "surface": "howto",
@@ -1727,7 +1726,7 @@
   },
   "/fi": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/fi/fi1/plastics-rubber-products": {
    "surface": "cell",
@@ -1755,7 +1754,7 @@
   },
   "/fj": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/fj/how-to-open": {
    "surface": "howto",
@@ -1763,11 +1762,11 @@
   },
   "/fm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/fr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/fr/fr1/plastics-rubber-products": {
    "surface": "cell",
@@ -1963,7 +1962,7 @@
   },
   "/ga": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ga/how-to-open": {
    "surface": "howto",
@@ -1971,11 +1970,11 @@
   },
   "/gd": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ge": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ge/how-to-open": {
    "surface": "howto",
@@ -1983,7 +1982,7 @@
   },
   "/gh": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/gh/how-to-open": {
    "surface": "howto",
@@ -1991,7 +1990,7 @@
   },
   "/gm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/gm/how-to-open": {
    "surface": "howto",
@@ -1999,7 +1998,7 @@
   },
   "/gn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/gn/how-to-open": {
    "surface": "howto",
@@ -2007,7 +2006,7 @@
   },
   "/gq": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/gq/how-to-open": {
    "surface": "howto",
@@ -2015,7 +2014,7 @@
   },
   "/gr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/gr/how-to-open": {
    "surface": "howto",
@@ -2023,7 +2022,7 @@
   },
   "/gt": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/gt/how-to-open": {
    "surface": "howto",
@@ -2031,7 +2030,7 @@
   },
   "/gw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/gw/how-to-open": {
    "surface": "howto",
@@ -2039,11 +2038,11 @@
   },
   "/gy": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/hk": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/hk/how-to-open": {
    "surface": "howto",
@@ -2051,7 +2050,7 @@
   },
   "/hn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/hn/how-to-open": {
    "surface": "howto",
@@ -2059,7 +2058,7 @@
   },
   "/hr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/hr/how-to-open": {
    "surface": "howto",
@@ -2091,11 +2090,11 @@
   },
   "/ht": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/hu": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/hu/how-to-open": {
    "surface": "howto",
@@ -2191,7 +2190,7 @@
   },
   "/id": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/id/how-to-open": {
    "surface": "howto",
@@ -2199,7 +2198,7 @@
   },
   "/ie": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ie/how-to-open": {
    "surface": "howto",
@@ -2223,7 +2222,7 @@
   },
   "/il": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/il/how-to-open": {
    "surface": "howto",
@@ -2231,7 +2230,7 @@
   },
   "/in": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/in/how-to-open": {
    "surface": "howto",
@@ -2791,7 +2790,7 @@
   },
   "/iq": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/iq/how-to-open": {
    "surface": "howto",
@@ -2799,7 +2798,7 @@
   },
   "/ir": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ir/how-to-open": {
    "surface": "howto",
@@ -2807,7 +2806,7 @@
   },
   "/is": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/is/how-to-open": {
    "surface": "howto",
@@ -2815,7 +2814,7 @@
   },
   "/it": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/it/how-to-open": {
    "surface": "howto",
@@ -2971,7 +2970,7 @@
   },
   "/jm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/jm/how-to-open": {
    "surface": "howto",
@@ -2979,7 +2978,7 @@
   },
   "/jo": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/jo/how-to-open": {
    "surface": "howto",
@@ -2987,7 +2986,7 @@
   },
   "/jp": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/jp/how-to-open": {
    "surface": "howto",
@@ -2995,7 +2994,7 @@
   },
   "/ke": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ke/how-to-open": {
    "surface": "howto",
@@ -3003,7 +3002,7 @@
   },
   "/kg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/kg/how-to-open": {
    "surface": "howto",
@@ -3011,7 +3010,7 @@
   },
   "/kh": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/kh/how-to-open": {
    "surface": "howto",
@@ -3019,11 +3018,11 @@
   },
   "/ki": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/km": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/km/how-to-open": {
    "surface": "howto",
@@ -3031,11 +3030,11 @@
   },
   "/kn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/kr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/kr/how-to-open": {
    "surface": "howto",
@@ -3043,7 +3042,7 @@
   },
   "/kw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/kw/how-to-open": {
    "surface": "howto",
@@ -3051,7 +3050,7 @@
   },
   "/kz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/kz/how-to-open": {
    "surface": "howto",
@@ -3059,7 +3058,7 @@
   },
   "/la": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/la/how-to-open": {
    "surface": "howto",
@@ -3067,7 +3066,7 @@
   },
   "/lb": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/lb/how-to-open": {
    "surface": "howto",
@@ -3075,19 +3074,19 @@
   },
   "/lc": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/li": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/lk": {
    "surface": "country",
-   "blocks": 14
+   "blocks": 9
   },
   "/lr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/lr/how-to-open": {
    "surface": "howto",
@@ -3095,7 +3094,7 @@
   },
   "/ls": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ls/how-to-open": {
    "surface": "howto",
@@ -3103,7 +3102,7 @@
   },
   "/lt": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/lt/how-to-open": {
    "surface": "howto",
@@ -3123,7 +3122,7 @@
   },
   "/lu": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/lu/how-to-open": {
    "surface": "howto",
@@ -3131,7 +3130,7 @@
   },
   "/lv": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/lv/how-to-open": {
    "surface": "howto",
@@ -3147,7 +3146,7 @@
   },
   "/ly": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ly/how-to-open": {
    "surface": "howto",
@@ -3155,7 +3154,7 @@
   },
   "/ma": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ma/how-to-open": {
    "surface": "howto",
@@ -3163,11 +3162,11 @@
   },
   "/mc": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/md": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/md/how-to-open": {
    "surface": "howto",
@@ -3175,7 +3174,7 @@
   },
   "/me": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/me/how-to-open": {
    "surface": "howto",
@@ -3183,7 +3182,7 @@
   },
   "/mg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mg/how-to-open": {
    "surface": "howto",
@@ -3191,11 +3190,11 @@
   },
   "/mh": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mk": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mk/how-to-open": {
    "surface": "howto",
@@ -3203,7 +3202,7 @@
   },
   "/ml": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ml/how-to-open": {
    "surface": "howto",
@@ -3211,7 +3210,7 @@
   },
   "/mm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mm/how-to-open": {
    "surface": "howto",
@@ -3219,7 +3218,7 @@
   },
   "/mn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mn/how-to-open": {
    "surface": "howto",
@@ -3227,11 +3226,11 @@
   },
   "/mo": {
    "surface": "country",
-   "blocks": 13
+   "blocks": 9
   },
   "/mr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mr/how-to-open": {
    "surface": "howto",
@@ -3239,7 +3238,7 @@
   },
   "/mt": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mt/how-to-open": {
    "surface": "howto",
@@ -3247,7 +3246,7 @@
   },
   "/mu": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mu/how-to-open": {
    "surface": "howto",
@@ -3255,11 +3254,11 @@
   },
   "/mv": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mw/how-to-open": {
    "surface": "howto",
@@ -3267,7 +3266,7 @@
   },
   "/mx": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/mx/how-to-open": {
    "surface": "howto",
@@ -3275,7 +3274,7 @@
   },
   "/my": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/my/how-to-open": {
    "surface": "howto",
@@ -3283,7 +3282,7 @@
   },
   "/mz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/mz/how-to-open": {
    "surface": "howto",
@@ -3291,7 +3290,7 @@
   },
   "/na": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/na/how-to-open": {
    "surface": "howto",
@@ -3299,7 +3298,7 @@
   },
   "/ne": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ne/how-to-open": {
    "surface": "howto",
@@ -3307,7 +3306,7 @@
   },
   "/ng": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ng/how-to-open": {
    "surface": "howto",
@@ -3315,7 +3314,7 @@
   },
   "/ni": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ni/how-to-open": {
    "surface": "howto",
@@ -3323,7 +3322,7 @@
   },
   "/nl": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/nl/how-to-open": {
    "surface": "howto",
@@ -3387,7 +3386,7 @@
   },
   "/no": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/no/how-to-open": {
    "surface": "howto",
@@ -3423,7 +3422,7 @@
   },
   "/np": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/np/how-to-open": {
    "surface": "howto",
@@ -3431,11 +3430,11 @@
   },
   "/nr": {
    "surface": "country",
-   "blocks": 13
+   "blocks": 9
   },
   "/nz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/nz/how-to-open": {
    "surface": "howto",
@@ -3443,7 +3442,7 @@
   },
   "/om": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/om/how-to-open": {
    "surface": "howto",
@@ -3451,7 +3450,7 @@
   },
   "/pa": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/pa/how-to-open": {
    "surface": "howto",
@@ -3459,7 +3458,7 @@
   },
   "/pe": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/pe/how-to-open": {
    "surface": "howto",
@@ -3467,11 +3466,11 @@
   },
   "/pg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ph": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ph/how-to-open": {
    "surface": "howto",
@@ -3479,11 +3478,11 @@
   },
   "/pk": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/pl": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/pl/how-to-open": {
    "surface": "howto",
@@ -3607,11 +3606,11 @@
   },
   "/ps": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/pt": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/pt/how-to-open": {
    "surface": "howto",
@@ -3635,11 +3634,11 @@
   },
   "/pw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/py": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/py/how-to-open": {
    "surface": "howto",
@@ -3647,7 +3646,7 @@
   },
   "/qa": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/qa/how-to-open": {
    "surface": "howto",
@@ -3655,7 +3654,7 @@
   },
   "/ro": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/ro/how-to-open": {
    "surface": "howto",
@@ -3711,7 +3710,7 @@
   },
   "/rs": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/rs/how-to-open": {
    "surface": "howto",
@@ -3719,7 +3718,7 @@
   },
   "/ru": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ru/how-to-open": {
    "surface": "howto",
@@ -3727,7 +3726,7 @@
   },
   "/rw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/rw/how-to-open": {
    "surface": "howto",
@@ -3735,7 +3734,7 @@
   },
   "/sa": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/sa/how-to-open": {
    "surface": "howto",
@@ -3743,11 +3742,11 @@
   },
   "/sb": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sc": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sc/how-to-open": {
    "surface": "howto",
@@ -3755,11 +3754,11 @@
   },
   "/sd": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/se": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/se/how-to-open": {
    "surface": "howto",
@@ -3811,7 +3810,7 @@
   },
   "/sg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/sg/how-to-open": {
    "surface": "howto",
@@ -3819,7 +3818,7 @@
   },
   "/si": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/si/how-to-open": {
    "surface": "howto",
@@ -3839,7 +3838,7 @@
   },
   "/sk": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/sk/how-to-open": {
    "surface": "howto",
@@ -3867,7 +3866,7 @@
   },
   "/sl": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sl/how-to-open": {
    "surface": "howto",
@@ -3875,11 +3874,11 @@
   },
   "/sm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sn/how-to-open": {
    "surface": "howto",
@@ -3887,19 +3886,19 @@
   },
   "/so": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/st": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sv": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sv/how-to-open": {
    "surface": "howto",
@@ -3907,11 +3906,11 @@
   },
   "/sy": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/sz/how-to-open": {
    "surface": "howto",
@@ -3919,7 +3918,7 @@
   },
   "/td": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/td/how-to-open": {
    "surface": "howto",
@@ -3927,7 +3926,7 @@
   },
   "/tg": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tg/how-to-open": {
    "surface": "howto",
@@ -3935,7 +3934,7 @@
   },
   "/th": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/th/how-to-open": {
    "surface": "howto",
@@ -3943,7 +3942,7 @@
   },
   "/tj": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tj/how-to-open": {
    "surface": "howto",
@@ -3951,11 +3950,11 @@
   },
   "/tl": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tm/how-to-open": {
    "surface": "howto",
@@ -3963,7 +3962,7 @@
   },
   "/tn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tn/how-to-open": {
    "surface": "howto",
@@ -3971,11 +3970,11 @@
   },
   "/to": {
    "surface": "country",
-   "blocks": 13
+   "blocks": 9
   },
   "/tr": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tr/how-to-open": {
    "surface": "howto",
@@ -3983,7 +3982,7 @@
   },
   "/tt": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tt/how-to-open": {
    "surface": "howto",
@@ -3991,11 +3990,11 @@
   },
   "/tv": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/tw/how-to-open": {
    "surface": "howto",
@@ -4003,7 +4002,7 @@
   },
   "/tz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/tz/how-to-open": {
    "surface": "howto",
@@ -4011,7 +4010,7 @@
   },
   "/ua": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ua/how-to-open": {
    "surface": "howto",
@@ -4019,7 +4018,7 @@
   },
   "/ug": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ug/how-to-open": {
    "surface": "howto",
@@ -4027,7 +4026,7 @@
   },
   "/us": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/us/how-to-open": {
    "surface": "howto",
@@ -5995,7 +5994,7 @@
   },
   "/uy": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/uy/how-to-open": {
    "surface": "howto",
@@ -6003,7 +6002,7 @@
   },
   "/uz": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/uz/how-to-open": {
    "surface": "howto",
@@ -6011,11 +6010,11 @@
   },
   "/vc": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ve": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ve/how-to-open": {
    "surface": "howto",
@@ -6023,7 +6022,7 @@
   },
   "/vn": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/vn/how-to-open": {
    "surface": "howto",
@@ -6031,19 +6030,19 @@
   },
   "/vu": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ws": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/xk": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ye": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/ye/how-to-open": {
    "surface": "howto",
@@ -6051,7 +6050,7 @@
   },
   "/za": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 11
   },
   "/za/how-to-open": {
    "surface": "howto",
@@ -6059,7 +6058,7 @@
   },
   "/zm": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/zm/how-to-open": {
    "surface": "howto",
@@ -6067,7 +6066,7 @@
   },
   "/zw": {
    "surface": "country",
-   "blocks": 15
+   "blocks": 10
   },
   "/zw/how-to-open": {
    "surface": "howto",

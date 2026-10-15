@@ -35,6 +35,9 @@ const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => { if
 const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
   { file: "country-GB", path: "/gb", dated: true },
   { file: "country-AF", path: "/af", dated: false },
+  /* Cambodia and Germany joined the harness list for the replicability test (plan 2026-10-13 country-page-journey, Task 1B). */
+  { file: "country-KH", path: "/kh", dated: false },
+  { file: "country-DE", path: "/de", dated: false },
   { file: "howto-GB", path: "/gb/how-to-open", dated: false },
   { file: "city-london", path: "/cities/london", dated: true },
   { file: "cell-gb-london-restaurants", path: "/gb/london/restaurants", dated: true },

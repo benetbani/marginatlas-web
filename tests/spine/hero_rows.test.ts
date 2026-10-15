@@ -1,7 +1,7 @@
 /**
  * The country hero's rows say what they hold (plan 06, task B1). The United Kingdom's "total effective tax burden" (his words,
  * 2026-08-30) is worked out by the law engine on a stated profit, not typed; the salary row is the typical (median) salary;
- * the admin index carries its last year, 2020; the days row is the company's own registration days (his ruling of 2026-09-20).
+ * the admin index carries its scale in its label and its last year, 2020, in its readout (plan 2026-10-13 country-page-journey, Task 3B); the days row is the company's own registration days (his ruling of 2026-09-20).
  *
  * Run: npx tsx tests/spine/hero_rows.test.ts
  */
@@ -29,8 +29,8 @@ check(`the UK's tax on profit is the engine's income tax and national insurance 
 check("the words under it state the profit and the form", gb.answerBasis === "on $52K of profit, a sole trader under Self Assessment");
 check("the label stays his: total effective tax burden", gb.answer?.label === "Total effective tax burden");
 const row = (key: string) => gb.rows.find((r) => r.key === key);
-check("the salary row is the typical salary (a median)", row("salary-month")?.label === "Typical salary");
-check("the admin index carries its last year", row("admin")?.label === "Admin ease, 2020");
+check("the salary row is the typical salary a month, its unit in its label", row("salary-month")?.label === "Monthly salary");
+check("the admin index carries its scale in its label and its last year in its readout", row("admin")?.label === "Admin ease /100" && (row("admin")?.readout ?? "").includes("2020"));
 check("the days row is the company's registration days: 1 day in the UK", row("llc-days")?.label === "Days to register" && row("llc-days")?.value === "1");
 const de = buildHeroBoard("DE");
 check("Germany keeps its regime's rate and its own words", de.answer !== null && de.answerBasis === undefined);

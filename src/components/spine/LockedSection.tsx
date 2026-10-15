@@ -54,12 +54,12 @@ export function lockedBody(body: React.ReactNode[], table: Record<string, LockSp
   return out;
 }
 
-export function LockedSection({ id, title, icon, kind, lineKey = id }: { id: string; title: string; icon: AtlasIconId; kind: StandInKind; lineKey?: string }) {
+export function LockedSection({ id, title, icon, kind, lineKey = id, stamp }: { id: string; title: string; icon: AtlasIconId; kind: StandInKind; lineKey?: string; /** The country page's slot stamps (plan 2026-10-13 country-page-journey): the paywall's shape reads a locked slot by them. */ stamp?: Record<string, string> }) {
   const line = (COPY.locked.lines as Record<string, string>)[lineKey];
   return (
     /* Stamped as a form (`data-archetype`) so the archetype sheet measures the card at three widths; the census and the coverage
        gate read their archetypes from the archetype folders, and no page gate reads a locked render (step 20 renders its own). */
-    <Box id={id} keep data-locked="1" data-archetype="locked-section" className="pro-locked">
+    <Box id={id} {...(stamp ?? {})} keep data-locked="1" data-archetype="locked-section" className="pro-locked">
       <Rail icon={icon} kicker={title} />
       <div className="mt-3">
         <StandIn kind={kind} />

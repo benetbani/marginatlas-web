@@ -7,8 +7,9 @@
  * lowest, each in the trade pages' unit (per 100, one decimal), each a door to its live London trade page, each stamped; its figure
  * is the set's middle, which no row prints; it prints for 45 days from its data's end and not a day after, and never without that
  * date; the restaurants row reads what London restaurants' page prints; since plan 2026-10-09 (home introduction) /gb's render
- * carries the duel in chapter 04, beside where new firms last, stamped; and the drawing (src/components/spine/country/Duel.tsx)
- * fills its half of that even level: its four rows as the table, never the fixed-height columns.
+ * carried the duel in chapter 04, and since plan 2026-10-13 country-page-journey (Task 4) behind slot 12's plus, stamped; its card
+ * (Duel.tsx) left with the page's old sections in that plan's Task 6, and the table head's checks its render carried stay on
+ * RankedBars drawn with the duel's own props.
  *
  * Run: npx tsx tests/home/duel.test.ts
  */
@@ -17,7 +18,7 @@ import { spawnSync } from "node:child_process";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { buildDuel, isFresh, FRESH_DAYS } from "../../src/lib/home/duel";
-import { Duel } from "../../src/components/spine/country/Duel";
+import { RankedBars } from "../../src/components/spine/archetypes/RankedBars";
 import { COPY } from "../../src/lib/spine/copy";
 import { SLUG_TO_INDUSTRY } from "../../src/lib/taxonomy";
 import { red, redSummary } from "../../scripts/lib/red";
@@ -48,11 +49,10 @@ if (item?.as_of) {
     check(`its figure is the set's middle, ${duel.middle.figure}, which no row prints`, duel.middle.value === Math.round(item.middle as number) / 10 && !duel.rows.some((r) => r.value === duel.middle.value));
     check("every row is a door to a live London trade page", duel.rows.every((r) => r.href === `/gb/london/${r.key}` && r.key in SLUG_TO_INDUSTRY && !!r.lands));
     check("every figure is stamped from the feed", [duel.middle.prov, ...duel.rows.map((r) => r.prov)].every((p) => p.src.startsWith("editorial/editorial_feed.json:fail-most") && !!p.kind));
-    /* THE DRAWING (plan 2026-10-09, home introduction, Task 4): it stands in a half of /gb's even level and takes the taller card's
-       height, so its four rows are the table (RankedBars `fill`), which shares that height, and never the columns, whose fixed height
-       stood 52px of blank foot at 1280 (the page laws' CARD FOOT BLANK, clause 52). The columns alone stamp `data-bar` on a row. */
-    const html = renderToStaticMarkup(React.createElement(Duel, { duel }));
-    check("the duel fills its half: its four rows are the table at every width, never the fixed-height columns", /id="duel"/.test(html) && !/data-bar=/.test(html) && (html.match(/data-track="set"/g) ?? []).length === 4, { file: "src/components/spine/country/Duel.tsx", remedy: "draw the duel as Duel holds it, RankedBars with fill, so its four rows are the table at every width from sm and share the height /gb's even level gives it (the columns' fixed height stood 52px of blank foot at 1280)" });
+    /* THE TABLE'S HEAD (fix round F1, group G8, below), read off RankedBars drawn with the props the duel's card gave it until plan
+       2026-10-13 country-page-journey, Task 6: the table form (`fill`), its phone head and its ceiling's label. */
+    const C = COPY.home.duel;
+    const html = renderToStaticMarkup(React.createElement(RankedBars, { id: "duel", kicker: duel.title, icon: "vacancy", basis: "", rows: duel.rows.map((r) => ({ key: r.key, name: r.name, value: r.value, href: r.href, lands: r.lands, prov: r.prov })), worldMax: Math.max(...duel.rows.map((r) => r.value)), ceiling: "set", topLabel: C.topLabel, fmt: (v: number) => v.toFixed(1), phoneHead: { name: C.phoneName, value: C.phoneValue }, feature: "none", fill: true, focal: { figure: duel.middle.figure, words: C.words, prov: duel.middle.prov } }));
     /* THE VALUE HEAD KEEPS ITS LINE (fix round F1, group G8; the built page's finding 3, .superpowers/sdd/hr-p16-report.md). "Of 100" wrapped to two
        lines ("Of" over "100") in the table's head at 768, where the card is half the column: its flex row holds the head and the ceiling's "Highest 2.9",
        and the head, the shrinkable one, gave. It is the pattern round D2 fixed in MarkList's unit head and FiguresTable's year heads. The TABLE's value head
@@ -101,9 +101,9 @@ if (cell && r0) check(`London restaurants' page prints ${(Math.round(r0.value) /
 
 /* ON THE UK PAGE (plan 2026-10-09, home introduction, Task 4): /gb's chapter 04, beside where new firms last, while the item is fresh. */
 const gb = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
-if (gb && buildDuel()) check("/gb's render carries the duel beside where new firms last, its middle stamped from the feed", /id="duel"/.test(gb) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(gb) && gb.indexOf('id="firms-last"') > -1 && gb.indexOf('id="firms-last"') < gb.indexOf('id="duel"'));
-/* PAST ITS WINDOW (plan 2026-10-11 gb-ch04-lone-state): the duel is gone from /gb, its section, its rail entry and every stamp from its item. */
-else if (gb) check("past its window /gb's render carries no duel: no section, no rail entry, no stamp from the feed's item", !/id="duel"/.test(gb) && !/href="#duel"/.test(gb) && !/data-src="editorial\/editorial_feed\.json:fail-most/.test(gb));
+if (gb && buildDuel()) check("/gb's render carries the duel's rows behind slot 12's plus, its middle stamped from the feed", gb.slice(gb.indexOf('data-slot="lasting"')).includes(`>${COPY.journey.more.failMost}<`) && /data-src="editorial\/editorial_feed\.json:fail-most:the middle/.test(gb));
+/* PAST ITS WINDOW (plan 2026-10-11 gb-ch04-lone-state; plan 2026-10-13 country-page-journey, Task 4): no plus of it, no stamp from its item. */
+else if (gb) check("past its window /gb's render carries no duel: no plus of it, no stamp from the feed's item", !gb.includes(`>${COPY.journey.more.failMost}<`) && !/data-src="editorial\/editorial_feed\.json:fail-most/.test(gb));
 else console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's check did not run");
 
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer

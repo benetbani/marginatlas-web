@@ -108,6 +108,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { requireBrowser } from "./lib/local_only.mjs";
+import { openPanels, OPENED } from "./lib/open_panels.mjs";
 import { pageRenders, givenRenders, describeRenders, nameWithKey, missingLine } from "./lib/page_renders.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER. This gate photographs real pages, so it cannot
@@ -359,7 +360,12 @@ for (const entry of PAGES) {
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(350);
     const { colW, sections } = await page.evaluate(measure);
-    const offenders = sections.filter((s) => s.fail);
+    /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): every plus open, the sections measured again; a section
+       full width only when its plus is open is an offender of the open page, named so. */
+    const openedSections = (await page.evaluate(openPanels)) ? (await page.evaluate(measure)).sections : [];
+    const closedFails = sections.filter((s) => s.fail);
+    const seen = new Set(closedFails.map((s) => s.label));
+    const offenders = [...closedFails, ...openedSections.filter((s) => s.fail && !seen.has(s.label)).map((s) => ({ ...s, label: `${s.label}${OPENED}` }))];
     /* The baseline is keyed by the page's OLD name (entry.key); the report prints the harness's name with it beside. */
     now[entry.key] = offenders.length;
     total += offenders.length;

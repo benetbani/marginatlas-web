@@ -18,7 +18,9 @@
  *    the centre; the column of supporting figures on the right. At md the
  *    answer and the image share a row and the column runs under them; at 375
  *    everything stacks, the answer first.
- *  - THE COLUMN: at most six rows (his cap), each one shape: a terracotta icon
+ *  - THE COLUMN (on the country page, `slotted`, plan 2026-10-13 country-page-journey: a row is its label with its unit, its figure and its
+ *    signal where its measure has an owner direction, src/lib/spine/owner_direction.ts; the key line is the signal's; the city board
+ *    keeps its level marks): at most six rows (his cap), each one shape: a terracotta icon
  *    tile, the label, the figure with its unit, and the level word in a small
  *    chip. Hairlines between rows, the basis "Among the countries" under them
  *    so the level words say what they measure. Never a grid of four by two.
@@ -46,10 +48,11 @@ import { DetailPanel } from "@/components/spine/archetypes/DetailPanel";
 import { DuotonePhoto } from "@/components/spine/archetypes/CityParts";
 import { Pie } from "@/components/spine/charts/Pie";
 import { provAttrs } from "@/lib/spine/provenance";
+import { Signal, SignalKey } from "@/components/spine/signal/Signal";
 
 export const HERO_BOARD_ROWS_CAP = 6;
 
-export function HeroBoard({ id = "take", board, answers }: { id?: string; board: HeroBoardData; answers?: string }) {
+export function HeroBoard({ id = "take", board, answers, slotted = false }: { id?: string; board: HeroBoardData; answers?: string; /** The country page's journey (plan 2026-10-13 country-page-journey): the answer column is slot 1, the rows slot 2. */ slotted?: boolean }) {
   const rows = board.rows.slice(0, HERO_BOARD_ROWS_CAP);
   return (
     <Band hero>
@@ -75,7 +78,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
                beside it set the card's height, and the drawing used to stand at this column's foot with 100 of nothing above it.
                The answer, its drawing and the words now read as one block at the top, the plus closes the column, and the air
                between is shared out, never one lump. */
-            <div className="grid content-between gap-5">
+            <div className="grid content-between gap-5" {...(slotted ? { "data-slot": "tax-on-profit", "data-stage": "1", "data-answer": "share" } : {})}>
               <div data-answer="1">
                 <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{board.answer.label}</div>
                 {/* THE ANSWER DRAWN, the figure never printed twice (his law of 2026-09-19, "a share of a whole is drawn").
@@ -109,7 +112,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
               {board.subtitle ? <p data-line="" className="max-w-[28ch] text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{board.subtitle}</p> : null}
               {board.taxes && board.taxes.length >= 2 ? (
                 <div data-hero-taxes className="max-w-[34ch]">
-                  <DetailPanel name="hero-taxes" summary={COPY.heroBoard.taxes.summary} rows={board.taxes} />
+                  <DetailPanel name="hero-taxes" summary={COPY.heroBoard.taxes.summary} rows={board.taxes} type={slotted ? "share" : undefined} />
                 </div>
               ) : null}
             </div>
@@ -133,7 +136,7 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
               {board.subtitle ? <p data-line="" className="max-w-[28ch] text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{board.subtitle}</p> : null}
             </div>
           )}
-          <div data-hero-rows="" className={`flex flex-col ${board.answer ? "md:col-span-2 lg:col-span-1" : ""}`}>
+          <div data-hero-rows="" {...(slotted ? { "data-slot": "where-it-stands", "data-stage": "1", "data-answer": "position" } : {})} className={`flex flex-col ${board.answer ? "md:col-span-2 lg:col-span-1" : ""}`}>
             {/* ONE GRID FOR THE WHOLE BOARD, NOT ONE PER ROW (2026-09-23, his
                 ruling on alignment, measured first). Each row used to be its own
                 grid, so every row sized its own columns and the figures ended at
@@ -143,30 +146,30 @@ export function HeroBoard({ id = "take", board, answers }: { id?: string; board:
             {/* THE MARKS SAY WHAT THEY MEAN (goal 2026-09-26, M1): a row read by the pointer, the keyboard or a tap shows its figure
                 and where it stands among the countries in the site's one placement sentence; the key under the column stays for a
                 reader who never touches the board. The whole row is the target, not the small mark. */}
-            <RowsFrame readable={rows.some((r) => r.placement)} className="grid grid-cols-[auto_minmax(0,1fr)_auto_auto] divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]">
+            {/* THE ROWS TAKE THE COLUMN'S HEIGHT ON THE COUNTRY'S BOARD (plan 2026-10-13 country-page-journey, Task 4's page holes, panels
+                open): the other taxes open under the answer, the picture fills the height they set, and the rows stood at the column's top
+                over 366 by 210 of nothing (clause 52). Equal rows share the height; closed, the rows set it and nothing moves. */}
+            <RowsFrame readable={rows.some((r) => r.placement || r.readout)} className={`grid grid-cols-[auto_minmax(0,1fr)_auto_auto] divide-y divide-[var(--c-border)] border-t border-[var(--c-border)]${slotted ? " flex-1 auto-rows-fr" : ""}`}>
               {rows.map((r) => (
-                <div key={r.key} data-row={r.key} {...(r.placement ? { "data-readout-figure": r.unit ? `${r.value} ${r.unit}` : r.value, "data-readout-words": r.placement } : {})} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
+                <div key={r.key} data-row={r.key} {...(r.placement || r.readout ? { "data-readout-figure": r.unit ? `${r.value} ${r.unit}` : r.value, "data-readout-words": r.readout ?? r.placement } : {})} {...(r.placed ? { "data-placed": r.placed } : {})} {...(r.noSignal ? { "data-no-signal": r.noSignal } : {})} className="col-span-full grid grid-cols-subgrid items-center gap-x-3 py-2">
                   <Ico id={r.icon} tone="terra" />
                   <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
                   {/* AN UNPRINTED ROW keeps its column and says only where the figure stands (the level mark): the figure is printed once, in the section below that explains it (spec 2.3). */}
                   {r.unprinted && r.level ? (
                     <span aria-hidden="true" />
                   ) : (
-                    <span data-figure="" className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]">
+                    <span data-figure="" className="whitespace-nowrap text-right text-[length:var(--t-body)] font-medium tabular-nums text-[var(--c-ink)]" data-value="">
                       {r.value}
                       {/* A real space before the unit, not a margin (2026-09-26): read aloud or copied, "21days" was one word. */}
                       {r.unit ? <>{" "}<span className="text-[length:var(--t-body)] font-normal text-[var(--c-muted)]">{r.unit}</span></> : null}
                     </span>
                   )}
-                  {r.level ? (
-                    <LevelMark level={r.level} />
-                  ) : (
-                    <span aria-hidden="true" />
-                  )}
+                  {r.signal ? <Signal state={r.signal.state} measure={r.signal.measure} /> : r.level ? <LevelMark level={r.level} /> : <span aria-hidden="true" />}
                 </div>
               ))}
             </RowsFrame>
-            <Basis>{board.levelBasis ?? COPY.heroBoard.levelBasis}</Basis>
+            {/* THE KEY (plan 2026-10-13 country-page-journey, Task 3B): the signal's one line on the country page, the levels' on the city's. */}
+            {slotted ? <SignalKey /> : <Basis>{board.levelBasis ?? COPY.heroBoard.levelBasis}</Basis>}
           </div>
         </div>
       </Box>

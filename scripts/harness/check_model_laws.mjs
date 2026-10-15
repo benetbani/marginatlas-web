@@ -270,6 +270,7 @@ import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
+import { openPanels, OPENED } from "../lib/open_panels.mjs";
 
 /* A BUILD SERVER HAS NO BROWSER (scripts/lib/local_only.mjs, the rule every
    browser gate follows since 2026-08-27): Vercel clones website/ alone and
@@ -373,7 +374,10 @@ if (listArg && args.includes("--render")) {
 /* calculator 7 since plan 2026-10-13 cost-simulator: /calculator holds the answer, your margin, your numbers, your month, what moves it most, the
    money to open it and where figures come from; its masthead is a band and no section. A view where a section has nothing to draw stands under it,
    and the chain renders the bare page, where all seven draw. */
-const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5, openings: 2, calculator: 7 };
+/* country: the thin exemplar's measured count since plan 2026-10-13 country-page-journey (Afghanistan draws the eleven slots its data holds,
+   the masthead one block; spec section 7: "the country floor follows the slots"). Lowered to a measurement, never raised; the floor census
+   decides the index from it (Q5). */
+const FLOOR_BY_SURFACE = { country: 10, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5, openings: 2, calculator: 7 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;
@@ -412,7 +416,8 @@ function inPage(ctx) {
      gate's own inDeadDetails; the archetype checker still opens every panel
      and reads what it holds, which is that instrument's law. Planted and
      watched: with the panel opened in the render the four rows fire, closed
-     they do not. */
+     they do not. Since plan 2026-10-13 (country-page-journey, Task 1E) the file reads every page a second time with its panels open and
+     reports what only that reading finds with " (panels open)"; this skip is the first reading's. */
   const hiddenFromSight = (el) => {
     let n = el;
     while (n && n !== document.documentElement) {
@@ -796,7 +801,12 @@ function inPage(ctx) {
      competes with the focal; a heading is words, and it is the one 20 a band section carries. Inside a zone the title's own size
      (`[data-rail-title]`) is left out of the "between 16 and 30" reading; every other leaf in the section is still read, so a
      figure at 20 or 24 still reds. Off a zone nothing changes. Proved by planting a 24px figure in an open section: red. */
-  const headingOfZone = (el) => !!el.closest("[data-zone]") && !!el.closest("[data-rail-title]");
+  /* A CITY CARD'S NAME IS ITS CARD'S HEADING (plan 2026-10-13 country-page-journey, Task 4): the country's customers slot stands the
+     national typical at 30 over the city cards, whose names sit at the heading rung by CityCards' own law (20, "the loudest thing on
+     the card"). A name is words, the reason the zone title above is left out, so `[data-city-name]` is left out of the same reading;
+     a figure on a city card (its pay, at 14) is still read. Confirmed by the controller, and held to a country slot (final review M6,
+     2026-10-15): a city name anywhere else (the home's cities, the city page's peers) is read as before. */
+  const headingOfZone = (el) => (!!el.closest("[data-zone]") && !!el.closest("[data-rail-title]")) || !!el.closest("[data-slot] [data-city-name]");
   const sizesOfBetween = (card) => [...card.querySelectorAll("*")]
     .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el) && !headingOfZone(el))
     .map((el) => parseFloat(getComputedStyle(el).fontSize));
@@ -1020,6 +1030,13 @@ for (const file of files) {
        data-URI fixture image needs no network for this and still benefits. */
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
     const { found, unmeasured: um, blocks, floor: pageFloor } = await page.evaluate(inPage, { floor, wide: w === WIDTHS[0], noAnswerRelief: name.startsWith("cell-") ? 2 : 0 });
+    /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): the rules read the page again with every plus open;
+       a finding only the open page makes is the plus's, named so. The page's counts (BLOCK FLOOR, LONE CARD, EDGE) are read once, closed. */
+    if (await page.evaluate(openPanels)) {
+      const again = await page.evaluate(inPage, { floor, wide: false, noAnswerRelief: name.startsWith("cell-") ? 2 : 0 });
+      const had = new Set(found.map((f) => `${f.id}␟${f.rule}␟${f.detail}`));
+      for (const f of again.found) if (!had.has(`${f.id}␟${f.rule}␟${f.detail}`)) found.push({ ...f, detail: `${f.detail}${OPENED}` });
+    }
     if (blocks != null) { blocksAtWide = blocks; floorAtWide = pageFloor; }
     const countThisWidth = new Map();
     for (const f of found) {

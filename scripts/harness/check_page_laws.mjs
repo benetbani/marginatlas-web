@@ -72,6 +72,7 @@
  *                         cluster, or on neighbouring levels (his words on
  *                         the market bento, 2026-09-20 night: "two similar
  *                         graphics should have a considerable distance")
+ *                         (a level is a zone on a band page, since plan 2026-10-13)
  *   -- ALIGNMENT        centred text that is not a mark's label, a sentence on
  *                         the right, or a column of figures with more than one
  *                         right edge (his ruling of 2026-09-23)
@@ -111,6 +112,7 @@ import { pathToFileURL } from "node:url";
 import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
+import { openPanels, OPENED } from "../lib/open_panels.mjs";
 
 await requireBrowser("harness-page-laws", "the page laws of 2026-09-20 (levels, text measure, card feet, the hero's side, overlap, repeated kinds, parts) on every page in scripts/harness/pages.json");
 preflight({ browser: true, name: "check_page_laws" });
@@ -119,19 +121,22 @@ const WIDTHS = [1280, 768, 375];
 const args = process.argv.slice(2);
 const listArg = args.find((a) => a === "--list" || a.startsWith("--list="));
 const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : "scripts/harness/pages.json";
-const listed = listArg ? JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) => `scratchpad/harness/pages/${p.surface}-${p.slugs.join("-")}.html`) : [];
+/* The list's renders stand in HARNESS_PAGES_DIR when it is set (a planted list's own directory, as scripts/lib/page_renders.mjs reads it;
+   the chain never sets it), else in scratchpad/harness/pages. */
+const PAGES_DIR = process.env.HARNESS_PAGES_DIR || "scratchpad/harness/pages";
+const listed = listArg ? JSON.parse(readFileSync(LIST, "utf8")).pages.map((p) => `${PAGES_DIR}/${p.surface}-${p.slugs.join("-")}.html`) : [];
 const files = [...args.filter((a) => !a.startsWith("--")), ...listed];
 if (files.length === 0) { console.error("usage: node scripts/harness/check_page_laws.mjs <rendered.html ...> | --list[=pages.json] [--write-baseline]"); process.exit(2); }
 
 /* THE IN-PAGE WALK. Everything below runs inside the browser; it takes the
    viewport width so the level and measure rules know whether they apply. */
-function inPage({ width, pageName }) {
+function inPage({ width, pageName, opened = false }) {
   /* The four chart forms of 2026-09-25 (src/components/spine/charts/: a figure on the world's range, a bar list, a ring with its
      centre figure, a country's span against the world's) draw, so they are visual kinds like the rest. */
   /* The page-agnostic sections of the same night (src/components/spine/sections/) that draw: a cohort's curve, columns, a scale of
      rates, age bars, pies, a trip bar, a market bar, a price table with its bars. The apps directory and the thresholds are rows
      and a list, text-only, and are not here. */
-  const VISUAL = new Set(["world-range", "bar-list", "donut-stat", "range-pair", "ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board", "donut", "ring", "month-bars", "share-bar", "bento-count", "survival-curve", "obstacles", "spend-by-income", "spend-by-age", "job-market", "age-mix", "origin", "customers-come", "market-hold", "stock-tiers"]);
+  const VISUAL = new Set(["world-range", "bar-list", "range-pair", "ranked-bars", "range-strip", "spectra-table", "pay-bars", "income-breakdown", "bento-band", "city-cards", "segment-bar", "hero-board", "donut", "ring", "month-bars", "share-bar", "bento-count", "survival-curve", "obstacles", "spend-by-income", "spend-by-age", "job-market", "age-mix", "origin", "customers-come", "market-hold", "stock-tiers"]);
   const VARIANT_KEYS = ["data-variant", "data-form", "data-marks", "data-columns", "data-look", "data-feature", "data-dot", "data-shape", "data-orientation"];
   const CARD = 'main [data-card]';
   const main = document.querySelector("main");
@@ -149,8 +154,8 @@ function inPage({ width, pageName }) {
   const reds = [];
   const red = (id, rule, msg) => reds.push({ id, rule, msg });
 
-  /* THE LEVELS, at 1280 only. */
-  if (width >= 1280) {
+  /* THE LEVELS, at 1280 only, on the closed reading (plan 2026-10-13, Task 1E). */
+  if (width >= 1280 && !opened) {
     const bands = [...document.querySelectorAll("main [data-band], main [data-hero]")].filter((b) => b.getClientRects().length);
     for (const band of bands) {
       /* A BENTO CLUSTER IS ONE CARD (the spec's blind spot, stated): the
@@ -304,13 +309,17 @@ function inPage({ width, pageName }) {
     if (width >= 1280 && parts > 1 && !card.querySelector("details, [role='tablist'], [data-popup]")) red(id, "PARTS NOT REVEALED", `the card declares ${parts} parts and shows them all at once; no plus, tab or popup inside it (clause 58)`);
   }
 
-  /* THE PAGE, once at 1280: kinds, twins and distance. */
-  if (width >= 1280) {
+  /* THE PAGE, once at 1280: kinds, twins and distance; on the closed reading (plan 2026-10-13, Task 1E). */
+  if (width >= 1280 && !opened) {
     const byKind = new Map();
     for (const card of cards) { if (!isVisual(card)) continue; const k = archetypeOf(card); if (!byKind.has(k)) byKind.set(k, []); byKind.get(k).push(card); }
     /* THE LEVELS IN ORDER, so "neighbouring" is a fact of the page and not of the DOM's depth: a card's level is its nearest band or hero; a bento's cells share their cluster's level. */
-    const levels = [...document.querySelectorAll("main [data-band], main [data-hero]")].filter((b) => b.getClientRects().length && !b.parentElement.closest("[data-band], [data-hero]"));
-    const levelOf = (card) => card.closest("[data-band], [data-hero]");
+    /* A ZONE IS A LEVEL (plan 2026-10-13 country-page-journey, Task 1E; MODEL PART 10 keeps clause 64 on a band page): the old reading found a
+       level by [data-band] or [data-hero] alone, which no zone carries, so on a band page it compared the hero and nothing else. A card's level
+       is its outermost zone, band or hero; the levels are those, in page order. */
+    const LEVEL = "[data-zone], [data-band], [data-hero]";
+    const levels = [...document.querySelectorAll("main [data-zone], main [data-band], main [data-hero]")].filter((b) => b.getClientRects().length && !b.parentElement.closest(LEVEL));
+    const levelOf = (card) => { let l = card.closest(LEVEL); while (l && l.parentElement && l.parentElement.closest(LEVEL)) l = l.parentElement.closest(LEVEL); return l; };
     for (const [kind, list] of byKind) {
       if (kind === "kit") continue;
       if (list.length > 2) red(list.map(idOf).join(" | "), "KIND REPEATED", `${kind} on ${list.length} cards; two is the cap (clause 55)`);
@@ -382,7 +391,9 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
       const tips = [...card.querySelectorAll(TIP)];
       if (tips.length > 1) red(idOf(card), "GLOSS", `${tips.length} glosses on one card; one card, one word explained`);
       for (const t of tips) {
-        if (t.closest(".fig") || t.closest("[data-answer]")) red(idOf(card), "GLOSS", "a gloss on a figure or on the page's answer; it belongs beside the words, not the number");
+        /* The page's answer is `data-answer="1"`; since plan 2026-10-13 (country-page-journey, Task 1C) a slot or a list declares its
+           answer type in `data-answer` too, and a gloss beside a slot's title is no gloss on the answer. */
+        if (t.closest(".fig") || t.closest('[data-answer="1"]')) red(idOf(card), "GLOSS", "a gloss on a figure or on the page's answer; it belongs beside the words, not the number");
       }
     }
     for (const card of cards) {
@@ -408,7 +419,10 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
      Their blind spots, stated: a row drawn without `data-row` inside a phone table, or a figure cell without `data-col`, is not
      read by SPLIT ROW; a band painted by something other than a zone is not a zone. */
   const zones = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
-  if (zones.length) {
+  /* LEVEL HEIGHT's own count of what it read (below), returned with the walk: zones declaring two cells, and levels of two read side by side. */
+  let levelPairs = 0, levelsRead = 0;
+  /* The zones are read closed (plan 2026-10-13 country-page-journey, Task 1E): a plus a reader opened is his. */
+  if (zones.length && !opened) {
     const PAPER = "rgb(255, 255, 255)", TINT = "rgb(246, 246, 245)";
     /* THE ONE TERRACOTTA ZONE (his request of 2026-10-10 for one section in terracotta; his decision of 2026-10-13, one solid statement on
        the brand terracotta at full strength; plan 2026-10-13 home-quiet-editorial, Task 5): the home's band, accepted once and only on
@@ -448,10 +462,32 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
       const split = z.getAttribute("data-zone");
       const cells = [...z.querySelectorAll(":scope > [data-zone-level] > [data-zone-cell]")];
       const cellsAsked = split === "wide" || split === "lone" ? 1 : split === "1-1-1" ? 3 : 2;
+      if (width >= 1280 && split && cellsAsked === 2) levelPairs++;
       if (split && cells.length !== cellsAsked) red(zid, "ZONE SPLIT", `a zone declared ${split} draws ${cells.length} cell(s)`);
       for (const c of cells) {
         const r = c.getBoundingClientRect();
         if (r.height < 8 || !(c.textContent || "").trim()) red(zid, "ZONE SPLIT", `an empty cell in a zone (${Math.round(r.width)} by ${Math.round(r.height)})`);
+      }
+      /* LEVEL HEIGHT (final review I3, 2026-10-15; his ruling 7 of 2026-09-04: "two sections on one horizontal level share one height, no
+         matter what"). A zone is an open level, so the air beside a short section stands outside every card, where the holes' WHITE SPACE
+         (inside a card) cannot see it. At 1280, on the closed reading, a level of two cells side by side: their content bottoms (the
+         lowest drawn element in each cell, measured from the level's top) differ by at most max(48px, a fifth of the taller).
+         BLIND SPOT, stated: it reads the closed page at one width; a pair equal at 1280 may part at 1024 or once a plus is opened (a
+         reader's opening is his), and it measures boxes, so a cell's drawn but empty box counts as content.
+         IT COUNTS WHAT IT READS (the fix wave's re-review, Important 1, 2026-10-15; a gate never passes having read nothing): each level of two
+         read side by side counts, beside the zones that declare two cells, and the run reds a page that declares a level of two and reads
+         none, a run that read no page at 1280, a ledger page that reads no level, and a list that gave the law no level at all. */
+      if (width >= 1280 && cells.length === 2) {
+        const [ca, cb] = cells;
+        const ra = ca.getBoundingClientRect(), rb = cb.getBoundingClientRect();
+        if (Math.abs(ra.top - rb.top) < 2 && ra.right <= rb.left + 1) {
+          levelsRead++;
+          const inkBottom = (cell) => { let b = cell.getBoundingClientRect().top; for (const el of cell.querySelectorAll("*")) { const er = el.getBoundingClientRect(); if (er.width > 0 && er.height > 0 && el.getClientRects().length) b = Math.max(b, er.bottom); } return b; };
+          const top = Math.min(ra.top, rb.top);
+          const ha = Math.round(inkBottom(ca) - top), hb = Math.round(inkBottom(cb) - top);
+          const taller = Math.max(ha, hb), diff = Math.abs(ha - hb), allowed = Math.round(Math.max(48, taller / 5));
+          if (diff > allowed) red(zid, "LEVEL HEIGHT", `the two sections of a level end ${diff}px apart (${ha} and ${hb} tall), over the ${allowed} allowed (max of 48 and a fifth of the taller); two sections on one level share one height (ruling 7)`);
+        }
       }
       for (const card of z.querySelectorAll("[data-card]")) {
         const ccs = getComputedStyle(card);
@@ -503,14 +539,16 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
       }
     }
   }
-  return { reds, cards: cards.length, contentW: Math.round(contentW) };
+  return { reds, cards: cards.length, contentW: Math.round(contentW), levels: { declared: levelPairs, read: levelsRead } };
 }
 
 const reds = [];
+/* LEVEL HEIGHT's reading, page by page at 1280: { declared, read }. */
+const levelSeen = {};
 const browser = await chromium.launch();
 for (const file of files) {
   const name = basename(file).replace(/\.html$/, "");
-  if (!existsSync(file)) { reds.push({ page: name, w: "all", id: "-", rule: "NO RENDER", msg: "the list names this page and no render exists under scratchpad/harness/pages" }); continue; }
+  if (!existsSync(file)) { reds.push({ page: name, w: "all", id: "-", rule: "NO RENDER", msg: `the list names this page and no render exists under ${PAGES_DIR}` }); continue; }
   for (const w of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 1200 }, deviceScaleFactor: 1 });
     const page = await ctx.newPage();
@@ -518,22 +556,46 @@ for (const file of files) {
     await page.evaluate(() => document.fonts && document.fonts.ready);
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
     const walk = await page.evaluate(inPage, { width: w, pageName: name });
+    if (w >= 1280) levelSeen[name] = walk.levels;
     if (walk.cards === 0) reds.push({ page: name, w, id: "page", rule: "NO SECTIONS", msg: "no section card found under main; the render or the landmark is broken" });
     for (const r of walk.reds) reds.push({ page: name, w, ...r });
+    /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): the card rules read again with every plus open; a red
+       only the open page makes is the plus's, named so. Levels, zones and the page's kinds are read closed (a plus a reader opened is his). */
+    if (await page.evaluate(openPanels)) {
+      const ow = await page.evaluate(inPage, { width: w, pageName: name, opened: true });
+      const said = new Set(walk.reds.map((r) => `${r.id}␟${r.rule}`));
+      for (const r of ow.reds) if (!said.has(`${r.id}␟${r.rule}`)) reds.push({ page: name, w, ...r, msg: `${r.msg}${OPENED}` });
+    }
     console.log(`${name}@${w}: ${walk.cards} cards, ${walk.reds.length} red(s)`);
     await ctx.close();
   }
 }
 await browser.close();
-console.log(`page laws: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s)`);
+const levelTotal = Object.values(levelSeen).reduce((a, l) => a + l.read, 0);
+console.log(`page laws: ${files.length} page(s) x ${WIDTHS.length} widths, ${reds.length} red(s); LEVEL HEIGHT read ${levelTotal} level(s) of two at 1280 (${Object.entries(levelSeen).map(([k, l]) => `${k} ${l.read} of ${l.declared} declared`).join(", ") || "no page read at 1280"})`);
 for (const r of reds) console.log(`  ${r.page}@${r.w} #${r.id}: ${r.rule}: ${r.msg}`);
 
 /* THE PER-PAGE RATCHET, the page filter's rule: seeded at the first honest
    measurement, falling only, never raised by hand. */
 const BASELINE = "scripts/harness/page_laws_baseline.json";
 const WRITE_BASELINE = args.includes("--write-baseline");
-const byPage = {};
-for (const r of reds) byPage[r.page] = (byPage[r.page] ?? 0) + 1;
+/* LEVEL HEIGHT KEEPS ITS OWN LEDGER (final review I3, 2026-10-15): the law is new on every page type, so each page's first measurement of it
+   is seeded in scripts/harness/level_height_baseline.json (never added to a page's ratchet here, which would raise it), and falls the same
+   way: a page with no entry must have zero, an entry never rises. */
+const LEVEL_RULE = "LEVEL HEIGHT", LEVEL_BASELINE = "scripts/harness/level_height_baseline.json";
+const byPage = {}, levelByPage = {};
+for (const r of reds) {
+  if (r.rule === LEVEL_RULE) levelByPage[r.page] = (levelByPage[r.page] ?? 0) + 1;
+  else byPage[r.page] = (byPage[r.page] ?? 0) + 1;
+}
+let levelBase = {};
+try { levelBase = JSON.parse(readFileSync(LEVEL_BASELINE, "utf8")); } catch { levelBase = {}; }
+const levelOver = [], levelUnder = [];
+for (const name of files.map((f) => basename(f, ".html"))) {
+  const have = levelByPage[name] ?? 0, allowed = typeof levelBase[name] === "number" ? levelBase[name] : 0;
+  if (have > allowed) levelOver.push(`${name}: ${have} against a first measurement of ${allowed}`);
+  else if (have < allowed) levelUnder.push(`${name}: ${have}, first measurement ${allowed} can fall`);
+}
 let base = {};
 try { base = JSON.parse(readFileSync(BASELINE, "utf8")); } catch { base = {}; }
 const over = [], under = [];
@@ -544,6 +606,27 @@ for (const name of files.map((f) => basename(f, ".html"))) {
 }
 let exit = 0;
 if (over.length) { console.log(`page laws RATCHET: ${over.length} page(s) over their baseline: ${over.join("; ")}`); exit = 1; }
+if (levelOver.length) { console.log(`page laws LEVEL HEIGHT: ${levelOver.length} page(s) over their ledger (${LEVEL_BASELINE}): ${levelOver.join("; ")}`); exit = 1; }
+/* LEVEL HEIGHT READ NOTHING (the fix wave's re-review, Important 1): the law reds what it measured, so it must also say when it measured
+   nothing. A page that declares a level of two and reads none side by side (a drifted grid, a cell reading that matches nothing), a run
+   that read no page at 1280 (the widths), a ledger page whose entry says it draws uneven levels and that reads none (lowered only by
+   --write-baseline), and a list run whose pages gave the law no level at all, each red. A page passed by hand that declares no level of
+   two is not red: it holds nothing for the law to read, and the summary line says so. */
+const levelNothing = [];
+if (files.some((f) => existsSync(f)) && !Object.keys(levelSeen).length) levelNothing.push(`the run read no page at 1280 (widths ${WIDTHS.join(", ")}), so the law measured nothing`);
+for (const [name, l] of Object.entries(levelSeen)) {
+  if (l.declared > 0 && l.read === 0) levelNothing.push(`${name}: declares ${l.declared} zone${l.declared === 1 ? "" : "s"} of two and the law read none side by side at 1280`);
+  else if (!WRITE_BASELINE && typeof levelBase[name] === "number" && levelBase[name] > 0 && l.read === 0) levelNothing.push(`${name}: its ledger entry ${levelBase[name]} says it draws uneven levels and the law read no level of two there (lower it with --write-baseline if the page no longer draws one)`);
+}
+if (listArg && Object.keys(levelSeen).length && levelTotal === 0) levelNothing.push(`the list's ${files.length} page(s) gave the law no level of two at 1280`);
+if (levelNothing.length) { for (const m of levelNothing) console.log(`page laws LEVEL HEIGHT READ NOTHING: ${m}`); exit = 1; }
+if (levelUnder.length && !WRITE_BASELINE) console.log(`page laws LEVEL HEIGHT: ${levelUnder.join("; ")} (run with --write-baseline to lower it)`);
+if (WRITE_BASELINE && levelUnder.length) {
+  for (const name of files.map((f) => basename(f, ".html"))) { const have = levelByPage[name] ?? 0; if (typeof levelBase[name] === "number" && have < levelBase[name]) levelBase[name] = have; }
+  for (const k of Object.keys(levelBase)) if (levelBase[k] === 0) delete levelBase[k];
+  writeFileSync(LEVEL_BASELINE, JSON.stringify(levelBase, null, 2) + String.fromCharCode(10));
+  console.log(`page laws LEVEL HEIGHT: ledger lowered (${levelUnder.join("; ")})`);
+}
 if (WRITE_BASELINE) {
   for (const name of files.map((f) => basename(f, ".html"))) { const have = byPage[name] ?? 0; if (!(name in base) || have < base[name]) base[name] = have; }
   for (const k of Object.keys(base)) if (base[k] === 0) delete base[k];

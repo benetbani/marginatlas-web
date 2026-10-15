@@ -21,11 +21,17 @@
  *    padding was the one distance off the ladder (DISTANCES.md section 1), and 8 stands the square 1px above that line's centre.
  *  - NO EMPTY ROW: a fact without a value is not drawn, and no facts draw nothing.
  *  - `data-archetype="fact-rows"`, `data-row` and `data-label` on each, so the harness reads its rows like any other.
+ *  - A LIST DECLARES ITS TYPE (plan 2026-10-13 country-page-journey, Task 3A): `answer` stamps data-answer and each value data-value, so the
+ *    answer-type gate reads every row; a state list's values are words.
  */
 import * as React from "react";
 import type { Provenance } from "@/lib/spine/provenance";
 import { Fig, Ico, SampleTag } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
+import { Signal } from "@/components/spine/signal/Signal";
+import type { AnswerType } from "@/lib/spine/country_slots";
+import type { Signalled } from "@/lib/spine/signal";
+import type { MeasureKey } from "@/lib/spine/owner_direction";
 
 export type FactRow = {
   key: string;
@@ -43,6 +49,12 @@ export type FactRow = {
   confidence?: "measured" | "modeled" | "placeholder";
   /** Where the row's figure came from (src/lib/spine/provenance.ts), stamped on its figure; a row without one stamps nothing. */
   prov?: Provenance | null;
+  /** The measure of a figure placed among the countries (plan 2026-10-13 country-page-journey): stamped data-placed for the mark rule. */
+  placed?: MeasureKey | null;
+  /** Its signal, beside the figure (src/components/spine/signal/Signal.tsx). */
+  signal?: Signalled | null;
+  /** Why a directed measure draws no mark: "set" (under twenty hold it), "fill". */
+  noSignal?: "set" | "fill" | null;
 };
 
 /* A DATE NEVER BREAKS OVER TWO LINES (the design review, 2026-10-04: "since 1 / Apr 2026"): a note's "1 Apr 2026" keeps its two
@@ -50,7 +62,7 @@ export type FactRow = {
 const DATE = /(\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})/g;
 const keepDates = (s: string) => s.replace(DATE, "$1\u00a0$2\u00a0$3");
 
-export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?: string }) {
+export function FactRows({ rows, className = "", answer }: { rows: FactRow[]; className?: string; /** The list's answer type (plan 2026-10-13 country-page-journey): stamped data-answer; "state" sets the values as words. */ answer?: AnswerType }) {
   const live = rows.filter((r) => r.value != null && r.value !== "");
   if (live.length === 0) return null;
   /* TWO LISTS SIDE BY SIDE FROM 600px OF WIDTH (2026-10-04, the band page at 768, where a section takes the column's 720px):
@@ -62,6 +74,8 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
     <div
       key={r.key}
       data-row={r.key}
+      {...(r.placed ? { "data-placed": r.placed } : {})}
+      {...(r.noSignal ? { "data-no-signal": r.noSignal } : {})}
       className={`col-span-full grid grid-cols-subgrid items-start py-4 ${i > 0 ? "border-t border-[var(--c-border)]" : ""}`}
     >
       <dt className="flex min-w-0 items-start gap-3">
@@ -83,14 +97,22 @@ export function FactRows({ rows, className = "" }: { rows: FactRow[]; className?
           {r.note ? <span className="block text-[length:var(--t-body)] leading-5 text-[var(--c-muted)]">{keepDates(r.note)}</span> : null}
         </span>
       </dt>
-      <dd className="text-right [@container(min-width:420px)]:text-left">
-        <Fig className="block pt-1 text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]" prov={r.prov}>{r.value}</Fig>
+      <dd data-value="" className="text-right [@container(min-width:420px)]:text-left">
+        {answer === "state" ? (
+          /* A WORD LIST IN THE BODY FACE (plan 2026-10-13 country-page-journey, Task 3A; R6 section 3): a state is a word, never set in the figure face. */
+          <span className="block pt-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{r.value}</span>
+        ) : r.signal ? (
+          /* A PLACED FIGURE AND ITS SIGNAL ON ONE LINE (spec section 4: the triangle right after the figure). */
+          <span className="inline-flex items-center gap-2 pt-1"><Fig className="text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]" prov={r.prov}>{r.value}</Fig><Signal state={r.signal.state} measure={r.signal.measure} /></span>
+        ) : (
+          <Fig className="block pt-1 text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]" prov={r.prov}>{r.value}</Fig>
+        )}
       </dd>
     </div>
   );
   return (
     <div className={`[container-type:inline-size] ${className}`}>
-      <div data-archetype="fact-rows" data-rows={String(live.length)} className="grid grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12">
+      <div data-archetype="fact-rows" data-rows={String(live.length)} {...(answer ? { "data-answer": answer } : {})} className="grid grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12">
         {lists.map((list, li) => (
           /* ONE GRID FOR A LIST, EACH ROW A SUBGRID OF IT (DISTANCES 5.7, rule 3: "one column, one right edge"; separate row grids
              sized each figure's column to its own figure, so "3.75%" and "$663 to $33K" stood on two right edges). */

@@ -37,7 +37,7 @@ export type Wall = {
   prov: Provenance;
 };
 export type FromAbroad = {
-  focal: { gbp: number; usd: number | null; weeks: number; prov: Provenance };
+  focal: { gbp: number; usd: number | null; weeks: number; years: number; prov: Provenance };
   walls: Wall[];
 };
 
@@ -83,5 +83,5 @@ export function buildFromAbroad(law: FromAbroadLaw = FROM_ABROAD): FromAbroad | 
   if (trades?.ineligible.length)
     wall({ key: "hiring", label: "Hiring from abroad", state: "closed", fee: null, time: null, note: "Not barbers, salons or cooks", prov: lookedUp("skilled_worker_trades") });
 
-  return { focal: { gbp: focalGbp, usd: convertToUsd("GBP", focalGbp), weeks: decision.outside, prov: worked("innovator_founder") }, walls };
+  return { focal: { gbp: focalGbp, usd: convertToUsd("GBP", focalGbp), weeks: decision.outside, years: founder.years, prov: worked("innovator_founder") }, walls };
 }

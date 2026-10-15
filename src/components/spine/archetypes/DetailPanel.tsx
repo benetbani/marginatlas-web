@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Fig, InlineDisclosure } from "@/components/spine/kit";
 import type { Provenance } from "@/lib/spine/provenance";
+import type { AnswerType } from "@/lib/spine/country_slots";
 
 /**
  * THE FOUNDER'S PLUS (2026-09-08, his words): "the click and show button was
@@ -52,7 +53,7 @@ import type { Provenance } from "@/lib/spine/provenance";
  *
  * `prov` (plan 2026-10-08, home sections): where the row's figure came from, stamped on it; a row with none stamps nothing.
  */
-export type DetailRow = { label: string; value: string; note?: string; prov?: Provenance | null };
+export type DetailRow = { label: string; value: string; note?: string; prov?: Provenance | null; /** A row with a page of its own links its label (the answer fold only). */ href?: string };
 
 /**
  * `name` is passed straight to the native `<details name>` attribute (review
@@ -63,12 +64,16 @@ export type DetailRow = { label: string; value: string; note?: string; prov?: Pr
  * accident; two panels are meant to open independently unless a caller wants
  * the accordion behaviour on purpose.
  */
-export function DetailPanel({ name, summary, rows, withheldLine }: { name: string; summary: string; rows: DetailRow[]; withheldLine?: string | null }) {
+export function DetailPanel({ name, summary, rows, withheldLine, type, split }: { name: string; summary: string; rows: DetailRow[]; withheldLine?: string | null; /** Two lists side by side from 640px of the card (FactRows' rule of 2026-10-04; final review I4): the first half of the rows on the left, the rest on the right, one list under 640. */ split?: boolean; /** The answer fold's type (plan 2026-10-13 country-page-journey): given, the country page's fold; absent, the panel every other page draws. */ type?: AnswerType }) {
   if (!rows || rows.length < 2) return null;
+  if (type) return <AnswerFold name={name} summary={summary} rows={rows} type={type} />;
   return (
     <div data-archetype="detail-panel" data-rows={rows.length}>
       <InlineDisclosure name={name} summary={summary} className="group mt-3 [&>summary]:py-2.5">
-        <dl className="mt-2 grid gap-2">
+        <dl
+          className={`mt-2 grid gap-2${split ? " [@container(min-width:640px)]:grid-flow-col [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:gap-x-8 [@container(min-width:640px)]:[grid-template-rows:repeat(var(--detail-rows),auto)]" : ""}`}
+          style={split ? ({ "--detail-rows": Math.ceil(rows.length / 2) } as React.CSSProperties) : undefined}
+        >
           {rows.map((r, i) => (
             <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
               <dt data-label className="text-[length:var(--t-body)] text-[var(--c-ink2)]">{r.label}</dt>
@@ -101,6 +106,48 @@ export function DetailPanel({ name, summary, rows, withheldLine }: { name: strin
             inside the walk, and that is a harness change, not a class here. */}
         {withheldLine ? <p data-line="" className="mt-2 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{withheldLine}</p> : null}
       </InlineDisclosure>
+    </div>
+  );
+}
+
+/**
+ * THE ANSWER FOLD (plan 2026-10-13 country-page-journey, Task 3A; spec section 5; R6 2.3): the country page's plus. Closed on arrival; the
+ * whole summary row a 44px target: the list's head as its label, the count of its rows as its figure ("their count", so no figure shown
+ * closed repeats inside), the plus at the row's end, hidden from a screen reader so the summary's words are its name. Open, two to eight
+ * rows of one type in place, each value stamped data-value for the answer-type gate, a word list (state) in the body face and a figure list
+ * in the figure face; a row with a page of its own links its label and carries the arrow after its value. No drawing, no fold inside a
+ * fold, no terracotta on hover; the browser's own marker is hidden, the signal being the page's one triangle. Every other page keeps the
+ * panel above until its own pass (spec section 9).
+ * THE PLUS IS LEFT IN ITS OWN BOX, THE KIT'S PLUS (Task 4's page laws, ALIGNMENT): centred in a fixed box it read as centred text on
+ * every fold at 1280; the glyph's own width is its box, so it turns in place. A LINKED ROW IS A THUMB'S TAP (TAP SIZE at 375, panels
+ * open): its label's link takes the row 44 tall, so a list that links carries no gap between its rows, the height being its air.
+ * STRAIGHT UNDER A FIGURE'S BLOCK it adds no margin: the block keeps 12 above a fold (Slot.tsx), DISTANCES 2.1's figure to its panel.
+ */
+function AnswerFold({ name, summary, rows, type }: { name: string; summary: string; rows: DetailRow[]; type: AnswerType }) {
+  const words = type === "state";
+  const linked = rows.some((r) => r.href);
+  return (
+    <div data-archetype="detail-panel" data-rows={rows.length} data-fold="answer" data-answer={type} className="mt-6 border-t border-[var(--c-border)] [:has(>[data-focal-words])+&]:mt-0">
+      <details name={name} className="group">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 py-3 [&::-webkit-details-marker]:hidden">
+          <span data-fold-head="" className="min-w-0 flex-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{summary}</span>
+          <span data-fold-count className="tabular-nums text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{rows.length}</span>
+          <span aria-hidden="true" className="text-[length:var(--t-lead)] leading-5 text-[var(--c-muted)] transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <dl className={`grid pb-3 ${linked ? "" : "gap-2"}`}>
+          {rows.map((r, i) => (
+            <div key={i} data-detail-row className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3">
+              <dt data-label className="min-w-0 text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{r.href ? <a href={r.href} className="flex min-h-11 items-center underline-offset-2 hover:underline">{r.label}</a> : r.label}</dt>
+              <dd className="flex items-baseline justify-end gap-2 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">
+                <span data-value="">{words ? <span className="font-medium">{r.value}</span> : <Fig prov={r.prov}>{r.value}</Fig>}</span>
+                {r.href ? <span aria-hidden="true" className="text-[var(--c-muted)]">→</span> : null}
+              </dd>
+              {/* A note's figures stack down the fold as the values do (the loans' law pounds under their dollars), so they are tabular (F1). */}
+              {r.note ? <dd className="col-span-2 text-[length:var(--t-body)] leading-5 tabular-nums text-[var(--c-muted)]">{r.note}</dd> : null}
+            </div>
+          ))}
+        </dl>
+      </details>
     </div>
   );
 }

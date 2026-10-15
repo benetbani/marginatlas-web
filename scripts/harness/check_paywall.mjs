@@ -7,7 +7,7 @@
  * It renders three locked UK pages itself through the routes' own renderers (scripts/harness/render_page.tsx --locked: the
  * country page, London's city page, London restaurants), never through scripts/harness/pages.json, whose gates would read a
  * locked page's sections as faults, and holds each, read with jsdom, to:
- *   1. the locked sections are exactly the cards of the levels lockedLevelKeys locks, the levels read as drawn: the zones in
+ *   1. the locked sections are exactly the cards of the levels lockedLevelKeys locks, the levels read as drawn, on the country page its slots (plan 2026-10-13): the zones in
  *      order, a chapter opening at its head, the zones before chapter 01 and the close ("Where to next") outside;
  *   2. no first level of a chapter holds a locked section;
  *   3. each locked section has its block, the class pro-locked, a rail with an icon, one paragraph of at most twelve words in
@@ -83,21 +83,42 @@ for (const p of PAGES) {
   const dom = new JSDOM(readFileSync(file, "utf8").replace(/<style[\s\S]*?<\/style>/g, ""));
   const doc = dom.window.document;
 
-  // 1 and 2: the levels as drawn, and what locks.
-  let inChapters = false;
-  const levels = [...doc.querySelectorAll("section[data-zone]")].map((z, i) => {
-    const head = z.querySelector("[data-chapter-head]")?.getAttribute("data-chapter-head") ?? null;
-    if (head) inChapters = true;
-    const label = z.getAttribute("data-zone-label") ?? "";
-    return { key: `z${i}`, chapter: head, outside: !inChapters || label === COPY.close.kicker, label, zone: z };
-  });
+  // 1 and 2: the levels as drawn, and what locks. ON THE COUNTRY PAGE THE SLOTS ARE THE LEVELS (plan 2026-10-13 country-page-journey,
+  // Task 1F; spec section 8: his ruling 18 by analogy, each stage's first slot open, every later slot of the stage locked): a slot is
+  // [data-slot] with its stage's number; stages 1 and 7 (the masthead and the close) stand outside; a locked slot is its LockedSection,
+  // which carries the slot's stamps. Every other page reads its zones, as before.
+  const slotted = p.stem === "country-gb";
+  let levels;
+  if (slotted) {
+    const seen = new Set();
+    levels = [...doc.querySelectorAll("[data-slot]")].filter((s) => { const k = s.getAttribute("data-slot"); if (seen.has(k)) return false; seen.add(k); return true; }).map((s) => {
+      const stage = Number(s.getAttribute("data-stage") ?? "0");
+      return { key: s.getAttribute("data-slot"), chapter: stage >= 2 && stage <= 6 ? String(stage) : null, outside: !(stage >= 2 && stage <= 6), label: s.getAttribute("data-slot"), zone: s };
+    });
+    if (levels.length === 0) fault(p, "the country page draws no slot ([data-slot]): its levels are its slots (spec section 8)");
+  } else {
+    let inChapters = false;
+    levels = [...doc.querySelectorAll("section[data-zone]")].map((z, i) => {
+      const head = z.querySelector("[data-chapter-head]")?.getAttribute("data-chapter-head") ?? null;
+      if (head) inChapters = true;
+      const label = z.getAttribute("data-zone-label") ?? "";
+      return { key: `z${i}`, chapter: head, outside: !inChapters || label === COPY.close.kicker, label, zone: z };
+    });
+  }
   const lockedZones = lockedLevelKeys(levels.map(({ key, chapter, outside }) => ({ key, chapter, outside })));
-  const expected = levels.filter((l) => lockedZones.has(l.key)).flatMap((l) => topBlocks(l.zone).map((b) => b.getAttribute("data-block"))).sort();
+  const blocksOf = (l) => (slotted ? [l.zone.getAttribute("data-block") ?? l.zone.id] : topBlocks(l.zone).map((b) => b.getAttribute("data-block")));
+  const expected = levels.filter((l) => lockedZones.has(l.key)).flatMap(blocksOf).sort();
   const locked = [...doc.querySelectorAll("[data-locked]")];
   const got = locked.map((b) => b.getAttribute("data-block") ?? b.id).sort();
   if (expected.length === 0) fault(p, "no level locks: the page drew no chapters, or the render is not a locked one");
   if (JSON.stringify(got) !== JSON.stringify(expected)) fault(p, `locked ${got.join(", ") || "nothing"}; the levels lock ${expected.join(", ") || "nothing"} (rule 1, his ruling 18)`);
-  for (const l of levels) if (l.chapter && l.zone.querySelector("[data-locked]")) fault(p, `chapter ${l.chapter}'s first level ("${l.label}") holds a locked section (rule 2, each chapter opens free)`);
+  const firsts = new Set();
+  for (const l of levels) {
+    if (!l.chapter || firsts.has(l.chapter)) continue;
+    firsts.add(l.chapter);
+    const first = slotted ? l.zone.hasAttribute("data-locked") : !!l.zone.querySelector("[data-locked]");
+    if (first) fault(p, `${slotted ? "stage" : "chapter"} ${l.chapter}'s first level ("${l.label}") holds a locked section (rule 2, each ${slotted ? "stage" : "chapter"} opens free)`);
+  }
 
   // 3 and 4: each locked card.
   for (const card of locked) {

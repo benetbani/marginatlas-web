@@ -152,6 +152,8 @@ export type CompareTableProps = {
    *  the sortable table alone keeps a box, because the reader operates it (research R3, 3.7); no full-width wrapper, the
    *  zone carries the width. */
   zone?: boolean;
+  /** The country page's journey (plan 2026-10-13 country-page-journey): slot 11's stamps on the table's Box. */
+  stamp?: Record<string, string>;
 };
 
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -201,7 +203,7 @@ const WIDE_FROM: Record<number, { wide: string; phone: string }> = {
   6: { wide: "hidden [@container(min-width:690px)]:block", phone: "[@container(min-width:690px)]:hidden" },
 };
 
-export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false, inBand = false, zone = false }: CompareTableProps) {
+export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHead, withheld, note, flags = true, sample = false, inBand = false, zone = false, stamp }: CompareTableProps) {
   /* FIVE COLUMNS TAKE THREE A LINE ON A PHONE (2026-09-25, the country's peers gained the average salary): five figures in 327px
      ran "12 days" past the card; three a line, the heads and every row's figures wrapping the same way, keep each figure under its
      head. */
@@ -322,7 +324,7 @@ export function CompareTable({ id, kicker, icon, rows, columns, caveat, entityHe
     /* ON A ZONE THE TABLE KEEPS ITS SANCTION (`data-wide-table`, the page's one full-width table, clause 36) and drops the band margin
        the zone's padding replaces. */
     <div {...(inBand ? { className: "h-full" } : zone ? { "data-wide-table": "" } : { "data-wide-table": "", className: "mt-8" })}>
-      <Box id={id} data-archetype="compare-table" data-flags={flags ? "1" : "0"} data-doors={rows.some((r) => r.href) ? "1" : undefined} className={inBand ? "h-full" : undefined}>
+      <Box id={id} {...(stamp ?? {})} data-archetype="compare-table" data-flags={flags ? "1" : "0"} data-doors={rows.some((r) => r.href) ? "1" : undefined} className={inBand ? "h-full" : undefined}>
         <Rail icon={icon} kicker={kicker} sample={sample} />
         <div className="[container-type:inline-size]" {...(zone ? { "data-instrument": "table" } : {})}>
           <SortTable

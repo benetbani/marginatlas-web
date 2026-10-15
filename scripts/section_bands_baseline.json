@@ -1,6 +1,8 @@
 {
   "country-gb-new": 2,
-  "country-AF": 2,
+  "country-AF": 1,
+  "country-KH": 1,
+  "country-DE": 2,
   "howto-GB": 1,
   "city-london": 2,
   "cell-london-restaurants": 1,
@@ -49,6 +51,13 @@
       "new": "1 and 1",
       "date": "2026-09-19",
       "reason": "Not a regression: the neighbourhood pages' second full width landed, and the district page is a first measurement. Plan step 35 seated MODEL.md 8.8's `03 compare` on CompareTable at the table's own full width under its data-wide-table sanction, the second of the page's three full widths (R1: the take, the districts table, the close; PART 9 clause 36, 'three stands'), the same section the cell-london-restaurants re-seed of 2026-09-18 and the industry-restaurants re-seed of 2026-09-19 name on their pages. The hub's 0 was the count of the old page, whose comparison sat in a 1-1 band beside the myth chapter; the district page is the same body in focus (/cities/london/neighborhoods/city-of-london) and holds the same table. The exit stands on the hero band and is not counted here. The count may fall and never rise."
+    },
+    {
+      "page": "country-KH and country-DE",
+      "old": 0,
+      "new": "1 and 2",
+      "date": "2026-10-14",
+      "reason": "Not a regression: a first measurement (plan 2026-10-13 country-page-journey, Task 1B). Cambodia and Germany joined scripts/harness/pages.json for the spec's replicability test, so this gate read their keys as 0. On the render of that day Cambodia's one full-width section with no wide form is the exit (Where to next); Germany's two are the peers table and the exit, the same two the country-gb-new re-seed of 2026-09-17 names (three full widths stand, R1). Written by hand so no other page's entry is touched. The count may fall and never rise."
     }
   ]
 }

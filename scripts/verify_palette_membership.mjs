@@ -6,7 +6,8 @@
  *
  * Ratified by the founder 2026-08-09, asked as a straight question and answered
  * without hedging: terracotta plus cool neutrals only. NO GREEN, NO AMBER, NO
- * BROWN. No exceptions.
+ * BROWN. No exceptions. One named exception since 2026-10-13, his: the signal's five colours, inside its tokens file alone (SIGNAL_ALLOW
+ * below).
  *
  * WHY A NAME CHECK COULD NEVER HAVE HELD THE LINE. A gate that greps for the
  * word "green" does not see `#6f8f25`, and one that greps for "orange" does not
@@ -141,6 +142,11 @@ const ALLOWED = [
 ];
 /** Anything at or below this saturation is a neutral and always allowed. */
 const NEUTRAL_S_MAX = 12;
+/* THE SIGNAL'S NAMED EXCEPTION (plan 2026-10-13 country-page-journey, Task 2; his ruling of 2026-10-13, "Green to red, only in the signal";
+   spec section 4): the good-or-bad triangle's five colours are legal in its one tokens file and nowhere else. Any other off-palette hue in
+   that file, and these five in any other file, count as before. A list named here, never a raised baseline. */
+const SIGNAL_ALLOW = { file: "src/components/spine/signal/tokens.ts", hexes: new Set(["#1b5e20", "#2e7d32", "#8a6d00", "#c62828", "#7f0000"]) };
+const signalAllowed = (f, hex) => f === SIGNAL_ALLOW.file && SIGNAL_ALLOW.hexes.has(hex.toLowerCase());
 
 function hexToHsl(hex) {
   let h = hex.replace("#", "");
@@ -305,7 +311,7 @@ for (const root of ROOTS) {
     const src = sourceOf(f);
     let n = (src.match(BANNED_TOKENS) || []).length;
     // Raw hex, judged by hue rather than by name.
-    for (const m of src.match(/#[0-9a-fA-F]{6}\b/g) || []) if (!isPaletteLegal(m)) n++;
+    for (const m of src.match(/#[0-9a-fA-F]{6}\b/g) || []) if (!isPaletteLegal(m) && !signalAllowed(f, m)) n++;
     // ...and the same judgement on rgb()/rgba(), which is how the green in the
     // gutters hid from a hex-only scan for months.
     for (const m of rgbLiteralsToHex(src)) if (!isPaletteLegal(m)) n++;

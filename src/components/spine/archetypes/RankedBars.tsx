@@ -260,6 +260,8 @@ export type RankedBarsProps = {
    *  BLANK, clause 52: 52px at 1280), so a card of four or five rows draws the table at every width from sm, whose rows share the
    *  height the level gives it (PART 5's height law; the form six or more rows already take). Off, as before: columns from lg. */
   fill?: boolean;
+  /** The country page's journey (plan 2026-10-13 country-page-journey): slot 5b's stamps on the card's Box. */
+  stamp?: Record<string, string>;
   /** THE CARD'S OWN FOCAL OVER THE BARS (MODEL.md 8.6 `04 open`, plan step 33's
    *  second dispatch, 2026-09-18): one figure at 30 between the opener and the
    *  basis, `--terra-text` when the card is one of the page's loud moments and
@@ -387,7 +389,7 @@ const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey, selfKey = null, fill = false, level = 3 }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey, selfKey = null, fill = false, level = 3, stamp }: RankedBarsProps) {
   if (rows.length < 2) return null;
   /* THE RESIDUAL IS LIFTED OUT OF THE RANKING BEFORE ANYTHING IS SORTED (see
      the prop): it takes no part in the order and cannot be the leader. A key
@@ -487,7 +489,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
      stated line) would stand 48 under its title instead of 24. */
   const drawTop = focal || basis || withheldLine ? "mt-6" : "mt-0";
   return (
-    <Box id={id} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
+    <Box id={id} {...(stamp ?? {})} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
       <Rail icon={icon} kicker={kicker} sample={tagged} gloss={gloss} level={level} />
       <div className={headTwoUp ? "gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start" : undefined}>
       {/* THE FOCAL, when the card holds one: the only element on this card

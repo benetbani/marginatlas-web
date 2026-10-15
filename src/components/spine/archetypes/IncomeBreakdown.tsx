@@ -226,7 +226,7 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
            bar's segments are `data-mix-*`, never `data-seg-*`, so "a withheld breakdown draws no segment of sales" still holds.
            A SEGMENT AND ITS LEGEND ROW ARE ONE PART (the goal of 2026-09-26, M1 and M2): greys told apart by their hatch alone are
            the hardest match on the page, so touching either lights both and the segment reads its share. */
-        <Marks label={`${kicker}: ${ariaLabel}`} className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
+        <Marks label={`${kicker}: ${ariaLabel}`} className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr_auto] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
           <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
             <div data-answer="1">
               <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
@@ -252,8 +252,8 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
             </div>
           </div>
           {foot || detail ? (
-            <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-2">
-              {foot ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+            <div className="[@container(min-width:640px)]:col-span-2 [@container(min-width:640px)]:row-start-3">
+              {foot ? <p data-line="" className="mt-3 max-w-[46ch] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
               {detail}
             </div>
           ) : null}
@@ -268,13 +268,16 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
               hole on 78 of the 138 London trades. From 640 the net, its basis
               and the bar stand in the left half and the legend in the right, one
               column, so no figure stands far from its name and no cell is empty.
-              The foot and the plus join the left half under the bar (the
-              legend spans both rows), because a seven-line legend stands about
-              50 taller than the net and its bar and the foot below both halves
-              left that as air under the bar. The 1280 and 1024 seats are about
+              The foot and the plus stand on a third row under both halves
+              (final review I4, 2026-10-15): in the left half, an opened plus
+              grew it 86 past the legend and stood 375 by 120 of nothing beside
+              its rows (the holes' opened reading, London barbershops at 768);
+              under both, the plus opens its rows in two lists side by side
+              from 640px of card (DetailPanel `split`, FactRows' rule), and
+              closed, only the legend's few pixels past the bar stand under it. The 1280 and 1024 seats are about
               580 inside and keep the column; the phone keeps it too. */}
           {/* A SEGMENT AND ITS LEGEND ROW ARE ONE PART (the goal of 2026-09-26, M1 and M2), as in the costs' own layout above. */}
-          <Marks label={`${kicker}: ${ariaLabel}`} className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
+          <Marks label={`${kicker}: ${ariaLabel}`} className="[@container(min-width:640px)]:grid [@container(min-width:640px)]:grid-cols-2 [@container(min-width:640px)]:grid-rows-[auto_1fr_auto] [@container(min-width:640px)]:items-start [@container(min-width:640px)]:gap-x-8">
           <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-1">
           <div data-answer="1">
             <div className="text-[length:var(--t-body)] font-medium leading-snug text-[var(--c-ink2)]">{netLabel}</div>
@@ -352,8 +355,8 @@ export function IncomeBreakdown({ id, kicker, gloss, netPct, segments, basis, ic
           </div>
           </div>
           {foot || detail ? (
-            <div className="[@container(min-width:640px)]:col-start-1 [@container(min-width:640px)]:row-start-2">
-              {foot ? <p data-line="" className="mt-3 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
+            <div className="[@container(min-width:640px)]:col-span-2 [@container(min-width:640px)]:row-start-3">
+              {foot ? <p data-line="" className="mt-3 max-w-[46ch] text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}
               {detail}
             </div>
           ) : null}

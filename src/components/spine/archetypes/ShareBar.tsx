@@ -93,13 +93,13 @@ export function ShareBar({ parts, unit = "%", lead, residualKey, tall = false, f
           <span key={p.key} data-wedge={p.key} data-part-key={p.key} data-readout-figure={`${Math.round(p.share)}${unit}`} data-readout-words={p.name} className={`block h-full min-w-[3px] ${i === 0 ? (slimFirst ? "rounded-l-[2px]" : tall ? "rounded-l-lg" : "rounded-l-full") : ""} ${i === live.length - 1 ? (slimLast ? "rounded-r-[2px]" : tall ? "rounded-r-lg" : "rounded-r-full") : ""}`} style={{ width: `${((p.share / total) * 100).toFixed(2)}%`, background: colourOf(p) }} />
         ))}
       </div>
-      <div className={`mt-3 grid gap-2 ${led ? "[@container(min-width:560px)]:grid-cols-2" : ""} ${fill ? "flex-1 auto-rows-fr" : ""}`} data-expect-rows={live.length}>
+      <div className={`mt-3 grid gap-2 ${led ? "[@container(min-width:560px)]:grid-cols-2" : ""} ${fill ? "flex-1 auto-rows-fr" : ""}`} data-expect-rows={live.length} data-answer="share">
         {live.map((p) => (
           /* In the led form the remainder's row spans the line when the rows are two a line and odd in number, so no row stands alone. */
           <div key={p.key} data-row={p.key} data-part-key={p.key} className={`grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 rounded-[8px] bg-[var(--c-soft)] px-3 py-2 ${led && p.key === residualKey && live.length % 2 === 1 ? "[@container(min-width:560px)]:col-span-2" : ""}`}>
             <span aria-hidden="true" className="inline-block h-3 w-3 rounded-[3px] border border-[var(--c-border)]" style={{ background: colourOf(p) }} />
             <span data-label className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{p.name}</span>
-            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink2)]" {...provAttrs(p.prov)}>{Math.round(p.share)}{unit}</span>
+            <span className="rounded-md border border-[var(--c-border)] bg-[var(--c-card)] px-2 py-0.5 text-[length:var(--t-body)] font-semibold tabular-nums text-[var(--c-ink2)]" data-value="" {...provAttrs(p.prov)}>{Math.round(p.share)}{unit}</span>
           </div>
         ))}
       </div>

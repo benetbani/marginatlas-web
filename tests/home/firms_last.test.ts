@@ -15,11 +15,9 @@
  * no held-out city drawn; every row a door to its own city page; every figure stamped from the slice; the UK's tick the slice's;
  * the lead's line twelve words at most with the cohort and its fifth year in it.
  *
- * Holds the drawing on the UK page since plan 2026-10-09, home introduction (src/components/spine/country/FirmsLast.tsx, in /gb's
- * chapter 04 after its first level, beside which trades fail most): a box with its id and the site's bars, plain and filling the half;
- * each bar its city's own share of 100; the lead's bar the one marked, by weight (ink2), its figure in ink (quiet: /gb's three loud
- * moments are its own); the UK's tick at its share and keyed once; every row a door to its city page; every figure stamped; the
- * title the copy gate's; and the /gb render draws it there.
+ * Holds the /gb render: since plan 2026-10-13 country-page-journey (Task 4) where new firms last stands behind slot 12's plus, one row a
+ * city, each a door to its page, the lead stamped. Its card on the UK page (FirmsLast.tsx, plan 2026-10-09) left with the page's old
+ * sections in that plan's Task 6, and its drawing's checks with it.
  *
  * Run: npx tsx tests/home/firms_last.test.ts
  */
@@ -28,9 +26,6 @@ import { holdHomeExport, homePassLine } from "../../scripts/lib/home_export";
 import { buildSurvival } from "../../src/lib/spine/sections/first_years";
 import { buildFirmsLast } from "../../src/lib/home/firms_last";
 import { COPY } from "../../src/lib/spine/copy";
-import * as React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
-import { FirmsLast } from "../../src/components/spine/country/FirmsLast";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-firms-last";
@@ -91,47 +86,14 @@ if (built && d) {
   check(`the lead's line stays under sixty characters for the longest city name the slice draws ("${widest}", ${widest.length})`, !!longest && widest.length < 60, { file: "src/lib/spine/copy.ts", remedy: "keep COPY.home.firmsLast.words under sixty characters for the longest city name: alone in its level the card is wide enough for TEXT WIDE to read the line" });
 }
 
-/* THE DRAWING ON THE UK PAGE (plan 2026-10-09, home introduction, Task 4): the bars, plain and filling the half, the lead's bar marked
-   by weight (ink2, BarList's `quiet`) and its figure in ink, the UK's tick keyed once, every figure stamped, the title the copy gate's.
-   A red here is the component's to put right (the slice and the builder are held above), so it names FirmsLast and never the export. */
-const DRAWN_AT = { file: "src/components/spine/country/FirmsLast.tsx", remedy: "draw where new firms last on /gb as FirmsLast holds it: the site's bars at the whole of 100, the lead's bar marked in ink2 (BarList quiet) and its figure in ink (no accent: /gb's seats are its own), the UK's tick keyed once, every row a door to its city page, every figure stamped" };
-if (built) {
-  const html = renderToStaticMarkup(React.createElement(FirmsLast, { last: built }));
-  check("the section is a box with its id and its bars (plain, filling its half, the lead's bar marked)", /id="firms-last"/.test(html) && /data-archetype="bar-list"/.test(html) && /data-look="plain"/.test(html) && /data-marked="1"/.test(html) && /flex-1/.test(html), DRAWN_AT);
-  check("no figure in the accent (quiet: /gb's three loud moments are its own)", !/(?:^|[\s"])text-\[var\(--terra-text\)\]/.test(html), DRAWN_AT);
-  check("the lead's bar is marked by weight, in ink2, and no bar is terracotta", /data-marked="1"[^>]*style="[^"]*background-color:var\(--c-ink2\)/.test(html) && [...html.matchAll(/data-bar="true"[^>]*style="([^"]*)"/g)].every((m) => !/terra/.test(m[1])), DRAWN_AT);
-  const figs = [...html.matchAll(/<[^>]+class="[^"]*\bfig\b[^"]*"[^>]*>/g)].map((m) => m[0]);
-  check(`every figure says where it came from (${figs.length})`, figs.length === built.rows.length + 1 && figs.every((f) => /data-src="home\/city_survival\.json:/.test(f) && /data-kind="worked out"/.test(f)), DRAWN_AT);
-  check("the tick at the UK's share is keyed once", /data-ref-tick/.test(html) && (html.match(/data-ref-key/g) ?? []).length === 1 && html.includes(COPY.home.firmsLast.ukKey), DRAWN_AT);
-  const tenth = (n: number) => Math.round(n * 10) / 10;
-  const widths = [...html.matchAll(/data-bar="true"[^>]*style="width:([\d.]+)%/g)].map((m) => Number(m[1]));
-  check(`each bar is its city's own share of 100 (${widths.join(", ")})`, widths.length === built.rows.length && widths.every((w, i) => tenth(w) === built.rows[i].value), DRAWN_AT);
-  const ticks = [...html.matchAll(/data-ref-tick[^>]*style="left:calc\(([\d.]+)% - 1px\)/g)].map((m) => Number(m[1]));
-  check(`the UK's tick stands at ${built.uk.value} on every bar (${ticks.join(", ")})`, ticks.length === built.rows.length && ticks.every((t) => tenth(t) === built.uk.value), DRAWN_AT);
-  check("every row is a door to its city page", built.rows.every((r) => html.includes(`href="${r.href}"`)), DRAWN_AT);
-  const leadRow = html.split("<li ").find((s) => s.startsWith(`data-row="${built.lead.key}"`)) ?? "";
-  check("the lead's bar is the one marked", /data-marked="1"/.test(leadRow) && (html.match(/data-marked="1"/g) ?? []).length === 1, DRAWN_AT);
-  const title = /<h3[^>]*>([^<]*)<\/h3>/.exec(html)?.[1] ?? "";
-  check(`the title is the copy's, four words at most ("${title}")`, title === COPY.home.firmsLast.kicker && title.split(/\s+/).length <= 4, DRAWN_AT);
-  check("one supporting line, the lead's", (html.match(/<p /g) ?? []).length === 1 && html.includes(built.lead.words), DRAWN_AT);
-}
-
-/* THE UK PAGE'S RENDER (pages-fresh renders it first in the chain): the level after chapter 04's first, where new firms last beside which
-   trades fail most. */
-const VIEW_AT = { file: "src/components/spine/country/country-view.tsx", remedy: "seat FirmsLast in the zone keyed lasts after chapter 04's first level: split 1-1, even while both draw, FirmsLast then Duel" };
+/* THE UK PAGE'S RENDER (plan 2026-10-13 country-page-journey, Task 4): where new firms last stands behind slot 12's plus, "By city", each city
+   a row that opens its page, the lead stamped. */
+const VIEW_AT = { file: "src/lib/spine/slots/last.ts", remedy: "keep where new firms last behind slot 12's plus as one row a city, stamped, each a door to its page" };
 const gbRender = existsSync("scratchpad/harness/pages/country-GB.html") ? readFileSync("scratchpad/harness/pages/country-GB.html", "utf8") : "";
 if (gbRender && built) {
-  const at = gbRender.indexOf(`data-zone-label="${COPY.home.firmsLast.kicker}"`);
-  const zone = at < 0 ? "" : gbRender.slice(gbRender.lastIndexOf("<section", at), gbRender.indexOf("<section data-zone", at + 1));
-  const years = gbRender.indexOf('id="first-years"');
-  check("/gb draws where new firms last in a level of chapter 04 after its first, its lead stamped", years > 0 && at > years && /id="firms-last"/.test(zone) && new RegExp(`data-src="home/city_survival\\.json:${built.lead.key}"`).test(zone), VIEW_AT);
-  /* ONE LEVEL, TWO STATES (plan 2026-10-11 gb-ch04-lone-state; QUEUE gb:ch04-lone-state; final review M6). While the feed's item is fresh,
-     two even halves, where new firms last first; past its 45 days (from 2026-11-15 for the item of 2026-09-30) the duel leaves and where new
-     firms last stands alone in the zones' LONE two thirds: one cell, no even, no duel in the rail. The render is pages-fresh's, so from that
-     day this reads the lone level the site serves; scripts/harness/fake_today.cjs draws it before then. */
-  const cells = (zone.match(/data-zone-cell=""/g) ?? []).length;
-  if (/id="duel"/.test(zone)) check("the level is two halves with the duel, even, where the duel is fresh", /^<section data-zone="1-1"/.test(zone) && /data-zone-even/.test(zone) && cells === 2 && zone.indexOf('id="firms-last"') < zone.indexOf('id="duel"'), VIEW_AT);
-  else check(`past the duel's window the level is lone: where new firms last in its one cell, no even, no duel in the rail (${cells} cell(s))`, /^<section data-zone="lone"/.test(zone) && !/data-zone-even/.test(zone) && cells === 1 && !gbRender.includes('href="#duel"'), VIEW_AT);
+  const slot = gbRender.slice(gbRender.indexOf('data-slot="lasting"'), gbRender.indexOf('data-slot="exit"'));
+  const fold = slot.slice(slot.indexOf(`>${COPY.journey.more.byCity}<`));
+  check("/gb draws where new firms last behind slot 12's plus, one row a city, the lead stamped, each a door", slot.length > 0 && fold.length > 0 && new RegExp(`data-src="home/city_survival\\.json:${built.lead.key}"`).test(fold) && built.rows.every((r) => fold.includes(`href="${r.href}"`)), VIEW_AT);
 } else if (!gbRender) console.log("DEFER  scratchpad/harness/pages/country-GB.html is not rendered here; the /gb render's checks did not run");
 
 /* OFF THE HOME (plan 2026-10-09, home introduction, Task 10): the section is drawn on the page it belongs on, and the home no longer

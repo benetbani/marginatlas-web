@@ -23,7 +23,23 @@ const gb: LevelRef[] = [
   { key: "close", outside: true },
 ];
 /* Chapter 04's second level since plan 2026-10-09 (home introduction): where new firms last beside which trades fail most. */
-check("/gb locks eight of twelve chapter levels", same(lockedLevelKeys(gb), ["staff", "running", "peers", "money", "people", "cities", "spend", "lasts"]));
+check("a page of zones carried forward (the /gb of 2026-10-09) locks eight of twelve chapter levels", same(lockedLevelKeys(gb), ["staff", "running", "peers", "money", "people", "cities", "spend", "lasts"]));
+
+/* THE COUNTRY PAGE'S SLOTS (plan 2026-10-13 country-page-journey, Task 1F; spec section 8: his ruling 18 by analogy, each stage's first slot
+   open and every later slot of the stage locked): the masthead's two slots and the close stand outside, each stage tags its slots. */
+const gbSlots: LevelRef[] = [
+  { key: "tax-on-profit", outside: true }, { key: "where-it-stands", outside: true },
+  { key: "customers", chapter: "2" }, { key: "spend", chapter: "2" }, { key: "trades", chapter: "2" },
+  { key: "open", chapter: "3" },
+  { key: "hire", chapter: "4" }, { key: "running-costs", chapter: "4" }, { key: "credit", chapter: "4" }, { key: "filings", chapter: "4" }, { key: "peers", chapter: "4" },
+  { key: "lasting", chapter: "5" }, { key: "exit", chapter: "5" },
+  { key: "dealings", chapter: "6" }, { key: "changes", chapter: "6" },
+  { key: "close", outside: true },
+];
+check("/gb's slots lock eight: every slot after its stage's first", same(lockedLevelKeys(gbSlots), ["spend", "trades", "running-costs", "credit", "filings", "peers", "exit", "changes"]));
+check("a thin country's stages of one slot lock nothing but what follows a first", same(lockedLevelKeys(gbSlots.filter((s) => !["trades", "filings", "peers", "lasting", "changes"].includes(s.key))), ["spend", "running-costs", "credit"]));
+/* Slot 5b (the controller's ruling on Q1) where a country draws it: a third slot of the market, locked after the first. */
+check("a country drawing the trades' margins locks them with the market's later slots", same(lockedLevelKeys([...gbSlots.slice(0, 5), { key: "margins", chapter: "2" }, ...gbSlots.slice(5)]), ["spend", "trades", "margins", "running-costs", "credit", "filings", "peers", "exit", "changes"]));
 
 const london: LevelRef[] = [
   { key: "premises", chapter: "01" }, { key: "gates", chapter: "01" }, { key: "living", chapter: "01" }, { key: "crew", chapter: "01" },

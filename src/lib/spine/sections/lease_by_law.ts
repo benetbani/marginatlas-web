@@ -92,7 +92,7 @@ export function buildLeaseByLaw(law: LeaseLaw = LEASE_LAW, opts: { rentGbp?: num
   };
   push("renewal", "renewal_right", "Renewal", f.renewal_right?.value === "statutory" ? "By law" : null, "Unless you sign it away");
   const outDays = num(law, "contracting_out_notice_days");
-  push("signing-away", "contracting_out_notice_days", "Signing it away", outDays != null ? `${outDays} days' warning` : null, "Then a signed declaration");
+  push("signing-away", "contracting_out_notice_days", "Signing it away", outDays != null ? `${outDays} days' warning` : null, "Then a declaration");
   const request = f.tenant_request_months?.value as { min?: number; max?: number } | undefined;
   push("asking", "tenant_request_months", "Asking to renew", request?.min != null && request?.max != null ? `${request.min} to ${request.max} months` : null, "Before the date you ask for");
   const newYears = num(law, "new_tenancy_years_max");

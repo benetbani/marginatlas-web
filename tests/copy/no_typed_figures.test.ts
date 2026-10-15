@@ -76,7 +76,6 @@ control("the reader leaves a comment alone: {/* $618K */} and // 1", typedFigure
 /** Exceptions: a bare number that is not a reading of the world. Matched by file and text, never by line, so a line move never frees one. */
 const EXEMPT: Array<{ file: string; text: string; why: string }> = [
   { file: "src/app/not-found.tsx", text: "404", why: "the error page names its own status code; a code is not a measurement" },
-  { file: "src/components/spine/sections/JobMarket.tsx", text: "0%", why: "the left end of a track whose right end is the drawn maximum ({top}%): a scale's zero, not a reading" },
   { file: "src/components/spine2/page/Ch11FirstYear.tsx", text: "$0", why: "the cash chart's zero-line label; the chart's other axis labels are drawn from its figures" },
 ];
 

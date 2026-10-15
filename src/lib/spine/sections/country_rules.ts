@@ -22,6 +22,7 @@ import paymentsJson from "../../../../data/sections/payments.json";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { ChangeRow } from "@/components/spine/archetypes/DatedChanges";
 import type { FactRow } from "@/components/spine/archetypes/FactRows";
+import type { SlotRow } from "@/lib/spine/slots/types";
 
 /** One figure as the files hold it (changes.json and rules.json `_about`). */
 export type LawValue = {
@@ -89,18 +90,26 @@ function countryBlock<T>(file: unknown, iso2: string): T | null {
   return c && typeof c === "object" ? (c as T) : null;
 }
 
+/** How long a change in force stays news: the changes slot's recent run and the "since" note a dated row carries (src/lib/spine/slots/dated.ts),
+ *  one window (final review M11, 2026-10-15: the two held their own 120 and could drift). */
+export const RECENT_CHANGE_DAYS = 120;
+
 /**
  * THE CHANGES, IN TWO RUNS. COMING: every change enacted with a date after `today`, soonest first. IN FORCE: the changes in force,
  * the `lead` keys and every change of the last `recentDays` first, newest first (the ones a person opening a small business meets
  * first, and the news), then the rest newest first, which the card shows behind its plus; `inForceLead` counts the lead rows. A row
  * whose two values the module cannot say is left out, never half printed.
  */
-export function buildRuleChanges(iso2: string, today: string, lead: string[] = [], recentDays = 120): { coming: ChangeRow[]; inForce: ChangeRow[]; inForceLead: number } | null {
+export function buildRuleChanges(iso2: string, today: string, lead: string[] = [], recentDays = RECENT_CHANGE_DAYS): { coming: ChangeRow[]; inForce: ChangeRow[]; inForceLead: number } | null {
   const c = countryBlock<{ changes?: FileChange[] }>(changesJson, iso2);
   if (!c || !Array.isArray(c.changes)) return null;
   const row = (x: FileChange): ChangeRow | null => {
     const d = dateText(x.date);
-    const before = lawValue(x.before, !!x.from.per && x.from.per === x.before.per);
+    /* WHAT A RATE SITS OVER IS SAID ONCE, ON THE RIGHT, as the period is (plan 2026-10-13 country-page-journey, Task 4's model laws:
+       "2.5% over Bank Rate to 4% over Bank Rate" was the run's one long pair, and it widened the values' column until every short pair
+       stood a third of the card from its item, LABEL GAP). */
+    const overBoth = x.before.above != null && x.before.above === x.from.above;
+    const before = lawValue(overBoth ? { ...x.before, above: undefined } : x.before, !!x.from.per && x.from.per === x.before.per);
     const from = lawValue(x.from);
     if (!d || !before || !from) return null;
     return { key: `${x.key}-${x.date}`, item: x.item, dateText: d, iso: x.date, before, from };
@@ -156,6 +165,41 @@ export function nextChange(iso2: string, key: string, today: string): { dateText
   const d = dateText(hit.date);
   const from = lawValue(hit.from);
   return d && from ? { dateText: d, from } : null;
+}
+
+/** THE LEDGER AROUND ONE DAY, raw (plan 2026-10-13 country-page-journey, Task 3E): the newest change of a key in force on `today` and the
+ *  soonest coming after it, each with its values as the file holds them, so a row can print them in its own form (src/lib/spine/slots/dated.ts). */
+export function changeAround(iso2: string, key: string, today: string): { latest: { date: string; dateText: string; from: LawValue } | null; next: { date: string; dateText: string; from: LawValue; before: LawValue } | null } {
+  const c = countryBlock<{ changes?: FileChange[] }>(changesJson, iso2);
+  const all = (c?.changes ?? []).filter((x) => x.key === key);
+  const past = all.filter((x) => x.date <= today).sort((a, b) => b.date.localeCompare(a.date))[0];
+  const coming = all.filter((x) => x.date > today).sort((a, b) => a.date.localeCompare(b.date))[0];
+  const pastText = past ? dateText(past.date) : null;
+  const comingText = coming ? dateText(coming.date) : null;
+  return {
+    latest: past && pastText ? { date: past.date, dateText: pastText, from: past.from } : null,
+    next: coming && comingText ? { date: coming.date, dateText: comingText, from: coming.from, before: coming.before } : null,
+  };
+}
+
+/** One rule's value as the file holds it, or null. */
+export function ruleRaw(iso2: string, topic: string, key: string): LawValue | null {
+  const c = countryBlock<Record<string, unknown>>(rulesJson, iso2);
+  const list = c && Array.isArray(c[topic]) ? (c[topic] as FileRule[]) : null;
+  const r = list?.find((x) => x.key === key);
+  return r && r.value && typeof r.value === "object" ? r.value : null;
+}
+
+/** One rule as a slot's row: the file's label (or `label`), its value (bare drops the period, for a list whose label or head carries
+ *  it), its note (or `note`; a file note's semicolon read as a comma, the copy rule); null where the file holds no value it can say. */
+export function ruleRow(iso2: string, topic: string, key: string, opts: { bare?: boolean; label?: string; note?: string | null } = {}): SlotRow | null {
+  const c = countryBlock<Record<string, unknown>>(rulesJson, iso2);
+  const list = c && Array.isArray(c[topic]) ? (c[topic] as FileRule[]) : null;
+  const r = list?.find((x) => x.key === key);
+  const value = r ? lawValue(r.value, !!opts.bare) : null;
+  if (!r || !value) return null;
+  const note = opts.note !== undefined ? opts.note : typeof r.note === "string" ? r.note.replace(/;\s*/g, ", ") : null;
+  return { key, label: opts.label ?? r.label, value, note };
 }
 
 /**

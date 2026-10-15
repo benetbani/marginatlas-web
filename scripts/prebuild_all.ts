@@ -176,6 +176,61 @@ const GATES: Gate[] = [
   { name: "spacing-pin", script: "tests/spine/spacing_pin.test.ts" },
   /* D3 AND D6 ON THE ZONES, THE JUDGING (plan 2026-10-12 rhythm-air-inside, Task 1D): scripts/lib/zone_rhythm.mjs over fixtures; art-direction applies it to the renders. No browser. */
   { name: "zone-rhythm", script: "tests/spine/zone_rhythm.test.ts" },
+  /* THE COUNTRY PAGE'S MODEL (plan 2026-10-13 country-page-journey, Task 1A; his direction of 2026-10-13: the same slots, in the same
+     order and type, for every country): the sixteen slots and the ruled 5b in seven stages, their words within the copy rules, the
+     direction table the spec's. No browser. */
+  { name: "country-model", script: "tests/spine/country_model.test.ts" },
+  /* THE PROGRAMMATIC PROMISE (plan 2026-10-13 country-page-journey, Task 1B; spec section 8): /gb, /kh, /af and /de draw their slots in the
+     model's order and types, no seat, the index landing on what is drawn. Static, over the renders pages-fresh writes. */
+  { name: "country-slots", script: "tests/spine/country_slots.test.ts" },
+  /* ONE ANSWER TYPE A LIST (plan 2026-10-13 country-page-journey, Task 1C; his words of 2026-10-13, "in a declarative section you cannot
+     switch from words to numbers"): every list on a country render declares its type and holds that type alone, units out of the cells,
+     folds of two to eight rows (scripts/lib/answer_type.mjs). Static; its reading's fixtures beside it. */
+  { name: "answer-type", script: "scripts/harness/check_answer_type.mjs", args: ["--list"] },
+  { name: "answer-type-reader", script: "tests/spine/answer_type.test.ts" },
+  /* THE SIGNAL'S MARK RULE (plan 2026-10-13 country-page-journey, Task 1D; spec section 4): every mark on a country render names a directed
+     measure of the direction table, every placed figure follows it, the page carries its one key. Static. */
+  { name: "signal-marks", script: "tests/spine/signal_marks.test.ts" },
+  /* EVERY BROWSER CHECK READS INSIDE A CLOSED PLUS (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): seven checks read each page
+     again with its panels open (scripts/lib/open_panels.mjs), proved on planted pages, and KIND ADJACENT reads zones. A browser gate. */
+  { name: "panels-opened", script: "scripts/harness/check_panels_opened.mjs", browser: true },
+  /* THE SIGNAL (plan 2026-10-13 country-page-journey, Task 2; his ruling of 2026-10-13, "Green to red, only in the signal"): the state's
+     fifths, the triangle at its five angles, the five colours in one file the palette gate names, and no other triangle on a country page.
+     No browser. */
+  { name: "signal", script: "tests/spine/signal.test.ts" },
+  /* THE JOURNEY'S SHARED PIECES (plan 2026-10-13 country-page-journey, Task 3A; spec section 5): the answer fold, the declared list, the
+     focal's signal, the slot's frame. No browser. */
+  { name: "answer-fold", script: "tests/spine/answer_fold.test.ts" },
+  /* STAGE 1, ORIENT (plan 2026-10-13 country-page-journey, Task 3B): slot 1 answers on every country, slot 2's placed figures carry their
+     signals. No browser. */
+  { name: "slots-orient", script: "tests/spine/slots_orient.test.ts" },
+  /* STAGE 2, THE MARKET (plan 2026-10-13 country-page-journey, Task 3C): customers city by city, what households spend on, what trades take,
+     and what they keep where the seed holds their margins (5b, the controller's ruling on Q1). No browser. */
+  { name: "slots-market", script: "tests/spine/slots_market.test.ts" },
+  /* STAGE 3, TO OPEN (plan 2026-10-13 country-page-journey, Task 3D): the bill, the legal forms and the days, the steps, licences and walls from
+     abroad behind the plus, one type a list. No browser. */
+  { name: "slots-open", script: "tests/spine/slots_open.test.ts" },
+  /* STAGE 4, SLOT 7, AND THE DATED ROW (plan 2026-10-13 country-page-journey, Task 3E; Review Focus 3): what a hire costs, one type a list,
+     and a dated rule's value and note switching together on the change's day. No browser. */
+  { name: "slots-hire", script: "tests/spine/slots_hire.test.ts" },
+  /* STAGE 4, SLOTS 8 TO 11 (plan 2026-10-13 country-page-journey, Task 3F): running costs and credit placed with their signals, the UK's
+     filings, the peers stamped. No browser. */
+  { name: "slots-run", script: "tests/spine/slots_run.test.ts" },
+  /* STAGE 5, TO LAST (plan 2026-10-13 country-page-journey, Task 3G): how many last, selling or failing, one type a list, the time to sell
+     placed with its signal. No browser. */
+  { name: "slots-last", script: "tests/spine/slots_last.test.ts" },
+  /* STAGES 6 AND 7 (plan 2026-10-13 country-page-journey, Task 3H): how dealings go, the rule changes, where to next, and every coming or
+     recent change dated on its row or named as printed on none. No browser. */
+  { name: "slots-rules", script: "tests/spine/slots_rules.test.ts" },
+  /* THE COMPOSITION (plan 2026-10-13 country-page-journey, Task 4; spec section 6): every set of the slots composes into zones that pair only
+     two neighbouring slots of one stage, with D3 clean, and the four countries plan the slots the replicability gate expects. No browser. */
+  { name: "country-zones", script: "tests/spine/country_zones.test.ts" },
+  /* THE PROGRAMMATIC PROMISE ON EVERY COUNTRY (final review M2, 2026-10-15): every country's slot plan built from its files without a throw,
+     its slots in the model's order, every list one answer type and every fold two to eight rows. Files only, no database, no browser. */
+  { name: "country-sweep", script: "tests/spine/country_sweep.test.ts" },
+  /* THE LOCKS FOLLOW THE SLOTS (plan 2026-10-13 country-page-journey, Task 5; his ruling 18 by analogy): each stage's first slot open, every
+     later one its LockedSection, the trades' pages free. No browser. */
+  { name: "country-locks", script: "tests/spine/country_locks.test.ts" },
   /* THE PROVENANCE RATCHET (plan 06, task B5): on every harness render, the figures (the `fig` class) printed without data-src
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */

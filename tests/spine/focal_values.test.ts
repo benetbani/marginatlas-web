@@ -8,16 +8,16 @@
  * London trade page's strip print theirs already: tests/spine/home_forms.test.ts, tests/home/home_answers.test.ts).
  *
  * Holds, on the components and on /gb's render where the harness wrote it:
- *  - Obstacles (src/components/spine/sections/Obstacles.tsx): in the column form every column's share stands over its bar, the
- *    longest included, with room above the plot for it; in the row form every row prints its share, the top row included; the top's
- *    bar is flat --terra in both forms, with no gradient (the others are grey);
+ *  - what holds firms back: since plan 2026-10-13 country-page-journey (Task 4) every obstacle a row behind slot 12's plus, its share
+ *    printed, the top's too (its card, Obstacles.tsx, and the survival card, FirstYears.tsx, left with the page's old sections in that
+ *    plan's Task 6, and the checks that rendered them with them);
  *  - SurvivalCurve (src/components/spine/interact/SurvivalCurve.tsx): every point prints its share, the last (the terracotta dot)
  *    too, pinned inside the plot's right edge, and since critique pass 3, fix round D2, item P2.8 the start too (the whole cohort,
  *    the curve's own first point, never a typed "100%"), pinned inside the plot's left edge; and every one of those labels carries
  *    data-src and data-kind (fix round F1, group G2, the final review's M2), the stamp its builder gave the point (the start's, which
- *    is no share the file holds, worked out from the file's cohort), as Obstacles' labels carry theirs;
+ *    is no share the file holds, worked out from the file's cohort);
  *  - the source carries no guard that takes a mark's label away (`o === top ? null`, `!isLast`, a label behind `i > 0`);
- *  - /gb's render draws all of it in chapter 04.
+ *  - /gb's render draws all of it in slot 12.
  * BLIND SPOT: the source guards are read as text, so a label taken away by another route (a class that hides it) is seen only on the
  * render's markup, which counts the label elements and never measures that they are visible: the browser gates (page laws, holes,
  * readability) see what the render draws.
@@ -27,8 +27,6 @@
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { existsSync, readFileSync } from "node:fs";
-import { Obstacles } from "../../src/components/spine/sections/Obstacles";
-import { FirstYears } from "../../src/components/spine/sections/FirstYears";
 import { SurvivalCurve } from "../../src/components/spine/interact/SurvivalCurve";
 import { buildObstacles, buildSurvival } from "../../src/lib/spine/sections/first_years";
 import { COPY } from "../../src/lib/spine/copy";
@@ -36,42 +34,16 @@ import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "focal-values";
-const OBSTACLES = "src/components/spine/sections/Obstacles.tsx";
+const LAST = "src/lib/spine/slots/last.ts";
 const CURVE = "src/components/spine/interact/SurvivalCurve.tsx";
-const REMEDY = "print the focal mark's value on the drawing as its neighbours print theirs: Obstacles' top column and top row take their share (the top bar flat --terra), SurvivalCurve labels the start and the last point; the section's figure stays the large one above";
-const STAMP_REMEDY = "stamp every point label of SurvivalCurve from the builder, as Obstacles' labels are: buildSurvival (src/lib/spine/sections/first_years.ts) gives each point (and `start`, the whole cohort at year 0, beside them) a prov under sections/survival.json, FirstYears passes start in, and the label spreads provAttrs of its point";
+const REMEDY = "print the focal mark's value on the drawing as its neighbours print theirs: every obstacle's row behind slot 12's plus takes its share, SurvivalCurve labels the start and the last point; the section's figure stays the large one above";
+const STAMP_REMEDY = "stamp every point label of SurvivalCurve from the builder: buildSurvival (src/lib/spine/sections/first_years.ts) gives each point (and `start`, the whole cohort at year 0, beside them) a prov under sections/survival.json, slot 12 (StageLast.tsx) passes start in, and the label spreads provAttrs of its point";
 let failed = 0;
-const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? OBSTACLES, detail: label, remedy: at?.remedy ?? REMEDY }); };
+const check = (label: string, ok: boolean, at?: { file?: string; remedy?: string }) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file: at?.file ?? LAST, detail: label, remedy: at?.remedy ?? REMEDY }); };
 
 const obs = buildObstacles("GB");
 const sv = buildSurvival("GB");
 check("the UK's obstacles and survival build", !!obs && !!sv, { file: "src/lib/spine/sections/first_years.ts", remedy: "keep data/sections/survival.json's GB entry whole" });
-
-if (obs) {
-  const html = renderToStaticMarkup(React.createElement(Obstacles, { data: obs }));
-  const top = obs.items.reduce((a, b) => (b.pct > a.pct ? b : a));
-  /* THE COLUMN FORM: each column holds its share as a mark label (text "NN%") over its bar. */
-  const cols = [...html.matchAll(/<div data-col="([^"]+)"[^>]*>([\s\S]*?)<\/div>/g)].map((m) => ({ key: m[1], body: m[2] }));
-  const shareOf = (k: string) => obs.items.find((i) => i.key === k)?.pct;
-  const labelled = cols.filter((c) => new RegExp(`<span data-mark-label="true"[^>]*>${shareOf(c.key)}%</span>`).test(c.body));
-  check(`every obstacle's column prints its share over its bar, the longest (${top.label}, ${top.pct}%) included (${labelled.length} of ${obs.items.length})`, cols.length === obs.items.length && labelled.length === obs.items.length);
-  /* THE ROW FORM: each row prints its share at the right of its name. */
-  const rows = [...html.matchAll(/<li data-row="([^"]+)"[^>]*>([\s\S]*?)<\/li>/g)].map((m) => ({ key: m[1], body: m[2] }));
-  const rowLabelled = rows.filter((r) => r.body.includes(`>${shareOf(r.key)}%<`));
-  check(`every obstacle's row prints its share, the top row (${top.label}) included (${rowLabelled.length} of ${obs.items.length})`, rows.length === obs.items.length && rowLabelled.length === obs.items.length);
-  /* EVERY SHARE THE ROW FORM PRINTS IS A STAMPED FIGURE, read from the builder (the provenance ratchet counts the `fig` class: the top
-     row's share is a new figure on /gb, and a figure without its stamp raises that page's count). */
-  const stamped = [...html.matchAll(/<span class="fig [^"]*" data-src="(sections\/survival\.json:GB:obstacles:[^"]+)" data-kind="looked up">(\d+)%<\/span>/g)];
-  check(`every share the row form prints is a figure stamped from the builder, the top row's too (${stamped.length} of ${obs.items.length})`, stamped.length === obs.items.length && obs.items.every((i) => stamped.some((m) => m[1] === i.prov.src && Number(m[2]) === i.pct)));
-  /* THE TOP'S BAR IS FLAT --terra, IN BOTH FORMS, AND NO BAR IS DRAWN IN THE TERRACOTTA GRADIENT. */
-  const bars = [...html.matchAll(/<span (?:aria-hidden="true" )?data-bar="true"[^>]*style="([^"]*)"/g)].map((m) => m[1]);
-  const terraBars = bars.filter((s) => s.includes("var(--terra)"));
-  check(`the top's bar is flat --terra in both forms (${terraBars.length} bars, none with a gradient), and no bar draws the terracotta gradient`, terraBars.length === 2 && terraBars.every((s) => !/gradient/.test(s)) && !/gradient\([^)]*var\(--terra/.test(html));
-  /* THE COLUMN FORM HAS ROOM ABOVE ITS PLOT FOR THE LONGEST COLUMN'S LABEL. */
-  check("the columns' plot keeps 20px above its bars, so the longest column's share stands inside the drawing", /<div class="flex min-h-40 flex-1 items-stretch gap-2 pt-5" role="img"/.test(html));
-  /* THE SECTION'S FIGURE STAYS THE LARGE ONE, ONCE. */
-  check(`the section's figure is still the large one above the drawing (${top.pct}% at the focal rung, once)`, (html.match(/data-focal="1"/g) ?? []).length === 1 && new RegExp(`data-focal="1" class="[^"]*">${top.pct}%</div>`).test(html));
-}
 
 if (sv) {
   const words = { focal: COPY.firstYears.focalWords, focalIn: COPY.firstYears.focalWordsIn, start: COPY.firstYears.start, year: COPY.firstYears.year, regions: COPY.firstYears.regions, choose: COPY.firstYears.choose, country: "The UK", kicker: COPY.firstYears.kicker };
@@ -85,18 +57,17 @@ if (sv) {
   const start = sv.start as { year: number; pct: number; prov: { src: string; kind: string } } | undefined;
   const want = [Math.round(start?.pct ?? NaN), ...sv.points.map((p) => Math.round(p.pct))];
   check(`every point prints its share, the start (${want[0]}%) and the last (the terracotta dot, ${want[want.length - 1]}%) included (${labels.length} labels for ${sv.points.length + 1} points: ${labels.join(", ")})`, labels.length === sv.points.length + 1 && JSON.stringify(labels) === JSON.stringify(want), { file: CURVE });
-  check(`the builder gives the start beside its points: year ${start?.year ?? "none"}, before the file's first year (${sv.points[0].year}), a share (${start?.pct ?? "none"}) at least the first year's (${sv.points[0].pct}) and the cohort whole, and the curve draws no start of its own`, !!start && start.year < sv.points[0].year && start.year === 0 && start.pct >= sv.points[0].pct && start.pct === Math.max(start.pct, ...sv.points.map((p) => p.pct)) && Number.isFinite(start.pct), { file: "src/lib/spine/sections/first_years.ts", remedy: "have buildSurvival return `start` beside `points`: year 0, the whole cohort (definitional, said in a comment where it is built), stamped; FirstYears passes it to SurvivalCurve, which has no START constant of its own" });
+  check(`the builder gives the start beside its points: year ${start?.year ?? "none"}, before the file's first year (${sv.points[0].year}), a share (${start?.pct ?? "none"}) at least the first year's (${sv.points[0].pct}) and the cohort whole, and the curve draws no start of its own`, !!start && start.year < sv.points[0].year && start.year === 0 && start.pct >= sv.points[0].pct && start.pct === Math.max(start.pct, ...sv.points.map((p) => p.pct)) && Number.isFinite(start.pct), { file: "src/lib/spine/sections/first_years.ts", remedy: "have buildSurvival return `start` beside `points`: year 0, the whole cohort (definitional, said in a comment where it is built), stamped; slot 12 passes it to SurvivalCurve, which has no START constant of its own" });
   /* EVERY LABEL SAYS WHERE ITS SHARE WAS READ (fix round F1, group G2, the final review's M2): the card's `fig` figure is held to
-     the provenance ratchet, the labels (plain spans) are not, so nothing but this check sees a label printed bare. Obstacles' labels
-     spread `provAttrs(o.prov)`; the curve's points take their stamp from the builder the same way, the start's too (it is no share the
+     the provenance ratchet, the labels (plain spans) are not, so nothing but this check sees a label printed bare. The curve's points
+     take their stamp from the builder, the start's too (it is no share the
      file holds, so its stamp, on `start.prov`, says "worked out" from the file's cohort: every share in the file is of that cohort's
      births). The oracle is the builder's own stamps, read, and no src is typed here but the file's name. BLIND SPOT: this reads the country's
      curve, the only one static markup draws (a chosen region lives in the component's state); a region's points are held at the
      builder, and the label element's source for the spread, below. */
   const LEDGER_KINDS = ["counted", "worked out", "looked up", "estimate"];
-  /* The stamps are read off the CARD (FirstYears, the way /gb draws it), so the wiring that hands the curve the start's stamp is held too. */
-  const card = renderToStaticMarkup(React.createElement(FirstYears, { data: sv }));
-  const labelEls = [...card.matchAll(/<span data-mark-label="true"[^>]*>(\d+)%<\/span>/g)].map((m) => ({ src: /data-src="([^"]*)"/.exec(m[0])?.[1], kind: /data-kind="([^"]*)"/.exec(m[0])?.[1] }));
+  /* The stamps are read off the curve drawn with the builder's start, as slot 12 hands it; the /gb render's checks below hold that wiring on the page. */
+  const labelEls = [...html.matchAll(/<span data-mark-label="true"[^>]*>(\d+)%<\/span>/g)].map((m) => ({ src: /data-src="([^"]*)"/.exec(m[0])?.[1], kind: /data-kind="([^"]*)"/.exec(m[0])?.[1] }));
   const labelStamped = labelEls.filter((l) => !!l.src && LEDGER_KINDS.includes(l.kind ?? ""));
   check(`every point label carries data-src and data-kind, the start's too (${labelStamped.length} of ${labelEls.length})`, labelEls.length === sv.points.length + 1 && labelStamped.length === labelEls.length, { file: CURVE, remedy: STAMP_REMEDY });
   const given = [start?.prov, ...sv.points.map((p) => p.prov)];
@@ -117,24 +88,24 @@ if (sv) {
 
 /* THE SOURCE CARRIES NO GUARD THAT TAKES THE FOCAL MARK'S LABEL AWAY (read as text, comments stripped). */
 const code = (f: string) => stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n");
-const oSrc = code(OBSTACLES), cSrc = code(CURVE);
-check("Obstacles holds no `o === top ? null` guard on a share, and its fill takes no lead", !/o === top\s*\?\s*null/.test(oSrc) && !/const fill = \(lead/.test(oSrc), { file: OBSTACLES });
+const cSrc = code(CURVE);
 const curveLabels = [...cSrc.matchAll(/<span data-mark-label[\s\S]*?<\/span>/g)].map((m) => m[0]);
 check("SurvivalCurve labels every point, the start too: no `!isLast` guard on a label, none behind an index test (`i > 0 ?`, the guard that took the start's away), and its one label element prints `Math.round(p.pct)` read from its own point, never a typed share", !/!isLast/.test(cSrc) && !/\bi\s*(>|!==?)\s*0\s*\?[\s\S]{0,80}data-mark-label/.test(cSrc) && curveLabels.length === 1 && /\{Math\.round\(p\.pct\)\}%<\/span>$/.test(curveLabels[0]), { file: CURVE });
 check("SurvivalCurve's one label element spreads provAttrs of its own point (`{...provAttrs(p.prov)}`), so a chosen region's labels are stamped as the country's are, and the start, with its stamp, comes in as the `start` prop: no START constant, no typed `pct: 100`, no survival.json key in the component", curveLabels.length === 1 && curveLabels[0].includes("{...provAttrs(p.prov)}") && /\bstart: CurvePoint\b/.test(cSrc) && !/\bSTART\b/.test(cSrc) && !/\bpct:\s*100\b/.test(cSrc) && !/sections\/survival\.json/.test(cSrc), { file: CURVE, remedy: STAMP_REMEDY });
 
-/* THE RENDER, where the harness wrote it: /gb's chapter 04 draws both. */
+/* THE RENDER, where the harness wrote it: /gb's slot 12 draws both. */
 const GB = "scratchpad/harness/pages/country-GB.html";
 if (existsSync(GB)) {
   const page = readFileSync(GB, "utf8");
   /* A card's markup: from its id to the next card's id (the survival card stands before the obstacles card) or the next zone. */
   const at = (id: string, until: string) => { const i = page.indexOf(`id="${id}"`); if (i < 0) return ""; const j = page.indexOf(until, i + 1); return page.slice(i, j < 0 ? undefined : j); };
-  const obsPart = at("obstacles", "<section data-zone");
-  const cols = (obsPart.match(/data-col="/g) ?? []).length;
-  const colLabels = (obsPart.match(/<span data-mark-label="true"[^>]*>\d+%<\/span>/g) ?? []).length;
-  const rowLabels = [...obsPart.matchAll(/<li data-row="[^"]*"[\s\S]*?<\/li>/g)].filter((m) => />\d+%<\/span>/.test(m[0])).length;
-  check(`/gb's render prints every obstacle's share in both forms (${colLabels} column labels of ${cols}, ${rowLabels} rows)`, cols > 0 && colLabels === cols && rowLabels === cols, { file: "src/components/spine/country/country-view.tsx", remedy: "render the UK page (bash scratchpad/reform/render_some.sh \"country GB\") after Obstacles prints every share" });
-  const svPart = at("first-years", 'id="obstacles"');
+  /* THE OBSTACLES BEHIND SLOT 12'S PLUS (plan 2026-10-13 country-page-journey, Task 4): one row each, its share printed. */
+  const lasting = page.slice(page.indexOf('data-slot="lasting"'), page.indexOf('data-slot="exit"'));
+  const back = lasting.slice(lasting.indexOf(`>${COPY.journey.more.back}<`));
+  const shares = (obs?.items ?? []).filter((o) => back.includes(`>${o.pct}%<`)).length;
+  check(`/gb's render prints every obstacle's share behind slot 12's plus, one row each (${shares} of ${obs?.items.length ?? 0})`, !!obs && shares === obs.items.length, { file: "src/lib/spine/slots/last.ts", remedy: "keep every obstacle a row of slot 12's plus, its share printed" });
+  /* The curve before the slot's first plus. */
+  const svPart = lasting.slice(0, lasting.indexOf('data-fold="answer"'));
   const pts = Number(/data-archetype="survival-curve"[^>]*data-points="(\d+)"/.exec(svPart)?.[1] ?? 0);
   const ptLabels = (svPart.match(/<span data-mark-label="true"[^>]*>\d+%<\/span>/g) ?? []).length;
   check(`/gb's render labels every point, the start too (${ptLabels} labels for ${pts} points and the start)`, pts > 0 && ptLabels === pts + 1, { file: "src/components/spine/country/country-view.tsx", remedy: "render the UK page (bash scratchpad/reform/render_some.sh \"country GB\") after SurvivalCurve labels its start and its last point" });

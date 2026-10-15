@@ -90,6 +90,8 @@
       "browser": true,
       "asserts": "THE PAGE LAWS OF 2026-09-20, held on a rendered page.",
       "reads": [
+        "scratchpad/harness/pages",
+        "scripts/harness/level_height_baseline.json",
         "scripts/harness/page_laws_baseline.json",
         "scripts/harness/pages.json"
       ],
@@ -285,6 +287,242 @@
       "reads": [
         "scripts/lib/zone_rhythm.mjs",
         "scripts/verify_art_direction.mjs"
+      ],
+      "claims": []
+    },
+    {
+      "name": "country-model",
+      "script": "tests/spine/country_model.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COUNTRY PAGE'S MODEL (plan 2026-10-13 country-page-journey, Task 1A; spec E:/atlas/docs/superpowers/specs/2026-10-13-country-page-journey-design.md, sections 2 to 4; R5 section 5, adopted row for ",
+      "reads": [
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/country_slots.ts",
+        "src/lib/spine/owner_direction.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "country-slots",
+      "script": "tests/spine/country_slots.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PROGRAMMATIC PROMISE (plan 2026-10-13 country-page-journey, Task 1B; spec section 8: \"a replicability test that /gb, /kh, /af and /de draw their slots in the model's order and types\"; his question",
+      "reads": [
+        "scripts/harness/pages.json",
+        "src/components/spine/country/country-view.tsx",
+        "tests/spine/country_slots.test.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "answer-type",
+      "script": "scripts/harness/check_answer_type.mjs",
+      "args": [
+        "--list"
+      ],
+      "browser": false,
+      "asserts": "check_answer_type , ONE ANSWER TYPE A LIST (plan 2026-10-13 country-page-journey, Task 1C; spec sections 3 and 6).",
+      "reads": [
+        "scripts/harness/pages.json"
+      ],
+      "claims": []
+    },
+    {
+      "name": "answer-type-reader",
+      "script": "tests/spine/answer_type.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "ONE ANSWER TYPE A LIST, THE READING (plan 2026-10-13 country-page-journey, Task 1C; spec sections 3 and 6): scripts/lib/answer_type.mjs over jsdom fixtures: the value classes, the unit in a cell, the ",
+      "reads": [
+        "scripts/harness/check_answer_type.mjs",
+        "scripts/lib/answer_type.mjs"
+      ],
+      "claims": []
+    },
+    {
+      "name": "signal-marks",
+      "script": "tests/spine/signal_marks.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SIGNAL'S MARK RULE (plan 2026-10-13 country-page-journey, Task 1D; spec section 4, and section 8: \"the signal's direction table read for every mark printed\").",
+      "reads": [
+        "scripts/harness/pages.json",
+        "src/components/spine/country/country-view.tsx",
+        "src/lib/spine/signal.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "panels-opened",
+      "script": "scripts/harness/check_panels_opened.mjs",
+      "args": [],
+      "browser": true,
+      "asserts": "check_panels_opened , EVERY BROWSER CHECK READS INSIDE A CLOSED PLUS (plan 2026-10-13 country-page-journey, Task 1E; spec section 5: \"every browser check that reads a section's content opens the panel",
+      "reads": [
+        "scratchpad/journey/panels",
+        "scripts/harness/check_model_laws.mjs",
+        "scripts/harness/check_page_holes.mjs",
+        "scripts/harness/check_page_laws.mjs",
+        "scripts/harness/probe_page.mjs",
+        "scripts/verify_art_direction.mjs",
+        "scripts/verify_full_width_sitewide.mjs",
+        "scripts/verify_gathered_emptiness.mjs"
+      ],
+      "claims": []
+    },
+    {
+      "name": "signal",
+      "script": "tests/spine/signal.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SIGNAL (plan 2026-10-13 country-page-journey, Task 2; spec section 4): the state's arithmetic (src/lib/spine/signal.ts) on fixtures and on the UK's electricity; the triangle (src/components/spine/",
+      "reads": [
+        "scripts/harness/pages.json",
+        "scripts/verify_palette_membership.mjs",
+        "src/components/spine/charts/WorldRange.tsx",
+        "src/components/spine/signal/Signal.tsx",
+        "src/components/spine/signal/tokens.ts",
+        "src/lib/spine/signal.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "answer-fold",
+      "script": "tests/spine/answer_fold.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SHARED PIECES OF THE JOURNEY (plan 2026-10-13 country-page-journey, Task 3A; spec sections 3 and 5): DetailPanel's answer fold (closed, the head, the count and the plus at the row's end, a 44px ro",
+      "reads": [
+        "src/components/spine/archetypes/DetailPanel.tsx",
+        "src/components/spine/archetypes/FactRows.tsx",
+        "src/components/spine/country/Slot.tsx",
+        "src/components/spine/kit.tsx",
+        "src/lib/spine/slots/types.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "slots-orient",
+      "script": "tests/spine/slots_orient.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 1, ORIENT (plan 2026-10-13 country-page-journey, Task 3B; spec sections 3 and 4; R5 section 5, slots 1 and 2): his masthead holds slot 1 (the tax on profit, its thin state the company rate under",
+      "reads": [
+        "src/components/spine/archetypes/HeroBoard.tsx",
+        "src/lib/spine/hero_board.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "slots-market",
+      "script": "tests/spine/slots_market.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 2, THE MARKET (plan 2026-10-13 country-page-journey, Task 3C; spec sections 2 and 3; R5 section 5, slots 3 to 5, and 5b by the controller's ruling on Q1): customers city by city (the national ty",
+      "reads": [
+        "src/components/spine/country/slots/StageMarket.tsx",
+        "src/lib/spine/slots/market.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "slots-open",
+      "script": "tests/spine/slots_open.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 3, TO OPEN (plan 2026-10-13 country-page-journey, Task 3D; spec sections 2 and 3; R5 section 5, slot 6): one slot, \"Forms, fees and days\": the bill at 30 (its own shard figure, stamped), the leg",
+      "reads": [
+        "src/components/spine/country/slots/StageOpen.tsx",
+        "src/lib/spine/slots/open.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "slots-hire",
+      "script": "tests/spine/slots_hire.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 4, SLOT 7, WHAT A HIRE COSTS, AND THE DATED ROW (plan 2026-10-13 country-page-journey, Task 3E; spec sections 2 and 3; R5 section 5, slot 7; Review Focus 3).",
+      "reads": [
+        "src/components/spine/country/slots/StageHire.tsx",
+        "src/lib/spine/slots/dated.ts",
+        "src/lib/spine/slots/hire.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "slots-run",
+      "script": "tests/spine/slots_run.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 4, SLOTS 8 TO 11 (plan 2026-10-13 country-page-journey, Task 3F; spec sections 2 to 4; R5 section 5, slots 8 to 11): running costs (electricity at 30, placed with its signal, diesel a row; the U",
+      "reads": [
+        "src/components/spine/country/slots/StageRun.tsx",
+        "src/lib/spine/slots/run.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "slots-last",
+      "script": "tests/spine/slots_last.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGE 5, TO LAST (plan 2026-10-13 country-page-journey, Task 3G; spec sections 2 and 3; R5 section 5, slots 12 and 13): how many last (the UK's survival curve with its figure at 30 and its region leve",
+      "reads": [
+        "src/components/spine/country/slots/StageLast.tsx",
+        "src/lib/spine/slots/last.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "slots-rules",
+      "script": "tests/spine/slots_rules.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "STAGES 6 AND 7 (plan 2026-10-13 country-page-journey, Task 3H; spec sections 2 and 3; R5 section 5, slots 14 to 16): how dealings go (the state's and the people's spectra under one switch, their two f",
+      "reads": [
+        "src/components/spine/country/slots/StageRules.tsx",
+        "src/lib/spine/slots/dated.ts",
+        "src/lib/spine/slots/rules.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "country-zones",
+      "script": "tests/spine/country_zones.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE COMPOSITION (plan 2026-10-13 country-page-journey, Task 4; spec section 6: \"The stage order is the phone's one column; a desktop pair joins only two neighbouring slots of one stage\"; section 3: \"A",
+      "reads": [
+        "src/lib/spine/slots/plan.ts",
+        "src/lib/spine/slots/zones.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "country-sweep",
+      "script": "tests/spine/country_sweep.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PROGRAMMATIC PROMISE ON EVERY COUNTRY (plan 2026-10-13 country-page-journey, final review M2, 2026-10-15).",
+      "reads": [
+        "src/lib/spine/slots",
+        "src/lib/spine/slots/plan.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "country-locks",
+      "script": "tests/spine/country_locks.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE LOCKS FOLLOW THE SLOTS (plan 2026-10-13 country-page-journey, Task 5; spec section 8: \"his ruling 18 by analogy: each stage's first slot open, every later slot of the stage locked when the paywall",
+      "reads": [
+        "src/components/spine/country/country-view.tsx",
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/slots/locks.ts"
       ],
       "claims": []
     },
@@ -2102,7 +2340,6 @@
         "scratchpad/harness/pages/home-gb.html",
         "scripts/harness/fake_today.cjs",
         "src/components/spine/archetypes/RankedBars.tsx",
-        "src/components/spine/country/Duel.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/lib/home/duel.ts"
       ],
@@ -2134,10 +2371,9 @@
         "data/uk/registers/survival.json",
         "scratchpad/harness/pages/country-GB.html",
         "scratchpad/harness/pages/home-gb.html",
-        "src/components/spine/country/FirmsLast.tsx",
-        "src/components/spine/country/country-view.tsx",
         "src/components/spine/home/home-view.tsx",
-        "src/lib/spine/copy.ts"
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/slots/last.ts"
       ],
       "claims": []
     },
@@ -2151,8 +2387,8 @@
         "scratchpad/harness/pages/country-GB.html",
         "src/components/spine/country/country-view.tsx",
         "src/components/spine/interact/SurvivalCurve.tsx",
-        "src/components/spine/sections/Obstacles.tsx",
-        "src/lib/spine/sections/first_years.ts"
+        "src/lib/spine/sections/first_years.ts",
+        "src/lib/spine/slots/last.ts"
       ],
       "claims": []
     },
@@ -2784,7 +3020,6 @@
       "asserts": "verify_interact: A DRAWING'S PARTS ANSWER THE READER, AND ONLY WITH THE DRAWING'S OWN DATA (goal 2026-09-26, his message of that afternoon: \"study the potential dynamism of all sections ...",
       "reads": [
         "scripts/harness/pages.json",
-        "src/components/spine/interact/CoverPicker.tsx",
         "src/components/spine/interact/HireLever.tsx",
         "src/components/spine/interact/LoanLever.tsx",
         "src/components/spine/interact/Marks.tsx",
@@ -3040,6 +3275,7 @@
         "scripts/palette_baseline.json",
         "src/app",
         "src/components",
+        "src/components/spine/signal/tokens.ts",
         "src/lib",
         "src/styles"
       ],
@@ -3703,7 +3939,6 @@
         "src/app/not-found.tsx",
         "src/app/world/page.tsx",
         "src/components",
-        "src/components/spine/sections/JobMarket.tsx",
         "src/components/spine2/page/Ch11FirstYear.tsx",
         "tests/copy/no_typed_figures.test.ts"
       ],
@@ -4223,6 +4458,7 @@
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 4 (the honesty gate): \"Anything modeled or sampled carries a visible SampleTag.",
       "reads": [
+        "src/components/spine/country/Slot.tsx",
         "src/components/spine/country/country-view.tsx"
       ],
       "claims": []
