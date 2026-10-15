@@ -5,6 +5,9 @@
  * tile (h-7 w-7 rounded-lg AtlasIcon) LEFT of the title. Icons are ON at
  * subsection level (2026-07-11 reversal)." Every <Head> and <Rail> call
  * site on the spine/home surfaces must carry an `icon=` attribute.
+ * Since plan 2026-10-12 rhythm-air-inside, Task 5 (his rule of 2026-10-13) the icon draws as a bare 32px
+ * terracotta glyph, no tile; this gate still reads only that the icon is passed, and tiles-openers
+ * (tests/spine/tiles_openers.test.ts) reads how it is drawn.
  *
  * Tag-scan is multiline-aware (mirrors verify_bar_budget's brace-depth
  * approach, generalized from `}` to the tag's own closing `>`): an opening

@@ -11,7 +11,7 @@
  * `scale="log"` for a field whose world spans orders of magnitude (pay, prices of a service), linear otherwise.
  */
 import * as React from "react";
-import { Fig, Ico } from "@/components/spine/kit";
+import { Fig } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { WorldRange } from "@/lib/spine/world_stats";
 import type { Provenance } from "@/lib/spine/provenance";
@@ -100,7 +100,6 @@ export function WorldRangeRows({ rows, headless = false, ends, showEnds = true }
         return (
           <div key={r.key} data-row={r.key}>
             {headless || r.headless ? null : <div className="flex items-center gap-3">
-              {r.icon ? <Ico id={r.icon} tone="terra" /> : null}
               <span data-label className="text-[length:var(--t-body)] text-[var(--c-ink)]">{r.label}</span>
               <span className="whitespace-nowrap">
                 <Fig className="text-[length:var(--t-lead)] font-semibold text-[var(--c-ink)]">{r.display}</Fig>

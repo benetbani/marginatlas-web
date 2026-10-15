@@ -39,7 +39,6 @@
  */
 import * as React from "react";
 import { NOTE_CAP, type LocalNote } from "@/lib/spine/note_shape";
-import { Ico } from "@/components/spine/kit";
 import { Dots } from "@/components/spine/archetypes/TiersTable";
 
 /** `fill` (2026-09-25): the notes share the height the level lends the card (a taller neighbour), each note an equal row, instead
@@ -56,10 +55,8 @@ export function NoteList({ notes, columns = 1, editorial = true, fill = false }:
             {/* THE TITLE LEADS ITS FACT (2026-09-26, the capitals ruling's follow-through on "bad hierarchy"): the title stood at
                 12px over a 14px fact, so the eye met the explanation before the claim it explains. Both at the body rung now, the
                 title in bold ink and the fact in regular ink2: one size, two weights, one order. */}
-            {/* A GLYPH A NOTE (the goal of 2026-09-26, M6): where the note carries one, the terracotta tile stands before the title,
-                on its line, so four notes read as four subjects before a word is read and the fact keeps the note's full width (a
-                column of its own narrowed every fact by 40px, and the trade page's suits card grew until the card beside it held a
-                50px foot). */}
+            {/* NO GLYPH ON A NOTE (plan 2026-10-12 rhythm-air-inside, Task 5: tiles on openers only): the terracotta tile a note drew
+                before its title from 2026-09-26 (M6) is gone; a note is its title and its fact. */}
             <div>
               {/* SYMBOLS OVER WORDS (his message of 2026-09-25): a paperwork level is drawn as the legal forms table draws it, the
                   table's own dots in ink, so "Three dots" is read off the mark it names; the words stay for a screen reader. */}
@@ -67,11 +64,6 @@ export function NoteList({ notes, columns = 1, editorial = true, fill = false }:
                 <div data-note-label className="flex h-[1.375em] items-center text-[length:var(--t-body)] leading-snug">
                   <span className="inline-flex"><Dots n={n.dots} tone="ink" /></span>
                   <span className="sr-only">{n.label}</span>
-                </div>
-              ) : n.icon ? (
-                <div data-note-label className="flex items-center gap-2 text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">
-                  <Ico id={n.icon} tone="terra" />
-                  <span className="min-w-0">{n.label}</span>
                 </div>
               ) : (
                 <div data-note-label className="text-[length:var(--t-body)] font-semibold leading-snug text-[var(--c-ink)]">{n.label}</div>

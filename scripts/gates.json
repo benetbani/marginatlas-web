@@ -303,6 +303,21 @@
       "claims": []
     },
     {
+      "name": "tiles-openers",
+      "script": "tests/spine/tiles_openers.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "TILES ON OPENERS ONLY, READ AS HIS RULE OF 2026-10-13 (plan 2026-10-12 rhythm-air-inside, Task 5; spec E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, section 2.4, and the coun",
+      "reads": [
+        "scripts/harness/pages.json",
+        "scripts/lib/spine_scan.mjs",
+        "src/components/spine/archetypes/FactRows.tsx",
+        "src/components/spine/kit.tsx",
+        "tests/spine/tiles_openers.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "country-model",
       "script": "tests/spine/country_model.test.ts",
       "args": [],

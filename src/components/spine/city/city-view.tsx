@@ -95,9 +95,8 @@ import { spineCitySeed } from "@/lib/spine-seeds";
    MODEL.md, THE SAMPLE MARK IS BEHIND ONE SWITCH), and scripts/verify_sample_tags.ts
    proves the wiring by the reference, so the mark returns on every modelled
    card the day the switch is flipped. */
-import { Basis, Box, Rail, Ico, SampleTag, usd, Fig, FocalWords } from "@/components/spine/kit";
+import { Basis, Box, Rail, SampleTag, usd, Fig, FocalWords } from "@/components/spine/kit";
 import { Zone, type ZoneSplit } from "@/components/spine/zones";
-import type { AtlasIconId } from "@/components/brand/icons";
 import { EVERYDAY_TRADES } from "@/lib/spine/adapt_city";
 import { countWord } from "@/lib/spine/district_rows";
 import { Terminus } from "@/components/spine/archetypes/Terminus";
@@ -430,8 +429,10 @@ function Earnings({ strip }: { strip: CityEarningsData | null }) {
  * hairline between rows, equal heights, seven rows maximum. Never a chip,
  * never a wrapped ragged row"; PART 9 clause 21 bans the wrapped chips this
  * card drew until today). One row per trade, full card width at every width:
- * the trade's own icon tile (the trade family of icons), its name, and the
- * arrow at the right edge with a `--c-soft` hover, because every row
+ * the trade's name and the arrow at the right edge (the 28px tile PART 5
+ * names went on 2026-10-12, plan rhythm-air-inside Task 5, by his rule of
+ * 2026-10-13: a section's icon is never repeated inside it, and the
+ * fallback tile was the opener's own high-street glyph) with a `--c-soft` hover, because every row
  * navigates to the trade's page under this city (PART 5, LINKS LOOK LIKE
  * LINKS). NO FIGURE PER ROW: take-home and margin are stripped upstream by
  * the 2026-07-11 ban (adapt_city.ts maps the list down to name, slug and
@@ -478,19 +479,6 @@ function Earnings({ strip }: { strip: CityEarningsData | null }) {
  * was the page's alternation between two opener styles inside one band.
  * Hover is INK on the name and `--c-soft` on the row, never the accent (§37).
  */
-/* slug -> the trade's icon tile, the trade family (added 2026-07-08). Every
-   everyday trade that resolves a cell has one; an unknown slug takes the
-   street rather than no tile, so every row keeps one geometry. */
-const TRADE_ICON: Record<string, AtlasIconId> = {
-  "restaurants": "trade-restaurant",
-  "grocery-stores": "trade-grocery",
-  "pharmacies": "trade-retail",
-  "hairdressers-beauty": "trade-salon",
-  "sports-fitness": "trade-gym",
-  "auto-repair-shops": "trade-auto",
-  "cafes-coffee-shops": "trade-cafe",
-  "bars-nightclubs": "trade-bar",
-};
 const SLATE_ORDER: string[] = [...EVERYDAY_TRADES];
 const hasTradesHere = (d: any) => (d?.trades_here?.list?.length ?? 0) >= 4;
 /* A seat's line names the city, the way the neighbourhoods seat's does
@@ -520,9 +508,8 @@ function TradesHere({ d }: { d: any }) {
             href={t.href}
             data-row={t.slug}
             data-lands={t.lands}
-            className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-3 no-underline transition hover:bg-[var(--c-soft)]"
+            className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 no-underline transition hover:bg-[var(--c-soft)]"
           >
-            <Ico id={TRADE_ICON[t.slug] ?? "high-street"} />
             <span data-label className="min-w-0 truncate text-[length:var(--t-body)] font-medium text-[var(--c-ink)]">{t.name}</span>
             <span aria-hidden="true" className="pr-1 text-[length:var(--t-body)] text-[var(--c-muted)]">&#8594;</span>
           </a>

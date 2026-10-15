@@ -1758,9 +1758,11 @@ export function BentoBandStories({ instances = pickBentoBandInstances(), city = 
             cols: 1,
             rows: 2,
             node: (
-              <Box className="h-full">
+              <Box className="flex h-full flex-col">
                 <Rail icon="locals-know" kicker={`${COPY.locals.kicker}, ${nameOf("GB")}`} sample />
-                <NoteList notes={notes.notes} columns={1} />
+                {/* The notes share the two rows' height (NoteList's fill): with the opener's gap at 4 (plan 2026-10-12, Task 5, fix round 1) the
+                    title takes one line, and the notes left a 399 by 186 blank under them at 768 (LONE STAT). */}
+                <NoteList notes={notes.notes} columns={1} fill />
               </Box>
             ),
           },

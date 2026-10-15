@@ -20,7 +20,7 @@
  *    the model laws read the figures on their row's line.
  */
 import * as React from "react";
-import { Box, Fig, Focal, Ico, InlineDisclosure, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, InlineDisclosure, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { StockKit, StockTierKey } from "@/lib/spine/sections/stock_kit";
 
@@ -72,7 +72,6 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
     return (
       <div key={r.cat} data-row={r.cat} className="col-span-full grid grid-cols-subgrid items-start border-t border-[var(--c-border)] py-2">
         <span className="flex min-w-0 items-center gap-3">
-          <Ico id={r.icon} tone="terra" />
           <span className="min-w-0">
             <span data-label className="block break-words text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
             <span className="block text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">&times;{r.qty}</span>
@@ -146,8 +145,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
               /* `max-w-none`: a list item carries the prose measure site-wide (BarList's rows say the same), and the prices stood 45px
                  short of the card's right edge. */
               const row = (l: (typeof byCost)[number]) => (
-                <li key={l.cat} data-row={l.cat} className="grid max-w-none grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-[var(--c-border)] py-2 first:border-t-0">
-                  <Ico id={l.icon} tone="terra" />
+                <li key={l.cat} data-row={l.cat} className="grid max-w-none grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 border-t border-[var(--c-border)] py-2 first:border-t-0">
                   <span className="min-w-0">
                     <span data-label className="block text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{l.label} <span className="text-[var(--c-muted)]">&times;{l.qty}</span></span>
                     <span className="block break-words text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{l.name}</span>

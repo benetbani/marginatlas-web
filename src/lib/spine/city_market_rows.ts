@@ -6,10 +6,10 @@
  * main pages hold "more sections", from what the files hold, MODEL PART 9
  * clause 63). The first question, PART 9 clause 57: six trades' density is a
  * ranking of one quantity, and a ranking of under seven members is his B1
- * bars (RankedBars, the districts card's form), each row wearing its trade's
- * icon tile (the site's trade-rows grammar, PART 5), which is what makes the
- * page's second ranked-bars card look unlike its first (clause 55: two of
- * one kind must differ; `data-look="icons"` says how).
+ * bars, drawn since plan 2026-10-12's Task 5 fix round 1 as the kit's slim
+ * BarList (the trade tiles that made it unlike the districts' RankedBars went
+ * with tiles on openers only; clause 55: two of one kind must differ, and
+ * now they are two kinds). A row's `icon` is drawn nowhere.
  *
  * WHERE THE ROWS COME FROM, each figure with its file and field, on the
  * city shard (data/facts/city/<ISO2>-<slug>.json through city_shard.ts):

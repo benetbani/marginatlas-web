@@ -22,8 +22,9 @@
  *    headline whatever its answer cards number. The harness reads the level
  *    and counts the h1s.
  *  - THE TRADE IDENTITY VARIANT (MODEL.md 8.7, plan step 34, 2026-09-18): a
- *    trade anywhere has no flag, so `tile` puts the trade's 28px icon tile
- *    in the flag's seat and drops the country mark; see the prop.
+ *    trade anywhere has no flag, so `tile` puts the trade's 28px glyph (bare
+ *    and grey since 2026-10-12, Task 5) in the flag's seat and drops the
+ *    country mark; see the prop.
  *  - THE MASTHEAD DECLARES WHAT IT ANSWERS (plan step 39, 2026-09-19):
  *    `answers`, a kind from src/lib/spine/door_kinds.ts, set by each
  *    surface's view from SURFACE_ANSWERS and stamped as `data-answers`, so a
@@ -32,8 +33,8 @@
  *    render for this stamp, and reds a page-level masthead without one.
  */
 import * as React from "react";
-import { Band, Box, Ico, Rail, SampleTag } from "@/components/spine/kit";
-import type { AtlasIconId } from "@/components/brand/icons";
+import { Band, Box, Rail, SampleTag } from "@/components/spine/kit";
+import { AtlasIcon, type AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import { AtlasMark } from "@/components/spine/marks";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -75,14 +76,14 @@ export type AnswerCardProps = {
    * measured. The country's three (COPY.answer) are the default, so the
    * country masthead is unchanged; the trade masthead passes its own. */
   absent?: { label: string; word: string; note: string };
-  /** The rail's icon tile at section level. */
+  /** The rail's opener glyph at section level. */
   icon?: AtlasIconId;
   /** THE TRADE IDENTITY VARIANT (MODEL.md 8.7 `00 take`: "the trade's 28px
    * icon tile in the flag's seat"; plan step 34's first dispatch,
    * 2026-09-18): a page whose subject is a trade anywhere has no flag and no
-   * country mark, so the identity row draws the trade's own tile (the kit's
-   * `Ico`, PART 5's 28px trade tile, the one the city's trade rows draw)
-   * where the flag stands, then the h1, and nothing else: the country mark
+   * country mark, so the identity row draws the trade's own glyph (PART 5's
+   * 28px trade mark; since 2026-10-12 bare and grey, no tile, by his rule
+   * of 2026-10-13) where the flag stands, then the h1, and nothing else: the country mark
    * that leads the flag on a country's or a city's masthead is not drawn,
    * because it names an altitude this page does not have. The same
    * component, one more seat; undefined on every other masthead, which
@@ -112,7 +113,9 @@ export function AnswerCard({ id = "take", name, iso2, image, subtitle, answer, c
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           {/* NO TILE, NO MARK (2026-09-26, the district page's review): the fallback was a 13px "Country level" glyph at 55% opacity
               before the flag, on the district and trade heroes too, a mark nobody could read and a wrong one there. */}
-          {tile ? <span data-identity-tile={tile} className="inline-flex"><Ico id={tile} /></span> : null}
+          {/* THE TRADE'S GLYPH, BARE AND GREY (plan 2026-10-12 rhythm-air-inside, Task 5; his rule of 2026-10-13: no background on an icon, and
+              terracotta only at a section's opener): the 28px seat the tile held, the glyph alone in ink2 at the family's 1.6 stroke. */}
+          {tile ? <span data-identity-tile={tile} aria-hidden className="inline-flex"><AtlasIcon id={tile} size={28} strokeWidth={1.6} className="spine-ic shrink-0" style={{ color: "var(--c-ink2)" }} /></span> : null}
           {image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={image.src} alt={image.alt} width={80} height={60} className="h-[60px] w-20 shrink-0 rounded-lg object-cover" data-hero-image />

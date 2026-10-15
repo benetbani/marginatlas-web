@@ -1419,6 +1419,11 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
   line-height: 28px;
   letter-spacing: -0.01em;
 }
+/* THE OPENER'S GLYPH STANDS ON THAT LINE (plan 2026-10-12 rhythm-air-inside, Task 5): its box is the title's first line, so the bare 32px
+   glyph is centred on the 28 here as it is on the 20 inside a card (measured at 375 on /gb: on a 20px box it stood 4px above the line's centre). */
+[data-zone] .spine-card:not([data-keep-card]) [data-rail] [data-opener-box] {
+  height: 28px;
+}
 /* THE LINE THAT CARRIES A SECTION'S FIGURE IS BODY TEXT (14 on 20, DISTANCES.md section 4: "14 for the sentence that carries
    it"), not a 12px caption: research R2 and RATIOS.md measured half the old page set at the 12px floor. */
 [data-zone] .spine-card:not([data-keep-card]) [data-focal-words],
