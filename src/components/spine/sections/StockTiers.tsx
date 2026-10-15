@@ -83,7 +83,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
           return (
             <span key={t.key} className="min-w-0">
               <Fig className="block text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{dollars(l.usd)}</Fig>
-              <span className="block truncate text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]" title={l.name}>{l.name}</span>
+              <span className="block break-words text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{l.name}</span>
             </span>
           );
         })}
