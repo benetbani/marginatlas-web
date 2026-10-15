@@ -666,3 +666,43 @@ browser at a time; the full chain and the full typecheck are the check server's.
 - M4, M7 and M12, not done, as ruled.
 - The archetype sheet still times out at 360s, here and on the check server.
 - The standing reds above, unchanged by this wave; the production probe waits on the owner's deploy word.
+
+### The fix wave's re-review (0f6e54b0)
+
+The re-review (`.superpowers/sdd/country-journey-fixwave-rereview.md` in the main checkout) found every finding addressed, one new
+Important and four Minors. The controller asked for the Important and Minors 1, 3 and 4, in one commit.
+
+- **Important 1, LEVEL HEIGHT could pass having read nothing.** The walk now returns, at 1280, the zones that declare two cells and the
+  levels of two it read side by side. The run reds, outside both ratchets (nothing can be allowed of them): a page that declares a level
+  of two and reads none, a run that read no page at 1280, a ledger page whose entry is above 0 and that reads no level (lowered only by
+  `--write-baseline`), and a `--list` run whose pages gave the law no level at all. A page passed by hand that declares no level of two
+  is not red, and the summary line says what was read. The list's renders follow `HARNESS_PAGES_DIR` as page_renders.mjs does.
+  The fixture is in panels-opened, beside its KIND ADJACENT plant: a zone declared `1-1` whose level is drawn as a block (its cells
+  stacked), and a list of one page of lone zones in the plants' own directory. Red first on the old law (`rr-level-red.txt`): the
+  stacked page read 6 reds and no word of reading nothing, the list read NO RENDER. The law's two cases were red; the other four
+  cases of that run stopped on the 620 MB memory floor (606 to 601 free; other apps held the machine), not on the code. Green on the new
+  law (`rr-level-green.txt`): all 10 planted pages, "stacked: declares 1 zone of two and the law read none side by side at 1280" and
+  "the list's 1 page(s) gave the law no level of two at 1280". On the chain's list (`rr-pagelaws.txt`): 27 levels of two read at
+  1280, every declared level read on every page (country-AF 1 of 1, city-london 5 of 5, the cell pages 5 of 5 and 6 of 6,
+  industry-restaurants 4 of 4, home-gb 2 of 2, the rest 1 of 1; GB, KH and DE declare none), and the law passes.
+- **Minor 1, the profile shares on the UK.** I1's two rows draw on the UK page too, which never printed them before this wave. Each is
+  the UK's own held row of `data/economic_indicators/country_profile_v2.json` (`countries.GB`, tier A): `labor_force_participation_pct`
+  63.5 and `informal_economy_share_pct` 11, printed 63.5% and 11%, stamped with their fields as "looked up" (tier A). `profileShares`
+  draws a row only where the profile's row is the country's own, never the default fallback. slots-rules now holds all four pages to them
+  (GB 63.5% and 11%, KH 51.7% and 49%, AF 58.3% and 45.2%, DE 61.5% and 9%).
+- **Minor 3, the exit notes.** "within N years of bankruptcy", "free, if you own little" and "if you own little" (`if_it_fails.ts`), so
+  every note in the three folds is lower case.
+- **Minor 4, typed counts.** The sweep's header says the page is built for every country in the taxonomy (no typed 198); dated.ts names
+  `RECENT_CHANGE_DAYS` where it typed 120 days; copy.ts's seat comment says the country page seats none since this plan and names the two
+  seats that stay, peers and locals, with no typed word counts or country counts.
+- Not asked, named here as the re-review asks: **Minor 2**, the hire's mark reads only the pay half (`hire.ts`,
+  `pay.confidence !== "measured"`; the old card also read the hiring block's confidence). The two shares that read the hiring block
+  now stand in slot 14, which is always marked, so no figure loses its mark today; the marks are off site-wide.
+- `scripts/gates.json` regenerated (`counts.ts --write`: the page laws now read `scratchpad/harness/pages` by name); still 307 gates.
+- Here, on fresh renders (`rr-gates.txt`): pages-fresh, harness-page-filter, harness-page-laws, harness-copy-plain, answer-type,
+  slots-rules, country-sweep, no-em-dashes, archetype-copy and if-it-fails pass; counts-fresh passes after the regeneration; harness-laws
+  (the two cell pages over their ratchet, as in every run of this wave) and art-direction (the barbershops rhythm) are the standing reds.
+- The check server, run 38715431698 on 0f6e54b0: Typecheck exit 0; the chain 296 passed, 11 red: fact-once, harness-laws, harness-links,
+  provenance, type-floor, art-direction (the barbershops rhythm alone), census-fresh, home-answers, uk-city-sources, and
+  harness-archetypes and money-shown-own-rows by TIMEOUT. Every red line is the same as on 1093c0e9's run; harness-page-laws and
+  panels-opened pass.
