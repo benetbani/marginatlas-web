@@ -3946,6 +3946,25 @@
       "claims": []
     },
     {
+      "name": "buy-price-held",
+      "script": "tests/open/buy_price_held.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE BUY-OR-START PRICE IS HELD, NEVER TYPED (QUEUE open:buy-or-start-typed-multiples, 2026-10-15; the investigation is .superpowers/sdd/integration/typed-multiples-investigation.md).",
+      "reads": [
+        "data/facts/industry",
+        "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx",
+        "src/components/buy",
+        "src/components/buy/BuyVsStartHero.tsx",
+        "src/lib/open",
+        "src/lib/open/buy_side.ts",
+        "src/lib/open/buy_vs_start.ts",
+        "src/lib/spine/worth_rows.ts",
+        "tests/open/buy_price_held.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-city-sources",
       "script": "tests/spine/uk_city_sources.test.ts",
       "args": [],

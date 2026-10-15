@@ -1014,6 +1014,14 @@ const GATES: Gate[] = [
      hand-kept constant) has no builder and no provenance. Every .tsx under src/app and src/components outside the workshop, three named
      exceptions (a status code and two scales' zeros). */
   { name: "no-typed-figures", script: "tests/copy/no_typed_figures.test.ts" },
+  /* The buy-or-start price is held, never typed (QUEUE open:buy-or-start-typed-multiples, 2026-10-15): the page priced a purchase from 153
+     multiples typed by slug, a 0.4 floor of the start cost and a price band, none with a source, and printed "about 2x owner earnings"
+     beside a price the floor had set; no_typed_figures cannot see a number a builder holds. The price is the trade's own sale range in
+     currency through worthPrice (the function the trade page's "What one sells for" card calls), stamped data-src and data-kind, on the
+     card's stated line where the shard rests on operating earnings: the builder files hold no number but the dead-band, every figure
+     element is stamped, and all 243 shards price to the dollar as the card does. Reds on a6930c60's text (190 findings) and reads 243
+     shards, never passing having read nothing. */
+  { name: "buy-price-held", script: "tests/open/buy_price_held.test.ts" },
   /* Every UK city's page prints an official figure, says in its card's one line that a figure is an estimate, or withholds it:
      London's shop rent from the valuation slice, the survey's pay, no hand-anchored cost of living, no engine district rents
      (masterplan step 03); the six other cities' shard figures each marked an estimate (plan 2026-10-08, uk:cities-sourced-or-marked). */

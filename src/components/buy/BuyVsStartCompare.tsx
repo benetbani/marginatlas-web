@@ -10,9 +10,11 @@
  *   - The risk read (where the danger sits on each path).
  *
  * The two columns share one visual language, the board's quiet label / display
- * figure treatment, with a warm-taupe divider between them. The BUY column is
- * marked "modeled" on its cash figure because the sale price is an archetype, not
- * a real listing, exactly the honesty the rest of the site keeps.
+ * figure treatment, with a warm-taupe divider between them. The BUY column's cash
+ * figure is the trade page's own sale range in currency, stamped with where it was
+ * read (data-src, data-kind) and called an estimate, because a sale price here is
+ * never a real listing; a trade that cannot be priced prints the card's stated
+ * line in the figure's place. Exactly the honesty the rest of the site keeps.
  *
  * Server component. Tokens only, mobile-first (the columns stack on a narrow
  * screen and sit side by side from sm), no raw hex, no em-dashes, no source-agency
@@ -20,6 +22,9 @@
  */
 import * as React from "react";
 import { fmtUSD, fmtWeeksToOpen } from "@/components/board/format";
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
+import { buyRangeText } from "@/lib/open/buy_side";
+import { COPY } from "@/lib/spine/copy";
 import type { BuyVsStart } from "@/lib/open/buy_vs_start";
 
 /** A real, finite, positive number. */
@@ -32,17 +37,23 @@ function Row({
   label,
   value,
   note,
+  prov,
 }: {
   label: string;
   value: string;
   note?: string;
+  /** Where the value was read, when it is a figure with a source (data-src, data-kind on the figure). */
+  prov?: Provenance | null;
 }) {
   return (
     <div>
       <div className="text-[11px] uppercase tracking-wide text-cocoa-500">
         {label}
       </div>
-      <div className="mt-0.5 font-display text-lg font-semibold tabular-nums text-ink-900">
+      <div
+        {...provAttrs(prov)}
+        className="mt-0.5 font-display text-lg font-semibold tabular-nums text-ink-900"
+      >
         {value}
       </div>
       {note ? (
@@ -67,6 +78,9 @@ function startCashFlowPhrase(page: BuyVsStart): string {
 }
 
 export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
+  /* The buy figure is the trade page's own sale range in currency with its stamp; a trade with no price prints the card's stated line in the
+     figure's place, and no figure. */
+  const buyRange = buyRangeText(page.buy);
   return (
     <section className="mt-8">
       {/* ONE card, not two half-cards. This was a pair of hand-rolled opaque
@@ -114,8 +128,9 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
           <div className="mt-4 flex flex-col gap-4">
             <Row
               label="Cash needed"
-              value={fmtUSD(page.buy.cashNeededUsd)}
-              note={`about ${page.buy.multiple}x owner earnings, an estimate`}
+              value={buyRange ?? (page.buy.line ?? "")}
+              note={buyRange ? COPY.tradeWorth.basis : undefined}
+              prov={buyRange ? page.buy.prov : null}
             />
             <Row
               label="Time to cash flow"
@@ -131,10 +146,12 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
         </div>
       </div>
 
-      {/* One quiet line: the buy side is an estimate (the struck "modeled" said plainly, masterplan step 02). */}
-      <p className="mt-3 text-[11px] text-cocoa-500">
-        The sale price is an estimate from earnings, not a real listing.
-      </p>
+      {/* One quiet line, where a sale range stands: the buy side is an estimate (the struck "modeled" said plainly, masterplan step 02). */}
+      {buyRange ? (
+        <p className="mt-3 text-[11px] text-cocoa-500">
+          The sale price is an estimate, not a real listing.
+        </p>
+      ) : null}
     </section>
   );
 }

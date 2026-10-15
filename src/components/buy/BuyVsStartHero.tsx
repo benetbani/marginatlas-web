@@ -3,9 +3,9 @@
  *
  * The masthead of the buy-or-start page: a clean-data-tool hero, not a magazine
  * cover. No image, no gradient. It leads with the QUESTION, then sets the two
- * headline cash figures side by side, the cash to START fresh and the cash to BUY
- * an existing one, so the reader gets the whole decision in a glance. The honest
- * one-line verdict sits beneath, and a quiet link points back to the full cell
+ * headline cash figures side by side, the cash to START fresh and the sale range
+ * to BUY an existing one, so the reader gets the whole decision in a glance. One
+ * line on the cash sits beneath, and a quiet link points back to the full cell
  * economics.
  *
  * Layout: on a narrow screen the two cash figures stack; from sm they sit side by
@@ -19,10 +19,15 @@ import * as React from "react";
 import Link from "next/link";
 import { fmtUSD } from "@/components/board/format";
 import { T_H1 } from "@/lib/ui/typography";
+import { provAttrs } from "@/lib/spine/provenance";
+import { buyRangeText } from "@/lib/open/buy_side";
 import type { BuyVsStart } from "@/lib/open/buy_vs_start";
 
 export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
   const lower = page.businessName.toLowerCase();
+  /* The buy figure is a range in currency, the trade page's own sale range, stamped with where it was read (data-src, data-kind); a trade with
+     no price prints the card's stated line in its place and no figure. */
+  const buyRange = buyRangeText(page.buy);
 
   return (
     <header className="pb-2">
@@ -46,17 +51,24 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
         </div>
 
         <div className="shrink-0 sm:border-l sm:border-parchment sm:pl-12">
-          <div className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl">
-            {fmtUSD(page.buy.cashNeededUsd)}
-          </div>
+          {buyRange ? (
+            <div
+              {...provAttrs(page.buy.prov)}
+              className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl"
+            >
+              {buyRange}
+            </div>
+          ) : (
+            <p className="text-sm leading-snug text-cocoa-700">{page.buy.line}</p>
+          )}
           <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-            To buy, estimated
+            {buyRange ? "To buy, estimated" : "To buy"}
           </div>
         </div>
       </div>
 
-      {/* The honest verdict, one quiet paragraph that names the catch on both
-          sides. */}
+      {/* The verdict, one quiet line on the cash that leans only outside the dead-band and says estimate (src/lib/open/buy_side.ts); the catch on each side
+          stands in the section below the card (BuyVsStartCatches). */}
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
         {page.verdict}
       </p>

@@ -4,8 +4,9 @@
  * Founder-review tool. NOT wired into the app, NOT a production helper. It calls
  * the SAME buildBuyVsStart(...) the new page will call, for ~10 representative
  * flagship business x place combos, and prints, per combo: the START total to
- * open, the owner take-home, the SDE multiple used, the modeled sale price, the
- * cash needed on both sides, and the honest verdict.
+ * open, the buy range (the trade's own shard range times the take-home, the same
+ * figure the trade page's "What one sells for" card prints) with its stamp or its
+ * stated line, and the verdict.
  *
  * This DOES touch the database (buildBuyVsStart calls buildOpeningPage, which
  * resolves a real cell through getCellBySlug, exactly as the cell page does), so
@@ -13,11 +14,10 @@
  * Supabase client picks up the env (the client is constructed at module-load
  * time, so the env must be present before the builder module is evaluated).
  *
- * The whole point: confirm the modeled multiples and sale prices are PLAUSIBLE (a
- * small restaurant selling for ~2x its owner earnings, not absurd), the START
- * side AGREES with the cost-to-open page (same builder), no NaN, and nulls show
- * up wherever take-home or cost-to-open is missing, before any page or component
- * is built.
+ * The whole point: confirm the buy range AGREES with the trade page's card (same
+ * function, worthPrice), the START side AGREES with the cost-to-open page (same
+ * builder), no NaN, and nulls show up wherever take-home or cost-to-open is
+ * missing.
  *
  * Run: npx tsx scripts/audit/dryrun_buy_vs_start.ts
  */
@@ -66,6 +66,7 @@ function pad(s: string, w: number): string {
 async function main(): Promise<void> {
   // Dynamic import AFTER env is loaded.
   const { buildBuyVsStart } = await import("@/lib/open/buy_vs_start");
+  const { buyRangeText } = await import("@/lib/open/buy_side");
 
   console.log("");
   console.log("=".repeat(110));
@@ -79,11 +80,8 @@ async function main(): Promise<void> {
   type Row = {
     label: string;
     startTotal: string;
-    takeHome: string;
-    multiple: string;
-    salePrice: string;
     startCash: string;
-    buyCash: string;
+    buyRange: string;
   };
   const rows: Row[] = [];
 
@@ -102,11 +100,8 @@ async function main(): Promise<void> {
       rows.push({
         label: c.label,
         startTotal: "ERROR",
-        takeHome: "ERROR",
-        multiple: "-",
-        salePrice: "-",
         startCash: "-",
-        buyCash: "-",
+        buyRange: "-",
       });
       continue;
     }
@@ -117,11 +112,8 @@ async function main(): Promise<void> {
       rows.push({
         label: c.label,
         startTotal: "NULL",
-        takeHome: "NULL",
-        multiple: "-",
-        salePrice: "-",
         startCash: "-",
-        buyCash: "-",
+        buyRange: "-",
       });
       continue;
     }
@@ -130,14 +122,16 @@ async function main(): Promise<void> {
     const coreNums = [
       page.start.cashNeededUsd,
       page.start.timeToOpenWeeks,
-      page.buy.multiple,
-      page.buy.ownerTakeHomeUsd,
-      page.buy.salePriceUsd,
-      page.buy.cashNeededUsd,
     ];
     for (const n of coreNums) {
       if (typeof n !== "number" || !Number.isFinite(n)) nanLeaks++;
     }
+    // The buy range, where one stands: both ends finite and ordered, and the stamp present. A stated line stands in its place otherwise.
+    if (page.buy.state === "range") {
+      const { lowUsd, highUsd, prov } = page.buy;
+      if (typeof lowUsd !== "number" || typeof highUsd !== "number" || !Number.isFinite(lowUsd) || !Number.isFinite(highUsd) || !(lowUsd < highUsd) || !prov) nanLeaks++;
+    }
+    const buyRange = buyRangeText(page.buy);
 
     console.log(`  Business / place : ${page.businessName} in ${page.placeName}`);
     console.log(`  Cell href        : ${page.cellHref}`);
@@ -148,22 +142,18 @@ async function main(): Promise<void> {
     console.log(`    - Time to open  : ${page.start.timeToOpenWeeks} weeks`);
     console.log(`    - Payback (ramp): ${page.start.paybackYears == null ? "null (unscored)" : page.start.paybackYears + "y"}`);
     console.log("");
-    console.log("  BUY (buy existing, modeled):");
-    console.log(`    - Owner take-home: ${usd(page.buy.ownerTakeHomeUsd)} / year`);
-    console.log(`    - SDE multiple   : ${page.buy.multiple}x`);
-    console.log(`    - Sale price     : ${usd(page.buy.salePriceUsd)}   (= take-home x multiple, bounded)`);
-    console.log(`    - Cash needed    : ${usd(page.buy.cashNeededUsd)}   (all-cash headline)`);
+    console.log("  BUY (buy existing, an estimate):");
+    console.log(`    - Sale range     : ${buyRange ?? "none"}   (the trade's shard range times the take-home, the trade page's own figure)`);
+    console.log(`    - Stamp          : ${page.buy.prov ? `${page.buy.prov.kind}, ${page.buy.prov.src}` : "none"}`);
+    console.log(`    - Stated line    : ${page.buy.line ?? "none"}`);
     console.log("");
     console.log(`  VERDICT: ${page.verdict}`);
 
     rows.push({
       label: c.label,
       startTotal: usd(page.start.cashNeededUsd),
-      takeHome: usd(page.buy.ownerTakeHomeUsd),
-      multiple: `${page.buy.multiple}x`,
-      salePrice: usd(page.buy.salePriceUsd),
       startCash: usd(page.start.cashNeededUsd),
-      buyCash: usd(page.buy.cashNeededUsd),
+      buyRange: buyRange ?? "none",
     });
   }
 
@@ -176,23 +166,17 @@ async function main(): Promise<void> {
     "  " +
       pad("Combo", 24) +
       pad("StartTotal", 12) +
-      pad("TakeHome", 12) +
-      pad("Mult", 7) +
-      pad("SalePrice", 12) +
       pad("StartCash", 12) +
-      pad("BuyCash", 12),
+      pad("BuyRange", 24),
   );
-  console.log("  " + "-".repeat(89));
+  console.log("  " + "-".repeat(72));
   for (const r of rows) {
     console.log(
       "  " +
         pad(r.label, 24) +
         pad(r.startTotal, 12) +
-        pad(r.takeHome, 12) +
-        pad(r.multiple, 7) +
-        pad(r.salePrice, 12) +
         pad(r.startCash, 12) +
-        pad(r.buyCash, 12),
+        pad(r.buyRange, 24),
     );
   }
 
