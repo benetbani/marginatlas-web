@@ -200,6 +200,9 @@ const EXEMPLARS: Exemplar[] = [
   { surface: "howto", slugs: ["IN"], why: "forms on file, no authored locals" },
   { surface: "home", slugs: ["gb"], why: "the home page on the band page (masterplan step 37), served at / since 2026-10-07 unless NEXT_PUBLIC_HOME_REFORM=0" },
   { surface: "openings", slugs: ["world"], why: "/new-businesses (plan 2026-10-09, home introduction): one page, its own exemplar" },
+  { surface: "calculator", slugs: ["gb", "london", "restaurants"], why: "/calculator (plan 2026-10-13 cost-simulator): the harness's page, the UK model at its defaults" },
+  { surface: "calculator", slugs: ["de", "berlin", "restaurants"], why: "the world rows: a city's rent, the shard's team, no sales held" },
+  { surface: "calculator", slugs: ["gb", "manchester", "barbershops"], why: "England's rows off the model: a recipe that does not carry its utilities" },
 ];
 const stemOf = (p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`;
 const nameOf = (p: { surface: string; slugs: string[] }) => `${p.surface} ${p.slugs.join("/")}`;
@@ -216,6 +219,7 @@ function productionPath(p: { surface: string; slugs: string[] }): string {
     case "hood": return s[1] ? `/cities/${s[0]}/neighborhoods/${s[1]}` : `/cities/${s[0]}/neighborhoods`;
     case "home": return "/";
     case "openings": return "/new-businesses";
+    case "calculator": return `/calculator?country=${s[0]}${s[1] === "anywhere" ? "" : `&city=${s[1]}`}&trade=${s[2]}`;
     default: return `/${s.join("/")}`;
   }
 }

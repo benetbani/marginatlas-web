@@ -17,6 +17,7 @@ export const ROUTE_SHAPES: ReadonlyArray<readonly string[]> = [
   ["admin", "anomalies"],
   ["admin", "data-quality"],
   ["admin", "review"],
+  ["api", "calculator"],
   ["api", "cell-lookup"],
   ["api", "cell-snapshot"],
   ["api", "cell-take-home"],

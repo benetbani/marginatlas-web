@@ -96,6 +96,7 @@ import { isSpineReformEnabledFor } from "../src/lib/feature_flags";
 import { buildHowTo } from "../src/lib/spine/howto_rows";
 import { CELL_INSTANCES } from "../src/lib/spine/trade_hero_facts";
 import cityListJson from "../data/cities/city_list_v1.json";
+import { resolvePlace } from "../src/lib/simulator/place";
 
 const RULE = "doors";
 const MODULE = "src/lib/spine/door_kinds.ts";
@@ -150,6 +151,16 @@ const EXEMPLARS = new Set(Object.values(CELL_INSTANCES).map((i) => i.route.join(
 
 const HOOD_ON = isSpineReformEnabledFor("hood");
 
+/* /calculator (plan 2026-10-13 cost-simulator, Task 6): a static route that reads its address; it exists for the place its three words resolve and
+   answers 404 for any other, the page's own rule (src/lib/simulator/place.ts). */
+function calculatorLanding(href: string): Landing {
+  const q = new URLSearchParams(href.split("#")[0].split("?")[1] ?? "");
+  const place = resolvePlace({ country: q.get("country"), city: q.get("city"), trade: q.get("trade") });
+  return place
+    ? { surface: "calculator", answers: SURFACE_ANSWERS.calculator, exists: "yes", why: `the calculator resolves ${place.country}/${place.city ?? "anywhere"}/${place.trade}` }
+    : { surface: "calculator", answers: SURFACE_ANSWERS.calculator, exists: "no", why: `the calculator answers 404 for "${q.toString()}"` };
+}
+
 function landingOf(rawHref: string): Landing {
   const href = rawHref.trim();
   if (/^[a-z][a-z0-9+.-]*:/i.test(href)) return { surface: "static", answers: null, exists: "no", why: `not a route: a ${href.split(":")[0]}: URL${href.startsWith("file:") ? " (the renderer mapped a page link to a file; read render_page.tsx mapAssets)" : ""}` };
@@ -160,6 +171,7 @@ function landingOf(rawHref: string): Landing {
   if (ROUTES.statics.has(path)) {
     if (path === "/compare") return { surface: "compare", answers: SURFACE_ANSWERS.compare, exists: "yes", why: "a static route" };
     if (path === "/pricing") return { surface: "pricing", answers: SURFACE_ANSWERS.pricing, exists: "yes", why: "a static route" };
+    if (path === "/calculator") return calculatorLanding(href);
     return { surface: "static", answers: null, exists: "yes", why: "a static route" };
   }
 
@@ -258,7 +270,7 @@ function doorsOf(page: string, html: string): { doors: Walked[]; termini: Array<
   const termini = [...doc.querySelectorAll('[data-archetype="terminus"]')].map((t) => ({ card: cardOf(t), labels: [...t.querySelectorAll("a[data-door]")].map((a) => text(a)) }));
   const tableAnchors = [...doc.querySelectorAll('[data-archetype="compare-table"]:not([data-doors="1"]) a[href]')].map((a) => ({ card: cardOf(a), href: a.getAttribute("href") ?? "" }));
   /* The country's masthead is the hero board since 2026-09-20 (HeroBoard.tsx, his design); it declares its answer and its markers the way the answer card does. */
-  const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"], [data-archetype="hero-board"][data-level="page"]')].map((m) => ({ card: `${m.getAttribute("data-archetype")}#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div")) }));
+  const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"], [data-archetype="hero-board"][data-level="page"], [data-archetype="sim-answer"][data-level="page"]')].map((m) => ({ card: `${m.getAttribute("data-archetype")}#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div, [data-sim-figure] .fig, [data-sim-label]")) }));
   return { doors, termini, tableAnchors, mastheads };
 }
 
@@ -274,6 +286,8 @@ function expectedAnswer(surface: string, slugs: string[]): DoorKind | null {
     case "home": return null;
     /* /new-businesses answers no one place (plan 2026-10-09, home introduction): its rows are doors to the country pages that do. */
     case "openings": return null;
+    /* /calculator answers the sales to break even (plan 2026-10-13 cost-simulator): its answer section is the page's masthead. */
+    case "calculator": return SURFACE_ANSWERS.calculator;
     default: return null;
   }
 }

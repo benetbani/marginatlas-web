@@ -180,6 +180,28 @@ const GATES: Gate[] = [
      and data-kind, held to scripts/harness/provenance_baseline.json; only falls. No browser: it parses the renders pages-fresh
      writes. Planted before registering (the London firm count's stamp removed: 66 against 65, red). */
   { name: "provenance", script: "scripts/harness/check_provenance.mjs", args: ["--list"] },
+  /* THE COST SIMULATOR'S ARITHMETIC (plan 2026-10-13 cost-simulator, Task 1): F / (1 - v) on London's three money trades against model.ts, on
+     hand-worked London and Berlin cases, a loss, no sales, a sale that costs all it brings, extremes. Offline: the register slices and fixtures. */
+  { name: "calc-engine", script: "tests/simulator/engine.test.ts" },
+  /* THE COST SIMULATOR'S DEFAULTS (plan 2026-10-13 cost-simulator, Task 2): R7 4.1 row for row, city then country then none with its line, the
+     no-fill sweep, a city with no rent (Review Focus 3), London's and England's break-even on model.ts. Offline: the shards and the slices. */
+  { name: "calc-defaults", script: "tests/simulator/defaults.test.ts" },
+  /* THE PLACE SWITCH'S ROUTE (plan 2026-10-13 cost-simulator, Task 3): 404 on an unknown place, the defaults whole over the wire, the route
+     rate-limited and reading the place alone, the edge's table holding it. Offline: a stub loader and the shards. */
+  { name: "calc-api", script: "tests/simulator/api.test.ts" },
+  /* THE MONEY AND THE WORDS (plan 2026-10-13 cost-simulator, Task 4A): every currency's round trip, the pound's two rates as the site holds them, a
+     loss with a true minus, the lever empty and stamped, every calculator string inside the copy rules. */
+  { name: "calc-display", script: "tests/simulator/display.test.ts" },
+  /* THE COST SIMULATOR'S PAGE (plan 2026-10-13 cost-simulator, Task 4B): the seven parts, the one 40, one 30 a section, every figure stamped, the bar
+     outside the switch, each missing figure's reason (Review Focus 2), the loud seats, no server module in the browser, and a currency
+     change that writes no lever (Review Focus 5). Offline: bundles built from the shards; jsdom. */
+  { name: "calc-page", script: "tests/simulator/page.test.ts" },
+  /* THE ADDRESS (plan 2026-10-13 cost-simulator, Task 5): only the changes in v, read back clamped (Review Focus 4), unknown keys ignored, canonical
+     /calculator and noindex with parameters, the edge never caching it, the client writing it with replaceState. */
+  { name: "calc-state", script: "tests/simulator/state.test.ts" },
+  /* THE DOOR (plan 2026-10-13 cost-simulator, Task 6; Q3 answer A): every trade page's close carries "Run your own numbers" with its place and trade,
+     before the pill, four doors on the trade close alone. */
+  { name: "calc-door", script: "tests/simulator/door.test.ts" },
   /* THE TYPE FLOOR (plan 2026-10-12 rhythm-air-inside, Task 1A; his choice of 2026-10-12, "Air inside only": small text rises to 14px).
      On every spine render pages-fresh writes, at 1280, characters under 14px outside scripts/harness/type_floor_allow.json are 20% or
      less of the visible characters, read as R1 read the renders (scripts/lib/type_floor.mjs states its blind spot). No browser. Its

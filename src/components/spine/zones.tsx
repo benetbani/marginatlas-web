@@ -54,8 +54,8 @@ const SPLIT_LG: Record<Exclude<ZoneSplit, "wide">, string> = {
 /* Stacked, 24, a hairline, 24 between sections (R3, 3.6); side by side, 48 apart (64 from 1024), no rule, each section the height
    of its own content (an open section has no box to stretch). ONE SEPARATOR BETWEEN STACKED CARDS (plan 2026-10-10, the home
    reformed to ship, Task 4; the critique's P1.8): a section that keeps its box (`data-keep-card`, a door or an instrument) is its own
-   edge, so the cell that holds it takes no hairline and no padding over it; the 24px gap stays, and open sections keep the rule. */
-const STACKED = "grid grid-cols-1 items-start gap-y-6 [&>*+*]:border-t [&>*+*]:border-[var(--c-border)] [&>*+*]:pt-6 [&>*+*:has(>[data-keep-card])]:border-t-0 [&>*+*:has(>[data-keep-card])]:pt-0";
+   edge, so the cell that holds it takes no hairline and no padding over it; the 24px gap stays, and open sections keep the rule. The calculator's instrument (plan 2026-10-13 cost-simulator) stacks by it too. */
+export const STACKED = "grid grid-cols-1 items-start gap-y-6 [&>*+*]:border-t [&>*+*]:border-[var(--c-border)] [&>*+*]:pt-6 [&>*+*:has(>[data-keep-card])]:border-t-0 [&>*+*:has(>[data-keep-card])]:pt-0";
 const SIDE_MD = "md:gap-x-12 md:[&>*+*]:border-t-0 md:[&>*+*]:pt-0 lg:gap-x-16";
 const SIDE_LG = "lg:gap-x-16 lg:[&>*+*]:border-t-0 lg:[&>*+*]:pt-0";
 /* ONE GUTTER FOR A LEVEL OF CARDS (`cards`, critique pass 3, fix round D1, item P2.1): a card carries its own edge, so cards need less air between

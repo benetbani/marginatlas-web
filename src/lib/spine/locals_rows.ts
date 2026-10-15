@@ -13,13 +13,11 @@ import notesJson from "../../../data/archetypes/locals_notes.json";
 import { ATLAS_ICONS_BY_ID, type AtlasIconId } from "@/components/brand/icons/atlas-icons-data";
 import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
 
-/** `icon`: the note's glyph, chosen by hand with the note (2026-09-26, M6); a name the atlas set does not hold is dropped. */
-/** `dots` (2026-09-26): a paperwork level, one to five, drawn as the legal forms table draws it in place of the label's words. */
-export type LocalNote = { label: string; fact: string; icon?: AtlasIconId; dots?: 1 | 2 | 3 | 4 | 5; source?: string };
+import { NOTE_CAP, type LocalNote } from "./note_shape";
+export { NOTE_CAP, type LocalNote };
 export type LocalsNotes = { notes: LocalNote[]; confidence: "placeholder"; source: string };
 
 /** At most five notes; a label of at most seven words; a fact of at most 140 characters (H7, one fact each). */
-export const NOTE_CAP = 5;
 export const LABEL_WORDS_CAP = 7;
 export const FACT_CHARS_CAP = 140;
 export const LOCALS_SOURCE = "Written by hand for this country, not derived from a dataset.";

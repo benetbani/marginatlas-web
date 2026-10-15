@@ -2321,11 +2321,13 @@ export const COPY = {
    *  M21's own words. Across to the industry page, up to the city page (the
    *  city masthead's own idiom, "Opening a business in"), and the compare
    *  pill last. Three first words, none shared; no pricing door, no sibling
-   *  door (`13` is that door on every row). */
+   *  door (`13` is that door on every row).
+   *  The run door since plan 2026-10-13 cost-simulator (Q3, answer A): the calculator with the page's place and trade, before the pill, a fourth door. */
   tradeClose: {
     industryDoor: "See {trade} in other cities",
     cityDoor: "Opening a business in {city}",
     compareDoor: "Compare {trade} across cities",
+    runDoor: "Run your own numbers",
   },
   /** THE INDUSTRY PAGE'S `00 take` (MODEL.md 8.7; plan step 34's first
    *  dispatch, 2026-09-18): the answer label is the trade's keep in four
@@ -2926,6 +2928,76 @@ export const COPY = {
       trades: "Trades with figures for this city.",
       "firms-last": "How long new firms last in each UK city.",
       duel: "Which trades see the most companies fail.",
+    },
+  },
+  /** THE COST SIMULATOR, /calculator (plan 2026-10-13 cost-simulator; spec docs/superpowers/specs/2026-10-13-cost-simulator-design.md,
+   *  section 4; R7 4.6's headings). The masthead, the answer, the levers, the month, what moves it most, the money to open it, where figures come
+   *  from; each default's line (R7 4.1 and 4.3: "London holds none. This is the UK's."), each empty figure's reason, the sources' notes. Headings
+   *  of four words, lines of twelve, labels of three; tests/simulator/display.test.ts reads every string. */
+  calculator: {
+    title: "What your business costs",
+    metaTitle: "What your business costs | Margin Atlas",
+    metaDescription: "The sales your business needs to break even, with every cost shown.",
+    yoursTail: ", with your figures",
+    pick: { label: "Place and trade", country: "Country", city: "City", trade: "Trade", anywhere: "Anywhere in {country}", failed: "That place did not load. Try again." },
+    answer: { title: "Sales to break even", month: "Each month must take this much to cover every cost.", day: "A day", customers: "Customers a day", customersNote: "Every day of the year", firms: "Firms above it", firmsNote: "Registered firms in the place", firmsNoteCell: "Local firms of the trade", goal: "For your goal", goalNote: "A month, after tax", goalNoteWorld: "A month, before tax", basis: "Fixed costs over what each sale keeps.", basisYours: "Fixed costs over what each sale keeps, with your figures." },
+    margin: { title: "Your margin", words: "of each sale you keep, before tax", wordsNoTax: "of each sale you keep, before any tax", after: "After tax", placement: "Your sales top {pct} of firms here." },
+    levers: {
+      title: "Your numbers",
+      fixed: "fixed costs a month, whatever you sell",
+      basis: "Move any figure and every answer follows.",
+      groups: { team: "Team", premises: "Premises", sales: "Sales", you: "You", loan: "Loan" },
+      reset: "Reset",
+      yourFigure: "Your figure.",
+      add: "Add one",
+      remove: "Remove one",
+      payYourself: "Pay yourself",
+      stopPaying: "Stop paying yourself",
+      setTarget: "Set a profit goal",
+      dropTarget: "Drop the profit goal",
+      form: "Legal form",
+      sole: "Sole trader",
+      company: "Company",
+      staffLine: "The trade's staff line pays the usual team.",
+      hireOnTop: "Hires you add stand on top of it.",
+      effect: "Break-even now",
+      effectTail: "a month",
+      labels: { area: "Floor space", rent: "Rent per m2", service: "Service charge", oncost: "Employer charges", sales: "Sales a year", ticket: "Spend per customer", goods: "Cost of goods", runShare: "Running costs", owner: "Your pay", target: "Profit goal", loanAmount: "Loan", loanRate: "Interest rate", loanYears: "Years to repay", opening: "Money to open", pay: "Pay a year" },
+      units: { m2: "m2", year: "a year", head: "a head", share: "of sales", pay: "of pay", years: "years", pct: "%" },
+    },
+    month: { title: "Your month", profit: "profit a month at your sales", loss: "loss a month at your sales", basis: "At sales of {sales} a year.", span: "Show the bill", monthTab: "A month", yearTab: "A year", key: { variable: "Costs per sale", fixed: "Fixed costs", profit: "Profit", loss: "Loss" }, tick: "Break-even", bar: "Your month: costs that follow sales, fixed costs and {last}." },
+    bill: { goods: "Cost of goods", running: "Running costs", team: "Your team", teamNote: "{n} people with employer costs", crew: "Staff", rent: "Rent", service: "Service charge", rates: "Business rates", ratesNote: "2026-27 rates on the rent", ratesStandard: "2026-27 rates, standard multiplier", loan: "Loan repayments", owner: "Your pay" },
+    moves: { title: "What moves it most", focal: "of sales cover each 100 of fixed costs", basis: "Each figure moved up a tenth, or one more hire.", top: "Largest", phoneHead: { name: "Figure moved", value: "Rise a year" }, rows: { area: "More floor space", rent: "Higher rent", service: "Higher service charge", pay: "Higher pay", goods: "Dearer goods", running: "Higher running costs", owner: "Your higher pay", loan: "A bigger loan", crew: "More staff cost" } },
+    opening: { title: "Money to open it", months: "months to earn back the money to open", monthsUk: "months to earn it back, after tax", total: "In all", yours: "Your figure" },
+    reasons: { needs: "Fill the empty fields above to see this.", noMargin: "Each sale costs more than it brings in.", noSales: "Type your sales to see this.", loss: "No payback while the month runs at a loss.", noTicket: "Type a spend per customer to see this.", noOpening: "No cost to open is held for this trade.", outOfReach: "Past a £500,000 rateable value, rates take a higher rule.", beyondSpread: "Past the range of firms held here.", noSpread: "No register of firms is held here.", noTarget: "Set a profit goal to see this." },
+    fallback: "{city} holds none. This is {country}'s.",
+    lines: {
+      area: { valuation: "Average premises of the trade's kind, 2021 valuation.", perWorker: "{m2} m2 a worker in this sector, for the team.", none: "No floor space is held here. Type yours." },
+      rent: { valuation: "The 2021 valuation's rent for these premises.", city: "Secondary shop rent in {city}.", country: "The country's average commercial rent.", none: "No rent is held here. Type yours." },
+      service: { city: "Service charge in {city}.", valuation: "The valuation's rent holds none. Type yours if you pay one.", none: "No service charge is held here." },
+      team: { roles: "The trade's usual team, at its typical counts.", sector: "The trade holds no roles. This is its sector's.", none: "No team is held for this trade.", ukLaw: "Employer NI and pension, 2026-27 law." },
+      oncost: { country: "{country}'s employer charges, a share of pay.", none: "No employer charges are held here. Type yours." },
+      pay: { city: "{index} times average pay in {city}.", country: "{index} times the country's median pay.", none: "No pay is held here. Type it." },
+      sales: { register: "Average sales of registered firms under £5m, March 2026.", cell: "Typical yearly sales for the trade here.", none: "No sales are held here. Type yours." },
+      ticket: { trade: "Spend per customer for the trade.", tier: "Spend per customer, set for a city this size.", none: "No spend per customer is held. Type yours." },
+      goods: { recipe: "The trade's cost of goods, a share of each sale.", driver: "The trade's goods and supplies, a share of each sale.", margin: "What the gross margin leaves, which may include direct labour.", sector: "The sector's cost of goods. The trade holds none.", none: "No cost of goods is held. Type yours." },
+      running: { recipe: "Utilities, supplies and running costs, a share of sales.", sector: "The sector's energy, marketing, software and insurance.", none: "No running costs are held. Type yours." },
+      owner: { off: "None by default. You keep the profit.", city: "Typical income in {city}.", country: "The country's median pay.", none: "No income figure is held here. Type yours." },
+      target: { uk: "The profit you want each year, after tax.", world: "The profit you want each year, before tax." },
+      loan: { amount: "None by default. Type a loan if you take one.", uk: "The UK start-up loan rate.", country: "{country}'s bank lending rate.", noRate: "No lending rate is held here. Type yours.", years: "Type the years to repay." },
+      opening: { held: "The trade's opening bill for {country}.", built: "Fit-out for this space, the deposit and registration.", archetype: "The trade's usual cost to open, at {city} prices.", archetypeBare: "The trade's usual cost to open.", none: "No cost to open is held for this trade." },
+      openingItems: { fitOut: "Fit-out", deposit: "Lease deposit", registration: "Registration" },
+      form: "Sole trader by default. Tax follows 2026-27 law.",
+    },
+    sources: {
+      title: "Where figures come from",
+      yours: { label: "Your figures", fact: "Kept in this page's address." },
+      register: { label: "Registered firms", fact: "Sales by band, March 2026." },
+      valuation: { label: "Premises and rents", fact: "The valuation of April 2021." },
+      law: { label: "UK law", fact: "Rates, payroll, tax, 2026-27." },
+      cell: { label: "Local firms", fact: "The trade's local figures." },
+      trade: { label: "The trade", fact: "Team and costs, as estimates." },
+      place: { label: "The place", fact: "Rent and wages, as estimates." },
     },
   },
   /** Words that must never appear in an archetype's copy: the corporate register.

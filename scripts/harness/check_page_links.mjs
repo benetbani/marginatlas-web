@@ -56,7 +56,9 @@ const LIST = "scripts/harness/pages.json";
    only rises, stays at 11 until someone means to raise it. */
 /* openings 19 since plan 2026-10-09, home introduction: /new-businesses' distinct internal links as this walk counts them on its render
    (ten country doors, seven of where to next, the sources line, the report link). */
-const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3, home: 11, openings: 19 };
+/* calculator 2 since plan 2026-10-13 cost-simulator: /calculator's distinct internal links as this walk counts them on its render (the sources foot's
+   link to how the figures are made and the report link; the levers, the pickers and the bars navigate nowhere). */
+const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3, home: 11, openings: 19, calculator: 2 };
 
 const surfaceOf = (name) =>
   name.startsWith("country-") ? "country" :
@@ -66,6 +68,7 @@ const surfaceOf = (name) =>
   name.startsWith("hood-") ? "hood" :
   name.startsWith("home-") ? "home" :
   name.startsWith("openings-") ? "openings" :
+  name.startsWith("calculator-") ? "calculator" :
   name.startsWith("howto-") ? "howto" : "other";
 
 /* THE ROUTES, from src/app: every directory holding a page or a route handler.

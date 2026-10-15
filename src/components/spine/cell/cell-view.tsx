@@ -100,7 +100,7 @@
  * RangeStrip with two marks (worth_rows.ts: the shard's sale figures times
  * the take-home `00` prints, in currency; the stated line off `moneyShown`
  * and on the 38 operating-earnings shards); then `15 close` on Terminus,
- * three doors and the pill last (close_rows.ts buildTradeCloseDoors: the
+ * four doors, the run door before the pill last (close_rows.ts buildTradeCloseDoors: the
  * industry page, the place's own page, the compare pill). WHAT IT RETIRED:
  * the Related links (`d.related`, never fed on the live route) and the old
  * Close below this header (the sibling door, the pricing pill), so nothing
@@ -161,6 +161,7 @@ import { NoteList } from "@/components/spine/archetypes/NoteList";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { buildSuits } from "@/lib/spine/suits_rows";
 import { COPY } from "@/lib/spine/copy";
+import { TRADE_CLOSE_CAP } from "@/components/spine/archetypes/Terminus";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { StockTiers } from "@/components/spine/sections/StockTiers";
 import { Thresholds } from "@/components/spine/sections/Thresholds";
@@ -459,7 +460,7 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
     { key: "exit", split: "1-1", stack: exitCustomers && worthDrawn ? undefined : "lg", chapter: "03", label: "The way out", body: keep([exitCustomers ? <CustomersCard key="customers" customers={exitCustomers} /> : null, worthDrawn ? <WorthCard key="worth" worth={worthDrawn} /> : null]) },
     /* THE EXIT ON THE HERO BAND THE BENTO'S CLOSE STOOD ON (`Band hero`, exit.tsx says why): the page's third full width, the
        sanction the full-width gates and the section-bands baseline read on this page. */
-    { key: "close", split: "wide", label: "Where to next", outside: true, body: doors.length > 0 ? [<div key="close" data-hero="1"><CloseCard doors={doors} /></div>] : [] },
+    { key: "close", split: "wide", label: "Where to next", outside: true, body: doors.length > 0 ? [<div key="close" data-hero="1"><CloseCard doors={doors} cap={TRADE_CLOSE_CAP} /></div>] : [] },
   ];
   const cellZones = cellZonesAll.filter((z) => z.body.length > 0);
   /* THE LOCK (masterplan step 16; his ruling 18): told the page is locked, each chapter's first level that draws stays open and

@@ -16,6 +16,10 @@
     {
       "section": "src/components/spine/LockedSection.tsx#id",
       "reason": "the locked section (masterplan step 15; his rulings 18 and 22): it stands in for a UK section that is on an archetype when open, and draws no figure of its own (its rail, a blurred stand-in, one line, one button), so no archetype holds it"
+    },
+    {
+      "section": "src/components/spine/calculator/levers.tsx#levers",
+      "reason": "the cost simulator's levers (plan 2026-10-13 cost-simulator, Task 4B; MODEL 10.4, the page's one card the reader operates): sliders beside typed figures and steppers, each the reader's control with its source line; no archetype draws controls, as none draws HireLever's or LoanLever's"
     }
   ]
 }

@@ -43,9 +43,12 @@ import type { DoorKind } from "@/lib/spine/door_kinds";
 
 export type Door = { key: string; label: string; href: string; kind: "link" | "pill"; /** What the door promises: the kind its landing page's masthead answers (door_kinds.ts). */ lands: DoorKind };
 export const DOOR_CAP = 3;
+/** THE TRADE CLOSE'S FOUR (plan 2026-10-13 cost-simulator, Task 6; Q3 answered A): the industry page, the place's page, the calculator with the place,
+ *  the compare pill. Only the trade close asks it; every other terminus keeps DOOR_CAP. */
+export const TRADE_CLOSE_CAP = 4;
 
-export function Terminus({ kicker, doors }: { kicker?: string; doors: Door[] }) {
-  const live = doors.filter((d) => d.label && d.href && !d.href.startsWith("#")).slice(0, DOOR_CAP);
+export function Terminus({ kicker, doors, cap = DOOR_CAP }: { kicker?: string; doors: Door[]; cap?: number }) {
+  const live = doors.filter((d) => d.label && d.href && !d.href.startsWith("#")).slice(0, cap);
   if (live.length === 0) return null;
   const pillIndex = live.findIndex((d) => d.kind === "pill");
   const ordered = pillIndex >= 0 ? [...live.filter((d) => d.kind !== "pill"), live[pillIndex]] : live;

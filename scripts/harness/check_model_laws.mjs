@@ -370,7 +370,10 @@ if (listArg && args.includes("--render")) {
    switch on. The floor stays at 5: a floor is not lowered to fit a page, nor raised to a page's count unless someone means it. */
 /* openings 2 since plan 2026-10-09, home introduction: /new-businesses holds where new companies open and where US restaurants grew and
    shrank; its h1 is a band and not a section, and where to next is furniture (doors, no figure). */
-const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5, openings: 2 };
+/* calculator 7 since plan 2026-10-13 cost-simulator: /calculator holds the answer, your margin, your numbers, your month, what moves it most, the
+   money to open it and where figures come from; its masthead is a band and no section. A view where a section has nothing to draw stands under it,
+   and the chain renders the bare page, where all seven draw. */
+const FLOOR_BY_SURFACE = { country: 13, city: 16, cell: 15, industry: 11, hood: 4, howto: 7, home: 5, openings: 2, calculator: 7 };
 function floorFor(name) {
   const m = name.match(/^([a-z]+)-/);
   const surface = m ? m[1] : null;

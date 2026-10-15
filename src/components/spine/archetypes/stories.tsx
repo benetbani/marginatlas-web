@@ -40,7 +40,7 @@ import { buildCharacterTables, buildCityCharacterTables, buildCityPeopleTable, l
 import { NoteList } from "./NoteList";
 import { buildLocalsNotes, countriesWithNotes } from "@/lib/spine/locals_rows";
 import { buildChecks } from "@/lib/spine/checks_rows";
-import { Terminus } from "./Terminus";
+import { Terminus, TRADE_CLOSE_CAP } from "./Terminus";
 import { buildCloseDoors, buildCityCloseDoors, buildCompareDoor, buildTradeCloseDoors } from "@/lib/spine/close_rows";
 import { coveredCities } from "@/lib/cities/city_pages";
 import { buildCitiesSeat, cutCitiesSeatTables, CITIES_SEAT_NAMES_CAP } from "@/lib/spine/country_cities_seat";
@@ -953,10 +953,10 @@ export function pickCityCloseInstances(cities: CityHeroInstance[]): CityHeroInst
   if (plain) out.push({ ...plain, why: "a second city, the same three doors on its own names" });
   return out;
 }
-/** THE TRADE'S DOORS, `15 close` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18), keyed cell:<handle>:close off the seeds the sheet loads and drawn by the page's own card (cell/exit.tsx CloseCard) at the full width the terminus takes: the exemplar's three doors, the industry page, the city page up one altitude and the compare pill last (M21); no pricing door, no sibling door. */
+/** THE TRADE'S DOORS, `15 close` (MODEL.md 8.6; plan step 33's sixth dispatch, 2026-09-18), keyed cell:<handle>:close off the seeds the sheet loads and drawn by the page's own card (cell/exit.tsx CloseCard) at the full width the terminus takes: the exemplar's four doors, the industry page, the city page up one altitude, the calculator with the place, the compare pill last (M21); no pricing door, no sibling door. */
 export const cellCloseKey = (c: CellHeroInstance) => `cell:${c.key}:close`;
 export function pickCellCloseInstances(cell: CellHeroInstance[]): Instance[] {
-  return cell.filter((c) => cellServes(c.key, "close") && buildTradeCloseDoors(c.seed).length > 0).map((c) => ({ iso2: cellCloseKey(c), why: "trade block 15 on the exemplar: the industry page, the city page up one altitude, the compare pill last; no pricing door, no sibling door" }));
+  return cell.filter((c) => cellServes(c.key, "close") && buildTradeCloseDoors(c.seed).length > 0).map((c) => ({ iso2: cellCloseKey(c), why: "trade block 15 on the exemplar: the industry page, the city page up one altitude, the calculator with the place, the compare pill last; no pricing door, no sibling door" }));
 }
 /** THE INDUSTRY'S DOORS, `11 close` (MODEL.md 8.7; plan step 34's fourth dispatch, 2026-09-19), keyed industry:<handle>:close off the slate the sheet resolves for each handle (the same resolution the seated places block reads, so the city door is drawn exactly where the table is, which today is nowhere) and the benchmark built by id, drawn by the page's own card (cell/exit.tsx CloseCard through industry/turn-three.tsx) at the full width the terminus takes: the exemplar's two doors (restaurants: the trade next door off `02`, short-term rental management, and the compare pill last; no city door because `06` stands seated) and the pill alone (game development studios: the sector's other members retired, so `02` holds no other row in scope). The three-door branch, the best-paying city's trade page, is proven on the table's own fixtures by the archetype copy gate, as the table's law is. */
 export const industryCloseKey = (i: IndustryPlacesInstance) => industryKey(i.key, "close");
@@ -978,7 +978,7 @@ export function TerminusStories({ instances = pickTerminusInstances(), city = []
       {cell.filter((c) => cellServes(c.key, "close")).map((c) => {
         const doors = buildTradeCloseDoors(c.seed);
         if (doors.length === 0) return null;
-        return <Story kind="terminus" key={cellCloseKey(c)} iso2={cellCloseKey(c)} why={pickCellCloseInstances([c])[0]?.why ?? c.why}><div style={{ maxWidth: 1072 }}><CloseCard id={`close-cell-${c.key}`} doors={doors} /></div></Story>;
+        return <Story kind="terminus" key={cellCloseKey(c)} iso2={cellCloseKey(c)} why={pickCellCloseInstances([c])[0]?.why ?? c.why}><div style={{ maxWidth: 1072 }}><CloseCard id={`close-cell-${c.key}`} doors={doors} cap={TRADE_CLOSE_CAP} /></div></Story>;
       })}
       {pickHoodCloseInstances().map((i) => {
         const h = i.iso2.slice("hood:".length, -":close".length);

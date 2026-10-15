@@ -18,7 +18,7 @@
  * do NOT multiply the count.
  *
  * Budgets (rulebook v1): city 3, cell 3, country 8, industry 3,
- * hood 2, home 2, openings 2.
+ * hood 2, home 2, openings 2, calculator 2.
  *
  * Run: npx tsx scripts/verify_bar_budget.ts
  */
@@ -94,6 +94,7 @@ const GROUPS: Group[] = [
   },
   { name: "home", budget: 2, files: tsxIn("src/components/spine/home") }, // the home's folder (plan 2026-10-13 home-quiet-editorial, Task 7B)
   { name: "openings", budget: 2, files: ["src/components/spine/openings/openings-view.tsx"] }, // /new-businesses, plan 2026-10-09
+  { name: "calculator", budget: 2, files: tsxIn("src/components/spine/calculator") }, // /calculator, plan 2026-10-13 cost-simulator: the month's bar and what moves it most (RankedBars is no PRIMITIVE here, so the count reads 1)
 ];
 
 function isCommentLine(line: string): boolean {

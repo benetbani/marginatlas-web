@@ -152,6 +152,10 @@ files.
 | A fill value equal to a data file's own default is withheld with a stated line rather than printed as an observed figure. | `shared-revenue` covers the case of one fill shared across countries; the general rule is not fully machine-checked beyond that case | 2026-09-12 (R11), the shared-revenue gate itself 2026-08-01 |
 | No raw population figure printed as a headline, and no section titled "easiest to start." | not machine-checkable; these are two named bans a person checks against MODEL.md PART 9 clause 34 | 2026-09-07 |
 | No unknowable metric asserted as a figure, and no conclusion sentence in a header, subtitle, or footer; every section is understandable from its graphic alone. | not machine-checkable in general; `comparative-voice` and `retired-claims` catch known instances of the shape | 2026-09-07 |
+| A figure the reader set carries the kind word "yours" (the fifth beside the ledger's four); an output resting on one keeps its own kind and says "your figures" in its line. | `provenance` (the five words), `calc-engine`, `calc-page` | 2026-10-13 |
+| The calculator's break-even is F / (1 - v): every fixed line and the owner's pay in F, never a share of the sales it answers; a loss prints as a loss with a true minus, and no payback stands at a loss. | `calc-engine`, `calc-display` | 2026-10-13 |
+| A default the place lacks falls back a level and says so ("Berlin holds none. This is Germany's."), or stands empty with its line; never a file's fallback row, the 42/10/5 ladder or the 80,000 archetype. | `calc-defaults` | 2026-10-13 |
+| The trade close holds four doors, "Run your own numbers" before the compare pill, with the page's place and trade; every other terminus holds three. | `calc-door`, `archetype-copy`, `doors` | 2026-10-13 |
 
 ### 0.8 Readability and accessibility beyond section 4.2
 

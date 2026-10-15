@@ -274,6 +274,8 @@ export type RankedBarsProps = {
    *  estimate it is (open_rows.ts, plan 2026-10-11); a focal that
    *  is NOT what the kicker names has to say what it is, or it is a number
    *  floating over a list. A label, never a sentence (PART 9). */
+  /** The title's heading level (plan 2026-10-13 cost-simulator): 3 under a page's chapters, the default; 2 where the section is the page's own level. */
+  level?: 2 | 3;
   focal?: { figure: string; accent?: boolean; words?: string; prov?: Provenance };
   /** THE FOOT, PART 7's fourth part, where earned: companion figures at 16
    *  under a hairline after the drawing (the cost to open's months to break
@@ -385,7 +387,7 @@ const barFill = (isLeader: boolean, marks: boolean): React.CSSProperties =>
     ? { background: isLeader ? "var(--terra)" : "var(--c-border)", backgroundImage: isLeader ? undefined : HATCH[0] }
     : { background: "var(--c-line-strong)" };
 
-export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey, selfKey = null, fill = false }: RankedBarsProps) {
+export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLine, rows, worldMax, fmt, phoneHead, best = "max", topLabel, ceiling = "world", feature = "leader", focal, foot, detail, residualKey, selfKey = null, fill = false, level = 3 }: RankedBarsProps) {
   if (rows.length < 2) return null;
   /* THE RESIDUAL IS LIFTED OUT OF THE RANKING BEFORE ANYTHING IS SORTED (see
      the prop): it takes no part in the order and cannot be the leader. A key
@@ -486,7 +488,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
   const drawTop = focal || basis || withheldLine ? "mt-6" : "mt-0";
   return (
     <Box id={id} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
-      <Rail icon={icon} kicker={kicker} sample={tagged} gloss={gloss} />
+      <Rail icon={icon} kicker={kicker} sample={tagged} gloss={gloss} level={level} />
       <div className={headTwoUp ? "gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start" : undefined}>
       {/* THE FOCAL, when the card holds one: the only element on this card
           above 16, and the only one that may wear the accent (see the prop). */}

@@ -82,6 +82,15 @@
         "world"
       ],
       "since": "plan 2026-10-09, home introduction: /new-businesses, where new companies open and where US restaurants grew and shrank, re-homed from the home; noindex until his ruling on pages outside the UK"
+    },
+    {
+      "surface": "calculator",
+      "slugs": [
+        "gb",
+        "london",
+        "restaurants"
+      ],
+      "since": "plan 2026-10-13 cost-simulator: /calculator, the cost simulator, London restaurants at their defaults (model.ts's business, no reader's figure)"
     }
   ]
 }

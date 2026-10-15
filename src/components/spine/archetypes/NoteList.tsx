@@ -38,7 +38,7 @@
  *    card at 589).
  */
 import * as React from "react";
-import { NOTE_CAP, type LocalNote } from "@/lib/spine/locals_rows";
+import { NOTE_CAP, type LocalNote } from "@/lib/spine/note_shape";
 import { Ico } from "@/components/spine/kit";
 import { Dots } from "@/components/spine/archetypes/TiersTable";
 

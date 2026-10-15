@@ -4,7 +4,7 @@
  *
  * A FIGURE IS AN ELEMENT CARRYING THE `fig` CLASS: the kit's `Fig`, the hero's answer, the answer card's figure, the class the
  * model laws' FIGURE FACE already reads as "a number the page prints". A figure SAYS WHERE IT CAME FROM when it carries both
- * `data-src` (the file and key it was read from) and `data-kind` (counted, worked out, looked up, estimate; src/lib/spine/
+ * `data-src` (the file and key it was read from) and `data-kind` (counted, worked out, looked up, estimate, or yours for a figure the reader set on /calculator; src/lib/spine/
  * provenance.ts). The truth pass's figures carry both; every other figure is counted here, page by page, and the count may only
  * fall: a new figure printed without its provenance turns this red.
  *
@@ -37,7 +37,8 @@ const listArg = args.find((a) => a.startsWith("--list"));
 const LIST = listArg && listArg.includes("=") ? listArg.slice("--list=".length) : "scripts/harness/pages.json";
 const WRITE = args.includes("--write-baseline");
 const BASELINE = "scripts/harness/provenance_baseline.json";
-const KINDS = new Set(["counted", "worked out", "looked up", "estimate"]);
+/* The ledger's four words and "yours", a figure the reader set on /calculator (plan 2026-10-13 cost-simulator, Task 1; src/lib/spine/provenance.ts StampKind). */
+const KINDS = new Set(["counted", "worked out", "looked up", "estimate", "yours"]);
 /* A PRO PRICE, the one exemption (header): a dollar figure, then optionally "a month" or "a year", then optionally ", billed
    yearly" (the band holds its last two words with a no-break space, so either space is read). "31,926" and "18%" are no price. */
 const PRICE_SHAPE = /^\$\d[\d,]*(?:\.\d{2})?(?: a (?:month|year))?(?:, billed[ \xa0]yearly)?$/;
@@ -60,7 +61,7 @@ for (const file of files) {
   const said = figs.filter((el) => el.getAttribute("data-src") && KINDS.has(el.getAttribute("data-kind") ?? ""));
   /* A kind outside the ledger's four is a figure that says something wrong about itself: a red on its own, not a pass. */
   const wrongKind = figs.filter((el) => el.hasAttribute("data-kind") && !KINDS.has(el.getAttribute("data-kind") ?? ""));
-  for (const el of wrongKind) reds.push(`${name}: a figure "${el.textContent.trim().slice(0, 40)}" says its kind is "${el.getAttribute("data-kind")}", not one of the ledger's four`);
+  for (const el of wrongKind) reds.push(`${name}: a figure "${el.textContent.trim().slice(0, 40)}" says its kind is "${el.getAttribute("data-kind")}", not one of the ledger's four or "yours"`);
   /* A Pro price that carries no stamp is the exemption's, counted apart and printed; a wrong kind above stays a red on a price too. */
   const prices = figs.filter((el) => !said.includes(el) && isProPrice(el));
   const silent = figs.length - said.length - prices.length;

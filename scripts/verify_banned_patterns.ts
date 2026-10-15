@@ -55,6 +55,10 @@ const SURFACE_FILES: string[] = [
   "src/components/spine/NeighborhoodExplorer.tsx",
   ...tsxIn("src/components/spine/home"), // the home's view and every piece it draws (plan 2026-10-13 home-quiet-editorial, Task 7B: the folder, so a new piece is read from its first commit)
   "src/components/spine/openings/openings-view.tsx", // /new-businesses (plan 2026-10-09, home introduction)
+  "src/components/spine/calculator/calculator-view.tsx", // /calculator (plan 2026-10-13 cost-simulator), and the three files it draws
+  "src/components/spine/calculator/CalculatorClient.tsx",
+  "src/components/spine/calculator/sections.tsx",
+  "src/components/spine/calculator/levers.tsx",
 ];
 
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");
