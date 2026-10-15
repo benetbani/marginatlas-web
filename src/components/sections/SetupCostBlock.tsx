@@ -18,6 +18,7 @@ import * as React from "react";
 import type { Cell } from "@/lib/cells";
 import type { SetupRegistration, SetupCapital } from "@/lib/types/deepening";
 import { fmtMoney } from "@/lib/format/money";
+import { setupItemsFromCell } from "@/lib/spine/setup_items";
 
 type Props = {
   cell: Cell;
@@ -47,8 +48,8 @@ const CAPITAL_LINES: Array<{ field: keyof SetupCapital; label: string }> = [
  */
 export function hasSetupCostData(cell: Cell): boolean {
   const setup = cell.setup_costs;
-  /* A bill reached through the parent trade's row is that trade's, not this one's (plan 06, task A3). */
-  if (!setup || cell._fromParentIndustry) return false;
+  /* A bill reached through the parent trade's row is that trade's, not this one's (plan 06, task A3); a typed bill is nobody's (release 3 job A): the one reader decides. */
+  if (!setup || !setupItemsFromCell(cell)) return false;
   const reg = setup.registration;
   const cap = setup.capital;
   const regTotal =
@@ -62,7 +63,7 @@ export function hasSetupCostData(cell: Cell): boolean {
 
 export function SetupCostBlock({ cell, id }: Props) {
   const setup = cell.setup_costs;
-  if (!setup || cell._fromParentIndustry) return null;
+  if (!setup || !setupItemsFromCell(cell)) return null;
 
   const reg = setup.registration;
   const cap = setup.capital;

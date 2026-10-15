@@ -22,17 +22,21 @@ const check = (label: string, ok: boolean, file = FILE, remedy = REMEDY) => {
   red({ rule: RULE, file, detail: label, remedy });
 };
 
-/* The restaurant bill's capital and registration lines as the import wrote them (nine non-zero lines, 426,020 in all). */
-const RESTAURANT_BILL = {
+/* The restaurant bill's capital and registration lines as the import wrote them (nine non-zero lines, 426,020 in all), planted here as a MEASURED bill
+   (`measured_src` set) so the checks below can see the parent, grade and country rules; the import's own block names no measurement and prints none
+   (release 3 job A, the check after this one; the gate held-bill reads the three SQL files themselves). */
+const TYPED_BILL = {
   capital: { property_fitout: 250_000, equipment_initial: 100_000, initial_inventory: 20_000, lease_deposit: 40_000, pre_opening_marketing: 12_000, total_estimated: 422_000 },
   registration: { business_registration_fee: 20, industry_licenses_fee: 1_500, insurance_bond_initial: 2_000, certifications_initial: 500, total_estimated: 4_020 },
   grade: "B",
-} as unknown as Cell["setup_costs"];
+} as unknown as NonNullable<Cell["setup_costs"]>;
+const RESTAURANT_BILL = { ...TYPED_BILL, measured_src: "fixture:a measured bill" } as unknown as Cell["setup_costs"];
+check("the bill as the import typed it (no measurement named) prints no lines, on its own trade too", setupItemsFromCell({ setup_costs: TYPED_BILL, country: "GB" }) === undefined && hasSetupCostData({ setup_costs: TYPED_BILL } as unknown as Cell) === false, FILE, "a bill prints only where its block names the measurement its lines were read from (measured_src, src/lib/spine/setup_items.ts); never print a typed bill");
 
 const own = setupItemsFromCell({ setup_costs: RESTAURANT_BILL, country: "GB" });
 check("the restaurants page keeps its own bill: nine lines, 426,020, the UK's", own !== undefined && own.items.length === 9 && own.items.reduce((a, i) => a + i.usd, 0) === 426_020 && own.scope === "GB");
 check("a cafe holding the restaurants row through the parent fallback prints no bill", setupItemsFromCell({ setup_costs: RESTAURANT_BILL, _fromParentIndustry: "restaurants", country: "GB" }) === undefined);
-const asCell = (extra: Partial<Cell>) => ({ setup_costs: RESTAURANT_BILL, ...extra }) as unknown as Cell;
+const asCell = (extra: Partial<Cell>) => ({ setup_costs: RESTAURANT_BILL, country: "GB", ...extra }) as unknown as Cell;
 check("the older setup block refuses the parent's bill too", hasSetupCostData(asCell({ _fromParentIndustry: "restaurants" })) === false && hasSetupCostData(asCell({})) === true);
 
 /* WHOSE BILL IT IS (plan 2026-10-11 held-bill-provenance): one bill per country, grade B where typed by hand; the bulk files' grade C bill sets US lines everywhere. */
