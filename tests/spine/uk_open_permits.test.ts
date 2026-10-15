@@ -1,8 +1,7 @@
 /**
- * No licence list in another country's terms on a UK page (plan 06, task A6), every page's place read through cityOfCountry
- * (plan 2026-10-11), and NO TYPED COST TO OPEN on any page (2026-10-15, release 2 job A): the open card earns it back on every
- * trade with its two shard figures stamped, and the other trades' card prints each trade's years to pay back off its own shard,
- * the same in every place. Until that day this test held the typed capital at the city's cost-of-living factor (London's 0.75
+ * No licence list in another country's terms on a UK page, every page's place read through cityOfCountry, and no typed cost to open
+ * on any page. Plan 06 task A6, plan 2026-10-11, and release 2 job A (2026-10-15): the open card earns it back on every trade with its
+ * two shard figures stamped, and the other trades' card prints each trade's years to pay back off its own shard, the same everywhere. Until that day this test held the typed capital at the city's cost-of-living factor (London's 0.75
  * turning 60,000 into 45,000); that figure left the pages.
  *
  * Run: npx tsx tests/spine/uk_open_permits.test.ts

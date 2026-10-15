@@ -323,7 +323,7 @@ export default async function ExtremesPage() {
         <LensBlock
           eyebrow="What it takes to get in"
           title="Time to pay back"
-          intro="Before the first customer there is a bill, and after it a wait while the business earns it back. Some trades pay it back within a year, others take ten years or more. The figure is each trade's typical, not any one place's."
+          intro="Before the first customer there is a bill, and after it a wait while the business earns it back. Some trades earn it back fast, others take many years. The figure is each trade's typical, not any one place's."
         >
           {paybackBoards.map((board) => (
             <PaybackLeaderboardSection key={board.key} board={board} />

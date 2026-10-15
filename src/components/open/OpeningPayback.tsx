@@ -51,7 +51,8 @@ export function OpeningPayback({ page }: { page: OpeningPage }) {
             {...provAttrs(page.takeHomeProv)}
             className="font-display text-lg font-semibold tabular-nums text-ink-900"
           >
-            {fmtUSD(page.takeHomeUsd)}
+            {/* An estimate to the dollar is false precision: printed to the nearest thousand (review Minor 6), the builder's figure untouched (the buy range is worked from it). */}
+            {fmtUSD(Math.round((page.takeHomeUsd as number) / 1000) * 1000)}
           </div>
           <div className="text-[11px] text-cocoa-500">{C.takeHomeLabel}</div>
         </div>

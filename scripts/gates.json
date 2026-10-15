@@ -2714,7 +2714,7 @@
       "script": "tests/spine/uk_open_permits.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "No licence list in another country's terms on a UK page (plan 06, task A6), every page's place read through cityOfCountry (plan 2026-10-11), and NO TYPED COST TO OPEN on any page (2026-10-15, release ",
+      "asserts": "No licence list in another country's terms on a UK page, every page's place read through cityOfCountry, and no typed cost to open on any page.",
       "reads": [
         "data/cities/city_list_v1.json",
         "data/facts/industry/restaurants.json:first_year.payback_years",
@@ -3988,6 +3988,7 @@
       "reads": [
         "src/lib/markets/opening_archetypes.ts",
         "src/lib/markets/startup_capital_archetypes.ts",
+        "src/lib/spine/copy.ts",
         "tests/open/start_side_held.test.ts"
       ],
       "claims": []
