@@ -19,12 +19,15 @@ import * as React from "react";
 import Link from "next/link";
 import { fmtUSD } from "@/components/board/format";
 import { T_H1 } from "@/lib/ui/typography";
+import { tradeNounFor } from "@/lib/taxonomy";
 import { provAttrs } from "@/lib/spine/provenance";
 import { buyRangeText } from "@/lib/open/buy_side";
 import type { BuyVsStart } from "@/lib/open/buy_vs_start";
 
 export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
-  const lower = page.businessName.toLowerCase();
+  /* The business as one count noun, the trade pages' own (tradeNounFor): "an existing restaurant", never the plural display name
+     ("an existing restaurants", run 2 of release 1). */
+  const noun = tradeNounFor(page.businessName) || "business";
   /* The buy figure is a range in currency, the trade page's own sale range, stamped with where it was read (data-src, data-kind); a trade with
      no price prints the card's stated line in its place and no figure. */
   const buyRange = buyRangeText(page.buy);
@@ -35,7 +38,7 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
         Buy or start
       </div>
       <h1 className={T_H1}>
-        Buy an existing {lower} in {page.placeName}, or start one fresh?
+        Buy an existing {noun} in {page.placeName}, or start one fresh?
       </h1>
 
       {/* The two headline cash numbers, side by side. Start leads (the cheaper,
