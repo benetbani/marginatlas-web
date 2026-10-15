@@ -134,7 +134,6 @@ import { getVatRow, getSmbRegime } from "@/lib/tax/smb_effective_rates";
 import { getCountrySignature } from "@/lib/countries/country_signature";
 import { PEER_GROUPS } from "@/lib/countries/country_view";
 import { ownerTakeHomeForCell } from "@/lib/scores/country_board";
-import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import coordinatesJson from "../cities/coordinates_curated.json";
 import formationJson from "../../../data/legal/business_formation_costs_v1.json";
@@ -741,14 +740,8 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
       );
       if (!cell) return null;
       const keeps = ownerTakeHomeForCell(cell, placeAnnualIncome);
-      // src/lib/markets/startup_capital_archetypes.ts, place-adjusted. The
-      // module's own header calls its figures directional, so this is modeled
-      // wherever it appears and it never stands alone as a fact.
-      const costToOpen = placeAdjustedStartupCapital({
-        industryId,
-        costOfLivingIndex: placeCostOfLiving,
-        avgYearlySalary: placeAnnualIncome,
-      });
+      /* NO COST TO OPEN ON THE ROW (2026-10-15, release 2 job A): `cost_to_open_usd` was a capital typed by hand with no source
+         (src/lib/markets/startup_capital_archetypes.ts) place-adjusted here; only /dev/spine read it, and it left. */
       if (!isNum(keeps) || keeps <= 0) return null;
       /* THE STRUCTURAL NET MARGIN RIDES BESIDE THE KEEP (founder ruling 6,
          2026-09-04: the card is the net profit margin in percent). Unfloored,
@@ -763,7 +756,6 @@ export async function buildSpineCountrySeed(iso2: string): Promise<any> {
         /* The row is a door to the trade's page at national altitude, landing on "A typical owner keeps" (plan step 39): the promise declared with the href. */
         lands: SURFACE_ANSWERS.cell,
         keeps_usd_year: Math.round(keeps),
-        cost_to_open_usd: Math.round(costToOpen),
         net_margin: nm ? nm.margin : null,
         net_margin_clamped: nm ? nm.clamped : false,
         net_margin_flagged: nm ? nm.flagged : false,

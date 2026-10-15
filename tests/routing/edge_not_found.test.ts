@@ -988,11 +988,12 @@ protoCheck("no old district address is a built-in name in the city slot (cityPat
    draw only where the trust gate passes the live row, which no table here reads, so a miss there keeps its route's 200 and skeleton (left to
    their route above). The site draws no door to one: the across page linked "Cost to open" under every column, London's included, whose
    curated rows the gate refuses (/gb/london/restaurants/opening, probed 2026-10-11), and the opening page linked its buy-or-start companion
-   where that page has no take-home or no total to stand on. */
+   where that page has no take-home to stand on. */
 const LINKS = "draw a door to a /opening or /buy-or-start page only where its route draws it: the across column's `opens` (isTrustedLocalCell, buildOpeningPage's gate) and buyOrStartDraws (buildBuyVsStart's own test)";
 check("the across page draws a column's Cost to open door only where that cost page draws", /\{c\.opens \? \(\s*<Link\s+href=\{openingHref\(c, activitySlug\)\}/.test(codeOf("src/app/(site)/industries/[industry]/across/page.tsx")) && /\bopens: isTrustedLocalCell\(cell, expectIndustryId\),/.test(codeOf("src/lib/markets/across_cities.ts")), "src/app/(site)/industries/[industry]/across/page.tsx", LINKS);
 check("the opening page draws its buy-or-start door only where that page draws, by buildBuyVsStart's own test", /\{buyOrStartDraws\(page\) \? \(/.test(codeOf("src/components/open/OpeningHero.tsx")) && /if \(!buyOrStartDraws\(opening\)\) return null;/.test(codeOf("src/lib/open/buy_vs_start.ts")), "src/components/open/OpeningHero.tsx", LINKS);
-check("buyOrStartDraws asks a positive take-home and a positive total to open", buyOrStartDraws({ takeHomeUsd: 52_000, totalToOpenUsd: 180_000 }) && !buyOrStartDraws({ takeHomeUsd: null, totalToOpenUsd: 180_000 }) && !buyOrStartDraws({ takeHomeUsd: 52_000, totalToOpenUsd: 0 }), "src/lib/open/sub_page_gates.ts", LINKS);
+/* The take-home alone since 2026-10-15 (release 2 job A): the total to open was a typed figure and left both pages. */
+check("buyOrStartDraws asks a positive take-home", buyOrStartDraws({ takeHomeUsd: 52_000 }) && !buyOrStartDraws({ takeHomeUsd: null }) && !buyOrStartDraws({ takeHomeUsd: 0 }) && !buyOrStartDraws({ takeHomeUsd: Number.NaN }), "src/lib/open/sub_page_gates.ts", LINKS);
 /* THE DOORS' ADDRESS (the review of 2026-10-12, I1 and M2). A door is only as good as the address it spells. cellUrl(cell) is built from the cell's
    display label, and where the label does not slugify back to the geo of the request it is another address: the prerendered flagship
    /mx/mx-roo/hotels-lodging/opening is labelled "Quintana Roo", so its buy-or-start door opened /mx/quintana-roo/hotels-lodging/buy-or-start, whose

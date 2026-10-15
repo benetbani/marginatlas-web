@@ -1,57 +1,45 @@
 /**
  * src/lib/open/opening_page.ts
  *
- * Server-side data builder for the dedicated "what it costs to open a [business]
- * in [place]" page. ONE responsibility: assemble the full opening picture for a
- * single (country, geo, industry) URL triple, reusing the EXACT functions the
- * cell page already uses so the two surfaces can never disagree on a shared
- * number (capital, permits, time, hires, owner take-home, the break-in rating).
+ * Server-side data builder for the dedicated "what it takes to open a [business]
+ * in [place]" page. ONE responsibility: assemble the opening picture for a
+ * single (country, geo, industry) URL triple from what the site HOLDS, through
+ * the builders the trade page already prints with, so the two surfaces can
+ * never disagree on a shared figure.
  *
- * The contract with the cell page (the source of truth, src/app/[country]/[geo]/
- * [industry]/page.tsx and src/lib/scores/cell_board.ts):
+ * NO TYPED START FIGURE (2026-10-15, release 2 job A; the controller's ruling,
+ * option (c) of /srv/atlas/reports/start-capitals-investigation.md). Until this
+ * date the page printed a total to open, capital, permits in dollars, weeks,
+ * first hires and a payback, all read from two tables typed by hand with no
+ * source (src/lib/markets/startup_capital_archetypes.ts and
+ * opening_archetypes.ts), with an 80,000 fill on the 44 live trades the capital
+ * table did not key and a "place adjustment" that was the national wage proxy
+ * on every US state. In their place the page prints:
  *
- *   - The cell is resolved with the SAME getCellBySlug call (default size/year),
- *     budget-wrapped.
- *   - The four entry parts are the SAME values the board's "What it takes to
- *     open" section computes: capital is the real trusted startup cost where one
- *     is held AND the cell passes the four-way trust gate, else the modeled,
- *     place-adjusted archetype (placeAdjustedStartupCapital); permits are the
- *     modeled, place-adjusted archetype (placeAdjustedPermitsUsd); time is the
- *     place-invariant modeled weeks (timeToOpenWeeks); first hires is the
- *     place-invariant modeled count plus the warm role hint (firstHiresCount /
- *     firstHiresRoleHint). The place signals (city cost-of-living index, else the
- *     country wage proxy) are resolved exactly as the page resolves them.
- *   - Owner take-home is the SAME figure the page passes to the board, resolved
- *     by the shared source of truth (src/lib/finance/owner_take_home.ts): the
- *     larger of estimateNetProfit(...) -> net_profit and the dollars implied by
- *     the shown 3%-floored net margin, then the larger-firm take-home floor (2x
- *     country average income for 10+ employee bands), London-curated economics
- *     preferred where present (the board prefers them, so we mirror that for the
- *     rating anchor).
- *   - The break-in rating is taken STRAIGHT OFF buildCellBoard (the same
- *     CellBoardResult the masthead reads), so the headline score, band, payback,
- *     and headline are byte-for-byte the cell page's.
+ *   - the licences the trade needs, each with its typical wait in days and its
+ *     fee band, through buildPermits (src/lib/spine/permits_rows.ts), the trade
+ *     page's own `03 permits` builder; the longest wait leads the page;
+ *   - the trade's months to break even and years to pay back, through
+ *     buildOpenFoot (src/lib/spine/open_rows.ts), the trade page's own `04 open`
+ *     figures (first_year.* on the shard);
+ *   - the owner take-home, the cell page's own derivation (below);
+ *   - the same business in other places, each with its owner take-home, off
+ *     buildAcrossCities (the across page's slate).
  *
- * Comparisons reuse buildAcrossCities (the same trust-gated world-city slate the
- * across page and the extremes hub use); peer scores call computeBreakInRating
- * per column with that column's own inputs, exactly as the break-in leaderboard
- * does (src/lib/extremes/leaderboards.ts breakInRowFromColumn). "Other businesses
- * here" is best-effort: a clean multi-industry-per-geo read only exists for US
- * state geos (getComparableCells), so it resolves there and self-omits (empty
- * array) everywhere else rather than running a fragile or expensive scan.
+ * Every printed figure carries its stamp (src/lib/spine/provenance.ts). The
+ * shard figures are the trade's, modelled (R12), and say estimate.
  *
  * Build-safe by construction: every Supabase read is wrapped in withBudget(), so
  * a slow or failed query degrades that one part (it self-omits) rather than
- * hanging the page. Any sub-part that fails returns its empty/null shape. The
- * function returns null ONLY when the core cell does not resolve or is not a
- * trusted local measurement of the requested activity, so the page can notFound()
- * cleanly without ever rendering a number it cannot stand behind.
+ * hanging the page. The function returns null ONLY when the core cell does not
+ * resolve or is not a trusted local measurement of the requested activity, so the
+ * page can notFound() cleanly without ever rendering a number it cannot stand
+ * behind.
  *
  * Constraint-safe: no em-dashes, no source-agency names, USD-only money.
  */
 import {
   getCellBySlug,
-  getComparableCells,
   cellUrl,
   withBudget,
   type Cell,
@@ -64,53 +52,13 @@ import { iso2ToName } from "@/lib/countries";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
-import {
-  cityOfCountry,
-  getCityCostOfLivingIndex,
-  getCityPopulation,
-} from "@/lib/cities/city_tier";
-import industryMarginsJson from "@/lib/finance/industry_margins.json";
-import {
-  buildCellBoard,
-  getLondonEntry,
-} from "@/lib/scores/cell_board";
-import {
-  computeBreakInRating,
-  type BreakInRating,
-  type BreakInBand,
-} from "@/lib/scores/break_in_rating";
-import {
-  placeAdjustedStartupCapital,
-} from "@/lib/markets/startup_capital_archetypes";
-import {
-  placeAdjustedPermitsUsd,
-  timeToOpenWeeks,
-  firstHiresCount,
-  firstHiresRoleHint,
-} from "@/lib/markets/opening_archetypes";
-import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
-import {
-  buildAcrossCities,
-  type CityColumn,
-} from "@/lib/markets/across_cities";
-
-/* ----------------------------------------------------------------------------
- * Industry-margin lookup (the exact shape + helper the cell page uses, so the
- * gross/operating/net inputs handed to buildCellBoard match it).
- * ------------------------------------------------------------------------- */
-type IndustryMarginRow = {
-  gross_margin: number;
-  operating_margin: number;
-  asset_intensity?: number;
-};
-const INDUSTRY_MARGINS = industryMarginsJson as unknown as {
-  default_fallback: IndustryMarginRow;
-  industries: Record<string, IndustryMarginRow>;
-};
-function lookupIndustryMargin(industryId: string | null | undefined): IndustryMarginRow {
-  if (!industryId) return INDUSTRY_MARGINS.default_fallback;
-  return INDUSTRY_MARGINS.industries[industryId] || INDUSTRY_MARGINS.default_fallback;
-}
+import { getLondonEntry } from "@/lib/scores/cell_board";
+import { buildAcrossCities, type CityColumn } from "@/lib/markets/across_cities";
+import { buildPermits, type PermitsData } from "@/lib/spine/permits_rows";
+import { buildOpenFoot } from "@/lib/spine/open_rows";
+import type { Companion } from "@/components/spine/archetypes/BentoBand";
+import type { Provenance } from "@/lib/spine/provenance";
+import { COPY } from "@/lib/spine/copy";
 
 /** A finite, real number (not null, not NaN, not Infinity). */
 function isNum(n: number | null | undefined): n is number {
@@ -125,12 +73,11 @@ function isPos(n: number | null | undefined): n is number {
  * Public types
  * ------------------------------------------------------------------------- */
 
-/** One of the four entry parts a would-be owner asks about. */
-export interface OpeningPart {
-  /** The resolved figure (USD for capital/permits, weeks for time, count for hires). */
-  value: number;
-  /** True when this figure is a modeled archetype rather than a real measurement. */
-  modeled: boolean;
+/** A printed figure and where it was read (data-src, data-kind on the figure). */
+export interface StampedFigure {
+  /** The figure as it prints ("75 days", "$62K"). */
+  figure: string;
+  prov: Provenance;
 }
 
 /** One peer place for the SAME business, for the "same business elsewhere" strip. */
@@ -141,27 +88,13 @@ export interface PeerPlace {
   country: string;
   /** Link to that place's full cell page for this activity. */
   href: string;
-  /** Total one-time cost to open there (capital + permits), USD. */
-  totalToOpenUsd: number;
-  /** That place's break-in score, 0..100 (higher = easier), or null. */
-  score: number | null;
-  /** That place's break-in band, or null when unscored. */
-  band: BreakInBand | null;
+  /** That place's owner take-home a year, USD: the across page's own column figure. */
+  takeHomeUsd: number;
+  /** Where the take-home was worked out. */
+  prov: Provenance;
 }
 
-/** One other common business in the SAME place, for the "other businesses here" strip. */
-export interface OtherBusinessHere {
-  /** Display business name. */
-  business: string;
-  /** Link to that business's full cell page in this place. */
-  href: string;
-  /** That business's break-in score, 0..100, or null. */
-  score: number | null;
-  /** That business's break-in band, or null when unscored. */
-  band: BreakInBand | null;
-}
-
-/** The full opening picture for one (country, geo, industry). */
+/** The opening picture for one (country, geo, industry). */
 export interface OpeningPage {
   /** Business (activity) display name, e.g. "Restaurants". */
   businessName: string;
@@ -171,7 +104,7 @@ export interface OpeningPage {
    * shared lookup on the page already uses.
    */
   industryId: string;
-  /** Place display name, e.g. "London". */
+  /** Place display name, e.g. "California". */
   placeName: string;
   /** ISO2 country slug (lowercased). */
   country: string;
@@ -187,29 +120,24 @@ export interface OpeningPage {
   /** True when the cell is a trusted local measurement (always true here; null otherwise). */
   trusted: true;
 
-  /** The four entry parts, computed exactly as the cell board computes them. */
-  capital: OpeningPart;
-  permits: OpeningPart;
-  time: OpeningPart;
-  hires: OpeningPart & { roleHint: string };
-
-  /** Total one-time cost to open: capital + permits, USD. */
-  totalToOpenUsd: number;
+  /** The licences the trade needs: the trade page's `03 permits` builder, stamped; null where the place prints none (a UK page) or the shard holds none. */
+  permits: PermitsData | null;
+  /** The longest licence wait, the page's lead figure, or null with no licence to wait for. */
+  longestWait: StampedFigure | null;
+  /** Months to break even and years to pay back: the trade page's `04 open` figures off the shard, stamped; empty where the trade holds no shard. */
+  earning: Companion[];
 
   /** Real annual owner take-home after tax, USD (page method), or null. */
   takeHomeUsd: number | null;
-
-  /** The single headline break-in rating (straight off buildCellBoard), or null. */
-  breakIn: BreakInRating | null;
+  /** Where the take-home was worked out, or null with no take-home. */
+  takeHomeProv: Provenance | null;
 
   comparisons: {
-    /** 3-4 peer places for the same business (a cheaper and a dearer contrast). */
+    /** Up to four peer places for the same business: the two whose owners keep most and the two whose owners keep least. */
     sameBusinessElsewhere: PeerPlace[];
-    /** 3-4 other common businesses in this place (best effort; empty when no clean read). */
-    otherBusinessesHere: OtherBusinessHere[];
   };
 
-  /** A short, warm one-line verdict (the break-in headline, else a band line). */
+  /** A short line under the lead figure: what the page holds. */
   verdict: string;
 }
 
@@ -220,6 +148,14 @@ export interface BuildOpeningPageArgs {
   geo: string;
   /** Industry URL slug, e.g. "restaurants". */
   industry: string;
+}
+
+/**
+ * Where an owner take-home was worked out: the shared take-home builder (src/lib/finance/owner_take_home.ts) over the row at this address.
+ * An estimate, the engine's keeps (provenance.ts names them so).
+ */
+export function takeHomeProvFor(href: string): Provenance {
+  return { src: `finance/owner_take_home:${href}`, kind: "estimate" };
 }
 
 /* ----------------------------------------------------------------------------
@@ -250,7 +186,6 @@ function pageTakeHome(cell: Cell, country: string, geo: string): {
   /** Net margin fraction from the waterfall, pre-board-clamp. */
   netMarginPct: number | null;
 } {
-  const marginRow = lookupIndustryMargin(cell.industry_id);
   const grossRevenueForMargin = cell.revenue_per_firm ?? cell.rev_p50 ?? null;
 
   // Step 1: per-firm payroll with the page's unit-detection guard.
@@ -332,42 +267,23 @@ function pageTakeHome(cell: Cell, country: string, geo: string): {
 /* ----------------------------------------------------------------------------
  * comparisons.sameBusinessElsewhere
  *
- * Reuse buildAcrossCities (the trust-gated world-city slate) for THIS activity,
- * drop the current place, score each peer column with computeBreakInRating using
- * that column's own inputs (the exact breakInRowFromColumn recipe the break-in
- * leaderboard uses), then choose a small set that contrasts a cheaper-to-open and
- * a dearer-to-open place. Self-omits (empty array) when it cannot resolve.
+ * Reuse buildAcrossCities (the trust-gated world-city slate the across page
+ * prints) for THIS activity, drop the current place, and keep the places whose
+ * column holds an owner take-home: the two whose owners keep most and the two
+ * whose owners keep least, so the strip reads as a contrast. The figure is the
+ * across page's own column figure. Self-omits (empty array) when it cannot
+ * resolve.
  * ------------------------------------------------------------------------- */
-function peerFromColumn(
-  industryId: string,
-  col: CityColumn,
-  currentHref: string,
-): PeerPlace | null {
+function peerFromColumn(col: CityColumn, currentHref: string): PeerPlace | null {
   // Drop the current place (same cell href) so the page never compares to itself.
   if (col.href === currentHref) return null;
-  const total =
-    (isPos(col.startupCostUsd) ? col.startupCostUsd : 0); // permits not exposed on the column; capital is the entry figure here
-  if (!isPos(total)) return null;
-  // Score the peer exactly as the break-in leaderboard does: the column's modeled
-  // place-adjusted capital, the column's trusted-real take-home as the anchor,
-  // the modeled place-invariant weeks for the trade, the real local density where
-  // the column holds one else the modeled archetype. Permits ride at the module's
-  // zero default (the column does not expose a permits figure), matching the hub.
-  const rating = computeBreakInRating({
-    startupCapitalUsd: col.startupCostUsd,
-    permitsUsd: null,
-    annualOwnerTakeHomeUsd: col.takeHome,
-    timeToOpenWeeks: timeToOpenWeeks(industryId),
-    densityPer10k: col.densityPer10k ?? densityArchetypePer10k(industryId),
-    restsOnModeled: true,
-  });
+  if (!isPos(col.takeHome)) return null;
   return {
     place: col.name,
     country: col.country,
     href: col.href,
-    totalToOpenUsd: Math.round(total),
-    score: rating?.score ?? null,
-    band: rating?.band ?? null,
+    takeHomeUsd: Math.round(col.takeHome),
+    prov: takeHomeProvFor(col.href),
   };
 }
 
@@ -383,16 +299,15 @@ async function resolveSameBusinessElsewhere(
   );
   if (!across) return [];
   const peers = across.cities
-    .map((c) => peerFromColumn(industryId, c, currentHref))
+    .map((c) => peerFromColumn(c, currentHref))
     .filter((p): p is PeerPlace => p !== null);
   if (peers.length === 0) return [];
 
-  // Contrast a cheaper-to-open and a dearer-to-open place. Sort by total cost
-  // ascending, then take the two cheapest and the two dearest, de-duplicated and
-  // capped at four, preserving a cheapest -> dearest reading order.
-  const byCost = [...peers].sort((a, b) => a.totalToOpenUsd - b.totalToOpenUsd);
-  if (byCost.length <= 4) return byCost;
-  const picked = [byCost[0], byCost[1], byCost[byCost.length - 2], byCost[byCost.length - 1]];
+  // The two places whose owners keep most and the two whose owners keep least,
+  // read from most to least, de-duplicated and capped at four.
+  const byKeep = [...peers].sort((a, b) => b.takeHomeUsd - a.takeHomeUsd);
+  if (byKeep.length <= 4) return byKeep;
+  const picked = [byKeep[0], byKeep[1], byKeep[byKeep.length - 2], byKeep[byKeep.length - 1]];
   const seen = new Set<string>();
   const out: PeerPlace[] = [];
   for (const p of picked) {
@@ -404,94 +319,12 @@ async function resolveSameBusinessElsewhere(
 }
 
 /* ----------------------------------------------------------------------------
- * comparisons.otherBusinessesHere (BEST EFFORT)
- *
- * The only clean multi-industry-per-geo read in the codebase is
- * getComparableCells(stateName, excludeNaics6) - other industries in the SAME US
- * state, by firm count. It is US-state only (it resolves the state by geo_name).
- * For a US-state cell we resolve a few peers, score each with the SAME board math
- * (so the score equals what that peer's own cell masthead shows), and return
- * them. For every non-US / non-state cell there is no clean read, so we return an
- * empty array and the page omits that strip. We do NOT build a whole-DB scan.
- * ------------------------------------------------------------------------- */
-function scoreCellLikeBoard(peer: Cell): { score: number | null; band: BreakInBand | null } {
-  // Mirror the cell page's own resolution for this peer so the score equals the
-  // peer's masthead score: build that peer's board and read its rating.
-  const country = peer.country;
-  const geo = peer.geo_id || "";
-
-  const th = pageTakeHome(peer, country, geo);
-  const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
-  const peerGeoSlug = peer.geo_name ? slugForGeo(peer) : null;
-  const cityCostOfLivingIndex = getCityCostOfLivingIndex(cityOfCountry(country, peerGeoSlug));
-  const cityPopulation = getCityPopulation(cityOfCountry(country, peerGeoSlug));
-
-  const { breakInRating } = buildCellBoard({
-    cell: peer,
-    ownerTakeHome: th.ownerTakeHomeForBoard,
-    cityPopulation,
-    cityCostOfLivingIndex,
-    econ: econSnap,
-    londonEntry: getLondonEntry(peer),
-  });
-  return { score: breakInRating?.score ?? null, band: breakInRating?.band ?? null };
-}
-
-/** Best-effort geo slug for a peer cell (US state cells carry geo_name = state). */
-function slugForGeo(cell: Cell): string {
-  // For US state peers, getComparableCells returns cells whose geo_name is the
-  // state name; the cost-of-living / population lookups key on a CITY slug, so a
-  // state slug simply returns null (the place-adjust falls back to the country
-  // proxy, exactly as the cell page does for a state slug). cellUrl already
-  // slugifies geo_name, so reuse its geo segment.
-  const url = cellUrl(cell);
-  const parts = url.split("/").filter(Boolean);
-  return parts[1] ?? "";
-}
-
-async function resolveOtherBusinessesHere(cell: Cell): Promise<OtherBusinessHere[]> {
-  // Clean read only for US state cells (getComparableCells resolves the state by
-  // geo_name). Non-US and non-state cells: no clean multi-industry read, omit.
-  if (cell.country.toUpperCase() !== "US") return [];
-  if (!cell.geo_name) return [];
-  const peers = await withBudget(
-    getComparableCells(cell.geo_name, cell.naics_6 || undefined, 6),
-    [],
-    5_000,
-    `opening:comparable:${cell.geo_name}`,
-  );
-  if (peers.length === 0) return [];
-
-  const out: OtherBusinessHere[] = [];
-  const seenNames = new Set<string>();
-  const seenHrefs = new Set<string>();
-  for (const peer of peers) {
-    if (out.length >= 4) break;
-    const name = peer.industry_name || peer.industry_description || peer.naics_6;
-    if (!name) continue;
-    const href = cellUrl(peer);
-    // De-duplicate: getComparableCells can return several cells_master rows that
-    // resolve to the same broad sector name or the same cell href; show each
-    // business once so the strip never reads as a repeated row.
-    const nameKey = name.toLowerCase();
-    if (seenNames.has(nameKey) || seenHrefs.has(href)) continue;
-    seenNames.add(nameKey);
-    seenHrefs.add(href);
-    const { score, band } = scoreCellLikeBoard(peer);
-    out.push({ business: name, href, score, band });
-  }
-  return out;
-}
-
-/* ----------------------------------------------------------------------------
  * verdict
  * ------------------------------------------------------------------------- */
-/* THE VERDICT NO LONGER SPEAKS THE RATING (masterplan step 02, 2026-10-05). It was the break-in rating's headline, else its
-   band in words ("One of the friendlier rooms to enter"): the 0..100 composite said in a sentence, which his ruling 11 of
-   2026-09-26 forbids ("no composite, ever"). Every page now carries the line it carried when no rating held: what the
-   figures below are. */
+/* What the page holds, said once under the lead figure. Until 2026-10-15 it named "the cost, the calendar, and the first crew",
+   three typed figures that left the page that day. */
 function buildVerdict(): string {
-  return "The numbers below are what it takes to open here, the cost, the calendar, and the first crew.";
+  return COPY.opening.verdict;
 }
 
 /* ----------------------------------------------------------------------------
@@ -501,8 +334,9 @@ function buildVerdict(): string {
 /**
  * Assemble the opening picture for one (country, geo, industry), or null when the
  * core cell does not resolve or is not a trusted local measurement of the
- * requested activity. Mirrors the cell page's resolution exactly so every shared
- * number agrees; every secondary read is budget-wrapped and self-omits on a miss.
+ * requested activity. Every figure is a held one, read through the builder the
+ * trade page prints it with; every secondary read is budget-wrapped and
+ * self-omits on a miss.
  */
 export async function buildOpeningPage(
   args: BuildOpeningPageArgs,
@@ -521,8 +355,8 @@ export async function buildOpeningPage(
   // 2. Trust gate. The requested activity id is the friendly slug's industry, so
   // a misrouted slug, a synthesized stand-in, an extrapolated-tier cell, or a
   // country aggregate under a city slug all fail and the page notFound()s rather
-  // than rendering numbers it cannot stand behind. (Same gate the across page,
-  // the extremes hub, and the cell board's capital/density branches apply.)
+  // than rendering numbers it cannot stand behind. (Same gate the across page
+  // and the extremes hub apply.)
   const requestedIndustry = slugToIndustry(industry);
   const expectedIndustryId = requestedIndustry?.id ?? cell.industry_id ?? undefined;
   if (!isTrustedLocalCell(cell, expectedIndustryId)) return null;
@@ -530,78 +364,25 @@ export async function buildOpeningPage(
   if (!cell.industry_id) return null;
   const industryId = cell.industry_id;
 
-  // 3. Place signals, resolved exactly as the page resolves them.
-  const econSnap = getCountryEconomicsSnapshot(country.toUpperCase());
-  const cityCostOfLivingIndex = getCityCostOfLivingIndex(cityOfCountry(country, geo));
-  const cityPopulation = getCityPopulation(cityOfCountry(country, geo));
-  const countryWageProxy =
-    econSnap && isNum(econSnap.avgMonthlySalary)
-      ? econSnap.avgMonthlySalary * 12
-      : null;
-
-  // 4. Owner take-home (the page's exact derivation, incl. floor + London).
+  // 3. Owner take-home (the page's exact derivation, incl. floor + London).
   const th = pageTakeHome(cell, country, geo);
 
-  // 5. The four entry parts, computed the SAME way the board computes them.
-  //    Capital: real trusted startup cost where held AND trusted-local, else the
-  //    modeled, place-adjusted archetype. No real per-cell startup source exists
-  //    yet (page passes no realStartupCostUsd), so in practice this is modeled,
-  //    but we keep the real-first gate so the day a trusted figure lands the two
-  //    surfaces still agree.
-  const realStartupCostUsd: number | null = null; // mirrors page.tsx (no real source)
-  const hasRealStartupCost =
-    isPos(realStartupCostUsd) && isTrustedLocalCell(cell);
-  const modeledCapital = placeAdjustedStartupCapital({
-    industryId,
-    costOfLivingIndex: cityCostOfLivingIndex,
-    avgYearlySalary: countryWageProxy,
-  });
-  const capitalUsd = hasRealStartupCost
-    ? (realStartupCostUsd as number)
-    : modeledCapital;
-  const capitalModeled = !hasRealStartupCost;
+  // 4. The licences and the two first-year figures, through the trade page's own builders.
+  const permits = buildPermits(industryId, country);
+  const lead = permits?.longest ? permits.cells.find((c) => c.key === permits.longest!.key) ?? null : null;
+  const longestWait: StampedFigure | null =
+    lead && lead.prov && typeof lead.value === "string" ? { figure: lead.value, prov: lead.prov } : null;
+  const earning = buildOpenFoot(industryId);
 
-  const permitsUsd = placeAdjustedPermitsUsd({
-    industryId,
-    costOfLivingIndex: cityCostOfLivingIndex,
-    avgYearlySalary: countryWageProxy,
-  });
-  const timeWeeks = timeToOpenWeeks(industryId);
-  const hiresN = firstHiresCount(industryId);
-  const hiresHint = firstHiresRoleHint(industryId);
-
-  const totalToOpenUsd = Math.round(capitalUsd + permitsUsd);
-
-  // 6. The break-in rating: straight off buildCellBoard, so the headline score,
-  //    band, payback, and headline are byte-for-byte the cell page's. We hand it
-  //    the SAME inputs page.tsx hands it (the pre-London take-home, the place
-  //    signals, the real entry cost where held, the London entry), and read
-  //    breakInRating from the result.
-  //
-  //    The margins, the breakeven and the people figures were computed here
-  //    purely to fill arguments the rating never read, and went with the
-  //    section board on 2026-08-18.
-  const { breakInRating } = buildCellBoard({
-    cell,
-    ownerTakeHome: th.ownerTakeHomeForBoard,
-    cityPopulation,
-    cityCostOfLivingIndex,
-    econ: econSnap,
-    realStartupCostUsd,
-    londonEntry: getLondonEntry(cell),
-  });
-
-  // 7. Comparisons (each budget-wrapped, each self-omits on a miss).
+  // 5. The same business elsewhere (budget-wrapped, self-omits on a miss).
   const cellHref = cellUrl(cell);
-  const [sameBusinessElsewhere, otherBusinessesHere] = await Promise.all([
-    resolveSameBusinessElsewhere(industryId, cellHref),
-    resolveOtherBusinessesHere(cell),
-  ]);
+  const sameBusinessElsewhere = await resolveSameBusinessElsewhere(industryId, cellHref);
 
   const placeName =
     cell.geo_name || iso2ToName(country) || country.toUpperCase();
   const businessName =
     cell.industry_name || requestedIndustry?.name || industry.replace(/-/g, " ");
+  const takeHomeUsd = isNum(th.resolvedTakeHome) && th.resolvedTakeHome > 0 ? Math.round(th.resolvedTakeHome) : null;
 
   return {
     businessName,
@@ -611,14 +392,12 @@ export async function buildOpeningPage(
     cellHref,
     pageHref: tradePageHref(country, geo, industry),
     trusted: true,
-    capital: { value: Math.round(capitalUsd), modeled: capitalModeled },
-    permits: { value: Math.round(permitsUsd), modeled: true },
-    time: { value: timeWeeks, modeled: true },
-    hires: { value: hiresN, modeled: true, roleHint: hiresHint },
-    totalToOpenUsd,
-    takeHomeUsd: isNum(th.resolvedTakeHome) ? Math.round(th.resolvedTakeHome) : null,
-    breakIn: breakInRating,
-    comparisons: { sameBusinessElsewhere, otherBusinessesHere },
+    permits: permits && permits.cells.length > 0 ? permits : null,
+    longestWait,
+    earning,
+    takeHomeUsd,
+    takeHomeProv: takeHomeUsd != null ? takeHomeProvFor(tradePageHref(country, geo, industry)) : null,
+    comparisons: { sameBusinessElsewhere },
     verdict: buildVerdict(),
   };
 }

@@ -49,11 +49,6 @@ import type { Cell } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
 import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
-import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
-import {
-  timeToOpenWeeks,
-  placeAdjustedPermitsUsd,
-} from "@/lib/markets/opening_archetypes";
 import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
 import { displayDensityPer10k } from "@/lib/finance/margin_floor";
 import { cityOfCountry, getCityCostOfLivingIndex, getCityPopulation } from "@/lib/cities/city_tier";
@@ -370,55 +365,13 @@ export function ownerTakeHomeForCell(cell: Cell, annualIncome: number | null): n
 }
 
 /**
- * The single break-in rating for one resolved destination cell in a place, or
- * null when it cannot be defended. Mirrors buildCellBoard's break-in inputs
- * exactly (place-adjusted capital + permits, modeled time, real-or-modeled
- * density, the cell's real take-home), so the score equals that cell's masthead.
+ * The firms per 10,000 residents for one resolved destination cell in a place: REAL (firms divided by residents per 10k) only when
+ * the cell is a trusted local measurement holding both a firm count and a population AND the figure passes the display sanity cap,
+ * else the modeled per-industry archetype. London's curated population path lives on the cell page; the archetype is the safe
+ * place-level fallback for a London read here.
  */
-export function breakInForCell(
-  cell: Cell,
-  geo: string,
-  annualIncome: number | null,
-): {
-  score: number;
-  band: BreakInBand;
-  startupCostUsd: number;
-  permitsUsd: number;
-  densityPer10k: number;
-} | null {
-  const industryId = cell.industry_id ?? null;
-  const costOfLivingIndex = getCityCostOfLivingIndex(cityOfCountry(cell.country, geo));
-  const avgYearlySalary = isNum(annualIncome) ? annualIncome : null;
-
-  // Owner take-home: London prefers its curated figure (matching the cell board),
-  // else the structural take-home over the cell's own revenue.
+export function densityForCell(cell: Cell, geo: string): number | null {
   const london = getLondonEntry(cell)?.economics ?? null;
-  const takeHome =
-    london && isNum(london.owner_take_home)
-      ? london.owner_take_home
-      : ownerTakeHomeForCell(cell, annualIncome);
-
-  // Entry capital + permits: the place-adjusted modeled archetypes (the same
-  // figures the "What it takes to open" rows show on the masthead).
-  const startupCapitalUsd = placeAdjustedStartupCapital({
-    industryId,
-    costOfLivingIndex,
-    avgYearlySalary,
-  });
-  const permitsUsd = placeAdjustedPermitsUsd({
-    industryId,
-    costOfLivingIndex,
-    avgYearlySalary,
-  });
-
-  // Density: the blended firms-per-10k the cell board feeds the rating. It is
-  // REAL (firms divided by residents per 10k) only when the cell is a trusted
-  // local measurement holding both a firm count and a population AND the figure
-  // passes the same display sanity cap the board applies (a wrong-scale count
-  // dashes there and falls back to the archetype, so we mirror that here to stay
-  // exactly on the masthead's number); otherwise it is the modeled per-industry
-  // archetype. London's curated population path lives on the cell page; the
-  // archetype is the safe place-level fallback for a London read here.
   let realPer10k: number | null = null;
   if (london == null) {
     const pop = getCityPopulation(cityOfCountry(cell.country, geo));
@@ -428,28 +381,21 @@ export function breakInForCell(
       );
     }
   }
-  const densityPer10k = isNum(realPer10k)
-    ? realPer10k
-    : densityArchetypePer10k(industryId);
+  return isNum(realPer10k) ? realPer10k : densityArchetypePer10k(cell.industry_id ?? null);
+}
 
-  const rating = computeBreakInRating({
-    startupCapitalUsd,
-    permitsUsd,
-    annualOwnerTakeHomeUsd: takeHome,
-    timeToOpenWeeks: timeToOpenWeeks(industryId),
-    densityPer10k,
-    // The entry capital and crowding lean on modeled estimates, so the rating is
-    // directional, matching the board everywhere.
-    restsOnModeled: true,
-  });
-  if (rating == null) return null;
-  return {
-    score: rating.score,
-    band: rating.band,
-    startupCostUsd: startupCapitalUsd,
-    permitsUsd,
-    densityPer10k,
-  };
+/**
+ * The single break-in rating for one resolved destination cell in a place: NONE since 2026-10-15 (release 2 job A). It was worked
+ * from a capital, permits and weeks to open typed by hand with no source (src/lib/markets/startup_capital_archetypes.ts,
+ * opening_archetypes.ts), the masthead's own inputs, which left the same day; with no capital the rating module refuses to score, so
+ * this answers null, as it always did for a cell it could not defend. The city page's trade rows stand on the take-home alone.
+ */
+export function breakInForCell(
+  _cell: Cell,
+  _geo: string,
+  _annualIncome: number | null,
+): { score: number; band: BreakInBand; densityPer10k: number } | null {
+  return null;
 }
 
 /** The minimum number of scored activities before the panel is worth showing. */

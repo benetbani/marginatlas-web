@@ -1025,6 +1025,14 @@ const GATES: Gate[] = [
      element is stamped, and all 243 shards price to the dollar as the card does. Reds on a6930c60's text (190 findings) and reads 243
      shards, never passing having read nothing. */
   { name: "buy-price-held", script: "tests/open/buy_price_held.test.ts" },
+  /* No page or builder reads a typed start figure (release 2 job A, 2026-10-15; the controller's ruling, option (c)): two tables typed by hand
+     with no source, src/lib/markets/startup_capital_archetypes.ts and opening_archetypes.ts, printed a capital, permits, weeks, hires and
+     a payback on /opening, /buy-or-start, the London trade pages, the industry pages and /extremes. Every printing now stands on a held figure
+     through the trade page's own builder, and the tables are deleted. The gate reads every source file under src/ through strip_comments
+     and reds on any line of code naming either table (an import, a dynamic import, a require, a stamp string) and on either table existing;
+     red on 19e4072a (21 findings, 10 reading files and the two tables), its reader proven on planted lines, never passing having read
+     under 900 files or 3,500 import lines. */
+  { name: "start-side-held", script: "tests/open/start_side_held.test.ts" },
   /* Every UK city's page prints an official figure, says in its card's one line that a figure is an estimate, or withholds it:
      London's shop rent from the valuation slice, the survey's pay, no hand-anchored cost of living, no engine district rents
      (masterplan step 03); the six other cities' shard figures each marked an estimate (plan 2026-10-08, uk:cities-sourced-or-marked). */

@@ -2,11 +2,15 @@
  * src/components/buy/BuyVsStartCompare.tsx
  *
  * The side-by-side decision card: two columns, START on the left, BUY on the
- * right, each carrying the same three rows so the reader compares like for like:
+ * right, so the reader compares like for like:
  *
- *   - Cash needed up front (the lead figure on each side).
- *   - Time to positive cash flow (start = time to open plus the ramp; buy =
- *     day one, the whole point of buying).
+ *   - Cash needed up front: on the BUY side the sale range; on the START side
+ *     the stated line, because no start cost is held (the typed start cash left
+ *     on 2026-10-15, release 2 job A).
+ *   - Time: on the START side the longest licence wait and the trade's years to
+ *     pay back, the trade page's own figures, stamped (they stand where typed
+ *     weeks and a typed payback stood); on the BUY side day one, the whole point
+ *     of buying.
  *   - The risk read (where the danger sits on each path).
  *
  * The two columns share one visual language, the board's quiet label / display
@@ -21,16 +25,10 @@
  * names.
  */
 import * as React from "react";
-import { fmtUSD, fmtWeeksToOpen } from "@/components/board/format";
 import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 import { buyRangeText } from "@/lib/open/buy_side";
 import { COPY } from "@/lib/spine/copy";
 import type { BuyVsStart } from "@/lib/open/buy_vs_start";
-
-/** A real, finite, positive number. */
-function isPos(n: number | null | undefined): n is number {
-  return typeof n === "number" && Number.isFinite(n) && n > 0;
-}
 
 /** One labelled row inside a column: a quiet label, a value, an optional note. */
 function Row({
@@ -38,12 +36,15 @@ function Row({
   value,
   note,
   prov,
+  quiet = false,
 }: {
   label: string;
   value: string;
   note?: string;
   /** Where the value was read, when it is a figure with a source (data-src, data-kind on the figure). */
   prov?: Provenance | null;
+  /** A stated line where a figure would stand: body text, never the display figure's face. */
+  quiet?: boolean;
 }) {
   return (
     <div>
@@ -52,7 +53,7 @@ function Row({
       </div>
       <div
         {...provAttrs(prov)}
-        className="mt-0.5 font-display text-lg font-semibold tabular-nums text-ink-900"
+        className={quiet ? "mt-0.5 text-sm leading-snug text-cocoa-700" : "mt-0.5 font-display text-lg font-semibold tabular-nums text-ink-900"}
       >
         {value}
       </div>
@@ -63,24 +64,11 @@ function Row({
   );
 }
 
-/** The warm "time to positive cash flow" phrase for the START side. */
-function startCashFlowPhrase(page: BuyVsStart): string {
-  const weeks = fmtWeeksToOpen(page.start.timeToOpenWeeks);
-  if (isPos(page.start.paybackYears)) {
-    const y = page.start.paybackYears;
-    const ramp =
-      y < 1
-        ? `about ${Math.max(1, Math.round(y * 12))} months`
-        : `about ${Number.isInteger(y) ? y : y.toFixed(1)} years`;
-    return `${weeks} to open, then ${ramp} of ramp to earn it back`;
-  }
-  return `${weeks} to open, then a ramp before profit`;
-}
-
 export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
   /* The buy figure is the trade page's own sale range in currency with its stamp; a trade with no price prints the card's stated line in the
      figure's place, and no figure. */
   const buyRange = buyRangeText(page.buy);
+  const B = COPY.buyOrStart;
   return (
     <section className="mt-8">
       {/* ONE card, not two half-cards. This was a pair of hand-rolled opaque
@@ -99,16 +87,15 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
             Build it from nothing, your way.
           </p>
           <div className="mt-4 flex flex-col gap-4">
-            <Row
-              label="Cash needed"
-              value={fmtUSD(page.start.cashNeededUsd)}
-              note="capital plus permits to open, estimated"
-            />
-            <Row
-              label="Time to cash flow"
-              value={fmtWeeksToOpen(page.start.timeToOpenWeeks)}
-              note={startCashFlowPhrase(page)}
-            />
+            {/* No cash row on this side: the hero says once that no start cost is held (fix round 1, ruling 2); the column carries what it does hold. */}
+            {page.start.longestWait ? (
+              <Row label={B.waitLabel} value={page.start.longestWait.figure} note={B.waitNote} prov={page.start.longestWait.prov} />
+            ) : (
+              <Row label={B.waitLabel} value={B.noWait} quiet />
+            )}
+            {page.start.payback ? (
+              <Row label={B.paybackLabel} value={page.start.payback.figure} note={B.paybackNote} prov={page.start.payback.prov} />
+            ) : null}
             <Row
               label="Where the risk sits"
               value="The ramp"
@@ -131,6 +118,7 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
               value={buyRange ?? (page.buy.line ?? "")}
               note={buyRange ? COPY.tradeWorth.basis : undefined}
               prov={buyRange ? page.buy.prov : null}
+              quiet={!buyRange}
             />
             <Row
               label="Time to cash flow"

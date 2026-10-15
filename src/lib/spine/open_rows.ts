@@ -29,35 +29,27 @@
  *    line with their count and their sum (COPY.tradeOpen.tailMany), the
  *    MarkList precedent (a cap with the whole set named), never a silent
  *    drop; a cell with five lines or fewer draws them all and no line.
- *  BASELINE, no setup lines and the trade keyed in the archetype table
- *    (`startupCapitalArchetypeKeyed`, 153 of the 243 shard ids): the trade's
- *    typical cost to open at 30, marked modelled, never as this city's own
- *    figure (R3), LOUD: the accent marks the role the figure plays in the
- *    turn, not whether it was measured that day.
- *  WITHHELD, no setup lines and the trade on the 80,000 default (90 of 243;
- *    a fill value is never printed, R11) or a cell whose trade the table and
- *    the shards do not know, or, on a UK page, a keyed trade whose place holds no city index of its own country (plan
- *    2026-10-11): no total; the stated line stands where the
- *    focal would, at 16, so the card's height does not collapse; UNACCENTED,
- *    and turn one goes quiet on those pages, the page carrying two loud
- *    moments (8.6 says so plainly).
+ *  WITHHELD, no setup lines: no total; where the trade's shard holds its two
+ *    first-year figures the card earns it back instead (below); else the
+ *    stated line stands where the focal would, at 16, so the card's height
+ *    does not collapse; UNACCENTED, and turn one goes quiet on those pages,
+ *    the page carrying two loud moments (8.6 says so plainly).
  *
- * THE BASELINE STATE NAMES THE KINDS OF SHOP (2026-09-24, the goal's B10).
- * One centred total stood in a card the licences beside it made 362 tall:
- * on London barbershops a blank 476 by 132 at 1280 and 1440 (the
- * gathered-emptiness gate, E6) and the level's no-visual row. Every shard
- * holds its formats with `subtypes.list.*.capital_delta_pct`, each format's
- * opening cost against the trade's typical (243 of 243, four or five a trade,
- * modelled), and the formats card's own header gives the only reason it never
- * printed them: "its base, the cost to open, is withheld on 90 of the 243" (a
- * figure worked from the default would stand on a fill). In THIS state the
- * base is the keyed table's figure, not the fill, so each format's cost is the
- * typical times one plus its difference, printed as an absolute (clause 15),
- * the format at nought the lead under its own name (the typical IS that shop),
- * the others the working, dearest first (`formats`). Under two other formats,
- * or with no format at nought, the card keeps the one total.
+ * NO TYPED COST TO OPEN (2026-10-15, release 2 job A). A BASELINE state stood
+ * between these two until that day: no setup lines and the trade keyed in
+ * src/lib/markets/startup_capital_archetypes.ts, a table typed by hand with no
+ * source ("directional, drawn from general industry knowledge"), printed at 30
+ * as the trade's typical cost to open, times the city's cost-of-living factor,
+ * stamped with the table's own name as its source; and, from 2026-09-24, the
+ * kinds of shop worked from that figure (`subtypes.list.*.capital_delta_pct`
+ * times the typed base). It printed on up to 94 of the 138 London trade pages.
+ * The law is that every figure comes from held data, so the state left: every
+ * trade now takes the state the 44 unkeyed trades already shipped, the months
+ * to break even and the years to pay back under "Earning it back", and the
+ * kinds of shop leave with the base they were worked from (their own net
+ * margins stand on `07 formats`).
  *
- * THE WITHHELD STATE EARNS IT BACK INSTEAD (the same day, the goal's A4): it
+ * THE WITHHELD STATE EARNS IT BACK (2026-09-24, the goal's A4): it
  * printed "Not gathered yet: what it costs to open here." on 44 of the 138
  * live trades in London (counted on the renders of every one) and on the same
  * trades in every other British city, the NEVER list's card on a UK page.
@@ -80,34 +72,21 @@
  */
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import type { Companion } from "@/components/spine/archetypes/BentoBand";
-import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
-import { placeFactor, startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
-import { cityOfCountry, getCityCostOfLivingIndex } from "@/lib/cities/city_tier";
-import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
-import { honestRound } from "@/lib/uk/present/precision";
+import { industryFigure } from "@/lib/facts/industry_shard";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { Provenance } from "@/lib/spine/provenance";
 import { own } from "@/lib/own";
 
 export const OPEN_METRICS = { ramp: "first_year.ramp_to_breakeven_months", payback: "first_year.payback_years" } as const;
-/** The formats' names and their opening cost against the trade's typical, in percent (the shard's own fields). */
-export const OPEN_FORMAT_METRICS = { name: "subtypes.list.*.name", delta: "subtypes.list.*.capital_delta_pct" } as const;
-/** The working's floor: WorkedFigure draws its working from two items (its WORKING_MIN); fewer and the card keeps the one total. */
-export const OPEN_FORMATS_WORKING_MIN = 2;
-
-/** One kind of shop and what it costs to open: the typical times one plus its difference, rounded to the dollar. */
-export type OpenFormat = { key: string; name: string; delta: number; value: number; figure: string };
-
-export type OpenState = "held" | "baseline" | "withheld";
+export type OpenState = "held" | "withheld";
 
 /** How many lines the held card draws as bars: the archetype's vertical form holds under six. */
 export const DRAWN_LINES_CAP = 5;
 
 export type OpenData = {
   state: OpenState;
-  /** Where the focal figure came from (plan 06, task B5): set on the keyed baseline, an estimate (New York's index, at the page's
-   *  city's prices where the city holds a cost of living) and on the held bill, its country's estimate (plan 2026-10-11). Absent elsewhere. */
+  /** Where the focal figure came from (plan 06, task B5): set on the held bill, its country's estimate (plan 2026-10-11). Absent elsewhere. */
   prov?: Provenance;
   /** HELD ONLY: whose bill it is, the label under the total (COPY.tradeOpen.heldScope). */
   focalWords?: string;
@@ -121,7 +100,7 @@ export type OpenData = {
   lines: BarRow[];
   /** The leader: the biggest line's key (held only). */
   biggestKey: string | null;
-  /** The card's focal as printed (held: the total; baseline: the trade's typical), or null when withheld. */
+  /** The card's focal as printed (held: the total), or null when withheld. */
   figure: string | null;
   /** The focal's value in dollars, or null when withheld. */
   value: number | null;
@@ -131,14 +110,12 @@ export type OpenData = {
   basis: string | null;
   /** The two companions, months to break even and years to pay back; empty when the trade holds no shard. */
   foot: Companion[];
-  /** The line under the companions: null where the basis already names the foot's figures as the trade's (held, baseline); the withheld line where there are none; the modelled sentence in the withheld state, which has no basis to carry it. */
+  /** The line under the companions: null where the basis already names the foot's figures as the trade's (held); the withheld line where there are none; the modelled sentence in the withheld state, which has no basis to carry it. */
   footLine: string | null;
-  /** True in the held and baseline states: the total is the page's second loud moment. */
+  /** True in the held state: the total is the page's second loud moment. */
   accent: boolean;
-  /** True when the printed focal is an estimate: the baseline, and the held bill, one figure for a whole country. */
+  /** True when the printed figures are estimates: the held bill (one figure for a whole country) and the trade's two first-year figures. */
   sample: boolean;
-  /** BASELINE ONLY: the format at nought first (the typical under its own name), then the others dearest first; empty elsewhere and where fewer than OPEN_FORMATS_WORKING_MIN others can be worked. */
-  formats: OpenFormat[];
   /** WITHHELD ONLY: the card leads with the foot's two figures under "Earning it back" and prints no stated line; false where the trade holds no shard (the old withheld state stands). */
   recover: boolean;
   confidence: "measured" | "modeled";
@@ -156,69 +133,37 @@ export const yearsFigure = (y: number) => {
   return r === 1 ? "1 year" : `${Number.isInteger(r) ? r : r.toFixed(1)} years`;
 };
 
+/** Where a trade's shard figure was read: the file and the key, an estimate. */
+export const shardProv = (industryId: string, metric: string): Provenance => ({ src: `data/facts/industry/${industryId}.json:${metric}`, kind: "estimate" });
+
 /** The foot's two companions off the trade's shard, in the order 8.6 names them. */
 export function buildOpenFoot(industryId: string | null | undefined): Companion[] {
   if (!industryId) return [];
   const out: Companion[] = [];
+  /* Each figure stamped with the shard file and its key, an estimate (2026-10-15, release 2 job A): the same two on the trade page, on /opening and on /buy-or-start. */
   const ramp = industryFigure(industryId, OPEN_METRICS.ramp);
-  if (ramp && ramp.value > 0) out.push({ figure: monthsFigure(ramp.value), words: COPY.tradeOpen.breakEven });
+  if (ramp && ramp.value > 0) out.push({ figure: monthsFigure(ramp.value), words: COPY.tradeOpen.breakEven, prov: shardProv(industryId, OPEN_METRICS.ramp) });
   const pay = industryFigure(industryId, OPEN_METRICS.payback);
-  if (pay && pay.value > 0) out.push({ figure: yearsFigure(pay.value), words: COPY.tradeOpen.payBack });
+  if (pay && pay.value > 0) out.push({ figure: yearsFigure(pay.value), words: COPY.tradeOpen.payBack, prov: shardProv(industryId, OPEN_METRICS.payback) });
   return out;
 }
 
 /**
- * The kinds of shop off the trade's shard, worked from the typical total the
- * baseline state prints: the format whose difference is nought leads (the first
- * in the file's order where two are), the rest follow dearest first. Empty where
- * the shard holds no format at nought or fewer than two others with a figure.
- */
-export function buildOpenFormats(industryId: string | null | undefined, typical: number): OpenFormat[] {
-  if (!industryId || !(typical > 0)) return [];
-  const names = industryRows(industryId, OPEN_FORMAT_METRICS.name);
-  const deltas = new Map(industryRows(industryId, OPEN_FORMAT_METRICS.delta).map((f) => [f.rowKey, f.value] as const));
-  const all: OpenFormat[] = [];
-  for (const n of names) {
-    const delta = deltas.get(n.rowKey);
-    const name = typeof n.value === "string" ? n.value.trim() : "";
-    if (!name || !isNum(delta)) continue;
-    const value = Math.round(typical * (1 + delta / 100));
-    if (!(value > 0)) continue;
-    all.push({ key: String(n.rowKey), name, delta, value, figure: usd(value) });
-  }
-  const lead = all.find((f) => f.delta === 0);
-  if (!lead) return [];
-  const rest = all.filter((f) => f !== lead).sort((a, b) => b.value - a.value);
-  return rest.length >= OPEN_FORMATS_WORKING_MIN ? [lead, ...rest] : [];
-}
-
-/**
- * THE FORM THE CARD DRAWS, SAID ONCE (the goal's B12, 2026-09-24): the list for
- * the kinds of shop, the bars for the bill, and the figure card (BentoMetric)
- * for the months to earn it back and for a lone total. `OpenCard` branches on
+ * THE FORM THE CARD DRAWS, SAID ONCE (the goal's B12, 2026-09-24): the bars for
+ * the bill, and the figure card (BentoMetric) for the months to earn it back and
+ * for the stated line. (The list for the kinds of shop left on 2026-10-15 with the
+ * typed base it was worked from.) `OpenCard` branches on
  * it and the view seats by it: a figure card takes the band's narrow third
  * beside the licences, the list and the bill the wide two thirds. Measured by
  * E7's sweep: the lone total sat in the wide two thirds on 40 of the 138 London
  * trades at 1280, stretched to the licence grid's height with a blank of about
  * 613 by 126 above and below its figure (craft breweries).
  */
-export type OpenForm = "list" | "bill" | "metric";
+export type OpenForm = "bill" | "metric";
 export function openForm(open: OpenData): OpenForm {
-  if (open.state === "baseline" && open.formats.length > 0) return "list";
   if (open.recover) return "metric";
   if (open.state === "held") return "bill";
   return "metric";
-}
-
-/* THE KEYED FIGURE AT THE PLACE'S PRICES (plan 06, task A6, 2026-10-04): the archetype table is a New York index (cost of
-   living 100), and the trade page printed it unadjusted on every city (a London barbershop at New York's 60,000). Where the
-   page's city, one of its own country (cityOfCountry), holds a cost-of-living index, the figure takes the place factor
-   (London's 75: 0.75), rounded once to three figures, and the basis says it is an estimate at that city's prices; a page
-   with no city index keeps the keyed figure and its empty basis outside the UK, and none on a UK page. Never
-   `placeAdjustedStartupCapital`, which answers the 80,000 default for a trade the table does not key. */
-export function placeCostFactor(meta: { iso2?: unknown; geo?: unknown } | null | undefined): number | null {
-  const index = getCityCostOfLivingIndex(cityOfCountry(typeof meta?.iso2 === "string" ? meta.iso2 : null, typeof meta?.geo === "string" ? meta.geo : null));
-  return index != null ? placeFactor({ costOfLivingIndex: index }) : null;
 }
 
 export function buildOpen(seed: any): OpenData | null {
@@ -254,49 +199,21 @@ export function buildOpen(seed: any): OpenData | null {
       state: "held", rows: drawn, tail, tailLine, lines, biggestKey: lines[0].key, figure: usd(total), value: total, withheld: null,
       prov: heldProv, focalWords: scopeWords,
       basis, foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: true, confidence: "modeled",
-      formats: [], recover: false,
+      recover: false,
     };
   }
 
-  /* BASELINE: the trade's keyed figure. WITHHELD: the default, no key at all, or (plan 2026-10-11) a UK page whose place holds no city index of its own country, where the keyed figure would be New York's. */
-  const factor = placeCostFactor(meta);
-  const keyedNy = factor == null && countryHeldToRegisters(meta.iso2) ? null : startupCapitalArchetypeKeyed(slug);
-  if (keyedNy != null) {
-    const keyed = factor != null ? honestRound(keyedNy * factor) : keyedNy;
-    const city = typeof meta.city === "string" && meta.city ? meta.city : null;
-    /* One sentence for the three figures where the companions print (all of them the trade's, modelled); the total's own sentence and the withheld foot where they do not; at a place's prices, the estimate's own line. */
-    const formats = buildOpenFormats(industryId, keyed);
-    return {
-      state: "baseline", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: usd(keyed), value: keyed, withheld: null,
-      prov: { src: `markets/startup_capital_archetypes:${slug}${factor != null && typeof meta.geo === "string" ? `:${meta.geo}` : ""}`, kind: "estimate" },
-      basis: factor != null && city ? COPY.tradeOpen.basisPlace.replace("{city}", city) : formats.length > 0 ? (foot.length > 0 ? COPY.tradeOpen.basisFormats : COPY.tradeOpen.basisFormatsAlone) : foot.length > 0 ? COPY.tradeOpen.basisBaseline : COPY.tradeOpen.basisBaselineAlone,
-      foot, footLine: foot.length > 0 ? null : COPY.tradeOpen.footWithheld, accent: true, sample: true, confidence: "modeled",
-      formats, recover: false,
-    };
-  }
   /* EARNING IT BACK where the foot holds both figures (see the header); the old stated line only where the trade holds no shard. */
   if (foot.length === 2) {
     return {
       state: "withheld", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: null, value: null, withheld: null,
       basis: COPY.tradeOpen.basisRecover, foot, footLine: null, accent: false, sample: true, confidence: "modeled",
-      formats: [], recover: true,
+      recover: true,
     };
   }
   return {
     state: "withheld", rows: [], tail: null, tailLine: null, lines: [], biggestKey: null, figure: null, value: null, withheld: COPY.tradeOpen.withheld,
     basis: null, foot, footLine, accent: false, sample: false, confidence: "modeled",
-    formats: [], recover: false,
+    recover: false,
   };
-}
-
-/**
- * THE COUNT OVER THE 243 SHARD IDS, the two states a trade can be in before
- * any cell's own lines are read: keyed (the baseline state off a cell with no
- * lines) or on the default (the withheld state). The held state is a cell's,
- * not a trade's, and is counted over the cells the harness renders (item 56).
- */
-export function countOpenStates(ids: string[], slugOf: (id: string) => string): { total: number; keyed: number; default: number } {
-  let keyed = 0;
-  for (const id of ids) if (startupCapitalArchetypeKeyed(slugOf(id)) != null) keyed++;
-  return { total: ids.length, keyed, default: ids.length - keyed };
 }

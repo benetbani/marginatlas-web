@@ -34,8 +34,6 @@ import { honestRound } from "@/lib/uk/present/precision";
 import { usd } from "@/lib/spine/money";
 import { COPY } from "@/lib/spine/copy";
 import { registerSrc, type Provenance } from "@/lib/spine/provenance";
-import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
-import { placeCostFactor } from "@/lib/spine/open_rows";
 import { tradeSurvivalUk } from "@/lib/uk/registers/survival";
 
 const PREMISES = premisesJson as unknown as { trade_category: Record<string, string> };
@@ -165,22 +163,12 @@ export function londonTradeHero(slug: string): LondonTradeHero | null {
 
 /** THE HEADER NEVER OPENS ON A BLANK (his interview of 2026-09-26, answer 2: "a figure we trust (cost to open, sales a year)";
  *  QUEUE cell:hero-not-measured; milestone 1, M8). Where the register holds no row the page may print (an approximate, absent or
- *  thin code: 26 of 138 London trades on 2026-10-04), the answer is the trade's cost to open at London's prices, the open card's
- *  own figure and its own words ("An estimate at London prices."; open_rows.ts), so the page prints one number; else the UK's
- *  five-year survival for the trade's group at recent rates, rounded once through its interval (survival.ts); else null, and the
- *  state word stands (three trades on 2026-10-04). Sales a year are the register's alone, above. */
+ *  thin code: 26 of 138 London trades on 2026-10-04), the answer is the UK's five-year survival for the trade's group at recent
+ *  rates, rounded once through its interval (survival.ts); else null, and the state word stands (three trades on 2026-10-04).
+ *  Sales a year are the register's alone, above. The trade's cost to open at London's prices led this fallback until 2026-10-15:
+ *  a capital typed by hand with no source (src/lib/markets/startup_capital_archetypes.ts) times London's cost-of-living factor;
+ *  it left with the open card's own (release 2 job A), and the survival figure it stood in front of is a register's. */
 export function londonTradeFallbackAnswer(slug: string): LondonTradeHero["answer"] | null {
-  const keyed = startupCapitalArchetypeKeyed(slug);
-  const factor = placeCostFactor({ iso2: "GB", geo: "london" });
-  if (keyed != null && factor != null) {
-    return {
-      label: C().openLabel,
-      value: usd(honestRound(keyed * factor)),
-      basis: COPY.tradeOpen.basisPlace.replace("{city}", "London"),
-      confidence: "modeled",
-      prov: { src: `markets/startup_capital_archetypes:${slug}:london`, kind: "estimate" },
-    };
-  }
   const uk = tradeSurvivalUk(slug);
   if (uk) {
     const p = uk.period[5];

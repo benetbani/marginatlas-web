@@ -3,8 +3,8 @@
  *
  * OTHER TRADES TO OPEN, the trade page's `13 rivals` (MODEL.md 8.6; plan
  * step 33's sixth dispatch, 2026-09-18): the universal list card (his B3,
- * MarkList) with no marks, a sibling trade and its typical cost to open per
- * row, EVERY ROW A DOOR to that trade's page in this city, the headline the
+ * MarkList) with no marks, a sibling trade and its typical years to pay back
+ * per row, EVERY ROW A DOOR to that trade's page in this city, the headline the
  * set's middle at 30 in ink (the form's own law, so this card can never be
  * loud and is never a candidate for a fourth accent). The band's question
  * from one side: if not this trade, what else could I open here.
@@ -16,18 +16,26 @@
  * the place holds that many. Each carries the trade's slug, its name and
  * its verified href; nothing else, and nothing invented.
  *
- * THE FIGURE: `startupCapitalArchetypeKeyed(slug)`, the trade's typical cost
- * to open in a typical economy (startup_capital_archetypes.ts, 153 of the
- * 243 shard ids keyed), a TRADE figure marked modelled and never this
- * place's own (PART 9 clause 38, R3). A sibling on the table's 80,000
- * default is WITHHELD with the stated line counting it (clause 46, R11; the
- * lookup reads the KEY, never the value, because three keyed trades are
- * authored at exactly 80,000: DATA-REQUIREMENTS item 48's note). The rows
- * fall biggest first, the form's order; the middle is the LOWER median of
- * the keyed siblings, so the headline is a figure some row actually holds
- * (mark_list_rows.ts's own reasoning), and its label says which few it is
- * the middle of ("Middle of the four"), because the rows ARE every member
- * that holds a figure.
+ * THE FIGURE: each sibling's `first_year.payback_years` off its own shard
+ * (data/facts/industry/<id>.json, 243 of 243, 3 held, every one printed as
+ * modelled, R12), the same figure the sibling's own page prints under
+ * "Earning it back", through the same builder's metric and formatter
+ * (open_rows.ts), stamped with its file and key and called an estimate. A
+ * TRADE figure, never this place's own (PART 9 clause 38, R3). A sibling whose
+ * slug names no live trade or whose shard holds no payback is WITHHELD with
+ * the stated line counting it. The rows fall biggest first, the form's order
+ * (the slowest to pay back first); the middle is the LOWER median of the
+ * siblings that hold a figure, so the headline is a figure some row actually
+ * holds (mark_list_rows.ts's own reasoning), and its label says which few it
+ * is the middle of ("Middle of the four").
+ *
+ * UNTIL 2026-10-15 the figure was each sibling's cost to open, read from
+ * src/lib/markets/startup_capital_archetypes.ts, a table typed by hand with no
+ * source, times the city's cost-of-living factor, stamped with the table's
+ * name; a sibling on its 80,000 default was withheld, and a UK place with no
+ * city index drew no card. The law is that every figure comes from held data
+ * (release 2 job A), so the payback years stand in its place, the trade's
+ * own and the same in every place, and the card draws on every page.
  *
  * TWO STATES, and the card ships in both (8.6: never a lone `14`):
  *   list      four or more siblings hold a figure: the mark list, the
@@ -40,17 +48,6 @@
  *             model's and is imported, not retyped). The line says how many
  *             of the four the list needs hold a figure; where no sibling
  *             resolves at all it says that instead.
- *  NONE on a UK page whose place holds no city index of its own country (plan 2026-10-11): every row would be New York's.
- *
- * COUNTED 2026-09-18 by this dispatch, with the database up: London
- * restaurants resolve six siblings, four keyed (legal services, software
- * development, real estate agencies, grocery stores; office and business
- * support and employment services on the default); California restaurants
- * six, four keyed; Berlin restaurants six, all six keyed; Mumbai cafes and
- * Cairo restaurants none (their places hold no regional sibling rows), the
- * withheld state. Over the 243 trades the keyed count is the archetype's
- * own, 153 of 243; a sibling SET is a place's, not a trade's, and cannot be
- * counted without the database, so no such count is claimed here.
  *
  * BLIND SPOT, stated: this builder cannot tell "no sibling holds a cell
  * here" from "the table did not answer": both arrive as an empty list and
@@ -60,29 +57,27 @@
  *
  * Pure over a seed; the copy gates sweep it on fixtures without a database.
  */
-import { usd } from "@/components/spine/kit";
 import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
-import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
-import { placeCostFactor } from "@/lib/spine/open_rows";
-import { countryHeldToRegisters } from "@/lib/uk/registers/register_city";
+import { OPEN_METRICS, shardProv, yearsFigure } from "@/lib/spine/open_rows";
+import { industryFigure } from "@/lib/facts/industry_shard";
+import { slugToIndustry, tradeRowName } from "@/lib/taxonomy";
 import type { Provenance } from "@/lib/spine/provenance";
-import { honestRound } from "@/lib/uk/present/precision";
 import { COPY } from "@/lib/spine/copy";
 import { countWord } from "@/lib/spine/district_rows";
 import { SURFACE_ANSWERS, type DoorKind } from "@/lib/spine/door_kinds";
 
 /** Every row lands on a sibling trade's page in this city, "A typical owner keeps" (8.6's doors paragraph): the promise, declared once here (plan step 39). */
-export type RivalRow = { key: string; name: string; value: number; href: string; lands: DoorKind; /** Where the figure came from (plan 06, task B5): an estimate, as the cost to open is. */ prov?: Provenance };
+export type RivalRow = { key: string; name: string; value: number; href: string; lands: DoorKind; /** Where the figure came from (plan 06, task B5): the sibling's shard file and key, an estimate. */ prov?: Provenance };
 
 export type RivalsData = {
   state: "list" | "withheld";
-  /** The keyed siblings, biggest first; empty in the withheld state. */
+  /** The siblings that hold a payback, biggest first; empty in the withheld state. */
   rows: RivalRow[];
-  /** The lower median of the keyed siblings; null in the withheld state. */
+  /** The lower median of the siblings that hold a payback; null in the withheld state. */
   middle: number | null;
   /** The words over the headline ("Middle of the four"). */
   middleLabel: string;
-  /** Siblings on the archetype's default, counted (R11). */
+  /** Siblings whose shard holds no payback, counted (R11). */
   withheld: number;
   /** The line counting them, in the list state; null when none is withheld. */
   withheldLine: string | null;
@@ -114,30 +109,22 @@ export function buildRivals(seed: any): RivalsData | null {
   const siblings = list.filter((l) => typeof l.name === "string" && typeof l.slug === "string" && typeof l.href === "string") as Array<{ name: string; slug: string; href: string }>;
   const keyedRows: RivalRow[] = [];
   let withheld = 0;
-  /* At the page's city's prices, as the cost to open is (open_rows.ts placeCostFactor; plan 06, task A6). */
-  const factor = placeCostFactor(meta);
-  if (factor == null && countryHeldToRegisters(meta.iso2)) return null; // card and free doors omit themselves
   for (const s of siblings) {
-    const ny = startupCapitalArchetypeKeyed(s.slug);
-    if (ny == null) { withheld++; continue; }
-    const v = factor != null ? honestRound(ny * factor) : ny;
-    keyedRows.push({ key: s.slug, name: s.name, value: v, href: s.href, lands: SURFACE_ANSWERS.cell, prov: { src: `markets/startup_capital_archetypes:${s.slug}${factor != null && typeof meta.geo === "string" ? `:${meta.geo}` : ""}`, kind: "estimate" } });
+    const id = slugToIndustry(s.slug)?.id;
+    const pay = id ? industryFigure(id, OPEN_METRICS.payback) : null;
+    if (!id || !pay || !(pay.value > 0)) { withheld++; continue; }
+    /* The row form of the trade's name (tradeRowName: three words at most, the model's ROW SENTENCE law), as every other card that lists trades prints it. */
+    keyedRows.push({ key: s.slug, name: tradeRowName(id, s.name), value: pay.value, href: s.href, lands: SURFACE_ANSWERS.cell, prov: shardProv(id, OPEN_METRICS.payback) });
   }
   keyedRows.sort((a, b) => b.value - a.value);
   const c = COPY.tradeRivals;
-  const city = typeof meta.city === "string" && meta.city ? meta.city : null;
-  const basis = factor != null && city ? c.basisPlace.replace("{city}", city) : c.basis;
-  const common = { siblings: siblings.length, keyed: keyedRows.length, kicker: c.kicker, basis, head: c.head, fmt: usd, sample: true as const };
+  const common = { siblings: siblings.length, keyed: keyedRows.length, kicker: c.kicker, basis: c.basis, head: c.head, fmt: yearsFigure, sample: true as const };
   if (keyedRows.length < MARK_LIST_FLOOR) {
     const stateLine = siblings.length === 0 ? c.stateNone : fill(c.state, { k: keyedRows.length === 0 ? "none" : countWord(keyedRows.length) });
     return { state: "withheld", rows: [], middle: null, middleLabel: "", withheld, withheldLine: null, stateLine, ...common };
   }
   /* Digits in the withheld line, the country money card's and the mark list's own idiom ("6 cities withheld"), which the copy gate holds to a digit. */
-  const counted = withheld === 0 ? null : withheld === 1 ? c.withheldOne : fill(c.withheldMany, { n: String(withheld) });
-  /* ONE SUPPORTING LINE (the copy gate's LINES): at a place's prices the estimate's words lead the withheld count on the same
-     line, and the basis stands empty. */
-  const placeLine = factor != null && city ? c.basisPlace.replace("{city}", city) : null;
-  const withheldLine = counted && placeLine ? `${placeLine} ${counted}` : counted;
+  const withheldLine = withheld === 0 ? null : withheld === 1 ? c.withheldOne : fill(c.withheldMany, { n: String(withheld) });
   return {
     ...common,
     state: "list",
@@ -146,7 +133,6 @@ export function buildRivals(seed: any): RivalsData | null {
     middleLabel: COPY.markList.middleOfDrawn.replace("{n}", countWord(keyedRows.length)),
     withheld,
     withheldLine,
-    basis: counted && placeLine ? c.basis : common.basis,
     stateLine: null,
   };
 }

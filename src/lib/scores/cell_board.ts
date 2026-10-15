@@ -61,11 +61,6 @@ import type { Cell } from "@/lib/cells";
 import { industryToSlug } from "@/lib/taxonomy";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { densityArchetypePer10k } from "@/lib/markets/density_archetypes";
-import { placeAdjustedStartupCapital } from "@/lib/markets/startup_capital_archetypes";
-import {
-  timeToOpenWeeks,
-  placeAdjustedPermitsUsd,
-} from "@/lib/markets/opening_archetypes";
 import {
   computeBreakInRating,
   type BreakInRating,
@@ -255,36 +250,20 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
   const LE = L?.economics ?? null;
 
   // Capital to start: the one-time entry capital, and with the take-home the
-  // dominant term of the rating's payback. A trustworthy REAL startup /
-  // formation cost is preferred, but ONLY when the cell is a trusted local
-  // measurement (the shared four-way trust gate), so a country aggregate or an
-  // extrapolated cell can never put a "real" figure under a local title.
-  // Otherwise the figure is the MODELED per-industry archetype, place-adjusted
-  // by the city's cost-of-living index (NYC = 100) when known, else a country
-  // wage proxy, else the baseline, all inside a capped multiplier band so
-  // neither the cheapest nor the priciest place produces an absurd entry
-  // figure. The archetype always returns a finite, bounded value. Taking the
-  // modeled branch is what marks the rating as resting on modeled inputs, which
-  // is how the surfaces know to read the score as directional.
+  // dominant term of the rating's payback. ONLY a trustworthy REAL startup /
+  // formation cost, and only on a trusted local measurement (the shared four-way
+  // trust gate). Until 2026-10-15 a cell with none took a MODELED capital, a
+  // per-industry figure typed by hand with no source (src/lib/markets/
+  // startup_capital_archetypes.ts) times a place factor, and so did the
+  // permits and the weeks to open (opening_archetypes.ts); the law is that
+  // every figure comes from held data (release 2 job A), so they left, and
+  // with no real capital the rating refuses to score (null), as it always did
+  // without a figure it could stand on. No caller passes a real cost today.
   const hasRealStartupCost =
     isNum(realStartupCostUsd) &&
     realStartupCostUsd > 0 &&
     isTrustedLocalCell(cell);
-  // The country wage proxy (annualised average salary) is the second-choice
-  // place signal for every place-adjusted opening figure, used when the geo is a
-  // state/region slug with no city cost-of-living index. Derived once here so
-  // the capital and the permits place-adjust off the same number.
-  const countryWageProxy =
-    econ && isNum(econ.avgMonthlySalary) ? econ.avgMonthlySalary * 12 : null;
-  const modeledStartupCost = placeAdjustedStartupCapital({
-    industryId: cell.industry_id ?? null,
-    costOfLivingIndex: cityCostOfLivingIndex,
-    avgYearlySalary: countryWageProxy,
-  });
-  const startupCostIsModeled = !hasRealStartupCost;
-  const startupCost = hasRealStartupCost
-    ? (realStartupCostUsd as number)
-    : modeledStartupCost;
+  const startupCost = hasRealStartupCost ? (realStartupCostUsd as number) : null;
 
   // Owner take-home, resolved once: the curated London figure when present, else
   // the page's floored after-tax take-home straight out of resolveOwnerTakeHome.
@@ -296,17 +275,6 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
       : isNum(ownerTakeHome)
         ? ownerTakeHome
         : null;
-
-  // Permits and the calendar: modeled archetypes, permits place-adjusted off the
-  // SAME place signals the capital uses (city cost-of-living index, else the
-  // country wage proxy), time to open place-invariant. Both always return a
-  // finite, bounded figure.
-  const openTimeWeeks = timeToOpenWeeks(cell.industry_id ?? null);
-  const openPermitsUsd = placeAdjustedPermitsUsd({
-    industryId: cell.industry_id ?? null,
-    costOfLivingIndex: cityCostOfLivingIndex,
-    avgYearlySalary: countryWageProxy,
-  });
 
   // Density, the "room to enter" term. REAL (firms per 10k residents) when the
   // cell is a trusted local measurement AND both a local firm count and a
@@ -339,9 +307,8 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
   const per10kDisplay = densityIsModeled ? modeledPer10k : realPer10kDisplay;
 
   // The break-in rating: one 0-100 number, higher = easier to break in and win.
-  //   - entry capital: the real trusted cost where held, else the place-adjusted
-  //     modeled archetype;
-  //   - permits + time: the modeled, place-adjusted opening archetypes;
+  //   - entry capital: the real trusted cost where held, else none (no score);
+  //   - permits + time: none held, left to the module's defaults;
   //   - density: the real local firms-per-10k where held, else the modeled
   //     archetype;
   //   - annual owner take-home: the cell's REAL after-tax figure (London prefers
@@ -352,11 +319,11 @@ export function buildCellBoard(input: CellBoardInput): CellBoardResult {
   // (it almost always is), which marks the rating directional on the surface.
   const breakInRating = computeBreakInRating({
     startupCapitalUsd: isNum(startupCost) ? startupCost : null,
-    permitsUsd: isNum(openPermitsUsd) ? openPermitsUsd : null,
+    permitsUsd: null,
     annualOwnerTakeHomeUsd: realTakeHome,
-    timeToOpenWeeks: isNum(openTimeWeeks) ? openTimeWeeks : null,
+    timeToOpenWeeks: null,
     densityPer10k: isNum(per10kDisplay) ? per10kDisplay : null,
-    restsOnModeled: startupCostIsModeled || densityIsModeled,
+    restsOnModeled: densityIsModeled,
   });
 
   return { breakInRating };

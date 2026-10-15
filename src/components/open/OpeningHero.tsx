@@ -2,20 +2,23 @@
  * src/components/open/OpeningHero.tsx
  *
  * The masthead of the opening page: a clean-data-tool hero, not a magazine
- * cover. No image, no gradient. It leads with the ANSWER, the total one-time
- * cost to open, as the single large figure; the one-line verdict sits beneath,
- * and a quiet link points back to the full cell economics. The 0..100 break-in
- * rating that stood beside the cost left on 2026-10-05 (his ruling 11, "no
- * composite, ever"; masterplan step 02). The figure is the board's display
- * serif with tabular figures so it aligns with every other money figure on the
- * site.
+ * cover. No image, no gradient. It leads with one held figure, the longest
+ * licence wait (the trade page's `03 permits` builder), or where the place
+ * prints no licence list the trade's months to break even, stamped; the
+ * one-line verdict sits beneath, and a quiet link points back to the full cell
+ * economics. The total to open that led until 2026-10-15 was a typed capital
+ * with no source and left that day (release 2 job A); the 0..100 break-in
+ * rating that stood beside it left on 2026-10-05 (his ruling 11, "no
+ * composite, ever"). The figure is the board's display serif with tabular
+ * figures so it aligns with every other figure on the site.
  *
  * Server component. Tokens only, mobile-first, no raw hex, no em-dashes, no
  * source-agency names.
  */
 import * as React from "react";
 import Link from "next/link";
-import { fmtUSD } from "@/components/board/format";
+import { provAttrs } from "@/lib/spine/provenance";
+import { COPY } from "@/lib/spine/copy";
 import { T_H1 } from "@/lib/ui/typography";
 import { dealbreakerFor } from "@/lib/open/dealbreakers";
 import type { OpeningPage } from "@/lib/open/opening_page";
@@ -26,6 +29,12 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
   // single condition truly dominates. Null for everything else, so most pages
   // render nothing here.
   const dealbreaker = dealbreakerFor(page.industryId);
+  const earning = page.earning[0];
+  const lead = page.longestWait
+    ? { figure: page.longestWait.figure, prov: page.longestWait.prov, label: COPY.opening.leadWait }
+    : earning && earning.prov
+      ? { figure: earning.figure, prov: earning.prov, label: COPY.opening.leadEarning.replace("{words}", earning.words.charAt(0).toUpperCase() + earning.words.slice(1)) }
+      : null;
 
   return (
     <header className="pb-2">
@@ -36,14 +45,23 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
         {page.businessName} in {page.placeName}
       </h1>
 
-      {/* The answer, lead figure: the total to open. */}
+      {/* The lead figure: the longest licence wait, else the months to break even, stamped; with neither, the stated line. */}
       <div className="mt-6">
-        <div className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl">
-          {fmtUSD(page.totalToOpenUsd)}
-        </div>
-        <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-          To open
-        </div>
+        {lead ? (
+          <>
+            <div
+              {...provAttrs(lead.prov)}
+              className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl"
+            >
+              {lead.figure}
+            </div>
+            <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+              {lead.label}
+            </div>
+          </>
+        ) : (
+          <p className="text-base leading-snug text-cocoa-700">{COPY.opening.noLead}</p>
+        )}
       </div>
 
       {/* The warm verdict, one quiet line. */}
@@ -73,7 +91,7 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
         >
           See the full economics &rarr;
         </Link>
-        {/* The buy-or-start companion, only where it draws (plan 2026-10-11, dynamic 404 remains): without a take-home and a total to open
+        {/* The buy-or-start companion, only where it draws (plan 2026-10-11, dynamic 404 remains): without a take-home
             its route answers nothing, and a door there opened a skeleton. At the address this page was asked at and never cellHref: that is
             the cell's label spelling (/mx/quintana-roo/... for /mx/mx-roo/...), whose lookup falls to a row the gate refuses (review of
             2026-10-12, I1). */}

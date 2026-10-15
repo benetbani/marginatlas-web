@@ -37,7 +37,7 @@ import {
   loadExtremes,
   type ExtremeLeaderboard,
   type DensityLeaderboard,
-  type StartupLeaderboard,
+  type PaybackLeaderboard,
 } from "@/lib/extremes/leaderboards";
 
 export const revalidate = 86400;
@@ -169,13 +169,14 @@ function DensityLeaderboardSection({ board }: { board: DensityLeaderboard }) {
 }
 
 /**
- * One startup-capital leaderboard: the same warm framing and cream card as the
- * boards above, but the ranked figure is the modeled one-time cost to open the
- * business in that place (the per-industry archetype scaled by the city's cost
- * of living, capped). Each row links to the full cell. The figure is a model,
- * not a per-place measurement, so the note labels it modeled.
+ * One payback leaderboard: the same warm framing and cream card as the boards
+ * above, but the ranked figure is each trade's years to pay back, its shard's
+ * figure through the trade page's own builder, stamped (data-src, data-kind),
+ * an estimate. Each row links to the trade's industry page. Until 2026-10-15
+ * this board ranked a typed, place-adjusted cost to open with no source
+ * (release 2 job A).
  */
-function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
+function PaybackLeaderboardSection({ board }: { board: PaybackLeaderboard }) {
   return (
     /* ONE CARD PER BOARD. The heading trio, the ranked rows and the note
        were three loose objects on the page separated by a border-t rule,
@@ -212,12 +213,13 @@ function StartupLeaderboardSection({ board }: { board: StartupLeaderboard }) {
             rank={i + 1}
             label={row.name}
             href={row.href}
-            value={fmtUSD(row.startupCostUsd)}
+            value={row.figure}
+            prov={row.prov}
           />
         ))}
       </div>
       <p className="mt-3 text-[11px] leading-relaxed text-cocoa-500">
-        Estimated one-time cost to open, adjusted for the place&apos;s prices.
+        Each trade&apos;s typical years to pay back, an estimate.
       </p>
     </section>
   );
@@ -263,8 +265,8 @@ function LensBlock({
 
 export default async function ExtremesPage() {
   /* The break-in boards (easiest and hardest by the 0..100 rating) left this page on 2026-10-05: a composite, which his
-     ruling 11 forbids ("no composite, ever"; masterplan step 02). loadExtremes still builds them; nothing prints them. */
-  const { leaderboards, densityBoards, startupBoards } = await loadExtremes();
+     ruling 11 forbids ("no composite, ever"; masterplan step 02). loadExtremes stopped building them on 2026-10-15. */
+  const { leaderboards, densityBoards, paybackBoards } = await loadExtremes();
 
   // The hub is data-gated like every other surface: if too few leaderboards
   // resolve cleanly (a wide Supabase outage), render the hero and an honest
@@ -274,13 +276,12 @@ export default async function ExtremesPage() {
   // The density pair is shown only when BOTH the crowded and still-room boards
   // resolved cleanly, so the "room to enter" block never appears one-sided.
   const hasDensity = densityBoards.length >= 2;
-  // The startup pair is shown only when BOTH the cheapest and highest-barrier
-  // boards resolved cleanly, so the "cost to open" block never appears
-  // one-sided either.
-  const hasStartup = startupBoards.length >= 2;
+  // The payback pair is shown only when BOTH the quickest and slowest boards
+  // resolved, so the getting-in block never appears one-sided either.
+  const hasStartup = paybackBoards.length >= 2;
 
   // Assemble the lens blocks in the founder's reading order: the catalog
-  // first, then cost-to-open, take-home and crowding. Each lens is included only
+  // first, then time to pay back, take-home and crowding. Each lens is included only
   // when it resolved (the same self-omit the blocks already carried), so the
   // page draws exactly the lenses a reader can reach, every one a section.
   const lenses: LensEntry[] = [];
@@ -312,20 +313,20 @@ export default async function ExtremesPage() {
     ),
   });
 
-    // Startup-capital lens: the "cost to open" read, ranked (cheapest to start /
-    // highest barrier). Leads now: the entry figure is the first thing a reader
-    // weighs, ahead of the running economics.
+    // The getting-in lens: each trade's years to pay back, ranked (quickest /
+    // slowest), off the shards. Until 2026-10-15 it ranked a typed cost to open
+    // with no source (release 2 job A); its key stays "cost" so the anchor holds.
     lenses.push({
       key: "cost",
-      label: "Cost to open",
+      label: "Time to pay back",
       node: (
         <LensBlock
-          eyebrow="What it costs to get in"
-          title="Cost to open"
-          intro="Before the first customer there is a bill: the fit-out, the kit, the deposits, the working capital to open the doors. It separates the trades you can start from a laptop from the ones that need a builder, and it shifts with how expensive the place is to set up in."
+          eyebrow="What it takes to get in"
+          title="Time to pay back"
+          intro="Before the first customer there is a bill, and after it a wait while the business earns it back. Some trades earn it back fast, others take many years. The figure is each trade's typical, not any one place's."
         >
-          {startupBoards.map((board) => (
-            <StartupLeaderboardSection key={board.key} board={board} />
+          {paybackBoards.map((board) => (
+            <PaybackLeaderboardSection key={board.key} board={board} />
           ))}
         </LensBlock>
       ),

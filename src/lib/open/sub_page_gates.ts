@@ -8,10 +8,11 @@
  */
 
 /** The buy-or-start page draws (buildBuyVsStart, src/lib/open/buy_vs_start.ts) where the opening page it stands on carries a positive owner
- *  take-home and a positive total to open; the opening page's door to it (src/components/open/OpeningHero.tsx) asks the same. */
-export function buyOrStartDraws(opening: { takeHomeUsd?: number | null; totalToOpenUsd?: number | null }): boolean {
-  const pos = (n: number | null | undefined): boolean => typeof n === "number" && Number.isFinite(n) && n > 0;
-  return pos(opening.takeHomeUsd) && pos(opening.totalToOpenUsd);
+ *  take-home; the opening page's door to it (src/components/open/OpeningHero.tsx) asks the same. The take-home alone since 2026-10-15
+ *  (release 2 job A): the page also asked for a positive total to open, which was a typed figure and left both pages that day. */
+export function buyOrStartDraws(opening: { takeHomeUsd?: number | null }): boolean {
+  const n = opening.takeHomeUsd;
+  return typeof n === "number" && Number.isFinite(n) && n > 0;
 }
 
 /** A trade page's own address, /{country}/{geo}/{industry}: the three parts a request carries (or a lookup was asked with), lowercased as the

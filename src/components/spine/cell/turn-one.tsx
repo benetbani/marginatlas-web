@@ -98,8 +98,8 @@ import type { SplitData } from "@/lib/spine/split_rows";
 import type { TeamData } from "@/lib/spine/team_rows";
 import type { TradePeersData } from "@/lib/spine/trade_peer_rows";
 
-/** `top`: the figure at the top of the card, on the level's answer line, where the partner is the cost to open's kinds of shop (the same form, the same line); beside a taller drawing the figure stays centred, the air split round it (the goal's D7: at the top beside the bill's chart it left 294 by 138 on restaurants). */
-export function PermitsCard({ id = "permits", permits, top = false }: { id?: string; permits: PermitsData | null; top?: boolean }) {
+/** Beside a taller drawing the figure stays centred, the air split round it (the goal's D7: at the top beside the bill's chart it left 294 by 138 on restaurants). The `top` seat, for a partner on the same answer line, left on 2026-10-15 with the cost to open's kinds of shop. */
+export function PermitsCard({ id = "permits", permits }: { id?: string; permits: PermitsData | null }) {
   if (!permits) return null;
   const [lead, ...rest] = permits.cells;
   const worked = !!lead && rest.length >= WORKING_MIN;
@@ -115,7 +115,7 @@ export function PermitsCard({ id = "permits", permits, top = false }: { id?: str
       <Rail icon="licence-specific" kicker={COPY.tradePermits.kicker} sample />
       {/* THREE LICENCES FILL (2026-09-24, the long-tail sweep): the slowest and two more stood centred in 132 of air beside the cost to open's chart on /gb/london/bakeries-retail once the copy rewrite took the card's lines; at the working's minimum the rows grow into the card (WorkedFigure `fill`).
           THE ANSWER ON THE LEVEL'S LINE (the goal's D7, 2026-09-24): beside the cost to open's kinds of shop (`top`) the figure stands at the top of the card, so it sits at the height of that card's figure (87 and 99 when both were centred); the floor below keeps the foot, and the air the level lends falls between the waits and the floor. Beside the bill's taller chart it stays centred. */}
-      <div className={`flex flex-1 flex-col ${top || (worked && rest.length === WORKING_MIN) ? "" : "justify-center"}`}>
+      <div className={`flex flex-1 flex-col ${worked && rest.length === WORKING_MIN ? "" : "justify-center"}`}>
         {worked ? (
           <WorkedFigure list fill={rest.length === WORKING_MIN} label={lead.label} figure={String(lead.value)} working={rest.map((c) => ({ figure: String(c.value), words: c.label }))} />
         ) : (
@@ -151,31 +151,12 @@ export function PermitsCard({ id = "permits", permits, top = false }: { id?: str
   );
 }
 
-export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | null }) {
+/** `lean`: the card stands alone in its level (a UK page prints no licence card beside it), so the earn-back figure takes the kit's lean lone
+ *  form, the narrow column with the band running on beside it (zones.tsx LONE), never two thirds of air (fix round 1, ruling 5). */
+export function OpenCard({ id = "open", open, lean = false }: { id?: string; open: OpenData | null; lean?: boolean }) {
   if (!open) return null;
   /* ONE ANSWER FOR THE FORM (open_rows.ts `openForm`), the one the view seats by. */
   const form = openForm(open);
-  /* THE BASELINE WITH THE KINDS OF SHOP (open_rows.ts, the goal's B10): the
-     typical at 30 under the kind it is, the other kinds as the working, the
-     licences card's own composition beside it (spare height split round the
-     figure, the floor on the figure's columns from 560 of the card). */
-  if (form === "list") {
-    const [lead, ...rest] = open.formats;
-    return (
-      <Box id={id} className="flex h-full flex-col [container-type:inline-size]">
-        <Rail icon="startup-cost" kicker={COPY.tradeOpen.kicker} sample={open.sample} />
-        {/* THE ANSWER ON THE LEVEL'S LINE (the goal's D7): at the top, as the licences card's beside it; the floor keeps the foot. */}
-        <div className="flex flex-1 flex-col">
-          <WorkedFigure list accent={open.accent} label={lead.name} figure={open.figure ?? lead.figure} prov={open.figure ? open.prov : undefined} working={rest.map((f) => ({ figure: f.figure, words: f.name }))} />
-        </div>
-        <div className="[@container(min-width:560px)]:mt-6 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] [@container(min-width:560px)]:items-end [@container(min-width:560px)]:gap-x-8">
-          {open.basis ? <Basis className="[@container(min-width:560px)]:mt-0">{open.basis}</Basis> : null}
-          {/* THE FOOT STANDS 12 UNDER THE BASIS (DISTANCES 2.1: the basis line to the foot is 12; the line-rule gate reads a `data-foot` group so): the companion figures, or in the state with none the foot's stated line. */}
-          {open.foot.length > 0 ? <div data-foot className="mt-3 [@container(min-width:560px)]:mt-0 [@container(min-width:560px)]:pl-6"><CompanionRow items={open.foot} /></div> : <p data-line="" data-foot className="mt-3 [@container(min-width:560px)]:mt-0 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{open.footLine}</p>}
-        </div>
-      </Box>
-    );
-  }
   /* EARNING IT BACK (the goal's A4): the months to break even at 30 and the years to pay back beside it, under their own opener; no stated line. */
   if (open.recover) {
     return (
@@ -185,6 +166,9 @@ export function OpenCard({ id = "open", open }: { id?: string; open: OpenData | 
         kicker={COPY.tradeOpen.kickerRecover}
         sample={open.sample}
         figure={open.foot[0].figure}
+        prov={open.foot[0].prov}
+        stateWithheld
+        lean={lean}
         label={open.foot[0].words}
         second={open.foot.slice(1)}
         basis={open.basis ?? undefined}

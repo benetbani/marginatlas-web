@@ -13,7 +13,6 @@
 import cityListJson from "../../data/cities/city_list_v1.json";
 import { allFacts, loadFacts } from "../../src/lib/facts/store";
 import { shardLadderNet } from "../../src/lib/spine/trade_net";
-import { startupCapitalArchetypeKeyed } from "../../src/lib/markets/startup_capital_archetypes";
 import { hasCountrySpecificRates } from "../../src/lib/tax";
 import { listCountryProfiles } from "../../src/lib/economic_profile";
 import { getAovCityTierMultiplier } from "../../src/lib/economics/breakeven";
@@ -157,7 +156,8 @@ async function main(): Promise<void> {
       if (x.stamp && /default_fallback/.test(x.stamp.src)) faults.push(`${where} ${k}: a file's fallback row`);
     }
     if (b.inputs.goods.stamp && /margin_ladder/.test(b.inputs.goods.stamp.src) && shardLadderNet(p.industryId)?.fill) faults.push(`${where}: the 42/10/5 ladder reached the cost of goods`);
-    if (b.opening.kind === "archetype" && startupCapitalArchetypeKeyed(p.trade) === null) faults.push(`${where}: the 80,000 archetype default reached the money to open`);
+    /* No typed capital reaches the money to open (2026-10-15, release 2 job A): a held bill, a built one, or none with its line. */
+    if (b.opening.lines.some((l) => /startup_capital_archetypes/.test(l.stamp.src))) faults.push(`${where}: a typed capital (startup_capital_archetypes) reached the money to open`);
     if (p.iso2 !== "GB" && b.inputs.oncost.value !== null && !hasCountrySpecificRates(p.iso2)) faults.push(`${where}: the tax table's fallback rate reached the employer charges`);
     if (p.iso2 !== "GB" && b.inputs.loanRate.value !== null && !profiles.has(p.iso2)) faults.push(`${where}: the profile's fallback row reached the loan rate`);
     if (b.roles.some((r) => r.pay.value !== null && !r.pay.stamp)) faults.push(`${where}: a pay with no stamp`);

@@ -1501,7 +1501,7 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
  * everywhere it appeared. It invented weekly milestones ("Lease + licence",
  * "Soft opening", "First clean profit"...) that no seed could actually know. The
  * ONLY two things a first-year read can honestly claim are WHEN the doors open
- * (opening_archetypes.timeToOpenWeeks, modeled, place-invariant) and WHEN the
+ * (a typed weeks-to-open table until 2026-10-15, deleted that day as a figure with no source) and WHEN the
  * trade crosses break-even (a seed's own ramp_to_breakeven_months, counted from
  * week 0, never from opening). PhaseBar draws ONE bar on a week axis with up to
  * three segments derived ONLY from those two anchors , no milestone list, no

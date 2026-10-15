@@ -49,6 +49,7 @@ import { industryRows } from "@/lib/facts/industry_shard";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
 import { COPY } from "@/lib/spine/copy";
 import { daysFigure } from "@/lib/spine/entry_bill_rows";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export const PERMITS_METRICS = { name: "licensing.licences.*.name", days: "licensing.licences.*.typical_days", band: "licensing.licences.*.typical_cost_band" } as const;
 
@@ -93,6 +94,11 @@ export function isUsJurisdictionLicence(name: string): boolean {
   return /\bstate\b/i.test(name) && !/\b(?:state or national|national or state)\b/i.test(name);
 }
 
+/** Where one licence's wait was read: the shard file and the licence's key. */
+export function permitDaysProv(industryId: string, rowKey: string): Provenance {
+  return { src: `data/facts/industry/${industryId}.json:licensing.licences.${rowKey}.typical_days`, kind: "estimate" };
+}
+
 export function buildPermits(industryId: string, iso2?: string | null): PermitsData | null {
   /* NO LIST IN ANOTHER COUNTRY'S TERMS ON A UK PAGE (plan 06, task A6, 2026-10-04): the shard's licences are the trade's anywhere,
      written in United States terms (a sales tax permit, a certificate of occupancy, an individual barber licence), and no UK list
@@ -119,7 +125,8 @@ export function buildPermits(industryId: string, iso2?: string | null): PermitsD
   /* The longest wait first, the rest in the shard's order (a stable sort on one key). */
   const longest = rows.reduce<typeof rows[number] | null>((best, r) => (best == null || r.days > best.days ? r : best), null);
   const ordered = longest ? [longest, ...rows.filter((r) => r !== longest)] : rows;
-  const cells: KvCell[] = ordered.map((r) => ({ key: r.key, label: r.name, value: daysFigure(r.days), note: r.band ? COPY.tradePermits.feeBand[r.band] : undefined, confidence: "modeled" }));
+  /* EACH WAIT CARRIES ITS STAMP (2026-10-15, release 2 job A): the shard file and the licence's key, an estimate, the same on the trade page and on /opening, which draws this builder. */
+  const cells: KvCell[] = ordered.map((r) => ({ key: r.key, label: r.name, value: daysFigure(r.days), note: r.band ? COPY.tradePermits.feeBand[r.band] : undefined, confidence: "modeled", prov: permitDaysProv(industryId, r.key) }));
   if (cells.length === 0 && zero === 0 && foreign === 0) return null;
   const zeroLine = zero === 0 ? null : zero === 1 ? COPY.tradePermits.withheldOne : COPY.tradePermits.withheldMany.replace("{n}", String(zero));
   const foreignLine = foreign === 0 ? null : foreign === 1 ? COPY.tradePermits.foreignOne : COPY.tradePermits.foreignMany.replace("{n}", String(foreign));

@@ -14,7 +14,7 @@ export type LeverKey = (typeof LEVERS)[number];
 
 export type SimRole = { key: string; name: string; sub: string | null; heads: number; headsStamp: Stamp; pay: SimInput; owner: boolean };
 export type OpeningLine = { key: string; name: string; amount: number; stamp: Stamp };
-export type OpeningRule = { kind: "held" | "built" | "archetype" | "none"; lines: OpeningLine[]; line: string };
+export type OpeningRule = { kind: "held" | "built" | "none"; lines: OpeningLine[]; line: string };
 
 export type SimBundle = {
   path: "uk-model" | "world";

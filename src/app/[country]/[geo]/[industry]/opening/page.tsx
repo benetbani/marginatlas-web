@@ -1,11 +1,12 @@
 /**
  * Opening page - /[country]/[geo]/[industry]/opening.
  *
- * "What it costs to open a [business] in [place]." A focused, single-column data
- * tool that leads with the answer (the total one-time cost to open), sets the
- * break-in rating beside it, lists the four entry parts, ties the payback to the
- * owner take-home, and contrasts the same business elsewhere and other businesses
- * here. It is a dedicated surface for the highest-intent question a would-be
+ * "What it takes to open a [business] in [place]." A focused, single-column data
+ * tool that leads with the longest licence wait, sets the trade's months to break
+ * even and years to pay back beside the owner take-home, lists the licences with
+ * their waits and fee bands, and contrasts the same business elsewhere. Every
+ * figure is a held one, stamped; the typed total to open, capital, permits,
+ * weeks, hires and payback left on 2026-10-15 (release 2 job A). It is a dedicated surface for the highest-intent question a would-be
  * owner asks, split out of the cell page so it can answer that one question
  * cleanly and link back to the full economics.
  *
@@ -28,7 +29,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { buildOpeningPage } from "@/lib/open/opening_page";
-import { fmtUSD } from "@/components/board/format";
+import { tradeNounFor, withArticle } from "@/lib/taxonomy";
 import { OpeningHero } from "@/components/open/OpeningHero";
 import { OpeningChecklist } from "@/components/open/OpeningChecklist";
 import { OpeningPayback } from "@/components/open/OpeningPayback";
@@ -103,10 +104,10 @@ export async function generateMetadata({
   const page = await buildOpeningPage({ country, geo, industry });
   if (!page) return { title: "Page not found" };
 
-  const lower = page.businessName.toLowerCase();
-  const title = `What it costs to open a ${lower} in ${page.placeName}`;
-  const total = fmtUSD(page.totalToOpenUsd);
-  const desc = `Capital, permits, time, and first hires to open a ${lower} in ${page.placeName}: about ${total} to open.`;
+  /* The trade by its count noun (tradeNounFor), "a restaurant", never the plural display name; no cost in the words, since none is held. */
+  const noun = withArticle(tradeNounFor(page.businessName) || "business");
+  const title = `What it takes to open ${noun} in ${page.placeName}`;
+  const desc = `The licences, the waits and the time to earn it back for ${noun} in ${page.placeName}.`;
   /* An alias names its live trade's opening page (P1-C, 2026-10-09; src/lib/seo/alias_canonical.ts). */
   const canonical = tradeCanonicalPath(country, geo, industry, "opening");
   const ogPath = `/og/cell?country=${encodeURIComponent(

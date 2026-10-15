@@ -384,13 +384,11 @@ export function pickCellPermitsInstances(cell: CellHeroInstance[]): Instance[] {
 export const cellOpenKey = (c: CellHeroInstance) => `cell:${c.key}:open`;
 const openWhy = (o: NonNullable<ReturnType<typeof buildOpen>>) =>
   o.state === "held" ? `trade block 04 held: ${o.rows.length} setup lines as one set, the total at 30 in terracotta over them, the biggest line lit, the two companions in the foot`
-    : o.state === "baseline" && o.formats.length > 0 ? `trade block 04 baseline with the kinds of shop (the goal's B10): the typical at 30 in terracotta under its own kind (${o.formats[0].name}), ${o.formats.length - 1} other kinds as the working, dearest first, the companions and the basis on the floor`
-    : o.state === "baseline" ? "trade block 04 baseline: no setup lines, the trade's typical cost to open at 30 in terracotta, modelled, the two companions in the foot"
-    : o.recover ? "trade block 04 withheld, earning it back (the goal's A4): the trade on the archetype's default, the months to break even at 30 in ink and the years to pay back beside it, no stated line"
-    : "trade block 04 withheld: the trade on the default and no shard, the stated line at 16 where the total would stand, unaccented";
-/** The form each state of the cost to open draws on: the held bill on RankedBars, the baseline with its kinds of shop on WorkedFigure, the rest on BentoMetric. */
+    : o.recover ? "trade block 04 withheld, earning it back (the goal's A4): no bill held, the months to break even at 30 in ink and the years to pay back beside it, no stated line"
+    : "trade block 04 withheld: no bill and no shard, the stated line at 16 where the total would stand, unaccented";
+/** The form each state of the cost to open draws on: the held bill on RankedBars, the rest on BentoMetric. (The baseline with its kinds of shop on WorkedFigure left on 2026-10-15 with its typed base.) */
 export const openFormOf = (o: NonNullable<ReturnType<typeof buildOpen>>): "ranked-bars" | "worked-figure" | "bento-metric" =>
-  o.state === "held" ? "ranked-bars" : o.state === "baseline" && o.formats.length > 0 ? "worked-figure" : "bento-metric";
+  o.state === "held" ? "ranked-bars" : "bento-metric";
 export function pickCellOpenInstances(cell: CellHeroInstance[], kind: "ranked-bars" | "bento-metric" | "worked-figure"): Instance[] {
   return cell.filter((c) => cellServes(c.key, "open")).map((c) => ({ c, o: buildOpen(c.seed) })).filter((x) => x.o && openFormOf(x.o) === kind).map(({ c, o }) => ({ iso2: cellOpenKey(c), why: openWhy(o!) }));
 }

@@ -2714,13 +2714,13 @@
       "script": "tests/spine/uk_open_permits.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "The cost to open at the city's prices and no licence list in another country's terms on a UK page (plan 06, task A6).",
+      "asserts": "No licence list in another country's terms on a UK page, every page's place read through cityOfCountry, and no typed cost to open on any page.",
       "reads": [
         "data/cities/city_list_v1.json",
+        "data/facts/industry/restaurants.json:first_year.payback_years",
         "src/lib/cities/city_tier.ts",
         "src/lib/home/beats.ts",
         "src/lib/markets/across_cities.ts",
-        "src/lib/markets/startup_capital_archetypes.ts",
         "src/lib/spine/adapt_country.ts",
         "src/lib/spine/open_rows.ts",
         "src/lib/spine/permits_rows.ts",
@@ -3976,6 +3976,20 @@
         "src/lib/open/buy_vs_start.ts",
         "src/lib/spine/worth_rows.ts",
         "tests/open/buy_price_held.test.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "start-side-held",
+      "script": "tests/open/start_side_held.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO PAGE OR BUILDER READS A TYPED START FIGURE (2026-10-15, release 2 job A; the controller's ruling on /srv/atlas/reports/start-capitals-investigation.md, option (c)).",
+      "reads": [
+        "src/lib/markets/opening_archetypes.ts",
+        "src/lib/markets/startup_capital_archetypes.ts",
+        "src/lib/spine/copy.ts",
+        "tests/open/start_side_held.test.ts"
       ],
       "claims": []
     },

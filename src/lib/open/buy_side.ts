@@ -15,8 +15,8 @@
  * the page prints the stated line the trade page's card prints for that trade (COPY.tradeWorth) and no price. A trade whose shard holds
  * no pair prints the same line.
  *
- * No number is typed in this file but the verdict's dead-band and the zeros and ones of arithmetic: tests/open/buy_price_held.test.ts
- * keeps a price constant, a floor or a table by slug out of it.
+ * No number is typed in this file but the zeros and ones of arithmetic: tests/open/buy_price_held.test.ts keeps a price constant, a
+ * floor or a table by slug out of it.
  */
 import { worthPrice } from "@/lib/spine/worth_rows";
 import { COPY } from "@/lib/spine/copy";
@@ -27,13 +27,6 @@ import type { Provenance } from "@/lib/spine/provenance";
 function isPos(n: number | null | undefined): n is number {
   return typeof n === "number" && Number.isFinite(n) && n > 0;
 }
-
-/**
- * The verdict leans only OUTSIDE this band around the start cash: buying is called dearer only when even the low end of the sale range is
- * more than this far over it, cheaper only when even the high end is more than this far under, and anything between reads as overlapping.
- * It decides a lean and never a price.
- */
-const DEAD_BAND = 0.15;
 
 /**
  * The BUY side: skip the build, buy the cash flow. An estimate, stamped.
@@ -68,14 +61,15 @@ export function buySideFor(industryId: string, takeHomeUsd: number | null | unde
 }
 
 /**
- * The page's meta description, which Open Graph and Twitter reuse: the question, the start cash, and where a range stands the buy range as an estimate.
- * Pure, so the gate runs it on a priced and an unpriced trade; the buy figure in it is the range text and nothing typed. Where the shard cannot price
- * the trade the sentence is left out and the description names the start cash alone.
+ * The page's meta description, which Open Graph and Twitter reuse: the question, and where a range stands the buy range as an estimate.
+ * Pure, so the gate runs it on a priced and an unpriced trade; the buy figure in it is the range text and nothing typed. No start cost is held
+ * (2026-10-15, release 2 job A), so the description names none; where the shard cannot price the trade the sentence is left out too.
+ * `noun` is the trade's count noun (tradeNounFor), "restaurant", never the plural display name.
  */
-export function buyMetaDescription(businessLower: string, placeName: string, startCashText: string, buy: BuySide): string {
+export function buyMetaDescription(noun: string, placeName: string, buy: BuySide): string {
   const range = buyRangeText(buy);
   const clause = range ? ` Buying might cost ${range}, an estimate.` : "";
-  return `Is it smarter to buy an existing ${businessLower} in ${placeName} or start one fresh? Starting costs about ${startCashText}.${clause} The cash, the wait, and the honest catch on both sides.`;
+  return `Is it smarter to buy an existing ${noun} in ${placeName} or start one fresh?${clause} The licences, the wait, and the honest catch on both sides.`;
 }
 
 /**
@@ -88,28 +82,17 @@ export function buyRangeText(buy: BuySide): string | null {
 }
 
 /**
- * The verdict's four lines, each one sentence of twelve words or fewer. The cheaper line keeps the caution the old verdict carried beside a low price
- * ("a low price is exactly when to look hardest at what you are buying"), since it is the line a reader gets first where the range sits under the start cash.
+ * The verdict's two lines, each one sentence of twelve words or fewer, and neither leans (2026-10-15, release 2 job A). The line compared
+ * the sale range with a start cash typed by hand (src/lib/markets/startup_capital_archetypes.ts) and leaned "cheaper" or "dearer" on it;
+ * no start cost is held, so cash cannot decide. The hero says that once, where a reader meets it first (COPY.buyOrStart.startCash), so the
+ * verdict carries its own content: where a range stands it says the range is an estimate, and both lines point to what does decide.
  */
 const VERDICT = {
-  dearer: "On this estimate, buying costs more cash than starting fresh.",
-  cheaper: "Estimate: buying costs less cash than starting, so check what you buy.",
-  overlap: "This estimate overlaps the cost to start, so cash does not decide.",
-  noPrice: "Cash does not decide this one without a sale price.",
+  range: "The buy range is an estimate, so weigh the wait and risk.",
+  noPrice: "No sale price is held, so weigh the wait and the risk.",
 };
 
-/**
- * One line on the cash. The sale RANGE is compared with the start cash:
- *  - buying costs more only when the LOW end is over the start cash by more than the dead-band (the cheapest buy still costs more);
- *  - buying costs less only when the HIGH end is under the start cash by more than the dead-band (the dearest buy still costs less);
- *  - anything between is an overlap and the line leans nowhere.
- * With no range (the stated state) there is no cash to compare, so the line says so and leans nowhere. Never a claim the figures do not make.
- */
-export function buyVerdict(startCashUsd: number, buy: BuySide): string {
-  if (buy.state !== "range" || !isPos(buy.lowUsd) || !isPos(buy.highUsd) || !isPos(startCashUsd)) return VERDICT.noPrice;
-  /* The gap against the band, never the band's own sum or difference with the start cash: 100000 * (1 + 0.15) is 114999.99999999999, so a low end exactly on the band would lean. */
-  const band = startCashUsd * DEAD_BAND;
-  if (buy.lowUsd - startCashUsd > band) return VERDICT.dearer;
-  if (startCashUsd - buy.highUsd > band) return VERDICT.cheaper;
-  return VERDICT.overlap;
+/** One line with no lean: whether the buy side holds a figure, that it is an estimate, and what decides instead. */
+export function buyVerdict(buy: BuySide): string {
+  return buyRangeText(buy) ? VERDICT.range : VERDICT.noPrice;
 }

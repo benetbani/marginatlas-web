@@ -3,8 +3,9 @@
  *
  * Founder-review tool. NOT wired into the app, NOT a production helper. It calls
  * the SAME buildBuyVsStart(...) the new page will call, for ~10 representative
- * flagship business x place combos, and prints, per combo: the START total to
- * open, the buy range (the trade's own shard range times the take-home, the same
+ * flagship business x place combos, and prints, per combo: the START side (the
+ * stated line, the longest licence wait and the years to pay back, each with its
+ * stamp; no start cost is held since 2026-10-15, release 2 job A), the buy range (the trade's own shard range times the take-home, the same
  * figure the trade page's "What one sells for" card prints) with its stamp or its
  * stated line, and the verdict.
  *
@@ -15,8 +16,8 @@
  * time, so the env must be present before the builder module is evaluated).
  *
  * The whole point: confirm the buy range AGREES with the trade page's card (same
- * function, worthPrice), the START side AGREES with the cost-to-open page (same
- * builder), no NaN, and nulls show up wherever take-home or cost-to-open is
+ * function, worthPrice), the START side AGREES with the opening page (same
+ * builder), every figure stamped, and nulls show up wherever take-home is
  * missing.
  *
  * Run: npx tsx scripts/audit/dryrun_buy_vs_start.ts
@@ -49,6 +50,9 @@ const COMBOS: Combo[] = [
   { label: "Sydney gym", country: "au", geo: "sydney", industry: "sports-fitness" },
   { label: "Chicago auto repair", country: "us", geo: "chicago", industry: "auto-repair-shops" },
   { label: "Mumbai retail", country: "in", geo: "mumbai", industry: "clothing-boutiques" },
+  // US state geos, where the page draws today, a priced trade and an operating-earnings one.
+  { label: "California restaurants", country: "us", geo: "california", industry: "restaurants" },
+  { label: "California dental", country: "us", geo: "california", industry: "dental-practices" },
 ];
 
 function usd(n: number | null | undefined): string {
@@ -107,7 +111,7 @@ async function main(): Promise<void> {
     }
 
     if (!page) {
-      console.log("  -> buildBuyVsStart returned NULL (cell missing/untrusted, or no take-home / cost-to-open). Page would notFound().");
+      console.log("  -> buildBuyVsStart returned NULL (cell missing/untrusted, or no take-home). Page would notFound().");
       nullCount++;
       rows.push({
         label: c.label,
@@ -118,14 +122,9 @@ async function main(): Promise<void> {
       continue;
     }
 
-    // Core sanity: any NaN in the headline numbers is a leak we must catch.
-    const coreNums = [
-      page.start.cashNeededUsd,
-      page.start.timeToOpenWeeks,
-    ];
-    for (const n of coreNums) {
-      if (typeof n !== "number" || !Number.isFinite(n)) nanLeaks++;
-    }
+    // Core sanity: every START figure carries its stamp.
+    if (page.start.longestWait && !page.start.longestWait.prov) nanLeaks++;
+    if (page.start.payback && !page.start.payback.prov) nanLeaks++;
     // The buy range, where one stands: both ends finite and ordered, and the stamp present. A stated line stands in its place otherwise.
     if (page.buy.state === "range") {
       const { lowUsd, highUsd, prov } = page.buy;
@@ -138,9 +137,9 @@ async function main(): Promise<void> {
     console.log(`  Opening href     : ${page.openingHref}`);
     console.log("");
     console.log("  START (build it fresh):");
-    console.log(`    - Cash needed   : ${usd(page.start.cashNeededUsd)}   (total cost to open: capital + permits)`);
-    console.log(`    - Time to open  : ${page.start.timeToOpenWeeks} weeks`);
-    console.log(`    - Payback (ramp): ${page.start.paybackYears == null ? "null (unscored)" : page.start.paybackYears + "y"}`);
+    console.log(`    - Cash needed   : ${page.start.cashLine}`);
+    console.log(`    - Longest wait  : ${page.start.longestWait ? `${page.start.longestWait.figure}  [${page.start.longestWait.prov.src}]` : "none"}`);
+    console.log(`    - Pays back     : ${page.start.payback ? `${page.start.payback.figure}  [${page.start.payback.prov?.src ?? "NO STAMP"}]` : "none"}`);
     console.log("");
     console.log("  BUY (buy existing, an estimate):");
     console.log(`    - Sale range     : ${buyRange ?? "none"}   (the trade's shard range times the take-home, the trade page's own figure)`);
@@ -151,8 +150,8 @@ async function main(): Promise<void> {
 
     rows.push({
       label: c.label,
-      startTotal: usd(page.start.cashNeededUsd),
-      startCash: usd(page.start.cashNeededUsd),
+      startTotal: page.start.longestWait?.figure ?? "-",
+      startCash: page.start.payback?.figure ?? "-",
       buyRange: buyRange ?? "none",
     });
   }
@@ -165,8 +164,8 @@ async function main(): Promise<void> {
   console.log(
     "  " +
       pad("Combo", 24) +
-      pad("StartTotal", 12) +
-      pad("StartCash", 12) +
+      pad("LongestWait", 12) +
+      pad("PaysBack", 12) +
       pad("BuyRange", 24),
   );
   console.log("  " + "-".repeat(72));

@@ -2,17 +2,18 @@
  * Buy-or-start page - /[country]/[geo]/[industry]/buy-or-start.
  *
  * "Is it smarter to BUY an existing [business] in [place] or START one fresh?" A
- * focused, single-column data tool that leads with the question and the two
- * headline cash figures (the cash to start fresh and the sale range to buy an
- * existing one), sets them side by side with the time to positive cash flow and
- * the risk read on each path, and spells out the honest catch on both sides. It
+ * focused, single-column data tool that leads with the question and the sale
+ * range to buy an existing one beside the start side's stated line (no start
+ * cost is held since 2026-10-15, release 2 job A), sets the two side by side
+ * with the longest licence wait, the trade's years to pay back and the risk read
+ * on each path, and spells out the honest catch on both sides. It
  * is a dedicated surface for a high-intent question a would-be owner asks, split
  * out of the cell page so it can answer that one question cleanly and link back to
  * the full economics and the full cost-to-open breakdown.
  *
  * The server data builder (src/lib/open/buy_vs_start.ts) does ALL the work. The
- * START side is read straight off buildOpeningPage, which reuses the EXACT
- * functions the cell page uses, so every shared number agrees; the BUY side is
+ * START side is read straight off buildOpeningPage, which reads the trade page's
+ * own builders, so every shared figure agrees; the BUY side is
  * the trade page's own "What one sells for" range in currency (the trade's shard
  * figures times the cell's live owner take-home, stamped, called an estimate),
  * or the card's stated line where the shard cannot price it.
@@ -32,7 +33,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { buildBuyVsStart } from "@/lib/open/buy_vs_start";
-import { fmtUSD } from "@/components/board/format";
+import { tradeNounFor, withArticle } from "@/lib/taxonomy";
 import { buyMetaDescription } from "@/lib/open/buy_side";
 import { BuyVsStartHero } from "@/components/buy/BuyVsStartHero";
 import { BuyVsStartCompare } from "@/components/buy/BuyVsStartCompare";
@@ -114,11 +115,11 @@ export async function generateMetadata({
   const page = await buildBuyVsStart({ country, geo, industry });
   if (!page) return { title: "Page not found" };
 
-  const lower = page.businessName.toLowerCase();
-  const title = `Buy or start a ${lower} in ${page.placeName}`;
-  const startCash = fmtUSD(page.start.cashNeededUsd);
-  /* The buy figure in the description is the trade's sale range, an estimate, built in src/lib/open/buy_side.ts (a gate runs it on a priced and an unpriced trade); where the shard cannot price it the description names the start cash alone. */
-  const desc = buyMetaDescription(lower, page.placeName, startCash, page.buy);
+  /* The trade by its count noun, through tradeNounFor as the h1 reads it ("Buy or start a restaurant in California"), never the plural display name. */
+  const noun = tradeNounFor(page.businessName) || "business";
+  const title = `Buy or start ${withArticle(noun)} in ${page.placeName}`;
+  /* The buy figure in the description is the trade's sale range, an estimate, built in src/lib/open/buy_side.ts (a gate runs it on a priced and an unpriced trade); no start cost is held, so none is named. */
+  const desc = buyMetaDescription(noun, page.placeName, page.buy);
   /* An alias names its live trade's buy-or-start page (P1-C, 2026-10-09; src/lib/seo/alias_canonical.ts). */
   const canonical = tradeCanonicalPath(country, geo, industry, "buy-or-start");
   const ogPath = `/og/cell?country=${encodeURIComponent(
