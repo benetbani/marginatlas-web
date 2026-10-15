@@ -267,8 +267,10 @@ checkElsewhere(`the market line is unchanged on every city outside the UK (${mar
 check("London's market keeps the register's line", buildCityMarket("london")?.basis === COPY.cityMarket.register.basis.replace("{city}", "London"));
 const openingSrc = readFileSync(OPENING_FILE, "utf8");
 /* THE LINE PRINTS EXACTLY, IN ONE OF TWO PLACES (plan 2026-10-12 rhythm-air-inside, Task 2C): the card builds `line` from the builder's basis and foot and no other words, and prints it as the focal's
-   words when the card has a focal (the figure's own line, 8 under it) or as the bars' basis when it has none; a view-made variant (basisWithFocal) is no line the builder handed it. */
-check("the market card prints the line its builder hands it", !/basisWithFocal/.test(openingSrc) && /const line = `\$\{market\.basis\}\$\{market\.foot \? ` \$\{market\.foot\}` : ""\}`;/.test(openingSrc) && /basis=\{market\.focal \? "" : line\}/.test(openingSrc) && /words: line \}/.test(openingSrc), REMEDY_VIEW, OPENING_FILE);
+   words when the card has a focal (the figure's own line, 8 under it) or as the bars' basis when it has none; a view-made variant (basisWithFocal) is no line the builder handed it.
+   Since fix round 1 of plan 2026-10-12's Task 5 the card draws the kit's Focal and BarList, not RankedBars, so the pin reads the two seats in that markup: the focal's
+   `words={line}`, and the Basis under the bars when there is no focal (the same line, the same two places). */
+check("the market card prints the line its builder hands it", !/basisWithFocal/.test(openingSrc) && /const line = `\$\{market\.basis\}\$\{market\.foot \? ` \$\{market\.foot\}` : ""\}`;/.test(openingSrc) && /\{market\.focal \? null : <Basis>\{line\}<\/Basis>\}/.test(openingSrc) && /words=\{line\}/.test(openingSrc), REMEDY_VIEW, OPENING_FILE);
 
 /* WHAT RESIDENTS SPEND, WHO THE FOOTFALL IS, WHEN THE CITY SPENDS (plan 2026-10-08): the shard's modelled figures, each card's one
    line saying it is an estimate. London draws none of the three (its spend and calendar are placeholders, its split unheld). */

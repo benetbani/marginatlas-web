@@ -74,7 +74,7 @@ Loud today: 0 of 3, as `LOUD_SEATS` in how-to-view.tsx declares (a LIT seat is u
 | city-take | SpineCityBody / CityHero |  | HeroBoard or AnswerCard |  |
 | age-mix | SpineCityBody |  | AgeMix |  |
 | gates | GatesCard | The city's own permits | TiersTable |  |
-| market | MarketCard | Who is already trading | RankedBars |  |
+| market | MarketCard | Who is already trading | BarList |  |
 | premises | Premises |  | BentoBand |  |
 
 Loud today: 2 of 3, as `LOUD_SEATS` in city-view.tsx declares (a LIT seat is unlit on a render whose figure is withheld; the loud-seats gate reads that off the render).
