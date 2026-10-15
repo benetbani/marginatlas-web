@@ -113,6 +113,8 @@ export function buildHireSlot(iso2In: string, today: string): SlotModel<HireDraw
 
   return {
     id: "hire",
+    /* The old staff card's expression: its pay modelled off the profile's tier A. */
+    sample: pay!.confidence !== "measured",
     lead: { figure: usd(floor.value), words: !addsList && share != null ? H.leadShare.replace("{share}", `${share}%`) : COPY.pay.focalWords },
     rows: money.length > 0 ? { key: "money", head: J.slots.hire.heading, type: "money", rows: money } : null,
     more: present([

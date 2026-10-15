@@ -64,6 +64,20 @@ check("the slot's frame: its Box stamped with its slot, stage and type, its DOM 
 const order = [...(box?.querySelectorAll("[data-rail], [data-focal-row], [data-drawing], [data-archetype='fact-rows'], [data-fold='answer']") ?? [])].map((e) => e.hasAttribute("data-rail") ? "rail" : e.hasAttribute("data-focal-row") ? "lead" : e.hasAttribute("data-drawing") ? "drawing" : e.getAttribute("data-archetype") === "fact-rows" ? "rows" : "fold");
 check(`the frame's order: opener, lead, drawing, rows, folds (${order.join(", ")})`, JSON.stringify(order) === JSON.stringify(["rail", "lead", "drawing", "rows", "fold"]), SLOT);
 check("the frame reads clean through the answer-type gate", readAnswerTypes(s, { requireDeclared: true }).findings.length === 0, SLOT);
+/* THE HONESTY MARK IS WIRED THROUGH THE FRAME (final review I2): with his switch on, a slot its builder marks modelled draws the sample mark
+   on its opener, a modelled row draws its own, and a measured slot draws none; with the switch off nothing draws (the marks are hidden). */
+{
+  const was = process.env.NEXT_PUBLIC_SHOW_SAMPLE_MARKS;
+  process.env.NEXT_PUBLIC_SHOW_SAMPLE_MARKS = "1";
+  const modelled = { ...model, sample: true, rows: { ...model.rows, rows: model.rows.rows.map((r, i) => (i === 0 ? { ...r, confidence: "modeled" as const } : r)) } };
+  const on = doc(h(React.createElement(Slot, { model: modelled })));
+  const measured = doc(h(React.createElement(Slot, { model })));
+  const marks = (d: Document, sel: string) => [...d.querySelectorAll(`${sel} span`)].filter((e) => /^sample$/i.test(e.textContent ?? "")).length;
+  const railOn = marks(on, "[data-rail]"), rowOn = marks(on, '[data-archetype="fact-rows"]'), railOff = marks(measured, "[data-rail]");
+  if (was == null) delete process.env.NEXT_PUBLIC_SHOW_SAMPLE_MARKS; else process.env.NEXT_PUBLIC_SHOW_SAMPLE_MARKS = was;
+  const hidden = doc(h(React.createElement(Slot, { model: modelled })));
+  check(`a modelled slot marks its opener (${railOn}) and its modelled row (${rowOn}) with the switch on, a measured slot none (${railOff}), nothing with it off (${marks(hidden, "main")})`, railOn === 1 && rowOn === 1 && railOff === 0 && marks(hidden, "main") === 0, SLOT);
+}
 const TYPES = "src/lib/spine/slots/types.ts";
 let threw = false;
 try { list("x", "X", "money", Array.from({ length: 9 }, (_, i) => ({ key: String(i), label: `R${i}`, value: "$1" }))); } catch { threw = true; }

@@ -59,7 +59,7 @@ export function buildRunningCostsSlot(iso2In: string, today: string): SlotModel<
   const set = worldValues(F);
   const lead: SlotLead | null = kwh != null ? { figure: usdCents(kwh), words: COPY.ranged.electricityWords, placement: placementOf(kwh, set, "countries"), placed: "electricity", ...signalFor("electricity", kwh, set), prov: profileProv(iso2, F) } : null;
   const diesel = isPos(profile.diesel_usd_per_liter) ? profile.diesel_usd_per_liter : null;
-  const rows: SlotRow[] = diesel != null ? [{ key: "diesel", label: J.run.diesel, value: usdCents(diesel), note: COPY.ranged.dieselNote, prov: profileProv(iso2, "diesel_usd_per_liter") }] : [];
+  const rows: SlotRow[] = diesel != null ? [{ key: "diesel", label: J.run.diesel, value: usdCents(diesel), note: COPY.ranged.dieselNote, prov: profileProv(iso2, "diesel_usd_per_liter"), confidence: profile.tier === "A" ? "measured" : "modeled" }] : [];
   if (!lead && rows.length === 0) return null;
 
   const P = J.premises;
@@ -109,6 +109,8 @@ export function buildRunningCostsSlot(iso2In: string, today: string): SlotModel<
   return {
     id: "running-costs",
     lead,
+    /* The old card's expression (running_costs_rows.ts): the profile's figures are modelled off tier A. */
+    sample: profile.tier !== "A",
     rows: rows.length ? { key: "own", head: J.slots["running-costs"].heading, type: "money", rows } : null,
     more: present([list("premises", M.premises, "money", premises), list("insurance", M.insurance, "money", insurance), list("lease", M.lease, "state", leaseState), list("lease-terms", M.leaseTerms, "time", leaseTerms), list("lease-costs", M.leaseCosts, "money", leaseCosts), list("peers-power", M.peersPower, "money", peers)]),
     drawing: null,
@@ -162,6 +164,7 @@ export function buildCreditSlot(iso2In: string, today: string): SlotModel<Credit
   return {
     id: "credit",
     lead,
+    sample: profile.tier !== "A",
     rows: rows.length ? { key: "own", head: J.slots.credit.heading, type: "share", rows } : null,
     more: present([list("loans", M.loans, "money", loans), list("pay", M.pay, "share", split), list("lands", M.lands, "time", lands)]),
     drawing: { iso2, rate, base, loan: fin?.loan ?? null },

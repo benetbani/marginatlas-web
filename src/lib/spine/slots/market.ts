@@ -48,6 +48,7 @@ export function buildCustomersSlot(iso2: string): SlotModel<CustomersDrawing> | 
     more: present([list("cities", J.more.cities, "money", past), list("tenths", J.more.tenths, "money", tenths)]),
     drawing: { cards: cards ? { ...cards, cards: cards.cards.slice(0, shown) } : null },
     thin: !cards,
+    sample: strip.confidence !== "measured",
   };
 }
 
@@ -67,6 +68,7 @@ export function buildSpendSlot(iso2: string): SlotModel<SpendDrawing> | null {
     more: present(ageLists),
     drawing: { spend },
     thin: false,
+    sample: spend.tag !== "held",
   };
 }
 

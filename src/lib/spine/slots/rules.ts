@@ -36,6 +36,8 @@ export function buildDealingsSlot(iso2: string): SlotModel<DealingsDrawing> | nu
   ]);
   return {
     id: "dealings",
+    /* Always marked, as the two spectra cards were: the reads are anchored to published indices and placed by hand on their poles. */
+    sample: true,
     lead: null,
     rows: null,
     more: present([list("who", J.more.whoTrades, "share", who)]),

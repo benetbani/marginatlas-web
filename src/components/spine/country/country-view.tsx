@@ -13,11 +13,9 @@
  * `locked`, the paywall's form of the page (UK pages alone, his ruling 27): every slot after its stage's first draws as its LockedSection,
  * the slot's stamps on it (src/lib/spine/slots/locks.ts), and where the trades' slot locks, its trade pages stand as free doors after the
  * close (his ruling of 2026-10-05 on PARKED P20.1), so locking cuts no path.
- * SampleTag stays imported: scripts/verify_sample_tags.ts reads this file's source for the honesty marker of the country seeds' group.
  * No em-dashes, no raw hex, tokens only.
  */
 import * as React from "react";
-import { SampleTag } from "@/components/spine/kit";
 import { Zone, zoneTone } from "@/components/spine/zones";
 import { STAGES, slotDef, stageOfSlot } from "@/lib/spine/country_slots";
 import { planCountry, type PlannedSlot } from "@/lib/spine/slots/plan";
@@ -40,8 +38,6 @@ import { checkedDateForCountry } from "@/lib/spine/checked";
 import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
 import { countryPageTarget } from "@/lib/geo/page_targets";
 import { COPY } from "@/lib/spine/copy";
-
-void SampleTag;
 
 /**
  * THE THREE LOUD MOMENTS, declared where they are lit or held (MODEL.md PART 6; read off this source by scripts/lib/loud_seats.ts). Seat one

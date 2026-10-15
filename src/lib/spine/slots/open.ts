@@ -122,6 +122,7 @@ export function buildOpenSlot(iso2In: string, today: string): SlotModel<OpenDraw
   return {
     id: "open",
     lead,
+    sample: !!bill?.sample,
     /* The slot's own rows have no floor (list() is the plus's, two to eight), so the one row is its list. */
     rows: tradingRows.length > 0 ? { key: "trading", head: J.openRows.trading, type: "time", rows: tradingRows } : null,
     more: present([
