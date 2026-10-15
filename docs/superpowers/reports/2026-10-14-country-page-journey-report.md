@@ -463,3 +463,106 @@ reads "21 country, 17 city, ..."; the script's replacement keys on that text, so
 
 Commit message as the plan words it (website): `journey:guidelines: the signal, the answer type, the fold, the zones and the opened
 reading in the enforcement table (plan 2026-10-13 country-page-journey, Task 7)`.
+
+## Task 8: verification, the after against the before (18dd4252)
+
+All on this laptop with the placeholder Supabase URL (standing conditions), one browser at a time after a memory wait; the full chain and
+the full typecheck are the check server's (below). The after renders are pages-fresh's of 2760fc3a's source, copied to
+`scratchpad/journey/after/`; the one change made after them (18dd4252, a fold head's capital) was re-rendered and its gates rerun.
+
+**Measures** (scratchpad/journey/measure_country.mjs, the same reading as Task 0; `after/measure.txt` against `before/measure.txt`):
+
+| Page | Blocks before, after | First read | Slots after, in the model's order | Signals | Level marks on rows | Seats | "Not known yet" |
+|---|---|---|---|---|---|---|---|
+| GB | 30, 15 | all, all | 16 (every slot but 5b) | 0, 6 | 6, 0 | 0, 0 | 0, 0 |
+| KH | 15, 10 | all, all | 11 | 0, 7 | 8, 0 | 3, 0 | 1, 0 |
+| AF | 15, 10 | all, all | 11 | 0, 6 | 6, 0 | 5, 0 | 1, 0 |
+| DE | 15, 11 | all, all | 12 | 0, 7 | 8, 0 | 2, 0 | 0, 0 |
+
+- The plan expected GB about 15 blocks and KH, AF, DE 10, 10 and 11: met. Every block reads first; the depth stands behind closed
+  pluses.
+- Lists mixing value classes: by the answer-type gate's own reading of values (`after/answer-type.txt`), 0 on all four (GB 59 lists and
+  218 rows, KH 19 and 33, AF 16 and 19, DE 24 and 45); before, 10 of GB's 16 lists mixed, and one list on each of the others. The Task 0
+  script reads every `dd`, notes included, so it counts a note's words as a class (GB 25 of 40 by it, KH 2, AF 1, DE 2, against 10 of
+  16, 1, 1, 1 before): this measurement cannot distinguish a value from the note under it, which is why the gate's reading is the measure.
+  Values holding a unit by the same script: GB 14 of 252 (every one a note, "per year worked, to 12 weeks"), KH, AF, DE 0.
+- The one `data-level` left on each page is the masthead's `data-level="page"` (the page's level, not a mark). Every page carries one
+  key line (`data-signal-key`), and the world track's reference is a tick.
+- Signals by state (`data-signal`): GB clean dealing, admin ease, days and cost to register very good, electricity very poor, the lending
+  rate good; KH clean dealing and admin ease very poor, days and cost to register poor, electricity good, the lending rate and time to
+  sell middle; AF clean dealing, admin ease and time to sell very poor, the cost to register very good, electricity and the lending rate
+  good; DE clean dealing, admin ease and the lending rate very good, days to register poor, the cost to register and electricity very
+  poor, time to sell good.
+
+**The browser checks, before and after, by rule** (`after/<check>.txt` against `before/<check>.txt`, the four renders):
+
+| Check | Before | After |
+|---|---|---|
+| Page laws | 3: LONE FIGURE on KH #cities and #customers, AF #customers | 1: LONE FIGURE on AF #cities (slot 3's thin state, the national typical alone; the same section and red as AF's before, held at AF's baseline 1) |
+| Page holes | 0 | 0 |
+| Model laws | 3: FOCAL on KH, AF and DE #running-costs | 0 |
+| Plain copy | 0 | 0 |
+| Readability | 0 | 0 |
+| Paywall | PASS (country-gb 19 locked, links 22 open, 23 locked) | PASS (country-gb 8 locked, links 31 open, 32 locked, 0 lost) |
+| Archetype harness | the sheet hung here (Task 0) | the full sheet times out at 360s here and on the check server (base and branch alike); the three kinds this plan changed, run alone: 0 reds |
+
+No rule has more reds after than before. The answer-type, signal-marks, country-slots, country-zones, country-locks, panels-opened,
+line-rule, loud-seats and copy gates pass on the after renders (Task 6's runs, `t6-gates*.txt`, and `t8-gates-age.txt`).
+
+**The photographs, 375 first** (`scratchpad/journey/shots/`: the masthead and every drawn slot of the four pages at 375, 768 and 1280,
+`after-<ISO2>-<slot id>-<width>.jpeg`; the before mastheads at 375, taken now from Task 0's renders, which had none; every zone of GB and
+KH at 768 and 1280, `zone-*.png`, since the slot shots clip a card and miss its pair). Read: every 375 picture of the four pages, the
+mastheads of GB and KH at 1280, and five zones (GB to run, and credit with filings, at 1280, GB to last at 768, KH the market at 768,
+KH credit at 1280); the other 768 and 1280 card shots are on disk, not each read.
+What holds: one column in stage order on the phone (the chapter heads 01 to 05, each stage's slots under it); each slot leads with one
+figure at 30 and rows of its type, units in the labels ("Clean dealing /100", "Diesel per litre", "Tax return, months"), digits on one
+right edge; every plus one line, its head, its count and the plus at the row's end; the signal right after its figure, the key line
+under the board ("Up is easier for an owner, down is harder."); slot 1's thin state on KH and AF ("Tax on company profit 24.9%", no
+"Not known yet"); "Hiring staff" off the board; the reference a tick; desktop pairs only inside a stage (GB: cities with spend, hire
+with running costs, credit with filings, lasting with exit, dealings with changes; KH: cities with spend, hire with running costs, the
+rest lone, the lean ones in the left third).
+
+What the eye found that no gate reads:
+1. **The signal's angles do not read apart at 16px (for the controller, a design call).** The research's drawing
+   (`points="8,0.7 14,11.7 2,11.7"`, R6 1.3, which Task 2 built word for word) is near equilateral: a base of 12, legs of 12.5. An
+   equilateral triangle looks the same every 120 degrees, so up (very good), left (middle) and down (very poor) read, but -45 (good)
+   reads as pointing right and -135 (poor) as an upward triangle tipped over: KH's "$0.11 per kWh" good and GB's "6.6%" good both look
+   like "pointing right", a state the key does not name; KH's days and cost to register (poor) look much like it
+   (`zoom-KH-signals.png`, the board's four signals at 8x). The word in each mark's accessible label and title is right; the angle,
+   which carries the state for a reader who cannot tell the colours apart, is not. A narrower arrowhead (an apex near 40 degrees, for
+   example `8,0.7 12,11.7 4,11.7`, its centroid still the box's centre) would make every angle read; the drawing is the research's and
+   the spec's, so it is not changed here.
+2. **Unequal pairs at 1280 leave air under the shorter slot** (no gate measures between the cards of a zone; the holes check reads inside
+   a card): GB "To run", the hire slot runs about 350 taller than running costs beside it; GB credit with filings, about 400 under
+   filings (`zone-GB-1280-z04.png`, `-z05.png`).
+3. **The exit slot's axis stops at 24 while its scale runs to 36** (AF "12 to 36 months": the "Here" bar runs past the last tick with no
+   label at its end; `after-AF-exit-375.jpeg`). StageLast passes fixed ticks [0, 6, 12, 18, 24] with a max that grows with the data.
+4. **A placement sentence and a mark at different grains.** KH's lending rate 9.1% (middle) and AF's 8.6% (good) both read "Higher
+   than three countries in ten": the sentence is in tenths, the mark in fifths turned by the direction, so two figures under one sentence
+   can carry two states at a fifth's edge. As the spec defines it; a reader may still ask why.
+5. **Copy**: fixed at source, the age fold's head on GB read "the UK by age" (18dd4252). Left for the controller (small, no rule names
+   them): the exit rows' notes mix a capital and a lower case ("Median, start to finish", "For unfit conduct" beside "after the public
+   notice"); GB slot 13's lead words are a sentence ("Until a bankrupt sole trader is freed from the debts.") where every other lead's are
+   a fragment; the filings rows read "9" then "and 1 day, after the period ends" (the unit in the label, the remainder in the note, as
+   Reading 8 says, but it reads awkwardly). A data question older than this plan: DE's close door reads "Start in Munich, the largest of 8
+   cities here" because the city list holds Munich's metro at 6.0 million and Berlin's at 4.7 (data/cities/city_list_v1.json); the
+   before render printed the same line.
+
+**The chain and the typecheck (the check server)**: run 38665099117 on b976d2c7 (Tasks 6 and 7, and the check-server fixes): Typecheck
+exit 0; the chain 294 passed, 12 red, every one a standing condition: harness-page-filter (the barbershops hole, Task 6's section),
+fact-once, harness-laws (each country page one finding over its baseline of 0; every page carries exactly one more on the runner than here, and
+where the excerpt names it, FIGURE FACE, the fonts 5e11c768 installs on the runner), harness-links, provenance, type-floor,
+art-direction (barbershops rhythm 0 to 1, rhythm's D3), census-fresh, home-answers, uk-city-sources, harness-archetypes and
+money-shown-own-rows by TIMEOUT. render-graph, retired-claims, distance-ladder and masthead, red at c5c79a80, pass. The run of 18dd4252
+(38678531605): Typecheck exit 0, the chain 294 passed and the same 12 red, nothing new.
+
+**The floor census** (Task 4, Step 11): the country floor 13 to 10; /cu, /lk, /mo, /nr and /to under it, stop indexing and stay on the
+site, the owner's decision of 2026-10-15 (Q5). Nothing in Tasks 5 to 8 moved a country's block count.
+
+**The decisions each task built for**: Q1 slot 5b (Tasks 1A, 1B, 3C, 4, 5); Q2 A, the levers open under the rows (3E, 3F); Q3 admin ease
+directed, the living cost unmarked on the board (1A, 2, 3B); Q4 A, a chapter's opening zone starts D3 afresh (4); Q5 the floor at 10, the
+owner's (4, decided 2026-10-15); Q6 A, the changes' own continuation (3H).
+
+**Open for the controller**: the barbershops plus inside a two-half card (Task 6); the signal's drawing (finding 1); the unequal desktop
+pairs (finding 2); the exit axis (finding 3); the orphans Task 6 left by the plan's rule (cityScaleSpread, the country seat stories);
+census-fresh and the rhythm reds, the controller's at merge; the production probe (Step 7) waits on the owner's deploy word.
