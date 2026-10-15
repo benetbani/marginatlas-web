@@ -24,8 +24,15 @@
  *   TITLE LONG   a card title over four words (its h3, or a Rail's h2 where the section is the page's own level, the home's
  *                since plan 2026-10-09);
  *   LINE LONG    a supporting line over twelve words;
- *   SEMICOLON    a supporting line holding a semicolon (a line is one
- *                sentence).
+ *   SEMICOLON    a semicolon ANYWHERE in the page's visible text (copy rule:
+ *                no semicolon; widened 2026-10-15, release 1 run 3, from
+ *                supporting lines alone, which left a row's note and a prose
+ *                card's notes unread: "19% up to this; 25% over $331,625" and
+ *                two failure stories on the restaurants industry page passed).
+ *                Read over the whole body, a card or not, inside every
+ *                <details> opened, once per element and text. NOT a ratchet,
+ *                like INTERNAL. A page whose walk reads no visible text at all
+ *                reds NOTHING READ, so the rule cannot pass having read nothing.
  *   INTERNAL     a pipeline's own word anywhere in the page's visible text
  *                (truth-fixes round 3B, 2026-10-11: "Estimates for a typical
  *                restaurant, from wave5_extrapolation." printed on /gb/boston,
@@ -47,8 +54,8 @@
  *                field.
  *
  * A per-page ratchet (copy_plain_baseline.json), seeded at the first
- * measurement and falling only; the rewrite drives it to zero. INTERNAL stands
- * outside it.
+ * measurement and falling only; the rewrite drives it to zero. INTERNAL and
+ * SEMICOLON stand outside it.
  *
  * BLIND SPOT: it reads words and counts, not meaning; a plain line that says
  * nothing passes. What a line should say is COPY-STYLE.md's, and the rewrite's.
@@ -135,7 +142,6 @@ function inPage(READER) {
     for (const p of lines) {
       const t = p.textContent.trim();
       if (words(t) > LINE_MAX) red(id, "LINE LONG", `${words(t)} words: "${t.slice(0, 70)}"`);
-      if (t.includes(";")) red(id, "SEMICOLON", `"${t.slice(0, 70)}"`);
     }
   }
   /* THE INTERNAL WORD, over all of main (a foot, a note, a caption: not only a card's own lines), once per card and word. The
@@ -161,7 +167,23 @@ function inPage(READER) {
       }
     }
   }
-  return { reds, cards: cards.length };
+  /* THE SEMICOLON, over every visible text of the body (a card's line, a row's note, a prose card's fact, a table cell, a caption), every
+     <details> opened as a reader opens it. The card named is the outermost one the text sits in, else "page". `chars` counts what was
+     read, so a walk that reached nothing is said, not passed. */
+  for (const d of document.body.querySelectorAll("details")) { d.removeAttribute("name"); d.open = true; }
+  let chars = 0;
+  const semis = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n = semis.nextNode(); n; n = semis.nextNode()) {
+    const el = n.parentElement;
+    if (!el || el.closest("script,style,noscript,template") || hidden(el)) continue;
+    const t = n.textContent.replace(/\s+/g, " ").trim();
+    chars += t.length;
+    if (!t.includes(";")) continue;
+    let top = el.closest(CARD);
+    while (top && top.parentElement && top.parentElement.closest(CARD)) top = top.parentElement.closest(CARD);
+    red(top ? idOf(top) : "page", "SEMICOLON", `"${t.slice(0, 90)}"`);
+  }
+  return { reds, cards: cards.length, chars };
 }
 
 const reds = [];
@@ -176,8 +198,9 @@ for (const file of files) {
     await page.evaluate(() => document.fonts && document.fonts.ready);
     const walk = await page.evaluate(inPage, READER);
     if (walk.cards === 0) reds.push({ page: name, w, id: "page", rule: "NO SECTIONS", msg: "no section card found under main" });
+    if (!(walk.chars > 0)) reds.push({ page: name, w, id: "page", rule: "NOTHING READ", msg: "the semicolon walk read no visible text on this page" });
     for (const r of walk.reds) reds.push({ page: name, w, ...r });
-    console.log(`${name}@${w}: ${walk.cards} cards, ${walk.reds.length} red(s)`);
+    console.log(`${name}@${w}: ${walk.cards} cards, ${walk.chars} visible characters read, ${walk.reds.length} red(s)`);
     await ctx.close();
   }
 }
@@ -194,11 +217,17 @@ if (internal.length) {
   console.log(`copy plain INTERNAL: ${internal.length} pipeline word(s) in the visible text of ${pages.length} page(s): ${pages.join(", ")}. Remedy: strip the word where the data enters the page (a source line goes through sanitiseProvenance in src/lib/spine/adapt_cell.ts) and let the sentence name no source; if it is a reader's own word (a postcode district, a unit, a product's name), name it with its reason in src/lib/spine/reader_words.json instead; never print a pipeline's name for a source or a field, never invent a source, never name an agency`);
 }
 
+/* THE SEMICOLON STANDS OUTSIDE THE RATCHET too (the copy rule has no allowance), and so does a page read empty. */
+const hard = reds.filter((r) => r.rule === "SEMICOLON" || r.rule === "NOTHING READ");
+if (hard.length) {
+  console.log(`copy plain SEMICOLON: ${hard.length} finding(s) on ${[...new Set(hard.map((r) => r.page))].join(", ")}. Remedy: rewrite the words where they are written (the builder or the copy module, src/lib/spine/copy.ts and the files it reads) as two sentences or with a comma, twelve words a line; a page that read nothing is re-rendered (the pages-fresh gate)`);
+}
+
 /* THE PER-PAGE RATCHET: seeded at the first measurement, falling only. */
 const BASELINE = "scripts/harness/copy_plain_baseline.json";
 const WRITE_BASELINE = args.includes("--write-baseline");
 const byPage = {};
-for (const r of reds) if (r.rule !== "INTERNAL") byPage[r.page] = (byPage[r.page] ?? 0) + 1;
+for (const r of reds) if (r.rule !== "INTERNAL" && r.rule !== "SEMICOLON" && r.rule !== "NOTHING READ") byPage[r.page] = (byPage[r.page] ?? 0) + 1;
 let base = null;
 try { base = JSON.parse(readFileSync(BASELINE, "utf8")); } catch { base = null; }
 const seeding = base === null;
@@ -209,7 +238,7 @@ for (const name of files.map((f) => basename(f, ".html"))) {
   if (have > allowed) over.push(`${name}: ${have} against a baseline of ${allowed}`);
   else if (have < allowed) under.push(`${name}: ${have}, baseline ${allowed} can fall`);
 }
-let exit = internal.length ? 1 : 0;
+let exit = internal.length || hard.length ? 1 : 0;
 if (over.length && !(WRITE_BASELINE && seeding)) { console.log(`copy plain RATCHET: ${over.length} page(s) over their baseline: ${over.join("; ")}. Remedy: rewrite the card to COPY-STYLE.md; never raise the entry`); exit = 1; }
 if (WRITE_BASELINE) {
   for (const name of files.map((f) => basename(f, ".html"))) { const have = byPage[name] ?? 0; if (seeding || !(name in base) || have < base[name]) base[name] = have; }
