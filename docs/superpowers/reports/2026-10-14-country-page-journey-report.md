@@ -566,3 +566,103 @@ owner's (4, decided 2026-10-15); Q6 A, the changes' own continuation (3H).
 **Open for the controller**: the barbershops plus inside a two-half card (Task 6); the signal's drawing (finding 1); the unequal desktop
 pairs (finding 2); the exit axis (finding 3); the orphans Task 6 left by the plan's rule (cityScaleSpread, the country seat stories);
 census-fresh and the rhythm reds, the controller's at merge; the production probe (Step 7) waits on the owner's deploy word.
+
+## Final review fix wave (36700662 to 930797ca)
+
+The final review (`.superpowers/sdd/country-journey-final-review.md` in the main checkout, verdict "with fixes") is answered here as the
+controller ruled: C1, I1 to I5 (I3 by the controller's three-part ruling) and M1, M2, M3, M5, M6, M8, M9, M10, M11. Left by the same
+ruling: M4, M7 and M12. Same conditions as Task 8: this laptop, the placeholder Supabase URL, a memory wait before each browser run, one
+browser at a time; the full chain and the full typecheck are the check server's.
+
+**The commits, each red first where a check could be**
+
+- **36700662, the signal (C1, I5).** The drawing is a narrow arrowhead, `points="8,0.5 12,11.75 4,11.75"`: apex 39.1 degrees, its
+  centroid on the box's centre (8.00, 8.00), so the five turns read apart (an equilateral drawing repeats every 120 degrees). The state
+  is the placement sentence's own tenth, two tenths a state, turned by the measure's direction (`STATE_BY_TENTH`,
+  `src/lib/spine/signal.ts`), so a mark and the sentence under it never name two ranks. Red first in `tests/spine/signal.test.ts`, three
+  findings on the old code: the apex 57.2 degrees against at most 45, one placement tenth carrying two states (lower 7, 5, 3 and 1, the
+  fifths' edges), and the tie fixture. Five marks moved on the four pages, each now agreeing with its sentence: KH days to register poor
+  to good ("Higher than two countries in ten"), KH lending rate middle to good and KH time to sell middle to good (both "Higher than
+  three countries in ten"), DE days to register poor to good ("two in ten"), DE time to sell good to very good ("one in ten"). GB and AF
+  unchanged. Photographs: `scratchpad/journey/shots/signal-turns-8x.png` (the five turns at 8x) and `signal-good-16x.png`.
+- **97584531, the dealings (I1).** The labour force and informal economy shares every country but the UK printed under its staff card
+  before the fold now stand in slot 14's "Who trades here" (`profileShares`, `src/lib/spine/slots/rules.ts`), each stamped with its
+  profile field, its kind by tier. Red first: the slots-rules test, on the two rows missing. A before and after figure diff of the four
+  pages (`scratchpad/journey/figure_diff.mjs`) found nothing else lost: the tokens it flags are one list before and after the wave, each
+  read by hand as a reworded figure or an artifact of the reading.
+- **bae6b0df, the honesty mark (I2).** `sample` on the slot model, set by each builder from its source's tag or confidence as the old
+  cards set it (customers, spend, the bill, running costs, credit, the hire, dealings), drawn by the Rail; a modelled row's `confidence`
+  reaches FactRows. The view's `void SampleTag` is gone, and the sample-tags gate reads the frame that wires the mark (Slot.tsx) beside
+  the view: its frame check was red first on the unwired frame; `tests/spine/answer_fold.test.ts` pins the wiring.
+- **bed7c19b, the zones (I3).** (a) LEVEL HEIGHT in the page laws (`scripts/harness/check_page_laws.mjs`): at 1280, two cells side by
+  side in one level end within max(48px, a fifth of the taller). Red first on the country pages: GB 5 pairs, AF 1, KH 2, DE 1. Every
+  other page's first measurement is seeded once in its own ledger, `scripts/harness/level_height_baseline.json` (city-london 1,
+  cell-gb-london-restaurants 2, cell-gb-london-barbershops 3, industry-restaurants 2, hood-london 1, openings-world 1), lowered only.
+  (b) composeZones pairs two neighbours only when they weigh the same (`slotWeight` and `planWeights` in plan.ts, zones.ts): rows plus
+  folds, an instrument with an instrument, a drawing with nothing. (c) Lone zones in a row alternate their side (`data-zone-side`, Q4's
+  option C), and D3 reads the side. The four country pages read 0 on LEVEL HEIGHT. Their zones now, in order (`*` lean):
+  GB tax, customers, spend (end), trades, open, hire, running costs* (end), credit, filings (end), peers (wide), lasting, exit (end),
+  dealings, changes (end), close; KH tax, customers, spend (end), open, hire, running costs* (end), credit*, exit*, dealings, close;
+  AF tax, customers*, spend (end), open*, hire* with running costs* (the one pair, 1 to 1), credit*, exit*, dealings, close;
+  DE tax, customers, spend (end), open, hire, running costs* (end), credit*, peers (wide), exit*, dealings, close.
+  Photographs, GB stage 4 ("To run") at 1280 and 375: `scratchpad/journey/shots/zone-GB-1280-z05.png` to `zone-GB-1280-z09.png` and
+  `zone-GB-375-z05.png` to `zone-GB-375-z09.png` (z05 the chapter head and the hire, z06 running costs, z07 credit, z08 filings, z09
+  peers). Read for this section: z05, z06 and z08 at 1280, z06 at 375. At 1280 the hire holds the left two thirds, running costs (lean)
+  the right third under it, filings the right two thirds; no level holds two cells, so nothing ends short beside a neighbour. At 375 one
+  column, as before.
+- **ad51a6c1, the split card (I4).** From 640px of card the split's foot and plus stand on a third row under both halves
+  (`IncomeBreakdown.tsx`), and an opened plus lays its rows in two lists side by side (DetailPanel `split`, passed by the SplitCard in
+  `cell/turn-one.tsx`). The barbershops' 375 by 120 hole at 768 is gone; harness-page-filter is green here and on the check server.
+  Photographs: `scratchpad/journey/shots/split-restaurants-768-closed.png`, `-open.png`, and the same for barbershops.
+- **cdc4963a, the minors (M1, M3, M8, M9, M5's copy).** M1: the exit axis ends on a labelled tick (`exitAxis`, StageLast.tsx: 24, or
+  the next 12 above the data; ticks every 6 to 24, then every 12), pinned in `tests/spine/slots_last.test.ts`. M3: the failure rows'
+  notes in lower case; slot 13's lead words a fragment ("until a bankrupt sole trader is freed from the debts"); the filings read "plus
+  1 day, after the period ends"; a licence wait the source gives in months keeps its words in the note (finished in 930797ca). M8: the
+  hire, trades, margins, filings and exit leads stamped; the four country pages' provenance baselines lowered to the measure (GB 274 to
+  271, AF 12 to 10, KH 29 to 27, DE 94 to 92). M9: the leads say "the middle of London's trades" (trades) and "the middle of the
+  trades" (margins). M5's copy: the country seats' blocked copy (workforce, easiest, setup, money) gone with the seats.
+- **33c43b05, the orphans (M5).** `cityScaleSpread` deleted; the country's seat stories off the archetype sheet; archetype-copy's
+  thin-country seat counts gone, its drawn kicker holding peers and locals only. BlockedSeat, its copy and its law stay for the city,
+  trade, industry and hood pages that draw them.
+- **de0f2832, the gates (M2, M6, M10, M11).** M2: the `country-sweep` gate (`tests/spine/country_sweep.test.ts`) builds every
+  country's slot plan from its files (195 countries, 3,074 lists), checks the model's order and reads every list through the
+  answer-type gate's own reading; 307 gates, the counts regenerated. M6: FOCAL's city-name exemption held to a country slot
+  (`[data-slot] [data-city-name]`). M10: panels-opened plants its pages in their own directory (`HARNESS_PAGES_DIR`, read by
+  `scripts/lib/page_renders.mjs`). M11: one recent-change window, `RECENT_CHANGE_DAYS` (120) in country_rules.ts, for the changes slot
+  and the dated rows.
+- **930797ca, the licence note (M3, finished).** The check server's art-direction on de0f2832 grew `country-gb-new:prose` 0 to 1: GB's
+  open slot, panels open, read 226 characters against E1's 220, the gloss " as published" after "3 to 4 months" its cause. The note now
+  carries the source's bare words ("3 to 4 months, Ofsted registration"). Rerun here (`fw-m3b-gates.txt`, `fw-art2.txt`): pages-fresh,
+  answer-type, country-sweep, harness-page-laws, harness-page-filter and no-em-dashes pass; art-direction finds GB's prose gone, and
+  grows only by the standing barbershops rhythm.
+
+**Where this wave reads the review differently, each for the controller**
+1. Drawings weigh as their own class (I3 b). The literal rows-plus-folds weight still paired customers with spend, whose drawings stand
+   at different heights; with drawings apart, every country zone is lone but AF's hire with running costs (two lean slots).
+2. The lean rule widened (Slot.tsx): a slot drawing nothing but its figure, at most one row and its pluses stands lean. Without it the
+   lone running-costs card left WHITE SPACE at 768 and gathered emptiness (E6) at 1280 and 1440.
+3. The sample-tags gate reads Slot.tsx, the frame that wires the mark, beside the view.
+4. DetailPanel gained a `split` prop (I4), used only by the split card.
+5. A new gate, country-sweep (M2): 306 to 307 gates.
+6. M3's licence note keeps the source's own words with no gloss, where the review offered whole weeks or the source's unit.
+7. M9's words, above.
+8. Five signal states moved under the tenth rule (I5), listed above; each now agrees with its sentence.
+
+**The check server**
+- Run 38690506677 on de0f2832: Typecheck exit 0; the chain 296 passed, 11 red. Standing: fact-once, harness-laws (FIGURE FACE on the
+  runner), harness-links, provenance, type-floor, census-fresh, home-answers, uk-city-sources, and harness-archetypes and
+  money-shown-own-rows by TIMEOUT. art-direction, standing for the barbershops rhythm, also grew GB's prose (fixed in 930797ca).
+  harness-page-filter, red through Task 8, passes.
+- Run 38698853420 on 930797ca: Typecheck exit 0; the chain 296 passed, 11 red, every one standing: the ten above, and art-direction
+  for the barbershops rhythm alone (GB's prose gone). Against Task 8's run (38680369364) the red lines are the same but two:
+  harness-page-filter's is gone, and type-floor's GB share of characters under 14px reads 27.1% for 27.0% (the floor is 20%; KH and DE
+  unchanged). Provenance's reds are the two cell pages' (51 against 48, 124 against 123), as at Task 8; the four country pages hold
+  their lowered baselines exactly.
+
+**Open for the controller**
+- The composition. At 1280 nearly every country zone is now one slot, alternating sides down a stage: a lone slot leaves a third of the
+  row empty, and beside a lean slot two thirds. LEVEL HEIGHT cannot fire where nothing stands beside, so the owner judges this by the
+  photographs (GB stage 4 above).
+- M4, M7 and M12, not done, as ruled.
+- The archetype sheet still times out at 360s, here and on the check server.
+- The standing reds above, unchanged by this wave; the production probe waits on the owner's deploy word.
