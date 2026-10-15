@@ -510,7 +510,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
           Task 2A): a withheld line alone stood in the left half and left the right
           half blank, a 243 by 120 hole beside the title at 1280, which is the harness's
           floor (LONE STAT) once the title stood 24 above its content; alone it takes the width. */}
-      <div className={basis && withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : undefined}>
+      <div className={[basis && withheldLine ? "md:grid md:grid-cols-2 md:gap-x-6" : "", headTwoUp && withheldLine && !basis ? "[@container(min-width:560px)]:justify-self-end" : ""].filter(Boolean).join(" ") || undefined}>
         {basis ? <Basis beside>{basis}</Basis> : null}
         {withheldLine ? <p data-line="" className={`${basis ? "mt-0.5 " : ""}text-[length:var(--t-body)] text-[var(--c-muted)] md:mt-0`}>{withheldLine}</p> : null}
       </div>
