@@ -126,7 +126,7 @@ function AnswerFold({ name, summary, rows, type }: { name: string; summary: stri
   return (
     <div data-archetype="detail-panel" data-rows={rows.length} data-fold="answer" data-answer={type} className="mt-6 border-t border-[var(--c-border)] [:has(>[data-focal-words])+&]:mt-0">
       <details name={name} className="group">
-        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 py-2.5 [&::-webkit-details-marker]:hidden">
+        <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 py-3 [&::-webkit-details-marker]:hidden">
           <span data-fold-head="" className="min-w-0 flex-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{summary}</span>
           <span data-fold-count className="tabular-nums text-[length:var(--t-body)] leading-5 text-[var(--c-ink2)]">{rows.length}</span>
           <span aria-hidden="true" className="text-[length:var(--t-lead)] leading-5 text-[var(--c-muted)] transition-transform group-open:rotate-45">+</span>

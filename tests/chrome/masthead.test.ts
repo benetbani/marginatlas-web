@@ -576,7 +576,9 @@ async function main() {
   let bodiesFound = 0;
   for (const f of srcFiles) if (f.endsWith(".tsx")) code(f).split("\n").forEach((l, i) => { if (/<div\b[^>]*data-spine-body/.test(l)) { bodiesFound++; if (marginHits(l)) bodyWrappers.push({ file: f, line: i + 1 }); } });
   for (const w of bodyWrappers) red({ rule: RULE, file: w.file, line: w.line, detail: "a spine body takes a negative margin (-mx-2): the page's column is on the one 16px phone gutter, so the body stands on it with none", remedy: GUTTER_REMEDY });
-  check(`no spine body takes a negative margin: the column is already on the 16px gutter (${bodiesFound} bodies read, ${bodyWrappers.length} with one)`, bodiesFound >= 9 && bodyWrappers.length === 0, { file: bodyWrappers[0]?.file ?? "src/components/spine", remedy: GUTTER_REMEDY });
+  /* Eight bodies, one a page view: the country view drew two (the UK's composition and every other country's) until plan 2026-10-13
+     country-page-journey composed every country from one slot plan (Task 4). */
+  check(`no spine body takes a negative margin: the column is already on the 16px gutter (${bodiesFound} bodies read, ${bodyWrappers.length} with one)`, bodiesFound >= 8 && bodyWrappers.length === 0, { file: bodyWrappers[0]?.file ?? "src/components/spine", remedy: GUTTER_REMEDY });
   const harnessMains = ["scripts/harness/render_page.tsx", "scripts/seo/floor_census.tsx"].filter((f) => !/\bGUTTER\b/.test(code(f)) || /mx-auto px-6 pt-4/.test(code(f)));
   check(`the harness' own <main> reads GUTTER, so a render measures the widths a visitor gets${harnessMains.length ? `: ${harnessMains.join(", ")} do not` : ""}`, harnessMains.length === 0, { file: harnessMains[0] ?? "scripts/harness/render_page.tsx", remedy: "import GUTTER from src/lib/nav and write the render's <main> as `relative max-w-content mx-auto ${GUTTER} pt-4`, as SiteChrome does" });
   /* NO WORD LEFT ALONE ON THE NEWSLETTER LINE (critique pass 4, fix round F2, item P2.2): "Leave your email to hear when new figures / land." at 768,
