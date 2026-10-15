@@ -26,5 +26,19 @@
     "where": "crew",
     "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
     "reason": "The crew list's headline is the middle of its five roles, which is the Supervisor row's own figure, so the focal and the row it sums print the same pay."
+  },
+  {
+    "page": "cell-gb-london-restaurants",
+    "figure": "7%",
+    "where": "split",
+    "law": "MODEL 8.6 row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"net pinned last, no net-less mode\"",
+    "reason": "The split's focal is its net margin and the net row is the breakdown's pinned last segment, so the card prints the net twice by law; the Unallocated row's 7% is a different share that prints alike."
+  },
+  {
+    "page": "cell-gb-london-restaurants",
+    "figure": "$30K",
+    "where": "rivals",
+    "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
+    "reason": "The list's headline is the middle of its four trades and sits on the Legal services row's own figure (Real estate agencies also reads $30K, under its own source), so the focal and the row it sums print alike."
   }
 ]
