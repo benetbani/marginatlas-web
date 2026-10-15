@@ -1538,20 +1538,13 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (/\u2014/.test(t)) reds.push(`seat ${key}: an em dash in "${t}"`);
     }
   }
-  const drawnKicker: Record<string, string> = { setup: COPY.tiers.kicker, peers: COPY.peers.kicker, money: COPY.margin.kicker, locals: COPY.locals.kicker };
+  /* The two seats other pages still draw open under their drawn card's kicker; the country's seats left with plan 2026-10-13
+     country-page-journey (final review M5, 2026-10-15: a slot without its data omits itself, so no country page seats a block). */
+  const drawnKicker: Record<string, string> = { peers: COPY.peers.kicker, locals: COPY.locals.kicker };
   for (const [block, kicker] of Object.entries(drawnKicker)) {
     if ((COPY.blocked as Record<string, { kicker: string }>)[block]?.kicker !== kicker) reds.push(`seat ${block}: its kicker is not the drawn card's own ("${kicker}")`);
   }
-  const seated: Record<string, number> = { setup: 0, peers: 0, money: 0, locals: 0 };
-  for (const iso2 of codes) {
-    if (buildSetupRows(iso2).length === 0) seated.setup++;
-    if (!buildPeerTable(iso2)) seated.peers++;
-    const m = marginCardFromSnapshot(iso2);
-    if (!m || m.rows.length < 2) seated.money++;
-    if (!buildLocalsNotes(iso2)) seated.locals++;
-  }
-  for (const [block, n] of Object.entries(seated)) if (n === 0) reds.push(`seat ${block}: no country in the taxonomy takes this seat, so its story has nothing to draw`);
-  console.log(`seats: ${seats.length} drawn blocked seats' copy held (one line each under ${SEAT_LINE_WORDS_CAP + 1} words, a foot naming its item); of ${codes.length} countries the thin seats stand on ${seated.setup} (setup), ${seated.peers} (peers), ${seated.money} (money) and ${seated.locals} (locals)`);
+  console.log(`seats: ${seats.length} drawn blocked seats' copy held (one line each under ${SEAT_LINE_WORDS_CAP + 1} words, a foot naming no work queue)`);
 }
 /* THE CITY CARDS (MODEL.md 8.2 row `10 cities`; QUEUE
    country:cities-covered-list, ruled 2026-09-19: the builder walks the
