@@ -3,11 +3,13 @@
  *
  * The masthead of the buy-or-start page: a clean-data-tool hero, not a magazine
  * cover. No image, no gradient. It leads with the QUESTION, then sets the two
- * sides of the cash side by side: to START fresh, the stated line (no start cost
- * is held; the typed start cash that stood here left on 2026-10-15, release 2
- * job A), and to BUY an existing one, the sale range, stamped. One line on the
- * cash sits beneath and leans nowhere, and a quiet link points back to the full
- * cell economics.
+ * sides side by side: to START fresh, a held figure the page already prints
+ * (the longest licence wait, else the years to pay back, stamped: startLead in
+ * src/lib/open/buy_side.ts; no start cost is held, the typed start cash left on
+ * 2026-10-15 and the stated line that stood in its place on 2026-10-16, release
+ * 3 job A, said once lower down instead), and to BUY an existing one, the sale
+ * range, stamped. One line sits beneath and leans nowhere, and a quiet link
+ * points back to the full cell economics.
  *
  * Layout: on a narrow screen the two cash figures stack; from sm they sit side by
  * side, start leading. Figures are the board's display serif with tabular figures
@@ -21,7 +23,7 @@ import Link from "next/link";
 import { T_H1 } from "@/lib/ui/typography";
 import { tradeNounFor } from "@/lib/taxonomy";
 import { provAttrs } from "@/lib/spine/provenance";
-import { buyRangeText } from "@/lib/open/buy_side";
+import { buyRangeText, startLead } from "@/lib/open/buy_side";
 import type { BuyVsStart } from "@/lib/open/buy_vs_start";
 
 export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
@@ -31,6 +33,8 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
   /* The buy figure is a range in currency, the trade page's own sale range, stamped with where it was read (data-src, data-kind); a trade with
      no price prints the card's stated line in its place and no figure. */
   const buyRange = buyRangeText(page.buy);
+  /* The start side's held figure; null only where the page holds neither, and then the stated line stands here and nowhere else. */
+  const lead = startLead(page.start);
 
   return (
     <header className="pb-2">
@@ -44,11 +48,27 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
       {/* The two sides of the cash, side by side. Start leads (the more common path); buy sits beside it as the alternative. */}
       <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-12">
         <div className="shrink-0">
-          {/* No start cost is held: the stated line stands where the typed start cash stood, as the buy side's own line does where it cannot price. */}
-          <p className="text-sm leading-snug text-cocoa-700">{page.start.cashLine}</p>
-          <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-            To start fresh
-          </div>
+          {lead ? (
+            <>
+              <div
+                {...provAttrs(lead.prov)}
+                className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl"
+              >
+                {lead.figure}
+              </div>
+              <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+                {lead.label}
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Neither figure held: the stated line, as the buy side's own line stands where it cannot price. */}
+              <p className="text-sm leading-snug text-cocoa-700">{page.start.cashLine}</p>
+              <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+                To start fresh
+              </div>
+            </>
+          )}
         </div>
 
         <div className="shrink-0 sm:border-l sm:border-parchment sm:pl-12">

@@ -404,7 +404,8 @@ function startFor(industryId: string): StartSide {
 function checkStart(doc: Document, where: string, start: StartSide): string[] {
   const out: string[] = [];
   const text = doc.body.textContent ?? "";
-  /* SAID ONCE (fix round 1, ruling 2): the absence of a start cost is stated where a reader meets it first, the hero, and nowhere else. */
+  /* SAID ONCE (fix round 1, ruling 2): the absence of a start cost is stated once on the page: in the compare card's cash row where the hero leads
+     with a held figure, in the hero where it holds none (release 3 job A). */
   const said = text.split(COPY.buyOrStart.startCash).length - 1;
   if (said !== 1) out.push(`${where}: the start side's stated line prints ${said} times, not once`);
   if (/no start cost|no cost to open/i.test(text.split(COPY.buyOrStart.startCash).join(""))) out.push(`${where}: the absence of a start cost is said again in other words`);
@@ -432,6 +433,12 @@ function checkRender(Hero: React.ComponentType<{ page: BuyVsStart }>, Compare: R
   const rangeText = buyRangeText(priced.buy);
   if (!rangeText) { out.push("restaurants at the test take-home builds no range to render"); return out; }
   const a = render(priced);
+  /* THE HERO LEADS WITH A HELD FIGURE (release 3 job A, 2026-10-16): where the start side holds the longest licence wait or the years to pay back, the
+     hero's start side prints that figure, stamped, and not the stated line; the gap is said once, lower down (startLead, src/lib/open/buy_side.ts). */
+  const heroOnly = new JSDOM(`<body>${renderToStaticMarkup(React.createElement(Hero, { page: priced }))}</body>`).window.document;
+  const leadFig = priced.start.longestWait?.figure ?? priced.start.payback?.figure ?? null;
+  if (leadFig && (heroOnly.body.textContent ?? "").includes(COPY.buyOrStart.startCash)) out.push("the hero leads the start side with the stated line where a held figure stands (the longest licence wait or the years to pay back)");
+  if (leadFig && ![...heroOnly.querySelectorAll("[data-src]")].some((el) => el.textContent?.trim() === leadFig && /licensing\.licences\.|first_year\.payback_years/.test(el.getAttribute("data-src") ?? ""))) out.push(`the hero's start side does not lead with the held figure "${leadFig}", stamped`);
   const all = [...a.doc.querySelectorAll("[data-src]")];
   const stamped = all.filter((el) => /sale_exit/.test(el.getAttribute("data-src") ?? ""));
   if (stamped.length !== 2) out.push(`the priced render holds ${stamped.length} stamped buy figures, expected 2 (the hero's and the compare card's)`);
@@ -473,6 +480,10 @@ if (!STATIC_ONLY) {
   const OldHero = ({ page }: { page: BuyVsStart }) => React.createElement("div", { className: "fig" }, `$${(page.buy.lowUsd ?? 0) * 2} to start, ${page.start.cashLine.length} weeks`);
   const NoCompare = () => React.createElement("div", null, "about 2.4x owner earnings, an estimate");
   control("render reader: sees an unstamped figure, a multiple, a price on an EBITDA trade and a start side with no stated line and no stamped wait", checkRender(OldHero, NoCompare).length >= 3 && checkRender(OldHero, NoCompare).some((f) => /stated line/.test(f)) && checkRender(OldHero, NoCompare).some((f) => /longest licence wait/.test(f)));
+
+  /* The hero as it stood before 2026-10-16: the start side's stated line where the held wait could lead; the real card beside it. */
+  const StatedHero = ({ page }: { page: BuyVsStart }) => React.createElement("header", null, React.createElement("p", null, page.start.cashLine), React.createElement("div", null, "To start fresh"));
+  control("render reader: sees a hero that leads the start side with the stated line where the held wait stands", checkRender(StatedHero, BuyVsStartCompare).some((f) => /leads the start side with the stated line/.test(f)) && checkRender(StatedHero, BuyVsStartCompare).some((f) => /does not lead with the held figure/.test(f)));
 
   const real = checkPricing(buySideFor);
   counted = { sde: real.sde, ebitda: real.ebitda, none: real.none };

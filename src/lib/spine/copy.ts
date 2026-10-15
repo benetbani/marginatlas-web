@@ -2222,6 +2222,10 @@ export const COPY = {
    *  longest licence wait where the weeks stood, and the trade's years to pay back where the typed payback stood. */
   buyOrStart: {
     startCash: "No start cost held yet.",
+    /** The hero's start side leads with a held figure (release 3 job A), labelled as the buy side's "To buy, estimated" is. */
+    leadWait: "To start, the longest licence wait, estimated",
+    leadPayback: "To start, the time to pay back, estimated",
+    cashLabel: "Cash needed",
     waitLabel: "Longest licence wait",
     waitNote: "the slowest licence to get, an estimate",
     noWait: "No licence list here yet.",
