@@ -85,8 +85,7 @@
  * such timeline here would necessarily invent a representative trade. There is no honest
  * anchor at city altitude, so the block was deleted rather than replaced (2026-07-10).
  */
-import * as React from "react";
-
+import * as React from "react";
 import { lockedLevelKeys } from "@/lib/monetization/levels";
 import { lockedBody, type LockSpec } from "@/components/spine/LockedSection";
 import { spineCitySeed } from "@/lib/spine-seeds";
