@@ -254,6 +254,18 @@ const NAME_CLS = "min-w-0 py-0.5 text-[length:var(--t-body)] font-medium text-[v
    column shared by every row keeps every figure on one right edge. Sized to
    the glyph at the body rung with air on its left. */
 const ARROW_COL = "1.25rem";
+/* A UNIT WORD IS NARROWER THAN A DIGIT (2026-10-15, release 2 job A): the count above reserved every character at a digit's advance, right for
+   "$300K" and "14%" and 50 percent wide for a figure carrying a unit word. Measured on this server with the faces loaded, at the body rung:
+   "1.5 years" draws 60px in the figure face against 9ch of 9.3px reserved (92px), and the other trades' card, which prints years since that
+   day, wrapped "Software development" and "Engineering & architecture" past its equal rows at 375. So a lowercase letter or a space counts
+   half a digit ("years" averages about 0.55 there, so "1.5 years" reserves 6ch, 56px, and the 0.5rem slack covers the rest of its 60);
+   digits, signs, capitals and the K and M of money still count one, so every money and percent column keeps its width. The harness's
+   TEXT CUT and BOTCHED MOBILE rules read a figure that outgrows its column, so an underestimate here is reported, not hidden. */
+function figWidthCh(text: string): number {
+  let n = 0;
+  for (const ch of text) n += /[a-z ]/.test(ch) ? 0.5 : 1;
+  return n;
+}
 function geometry(figChars: number, marks: boolean, doors: boolean): React.CSSProperties {
   const fig = `calc(${figChars}ch + 0.5rem)`;
   const cols = [marks ? MARK_COL : null, "minmax(0,1fr)", fig, doors ? ARROW_COL : null].filter((c): c is string => c != null);
@@ -277,7 +289,7 @@ export function MarkList({ id, kicker, icon, tagged, headline, basis, head, rows
      href among rows without is a caller fault and is met loudly, the arrow
      column drawn and the static rows visibly without an arrow. */
   const doors = rows.some((r) => typeof r.href === "string" && r.href.length > 0);
-  const figChars = Math.max(1, ...rows.map((r) => fmt(r.value).length));
+  const figChars = Math.max(1, ...rows.map((r) => figWidthCh(fmt(r.value))));
   const GEO = geometry(figChars, marks, doors);
   return (
     /* THE ONE-COLUMN LIST FILLS ITS LEVEL (the goal's B12, 2026-09-24). Every

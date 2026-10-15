@@ -2020,8 +2020,8 @@ export const COPY = {
    *  printed (the form's law). The basis is 8.6's sentence without the word
    *  the shape gate bans as machinery ("baseline"; the second dispatch's
    *  finding), read aloud: each trade's typical figure, modelled (R3, R12),
-   *  never this city's. The withheld line counts the siblings on the
-   *  archetype's default (R11), the country money card's idiom. The state
+   *  never this city's. The withheld line counts the siblings whose shard
+   *  holds no payback (R11), the country money card's idiom. The state
    *  line stands where the list would when fewer than four siblings hold a
    *  figure (8.6: "full form with the withheld line counting the members it
    *  cannot print, never a short list"), in the site's idiom (M19); `{k}`
@@ -2029,14 +2029,13 @@ export const COPY = {
    *  all the shorter line says so. */
   tradeRivals: {
     kicker: "Other trades to open",
-    head: { name: "Trade", value: "To open" },
-    basis: "",
-    /** At a city's prices (plan 06, task A6): each trade's keyed figure times the city's place factor. */
-    basisPlace: "Estimates at {city} prices.",
-    withheldOne: "1 trade left out: no cost figures yet.",
-    withheldMany: "{n} trades left out: no cost figures yet.",
-    state: "Only {k} other trades here have cost figures, too few to compare.",
-    stateNone: "No other trades here have cost figures yet.",
+    /** Each row's figure is the trade's own years to pay back (2026-10-15, release 2 job A: the typed cost to open left). */
+    head: { name: "Trade", value: "Pays back" },
+    basis: "Each trade's typical years to pay back, an estimate.",
+    withheldOne: "1 trade left out: no payback figure yet.",
+    withheldMany: "{n} trades left out: no payback figures yet.",
+    state: "Only {k} other trades here have payback figures, too few to compare.",
+    stateNone: "No other trades here have payback figures yet.",
   },
   /** `14 worth` (the same dispatch): the kicker is 8.6's title; the two marks
    *  are the ends of what a business like this sells for, in a person's
@@ -2262,17 +2261,16 @@ export const COPY = {
     absent: "Not known yet",
     absentNote: "we have no figure for what this trade keeps",
     cells: {
-      cost: { label: "Cost to open", note: "" },
       spend: { label: "Spend per visit", note: "one customer, one visit" },
       visits: { label: "Visits a year", labelBetween: "Years between visits", note: "a typical customer" },
     },
     /** The not-gathered line's parts, joined by the builder in the order the cells stand. */
     notGathered: "We don't have {parts} yet.",
-    parts: { cost: "what it costs to open", spend: "what a customer spends", visits: "how often a customer buys" },
+    parts: { spend: "what a customer spends", visits: "how often a customer buys" },
     /** The coverage sentence over the printed companions, their names filled in the cells' order. */
     footAll: "Estimates for a typical {noun}, not any one place.",
     footOne: "Estimates for a typical {noun}, not any one place.",
-    names: { cost: "cost", spend: "spend", visits: "visits" },
+    names: { spend: "spend", visits: "visits" },
     /** The answer drawn under the net: its two parts, labels only, and the drawing's name for a screen reader after the figure. */
     bar: { part: "Kept", rest: "Costs", of: "of every $100 of sales kept" },
   },
@@ -2886,7 +2884,7 @@ export const COPY = {
       owner: { off: "None by default. You keep the profit.", city: "Typical income in {city}.", country: "The country's median pay.", none: "No income figure is held here. Type yours." },
       target: { uk: "The profit you want each year, after tax.", world: "The profit you want each year, before tax." },
       loan: { amount: "None by default. Type a loan if you take one.", uk: "The UK start-up loan rate.", country: "{country}'s bank lending rate.", noRate: "No lending rate is held here. Type yours.", years: "Type the years to repay." },
-      opening: { held: "The trade's opening bill for {country}.", built: "Fit-out for this space, the deposit and registration.", archetype: "The trade's usual cost to open, at {city} prices.", archetypeBare: "The trade's usual cost to open.", none: "No cost to open is held for this trade." },
+      opening: { held: "The trade's opening bill for {country}.", built: "Fit-out for this space, the deposit and registration.", none: "No cost to open is held for this trade." },
       openingItems: { fitOut: "Fit-out", deposit: "Lease deposit", registration: "Registration" },
       form: "Sole trader by default. Tax follows 2026-27 law.",
     },

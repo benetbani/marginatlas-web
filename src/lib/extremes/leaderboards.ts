@@ -54,6 +54,10 @@ import {
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
 import { buildAcrossCities, type CityColumn } from "@/lib/markets/across_cities";
+import { INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
+import { industryFigure } from "@/lib/facts/industry_shard";
+import { OPEN_METRICS, shardProv, yearsFigure } from "@/lib/spine/open_rows";
+import type { Provenance } from "@/lib/spine/provenance";
 
 /** A finite, positive real. */
 function isPos(n: number | null | undefined): n is number {
@@ -496,38 +500,41 @@ async function loadDensityBoards(): Promise<DensityLeaderboard[]> {
   return buildDensityBoards(acrossById);
 }
 
-// --- startup-capital leaderboards -------------------------------------------
+// --- payback leaderboards -------------------------------------------------
 //
-// The "what it costs to open" read, ranked across the trusted slate: the
-// cheapest businesses to start anywhere we cover, and the highest barriers to
-// entry. These rank the MODELED, place-adjusted cost-to-open the cell board now
-// shows (the per-industry archetype scaled by the city's cost-of-living index,
-// capped), the entry-figure sibling of the density and take-home boards above.
+// The "how long it takes to earn the opening back" read, ranked across every
+// live trade: the trades that pay back quickest and the ones that take longest.
+// The figure is each trade's own `first_year.payback_years` off its shard
+// (data/facts/industry/<id>.json, 243 of 243, every one printed as modelled,
+// R12), the same figure the trade page prints under "Earning it back", read
+// through the same builder (open_rows.ts), stamped and called an estimate. It
+// is the trade's, not a place's, so the boards rank trades and each row opens
+// the trade's industry page. Pure over the shards: no database read, so the
+// pair never self-omits on a slow table.
 //
-// Source of truth: the SAME trusted-city slate buildAcrossCities resolves for
-// the density boards, so a row here is only ever a genuinely local cell (right
-// activity, not synthetic, not the extrapolated tier, not a country aggregate).
-// To make "cheapest businesses" honest, we span a SET of activities, from the
-// laptop trades to the premises-heavy builds, and rank every (activity, city)
-// pair the slate resolves, so the cheap end is a light trade in a low-cost
-// metro and the barrier end is a heavy build in a costly one. The figure is the
-// pure model, so it never dashes; a board self-omits below MIN_ROWS clean rows,
-// exactly like the density boards.
+// UNTIL 2026-10-15 this lens was "Cost to open": every (activity, city) pair
+// of the across slate ranked by a capital typed by hand with no source
+// (src/lib/markets/startup_capital_archetypes.ts, place-adjusted, the 80,000
+// fill on the trades it did not key), unstamped. The law is that every figure
+// comes from held data (release 2 job A); the payback years are the held
+// figure nearest the question the lens asked, what it takes to get in.
 
-/** One ranked row on a startup-capital leaderboard. */
-export interface StartupRow {
-  /** Row label, the activity and place, e.g. "Restaurants in Paris". */
+/** One ranked row on a payback leaderboard. */
+export interface PaybackRow {
+  /** The trade's name, e.g. "Restaurants". */
   name: string;
-  /** Cell-page href for the full read. */
+  /** The trade's industry page. */
   href: string;
-  /** ISO2 country slug (lowercased), for a small flag. */
-  country: string;
-  /** Modeled, place-adjusted one-time cost to open, USD (the ranked figure). */
-  startupCostUsd: number;
+  /** Years to pay back, the ranked figure. */
+  years: number;
+  /** The figure as it prints ("2.5 years"). */
+  figure: string;
+  /** Where it was read: the shard file and key, an estimate. */
+  prov: Provenance;
 }
 
-/** One resolved startup-capital leaderboard: framing plus the ranked rows. */
-export interface StartupLeaderboard {
+/** One resolved payback leaderboard: framing plus the ranked rows. */
+export interface PaybackLeaderboard {
   /** Stable key for React + section anchors. */
   key: string;
   /** Small uppercase eyebrow above the title. */
@@ -539,309 +546,68 @@ export interface StartupLeaderboard {
   /** The label for the right-hand value column. */
   valueCaption: string;
   /** Ranked rows, best-for-the-framing first. */
-  rows: StartupRow[];
+  rows: PaybackRow[];
 }
 
-/**
- * The activity set the startup boards rank across. A deliberate spread from the
- * lightest opens (a consultant or a cleaner starts from a laptop and a van) to
- * the premises-heavy builds (a full venue, a clinic, a hotel), so the two
- * boards capture a real range rather than one trade. All are widely covered
- * activities, so the trusted slate resolves several cities for each, keeping the
- * flattened pool well above the row floor.
- */
-const STARTUP_ACTIVITY_IDS: string[] = [
-  "cleaning_services",
-  "management_consulting",
-  "marketing_design",
-  "software_development",
-  "barbershops",
-  "hair_salons_full",
-  "real_estate_agencies",
-  "restaurants",
-  "cafes_coffee",
-  "sports_fitness",
-  "grocery_stores",
-  "auto_repair_shops",
-  "dental_practices",
-  "veterinary_pet_care",
-  "hotels_lodging",
-];
-
-/**
- * A startup-board request: every (activity, city) pair across the trusted slate,
- * ranked one way by the modeled cost to open.
- */
-interface StartupSpec {
-  key: string;
-  eyebrow: string;
-  title: string;
-  intro: string;
-  valueCaption: string;
-  /**
-   * Ranking direction by cost to open. "low" puts the cheapest open first (the
-   * lowest barrier to entry); "high" puts the priciest first (the highest
-   * barrier).
-   */
-  direction: "high" | "low";
-}
-
-/**
- * The startup-board slate. Two opposite reads of the SAME entry figure: the
- * cheapest businesses to start, and the steepest barriers to entry. The pair is
- * the cost-to-open row made browsable, the same way the density pair is the
- * crowding gauge made browsable.
- */
-const STARTUP_SPECS: StartupSpec[] = [
+/** The payback-board slate: two opposite reads of the same figure. "low" puts the quickest first. */
+const PAYBACK_SPECS: Array<Omit<PaybackLeaderboard, "rows"> & { direction: "high" | "low" }> = [
   {
-    key: "cheapest-to-start",
-    eyebrow: "The low bar",
-    title: "The cheapest businesses to start",
+    key: "quickest-to-pay-back",
+    eyebrow: "The short wait",
+    title: "The quickest trades to pay back",
     intro:
-      "Not every business needs a fit-out and a lease. These are the openings that ask the least up front across everywhere we cover, the trades you can start from a laptop, a van, or a single chair. Low to enter is not the same as easy to win, but the bill to begin is small.",
-    valueCaption: "to open",
+      "Some openings earn their start back fast: little to fit out, customers from the first week. These trades take the fewest years to pay back what it cost to open. Quick to pay back is not the same as easy to win.",
+    valueCaption: "to pay back",
     direction: "low",
   },
   {
-    key: "highest-barriers",
-    eyebrow: "The high bar",
-    title: "The highest barriers to entry",
+    key: "slowest-to-pay-back",
+    eyebrow: "The long wait",
+    title: "The slowest trades to pay back",
     intro:
-      "The other end of the same scale: the openings that ask the most before the first customer. A full venue, a fitted clinic, a hotel, in the costliest places to build one. The figure is the price of the front door, and it is what keeps these trades from filling up overnight.",
-    valueCaption: "to open",
+      "The other end of the same scale: the openings that take the most years to earn their start back. A fitted venue, a clinic, a hotel. The wait is what keeps these trades from filling up overnight.",
+    valueCaption: "to pay back",
     direction: "high",
   },
 ];
 
-/** A finite, positive cost we can rank and show. */
-function rankableStartupCost(c: CityColumn): number | null {
-  return isPos(c.startupCostUsd) ? c.startupCostUsd : null;
-}
-
 /**
- * Build both startup-capital boards from the pre-resolved across-cities cache.
- * Flattens every resolved (activity, city) column across the activity set into
- * one pool, then each spec ranks that shared pool by the modeled cost to open
- * (ascending for the cheapest board, descending for the barriers board). A
- * board self-omits below MIN_ROWS clean rows. Because the columns come straight
- * from buildAcrossCities, every row is a trust-gated local cell; the figure
- * itself is the bounded model, so it never dashes or shows a wrong-scale value.
+ * Build both payback boards over the live trades (INDUSTRIES), each trade's own
+ * shard figure through open_rows.ts. Ties keep the trades in name order, so the
+ * boards read the same on every build. A board self-omits below MIN_ROWS.
  */
-function buildStartupBoards(
-  acrossById: Map<string, Awaited<ReturnType<typeof buildAcrossCities>>>,
-): StartupLeaderboard[] {
-  // One flat pool of (activity, city) rows: the activity name for the label,
-  // the city column for the place + figure. Across reads that did not resolve
-  // (null) simply contribute nothing.
-  type Pooled = { activityName: string; col: CityColumn; cost: number };
-  const pool: Pooled[] = [];
-  for (const id of STARTUP_ACTIVITY_IDS) {
-    const across = acrossById.get(id);
-    if (!across) continue;
-    for (const col of across.cities) {
-      const cost = rankableStartupCost(col);
-      if (cost === null) continue;
-      pool.push({ activityName: across.activityName, col, cost });
-    }
+export function buildPaybackBoards(): PaybackLeaderboard[] {
+  const pool: PaybackRow[] = [];
+  for (const ind of INDUSTRIES) {
+    const fig = industryFigure(ind.id, OPEN_METRICS.payback);
+    if (!fig || !(fig.value > 0)) continue;
+    pool.push({ name: ind.name, href: `/industries/${industryToSlug(ind.id)}`, years: fig.value, figure: yearsFigure(fig.value), prov: shardProv(ind.id, OPEN_METRICS.payback) });
   }
-
-  const boards: StartupLeaderboard[] = [];
-  for (const spec of STARTUP_SPECS) {
-    if (pool.length < MIN_ROWS) continue;
-    const ordered = [...pool].sort((a, b) =>
-      spec.direction === "high" ? b.cost - a.cost : a.cost - b.cost,
-    );
-    boards.push({
-      key: spec.key,
-      eyebrow: spec.eyebrow,
-      title: spec.title,
-      intro: spec.intro,
-      valueCaption: spec.valueCaption,
-      rows: ordered.slice(0, MAX_ROWS).map(({ activityName, col, cost }) => ({
-        name: `${activityName} in ${col.name}`,
-        href: col.href,
-        country: col.country,
-        startupCostUsd: cost,
-      })),
-    });
-  }
-  return boards;
+  if (pool.length < MIN_ROWS) return [];
+  return PAYBACK_SPECS.map(({ direction, ...spec }) => ({
+    ...spec,
+    rows: [...pool]
+      .sort((a, b) => (direction === "high" ? b.years - a.years : a.years - b.years) || a.name.localeCompare(b.name))
+      .slice(0, MAX_ROWS),
+  }));
 }
 
-// --- break-in-rating leaderboards -------------------------------------------
+// --- break-in-rating leaderboards: gone (2026-10-15, release 2 job A) ------
 //
-// The headline "how easy is it to break in and win" read, ranked across the
-// trusted slate: the easiest businesses to break into anywhere we cover, and the
-// hardest. These rank the SAME single break-in rating the cell masthead shows
-// (src/lib/scores/break_in_rating.ts), so the hub and the cell page agree on the
-// one number, the way the take-home / density / startup boards already mirror
-// their cell rows.
-//
-// Defensible by construction: the rating is built per (activity, city) column
-// from buildAcrossCities, whose columns are already trust-gated (right activity,
-// not synthetic, not the extrapolated tier, not a country aggregate) and only
-// carry a take-home when the cell is a real LOCAL measurement. Crucially, the
-// rating's anchor, the annual owner take-home, is therefore a TRUSTED-REAL
-// figure on every ranked row (the module refuses to score without it). The entry
-// costs (capital, time) and the crowding fall back to the modeled, place-adjusted
-// archetypes, so the supporting line says the ranking rests on real local
-// earnings and modeled entry costs. A board self-omits below MIN_ROWS clean rows,
-// exactly like the boards above.
-
-/** One ranked row on a break-in-rating leaderboard. */
-export interface BreakInRow {
-  /** Row label, the activity and place, e.g. "Restaurants in Paris". */
-  name: string;
-  /** Cell-page href for the full read. */
-  href: string;
-  /** ISO2 country slug (lowercased), for a small flag. */
-  country: string;
-  /** The single break-in rating, 0..100 (the ranked figure). Higher = easier. */
-  score: number;
-  /** The band word for the row texture ("forgiving", "brutal", ...). */
-  band: string;
-}
-
-/** One resolved break-in leaderboard: editorial framing plus the ranked rows. */
-export interface BreakInLeaderboard {
-  /** Stable key for React + section anchors. */
-  key: string;
-  /** Small uppercase eyebrow above the title. */
-  eyebrow: string;
-  /** Warm leaderboard title. */
-  title: string;
-  /** One-line editorial intro that names the read. */
-  intro: string;
-  /** The label for the right-hand value column. */
-  valueCaption: string;
-  /** Ranked rows, best-for-the-framing first. */
-  rows: BreakInRow[];
-}
-
-/**
- * The activity set the break-in boards rank across. The SAME spread the startup
- * boards span (laptop trades to premises-heavy builds), so the easy end is a
- * light, fast-payback trade and the hard end is a heavy, slow-payback build, and
- * both boards clear the row floor on the widely-covered activities.
- */
-const BREAK_IN_ACTIVITY_IDS: string[] = STARTUP_ACTIVITY_IDS;
-
-/**
- * A break-in-board request: every (activity, city) pair across the trusted
- * slate, ranked one way by the single break-in rating.
- */
-interface BreakInSpec {
-  key: string;
-  eyebrow: string;
-  title: string;
-  intro: string;
-  valueCaption: string;
-  /**
-   * Ranking direction by the break-in rating. "high" puts the easiest to break
-   * into first; "low" puts the hardest first.
-   */
-  direction: "high" | "low";
-}
-
-/**
- * The break-in-board slate. Two opposite reads of the SAME headline rating: the
- * easiest businesses to break into, and the hardest. The pair is the masthead
- * score made browsable, the same way the density pair is the crowding gauge and
- * the startup pair is the cost-to-open row.
- */
-const BREAK_IN_SPECS: BreakInSpec[] = [
-  {
-    key: "easiest-to-break-in",
-    eyebrow: "The open door",
-    title: "The easiest businesses to break into",
-    intro:
-      "Cheap to enter, quick to earn back, and room to stand out: these are the openings that ask the least and reward the soonest across everywhere we cover. Easy to break into is not a promise you will win, but the door is genuinely open.",
-    valueCaption: "break-in rating",
-    direction: "high",
-  },
-  {
-    key: "hardest-to-break-in",
-    eyebrow: "The steep climb",
-    title: "The hardest to break into",
-    intro:
-      "The other end of the same scale: heavy to open, a long road back to profit, and a crowded room when you get there. These ask the most patience and the deepest pockets, the businesses you do not walk into without a plan.",
-    valueCaption: "break-in rating",
-    direction: "low",
-  },
-];
-
-/**
- * Build one ranked break-in row from a trusted (activity, city) column, or null
- * when the column carries no break-in rating (it had no real take-home, so the
- * rating module returned null and the row drops). The rating itself is computed
- * ONCE, where the column is built (breakInForColumn in across_cities.ts), and
- * carried on the column as breakInScore / breakInBand, so this only reads that
- * stored figure. That keeps the extremes board, the across page, and the cell
- * masthead on the IDENTICAL number, with no second computation to drift.
- */
-function breakInRowFromColumn(
-  activityName: string,
-  col: CityColumn,
-): BreakInRow | null {
-  if (col.breakInScore == null || col.breakInBand == null) return null;
-  return {
-    name: `${activityName} in ${col.name}`,
-    href: col.href,
-    country: col.country,
-    score: col.breakInScore,
-    band: col.breakInBand,
-  };
-}
-
-/**
- * Build both break-in boards from the pre-resolved across-cities cache. Flattens
- * every resolved (activity, city) column into one pool of rated rows (columns
- * without a trusted-real take-home yield no rating and drop), then each spec
- * ranks that shared pool by the break-in rating (descending for the easiest
- * board, ascending for the hardest). A board self-omits below MIN_ROWS clean
- * rows. Because the columns come straight from buildAcrossCities, every row is a
- * trust-gated local cell whose rating rests on a real local take-home.
- */
-function buildBreakInBoards(
-  acrossById: Map<string, Awaited<ReturnType<typeof buildAcrossCities>>>,
-): BreakInLeaderboard[] {
-  const pool: BreakInRow[] = [];
-  for (const id of BREAK_IN_ACTIVITY_IDS) {
-    const across = acrossById.get(id);
-    if (!across) continue;
-    for (const col of across.cities) {
-      const row = breakInRowFromColumn(across.activityName, col);
-      if (row !== null) pool.push(row);
-    }
-  }
-
-  const boards: BreakInLeaderboard[] = [];
-  for (const spec of BREAK_IN_SPECS) {
-    if (pool.length < MIN_ROWS) continue;
-    const ordered = [...pool].sort((a, b) =>
-      spec.direction === "high" ? b.score - a.score : a.score - b.score,
-    );
-    boards.push({
-      key: spec.key,
-      eyebrow: spec.eyebrow,
-      title: spec.title,
-      intro: spec.intro,
-      valueCaption: spec.valueCaption,
-      rows: ordered.slice(0, MAX_ROWS),
-    });
-  }
-  return boards;
-}
+// The easiest and hardest boards ranked the 0..100 break-in rating per (activity,
+// city) column. No page printed them after 2026-10-05 (his ruling 11, "no
+// composite, ever"), and the rating stood on a capital and weeks typed by hand
+// with no source (src/lib/markets/startup_capital_archetypes.ts,
+// opening_archetypes.ts), so the boards, their loader and the column's rating
+// left together.
 
 /** The full hub payload: the leaderboards that resolved cleanly, in spec order. */
 export interface ExtremesPayload {
   leaderboards: ExtremeLeaderboard[];
-  /** Break-in-rating leaderboards (easiest / hardest), or empty. */
-  breakInBoards: BreakInLeaderboard[];
   /** Competition-density leaderboards (crowded / still-room), or empty. */
   densityBoards: DensityLeaderboard[];
-  /** Startup-capital leaderboards (cheapest / highest barrier), or empty. */
-  startupBoards: StartupLeaderboard[];
+  /** Payback leaderboards (quickest / slowest), off the shards; empty only below the row floor. */
+  paybackBoards: PaybackLeaderboard[];
 }
 
 /**
@@ -892,80 +658,21 @@ async function resolveWithPool(
  * The page decides whether it has enough to render at all.
  */
 export async function loadExtremes(): Promise<ExtremesPayload> {
-  // The take-home boards (US-state reads), the density boards, and the startup +
-  // break-in boards (across-cities reads) hit different surfaces and self-omit on
-  // a thin or failed read, so run them in parallel without affecting each other.
-  //
-  // The startup and break-in boards span the SAME activity set, so their
-  // across-cities slates are resolved ONCE (the union of their ids) and both
-  // board sets are built from that one shared cache, halving the Supabase reads
-  // they would otherwise duplicate. The density boards resolve their own (mostly
-  // restaurants) slate; the small remaining overlap is cheaper than threading one
-  // cache through every differently-shaped board set.
-  const [results, densityBoards, startupAndBreakIn] = await Promise.all([
+  // The take-home boards (US-state reads) and the density boards hit different
+  // surfaces and self-omit on a thin or failed read, so run them in parallel
+  // without affecting each other. The payback boards are pure over the shards.
+  // (The break-in boards stopped loading here on 2026-10-15: no page printed
+  // them since 2026-10-05, and their rating stood on the typed capital.)
+  const [results, densityBoards] = await Promise.all([
     resolveWithPool(LEADERBOARD_SPECS),
     loadDensityBoards(),
-    loadStartupAndBreakInBoards(),
   ]);
   const leaderboards = results.filter(
     (b): b is ExtremeLeaderboard => b !== null,
   );
   return {
     leaderboards,
-    breakInBoards: startupAndBreakIn.breakInBoards,
     densityBoards,
-    startupBoards: startupAndBreakIn.startupBoards,
+    paybackBoards: buildPaybackBoards(),
   };
-}
-
-/**
- * Resolve the across-cities slate shared by the startup and break-in boards
- * ONCE (the union of both activity sets), then build both board sets from that
- * single cache. Each across read is the builder's own budgeted, trust-gated
- * resolve, so a slow or thin activity simply contributes no rows to either set.
- */
-async function loadStartupAndBreakInBoards(): Promise<{
-  startupBoards: StartupLeaderboard[];
-  breakInBoards: BreakInLeaderboard[];
-}> {
-  const uniqueIds = Array.from(
-    new Set([...STARTUP_ACTIVITY_IDS, ...BREAK_IN_ACTIVITY_IDS]),
-  );
-  const acrossById = new Map<
-    string,
-    Awaited<ReturnType<typeof buildAcrossCities>>
-  >();
-  await Promise.all(
-    uniqueIds.map(async (id) => {
-      acrossById.set(id, await buildAcrossCities(id));
-    }),
-  );
-  return {
-    startupBoards: buildStartupBoards(acrossById),
-    breakInBoards: buildBreakInBoards(acrossById),
-  };
-}
-
-/**
- * Resolve ONLY the break-in-rating boards (easiest / hardest), for callers that
- * want the headline rating without paying for the take-home, density, and
- * startup reads the full hub does. The homepage uses this for its lead break-in
- * beat: it reuses the EXACT board builder and rating math the hub and the cell
- * masthead share (no recomputation), just over the break-in activity slate
- * alone. Each across read is the builder's own budgeted, trust-gated resolve, so
- * a slow or thin activity simply yields fewer (or no) rows, and the caller
- * self-omits when the pair is incomplete.
- */
-export async function loadBreakInBoards(): Promise<BreakInLeaderboard[]> {
-  const uniqueIds = Array.from(new Set(BREAK_IN_ACTIVITY_IDS));
-  const acrossById = new Map<
-    string,
-    Awaited<ReturnType<typeof buildAcrossCities>>
-  >();
-  await Promise.all(
-    uniqueIds.map(async (id) => {
-      acrossById.set(id, await buildAcrossCities(id));
-    }),
-  );
-  return buildBreakInBoards(acrossById);
 }

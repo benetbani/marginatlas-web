@@ -66,14 +66,15 @@ check("the strip's marks are worked out from the register's bands", s !== null &
 check("the masthead and the strip carry the stamps through", f?.answer?.prov?.kind === "estimate" && f.cells.every((c) => !!c.prov) && !!sp && sp.marks.every((m) => !!m.prov));
 
 /* THE HEADER NEVER OPENS ON A BLANK (milestone 1, M8; his interview of 2026-09-26, answer 2: "a figure we trust (cost to open,
-   sales a year)"): where the register holds no row, the cost to open at London's prices, else the UK's survival for the group. */
+   sales a year)"): where the register holds no row, the UK's survival for the group, else nothing. The cost to open at London's prices led
+   this fallback until 2026-10-15: a capital typed by hand with no source, which left every page that day (release 2 job A). */
 const pz = londonTradeFallbackAnswer("pizzerias");
-check("pizzerias (no register row): the cost to open at London prices, 200,000 at 0.75 is $150K, an estimate said so", pz?.label === "Cost to open" && pz.value === "$150K" && pz.basis === "An estimate at London prices." && pz.confidence === "modeled" && pz.prov.kind === "estimate");
+check(`pizzerias (no register row): no typed cost to open, the UK's five-year survival for its group (${pz?.value}, ${pz?.basis})`, pz?.label === "Still trading after five years" && /^\d+%$/.test(pz.value) && pz.prov.kind === "worked out" && !/startup_capital_archetypes/.test(pz.prov.src));
 const hs = londonTradeFallbackAnswer("hostels");
-check(`hostels (no register row, no keyed cost): the UK's five-year survival for its group (${hs?.value}, ${hs?.basis})`, hs?.label === "Still trading after five years" && /^\d+%$/.test(hs.value) && hs.basis === "of UK holiday lets and hostels that open, at recent rates" && hs.prov.kind === "worked out");
+check(`hostels (no register row): the UK's five-year survival for its group (${hs?.value}, ${hs?.basis})`, hs?.label === "Still trading after five years" && /^\d+%$/.test(hs.value) && hs.basis === "of UK holiday lets and hostels that open, at recent rates" && hs.prov.kind === "worked out");
 check("pool service (neither): no figure, the state word stands", londonTradeFallbackAnswer("pool-service-maintenance") === null);
 const pf = tradeHeroFacts({ meta: { trade: "Pizzerias", city: "London", iso2: "GB", money_shown: false, provenance_line: "" }, london_fallback: pz });
-check("the masthead leads with the fallback where money is not shown", pf?.answer?.value === "$150K" && pf.answer.label === "Cost to open");
+check("the masthead leads with the fallback where money is not shown", !!pz && pf?.answer?.value === pz.value && pf.answer.label === pz.label);
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/london_trade_hero: all pass");

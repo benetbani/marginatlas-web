@@ -4,7 +4,7 @@
  * THE INDUSTRY MASTHEAD'S FACTS, `00 take` (MODEL.md 8.7; plan step 34's
  * first dispatch, 2026-09-18), for the AnswerCard archetype and its stories,
  * the way trade_hero_facts.ts maps the trade's. Pure over the taxonomy, the
- * shard and the archetype table, synchronous, no database: the industry page
+ * shard, synchronous, no database: the industry page
  * answers for the trade anywhere, so nothing here needs a place. The view
  * hands it the taxonomy id the adapter carries (`meta.id`); the stories and
  * the copy gates hand it an id straight.
@@ -25,12 +25,16 @@
  * state word stands where the answer would only if neither holds a figure
  * (no trade today; the shape exists so the card can say it).
  *
- * THE COMPANIONS, 8.7's three, each with its file and field:
- *  - COST TO OPEN: `startupCapitalArchetypeKeyed(industryToSlug(id))`, the
- *    trade's typical cost to open in a typical economy, a TRADE figure marked
- *    modelled (R3, clause 38), 153 of 243 keyed; the 90 on the table's 80,000
- *    default are WITHHELD (clause 46, R11) and the foot says so in the
- *    not-gathered idiom (M19).
+ * THE COMPANIONS, two of 8.7's three since 2026-10-15, each with its file and field:
+ *  - NO COST TO OPEN (2026-10-15, release 2 job A). The first companion was
+ *    the trade's cost to open, a capital typed by hand with no source, read
+ *    from src/lib/markets/startup_capital_archetypes.ts and printed with no
+ *    stamp on 91 of the indexable industry pages. The held figures nearest its
+ *    question (the licences' waits, the months to break even, the years to
+ *    pay back) each print already in the page's own `04 open` and `pays`
+ *    cards, and the fact-once law keeps a figure in the section whose job is
+ *    to explain it, so the companion left with no stand-in here: the answer
+ *    to "what it takes to get in" is those two cards.
  *  - SPEND PER VISIT: `demand.spend_per_head_usd`, 243 of 243 (28 held);
  *    seven business-to-business shards hold it as zero (grain farming,
  *    forestry, civil engineering, three wholesale trades, pipeline transport,
@@ -53,8 +57,7 @@ import { COPY } from "@/lib/spine/copy";
 import { resolveTradeNet, type TradeNet } from "@/lib/spine/trade_net";
 import { tradeIconFor } from "@/lib/spine/trade_icon";
 import { industryFigure } from "@/lib/facts/industry_shard";
-import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
-import { INDUSTRY_BY_ID, SECTOR_BY_ID, industryToSlug, tradeNounFor } from "@/lib/taxonomy";
+import { INDUSTRY_BY_ID, SECTOR_BY_ID, tradeNounFor } from "@/lib/taxonomy";
 
 type Conf = "measured" | "modeled" | "placeholder";
 const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
@@ -62,7 +65,7 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 export const INDUSTRY_HERO_METRICS = { spend: "demand.spend_per_head_usd", visits: "demand.purchases_per_year" } as const;
 
 /** The companions in the order they stand, 8.7's. */
-export const INDUSTRY_HERO_CELLS = ["cost", "spend", "visits"] as const;
+export const INDUSTRY_HERO_CELLS = ["spend", "visits"] as const;
 export type IndustryHeroCellKey = (typeof INDUSTRY_HERO_CELLS)[number];
 
 export type IndustryHeroFacts = {
@@ -104,13 +107,11 @@ export function industryHeroFacts(industryId: string | null | undefined): Indust
   const answer = net
     ? { label: COPY.industryHero.answerLabel, value: net.text, basis: net.branch === "profile" ? COPY.industryHero.answerBasisProfile : COPY.industryHero.answerBasisShard, confidence: "modeled" as Conf }
     : null;
-  const cost = startupCapitalArchetypeKeyed(industryToSlug(industryId));
   const spend = industryFigure(industryId, INDUSTRY_HERO_METRICS.spend)?.value;
   const visits = industryFigure(industryId, INDUSTRY_HERO_METRICS.visits)?.value;
   const cells: KvCell[] = [];
   const withheld: IndustryHeroCellKey[] = [];
   const C = COPY.industryHero.cells;
-  if (isNum(cost) && cost > 0) cells.push({ key: "cost", label: C.cost.label, value: usd(cost), note: C.cost.note, confidence: "modeled" }); else withheld.push("cost");
   if (isNum(spend) && spend > 0) cells.push({ key: "spend", label: C.spend.label, value: usd(spend), note: C.spend.note, confidence: "modeled" }); else withheld.push("spend");
   /* One reading with the trade page's customer card (`visitsReading`, the goal's A22): never a zero, never a second rounding. */
   if (isNum(visits) && visits > 0) { const r = visitsReading(visits); cells.push({ key: "visits", label: r.unit === "a year" ? C.visits.label : C.visits.labelBetween, value: r.figure, note: C.visits.note, confidence: "modeled" }); } else withheld.push("visits");
@@ -153,7 +154,7 @@ export function industryHeroFacts(industryId: string | null | undefined): Indust
  */
 export const INDUSTRY_INSTANCES: Record<string, { id: string; why: string; blocks?: readonly string[] }> = {
   restaurants: { id: "restaurants", why: "the exemplar: the ladder's net at 40, the three companions, the sector's five bars with two members withheld" },
-  "alarm-systems": { id: "alarm_systems_install", why: "the ladder is the file's fill and the cost is the table's default: the sector profile's residual as the answer with its own basis, the cost withheld in the foot", blocks: ["take"] },
+  "alarm-systems": { id: "alarm_systems_install", why: "the ladder is the file's fill: the sector profile's residual as the answer with its own basis", blocks: ["take"] },
   telecom: { id: "telecom", why: "a two-member sector with both members on the fill: the benchmark withheld, the not-gathered line where the rows would stand (a retired trade, drawn by id)", blocks: ["benchmark"] },
   "game-dev": { id: "game_dev_studios", why: "a three-member sector, every member holding a figure: the short table under the floor line; and the close with the pill alone, the sector's other two members retired", blocks: ["benchmark", "close"] },
   /* Plan step 34's second dispatch (2026-09-18): turn one's thin shards. */
@@ -254,17 +255,16 @@ export async function loadIndustryPlacesInstances(handles: string[] = Object.key
 }
 
 /** How the 243 fall, counted rather than remembered, for the gates and the record. */
-export function countIndustryHeroStates(ids: string[]): { total: number; answered: number; absent: number; ladder: number; profile: number; costWithheld: number; spendWithheld: number; visitsWithheld: number; allThree: number } {
-  const out = { total: ids.length, answered: 0, absent: 0, ladder: 0, profile: 0, costWithheld: 0, spendWithheld: 0, visitsWithheld: 0, allThree: 0 };
+export function countIndustryHeroStates(ids: string[]): { total: number; answered: number; absent: number; ladder: number; profile: number; spendWithheld: number; visitsWithheld: number; allTwo: number } {
+  const out = { total: ids.length, answered: 0, absent: 0, ladder: 0, profile: 0, spendWithheld: 0, visitsWithheld: 0, allTwo: 0 };
   for (const id of ids) {
     const f = industryHeroFacts(id);
     if (!f) continue;
     if (f.answer) out.answered++; else out.absent++;
     if (f.net?.branch === "shard") out.ladder++; else if (f.net?.branch === "profile") out.profile++;
-    if (f.withheld.includes("cost")) out.costWithheld++;
     if (f.withheld.includes("spend")) out.spendWithheld++;
     if (f.withheld.includes("visits")) out.visitsWithheld++;
-    if (f.withheld.length === 0) out.allThree++;
+    if (f.withheld.length === 0) out.allTwo++;
   }
   return out;
 }

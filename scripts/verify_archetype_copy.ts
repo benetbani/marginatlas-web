@@ -83,9 +83,9 @@ import { resolveTradeNet, countTradeNets, netText } from "@/lib/spine/trade_net"
 import { buildSuits } from "@/lib/spine/suits_rows";
 import { buildTradeSpread } from "@/lib/spine/trade_spread_rows";
 import { tradeHeroFacts } from "@/lib/spine/trade_hero_facts";
-import { ALL_INDUSTRIES, INDUSTRIES, industryToSlug } from "@/lib/taxonomy";
+import { ALL_INDUSTRIES, INDUSTRIES, industryToSlug, slugToIndustry } from "@/lib/taxonomy";
 import { buildPermits, WORLD } from "@/lib/spine/permits_rows";
-import { buildOpen, buildOpenFoot, buildOpenFormats, countOpenStates, OPEN_FORMATS_WORKING_MIN } from "@/lib/spine/open_rows";
+import { buildOpen, buildOpenFoot } from "@/lib/spine/open_rows";
 import { resolveSplit, countSplitStates, shardCostLines, driverLabel, LABEL_WORDS_CAP as SPLIT_LABEL_WORDS_CAP } from "@/lib/spine/split_rows";
 import { buildTeam, countTeamRows, roleLines, TEAM_ROWS_CAP } from "@/lib/spine/team_rows";
 import { buildTradePeers, TRADE_PEERS_CAP } from "@/lib/spine/trade_peer_rows";
@@ -94,7 +94,6 @@ import { buildLasts } from "@/lib/spine/lasts_rows";
 import { buildMix, MIX_WHOLE, MIX_SUM_TOLERANCE } from "@/lib/spine/mix_rows";
 import { buildRivals } from "@/lib/spine/rivals_rows";
 import { buildWorth, countWorthBases } from "@/lib/spine/worth_rows";
-import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { buildMarket, densityText, MARKET_CELLS } from "@/lib/spine/market_rows";
 import { industryHeroFacts, countIndustryHeroStates, INDUSTRY_HERO_CELLS, INDUSTRY_HERO_METRICS } from "@/lib/spine/industry_hero_facts";
 import { buildBenchmark, countBenchmarkStates, placeText, BENCHMARK_FLOOR, BENCHMARK_ROWS_CAP } from "@/lib/spine/benchmark_rows";
@@ -1131,8 +1130,6 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     ban(`permits ${id}`, [...p.cells.map((c) => c.label), p.basis, p.foot, p.withheld ?? ""]);
     if (buildOpenFoot(id).length === 2) footFull++;
   }
-  const states = countOpenStates(ids, industryToSlug);
-  if (states.keyed !== 153 || states.default !== 90) reds.push(`open: the archetype keys ${states.keyed} of ${states.total} shard ids and leaves ${states.default} on the default; item 48 counts 153 and 90 (a change here is the data track's to record)`);
   if (footFull !== ids.length) reds.push(`open: the foot's two companions resolve on ${footFull} of ${ids.length} shard ids, not all`);
   const lines = { scope: "GB", items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }, { name: "Business registration", usd: 20 }] };
   const held = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: lines });
@@ -1150,44 +1147,36 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (!five || five.rows.length !== 5 || five.tail !== null || five.basis !== COPY.tradeOpen.basisHeld) reds.push("open (held, five lines): five lines draw with a tail or the capped basis");
   const six = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { ...nine, items: nine.items.slice(0, 6) } });
   if (!six || six.rows.length !== 5 || six.tail?.count !== 1 || six.tailLine !== "The smallest cost, $20, is in the total.") reds.push(`open (held, six lines): the one smallest line is not stated singular ("${six?.tailLine}")`);
-  /* WHOSE IT IS (plan 2026-10-11, uk:held-bill-provenance): the same nine lines with no country on the block print no bill; the card falls to the baseline. */
+  /* WHOSE IT IS (plan 2026-10-11, uk:held-bill-provenance): the same nine lines with no country on the block print no bill; the card earns it back. */
   const unnamed = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items } });
   if (!unnamed || unnamed.state === "held") reds.push("open (held, no country): a bill naming no country prints");
+  /* NO TYPED COST TO OPEN (2026-10-15, release 2 job A): the keyed baseline and its kinds of shop left; a trade with no bill and its shard earns it back, the
+     two figures stamped with the shard's keys, on every shard id. */
   const base = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" } });
-  if (!base || base.state !== "baseline" || base.value !== 300000 || !base.accent || !base.sample || base.basis !== COPY.tradeOpen.basisFormats || base.footLine !== null || base.foot.length !== 2 || base.formats.length < 1 + OPEN_FORMATS_WORKING_MIN) reds.push("open (baseline): a keyed trade with no lines does not build the table's figure, the accent, the kinds of shop, the one basis and the foot as expected");
-  /* THE KINDS OF SHOP (the goal's B10, 2026-09-24), on every keyed shard: the lead at nought and at the typical, every other kind the typical times one plus its difference, printed by the kit's one form, dearest first. */
-  let formatsCards = 0, formatsNone = 0;
+  if (!base || base.state !== "withheld" || !base.recover || base.figure !== null || base.value !== null || base.prov !== undefined || base.accent || base.foot.length !== 2) reds.push("open (no bill): restaurants with no bill does not earn it back with no total and no accent");
+  let recoverCards = 0;
   for (const id of ids) {
-    const typical = startupCapitalArchetypeKeyed(industryToSlug(id));
-    if (typical == null) continue;
-    const f = buildOpenFormats(id, typical);
-    if (f.length === 0) { formatsNone++; continue; }
-    formatsCards++;
-    const [lead, ...rest] = f;
-    if (lead.delta !== 0 || lead.value !== Math.round(typical)) reds.push(`open ${id}: the lead kind of shop is not the typical at nought (${lead.name}, ${lead.delta})`);
-    if (rest.length < OPEN_FORMATS_WORKING_MIN) reds.push(`open ${id}: ${rest.length} other kinds, under the working's floor`);
-    for (const k of f) {
-      if (k.value !== Math.round(typical * (1 + k.delta / 100))) reds.push(`open ${id}: ${k.name} prints ${k.value}, not the typical times one plus ${k.delta} percent`);
-      if (k.figure !== usd(k.value)) reds.push(`open ${id}: ${k.name}'s figure is not the kit's form`);
-      if (!k.name.trim()) reds.push(`open ${id}: a kind of shop with no name`);
-    }
-    for (let i = 1; i < rest.length; i++) if (rest[i].value > rest[i - 1].value) reds.push(`open ${id}: the other kinds are not dearest first`);
-    ban(`open ${id}`, f.map((k) => k.name));
+    const o = buildOpen({ meta: { industry: industryToSlug(id), industry_id: id } });
+    if (!o) { reds.push(`open ${id}: no card`); continue; }
+    if (o.figure !== null || o.prov !== undefined) reds.push(`open ${id}: a total prints with no bill held ("${o.figure}", ${o.prov?.src ?? "no stamp"})`);
+    if (o.recover) recoverCards++;
+    for (const c of o.foot) if (c.prov?.src !== `data/facts/industry/${id}.json:${/month/.test(c.figure) ? "first_year.ramp_to_breakeven_months" : "first_year.payback_years"}` || c.prov.kind !== "estimate") reds.push(`open ${id}: the companion "${c.figure}" does not carry its shard stamp (${c.prov?.src ?? "none"})`);
   }
   const withheld = buildOpen({ meta: { industry: "shoe-repair", industry_id: "shoe_repair" } });
-  /* EARNING IT BACK (the goal's A4): a default trade with its shard prints no stated line, only the foot's two figures under their own opener. */
-  if (!withheld || withheld.state !== "withheld" || withheld.figure !== null || withheld.accent || withheld.withheld !== null || !withheld.recover || withheld.basis !== COPY.tradeOpen.basisRecover || withheld.foot.length !== 2 || withheld.footLine !== null) reds.push("open (withheld): a default trade with its shard does not earn it back (no stated line, the two figures, the recover basis)");
+  /* EARNING IT BACK (the goal's A4): a trade with no bill and its shard prints no stated line, only the foot's two figures under their own opener. */
+  if (!withheld || withheld.state !== "withheld" || withheld.figure !== null || withheld.accent || withheld.withheld !== null || !withheld.recover || withheld.basis !== COPY.tradeOpen.basisRecover || withheld.foot.length !== 2 || withheld.footLine !== null) reds.push("open (withheld): a trade with no bill and its shard does not earn it back (no stated line, the two figures, the recover basis)");
   const noShardDefault = buildOpen({ meta: { industry: "no-such-trade", industry_id: "no_such_trade" } });
   if (!noShardDefault || noShardDefault.recover || noShardDefault.withheld !== COPY.tradeOpen.withheld) reds.push("open (withheld, no shard): the old stated line does not stand where the trade holds no shard");
   const noShard = buildOpen({ meta: { industry: "restaurants", industry_id: "no_such_trade" } });
-  if (!noShard || noShard.foot.length !== 0 || noShard.footLine !== COPY.tradeOpen.footWithheld || noShard.basis !== COPY.tradeOpen.basisBaselineAlone) reds.push("open (no shard): the withheld foot line and the total's own basis do not build");
+  if (!noShard || noShard.foot.length !== 0 || noShard.recover || noShard.withheld !== COPY.tradeOpen.withheld || noShard.figure !== null) reds.push("open (no shard): the old stated line does not stand where the trade holds no shard");
   const heldNoShard = buildOpen({ meta: { industry: "restaurants", industry_id: "no_such_trade" }, setup: nine });
   if (!heldNoShard || heldNoShard.basis !== COPY.tradeOpen.basisHeldCappedAlone || heldNoShard.footLine !== COPY.tradeOpen.footWithheld) reds.push("open (held, no shard): the total's own capped basis and the withheld foot do not build");
-  for (const [name, o] of [["held", held], ["held, nine lines", capped], ["held, six lines", six], ["held, no shard", heldNoShard], ["baseline", base], ["withheld", withheld], ["no shard", noShard]] as const) if (o) ban(`open (${name})`, [o.basis ?? "", o.withheld ?? "", o.footLine ?? "", o.tailLine ?? "", o.focalWords ?? "", ...o.foot.flatMap((c) => [c.figure, c.words]), ...o.rows.map((r) => r.name)]);
-  ban("open (copy)", [COPY.tradeOpen.kickerRecover, COPY.tradeOpen.basisRecover, COPY.tradeOpen.basisFormats, COPY.tradeOpen.basisFormatsAlone]);
-  console.log(`trade turn one: the cost to open names its kinds of shop on ${formatsCards} keyed shards (${formatsNone} keep the one total), and earns it back on the default wherever the shard holds both figures`);
+  for (const [name, o] of [["held", held], ["held, nine lines", capped], ["held, six lines", six], ["held, no shard", heldNoShard], ["no bill", base], ["withheld", withheld], ["no shard", noShard]] as const) if (o) ban(`open (${name})`, [o.basis ?? "", o.withheld ?? "", o.footLine ?? "", o.tailLine ?? "", o.focalWords ?? "", ...o.foot.flatMap((c) => [c.figure, c.words]), ...o.rows.map((r) => r.name)]);
+  ban("open (copy)", [COPY.tradeOpen.kickerRecover, COPY.tradeOpen.basisRecover]);
+  if (recoverCards !== footFull) reds.push(`open: ${recoverCards} cards earn it back with no bill, against ${footFull} shard ids holding both figures`);
+  console.log(`trade turn one: with no bill held the cost to open earns it back on ${recoverCards} of ${ids.length} shard ids (no typed total since 2026-10-15)`);
   for (const o of [held, base, withheld]) if (o) for (const c of o.foot) if (!/^(1 month|\d+ months)$/.test(c.figure) && !/^(1 year|\d+(\.\d)? years)$/.test(c.figure)) reds.push(`open: a companion off the months or years form: "${c.figure}"`);
-  console.log(`trade turn one: the permits build on ${ids.length} shards, ${cellsTotal} cells (${Object.entries(perShard).sort().map(([k, v]) => `${v} with ${k}`).join(", ")}), ${withheldCards} with a zero-day licence withheld; the cost to open is keyed on ${states.keyed} of ${states.total} shard ids and on the default for ${states.default} (item 48), the foot's two companions on ${footFull}; the three states build off fixtures`);
+  console.log(`trade turn one: the permits build on ${ids.length} shards, ${cellsTotal} cells (${Object.entries(perShard).sort().map(([k, v]) => `${v} with ${k}`).join(", ")}), ${withheldCards} with a zero-day licence withheld; the foot's two companions on ${footFull}; the held and withheld states build off fixtures`);
 }
 
 /* THE TRADE PAGE'S SECOND BAND OF TURN ONE (MODEL.md 8.6 `05 split | 06
@@ -1688,7 +1677,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
   };
   const siblings = (slugs: string[]) => ({ list: slugs.map((slug) => ({ name: slug.replace(/-/g, " "), slug, href: `/gb/london/${slug}` })) });
-  const fourOfSix = buildRivals({ meta: { trade: "Restaurants" }, rivals: siblings(["legal-services", "software-development", "office-business-support", "real-estate-agencies", "employment-services", "grocery-stores"]) });
+  const fourOfSix = buildRivals({ meta: { trade: "Restaurants" }, rivals: siblings(["legal-services", "software-development", "no-such-trade-one", "real-estate-agencies", "no-such-trade-two", "grocery-stores"]) });
   if (!fourOfSix || fourOfSix.state !== "list" || fourOfSix.rows.length !== 4 || fourOfSix.withheld !== 2 || !fourOfSix.withheldLine || fourOfSix.siblings !== 6 || fourOfSix.keyed !== 4) reds.push("rivals (four keyed of six): four rows, two withheld with a line, six siblings do not build as expected");
   const sixKeyed = buildRivals({ meta: { trade: "Restaurants" }, rivals: siblings(["marketing-design-agencies", "real-estate-agencies", "specialty-trades-mixed", "engineering-architecture", "software-development", "legal-services"]) });
   if (!sixKeyed || sixKeyed.state !== "list" || sixKeyed.rows.length !== 6 || sixKeyed.withheld !== 0 || sixKeyed.withheldLine != null) reds.push("rivals (six keyed): six rows and no withheld line do not build as expected");
@@ -1696,7 +1685,9 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (!r || r.state !== "list") continue;
     for (const row of r.rows) {
       if (!Number.isFinite(row.value) || !/\d/.test(r.fmt(row.value))) reds.push(`rivals (${name}): row "${row.name}" prints no figure`);
-      if (startupCapitalArchetypeKeyed(row.key) == null) reds.push(`rivals (${name}): row "${row.name}" is on the archetype's default and is drawn`);
+      /* Each row is the sibling's own years to pay back off its shard, stamped (2026-10-15, release 2 job A: the typed cost to open left). */
+      const sid = slugToIndustry(row.key)?.id;
+      if (!sid || row.prov?.src !== `data/facts/industry/${sid}.json:first_year.payback_years` || row.prov.kind !== "estimate" || row.value !== industryFigure(sid, "first_year.payback_years")?.value) reds.push(`rivals (${name}): row "${row.name}" is not its shard's years to pay back with the shard's stamp`);
       if (!row.href.startsWith("/gb/london/")) reds.push(`rivals (${name}): row "${row.name}" is not a door under the place (${row.href})`);
     }
     for (let i = 1; i < r.rows.length; i++) if (r.rows[i].value > r.rows[i - 1].value) reds.push(`rivals (${name}): "${r.rows[i].name}" ranks below "${r.rows[i - 1].name}" and holds the larger figure`);
@@ -1711,7 +1702,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     ban(`rivals (${name})`, [r.kicker, r.basis, r.middleLabel, r.head.name, r.head.value, r.withheldLine ?? ""]);
   }
   const under: Array<[string, any, number, number]> = [
-    ["three keyed of six", siblings(["legal-services", "software-development", "real-estate-agencies", "office-business-support", "employment-services", "vocational-other-training"]), 6, 3],
+    ["three keyed of six", siblings(["legal-services", "software-development", "real-estate-agencies", "no-such-trade-one", "no-such-trade-two", "no-such-trade-three"]), 6, 3],
     ["two siblings", siblings(["legal-services", "software-development"]), 2, 2],
     ["no sibling", { list: [] }, 0, 0],
   ];
@@ -1811,7 +1802,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   const ids = ALL_INDUSTRIES.map((i) => i.id);
   const hero = countIndustryHeroStates(ids);
   if (hero.absent > 0) reds.push(`industry take: ${hero.absent} of ${hero.total} trades show the state word (the one net builder resolves every trade today)`);
-  let takes = 0, costDrawn = 0, notGathered = 0;
+  let takes = 0, notGathered = 0;
   for (const id of ids) {
     const f = industryHeroFacts(id);
     if (!f) { reds.push(`industry take ${id}: no facts for a taxonomy id`); continue; }
@@ -1831,11 +1822,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
       if (c.value == null || c.value === "") reds.push(`industry take ${id}: an empty cell ${c.key}`);
       if (c.confidence !== "modeled") reds.push(`industry take ${id}: the cell ${c.key} is not marked modelled (R12)`);
     }
-    const keyed = startupCapitalArchetypeKeyed(industryToSlug(id));
-    const costCell = f.cells.find((c) => c.key === "cost");
-    if (keyed == null && costCell) reds.push(`industry take ${id}: COST KEYED: the cost cell draws on a trade the archetype table does not key (the 80,000 default, clause 46)`);
-    if (keyed != null && (!costCell || costCell.value !== usd(keyed))) reds.push(`industry take ${id}: COST KEYED: the cost cell does not print the keyed figure`);
-    if (costCell) costDrawn++;
+    /* NO COST TO OPEN IN THE HERO (2026-10-15, release 2 job A): the typed capital left, and the held figures nearest its question print in `04 open` and `pays`, once (fact-once). */
+    if (f.cells.some((c) => !["spend", "visits"].includes(c.key))) reds.push(`industry take ${id}: a companion other than spend and visits prints (${f.cells.map((c) => c.key).join(", ")})`);
     for (const key of ["spend", "visits"] as const) {
       const fig = industryFigure(id, INDUSTRY_HERO_METRICS[key]);
       const cell = f.cells.find((c) => c.key === key);
@@ -1852,7 +1840,6 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (f.foot && !f.foot.modeled) reds.push(`industry take ${id}: the foot is not marked modelled`);
     ban(`industry take ${id}`, [f.absent.label, f.absent.word, f.absent.note, f.answer?.label ?? "", f.answer?.basis ?? "", foot, ...f.cells.flatMap((c) => [c.label, c.note ?? ""])]);
   }
-  if (hero.costWithheld !== ids.length - costDrawn) reds.push(`industry take: the cost is withheld on ${hero.costWithheld} by the count and drawn on ${costDrawn} of ${ids.length}`);
   if (industryHeroFacts("no_such_trade") !== null || industryHeroFacts(undefined) !== null) reds.push("industry take: a trade not in the taxonomy builds a card");
 
   let worldLasts = 0;
@@ -1931,7 +1918,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   if (buildBenchmark("no_such_trade") !== null || buildBenchmark(undefined) !== null) reds.push("industry benchmark: a trade not in the taxonomy builds a card");
   ban("industry copy", [COPY.industryBenchmark.kicker, COPY.industryBenchmark.topLabel, COPY.industryHero.answerLabel, ...Object.values(COPY.industryChapters)]);
   if (wordsOf(COPY.industryBenchmark.kicker) > 4 || wordsOf(COPY.industryHero.answerLabel) > 4) reds.push("industry copy: a kicker or the answer label runs over four words");
-  console.log(`industry opening: the take draws on ${takes} of ${ids.length} trades (${hero.ladder} on the ladder, ${hero.profile} on the sector profile, ${hero.absent} with the state word), the cost keyed on ${costDrawn} and withheld on ${hero.costWithheld}, spend withheld on ${hero.spendWithheld} and visits on ${hero.visitsWithheld}, the not-gathered foot on ${notGathered}; the survival grid at the world altitude on ${worldLasts}; the benchmark on ${benchCards}: ${bench.ranked} ranked (${tenRows} at the cap of ${BENCHMARK_ROWS_CAP} rows), ${bench.short} short, ${bench.withheld} withheld, the trade itself on the profile on ${bench.selfWithheld}, a member withheld on ${bench.anyWithheld}`);
+  console.log(`industry opening: the take draws on ${takes} of ${ids.length} trades (${hero.ladder} on the ladder, ${hero.profile} on the sector profile, ${hero.absent} with the state word), no cost to open (since 2026-10-15), spend withheld on ${hero.spendWithheld} and visits on ${hero.visitsWithheld}, the not-gathered foot on ${notGathered}; the survival grid at the world altitude on ${worldLasts}; the benchmark on ${benchCards}: ${bench.ranked} ranked (${tenRows} at the cap of ${BENCHMARK_ROWS_CAP} rows), ${bench.short} short, ${bench.withheld} withheld, the trade itself on the profile on ${bench.selfWithheld}, a member withheld on ${bench.anyWithheld}`);
 }
 /* THE INDUSTRY PAGE'S TURN ONE (MODEL.md 8.7 `03 split`, `04 open`, `05
    pays`; plan step 34's second dispatch, 2026-09-18), on every one of the 243
@@ -2130,7 +2117,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   /* A column as the resolver shapes it: the fields the builder reads filled, the rest null; a distinct revenue per city unless one is given. */
   type Opt = { revenue?: number; filled?: boolean; floored?: boolean; economics?: "curated" | "estimator" | null };
   let rev = 400000;
-  const col = (slug: string, country: string, takeHome: number | null, net: number | null, o: Opt = {}): CityColumn => ({ name: slug.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" "), slug, country, href: `/${country}/${slug}/restaurants`, revenue: o.revenue ?? (rev += 12345.67), revP10: null, revP90: null, takeHome, netMarginFraction: net, densityPer10k: null, startupCostUsd: null, breakevenDaily: null, typicalDaily: null, survivalYr5: null, breakInScore: null, breakInBand: null, revenueFilled: o.filled ?? false, economics: o.economics === undefined ? "estimator" : o.economics, netMarginFloored: o.floored ?? false });
+  const col = (slug: string, country: string, takeHome: number | null, net: number | null, o: Opt = {}): CityColumn => ({ name: slug.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" "), slug, country, href: `/${country}/${slug}/restaurants`, revenue: o.revenue ?? (rev += 12345.67), revP10: null, revP90: null, takeHome, netMarginFraction: net, densityPer10k: null, breakevenDaily: null, typicalDaily: null, survivalYr5: null, revenueFilled: o.filled ?? false, economics: o.economics === undefined ? "estimator" : o.economics, netMarginFloored: o.floored ?? false });
   const eight = [col("new-york", "us", 25263, 0.0549), col("london", "gb", 36000, 0.05, { economics: "curated", filled: true }), col("paris", "fr", 12995, 0.031), col("madrid", "es", 12800, 0.032), col("barcelona", "es", 12700, 0.033), col("berlin", "de", 16477, 0.038), col("amsterdam", "nl", 18482, 0.0427), col("tokyo", "jp", 13077, 0.0302)];
   const table = buildIndustryPlaces("restaurants", eight);
   if (!table || table.state !== "table") reds.push("industry places: eight cities of their own do not draw the table");
@@ -2430,7 +2417,7 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     }
     /* The three-door branch on the table's fixture, the seat, a withheld 02. */
     const rev0 = 400000; let revN = rev0;
-    const colx = (slug: string, country: string, takeHome: number, net: number): CityColumn => ({ name: slug.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" "), slug, country, href: `/${country}/${slug}/restaurants`, revenue: (revN += 12345.67), revP10: null, revP90: null, takeHome, netMarginFraction: net, densityPer10k: null, startupCostUsd: null, breakevenDaily: null, typicalDaily: null, survivalYr5: null, breakInScore: null, breakInBand: null, revenueFilled: false, economics: "estimator", netMarginFloored: false });
+    const colx = (slug: string, country: string, takeHome: number, net: number): CityColumn => ({ name: slug.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join(" "), slug, country, href: `/${country}/${slug}/restaurants`, revenue: (revN += 12345.67), revP10: null, revP90: null, takeHome, netMarginFraction: net, densityPer10k: null, breakevenDaily: null, typicalDaily: null, survivalYr5: null, revenueFilled: false, economics: "estimator", netMarginFloored: false });
     const eightOwn = [colx("new-york", "us", 25263, 0.0549), colx("london", "gb", 36000, 0.05), colx("paris", "fr", 12995, 0.031), colx("madrid", "es", 12800, 0.032), colx("barcelona", "es", 12700, 0.033), colx("berlin", "de", 16477, 0.038), colx("amsterdam", "nl", 18482, 0.0427), colx("tokyo", "jp", 13077, 0.0302)];
     const tabled = buildIndustryPlaces("restaurants", eightOwn);
     const three = buildIndustryCloseDoors("restaurants", tabled, buildBenchmark("restaurants"));

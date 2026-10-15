@@ -46,7 +46,6 @@ import {
   summarizeActivityPlaces,
   type ActivityPlaceInput,
 } from "@/lib/scores/activity_board";
-import { loadBreakInBoards } from "@/lib/extremes/leaderboards";
 
 /** A finite, positive real. */
 function isPos(n: number | null | undefined): n is number {
@@ -520,28 +519,10 @@ const BREAK_IN_TOP_N = 5;
  * other read in this file.
  */
 async function resolveBreakIn(): Promise<BeatBreakIn | null> {
-  const boards = await withBudget(loadBreakInBoards(), [], 6_000, "homeBreakIn");
-  // The builder yields the easiest board (direction "high") first and the
-  // hardest (direction "low") second. Match by key so a future reorder cannot
-  // silently flip the two ends.
-  const easiestBoard = boards.find((b) => b.key === "easiest-to-break-in");
-  const hardestBoard = boards.find((b) => b.key === "hardest-to-break-in");
-  if (!easiestBoard || !hardestBoard) return null;
-
-  const toRows = (rows: typeof easiestBoard.rows): BeatBreakInRow[] =>
-    rows.slice(0, BREAK_IN_TOP_N).map((r) => ({
-      label: r.name,
-      href: r.href,
-      score: r.score,
-      band: r.band,
-    }));
-
-  const easiest = toRows(easiestBoard.rows);
-  const hardest = toRows(hardestBoard.rows);
-  if (easiest.length < BREAK_IN_TOP_N || hardest.length < BREAK_IN_TOP_N) {
-    return null;
-  }
-  return { easiest, hardest };
+  /* NO BREAK-IN BEAT (2026-10-15, release 2 job A): the boards it read ranked a rating worked from a capital and weeks typed by hand
+     with no source (src/lib/markets/startup_capital_archetypes.ts, opening_archetypes.ts), and they left with the rating. The beat
+     self-omits, as it always did on a thin read. */
+  return null;
 }
 
 /**

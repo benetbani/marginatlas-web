@@ -187,7 +187,8 @@ const X: any = spineCellSeed;
  * seat table; plan step 40, 2026-09-19). Seat one is the masthead's AnswerCard
  * in ./masthead.tsx (`tone="accent"`, the answer withheld off `moneyShown`),
  * seat two the open card in ./turn-one.tsx (`open.accent`, true in the held
- * and baseline states of open_rows.ts and false in the withheld one), seat
+ * state of open_rows.ts and false in the withheld one, whose card earns it back
+ * and carries the withheld marker; the baseline state left on 2026-10-15), seat
  * three the clears card in ./turn-two.tsx (`clears.accent`, always on). All
  * three lit on the exemplar, London restaurants; the two data-conditional
  * seats are unlit where their figure is withheld, which the loud-seats gate
@@ -197,7 +198,7 @@ const X: any = spineCellSeed;
  */
 export const LOUD_SEATS = [
   { seat: 1, card: "00 take", figure: "the take-home, 40", state: "LIT", condition: "8.6: the page's only rung-40 figure where moneyShown (London's curated entry and trusted-local cells: 16 of the 31 walked routes, 87 of the slate's 3,670, under trust:revenue-filled 2026-09-19); off it the answer is withheld with a stated line (the AnswerCard's data-state no-answer) and the page carries two" },
-  { seat: 2, card: "04 open", figure: "the total to open, 30; its biggest bar `--terra` where the bill is held; on the baseline the typical at 30 on WorkedFigure under its own kind of shop (2026-09-24, the goal's B10)", state: "LIT", condition: "8.6: LIT where held or baseline; UNLIT where withheld (a cell without setup_costs on the 90 trades on the 80,000 default: since 2026-09-24 the card earns it back, the months to break even at 30 in ink under 'Earning it back', and the stated line only where the trade holds no shard), and the page carries two; the accent never moves to 05's net or to 03's longest wait" },
+  { seat: 2, card: "04 open", figure: "the total to open, 30; its biggest bar `--terra` where the bill is held", state: "LIT", condition: "8.6: LIT where held; UNLIT where withheld (a cell without setup_costs: the card earns it back, the months to break even at 30 in ink under 'Earning it back', marked data-withheld, and the stated line only where the trade holds no shard; every trade since 2026-10-15, when the typed baseline left), and the page carries two; the accent never moves to 05's net or to 03's longest wait" },
   { seat: 3, card: "08 clears", figure: "the needed share of a day, the sweep `--terra`", state: "LIT", condition: "8.6: always on, 243 of 243 (computeBreakeven where moneyShown, else the shard's breakeven_utilization_pct); the Ring since 2026-09-20 (candidate 4, clicked by his gold standard), the share at 30 in `--terra-text` inside the sweep" },
 ] as const satisfies readonly LoudSeat[];
 
@@ -438,11 +439,11 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
     : customers && hasSuits
       ? [<CustomersCard key="customers" customers={customers} />, <Suits key="suits" d={d} />]
       : keep([hasSpread ? <Spread key="spread" d={d} /> : null, hasSuits ? <Suits key="suits" d={d} /> : null]);
-  const openSplit: ZoneSplit = open ? (openForm(open) === "metric" ? "2-1" : openForm(open) === "list" ? "1-1" : "1-2") : "1-2";
+  const openSplit: ZoneSplit = open ? (openForm(open) === "metric" ? "2-1" : "1-2") : "1-2";
   const cellZonesAll: CellZone[] = [
     { key: "take", split: "wide", label: "The answer", outside: true, body: [<Masthead key="take" d={d} />] },
     { key: "opening", split: "1-2", stack: "lg", label: "Is the money in it", outside: true, body: opening },
-    { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne ? keep([permits ? <PermitsCard key="permits" permits={permits} top={!!open && openForm(open) === "list"} /> : null, open ? <OpenCard key="open" open={open} /> : null]) : [] },
+    { key: "permits", split: openSplit, stack: "lg", chapter: "01", label: COPY.tradeChapters.costs, body: turnOne ? keep([permits ? <PermitsCard key="permits" permits={permits} /> : null, open ? <OpenCard key="open" open={open} /> : null]) : [] },
     {
       key: "stock",
       split: kit && lines ? "3-2" : "2-3",

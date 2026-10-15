@@ -10,8 +10,8 @@
  * sales where England holds them.
  *
  * NEVER A FILL (spec section 3): a row the place lacks falls back a level and says so, or stands empty with its line. The files' own fallbacks
- * are never read: the tax table's and the two profiles' default_fallback, the 42/10/5 ladder (trade_net.ts LADDER_FILL), the 80,000 archetype
- * default (startupCapitalArchetypeKeyed answers null on it). tests/simulator/defaults.test.ts holds each.
+ * are never read: the tax table's and the two profiles' default_fallback, the 42/10/5 ladder (trade_net.ts LADDER_FILL). No typed capital is
+ * read at all since 2026-10-15 (the archetype path left). tests/simulator/defaults.test.ts holds each.
  *
  * ITS BLIND SPOT, stated: it reads what the files hold and cannot tell a city's rent from a guess filed under the city; every shard figure is an
  * estimate and is stamped so. Server only: it reads the fact shards from disk. It never imports src/lib/cells.ts: the cell comes as an argument.
@@ -22,7 +22,6 @@ import { countryFigure } from "@/lib/facts/country_shard";
 import { industryFigure, industryRows } from "@/lib/facts/industry_shard";
 import { countryMedianPay, shardRoles } from "@/lib/spine/team_rows";
 import { shardLadderNet } from "@/lib/spine/trade_net";
-import { placeCostFactor } from "@/lib/spine/open_rows";
 import { inSentence } from "@/lib/spine/place_names";
 import { registerSrc } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
@@ -31,7 +30,6 @@ import { getCountryProfile, listCountryProfiles } from "@/lib/economic_profile";
 import { getAovCityTierMultiplier } from "@/lib/economics/breakeven";
 import { cityOfCountry, getCityTier } from "@/lib/cities/city_tier";
 import { getCountryTaxRates, hasCountrySpecificRates } from "@/lib/tax";
-import { startupCapitalArchetypeKeyed } from "@/lib/markets/startup_capital_archetypes";
 import { honestRound } from "@/lib/uk/present/precision";
 import { convertUsdTo } from "@/lib/finance/fx";
 import { INDUSTRY_BY_ID } from "@/lib/taxonomy";
@@ -109,7 +107,7 @@ function notesOf(b: Omit<SimBundle, "notes">): Array<{ label: string; fact: stri
     b.ukLaw || b.rates || b.tax.law === "uk" ? S.law : null,
     holds(/^cells:|setup_costs:/) ? S.cell : null,
     holds(/recipes\.ts|facts\/industry\/|industry_cost_profile/) ? S.trade : null,
-    holds(/facts\/city\/|facts\/country\/|city_wage_premium|economic_profile|country_metrics|country_rates|startup_capital_archetypes/) ? S.place : null,
+    holds(/facts\/city\/|facts\/country\/|city_wage_premium|economic_profile|country_metrics|country_rates/) ? S.place : null,
   ] as Array<{ label: string; fact: string } | null>).filter((n): n is { label: string; fact: string } => n !== null);
   return out.slice(0, 5).map((n) => ({ label: n.label, fact: n.fact }));
 }
@@ -223,8 +221,9 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
     : lend !== null ? input(lend, est(`economic_profile:${place.iso2}.bank_lending_rate_pct x 100`), "country", fill(W.lines.loan.country, { country: inSentence(place.countryName) }))
     : input(null, null, "none", W.lines.loan.noRate);
 
-  /* THE MONEY TO OPEN IT: the cell's held bill, else fit-out for this floor space, the deposit and registration, else the trade's archetype at
-     the city's prices (never on a UK page without its own city index, as the trade page holds it), else none. */
+  /* THE MONEY TO OPEN IT: the cell's held bill, else fit-out for this floor space, the deposit and registration, else none with its line.
+     The trade's archetype at the city's prices stood before none until 2026-10-15: a capital typed by hand with no source
+     (src/lib/markets/startup_capital_archetypes.ts), and it left with the trade page's own (release 2 job A). */
   let opening: OpeningRule;
   const fit = city("realestate.fit_out_cost_usd_sqm");
   if (cell?.setup) {
@@ -238,14 +237,10 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
     if (reg !== null) lines.push({ key: "registration", name: W.lines.openingItems.registration, amount: pennies(money(reg) as number), stamp: est(ksrc("costs.license_setup_usd")) });
     opening = { kind: "built", lines, line: W.lines.opening.built };
   } else {
-    const factor = place.city ? placeCostFactor({ iso2: place.iso2, geo: place.city }) : null;
-    const keyed = factor === null && uk ? null : startupCapitalArchetypeKeyed(place.trade);
-    opening = keyed !== null
-      ? { kind: "archetype", lines: [{ key: "archetype", name: W.opening.total, amount: pennies(money(factor !== null ? honestRound(keyed * factor) : keyed) as number), stamp: est(`markets/startup_capital_archetypes:${place.trade}${factor !== null ? `:${place.city}` : ""}`) }], line: factor !== null && place.cityName ? fill(W.lines.opening.archetype, { city: place.cityName }) : W.lines.opening.archetypeBare }
-      : { kind: "none", lines: [], line: W.lines.opening.none };
+    opening = { kind: "none", lines: [], line: W.lines.opening.none };
   }
   const openTotal = opening.lines.reduce((a, l) => a + l.amount, 0);
-  const openingInput = opening.lines.length > 0 ? input(pennies(openTotal), opening.lines.length === 1 ? opening.lines[0].stamp : { src: opening.lines.map((l) => l.stamp.src).join(" + "), kind: "estimate" }, opening.kind === "archetype" ? "trade" : "city", opening.line) : input(null, null, "none", opening.line);
+  const openingInput = opening.lines.length > 0 ? input(pennies(openTotal), opening.lines.length === 1 ? opening.lines[0].stamp : { src: opening.lines.map((l) => l.stamp.src).join(" + "), kind: "estimate" }, "city", opening.line) : input(null, null, "none", opening.line);
 
   const inputs: Record<LeverKey, SimInput> = {
     area, rent, service, oncost, sales, ticket, goods, runShare, owner,

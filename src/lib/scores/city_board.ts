@@ -65,7 +65,7 @@ import { estimateNetProfit } from "@/lib/finance/net_profit";
 import { resolveOwnerTakeHome } from "@/lib/finance/owner_take_home";
 import { isTrustedLocalCell } from "@/lib/cells/trust";
 import { getCountryEconomicsSnapshot } from "@/lib/economics/country_metrics";
-import { breakInForCell } from "@/lib/scores/country_board";
+import { densityForCell } from "@/lib/scores/country_board";
 import type { BreakInBand } from "@/lib/scores/break_in_rating";
 import { LONDON_MARKET } from "@/lib/london/market";
 
@@ -580,18 +580,17 @@ export async function buildCityActivities(input: {
     if (citySlug === "london") {
       const ec = LONDON.activities[r.activitySlug]?.economics;
       if (ec && isNum(ec.owner_take_home)) {
-        const rating = cell ? breakInForCell(cell, citySlug, annualIncome) : null;
         withFigures += 1;
         rows.push({
           ...base,
-          breakInScore: rating?.score ?? null,
-          breakInBand: rating?.band ?? null,
+          breakInScore: null,
+          breakInBand: null,
           takeHome: ec.owner_take_home,
           netMarginPct: isNum(ec.net_margin_pct)
             ? clampNetMarginPct(ec.net_margin_pct, r.industryId)
             : null,
-          startupCostUsd: rating?.startupCostUsd ?? null,
-          densityPer10k: rating?.densityPer10k ?? null,
+          startupCostUsd: null,
+          densityPer10k: cell ? densityForCell(cell, citySlug) : null,
           survivalYr5: surv.yr5,
         });
         continue;
@@ -603,18 +602,19 @@ export async function buildCityActivities(input: {
     // national-aggregate cells). A trade without one stays on the slate with a
     // dash rather than a borrowed or invented number.
     if (cell && isTrustedLocalCell(cell, r.industryId)) {
-      const rating = breakInForCell(cell, citySlug, annualIncome);
+      /* THE TAKE-HOME ALONE DECIDES THE ROW (2026-10-15, release 2 job A): it also asked a break-in rating, worked from a capital and
+         weeks typed by hand with no source, which left that day; the score, the band and the cost to open stay null. */
       const { takeHome, netMarginPct } = takeHomeAndMarginForCell(cell, annualIncome);
-      if (rating != null && isNum(takeHome)) {
+      if (isNum(takeHome)) {
         withFigures += 1;
         rows.push({
           ...base,
-          breakInScore: rating.score,
-          breakInBand: rating.band,
+          breakInScore: null,
+          breakInBand: null,
           takeHome,
           netMarginPct,
-          startupCostUsd: rating.startupCostUsd,
-          densityPer10k: rating.densityPer10k,
+          startupCostUsd: null,
+          densityPer10k: densityForCell(cell, citySlug),
           survivalYr5: surv.yr5,
         });
         continue;

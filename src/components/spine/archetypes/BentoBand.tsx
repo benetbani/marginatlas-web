@@ -441,7 +441,12 @@ export function BentoMetric({
   detail,
   gloss,
   prov,
+  stateWithheld = false,
 }: {
+  /** The CARD's own figure is withheld though the cell prints others in its place (the trade page's `04 open` earning it back, open_rows.ts): marks the
+   *  figure's wrapper data-withheld="1", the state marker the loud-seats gate reads (scripts/lib/accent_walk.mjs), so a seat declared LIT reads unlit
+   *  by the card's own state and never by a lost accent. */
+  stateWithheld?: boolean;
   /** Where the focal figure came from (plan 06, task B5), stamped on it. */
   prov?: Provenance;
   /** The section's id when the cell stands alone as a block; a cluster cell passes none. */
@@ -482,7 +487,7 @@ export function BentoMetric({
     <Box id={id} data-lean={lean ? "1" : undefined} className={`flex h-full flex-col${detail ? " [container-type:inline-size]" : ""}`} data-archetype="bento-metric" data-bento-kind="metric">
       {/* THE KIT'S OPENER (plan 2026-10-12 rhythm-air-inside, Task 2A): its title at the section rung on a zone and 24 above the cell's content; his pop-up rides in it as before (2026-09-22, QUEUE ui:the-gloss). */}
       <Rail icon={icon} kicker={kicker} gloss={gloss} sample={sample} />
-      <div className={`flex flex-1 flex-col justify-center${second || !basis ? " pb-2" : ""}`}>
+      <div data-withheld={stateWithheld ? "1" : undefined} className={`flex flex-1 flex-col justify-center${second || !basis ? " pb-2" : ""}`}>
         {figure != null ? (
           <Fig className={`block text-[length:var(--t-focal)] font-semibold leading-none ${accent ? "text-[var(--terra-text)]" : "text-[var(--c-ink)]"}`} prov={prov}>{figure}</Fig>
         ) : (

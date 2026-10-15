@@ -114,7 +114,8 @@ export async function rankPlacesForTrade(
       name: col.name,
       href: col.href,
       keepPct: col.netMarginFraction != null ? Math.round(col.netMarginFraction * 100) : null,
-      startupCostUsd: col.startupCostUsd,
+      /* No cost to open on a column since 2026-10-15 (release 2 job A): a budget keeps the row, as it keeps any unknown cost. */
+      startupCostUsd: null,
       composite,
     };
   });

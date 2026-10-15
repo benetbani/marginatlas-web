@@ -18,6 +18,7 @@
  *
  * Server component. Tokens only, mobile-first.
  */
+import { provAttrs, type Provenance } from "@/lib/spine/provenance";
 import * as React from "react";
 import Link from "next/link";
 
@@ -32,9 +33,11 @@ export interface RankRowProps {
   value: string;
   /** Optional one-word texture, e.g. "seasonal", "deep". */
   texture?: string;
+  /** Where the value was read (data-src, data-kind on the figure), when the caller holds it. */
+  prov?: Provenance | null;
 }
 
-export function RankRow({ rank, label, href, value, texture }: RankRowProps) {
+export function RankRow({ rank, label, href, value, texture, prov }: RankRowProps) {
   return (
     <div className="flex items-baseline gap-3 border-t border-parchment py-3 first:border-t-0 first:pt-0">
       <span
@@ -65,7 +68,7 @@ export function RankRow({ rank, label, href, value, texture }: RankRowProps) {
         </span>
       ) : null}
 
-      <span className="shrink-0 text-right font-display text-[15px] md:text-base font-semibold tabular-nums text-ink-900">
+      <span {...provAttrs(prov)} className="shrink-0 text-right font-display text-[15px] md:text-base font-semibold tabular-nums text-ink-900">
         {value}
       </span>
     </div>

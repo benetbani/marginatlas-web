@@ -23,7 +23,8 @@ export function compositeForColumn(
   return compositeScore(
     {
       keepPct: col.netMarginFraction != null ? col.netMarginFraction * 100 : null,
-      breakInScore: col.breakInScore,
+      /* No break-in leg on a column since 2026-10-15: the rating stood on a typed capital (release 2 job A). */
+      breakInScore: null,
       survivalYr5Pct: col.survivalYr5,
       demandScore: demand,
       restsOnModeled: true,
