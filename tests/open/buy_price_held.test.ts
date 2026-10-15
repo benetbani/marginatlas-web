@@ -12,7 +12,7 @@
  *
  * WHAT IT READS, AND WHAT EACH REED CAN SEE:
  *  1. SOURCE of src/lib/open/buy_vs_start.ts and src/lib/open/buy_side.ts, comments stripped through scripts/lib/strip_comments and string
- *     text blanked: no number but 0 and 1 and the one dead-band (const DEAD_BAND = 0.15), no table of numbers by slug (a Record<string,
+ *     text blanked: no number but 0 and 1, no table of numbers by slug (a Record<string,
  *     number>, an index signature, three or more numeric properties), none of the old constants by name, the price built only through
  *     buySideFor and worthPrice. A typed price constant, a floor, a fraction or a multiple is a number in that file, so it reds.
  *  2. SOURCE of every file of the route that can print the buy figure (both named components, any other component under src/components/buy,
@@ -22,14 +22,15 @@
  *  3. THE BUILDER, on every one of the 243 trade shards at one take-home: the buy range equals the trade card's two marks to the dollar
  *     (the same function, so the two pages cannot disagree), its src names the shard file and both keys and its kind is estimate; every
  *     trade whose shard rests on EBITDA prints the card's stated line and no figure; a trade with no take-home prints the other stated line.
- *  4. THE VERDICT, on the edges of the dead-band: it leans only when the whole range is outside it, says estimate when a range stands,
- *     carries a caution beside a lean toward buying,
- *     and each line is one sentence of twelve words or fewer with none of the words the copy laws refuse.
+ *  4. THE VERDICT (since 2026-10-15, release 2 job A: no start cost is held, so it never leans): on ranges above, below, across and without
+ *     a start cash it leans nowhere, says estimate when a range stands, and is one sentence of twelve words or fewer with none of the words
+ *     the copy laws refuse.
  *  5. THE META DESCRIPTION (Open Graph and Twitter reuse it), built by buyMetaDescription on a priced and an unpriced trade: the buy range in it
- *     is the range text as an estimate and nothing typed, no digit outside the start cash and the range, no multiple; page.tsx builds it through
+ *     is the range text as an estimate and nothing typed, no digit outside the range, no start cash, no multiple; page.tsx builds it through
  *     that function and reads no buy figure itself.
- *  6. THE RENDER of the two components on a priced trade and on an EBITDA trade: the figure carries data-src and data-kind and reads as a
- *     range in the trade page's own grammar; the EBITDA trade prints the stated line, no figure and no stamp; no multiple anywhere.
+ *  6. THE RENDER of the two components on a priced trade and on an EBITDA trade: the buy figure carries data-src and data-kind and reads as a
+ *     range in the trade page's own grammar; the EBITDA trade prints the stated line, no buy figure and no buy stamp; the START side prints its
+ *     stated line and no cash, and its two figures (the longest licence wait, the years to pay back) carry the shard's stamps; no multiple.
  *
  * EACH READER PROVES ITSELF FIRST on a planted copy of the old defect (a reader that sees nothing would pass everything), and the walk
  * must read something: 243 shards, both source files, both components. To watch it red on the real old code, run it against the old text:
@@ -37,8 +38,8 @@
  *   npx tsx tests/open/buy_price_held.test.ts --static-only --buy=a.ts --hero=h.tsx --compare=c.tsx
  *
  * ITS BLIND SPOTS, said once. It cannot distinguish a price taken from a shard figure that is itself wrong from one that is right: the
- * shard's held tag is a tag and not a verification (R12), which is why the printed word stays estimate. It does not read the START side
- * (src/lib/markets/startup_capital_archetypes.ts, opening_archetypes.ts), which is one typed capital per trade and its own ticket. It
+ * shard's held tag is a tag and not a verification (R12), which is why the printed word stays estimate. Whether a typed start figure is
+ * read anywhere is tests/open/start_side_held.test.ts's business (release 2 job A). It
  * reads source and a render of two components on two fixtures, never a built page, so what a built page draws is for the built page. A
  * typed constant hidden in a module these two files import is not seen by the source read (the price must come through worthPrice, which
  * check 3 holds to the shard).
@@ -57,7 +58,9 @@ import { buildWorth, countWorthBases } from "../../src/lib/spine/worth_rows";
 import { COPY } from "../../src/lib/spine/copy";
 import { BuyVsStartHero } from "../../src/components/buy/BuyVsStartHero";
 import { BuyVsStartCompare } from "../../src/components/buy/BuyVsStartCompare";
-import type { BuyVsStart } from "../../src/lib/open/buy_vs_start";
+import type { BuyVsStart, StartSide } from "../../src/lib/open/buy_vs_start";
+import { buildPermits } from "../../src/lib/spine/permits_rows";
+import { buildOpenFoot } from "../../src/lib/spine/open_rows";
 
 const RULE = "buy-price-held";
 const REMEDY = "price the purchase only through worthPrice (src/lib/spine/worth_rows.ts) in currency with its data-src and data-kind, withhold it with the trade card's stated line on an operating-earnings basis, and type no multiple, floor, fraction or table by slug into the buy-or-start builder";
@@ -123,8 +126,8 @@ function codeLines(text: string): string[] {
   return out.split("\n");
 }
 
-/** The numbers a builder file may hold: zero and one, and the one dead-band on its own declaration. Nothing else is a number of this page's price. */
-const ALLOWED = (tok: string, line: string) => tok === "0" || tok === "1" || (tok === "0.15" && /^\s*const DEAD_BAND = 0\.15;\s*$/.test(line));
+/** The numbers a builder file may hold: zero and one. Nothing else is a number of this page's price (the verdict's dead-band left on 2026-10-15 with its lean). */
+const ALLOWED = (tok: string, _line: string) => tok === "0" || tok === "1";
 const OLD_NAMES = /\b(SDE_MULTIPLE\w*|sdeMultiple\w*|ASSET_FLOOR\w*|SALE_PRICE_(?:FLOOR|CEILING)\w*|MULTIPLE_(?:MIN|MAX)\b)/;
 
 type Finding = { line: number; detail: string };
@@ -179,8 +182,8 @@ const OLD_TABLE = [
   control("source reader: sees the numeric record and the table of numbers by key", has(/Record<string, number>/) && has(/numeric property lines/));
   control("source reader: sees the old constants by name and a builder that does not price through buySideFor", has(/SDE_MULTIPLE_BY_SLUG|SDE_MULTIPLE_DEFAULT/) && has(/ASSET_FLOOR_FRACTION/) && has(/buySideFor/));
   control("source reader: a number inside a comment or a string is not read (the comment's 2.4, the template's 2.4)", !f.some((x) => (x.line === 1 && !/buySideFor/.test(x.detail)) || x.line === 11));
-  const clean = ["const DEAD_BAND = 0.15;", "function f(n: number) { return n > 0 && n + 1 > startCash * (1 + DEAD_BAND); }", 'const s = "twelve 12 words";', "const t = `${a * (1 - DEAD_BAND)} costs 99`;"].join("\n");
-  control("source reader: leaves zero, one, the dead-band, a string's digits and a template's text alone", scanBuilder(clean, "vs").filter((x) => !/buySideFor/.test(x.detail)).length === 0);
+  const clean = ["function f(n: number) { return n > 0 && n + 1 > startCash * (1 + band); }", 'const s = "twelve 12 words";', "const t = `${a * (1 - band)} costs 99`;"].join("\n");
+  control("source reader: leaves zero, one, a string's digits and a template's text alone", scanBuilder(clean, "vs").filter((x) => !/buySideFor/.test(x.detail)).length === 0);
   control("source reader: reads a number inside a template's ${ } expression", scanBuilder("const t = `${price * 0.4}`;", "vs").some((x) => /number 0\.4\b/.test(x.detail)));
 }
 
@@ -343,49 +346,68 @@ function checkPricing(price: Pricer): { findings: string[]; sde: number; ebitda:
 }
 
 const SIDE = (lo: number | null, hi: number | null): BuySide => (lo == null || hi == null ? { state: "stated", lowUsd: null, highUsd: null, line: COPY.tradeWorth.otherBasis, prov: null } : { state: "range", lowUsd: lo, highUsd: hi, line: null, prov: { src: "x", kind: "estimate" } });
-const START = 100000;
-/** The verdict on the dead-band's edges, and its words. */
-function checkVerdict(verdict: (startCash: number, buy: BuySide) => string): string[] {
+/** The verdict on ranges every side of a start cash it no longer holds, and its words: it leans nowhere (2026-10-15). */
+function checkVerdict(verdict: (buy: BuySide) => string): string[] {
   const out: string[] = [];
-  const cases: Array<[string, BuySide, "more" | "less" | null]> = [
-    ["low end 1 over the band", SIDE(115001, 200000), "more"],
-    ["low end exactly on the band", SIDE(115000, 200000), null],
-    ["high end 1 under the band", SIDE(50000, 84999), "less"],
-    ["high end exactly on the band", SIDE(50000, 85000), null],
-    ["a range straddling the start cash", SIDE(80000, 120000), null],
-    ["a wide range that holds the start cash", SIDE(40000, 300000), null],
-    ["no range", SIDE(null, null), null],
+  const cases: Array<[string, BuySide]> = [
+    ["a high range", SIDE(400000, 900000)],
+    ["a low range", SIDE(20000, 40000)],
+    ["a middling range", SIDE(80000, 120000)],
+    ["no range", SIDE(null, null)],
   ];
-  for (const [label, buy, lean] of cases) {
-    const v = verdict(START, buy);
-    const says = /more cash/.test(v) ? "more" : /less cash/.test(v) ? "less" : null;
-    if (says !== lean) out.push(`${label}: the verdict leans "${says}" where it must lean ${lean === null ? "nowhere" : `"${lean}"`}: "${v}"`);
+  for (const [label, buy] of cases) {
+    const v = verdict(buy);
+    if (/\b(more|less) cash\b|\bcheaper\b|\bdearer\b|\bcosts (more|less)\b/i.test(v)) out.push(`${label}: the verdict leans on the cash where no start cost is held: "${v}"`);
     if (buy.state === "range" && !/\bestimate\b/i.test(v)) out.push(`${label}: a range stands and the verdict does not say estimate: "${v}"`);
-    if (lean === "less" && !/\b(check|look)\b/i.test(v)) out.push(`${label}: the verdict leans toward buying with no caution to look at what is bought: "${v}"`);
-    for (const sentence of v.split(/(?<=[.!?])\s+/).filter(Boolean)) {
+    const sentences = v.split(/(?<=[.!?])\s+/).filter(Boolean);
+    if (sentences.length !== 1) out.push(`${label}: the verdict is ${sentences.length} sentences, not one line: "${v}"`);
+    for (const sentence of sentences) {
       if (sentence.trim().split(/\s+/).length > 12) out.push(`${label}: a sentence over twelve words: "${sentence}"`);
     }
+    if (/\d/.test(v)) out.push(`${label}: the verdict holds a figure: "${v}"`);
     if (/[;\u2014]|\b(we|our|modell?ed|withheld|on file|multiple)\b/i.test(v)) out.push(`${label}: the verdict holds a semicolon, an em-dash or a word the copy laws refuse: "${v}"`);
   }
   return out;
 }
 
 /** The meta description (Open Graph and Twitter reuse it) on a priced and an unpriced trade: the buy range in it is the range text and nothing typed, and no multiple. */
-function checkDescription(describe: (lower: string, place: string, startCash: string, buy: BuySide) => string): string[] {
+function checkDescription(describe: (noun: string, place: string, buy: BuySide) => string): string[] {
   const out: string[] = [];
-  const START_TEXT = "$328.5K";
   for (const [id, label] of [["restaurants", "priced"], ["dental_practices", "unpriced"]] as const) {
     const buy = buySideFor(id, TAKE);
-    const d = describe("restaurants", "California", START_TEXT, buy);
+    const d = describe("restaurant", "California", buy);
     const range = buyRangeText(buy);
     if (range && !d.includes(`Buying might cost ${range}, an estimate.`)) out.push(`${label}: the description does not carry the range as an estimate: "${d}"`);
     if (!range && (/Buying might cost/.test(d) || /\$[\d.,]+[KM]?\s+to\s+\$/.test(d))) out.push(`${label}: the description prints a buy figure where no price stands: "${d}"`);
-    /* what is left once the start cash and the range are taken out holds no digit: nothing else in it is a figure */
-    let rest = d.split(START_TEXT).join("");
-    if (range) rest = rest.split(range).join("");
-    if (/\d/.test(rest)) out.push(`${label}: a digit stands in the description outside the start cash and the range: "${d}"`);
+    /* what is left once the range is taken out holds no digit: no start cash, nothing else in it is a figure */
+    const rest = range ? d.split(range).join("") : d;
+    if (/\d/.test(rest)) out.push(`${label}: a digit stands in the description outside the range: "${d}"`);
+    if (/\brestaurants\b/.test(d)) out.push(`${label}: the description reads the trade by its plural name, not its count noun: "${d}"`);
     if (/multiple|owner earnings|\bx\b|[;\u2014]|\b(we|our|modell?ed|withheld|on file)\b/i.test(d)) out.push(`${label}: the description names a multiple or holds a word the copy laws refuse: "${d}"`);
   }
+  return out;
+}
+
+/** The START side as buildBuyVsStart builds it (buy_vs_start.ts cannot load here: it imports the Supabase client), from the same two builders. */
+function startFor(industryId: string): StartSide {
+  const permits = buildPermits(industryId, "US");
+  const lead = permits?.longest ? permits.cells.find((c) => c.key === permits.longest!.key) : null;
+  return {
+    cashLine: COPY.buyOrStart.startCash,
+    longestWait: lead && lead.prov && typeof lead.value === "string" ? { figure: lead.value, prov: lead.prov } : null,
+    payback: buildOpenFoot(industryId).find((c) => c.words === COPY.tradeOpen.payBack) ?? null,
+  };
+}
+
+/** The START side in a render: the stated line, no cash figure, and its two figures stamped with the shard's keys. */
+function checkStart(doc: Document, where: string, start: StartSide): string[] {
+  const out: string[] = [];
+  const text = doc.body.textContent ?? "";
+  if (!text.includes(COPY.buyOrStart.startCash)) out.push(`${where}: the start side does not print its stated line`);
+  if (!start.longestWait || !start.payback) out.push(`${where}: the fixture's start side holds no licence wait or no payback to check`);
+  const src = (re: RegExp) => [...doc.querySelectorAll("[data-src]")].filter((el) => re.test(el.getAttribute("data-src") ?? ""));
+  if (start.longestWait && !src(/^data\/facts\/industry\/[a-z_]+\.json:licensing\.licences\.[^.]+\.typical_days$/).some((el) => el.textContent?.trim() === start.longestWait!.figure)) out.push(`${where}: the longest licence wait "${start.longestWait.figure}" is not printed with its shard stamp`);
+  if (start.payback && !src(/^data\/facts\/industry\/[a-z_]+\.json:first_year\.payback_years$/).some((el) => el.textContent?.trim() === start.payback!.figure)) out.push(`${where}: the years to pay back "${start.payback.figure}" are not printed with their shard stamp`);
   return out;
 }
 
@@ -395,8 +417,8 @@ function checkRender(Hero: React.ComponentType<{ page: BuyVsStart }>, Compare: R
   const page = (industryId: string, buy: BuySide): BuyVsStart => ({
     businessName: "Restaurants", industryId, placeName: "California", country: "us",
     cellHref: "/us/california/restaurants", pageHref: "/us/california/restaurants", openingHref: "/us/california/restaurants/opening",
-    start: { cashNeededUsd: 328500, timeToOpenWeeks: 20, paybackYears: 2, modeled: true },
-    buy, catches: { startUpside: "a", startCatch: "b", buyUpside: "c", buyCatch: "d" }, verdict: buyVerdict(328500, buy),
+    start: startFor(industryId),
+    buy, catches: { startUpside: "a", startCatch: "b", buyUpside: "c", buyCatch: "d" }, verdict: buyVerdict(buy),
   });
   const render = (p: BuyVsStart) => {
     const html = renderToStaticMarkup(React.createElement("div", null, React.createElement(Hero, { page: p }), React.createElement(Compare, { page: p })));
@@ -406,8 +428,11 @@ function checkRender(Hero: React.ComponentType<{ page: BuyVsStart }>, Compare: R
   const rangeText = buyRangeText(priced.buy);
   if (!rangeText) { out.push("restaurants at the test take-home builds no range to render"); return out; }
   const a = render(priced);
-  const stamped = [...a.doc.querySelectorAll("[data-src]")];
-  if (stamped.length !== 2) out.push(`the priced render holds ${stamped.length} stamped figures, expected 2 (the hero's and the compare card's)`);
+  const all = [...a.doc.querySelectorAll("[data-src]")];
+  const stamped = all.filter((el) => /sale_exit/.test(el.getAttribute("data-src") ?? ""));
+  if (stamped.length !== 2) out.push(`the priced render holds ${stamped.length} stamped buy figures, expected 2 (the hero's and the compare card's)`);
+  out.push(...checkStart(a.doc, "the priced render", priced.start));
+  for (const el of all.filter((e) => !stamped.includes(e) && !/licensing\.licences\.|first_year\.payback_years/.test(e.getAttribute("data-src") ?? ""))) out.push(`the priced render stamps a figure that is neither the buy range nor the start side's two: "${el.getAttribute("data-src")}"`);
   for (const el of stamped) {
     if (el.textContent?.trim() !== rangeText) out.push(`a stamped element prints "${el.textContent?.trim()}", not the range "${rangeText}"`);
     if (el.getAttribute("data-kind") !== "estimate") out.push(`a stamped figure has data-kind "${el.getAttribute("data-kind")}", not estimate`);
@@ -419,7 +444,8 @@ function checkRender(Hero: React.ComponentType<{ page: BuyVsStart }>, Compare: R
   const stated = page("dental_practices", buySideFor("dental_practices", TAKE));
   const b = render(stated);
   if (stated.buy.state !== "stated") out.push("an EBITDA trade (dental_practices) built a price");
-  if (b.doc.querySelectorAll("[data-src]").length) out.push("the stated render holds a stamped figure, where no figure stands");
+  if ([...b.doc.querySelectorAll("[data-src]")].some((el) => /sale_exit/.test(el.getAttribute("data-src") ?? ""))) out.push("the stated render holds a stamped buy figure, where no figure stands");
+  out.push(...checkStart(b.doc, "the stated render", stated.start));
   if (!(b.doc.body.textContent ?? "").includes(COPY.tradeWorth.otherBasis)) out.push("the stated render does not print the card's stated line");
   if (/\$[\d.,]+[KM]?\s+to\s+\$/.test(b.doc.body.textContent ?? "")) out.push("the stated render prints a range where no price stands");
   return out;
@@ -431,15 +457,16 @@ if (!STATIC_ONLY) {
   const planted: Pricer = (_id, th) => ({ state: "range", lowUsd: Math.round((th ?? 0) * 2.4 * 0.8), highUsd: Math.round((th ?? 0) * 2.4 * 1.2), line: null, prov: null });
   const bad = checkPricing(planted);
   control("builder reader: sees a typed-multiple price on every trade (EBITDA priced, marks missed, no stamp)", bad.findings.some((f) => /instead of the stated line/.test(f)) && bad.findings.some((f) => /not the trade card's/.test(f)) && bad.findings.some((f) => /no stamp|names the shard/.test(f)));
-  const midBand = (s: number, b: BuySide) => (b.state === "range" && ((b.lowUsd! + b.highUsd!) / 2 > s * 1.15 ? "On this estimate, buying costs more cash than starting fresh." : (b.lowUsd! + b.highUsd!) / 2 < s * 0.85 ? "On this estimate, buying costs less cash than starting fresh." : "This estimate overlaps the cost to start, so cash does not decide.")) || "No sale price yet, so cash does not decide this one.";
-  control("verdict reader: sees a lean taken from the range's midpoint, inside the band", checkVerdict(midBand).length > 0);
+  /* The old verdict, leaning on a typed start cash of 328,451 (California restaurants), as it stood before 2026-10-15. */
+  const leaning = (b: BuySide) => (b.state === "range" && b.lowUsd! - 328451 > 328451 * 0.15 ? "On this estimate, buying costs more cash than starting fresh." : b.state === "range" && 328451 - b.highUsd! > 328451 * 0.15 ? "Estimate: buying costs less cash than starting, so check what you buy." : b.state === "range" ? "This estimate overlaps the cost to start, so cash does not decide." : "Cash does not decide this one without a sale price.");
+  control("verdict reader: sees the old lean on a typed start cash", checkVerdict(leaning).some((f) => /leans on the cash/.test(f)));
   const longWinded = () => "On this estimate, buying costs more cash than starting fresh; we think so, and it can be worth it here because starting means a long ramp.";
   control("verdict reader: sees a semicolon, a \"we\" and a sentence over twelve words", checkVerdict(longWinded).some((f) => /semicolon/.test(f)) && checkVerdict(longWinded).some((f) => /twelve words/.test(f)));
-  const typedDescription = (lower: string, place: string, start: string) => `Is it smarter to buy an existing ${lower} in ${place} or start one fresh? About ${start} to start, $131.4K to buy in at about 2x owner earnings.`;
+  const typedDescription = (noun: string, place: string) => `Is it smarter to buy an existing ${noun}s in ${place} or start one fresh? About $328.5K to start, $131.4K to buy in at about 2x owner earnings.`;
   control("description reader: sees a typed buy figure, a multiple and a figure where no price stands", checkDescription(typedDescription).length >= 3);
-  const OldHero = ({ page }: { page: BuyVsStart }) => React.createElement("div", { className: "fig" }, `$${(page.buy.lowUsd ?? 0) * 2}`);
+  const OldHero = ({ page }: { page: BuyVsStart }) => React.createElement("div", { className: "fig" }, `$${(page.buy.lowUsd ?? 0) * 2} to start, ${page.start.cashLine.length} weeks`);
   const NoCompare = () => React.createElement("div", null, "about 2.4x owner earnings, an estimate");
-  control("render reader: sees an unstamped figure, a multiple and a price on an EBITDA trade", checkRender(OldHero, NoCompare).length >= 3);
+  control("render reader: sees an unstamped figure, a multiple, a price on an EBITDA trade and a start side with no stated line and no stamped wait", checkRender(OldHero, NoCompare).length >= 3 && checkRender(OldHero, NoCompare).some((f) => /stated line/.test(f)) && checkRender(OldHero, NoCompare).some((f) => /longest licence wait/.test(f)));
 
   const real = checkPricing(buySideFor);
   counted = { sde: real.sde, ebitda: real.ebitda, none: real.none };
@@ -463,5 +490,5 @@ if (failed > 0) {
 console.log(
   STATIC_ONLY
     ? `PASS  static-only: ${sourceRead.files} builder files (${sourceRead.lines} code lines) and ${ROUTE_FILES.length} route files read; no typed price, every buy figure stamped`
-    : `PASS  ${ids.length} trade shards priced through worthPrice (${counted.sde} to the dollar as the trade card, ${counted.ebitda} operating-earnings trades on the stated line, ${counted.none} without a pair); the verdict leans only outside the dead-band; ${sourceRead.files} builder files (${sourceRead.lines} code lines) and ${ROUTE_FILES.length} route files read, the figure stamped on a priced render and absent on a stated one, the description built from the range`,
+    : `PASS  ${ids.length} trade shards priced through worthPrice (${counted.sde} to the dollar as the trade card, ${counted.ebitda} operating-earnings trades on the stated line, ${counted.none} without a pair); the verdict leans nowhere; ${sourceRead.files} builder files (${sourceRead.lines} code lines) and ${ROUTE_FILES.length} route files read, the figure stamped on a priced render and absent on a stated one, the description built from the range`,
 );

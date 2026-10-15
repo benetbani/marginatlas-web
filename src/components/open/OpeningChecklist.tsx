@@ -1,15 +1,19 @@
 /**
  * src/components/open/OpeningChecklist.tsx
  *
- * The four entry parts a would-be owner asks about, rendered as the board's
- * StatGrid so they read in the same visual language as the cell page's "What it
- * takes to open" section (Capital to start, Time to open, Permits and licensing,
- * First hires). The four values come straight off the data builder, which
- * computed them the SAME way the board does, so the two surfaces never disagree.
+ * The licences a would-be owner needs before the first customer, rendered as
+ * the board's StatGrid: each licence is a label over its typical wait in days,
+ * its fee band as the hint. The rows are the trade page's own `03 permits`
+ * cells (buildPermits, src/lib/spine/permits_rows.ts), longest wait first, so
+ * the two pages print one list; each wait carries its stamp (data-src names
+ * the shard file and the licence's key, data-kind says estimate).
  *
- * Each estimated row says "estimated" as its hint, the word milestone 1 (M11)
- * gave the struck "modeled" (his copy correction of 2026-09-24; masterplan step
- * 02), and First hires carries the role hint beside it. One supporting line.
+ * WHAT STOOD HERE UNTIL 2026-10-15 (release 2 job A): capital to start, time
+ * to open, permits in dollars and first hires, four figures from two tables
+ * typed by hand with no source, the 80,000, 10-week, $1,500 and 2-hire fills
+ * on the trades the tables did not key. The licences are what the shard holds
+ * in their place. A place that prints no licence list (a UK page) prints the
+ * stated line, never an empty section.
  *
  * Server component. Tokens only, mobile-first, no raw hex, no em-dashes, no
  * source-agency names.
@@ -17,47 +21,33 @@
 import * as React from "react";
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import { StatGrid, type StatRow } from "@/components/board/StatGrid";
-import { fmtUSD, fmtInt, fmtWeeksToOpen } from "@/components/board/format";
+import { provAttrs } from "@/lib/spine/provenance";
+import { COPY } from "@/lib/spine/copy";
 import type { OpeningPage } from "@/lib/open/opening_page";
 
 export function OpeningChecklist({ page }: { page: OpeningPage }) {
-  const rows: StatRow[] = [
-    {
-      label: "Capital to start",
-      value: fmtUSD(page.capital.value),
-      hint: page.capital.modeled ? "estimated" : undefined,
-    },
-    {
-      label: "Time to open",
-      value: fmtWeeksToOpen(page.time.value),
-      hint: page.time.modeled ? "estimated" : undefined,
-    },
-    {
-      label: "Permits and licensing",
-      value: fmtUSD(page.permits.value),
-      hint: page.permits.modeled ? "estimated" : undefined,
-    },
-    {
-      label: "First hires",
-      value: fmtInt(page.hires.value),
-      // The role hint is the row's supporting text; "estimated" rides beside it.
-      hint: page.hires.roleHint
-        ? `${page.hires.roleHint}, estimated`
-        : page.hires.modeled
-          ? "estimated"
-          : undefined,
-    },
-  ];
+  const C = COPY.opening;
+  const rows: StatRow[] = (page.permits?.cells ?? []).map((c) => ({
+    label: c.label,
+    value: null,
+    node: <span {...provAttrs(c.prov)}>{c.value}</span>,
+    hint: c.note,
+  }));
 
   return (
     <section className="mt-10">
-      <SectionEyebrow>The checklist</SectionEyebrow>
+      <SectionEyebrow>{C.licencesHead}</SectionEyebrow>
       <p className="mt-1 text-sm text-cocoa-700">
-        The cost, the calendar and the crew before your first customer.
+        {rows.length > 0 ? C.licencesLine : C.noLicences}
       </p>
-      <div className="mt-3">
-        <StatGrid rows={rows} />
-      </div>
+      {rows.length > 0 ? (
+        <div className="mt-3">
+          <StatGrid rows={rows} />
+        </div>
+      ) : null}
+      {page.permits?.withheld ? (
+        <p className="mt-2 text-[11px] text-cocoa-500">{page.permits.withheld}</p>
+      ) : null}
     </section>
   );
 }

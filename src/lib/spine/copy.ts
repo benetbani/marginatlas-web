@@ -2196,6 +2196,34 @@ export const COPY = {
     withheld: "No sale price yet: we have no take-home for this trade here.",
     otherBasis: "No sale price yet for this trade.",
   },
+  /** THE OPENING PAGE'S OWN WORDS (2026-10-15, release 2 job A): the typed start figures (a total to open, capital, permits in
+   *  dollars, weeks, first hires, a payback) left /opening, and the trade page's held figures stand in their place: the licences
+   *  with their waits and fee bands, and the trade's first-year figures. Four-word headings, one supporting line each. */
+  opening: {
+    leadWait: "Longest licence wait, an estimate",
+    /** Under the months to break even where the place prints no licence list: "{words}" is the figure's own words ("To break even"). */
+    leadEarning: "{words}, an estimate",
+    noLead: "No licence or payback figures for this trade yet.",
+    licencesHead: "Licences you need",
+    licencesLine: "Each licence's typical wait and fee band, for the trade.",
+    noLicences: "No licence list for this trade here yet.",
+    earningHead: "Earning it back",
+    earningLine: "The trade's typical first year, an estimate.",
+    takeHomeLabel: "A typical owner keeps a year here",
+    peersHead: "The same business elsewhere",
+    peersLine: "What a typical owner keeps a year in other places.",
+  },
+  /** THE BUY-OR-START PAGE'S START SIDE (the same day): no start cost is held, so the stated line stands where the cash stood, the
+   *  longest licence wait where the weeks stood, and the trade's years to pay back where the typed payback stood. */
+  buyOrStart: {
+    startCash: "No start cost held yet.",
+    startCashNote: "no cost to open is held for this trade",
+    waitLabel: "Longest licence wait",
+    waitNote: "the slowest licence to get, an estimate",
+    noWait: "No licence list here yet.",
+    paybackLabel: "Time to pay back",
+    paybackNote: "the trade's typical, an estimate",
+  },
   /** `15 close` (the same dispatch): the trade's three doors, 8.6's and
    *  M21's own words. Across to the industry page, up to the city page (the
    *  city masthead's own idiom, "Opening a business in"), and the compare

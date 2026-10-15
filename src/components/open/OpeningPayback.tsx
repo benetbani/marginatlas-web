@@ -1,73 +1,61 @@
 /**
  * src/components/open/OpeningPayback.tsx
  *
- * One clean line that ties the two money figures together: how long the entry
- * cost takes to earn back, and the owner take-home it earns back against. It
- * reads the payback straight off the break-in rating and the take-home off the
- * data builder, so both numbers match the cell page exactly.
+ * "Earning it back": the trade's months to break even and years to pay back,
+ * the trade page's own `04 open` figures (buildOpenFoot, src/lib/spine/
+ * open_rows.ts, first_year.* on the trade's shard), each stamped and called an
+ * estimate; and beside them the owner take-home at this address, the cell
+ * page's own derivation, stamped with where it was worked out.
  *
- * Graceful by construction: with no rating (no payback) AND no take-home there
- * is nothing honest to say, so the component renders nothing. With only one of
- * the two it shows just that half rather than inventing the other.
+ * WHAT STOOD HERE UNTIL 2026-10-15 (release 2 job A): "Breaks even in about N
+ * years", a payback worked out as a typed capital plus typed permits over the
+ * take-home, so its years were only as good as two tables with no source. The
+ * shard's two figures stand in its place; the take-home stays, as its own
+ * figure, because the trade's years are not worked from it.
  *
- * The payback is phrased the same warm way the break-in breakdown phrases it
- * (months under a year so a fast payback never reads "0.4 years"; years to one
- * natural decimal above that), so the two surfaces speak with one voice.
+ * Graceful by construction: with neither the trade's figures nor a take-home
+ * there is nothing honest to say, so the component renders nothing.
  *
  * Server component. Tokens only, mobile-first, no raw hex, no em-dashes, no
  * source-agency names.
  */
 import * as React from "react";
 import { fmtUSD } from "@/components/board/format";
+import { CompanionRow } from "@/components/spine/archetypes/BentoBand";
+import { provAttrs } from "@/lib/spine/provenance";
+import { COPY } from "@/lib/spine/copy";
 import type { OpeningPage } from "@/lib/open/opening_page";
 
-/** A real, finite, positive number. */
-function isPos(n: number | null | undefined): n is number {
-  return typeof n === "number" && Number.isFinite(n) && n > 0;
-}
-
-/**
- * Warm payback phrase. Under a year reads in months so a fast payback does not
- * print "0.4 years"; a year or more reads to one natural decimal. No em-dashes.
- */
-function paybackClause(years: number): string {
-  if (years < 1) {
-    const months = Math.max(1, Math.round(years * 12));
-    return months === 1
-      ? "Breaks even in about a month"
-      : `Breaks even in about ${months} months`;
-  }
-  const rounded = Math.round(years * 10) / 10;
-  const figure = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
-  return `Breaks even in about ${figure} years`;
-}
-
 export function OpeningPayback({ page }: { page: OpeningPage }) {
-  const hasPayback = page.breakIn != null && isPos(page.breakIn.paybackYears);
-  const hasTakeHome = isPos(page.takeHomeUsd);
-
-  // Nothing defensible to say without at least one of the two figures.
-  if (!hasPayback && !hasTakeHome) return null;
-
-  let line: string;
-  if (hasPayback && hasTakeHome) {
-    line = `${paybackClause(
-      page.breakIn!.paybackYears,
-    )}, on a typical owner take-home of ${fmtUSD(page.takeHomeUsd)} a year.`;
-  } else if (hasPayback) {
-    line = `${paybackClause(page.breakIn!.paybackYears)} on these numbers.`;
-  } else {
-    line = `Typical owner take-home runs about ${fmtUSD(
-      page.takeHomeUsd,
-    )} a year.`;
-  }
+  const C = COPY.opening;
+  const hasEarning = page.earning.length > 0;
+  const hasTakeHome = page.takeHomeUsd != null && page.takeHomeUsd > 0;
+  if (!hasEarning && !hasTakeHome) return null;
 
   return (
     <section className="atlas-card mt-6 p-4 md:p-5">
       <div className="text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-        Payback
+        {C.earningHead}
       </div>
-      <p className="mt-1.5 text-base leading-relaxed text-ink-900">{line}</p>
+      {hasEarning ? (
+        <>
+          <div className="mt-2">
+            <CompanionRow items={page.earning} />
+          </div>
+          <p className="mt-1.5 text-[11px] text-cocoa-500">{C.earningLine}</p>
+        </>
+      ) : null}
+      {hasTakeHome ? (
+        <div className={hasEarning ? "mt-4 border-t border-parchment pt-3" : "mt-2"}>
+          <div
+            {...provAttrs(page.takeHomeProv)}
+            className="font-display text-lg font-semibold tabular-nums text-ink-900"
+          >
+            {fmtUSD(page.takeHomeUsd)}
+          </div>
+          <div className="text-[11px] text-cocoa-500">{C.takeHomeLabel}</div>
+        </div>
+      ) : null}
     </section>
   );
 }

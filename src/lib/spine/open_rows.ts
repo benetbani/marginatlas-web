@@ -156,14 +156,18 @@ export const yearsFigure = (y: number) => {
   return r === 1 ? "1 year" : `${Number.isInteger(r) ? r : r.toFixed(1)} years`;
 };
 
+/** Where a trade's shard figure was read: the file and the key, an estimate. */
+export const shardProv = (industryId: string, metric: string): Provenance => ({ src: `data/facts/industry/${industryId}.json:${metric}`, kind: "estimate" });
+
 /** The foot's two companions off the trade's shard, in the order 8.6 names them. */
 export function buildOpenFoot(industryId: string | null | undefined): Companion[] {
   if (!industryId) return [];
   const out: Companion[] = [];
+  /* Each figure stamped with the shard file and its key, an estimate (2026-10-15, release 2 job A): the same two on the trade page, on /opening and on /buy-or-start. */
   const ramp = industryFigure(industryId, OPEN_METRICS.ramp);
-  if (ramp && ramp.value > 0) out.push({ figure: monthsFigure(ramp.value), words: COPY.tradeOpen.breakEven });
+  if (ramp && ramp.value > 0) out.push({ figure: monthsFigure(ramp.value), words: COPY.tradeOpen.breakEven, prov: shardProv(industryId, OPEN_METRICS.ramp) });
   const pay = industryFigure(industryId, OPEN_METRICS.payback);
-  if (pay && pay.value > 0) out.push({ figure: yearsFigure(pay.value), words: COPY.tradeOpen.payBack });
+  if (pay && pay.value > 0) out.push({ figure: yearsFigure(pay.value), words: COPY.tradeOpen.payBack, prov: shardProv(industryId, OPEN_METRICS.payback) });
   return out;
 }
 

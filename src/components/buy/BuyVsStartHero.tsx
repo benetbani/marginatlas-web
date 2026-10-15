@@ -3,10 +3,11 @@
  *
  * The masthead of the buy-or-start page: a clean-data-tool hero, not a magazine
  * cover. No image, no gradient. It leads with the QUESTION, then sets the two
- * headline cash figures side by side, the cash to START fresh and the sale range
- * to BUY an existing one, so the reader gets the whole decision in a glance. One
- * line on the cash sits beneath, and a quiet link points back to the full cell
- * economics.
+ * sides of the cash side by side: to START fresh, the stated line (no start cost
+ * is held; the typed start cash that stood here left on 2026-10-15, release 2
+ * job A), and to BUY an existing one, the sale range, stamped. One line on the
+ * cash sits beneath and leans nowhere, and a quiet link points back to the full
+ * cell economics.
  *
  * Layout: on a narrow screen the two cash figures stack; from sm they sit side by
  * side, start leading. Figures are the board's display serif with tabular figures
@@ -17,7 +18,6 @@
  */
 import * as React from "react";
 import Link from "next/link";
-import { fmtUSD } from "@/components/board/format";
 import { T_H1 } from "@/lib/ui/typography";
 import { tradeNounFor } from "@/lib/taxonomy";
 import { provAttrs } from "@/lib/spine/provenance";
@@ -41,13 +41,11 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
         Buy an existing {noun} in {page.placeName}, or start one fresh?
       </h1>
 
-      {/* The two headline cash numbers, side by side. Start leads (the cheaper,
-          more common path); buy sits beside it as the alternative. */}
+      {/* The two sides of the cash, side by side. Start leads (the more common path); buy sits beside it as the alternative. */}
       <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-12">
         <div className="shrink-0">
-          <div className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl">
-            {fmtUSD(page.start.cashNeededUsd)}
-          </div>
+          {/* No start cost is held: the stated line stands where the typed start cash stood, as the buy side's own line does where it cannot price. */}
+          <p className="text-sm leading-snug text-cocoa-700">{page.start.cashLine}</p>
           <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
             To start fresh
           </div>
@@ -70,7 +68,7 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
         </div>
       </div>
 
-      {/* The verdict, one quiet line on the cash that leans only outside the dead-band and says estimate (src/lib/open/buy_side.ts); the catch on each side
+      {/* The verdict, one quiet line on the cash that leans nowhere and says estimate where a figure is one (src/lib/open/buy_side.ts); the catch on each side
           stands in the section below the card (BuyVsStartCatches). */}
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
         {page.verdict}

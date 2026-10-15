@@ -4,17 +4,20 @@
  * Server-side data builder for the dedicated "is it smarter to BUY an existing
  * [business] in [place] or START one fresh?" page. ONE responsibility: assemble
  * a side-by-side BUY vs START picture for a single (country, geo, industry) URL
- * triple, reusing the EXACT live numbers the cost-to-open page already computes
- * so the START side can never disagree with the rest of the site.
+ * triple, from what the site holds, through the builders the trade page prints
+ * with, so the two surfaces can never disagree.
  *
- * The START side is NOT re-derived here. It is read STRAIGHT OFF buildOpeningPage
- * (src/lib/open/opening_page.ts), which itself mirrors the cell page's resolution
- * exactly: the total one-time cost to open (capital + permits), the time to open
- * (modeled weeks), the break-in payback in years (off buildCellBoard), and the
- * owner take-home (the page's shared source of truth). So every START figure on
- * this page is byte-for-byte the cost-to-open page's, and through it the cell
- * page's. We add nothing to the START side; we only RE-FRAME it as one half of a
- * buy-or-build decision.
+ * THE START SIDE HOLDS NO CASH FIGURE (2026-10-15, release 2 job A; the
+ * controller's ruling, option (c) of /srv/atlas/reports/start-capitals-
+ * investigation.md). It printed a start cash, weeks to open and a payback, all
+ * from two tables typed by hand with no source (src/lib/markets/startup_capital_
+ * archetypes.ts and opening_archetypes.ts), and the verdict leaned "cheaper" or
+ * "dearer" by comparing that typed cash with the sale range. Now the START side
+ * is read off buildOpeningPage, which holds no typed figure: the stated line
+ * where the cash stood, the longest licence wait (the trade page's `03 permits`
+ * builder) where the weeks stood, and the trade's years to pay back (the trade
+ * page's `04 open` figure) where the typed payback stood, each stamped. The
+ * verdict is one line that leans nowhere (buy_side.ts).
  *
  * THE BUY SIDE IS THE TRADE PAGE'S OWN "What one sells for", NOT A SECOND MODEL
  * (2026-10-15, QUEUE open:buy-or-start-typed-multiples). It is a range in
@@ -26,38 +29,24 @@
  * It carries its source stamp (data-src names the shard file and the keys,
  * data-kind says estimate) and the words call it an estimate.
  *
- * This file used to hold the price in its own hands: 153 multiples typed by slug
- * with no source, a blanket default, a band, a price floor and ceiling, and an
- * asset floor of 40% of the start cost that set the printed price on half the
- * pages the note "about 2x owner earnings" sat beside. All of it is gone, and
- * tests/open/buy_price_held.test.ts keeps it out: no number is typed in this
- * file or in buy_side.ts (the pure buy side, split out so the gate can run it
- * without the Supabase client) but the verdict's dead-band and the zeros and
- * ones of arithmetic.
- *
  * Where the shard's figures rest on operating earnings (EBITDA), a figure worked
  * from an owner's take-home would be the wrong base, so the page prints the
  * stated line the trade page's card prints for that trade (COPY.tradeWorth) and
  * no price. A trade whose shard holds no pair prints the same line.
  *
  * MISSING-DATA DISCIPLINE (the founder no-wrong-numbers rule): the BUY side is
- * meaningless without a real owner take-home to multiply, and the START side is
- * meaningless without a real cost to open. So the builder returns null when the
- * opening page is null (untrusted / unresolved cell) OR when its owner take-home
- * is missing OR when its total-to-open is missing, and the route notFound()s
- * rather than printing an invented sale price. Every shared number is reused, not
- * re-derived, so the two surfaces can never drift.
- *
- * NOT FIXED HERE, and said so: the START cash (src/lib/markets/startup_capital_
- * archetypes.ts and opening_archetypes.ts) is still one typed capital per trade
- * with no source. The verdict compares a stamped sale range with it, so it leans
- * only outside a dead-band and says estimate; the start side is its own ticket.
+ * meaningless without a real owner take-home to multiply, so the builder returns
+ * null when the opening page is null (untrusted / unresolved cell) OR when its
+ * owner take-home is missing, and the route notFound()s rather than printing an
+ * invented sale price. The page draws on the take-home alone (sub_page_gates.ts).
  *
  * Pure-ish: one await on buildOpeningPage (which owns all the Supabase work and
  * is fully budget-wrapped) plus pure arithmetic and copy. No direct Supabase, no
  * React. Constraint-safe: no em-dashes, no source-agency names, USD-only.
  */
-import { buildOpeningPage } from "@/lib/open/opening_page";
+import { buildOpeningPage, type StampedFigure } from "@/lib/open/opening_page";
+import { COPY } from "@/lib/spine/copy";
+import type { Companion } from "@/components/spine/archetypes/BentoBand";
 import { buyOrStartDraws, subPageHref } from "@/lib/open/sub_page_gates";
 import { buySideFor, buyVerdict, type BuySide } from "@/lib/open/buy_side";
 
@@ -72,19 +61,14 @@ function isPos(n: number | null | undefined): n is number {
  * Public types
  * ------------------------------------------------------------------------- */
 
-/** The START side: build it fresh, the live cost-to-open numbers, re-framed. */
+/** The START side: build it fresh. No cash figure is held, so it carries the stated line, the longest licence wait and the trade's years to pay back. */
 export interface StartSide {
-  /** Cash needed up front: the total one-time cost to open, USD (capital + permits). */
-  cashNeededUsd: number;
-  /** Modeled weeks from the decision to opening day. */
-  timeToOpenWeeks: number;
-  /**
-   * Years to earn the entry cost back once open (the break-in payback), or null
-   * when the cell has no defensible rating. This is the ramp AFTER opening.
-   */
-  paybackYears: number | null;
-  /** True (the start cost is always at least partly modeled archetype). */
-  modeled: true;
+  /** The stated line where the start cash would stand: no start cost is held. */
+  cashLine: string;
+  /** The longest licence wait (the trade page's `03 permits`), stamped, or null where the place prints no licence list. */
+  longestWait: StampedFigure | null;
+  /** The trade's years to pay back (the trade page's `04 open` figure), stamped, or null where the shard holds none. */
+  payback: Companion | null;
 }
 
 /** The honest catch on each side, named in plain language. */
@@ -129,7 +113,7 @@ export interface BuyVsStart {
   /** The honest two-sided catch. */
   catches: BuyVsStartCatch;
 
-  /** One line that leans only outside the dead-band, or says there is no sale price. */
+  /** One line with no lean on the cash: which side holds a figure, and that it is an estimate (buy_side.ts). */
   verdict: string;
 }
 
@@ -172,19 +156,18 @@ function buildCatches(): BuyVsStartCatch {
 
 /**
  * Assemble the BUY vs START picture for one (country, geo, industry), or null
- * when the START side cannot be trusted. The START side is read straight off
- * buildOpeningPage (which mirrors the cell page exactly and self-gates on trust),
- * so this returns null whenever that does, AND whenever the owner take-home or
- * the total-to-open is missing (no defensible BUY price without a take-home to
- * multiply, no defensible START cash without a cost to open). Every shared number
- * is reused, never re-derived, so the two surfaces cannot drift.
+ * when the cell cannot be trusted. The START side is read straight off
+ * buildOpeningPage (which self-gates on trust), so this returns null whenever
+ * that does, AND whenever the owner take-home is missing (no defensible BUY
+ * price without a take-home to multiply). Every shared figure is reused, never
+ * re-derived, so the two surfaces cannot drift.
  */
 export async function buildBuyVsStart(
   args: BuildBuyVsStartArgs,
 ): Promise<BuyVsStart | null> {
   const { country, geo, industry } = args;
 
-  // The START side is the cost-to-open page's numbers, resolved through the same
+  // The START side stands on the opening page, resolved through the same
   // trust-gated builder. Null here means the cell did not resolve or is not a
   // trusted local measurement, so we notFound() exactly as that page does.
   const opening = await buildOpeningPage({ country, geo, industry });
@@ -193,31 +176,25 @@ export async function buildBuyVsStart(
 
   // No-wrong-numbers gate. The BUY range multiplies the owner take-home, so a
   // missing take-home means no defensible sale price: return null rather than
-  // invent one. The START cash is the total to open, so a missing/non-positive
-  // total is equally undefensible.
+  // invent one.
   const takeHome = opening.takeHomeUsd;
   if (!isPos(takeHome)) return null;
-  if (!isPos(opening.totalToOpenUsd)) return null;
 
   const industryId = opening.industryId;
 
-  // START side: re-frame the live cost-to-open numbers. The payback (the ramp
-  // after opening) rides off the break-in rating, null when the cell is unscored.
+  // START side: no cash figure is held, so the stated line stands where it was; the longest licence wait and the years to pay back
+  // are the opening page's own, stamped (the payback is the second of the trade page's two first-year figures).
   const start: StartSide = {
-    cashNeededUsd: Math.round(opening.totalToOpenUsd),
-    timeToOpenWeeks: opening.time.value,
-    paybackYears:
-      opening.breakIn && isPos(opening.breakIn.paybackYears)
-        ? opening.breakIn.paybackYears
-        : null,
-    modeled: true,
+    cashLine: COPY.buyOrStart.startCash,
+    longestWait: opening.longestWait,
+    payback: opening.earning.find((c) => c.words === COPY.tradeOpen.payBack) ?? null,
   };
 
   // BUY side: the trade's own sale range off its shard, times this cell's take-home, through the one function the trade page's card calls.
   const buy = buySideFor(industryId, takeHome);
 
   const catches = buildCatches();
-  const verdict = buyVerdict(start.cashNeededUsd, buy);
+  const verdict = buyVerdict(buy);
 
   // The cost-to-open page lives at this page's own address and /opening, never at cellHref and /opening: that is the cell's label spelling (/mx/quintana-roo/... for
   // /mx/mx-roo/...), review of 2026-10-12, I1. Link the START detail there so a reader can drill into the full opening breakdown.

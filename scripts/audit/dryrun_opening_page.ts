@@ -3,9 +3,11 @@
  *
  * Founder-review tool. NOT wired into the app, NOT a production helper. It calls
  * the SAME buildOpeningPage(...) the new page will call, for ~10 representative
- * flagship business x place combos, and prints, per combo: the total to open,
- * the four entry parts, the break-in score + band + payback, the resolved owner
- * take-home, and the count + first row of each comparison strip.
+ * flagship business x place combos, and prints, per combo: the licences with
+ * their waits and stamps, the longest wait, the trade's two first-year figures,
+ * the resolved owner take-home, and the peer strip (since 2026-10-15, release 2
+ * job A: the typed total, capital, permits, weeks, hires and payback left the
+ * page, and this dry-run prints what stands in their place).
  *
  * This DOES touch the database (buildOpeningPage resolves a real cell through
  * getCellBySlug, exactly as the cell page does), so it loads .env.local first and
@@ -57,6 +59,10 @@ const COMBOS: Combo[] = [
   { label: "Sydney gym", country: "au", geo: "sydney", industry: "sports-fitness" },
   { label: "Los Angeles hair & beauty", country: "us", geo: "los-angeles", industry: "hairdressers-beauty" },
   { label: "Chicago auto repair", country: "us", geo: "chicago", industry: "auto-repair-shops" },
+  // US state geos, where the page draws today (the investigation's production sample: 18 of 27 drew).
+  { label: "California restaurants", country: "us", geo: "california", industry: "restaurants" },
+  { label: "California software", country: "us", geo: "california", industry: "software-development" },
+  { label: "Ohio plumbers", country: "us", geo: "ohio", industry: "plumbers" },
 ];
 
 function usd(n: number | null | undefined): string {
@@ -67,10 +73,6 @@ function usd(n: number | null | undefined): string {
   return `$${Math.round(n)}`;
 }
 
-function flag(b: boolean): string {
-  return b ? "modeled" : "real";
-}
-
 async function main(): Promise<void> {
   // Dynamic import AFTER env is loaded (the Supabase client is built at module
   // load, so the builder must be imported only once the env is present).
@@ -78,7 +80,7 @@ async function main(): Promise<void> {
 
   console.log("");
   console.log("=".repeat(78));
-  console.log("COST-TO-OPEN PAGE BUILDER — DRY RUN (buildOpeningPage, same path as the cell page)");
+  console.log("OPENING PAGE BUILDER, DRY RUN (buildOpeningPage, the trade page's own builders)");
   console.log("=".repeat(78));
 
   let nullCount = 0;
@@ -105,82 +107,32 @@ async function main(): Promise<void> {
       continue;
     }
 
-    // Core sanity: any NaN in the core numbers is a leak we must catch.
-    const coreNums = [
-      page.capital.value,
-      page.permits.value,
-      page.time.value,
-      page.hires.value,
-      page.totalToOpenUsd,
-    ];
-    for (const n of coreNums) {
-      if (typeof n !== "number" || !Number.isFinite(n)) nanLeaks++;
-    }
+    // Core sanity: a printed figure with no stamp is a leak we must catch.
+    const stamps = [page.longestWait?.prov, page.takeHomeProv, ...page.earning.map((e) => e.prov), ...(page.permits?.cells ?? []).map((c) => c.prov)];
+    const figures = [page.longestWait, page.takeHomeUsd, ...page.earning, ...(page.permits?.cells ?? [])].filter((f) => f != null);
+    if (stamps.filter(Boolean).length !== figures.length) nanLeaks++;
 
     console.log(`  Business / place : ${page.businessName} in ${page.placeName}`);
     console.log(`  Cell page href   : ${page.cellHref}`);
     console.log(`  Trusted          : ${page.trusted}`);
     console.log("");
-    console.log(`  TOTAL TO OPEN    : ${usd(page.totalToOpenUsd)}   (capital + permits)`);
-    console.log(`    - Capital      : ${usd(page.capital.value)}   [${flag(page.capital.modeled)}]`);
-    console.log(`    - Permits      : ${usd(page.permits.value)}   [${flag(page.permits.modeled)}]`);
-    console.log(`    - Time to open : ${page.time.value} weeks   [${flag(page.time.modeled)}]`);
-    console.log(`    - First hires  : ${page.hires.value}   (${page.hires.roleHint}) [${flag(page.hires.modeled)}]`);
-    console.log("");
-    console.log(`  Owner take-home  : ${usd(page.takeHomeUsd)} / year (after tax)`);
-    if (page.breakIn) {
-      const b = page.breakIn;
-      console.log(
-        `  BREAK-IN RATING  : ${b.score}/100  band=${b.band}  payback=${b.paybackYears}y  restsOnModeled=${b.restsOnModeled}`,
-      );
-      console.log(
-        `    components     : payback=${b.components.paybackScore} speed=${b.components.speedScore} room=${b.components.roomScore}`,
-      );
-    } else {
-      console.log("  BREAK-IN RATING  : null (no defensible take-home + capital)");
-    }
+    console.log(`  LONGEST WAIT     : ${page.longestWait ? `${page.longestWait.figure}  [${page.longestWait.prov.src}]` : "none"}`);
+    for (const c of page.permits?.cells ?? []) console.log(`    - ${c.label}: ${String(c.value)} (${c.note ?? "no band"})  [${c.prov?.src ?? "NO STAMP"}]`);
+    if (page.permits?.withheld) console.log(`    withheld line: ${page.permits.withheld}`);
+    for (const e of page.earning) console.log(`  EARNING          : ${e.figure} ${e.words}  [${e.prov?.src ?? "NO STAMP"}]`);
+    console.log(`  Owner take-home  : ${usd(page.takeHomeUsd)} / year (after tax)  [${page.takeHomeProv?.src ?? "none"}]`);
     console.log(`  Verdict          : "${page.verdict}"`);
 
-    // Comparisons.
     const peers = page.comparisons.sameBusinessElsewhere;
     console.log("");
     console.log(`  sameBusinessElsewhere: ${peers.length} place(s)`);
-    if (peers.length > 0) {
-      const p = peers[0];
-      console.log(
-        `    first row -> ${p.place} (${p.country}) total=${usd(p.totalToOpenUsd)} score=${p.score ?? "null"} band=${p.band ?? "null"} href=${p.href}`,
-      );
-      // Print the rest compactly so the cheaper/dearer contrast is visible.
-      for (let i = 1; i < peers.length; i++) {
-        const q = peers[i];
-        console.log(
-          `              -> ${q.place} (${q.country}) total=${usd(q.totalToOpenUsd)} score=${q.score ?? "null"} band=${q.band ?? "null"}`,
-        );
-      }
-    }
-
-    const others = page.comparisons.otherBusinessesHere;
-    console.log(`  otherBusinessesHere : ${others.length} business(es)`);
-    if (others.length > 0) {
-      const o = others[0];
-      console.log(
-        `    first row -> ${o.business} score=${o.score ?? "null"} band=${o.band ?? "null"} href=${o.href}`,
-      );
-      for (let i = 1; i < others.length; i++) {
-        const x = others[i];
-        console.log(
-          `              -> ${x.business} score=${x.score ?? "null"} band=${x.band ?? "null"}`,
-        );
-      }
-    } else {
-      console.log("    (omitted: no clean multi-industry-per-geo read for this geo)");
-    }
+    for (const q of peers) console.log(`    -> ${q.place} (${q.country}) keeps=${usd(q.takeHomeUsd)} href=${q.href}`);
   }
 
   console.log("");
   console.log("=".repeat(78));
   console.log(
-    `SUMMARY: ${COMBOS.length} combos, ${nullCount} returned null, ${nanLeaks} NaN/non-finite core leak(s).`,
+    `SUMMARY: ${COMBOS.length} combos, ${nullCount} returned null, ${nanLeaks} page(s) printing a figure with no stamp.`,
   );
   console.log("=".repeat(78));
   console.log("");
