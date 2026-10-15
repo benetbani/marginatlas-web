@@ -74,7 +74,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
         <span className="flex min-w-0 items-center gap-3">
           <Ico id={r.icon} tone="terra" />
           <span className="min-w-0">
-            <span data-label className="block truncate text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
+            <span data-label className="block break-words text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
             <span className="block text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">&times;{r.qty}</span>
           </span>
         </span>
@@ -150,7 +150,7 @@ export function StockTiers({ id = "stock", kit, initial = "mid" }: { id?: string
                   <Ico id={l.icon} tone="terra" />
                   <span className="min-w-0">
                     <span data-label className="block text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{l.label} <span className="text-[var(--c-muted)]">&times;{l.qty}</span></span>
-                    <span className="block truncate text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{l.name}</span>
+                    <span className="block break-words text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{l.name}</span>
                   </span>
                   <Fig className="text-right text-[length:var(--t-body)] font-semibold leading-tight text-[var(--c-ink)]">{dollars(l.usd)}</Fig>
                 </li>
