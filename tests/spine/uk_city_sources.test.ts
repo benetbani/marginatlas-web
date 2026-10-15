@@ -140,7 +140,14 @@ for (const slug of SIX) {
   checkSix(`${slug}'s prime rent and its details say they are estimates ("${p && "figure" in p.rent ? p.rent.basis : "none"}")`, !!p && !p.rentKicker && "figure" in p.rent && p.rent.basis === `${PB.rentEstimate}.` && (p.rent.detail?.rows.length ?? 0) >= 2);
   checkSix(`${slug}'s deposit and its lease say they are estimates`, !!p && "figure" in p.deposit && p.deposit.basis === `${PB.depositEstimate}.` && !!p.deposit.second);
   checkSix(`${slug}'s empty shops say they are an estimate`, !!p && "part" in p.empty && p.empty.basis === `${PB.emptyEstimate}.`);
-  checkSix(`${slug}'s fit-out and its rent-free months say they are estimates (London's line)`, !!p && "figure" in p.fitOut && p.fitOut.basis === `${PB.fitOutEstimate}.` && !!p.fitOut.second);
+  /* THE FIT-OUT'S ONE LINE DOES NOT NAME ITS RENT-FREE MONTHS (type floor, Task 3, fix round 1): it opens with the plural "Estimates", which by the
+     house convention of the rent line (copy.ts, rentEstimate) covers the figure and its companion, so the check reads what the page draws: the
+     basis the builder hands the view opens with "Estimates: ", and the months stand in the same cell as the figure's companion. It no longer
+     compares the basis with the copy constant it is built from, which could not fail. BLIND SPOT: this reads the words and the cell, not the
+     reader, so it cannot tell a reader who takes the plural to cover the months from one who takes it to cover the figure alone; that the plural
+     covers both is the house convention, stated in copy.ts. */
+  const fit = p && "figure" in p.fitOut ? p.fitOut : null;
+  checkSix(`${slug}'s fit-out line opens with "Estimates" (its rent-free months ride the plural, as the rent line's details do) and the months are drawn in the same cell ("${fit?.basis ?? "none"}", companion ${fit?.second ? `${fit.second.figure} ${fit.second.words}` : "none"})`, !!fit && /^Estimates: /.test(fit.basis) && fit.second?.words === COPY.premisesBento.detail.companions.rentFree && /^\d+(?:\.\d)? months?$/.test(fit.second.figure));
   /* THE FIGURES, NOT ONLY THE LINES: each cell holds the shard's own field, read as the builder reads it (cityFigure), never a
      neighbouring one; the empty shops hold the rate they were rounded from. */
   const cells: Array<[string, string, number | null]> = [

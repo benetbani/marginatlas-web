@@ -1102,7 +1102,9 @@ export const COPY = {
       rent: "A square metre of prime shop space, a year",
       /** The valuation's own date: the rateable value estimates the rent at 1 April 2021. */
       rentValued: "A square metre of shop space, a year, at 2021 values",
-      /** The fit-out on a page that prints a sourced figure or a marked one: no source holds it or its rent-free months, so the line says both are estimates. */
+      /** The fit-out on a page that prints a sourced figure or a marked one: no source holds it or its rent-free months. The line is one plain
+       *  line that keeps the figure's unit and opens with the plural "Estimates", which covers the figure and its companion, the rent-free
+       *  months, by the convention rentEstimate's comment states below. The line does not name the months. */
       fitOutEstimate: "Estimates: a square metre fitted out",
       /** The six UK cities held to sources and to no register region (plan 2026-10-08, uk:cities-sourced-or-marked): the shard's
        *  figures, each cell's one line saying they are estimates; "Estimates" covers the cell's details and its companion. */

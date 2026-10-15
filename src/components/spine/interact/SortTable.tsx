@@ -112,7 +112,7 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
         type="button"
         onClick={() => press(c)}
         data-sort-head={c.key}
-        className={`tap-y min-h-6 rounded-sm text-right leading-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${HEAD} ${dir ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"} ${phone ? "block w-full" : "inline-block"}`}
+        className={`tap-y min-h-6 rounded-sm text-right leading-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${HEAD} ${dir ? "text-[var(--c-ink)]" : "text-[var(--c-muted)] hover:text-[var(--c-ink2)]"} ${phone ? "block w-full" : "inline-block"}`}
       >
         {headWords(
           c,
@@ -171,8 +171,8 @@ export function SortTable({ label, columns, rows, entityHead, wideClass, phoneCl
             301px card) never leaves its row the odd height. */}
         <div className={`grid [grid-template-rows:auto] auto-rows-fr ${phoneCols}`}>
           <div className="col-span-full grid grid-cols-subgrid items-end border-b border-[var(--c-line-strong)] pb-2">
-            {nameInline ? <span className={`text-left leading-4 ${HEAD} text-[var(--c-muted)]`}>{entityHead}</span> : null}
-            {columns.map((c) => (sortable ? <span key={c.key} className="flex justify-end">{headButton(c, true)}</span> : <span key={c.key} className={`text-right leading-4 ${HEAD} text-[var(--c-muted)]`}>{headWords(c, true, null)}</span>))}
+            {nameInline ? <span className={`text-left leading-5 ${HEAD} text-[var(--c-muted)]`}>{entityHead}</span> : null}
+            {columns.map((c) => (sortable ? <span key={c.key} className="flex justify-end">{headButton(c, true)}</span> : <span key={c.key} className={`text-right leading-5 ${HEAD} text-[var(--c-muted)]`}>{headWords(c, true, null)}</span>))}
           </div>
           {shown.map((r, i) => (
             /* THE HOME ROW'S TINT REACHES 8px PAST THE TEXT EACH SIDE as a side shadow of the same colour, which paints and takes no
