@@ -2924,6 +2924,8 @@ export const COPY = {
     buyers: { active: "with plenty of buyers", steady: "with some buyers", thin: "with few buyers" } as Record<string, string>,
     exitWords: "to sell a business here",
     views: { state: "With the state", people: "With people" },
+    /** Slot 14's "Who trades here" rows from the profile (final review I1): the shares every country but the UK printed under its staff card. */
+    whoRows: { labour: "Labour force, adults", informal: "Informal economy" },
     runs: { coming: "Coming", recent: "Recent" },
     /** The admin index's year, said in the board row's readout once its label carries the unit (the plan's Reading 8). */
     adminNote: "Last published in 2020.",

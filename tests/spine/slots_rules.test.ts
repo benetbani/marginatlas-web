@@ -12,6 +12,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { JSDOM } from "jsdom";
 import { buildDealingsSlot, buildChangesSlot, buildCloseSlot } from "../../src/lib/spine/slots/rules";
+import { getCountryProfile } from "../../src/lib/economic_profile";
 import { DealingsSlot, ChangesSlot, CloseSlot } from "../../src/components/spine/country/slots/StageRules";
 import { buildOpenSlot } from "../../src/lib/spine/slots/open";
 import { buildHireSlot } from "../../src/lib/spine/slots/hire";
@@ -39,6 +40,16 @@ for (const [iso2, name] of [["GB", "the United Kingdom"], ["KH", "Cambodia"], ["
   const deal = buildDealingsSlot(iso2);
   check(`${iso2} slot 14: the spectra drawn, the foot figures behind the plus as shares`, !!deal && (!!deal.drawing.state || !!deal.drawing.people) && deal.more.every((l) => l.key === "who" && l.type === "share") && !deal.drawing.state?.foot && !deal.drawing.people?.foot);
   if (deal) { const doc = read(React.createElement(DealingsSlot, { model: deal })); const f = clean(doc); check(`${iso2} slot 14 reads clean, a switch where both tables stand (${f.join("; ") || "clean"})`, f.length === 0 && (!(deal.drawing.state && deal.drawing.people) || !!doc.querySelector("#dealings [data-switch]")), "src/components/spine/country/slots/StageRules.tsx"); }
+  /* NOTHING PRINTED IS LOST (final review I1): the labour force and informal economy shares every country but the UK printed under its
+     staff card stand in "Who trades here" as shares in the old card's rounding, stamped with their profile fields. */
+  if (iso2 !== "GB") {
+    const prof = getCountryProfile(iso2) as unknown as Record<string, number>;
+    const rows = deal?.more.find((l) => l.key === "who")?.rows ?? [];
+    const want = [["labour-force", "labor_force_participation_pct"], ["informal", "informal_economy_share_pct"]].map(([key, field]) => ({ key, field, value: `${Math.round(prof[field] * 10) / 10}%` }));
+    const got = want.map((w) => rows.find((r) => r.key === w.key));
+    check(`${iso2} slot 14: the labour force and informal economy shares behind the plus (${got.map((r) => r?.value ?? "none").join(", ")}), each stamped with its field`,
+      got.every((r, i) => !!r && r.value === want[i].value && r.prov?.src === `economic_indicators/country_profile_v2.json:${want[i].field}`));
+  }
   const close = buildCloseSlot(iso2, name);
   check(`${iso2} slot 16: doors`, !!close && close.drawing.doors.length > 0);
   if (close) { const doc = read(React.createElement(CloseSlot, { model: close })); check(`${iso2} slot 16 is the terminus, stamped`, !!doc.querySelector('[data-terminus] #close[data-slot="close"][data-stage="7"][data-answer="doors"] [data-archetype="terminus"]'), "src/components/spine/country/slots/StageRules.tsx"); }
