@@ -451,7 +451,11 @@ export function SpineCellBody({ data = X, locked = false }: { data?: any; locked
       label: "Stock",
       body: turnOne && lines ? (kit ? [<StockTiers key="stock" id="stock" kit={kit} />, <Thresholds key="thresholds" id="thresholds" data={lines} fill />] : hold ? [<MarketHold key="hold" id="market-hold" data={hold} />, <Thresholds key="thresholds" id="thresholds" data={lines} fill />] : []) : [],
     },
-    { key: "split", split: "3-2", stack: "lg", chapter: "01", label: "Where the money goes", body: turnOne && split && team ? [<SplitCard key="split" split={split} />, <TeamCard key="team" team={team} />] : [] },
+    /* THE MONEY LEVEL STANDS THE OTHER WAY ROUND WHERE THE STOCK LEVEL DREW THE KIT (2026-10-15, art direction D3 on the zones,
+       scripts/lib/zone_rhythm.mjs: no zone repeats its neighbour's split). The kit's stock level is 3-2, so the split beside the team
+       is 2-3 there: at 1280 the card stands 403 wide and the team 605, their heights unmoved (328 and 353, as under 3-2); below lg
+       both splits stack alike. The hold branch's stock level is 2-3, so the split keeps 3-2 after it, as does a trade with no stock level. */
+    { key: "split", split: kit && lines ? "2-3" : "3-2", stack: "lg", chapter: "01", label: "Where the money goes", body: turnOne && split && team ? [<SplitCard key="split" split={split} />, <TeamCard key="team" team={team} />] : [] },
     { key: "peers", split: "wide", chapter: "01", label: COPY.tradePeers.kicker, body: turnOne && peers && peers.peers > 0 ? [<PeersCard key="peers" peers={peers} zone />] : [] },
     { key: "clears", split: "1-1", chapter: "02", label: COPY.tradeChapters.keep, body: turnTwo ? keep([clears ? <ClearsCard key="clears" clears={clears} /> : null, lasts ? <LastsCard key="lasts" lasts={lasts} /> : null]) : [] },
     { key: "market", split: "wide", chapter: "03", label: COPY.tradeChapters.trade, body: turnThree ? [<MarketBand key="market" market={market} />] : [] },
