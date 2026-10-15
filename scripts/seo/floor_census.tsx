@@ -9,7 +9,8 @@
  * P1-E (2026-10-09). The sitemap lists neither set now (both shards answer empty) and this script never reads it: it asks the
  * database for the two sets itself. indexFor (byCensus, src/lib/seo/indexable.ts) reads the counts for the pages outside the UK
  * that it leaves to the census, regional trade pages among them. UK pages are not counted: they index by his rule whatever
- * their count. A page whose seed builder returns nothing is not counted either: its route answers 404.
+ * their count. A page whose seed builder returns nothing is not counted either: its route answers 404; nor is a trade address the edge
+ * answers 404 for (src/lib/routing/edge_not_found.ts).
  *
  * Needs the database (the trade pages' seeds read it) and runs by hand, never in the chain:
  *   node node_modules/tsx/dist/cli.mjs --tsconfig scripts/tsconfig.harness.json --require ./scripts/harness/env.cjs \
@@ -37,6 +38,7 @@ import { GUTTER } from "../../src/lib/nav";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
 import { countTopBlocks, floorsFromLaws } from "../lib/block_count.mjs";
 import { labelMissesWord } from "../../src/lib/cells/us_industry_match";
+import { edgeNotFound } from "../../src/lib/routing/edge_not_found";
 
 type Surface = "country" | "howto" | "city" | "industry" | "cell";
 type Entry = { surface: Surface; blocks: number };
@@ -90,7 +92,12 @@ async function candidates(): Promise<Array<{ surface: Surface; slugs: string[]; 
     const paths = new Set<string>();
     for (const c of us as any[]) if (c.geo_name && (c.industry_description || c.naics_6)) paths.add(`/${String(c.country).toLowerCase()}/${slugify(c.geo_name)}/${slugify(c.industry_description || c.naics_6)}`);
     for (const c of regional as any[]) if ((c.quality_score ?? 0) >= 40) { const u = regionalCellUrl(c); if (u) paths.add(u); }
-    for (const p of paths) { const parts = p.split("/").filter(Boolean); if (parts.length === 3 && parts[0] !== "gb") out.push({ surface: "cell", slugs: parts, path: p }); }
+    /* AN ADDRESS THE EDGE ANSWERS 404 IS NO PAGE (2026-10-15): the database's regional set can name a word no live trade resolves
+       (`property-leasing`, eight regions that day), whose seed still builds here while the middleware answers 404 for it
+       (src/lib/routing/edge_not_found.ts, the route's own resolvers). The census counts what is served, so it asks the edge first. */
+    let refused = 0;
+    for (const p of paths) { const parts = p.split("/").filter(Boolean); if (parts.length === 3 && parts[0] !== "gb") { if (edgeNotFound(p)) { refused++; continue; } out.push({ surface: "cell", slugs: parts, path: p }); } }
+    if (refused) console.log(`floor census: ${refused} trade address(es) the edge answers 404 for, not counted`);
   }
   return out;
 }
