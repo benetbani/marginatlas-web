@@ -1,6 +1,6 @@
 {
  "why": "The floor census (milestone 1, M10; his interview of 2026-09-26, answer 6): each spine page outside the United Kingdom with its block count, read by src/lib/seo/indexable.ts. A page indexes when its count meets its type's floor (`floors`, the model laws' FLOOR_BY_SURFACE); UK pages index by his rule and are not counted. label_misses lists the United States trade pages whose printed trade does not read as their address's word (P1-D, 2026-10-09). Written by scripts/seo/floor_census.tsx; never edited by hand.",
- "generated_at": "2026-10-14T22:46:27.941Z",
+ "generated_at": "2026-10-15T16:53:33.938Z",
  "floors": {
   "country": 10,
   "city": 16,
@@ -15,11 +15,11 @@
  "pages": {
   "/ad": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/ae": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/ae/how-to-open": {
    "surface": "howto",
@@ -67,55 +67,11 @@
   },
   "/at": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
-  "/at/at1/metal-products-mfg": {
+  "/at/at1/motor-vehicles-parts": {
    "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at11/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at12/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at13/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at2/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at21/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at22/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at3/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at31/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at32/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at33/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
-  },
-  "/at/at34/metal-products-mfg": {
-   "surface": "cell",
-   "blocks": 13
+   "blocks": 6
   },
   "/at/how-to-open": {
    "surface": "howto",
@@ -123,7 +79,7 @@
   },
   "/au": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/au/how-to-open": {
    "surface": "howto",
@@ -147,7 +103,7 @@
   },
   "/bb": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/bd": {
    "surface": "country",
@@ -176,6 +132,10 @@
   "/bg": {
    "surface": "country",
    "blocks": 11
+  },
+  "/bg/bg42/hotels-lodging": {
+   "surface": "cell",
+   "blocks": 13
   },
   "/bg/how-to-open": {
    "surface": "howto",
@@ -207,7 +167,7 @@
   },
   "/bn": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/bn/how-to-open": {
    "surface": "howto",
@@ -1333,6 +1293,10 @@
    "surface": "country",
    "blocks": 10
   },
+  "/cy/cy0/hotels-lodging": {
+   "surface": "cell",
+   "blocks": 13
+  },
   "/cy/how-to-open": {
    "surface": "howto",
    "blocks": 7
@@ -1341,55 +1305,251 @@
    "surface": "country",
    "blocks": 11
   },
+  "/cz/cz03/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/cz/cz04/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/cz/cz05/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/cz/cz06/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/cz/cz07/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/cz/cz08/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
   "/cz/how-to-open": {
    "surface": "howto",
    "blocks": 7
   },
   "/de": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
-  "/de/dea2/management-consulting": {
+  "/de/de1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/dea3/management-consulting": {
+  "/de/de11/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/dea4/management-consulting": {
+  "/de/de12/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/dea5/management-consulting": {
+  "/de/de13/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/deb/management-consulting": {
+  "/de/de14/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/deb1/management-consulting": {
+  "/de/de2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/deb2/management-consulting": {
+  "/de/de21/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/deb3/management-consulting": {
+  "/de/de22/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/dec/management-consulting": {
+  "/de/de23/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/deg/plastics-rubber-products": {
+  "/de/de24/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/de/deg0/plastics-rubber-products": {
+  "/de/de25/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de26/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de27/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de3/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de30/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de4/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de40/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de5/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de50/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de6/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de60/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de7/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de71/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de72/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de73/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de8/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de80/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de9/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de91/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de92/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de93/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/de94/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea1/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea2/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea3/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea4/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dea5/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb1/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb2/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deb3/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dec/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dec0/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/ded/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/ded2/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/ded4/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/ded5/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dee/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/dee0/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/def/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/def0/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deg/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/de/deg0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -1409,27 +1569,27 @@
    "surface": "country",
    "blocks": 11
   },
-  "/dk/dk0/plastics-rubber-products": {
+  "/dk/dk0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/dk/dk01/plastics-rubber-products": {
+  "/dk/dk01/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/dk/dk02/plastics-rubber-products": {
+  "/dk/dk02/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/dk/dk03/plastics-rubber-products": {
+  "/dk/dk03/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/dk/dk04/plastics-rubber-products": {
+  "/dk/dk04/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/dk/dk05/plastics-rubber-products": {
+  "/dk/dk05/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -1469,11 +1629,11 @@
    "surface": "country",
    "blocks": 10
   },
-  "/ee/ee0/plastics-rubber-products": {
+  "/ee/ee0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ee/ee00/plastics-rubber-products": {
+  "/ee/ee00/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -1489,71 +1649,71 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/el/el3/plastics-rubber-products": {
+  "/el/el3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el30/plastics-rubber-products": {
+  "/el/el30/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el4/plastics-rubber-products": {
+  "/el/el4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el41/plastics-rubber-products": {
+  "/el/el41/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el42/plastics-rubber-products": {
+  "/el/el42/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el43/plastics-rubber-products": {
+  "/el/el43/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el5/plastics-rubber-products": {
+  "/el/el5/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el51/plastics-rubber-products": {
+  "/el/el51/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el52/plastics-rubber-products": {
+  "/el/el52/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el53/plastics-rubber-products": {
+  "/el/el53/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el54/plastics-rubber-products": {
+  "/el/el54/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el6/plastics-rubber-products": {
+  "/el/el6/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el61/plastics-rubber-products": {
+  "/el/el61/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el62/plastics-rubber-products": {
+  "/el/el62/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el63/plastics-rubber-products": {
+  "/el/el63/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el64/plastics-rubber-products": {
+  "/el/el64/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/el/el65/plastics-rubber-products": {
+  "/el/el65/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -1561,155 +1721,95 @@
    "surface": "country",
    "blocks": 11
   },
-  "/es/es1/management-consulting": {
+  "/es/es1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es1/plastics-rubber-products": {
+  "/es/es11/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es11/management-consulting": {
+  "/es/es12/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es11/plastics-rubber-products": {
+  "/es/es13/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es12/management-consulting": {
+  "/es/es2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es12/plastics-rubber-products": {
+  "/es/es21/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es13/management-consulting": {
+  "/es/es22/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es13/plastics-rubber-products": {
+  "/es/es23/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es2/management-consulting": {
+  "/es/es24/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es2/plastics-rubber-products": {
+  "/es/es3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es21/management-consulting": {
+  "/es/es30/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es21/plastics-rubber-products": {
+  "/es/es4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es22/management-consulting": {
+  "/es/es41/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es22/plastics-rubber-products": {
+  "/es/es42/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es23/management-consulting": {
+  "/es/es43/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es23/plastics-rubber-products": {
+  "/es/es5/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es24/management-consulting": {
+  "/es/es51/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es24/plastics-rubber-products": {
+  "/es/es52/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es3/management-consulting": {
+  "/es/es53/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es3/plastics-rubber-products": {
+  "/es/es6/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es30/management-consulting": {
+  "/es/es61/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es30/plastics-rubber-products": {
+  "/es/es7/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/es/es4/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es4/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es41/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es41/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es42/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es42/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es43/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es43/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es5/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es51/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es52/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es53/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es6/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es61/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es7/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/es/es70/plastics-rubber-products": {
+  "/es/es70/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -1729,23 +1829,19 @@
    "surface": "country",
    "blocks": 11
   },
-  "/fi/fi1/plastics-rubber-products": {
+  "/fi/fi19/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fi/fi19/plastics-rubber-products": {
+  "/fi/fi1b/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fi/fi1b/plastics-rubber-products": {
+  "/fi/fi1c/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fi/fi1c/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fi/fi1d/plastics-rubber-products": {
+  "/fi/fi1d/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -1769,191 +1865,163 @@
    "surface": "country",
    "blocks": 11
   },
-  "/fr/fr1/plastics-rubber-products": {
+  "/fr/fr1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fr10/plastics-rubber-products": {
+  "/fr/fr10/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frb/plastics-rubber-products": {
+  "/fr/frb/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frb0/plastics-rubber-products": {
+  "/fr/frb0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frc/management-consulting": {
+  "/fr/frc/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frc/plastics-rubber-products": {
+  "/fr/frc1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frc1/management-consulting": {
+  "/fr/frc2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frc1/plastics-rubber-products": {
+  "/fr/frd/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frc2/management-consulting": {
+  "/fr/frd1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frc2/plastics-rubber-products": {
+  "/fr/frd2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frd/management-consulting": {
+  "/fr/fre/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frd/plastics-rubber-products": {
+  "/fr/fre1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frd1/management-consulting": {
+  "/fr/fre2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frd1/plastics-rubber-products": {
+  "/fr/frf/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frd2/management-consulting": {
+  "/fr/frf1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frd2/plastics-rubber-products": {
+  "/fr/frf2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fre/management-consulting": {
+  "/fr/frf3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fre/plastics-rubber-products": {
+  "/fr/frg/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fre1/management-consulting": {
+  "/fr/frg0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fre1/plastics-rubber-products": {
+  "/fr/frh/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fre2/management-consulting": {
+  "/fr/frh0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fre2/plastics-rubber-products": {
+  "/fr/fri/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frf/management-consulting": {
+  "/fr/fri1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frf/plastics-rubber-products": {
+  "/fr/fri2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frf1/management-consulting": {
+  "/fr/fri3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frf1/plastics-rubber-products": {
+  "/fr/frj/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frf2/plastics-rubber-products": {
+  "/fr/frj1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frf3/plastics-rubber-products": {
+  "/fr/frj2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frg/plastics-rubber-products": {
+  "/fr/frk/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frg0/plastics-rubber-products": {
+  "/fr/frk1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frh/plastics-rubber-products": {
+  "/fr/frk2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frh0/plastics-rubber-products": {
+  "/fr/frl/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fri/plastics-rubber-products": {
+  "/fr/frl0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fri1/plastics-rubber-products": {
+  "/fr/frm/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fri2/plastics-rubber-products": {
+  "/fr/frm0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/fri3/plastics-rubber-products": {
+  "/fr/fry/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frj/plastics-rubber-products": {
+  "/fr/fry1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frj1/plastics-rubber-products": {
+  "/fr/fry2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frj2/plastics-rubber-products": {
+  "/fr/fry3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/fr/frk/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fr/frk1/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fr/frk2/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fr/frl/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fr/frl0/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fr/fry/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fr/fry2/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/fr/fry4/plastics-rubber-products": {
+  "/fr/fry4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -2039,7 +2107,7 @@
   },
   "/gy": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/hk": {
    "surface": "country",
@@ -2065,27 +2133,23 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/hr/hr0/plastics-rubber-products": {
+  "/hr/hr0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hr/hr02/plastics-rubber-products": {
+  "/hr/hr02/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hr/hr03/plastics-rubber-products": {
+  "/hr/hr03/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hr/hr05/plastics-rubber-products": {
+  "/hr/hr05/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hr/hr06/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hr/hr06/plastics-rubber-products": {
+  "/hr/hr06/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -2101,91 +2165,47 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/hu/hu1/management-consulting": {
+  "/hu/hu1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu1/plastics-rubber-products": {
+  "/hu/hu11/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu11/management-consulting": {
+  "/hu/hu12/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu11/plastics-rubber-products": {
+  "/hu/hu2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu12/management-consulting": {
+  "/hu/hu21/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu12/plastics-rubber-products": {
+  "/hu/hu22/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu2/management-consulting": {
+  "/hu/hu23/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu2/plastics-rubber-products": {
+  "/hu/hu3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu21/management-consulting": {
+  "/hu/hu31/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu21/plastics-rubber-products": {
+  "/hu/hu32/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/hu/hu22/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu22/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu23/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu23/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu3/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu3/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu31/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu31/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu32/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu32/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu33/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/hu/hu33/plastics-rubber-products": {
+  "/hu/hu33/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -2199,31 +2219,15 @@
   },
   "/ie": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/ie/how-to-open": {
    "surface": "howto",
    "blocks": 7
   },
-  "/ie/ie0/management-consulting": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/ie/ie04/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/ie/ie05/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/ie/ie06/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
   "/il": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/il/how-to-open": {
    "surface": "howto",
@@ -2815,157 +2819,113 @@
   },
   "/it": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/it/how-to-open": {
    "surface": "howto",
    "blocks": 7
   },
-  "/it/itc/management-consulting": {
+  "/it/itc/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc/plastics-rubber-products": {
+  "/it/itc1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc1/management-consulting": {
+  "/it/itc2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc1/plastics-rubber-products": {
+  "/it/itc3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc2/management-consulting": {
+  "/it/itc4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc2/plastics-rubber-products": {
+  "/it/itf/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc3/management-consulting": {
+  "/it/itf1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc3/plastics-rubber-products": {
+  "/it/itf2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc4/management-consulting": {
+  "/it/itf3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itc4/plastics-rubber-products": {
+  "/it/itf4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf/management-consulting": {
+  "/it/itf5/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf/plastics-rubber-products": {
+  "/it/itf6/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf1/management-consulting": {
+  "/it/itg/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf1/plastics-rubber-products": {
+  "/it/itg1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf2/management-consulting": {
+  "/it/itg2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf2/plastics-rubber-products": {
+  "/it/ith/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf3/management-consulting": {
+  "/it/ith1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf3/plastics-rubber-products": {
+  "/it/ith2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf4/management-consulting": {
+  "/it/ith3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf4/plastics-rubber-products": {
+  "/it/ith4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf5/management-consulting": {
+  "/it/ith5/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf5/plastics-rubber-products": {
+  "/it/iti/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itf6/plastics-rubber-products": {
+  "/it/iti1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itg/plastics-rubber-products": {
+  "/it/iti2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itg1/plastics-rubber-products": {
+  "/it/iti3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/it/itg2/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/ith/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/ith1/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/ith2/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/ith3/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/ith4/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/ith5/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/iti/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/iti1/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/iti2/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/iti3/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/it/iti4/plastics-rubber-products": {
+  "/it/iti4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -2987,7 +2947,7 @@
   },
   "/jp": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/jp/how-to-open": {
    "surface": "howto",
@@ -3059,7 +3019,7 @@
   },
   "/la": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/la/how-to-open": {
    "surface": "howto",
@@ -3079,7 +3039,7 @@
   },
   "/li": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/lk": {
    "surface": "country",
@@ -3109,15 +3069,15 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/lt/lt0/plastics-rubber-products": {
+  "/lt/lt0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/lt/lt01/plastics-rubber-products": {
+  "/lt/lt01/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/lt/lt02/plastics-rubber-products": {
+  "/lt/lt02/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3129,6 +3089,10 @@
    "surface": "howto",
    "blocks": 7
   },
+  "/lu/lu00/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
   "/lv": {
    "surface": "country",
    "blocks": 10
@@ -3137,11 +3101,15 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/lv/lv0/plastics-rubber-products": {
+  "/lv/lv0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/lv/lv00/plastics-rubber-products": {
+  "/lv/lv00/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/lv/lv00/property-leasing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3175,7 +3143,7 @@
   },
   "/me": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/me/how-to-open": {
    "surface": "howto",
@@ -3244,6 +3212,22 @@
   "/mt/how-to-open": {
    "surface": "howto",
    "blocks": 7
+  },
+  "/mt/mt0/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/mt/mt0/property-leasing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/mt/mt00/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/mt/mt00/property-leasing": {
+   "surface": "cell",
+   "blocks": 6
   },
   "/mu": {
    "surface": "country",
@@ -3329,59 +3313,71 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/nl/nl11/plastics-rubber-products": {
+  "/nl/nl12/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl12/plastics-rubber-products": {
+  "/nl/nl12/property-leasing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl2/plastics-rubber-products": {
+  "/nl/nl13/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl21/plastics-rubber-products": {
+  "/nl/nl2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl22/plastics-rubber-products": {
+  "/nl/nl2/property-leasing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl23/plastics-rubber-products": {
+  "/nl/nl21/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl3/plastics-rubber-products": {
+  "/nl/nl21/property-leasing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl31/plastics-rubber-products": {
+  "/nl/nl22/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl32/plastics-rubber-products": {
+  "/nl/nl23/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl33/plastics-rubber-products": {
+  "/nl/nl3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl34/plastics-rubber-products": {
+  "/nl/nl31/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl4/plastics-rubber-products": {
+  "/nl/nl32/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl41/plastics-rubber-products": {
+  "/nl/nl33/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/nl/nl42/plastics-rubber-products": {
+  "/nl/nl34/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl4/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl41/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/nl/nl42/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3393,31 +3389,31 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/no/no0/plastics-rubber-products": {
+  "/no/no0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/no/no02/plastics-rubber-products": {
+  "/no/no02/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/no/no06/plastics-rubber-products": {
+  "/no/no06/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/no/no07/plastics-rubber-products": {
+  "/no/no07/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/no/no08/plastics-rubber-products": {
+  "/no/no08/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/no/no09/plastics-rubber-products": {
+  "/no/no09/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/no/no0a/plastics-rubber-products": {
+  "/no/no0a/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3435,7 +3431,7 @@
   },
   "/nz": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/nz/how-to-open": {
    "surface": "howto",
@@ -3483,125 +3479,105 @@
   },
   "/pl": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/pl/how-to-open": {
    "surface": "howto",
    "blocks": 7
   },
-  "/pl/pl2/plastics-rubber-products": {
+  "/pl/pl2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl21/plastics-rubber-products": {
+  "/pl/pl21/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl22/management-consulting": {
+  "/pl/pl22/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl22/plastics-rubber-products": {
+  "/pl/pl4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl4/management-consulting": {
+  "/pl/pl41/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl4/plastics-rubber-products": {
+  "/pl/pl42/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl41/management-consulting": {
+  "/pl/pl43/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl41/plastics-rubber-products": {
+  "/pl/pl5/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl42/management-consulting": {
+  "/pl/pl51/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl42/plastics-rubber-products": {
+  "/pl/pl52/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl43/management-consulting": {
+  "/pl/pl6/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl43/plastics-rubber-products": {
+  "/pl/pl61/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl5/plastics-rubber-products": {
+  "/pl/pl62/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl51/plastics-rubber-products": {
+  "/pl/pl63/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl52/plastics-rubber-products": {
+  "/pl/pl7/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl6/plastics-rubber-products": {
+  "/pl/pl71/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl61/plastics-rubber-products": {
+  "/pl/pl72/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl62/plastics-rubber-products": {
+  "/pl/pl8/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl63/plastics-rubber-products": {
+  "/pl/pl81/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl7/plastics-rubber-products": {
+  "/pl/pl82/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl71/plastics-rubber-products": {
+  "/pl/pl84/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl72/plastics-rubber-products": {
+  "/pl/pl9/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl8/plastics-rubber-products": {
+  "/pl/pl91/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pl/pl81/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/pl/pl82/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/pl/pl84/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/pl/pl9/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/pl/pl91/plastics-rubber-products": {
-   "surface": "cell",
-   "blocks": 6
-  },
-  "/pl/pl92/plastics-rubber-products": {
+  "/pl/pl92/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3611,25 +3587,41 @@
   },
   "/pt": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/pt/how-to-open": {
    "surface": "howto",
    "blocks": 7
   },
-  "/pt/pt1/plastics-rubber-products": {
+  "/pt/pt1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pt/pt11/plastics-rubber-products": {
+  "/pt/pt11/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pt/pt16/plastics-rubber-products": {
+  "/pt/pt11/property-leasing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/pt/pt18/plastics-rubber-products": {
+  "/pt/pt15/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pt/pt15/property-leasing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pt/pt16/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pt/pt17/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/pt/pt18/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3661,51 +3653,63 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/ro/ro1/plastics-rubber-products": {
+  "/ro/ro1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro11/plastics-rubber-products": {
+  "/ro/ro11/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro12/plastics-rubber-products": {
+  "/ro/ro12/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro2/plastics-rubber-products": {
+  "/ro/ro2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro21/plastics-rubber-products": {
+  "/ro/ro21/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro22/plastics-rubber-products": {
+  "/ro/ro22/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro3/plastics-rubber-products": {
+  "/ro/ro3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro31/plastics-rubber-products": {
+  "/ro/ro31/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro32/plastics-rubber-products": {
+  "/ro/ro32/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro4/plastics-rubber-products": {
+  "/ro/ro4/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro41/plastics-rubber-products": {
+  "/ro/ro4/textile-apparel-mfg": {
    "surface": "cell",
    "blocks": 6
   },
-  "/ro/ro42/plastics-rubber-products": {
+  "/ro/ro41/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro41/textile-apparel-mfg": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro42/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/ro/ro42/textile-apparel-mfg": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3765,47 +3769,55 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/se/se1/plastics-rubber-products": {
+  "/se/se1/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se11/plastics-rubber-products": {
+  "/se/se1/textile-apparel-mfg": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se12/plastics-rubber-products": {
+  "/se/se11/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se2/plastics-rubber-products": {
+  "/se/se11/textile-apparel-mfg": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se21/plastics-rubber-products": {
+  "/se/se12/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se22/plastics-rubber-products": {
+  "/se/se2/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se23/plastics-rubber-products": {
+  "/se/se21/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se3/plastics-rubber-products": {
+  "/se/se22/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se31/plastics-rubber-products": {
+  "/se/se23/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se32/plastics-rubber-products": {
+  "/se/se3/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/se/se33/plastics-rubber-products": {
+  "/se/se31/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se32/machinery-manufacturing": {
+   "surface": "cell",
+   "blocks": 6
+  },
+  "/se/se33/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3825,15 +3837,15 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/si/si0/plastics-rubber-products": {
+  "/si/si0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/si/si03/plastics-rubber-products": {
+  "/si/si03/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/si/si04/plastics-rubber-products": {
+  "/si/si04/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3845,23 +3857,23 @@
    "surface": "howto",
    "blocks": 7
   },
-  "/sk/sk0/plastics-rubber-products": {
+  "/sk/sk0/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/sk/sk01/plastics-rubber-products": {
+  "/sk/sk01/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/sk/sk02/plastics-rubber-products": {
+  "/sk/sk02/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/sk/sk03/plastics-rubber-products": {
+  "/sk/sk03/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
-  "/sk/sk04/plastics-rubber-products": {
+  "/sk/sk04/machinery-manufacturing": {
    "surface": "cell",
    "blocks": 6
   },
@@ -3975,7 +3987,7 @@
   },
   "/tr": {
    "surface": "country",
-   "blocks": 10
+   "blocks": 11
   },
   "/tr/how-to-open": {
    "surface": "howto",
@@ -4027,7 +4039,7 @@
   },
   "/us": {
    "surface": "country",
-   "blocks": 11
+   "blocks": 12
   },
   "/us/how-to-open": {
    "surface": "howto",
@@ -4035,15 +4047,15 @@
   },
   "/us/mississippi/administrative-management-and-general-management-consulting-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/all-other-schools-and-instruction": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/business-support-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/construction-and-mining-except-oil-well-machinery-and-equipment-merchant-wholesalers": {
    "surface": "cell",
@@ -4055,27 +4067,27 @@
   },
   "/us/mississippi/electronics-and-appliance-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/floor-covering-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/general-rental-centers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/hotels-except-casino-hotels-and-motels": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/investigation-guard-and-armored-car-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/lessors-of-miniwarehouses-and-self-storage-units": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/management-of-companies-and-enterprises": {
    "surface": "cell",
@@ -4083,11 +4095,11 @@
   },
   "/us/mississippi/motion-picture-theaters-except-drive-ins": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/mississippi/new-car-dealers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/new-multifamily-housing-construction-except-for-sale-builders": {
    "surface": "cell",
@@ -4095,19 +4107,19 @@
   },
   "/us/mississippi/nursing-care-facilities-skilled-nursing-facilities": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/offices-of-lawyers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/other-activities-related-to-real-estate": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/other-clothing-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/other-direct-selling-establishments": {
    "surface": "cell",
@@ -4115,11 +4127,11 @@
   },
   "/us/mississippi/other-personal-care-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/other-professional-scientific-and-technical-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/pipeline-transportation-of-crude-oil": {
    "surface": "cell",
@@ -4139,15 +4151,15 @@
   },
   "/us/mississippi/research-and-development-in-the-physical-engineering-and-life-sciences-except-nanotechnology-and-biotechnology": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/mississippi/security-guards-and-patrol-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/supermarkets-and-other-grocery-except-convenience-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/mississippi/support-activities-for-mining": {
    "surface": "cell",
@@ -4167,15 +4179,15 @@
   },
   "/us/missouri/all-other-miscellaneous-store-retailers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/all-other-travel-arrangement-and-reservation-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/amusement-and-theme-parks": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/animal-food-manufacturing": {
    "surface": "cell",
@@ -4187,7 +4199,7 @@
   },
   "/us/missouri/beauty-salons": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/boiler-tank-and-shipping-container-manufacturing": {
    "surface": "cell",
@@ -4199,7 +4211,7 @@
   },
   "/us/missouri/business-support-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/chemical-manufacturing": {
    "surface": "cell",
@@ -4215,39 +4227,39 @@
   },
   "/us/missouri/computer-and-office-machine-repair-and-maintenance": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/computer-systems-design-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/cosmetics-beauty-supplies-and-perfume-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/couriers-and-messengers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/custom-computer-programming-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/death-care-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/directory-and-mailing-list-publishers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/electrical-contractors-and-other-wiring-installation-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/facilities-support-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/financial-transactions-processing-reserve-and-clearinghouse-activities": {
    "surface": "cell",
@@ -4263,7 +4275,7 @@
   },
   "/us/missouri/general-rental-centers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/hardware-stores": {
    "surface": "cell",
@@ -4275,11 +4287,11 @@
   },
   "/us/missouri/marinas": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/medical-and-diagnostic-laboratories": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/medical-equipment-and-supplies-manufacturing": {
    "surface": "cell",
@@ -4287,7 +4299,7 @@
   },
   "/us/missouri/motion-picture-and-video-production": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/navigational-measuring-electromedical-and-control-instruments-manufacturing": {
    "surface": "cell",
@@ -4311,19 +4323,19 @@
   },
   "/us/missouri/other-consumer-goods-rental": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/other-information-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/other-miscellaneous-store-retailers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/other-residential-care-facilities": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/other-social-advocacy-organizations": {
    "surface": "cell",
@@ -4331,7 +4343,7 @@
   },
   "/us/missouri/other-spectator-sports": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/other-support-activities-for-road-transportation": {
    "surface": "cell",
@@ -4347,7 +4359,7 @@
   },
   "/us/missouri/payroll-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/petroleum-and-petroleum-products-merchant-wholesalers-except-bulk-stations-and-terminals": {
    "surface": "cell",
@@ -4359,11 +4371,11 @@
   },
   "/us/missouri/repair-and-maintenance": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/residential-intellectual-and-developmental-disability-facilities": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/school-and-employee-bus-transportation": {
    "surface": "cell",
@@ -4375,15 +4387,15 @@
   },
   "/us/missouri/security-guards-and-patrol-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/software-publishers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/special-food-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/missouri/textile-bag-and-canvas-mills": {
    "surface": "cell",
@@ -4395,19 +4407,19 @@
   },
   "/us/missouri/used-merchandise-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/missouri/video-tape-and-disc-rental": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/montana/all-other-miscellaneous-store-retailers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/all-other-specialty-food-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/animal-slaughtering-and-processing": {
    "surface": "cell",
@@ -4415,11 +4427,11 @@
   },
   "/us/montana/continuing-care-retirement-communities-and-assisted-living-facilities-for-the-elderly": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/drycleaning-and-laundry-services-except-coin-operated": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/montana/electrical-apparatus-and-equipment-wiring-supplies-and-related-equipment-merchant-wholesalers": {
    "surface": "cell",
@@ -4447,7 +4459,7 @@
   },
   "/us/montana/food-and-beverage-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/hunting-and-trapping": {
    "surface": "cell",
@@ -4463,19 +4475,19 @@
   },
   "/us/montana/office-administrative-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/offices-of-chiropractors": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/offices-of-physicians": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/other-gambling-industries": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/montana/other-nonmetallic-mineral-mining-and-quarrying": {
    "surface": "cell",
@@ -4491,23 +4503,23 @@
   },
   "/us/montana/pharmacies-and-drug-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/process-physical-distribution-and-logistics-consulting-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/montana/residential-property-managers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/montana/roofing-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/montana/shoe-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/small-arms-ordnance-and-ordnance-accessories-manufacturing": {
    "surface": "cell",
@@ -4519,7 +4531,7 @@
   },
   "/us/montana/supermarkets-and-other-grocery-except-convenience-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/montana/support-activities-for-air-transportation": {
    "surface": "cell",
@@ -4535,7 +4547,7 @@
   },
   "/us/nebraska/advertising-public-relations-and-related-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/automobile-and-other-motor-vehicle-merchant-wholesalers": {
    "surface": "cell",
@@ -4543,7 +4555,7 @@
   },
   "/us/nebraska/automotive-mechanical-and-electrical-repair-and-maintenance": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/brick-stone-and-related-construction-material-merchant-wholesalers": {
    "surface": "cell",
@@ -4555,7 +4567,7 @@
   },
   "/us/nebraska/cemeteries-and-crematories": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/clothing-stores": {
    "surface": "cell",
@@ -4571,11 +4583,11 @@
   },
   "/us/nebraska/couriers-and-express-delivery-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/data-processing-hosting-and-related-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/emergency-and-other-relief-services": {
    "surface": "cell",
@@ -4587,7 +4599,7 @@
   },
   "/us/nebraska/flooring-contractors": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/general-line-grocery-merchant-wholesalers": {
    "surface": "cell",
@@ -4595,19 +4607,19 @@
   },
   "/us/nebraska/gift-novelty-and-souvenir-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/hotels-except-casino-hotels-and-motels": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/independent-artists-writers-and-performers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/investigation-guard-and-armored-car-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/lumber-plywood-millwork-and-wood-panel-merchant-wholesalers": {
    "surface": "cell",
@@ -4615,11 +4627,11 @@
   },
   "/us/nebraska/management-scientific-and-technical-consulting-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/motion-picture-and-video-exhibition": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/navigational-measuring-electromedical-and-control-instruments-manufacturing": {
    "surface": "cell",
@@ -4631,7 +4643,7 @@
   },
   "/us/nebraska/other-commercial-and-industrial-machinery-and-equipment-rental-and-leasing": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/other-individual-and-family-services": {
    "surface": "cell",
@@ -4639,15 +4651,15 @@
   },
   "/us/nebraska/other-information-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/private-mail-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/professional-scientific-and-technical-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/religious-organizations": {
    "surface": "cell",
@@ -4655,7 +4667,7 @@
   },
   "/us/nebraska/rental-and-leasing-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/sheet-metal-work-manufacturing": {
    "surface": "cell",
@@ -4663,7 +4675,7 @@
   },
   "/us/nebraska/software-publishers": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/nebraska/specialized-freight-except-used-goods-trucking-long-distance": {
    "surface": "cell",
@@ -4671,11 +4683,11 @@
   },
   "/us/nebraska/technical-and-trade-schools": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nebraska/theater-companies-and-dinner-theaters": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nebraska/utilities": {
    "surface": "cell",
@@ -4695,15 +4707,15 @@
   },
   "/us/nevada/all-other-consumer-goods-rental": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/all-other-information-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/all-other-outpatient-care-centers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/architectural-and-structural-metals-manufacturing": {
    "surface": "cell",
@@ -4711,15 +4723,15 @@
   },
   "/us/nevada/automotive-glass-replacement-shops": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/automotive-parts-accessories-and-tire-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/automotive-parts-and-accessories-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/beer-wine-and-distilled-alcoholic-beverage-merchant-wholesalers": {
    "surface": "cell",
@@ -4727,11 +4739,11 @@
   },
   "/us/nevada/book-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/building-inspection-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/business-professional-labor-political-and-similar-organizations": {
    "surface": "cell",
@@ -4739,7 +4751,7 @@
   },
   "/us/nevada/caterers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/clothing-accessories-stores": {
    "surface": "cell",
@@ -4747,11 +4759,11 @@
   },
   "/us/nevada/commercial-and-industrial-machinery-and-equipment-rental-and-leasing": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/computer-systems-design-and-related-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/credit-unions": {
    "surface": "cell",
@@ -4767,11 +4779,11 @@
   },
   "/us/nevada/death-care-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/diagnostic-imaging-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/fabricated-structural-metal-manufacturing": {
    "surface": "cell",
@@ -4779,7 +4791,7 @@
   },
   "/us/nevada/flooring-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/fruit-and-vegetable-preserving-and-specialty-food-manufacturing": {
    "surface": "cell",
@@ -4803,11 +4815,11 @@
   },
   "/us/nevada/home-health-care-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/hotels-except-casino-hotels-and-motels": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/household-appliances-and-electrical-and-electronic-goods-merchant-wholesalers": {
    "surface": "cell",
@@ -4815,7 +4827,7 @@
   },
   "/us/nevada/investigation-guard-and-armored-car-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/janitorial-services": {
    "surface": "cell",
@@ -4831,7 +4843,7 @@
   },
   "/us/nevada/medical-and-diagnostic-laboratories": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/miscellaneous-intermediation": {
    "surface": "cell",
@@ -4839,11 +4851,11 @@
   },
   "/us/nevada/motorcycle-boat-and-other-motor-vehicle-dealers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/music-publishers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/navigational-measuring-electromedical-and-control-instruments-manufacturing": {
    "surface": "cell",
@@ -4863,23 +4875,23 @@
   },
   "/us/nevada/other-automotive-mechanical-and-electrical-repair-and-maintenance": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/other-specialty-food-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/outdoor-advertising": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/passenger-car-rental-and-leasing": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/pharmacies-and-drug-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/plastics-materials-and-basic-forms-and-shapes-merchant-wholesalers": {
    "surface": "cell",
@@ -4895,7 +4907,7 @@
   },
   "/us/nevada/poured-concrete-foundation-and-structure-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/nevada/printing-and-related-support-activities": {
    "surface": "cell",
@@ -4903,11 +4915,11 @@
   },
   "/us/nevada/recreational-vehicle-dealers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/shoe-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/nevada/special-needs-transportation": {
    "surface": "cell",
@@ -4923,19 +4935,19 @@
   },
   "/us/new-hampshire/accounting-tax-preparation-bookkeeping-and-payroll-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/all-other-outpatient-care-centers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/all-other-support-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-hampshire/assisted-living-facilities-for-the-elderly": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/new-hampshire/brick-stone-and-related-construction-material-merchant-wholesalers": {
    "surface": "cell",
@@ -4943,7 +4955,7 @@
   },
   "/us/new-hampshire/employment-placement-agencies-and-executive-search-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-hampshire/general-freight-trucking-local": {
    "surface": "cell",
@@ -4955,7 +4967,7 @@
   },
   "/us/new-hampshire/lessors-of-other-real-estate-property": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/machinery-equipment-and-supplies-merchant-wholesalers": {
    "surface": "cell",
@@ -4975,11 +4987,11 @@
   },
   "/us/new-hampshire/offices-of-lawyers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/offices-of-physicians-mental-health-specialists": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/other-miscellaneous-durable-goods-merchant-wholesalers": {
    "surface": "cell",
@@ -4987,7 +4999,7 @@
   },
   "/us/new-hampshire/personal-and-laundry-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/petroleum-bulk-stations-and-terminals": {
    "surface": "cell",
@@ -4995,7 +5007,7 @@
   },
   "/us/new-hampshire/photographic-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/savings-institutions": {
    "surface": "cell",
@@ -5003,7 +5015,7 @@
   },
   "/us/new-hampshire/special-food-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-hampshire/special-needs-transportation": {
    "surface": "cell",
@@ -5011,11 +5023,11 @@
   },
   "/us/new-hampshire/traveler-accommodation": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-hampshire/veterinary-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-hampshire/warm-air-heating-and-air-conditioning-equipment-and-supplies-merchant-wholesalers": {
    "surface": "cell",
@@ -5023,7 +5035,7 @@
   },
   "/us/new-jersey/advertising-material-distribution-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/apparel-manufacturing": {
    "surface": "cell",
@@ -5031,7 +5043,7 @@
   },
   "/us/new-jersey/architectural-engineering-and-related-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/asphalt-paving-mixture-and-block-manufacturing": {
    "surface": "cell",
@@ -5047,7 +5059,7 @@
   },
   "/us/new-jersey/beer-wine-and-liquor-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/beverage-and-tobacco-product-manufacturing": {
    "surface": "cell",
@@ -5063,7 +5075,7 @@
   },
   "/us/new-jersey/cemeteries-and-crematories": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/construction-and-mining-except-oil-well-machinery-and-equipment-merchant-wholesalers": {
    "surface": "cell",
@@ -5083,7 +5095,7 @@
   },
   "/us/new-jersey/electrical-contractors-and-other-wiring-installation-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/engine-turbine-and-power-transmission-equipment-manufacturing": {
    "surface": "cell",
@@ -5091,11 +5103,11 @@
   },
   "/us/new-jersey/facilities-support-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/family-planning-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/fruit-and-vegetable-preserving-and-specialty-food-manufacturing": {
    "surface": "cell",
@@ -5103,7 +5115,7 @@
   },
   "/us/new-jersey/funeral-homes-and-funeral-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/general-freight-trucking-local": {
    "surface": "cell",
@@ -5111,11 +5123,11 @@
   },
   "/us/new-jersey/general-rental-centers": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/new-jersey/golf-courses-and-country-clubs": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/new-jersey/grantmaking-and-giving-services": {
    "surface": "cell",
@@ -5123,7 +5135,7 @@
   },
   "/us/new-jersey/graphic-design-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/home-furnishing-merchant-wholesalers": {
    "surface": "cell",
@@ -5151,19 +5163,19 @@
   },
   "/us/new-jersey/office-administrative-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/office-supplies-and-stationery-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/offices-of-podiatrists": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/other-amusement-and-recreation-industries": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/other-chemical-and-allied-products-merchant-wholesalers": {
    "surface": "cell",
@@ -5175,15 +5187,15 @@
   },
   "/us/new-jersey/outdoor-advertising": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/outpatient-care-centers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/payroll-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-jersey/power-and-communication-line-and-related-structures-construction": {
    "surface": "cell",
@@ -5227,11 +5239,11 @@
   },
   "/us/new-jersey/telemarketing-bureaus-and-other-contact-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/truck-utility-trailer-and-rv-recreational-vehicle-rental-and-leasing": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/new-jersey/used-household-and-office-goods-moving": {
    "surface": "cell",
@@ -5239,7 +5251,7 @@
   },
   "/us/new-jersey/used-merchandise-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-jersey/utilities": {
    "surface": "cell",
@@ -5255,7 +5267,7 @@
   },
   "/us/new-mexico/all-other-professional-scientific-and-technical-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/arts-entertainment-and-recreation": {
    "surface": "cell",
@@ -5263,27 +5275,27 @@
   },
   "/us/new-mexico/automotive-oil-change-and-lubrication-shops": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/automotive-parts-and-accessories-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/automotive-repair-and-maintenance": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/beer-wine-and-liquor-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/blood-and-organ-banks": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/new-mexico/building-equipment-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/building-material-and-garden-equipment-and-supplies-dealers": {
    "surface": "cell",
@@ -5295,15 +5307,15 @@
   },
   "/us/new-mexico/business-service-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/clothing-and-clothing-accessories-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/computer-systems-design-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/crude-petroleum-extraction": {
    "surface": "cell",
@@ -5319,7 +5331,7 @@
   },
   "/us/new-mexico/drywall-and-insulation-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/electronics-stores": {
    "surface": "cell",
@@ -5327,7 +5339,7 @@
   },
   "/us/new-mexico/food-and-beverage-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/food-manufacturing": {
    "surface": "cell",
@@ -5347,11 +5359,11 @@
   },
   "/us/new-mexico/general-merchandise-stores-including-warehouse-clubs-and-supercenters": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/home-furnishings-stores": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/jewelry-and-silverware-manufacturing": {
    "surface": "cell",
@@ -5359,7 +5371,7 @@
   },
   "/us/new-mexico/meat-markets": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/metalworking-machinery-manufacturing": {
    "surface": "cell",
@@ -5367,23 +5379,23 @@
   },
   "/us/new-mexico/motion-picture-theaters-except-drive-ins": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/musical-groups-and-artists": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/offices-of-other-health-practitioners": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/offices-of-physicians-except-mental-health-specialists": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/offices-of-physicians-mental-health-specialists": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/oil-and-gas-pipeline-and-related-structures-construction": {
    "surface": "cell",
@@ -5391,7 +5403,7 @@
   },
   "/us/new-mexico/other-support-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/other-telecommunications": {
    "surface": "cell",
@@ -5399,11 +5411,11 @@
   },
   "/us/new-mexico/painting-and-wall-covering-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/personal-and-laundry-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/plastics-materials-and-basic-forms-and-shapes-merchant-wholesalers": {
    "surface": "cell",
@@ -5415,7 +5427,7 @@
   },
   "/us/new-mexico/security-systems-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/soft-drink-and-ice-manufacturing": {
    "surface": "cell",
@@ -5427,11 +5439,11 @@
   },
   "/us/new-mexico/temporary-help-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-mexico/veterinary-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-mexico/women-s-children-s-and-infants-clothing-and-accessories-merchant-wholesalers": {
    "surface": "cell",
@@ -5439,15 +5451,15 @@
   },
   "/us/new-york/accounting-tax-preparation-bookkeeping-and-payroll-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/advertising-public-relations-and-related-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/all-other-professional-scientific-and-technical-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/brick-stone-and-related-construction-material-merchant-wholesalers": {
    "surface": "cell",
@@ -5455,7 +5467,7 @@
   },
   "/us/new-york/business-service-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-york/cable-and-other-subscription-programming": {
    "surface": "cell",
@@ -5463,7 +5475,7 @@
   },
   "/us/new-york/car-washes": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/computer-and-computer-peripheral-equipment-and-software-merchant-wholesalers": {
    "surface": "cell",
@@ -5495,7 +5507,7 @@
   },
   "/us/new-york/drinking-places-alcoholic-beverages": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/electric-power-transmission-control-and-distribution": {
    "surface": "cell",
@@ -5503,19 +5515,19 @@
   },
   "/us/new-york/electronic-and-precision-equipment-repair-and-maintenance": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/family-planning-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-york/florists": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-york/framing-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/furniture-merchant-wholesalers": {
    "surface": "cell",
@@ -5523,7 +5535,7 @@
   },
   "/us/new-york/gasoline-stations": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-york/general-medical-and-surgical-hospitals": {
    "surface": "cell",
@@ -5531,7 +5543,7 @@
   },
   "/us/new-york/golf-courses-and-country-clubs": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/hardware-merchant-wholesalers": {
    "surface": "cell",
@@ -5543,7 +5555,7 @@
   },
   "/us/new-york/independent-artists-writers-and-performers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/industrial-building-construction": {
    "surface": "cell",
@@ -5559,11 +5571,11 @@
   },
   "/us/new-york/landscaping-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-york/lessors-of-nonresidential-buildings-except-miniwarehouses": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/meat-and-meat-product-merchant-wholesalers": {
    "surface": "cell",
@@ -5571,7 +5583,7 @@
   },
   "/us/new-york/media-buying-agencies": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/men-s-and-boys-clothing-and-furnishings-merchant-wholesalers": {
    "surface": "cell",
@@ -5583,7 +5595,7 @@
   },
   "/us/new-york/musical-groups-and-artists": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/nonferrous-metal-except-copper-and-aluminum-rolling-drawing-and-extruding": {
    "surface": "cell",
@@ -5599,11 +5611,11 @@
   },
   "/us/new-york/other-personal-care-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/outpatient-mental-health-and-substance-abuse-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-york/petroleum-and-coal-products-manufacturing": {
    "surface": "cell",
@@ -5627,7 +5639,7 @@
   },
   "/us/new-york/real-estate-property-managers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/religious-organizations": {
    "surface": "cell",
@@ -5635,7 +5647,7 @@
   },
   "/us/new-york/specialized-design-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/new-york/support-activities-for-agriculture-and-forestry": {
    "surface": "cell",
@@ -5659,7 +5671,7 @@
   },
   "/us/new-york/travel-arrangement-and-reservation-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/new-york/turned-product-and-screw-nut-and-bolt-manufacturing": {
    "surface": "cell",
@@ -5675,15 +5687,15 @@
   },
   "/us/north-carolina/all-other-personal-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/all-other-specialty-trade-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/blood-and-organ-banks": {
    "surface": "cell",
-   "blocks": 14
+   "blocks": 5
   },
   "/us/north-carolina/civic-and-social-organizations": {
    "surface": "cell",
@@ -5691,7 +5703,7 @@
   },
   "/us/north-carolina/continuing-care-retirement-communities-and-assisted-living-facilities-for-the-elderly": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/credit-intermediation-and-related-activities": {
    "surface": "cell",
@@ -5699,7 +5711,7 @@
   },
   "/us/north-carolina/dance-companies": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/educational-services": {
    "surface": "cell",
@@ -5707,15 +5719,15 @@
   },
   "/us/north-carolina/exterminating-and-pest-control-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/facilities-support-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/finish-carpentry-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/fish-and-seafood-merchant-wholesalers": {
    "surface": "cell",
@@ -5723,7 +5735,7 @@
   },
   "/us/north-carolina/graphic-design-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/grocery-and-related-product-merchant-wholesalers": {
    "surface": "cell",
@@ -5735,7 +5747,7 @@
   },
   "/us/north-carolina/investigation-and-security-services": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/jewelry-watch-precious-stone-and-precious-metal-merchant-wholesalers": {
    "surface": "cell",
@@ -5743,7 +5755,7 @@
   },
   "/us/north-carolina/landscape-architectural-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/lessors-of-nonfinancial-intangible-assets-except-copyrighted-works": {
    "surface": "cell",
@@ -5751,7 +5763,7 @@
   },
   "/us/north-carolina/media-buying-agencies": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/miscellaneous-durable-goods-merchant-wholesalers": {
    "surface": "cell",
@@ -5759,15 +5771,15 @@
   },
   "/us/north-carolina/offices-of-optometrists": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/offices-of-real-estate-appraisers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/other-building-finishing-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/other-heavy-and-civil-engineering-construction": {
    "surface": "cell",
@@ -5775,11 +5787,11 @@
   },
   "/us/north-carolina/other-personal-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/painting-and-wall-covering-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/paper-and-paper-product-merchant-wholesalers": {
    "surface": "cell",
@@ -5787,11 +5799,11 @@
   },
   "/us/north-carolina/pet-care-except-veterinary-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/photofinishing-laboratories-except-one-hour": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/psychiatric-and-substance-abuse-hospitals": {
    "surface": "cell",
@@ -5799,15 +5811,15 @@
   },
   "/us/north-carolina/real-estate-property-managers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/research-and-development-in-nanotechnology": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/research-and-development-in-the-social-sciences-and-humanities": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/securities-brokerage": {
    "surface": "cell",
@@ -5815,7 +5827,7 @@
   },
   "/us/north-carolina/site-preparation-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-carolina/stone-mining-and-quarrying": {
    "surface": "cell",
@@ -5823,15 +5835,15 @@
   },
   "/us/north-carolina/technical-and-trade-schools": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/telephone-call-centers": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/traveler-accommodation": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-carolina/water-supply-and-irrigation-systems": {
    "surface": "cell",
@@ -5851,11 +5863,11 @@
   },
   "/us/north-dakota/all-other-amusement-and-recreation-industries": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-dakota/architectural-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-dakota/commercial-banking": {
    "surface": "cell",
@@ -5867,7 +5879,7 @@
   },
   "/us/north-dakota/consumer-goods-rental": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-dakota/crude-petroleum-extraction": {
    "surface": "cell",
@@ -5899,7 +5911,7 @@
   },
   "/us/north-dakota/management-scientific-and-technical-consulting-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-dakota/motor-vehicle-and-motor-vehicle-parts-and-supplies-merchant-wholesalers": {
    "surface": "cell",
@@ -5911,11 +5923,11 @@
   },
   "/us/north-dakota/offices-of-physical-occupational-and-speech-therapists-and-audiologists": {
    "surface": "cell",
-   "blocks": 13
+   "blocks": 5
   },
   "/us/north-dakota/other-building-equipment-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-dakota/other-grocery-and-related-products-merchant-wholesalers": {
    "surface": "cell",
@@ -5923,7 +5935,7 @@
   },
   "/us/north-dakota/other-scientific-and-technical-consulting-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-dakota/petroleum-bulk-stations-and-terminals": {
    "surface": "cell",
@@ -5935,7 +5947,7 @@
   },
   "/us/north-dakota/rental-and-leasing-services": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/north-dakota/water-supply-and-irrigation-systems": {
    "surface": "cell",
@@ -5959,7 +5971,7 @@
   },
   "/us/ohio/finish-carpentry-contractors": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/ohio/industrial-building-construction": {
    "surface": "cell",
@@ -5975,7 +5987,7 @@
   },
   "/us/ohio/periodical-publishers": {
    "surface": "cell",
-   "blocks": 15
+   "blocks": 5
   },
   "/us/ohio/recyclable-material-merchant-wholesalers": {
    "surface": "cell",
