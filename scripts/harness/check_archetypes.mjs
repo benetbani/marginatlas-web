@@ -420,10 +420,11 @@ function inPage(storySelector) {
     if (r.kind === "terminus") {
       const doors = [...card.querySelectorAll("[data-door]")];
       r.doorCount = doors.length;
-      /* The cap the terminus was drawn with (`data-door-cap`, Terminus.tsx): three, or the trade close's four (TRADE_CLOSE_CAP, plan
-         2026-10-13 cost-simulator, Task 6, Q3 answered A). No other cap is honoured: a terminus asking five reads against three. */
-      const capEl = card.matches("[data-door-cap]") ? card : card.querySelector("[data-door-cap]");
-      r.doorCap = Number(capEl?.getAttribute("data-door-cap")) === 4 ? 4 : 3;
+      /* The allowance is keyed to WHERE the terminus is drawn, never to the cap it declares (`data-door-cap` is the component's own
+         prop, so any caller could ask four and pass): the trade close's story (`cell:<handle>:close`, cellCloseKey in stories.tsx)
+         reads against four (TRADE_CLOSE_CAP, plan 2026-10-13 cost-simulator, Task 6, Q3 answered A), every other terminus against
+         three, whatever cap it was drawn with. Which callers pass a cap at all is pinned in tests/simulator/door.test.ts. */
+      r.doorCap = /^terminus:cell:[^:]+:close$/.test(inst) ? 4 : 3;
       r.pillCount = doors.filter((d) => d.getAttribute("data-door-kind") === "pill").length;
       r.doorFirstWords = doors.map((d) => (d.textContent || "").trim().split(/\s+/)[0].toLowerCase());
       r.doorLines = doors.map((d) => { const cs = getComputedStyle(d); const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5; const inner = d.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom); return Math.round(inner / lh); });

@@ -9,13 +9,15 @@
  */
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { JSDOM } from "jsdom";
 import { buildTradeCloseDoors } from "../../src/lib/spine/close_rows";
 import { Terminus, DOOR_CAP } from "../../src/components/spine/archetypes/Terminus";
 import { COPY } from "../../src/lib/spine/copy";
 import { INDUSTRIES, isDefaultVisible, industryToSlug } from "../../src/lib/taxonomy";
 import { red, redSummary } from "../../scripts/lib/red";
+import { stripCommentLines } from "../../scripts/lib/strip_comments";
 
 const RULE = "calc-door";
 const FILE = "src/lib/spine/close_rows.ts";
@@ -49,6 +51,21 @@ async function main(): Promise<void> {
   const three = renderToStaticMarkup(React.createElement(Terminus, { doors: london }));
   check("the trade close draws its four doors; a terminus without the cap still draws three", (four.match(/data-door="/g) ?? []).length === 4 && (three.match(/data-door="/g) ?? []).length === 3, "src/components/spine/archetypes/Terminus.tsx");
   check("the trade page asks four of its close card", /<CloseCard doors=\{doors\} cap=\{TRADE_CLOSE_CAP\} \/>/.test(readFileSync("src/components/spine/cell/cell-view.tsx", "utf8")), "src/components/spine/cell/cell-view.tsx");
+  /* EVERY CALLER OF `cap=`, pinned (review of run 1, I1): the archetype gate reads the trade close's four by where a terminus is
+     drawn, and this list is the other half, so a new caller asking a cap anywhere reds here until it is named with its reason. Every
+     `cap={...}` in a .tsx under src/, comments stripped, read as file and expression: an alias of Terminus or CloseCard cannot hide. */
+  const CAP_CALLERS: ReadonlyArray<readonly [string, string, string]> = [
+    ["src/components/spine/cell/cell-view.tsx", "TRADE_CLOSE_CAP", "the trade page's close, the one ruled four"],
+    ["src/components/spine/archetypes/stories.tsx", "TRADE_CLOSE_CAP", "the trade close's story on the archetype sheet, drawn as the page draws it"],
+    ["src/components/spine/cell/exit.tsx", "cap", "CloseCard forwarding its own prop to Terminus"],
+    ["src/app/(site)/account/AccountPreview.tsx", "account.savedCap", "the saved-cells list's limit, no terminus"],
+  ];
+  const tsx = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? tsx(join(dir, e.name)) : e.name.endsWith(".tsx") ? [join(dir, e.name)] : []));
+  const callers = tsx("src").flatMap((f) => [...stripCommentLines(readFileSync(f, "utf8").split("\n")).join("\n").matchAll(/(?<![\w-])cap=\{([^}]*)\}/g)].map((m) => `${f.replace(/\\/g, "/")} cap={${m[1].trim()}}`));
+  const pinned = CAP_CALLERS.map(([f, e]) => `${f} cap={${e}}`);
+  const stray = callers.filter((c) => !pinned.includes(c));
+  const gone = pinned.filter((c) => !callers.includes(c));
+  check(`every caller of cap= is pinned (${callers.length} read)${stray.length ? `; not pinned: ${stray.join("; ")}` : ""}${gone.length ? `; pinned and gone: ${gone.join("; ")}` : ""}`, callers.length > 0 && stray.length === 0 && gone.length === 0, "src/components/spine/archetypes/Terminus.tsx");
   check("the door gate lands /calculator by the place it resolves", /if \(path === "\/calculator"\) return calculatorLanding\(href\);/.test(readFileSync("scripts/verify_doors.ts", "utf8")), "scripts/verify_doors.ts");
   check("the archetype gate holds the trade close to four", /checkDoors\(name, doors, "trade close", TRADE_CLOSE_CAP\)/.test(readFileSync("scripts/verify_archetype_copy.ts", "utf8")), "scripts/verify_archetype_copy.ts");
 
