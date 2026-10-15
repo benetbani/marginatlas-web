@@ -62,12 +62,13 @@ if (typeof K.Basis === "function") {
 const rows = renderToStaticMarkup(React.createElement(FactRows, { rows: [{ key: "a", label: "One", value: "1" }, { key: "b", label: "Two", value: "2" }] }));
 const rowCls = [...rows.matchAll(/data-row="[ab]" class="([^"]*)"/g)].map((m) => m[1]);
 check(`a fact row stands 16 above and below its words (${rowCls.map((c) => step(c, "py")).join(", ")})`, rowCls.length === 2 && rowCls.every((c) => step(c, "py") === 16), FACT);
-/* THE 4 UNDER THE TILE BELONGS TO THE TILE (plan 2026-10-12 rhythm-air-inside, Task 4, the German running costs' hole): a row with no tile and no swatch has nothing to centre its
-   first line on, so its label and its figure stand without the 4; a row with a tile or a swatch keeps it. */
+/* THE 4 UNDER THE TILE BELONGED TO THE TILE (plan 2026-10-12 rhythm-air-inside, Task 4, the German running costs' hole), AND THE TILE IS GONE (Task 5,
+   tiles on openers only; this pin follows that ruled change, it is not a raised baseline): no row draws a tile, so every row, one handed an icon or a
+   swatch included, stands its label and its figure on the row's padding without the 4; the swatch's own mt-1 sits it on the label's first line. */
 const bareRow = rows.slice(rows.indexOf('data-row="a"'), rows.indexOf('data-row="b"'));
 const tiledRow = renderToStaticMarkup(React.createElement(FactRows, { rows: [{ key: "t", label: "Tiled", value: "1", icon: "wages" }, { key: "s", label: "Swatched", value: "2", swatch: "#999999" }] }));
 check("a fact row without a tile or a swatch stands its label and its figure without the 4 under the tile (no pt-1)", /data-label="true" class="block text-/.test(bareRow) && /<span class="fig block text-/.test(bareRow), FACT);
-check("a fact row with a tile or a swatch keeps the 4 under its label and its figure", (tiledRow.match(/data-label="true" class="block pt-1 text-/g) ?? []).length === 2 && (tiledRow.match(/<span class="fig block pt-1 text-/g) ?? []).length === 2, FACT);
+check("a fact row handed an icon or a swatch stands its label and its figure on the row's padding too (no pt-1; no tile since Task 5)", (tiledRow.match(/data-label="true" class="block text-/g) ?? []).length === 2 && (tiledRow.match(/<span class="fig block text-/g) ?? []).length === 2 && !/\bpt-1\b/.test(tiledRow), FACT);
 
 /* NO PAGE SETS ITS OWN: the spine the pages draw, comments stripped. THE SCAN SET IS ONE HELPER'S (fix round 1 of this task's review): the pin had walked nine
    folders it was handed by name, so home/, openings/, a new folder and every file at the root went unread and the test printed PASS about source it had not

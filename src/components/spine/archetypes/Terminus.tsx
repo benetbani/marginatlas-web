@@ -23,10 +23,10 @@
  *  - No doors, nothing drawn; the view then draws no card.
  *  - THE KICKER IS OPTIONAL (MODEL.md 8.2, `19 compare`; plan step 31, fifth
  *    dispatch, 2026-09-18). The bare `<h3>` here is not PART 7's opener (no
- *    28px icon tile); a caller that opens with the kit's `Rail`, which
- *    carries the tile, passes no kicker and the `<h3>` is not drawn, so the
+ *    opener glyph); a caller that opens with the kit's `Rail`, which
+ *    carries the glyph, passes no kicker and the `<h3>` is not drawn, so the
  *    card never prints two kicker lines stacked. The country page's compare
- *    door is the first such caller, with the `compare` tile the cell and
+ *    door is the first such caller, with the `compare` glyph the cell and
  *    neighbourhood pages already ship; the close still passes its own.
  *  - THE PILL'S HOVER IS INK, NOT TERRACOTTA (PART 6: terracotta never on a
  *    hover state, a control or a pill; this file was the named offender).

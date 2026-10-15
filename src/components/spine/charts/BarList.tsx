@@ -6,15 +6,16 @@
  * A badge word may stand after a name (a cover the law requires).
  */
 import * as React from "react";
-import { Fig, Ico } from "@/components/spine/kit";
+import { Fig } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { Provenance } from "@/lib/spine/provenance";
 import type { AnswerType } from "@/lib/spine/country_slots";
 
-export type BarItem = { key: string; label: string; value: number; display: string; href?: string; icon?: AtlasIconId; badge?: string | null; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance };
+export type BarItem = { key: string; label: string; value: number; display: string; href?: string; /** Drawn nowhere since plan 2026-10-12 rhythm-air-inside, Task 5; kept so a caller that passes one still compiles. */ icon?: AtlasIconId; badge?: string | null; /** Where the figure came from (plan 06, task B5). */ prov?: Provenance };
 
-/** `look`: "icons" draws each thing's glyph before its name (a list of trades); "plain" draws the name alone, for a list whose
- *  items share no glyph worth drawing (the covers of one insurance). The page laws read it as the two lists' difference. */
+/** `look`: "icons" is a list of things (trades): 10px bars and a 12px row gap; "plain" a list whose items share no glyph worth drawing
+ *  (the covers of one insurance): 16px bars and a 24px row gap. Since plan 2026-10-12 rhythm-air-inside, Task 5 (tiles on openers only)
+ *  neither draws a glyph before the name, so the bars and the gap are the two lists' difference, which the page laws read by the look. */
 /** `mark` (2026-09-25, the chain's art direction, C2: a card marks its answer, at most two accent marks): the one bar in the
  *  accent's gradient, the item the card is about (the highest margin, the cover the law requires); every other bar in the neutral
  *  gradient, so the list still reads as a ranking at a glance and the answer is the one bar in colour. Defaults to the largest. */
@@ -38,7 +39,7 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
     /* THE ROW FOLLOWS THE CARD, NOT THE WINDOW: from 420px of card the bar takes the row's last column; under it (a phone, a third
        of a desktop) the name keeps its column and the bar runs the row's full width on a line of its own, never squeezed to zero. */
     <div className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
-    <ol data-archetype="bar-list" data-visual="1" data-look={look} data-rows={String(live.length)} {...(answer ? { "data-answer": answer } : {})} className={`m-0 grid list-none items-center gap-x-3 p-0 ${fill ? "flex-1 gap-y-0 " : look === "icons" ? "gap-y-3 " : "gap-y-6 "}${look === "icons" ? "grid-cols-[auto_minmax(0,1fr)_auto] [@container(min-width:420px)]:grid-cols-[auto_minmax(0,24ch)_auto_minmax(0,1fr)]" : "grid-cols-[minmax(0,1fr)_auto] [@container(min-width:420px)]:grid-cols-[minmax(0,24ch)_auto_minmax(0,1fr)]"}`}>
+    <ol data-archetype="bar-list" data-visual="1" data-look={look} data-rows={String(live.length)} {...(answer ? { "data-answer": answer } : {})} className={`m-0 grid list-none items-center gap-x-3 p-0 ${fill ? "flex-1 gap-y-0 " : look === "icons" ? "gap-y-3 " : "gap-y-6 "}grid-cols-[minmax(0,1fr)_auto] [@container(min-width:420px)]:grid-cols-[minmax(0,24ch)_auto_minmax(0,1fr)]`}>
       {live.map((i, idx) => {
         const w = top > 0 ? Math.max(2, (i.value / top) * 100) : 0;
         const name = i.href ? (
@@ -48,7 +49,6 @@ export function BarList({ items, max, ariaUnit = "", look = "icons", mark, fill 
         );
         return (
           <li key={i.key} data-row={i.key} className={`col-span-full grid max-w-none grid-cols-subgrid items-center${fill ? ` self-stretch content-center py-3${idx > 0 ? " border-t border-[var(--c-border)]" : " pt-0"}${idx === live.length - 1 ? " pb-0" : ""}` : ""}`}>
-            {look === "icons" ? (i.icon ? <Ico id={i.icon} tone="terra" /> : <span aria-hidden />) : null}
             <span data-label className="min-w-0 truncate text-[length:var(--t-body)] leading-tight">
               {name}
               {/* The badge is the page's one chip shape (the level pill on the ranges, the buyers on the sale card), 2026-09-26. */}

@@ -179,6 +179,10 @@ const GATES: Gate[] = [
   { name: "spacing-pin", script: "tests/spine/spacing_pin.test.ts" },
   /* D3 AND D6 ON THE ZONES, THE JUDGING (plan 2026-10-12 rhythm-air-inside, Task 1D): scripts/lib/zone_rhythm.mjs over fixtures; art-direction applies it to the renders. No browser. */
   { name: "zone-rhythm", script: "tests/spine/zone_rhythm.test.ts" },
+  /* TILES ON OPENERS ONLY (plan 2026-10-12 rhythm-air-inside, Task 5; his rule of 2026-10-13: a section's icon "bigger and superior with no
+     background", never the same as an icon inside it): the kit's Ico tile drawn nowhere a spine page draws (source, scanSpine), every opener one
+     bare 32px terracotta glyph in its Rail and every other glyph grey and never its opener's, on the renders pages-fresh writes. No browser. */
+  { name: "tiles-openers", script: "tests/spine/tiles_openers.test.ts" },
   /* THE COUNTRY PAGE'S MODEL (plan 2026-10-13 country-page-journey, Task 1A; his direction of 2026-10-13: the same slots, in the same
      order and type, for every country): the sixteen slots and the ruled 5b in seven stages, their words within the copy rules, the
      direction table the spec's. No browser. */

@@ -34,6 +34,9 @@ export const AtlasIcon = React.forwardRef<SVGSVGElement, AtlasIconProps>(
       <svg
         {...rest}
         ref={ref}
+        /* `data-icon` names the glyph on the page (plan 2026-10-12 rhythm-air-inside, Task 5): the tiles-openers gate reads it to tell a
+           section's inner glyphs from its opener's. An attribute only; nothing styles on it. */
+        data-icon={id}
         viewBox="0 0 32 32"
         width={size}
         height={size}

@@ -155,7 +155,7 @@
  * gets a section built from that file, not a lookup dressed as knowledge.
  */
 import * as React from "react";
-import { Basis, Box, Rail, Fig, Ico } from "@/components/spine/kit";
+import { Basis, Box, Rail, Fig } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { DoorKind } from "@/lib/spine/door_kinds";
 import type { Provenance } from "@/lib/spine/provenance";
@@ -175,7 +175,7 @@ import { HATCH } from "./IncomeBreakdown";
 import { CompanionRow, type Companion } from "./BentoBand";
 
 export type BarRow = { key: string; name: string; href?: string;
-  /** A tile before the name (the site's trade-rows grammar, PART 5), for a ranking of trades: the city's market card since 2026-09-20 late evening. Rows with a tile make the card's `data-look="icons"`, the difference his clause 55 asks of two ranked-bars cards on one page. */
+  /** Drawn nowhere since 2026-10-12 (tiles on openers only); kept so a caller that passes one still compiles. Rows given one still stamp the card's `data-look="icons"` (the city's market card), which since then names the caller's intent and no drawn difference: see the report of plan 2026-10-12, Task 5. */
   icon?: AtlasIconId;
   /** What a row that navigates promises: the kind its page's masthead answers (src/lib/spine/door_kinds.ts), set by the builder with the href and stamped as `data-lands` for the chain's `doors` gate (plan step 39, 2026-09-19). */
   lands?: DoorKind;
@@ -621,7 +621,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
                       the name: the model laws' DISTRICT ADJECTIVE reads any
                       span nested in a district's name as free text about the
                       district, and a glyph is not a word. */}
-                  <span data-label data-self={r.key === selfKey ? "1" : undefined} className={`${r.key === selfKey ? selfName(NAME_CLS) : NAME_CLS}${r.icon ? " flex items-center gap-2" : ""}${r.href ? " after:ml-1.5 after:text-[length:var(--t-body)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.icon ? <Ico id={r.icon} tone="terra" /> : null}{r.name}</span>
+                  <span data-label data-self={r.key === selfKey ? "1" : undefined} className={`${r.key === selfKey ? selfName(NAME_CLS) : NAME_CLS}${r.href ? " after:ml-1.5 after:text-[length:var(--t-body)] after:font-normal after:text-[var(--c-muted)] after:content-['→']" : ""}`}>{r.name}</span>
                   {/* --t-lead, THE WHOLE COLUMN, not the leader alone. PART 5
                       allows 16px for "the card's naming figure" and in the
                       same breath requires every figure in a column to share

@@ -12,7 +12,7 @@
  *  - `data-archetype="thresholds"`, `data-rows`; `data-row` and `data-label` on each line.
  */
 import * as React from "react";
-import { Box, Fig, Focal, Ico, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Rail } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { Thresholds as ThresholdsData } from "@/lib/spine/sections/thresholds";
 
@@ -38,8 +38,7 @@ export function Thresholds({ id = "thresholds", data, fill = false }: { id?: str
         {/* `max-w-none` on each row: globals.css gives every list item under main the prose measure (360px at a 768 window), and a
             row there stopped 312px short of the card's edge (the page filter's WHITE SPACE on the trade page at 768, 2026-09-25). */}
         {data.rows.map((r) => (
-          <li key={r.key} data-row={r.key} className={`grid max-w-none grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-3 border-t border-[var(--c-border)] py-3 [@container(min-width:900px)]:first:border-t-0 ${fill ? "content-center" : ""}`}>
-            <Ico id={r.icon} tone="terra" />
+          <li key={r.key} data-row={r.key} className={`grid max-w-none grid-cols-[minmax(0,1fr)_auto] items-start gap-x-3 border-t border-[var(--c-border)] py-3 [@container(min-width:900px)]:first:border-t-0 ${fill ? "content-center" : ""}`}>
             <span className="min-w-0">
               <span data-label className="block text-[length:var(--t-body)] leading-tight text-[var(--c-ink)]">{r.label}</span>
               {r.note ? <span className="block text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{r.note}</span> : null}

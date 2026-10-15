@@ -22,7 +22,7 @@
  *  - `data-archetype="local-apps"`, `data-visual="1"` (the flags draw), `data-jobs`; `data-row` and `data-label` on each app.
  */
 import * as React from "react";
-import { Box, Fig, Focal, Ico, Rail } from "@/components/spine/kit";
+import { Box, Fig, Focal, Rail } from "@/components/spine/kit";
 import { CountryFlag } from "@/components/CountryFlag";
 import { COPY } from "@/lib/spine/copy";
 import type { LocalApps as LocalAppsData } from "@/lib/spine/sections/local_apps";
@@ -44,7 +44,6 @@ export function LocalApps({ id = "local-apps", data }: { id?: string; data: Loca
                   every word of a directory with no figure stood at 14px or under, and the page filter's NO LEAD read a card with no
                   order for the eye. The subject leads, as the spectra table's `lead` scale has its trait names do. */}
               <div className="mb-1 flex items-center gap-2">
-                <Ico id={j.icon} tone="terra" />
                 <span className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{j.label}</span>
                 {allFree ? <span className="ml-auto text-[length:var(--t-body)] font-semibold text-[var(--c-muted)]">{COPY.localApps.allFree}</span> : null}
               </div>
