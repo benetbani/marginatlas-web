@@ -351,3 +351,115 @@ right half stands empty beside them. No fix is free of a design call: the opened
 leave the same blank on the right; the plus under the legend leaves the blank under the bar instead; two rows a line across the card is a
 new form of DetailPanel for every trade page. So it stays red, no baseline touched, for the controller to put to the owner: where a
 plus opens inside a two-half card.
+
+## Task 7: the written rules (texts for the controller)
+
+Per the controller's ruling no file in E:/atlas was edited, and GUIDELINES.md was not edited on this branch either: the texts below
+are ready to apply as written. Each anchor was checked to exist on 2026-10-15 (E:/atlas on `p4-seam`, read only; the website's
+GUIDELINES.md as this branch holds it). The FOUNDER-VERDICTS, MODEL and GUIDELINES texts are the plan's, word for word, with the
+measured floor (10), slot 5b (Q1) and the answers (Q1 to Q6) filled in; the plan names no DISTANCES text, so 7.3 is new, written from
+the distances Task 4 measured and set (efbe2bad).
+
+### 7.1 FOUNDER-VERDICTS.md (E:/atlas/rules/), appended after the last entry
+
+The last entry on `p4-seam` today is "## The long-term page architecture, the home spec, search data, AI access (2026-10-09, in
+chat)"; the home plan's entry ("The home, quiet editorial") is not there yet, so this goes after whichever is last when applied.
+
+```markdown
+## The country page, by the visitor's journey (2026-10-13, in chat)
+
+His words, reading /gb on a phone, in substance (the spec, E:/atlas/docs/superpowers/specs/2026-10-13-country-page-journey-design.md, section 1):
+the stacking of text lowers readability; the alignment of elements is often bad; missing cues make it hard to tell whether an indicator is
+good or bad; "if the same page is done for Cambodia, would you fill it roughly the same? That's the problem, each section has to be filled in
+a more programmatic, category based, less declarative language"; "click to explore more in the same section"; "is the visitor ready for this
+info at this moment?"; "You cannot slap legislative changes at the top"; "in a declarative section you cannot switch from words to numbers";
+"be programmatic, but not shallow, but also relevant and understandable"; the section icons "bigger and superior with no background";
+"vertically first".
+
+His decisions:
+- **Journey order, depth behind "more".** Sixteen slots in seven stages for every country (orient, the market, to open, to run, to last,
+  the rules, next); the UK's extra depth opens inside the slot it deepens (DetailPanel's answer fold, two to eight rows of one type, closed
+  on arrival). One answer type a slot; units in the label or the head, never the cell. A slot without its data omits itself.
+- **Green to red, only in the signal.** One solid triangle beside a placed figure whose measure has an owner direction; its angle carries
+  the state in fifths of the placement; dark green, green, dark yellow, red, dark red, inside the signal's own tokens file alone, the one
+  named exception to the terracotta-and-greys palette; never colour alone (the angle, the word, a key line on every page).
+- The spec, approved by him on 2026-10-13, is the binding text; research R5 section 5 is its slot table.
+
+What it replaces, his rulings over these: MODEL PART 1's walk; 10.2's chapters (one set of seven stages); 10.7's "every row shows at every
+width" (a slot's depth folds); 8.2's "every block is present on every country, drawn or seated" and the floor of 13 (the floor is the thin
+exemplar's measured count); clause 63's "more sections" (the content stays, a dozen sections open on a tap); PART 6's "nothing is a judgment"
+and the palette's "no green" for the signal alone. Kept: one figure printed once, three full widths, no typed figure, a section with no data
+omits itself, the copy rules.
+
+The plan (E:/atlas/docs/superpowers/plans/2026-10-13-country-page-journey.md) asked him six questions; his answers, as the controller
+recorded them:
+- Q1, slot 5 where a country's only trade figures are net margins: a seventeenth slot, 5b "What trades keep" (a share), in stage 2 after
+  slot 5, drawn where a country holds sourced net margins for its trades and omitted elsewhere; slot 5 stays money everywhere.
+- Q2, the hire and loan levers behind the plus: A, the levers stand open in their slot's body under its rows; a plus holds rows only.
+- Q3, admin ease and the living cost (their direction, and the living cost's place): admin ease takes a direction, higher is easier for
+  an owner (dated 2026-10-13); the cost of living carries no mark and stands on the board.
+- Q4, two single-slot stages in a row (art direction D3): A, a stage's opening zone, under its chapter head, starts a new comparison.
+- Q5, the new country floor and the index it decides: "Let them drop (Recommended)" (2026-10-15). The floor is 10, Afghanistan's measured
+  count; /cu, /lk, /mo, /nr and /to fall under it and stop indexing, and stay on the site.
+- Q6, the rule changes' rest past eight rows: A, the run keeps its own continuation, newest first, all one type, the one named exception
+  to the two-to-eight fold.
+```
+
+Q1 to Q4 and Q6 are written from the plan's record of the controller's rulings of 2026-10-13; Q5 carries the owner's words as the
+controller relayed them. The controller replaces any answer with his own words where the chat holds them.
+
+### 7.2 MODEL.md (E:/atlas/design/loop/build/briefs/), each superseded paragraph keeps its text and gains a bracket at its end
+
+1. After the paragraph that opens `**THE WALK, and every country page and every city page obeys it, top to bottom, no exceptions.**`:
+   `[SUPERSEDED FOR THE COUNTRY PAGE 2026-10-13 (his ruling, in chat; FOUNDER-VERDICTS.md "The country page, by the visitor's journey"): the country page follows the visitor's journey, sixteen slots in seven stages (and slot 5b, What trades keep, where a country holds sourced margins), the same for every country (website src/lib/spine/country_slots.ts, held by the country-model and country-slots gates); the city and trade pages keep this walk until their own pass.]`
+2. At the end of the PART 6 paragraph holding `One direction always, so the same words mean the same rank on every page and nothing is a judgment.`:
+   `[AMENDED 2026-10-13 FOR THE SIGNAL ALONE (his ruling, "Green to red, only in the signal"): a placed figure whose measure has an owner direction (website src/lib/spine/owner_direction.ts) carries one triangle whose angle and colour say easier or harder for an owner; the placement sentence keeps its one direction; held by the signal and signal-marks gates.]`
+3. At the end of the paragraph that opens `**THE THIN COUNTRY, SEATED`:
+   `[SUPERSEDED 2026-10-13 (his ruling): no seat; a slot without its data omits itself, so a thin country draws the slots its data holds (Afghanistan eleven, in ten blocks).]`
+4. At the end of the paragraph that opens `**FLOOR: 13,`:
+   `[2026-10-13: the country floor is the thin exemplar's measured count, 10, lowered by measurement (website scripts/harness/check_model_laws.mjs FLOOR_BY_SURFACE); the floor census decides the index from it. His answer to the plan's Q5 (2026-10-15): the five countries it drops (/cu, /lk, /mo, /nr, /to) stop indexing and stay on the site.]`
+5. At the end of the 10.2 paragraph holding `The United Kingdom's four:`:
+   `[SUPERSEDED FOR THE COUNTRY PAGE 2026-10-13: every country's chapters are the journey's stages 2 to 6, numbered 01 to 05: The market, To open, To run, To last, The rules; the masthead and the close stand outside them.]`
+6. At the end of the bullet holding `Every row shows at every width. A fold behind a plus was tried on 2026-10-04 and left the same day`:
+   `[SUPERSEDED FOR THE COUNTRY PAGE 2026-10-13 (his ruling, "depth behind more"): a slot's rows of another type fold behind its plus, DetailPanel's answer fold, two to eight rows of one type, closed on arrival; the browser checks read every page with its panels open (the panels-opened gate).]`
+7. At the end of PART 9 clause 33: `[2026-10-13: the country's floor is PART 8's measured one (8.2's FLOOR bracket of that date).]`
+   At the end of clause 63: `[2026-10-13, the country page: the content stays and a dozen sections open on a tap inside the slot they deepen.]`
+
+Commit messages as the plan words them (E:/atlas): `rules: his rulings of 2026-10-13 on the country page by the visitor's journey, and
+the plan's six questions (plan 2026-10-13 country-page-journey, Task 7)` and `model: the country page by the visitor's journey, the
+signal, the fold and the floor, bracketed where they supersede (plan 2026-10-13 country-page-journey, Task 7)`.
+
+### 7.3 DISTANCES.md (E:/atlas/design/loop/build/briefs/), a new subsection after 2.5 "The band page"
+
+```markdown
+### 2.6 The country page by the journey (2026-10-13)
+
+- **The signal** stands in its own column right after its figure: 16 beside a row's figure, 20 beside a section's 30 (the spec, section 4).
+- **A fold straight under a figure's block** stands 12 below the block; an instrument there (the hire's and the loan's levers) 24. The
+  block's own margin is never added to it (measured 48 and 44 before the rule, Task 4).
+- **A fold's row is the tap**: the whole row 44 tall, and a row that opens a page takes the row's 44 for its link, never an 18 line.
+- **A lone thin slot** (one figure, no rows, no plus) takes the left half of the column from 768 and the left third from 1024, as the
+  kit's Band does; any other lone slot keeps the left two thirds.
+```
+
+### 7.4 GUIDELINES.md (website docs/design-system/), section 0's enforcement table
+
+The rows below are the plan's Step 3, prepared as scratchpad/journey/edit_guidelines.mjs (not run). On this branch the 0.3 floor row still
+reads "21 country, 17 city, ..."; the script's replacement keys on that text, so it is rerun against whatever the merged file holds.
+
+- 0.2: the row that opens `| The palette is terracotta plus cool neutrals only` gains, before its gate cell, " One named exception since
+  2026-10-13, his ruling: the signal's five colours inside `src/components/spine/signal/tokens.ts`, nowhere else." After it:
+  `| A placed figure whose measure has an owner direction carries the signal (one triangle, its angle and colour the state in fifths of the placement, its word its accessible name); a measure with none carries no mark; the page carries one key line. | \`signal\`, \`signal-marks\` | 2026-10-13 |`
+- 0.3: the floor row reads `| A page's block count clears its page type's floor (\`FLOOR_BY_SURFACE\` in \`scripts/harness/check_model_laws.mjs\`, never typed here; the country's, the thin exemplar's measured count since 2026-10-13). | \`check_model_laws.mjs: BLOCK FLOOR\` | 2026-09-08, five floors since 2026-09-17 |`;
+  the SPINE row gains " Retired 2026-08-29 to 2026-09-17; on the country page the slots hold it since 2026-10-13: every country draws its
+  slots in the model's order and types." with its gate cell `country-slots`; after it:
+  `| A desktop pair joins two neighbouring slots of one stage; a slot left over stands alone; a chapter's opening zone starts D3 afresh. | \`country-zones\`, \`art-direction\` | 2026-10-13 |`
+- 0.4: after the row that opens `| One unit per column`:
+  `| One answer type a list (money, share, time, position, state, dated pair); a unit sits in the label or the head, never in the cell. | \`answer-type\` | 2026-10-13 |`
+- 0.5: the row that opens `| A detail panel (the plus) is closed on arrival` gains " On the country page the plus is the answer fold: its
+  head, its count and the plus at the row's end, two to eight rows of one type, the whole row a 44px target (the rule changes' own
+  continuation the one named exception, Q6)." and its gate cell adds `answer-fold`; after it:
+  `| Every browser check that reads a section's content reads it with the panels open. | \`panels-opened\` | 2026-10-13 |`
+
+Commit message as the plan words it (website): `journey:guidelines: the signal, the answer type, the fold, the zones and the opened
+reading in the enforcement table (plan 2026-10-13 country-page-journey, Task 7)`.
