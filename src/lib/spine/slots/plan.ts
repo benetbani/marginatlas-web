@@ -8,6 +8,7 @@
 import type { SlotId } from "@/lib/spine/country_slots";
 import type { MarginCard } from "@/lib/spine/margin_rows";
 import type { SlotModel } from "./types";
+import type { SlotWeight } from "./zones";
 import { buildCustomersSlot, buildSpendSlot, buildTradesSlot, buildMarginsSlot, type CustomersDrawing, type SpendDrawing, type TradesDrawing, type MarginsDrawing } from "./market";
 import { buildOpenSlot, type OpenDrawing } from "./open";
 import { buildHireSlot, type HireDrawing } from "./hire";
@@ -53,4 +54,30 @@ export function planCountry(iso2In: string, name: string, today: string, margins
   const close = buildCloseSlot(iso2, name); if (close) slots.push({ id: "close", model: close });
   const drawn = slots.flatMap((s): SlotId[] => (s.id === "tax-on-profit" ? ["tax-on-profit", "where-it-stands"] : [s.id]));
   return { slots, drawn };
+}
+
+/** A planned slot's weight for pairing (src/lib/spine/slots/zones.ts; final review I3): its rows plus its folds, whether it carries an
+ *  instrument (the hire's lever where the pay and the employer's rate draw it, the loan's lever where the start-up loan does), and whether it
+ *  carries a drawing (the city cards, the share bar, the bars, the forms table, the curve, the world track, the range, the spectra, the
+ *  changes' run, the doors). The masthead weighs nothing here: it is its own full-width zone. */
+export function slotWeight(s: PlannedSlot): SlotWeight | null {
+  if (!s.model) return null;
+  const units = (s.model.rows?.rows.length ?? 0) + s.model.more.length;
+  switch (s.id) {
+    case "hire": return { units, instrument: !!(s.model.drawing.pay && s.model.drawing.rate != null), drawing: false };
+    case "running-costs":
+    case "filings": return { units, instrument: false, drawing: false };
+    case "customers": return { units, instrument: false, drawing: !!s.model.drawing.cards };
+    case "open": return { units, instrument: false, drawing: s.model.drawing.setup.length > 0 };
+    case "exit": return { units, instrument: false, drawing: !!s.model.drawing.exit?.usual };
+    case "credit": return { units, instrument: !!s.model.drawing.loan, drawing: true };
+    default: return { units, instrument: false, drawing: true };
+  }
+}
+
+/** Every planned slot's weight, keyed by its id, for composeZones. */
+export function planWeights(slots: readonly PlannedSlot[]): Partial<Record<SlotId, SlotWeight>> {
+  const out: Partial<Record<SlotId, SlotWeight>> = {};
+  for (const s of slots) { const w = slotWeight(s); if (w) out[s.id] = w; }
+  return out;
 }

@@ -404,7 +404,9 @@ const collect = () => {
      next, one zone's padding below and the next one's above; two sections side by side, the level's column gap; a kept box, its padding.
      The judging is scripts/lib/zone_rhythm.mjs's, in node. */
   const zoneEls = [...document.querySelectorAll("main [data-zone]")].filter((z) => z.getClientRects().length);
-  const zoneSplits = zoneEls.map((z) => z.getAttribute("data-zone") || "");
+  /* A lone zone standing on the right (`data-zone-side="end"`, plan Q4's option C; final review I3, 2026-10-15) is a split of its own,
+     "lone-end", so lone zones that alternate their side are no repeat; two on one side still are. */
+  const zoneSplits = zoneEls.map((z) => { const s = z.getAttribute("data-zone") || ""; return s === "lone" && z.getAttribute("data-zone-side") === "end" ? "lone-end" : s; });
   /* A zone that opens a chapter starts D3 afresh (plan 2026-10-13 country-page-journey, Q4's answer A; scripts/lib/zone_rhythm.mjs). */
   const zoneStarts = zoneEls.map((z) => !!z.querySelector(":scope > [data-chapter-head]"));
   const levelGaps = zoneEls.slice(1).map((z, i) => px(getComputedStyle(zoneEls[i]).paddingBottom) + px(getComputedStyle(z).paddingTop));

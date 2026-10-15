@@ -459,6 +459,23 @@ const ALIGN_EXEMPT = "[data-mark-label], [data-mark], [data-archetype='ring'], [
         const r = c.getBoundingClientRect();
         if (r.height < 8 || !(c.textContent || "").trim()) red(zid, "ZONE SPLIT", `an empty cell in a zone (${Math.round(r.width)} by ${Math.round(r.height)})`);
       }
+      /* LEVEL HEIGHT (final review I3, 2026-10-15; his ruling 7 of 2026-09-04: "two sections on one horizontal level share one height, no
+         matter what"). A zone is an open level, so the air beside a short section stands outside every card, where the holes' WHITE SPACE
+         (inside a card) cannot see it. At 1280, on the closed reading, a level of two cells side by side: their content bottoms (the
+         lowest drawn element in each cell, measured from the level's top) differ by at most max(48px, a fifth of the taller).
+         BLIND SPOT, stated: it reads the closed page at one width; a pair equal at 1280 may part at 1024 or once a plus is opened (a
+         reader's opening is his), and it measures boxes, so a cell's drawn but empty box counts as content. */
+      if (width >= 1280 && cells.length === 2) {
+        const [ca, cb] = cells;
+        const ra = ca.getBoundingClientRect(), rb = cb.getBoundingClientRect();
+        if (Math.abs(ra.top - rb.top) < 2 && ra.right <= rb.left + 1) {
+          const inkBottom = (cell) => { let b = cell.getBoundingClientRect().top; for (const el of cell.querySelectorAll("*")) { const er = el.getBoundingClientRect(); if (er.width > 0 && er.height > 0 && el.getClientRects().length) b = Math.max(b, er.bottom); } return b; };
+          const top = Math.min(ra.top, rb.top);
+          const ha = Math.round(inkBottom(ca) - top), hb = Math.round(inkBottom(cb) - top);
+          const taller = Math.max(ha, hb), diff = Math.abs(ha - hb), allowed = Math.round(Math.max(48, taller / 5));
+          if (diff > allowed) red(zid, "LEVEL HEIGHT", `the two sections of a level end ${diff}px apart (${ha} and ${hb} tall), over the ${allowed} allowed (max of 48 and a fifth of the taller); two sections on one level share one height (ruling 7)`);
+        }
+      }
       for (const card of z.querySelectorAll("[data-card]")) {
         const ccs = getComputedStyle(card);
         const edged = parseFloat(ccs.borderTopWidth) > 0 || (ccs.backgroundColor !== "rgba(0, 0, 0, 0)" && ccs.backgroundColor !== "transparent");
@@ -545,8 +562,23 @@ for (const r of reds) console.log(`  ${r.page}@${r.w} #${r.id}: ${r.rule}: ${r.m
    measurement, falling only, never raised by hand. */
 const BASELINE = "scripts/harness/page_laws_baseline.json";
 const WRITE_BASELINE = args.includes("--write-baseline");
-const byPage = {};
-for (const r of reds) byPage[r.page] = (byPage[r.page] ?? 0) + 1;
+/* LEVEL HEIGHT KEEPS ITS OWN LEDGER (final review I3, 2026-10-15): the law is new on every page type, so each page's first measurement of it
+   is seeded in scripts/harness/level_height_baseline.json (never added to a page's ratchet here, which would raise it), and falls the same
+   way: a page with no entry must have zero, an entry never rises. */
+const LEVEL_RULE = "LEVEL HEIGHT", LEVEL_BASELINE = "scripts/harness/level_height_baseline.json";
+const byPage = {}, levelByPage = {};
+for (const r of reds) {
+  if (r.rule === LEVEL_RULE) levelByPage[r.page] = (levelByPage[r.page] ?? 0) + 1;
+  else byPage[r.page] = (byPage[r.page] ?? 0) + 1;
+}
+let levelBase = {};
+try { levelBase = JSON.parse(readFileSync(LEVEL_BASELINE, "utf8")); } catch { levelBase = {}; }
+const levelOver = [], levelUnder = [];
+for (const name of files.map((f) => basename(f, ".html"))) {
+  const have = levelByPage[name] ?? 0, allowed = typeof levelBase[name] === "number" ? levelBase[name] : 0;
+  if (have > allowed) levelOver.push(`${name}: ${have} against a first measurement of ${allowed}`);
+  else if (have < allowed) levelUnder.push(`${name}: ${have}, first measurement ${allowed} can fall`);
+}
 let base = {};
 try { base = JSON.parse(readFileSync(BASELINE, "utf8")); } catch { base = {}; }
 const over = [], under = [];
@@ -557,6 +589,14 @@ for (const name of files.map((f) => basename(f, ".html"))) {
 }
 let exit = 0;
 if (over.length) { console.log(`page laws RATCHET: ${over.length} page(s) over their baseline: ${over.join("; ")}`); exit = 1; }
+if (levelOver.length) { console.log(`page laws LEVEL HEIGHT: ${levelOver.length} page(s) over their ledger (${LEVEL_BASELINE}): ${levelOver.join("; ")}`); exit = 1; }
+if (levelUnder.length && !WRITE_BASELINE) console.log(`page laws LEVEL HEIGHT: ${levelUnder.join("; ")} (run with --write-baseline to lower it)`);
+if (WRITE_BASELINE && levelUnder.length) {
+  for (const name of files.map((f) => basename(f, ".html"))) { const have = levelByPage[name] ?? 0; if (typeof levelBase[name] === "number" && have < levelBase[name]) levelBase[name] = have; }
+  for (const k of Object.keys(levelBase)) if (levelBase[k] === 0) delete levelBase[k];
+  writeFileSync(LEVEL_BASELINE, JSON.stringify(levelBase, null, 2) + String.fromCharCode(10));
+  console.log(`page laws LEVEL HEIGHT: ledger lowered (${levelUnder.join("; ")})`);
+}
 if (WRITE_BASELINE) {
   for (const name of files.map((f) => basename(f, ".html"))) { const have = byPage[name] ?? 0; if (!(name in base) || have < base[name]) base[name] = have; }
   for (const k of Object.keys(base)) if (base[k] === 0) delete base[k];

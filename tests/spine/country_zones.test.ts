@@ -8,8 +8,8 @@
  *
  * Run: node node_modules/tsx/dist/cli.mjs tests/spine/country_zones.test.ts
  */
-import { composeZones, PAIR_SPLIT, WIDE_SLOTS } from "../../src/lib/spine/slots/zones";
-import { planCountry } from "../../src/lib/spine/slots/plan";
+import { composeZones, PAIR_SPLIT, WIDE_SLOTS, rhythmSplit, weightsMatch, type SlotWeight } from "../../src/lib/spine/slots/zones";
+import { planCountry, planWeights } from "../../src/lib/spine/slots/plan";
 import { SLOTS, slotDef, type SlotId } from "../../src/lib/spine/country_slots";
 import { marginCardFromSnapshot } from "../../src/lib/spine/margin_rows";
 import { zoneRhythm } from "../../scripts/lib/zone_rhythm.mjs";
@@ -22,10 +22,13 @@ let failed = 0;
 const check = (label: string, ok: boolean, file = FILE) => { if (ok) { console.log(`PASS  ${label}`); return; } failed++; red({ rule: RULE, file, detail: label, remedy: REMEDY }); };
 
 const OPTIONAL = SLOTS.filter((s) => s.n >= 3).map((s) => s.id);
+/* TWO SWEEPS (final review I3): with no weights every slot counts as carrying a drawing and stands lone, its lone zones alternating their
+   side; with every slot weighing the same and drawing nothing, every pair PAIR_SPLIT names can stand. Both hold the same laws. */
+const EVEN: Partial<Record<SlotId, SlotWeight>> = Object.fromEntries(SLOTS.map((s) => [s.id, { units: 2, instrument: false, drawing: false }]));
 const faults: string[] = [];
-for (let mask = 0; mask < 1 << OPTIONAL.length; mask++) {
+for (const weights of [{}, EVEN] as Array<Partial<Record<SlotId, SlotWeight>>>) for (let mask = 0; mask < 1 << OPTIONAL.length; mask++) {
   const drawn: SlotId[] = ["tax-on-profit", "where-it-stands", ...OPTIONAL.filter((_, i) => mask & (1 << i))];
-  const zones = composeZones(drawn);
+  const zones = composeZones(drawn, { weights });
   const flat = zones.flatMap((z) => z.slots);
   const say = (f: string) => { if (faults.length < 12) faults.push(`${drawn.slice(2).join(",") || "(none)"}: ${f}`); };
   if (JSON.stringify(flat) !== JSON.stringify(drawn)) say(`the zones hold ${flat.join(",")}`);
@@ -34,14 +37,25 @@ for (let mask = 0; mask < 1 << OPTIONAL.length; mask++) {
     if (z.slots.length === 2 && z.stage !== "orient") {
       const [a, b] = z.slots;
       if (drawn.indexOf(b) !== drawn.indexOf(a) + 1 || PAIR_SPLIT[`${a}|${b}`] !== z.split) say(`zone ${z.key} pairs ${a} and ${b} as ${z.split}`);
+      if (!weightsMatch(weights[a], weights[b])) say(`zone ${z.key} pairs ${a} and ${b}, which do not weigh the same`);
     }
+    if ((z.split === "lone") !== (z.side != null)) say(`zone ${z.key}: a side on a ${z.split} zone`);
     if (z.slots.some((id) => WIDE_SLOTS.has(id)) && (z.split !== "wide" || z.slots.length !== 1)) say(`zone ${z.key} holds a full-width slot beside another`);
   }
   if (zones.filter((z) => z.split === "wide").length > 3) say("more than three full widths");
-  const d3 = zoneRhythm(zones.map((z) => z.split), zones.map((z) => !!z.chapter));
+  const d3 = zoneRhythm(zones.map(rhythmSplit), zones.map((z) => !!z.chapter));
   if (d3.length) say(`D3: ${d3.join("; ")}`);
 }
-check(`every set of the optional slots composes clean (${faults.join(" | ") || `all ${1 << OPTIONAL.length}`})`, faults.length === 0);
+check(`every set of the optional slots composes clean, unweighted and evenly weighted (${faults.join(" | ") || `all ${1 << OPTIONAL.length} twice`})`, faults.length === 0);
+
+/* THE WEIGHTS (final review I3): a pair only between two slots drawing nothing, both or neither with an instrument, of equal rows plus folds. */
+const w = (units: number, instrument = false, drawing = false): SlotWeight => ({ units, instrument, drawing });
+check("weights: equal and drawing-free pair; a drawing, an instrument against none, or unequal rows plus folds do not",
+  weightsMatch(w(4), w(4)) && weightsMatch(w(3, true), w(3, true)) && !weightsMatch(w(4, false, true), w(4)) && !weightsMatch(w(4, true), w(4)) && !weightsMatch(w(4), w(5)) && !weightsMatch(undefined, w(1)));
+const rf = composeZones(["tax-on-profit", "where-it-stands", "running-costs", "filings"], { weights: { "running-costs": w(3), filings: w(3) } });
+check(`two drawing-free neighbours of one weight pair (${rf.map((z) => `${z.split}:${z.slots.join("+")}`).join(" | ")})`, rf.some((z) => z.slots.join("+") === "running-costs+filings" && z.split === "1-1"));
+const lone3 = composeZones(["tax-on-profit", "where-it-stands", "hire", "running-costs", "credit"], { weights: { hire: w(6, true), "running-costs": w(7), credit: w(3, true, true) } });
+check(`a stage left lone alternates its side, its first on the left (${lone3.slice(1).map((z) => `${z.slots[0]}:${z.side}`).join(" ")})`, JSON.stringify(lone3.slice(1).map((z) => z.side)) === JSON.stringify(["start", "end", "start"]));
 
 /* The UK draws every slot but 5b (its trade margins are neither sourced nor marked); Germany draws 5b where its seed holds its margins,
    here the harness snapshot standing in for the seed (the replicability gate reads the render, which holds 5b only with the database). */

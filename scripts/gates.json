@@ -90,6 +90,7 @@
       "browser": true,
       "asserts": "THE PAGE LAWS OF 2026-09-20, held on a rendered page.",
       "reads": [
+        "scripts/harness/level_height_baseline.json",
         "scripts/harness/page_laws_baseline.json",
         "scripts/harness/pages.json"
       ],
@@ -4257,6 +4258,7 @@
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 4 (the honesty gate): \"Anything modeled or sampled carries a visible SampleTag.",
       "reads": [
+        "src/components/spine/country/Slot.tsx",
         "src/components/spine/country/country-view.tsx"
       ],
       "claims": []

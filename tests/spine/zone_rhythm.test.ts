@@ -38,6 +38,10 @@ const gate = stripCommentLines(readFileSync(GATE, "utf8").split(/\r?\n/)).join("
 check("a chapter's opening zone starts afresh: two lone zones with a chapter head between them are no repeat", same(zoneRhythm(["wide", "lone", "lone", "wide"], [false, true, true, false]), []));
 check("inside one chapter two lone neighbours still repeat", same(zoneRhythm(["wide", "lone", "lone"], [false, true, false]), ["zones 2 and 3 both split lone"]));
 check("no run of three equal halves crosses a chapter's head", same(zoneRhythm(["1-1", "1-1", "1-1"], [false, false, true]), ["zones 1 and 2 both split 1-1"]));
+/* LONE ZONES ALTERNATING THEIR SIDE (plan Q4's option C; final review I3, 2026-10-15): a lone zone on the right is "lone-end", so a run that
+   alternates is no repeat, and two on one side still are; the art-direction gate reads the side off `data-zone-side`. */
+check("lone zones that alternate their side are no repeat; two on one side are", same(zoneRhythm(["wide", "lone", "lone-end", "lone", "wide"], [false, true, false, false, false]), []) && same(zoneRhythm(["lone-end", "lone-end"]), ["zones 1 and 2 both split lone-end"]));
+check("the art-direction gate reads a right-hand lone zone as lone-end", /data-zone-side/.test(gate) && /"lone-end"/.test(gate));
 check("the art-direction gate reads the zones, judges them with zone_rhythm.mjs, a chapter's opening zone afresh, and no longer looks for the old Band class", /from "\.\/lib\/zone_rhythm\.mjs"/.test(gate) && /querySelectorAll\("main \[data-zone\]"\)/.test(gate) && /zoneRhythm\(result\.zoneSplits, result\.zoneStarts\)/.test(gate) && /zoneLadder\(result\)/.test(gate) && !/mt-8 grid grid-cols-1 items-start gap-8/.test(gate), GATE, "read `main [data-zone]` in collect() and judge in node with zoneRhythm and zoneLadder");
 const unreadAt = gate.indexOf("const unread = pages.filter((p) => !p.result.zoneSplits.length);");
 const unreadExit = unreadAt === -1 ? -1 : gate.indexOf("process.exit(1);", unreadAt);

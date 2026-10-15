@@ -3,7 +3,9 @@
  * E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, section 3 item 4).
  * D3: no zone repeats the split of the zone before it, and never three equal-halves zones in a row. A "wide" zone (the hero, the peers table,
  * the close: full-width levels, which section-bands counts) holds no split, so two wide neighbours are no repeat; "lone" is a split (a level
- * whose partner self-omits), so two lone neighbours are one, whichever side each stands (the attribute does not say the side). A zone that
+ * whose partner self-omits), so two lone neighbours on one side are one; a lone level standing on the right, "lone-end" (its zone's
+ * `data-zone-side`, plan Q4's option C; final review I3, 2026-10-15), is a split of its own, so lone levels that alternate their side are
+ * no repeat. A zone that
  * opens a chapter (it holds the chapter's numbered head) starts the comparison afresh: it is compared with no zone before it, and no run of
  * three equal halves crosses it (plan 2026-10-13 country-page-journey, Q4's answer A: two stages each drawing one slot stand as two lone
  * zones, and the chapter head between them is the break).

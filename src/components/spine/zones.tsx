@@ -69,6 +69,10 @@ const SIDE_LG_CARDS = "lg:gap-x-8 lg:[&>*+*]:border-t-0 lg:[&>*+*]:pt-0";
    THE LEFT HALF (plan 2026-10-13 country-page-journey, Task 4: the country's thin slots, one figure and its track, took the column
    at 768 and left 360 by 156 blank beside their words, the page holes' WHITE SPACE), the kit Band's own half at 768 (kit.tsx). */
 const LONE = "grid grid-cols-1 lg:grid-cols-[2fr_1fr] [&:has(>[data-zone-cell]>[data-lean])]:md:grid-cols-2 [&:has(>[data-zone-cell]>[data-lean])]:lg:grid-cols-[1fr_2fr]";
+/* A LONE LEVEL ON THE RIGHT (final review I3, 2026-10-15; plan Q4's option C): where lone levels follow one another they alternate, the
+   section in the right two thirds (a lean one in the right half from 768 and the right third from 1024), so two lone levels in a row are
+   not one split twice (art direction D3 reads `data-zone-side`). */
+const LONE_END = "grid grid-cols-1 lg:grid-cols-[1fr_2fr] lg:[&>[data-zone-cell]]:col-start-2 [&:has(>[data-zone-cell]>[data-lean])]:md:grid-cols-2 [&:has(>[data-zone-cell]>[data-lean])]:md:[&>[data-zone-cell]]:col-start-2 [&:has(>[data-zone-cell]>[data-lean])]:lg:grid-cols-[2fr_1fr]";
 /* A LEVEL OF DOORS ENDS LEVEL (`even`, masterplan step 37; PART 10.5, "chosen so the two columns end level"; ruling 7 of 2026-09-04,
    cards in one row share one height): where every section of a level keeps its box (the home page's three answers, each a door),
    the boxes stand side by side from 768, so each is stretched to the row's height there. The level asks it; a box's own readings
@@ -97,7 +101,7 @@ export function ChapterHead({ index, heading }: { index: string; heading: string
  * until 1024. A zone with no children draws nothing; a child that RENDERS nothing is still a child here (React cannot see that
  * from outside), so the page passes only sections it knows will draw: an empty cell is the page laws' ZONE SPLIT red.
  */
-export function Zone({ tone, split = "1-1", stack, even, cards, chapter, label, children }: { tone?: ZoneTone; split?: ZoneSplit; stack?: "lg"; even?: boolean; /** The level is cards that keep their boxes: 24 between them from 768 and 32 from 1024, not an open level's 48 and 64. */ cards?: boolean; chapter?: { index: string; heading: string }; label?: string; children: React.ReactNode }) {
+export function Zone({ tone, split = "1-1", stack, even, cards, chapter, label, side = "start", children }: { tone?: ZoneTone; split?: ZoneSplit; stack?: "lg"; even?: boolean; /** The level is cards that keep their boxes: 24 between them from 768 and 32 from 1024, not an open level's 48 and 64. */ cards?: boolean; chapter?: { index: string; heading: string }; label?: string; /** A lone level's side: its section in the left two thirds (start) or the right (end), so lone levels in a row alternate (plan Q4's option C; final review I3). */ side?: "start" | "end"; children: React.ReactNode }) {
   const kids = React.Children.toArray(children).filter(Boolean);
   if (kids.length === 0) return null;
   /* A level of three that draws two (a how-to page whose country has no forms to explain) is a pair of halves, never a third
@@ -109,12 +113,12 @@ export function Zone({ tone, split = "1-1", stack, even, cards, chapter, label, 
   return (
     /* NAMED ONLY BY ITS CHAPTER (the code review of 2026-10-04): a zone named after its first section announced a "Borrowing" region
        that also held "Getting paid"; a chapter's first zone takes the chapter's title, the others are not regions of their own. */
-    <section data-zone={pair ? level : lone ? "lone" : "wide"} data-tone={tone} data-zone-label={label} aria-labelledby={chapter ? `chapter-${chapter.index}` : undefined}>
+    <section data-zone={pair ? level : lone ? "lone" : "wide"} {...(lone && side === "end" ? { "data-zone-side": "end" } : {})} data-tone={tone} data-zone-label={label} aria-labelledby={chapter ? `chapter-${chapter.index}` : undefined}>
       {chapter ? <ChapterHead index={chapter.index} heading={chapter.heading} /> : null}
       <div
         data-zone-level=""
         {...(even && pair ? { "data-zone-even": "" } : {})}
-        className={pair && s ? `${STACKED} ${stack === "lg" ? `${cards ? SIDE_LG_CARDS : SIDE_LG} ${SPLIT_LG[s]}` : `${cards ? SIDE_MD_CARDS : SIDE_MD} ${SPLIT[s]}`}${even ? ` ${EVEN}` : ""}` : lone ? LONE : "grid grid-cols-1"}
+        className={pair && s ? `${STACKED} ${stack === "lg" ? `${cards ? SIDE_LG_CARDS : SIDE_LG} ${SPLIT_LG[s]}` : `${cards ? SIDE_MD_CARDS : SIDE_MD} ${SPLIT[s]}`}${even ? ` ${EVEN}` : ""}` : lone ? (side === "end" ? LONE_END : LONE) : "grid grid-cols-1"}
       >
         {/* EACH SECTION IN ITS OWN CELL: the hairline between two stacked sections belongs to the level, not to the section, so the
             zone's rule that takes a section's box away (border 0) can never take the level's hairline with it. */}

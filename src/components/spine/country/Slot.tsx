@@ -19,8 +19,12 @@ export function Slot({ model, children, after }: { model: SlotModel<unknown>; ch
   const stage = stageOfSlot(model.id);
   /* A THIN SLOT OF ONE FIGURE IS LEAN (Task 4's page holes, 768): its figure, its track or one row, nothing behind a plus. Standing alone
      on a level it took the column and left half the card blank beside its words; `data-lean` is the zones' own flag (zones.tsx LONE), so
-     the air stands outside the card's edge: a half from 768, a third from 1024. Beside a partner the flag changes nothing. */
-  const lean = model.thin && model.more.length === 0 && (model.rows?.rows.length ?? 0) <= 1 && !after;
+     the air stands outside the card's edge: a half from 768, a third from 1024. Beside a partner the flag changes nothing. A SLOT THAT
+     DRAWS NOTHING BUT ITS FIGURE, ONE ROW AND ITS PLUSES IS LEAN TOO (final review I3, 2026-10-15): once unequal pairs stand lone, the
+     running costs (the electricity figure, the diesel row, the folds) took the whole column at 768 and two thirds at 1280 and left half
+     its card blank beside the figure (the holes' WHITE SPACE, 360 by 246 at 768); a fold's one-line head reads at a third. */
+  const drawing = React.Children.toArray(children).length > 0;
+  const lean = !after && (model.rows?.rows.length ?? 0) <= 1 && ((model.thin && model.more.length === 0) || !drawing);
   return (
     <Box id={def.domId} data-slot={def.id} data-stage={String(stage.n)} data-answer={def.type} {...(lean ? { "data-lean": "1" } : {})} className="flex flex-col">
       <Rail icon={def.icon ?? undefined} kicker={def.heading} gloss={model.gloss ?? undefined} sample={model.sample ?? false} />

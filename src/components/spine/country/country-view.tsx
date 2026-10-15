@@ -18,7 +18,7 @@
 import * as React from "react";
 import { Zone, zoneTone } from "@/components/spine/zones";
 import { STAGES, slotDef, stageOfSlot } from "@/lib/spine/country_slots";
-import { planCountry, type PlannedSlot } from "@/lib/spine/slots/plan";
+import { planCountry, planWeights, type PlannedSlot } from "@/lib/spine/slots/plan";
 import { composeZones } from "@/lib/spine/slots/zones";
 import { marginCardFromRows } from "@/lib/spine/margin_rows";
 import { lockedSlots, lockLineKey, SLOT_STAND_IN } from "@/lib/spine/slots/locks";
@@ -126,7 +126,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
   const margins = { card: marginCardFromRows(Array.isArray(d.money?.list) ? d.money.list : []), tagged: typeof d.money?._meta?.confidence === "string" && d.money._meta.confidence !== "measured" };
   const plan = planCountry(iso2, name, todayIso(), margins);
   const locks = locked ? lockedSlots(plan.drawn) : null;
-  const zones = composeZones(plan.drawn);
+  const zones = composeZones(plan.drawn, { weights: planWeights(plan.slots) });
   const byId = new Map(plan.slots.map((s) => [s.id as string, s]));
   const chapters = Object.fromEntries(STAGES.filter((g) => g.index && g.heading).map((g) => [g.index as string, { index: g.index as string, heading: g.heading as string }]));
   const sections: RailSection[] = plan.drawn.filter((id) => id !== "where-it-stands").map((id) => ({ id: slotDef(id).domId, label: slotDef(id).heading, chapter: stageOfSlot(id).index ?? undefined }));
@@ -135,7 +135,7 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       {/* SIXTEEN PIXELS OF GUTTER ON A PHONE (research R2): the site's column holds 16 under 768, so a section's content is 343px wide at 375. */}
       <div data-spine-body data-composition="zones">
         {zones.map((z, i) => (
-          <Zone key={z.key} tone={zoneTone(i)} split={z.split === "lone" ? "2-1" : z.split} label={z.label} chapter={z.chapter ?? undefined}>
+          <Zone key={z.key} tone={zoneTone(i)} split={z.split === "lone" ? "2-1" : z.split} side={z.side ?? "start"} label={z.label} chapter={z.chapter ?? undefined}>
             {z.slots.filter((id) => id !== "where-it-stands").map((id) => {
               const slot = byId.get(id);
               if (!slot) return null;
