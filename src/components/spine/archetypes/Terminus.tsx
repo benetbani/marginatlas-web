@@ -53,7 +53,7 @@ export function Terminus({ kicker, doors, cap = DOOR_CAP }: { kicker?: string; d
   const pillIndex = live.findIndex((d) => d.kind === "pill");
   const ordered = pillIndex >= 0 ? [...live.filter((d) => d.kind !== "pill"), live[pillIndex]] : live;
   return (
-    <div data-archetype="terminus" data-doors={String(ordered.length)}>
+    <div data-archetype="terminus" data-doors={String(ordered.length)} data-door-cap={String(cap)}>
       {kicker ? <h3 data-typography="custom" className="mb-6 text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]">{kicker}</h3> : null}
       <div className="mt-2 flex flex-col items-start gap-3 border-t border-[var(--c-border)] pt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-6">
         {ordered.map((d) =>

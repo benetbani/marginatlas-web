@@ -420,6 +420,10 @@ function inPage(storySelector) {
     if (r.kind === "terminus") {
       const doors = [...card.querySelectorAll("[data-door]")];
       r.doorCount = doors.length;
+      /* The cap the terminus was drawn with (`data-door-cap`, Terminus.tsx): three, or the trade close's four (TRADE_CLOSE_CAP, plan
+         2026-10-13 cost-simulator, Task 6, Q3 answered A). No other cap is honoured: a terminus asking five reads against three. */
+      const capEl = card.matches("[data-door-cap]") ? card : card.querySelector("[data-door-cap]");
+      r.doorCap = Number(capEl?.getAttribute("data-door-cap")) === 4 ? 4 : 3;
       r.pillCount = doors.filter((d) => d.getAttribute("data-door-kind") === "pill").length;
       r.doorFirstWords = doors.map((d) => (d.textContent || "").trim().split(/\s+/)[0].toLowerCase());
       r.doorLines = doors.map((d) => { const cs = getComputedStyle(d); const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.5; const inner = d.getBoundingClientRect().height - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom); return Math.round(inner / lh); });
@@ -870,7 +874,7 @@ for (const w of WIDTHS) {
       if (r.noteCount > 5) red(r.inst, w, "OVERLOAD", `${r.noteCount} notes, over five`);
     }
     if (r.kind === "terminus") {
-      if (r.doorCount > 3) red(r.inst, w, "OVERLOAD", `${r.doorCount} doors, over three`);
+      if (r.doorCount > r.doorCap) red(r.inst, w, "OVERLOAD", `${r.doorCount} doors, over ${r.doorCap === 4 ? "the trade close's four" : "three"}`);
       if (r.pillCount > 1) red(r.inst, w, "NO HIERARCHY", `${r.pillCount} pills; one door is the heavy one`);
       const fw = r.doorFirstWords || []; if (new Set(fw).size !== fw.length) red(r.inst, w, "REPETITION", `doors share a first word: ${fw.join(", ")}`);
       const cap = w >= 768 ? 1 : 2; const wrapped = (r.doorLines || []).filter((n) => n > cap).length; if (wrapped) red(r.inst, w, "BOTCHED MOBILE", `${wrapped} door(s) run past ${cap} line(s)`);
