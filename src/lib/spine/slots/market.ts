@@ -13,7 +13,8 @@ import { buildAgeMix, listPeoplePlaces } from "@/lib/spine/sections/people";
 import { buildLondonTradeSales, londonMiddleSales } from "@/lib/spine/country_depth_rows";
 import type { MarginCard } from "@/lib/spine/margin_rows";
 import { getCountryProfile } from "@/lib/economic_profile";
-import type { Provenance } from "@/lib/spine/provenance";
+import { registerSrc, type Provenance } from "@/lib/spine/provenance";
+import { LONDON_GEOGRAPHY } from "@/lib/uk/registers/london_trade";
 import { FOLD_MAX, list, present, type SlotModel, type SlotRow } from "./types";
 
 const J = COPY.journey;
@@ -87,7 +88,8 @@ export function buildTradesSlot(iso2: string): SlotModel<TradesDrawing> | null {
   const rest: SlotRow[] = sales.rows.slice(shown).map((r) => ({ key: r.key, label: r.name, value: usd(r.value), prov: r.prov ?? null, href: r.href }));
   return {
     id: "trades",
-    lead: { figure: usd(middle), words: J.slots.trades.words },
+    /* The middle of the register's trades, worked out from the rows the bars draw (final review M8: stamped). */
+    lead: { figure: usd(middle), words: J.slots.trades.words, prov: { src: registerSrc("turnover.json", "the middle of the trades", LONDON_GEOGRAPHY), kind: "worked out" } },
     rows: null,
     more: present([list("more", J.more.trades, "money", rest)]),
     drawing: { drawn: sales.rows.slice(0, shown), worldMax: sales.worldMax, middle },
@@ -106,7 +108,8 @@ export function buildMarginsSlot(iso2: string, card: MarginCard | null, tagged =
   const mid = m.length % 2 ? m[(m.length - 1) / 2] : (m[m.length / 2 - 1] + m[m.length / 2]) / 2;
   return {
     id: "margins",
-    lead: { figure: `${Math.round(mid * 100)}%`, words: J.slots.margins.words },
+    /* The middle of the trades' net margins the card draws, worked out from them (final review M8: stamped). */
+    lead: { figure: `${Math.round(mid * 100)}%`, words: J.slots.margins.words, prov: { src: "scores/country_board.ts:netMarginForCell:the middle of the trades", kind: "worked out" } },
     rows: null,
     more: [],
     drawing: { card, tagged },

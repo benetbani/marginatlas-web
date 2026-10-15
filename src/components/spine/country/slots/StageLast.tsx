@@ -22,16 +22,26 @@ export function LastingSlot({ model }: { model: SlotModel<LastingDrawing> }) {
   );
 }
 
+/** THE EXIT AXIS ENDS ON A LABEL (final review M1, 2026-10-15: Afghanistan's 12 to 36 months ran past the last tick, 24): ticks every six months
+ *  to 24 and every twelve above, the axis's top the first tick at or past the longest span. */
+export function exitAxis(max: number): { top: number; ticks: number[] } {
+  const top = max <= 24 ? 24 : 24 + Math.ceil((max - 24) / 12) * 12;
+  const ticks = [0, 6, 12, 18, 24];
+  for (let t = 36; t <= top; t += 12) ticks.push(t);
+  return { top, ticks };
+}
+
 export function ExitSlot({ model }: { model: SlotModel<ExitDrawing> }) {
   const exit = model.drawing.exit;
   const C = COPY.countryExit;
   const lo = exit?.marks[0].value ?? 0;
   const hi = exit?.marks[exit.marks.length - 1].value ?? 0;
+  const axis = exitAxis(Math.max(24, exit?.usual?.hi ?? 0, hi));
   return (
     <Slot model={model}>
       {exit?.usual ? (
         <div className="flex flex-1 flex-col">
-          <RangePair fill spans={[{ key: "here", label: C.here, lo, hi, accent: true, quiet: true }, { key: "usual", label: C.usualAnywhere, lo: exit.usual.lo, hi: exit.usual.hi }]} max={Math.max(24, exit.usual.hi, hi)} fmt={(v) => String(Math.round(v))} unit={C.months} ticks={[0, 6, 12, 18, 24]} aria={C.kicker} />
+          <RangePair fill spans={[{ key: "here", label: C.here, lo, hi, accent: true, quiet: true }, { key: "usual", label: C.usualAnywhere, lo: exit.usual.lo, hi: exit.usual.hi }]} max={axis.top} fmt={(v) => String(Math.round(v))} unit={C.months} ticks={axis.ticks} aria={C.kicker} />
         </div>
       ) : null}
     </Slot>

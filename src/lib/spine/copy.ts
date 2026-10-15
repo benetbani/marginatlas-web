@@ -197,29 +197,11 @@ export const COPY = {
    *  drawn cards' own, referenced and never retyped, so the block reads under
    *  one name whether it is drawn or seated. */
   blocked: {
-    workforce: {
-      kicker: "Who you can hire",
-      line: "We don't have job-seeker or paid-leave figures here yet.",
-      foot: "",
-    },
-    easiest: {
-      kicker: "Easiest to break in",
-      line: "We don't have payback times for the six trades here yet.",
-      foot: "",
-    },
-    setup: {
-      kicker: TIERS_KICKER,
-      line: "We don't have this country's legal forms and their costs yet.",
-      foot: "What registering costs is beside.",
-    },
+    /* The country's own seats (workforce, easiest, setup, money) left with the seats themselves (plan 2026-10-13 country-page-journey;
+       final review M5, 2026-10-15): a slot without its data omits itself. Peers and locals stay, drawn by the trade, city and how-to pages. */
     peers: {
       kicker: PEERS_KICKER,
       line: "We don't have countries to compare this one with yet.",
-      foot: "",
-    },
-    money: {
-      kicker: MARGIN_KICKER,
-      line: "We don't have profit figures for everyday shops here yet.",
       foot: "",
     },
     locals: {
@@ -2596,7 +2578,7 @@ export const COPY = {
    *  trade or a company (src/lib/spine/sections/if_it_fails.ts). The strike-off is the paperwork card's and is never printed here. */
   ifItFails: {
     months: "months",
-    words: "Until a bankrupt sole trader is freed from the debts.",
+    words: "until a bankrupt sole trader is freed from the debts",
   },
   /** OPENING FROM ABROAD (masterplan step 27; his ruling 28 of 2026-09-26; DATA-REQUIREMENTS item 74): chapter 01's level after
    *  registering. Its figure is the Innovator Founder route's fees for three years per person; its rows the walls in the research's
@@ -2863,9 +2845,9 @@ export const COPY = {
       "where-it-stands": { heading: "Where it stands" },
       customers: { heading: "Customers, city by city", words: "typical full-time pay, a year, nationwide" },
       spend: { heading: "What households spend on" },
-      trades: { heading: "What trades take", words: "typical yearly sales of the middle London trade" },
+      trades: { heading: "What trades take", words: "typical yearly sales, the middle of London's trades" },
       /* Slot 5b, the controller's ruling on Q1 (2026-10-13): the trades' net margins, a share, where the country holds them. */
-      margins: { heading: "What trades keep", words: "of sales the middle trade keeps as profit" },
+      margins: { heading: "What trades keep", words: "of sales kept as profit, the middle of the trades" },
       open: { heading: "Forms, fees and days" },
       hire: { heading: "What a hire costs" },
       "running-costs": { heading: "Running costs" },
@@ -2933,6 +2915,8 @@ export const COPY = {
      *  stand until the rhythm plan's Task 4 takes them to the registering table (fact-once). */
     /** Slot 6's own row: the days until trading (the shard's total), its unit in its label. */
     openRows: { trading: "Until trading, days" },
+    /** A licence wait the source gives in months, its own words in the row's note (final review M3). */
+    licenceAsGiven: "{given} as published",
     /** The UK's walls from abroad behind slot 6's plus: the founder route's fees, the decision's wait, a fee that buys a stay. */
     /** A rule the changes ledger dates, on its own row (spec section 2; slots/dated.ts): the coming value and its day, or the day it began. */
     dated: { coming: "{to} from {date}", since: "since {date}" },
@@ -2948,7 +2932,7 @@ export const COPY = {
     /** Slot 9: the lead's words, the UK's loan rate row, the waits' labels. */
     credit: { words: "a year, the average rate on a business bank loan", loanRate: "Start-up loan rate", payouts: "Card payouts, days", terms: "Payment terms, days", agreed: "Agreed limit, days" },
     /** Slot 10: the UK's deadlines, a time each, its unit in its label. */
-    filings: { taxReturn: "Tax return, months", taxPayment: "Tax payment, months", vatReturn: "VAT return, months", andDays: "and {n} days, {note}", andDay: "and 1 day, {note}" },
+    filings: { taxReturn: "Tax return, months", taxPayment: "Tax payment, months", vatReturn: "VAT return, months", andDays: "plus {n} days, {note}", andDay: "plus 1 day, {note}" },
     /** Slot 12's pluses: the first row's note in each, the duel's middle trade. */
     lastRows: { cohort: "born in {cohort}, still trading in {year}", insolvent: "of companies insolvent a year", middle: "Middle trade", ofTrades: "the middle of {n} trades" },
     /** Slot 13 on the UK: its times, each unit in its label. */

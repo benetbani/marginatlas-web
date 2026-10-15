@@ -13,7 +13,7 @@ import { COPY } from "@/lib/spine/copy";
 import { buildSurvival, buildObstacles, type Survival } from "@/lib/spine/sections/first_years";
 import { buildFirmsLast } from "@/lib/home/firms_last";
 import { buildDuel } from "@/lib/home/duel";
-import { buildCountryExit, exitMonthsText, worldExitHighs, type CountryExitData } from "@/lib/spine/country_exit_rows";
+import { buildCountryExit, exitMonthsText, worldExitHighs, COUNTRY_EXIT_METRICS, type CountryExitData } from "@/lib/spine/country_exit_rows";
 import { buildIfItFails } from "@/lib/spine/sections/if_it_fails";
 import { lawValue, ruleRaw, ruleRow } from "@/lib/spine/sections/country_rules";
 import { signalFor } from "@/lib/spine/signal";
@@ -105,6 +105,8 @@ export function buildExitSlot(iso2In: string, today: string): SlotModel<ExitDraw
     placement: exit.placement,
     placed: "time-to-sell",
     ...(highs ? signalFor("time-to-sell", hi, highs) : { signal: null, noSignal: "set" as const }),
+    /* The shard's own span (final review M8: stamped). */
+    prov: { src: `facts/country/${iso2}.json:${COUNTRY_EXIT_METRICS.monthsLow}..${COUNTRY_EXIT_METRICS.monthsHigh}`, kind: "looked up" },
   };
   return { id: "exit", lead, rows: null, more: [], drawing: { exit }, thin: true, gloss: COPY.countryExit.basis };
 }

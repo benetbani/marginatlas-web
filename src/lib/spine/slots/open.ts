@@ -93,7 +93,8 @@ export function buildOpenSlot(iso2In: string, today: string): SlotModel<OpenDraw
   const costRows: SlotRow[] = oneFee ? [] : all.flatMap((s, i) => (s.cost ? [{ key: s.key, label: labels[i], value: s.cost }] : []));
   const licenceRows: SlotRow[] = (setup.length > 0 ? buildCountryLicences(iso2) ?? [] : []).flatMap((r, i) => {
     const d = inDays(r.value);
-    return d != null ? [{ key: `licence-${i}`, label: r.label, value: d, note: r.note ?? null }] : [];
+    const months = /\bmonths?\b/i.test(r.value ?? "") ? String(r.value).replace(/[\s\u00a0]+/g, " ").trim() : null;
+    return d != null ? [{ key: `licence-${i}`, label: r.label, value: d, note: [months ? J.licenceAsGiven.replace("{given}", months) : null, r.note].filter(Boolean).join(", ") || null }] : [];
   });
 
   /* THE UK'S WALLS FROM ABROAD (sections/from_abroad.ts), three lists: each wall's state; what the route and the walls cost (a law's own

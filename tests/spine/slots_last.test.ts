@@ -12,7 +12,7 @@ import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { JSDOM } from "jsdom";
 import { buildLastingSlot, buildExitSlot } from "../../src/lib/spine/slots/last";
-import { LastingSlot, ExitSlot } from "../../src/components/spine/country/slots/StageLast";
+import { LastingSlot, ExitSlot, exitAxis } from "../../src/components/spine/country/slots/StageLast";
 import { buildCountryExit, worldExitHighs } from "../../src/lib/spine/country_exit_rows";
 import { signalState } from "../../src/lib/spine/signal";
 import { readAnswerTypes } from "../../scripts/lib/answer_type.mjs";
@@ -49,5 +49,14 @@ check("the director's loan charge is slot 1's, never here", ![...(gbExit.rows?.r
 check(`the UK's times carry their units in their labels, their values bare (${(gbExit.rows?.rows ?? []).map((r) => `${r.label}=${r.value}`).join("; ")})`, (gbExit.rows?.rows ?? []).every((r) => /, (months|years)$/.test(r.label) && /^\d+( to \d+)?$/.test(r.value)));
 { const f = clean(React.createElement(ExitSlot, { model: gbExit })); check(`the UK's slot 13 reads clean (${f.join("; ") || "clean"})`, f.length === 0, "src/components/spine/country/slots/StageLast.tsx"); }
 
+/* THE EXIT AXIS ENDS ON A LABEL (final review M1): ticks every six to 24 and every twelve above, its top the first tick at or past the span. */
+const ax = (m: number) => exitAxis(m);
+check(`the exit axis: 18 ${JSON.stringify(ax(18))}, 30 ${JSON.stringify(ax(30))}, 36 ${JSON.stringify(ax(36))}`, ax(18).top === 24 && JSON.stringify(ax(18).ticks) === "[0,6,12,18,24]" && ax(30).top === 36 && JSON.stringify(ax(36).ticks) === "[0,6,12,18,24,36]", "src/components/spine/country/slots/StageLast.tsx");
+{
+  const af = buildExitSlot("AF", "2026-10-13");
+  const hi = af?.drawing.exit?.marks[af.drawing.exit.marks.length - 1].value ?? 0;
+  const html = af ? renderToStaticMarkup(React.createElement(ExitSlot, { model: af })) : "";
+  check(`Afghanistan's exit span (to ${hi} months) ends on a labelled tick (${ax(Math.max(24, hi)).top})`, !!af && ax(Math.max(24, hi)).top >= hi && ax(Math.max(24, hi)).ticks.includes(ax(Math.max(24, hi)).top) && html.includes(`>${ax(Math.max(24, hi)).top}<`), "src/components/spine/country/slots/StageLast.tsx");
+}
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/slots_last: all pass");

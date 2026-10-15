@@ -196,7 +196,8 @@ export function buildFilingsSlot(iso2In: string, today: string): SlotModel<null>
   ]);
   return {
     id: "filings",
-    lead: { figure: accountsText, words: J.slots.filings.words },
+    /* The accounts' deadline, the rules file's own row (final review M8: stamped). */
+    lead: { figure: accountsText, words: J.slots.filings.words, prov: { src: `sections/rules.json:${iso2}:filings:accounts-deadline`, kind: "looked up" } },
     rows: rows.length ? { key: "own", head: J.slots.filings.heading, type: "time", rows } : null,
     more: present([list("costs", J.more.filingCosts, "money", costs)]),
     drawing: null,

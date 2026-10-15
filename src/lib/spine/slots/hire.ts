@@ -115,7 +115,8 @@ export function buildHireSlot(iso2In: string, today: string): SlotModel<HireDraw
     id: "hire",
     /* The old staff card's expression: its pay modelled off the profile's tier A. */
     sample: pay!.confidence !== "measured",
-    lead: { figure: usd(floor.value), words: !addsList && share != null ? H.leadShare.replace("{share}", `${share}%`) : COPY.pay.focalWords },
+    /* The minimum wage's full-time year, the profile's own field (final review M8: stamped). */
+    lead: { figure: usd(floor.value), words: !addsList && share != null ? H.leadShare.replace("{share}", `${share}%`) : COPY.pay.focalWords, prov: { src: "economic_indicators/country_profile_v2.json:minimum_wage_annual_usd", kind: pay!.confidence === "measured" ? "looked up" : "estimate" } },
     rows: money.length > 0 ? { key: "money", head: J.slots.hire.heading, type: "money", rows: money } : null,
     more: present([
       addsList,

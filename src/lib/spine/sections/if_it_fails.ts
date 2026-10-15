@@ -50,16 +50,16 @@ export function buildIfItFails(law: IfItFailsLaw = IF_IT_FAILS): IfItFails | nul
   const sample = obj<{ started: number }>(law, "liquidation_sample");
   push("liquidation-fees", "liquidation_cost_local", "Liquidation fees", cost && sample ? gbpText(cost.median_fees_gbp) : null, `${sample?.started}'s median, assets ${gbpText(cost?.median_assets_gbp ?? 0)}`);
   const time = obj<{ median_days: number }>(law, "liquidation_months");
-  push("liquidation-time", "liquidation_months", "Liquidation time", time ? `${monthsOfDays(time.median_days)} months` : null, "Median, start to finish", worked("liquidation_months"));
+  push("liquidation-time", "liquidation_months", "Liquidation time", time ? `${monthsOfDays(time.median_days)} months` : null, "median, start to finish", worked("liquidation_months"));
   /* WHERE THE COMPANY'S DEBTS REACH ITS OWNER. */
   const wrongful = obj<{ applies: boolean; capped: boolean }>(law, "wrongful_trading");
-  push("wrongful-trading", "wrongful_trading", "Wrongful trading", wrongful?.applies ? (wrongful.capped ? "Capped" : "No cap") : null, "Trading on into insolvency");
+  push("wrongful-trading", "wrongful_trading", "Wrongful trading", wrongful?.applies ? (wrongful.capped ? "Capped" : "No cap") : null, "trading on into insolvency");
   const banMin = obj<number>(law, "disqualification_years_min");
   const banMax = obj<number>(law, "disqualification_years_max");
-  push("director-ban", "disqualification_years_max", "Director ban", banMin != null && banMax != null ? `${banMin} to ${banMax} years` : null, "For unfit conduct");
-  push("guarantee", "guarantee_survives", "Your guarantee", obj(law, "guarantee_survives") === true ? "Survives" : null, "You still owe what you signed");
+  push("director-ban", "disqualification_years_max", "Director ban", banMin != null && banMax != null ? `${banMin} to ${banMax} years` : null, "for unfit conduct");
+  push("guarantee", "guarantee_survives", "Your guarantee", obj(law, "guarantee_survives") === true ? "Survives" : null, "you still owe what you signed");
   const loan = obj<{ from_2026: number }>(law, "directors_loan_charge_pct");
-  push("directors-loan", "directors_loan_charge_pct", "Director's loan", loan ? `${loan.from_2026}%` : null, "Company pays, until repaid");
+  push("directors-loan", "directors_loan_charge_pct", "Director's loan", loan ? `${loan.from_2026}%` : null, "company pays, until repaid");
 
   return { focal: { months: discharge, prov: lookedUp("discharge_months") }, rows };
 }
