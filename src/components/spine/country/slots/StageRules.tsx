@@ -30,7 +30,9 @@ export function DealingsSlot({ model }: { model: SlotModel<DealingsDrawing> }) {
 
 export function ChangesSlot({ model }: { model: SlotModel<ChangesDrawing> }) {
   const { coming, recent, shown } = model.drawing;
-  const head = (words: string) => <p data-line="" className="mt-4 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink2)] first:mt-0">{words}</p>;
+  /* A RUN'S HEAD IS A LABEL, NOT A SUPPORTING LINE (the integration merge of 2026-10-15): it carries no data-line, the mark the plain-copy
+     law counts a lifted line by (scripts/harness/check_copy_plain.mjs, LINES), or "Recent" under "Coming" reads as a card's second line. */
+  const head = (words: string) => <p className="mt-4 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink2)] first:mt-0">{words}</p>;
   return (
     <Slot model={model}>
       {coming.length ? <>{head(J.runs.coming)}<ChangeRun rows={coming} /></> : null}
