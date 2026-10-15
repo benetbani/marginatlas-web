@@ -38,14 +38,13 @@
  * for the controller in the dispatch's report; 8.8's row and its loud-moment
  * ledger name the figure as the lightest district's.
  *
- * THE COMPANIONS, 8.8's three (the cheapest district's figure, the dearest's,
- * the district count) LESS the one the 40 already prints (M1: one figure once
- * in a band; the old masthead's own note, "you are repeating the front part",
- * his words of 2026-08-25). So the hub holds the cheapest's 1.00x, named as
- * the reference under a label that names it (PART 5's reference row, in a
- * cell), and the count; a district page holds all three unless its 40 is the
- * dearest's (the dearest's own page, and the cheapest's, whose 40 is the
- * spread). The count prints as a figure (a cell holds a figure).
+ * THE COMPANIONS, 8.8's three (the cheapest district, the dearest, the district count) LESS the one the 40 already prints (M1: one
+ * figure once in a band; the old masthead's own note, "you are repeating the front part", his words of 2026-08-25). Since plan
+ * 2026-10-12 rhythm-air-inside (Task 4, spec 2.3: each fact prints once, the hero keeps only the page's answer) the two district
+ * cells name the district at each end in words and print no figure: the cheapest's 1.00x and the dearest's 2.50x are the rent
+ * table's own rows (PART 5: the reference row and every row print their real figures), so a figure in the hero would print twice.
+ * The hub holds the cheapest district and the count; a district page holds all three unless its 40 is the dearest's (the
+ * dearest's own page, and the cheapest's, whose 40 is the spread). The count prints as a figure (a cell holds a figure).
  *
  * THE IDENTITY: the hub's h1 is the city, the flag beside it, the country
  * nowhere in words (clause 11: the place named once); a district page's h1
@@ -115,17 +114,15 @@ export function buildHoodTake(citySlug: string, focus: string | null = null): Ho
     ? fill(COPY.hoodTake.labelSpread, { dearest: dearest.name, cheapest: cheapest.name })
     : fill(COPY.cityDistricts.phoneHead.value, { district: cheapest.name });
 
-  /* THE COMPANIONS: the cheapest's own 1.00x (PART 5's reference figure next
-     to its own name, the label naming it the cheapest), the dearest's spread,
-     the count, less whichever the 40 prints (the dearest's on the hub, on
-     the cheapest district's page and on the dearest's own). On the cheapest
-     district's own page its 1.00x stands under its own h1: measured
-     2026-09-19 on the story sheet, a lone count cell docked at the half
-     opened a 480 by 120 blank at 1280 (LONE STAT), and the reference's own
-     figure is the one honest second companion the set holds. */
+  /* THE COMPANIONS: the cheapest district, the dearest, the count, less the dearest where the 40 already stands on it (the hub, the
+     cheapest district's page and the dearest's own). The cheapest district's own page keeps its one district cell beside the count:
+     measured 2026-09-19 on the story sheet, a lone count cell docked at the half opened a 480 by 120 blank at 1280 (LONE STAT). */
+  /* EACH FACT PRINTS ONCE (plan 2026-10-12 rhythm-air-inside, Task 4; spec 2.3, "the hero keeps only the page's answer"): the cheapest
+     district's 1.00x and the dearest's 2.50x are printed by the rent table's own rows (PART 5, the reference row and every row print
+     their real figures), so the cells say which district stands at each end, in words, and the figures stay in that table. */
   const cells: KvCell[] = [];
-  cells.push({ key: "cheapest", label: fill(COPY.hoodTake.cells.cheapest, { district: cheapest.name }), value: rentMult(1), confidence: "modeled" });
-  if (!spread && district!.slug !== dearest.slug) cells.push({ key: "dearest", label: fill(COPY.hoodTake.cells.dearest, { district: dearest.name }), value: rentMult(againstCheapest(dearest, cheapest)), confidence: "modeled" });
+  cells.push({ key: "cheapest", label: COPY.hoodTake.cells.cheapest, value: cheapest.name, confidence: "modeled" });
+  if (!spread && district!.slug !== dearest.slug) cells.push({ key: "dearest", label: COPY.hoodTake.cells.dearest, value: dearest.name, confidence: "modeled" });
   cells.push({ key: "count", label: COPY.hoodTake.cells.count, value: String(rows.length) });
 
   return {

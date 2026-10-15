@@ -2653,7 +2653,7 @@ export const COPY = {
     subtitle: "",
     labelSpread: "Rent, {dearest} against {cheapest}",
     basis: "Estimates from each district's character, not from leases.",
-    cells: { cheapest: "{district}, cheapest", dearest: "{district}, dearest", count: "Districts ranked" },
+    cells: { cheapest: "Cheapest district", dearest: "Dearest district", count: "Districts ranked" },
     foot: "",
     footYear: "",
   },
