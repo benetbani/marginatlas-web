@@ -60,6 +60,10 @@
  *   - ITS ARCHETYPE is the first archetype drawn inside it (the harness's own
  *     reading of a card, the first `[data-archetype]` in document order), or
  *     the tag itself for a card-owning call.
+ *   - THE COUNTRY'S SLOTS ARE ROWS OF THE REGISTRY (src/lib/spine/country_slots.ts, read as data; registrySlot below): the view draws
+ *     every slot through one frame whose id is `def.domId`, which as source is one unreadable row; a frame with a literal slot is that
+ *     slot's row, a frame with any other `def` stands for every slot (the locked card for stages 2 to 6), each its own row under the
+ *     registry's DOM id and heading, carrying its stage component, its first archetype and the builder plan.ts asks for it.
  *   - ONE SECTION, ONE ROW: the rows of one page that share an id are one
  *     section in its states (a drawn card and the seat that stands where its
  *     data is absent, `peers` on CompareTable or BlockedSeat), printed once
@@ -85,6 +89,7 @@ import { join, basename, resolve, dirname } from "node:path";
 import { stripCommentLines } from "../lib/strip_comments";
 import { readLoudSeats, litCount, loudCount, SPINE_PAGES, type LoudDeclaration } from "../lib/loud_seats";
 import { COPY } from "../../src/lib/spine/copy";
+import { SLOTS, stageOfSlot, type SlotDef } from "../../src/lib/spine/country_slots";
 import { preflight } from "./preflight.mjs";
 import { pageRenders, describeRenders, missingLine } from "../lib/page_renders.mjs";
 
@@ -307,13 +312,48 @@ function resolveId(prop: { kind: "string" | "expr"; value: string } | null, sign
   return bare;
 }
 
+/** The names a file imports from the archetype folders (archetypes, charts, sections and interact, which holds the survival curve), as local names. */
+function importedFromArchetypeFolders(src: string): string[] {
+  const out: string[] = [];
+  const importRe = /import\s*\{([^}]*)\}\s*from\s*"(?:@\/components\/spine\/(?:archetypes|charts|sections|interact)\/[^"]+|\.\.?\/(?:[^"]*\/)?(?:archetypes|charts|sections|interact)\/[^"]+)"/g;
+  let im: RegExpExecArray | null;
+  while ((im = importRe.exec(src))) for (const name of im[1].split(",")) { const n = name.trim().split(/\s+as\s+/).pop()?.trim(); if (n) out.push(n); }
+  return out;
+}
+
+/* THE COUNTRY PAGE'S SLOTS ARE ROWS OF THE REGISTRY (plan 2026-10-13 country-page-journey; the census after the merge with the rhythm plan).
+   The country view draws every slot through one frame, `<Box id={def.domId}>` with `def = slotDef(model.id)`, and a few through their own
+   (`def = slotDef("margins")`, "peers", "close"). Read as source, that id is the text `def.domId`, so the census printed ONE row for the whole
+   page (and the block check, which holds the renders to the census, read 42 blocks it could not see). The registry (src/lib/spine/country_slots.ts)
+   is data, so the census reads it: a frame whose `def` is a literal slot is that slot's row, under the registry's own DOM id and heading; a
+   frame whose `def` is any other expression stands for every slot of the registry (stages 2 to 7 for the page's one frame, stages 2 to 6 for the
+   locked card, which locks every slot after a stage's first), each its own row, carrying the stage component that draws it (`<Pascal id>Slot`,
+   read from the folder for its first archetype), the builder plan.ts asks for it, and its answer type. BLIND SPOT: a slot whose stage
+   component does not follow the `<Pascal id>Slot` name prints the frame's own form (FactRows), and a slot the registry gains is a row the day it
+   lands; whether the page draws it is the block check's reading of the render. */
+const EVERY = "slot:every";
+function registrySlot(id: string | null, scope: string): SlotDef | typeof EVERY | null {
+  if (!id) return null;
+  const lit = /^slotDef\(\s*"([a-z-]+)"\s*\)\.domId$/.exec(id);
+  const viaDef = id === "def.domId" ? /\bconst\s+def\s*=\s*slotDef\(\s*(?:"([a-z-]+)"|[^)]*)\)/.exec(scope) : null;
+  const key = lit?.[1] ?? viaDef?.[1];
+  if (key) return SLOTS.find((x) => x.id === key) ?? null;
+  return viaDef ? EVERY : null;
+}
+/** The builder plan.ts asks for each slot: `const x = buildXSlot(...); if (x) slots.push({ id: "x", ...`. */
+const PLAN_BUILDERS: Map<string, string> = (() => {
+  const out = new Map<string, string>();
+  const text = readFileSync("src/lib/spine/slots/plan.ts", "utf8");
+  for (const m of text.matchAll(/\b(build\w+)\([^)]*\);\s*if \(\w+\) slots\.push\(\{ id: "([a-z-]+)"/g)) out.set(m[2], m[1]);
+  return out;
+})();
+const pascal = (id: string) => id.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join("");
+
 function sectionsOf(file: string): Section[] {
   const raw = readFileSync(file, "utf8").split(String.fromCharCode(13)).join("");
   const src = stripCommentLines(raw.split(NL)).join(NL);
   const imported = new Set<string>();
-  const importRe = /import\s*\{([^}]*)\}\s*from\s*"(?:@\/components\/spine\/(?:archetypes|charts|sections)\/[^"]+|\.\.?\/(?:[^"]*\/)?(?:archetypes|charts|sections)\/[^"]+)"/g;
-  let im: RegExpExecArray | null;
-  while ((im = importRe.exec(src))) for (const name of im[1].split(",")) { const n = name.trim().split(/\s+as\s+/).pop()?.trim(); if (n) imported.add(n); }
+  for (const name of importedFromArchetypeFolders(src)) imported.add(name);
   const fns: Array<{ name: string; at: number }> = [];
   const fnRe = /(?:export\s+)?function\s+([A-Z]\w*)\s*\(/g;
   let fm: RegExpExecArray | null;
@@ -359,7 +399,9 @@ function sectionsOf(file: string): Section[] {
        then the id, then `#n`; the country's `character-people` and `locals`
        printed as `#4` and `#8` while the page stamped their names. */
     const blockProp = topProp(tag, "data-block");
-    const id = (blockProp?.kind === "string" ? blockProp.value : null) ?? resolveId(topProp(tag, "id"), signatureOf(fn)) ?? `#${n}`;
+    let id = (blockProp?.kind === "string" ? blockProp.value : null) ?? resolveId(topProp(tag, "id"), signatureOf(fn)) ?? `#${n}`;
+    const reg = registrySlot(id, scope);
+    if (reg && reg !== EVERY) id = reg.domId;
     /* A Box that DECLARES its form (`data-form="door"`) prints the declaration
        beside the tag it stands on, so the census tells a door card from the
        terminus it is built on (MODEL.md 8.2, `19 compare`). */
@@ -367,7 +409,8 @@ function sectionsOf(file: string): Section[] {
     const form = firstArchetype(block);
     const archetype = declared?.kind === "string" ? `${form} (${declared.value})` : form;
     const builder = /\b(build[A-Z]\w*)\s*\(/.exec(scope)?.[1] ?? "";
-    out.push({ page: pageOf(file), file: basename(file), id, component: fn?.name ?? "", kicker: kickerOf(block, copyAliases(scope)), archetype, builder, at });
+    const kicker = kickerOf(block, copyAliases(scope));
+    out.push({ page: pageOf(file), file: basename(file), id: reg === EVERY ? EVERY : id, component: fn?.name ?? "", kicker: reg && reg !== EVERY && kicker === "def.heading" ? reg.heading : kicker, archetype, builder: reg && reg !== EVERY ? PLAN_BUILDERS.get(reg.id) ?? builder : builder, at });
   }
   /* THE CARDS AN ARCHETYPE DRAWS (the header's SECTION): a card-owning
      archetype called with an id, outside every Box of this file. Without an
@@ -383,15 +426,18 @@ function sectionsOf(file: string): Section[] {
       if (tagEnd === -1) continue;
       const tag = src.slice(at, tagEnd);
       const fn = fnAt(at);
-      const id = resolveId(topProp(tag, "id"), signatureOf(fn));
+      let id = resolveId(topProp(tag, "id"), signatureOf(fn));
       if (id == null) continue;
       const scope = src.slice(fn ? fn.at : 0, tagEnd);
+      const reg = registrySlot(id, scope);
+      if (reg && reg !== EVERY) id = reg.domId;
       const k = topProp(tag, "kicker");
-      const kicker = !k ? "" : k.kind === "string" ? k.value : resolveCopy(k.value, copyAliases(scope)) ?? k.value.replace(/^`|`$/g, "");
+      const kickerText = !k ? "" : k.kind === "string" ? k.value : resolveCopy(k.value, copyAliases(scope)) ?? k.value.replace(/^`|`$/g, "");
+      const kicker = reg && reg !== EVERY && kickerText === "def.heading" ? reg.heading : kickerText;
       /* THE BUILDER OF A CALL is the one its own props call (`board={buildHeroBoard(iso2)}`); failing that, the enclosing component's first,
          but only when that component draws this one card: a page body that seats a dozen would name whichever builder it called first. */
-      const builder = /\b(build[A-Z]\w*)\s*\(/.exec(tag)?.[1] ?? "";
-      calls.push({ page: pageOf(file), file: basename(file), id, component: fn?.name ?? "", kicker, archetype: a, builder, at, fnAt: fn ? fn.at : -1 });
+      const builder = (reg && reg !== EVERY ? PLAN_BUILDERS.get(reg.id) : null) ?? /\b(build[A-Z]\w*)\s*\(/.exec(tag)?.[1] ?? "";
+      calls.push({ page: pageOf(file), file: basename(file), id: reg === EVERY ? EVERY : id, component: fn?.name ?? "", kicker, archetype: a, builder, at, fnAt: fn ? fn.at : -1 });
     }
   }
   for (const c of calls) {
@@ -469,9 +515,12 @@ function borrowedOf(file: string, own: Map<string, Section[]>): Section[] {
         if (tagEnd === -1) continue;
         const fn = [...fns].reverse().find((f) => f.at < at);
         const signature = fn ? src.slice(fn.at, src.indexOf(")", fn.at) + 1) : "";
-        const callId = resolveId(topProp(src.slice(at, tagEnd), "id"), signature);
+        const rawId = resolveId(topProp(src.slice(at, tagEnd), "id"), signature);
+        /* A CALL WITH A SLOT'S REGISTRY ID (the country's locked card): the slot's row, or every slot's (registrySlot). */
+        const reg = registrySlot(rawId, src.slice(fn ? fn.at : 0, tagEnd));
+        const callId = reg === EVERY ? EVERY : reg ? reg.domId : rawId;
         for (const s of theirs) {
-          out.push({ ...s, page: pageOf(file), file: `${s.file} (${folderOf(def.file)})`, id: callId ?? s.id, component: local === def.name ? local : `${local} (${def.name})`, at });
+          out.push({ ...s, page: pageOf(file), file: `${s.file} (${folderOf(def.file)})`, id: callId ?? s.id, component: local === def.name ? local : `${local} (${def.name})`, kicker: reg && reg !== EVERY ? reg.heading : s.kicker, at });
         }
       }
     }
@@ -537,10 +586,57 @@ function render(rows: Row[], files: string[], loud: Map<string, LoudDeclaration>
   return lines.join(NL);
 }
 
+/** The stage component that draws a slot (`<Pascal id>Slot` in the country folder) and the first archetype it draws, read as the census reads a card; null when no such component is found. */
+function stageComponent(slot: SlotDef, files: string[]): { name: string; archetype: string | null } | null {
+  const name = `${pascal(slot.id)}Slot`;
+  for (const f of files) {
+    if (pageOf(f) !== "country") continue;
+    const src = sourceOf(f);
+    const m = new RegExp(`(?:export\\s+)?function\\s+${name}\\s*\\(`).exec(src);
+    if (!m) continue;
+    const rest = src.slice(m.index + m[0].length);
+    const next = rest.search(/\n(?:export\s+)?function\s+[A-Z]\w*\s*\(/);
+    const body = src.slice(m.index, m.index + m[0].length + (next === -1 ? rest.length : next));
+    let best: { a: string; at: number } | null = null;
+    for (const a of importedFromArchetypeFolders(src).filter((x) => ARCHETYPES.has(x))) {
+      const i = body.search(new RegExp(`<${a}\\b`));
+      if (i !== -1 && (!best || i < best.at)) best = { a, at: i };
+    }
+    return { name, archetype: best ? best.a : null };
+  }
+  return null;
+}
+
+/** A frame that stands for every slot of the registry (registrySlot's EVERY) becomes one section a slot: the page's one frame the slots whose own Box is not written elsewhere, the locked card the slots of stages 2 to 6 (locks.ts: each stage's first slot stays open and every later one locks, the masthead and the close stand outside). */
+function expandSlots(sections: Section[], files: string[]): Section[] {
+  const literal = new Set(sections.filter((s) => s.page === "country" && s.id !== EVERY && !s.id.startsWith("#")).map((s) => s.id));
+  const out: Section[] = [];
+  for (const s of sections) {
+    if (s.id !== EVERY) { out.push(s); continue; }
+    const locked = s.component.startsWith("LockedSection");
+    const seen = new Set<string>();
+    for (const slot of SLOTS) {
+      const stage = stageOfSlot(slot.id).n;
+      if (locked ? stage < 2 || stage > 6 : stage < 2) continue;
+      if (!locked && literal.has(slot.domId)) continue;
+      if (seen.has(slot.domId)) continue;
+      seen.add(slot.domId);
+      const drawn = locked ? null : stageComponent(slot, files);
+      out.push({ ...s, id: slot.domId, component: locked ? s.component : drawn?.name ?? s.component, kicker: slot.heading, archetype: locked ? "kit" : drawn?.archetype ?? s.archetype, builder: PLAN_BUILDERS.get(slot.id) ?? "", at: s.at + slot.n / 1000 });
+    }
+  }
+  return out;
+}
+
 const files = walk(ROOT);
 const own = new Map(files.map((f) => [f, sectionsOf(f)]));
-/* Each file's own sections and the cards it borrows, in the order they stand in the file. */
-const rows = mergeRows(files.flatMap((f) => [...own.get(f)!, ...borrowedOf(f, own)].sort((a, b) => a.at - b.at)));
+/* Each file's own sections and the cards it borrows, in the order they stand in the file; the frames that stand for every slot of the registry one section a slot. */
+const merged = mergeRows(expandSlots(files.flatMap((f) => [...own.get(f)!, ...borrowedOf(f, own)].sort((a, b) => a.at - b.at)), files));
+/* THE COUNTRY'S ROWS STAND IN THE REGISTRY'S ORDER (the page's own order), whichever file draws them. */
+const slotOrder = (id: string) => { const i = SLOTS.findIndex((x) => x.domId === id); return i === -1 ? 1000 : i; };
+const countryAt = merged.flatMap((r, i) => (r.page === "country" ? [i] : []));
+const countrySorted = countryAt.map((i) => merged[i]).sort((a, b) => slotOrder(a.id) - slotOrder(b.id));
+const rows = merged.map((r, i) => (r.page === "country" ? countrySorted[countryAt.indexOf(i)] : r));
 
 /* THE CENSUS HELD TO THE PAGE (the header's `--check`): every block each fresh
    render draws, its `[data-block]` ids (the unit BLOCK FLOOR counts), must be
