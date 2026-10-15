@@ -59,7 +59,7 @@ export function buildSpendSlot(iso2: string): SlotModel<SpendDrawing> | null {
   if (!spend) return null;
   const place = listPeoplePlaces().find((p) => p.iso2 === iso2.toUpperCase())?.city;
   const ages = buildAgeMix(iso2, place, "country");
-  const ageLists = (ages?.bars ?? []).map((bar, i) => list(`ages-${i}`, J.ageOf.replace("{place}", bar.name), "share", bar.bands.map((b) => ({ key: b.key, label: b.label, value: `${Math.round(b.pct)}%` }))));
+  const ageLists = (ages?.bars ?? []).map((bar, i) => list(`ages-${i}`, J.ageOf.replace("{place}", bar.name.charAt(0).toUpperCase() + bar.name.slice(1)), "share", bar.bands.map((b) => ({ key: b.key, label: b.label, value: `${Math.round(b.pct)}%` }))));
   return {
     id: "spend",
     lead: { figure: spend.out.figure, words: COPY.countrySpend.outWords, prov: spend.out.prov ?? null },
