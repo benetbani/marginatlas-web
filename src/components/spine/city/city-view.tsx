@@ -937,9 +937,13 @@ export function SpineCityBody({ data = spineCitySeed, locked = false }: { data?:
     { key: "take", split: "wide", label: "The answer", outside: true, body: [cityBoard ? <HeroBoard key="take" id="city-take" board={cityBoard} answers={SURFACE_ANSWERS.city} /> : <CityHero key="take" d={d} />] },
     { key: "premises", split: "wide", chapter: "01", label: "Premises", body: keep([premises ? <Premises key="premises" bento={premises} /> : null]) },
     { key: "gates", split: "1-1", stack: "lg", chapter: "01", label: "Opening here", body: keep([gates ? <GatesCard key="gates" gates={gates} /> : null, cityMarket ? <MarketCard key="market" market={cityMarket} /> : null]) },
+    /* THE LIVING PAIR TAKES 2-1, the split chosen 2026-10-16 so no neighbour repeats it (art direction D3 on the zones; plan 2026-10-12
+       rhythm-air-inside, Task 6): on the 209 cities where who buys stands beside the season, four levels of halves ran in a row (opening,
+       living, who buys, the crew). Measured at 1280 on seven of them, the living card and the runway end 20 to 31 apart at 2-1 (20 to 50 at
+       3-2 and 2-3); the level of three stays three. */
     {
       key: "living",
-      split: livingThree || earningsOnLiving ? "1-1-1" : "1-1",
+      split: livingThree || earningsOnLiving ? "1-1-1" : "2-1",
       chapter: "01",
       label: "Living here",
       body: livingThree
@@ -948,7 +952,9 @@ export function SpineCityBody({ data = spineCitySeed, locked = false }: { data?:
           ? [<Living key="living" living={living} />, <Runway key="runway" runway={runway} />, <Earnings key="earnings" strip={earnings} />]
           : keep([living ? <Living key="living" living={living} /> : null, runway ? <Runway key="runway" runway={runway} /> : null]),
     },
-    { key: "demand", split: "1-1", chapter: "01", label: "Who buys", body: demandBesideSeason ? [<Demand key="demand" demand={demand} />, <Season key="season" season={season} />] : [] },
+    /* WHO BUYS TAKES 2-3 (the same day, the same reason): between the living pair's 2-1 and the crew's halves; the demand card and the
+       season end 6 to 10 apart at 2-3 and 1-2, 30 at 1-1; of those two, 2-3 leaves the demand card more room. */
+    { key: "demand", split: "2-3", chapter: "01", label: "Who buys", body: demandBesideSeason ? [<Demand key="demand" demand={demand} />, <Season key="season" season={season} />] : [] },
     { key: "crew", split: "1-1", chapter: "01", label: "The crew", body: keep([crew ? <Crew key="crew" crew={crew} /> : null, texture ? <Texture key="texture" texture={texture} /> : null]) },
     { key: "calendar", split: "2-1", stack: "lg", chapter: "01", label: "The year", body: calendar ? keep([<SpendCalendar key="calendar" calendar={calendar} />, earnings ? <Earnings key="earnings" strip={earnings} /> : null]) : [] },
     { key: "earnings", split: "2-1", chapter: "02", label: "What customers earn", body: !calendar && earnings && !earningsOnLiving ? [<Earnings key="earnings" strip={earnings} />] : [] },
