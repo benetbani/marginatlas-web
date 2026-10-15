@@ -15,8 +15,7 @@
  *   M4 THE SWITCH: the first view shows alone; a click on the second tab shows its panel alone and marks it selected; the left
  *     arrow moves back.
  *   M3 THE LEVERS: the hire lever opens at the card's own $59K; a typed pay of $40,000 gives $45K and a share of $5,005 (15% above
- *     $6,632, the rule and nothing else); the slider's arrow key moves it. The cover picker opens at the four covers' $2,200;
- *     unticking one takes its premium off; a click on the required cover changes nothing.
+ *     $6,632, the rule and nothing else); the slider's arrow key moves it.
  *     The survival lever opens on the country's 38%; the South West gives 44% and its words, the country's curve kept behind.
  *     The loan lever opens at the largest amount over five years and moves by the fixed-rate repayment when three are chosen.
  *   M5 THE SORT: a table of four rows opens in its builder's order; a press on a head where the lowest wins orders the rows lowest
@@ -58,7 +57,6 @@ import { createRoot } from "react-dom/client";
 import { Marks } from ${JSON.stringify(COMPONENT.replace(/\\/g, "/"))};
 import { Switch } from ${JSON.stringify(resolve("src/components/spine/interact/Switch.tsx").replace(/\\/g, "/"))};
 import { HireLever } from ${JSON.stringify(resolve("src/components/spine/interact/HireLever.tsx").replace(/\\/g, "/"))};
-import { CoverPicker } from ${JSON.stringify(resolve("src/components/spine/interact/CoverPicker.tsx").replace(/\\/g, "/"))};
 import { SurvivalCurve } from ${JSON.stringify(resolve("src/components/spine/interact/SurvivalCurve.tsx").replace(/\\/g, "/"))};
 import { LoanLever } from ${JSON.stringify(resolve("src/components/spine/interact/LoanLever.tsx").replace(/\\/g, "/"))};
 import { SortTable } from ${JSON.stringify(resolve("src/components/spine/interact/SortTable.tsx").replace(/\\/g, "/"))};
@@ -94,9 +92,6 @@ function Page() {
       </div>
       <div id="hire" style={{ marginTop: 60, maxWidth: 480 }}>
         <HireLever pay={51785} min={33000} rate={15} threshold={6632} words={{ label: "A full-time hire", unit: "a year", salary: "Salary", onCost: "employer's share", rule: "{rate} on pay above {threshold} a year.", lever: "Pay" }} />
-      </div>
-      <div id="covers" style={{ marginTop: 60, maxWidth: 480 }}>
-        <CoverPicker covers={[{ key: "p", label: "Property and contents", usd: 700, required: false }, { key: "e", label: "Employers liability", usd: 600, required: true }, { key: "i", label: "Professional indemnity", usd: 550, required: false }, { key: "l", label: "Public liability", usd: 350, required: false }]} words={{ focal: "a year for the covers ticked", required: "Required", minimum: "at least $6.6M of cover once you employ", aYear: "/yr", tick: "The covers to count" }} />
       </div>
       <div id="survival" style={{ marginTop: 60, maxWidth: 480 }}>
         <SurvivalCurve id="sv" start={{ year: 0, pct: 100 }} country={[{ year: 1, pct: 94.6 },{ year: 2, pct: 74.7 }, { year: 3, pct: 55.9 }, { year: 4, pct: 45 }, { year: 5, pct: 38.4 }]} regions={[{ key: "south-west", name: "South West", inName: "the South West", points: [{ year: 1, pct: 95 }, { year: 2, pct: 77.7 }, { year: 3, pct: 61 }, { year: 4, pct: 50.1 }, { year: 5, pct: 43.5 }] }]} best={{ name: "South West", pct: 43.5 }} worst={{ name: "West Midlands", pct: 30.6 }} words={{ focal: "of new firms still trading after {n} years", focalIn: "of new firms still trading after {n} years in {region}", start: "Start", year: "Year {n}", regions: "By region, year {n}", choose: "Region", country: "The UK", kicker: "Who is still trading" }} />
@@ -228,7 +223,7 @@ try {
     const p3 = await d2.newPage();
     await p3.goto(url);
     await p3.waitForSelector("#sw-tab-close");
-    const SW = "src/components/spine/interact/Switch.tsx", HL = "src/components/spine/interact/HireLever.tsx", CP = "src/components/spine/interact/CoverPicker.tsx";
+    const SW = "src/components/spine/interact/Switch.tsx", HL = "src/components/spine/interact/HireLever.tsx";
     const vis = (sel) => p3.evaluate((sel) => { const el = document.querySelector(sel); return !!el && el.getClientRects().length > 0; }, sel);
     if (!(await vis("#panel-run")) || (await vis("#panel-close"))) fail("the switch did not open on its first view alone", "show the first panel and hide the others (M4)", SW);
     await p3.locator("#sw-tab-close").click();
@@ -256,19 +251,6 @@ try {
     await settle(p3);
     const after = await p3.inputValue("#hire-pay-range");
     if (after === before) fail("the right arrow on the pay slider moved nothing", "keep the native range's keyboard", "src/components/spine/interact/Range.tsx");
-
-    const coverTotal = () => p3.evaluate(() => document.querySelector("#covers [data-focal]")?.textContent.trim() ?? "");
-    let c0 = await coverTotal();
-    if (c0 !== "$2,200") fail(`the cover picker opened at "${c0}", not the four covers' $2,200`, "all covers ticked at first", CP);
-    await p3.locator("#covers label", { hasText: "Public liability" }).click();
-    await settle(p3);
-    c0 = await coverTotal();
-    if (c0 !== "$1,850") fail(`unticking public liability left "${c0}", not $1,850`, "the figure is the sum of the ticked covers", CP);
-    await p3.locator("#covers label", { hasText: "Employers liability" }).click({ force: true });
-    await settle(p3);
-    c0 = await coverTotal();
-    const req = await p3.evaluate(() => { const b = [...document.querySelectorAll('#covers input[type="checkbox"]')].find((x) => x.getAttribute("aria-disabled") === "true"); return b ? b.checked : null; });
-    if (c0 !== "$1,850" || req !== true) fail(`a click on the required cover changed the figure to "${c0}" or unticked it (${req})`, "the cover the law requires stays ticked", CP);
 
     const SV = "src/components/spine/interact/SurvivalCurve.tsx", LL = "src/components/spine/interact/LoanLever.tsx";
     const svFigure = () => p3.evaluate(() => document.querySelector("#survival [data-focal]")?.textContent.trim() ?? "");

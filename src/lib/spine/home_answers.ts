@@ -91,7 +91,7 @@ export function buildHomeAnswers(iso2 = "GB"): HomeAnswer[] {
     out.push({
       key: "years",
       id: "years",
-      href: "/gb#first-years",
+      href: "/gb#lasting",
       lands,
       kicker: COPY.firstYears.kicker,
       icon: "first-year",

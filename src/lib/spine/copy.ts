@@ -227,29 +227,6 @@ export const COPY = {
       line: "We don't have local tips for this country yet.",
       foot: "",
     },
-    /** THE CITIES SEAT, `10 cities` on the 90 countries with no covered city
-     *  (MODEL.md 8.2's FLOOR bracket; plan step 49, decided 2026-09-19 by the
-     *  controller, option A, reversible by his word). The line is COMPOSED by
-     *  src/lib/spine/country_cities_seat.ts: `{cities}` takes the three
-     *  largest covered cities of the country's own region, said the way a
-     *  person says them ("Delhi, Dhaka and Mumbai"; "Lagos and Luanda" where
-     *  the region holds two; "Cairo" where one), so the template stands at
-     *  eight words and the longest composed line at fourteen, the cap
-     *  (Latin America & Caribbean: "São Paulo, Mexico City and Buenos
-     *  Aires"). The region is said as "Nearby", not by its name: its name
-     *  runs to five words and no line naming both it and three cities fits
-     *  the cap on any region but South Asia (the builder says so). `lineNone`
-     *  is the line where the region holds no covered city, reachable by no
-     *  live country today (every region holds twelve or more); it is drawn on
-     *  the sheet from a cut of the list. No door: a seat carries none, and
-     *  the names are text. The item is 82, appended for this seat: one covered
-     *  city per country in data/cities/city_list_v1.json. */
-    cities: {
-      kicker: CITIES_KICKER,
-      line: "No city here yet. Nearby: {cities}.",
-      lineNone: "No city here or nearby yet.",
-      foot: "",
-    },
     /** THE TRADE PAGE'S ONE DRAWN BLOCKED SEAT, `10 watch` (MODEL.md 8.6;
      *  plan step 33's fifth dispatch, 2026-09-18): his B1 bars wait on item
      *  53 (causes of closure with shares, 0 of 243), so the block stands on
@@ -344,12 +321,9 @@ export const COPY = {
       clean: CLEAN_DEALING,
       admin: "Admin ease, 2020",
       llcDays: "Days to register",
-      hiring: "Hiring staff",
       salaryMonth: "Typical salary",
       llcCost: "Register a company",
     },
-    /** The shard's three words for how easy hiring is, as the board prints them. */
-    hireEase: { easy: "Easy", moderate: "Moderate", hard: "Hard" },
     /** The plus under the answer: its name, and the notes and fallback labels of its rows. */
     taxes: { summary: "The other taxes" },
     taxNotes: { vatFrom: "once sales pass {amount} a year", salesTax: "Sales tax", /* Three words, a row label (ROW SENTENCE, read behind the plus since plan 2026-10-13, Task 1E). */ companyTax: "Company profit tax" },
@@ -524,15 +498,12 @@ export const COPY = {
     kicker: "The bill to register",
     /** After the second figure, on its line: "21 days until you can trade". */
     daysWords: "until you can trade",
-    /** HIS PLUS on the bill (correction 5 of 2026-09-20): the LLC's own facts behind a click, the summary line and the four row labels, each under three words. */
-    detailSummary: "What the LLC involves",
     /** The figure's words under the bill (2026-09-25), and the plus of licences by trade (country_licences_rows.ts). */
     focalWords: "limited company, all in",
     /** Where one step is the only one that costs money (the bill is that fee): the line says the rest are free. */
     focalWordsOneFee: "limited company, all in: the other {n} steps are free",
     focalWordsLocalFee: "limited company, all in: the {fee} online fee, the other {n} steps free",
     licences: { summary: "Licences by trade", noWait: "0 days", noLicence: "No licence needed", /** A shard's trade name over three words, as a row label (ROW SENTENCE; plan 2026-10-13 country-page-journey, Task 3D). */ short: { "Bar / restaurant (alcohol)": "Selling alcohol", "Taxi / private hire": "Taxi or minicab", "Most retail and online": "Retail and online" } as Record<string, string> },
-    detailRows: { form: "The form here", fee: "Government fee", filing: "Filing time", paperwork: "Paperwork" },
     /** The one line: the bill's where it prints, the days' otherwise (entry_bill_rows.ts). */
     basisBill: "Fees and a first licence, not share capital.",
     basisDays: "Days until the last step clears.",
@@ -659,8 +630,6 @@ export const COPY = {
     minimum: "Minimum salary",
     average: "Typical salary",
     withheld: "Pay is not shown: typical pay sits too close to the minimum.",
-    /** THE ON-COST ON THE BAR (section 9's plan, 2026-09-20): the darker piece at the average bar's end, said under the track; `{pct}` is the employer's payroll on-cost as printed. */
-    employerAdds: "Employer adds {pct}.",
     /** The employer's share standing as its own figure where no hire's lever draws (milestone 1, M3: the average's bar it rode on left the card). */
     employerShare: "employer's share on top of pay",
     /** The staff card's one figure since milestone 1, M3: the minimum wage's cost of a full-time year. */
@@ -685,11 +654,6 @@ export const COPY = {
     costs: COSTS_CHAPTER,
     where: "Where to open it, and what to open",
     place: "What the place is like",
-    /** The country page's second and third turns where the country holds the new sections (2026-09-25; the United Kingdom). */
-    money: "Red tape, borrowing and getting paid",
-    open: "What to open, and where",
-    /** The country page's fourth turn where the country holds a cohort's years and what holds small firms back (2026-09-25). */
-    firstYears: "The first years",
   },
   /** THE KIT TO OPEN, AT FOUR BUDGETS (sections/StockTiers.tsx, 2026-09-25; his "cheap, medium, premium, luxury ... 3 chairs of
    *  different kinds"). Labels, never sentences; the one line under the span names the shop and the VAT, nothing else. */
@@ -719,9 +683,6 @@ export const COPY = {
     start: "Start",
     year: "Year {n}",
     regions: "By region, year {n}",
-    /* Four words at most, the copy gate's TITLE LONG (the UK page's first render of the card, 2026-09-25: "What holds small firms
-       back", five). The line under the figure says whose answer it is. */
-    obstaclesKicker: "What holds firms back",
     obstaclesWords: "of small employers call {item} a major obstacle",
     obstacles: {
       tax: "Tax", energy: "Energy prices", "red-tape": "Red tape", competition: "Rivals", staff: "Finding staff",
@@ -771,7 +732,6 @@ export const COPY = {
   },
   /** THE JOB MARKET (sections/JobMarket.tsx, 2026-09-25). */
   jobMarket: {
-    kicker: "The job market",
     focalWords: "out of work and looking",
     /* "Under 25", not "Aged 16 to 24" (the model laws' ROW SENTENCE, four words, on the page's first render): the rate counts the
        16 to 24s, and nobody under 16 is in the count, so the two say the same. */
@@ -817,7 +777,6 @@ export const COPY = {
   /** THE COUNTRY PAGE'S NEW SECTIONS (country_depth_rows.ts, 2026-09-25). Labels the same on every country; a note is the one short
    *  line that says what the figure is, never a method line. */
   employment: {
-    kicker: "Employing people",
     focalWords: "out of work and looking",
     leaveWords: "paid holiday a year, bank holidays included",
     cells: { leave: "Paid leave", out: "Unemployed", week: "Longest week", sick: "Sick pay", dismissal: "Unfair dismissal", maternity: "Maternity pay" },
@@ -828,14 +787,9 @@ export const COPY = {
   /** THE LAW BEHIND A SECTION'S FIGURE, as ruled rows (2026-10-04; rules.json through country_rules.ts). Labels three words or
    *  fewer, notes eight or fewer, never a sentence that concludes. */
   rulesRows: {
-    insuranceWords: "of employers' liability cover at the least, from the first employee",
     payments: {
-      centerWords: "pay by {part}",
       readers: "Card readers",
       readersNote: "in person, no monthly fee",
-      payout: "Card payouts",
-      payoutDay: "Next day",
-      payoutDays: "{n} days",
       payoutNote: "some readers within minutes",
       cash: "Cash, all payments",
       cashNote: "{then} in {thenYear}",
@@ -844,32 +798,13 @@ export const COPY = {
     ratesNote: "per £1 of value, England",
     reliefNote: "rateable value, one property",
     retailNote: "below £51,000, England",
-    dismissalNote: "{from} from {date}",
-    dismissalSince: "since {date}",
     sickNote: "from day one",
-    maternityNote: "{weekly} after week 6",
     noticeNote: "per year worked, to 12 weeks",
     holidaysNote: "{year}, England and Wales",
     lateAccountsNote: "1 to over 6 months late",
     statementWords: "a year to file the company statement, online",
-    strikeWords: "to close a company with no debts, online",
-  },
-  insurance: {
-    kicker: "Insurance",
-    minCoverWords: "{cover} cover, required once you employ",
-    requiredWords: "a year for {cover}, which the law requires",
-    requiredNote: "required by law",
-    required: "Required",
-    aYear: "/yr",
-    /** The cover picker (goal 2026-09-26): the figure's words, the required row's minimum, the list's name for a screen reader. */
-    tickedWords: "a year for the covers ticked",
-    minimumWords: "at least {cover} of cover once you employ",
-    tick: "The covers to count",
-    typicalNote: "",
-    basis: "What each cover typically costs a year.",
   },
   financing: {
-    kicker: "Borrowing",
     focalWords: "average rate on a new small-business loan",
     cells: { base: "Central bank rate", startup: "Start-up loans" },
     notes: { base: "", startup: "{rate} fixed, {min} to {max} years", startupLocal: "{min} to {max}, {rate} fixed", grantFor: "for" },
@@ -877,34 +812,6 @@ export const COPY = {
     startupTerm: { min: 1, max: 5 },
     /** The loan lever (goal 2026-09-26, M3). */
     loan: { label: "A start-up loan", perMonth: "a month", amount: "Amount", years: "Years", yearsUnit: "years", total: "repaid in all" },
-  },
-  banking: {
-    kicker: "Getting paid",
-    focalWords: "of each card sale",
-    cells: { fee: "Card fees", lands: "Card payouts", foreign: "Foreign owner's account", friction: "Opening an account" },
-    notes: { lands: "", foreign: "", friction: "" },
-    yes: "Yes",
-    no: "No",
-    friction: { low: "Quick", medium: "Some paperwork", high: "Slow" } as Record<string, string>,
-    donut: "How customers pay",
-    centerWords: "pay by {part}",
-  },
-  paperwork: {
-    kicker: "Legal and admin costs",
-    focalWords: "a year to file the company statement",
-    cells: { rename: "Changing the name", filings: "Filings a year", hours: "Admin a year", online: "Filed online" },
-    notes: { rename: "", filings: "", hours: "", online: "" },
-    /** The card's two views (goal 2026-09-26, M4): running the company (the yearly statement, the filings, the admin hours and
-     *  the one-off name change), and closing it. "Each year" would have been wrong for the name change. */
-    views: { year: "To run", close: "To close" },
-  },
-  closing: {
-    summary: "Closing a company",
-    rows: { strike: "Closing, no debts", windUp: "Closing with debts", liability: "Owner's liability" },
-    notes: { strike: "online", windUp: "via an insolvency practitioner", liability: "unless personally guaranteed" },
-    limited: "Limited",
-    /** Read with the strike-off's figure at the head of the "To close" view: "$17 to close a company with no debts, online". */
-    focalWords: "to close a company with no debts, online",
   },
   /** The world's range under a figure (charts/WorldRange.tsx, 2026-09-25): the median's word and the rows' labels and units. */
   ranged: { ends: { lowest: "Lowest", highest: "Highest" }, electricity: "Business electricity", electricityWords: "per kWh of business electricity", perKwh: "/kWh", diesel: "Diesel", dieselNote: "at the pump", perLitre: "/L", lending: "Rate on a small-business loan", peers: "Peers" },
@@ -2200,9 +2107,6 @@ export const COPY = {
     world: { usual: "the usual anywhere", longer: "countries where a sale can take longer", longerLean: "countries where selling takes longer" },
     here: "Here",
     usualAnywhere: "Usual anywhere",
-    /** Read with the months at the head of the lean card (goal 2026-09-26): "6 to 12 months" then these words. */
-    monthsLean: "to sell a business, quicker than in {rank} countries",
-    monthsLeanAlone: "to sell a business here",
     /** The buyers as a label on the lean card (2026-09-25): the file's three words, said as a reader says them. */
     buyers: { active: "Plenty of buyers", steady: "Some buyers", thin: "Few buyers" } as Record<string, string>,
     basis: "From listing to money, for a small business changing hands.",
@@ -2216,7 +2120,6 @@ export const COPY = {
    *  basis names that division in the words a person would use. The ceiling is
    *  the whole budget, so the same line names it at the head of the track. */
   countrySpend: {
-    kicker: "What households spend on",
     /** The bracket over eating out and groceries, the two parts the card's figure is worked from (goal 2026-09-26, M6). */
     bracket: "Food",
     categories: {
@@ -2232,7 +2135,6 @@ export const COPY = {
       other: "Everything else",
     },
     outWords: "of the food money goes on eating out",
-    topLabel: "the whole budget",
     phoneHead: { name: "What it goes on", value: "Share" },
     /* NO LINE (his correction of 2026-09-24, evening): the title asks the
        question, the rows' heads say "What it goes on" and "Share", and the
@@ -2693,7 +2595,6 @@ export const COPY = {
    *  Its figure is the months until a bankrupt sole trader is freed from the debts; its rows what failing costs the owner of a sole
    *  trade or a company (src/lib/spine/sections/if_it_fails.ts). The strike-off is the paperwork card's and is never printed here. */
   ifItFails: {
-    kicker: "If it fails",
     months: "months",
     words: "Until a bankrupt sole trader is freed from the debts.",
   },
@@ -2701,7 +2602,6 @@ export const COPY = {
    *  registering. Its figure is the Innovator Founder route's fees for three years per person; its rows the walls in the research's
    *  order (src/lib/spine/sections/from_abroad.ts), each its cost or its time where open, its state where not. */
   fromAbroad: {
-    kicker: "Opening from abroad",
     words: "Founder visa fees for 3 years, per person, decided in {weeks} weeks.",
     state: { open: "Open", conditional: "Depends", closed: "Closed" },
   },
@@ -2709,7 +2609,6 @@ export const COPY = {
    *  running costs. Its figure is the least notice a landlord must give to end a protected lease; its rows the clauses in plain
    *  words and the stamp duty on an 80 square metre London shop's lease (src/lib/spine/sections/lease_by_law.ts). */
   leaseByLaw: {
-    kicker: "The lease, by law",
     months: "months",
     words: "The least notice a landlord gives to end a protected lease.",
     taxLabel: { 5: "5-year lease", 10: "10-year lease" },
@@ -2720,7 +2619,6 @@ export const COPY = {
    *  Its figure is one worked hour of a minimum-wage hire, all in (src/lib/spine/sections/hire_all_in.ts); its rows what letting
    *  that hire go costs after one, three and ten years, and the law's amounts the page prints nowhere else. */
   hireAllIn: {
-    kicker: "An hour, all in",
     words: "One worked hour at the minimum wage, with the allowance.",
     parting: { 1: "Parting, 1 year", 3: "Parting, 3 years", 10: "Parting, 10 years" },
     partingNote: "Redundancy and notice, at 35",
@@ -2791,7 +2689,6 @@ export const COPY = {
       kicker: "Where new firms last",
       words: "{city}, of 100 firms born in {cohort} still trading in {year}",
       ukKey: "The UK",
-      aria: " of 100 still trading",
     },
     /** WHERE NEW COMPANIES OPEN (plan 2026-10-08, home sections, section 2): the title, the yardstick's label (the UK's own figure,
      *  for scale; it ranks nothing), the one line (the measure said once: limited companies, per 1,000 of working age, the year),
@@ -2913,19 +2810,9 @@ export const COPY = {
   locked: {
     button: "Open with Pro",
     lines: {
-      hiring: "The wage floor, and a first hire’s yearly cost.",
-      "hire-all-in": "What one worked hour costs, and what letting go costs.",
-      "lease-by-law": "What the law says about your shop’s lease.",
-      "from-abroad": "What stands between a founder from abroad and opening.",
-      "if-it-fails": "What failing costs you, as a sole trader or a director.",
-      employment: "The rules you take on with your first employee.",
       "running-costs": "What it costs to keep the doors open.",
-      insurance: "The cover the law asks for, and what it costs.",
       peers: "How the UK compares with countries like it.",
-      financing: "What borrowing costs a small firm here.",
-      banking: "How customers pay you, and what each payment costs.",
       "age-mix": "Who lives here, by age.",
-      "job-market": "How hard it is to find staff here.",
       cities: "The UK’s cities, side by side.",
       locals: "Things worth knowing before you open here.",
       spend: "What households here spend their money on.",
@@ -2963,8 +2850,6 @@ export const COPY = {
       "trade-peers": "How this trade does here against other places.",
       districts: "What rent costs in each part of the city.",
       trades: "Trades with figures for this city.",
-      "firms-last": "How long new firms last in each UK city.",
-      duel: "Which trades see the most companies fail.",
     },
   },
   /** THE COUNTRY PAGE BY THE VISITOR'S JOURNEY (plan 2026-10-13 country-page-journey; spec E:/atlas/docs/superpowers/specs/2026-10-13-

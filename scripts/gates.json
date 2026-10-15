@@ -2168,7 +2168,6 @@
         "scratchpad/harness/pages/home-gb.html",
         "scripts/harness/fake_today.cjs",
         "src/components/spine/archetypes/RankedBars.tsx",
-        "src/components/spine/country/Duel.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/lib/home/duel.ts"
       ],
@@ -2200,7 +2199,6 @@
         "data/uk/registers/survival.json",
         "scratchpad/harness/pages/country-GB.html",
         "scratchpad/harness/pages/home-gb.html",
-        "src/components/spine/country/FirmsLast.tsx",
         "src/components/spine/home/home-view.tsx",
         "src/lib/spine/copy.ts",
         "src/lib/spine/slots/last.ts"
@@ -2217,7 +2215,6 @@
         "scratchpad/harness/pages/country-GB.html",
         "src/components/spine/country/country-view.tsx",
         "src/components/spine/interact/SurvivalCurve.tsx",
-        "src/components/spine/sections/Obstacles.tsx",
         "src/lib/spine/sections/first_years.ts",
         "src/lib/spine/slots/last.ts"
       ],
@@ -2910,7 +2907,6 @@
       "asserts": "verify_interact: A DRAWING'S PARTS ANSWER THE READER, AND ONLY WITH THE DRAWING'S OWN DATA (goal 2026-09-26, his message of that afternoon: \"study the potential dynamism of all sections ...",
       "reads": [
         "scripts/harness/pages.json",
-        "src/components/spine/interact/CoverPicker.tsx",
         "src/components/spine/interact/HireLever.tsx",
         "src/components/spine/interact/LoanLever.tsx",
         "src/components/spine/interact/Marks.tsx",
@@ -3760,7 +3756,6 @@
         "src/app/not-found.tsx",
         "src/app/world/page.tsx",
         "src/components",
-        "src/components/spine/sections/JobMarket.tsx",
         "src/components/spine2/page/Ch11FirstYear.tsx",
         "tests/copy/no_typed_figures.test.ts"
       ],

@@ -39,9 +39,7 @@ import { ReportFoot } from "@/components/spine/ReportFoot";
 import { checkedDateForCountry } from "@/lib/spine/checked";
 import { DepthNotifyFoot } from "@/components/spine/DepthNotifyFoot";
 import { countryPageTarget } from "@/lib/geo/page_targets";
-import { RankedBars } from "@/components/spine/archetypes/RankedBars";
 import { COPY } from "@/lib/spine/copy";
-import { SPEND_RESIDUAL, SPEND_WHOLE, type CountrySpendData } from "@/lib/spine/country_spend_rows";
 
 void SampleTag;
 
@@ -175,31 +173,6 @@ export function SpineCountryBody({ data, locked = false }: { data?: any; locked?
       {ownPath ? <DepthNotifyFoot path={ownPath} /> : null}
       <OnThisPage sections={sections} chapters={chapters} />
     </>
-  );
-}
-
-/* WHAT HOUSEHOLDS SPEND ON, the ranked form the archetype sheet still draws (stories.tsx imports it from here): seven parts of a hundred, the
-   leftover pinned last, on a track whose far end is the whole budget. No country page draws it; slot 4 draws the share bar. */
-export function SpendCard({ spend }: { spend: CountrySpendData | null }) {
-  if (!spend) return null;
-  const C = COPY.countrySpend;
-  return (
-    <RankedBars
-      id="spend"
-      kicker={C.kicker}
-      icon="spending-power"
-      tagged={spend.tag !== "held"}
-      basis={spend.basis}
-      rows={spend.rows.map((r) => ({ key: r.key, name: r.name, value: r.value }))}
-      residualKey={SPEND_RESIDUAL}
-      worldMax={SPEND_WHOLE}
-      ceiling="whole"
-      topLabel={C.topLabel}
-      feature="none"
-      focal={{ figure: spend.out.figure, words: C.outWords }}
-      fmt={(v) => `${v}%`}
-      phoneHead={{ name: C.phoneHead.name, value: C.phoneHead.value }}
-    />
   );
 }
 

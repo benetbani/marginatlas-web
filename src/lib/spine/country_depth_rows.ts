@@ -1,22 +1,17 @@
 /**
  * src/lib/spine/country_depth_rows.ts
  *
- * THE COUNTRY PAGE'S NEW SECTIONS (2026-09-25, his goal of that day: the
- * United Kingdom's page at the highest standard). Four he asked for by name on
- * 2026-09-20 and one his correction 6 of that day widened:
+ * THE COUNTRY PAGE'S DEPTH (2026-09-25, his goal of that day: the United
+ * Kingdom's page at the highest standard), what the slots read of it since plan
+ * 2026-10-13 country-page-journey:
  *  - EMPLOYING PEOPLE: his correction 8 ("the title is wrong ... you are very
  *    correct about the unemployment rate, the days of paid leave, and the share
- *    of work that happens informally"), with the rules an employer meets.
- *  - INSURANCE: his correction 6 names insurance among the costs that are the
- *    same everywhere in a country.
+ *    of work that happens informally"), with the rules an employer meets (slot 7).
  *  - BORROWING: "financing the business: the interest rates, the ease of taking
- *    a loan".
- *  - GETTING PAID: "banking procedures ... current accounts ... the ease of
- *    settling funds".
- *  - LEGAL AND ADMIN COSTS: "the cost to make an amendment to an LLC ... typical
- *    things, practical".
- * And London's own margins, trade by trade, for the margin card (his ruling 6
- * of 2026-09-04: "net profit margin in %").
+ *    a loan" (slot 9).
+ *  - What London's trades take, trade by trade (slot 5).
+ * The insurance, getting-paid and legal-costs cards left with the page's old
+ * sections (that plan's Task 6): the slots read the law's own rows instead.
  *
  * THE LAW OF EVERY SECTION (his, 2026-09-20): labels and categories defined
  * once here and filled per country, never a sentence written for one country.
@@ -36,8 +31,6 @@ import { getCountryProfile } from "@/lib/economic_profile";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 import type { KvCell } from "@/components/spine/archetypes/KvGrid";
-import type { DonutPart } from "@/components/spine/archetypes/Donut";
-import type { DetailRow } from "@/components/spine/archetypes/DetailPanel";
 import type { BarRow } from "@/components/spine/archetypes/RankedBars";
 import { LONDON_MARKET } from "@/lib/london/market";
 import { SLUG_TO_INDUSTRY } from "@/lib/taxonomy";
@@ -58,15 +51,6 @@ const isNum = (v: unknown): v is number => typeof v === "number" && Number.isFin
 const conf = (tag: string) => (tag === "held" ? ("measured" as const) : ("modeled" as const));
 /* A share as it is stated: 3.75% stays 3.75% (the Bank Rate is set in quarter points), 4.9 stays 4.9, 63.5 stays 63.5. */
 const trimPct = (v: number) => `${Math.round(v * 100) / 100}%`;
-/** A yes-or-no the shard may hold as a boolean or as the words "True" and "False". */
-const isYes = (v: unknown) => v === true || (typeof v === "string" && v.trim().toLowerCase() === "true");
-const isYesNo = (v: unknown) => typeof v === "boolean" || (typeof v === "string" && /^(true|false)$/i.test(v.trim()));
-/** The shard's one string for a metric, or null. */
-function word(iso2: string, metric: string): { value: string; tag: string } | null {
-  if (!loadCountryShard(iso2)) return null;
-  const f = queryFacts({ entityId: countryEntityId(iso2), metrics: [metric], rowKey: "" })[0];
-  return f && typeof f.value === "string" && f.value.trim() ? { value: f.value.trim(), tag: f.tag } : null;
-}
 /** The rows of one list the shard holds (`<prefix>.*.<field>`), in file order, keyed by the row. */
 function listRows(iso2: string, prefix: string): Array<Record<string, string | number | boolean> & { _tag: string }> {
   if (!loadCountryShard(iso2)) return [];
@@ -116,37 +100,6 @@ export function buildCountryEmployment(iso2: string): EmploymentCard | null {
   return { focal, cells, leaveDays };
 }
 
-/** INSURANCE: the cover the law requires as the figure (its minimum), the typical yearly cost of each cover as the cells. */
-/** `covers` and `minCover` (2026-09-26, the cover picker): the same covers as numbers, and the law's minimum cover, for the lever. */
-export type InsuranceCard = { focal: Focal; cells: KvCell[]; covers: Array<{ key: string; label: string; usd: number; required: boolean }>; minCover: number | null };
-export function buildCountryInsurance(iso2: string): InsuranceCard | null {
-  const I = COPY.insurance;
-  const covers = listRows(iso2, "insurance.covers").filter((r) => typeof r.name === "string" && isNum(r.typical_usd) && (r.typical_usd as number) > 0);
-  if (covers.length < 2) return null;
-  const required = covers.find((r) => isYes(r.required)) ?? null;
-  const minCover = countryFigure(iso2, "insurance.employers_liability_min_cover_usd");
-  const cells: KvCell[] = covers.map((r) => ({
-    key: String(r.name),
-    label: String(r.name),
-    value: usd(r.typical_usd as number),
-    note: isYes(r.required) ? I.requiredNote : I.typicalNote,
-    confidence: conf(r._tag),
-  }));
-  /* The figure is the law's own where the shard holds it (the minimum cover an employer must carry), else the required cover's cost. */
-  const focal: Focal | null = minCover && minCover.value > 0 && required
-    ? { figure: usd(minCover.value), words: I.minCoverWords.replace("{cover}", String(required.name).toLowerCase()) }
-    : required
-      ? { figure: usd(required.typical_usd as number), words: I.requiredWords.replace("{cover}", String(required.name).toLowerCase()) }
-      : null;
-  if (!focal) return null;
-  return {
-    focal,
-    cells,
-    covers: covers.map((r) => ({ key: String(r.name), label: String(r.name), usd: r.typical_usd as number, required: isYes(r.required) })),
-    minCover: minCover && minCover.value > 0 ? minCover.value : null,
-  };
-}
-
 /** BORROWING: what a small business pays for a new loan as the figure; the rate lenders start from, the government's start-up loans and the innovation grants as the cells. */
 export function buildCountryFinancing(iso2: string): DepthCard | null {
   const F = COPY.financing;
@@ -167,63 +120,6 @@ export function buildCountryFinancing(iso2: string): DepthCard | null {
   }
   if (cells.length < 2) return null;
   return { focal: { figure: trimPct(sme.value), words: F.focalWords }, cells, loan, baseRate: base && base.value > 0 ? base.value : null };
-}
-
-/** GETTING PAID: how customers pay, drawn as a whole; what a card sale costs as the figure; how fast money lands and the account as the cells. */
-export type BankingCard = { focal: Focal; parts: DonutPart[]; cells: KvCell[] };
-export function buildCountryBanking(iso2: string): BankingCard | null {
-  const B = COPY.banking;
-  const parts: DonutPart[] = listRows(iso2, "payments.methods")
-    .filter((r) => typeof r.name === "string" && isNum(r.pct) && (r.pct as number) > 0)
-    .map((r) => ({ key: String(r.name).toLowerCase().replace(/\s+/g, "-"), name: String(r.name), share: r.pct as number }));
-  const fee = countryFigure(iso2, "payments.card_fee_pct");
-  if (parts.length < 2 || !fee) return null;
-  const cells: KvCell[] = [];
-  const lands = word(iso2, "payments.settlement_days");
-  if (lands) cells.push({ key: "lands", icon: "first-year", label: B.cells.lands, value: lands.value.replace(/\s+days?$/i, " days"), note: B.notes.lands, confidence: conf(lands.tag) });
-  const foreign = queryFacts({ entityId: countryEntityId(iso2), metrics: ["setup.banking.can_foreigner"], rowKey: "" })[0];
-  if (foreign && isYesNo(foreign.value)) cells.push({ key: "foreign", icon: "visa-permit", label: B.cells.foreign, value: isYes(foreign.value) ? B.yes : B.no, note: B.notes.foreign, confidence: conf(foreign.tag) });
-  const friction = word(iso2, "setup.banking.friction");
-  if (friction) cells.push({ key: "friction", icon: "red-tape", label: B.cells.friction, value: (B.friction as Record<string, string>)[friction.value.toLowerCase()] ?? friction.value, note: B.notes.friction, confidence: conf(friction.tag) });
-  return { focal: { figure: trimPct(fee.value), words: B.focalWords }, parts, cells };
-}
-
-/** LEGAL AND ADMIN COSTS: the company's yearly filing fee as the figure; changing it, and the paperwork a year, as the cells. */
-export function buildCountryPaperwork(iso2: string): DepthCard | null {
-  const P = COPY.paperwork;
-  const yearly = countryFigure(iso2, "admin.confirmation_statement_usd");
-  if (!yearly) return null;
-  const cells: KvCell[] = [];
-  const rename = countryFigure(iso2, "admin.name_change_usd");
-  if (rename) cells.push({ key: "rename", icon: "change", label: P.cells.rename, value: usd(rename.value), note: P.notes.rename, confidence: conf(rename.tag) });
-  const filings = countryFigure(iso2, "admin_load.filings_per_year");
-  if (filings && filings.value > 0) cells.push({ key: "filings", icon: "filings", label: P.cells.filings, value: String(Math.round(filings.value)), note: P.notes.filings, confidence: conf(filings.tag) });
-  const hours = countryFigure(iso2, "admin_load.hours_per_year");
-  if (hours && hours.value > 0) cells.push({ key: "hours", icon: "freshness", label: P.cells.hours, value: `${Math.round(hours.value)} hours`, note: P.notes.hours, confidence: conf(hours.tag) });
-  /* THE SHARE OF FILINGS MADE ONLINE LEFT THE CARD (2026-09-25): seven cells drew the first alone on its row with half the row
-     empty, and it was the weakest reading of the seven, how the state's forms are sent rather than what they cost or ask. */
-  /* CLOSING THE COMPANY, the last of its legal costs (2026-09-25): striking off a debt-free company, and how long winding up with debts takes. */
-  const strike = countryFigure(iso2, "closing.strike_off_usd");
-  if (strike) cells.push({ key: "strike", icon: "closing", label: COPY.closing.rows.strike, value: usd(strike.value), note: COPY.closing.notes.strike, confidence: conf(strike.tag) });
-  const windUp = word(iso2, "closing.time_months");
-  if (windUp) cells.push({ key: "wind-up", icon: "closing", label: COPY.closing.rows.windUp, value: `${windUp.value} months`, note: COPY.closing.notes.windUp, confidence: conf(windUp.tag) });
-  const liability = word(iso2, "closing.liability");
-  if (liability && /^limited/i.test(liability.value)) cells.push({ key: "liability", icon: "safety", label: COPY.closing.rows.liability, value: COPY.closing.limited, note: COPY.closing.notes.liability, confidence: conf(liability.tag) });
-  if (cells.length < 2) return null;
-  return { focal: { figure: usd(yearly.value), words: P.focalWords }, cells };
-}
-
-/** CLOSING A COMPANY, behind the exit card's plus: what striking off costs, how long winding up with debts takes, and what the owner answers for. */
-export function buildCountryClosing(iso2: string): DetailRow[] | null {
-  const C = COPY.closing;
-  const rows: DetailRow[] = [];
-  const strike = countryFigure(iso2, "closing.strike_off_usd");
-  if (strike) rows.push({ label: C.rows.strike, value: usd(strike.value), note: C.notes.strike });
-  const time = word(iso2, "closing.time_months");
-  if (time) rows.push({ label: C.rows.windUp, value: `${time.value} months`, note: C.notes.windUp });
-  const liability = word(iso2, "closing.liability");
-  if (liability && /^limited/i.test(liability.value)) rows.push({ label: C.rows.liability, value: C.limited, note: C.notes.liability });
-  return rows.length >= 2 ? rows : null;
 }
 
 /**

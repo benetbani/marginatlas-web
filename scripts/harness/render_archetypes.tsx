@@ -34,7 +34,7 @@ import { pathToFileURL } from "node:url";
 /* Site-root asset paths (src="/cities/x.jpeg") resolve only under a server; a static file needs the public folder spelled out. */
 const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) => html.replace(/(src|href)="\/(cities|countries|spine|flags)\//g, (_m, a, d) => `${a}="${PUBLIC_URL}${d}/`);
-import { FactRowsStories, ChangeRunStories, StockTiersStories, SurvivalCurveStories, ObstaclesStories, SpendByIncomeStories, SpendByAgeStories, LocalAppsStories, MarketHoldStories, JobMarketStories, ThresholdsStories, AgeMixStories, CustomersComeStories, OriginStories, LockedSectionStories, AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, StepperStories, SegmentBarStories, MonthBarsStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
+import { FactRowsStories, ChangeRunStories, StockTiersStories, SurvivalCurveStories, SpendByIncomeStories, SpendByAgeStories, LocalAppsStories, MarketHoldStories, ThresholdsStories, AgeMixStories, CustomersComeStories, OriginStories, LockedSectionStories, AnswerCardStories, HeroBoardStories, DonutStories, RingStories, WorkedFigureStories, StepperStories, SegmentBarStories, MonthBarsStories, ShareBarStories, RankedBarsStories, pickCityDistrictInstances, CompareTableStories, CardPagerStories, CityCardsStories, TiersTableStories, RangeStripStories, SpectraTableStories, NoteListStories, TerminusStories, PayBarsStories, KvGridStories, DetailPanelStories, IncomeBreakdownStories, BentoBandStories, BentoMetricStories, MarkListStories, BlockedSeatStories, CityHeroStories, pickRankedBarsInstances, pickCompareTableInstances, pickRangeStripInstances, pickSpectraTableInstances, pickTerminusInstances, pickCityStripInstances, pickCityCloseInstances, pickAllInstances, StoriesIndex, pickCityPeerInstances } from "../../src/components/spine/archetypes/stories";
 import type { CityHeroInstance } from "../../src/lib/spine/city_hero_facts";
 import { loadCityHeroInstances } from "../../src/lib/spine/city_hero_facts";
 import { CELL_INSTANCES, loadCellHeroInstances, type CellHeroInstance } from "../../src/lib/spine/trade_hero_facts";
@@ -153,12 +153,10 @@ const SHEET: Entry[] = [
      decide later where to put them"): each drawn at a full card's width over the data file its builder reads. */
   { kind: "stock-tiers", city: "none", render: () => <StockTiersStories /> },
   { kind: "survival-curve", city: "none", render: () => <SurvivalCurveStories /> },
-  { kind: "obstacles", city: "none", render: () => <ObstaclesStories /> },
   { kind: "spend-by-income", city: "none", render: () => <SpendByIncomeStories /> },
   { kind: "spend-by-age", city: "none", render: () => <SpendByAgeStories /> },
   { kind: "local-apps", city: "none", render: () => <LocalAppsStories /> },
   { kind: "market-hold", city: "none", render: () => <MarketHoldStories /> },
-  { kind: "job-market", city: "none", render: () => <JobMarketStories /> },
   { kind: "thresholds", city: "none", render: () => <ThresholdsStories /> },
   /* THE BAND PAGE'S TWO NEW FORMS (2026-10-04, the UK page reform): a section's facts as ruled rows, and a run of dated changes. */
   { kind: "fact-rows", city: "none", render: () => <FactRowsStories /> },
