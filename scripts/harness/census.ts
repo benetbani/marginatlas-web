@@ -340,10 +340,11 @@ function registrySlot(id: string | null, scope: string): SlotDef | typeof EVERY 
   if (key) return SLOTS.find((x) => x.id === key) ?? null;
   return viaDef ? EVERY : null;
 }
-/** The builder plan.ts asks for each slot: `const x = buildXSlot(...); if (x) slots.push({ id: "x", ...`. */
+/** The builder plan.ts asks for each slot: `const x = buildXSlot(...); if (x) slots.push({ id: "x", ...`. Read from its code alone
+ *  (scripts/lib/strip_comments), so a commented-out or quoted call in plan.ts names no builder. */
 const PLAN_BUILDERS: Map<string, string> = (() => {
   const out = new Map<string, string>();
-  const text = readFileSync("src/lib/spine/slots/plan.ts", "utf8");
+  const text = stripCommentLines(readFileSync("src/lib/spine/slots/plan.ts", "utf8").split(String.fromCharCode(13)).join("").split(NL)).join(NL);
   for (const m of text.matchAll(/\b(build\w+)\([^)]*\);\s*if \(\w+\) slots\.push\(\{ id: "([a-z-]+)"/g)) out.set(m[2], m[1]);
   return out;
 })();

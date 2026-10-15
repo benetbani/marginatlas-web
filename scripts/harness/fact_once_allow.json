@@ -164,8 +164,8 @@
     "page": "country-GB",
     "figure": "38%",
     "where": "lasting",
-    "law": "tests/spine/focal_values.test.ts (gate focal-values), \"A DRAWING'S FOCAL MARK PRINTS ITS VALUE, SMALL, AS ITS NEIGHBOURS DO\" (critique pass 2, fix round C2, item P1.5; the controller's decision on the critique's Q2, YES)",
-    "reason": "The slot's figure is the share still trading at year five. The survival curve beneath it labels every point, the terracotta year-five dot too, so the focal and the drawing's last label print one share under one source. The ruling is the gate's, not a MODEL clause."
+    "law": "tests/spine/focal_values.test.ts (gate focal-values), \"A DRAWING'S FOCAL MARK PRINTS ITS VALUE, SMALL, AS ITS NEIGHBOURS DO\" (critique pass 2, fix round C2, item P1.5; the controller's decision on the critique's Q2, YES); MODEL PART 4, THE TYPE LADDER: \"Every section card now takes exactly one focal at 30, and nothing else in that card sits above 16.\"",
+    "reason": "The slot's figure is the share still trading at year five, its one focal at 30 by PART 4. The survival curve beneath it labels every point, the terracotta year-five dot too, so the focal and the drawing's last label print one share under one source. The second print is the gate's ruling; PART 4 is why the first stands at 30."
   },
   {
     "page": "country-DE",
