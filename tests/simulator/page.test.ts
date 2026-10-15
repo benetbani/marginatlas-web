@@ -89,7 +89,10 @@ async function main(): Promise<void> {
   /* THE SEVEN PARTS, IN THEIR ZONES. */
   const ids = ["answer", "margin", "levers", "month", "moves", "opening", "sources"];
   check(`London draws the seven parts (${ids.filter((id) => ld.getElementById(id)).join(", ")}), the masthead's h1 and three pickers on 48px fields`, ids.every((id) => ld.getElementById(id)) && ld.querySelector("h1")?.textContent === W.title && ld.querySelectorAll("form[data-sim-pick] select.h-12").length === 3);
-  check(`four zones, the instrument's wide (${[...ld.querySelectorAll("[data-zone]")].map((z) => z.getAttribute("data-zone")).join(", ")})`, JSON.stringify([...ld.querySelectorAll("[data-zone]")].map((z) => z.getAttribute("data-zone"))) === JSON.stringify(["wide", "wide", "lone", "3-2"]));
+  /* THE COMPOSITION MOVED (run 2 of release 1, the controller's ruling): Task 4B pinned `wide, wide, lone, 3-2`, the sources beside the money to open
+     it, and that level failed LEVEL HEIGHT at 1280 (442 against 323px, 88 allowed). His equal-heights ruling outranks a pinned composition, so the
+     sources stand beside the moves (2-1) and the money to open it is lone. */
+  check(`four zones, the instrument's wide, the sources beside the moves (${[...ld.querySelectorAll("[data-zone]")].map((z) => z.getAttribute("data-zone")).join(", ")})`, JSON.stringify([...ld.querySelectorAll("[data-zone]")].map((z) => z.getAttribute("data-zone"))) === JSON.stringify(["wide", "wide", "2-1", "lone"]) && !!ld.querySelector('[data-zone="2-1"] #sources') && !!ld.querySelector('[data-zone="lone"] #opening'));
   check("every section's title is an h2 of four words or fewer", ids.every((id) => { const h = ld.querySelector(`#${id} h2[data-rail-title]`); return !!h && (h.textContent ?? "").trim().split(/\s+/).length <= 4; }));
   check("only the levers keep their box", ld.querySelectorAll("[data-keep-card]").length === 1 && !!ld.querySelector("#levers[data-keep-card]"));
 

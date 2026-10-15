@@ -6,8 +6,8 @@
  * politely; a place switch fetches its defaults from /api/calculator and puts every lever back to the new place's (the plan's Reading 15). The words
  * come in the seed; this file imports no server module and no copy table.
  *
- * THE ZONES: the masthead alone; the instrument (the answer, your margin, your numbers and your month); what moves it most; the money to open it beside
- * where figures come from. A section with nothing to draw is not passed to a zone, and the zones close up so no two lone zones stand together.
+ * THE ZONES: the masthead alone; the instrument (the answer, your margin, your numbers and your month); what moves it most beside where figures come from;
+ * the money to open it alone. A section with nothing to draw is not passed to a zone, and the zones close up so no two lone zones stand together.
  */
 import * as React from "react";
 import { Zone, zoneTone, type ZoneSplit } from "@/components/spine/zones";
@@ -87,10 +87,13 @@ export function CalculatorClient({ seed }: { seed: CalculatorSeed }) {
   const sources = <SourcesSection key="sources" W={W} notes={notes} />;
   const hasMoves = r.moves.length > 0 && r.perHundred.held;
   const hasOpening = r.paybackMonths.held || r.paybackMonths.reason !== "no-opening";
-  /* THE MONEY TO OPEN IT TAKES THREE FIFTHS FROM 1024 (the model laws' LABEL GAP, measured on the render at 1280): in an even half (504px) its rows' labels
-     stood 168 to 227px from their figures; at three fifths (605px) the rows split into two lists, each label beside its figure. */
+  /* THE MONEY TO OPEN IT NEVER TAKES AN EVEN HALF (the model laws' LABEL GAP, measured on the render at 1280): in 504px its rows' labels stood 168 to
+     227px from their figures; wider, the rows split into two lists, each label beside its figure. WHERE FIGURES COME FROM STANDS BESIDE THE MOVES, the
+     money to open it alone in its level, two thirds wide (run 2 of release 1, the controller's ruling: his equal heights outrank the pinned
+     composition): beside the opening (442px tall at 1280) the sources (323) ended 119px short against LEVEL HEIGHT's 88; beside the moves they read
+     350 and 323. */
   const after: Array<{ key: string; split: ZoneSplit; label: string; body: React.ReactNode[] }> =
-    hasMoves && hasOpening ? [{ key: "moves", split: "2-1", label: W.moves.title, body: [moves] }, { key: "money", split: "3-2", label: W.opening.title, body: [opening, sources] }]
+    hasMoves && hasOpening ? [{ key: "moves", split: "2-1", label: W.moves.title, body: [moves, sources] }, { key: "money", split: "3-2", label: W.opening.title, body: [opening] }]
     : hasMoves ? [{ key: "moves", split: "2-1", label: W.moves.title, body: [moves, sources] }]
     : hasOpening ? [{ key: "money", split: "3-2", label: W.opening.title, body: [opening, sources] }]
     : [{ key: "sources", split: "2-1", label: W.sources.title, body: [sources] }];
