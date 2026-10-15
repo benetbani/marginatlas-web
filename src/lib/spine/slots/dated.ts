@@ -6,11 +6,11 @@
  * that change is news (the changes slot's own window, 120 days). The page regenerates daily, so on a change's day the value and the note
  * switch together. Older changes print the value and no note; the changes slot keeps their dates.
  */
-import { changeAround, lawValue, type LawValue } from "@/lib/spine/sections/country_rules";
+import { changeAround, lawValue, RECENT_CHANGE_DAYS, type LawValue } from "@/lib/spine/sections/country_rules";
 import { COPY } from "@/lib/spine/copy";
 
 /** How long a change in force stays news on its row: the changes slot's recent window (buildRuleChanges' `recentDays`). */
-export const DATED_RECENT_DAYS = 120;
+export const DATED_RECENT_DAYS = RECENT_CHANGE_DAYS;
 
 /** A change the ledger holds that no row of a country page prints, and why: its date stands in the changes slot alone (stage 6). A coming or
  *  recent change neither dated on a row nor named here is a red of the slots-rules gate. */

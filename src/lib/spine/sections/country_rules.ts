@@ -90,13 +90,17 @@ function countryBlock<T>(file: unknown, iso2: string): T | null {
   return c && typeof c === "object" ? (c as T) : null;
 }
 
+/** How long a change in force stays news: the changes slot's recent run and the "since" note a dated row carries (src/lib/spine/slots/dated.ts),
+ *  one window (final review M11, 2026-10-15: the two held their own 120 and could drift). */
+export const RECENT_CHANGE_DAYS = 120;
+
 /**
  * THE CHANGES, IN TWO RUNS. COMING: every change enacted with a date after `today`, soonest first. IN FORCE: the changes in force,
  * the `lead` keys and every change of the last `recentDays` first, newest first (the ones a person opening a small business meets
  * first, and the news), then the rest newest first, which the card shows behind its plus; `inForceLead` counts the lead rows. A row
  * whose two values the module cannot say is left out, never half printed.
  */
-export function buildRuleChanges(iso2: string, today: string, lead: string[] = [], recentDays = 120): { coming: ChangeRow[]; inForce: ChangeRow[]; inForceLead: number } | null {
+export function buildRuleChanges(iso2: string, today: string, lead: string[] = [], recentDays = RECENT_CHANGE_DAYS): { coming: ChangeRow[]; inForce: ChangeRow[]; inForceLead: number } | null {
   const c = countryBlock<{ changes?: FileChange[] }>(changesJson, iso2);
   if (!c || !Array.isArray(c.changes)) return null;
   const row = (x: FileChange): ChangeRow | null => {

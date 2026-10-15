@@ -225,6 +225,9 @@ const GATES: Gate[] = [
   /* THE COMPOSITION (plan 2026-10-13 country-page-journey, Task 4; spec section 6): every set of the slots composes into zones that pair only
      two neighbouring slots of one stage, with D3 clean, and the four countries plan the slots the replicability gate expects. No browser. */
   { name: "country-zones", script: "tests/spine/country_zones.test.ts" },
+  /* THE PROGRAMMATIC PROMISE ON EVERY COUNTRY (final review M2, 2026-10-15): every country's slot plan built from its files without a throw,
+     its slots in the model's order, every list one answer type and every fold two to eight rows. Files only, no database, no browser. */
+  { name: "country-sweep", script: "tests/spine/country_sweep.test.ts" },
   /* THE LOCKS FOLLOW THE SLOTS (plan 2026-10-13 country-page-journey, Task 5; his ruling 18 by analogy): each stage's first slot open, every
      later one its LockedSection, the trades' pages free. No browser. */
   { name: "country-locks", script: "tests/spine/country_locks.test.ts" },

@@ -51,7 +51,9 @@
  * A gate keys its `now` by entry.key and prints entry.name (with the key beside
  * it when the two differ), so a reader of its output sees both.
  *
- * HARNESS_PAGES_LIST, when set, names another list (scripts/harness/check_panels_opened.mjs points it at a planted page; the chain never sets it).
+ * HARNESS_PAGES_LIST, when set, names another list (scripts/harness/check_panels_opened.mjs points it at a planted page; the chain never sets it),
+ * and HARNESS_PAGES_DIR the directory its renders stand in (the planted pages' own, so a crash never leaves one beside the real renders;
+ * final review M10, 2026-10-15).
  *
  * WHAT THIS CANNOT TELL: whether a fresh render was drawn from live rows or
  * from the adapters' fallbacks. That is stated, with what is measured about
@@ -100,13 +102,13 @@ const FROZEN = ["countries-list"];
  * @returns {Array<{ name: string, key: string, kind: "fresh" | "frozen", path: string,
  *   surface?: string, slugs?: string[], date?: string, exists: boolean, mtime: Date | null, bytes: number }>}
  */
-export function pageRenders({ kinds = ["fresh", "frozen"], list = process.env.HARNESS_PAGES_LIST || HARNESS_LIST } = {}) {
+export function pageRenders({ kinds = ["fresh", "frozen"], list = process.env.HARNESS_PAGES_LIST || HARNESS_LIST, dir = process.env.HARNESS_PAGES_DIR || FRESH_DIR } = {}) {
   const out = [];
   if (kinds.includes("fresh")) {
     const pages = JSON.parse(readFileSync(list, "utf8")).pages;
     for (const p of pages) {
       const name = `${p.surface}-${p.slugs.join("-")}`;
-      out.push(withFileState({ name, key: BASELINE_KEYS[name] ?? name, kind: "fresh", path: `${FRESH_DIR}/${name}.html`, surface: p.surface, slugs: p.slugs }));
+      out.push(withFileState({ name, key: BASELINE_KEYS[name] ?? name, kind: "fresh", path: `${dir}/${name}.html`, surface: p.surface, slugs: p.slugs }));
     }
   }
   if (kinds.includes("frozen")) {

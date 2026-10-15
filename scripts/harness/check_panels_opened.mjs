@@ -20,7 +20,9 @@ preflight({ browser: true, name: "check_panels_opened" });
 
 const RULE = "panels-opened";
 const DIR = "scratchpad/journey/panels";
-const PAGES_DIR = "scratchpad/harness/pages";
+/* The planted renders stand in their own directory, never beside the real ones (final review M10, 2026-10-15): the two gates that read a
+   render list take it from HARNESS_PAGES_DIR, so a crash here leaves nothing among the chain's renders. */
+const PAGES_DIR = `${DIR}/pages`;
 mkdirSync(DIR, { recursive: true });
 mkdirSync(PAGES_DIR, { recursive: true });
 const zone = (inner) => `<section data-zone="lone" data-tone="tint"><div data-zone-level=""><div data-zone-cell="" class="min-w-0">${inner}</div></div></section>`;
@@ -48,7 +50,8 @@ const PLANTS = {
   kind: page(zone(card("bars-a", `<p>Bars A</p>`, "width:900px", ' data-archetype="bar-list" data-visual="1"')) + zone(card("bars-b", `<p>Bars B</p>`, "width:900px", ' data-archetype="bar-list" data-visual="1"'))),
 };
 for (const [k, html] of Object.entries(PLANTS)) writeFileSync(`${DIR}/${k}.html`, html, "utf8");
-/* The gates that read the harness list read a list of one planted page (scripts/lib/page_renders.mjs reads HARNESS_PAGES_LIST). */
+/* The gates that read the harness list read a list of one planted page in the plants' own directory (scripts/lib/page_renders.mjs reads
+   HARNESS_PAGES_LIST and HARNESS_PAGES_DIR). */
 writeFileSync(`${PAGES_DIR}/country-ZZART.html`, PLANTS.art, "utf8");
 writeFileSync(`${PAGES_DIR}/country-ZZEMPTY.html`, PLANTS.empty, "utf8");
 writeFileSync(`${DIR}/art.json`, JSON.stringify({ pages: [{ surface: "country", slugs: ["ZZART"] }] }), "utf8");
@@ -60,9 +63,9 @@ const CASES = [
   { check: "scripts/harness/check_page_holes.mjs", out: () => run(["scripts/harness/check_page_holes.mjs", `${DIR}/holes.html`]), want: /WHITE SPACE[^\n]*\(panels open\)/ },
   { check: "scripts/harness/check_page_laws.mjs", out: () => run(["scripts/harness/check_page_laws.mjs", `${DIR}/pageLaws.html`]), want: /TEXT OUT OF BOX[^\n]*\(panels open\)/ },
   { check: "scripts/harness/probe_page.mjs", out: () => run(["scripts/harness/probe_page.mjs", `${DIR}/probe.html`, "1280"]), want: /panels open[\s\S]*planted \d+x\d+ \(content \d+\)/ },
-  { check: "scripts/verify_art_direction.mjs", out: () => run(["scripts/verify_art_direction.mjs"], { HARNESS_PAGES_LIST: `${DIR}/art.json` }), want: /\(panels open\)/ },
+  { check: "scripts/verify_art_direction.mjs", out: () => run(["scripts/verify_art_direction.mjs"], { HARNESS_PAGES_LIST: `${DIR}/art.json`, HARNESS_PAGES_DIR: PAGES_DIR }), want: /\(panels open\)/ },
   { check: "scripts/verify_full_width_sitewide.mjs", out: () => run(["scripts/verify_full_width_sitewide.mjs", "--pages", `planted=${DIR}/wide.html`]), want: /\(panels open\)/ },
-  { check: "scripts/verify_gathered_emptiness.mjs", out: () => run(["scripts/verify_gathered_emptiness.mjs"], { HARNESS_PAGES_LIST: `${DIR}/empty.json` }), want: /\(panels open\)/ },
+  { check: "scripts/verify_gathered_emptiness.mjs", out: () => run(["scripts/verify_gathered_emptiness.mjs"], { HARNESS_PAGES_LIST: `${DIR}/empty.json`, HARNESS_PAGES_DIR: PAGES_DIR }), want: /\(panels open\)/ },
   { check: "scripts/harness/check_page_laws.mjs (KIND ADJACENT)", out: () => run(["scripts/harness/check_page_laws.mjs", `${DIR}/kind.html`]), want: /KIND ADJACENT[^\n]*neighbouring levels/ },
 ];
 let failed = 0;

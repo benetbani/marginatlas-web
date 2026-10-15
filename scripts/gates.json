@@ -360,7 +360,6 @@
       "browser": true,
       "asserts": "check_panels_opened , EVERY BROWSER CHECK READS INSIDE A CLOSED PLUS (plan 2026-10-13 country-page-journey, Task 1E; spec section 5: \"every browser check that reads a section's content opens the panel",
       "reads": [
-        "scratchpad/harness/pages",
         "scratchpad/journey/panels",
         "scripts/harness/check_model_laws.mjs",
         "scripts/harness/check_page_holes.mjs",
@@ -498,6 +497,18 @@
       "reads": [
         "src/lib/spine/slots/plan.ts",
         "src/lib/spine/slots/zones.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "country-sweep",
+      "script": "tests/spine/country_sweep.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE PROGRAMMATIC PROMISE ON EVERY COUNTRY (plan 2026-10-13 country-page-journey, final review M2, 2026-10-15).",
+      "reads": [
+        "src/lib/spine/slots",
+        "src/lib/spine/slots/plan.ts"
       ],
       "claims": []
     },
