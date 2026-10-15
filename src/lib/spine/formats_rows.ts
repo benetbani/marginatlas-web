@@ -74,10 +74,12 @@ import { MARK_LIST_FLOOR } from "@/components/spine/archetypes/MarkList";
 import { resolveTradeNet, netText, type TradeNetBranch } from "@/lib/spine/trade_net";
 import { COPY } from "@/lib/spine/copy";
 import { countWord } from "@/lib/spine/district_rows";
+import type { Provenance } from "@/lib/spine/provenance";
+import { INDUSTRY_BY_ID } from "@/lib/taxonomy";
 
 export const FORMATS_METRICS = { name: "subtypes.list.*.name", delta: "subtypes.list.*.margin_delta_pp" } as const;
 
-export type FormatRow = { key: string; name: string; /** The trade's net plus this format's delta, unrounded. */ value: number; /** The shard's delta, in points, for the record. */ delta: number };
+export type FormatRow = { key: string; name: string; /** The trade's net plus this format's delta, unrounded. */ value: number; /** The shard's delta, in points, for the record. */ delta: number; /** The two fields the figure is worked out from. */ prov: Provenance };
 
 export type FormatsData = {
   industryId: string;
@@ -126,7 +128,8 @@ export function buildFormats(industryId: string | undefined): FormatsData | null
     const name = typeof n.value === "string" ? n.value.trim() : "";
     const delta = deltas.get(n.rowKey);
     if (!name || !isNum(delta)) continue;
-    rows.push({ key: n.rowKey, name, value: net.pct + delta, delta });
+    const base = net.branch === "profile" ? `data/finance/industry_cost_profile_v1.json:${INDUSTRY_BY_ID[industryId]?.sector_id ?? ""}` : `data/facts/industry/${industryId}.json:margin_ladder.net_margin_pct`;
+    rows.push({ key: n.rowKey, name, value: net.pct + delta, delta, prov: { src: `${base} + data/facts/industry/${industryId}.json:subtypes.list.${n.rowKey}.margin_delta_pp`, kind: "worked out" } });
   }
   if (rows.length === 0) return null;
   /* Highest first, a stable sort, so two formats at one figure keep the file's order. */

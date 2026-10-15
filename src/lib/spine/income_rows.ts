@@ -39,6 +39,7 @@
  * never having failed.
  */
 import { COPY } from "@/lib/spine/copy";
+import type { Provenance } from "@/lib/spine/provenance";
 import icpJson from "../../../data/finance/industry_cost_profile_v1.json";
 
 type CostProfile = Record<string, unknown>;
@@ -57,7 +58,8 @@ const SHARE_KEYS = [
   "other_overhead_share",
 ] as const;
 
-export type IncomeSegment = { key: string; label: string; share: number };
+/** `prov`: where the share was read from (src/lib/spine/provenance.ts), stamped on its printed figure so two shares that print alike are two facts; absent, the figure says nothing of its source. */
+export type IncomeSegment = { key: string; label: string; share: number; prov?: Provenance };
 export type IncomeBreakdownData = { netPct: number; segments: IncomeSegment[]; modelled: true };
 
 /** At most this many cost lines are named on their own; the rest join one
@@ -117,7 +119,7 @@ export function buildIncomeBreakdownFromProfile(profile: CostProfile): IncomeBre
 /** One cost line before composition: its key, the label the legend prints,
  *  and its share of revenue as a FRACTION (the profile's own unit; a shard's
  *  percent is divided by a hundred at the door in split_rows.ts). */
-export type CostLine = { key: string; label: string; share: number };
+export type CostLine = { key: string; label: string; share: number; prov?: Provenance };
 
 /** The profile's nine lines as cost lines, the ones held above zero, biggest
  *  first, each under the one-word label the copy table gives it. Exported
@@ -153,7 +155,8 @@ export function sectorProfile(sector: string): CostProfile | null {
  *    model claiming more than the whole of revenue: null, never scaled to fit.
  * Every branch is the profile builder's own, unchanged; only the seam moved.
  */
-export function composeIncomeSegments(lines: CostLine[], netPct: number): IncomeSegment[] | null {
+/** `otherProv`: the source of the bucket of the smaller lines, which is their sum (worked out), when the caller can name it. */
+export function composeIncomeSegments(lines: CostLine[], netPct: number, otherProv?: Provenance): IncomeSegment[] | null {
   if (!Number.isFinite(netPct)) return null;
   const shares = lines.filter((s) => Number.isFinite(s.share) && s.share > 0).sort((a, b) => b.share - a.share);
   if (shares.length === 0) return null;
@@ -183,9 +186,9 @@ export function composeIncomeSegments(lines: CostLine[], netPct: number): Income
     namedEnd++;
   }
 
-  const segments: IncomeSegment[] = named.map((s) => ({ key: s.key, label: s.label, share: s.share * 100 }));
+  const segments: IncomeSegment[] = named.map((s) => ({ key: s.key, label: s.label, share: s.share * 100, ...(s.prov ? { prov: s.prov } : {}) }));
   if (other > 0.00005) {
-    segments.push({ key: "other", label: COPY.incomeBreakdown.otherLabel, share: other * 100 });
+    segments.push({ key: "other", label: COPY.incomeBreakdown.otherLabel, share: other * 100, ...(otherProv ? { prov: otherProv } : {}) });
   }
 
   const drawnTotal = segments.reduce((a, s) => a + s.share, 0) + netPct;

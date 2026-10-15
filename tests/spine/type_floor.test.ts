@@ -91,6 +91,14 @@ const codeLines = (f: string) => stripCommentLines(readFileSync(f, "utf8").split
 const SMALL = /text-\[length:var\(--t-(?:micro|mark)\)\]|(?:^|[\s"'`])text-xs(?=[\s"'`])|text-\[(?:9|10|11|12|13)(?:\.5)?px\]/;
 const tooSmall = scoped.flatMap((f) => codeLines(f).map((l, i) => (SMALL.test(l) && !/data-type-allow="[a-z0-9-]+"/.test(l) ? `${f}:${i + 1}` : null)).filter((x): x is string => x !== null));
 check(`no reader text under 14px in the spine's source outside the allowance list (${tooSmall.length}${tooSmall.length ? `: ${tooSmall.slice(0, 12).join(", ")}${tooSmall.length > 12 ? ", ..." : ""}` : ""})`, tooSmall.length === 0, tooSmall[0]?.split(":")[0] ?? LIST, "set reader text at var(--t-body) with its leading pair (14 on 20; leading-4 becomes leading-5); a chart's tick or axis label, or the foot's source line, carries data-type-allow with its key on the same line");
+/* THE LEADING THAT GOES WITH THE SIZE (Task 3, fix round 1): a line lifted to 14 stands on 20, and `leading-4` is the 12-on-16 pair. The size check above reads
+   the size on a line; when the size is a constant (SortTable's HEAD) and the leading sits on the element's own line, the two are on different lines and
+   the size check cannot see the leading (three phone sort heads stood at 14 on 16 that way). So no scanned line keeps `leading-4` outside the allowance.
+   BLIND SPOT: this cannot tell a `leading-4` on a 12px allowance element whose key stands on another line from one on a lifted element (it reds both,
+   and the key joins the line), and a leading set another way (an arbitrary value, a style attribute) is not read. */
+const LEADING_16 = /(?:^|[\s"'`:])leading-4(?=[\s"'`])/;
+const leading16 = scoped.flatMap((f) => codeLines(f).map((l, i) => (LEADING_16.test(l) && !/data-type-allow="[a-z0-9-]+"/.test(l) ? `${f}:${i + 1}` : null)).filter((x): x is string => x !== null));
+check(`no scanned line keeps leading-4, the 12-on-16 pair, outside the allowance (${leading16.length}${leading16.length ? `: ${leading16.slice(0, 12).join(", ")}` : ""})`, leading16.length === 0, leading16[0]?.split(":")[0] ?? LIST, "text lifted to 14 takes leading-5 (14 on 20): change leading-4 to leading-5 on the element that takes the lifted size, whether the size is written on the line or comes from a constant");
 const usedKeys = new Map<string, Set<string>>();
 for (const f of scoped) for (const l of codeLines(f)) for (const m of l.matchAll(/data-type-allow="([a-z0-9-]+)"/g)) { if (!usedKeys.has(m[1])) usedKeys.set(m[1], new Set()); usedKeys.get(m[1])!.add(f); }
 const notListed = [...usedKeys.keys()].filter((k) => !list.some((e) => e.key === k));

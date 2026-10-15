@@ -70,6 +70,8 @@ export type LastsData = {
   /** Where the UK card's figures came from (plan 06, task B5): the group's period survival and its 2019 starters, both read from
    *  the business demography's slice and worked out there (shares of births still trading). Absent off the UK. */
   prov?: { period: Provenance; cohort: Provenance };
+  /** Off the UK, where each of the three years was read from in the trade's file (the UK card stamps all three with the demography's period figure). */
+  yearProv?: { yr1: Provenance; yr3: Provenance; yr5: Provenance };
 };
 
 const isPct = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v) && v > 0 && v <= 100;
@@ -109,6 +111,7 @@ export function buildLasts(industryId: string | undefined, altitude: LastsAltitu
   const yr5 = industryFigure(industryId, LASTS_METRICS.yr5)?.value;
   if (!isPct(yr1) || !isPct(yr3) || !isPct(yr5)) return null;
   const values = { yr1: Math.round(yr1), yr3: Math.round(yr3), yr5: Math.round(yr5) };
+  const from = (key: "yr1" | "yr3" | "yr5"): Provenance => ({ src: `data/facts/industry/${industryId}.json:${LASTS_METRICS[key]}`, kind: "estimate" });
   const cell = (key: "yr5" | "yr1" | "yr3"): KvCell => ({ key, label: COPY.tradeLasts.cells[key], value: `${values[key]}%`, confidence: "modeled" });
   return {
     industryId,
@@ -116,6 +119,7 @@ export function buildLasts(industryId: string | undefined, altitude: LastsAltitu
     cells: [cell("yr5"), cell("yr1"), cell("yr3")],
     focal: { key: "yr5", value: values.yr5 },
     values,
+    yearProv: { yr1: from("yr1"), yr3: from("yr3"), yr5: from("yr5") },
     basis: altitude === "world" ? COPY.industryLasts.basis : COPY.tradeLasts.basis,
     /* THE INDUSTRY PAGE SAYS WHOSE FIGURE IT IS (his interview of 2026-09-26, answer 32; milestone 1, M7): the trade's own survival,
        the trade anywhere, never one country's; the UK's own by trade group prints on the UK pages (buildLastsUk). */

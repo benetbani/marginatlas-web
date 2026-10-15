@@ -128,8 +128,9 @@ const ENGLAND = "E92000001";
  * from the register slice (data/uk/registers/premises.json: rateable value a square metre, the valuation office's estimate of
  * the yearly rent at 1 April 2021, Greater London 322 pounds, at the site's one rate for the pound), an average and so "Shop
  * rent", not "Prime"; the deposit and the empty shops are withheld with their lines (no source holds either, and the two
- * deposits disagree); the fit-out prints as the estimate it is, beside its rent-free months, the line saying both are
- * estimates; the rent's three details and the deposit's lease term, held with no source, do not print.
+ * deposits disagree); the fit-out prints as the estimate it is, beside its rent-free months, its one line opening with the
+ * plural "Estimates", which covers the figure and its companion; the rent's three details and the deposit's lease term,
+ * held with no source, do not print.
  */
 function buildSourcedPremises(city: CityRow, iso2: string, geography: string): PremisesBento {
   const W = COPY.premisesBento.withheld;
@@ -138,7 +139,8 @@ function buildSourcedPremises(city: CityRow, iso2: string, geography: string): P
   const rentUsd = typeof shops === "number" && shops > 0 ? convertToUsd("GBP", shops) : null;
   const rent: PremisesMetric = rentUsd != null && rentUsd > 0 ? { figure: usd(rentUsd), basis: `${B.rentValued}.`, tag: "held", sample: false, value: Math.round(rentUsd) } : { withheld: W.rent };
   /* EACH CELL TWO READINGS (clause 65): the rent beside the same valuation for England's shops; the fit-out beside the
-     rent-free months a landlord gives to fit out, both estimates, and the line says so. */
+     rent-free months a landlord gives to fit out, both estimates: the line opens with the plural "Estimates", which covers
+     the figure and its companion, as the rent line's does its details (copy.ts, rentEstimate). */
   const england = PREMISES.rows[ENGLAND]?.categories?.Shops?.rv_per_m2;
   const englandUsd = typeof england === "number" && england > 0 ? convertToUsd("GBP", england) : null;
   if ("figure" in rent && englandUsd != null) rent.second = { figure: usd(englandUsd), words: COPY.premisesBento.rentEngland };

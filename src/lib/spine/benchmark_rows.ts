@@ -168,7 +168,7 @@ function buildBenchmarkOnce(industryId: string): BenchmarkData | null {
   const self = ranked.find((r) => r.id === industryId) ?? null;
   const others = ranked.filter((r) => r.id !== industryId).slice(0, self ? BENCHMARK_ROWS_CAP - 1 : BENCHMARK_ROWS_CAP);
   const chosen = [...(self ? [self] : []), ...others].sort((a, b) => b.pct - a.pct);
-  const rows: BarRow[] = chosen.map((r) => ({ key: r.id, name: r.name, value: r.pct }));
+  const rows: BarRow[] = chosen.map((r) => ({ key: r.id, name: r.name, value: r.pct, prov: { src: `data/facts/industry/${r.id}.json:margin_ladder.net_margin_pct`, kind: "estimate" } }));
   const state: BenchmarkState = holding.length >= BENCHMARK_FLOOR ? "ranked" : holding.length >= 2 ? "short" : "withheld";
   const B = COPY.industryBenchmark;
   let line: string | null = null;

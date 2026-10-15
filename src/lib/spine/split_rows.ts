@@ -77,6 +77,7 @@ import { composeIncomeSegments, profileCostLines, sectorProfile, type CostLine, 
 import { resolveTradeNet, type TradeNet } from "@/lib/spine/trade_net";
 import { INDUSTRY_BY_ID } from "@/lib/taxonomy";
 import { COPY } from "@/lib/spine/copy";
+import type { Provenance } from "@/lib/spine/provenance";
 
 export const SPLIT_METRICS = {
   drivers: "cost_structure.cost_drivers.",
@@ -151,7 +152,7 @@ export function shardCostLines(industryId: string): { lines: CostLine[]; held: b
     if (!row.name || !isNum(row.pct)) continue;
     if (!row.tags.every((t) => t === "held")) held = false;
     if (row.pct <= 0) continue;
-    lines.push({ key: rowKey, label: driverLabel(row.name), share: row.pct / 100 });
+    lines.push({ key: rowKey, label: driverLabel(row.name), share: row.pct / 100, prov: { src: `data/facts/industry/${industryId}.json:${SPLIT_METRICS.drivers}${rowKey}.pct_of_revenue`, kind: "estimate" } });
   }
   return { lines, held };
 }
@@ -162,7 +163,7 @@ export function sectorCostLines(industryId: string): CostLine[] | null {
   if (!ind) return null;
   const profile = sectorProfile(ind.sector_id);
   if (!profile) return null;
-  const lines = profileCostLines(profile);
+  const lines = profileCostLines(profile).map((l) => ({ ...l, prov: { src: `data/finance/industry_cost_profile_v1.json:${ind.sector_id}:${l.key}`, kind: "estimate" } as Provenance }));
   return lines.length > 0 ? lines : null;
 }
 
@@ -188,7 +189,9 @@ export function resolveSplit(industryId: string, net: TradeNet): SplitData | nul
   const lines = feed === "shard" ? shard.lines : sectorCostLines(industryId);
   if (!lines || lines.length === 0) return null;
   const linesPct = lines.reduce((a, l) => a + l.share * 100, 0);
-  const segments = composeIncomeSegments(lines, net.pct);
+  /* The bucket of the smaller lines is their sum: it names the feed the lines were read from, as a sum of them. */
+  const otherProv: Provenance = { src: feed === "shard" ? `data/facts/industry/${industryId}.json:${SPLIT_METRICS.drivers}* (the smaller lines together)` : `data/finance/industry_cost_profile_v1.json:${INDUSTRY_BY_ID[industryId]?.sector_id ?? ""} (the smaller lines together)`, kind: "worked out" };
+  const segments = composeIncomeSegments(lines, net.pct, otherProv);
   const basis = feed === "shard" ? COPY.tradeSplit.basisShard : COPY.tradeSplit.basisProfile;
   const detail = buildSplitDetail(industryId);
   const common = { feed, net, netPct: net.pct, netText: net.text, netLabel: COPY.tradeHero.cells.net, linesPct, basis, foot: COPY.tradeSplit.foot, detail, sample: true as const, confidence: "modeled" as const };

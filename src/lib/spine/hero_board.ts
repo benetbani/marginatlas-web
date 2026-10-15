@@ -84,6 +84,11 @@ export type HeroBoardRow = {
   /** Where the figure stands among the countries, in the site's one placement sentence (placement.ts), for the row's readout
    *  (goal 2026-09-26, M1): the words behind the marks the footnote only names. Null where the row draws no mark. */
   placement?: string | null;
+  /** The figure prints once on the page, in the section whose job is to explain it (plan 2026-10-12 rhythm-air-inside, Task 4;
+   *  spec 2.3: "the hero keeps a figure only where the hero is its home"). The row stays, says where the figure stands among the
+   *  places (its level mark) and prints no figure; `value` stays for the tests and the readout. Needs a level: a row with none
+   *  would say nothing, so the builder never sets this on one. */
+  unprinted?: boolean;
 };
 
 export type HeroBoardData = {

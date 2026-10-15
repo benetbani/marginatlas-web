@@ -2108,8 +2108,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (!o) { reds.push(`industry open ${id}: no card for a shard`); continue; }
     opens++;
     const order = o.cells.map((c) => c.key).join(",");
-    if (order !== INDUSTRY_OPEN_CELLS.filter((k) => !o.withheld.includes(k)).join(",")) reds.push(`industry open ${id}: the cells are not in 8.7's order (${order})`);
-    if (o.cells.length + o.withheld.length !== 3 || o.withheld.length !== o.withheldLines.length) reds.push(`industry open ${id}: ${o.cells.length} cells and ${o.withheld.length} withheld do not make three, or the lines do not match`);
+    if (order !== INDUSTRY_OPEN_CELLS.filter((k) => !o.withheld.includes(k) && !o.printedElsewhere.includes(k)).join(",")) reds.push(`industry open ${id}: the cells are not in 8.7's order (${order})`);
+    if (o.cells.length + o.withheld.length + o.printedElsewhere.length !== 3 || o.withheld.length !== o.withheldLines.length) reds.push(`industry open ${id}: ${o.cells.length} cells and ${o.withheld.length} withheld do not make three, or the lines do not match`);
     for (const c of o.cells) {
       if (wordsOf(c.label) > 4) reds.push(`industry open ${id}: label over four words: "${c.label}"`);
       const v = typeof c.value === "string" ? c.value : "";
@@ -2121,7 +2121,15 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (p && lic && lic.value !== String(p.count)) reds.push(`industry open ${id}: the licence count (${lic.value}) is not the permits builder's (${p.count})`);
     if (p?.longest && slow && slow.value !== daysFigure(p.longest.days)) reds.push(`industry open ${id}: the slowest wait (${slow.value}) is not the permits' longest (${p.longest.days})`);
     const rampFig = industryFigure(id, "first_year.ramp_to_breakeven_months");
-    if (rampFig && rampFig.value > 0 && (!ramp || ramp.value !== monthsFigure(rampFig.value))) reds.push(`industry open ${id}: the months cell is not the shard's ramp through open_rows' formatter`);
+    /* What the payback card draws: its companion months, only beside a printed payback (turn-one.tsx `"figure" in pays.payback`). */
+    const paysData = buildPays(id);
+    const paysMonths = paysData && "figure" in paysData.payback ? paysData.ramp : null;
+    if (o.printedElsewhere.includes("breakEven")) {
+      if (ramp) reds.push(`industry open ${id}: the months are printed by the payback card and by this one`);
+      if (!paysMonths || !rampFig || paysMonths.value !== rampFig.value) reds.push(`industry open ${id}: the months are left to the payback card, which does not print them`);
+    } else if (paysMonths && ramp) {
+      reds.push(`industry open ${id}: the months are printed by the payback card and by this one`);
+    } else if (rampFig && rampFig.value > 0 && (!ramp || ramp.value !== monthsFigure(rampFig.value))) reds.push(`industry open ${id}: the months cell is not the shard's ramp through open_rows' formatter`);
     if (!rampFig && ramp) reds.push(`industry open ${id}: a months cell with no ramp on file`);
     if (p && p.cells.length >= 2) {
       if (!o.detail) reds.push(`industry open ${id}: no plus over ${p.cells.length} licences`);

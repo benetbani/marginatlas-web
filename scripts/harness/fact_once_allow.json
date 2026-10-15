@@ -1,1 +1,128 @@
-[]
+[
+  {
+    "page": "city-london",
+    "figure": "$62K",
+    "where": "city-take and earnings",
+    "law": "MODEL 8.3 row 07 earnings: \"the typical is the card's 30 in ink, the site's strip law (M3)\"; PART 4: \"Every section card now takes exactly one focal at 30\"",
+    "reason": "The board keeps $62K as the page's answer. The earnings strip's typical mark is that card's one focal at 30, and the typical IS the customers' typical pay, so the law makes it print the same figure."
+  },
+  {
+    "page": "city-london",
+    "figure": "$62K",
+    "where": "city-take and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The peers table's own row (London) prints its real typical pay beside the other cities' in the same column, as a comparison table must; the board keeps $62K as the page's answer."
+  },
+  {
+    "page": "city-london",
+    "figure": "$62K",
+    "where": "earnings and peers",
+    "law": "MODEL 8.3 row 07 earnings (the strip's typical is the card's 30, M3) and PART 5, THE HOME ROW (\"It prints its real figures like every other row.\")",
+    "reason": "Both second printings are forced by their own law: the strip's typical is the earnings card's focal, and the home row of the peers table prints the same pay the answer states."
+  },
+  {
+    "page": "city-london",
+    "figure": "$3,050",
+    "where": "crew",
+    "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
+    "reason": "The crew list's headline is the middle of its five roles, which is the Supervisor row's own figure, so the focal and the row it sums print the same pay."
+  },
+  {
+    "page": "cell-gb-london-restaurants",
+    "figure": "7%",
+    "where": "split",
+    "law": "MODEL 8.6 row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"net pinned last, no net-less mode\"",
+    "reason": "The split's focal is its net margin and the net row is the breakdown's pinned last segment, so the card prints the net twice by law; the Unallocated row's 7% is a different share that prints alike."
+  },
+  {
+    "page": "cell-gb-london-restaurants",
+    "figure": "$30K",
+    "where": "rivals",
+    "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
+    "reason": "The list's headline is the middle of its four trades and sits on the Legal services row's own figure (Real estate agencies also reads $30K, under its own source), so the focal and the row it sums print alike."
+  },
+  {
+    "page": "cell-gb-london-barbershops",
+    "figure": "$104K",
+    "where": "spread and take",
+    "law": "MODEL 8.6 row 01 spread: \"the typical mark is the card's one 30 in ink (the site's strip law, M3)\"",
+    "reason": "On this thin trade the page's answer is the typical yearly sales and the strip's typical mark is that same register figure, which the law makes the spread card's focal."
+  },
+  {
+    "page": "cell-gb-london-barbershops",
+    "figure": "14%",
+    "where": "split",
+    "law": "MODEL 8.6 row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"net pinned last, no net-less mode\"",
+    "reason": "The split's focal is its net margin and the net row is the breakdown's pinned last segment, so the card prints the net twice by law."
+  },
+  {
+    "page": "cell-gb-london-barbershops",
+    "figure": "$30K",
+    "where": "rivals",
+    "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
+    "reason": "The list's headline is the middle of its four trades and sits on the Legal services row's own figure (Real estate agencies also reads $30K, under its own source), so the focal and the row it sums print alike."
+  },
+  {
+    "page": "hood-london",
+    "figure": "2.50x",
+    "where": "rank and take",
+    "law": "MODEL PART 5, DISTRICT ROWS: \"every row carrying its own figure\"; A LABEL NEVER STANDS WHERE A NUMBER GOES: \"Every row carries its own figure.\"",
+    "reason": "The hero's 2.50x is the page's answer, the dearest district's rent against the cheapest. The rent table's West End row carries its own figure, the same absolute, and PART 5 lets no row stand with a word in its place."
+  },
+  {
+    "page": "hood-london-city-of-london",
+    "figure": "2.47x",
+    "where": "rank and take",
+    "law": "MODEL PART 5, DISTRICT ROWS: \"every row carrying its own figure\"; A LABEL NEVER STANDS WHERE A NUMBER GOES: \"Every row carries its own figure.\"",
+    "reason": "The hero's 2.47x is the page's answer, this district's rent against the cheapest. The district's own row in the rent table carries its own figure, the same absolute, like every other row."
+  },
+  {
+    "page": "industry-restaurants",
+    "figure": "7%",
+    "where": "benchmark and take",
+    "law": "MODEL 8.7 row 02 benchmark: \"the trade itself and the highest nine of its sector\"; PART 5, which \"binds every table, tier list, ranked list\", A LABEL NEVER STANDS WHERE A NUMBER GOES: \"Every row carries its own figure.\"",
+    "reason": "The hero keeps 7% as the page's answer. The similar-trades ranking seats the trade itself, and that row carries its own figure like every other row of the ranking."
+  },
+  {
+    "page": "industry-restaurants",
+    "figure": "7%",
+    "where": "split and take",
+    "law": "MODEL 8.7 row 03 split: \"the net from the same shard's ladder through the SAME builder the hero calls\"; 8.6 row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"net pinned last, no net-less mode\"",
+    "reason": "The hero keeps 7% as the page's answer. The cost split's focal is that same net, from the one net builder, so the card cannot print another figure."
+  },
+  {
+    "page": "industry-restaurants",
+    "figure": "7%",
+    "where": "benchmark and split",
+    "law": "MODEL 8.7 row 02 benchmark: \"the trade itself and the highest nine of its sector\"; PART 5, which \"binds every table, tier list, ranked list\", A LABEL NEVER STANDS WHERE A NUMBER GOES: \"Every row carries its own figure.\"; MODEL 8.7 row 03 split: \"the net from the same shard's ladder through the SAME builder the hero calls\"; 8.6 row 05 split: \"net pinned last, the net at 30 in ink\"",
+    "reason": "Both second printings are forced by their own law: the split's pinned net and the ranking's row for the trade itself, one net from the one builder."
+  },
+  {
+    "page": "industry-restaurants",
+    "figure": "7%",
+    "where": "split",
+    "law": "MODEL 8.7 row 03 split: \"the net from the same shard's ladder through the SAME builder the hero calls\"; 8.6 row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"net pinned last, no net-less mode\"",
+    "reason": "The split's focal is its net margin and the net row is the breakdown's pinned last segment, so the card prints the net twice by law; the Unallocated row's 7% is a different share that prints alike."
+  },
+  {
+    "page": "industry-restaurants",
+    "figure": "7%",
+    "where": "formats and take",
+    "law": "MODEL PART 5, THE UNIVERSAL LIST CARD (the MarkList): \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30); \"EVERY ROW CARRIES A FIGURE.\"",
+    "reason": "Formats stand on the page's one net and a format at a delta of zero prints it to the digit (formats_rows.ts), so the Cafe / bistro row and the headline that is the set's middle print the net the hero states."
+  },
+  {
+    "page": "industry-restaurants",
+    "figure": "7%",
+    "where": "formats and split",
+    "law": "MODEL PART 5, THE UNIVERSAL LIST CARD (the MarkList): \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30); MODEL 8.7 row 03 split: \"the net from the same shard's ladder through the SAME builder the hero calls\"; 8.6 row 05 split: \"net pinned last, the net at 30 in ink\"",
+    "reason": "The formats' middle and Cafe / bistro row equal the net by construction, and the split pins that same net as its focal and last row."
+  },
+  {
+    "page": "industry-restaurants",
+    "figure": "7%",
+    "where": "formats",
+    "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
+    "reason": "The list's headline is the middle of its five formats, which is the Cafe / bistro row's own figure, so the focal and the row it sums print alike."
+  }
+]

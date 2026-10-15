@@ -382,9 +382,10 @@ export const COPY = {
     units: { aYear: "a year", per10k: "businesses" },
     levelBasis: "Levels compare cities. Cost of living: cheapest city 1, dearest 100.",
     /** The level line where the cost of living does not print (a city held to a register region, London: no source holds the
-     *  index). It says the board's one estimate, the permit wait, in words (plan 2026-10-08): the row's tag is drawn by nothing
-     *  on the board, and the visitors above it are counted. */
-    levelBasisNoLiving: "The permit wait is an estimate. Levels compare cities.",
+     *  index). It says the board's one estimate in words (plan 2026-10-08): the row's tag is drawn by nothing on the board, and
+     *  the visitors above it are counted. Since plan 2026-10-12 (Task 4) the board prints the permit wait's LEVEL and no figure
+     *  (the permits section prints the wait), so the line names the level, which is what the board draws. */
+    levelBasisNoLiving: "The permit level is an estimate. Levels compare cities.",
     /** A UK city held to no register region (the six; plan 2026-10-08, uk:cities-sourced-or-marked): every row is an estimate,
      *  and the line says so first. */
     levelBasisEstimates: "Estimates. Levels compare cities. Cost of living: cheapest city 1, dearest 100.",
@@ -1102,7 +1103,9 @@ export const COPY = {
       rent: "A square metre of prime shop space, a year",
       /** The valuation's own date: the rateable value estimates the rent at 1 April 2021. */
       rentValued: "A square metre of shop space, a year, at 2021 values",
-      /** The fit-out on a page that prints a sourced figure or a marked one: no source holds it or its rent-free months, so the line says both are estimates. */
+      /** The fit-out on a page that prints a sourced figure or a marked one: no source holds it or its rent-free months. The line is one plain
+       *  line that keeps the figure's unit and opens with the plural "Estimates", which covers the figure and its companion, the rent-free
+       *  months, by the convention rentEstimate's comment states below. The line does not name the months. */
       fitOutEstimate: "Estimates: a square metre fitted out",
       /** The six UK cities held to sources and to no register region (plan 2026-10-08, uk:cities-sourced-or-marked): the shard's
        *  figures, each cell's one line saying they are estimates; "Estimates" covers the cell's details and its companion. */
@@ -2653,7 +2656,7 @@ export const COPY = {
     subtitle: "",
     labelSpread: "Rent, {dearest} against {cheapest}",
     basis: "Estimates from each district's character, not from leases.",
-    cells: { cheapest: "{district}, cheapest", dearest: "{district}, dearest", count: "Districts ranked" },
+    cells: { cheapest: "Cheapest district", dearest: "Dearest district", count: "Districts ranked" },
     foot: "",
     footYear: "",
   },
