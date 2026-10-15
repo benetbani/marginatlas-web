@@ -6,7 +6,7 @@
  *   - THE TILE IS GONE. The kit's `Ico` (the 28px circle) is drawn nowhere a spine page draws: not by an opener, not by a row, not by the
  *     answer card's identity seat. Read in the source of every file `scanSpine()` returns (scripts/lib/spine_scan.mjs), comments stripped.
  *   - A SECTION'S OPENER IS ONE BARE GLYPH. Every visible `[data-opener-glyph]` stands in a `[data-rail]` (the kit's Rail, the one opener),
- *     one to a Rail, at 32px, in terracotta (var(--terra-text)), with no background, border, radius or shadow on it or on anything between it
+ *     one to a Rail, at 32px and stroke 2 (fix round 1), in terracotta (var(--terra-text)), with no background, border, radius or shadow on it or on anything between it
  *     and its Rail.
  *   - A GLYPH INSIDE A SECTION IS GREY AND NEVER ITS OPENER'S. Every other visible glyph (svg.ma-glyph) in main draws in no terracotta (its own
  *     colour or the nearest one it inherits), carries `spine-ic` or `ma-mono` (so its accent strokes follow its ink, globals.css), sits in no
@@ -84,6 +84,7 @@ function readPage(html: string): Read {
     if (!rail) { reds.push(`OPENER OUTSIDE A RAIL: ${where(g)}`); continue; }
     if (rail.querySelectorAll("[data-opener-glyph]").length !== 1) reds.push(`RAIL WITH ${rail.querySelectorAll("[data-opener-glyph]").length} OPENER GLYPHS: ${where(g)}`);
     if (g.getAttribute("width") !== "32" || g.getAttribute("height") !== "32") reds.push(`OPENER NOT 32px (${g.getAttribute("width")}): ${where(g)}`);
+    if (g.getAttribute("stroke-width") !== "2") reds.push(`OPENER STROKE NOT 2 (${g.getAttribute("stroke-width")}): ${where(g)}`);
     const col = colourOf(g);
     if (!col || !/terra-text/.test(col)) reds.push(`OPENER NOT TERRACOTTA (${col}): ${where(g)}`);
     for (let e: Element | null = g; e && e !== rail.parentElement; e = e.parentElement) if (tiled(e)) { reds.push(`OPENER ON A TILE (${e.tagName.toLowerCase()} "${e.getAttribute("class") ?? ""}" ${e.getAttribute("style") ?? ""}): ${where(g)}`); break; }
@@ -103,17 +104,18 @@ function readPage(html: string): Read {
 }
 
 /* ---------- fixtures: each red and its passing twin ---------- */
-const OPEN = (attrs = 'width="32" height="32" style="color:var(--terra-text)"', wrap = "", icon = "margin") =>
-  `<div data-rail=""><div class="grid grid-cols-[32px_minmax(0,1fr)] gap-x-3"><span${wrap}><svg class="ma-glyph spine-ic" data-opener-glyph="" data-icon="${icon}" ${attrs}></svg></span><h3 data-rail-title="">T</h3></div></div>`;
+const OPEN = (attrs = 'width="32" height="32" stroke-width="2" style="color:var(--terra-text)"', wrap = "", icon = "margin") =>
+  `<div data-rail=""><div class="grid grid-cols-[32px_minmax(0,1fr)] gap-x-1"><span${wrap}><svg class="ma-glyph spine-ic" data-opener-glyph="" data-icon="${icon}" ${attrs}></svg></span><h3 data-rail-title="">T</h3></div></div>`;
 const INNER = (style = "color:var(--c-ink2)", cls = "ma-glyph spine-ic", icon = "bank", parent = "") => `<span${parent}><svg class="${cls}" data-icon="${icon}" width="16" height="16" style="${style}"></svg></span>`;
 const page = (...parts: string[]) => `<html><body><main><div data-card="" id="s">${parts.join("")}</div></main></body></html>`;
 const FIX: { label: string; html: string; red: RegExp | null }[] = [
   { label: "a bare 32px terracotta opener and a grey inner glyph (the twin)", html: page(OPEN(), INNER()), red: null },
-  { label: "an opener outside a Rail", html: page(`<svg class="ma-glyph spine-ic" data-opener-glyph="" data-icon="margin" width="32" height="32" style="color:var(--terra-text)"></svg>`), red: /OPENER OUTSIDE A RAIL/ },
-  { label: "an opener at 18px", html: page(OPEN('width="18" height="18" style="color:var(--terra-text)"')), red: /OPENER NOT 32px/ },
-  { label: "an opener in grey", html: page(OPEN('width="32" height="32" style="color:var(--c-ink2)"')), red: /OPENER NOT TERRACOTTA/ },
+  { label: "an opener outside a Rail", html: page(`<svg class="ma-glyph spine-ic" data-opener-glyph="" data-icon="margin" width="32" height="32" stroke-width="2" style="color:var(--terra-text)"></svg>`), red: /OPENER OUTSIDE A RAIL/ },
+  { label: "an opener at 18px", html: page(OPEN('width="18" height="18" stroke-width="2" style="color:var(--terra-text)"')), red: /OPENER NOT 32px/ },
+  { label: "an opener at the family's 1.6 stroke (fix round 1 rules 2)", html: page(OPEN('width="32" height="32" stroke-width="1.6" style="color:var(--terra-text)"')), red: /OPENER STROKE NOT 2/ },
+  { label: "an opener in grey", html: page(OPEN('width="32" height="32" stroke-width="2" style="color:var(--c-ink2)"')), red: /OPENER NOT TERRACOTTA/ },
   { label: "an opener on a tile (a background on its wrapper)", html: page(OPEN(undefined, ' class="rounded-full border" style="background:var(--terra-soft)"')), red: /OPENER ON A TILE/ },
-  { label: "a Rail with two opener glyphs", html: page(`<div data-rail="">${["margin", "bank"].map((i) => `<svg class="ma-glyph spine-ic" data-opener-glyph="" data-icon="${i}" width="32" height="32" style="color:var(--terra-text)"></svg>`).join("")}</div>`), red: /RAIL WITH 2 OPENER GLYPHS/ },
+  { label: "a Rail with two opener glyphs", html: page(`<div data-rail="">${["margin", "bank"].map((i) => `<svg class="ma-glyph spine-ic" data-opener-glyph="" data-icon="${i}" width="32" height="32" stroke-width="2" style="color:var(--terra-text)"></svg>`).join("")}</div>`), red: /RAIL WITH 2 OPENER GLYPHS/ },
   { label: "an inner glyph in terracotta (inherited from its wrapper)", html: page(OPEN(), `<span class="text-[var(--terra-text)]">${INNER("")}</span>`), red: /INNER GLYPH IN TERRACOTTA/ },
   { label: "an inner glyph whose accent keeps the terracotta (no spine-ic, no ma-mono)", html: page(OPEN(), INNER(undefined, "ma-glyph")), red: /ACCENT NOT ITS INK/ },
   { label: "an inner glyph on a tile", html: page(OPEN(), INNER(undefined, undefined, undefined, ' class="rounded-full border" style="background:var(--c-soft)"')), red: /INNER GLYPH ON A TILE/ },

@@ -91,13 +91,15 @@ export const cap = (s: string) => (s ? s[0].toUpperCase() + s.slice(1) : "");
  *  the title's 20px line (28 on the band, where globals.css sets an open section's title 20 on 28 and its box with it) and is centred
  *  on it, so its 32 reaches past that line (6 above and below on 20, 2 on 28): the glyph sits on the title's first line, and
  *  the section's own distances (the title 24 above the first content, the zone's padding) stay measured from the title, as the ladder writes
- *  them. STROKE 1.6: the glyph family is drawn on a 32 grid at 1.6 (AtlasIcon's header), so at 32px it draws at its designed weight, 1.6px.
- *  The default 1.9 drew 1.9px, heavier than the 16px semibold title beside it; the old tile's 2.4 at 18 drew 1.35px, which at 32 reads
- *  thin. `spine-ic` keeps the accent strokes in the glyph's own ink (globals.css). */
+ *  them. STROKE 2 (the controller's ruling of fix round 1, on the photographs: "bigger and superior" with the semibold title): at 32px it
+ *  draws 2px, the weight of the 20px semibold title's stems, where the family's designed 1.6 read lighter than the words beside it.
+ *  THE GAP IS 4 BECAUSE THE GLYPH CARRIES ITS OWN AIR: across the 42 opener glyphs the renders draw, the ink stops 4 to 11px short of the
+ *  32px box's right edge (median 6), so the ladder's 4 reads as about 12 between the ink and the title's first letter (fix round 1;
+ *  measured in the report). `spine-ic` keeps the accent strokes in the glyph's own ink (globals.css). */
 function OpenerGlyph({ id }: { id: AtlasIconId }) {
   return (
     <span aria-hidden data-opener-box="" className="flex h-5 items-center justify-center">
-      <AtlasIcon id={id} size={32} strokeWidth={1.6} data-opener-glyph="" className="spine-ic shrink-0" style={{ color: "var(--terra-text)" }} />
+      <AtlasIcon id={id} size={32} strokeWidth={2} data-opener-glyph="" className="spine-ic shrink-0" style={{ color: "var(--terra-text)" }} />
     </span>
   );
 }
@@ -872,7 +874,7 @@ export function Head({ children, sample, icon }: { children: React.ReactNode; sa
     // page, measured on all nine top sections. The city blueprint's own
     // written fix: take Head and Rail bottom margin to the slot rung 8.
     // City finding #4 (2026-08-30), S1.
-    <div className={icon ? "mb-2 grid grid-cols-[32px_minmax(0,1fr)] items-start gap-x-3" : "mb-2 flex items-center gap-2"}>
+    <div className={icon ? "mb-2 grid grid-cols-[32px_minmax(0,1fr)] items-start gap-x-1" : "mb-2 flex items-center gap-2"}>
       {/* the other section opener (drawn by the /dev pages alone), same level, the same bare glyph as Rail above (plan 2026-10-12, Task 5) */}
       {icon ? <OpenerGlyph id={icon} /> : null}
       <div className={icon ? "flex min-w-0 items-center gap-2" : "contents"}>
@@ -1171,9 +1173,9 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss, level
     <div className="mb-6" data-rail="">
       {/* THE OPENER IS ONE BARE GLYPH (his rule of 2026-10-13, reading /gb on a phone: "the icons of the sections cannot be the same as the
           icons inside the section, they should be bigger and superior with no background"; plan 2026-10-12 rhythm-air-inside, Task 5): a
-          32px column and the title 12 after it, so a title that wraps hangs under its own first word. Still terracotta (his ruling of
+          32px column and the title 4 after it (about 12 to the eye: the glyph carries its own air), so a title that wraps hangs under its own first word. Still terracotta (his ruling of
           2026-09-19: "the big missed chance is to put it at the icons"); the accent budget counts text, so the glyph is not an accent. */}
-      <div className={icon ? "grid grid-cols-[32px_minmax(0,1fr)] items-start gap-x-3" : "flex items-center gap-2"}>
+      <div className={icon ? "grid grid-cols-[32px_minmax(0,1fr)] items-start gap-x-1" : "flex items-center gap-2"}>
         {icon ? <OpenerGlyph id={icon} /> : null}
         <div className={icon ? "flex min-w-0 items-center gap-2" : "contents"}>
         {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
