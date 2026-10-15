@@ -41,8 +41,9 @@ for (const [iso2, name] of [["GB", "the United Kingdom"], ["KH", "Cambodia"], ["
   check(`${iso2} slot 14: the spectra drawn, the foot figures behind the plus as shares`, !!deal && (!!deal.drawing.state || !!deal.drawing.people) && deal.more.every((l) => l.key === "who" && l.type === "share") && !deal.drawing.state?.foot && !deal.drawing.people?.foot);
   if (deal) { const doc = read(React.createElement(DealingsSlot, { model: deal })); const f = clean(doc); check(`${iso2} slot 14 reads clean, a switch where both tables stand (${f.join("; ") || "clean"})`, f.length === 0 && (!(deal.drawing.state && deal.drawing.people) || !!doc.querySelector("#dealings [data-switch]")), "src/components/spine/country/slots/StageRules.tsx"); }
   /* NOTHING PRINTED IS LOST (final review I1): the labour force and informal economy shares every country but the UK printed under its
-     staff card stand in "Who trades here" as shares in the old card's rounding, stamped with their profile fields. */
-  if (iso2 !== "GB") {
+     staff card stand in "Who trades here" as shares in the old card's rounding, stamped with their profile fields. The UK draws them too
+     since the fix wave (its own held row of the profile, tier A: the re-review's Minor 1, 2026-10-15), so all four are held to them. */
+  {
     const prof = getCountryProfile(iso2) as unknown as Record<string, number>;
     const rows = deal?.more.find((l) => l.key === "who")?.rows ?? [];
     const want = [["labour-force", "labor_force_participation_pct"], ["informal", "informal_economy_share_pct"]].map(([key, field]) => ({ key, field, value: `${Math.round(prof[field] * 10) / 10}%` }));

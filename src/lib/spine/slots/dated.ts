@@ -3,7 +3,7 @@
  * rule changes stand in stage 6, each change also dated on the row it changes"; Review Focus 3). A row printing a rule the changes ledger
  * dates (data/sections/changes.json, through sections/country_rules.ts) takes the value in force on `today`, in the row's own form, and a
  * note that agrees with the ledger: the coming value and its day where a change is coming, else the day the value in force began while
- * that change is news (the changes slot's own window, 120 days). The page regenerates daily, so on a change's day the value and the note
+ * that change is news (the changes slot's own window, RECENT_CHANGE_DAYS in sections/country_rules.ts). The page regenerates daily, so on a change's day the value and the note
  * switch together. Older changes print the value and no note; the changes slot keeps their dates.
  */
 import { changeAround, lawValue, RECENT_CHANGE_DAYS, type LawValue } from "@/lib/spine/sections/country_rules";

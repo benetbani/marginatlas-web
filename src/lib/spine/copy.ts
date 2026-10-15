@@ -176,26 +176,18 @@ export const COPY = {
   },
   /** The note list (what locals know): authored notes, the page's one editorial section. */
   locals: { kicker: LOCALS_KICKER },
-  /** THE DRAWN BLOCKED SEATS on the country page (MODEL.md 8.2; plan step 31,
-   *  2026-09-17 and 2026-09-18). Each is an opener, ONE stated line under
-   *  fifteen words in the site's idiom ("Not gathered yet: ..."), and a foot
-   *  naming the requirement it waits on in
-   *  E:/atlas/design/loop/build/DATA-REQUIREMENTS.md. The lines are 8.2's own,
-   *  verbatim, read aloud.
+  /** THE DRAWN BLOCKED SEATS (MODEL.md 8.2; plan step 31, 2026-09-17 and
+   *  2026-09-18). Each is an opener, ONE stated line under the seat law's word
+   *  cap in the site's idiom ("Not gathered yet: ..."), and a foot naming the
+   *  requirement it waits on in E:/atlas/design/loop/build/DATA-REQUIREMENTS.md.
+   *  The lines are 8.2's own, verbatim, read aloud.
    *
-   *  TWO SEATS STAND ON EVERY COUNTRY (`07 workforce` and `11 easiest`, the
-   *  first dispatch): fourteen words on 07 (at the cap), thirteen on 11. The
-   *  kicker on 11 is the shipped one; "easiest to start" is his ban.
-   *
-   *  FOUR SEATS STAND ON THE THIN COUNTRIES ONLY, where the drawn card's own
-   *  floor leaves the block unbuilt (8.2's "THE THIN COUNTRY, SEATED", the
-   *  seventh dispatch): `03 setup` on the 43 with no legal form on file
-   *  (thirteen words, item 10), `09 peers` where the peer table does not
-   *  resolve (thirteen words, item 57), `12 money` where the engine holds
-   *  under two credible margins (thirteen words, item 8) and `16 locals`
-   *  where no notes are authored (nine words, item 6). Their kickers are the
-   *  drawn cards' own, referenced and never retyped, so the block reads under
-   *  one name whether it is drawn or seated. */
+   *  The country page seats none since plan 2026-10-13 country-page-journey (a
+   *  slot without its data omits itself; the note inside the object below).
+   *  Two seats stay for the pages that still draw them: `peers` where the peer
+   *  table does not resolve and `locals` where no notes are authored. Their
+   *  kickers are the drawn cards' own, referenced and never retyped, so the
+   *  block reads under one name whether it is drawn or seated. */
   blocked: {
     /* The country's own seats (workforce, easiest, setup, money) left with the seats themselves (plan 2026-10-13 country-page-journey;
        final review M5, 2026-10-15): a slot without its data omits itself. Peers and locals stay, drawn by the trade, city and how-to pages. */

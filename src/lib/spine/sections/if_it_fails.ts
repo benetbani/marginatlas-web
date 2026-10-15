@@ -42,9 +42,9 @@ export function buildIfItFails(law: IfItFailsLaw = IF_IT_FAILS): IfItFails | nul
   };
   /* A SOLE TRADER WHO GOES BANKRUPT: the home, and the way out with no fee where the debts are small. */
   const home = obj<{ protected: string; years: number }>(law, "home_protected");
-  push("home", "home_protected", "Your home", home?.protected === "no" ? "Can be sold" : null, `Within ${home?.years} years of bankruptcy`);
+  push("home", "home_protected", "Your home", home?.protected === "no" ? "Can be sold" : null, `within ${home?.years} years of bankruptcy`);
   const dro = obj<{ debts_under_gbp: number; fee_gbp: number }>(law, "debt_relief_order");
-  push("debt-relief", "debt_relief_order", "Debt Relief Order", dro ? `Under ${gbpText(dro.debts_under_gbp)}` : null, dro?.fee_gbp === 0 ? "Free, if you own little" : "If you own little");
+  push("debt-relief", "debt_relief_order", "Debt Relief Order", dro ? `Under ${gbpText(dro.debts_under_gbp)}` : null, dro?.fee_gbp === 0 ? "free, if you own little" : "if you own little");
   /* A COMPANY THAT FAILS: what winding it up costs and takes, in the Insolvency Service's sample of liquidations. */
   const cost = obj<{ median_fees_gbp: number; median_assets_gbp: number }>(law, "liquidation_cost_local");
   const sample = obj<{ started: number }>(law, "liquidation_sample");

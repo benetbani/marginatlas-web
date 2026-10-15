@@ -1,6 +1,6 @@
 /**
- * THE PROGRAMMATIC PROMISE ON EVERY COUNTRY (plan 2026-10-13 country-page-journey, final review M2, 2026-10-15). The gates render four
- * countries; the page is built for 198. For every country in the taxonomy, from the files alone (no database: the trades' margins, slot 5b,
+ * THE PROGRAMMATIC PROMISE ON EVERY COUNTRY (plan 2026-10-13 country-page-journey, final review M2, 2026-10-15). The gates render a handful
+ * of countries; the page is built for every country in the taxonomy. For each of them, from the files alone (no database: the trades' margins, slot 5b,
  * come from the seed and are not asked here), the slot plan builds without a throw (a fold over eight rows throws in `list()`, which during
  * the site's regeneration would fail that country's page rather than a gate), every slot drawn is one the model holds, in the model's order,
  * and every slot's lists read clean through the answer-type gate's own reading (scripts/lib/answer_type.mjs), each list one type, each fold

@@ -90,6 +90,7 @@
       "browser": true,
       "asserts": "THE PAGE LAWS OF 2026-09-20, held on a rendered page.",
       "reads": [
+        "scratchpad/harness/pages",
         "scripts/harness/level_height_baseline.json",
         "scripts/harness/page_laws_baseline.json",
         "scripts/harness/pages.json"

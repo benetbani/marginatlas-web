@@ -3,7 +3,9 @@
  * browser check that reads a section's content opens the panels first (seven skip a closed panel today: their reading is fixed in the same
  * change, each a red first on a planted closed panel)"). It writes planted pages, each hiding one fault of one check's kind behind a closed
  * <details>, runs that check on it as the chain runs it, and holds the check's output to a finding marked " (panels open)"; and it plants
- * two bar lists on neighbouring zones and holds the page laws to KIND ADJACENT (Review Focus 2: clause 64 read on zones).
+ * two bar lists on neighbouring zones and holds the page laws to KIND ADJACENT (Review Focus 2: clause 64 read on zones), and a level of
+ * two whose cells stack and a list of lone zones, and holds the page laws' LEVEL HEIGHT to saying it read nothing (the fix wave's
+ * re-review, Important 1, 2026-10-15: a gate never passes having read nothing).
  * BLIND SPOT, stated: each fixture proves that one check opens the panels and reads one rule inside them, not every rule; the planted sizes
  * are set to trip the named rule, so a change to that rule's threshold can need the fixture resized.
  *
@@ -48,6 +50,11 @@ const PLANTS = {
   empty: page(zone(card("planted", `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px"><div>${shut(`<div style="height:900px;background:#555"></div>`)}</div><div><p>Short</p></div></div>`))),
   /* KIND ADJACENT on zones (Review Focus 2): two visual cards of one kind on neighbouring zones. */
   kind: page(zone(card("bars-a", `<p>Bars A</p>`, "width:900px", ' data-archetype="bar-list" data-visual="1"')) + zone(card("bars-b", `<p>Bars B</p>`, "width:900px", ' data-archetype="bar-list" data-visual="1"'))),
+  /* LEVEL HEIGHT READ NOTHING (the fix wave's re-review, Important 1): a zone declared a level of two whose cells stack (its level drawn as a
+     block, as a drifted grid or a lost 1280 would leave it), and a page of lone zones only, read as a list. The law must say it read no
+     level of two; it may never pass on nothing. */
+  stacked: page(`<section data-zone="1-1" data-tone="tint"><div data-zone-level="" style="display:block"><div data-zone-cell="" class="min-w-0">${card("pair-a", "<p>Left.</p>")}</div><div data-zone-cell="" class="min-w-0">${card("pair-b", "<p>Right.</p>")}</div></div></section>`),
+  levelless: page(zone(card("lone-a", "<p>Alone.</p>")) + zone(card("lone-b", "<p>Alone again.</p>"))),
 };
 for (const [k, html] of Object.entries(PLANTS)) writeFileSync(`${DIR}/${k}.html`, html, "utf8");
 /* The gates that read the harness list read a list of one planted page in the plants' own directory (scripts/lib/page_renders.mjs reads
@@ -56,6 +63,8 @@ writeFileSync(`${PAGES_DIR}/country-ZZART.html`, PLANTS.art, "utf8");
 writeFileSync(`${PAGES_DIR}/country-ZZEMPTY.html`, PLANTS.empty, "utf8");
 writeFileSync(`${DIR}/art.json`, JSON.stringify({ pages: [{ surface: "country", slugs: ["ZZART"] }] }), "utf8");
 writeFileSync(`${DIR}/empty.json`, JSON.stringify({ pages: [{ surface: "country", slugs: ["ZZEMPTY"] }] }), "utf8");
+writeFileSync(`${PAGES_DIR}/country-ZZLEVEL.html`, PLANTS.levelless, "utf8");
+writeFileSync(`${DIR}/levelless.json`, JSON.stringify({ pages: [{ surface: "country", slugs: ["ZZLEVEL"] }] }), "utf8");
 
 const run = (args, env = {}) => { const r = spawnSync(process.execPath, args, { encoding: "utf8", env: { ...process.env, ...env }, maxBuffer: 32 * 1024 * 1024 }); return `${r.stdout ?? ""}${r.stderr ?? ""}`; };
 const CASES = [
@@ -67,6 +76,8 @@ const CASES = [
   { check: "scripts/verify_full_width_sitewide.mjs", out: () => run(["scripts/verify_full_width_sitewide.mjs", "--pages", `planted=${DIR}/wide.html`]), want: /\(panels open\)/ },
   { check: "scripts/verify_gathered_emptiness.mjs", out: () => run(["scripts/verify_gathered_emptiness.mjs"], { HARNESS_PAGES_LIST: `${DIR}/empty.json`, HARNESS_PAGES_DIR: PAGES_DIR }), want: /\(panels open\)/ },
   { check: "scripts/harness/check_page_laws.mjs (KIND ADJACENT)", out: () => run(["scripts/harness/check_page_laws.mjs", `${DIR}/kind.html`]), want: /KIND ADJACENT[^\n]*neighbouring levels/ },
+  { check: "scripts/harness/check_page_laws.mjs (LEVEL HEIGHT, a stacked level)", out: () => run(["scripts/harness/check_page_laws.mjs", `${DIR}/stacked.html`]), want: /LEVEL HEIGHT READ NOTHING[^\n]*declares 1 zone of two/ },
+  { check: "scripts/harness/check_page_laws.mjs (LEVEL HEIGHT, a list of lone zones)", out: () => run(["scripts/harness/check_page_laws.mjs", `--list=${DIR}/levelless.json`], { HARNESS_PAGES_DIR: PAGES_DIR }), want: /LEVEL HEIGHT READ NOTHING[^\n]*no level of two/ },
 ];
 let failed = 0;
 for (const c of CASES) {
@@ -77,5 +88,6 @@ for (const c of CASES) {
 }
 rmSync(`${PAGES_DIR}/country-ZZART.html`, { force: true });
 rmSync(`${PAGES_DIR}/country-ZZEMPTY.html`, { force: true });
+rmSync(`${PAGES_DIR}/country-ZZLEVEL.html`, { force: true });
 if (failed) { redSummary(RULE, failed, "every browser check reads inside a closed plus (spec section 5)", `${CASES.length} planted pages`); process.exit(1); }
 console.log(`PASS panels-opened: ${CASES.length} planted pages read by their checks.`);
