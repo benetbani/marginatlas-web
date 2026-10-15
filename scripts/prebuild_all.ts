@@ -1037,6 +1037,14 @@ const GATES: Gate[] = [
      red on 19e4072a (21 findings, 10 reading files and the two tables), its reader proven on planted lines, never passing having read
      under 900 files or 3,500 import lines. */
   { name: "start-side-held", script: "tests/open/start_side_held.test.ts" },
+  /* No typed money figure on the opening surfaces (release 3 job A, 2026-10-16; QUEUE uk:held-bill-provenance): the bill to open in
+     cell.setup_costs was typed by hand into three SQL files and a bulk template, and the UK's nine lines ($426K) printed on 325 trade
+     pages and /calculator; /opening's dealbreaker typed "rent under about 12% of sales" and a "Directional" disclaimer. The gate feeds
+     every setup_costs block those writers hold to the bill reader (none may print without a named measurement), reads the surfaces'
+     string literals through strip_comments for a money or percent figure, asks every trade's dealbreaker, and reads the fresh London
+     renders for a bill stamp; red on 0beeee9a (15 findings), its readers proven on planted blocks and lines, never passing having read
+     under 19 SQL files, 300 strings or the three renders. */
+  { name: "held-bill", script: "tests/open/held_bill.test.ts" },
   /* Every UK city's page prints an official figure, says in its card's one line that a figure is an estimate, or withholds it:
      London's shop rent from the valuation slice, the survey's pay, no hand-anchored cost of living, no engine district rents
      (masterplan step 03); the six other cities' shard figures each marked an estimate (plan 2026-10-08, uk:cities-sourced-or-marked). */
