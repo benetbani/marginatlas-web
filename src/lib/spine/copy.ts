@@ -2915,8 +2915,6 @@ export const COPY = {
      *  stand until the rhythm plan's Task 4 takes them to the registering table (fact-once). */
     /** Slot 6's own row: the days until trading (the shard's total), its unit in its label. */
     openRows: { trading: "Until trading, days" },
-    /** A licence wait the source gives in months, its own words in the row's note (final review M3). */
-    licenceAsGiven: "{given} as published",
     /** The UK's walls from abroad behind slot 6's plus: the founder route's fees, the decision's wait, a fee that buys a stay. */
     /** A rule the changes ledger dates, on its own row (spec section 2; slots/dated.ts): the coming value and its day, or the day it began. */
     dated: { coming: "{to} from {date}", since: "since {date}" },

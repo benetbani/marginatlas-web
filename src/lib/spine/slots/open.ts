@@ -93,8 +93,11 @@ export function buildOpenSlot(iso2In: string, today: string): SlotModel<OpenDraw
   const costRows: SlotRow[] = oneFee ? [] : all.flatMap((s, i) => (s.cost ? [{ key: s.key, label: labels[i], value: s.cost }] : []));
   const licenceRows: SlotRow[] = (setup.length > 0 ? buildCountryLicences(iso2) ?? [] : []).flatMap((r, i) => {
     const d = inDays(r.value);
+    /* A wait the source gives in months keeps its own words in the note (final review M3): "3 to 4 months" beside the 91 to 122 days
+       the arithmetic gives, so the row shows no precision the source does not have. The bare words, no gloss: the UK's open slot
+       opened reads within E1's 220 characters. */
     const months = /\bmonths?\b/i.test(r.value ?? "") ? String(r.value).replace(/[\s\u00a0]+/g, " ").trim() : null;
-    return d != null ? [{ key: `licence-${i}`, label: r.label, value: d, note: [months ? J.licenceAsGiven.replace("{given}", months) : null, r.note].filter(Boolean).join(", ") || null }] : [];
+    return d != null ? [{ key: `licence-${i}`, label: r.label, value: d, note: [months, r.note].filter(Boolean).join(", ") || null }] : [];
   });
 
   /* THE UK'S WALLS FROM ABROAD (sections/from_abroad.ts), three lists: each wall's state; what the route and the walls cost (a law's own
