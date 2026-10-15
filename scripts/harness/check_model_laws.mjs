@@ -827,7 +827,12 @@ function inPage(ctx) {
      tables read how dealing with the state and with people feels; a coined index is banned). "Recorded as his exceptions; the
      UK's model-law count goes to zero." By form, wherever the form stands, as every exemption here is. */
   const KEPT_BY_HIS_RULING_31 = ["spectra-table", "city-cards"];
-  const FOCAL_EXEMPT_FORMS = new Set([...EVEN_BY_RULING, "note-list", ...KEPT_BY_HIS_RULING_31]);
+  /* THE HOME'S CONTENTS (plan 2026-10-13 home-quiet-editorial, Task 4B; his choice of 2026-10-13, quiet editorial: the atlas laid out as a
+     contents page, no charts; Q2 of that plan, ruled A): a department is a door to a part of the site, its rows names and its one kind of
+     figure a trade row's own at 16, so it holds no figure at 30 by its own law, as the prose form and the seat form do. Named in MODEL
+     PART 4's WHO HOLDS NO 30 in the same plan (Task 8). By form, wherever the form stands. */
+  const CONTENTS_BY_HIS_SPEC = ["department"];
+  const FOCAL_EXEMPT_FORMS = new Set([...EVEN_BY_RULING, "note-list", ...KEPT_BY_HIS_RULING_31, ...CONTENTS_BY_HIS_SPEC]);
   for (const block of topBlocks) {
     if (!block.getClientRects().length || FOCAL_EXEMPT_FORMS.has(formOf(block))) continue;
     const sizes = sizesOf(block);

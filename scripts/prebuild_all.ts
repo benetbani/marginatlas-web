@@ -604,15 +604,10 @@ const GATES: Gate[] = [
   { name: "industry-resolution", script: "tests/cells/industry_resolution.test.ts" },
   { name: "search-cascade", script: "tests/home/search_cascade.test.ts" },
   /* Where a home search lands: only pages that exist, the UK first, never /gb/gb/...; the search page lists pages that exist;
-     no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). Since plan 2026-10-09, home
-     introduction: the picker's three examples are links to the London pages that answer them, each word its trade's; the h1 asks
-     the example's question first; the site's one definition is the structured data's. */
+     no dialog search left (masterplan step 33; his ruling 11 and his refusals of 2026-09-22). Since plan 2026-10-13 (home, quiet
+     editorial): every case of the h1 the picker follows lands on a page the edge serves, the first the form's own seed; the h1 asks
+     restaurants in London first; the site's one definition is the structured data's. */
   { name: "home-destination", script: "tests/home/destination.test.ts" },
-  /* The worked example and the third proof on the home (plan 2026-10-09, home introduction, Tasks 6, 7, 8 and 10): the picker's own
-     case, restaurants in London, in four steps, each figure the London page's own from the same builder, under the same name, with
-     its kind; the case whole; the one 40 is step 3; the tax proof is /gb's masthead figure under its own name, its bar the masthead's
-     data drawn as the segment bar. Reads the home, London restaurants and /gb renders (masterplan step 34 first held the UK answers). */
-  { name: "home-answers", script: "tests/home/home_answers.test.ts" },
   /* Pro said once, only with the paywall's switch on, its title an h2, its prices through the plan and the year first; the launch
      check's item (i) reading the live home's counts band and passing the rebuilt home, which prints no ledger counts (masterplan step 35;
      his ruling 23; his decisions of 2026-10-07 and 2026-10-09). */
@@ -678,26 +673,16 @@ const GATES: Gate[] = [
      two counts a row; on /new-businesses, where its first loud seat stands. */
   { name: "home-us-restaurants", script: "tests/home/us_restaurants.test.ts" },
   /* Section 4, how figures are made, is the join now: a year of notices matched by name to the register, the notices, the names and
-     the names found, and the London trade pages read from the band counts. The home's first proof draws the join behind a door to
-     About the figures' #failures; the pages read are a line of its #reading. */
+     the names found, and the London trade pages read from the band counts. About the figures prints the join in its #failures and the
+     pages read in its #reading (the home's proof card of them left with plan 2026-10-13). */
   { name: "home-how-made", script: "tests/home/how_made.test.ts" },
   /* The archive, kept and dated (plan 2026-10-09, home introduction, proof 2): data/home/archive.json is the archive's own months of
      notices and register copies, read from its log by scripts/data/home/export_home.py archive; read again where the log is on this
-     machine, its source deferred on a build server. */
+     machine, its source deferred on a build server. About the figures prints it in #archive. */
   { name: "home-archive", script: "tests/home/archive.test.ts" },
-  /* The terracotta band, "Read from the record" (plan 2026-10-10, the home reformed to ship, Task 5; the spec's decision 7): its four
-     evidence counts recomputed from their sources (the official publishers' items in the sources list, every publisher classed, the
-     law's values, the London trade pages that print sales, the trades with a publishable failure rate) and stamped counted, none
-     typed, no slot and no list count, the band drawn only with all four (SITE_COUNTS_MIN) and nothing with fewer; the drawing a zone in ink on
-     the terracotta. Reads the home's render where the harness wrote it, deferred on a build server. */
-  { name: "site-counts", script: "tests/home/site_counts.test.ts" },
   /* The shared forms' small props for the home (plan 2026-10-09, home introduction, Task 3): Rail's level, Ring's lead size and its
      label, BarList's quiet, MonthBars' stamp, StepMark's numeral, each byte-identical where not passed; the copy gate reads a Rail's h2. */
   { name: "home-forms", script: "tests/spine/home_forms.test.ts" },
-  /* The home's foot (plan 2026-10-10, the home reformed to ship, Task 6; the spec's decisions 2 and 5): the cities as grey rows of
-     480 by 360 small copies with their landmark crops, two to a row under 768 with "All UK cities", a server component; "From the
-     blog"; the foot's checked date, London restaurants'. Reads the home's and /gb's renders where the harness wrote them. */
-  { name: "home-foot", script: "tests/home/foot.test.ts" },
   /* No terracotta on a hover under src/components/spine: a ratchet per file, seeded 2026-10-05, the home page at zero (masterplan
      step 36; MODEL.md PART 6). */
   { name: "no-terra-hover", script: "scripts/verify_no_terra_hover.ts" },
@@ -922,15 +907,28 @@ const GATES: Gate[] = [
   /* His ruling of 2026-10-07: the home's hero holds still (the rotating word fades in place, both together; the h1 fades in). */
   { name: "hero-still", script: "tests/trust/hero_still.test.ts" },
   /* The hero's two words on one timer (plan 2026-10-10, home reform, Task 2; WCAG 2.2.2): twelve ticks of 3.5 s, the last back to
-     "restaurant" and "London", then still for good; still at once on a touch, a key or a focus inside the search; paused while hidden;
-     the h1 on set lines, each slot as wide as its widest word drawn, the "?" against the city. */
+     "restaurant" and "London", then still for good; still at once on a touch, a key or a focus inside the search, or a pointer over the
+     picker; paused while hidden; the index told to the picker, which follows it (HomeAsk, plan 2026-10-13); the h1 on set lines, each
+     slot as wide as its widest word drawn, the "?" against the city. */
   { name: "hero-words", script: "tests/home/hero_words.test.ts" },
   /* The home picker in the spine's tokens (plan 2026-10-10, home reform, Task 2): sentence-case labels, 48px fields with a 3:1 edge
-     and an ink focus ring, 16px type on a phone, a "No match" row, the one ink action, its lists loaded on first use and its first
-     paint from the server's seed. */
+     and an ink focus ring, 16px type on a phone, a "No match" row, the one ink action, its lists loaded on first use, its first paint
+     from the server's seed or the h1's first case, its fields following the h1's case until the reader reaches them (plan 2026-10-13),
+     no examples' line. */
   { name: "home-picker", script: "tests/home/picker.test.ts" },
-  /* The home as an introduction (his yes of 2026-10-09; plan 2026-10-09, home introduction): the hero (his h1, still, the picker with no heading, its examples links, the definition), the worked example, (Pro), the three proofs, the UK's cities beside where to next; no counts, no newsletter band, nothing the plan re-homed. */
+  /* The home, quiet editorial (his choice of 2026-10-13; plan 2026-10-13 home-quiet-editorial): the positioning line above his h1 and the picker that follows it, the contents, (Pro), the band, the colophon; three seats; nothing the reform retired; every figure stamped; no reader text under 14px. Reads the home's render, which pages-fresh writes first. */
   { name: "home-shape", script: "tests/trust/home_shape.test.ts" },
+  /* The home's contents (plan 2026-10-13 home-quiet-editorial; his choice of 2026-10-13, quiet editorial): six numbered departments, each
+     at most four members chosen by a rule read from the code and recomputed here, a trade row printing its industry page's own figure, a
+     thin state drawing fewer rows and never a placeholder, every member landing; the Department form and the six literal sections; the
+     small copies of the city photographs it draws. Reads the home's render, which pages-fresh writes first. */
+  { name: "home-contents", script: "tests/home/contents.test.ts" },
+  /* The home's band, one solid statement (his decision of 2026-10-13): one sentence true of how every figure is made, one link to the
+     method, no figure and no digit, on the brand terracotta at full strength (--terra-full) in white at AA, ink on paper in print. */
+  { name: "home-band", script: "tests/home/band.test.ts" },
+  /* No country, city or trade-list count on the home, in figures or in words (his ruling of 2026-10-07), no figure but a trade row's and
+     Pro's, no digit on the band: read on the home's render, block by block, never passing having read nothing. */
+  { name: "home-no-counts", script: "tests/home/no_counts.test.ts" },
   /* No place summed up in a word or two (his ruling of 2026-09-07; MODEL.md PART 9 clause 19): no tagLabel, no words or
      stock sentence per engine tag, no district class read as words, anywhere under src/ outside /dev (2026-10-06). */
   { name: "no-place-words", script: "tests/copy/no_place_words.test.ts" },

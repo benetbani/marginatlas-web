@@ -279,7 +279,8 @@
   }
 
   /* THE FOCUS FLOOR (plan 2026-10-10, Task 1; the ship audit's 1.8, the critique's P0.8): every element that takes keyboard focus
-     shows a 2px ink ring 2px off its edge (17.24:1 on white, 15.94 on the tint zone, 7.06 on the terracotta fill), so a component
+     shows a 2px ink ring 2px off its edge (17.24:1 on white, 15.94 on the tint zone; on the home's band it turns white, below the
+     terracotta zone's rule), so a component
      that draws no ring of its own can no longer draw none at all. The menu's ring read 1.93:1 (atlas-500 at 40 percent). In the base
      layer on purpose: a component's own focus style still wins, which is how the range thumb keeps its ring. */
   :focus-visible {
@@ -675,6 +676,16 @@
   }
   .spine-scope .ma-glyph .af {
     fill: var(--terra-text);
+    stroke: none;
+  }
+  /* A MARK IN ITS OWN INK (plan 2026-10-13 home-quiet-editorial, Task 4B; the spec's section 3: on the home, terracotta in four places
+     only): the home's contents draw the site's icons and trade pictograms as member marks in ink2, so the glyph's accent follows its ink
+     here, as the section icon's does above. */
+  .spine-scope .ma-glyph.ma-mono .a {
+    stroke: currentColor;
+  }
+  .spine-scope .ma-glyph.ma-mono .af {
+    fill: currentColor;
     stroke: none;
   }
 
@@ -1167,9 +1178,8 @@
 :root {
   --zone-paper: var(--c-card);
   --zone-tint: var(--c-ground);
-  /* THE BAND'S RULES (plan 2026-10-10, the home reformed to ship, Task 5; critique section 4): ink at 30 percent over the terracotta,
-     1px, decorative, the only rules the band draws. */
-  --band-rule: color-mix(in srgb, var(--c-ink) 30%, var(--terra));
+  /* THE BAND'S INK (plan 2026-10-13 home-quiet-editorial, Task 5): white on the brand terracotta, every word of the band; ink in print. */
+  --band-ink: var(--c-card);
 }
 [data-zone] {
   position: relative;
@@ -1286,23 +1296,29 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
   --c-soft: var(--zone-paper);
   --c-surface: var(--zone-tint);
 }
-/* THE ONE TERRACOTTA ZONE (plan 2026-10-10, the home reformed to ship, Task 5; his request of 2026-10-10: "add 1 section in terracotta
-   background to signify some stats for the site"; critique section 4; ship audit section 6). The home's band, "Read from the record",
-   stands on the site's own fill, `--terra`, the colour of every drawn answer, and paints it edge to edge as every zone does. Every word
-   and figure on it is ink (7.06:1): no grey reads there (`--c-ink2` 3.01:1) and no red text (3.49:1 at best), so its hierarchy is size
-   and weight alone. A drawing's mask would paint the band. The page laws' ZONE TONES accept this colour once, on home-gb, and red it
-   anywhere else; the loud-seats gate reads the zone as its seat's moment (FIELD), never as an accent figure. In forced colours the
-   border drawn between zones (below) marks it. */
+/* THE ONE TERRACOTTA ZONE, ONE SOLID STATEMENT (plan 2026-10-13 home-quiet-editorial, Task 5; his decision of 2026-10-13: "one solid
+   statement: full-width brand terracotta at full strength, white type, one sentence, a link to the method"; it replaced the pale band of
+   plan 2026-10-10, whose terracotta he called "very light"). The home's band stands on the brand terracotta at full strength, `--terra-full`,
+   edge to edge as every zone does; every word on it is `--band-ink`, white, its hierarchy size and weight alone. The page laws' ZONE TONES
+   read the colour from this token and accept it once, on home-gb; the loud-seats gate reads the zone as its seat's moment (FIELD), never as
+   an accent figure. In forced colours the border drawn between zones (below) marks it. */
 [data-zone][data-tone="terra"] {
-  --zone-bg: var(--terra);
-  --c-surface: var(--terra);
-  color: var(--c-ink);
+  --zone-bg: var(--terra-full);
+  --c-surface: var(--terra-full);
+  color: var(--band-ink);
 }
-/* ON PAPER THE BAND KEEPS ITS INK ON WHITE (critique P2.11): no terracotta fill in print, so a printed home stays legible. */
+/* THE BAND'S FOCUS RING (the final review's I1, fix round 1 of plan 2026-10-13): the site's ink ring reads 2.82:1 on --terra-full, under
+   the 3:1 a focus indicator needs; on the band it takes the band's ink, white, 6.12:1, as the black footer's ring turns white. In print
+   --band-ink is ink. */
+[data-zone][data-tone="terra"] :focus-visible {
+  outline-color: var(--band-ink);
+}
+/* ON PAPER THE BAND IS INK ON WHITE (critique P2.11 of plan 2026-10-10): no fill in print, so a printed home stays legible. */
 @media print {
   [data-zone][data-tone="terra"] {
     --zone-bg: var(--c-card);
     --c-surface: var(--c-card);
+    --band-ink: var(--c-ink);
   }
 }
 /* THE FOOT LINES ARE ONE BAND, EDGE TO EDGE (critique pass 3, fix round D2, item P2.5): the licence line and the Report line (SourcesFoot and
@@ -2773,8 +2789,14 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
   /* ONE TEXT RED (the spec's decision 1, his question Q1 answered by his standing ruling of 2026-10-07): every red word and figure
      on the site reads #991600 (atlas-700), the value his h1 words already use, 8.50:1 on white and 7.86 on the tint zone. It was
      #c2410c, the orange he turned down on the old navigator button (the palette gate's header; hue 17.5 against the brand's 8.6).
-     --terra stays the fill of drawn answers and the band; #e62200 is the wordmark's alone. One line reverts it. */
+     --terra stays the fill of drawn answers; the home's band stands on --terra-full (below, plan 2026-10-13); #e62200 is the
+     wordmark's alone. One line reverts it. */
   --terra-text: #991600;
+  /* THE BRAND TERRACOTTA AT FULL STRENGTH (plan 2026-10-13 home-quiet-editorial, Task 2; the spec's sections 2 and 3, his decision of
+     2026-10-13: the band "full-width brand terracotta at full strength", the positioning line's mark beside it; his pick of the plan's
+     Q1: "Deep terracotta #c11c00", atlas-600). One step deeper than the wordmark's red; the home's band and the positioning line's mark
+     take it, and nothing else on the site. White on it reads 6.12 to 1. */
+  --terra-full: #c11c00;
   --terra-soft: #fff1ed;
   --terra-border: #ffc7ba;
   /* THE GROUND (his answer, 2026-09-07: "some sort of a gray and the cards

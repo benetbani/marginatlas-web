@@ -5,8 +5,9 @@
  * shipped the whole taxonomy and the city tables, about 57 KB gzip of source, to every visitor on the first paint, to draw three
  * words):
  *
- *   homePickerSeed()      what the form paints before anything loads: the three fields' values and labels, the four fields the
- *                         no-script form sends to /api/go, and the examples' links. The server works it out and passes it as a prop.
+ *   pickerSeed() and homePickerSeed()  what the form paints before anything loads: the three fields' values and labels and the four
+ *                         fields the no-script form sends to /api/go; homePickerSeed is the form's own case, restaurants in London. The
+ *                         h1's cases, one a tick, are src/lib/home/picker_cases.ts's (a server module: it reads the edge's route table).
  *   the option builders   the lists, the no-script fields for any pick, and the destination: src/components/NavigatorForm.tsx loads
  *                         this module with import() on first use (a pointer entering the form, or a focus inside it).
  *
@@ -16,7 +17,7 @@
 import { COUNTRIES, industryToSlug, visibleIndustries, type Gate } from "@/lib/taxonomy";
 import { getDefaultRegionForCountry } from "@/lib/regions/default_region_by_country";
 import { getCitiesForCountryCode, CASCADE_PREFILLS } from "@/lib/home/search_cascade";
-import { homeDestination, homeTryLinks, homeTryCityLabel } from "@/lib/home/destination";
+import { homeDestination } from "@/lib/home/destination";
 
 /** An option as the picker's fields take it (src/components/ComboField.tsx ComboOption, the same shape). */
 export type PickerOption = { value: string; label: string; examples?: string[]; keywords?: string[] };
@@ -30,8 +31,6 @@ export type PickerSeed = {
   city: PickerOption;
   business: PickerOption;
   hidden: PickerHidden;
-  tries: Array<{ word: string; href: string }>;
-  tryCity: string;
 };
 
 /** Every country, by name. */
@@ -64,20 +63,22 @@ export function hiddenFields(country: string, city: string, business: string): P
   };
 }
 
-/** The form's own case, restaurants in London (CASCADE_PREFILLS[0]), as the first paint draws it. */
-export function homePickerSeed(): PickerSeed {
-  const p = CASCADE_PREFILLS[0];
+/** A case as the first paint draws it, every label its list's own (the default audience gate's activities). */
+export function pickerSeed(country: string, city: string, business: string): PickerSeed {
   const pick = (options: PickerOption[], value: string): PickerOption => ({ value, label: options.find((o) => o.value === value)?.label ?? "" });
   return {
-    country: pick(countryOptions(), p.country),
-    city: pick(cityOptions(p.country), p.city),
-    business: pick(businessOptions({ revealMixed: false, revealCorp: false }), p.business),
-    hidden: hiddenFields(p.country, p.city, p.business),
-    tries: homeTryLinks(),
-    tryCity: homeTryCityLabel(),
+    country: pick(countryOptions(), country),
+    city: pick(cityOptions(country), city),
+    business: pick(businessOptions({ revealMixed: false, revealCorp: false }), business),
+    hidden: hiddenFields(country, city, business),
   };
 }
 
-/* What the loaded form reads besides the builders: the case it opens on where no seed was passed, the destination a search lands on,
-   and the examples' links. */
-export { CASCADE_PREFILLS, homeDestination, homeTryLinks, homeTryCityLabel };
+/** The form's own case, restaurants in London (CASCADE_PREFILLS[0]), as the first paint draws it. */
+export function homePickerSeed(): PickerSeed {
+  const p = CASCADE_PREFILLS[0];
+  return pickerSeed(p.country, p.city, p.business);
+}
+
+/* What the loaded form reads besides the builders: the case it opens on where nothing was passed, and the destination a search lands on. */
+export { CASCADE_PREFILLS, homeDestination };

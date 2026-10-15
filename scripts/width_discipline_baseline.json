@@ -555,11 +555,6 @@
       "chCaps": 1,
       "smPairings": 0
     },
-    "src/components/spine/home/HomeProofs.tsx": {
-      "remCaps": 0,
-      "chCaps": 1,
-      "smPairings": 0
-    },
     "src/components/spine/industry/turn-one.tsx": {
       "remCaps": 0,
       "chCaps": 1,

@@ -32,12 +32,10 @@
  *      data, deliberately diverse , `best_trades` is the real adapter's
  *      (adapt_hood.ts) ranking from the live per-city trade catalog, never
  *      a fixed set, the opposite of rule 32's "one reused set".
- *   2. PART 3 (plan 2026-10-09, home introduction): the picker's three
- *      examples, HOME_TRY in src/lib/home/destination.ts , the words of
- *      "Or try gyms, salons or cafés in London." (plan 2026-10-10, home
- *      reform), each a link to its London page. The spec draws them from
- *      rule 32's set, so each word is held to it, read from the module
- *      that prints them and never from the form's text; its failures print
+ *   2. PART 3 (plan 2026-10-13 home-quiet-editorial, Task 4A): the home's
+ *      trades, the contents' third department (contentsTrades in
+ *      src/lib/home/contents.ts), each held to rule 32's set by its
+ *      taxonomy id; an empty department is a red too. Its failures print
  *      under their own heading.
  *      (The form's own placeholder text, "Type a business: ...", is not
  *      scanned: Part 2, which grepped the form, was removed on
@@ -52,13 +50,15 @@
  */
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { HOME_TRY } from "../src/lib/home/destination";
+import { contentsTrades } from "../src/lib/home/contents";
+import { slugToIndustry } from "../src/lib/taxonomy";
+import { EVERYDAY_TRADES } from "../src/lib/spine/everyday_trades";
 
 const ROOT = process.cwd();
 const SEEDS_ROOT = resolve(ROOT, "src", "lib", "spine-seeds");
-/** The module Part 3 reads the picker's examples from (HOME_TRY): named as a path literal so the gate registry, which scripts/counts.ts generates from the
- *  literals in each gate's script, lists the file the gate reads (it listed the launcher below, which the gate does not read: final review M7). */
-const HOME_TRY_FILE = "src/lib/home/destination.ts";
+/** The module Part 3 reads the home's trades from (contentsTrades): named as a path literal so the gate registry, which scripts/counts.ts
+ *  generates from the literals in each gate's script, lists the file the gate reads. */
+const HOME_TRADES_FILE = "src/lib/home/contents.ts";
 
 /* Rule 32 (v2, 2026-07-12): the everyday set is eight, restaurant / grocery /
  * pharmacy / salon / gym / auto repair / cafe / bar, with common synonyms
@@ -208,18 +208,23 @@ for (const abs of walkSeedDir(SEEDS_ROOT)) {
  * spans ANY business, so its input examples (law firms, software, barbers,
  * plumbers) are a deliberate breadth demo, not a spine example slate. It is no
  * longer scanned, and no constant here names it: one that did (kept "for documentation") made the gate registry list it as a read the gate
- * never made, while the module Part 3 does read, HOME_TRY_FILE above, went unlisted (fix round F1, the final review's M7). */
+ * never made, while the module Part 3 then read went unlisted (fix round F1, the final review's M7). */
 
-/* PART 3 (plan 2026-10-09, home introduction): the picker's line is no longer a breadth demo. It is the home's three examples, each a
- * link to its London page, and the spec draws them from rule 32's set, so they are held to it, read from the module that prints them
- * (src/lib/home/destination.ts HOME_TRY), never from the form's text. */
-const triesReport: string[] = [];
-for (const t of HOME_TRY) {
-  if (isAllowedTrade(t.word)) continue;
-  triesReport.push(`"${t.word}" (${t.trade}) , outside the rule-32 set`);
+/* PART 3 (plan 2026-10-13 home-quiet-editorial, Task 4A): the home's trades. The contents' third department lists rule 32's everyday trades
+ * (contentsTrades, from EVERYDAY_TRADES, src/lib/spine/everyday_trades.ts), so each member is held here to that set by its taxonomy id,
+ * read from the module that prints them and never from the page's text; a department with no trade is a red too, so this part never
+ * passes having read nothing. BLIND SPOT: it holds the members to EVERYDAY_TRADES; that set's agreement with ALLOWED_RAW's words is not
+ * re-read here. */
+const homeReport: string[] = [];
+const everydayIds = new Set([...EVERYDAY_TRADES].map((s) => slugToIndustry(s)?.id).filter((x): x is string => !!x));
+const homeTrades = contentsTrades().members;
+if (homeTrades.length === 0) { homeReport.push("the home's trades department lists no trade"); violations++; }
+for (const m of homeTrades) {
+  if (everydayIds.has(m.key)) continue;
+  homeReport.push(`"${m.name}" (${m.key}) , outside the rule-32 set`);
   violations++;
 }
-console.log(`verify_trade_set: the picker's examples , ${HOME_TRY.map((t) => t.word).join(", ")}`);
+console.log(`verify_trade_set: the home's trades , ${homeTrades.map((m) => m.name).join(", ") || "none"}`);
 
 console.log(`verify_trade_set: allowed set , ${ALLOWED_RAW.join(", ")}`);
 
@@ -227,9 +232,9 @@ if (jsonReport.length > 0) {
   console.error("\nSeed slate offenders:");
   for (const line of jsonReport) console.error(`  ${line}`);
 }
-if (triesReport.length > 0) {
-  console.error(`\nPicker example offenders (HOME_TRY, ${HOME_TRY_FILE}):`);
-  for (const line of triesReport) console.error(`  ${line}`);
+if (homeReport.length > 0) {
+  console.error(`\nHome trade offenders (contentsTrades, ${HOME_TRADES_FILE}):`);
+  for (const line of homeReport) console.error(`  ${line}`);
 }
 
 if (violations > 0) {

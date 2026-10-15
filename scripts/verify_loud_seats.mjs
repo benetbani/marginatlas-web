@@ -205,7 +205,7 @@ for (const entry of PRESENT) {
     const id = loudCardId(s);
     const card = walk.cards[id];
     const label = `seat ${s.seat} ${s.card} (#${id})`;
-    if (!card || !card.present) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and its zone is not on the render ${where}`, remedy: "draw the zone (the home's band draws only with all four counts, SITE_COUNTS_MIN, and nothing with fewer: run node node_modules/tsx/dist/cli.mjs tests/home/site_counts.test.ts), or correct the declaration's card id" }); seatLines.push(`  ${label}: FIELD declared, zone absent`); continue; }
+    if (!card || !card.present) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and its zone is not on the render ${where}`, remedy: "draw the zone (the home's band, HomeBand, draws on every render: run node node_modules/tsx/dist/cli.mjs tests/home/band.test.ts), or correct the declaration's card id" }); seatLines.push(`  ${label}: FIELD declared, zone absent`); continue; }
     if (!card.field) { fieldFaults++; reds.push({ file: d.file, line: d.line, detail: `${label} is declared FIELD and #${id} is not a terracotta zone ([data-zone][data-tone="terra"]) on ${where}`, remedy: "give the seat's zone data-tone=\"terra\" (globals.css, THE ZONES), or declare the seat LIT on a figure" }); seatLines.push(`  ${label}: FIELD declared, not a terracotta zone`); continue; }
     seatLines.push(`  ${label}: FIELD, lit by its ground (the terracotta zone)`);
   }
@@ -221,7 +221,7 @@ for (const entry of PRESENT) {
   for (const [card, texts] of byCard) {
     if (litIds.has(card)) continue;
     const held = d.seats.find((s) => s.state !== "LIT" && loudCardId(s) === card);
-    if (held && held.state === "FIELD") reds.push({ file: d.file, line: d.line, detail: `seat ${held.seat} ${held.card} (#${card}) is declared FIELD and carries an accent figure on ${where} (${texts.join("; ")})`, remedy: "a zone lit by its ground holds no accent: its figures to ink (--c-ink, 7.06:1 on --terra)" });
+    if (held && held.state === "FIELD") reds.push({ file: d.file, line: d.line, detail: `seat ${held.seat} ${held.card} (#${card}) is declared FIELD and carries an accent figure on ${where} (${texts.join("; ")})`, remedy: "a zone lit by its ground holds no accent: its words in the band's ink (--band-ink on --terra-full)" });
     else if (held) reds.push({ file: d.file, line: d.line, detail: `seat ${held.seat} ${held.card} (#${card}) is declared ${held.state} and carries an accent on ${where} (${texts.join("; ")})`, remedy: "the seat's figure to ink until its condition is met, or declare it LIT with the condition" });
     else reds.push({ file: d.file, line: d.line, detail: `a lit figure not declared on ${where}: #${card}: ${texts.join("; ")}`, remedy: "that figure to ink (PART 6: anything terracotta not on the list goes to ink), or declare the seat if the model names it" });
     seatLines.push(`  #${card}: accent NOT DECLARED (${texts.join("; ")})`);

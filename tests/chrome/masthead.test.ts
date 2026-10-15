@@ -49,7 +49,7 @@ const RULE = "masthead";
 const CHROME = "src/components/SiteChrome.tsx";
 const SHEET = "src/components/MobileNav.tsx";
 const NAVFILE = "src/lib/nav.ts";
-const PROOFS = "src/components/spine/home/HomeProofs.tsx";
+const DEPARTMENT = "src/components/spine/archetypes/Department.tsx";
 const LAYOUT = "src/app/layout.tsx";
 const CSS = "src/app/globals.css";
 const NOT_FOUND = "src/app/not-found.tsx";
@@ -763,7 +763,7 @@ async function main() {
      door of the site carries. Under 640 the six doors are rows as Where to next draws its doors: one column, the name at Where to next's own 14
      medium (DOOR_NAME; the brief of round D2 said 16 because the critique did, and the doors measure 14: fix round F1, group G7) over its line,
      the arrow at the edge, a hairline between rows; from 640 the cards stay as they were (two-up, three-up from 1024). At every width a door
-     carries the arrow the home's proof doors carry, read here from HomeProofs.tsx' own DoorTitle and not typed: the same glyph, size and ink,
+     carries the arrow the home's department rows carry, read here from Department.tsx as drawn and not typed: the same glyph, size and ink,
      the margin that sets it on its own title line aside. BLIND SPOT: this reads classes; the round's probe measures the rows, the arrows and the
      page's width at 320, 375 and 1280 in a browser. */
   const ROWS_AT = { file: NOT_FOUND, remedy: "draw the 404's list as one column under 640 (grid-cols-1, a hairline between rows, no box) and cards from 640 (sm:), each door's name at Where to next's 14 medium (DOOR_NAME) under 640 over its line with the proof doors' arrow at the title row's edge" };
@@ -786,21 +786,20 @@ async function main() {
   const nameClasses = doorEls.map((d) => toks(/<span class="([^"]*)">[^<]*<\/span><span aria-hidden="true"/.exec(d.inner)?.[1]));
   check(`under 640 each door's name is Where to next's own (DOOR_NAME) in ink, and from 640 the card's 16 semibold, its line under it (${nameClasses.filter((c) => DOOR_NAME_TOKENS.length === 2 && DOOR_NAME_TOKENS.every((k) => c.includes(k))).length} of 6 carry DOOR_NAME)`, DOOR_NAME_TOKENS.length === 2 && doorEls.length === 6 && nameClasses.every((c) => DOOR_NAME_TOKENS.every((k) => c.includes(k)) && ["text-[var(--c-ink)]", "sm:text-[length:var(--t-lead)]", "sm:font-semibold"].every((k) => c.includes(k)) && !c.includes("text-[length:var(--t-lead)]")) && doorEls.every((d) => d.inner.indexOf("aria-hidden") < d.inner.indexOf("text-balance")), NAME_AT);
   check(`Where to next's door links carry DOOR_NAME too (${nextAnchors.length} links), and neither WhereNext.tsx nor the 404 spells its weight: the one constant is read by both`, DOOR_NAME_TOKENS.length === 2 && nextAnchors.length >= 5 && nextAnchors.every((a) => DOOR_NAME_TOKENS.every((k) => a.includes(k))) && !/\bfont-medium\b/.test(code("src/components/spine/WhereNext.tsx")) && !/\bfont-medium\b/.test(code(NOT_FOUND)) && /import \{[^}]*\bDOOR_NAME\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code("src/components/spine/WhereNext.tsx")) && /import \{[^}]*\bDOOR_NAME\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(NOT_FOUND)), NAME_AT);
-  /* ONE ARROW FOR EVERY DOOR, COMPARED BY IMPORT (fix round F1, group G9; the D2 review's Minors 5 and 8). The 404 copied DoorTitle's arrow classes and this
-     test kept the two in step by regex-reading the first &#8594; span of HomeProofs.tsx's source, which also left that file out of the registry's reads (its path
-     stood inline on a line with a regex literal). The classes are DOOR_ARROW in src/lib/spine/door_look.ts, read by DoorTitle and by the 404 and spelled in neither;
-     the test imports the constant, reads the arrow of a home proof door as drawn (ProofTax, from buildProofs, the way tests/home/home_answers.test.ts renders it) and the
-     404's six, and compares them with the margin aside (DoorTitle sets one on its own title line). */
+  /* ONE ARROW FOR EVERY DOOR, COMPARED BY IMPORT (fix round F1, group G9): the classes are DOOR_ARROW in src/lib/spine/door_look.ts, read by the home's Department rows (since plan 2026-10-13; HomeProofs' DoorTitle before) and by the 404, spelled in neither; the test imports the constant, renders a department with one row and its door and reads its two arrows, and the 404's six. */
   const DOOR_ARROW_TOKENS = toks((doorLook as { DOOR_ARROW?: string } | null)?.DOOR_ARROW).sort();
-  const { buildProofs } = await import("../../src/lib/home/proofs");
-  const { ProofTax } = await import("../../src/components/spine/home/HomeProofs");
+  const { Department } = await import("../../src/components/spine/archetypes/Department");
   const arrowsIn = (html: string) => [...html.matchAll(/<span aria-hidden="true" class="([^"]*)">→<\/span>/g)].map((m) => toks(m[1]).filter((k) => !/^mt-/.test(k)).sort());
-  const builtProofs = buildProofs();
-  const proofArrows = builtProofs ? arrowsIn(renderToStaticMarkup(React.createElement(ProofTax, { p: builtProofs.tax as never }))) : [];
+  const deptArrows = arrowsIn(renderToStaticMarkup(React.createElement(Department, { dept: "tools", index: "04", title: "Tools", line: "One line.", rows: [{ key: "decide", href: "/decide", name: "Decide", mark: null, figure: null }], door: { label: "All tools", href: "/tools" } })));
   const doorArrows = doorEls.map((d) => arrowsIn(d.inner));
-  const ARROW_AT = { file: "src/lib/spine/door_look.ts", remedy: "export const DOOR_ARROW from src/lib/spine/door_look.ts (the arrow's classes), draw it with `mt-1 ${DOOR_ARROW}` in HomeProofs.tsx's DoorTitle and with DOOR_ARROW in src/app/not-found.tsx, and spell the classes in neither" };
-  check(`every door carries the arrow the home's proof doors carry, once, at every width: DOOR_ARROW (${DOOR_ARROW_TOKENS.join(" ") || "not exported"}), the margin aside (${doorArrows.filter((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)).length} of 6 on the 404, ${proofArrows.length} on a proof door)`, DOOR_ARROW_TOKENS.length >= 3 && proofArrows.length === 1 && JSON.stringify(proofArrows[0]) === JSON.stringify(DOOR_ARROW_TOKENS) && doorEls.length === 6 && doorArrows.every((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)), ARROW_AT);
-  check("DoorTitle and the 404 import DOOR_ARROW from src/lib/spine/door_look.ts and spell its classes in neither", /import \{[^}]*\bDOOR_ARROW\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(PROOFS)) && /import \{[^}]*\bDOOR_ARROW\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(NOT_FOUND)) && !/leading-5 text-\[var\(--c-ink2\)\]/.test(code(PROOFS)) && !/leading-5 text-\[var\(--c-ink2\)\]/.test(code(NOT_FOUND)), ARROW_AT);
+  const ARROW_AT = { file: "src/lib/spine/door_look.ts", remedy: "export const DOOR_ARROW from src/lib/spine/door_look.ts (the arrow's classes), draw it with DOOR_ARROW in src/components/spine/archetypes/Department.tsx (each member row and the door) and in src/app/not-found.tsx, and spell the classes in neither" };
+  check(`every door carries the arrow the home's department rows carry, once, at every width: DOOR_ARROW (${DOOR_ARROW_TOKENS.join(" ") || "not exported"}), the margin aside (${doorArrows.filter((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)).length} of 6 on the 404, ${deptArrows.length} on a department's row and door)`, DOOR_ARROW_TOKENS.length >= 3 && deptArrows.length === 2 && deptArrows.every((a) => JSON.stringify(a) === JSON.stringify(DOOR_ARROW_TOKENS)) && doorEls.length === 6 && doorArrows.every((a) => a.length === 1 && JSON.stringify(a[0]) === JSON.stringify(DOOR_ARROW_TOKENS)), ARROW_AT);
+  check("Department and the 404 import DOOR_ARROW from src/lib/spine/door_look.ts and spell its classes in neither", /import \{[^}]*\bDOOR_ARROW\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(DEPARTMENT)) && /import \{[^}]*\bDOOR_ARROW\b[^}]*\} from "@\/lib\/spine\/door_look"/.test(code(NOT_FOUND)) && !/leading-5 text-\[var\(--c-ink2\)\]/.test(code(DEPARTMENT)) && !/leading-5 text-\[var\(--c-ink2\)\]/.test(code(NOT_FOUND)), ARROW_AT);
+
+  /* THE BLOG DOOR'S NAME (the critique's P2.7 of plan 2026-10-10; moved from tests/home/foot.test.ts with the home's foot, plan 2026-10-13):
+     Where to next, on /new-businesses and wherever it stands, calls the blog by the name the nav, the footer and the page give it. */
+  const blogDoor = nextDoors(null).find((d) => d.href === "/blog");
+  check(`"${blogDoor?.label}" opens /blog, and no door is the notebook`, blogDoor?.label === "From the blog" && blogDoor?.key === "blog" && !nextDoors(null).some((d) => /notebook/i.test(`${d.key} ${d.label}`)), { file: "src/lib/home/next_doors.ts", remedy: "name the blog door \"From the blog\" (COPY.home.next.doors.blog), the nav's and the footer's name" });
 
   /* ---------------- 3. THE SHEET, PRESSED (jsdom) ---------------- */
   const { JSDOM } = await import("jsdom");

@@ -2727,24 +2727,34 @@ export const COPY = {
    *  and icon, the drawing blurred behind, one line, one button; no pop-up"). One button, and one line for every section id a UK
    *  page can lock (the levels after the first of each chapter on /gb, the UK city pages and the London trade pages, read off
    *  their renders of 2026-10-05): what the section answers, in the reader's words, no figure. */
-  /** THE HOME PAGE ON THE BAND PAGE (masterplan steps 32 to 37; his rulings 11 and 23 of 2026-09-26; the h1 he kept on
-   *  2026-08-16, its business and city rotating between the words). */
+  /** THE HOME PAGE (plan 2026-10-13 home-quiet-editorial: the positioning line, his h1 with its business and city rotating between the
+   *  words, the contents, the band, the colophon); its other keys are the sections it once drew, now on /gb and /new-businesses, which
+   *  read them from here. */
   home: {
     h1: { lead: "How much does a", middle: "make in" },
+    /** THE POSITIONING LINE (plan 2026-10-13 home-quiet-editorial, Task 2; the spec's section 2, item 1): his pick of 2026-10-13, the
+     *  category the site owns, said above his h1 beside the compass mark; a statement, never a rank (no ranking evidence is held). The one
+     *  exception the no-eyebrow rule names (scripts/verify_no_eyebrow.ts). */
+    positioning: "The reference atlas of small-business earnings.",
+    /** THE ATLAS AS A CONTENTS PAGE (plan 2026-10-13 home-quiet-editorial, Task 4A; the spec's section 2, item 3): the zone's name (a data
+     *  attribute, not a printed word); each department's title (four words at most), its one line (twelve words at most, true of every
+     *  member its rule can draw) and its door; the tools' and the method's member names (the sources' name is the foot's own,
+     *  UK_SOURCES_FOOT.link; the tracks' are the learn page's own titles, src/lib/learn/tracks.ts); the trade figure's unit, said to a screen reader (the trades' line says it once for the eye). */
+    contents: {
+      label: "The atlas",
+      depts: {
+        countries: { title: "Countries", line: "What it takes to run a business, country by country.", door: "All countries" },
+        cities: { title: "Cities", line: "What a typical customer earns, city by city.", door: "All cities" },
+        trades: { title: "Trades", line: "What each trade keeps from its sales, after all costs.", door: "Every trade" },
+        tools: { title: "Tools", line: "Put the figures to work on your own plan.", door: "All tools" },
+        reading: { title: "Reading", line: "Plain guides to revenue and margins, and how to read a figure.", door: "All reading" },
+        method: { title: "How it is made", line: "Where each figure comes from, and every correction made.", door: "About the figures" },
+      },
+      tools: { decide: "Decide", check: "Check", calculator: "Calculator", compare: "Compare" },
+      method: { corrections: "Corrections", coverage: "Coverage report" },
+      unit: "of sales kept",
+    },
     searchLabel: "Search",
-    /** THE ANSWERS' SHORT LINES (his instruction of 2026-10-07: one short line a card). The same facts /gb's masthead and curve state
-     *  at length ("on $52K of profit, a sole trader under Self Assessment"; "of new firms still trading after 5 years"), said in
-     *  the fewest words beside the card's name; the trades keep /gb's own line, already short. */
-    lines: { answer: "of a sole trader’s {profit} profit", years: "of new firms, after {n} years" },
-    citiesLabel: "The UK’s cities",
-    /** THE HOME'S CITY ROWS (plan 2026-10-10, the home reformed to ship, Task 6; the critique's P1.10, the ship audit's 4.4): the eighth
-     *  cell under 768, a door to /gb's cities, and the figure's unit said to a screen reader (the basis line says it once for the eye). */
-    citiesAll: "All UK cities",
-    citiesUnit: "a year",
-    /** THE COLUMN HEAD over the figures, from 768 (critique pass 3, fix round D2, item P2.2): the figures were named only by the basis line
-     *  under the eighth row, "A typical customer's pay, a year.", about 450px below them, so "London $62K" read as a business's takings
-     *  first. From 768 the head stands in the title row over them and the basis line under the rows goes; under 768 the two-up cells keep the line. */
-    citiesHead: "Typical pay",
     /** THE HOME PAGE'S ASK (his interview of 2026-09-26: "notify me when my place reaches this depth"; the checkup of 2026-10-06,
      *  finding 5): in place of a free report nobody is writing, a city to wait for (src/lib/home/depth_places.ts). Drawn by the live
      *  home only since 2026-10-07: the rebuilt home leaves the asking to the footer's bar. */
@@ -2824,60 +2834,22 @@ export const COPY = {
         blog: "From the blog",
       },
     },
-    /** THE WORKED EXAMPLE (plan 2026-10-09, home introduction; the spec's section 2, DRAFT approved as written): the level's name (a
-     *  data attribute, not a printed word), the two halves' titles, each step's one line (steps 1 to 3 open with how the figure was
-     *  made, as About the figures names the kinds; step 4 names what it counts, "UK {noun} companies," and then says it was worked
-     *  out), the name of step 4 (the London page prints that figure in a sentence), and the two doors.
-     *  Every other name and every figure is the London page's own. */
-    example: {
-      label: "Worked example",
-      placeTitle: "{trade} in London",
-      paysTitle: "Does it pay?",
-      /** "Greater" and "London" are joined by a no-break space (U+00A0, written as the escape) so the place never splits across two lines (critique pass 4, P2.2);
-       *  the builder joins the month and its year the same way. */
-      registered: "Counted in the business register, Greater\u00A0London, {month}.",
-      sales: "Worked out from the register’s ten sales bands.",
-      /** One run of words, no comma (plan 2026-10-10, home reform, Task 3; the critique's P2.5); twelve words with the noun. */
-      breakEven: "An estimate of the yearly sales that carry an average London {noun}.",
-      insolventLabel: "Insolvent a year",
-      insolventFigure: "{n} of 100",
-      insolvent: "UK {noun} companies, worked out from notices matched by name.",
-      placeDoor: "See London {trade}",
-      paysDoor: "Try your own",
-    },
-    /** WHAT THE SITE IS, ONCE (plan 2026-10-09, home introduction; the spec's sections 1 and 7, DRAFT approved as written): the hero's
-     *  one plain line under the picker, and the Organization's description in the structured data (src/components/StructuredData.tsx). */
+    /** WHAT THE SITE IS, ONCE (plan 2026-10-09, home introduction): the site's one sentence for the head's description, the manifest, the
+     *  share card and the structured data (src/app/layout.tsx, manifest.ts, og/default/route.tsx, src/components/StructuredData.tsx). The
+     *  home no longer prints it since plan 2026-10-13: the positioning line says what the site is. */
     definition: "Margin Atlas shows what a small business earns and its owner keeps.",
-    /** THE THREE PROOFS (plan 2026-10-09, home introduction; the spec's section 4, DRAFT approved as written): the level's name (a data
-     *  attribute, not a printed word), each proof's title, its one line, the ring's caption, the archive's figure and row. No boast
-     *  word (the 2026-10-08 audit); no source named. Reformed by plan 2026-10-10 (the home reformed to ship, Task 4): the joins' title
-     *  in three words, so it stands on one line at 20 beside the chip and the arrow from 1024 ("Failures, trade by trade" took two),
-     *  and since its closing cleanup (item 8) naming what the card draws, the match of the notices' names to the register ("Failures
-     *  by trade" named no drawn thing: the notices are of four kinds, solvent liquidations among them); About's heading for the door's
-     *  destination stays "Failures, trade by trade", because the door's subject is the join;
-     *  the ring's caption the words alone under "97" (P1.6); the archive's line saying how a month is counted (decision 8), a column's
-     *  reading ({month} is "October 2025") and the drawing's spoken label; the tax's two rules (P0.7). Critique pass 2 (P0.1): the
-     *  joins' line says what is done to each notice and leaves "matched by name" to the title, and its two counts have names; the tax's
-     *  line carries his name for the figure ("Total effective tax burden"), so the three figures stand on one line, and its two rules
-     *  take a note in the law's own pounds ({rate}, {allowance}, {from} and {to} read from the year's parameters, never typed). */
-    proofs: {
-      label: "Proofs",
-      joins: { kicker: "Matched by name", words: "Liquidation and administration notices a year, each looked up in the register.", ring: "in 100 names found in the register", names: "Different names", found: "Names found" },
-      archive: { kicker: "Kept and dated", figure: "{n} months", words: "Notices by date published, {first} to {last}.", row: "Register copies", readout: "notices in {month}", aria: "Notices a month, {first} to {last}: {months}" },
-      tax: { kicker: "Tax, rule by rule", words: "Total effective tax burden on a sole trader’s {profit} profit, {year} rules.", income: "Income tax", class4: "National Insurance", keep: "You keep", incomeNote: "{rate} above the {allowance} allowance", class4Note: "{rate} from {from} to {to}", aria: "Of 100 of profit: income tax {incomeTax}, National Insurance {class4}, you keep {keep}." },
+    /** THE BAND, ONE SOLID STATEMENT (plan 2026-10-13 home-quiet-editorial, Task 5; the spec's section 2, item 4; his decision of
+     *  2026-10-13): the zone's name (a data attribute, not a printed word) and its one sentence, how every figure on the site is made, in
+     *  About the figures' four words (the provenance stamp's kinds); its link is that page's name, ABOUT_THE_FIGURES. No figure, no count. */
+    band: {
+      label: "How figures are made",
+      line: "Each figure is counted, worked out, looked up or estimated.",
     },
-    /** THE BAND, "READ FROM THE RECORD" (plan 2026-10-10, the home reformed to ship, Task 5; the spec's decision 7 and its critique,
-     *  section 4): the zone's name (a data attribute, not a printed word), its heading, its one line ({month} is the register slices'
-     *  build month, from src/lib/home/site_counts.ts), the word before a count's pages served, and each count's label. Ink on the
-     *  terracotta, no source named, every figure the builder's. */
-    record: {
-      label: "Read from the record",
-      title: "Read from the record",
-      line: "What the UK pages draw on, counted in {month}.",
-      /** The band's one door, to the list its first count is (critique pass 2, P1.2): three words, About the figures' #sources. */
-      door: "See every source",
-      of: "of",
-      labels: { sources: "Official datasets", laws: "Legal rates and limits", sales: "London trades with sales", failures: "Trades with failure rates" },
+    /** THE COLOPHON (plan 2026-10-13 home-quiet-editorial, Task 6; the spec's section 2, item 5): its name to a screen reader and the
+     *  status page's link; the rest are the foot's own words (COPY.pageFoot, UK_SOURCES_FOOT) and the corrections log's (contents.method). */
+    colophon: {
+      label: "Sources and corrections",
+      status: "Status",
     },
     /** PRO, QUIETLY (masterplan step 35; his ruling 23): drawn only while the paywall's switch is on. The year leads (his decision of
      *  2026-10-09): its row says how it is billed and the month's price is the second row, both figures from the plan. */

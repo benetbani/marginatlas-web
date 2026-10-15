@@ -17,7 +17,7 @@ import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "home-bands";
 const FILE = "src/components/spine/home/home-view.tsx";
-const REMEDY = "draw Pro only with the paywall's switch on, its prices through the plan; keep the launch check reading the live home's band and passing the rebuilt home that prints no ledger counts (its band's four evidence counts are tests/home/site_counts.test.ts's)";
+const REMEDY = "draw Pro only with the paywall's switch on, its prices through the plan; keep the launch check reading the live home's band and passing the rebuilt home that prints no ledger counts";
 let failed = 0;
 /* A check may be a value or a function: a function that throws (a name the plan does not export yet) is a failed check. */
 const check = (label: string, ok: boolean | (() => boolean), at?: { file?: string; remedy?: string }) => {
@@ -37,6 +37,9 @@ set(true);
 const on = renderToStaticMarkup(React.createElement(ProBand));
 set(false);
 check("nothing about Pro prints while the switch is off", off === "", BAND_AT);
+/* NO TERRACOTTA IN PRO (plan 2026-10-13 home-quiet-editorial, fix round 1; the final review's I2): the home holds terracotta in four places
+   only (the spec's section 3), and the kit's Rail draws its icon on a terracotta tile whatever its tone, so Pro's Rail draws no icon. */
+check("with the switch on, Pro draws no terracotta and its title no icon tile (the home's four terracotta places)", !/terra|atlas-\d/.test(on) && !/<svg/.test(on) && /<h2/.test(on), BAND_AT);
 /* His decision of 2026-10-09: the year leads. The focal figure is the pricing page's own lead, the year by the month with how it is
    billed (a "$38 a month" alone reads as a month-to-month price, which is $48), then the year's total, then the month to month
    price, every figure through the plan, and one button to /pricing. The card is narrow, so the band keeps the last two words of the

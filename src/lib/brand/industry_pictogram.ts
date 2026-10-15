@@ -42,6 +42,7 @@ const DIRECT: Partial<Record<string, AtlasPictogramId>> = {
   pharmacies_drug_stores: "pharmacy",
   independent_pharmacy: "pharmacy",
   pharmacies_health_stores: "pharmacy",
+  health_beauty_stores: "pharmacy",
   grocery_stores: "grocery",
   convenience_stores: "convenience",
   fitness_gyms: "gym",

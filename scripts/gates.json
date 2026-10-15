@@ -1706,8 +1706,6 @@
       "asserts": "WHERE A HOME SEARCH LANDS (milestone 3, masterplan step 33; his ruling 11 of 2026-09-26: a place-and-trade search, the UK first).",
       "reads": [
         "data/cities/city_list_v1.json",
-        "scripts/gates.json",
-        "scripts/verify_trade_set.ts",
         "src/app/api/go/route.ts",
         "src/components/GlobalSearch.tsx",
         "src/components/HeaderSearch.tsx",
@@ -1715,30 +1713,8 @@
         "src/components/StructuredData.tsx",
         "src/lib/hero-words.ts",
         "src/lib/home/destination.ts",
+        "src/lib/home/picker_cases.ts",
         "src/lib/spine/copy.ts"
-      ],
-      "claims": []
-    },
-    {
-      "name": "home-answers",
-      "script": "tests/home/home_answers.test.ts",
-      "args": [],
-      "browser": false,
-      "asserts": "THE WORKED EXAMPLE AND THE THIRD PROOF ON THE HOME PAGE (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, sections 2 and 4, approved as written on 2026-10-09;",
-      "reads": [
-        "scratchpad/harness/pages/cell-gb-london-restaurants.html",
-        "scratchpad/harness/pages/country-GB.html",
-        "scratchpad/harness/pages/home-gb.html",
-        "src/components/spine/cell/cell-view.tsx",
-        "src/components/spine/home/HomeExample.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
-        "src/components/spine/zones.tsx",
-        "src/lib/hero-words.ts",
-        "src/lib/home/proofs.ts",
-        "src/lib/home/search_cascade.ts",
-        "src/lib/home/worked_example.ts",
-        "src/lib/spine/copy.ts",
-        "src/lib/spine/uk_tax_on_profit.ts"
       ],
       "claims": []
     },
@@ -2046,14 +2022,8 @@
       "reads": [
         "data/home/method.json",
         "data/uk/registers/failures.json",
-        "scratchpad/harness/pages/home-gb.html",
         "src/app/(site)/about-data/page.tsx",
-        "src/components/spine/archetypes/Ring.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
-        "src/components/spine/home/home-view.tsx",
-        "src/lib/home/how_made.ts",
-        "src/lib/home/proofs.ts",
-        "src/lib/spine/copy.ts"
+        "src/lib/home/how_made.ts"
       ],
       "claims": []
     },
@@ -2066,33 +2036,8 @@
       "reads": [
         "data/home/archive.json",
         "data/home/method.json",
-        "scratchpad/harness/pages/home-gb.html",
         "src/app/(site)/about-data/page.tsx",
-        "src/components/spine/archetypes/MonthBars.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
-        "src/components/spine/home/home-view.tsx",
-        "src/lib/home/archive.ts",
-        "src/lib/home/proofs.ts",
-        "src/lib/spine/copy.ts"
-      ],
-      "claims": []
-    },
-    {
-      "name": "site-counts",
-      "script": "tests/home/site_counts.test.ts",
-      "args": [],
-      "browser": false,
-      "asserts": "THE TERRACOTTA BAND, \"READ FROM THE RECORD\" (plan docs/superpowers/plans/2026-10-10-home-reform, Task 5; the spec docs/superpowers/specs/2026-10-10-home-reform-design.md, decision 7 and sections 1, 5 ",
-      "reads": [
-        "data/uk/registers/failures.json",
-        "scratchpad/harness/pages/home-gb.html",
-        "src/app/(site)/about-data/page.tsx",
-        "src/components/spine/home/HomeRecord.tsx",
-        "src/components/spine/home/home-view.tsx",
-        "src/lib/home/site_counts.ts",
-        "src/lib/spine/copy.ts",
-        "src/lib/spine/uk_sources.ts",
-        "tests/home/site_counts.test.ts"
+        "src/lib/home/archive.ts"
       ],
       "claims": []
     },
@@ -2112,34 +2057,6 @@
         "src/components/spine/archetypes/SegmentBar.tsx",
         "src/components/spine/charts/BarList.tsx",
         "src/components/spine/kit.tsx"
-      ],
-      "claims": []
-    },
-    {
-      "name": "home-foot",
-      "script": "tests/home/foot.test.ts",
-      "args": [],
-      "browser": false,
-      "asserts": "THE HOME'S FOOT (plan docs/superpowers/plans/2026-10-10-home-reform, Task 6; the spec's decisions 2 and 5; the critique's P1.10, P1.11, P1.12 and P2.7; the ship audit's 3.3, 3.5, 4.4 and 5.8).",
-      "reads": [
-        "data/cities/images_credits.json",
-        "data/cities/images_manifest.json",
-        "public/cities",
-        "public/cities/thumbs",
-        "scratchpad/harness/pages/country-GB.html",
-        "scratchpad/harness/pages/home-gb.html",
-        "src/app/globals.css",
-        "src/app/layout.tsx",
-        "src/app/page.tsx",
-        "src/components/spine/WhereNext.tsx",
-        "src/components/spine/archetypes/CityCards.tsx",
-        "src/components/spine/archetypes/CityParts.tsx",
-        "src/components/spine/archetypes/CityRows.tsx",
-        "src/components/spine/country/country-view.tsx",
-        "src/components/spine/home/home-view.tsx",
-        "src/lib/home/next_doors.ts",
-        "src/lib/spine/city_cards.ts",
-        "src/lib/spine/copy.ts"
       ],
       "claims": []
     },
@@ -2728,6 +2645,7 @@
       "asserts": "verify_trade_row_names: a trade's name printed as a row is a label, three words or fewer and no parenthetical (the goal's A11, 2026-09-24; DATA-REQUIREMENTS item 71).",
       "reads": [
         "src/lib/spine/adapt_city.ts",
+        "src/lib/spine/everyday_trades.ts",
         "src/lib/taxonomy/industries.json"
       ],
       "claims": []
@@ -2803,9 +2721,10 @@
         "src/components/spine",
         "src/components/spine/Crumbs.tsx",
         "src/components/spine/WhereNext.tsx",
+        "src/components/spine/archetypes/Department.tsx",
         "src/components/spine/country/how-to-view.tsx",
-        "src/components/spine/home/HomeProofs.tsx",
         "src/components/spine/shell.tsx",
+        "src/lib/home/next_doors.ts",
         "src/lib/nav.ts",
         "src/lib/spine/door_look.ts",
         "src/lib/spine/howto_rows.ts",
@@ -3471,7 +3390,9 @@
       "reads": [
         "src/components/RotatingWord.tsx",
         "src/components/spine/home/HeroWords.tsx",
-        "src/lib/hero-words.ts"
+        "src/components/spine/home/HomeAsk.tsx",
+        "src/lib/hero-words.ts",
+        "src/lib/home/picker_cases.ts"
       ],
       "claims": []
     },
@@ -3486,6 +3407,7 @@
         "src/app/(site)/you/CompareToMeClient.tsx",
         "src/components/ComboField.tsx",
         "src/components/NavigatorForm.tsx",
+        "src/components/spine/home/HomeAsk.tsx",
         "src/lib/home/picker.ts",
         "src/lib/taxonomy"
       ],
@@ -3496,16 +3418,81 @@
       "script": "tests/trust/home_shape.test.ts",
       "args": [],
       "browser": false,
-      "asserts": "THE HOME AS AN INTRODUCTION (the spec docs/superpowers/specs/2026-10-09-home-introduction-design.md in the design repo, approved as written on 2026-10-09; plan docs/superpowers/plans/2026-10-09-home-i",
+      "asserts": "THE HOME, QUIET EDITORIAL (plan docs/superpowers/plans/2026-10-13-home-quiet-editorial.md, Task 1A; spec docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, approved 2026-10-13).",
       "reads": [
         "scratchpad/harness/pages/home-gb.html",
+        "scripts/harness/type_floor_allow.json",
         "src/app/globals.css",
         "src/app/page.tsx",
         "src/components/NavigatorForm.tsx",
         "src/components/StructuredData.tsx",
-        "src/components/spine/WhereNext.tsx",
-        "src/components/spine/home/HomeRecord.tsx",
-        "src/components/spine/home/home-view.tsx"
+        "src/components/spine/archetypes/Department.tsx",
+        "src/components/spine/home/HomeAsk.tsx",
+        "src/components/spine/home/home-view.tsx",
+        "src/lib/hero-words.ts",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "home-contents",
+      "script": "tests/home/contents.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE ATLAS AS A CONTENTS PAGE (plan docs/superpowers/plans/2026-10-13-home-quiet-editorial.md, Tasks 1B, 4A and 4B; spec docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, section 2, ite",
+      "reads": [
+        "data/cities/city_list_v1.json",
+        "data/cities/images_credits.json",
+        "data/cities/images_manifest.json",
+        "public/cities",
+        "public/cities/thumbs",
+        "scratchpad/harness/pages/home-gb.html",
+        "scripts/gates.json",
+        "scripts/verify_trade_set.ts",
+        "src/app/(site)/learn/page.tsx",
+        "src/app/globals.css",
+        "src/app/layout.tsx",
+        "src/app/page.tsx",
+        "src/components/spine/archetypes/CityCards.tsx",
+        "src/components/spine/archetypes/CityParts.tsx",
+        "src/components/spine/archetypes/Department.tsx",
+        "src/components/spine/home/HomeContents.tsx",
+        "src/lib/brand/industry_pictogram.ts",
+        "src/lib/home/contents.ts",
+        "src/lib/home/destination.ts",
+        "src/lib/home/list_counts.ts",
+        "src/lib/spine/copy.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "home-band",
+      "script": "tests/home/band.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE BAND, ONE SOLID STATEMENT (plan docs/superpowers/plans/2026-10-13-home-quiet-editorial.md, Tasks 1B and 5; spec docs/superpowers/specs/2026-10-13-home-quiet-editorial-design.md, section 2, item 4;",
+      "reads": [
+        "scratchpad/harness/pages/home-gb.html",
+        "scripts/harness/check_page_laws.mjs",
+        "src/app/(site)/about-data/page.tsx",
+        "src/app/globals.css",
+        "src/components/spine/home/HomeBand.tsx",
+        "src/lib/spine/copy.ts",
+        "src/lib/spine/provenance.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "home-no-counts",
+      "script": "tests/home/no_counts.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO COUNT ON THE HOME (his ruling of 2026-10-07: no country, city or trade-list count on the home; plan docs/superpowers/plans/2026-10-13-home-quiet-editorial.md, Task 1C; spec docs/superpowers/specs/2",
+      "reads": [
+        "scratchpad/harness/pages/home-gb.html",
+        "src/lib/home/list_counts.ts",
+        "src/lib/spine/copy.ts",
+        "tests/home/no_counts.test.ts"
       ],
       "claims": []
     },
@@ -3890,7 +3877,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
       ],
@@ -3908,7 +3895,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
       ],
@@ -3927,7 +3914,7 @@
         "src/app/dev/spine-industry",
         "src/app/dev/spine/page.tsx",
         "src/components/spine/NeighborhoodExplorer.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/openings/openings-view.tsx"
       ],
       "claims": [
@@ -3996,6 +3983,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/home/home-view.tsx",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
@@ -4014,7 +4002,7 @@
         "src/components/spine/NeighborhoodExplorer.tsx",
         "src/components/spine/cell/cell-view.tsx",
         "src/components/spine/city/city-view.tsx",
-        "src/components/spine/home/home-view.tsx",
+        "src/components/spine/home",
         "src/components/spine/industry/industry-view.tsx",
         "src/components/spine/openings/openings-view.tsx"
       ],
@@ -4027,7 +4015,7 @@
       "browser": false,
       "asserts": "Prebuild gate , rulebook v1 rule 32: \"One shared component and interaction kit, and one fixed set of example businesses (restaurant, grocery, pharmacy, salon, gym, auto repair), reused across all page",
       "reads": [
-        "src/lib/home/destination.ts"
+        "src/lib/home/contents.ts"
       ],
       "claims": []
     },

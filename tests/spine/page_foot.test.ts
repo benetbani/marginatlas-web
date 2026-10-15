@@ -7,8 +7,8 @@
  * (the export writes it since 2026-10-06); no other page holds the line, the UK how-to, London's district pages, the London
  * trades the registers do not match and the other UK cities' included (no export dates their figures), and never today's
  * date standing in for a check. The correction page holds the site's one correction form, open, its path filled in, and is
- * never indexed. Since plan 2026-10-10 (the home reformed to ship, Task 6; the critique's P1.12) the home holds the line too: its
- * worked example prints the London restaurant page's figures, so its foot asks that page's date.
+ * never indexed. Since plan 2026-10-13 (home, quiet editorial, Task 6) the home's colophon holds the Report link and no checked line: the
+ * home prints no register figure, so no date backs it (that plan's Q3, ruled B).
  *
  * Run: npx tsx tests/spine/page_foot.test.ts
  */
@@ -42,7 +42,7 @@ const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
   { file: "industry-restaurants", path: "/industries/restaurants", dated: false },
   { file: "hood-london", path: "/cities/london/neighborhoods", dated: false },
   { file: "hood-london-city-of-london", path: "/cities/london/neighborhoods/city-of-london", dated: false },
-  { file: "home-gb", path: "/", dated: true },
+  { file: "home-gb", path: "/", dated: false },
   { file: "openings-world", path: "/new-businesses", dated: false },
 ];
 const listed = JSON.parse(readFileSync("scripts/harness/pages.json", "utf8")).pages.map((p: { surface: string; slugs: string[] }) => `${p.surface}-${p.slugs.join("-")}`);
@@ -76,7 +76,7 @@ for (const [file, kind] of [
   ["src/components/spine/hood/hood-view.tsx", "none"],
   ["src/components/spine/country/country-view.tsx", "country"],
   ["src/components/spine/country/how-to-view.tsx", "none"],
-  ["src/components/spine/home/home-view.tsx", "trade"],
+  ["src/components/spine/home/home-view.tsx", "none"],
 ] as const) {
   const src = readFileSync(file, "utf8");
   const asks = { city: src.includes("checkedDateForCity("), country: src.includes("checkedDateForCountry("), trade: src.includes("checkedDateForTrade(") };
