@@ -19,10 +19,15 @@ import * as React from "react";
 import Link from "next/link";
 import { fmtUSD } from "@/components/board/format";
 import { T_H1 } from "@/lib/ui/typography";
+import { provAttrs } from "@/lib/spine/provenance";
+import { buyRangeText } from "@/lib/open/buy_side";
 import type { BuyVsStart } from "@/lib/open/buy_vs_start";
 
 export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
   const lower = page.businessName.toLowerCase();
+  /* The buy figure is a range in currency, the trade page's own sale range, stamped with where it was read (data-src, data-kind); a trade with
+     no price prints the card's stated line in its place and no figure. */
+  const buyRange = buyRangeText(page.buy);
 
   return (
     <header className="pb-2">
@@ -46,11 +51,18 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
         </div>
 
         <div className="shrink-0 sm:border-l sm:border-parchment sm:pl-12">
-          <div className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl">
-            {fmtUSD(page.buy.cashNeededUsd)}
-          </div>
+          {buyRange ? (
+            <div
+              {...provAttrs(page.buy.prov)}
+              className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl"
+            >
+              {buyRange}
+            </div>
+          ) : (
+            <p className="text-sm leading-snug text-cocoa-700">{page.buy.line}</p>
+          )}
           <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
-            To buy, estimated
+            {buyRange ? "To buy, estimated" : "To buy"}
           </div>
         </div>
       </div>

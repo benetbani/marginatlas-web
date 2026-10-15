@@ -88,29 +88,65 @@ function saleBasisWord(industryId: string): string | null {
   return f && typeof f.value === "string" ? f.value : null;
 }
 
-export function buildWorth(seed: any): WorthData | null {
-  const meta = seed?.meta;
-  const industryId: string | undefined = typeof meta?.industry_id === "string" ? meta.industry_id : undefined;
-  if (!industryId) return null;
+/**
+ * THE SALE PRICE FROM THE SHARD, IN CURRENCY: the one function behind every printed sale range on the site (2026-10-15, QUEUE
+ * open:buy-or-start-typed-multiples). The trade page's `14 worth` (buildWorth below) and the buy-or-start page's price
+ * (src/lib/open/buy_vs_start.ts) both call it, so a trade's sale range is one pair of numbers wherever it prints and the two pages
+ * can never disagree. The buy-or-start page had priced a purchase from 153 multiples typed into its own builder and a 0.4 floor of
+ * the start cost, none with a source, and printed "about 2x owner earnings" beside a price the floor had set; that table is gone.
+ *
+ * `low` and `high` are the shard's `sale_exit.multiple_low` and `_high` times the take-home, each rounded to the dollar, and exist
+ * only in the "strip" state: the basis is SDE and a take-home is given. `src` names the file and the keys they were read from, for
+ * the figure's data-src (the kind is "estimate": R12 marks every shard figure modelled, whatever its tag). Null when the trade holds
+ * no usable pair, which is a trade with no shard.
+ */
+export type SalePrice = {
+  state: WorthState;
+  low: number | null;
+  high: number | null;
+  figures: { multipleLow: number; multipleHigh: number; basisWord: string; held: boolean; takeHome: number | null };
+  src: string;
+};
+
+export function worthSrc(industryId: string): string {
+  return `data/facts/industry/${industryId}.json:sale_exit.multiple_low + sale_exit.multiple_high, each times the owner take-home`;
+}
+
+export function worthPrice(industryId: string, takeHome: number | null | undefined): SalePrice | null {
   const lo = industryFigure(industryId, "sale_exit.multiple_low");
   const hi = industryFigure(industryId, "sale_exit.multiple_high");
   if (!lo || !hi || lo.value <= 0 || hi.value <= lo.value) return null;
   const basisWord = saleBasisWord(industryId) ?? "";
   const held = lo.tag === "held" && hi.tag === "held";
+  const take = isNum(takeHome) && takeHome > 0 ? takeHome : null;
+  const figures = { multipleLow: lo.value, multipleHigh: hi.value, basisWord, held, takeHome: take };
+  const src = worthSrc(industryId);
+  /* Judged before the take-home: on operating earnings the base is wrong whether or not a take-home is given (see otherBasis above). */
+  if (basisWord.toUpperCase() !== "SDE") return { state: "otherBasis", low: null, high: null, figures, src };
+  if (take == null) return { state: "withheld", low: null, high: null, figures, src };
+  return { state: "strip", low: Math.round(lo.value * take), high: Math.round(hi.value * take), figures, src };
+}
+
+export function buildWorth(seed: any): WorthData | null {
+  const meta = seed?.meta;
+  const industryId: string | undefined = typeof meta?.industry_id === "string" ? meta.industry_id : undefined;
+  if (!industryId) return null;
   const moneyShown = meta.money_shown === true;
   const take = seed?.owner?.take_home_usd;
-  const takeHome = moneyShown && isNum(take) && take > 0 ? take : null;
-  const figures = { multipleLow: lo.value, multipleHigh: hi.value, basisWord, held, takeHome, moneyShown };
+  const price = worthPrice(industryId, moneyShown && isNum(take) && take > 0 ? take : null);
+  if (!price) return null;
+  const f = price.figures;
+  const figures = { multipleLow: f.multipleLow, multipleHigh: f.multipleHigh, basisWord: f.basisWord, held: f.held, takeHome: f.takeHome, moneyShown };
   const c = COPY.tradeWorth;
-  if (basisWord.toUpperCase() !== "SDE") {
+  if (price.state === "otherBasis") {
     return { state: "otherBasis", marks: [], basis: null, note: null, withheld: c.otherBasis, sample: true, figures };
   }
-  if (takeHome == null) {
+  if (price.state === "withheld" || price.low == null || price.high == null) {
     return { state: "withheld", marks: [], basis: null, note: null, withheld: c.withheld, sample: true, figures };
   }
   const marks: StripMark[] = [
-    { key: "low", label: c.marks.low, value: Math.round(lo.value * takeHome) },
-    { key: "high", label: c.marks.high, value: Math.round(hi.value * takeHome) },
+    { key: "low", label: c.marks.low, value: price.low },
+    { key: "high", label: c.marks.high, value: price.high },
   ];
   return { state: "strip", marks, basis: c.basis, note: c.note, withheld: null, sample: true, figures };
 }

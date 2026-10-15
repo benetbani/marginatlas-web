@@ -3,7 +3,7 @@
  *
  * "Is it smarter to BUY an existing [business] in [place] or START one fresh?" A
  * focused, single-column data tool that leads with the question and the two
- * headline cash figures (the cash to start fresh and the modeled cash to buy an
+ * headline cash figures (the cash to start fresh and the sale range to buy an
  * existing one), sets them side by side with the time to positive cash flow and
  * the risk read on each path, and spells out the honest catch on both sides. It
  * is a dedicated surface for a high-intent question a would-be owner asks, split
@@ -12,8 +12,10 @@
  *
  * The server data builder (src/lib/open/buy_vs_start.ts) does ALL the work. The
  * START side is read straight off buildOpeningPage, which reuses the EXACT
- * functions the cell page uses, so every shared number agrees; the BUY side is a
- * modeled earnings multiple on the cell's live owner take-home, clearly labelled.
+ * functions the cell page uses, so every shared number agrees; the BUY side is
+ * the trade page's own "What one sells for" range in currency (the trade's shard
+ * figures times the cell's live owner take-home, stamped, called an estimate),
+ * or the card's stated line where the shard cannot price it.
  * This file is the route shell: resolve params, call buildBuyVsStart, notFound()
  * on a miss (never a stub), and compose the buy/ components. It lives at its own
  * path with its own single-column layout, so it does not touch the canonical
@@ -31,6 +33,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { buildBuyVsStart } from "@/lib/open/buy_vs_start";
 import { fmtUSD } from "@/components/board/format";
+import { buyRangeText } from "@/lib/open/buy_side";
 import { BuyVsStartHero } from "@/components/buy/BuyVsStartHero";
 import { BuyVsStartCompare } from "@/components/buy/BuyVsStartCompare";
 import { BuyVsStartCatches } from "@/components/buy/BuyVsStartCatches";
@@ -50,20 +53,30 @@ type Params = { country: string; geo: string; industry: string };
 
 /**
  * Prerender ONLY a small bounded flagship set so the static build stays cheap.
- * Every entry here MUST resolve to a trusted local cell, because buildBuyVsStart
- * reads the START side off buildOpeningPage, which self-omits (and this route
- * notFound()s) for any cell that is not a trusted local measurement. The cell page
- * prerenders some country-aggregate (geo == country) and region geos that render
- * fine as a cell page but are NOT trusted local cells (gb/gb, es511, de/de, fr/fr,
- * it/it, jp/jp), so this list deliberately uses the trusted city-level geo for
- * every non-US flagship instead. That keeps all 20 URLs rendering instead of
- * prerendering to a 404; every other page renders on demand via dynamicParams +
- * the daily revalidate above.
+ * Each entry names a place and a trade this page can be asked at; whether it
+ * DRAWS depends on buildBuyVsStart, which reads the START side off
+ * buildOpeningPage, which self-omits (and this route notFound()s) for any cell
+ * that is not a trusted local measurement with a row of its own. Counted from
+ * production on 2026-10-15 (the typed-multiples investigation, section 1.3): FIVE of
+ * these eight draw (California software and restaurants, New York, Texas and
+ * Florida restaurants) and THREE answer "Page not found" (California and New York
+ * hotels-lodging, Mexico hotels-lodging), because their rows hold a filled
+ * revenue and the revenue-filled guard of 2026-09-19 (src/lib/cells/trust.ts)
+ * refuses them. Dropping the three would change what the build prerenders, which
+ * is his call, so they stay and are said here: an entry that answers "Page not
+ * found" at build costs a 404 page and nothing else, and the route notFound()s
+ * the same way on demand.
+ *
+ * The cell page prerenders some country-aggregate (geo == country) and region
+ * geos that render fine as a cell page but are NOT trusted local cells (gb/gb,
+ * es511, de/de, fr/fr, it/it, jp/jp), so this list uses the trusted city-level geo
+ * for every non-US flagship instead; every other page renders on demand via
+ * dynamicParams + the daily revalidate above.
  *
  * This list is IDENTICAL to the opening route's list (the two routes share a geo
- * slate). Verified end to end with scripts/audit/dryrun_flagship_static_params.ts
- * (each entry returns a non-null buildBuyVsStart). Keep the two lists in sync by
- * hand; re-run that dry-run after any change.
+ * slate). Keep the two lists in sync by hand. scripts/audit/dryrun_flagship_
+ * static_params.ts reads each entry through the builder with live credentials
+ * and prints which draw: re-run it after any change.
  *
  * TWENTY TO EIGHT, 2026-09-19 (QUEUE trust:revenue-filled): the opening route's
  * header says why; the same eight, in the same order.
@@ -102,8 +115,10 @@ export async function generateMetadata({
   const lower = page.businessName.toLowerCase();
   const title = `Buy or start a ${lower} in ${page.placeName}`;
   const startCash = fmtUSD(page.start.cashNeededUsd);
-  const buyCash = fmtUSD(page.buy.cashNeededUsd);
-  const desc = `Is it smarter to buy an existing ${lower} in ${page.placeName} or start one fresh? About ${startCash} to start, ${buyCash} to buy in. The cash, the wait, and the honest catch on both sides.`;
+  /* The buy figure in the description is the trade's sale range, an estimate; where the shard cannot price it the description names the start cash alone. */
+  const buyRange = buyRangeText(page.buy);
+  const buyClause = buyRange ? ` Buying might cost ${buyRange}, an estimate.` : "";
+  const desc = `Is it smarter to buy an existing ${lower} in ${page.placeName} or start one fresh? Starting costs about ${startCash}.${buyClause} The cash, the wait, and the honest catch on both sides.`;
   /* An alias names its live trade's buy-or-start page (P1-C, 2026-10-09; src/lib/seo/alias_canonical.ts). */
   const canonical = tradeCanonicalPath(country, geo, industry, "buy-or-start");
   const ogPath = `/og/cell?country=${encodeURIComponent(
