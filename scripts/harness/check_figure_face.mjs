@@ -8,7 +8,10 @@
  * node_modules) must not, and nor must a page naming Space Grotesk where fontconfig lists it installed (this build server, GitHub's CI).
  * BLIND SPOT, stated: it proves the load test on three faces at one weight; a page whose figures were measured and found every one in the
  * face is the pass read here, so a fixture whose figure face loads and whose `.fig` drew another family would red for that reason instead,
- * and the output file says which. Where fontconfig is absent (Windows) the Space Grotesk case says it was skipped; it is not a pass.
+ * and the output file says which. Where fontconfig is absent (Windows) the Space Grotesk case says it was skipped; it is not a pass. THE
+ * LARGER BLIND SPOT: like the model laws it measures faces this harness supplies (a system install, a page's own @font-face), never
+ * production's next/font slot (layout.tsx's hashed family on --font-serif), so it cannot distinguish a visitor whose slot resolves from
+ * one whose slot arrives empty.
  *
  *   node scripts/harness/check_figure_face.mjs
  */

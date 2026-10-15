@@ -982,7 +982,16 @@ function inPage(ctx) {
      exactly the width of this machine's generic monospace AND of its generic
      serif, and it reads the face at weight 600 only, so a family loaded in
      some weights and missing 600 reads as loaded if the browser synthesises
-     or substitutes a sibling weight. */
+     or substitutes a sibling weight (the 600 file is asked for before the
+     read, document.fonts.load in the loop below, so a face served per weight
+     is not read as its fallback). THE LARGER BLIND SPOT: the harness supplies
+     the faces itself, by system install and a Google Fonts stylesheet link
+     (render_page.tsx sets --font-serif to the literal 'Space Grotesk'), with
+     next/font stubbed (scripts/spikes/stub_next_font.cjs), so production's
+     next/font slot (layout.tsx's hashed __Space_Grotesk_* family on
+     --font-serif) is never exercised here: a pass says the face is on this
+     machine or reachable over the network, and cannot distinguish a visitor
+     whose next/font slot resolves from one whose slot arrives empty. */
   {
     const probe = document.createElement("span");
     probe.setAttribute("style", "position:absolute;left:-9999px;top:0;font-size:100px;font-weight:600;white-space:pre;font-variant-numeric:tabular-nums lining-nums");
@@ -1051,6 +1060,17 @@ for (const file of files) {
     /* Real flag images need a decode to report a true natural size; a
        data-URI fixture image needs no network for this and still benefits. */
     await page.evaluate(async () => { for (const im of document.images) { im.loading = "eager"; try { await im.decode(); } catch { /* not this check's business */ } } });
+    /* FIGURE FACE's probe reads the face at 600: ask the page for that weight first, so a face whose 600 file no figure has asked for
+       yet (a per-weight @font-face) is measured loaded rather than as its fallback. A face that does not exist resolves to nothing
+       here and is still read absent below. */
+    await page.evaluate(async () => {
+      const probe = document.createElement("span");
+      probe.style.fontFamily = "var(--font-num)";
+      document.body.appendChild(probe);
+      const face = (getComputedStyle(probe).fontFamily || "").split(",")[0].replace(/^\s*["']|["']\s*$/g, "").trim();
+      probe.remove();
+      if (face && document.fonts) { try { await document.fonts.load(`600 100px "${face.replace(/["\\]/g, "")}"`, "0"); } catch { /* an unknown face loads nothing; the probe reads it absent */ } }
+    });
     const { found, unmeasured: um, blocks, floor: pageFloor } = await page.evaluate(inPage, { floor, wide: w === WIDTHS[0], noAnswerRelief: name.startsWith("cell-") ? 2 : 0 });
     /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): the rules read the page again with every plus open;
        a finding only the open page makes is the plus's, named so. The page's counts (BLOCK FLOOR, LONE CARD, EDGE) are read once, closed. */
