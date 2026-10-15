@@ -219,7 +219,7 @@ for (const slug of SIX) {
   /* The measured mark is what tells the survey's answer from a modelled one: the two lines (answerBasis, answerBasisModelled) are the same words. */
   checkOfficial(`${slug}'s answer is the survey's pay, ${SURVEY_GBP[slug]} pounds at the site's rate (${typical} against ${want}), measured`, Math.abs(typical - want) <= 12 && b?.answerBasis === COPY.cityHero.answerBasis && b?.answer?.confidence === "measured");
 }
-check(`London's line says its permit wait is an estimate ("${hero?.levelBasis}")`, hero?.levelBasis === COPY.cityHeroBoard.levelBasisNoLiving && /permit wait is an estimate/i.test(hero?.levelBasis ?? ""));
+check(`London's line says its permit level is an estimate ("${hero?.levelBasis}"): the board prints that row's level and no wait`, hero?.levelBasis === COPY.cityHeroBoard.levelBasisNoLiving && /permit level is an estimate/i.test(hero?.levelBasis ?? "") && hero?.rows.find((r) => r.key === "permits")?.unprinted === true);
 checkElsewhere("Paris's board is unchanged", paris?.levelBasis === COPY.cityHeroBoard.levelBasis && paris?.rows.find((r) => r.key === "permits")?.label === COPY.cityHeroBoard.rows.permits);
 
 /* THE TEXTURE (plan 2026-10-08): the count of official visits is the shard's; London's line word for word. */

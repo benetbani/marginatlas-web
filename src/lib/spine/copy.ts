@@ -382,9 +382,10 @@ export const COPY = {
     units: { aYear: "a year", per10k: "businesses" },
     levelBasis: "Levels compare cities. Cost of living: cheapest city 1, dearest 100.",
     /** The level line where the cost of living does not print (a city held to a register region, London: no source holds the
-     *  index). It says the board's one estimate, the permit wait, in words (plan 2026-10-08): the row's tag is drawn by nothing
-     *  on the board, and the visitors above it are counted. */
-    levelBasisNoLiving: "The permit wait is an estimate. Levels compare cities.",
+     *  index). It says the board's one estimate in words (plan 2026-10-08): the row's tag is drawn by nothing on the board, and
+     *  the visitors above it are counted. Since plan 2026-10-12 (Task 4) the board prints the permit wait's LEVEL and no figure
+     *  (the permits section prints the wait), so the line names the level, which is what the board draws. */
+    levelBasisNoLiving: "The permit level is an estimate. Levels compare cities.",
     /** A UK city held to no register region (the six; plan 2026-10-08, uk:cities-sourced-or-marked): every row is an estimate,
      *  and the line says so first. */
     levelBasisEstimates: "Estimates. Levels compare cities. Cost of living: cheapest city 1, dearest 100.",

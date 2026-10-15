@@ -102,8 +102,10 @@ export function buildIndustryOpen(industryId: string | undefined): IndustryOpenD
   const withheld: IndustryOpenCellKey[] = [];
   const withheldLines: string[] = [];
   const printedElsewhere: IndustryOpenCellKey[] = [];
-  /* The payback card (pays_rows.ts) prints the same shard field as its companion figure, so the months are said there, once. */
-  const paysPrintsMonths = buildPays(industryId)?.ramp != null;
+  /* The payback card (pays_rows.ts) prints the same shard field as its companion figure, so the months are said there, once: only where the card draws them,
+     which is beside a printed payback (turn-one.tsx: `"figure" in pays.payback`, then `pays.ramp`). */
+  const pays = buildPays(industryId);
+  const paysPrintsMonths = pays != null && "figure" in pays.payback && pays.ramp != null;
   if (licences != null) cells.push({ key: "licences", label: L.licences, value: String(licences), confidence: "modeled" });
   else { withheld.push("licences"); withheldLines.push(W.licences); }
   if (slowestDays != null) cells.push({ key: "slowest", label: L.slowest, value: daysFigure(slowestDays), confidence: "modeled" });

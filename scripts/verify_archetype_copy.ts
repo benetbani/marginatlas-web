@@ -2118,10 +2118,14 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (p && lic && lic.value !== String(p.count)) reds.push(`industry open ${id}: the licence count (${lic.value}) is not the permits builder's (${p.count})`);
     if (p?.longest && slow && slow.value !== daysFigure(p.longest.days)) reds.push(`industry open ${id}: the slowest wait (${slow.value}) is not the permits' longest (${p.longest.days})`);
     const rampFig = industryFigure(id, "first_year.ramp_to_breakeven_months");
-    const paysMonths = buildPays(id)?.ramp ?? null;
+    /* What the payback card draws: its companion months, only beside a printed payback (turn-one.tsx `"figure" in pays.payback`). */
+    const paysData = buildPays(id);
+    const paysMonths = paysData && "figure" in paysData.payback ? paysData.ramp : null;
     if (o.printedElsewhere.includes("breakEven")) {
       if (ramp) reds.push(`industry open ${id}: the months are printed by the payback card and by this one`);
       if (!paysMonths || !rampFig || paysMonths.value !== rampFig.value) reds.push(`industry open ${id}: the months are left to the payback card, which does not print them`);
+    } else if (paysMonths && ramp) {
+      reds.push(`industry open ${id}: the months are printed by the payback card and by this one`);
     } else if (rampFig && rampFig.value > 0 && (!ramp || ramp.value !== monthsFigure(rampFig.value))) reds.push(`industry open ${id}: the months cell is not the shard's ramp through open_rows' formatter`);
     if (!rampFig && ramp) reds.push(`industry open ${id}: a months cell with no ramp on file`);
     if (p && p.cells.length >= 2) {
