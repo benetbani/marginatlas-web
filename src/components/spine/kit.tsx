@@ -1178,45 +1178,45 @@ export function Rail({ icon, kicker, verdict, tone = "ink", sample, gloss, level
       <div className={icon ? "grid grid-cols-[32px_minmax(0,1fr)] items-start gap-x-1" : "flex items-center gap-2"}>
         {icon ? <OpenerGlyph id={icon} /> : null}
         <div className={icon ? "flex min-w-0 items-center gap-2" : "contents"}>
-        {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
-            section opener in the spine, which means a page's heading outline
-            stopped at its chapters. Counted on the two flagship pages: 8 heading
-            elements against 14 section titles on one, 12 on the other. Skimming
-            by heading is how a screen-reader user reads a long page, and on these
-            pages it reached the chapter names and nothing inside them.
-            The classes carry every pixel of the look, so the tag is the whole
-            change and nothing moves.
-            The opt-out attribute is the one this project's own typography file
-            asks for, with the reason it asks for: the canonical heading tokens
-            are the pre-spine serif scale, and a spine heading cannot wear them. */}
-        {level === 2 ? (
-          <h2
-            data-typography="custom"
-            data-rail-title=""
-            className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
-          >
-            {kicker}
-          </h2>
-        ) : (
-          <h3
-            data-typography="custom"
-            data-rail-title=""
-            className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
-          >
-            {kicker}
-          </h3>
-        )}
-        {/* HIS POP-UP, AT THE ONE SEAT IT TAKES (2026-09-22, QUEUE ui:the-gloss;
-            his words after the push of 2026-09-20: "the pop up effect that you
-            said you would do... is not executed", and it was on none of the 49
-            rendered pages). The "?" sits beside the words it explains and
-            nowhere else: one a card, never on a figure, never on the page's
-            answer. What it says is the WORD's meaning; what the figure is made
-            of stays on the basis line under the figure, which is a different
-            job (clause 66, the same thing is not said twice). Gated by the
-            page laws (GLOSS) and the model-laws copy sweep. */}
-        {gloss ? <InfoTip gloss={gloss} className="ml-0.5" /> : null}
-        {sample ? <SampleTag /> : null}
+          {/* A SECTION TITLE IS A HEADING. This was a span, and so is every other
+              section opener in the spine, which means a page's heading outline
+              stopped at its chapters. Counted on the two flagship pages: 8 heading
+              elements against 14 section titles on one, 12 on the other. Skimming
+              by heading is how a screen-reader user reads a long page, and on these
+              pages it reached the chapter names and nothing inside them.
+              The classes carry every pixel of the look, so the tag is the whole
+              change and nothing moves.
+              The opt-out attribute is the one this project's own typography file
+              asks for, with the reason it asks for: the canonical heading tokens
+              are the pre-spine serif scale, and a spine heading cannot wear them. */}
+          {level === 2 ? (
+            <h2
+              data-typography="custom"
+              data-rail-title=""
+              className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
+            >
+              {kicker}
+            </h2>
+          ) : (
+            <h3
+              data-typography="custom"
+              data-rail-title=""
+              className="text-[length:var(--t-lead)] font-semibold leading-tight text-[var(--c-ink)]"
+            >
+              {kicker}
+            </h3>
+          )}
+          {/* HIS POP-UP, AT THE ONE SEAT IT TAKES (2026-09-22, QUEUE ui:the-gloss;
+              his words after the push of 2026-09-20: "the pop up effect that you
+              said you would do... is not executed", and it was on none of the 49
+              rendered pages). The "?" sits beside the words it explains and
+              nowhere else: one a card, never on a figure, never on the page's
+              answer. What it says is the WORD's meaning; what the figure is made
+              of stays on the basis line under the figure, which is a different
+              job (clause 66, the same thing is not said twice). Gated by the
+              page laws (GLOSS) and the model-laws copy sweep. */}
+          {gloss ? <InfoTip gloss={gloss} className="ml-0.5" /> : null}
+          {sample ? <SampleTag /> : null}
         </div>
       </div>
     </div>
