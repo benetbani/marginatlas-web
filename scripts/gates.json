@@ -98,6 +98,17 @@
       "claims": []
     },
     {
+      "name": "crumb-trails",
+      "script": "scripts/harness/check_crumb_trails.ts",
+      "args": [],
+      "browser": true,
+      "asserts": "check_crumb_trails , THE TRAIL BACK UP IS NEVER CUT, ON EVERY TRAIL SHAPE THE SITE DRAWS (release 3 job C, 2026-10-16; the rhythm reform's final review, Important 4).",
+      "reads": [
+        "src/app/globals.css"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-copy-plain",
       "script": "scripts/harness/check_copy_plain.mjs",
       "args": [

@@ -138,6 +138,10 @@ const GATES: Gate[] = [
      (scripts/harness/page_laws_baseline.json), seeded at the first honest
      measurement of each page and falling only. A browser gate, one more. */
   { name: "harness-page-laws", script: "scripts/harness/check_page_laws.mjs", args: ["--list"], browser: true },
+  /* THE TRAIL BACK UP IS NEVER CUT (release 3 job C, 2026-10-16; the rhythm reform's final review, Important 4): the page laws read
+     the trail on the chain's renders (CRUMB CUT), whose names are short; this draws the longest trail of every shape the site builds
+     through the pages' own builders and the real Crumbs, and reads each at 320, 375 and 768. A browser gate, one more. */
+  { name: "crumb-trails", script: "scripts/harness/check_crumb_trails.ts", browser: true },
   /* HIS CORRECTION OF 2026-09-24, EVENING: "bullshit subtitles, bullshit
      mechanical sentences", "the disclaimers are so disgusting", "subtitle,
      undertitle, disclaimer, body text all competing". Every card on the harness
