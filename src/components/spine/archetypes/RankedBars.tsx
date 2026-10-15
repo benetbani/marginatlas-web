@@ -175,7 +175,7 @@ import { HATCH } from "./IncomeBreakdown";
 import { CompanionRow, type Companion } from "./BentoBand";
 
 export type BarRow = { key: string; name: string; href?: string;
-  /** Drawn nowhere since 2026-10-12 (tiles on openers only); kept so a caller that passes one still compiles. Rows given one still stamp the card's `data-look="icons"` (the city's market card), which since then names the caller's intent and no drawn difference: see the report of plan 2026-10-12, Task 5. */
+  /** Drawn nowhere since 2026-10-12 (tiles on openers only); kept so a caller that passes one still compiles. The card's `data-look="icons"`, which rows with a tile stamped, went with the tiles (fix round 1 of Task 5): a stamp says what is drawn. */
   icon?: AtlasIconId;
   /** What a row that navigates promises: the kind its page's masthead answers (src/lib/spine/door_kinds.ts), set by the builder with the href and stamped as `data-lands` for the chain's `doors` gate (plan step 39, 2026-09-19). */
   lands?: DoorKind;
@@ -489,7 +489,7 @@ export function RankedBars({ id, kicker, icon, tagged, gloss, basis, withheldLin
      stated line) would stand 48 under its title instead of 24. */
   const drawTop = focal || basis || withheldLine ? "mt-6" : "mt-0";
   return (
-    <Box id={id} {...(stamp ?? {})} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature} data-look={rows.some((r) => r.icon) ? "icons" : undefined}>
+    <Box id={id} {...(stamp ?? {})} className={`${drawWide || drawMidTable || drawShort ? "flex flex-col" : ""}${headTwoUp ? " [container-type:inline-size]" : ""}`} data-archetype="ranked-bars" data-leader-key={leader.key} data-feature={feature}>
       <Rail icon={icon} kicker={kicker} sample={tagged} gloss={gloss} level={level} />
       <div className={headTwoUp ? "gap-x-8 [@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[auto_minmax(0,1fr)] [@container(min-width:560px)]:items-start" : undefined}>
       {/* THE FOCAL, when the card holds one: the only element on this card
