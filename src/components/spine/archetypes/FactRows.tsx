@@ -70,7 +70,10 @@ export function FactRows({ rows, className = "", answer }: { rows: FactRow[]; cl
      costs); two rows or more split into two lists, the first half on the left, each list one grid of its own, so its figures
      share one edge. Under 600px the two lists are one run, the second's first row ruled like any other. */
   const lists = live.length >= 2 ? [live.slice(0, Math.ceil(live.length / 2)), live.slice(Math.ceil(live.length / 2))] : [live];
-  const row = (r: FactRow, i: number) => (
+  const row = (r: FactRow, i: number) => {
+    /* The tile or the legend's swatch is what the 4px centres the first line on (the swatch's mt-2 stands on it). */
+    const tiled = !!(r.icon || r.swatch);
+    return (
     <div
       key={r.key}
       data-row={r.key}
@@ -89,8 +92,10 @@ export function FactRows({ rows, className = "", answer }: { rows: FactRow[]; cl
         <span className="min-w-0">
           {/* THE LABEL'S FIRST LINE IS CENTRED ON THE TILE (28): a 20px line 4px down, and the figure the same, so the glyph, the
               words and the figure share one centre line whatever the two faces' metrics; a label that wraps keeps 20px lines
-              (a 28px line height doubled the gap inside "Late payment / interest"). */}
-          <span data-label className="block pt-1 text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]">
+              (a 28px line height doubled the gap inside "Late payment / interest"). A ROW WITH NO TILE HAS NOTHING TO CENTRE ON (plan
+              2026-10-12 rhythm-air-inside, Task 4's census of the country page, the German running costs' 120 by 216 hole): the 4px
+              belongs to the tile, so a row without one stands 4 shorter, its label and its figure still on one line. */}
+          <span data-label className={`block ${tiled ? "pt-1 " : ""}text-[length:var(--t-body)] leading-5 text-[var(--c-ink)]`}>
             {r.label}
             {r.confidence && r.confidence !== "measured" ? <SampleTag /> : null}
           </span>
@@ -100,16 +105,17 @@ export function FactRows({ rows, className = "", answer }: { rows: FactRow[]; cl
       <dd data-value="" className="text-right [@container(min-width:420px)]:text-left">
         {answer === "state" ? (
           /* A WORD LIST IN THE BODY FACE (plan 2026-10-13 country-page-journey, Task 3A; R6 section 3): a state is a word, never set in the figure face. */
-          <span className="block pt-1 text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]">{r.value}</span>
+          <span className={`block ${tiled ? "pt-1 " : ""}text-[length:var(--t-body)] font-medium leading-5 text-[var(--c-ink)]`}>{r.value}</span>
         ) : r.signal ? (
           /* A PLACED FIGURE AND ITS SIGNAL ON ONE LINE (spec section 4: the triangle right after the figure). */
-          <span className="inline-flex items-center gap-2 pt-1"><Fig className="text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]" prov={r.prov}>{r.value}</Fig><Signal state={r.signal.state} measure={r.signal.measure} /></span>
+          <span className={`inline-flex items-center gap-2${tiled ? " pt-1" : ""}`}><Fig className="text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]" prov={r.prov}>{r.value}</Fig><Signal state={r.signal.state} measure={r.signal.measure} /></span>
         ) : (
-          <Fig className="block pt-1 text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]" prov={r.prov}>{r.value}</Fig>
+          <Fig className={`block ${tiled ? "pt-1 " : ""}text-[length:var(--t-lead)] leading-5 text-[var(--c-ink)]`} prov={r.prov}>{r.value}</Fig>
         )}
       </dd>
     </div>
-  );
+    );
+  };
   return (
     <div className={`[container-type:inline-size] ${className}`}>
       <div data-archetype="fact-rows" data-rows={String(live.length)} {...(answer ? { "data-answer": answer } : {})} className="grid grid-cols-1 [@container(min-width:600px)]:grid-cols-2 [@container(min-width:600px)]:gap-x-12">
