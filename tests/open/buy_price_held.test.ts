@@ -365,6 +365,7 @@ function checkVerdict(verdict: (buy: BuySide) => string): string[] {
       if (sentence.trim().split(/\s+/).length > 12) out.push(`${label}: a sentence over twelve words: "${sentence}"`);
     }
     if (/\d/.test(v)) out.push(`${label}: the verdict holds a figure: "${v}"`);
+    if (/start cost|cost to open/i.test(v)) out.push(`${label}: the verdict says again that no start cost is held (the hero says it once): "${v}"`);
     if (/[;\u2014]|\b(we|our|modell?ed|withheld|on file|multiple)\b/i.test(v)) out.push(`${label}: the verdict holds a semicolon, an em-dash or a word the copy laws refuse: "${v}"`);
   }
   return out;
@@ -395,7 +396,7 @@ function startFor(industryId: string): StartSide {
   return {
     cashLine: COPY.buyOrStart.startCash,
     longestWait: lead && lead.prov && typeof lead.value === "string" ? { figure: lead.value, prov: lead.prov } : null,
-    payback: buildOpenFoot(industryId).find((c) => c.words === COPY.tradeOpen.payBack) ?? null,
+    payback: buildOpenFoot(industryId).find((c) => c.prov?.src.endsWith(":first_year.payback_years")) ?? null,
   };
 }
 
@@ -403,7 +404,10 @@ function startFor(industryId: string): StartSide {
 function checkStart(doc: Document, where: string, start: StartSide): string[] {
   const out: string[] = [];
   const text = doc.body.textContent ?? "";
-  if (!text.includes(COPY.buyOrStart.startCash)) out.push(`${where}: the start side does not print its stated line`);
+  /* SAID ONCE (fix round 1, ruling 2): the absence of a start cost is stated where a reader meets it first, the hero, and nowhere else. */
+  const said = text.split(COPY.buyOrStart.startCash).length - 1;
+  if (said !== 1) out.push(`${where}: the start side's stated line prints ${said} times, not once`);
+  if (/no start cost|no cost to open/i.test(text.split(COPY.buyOrStart.startCash).join(""))) out.push(`${where}: the absence of a start cost is said again in other words`);
   if (!start.longestWait || !start.payback) out.push(`${where}: the fixture's start side holds no licence wait or no payback to check`);
   const src = (re: RegExp) => [...doc.querySelectorAll("[data-src]")].filter((el) => re.test(el.getAttribute("data-src") ?? ""));
   if (start.longestWait && !src(/^data\/facts\/industry\/[a-z_]+\.json:licensing\.licences\.[^.]+\.typical_days$/).some((el) => el.textContent?.trim() === start.longestWait!.figure)) out.push(`${where}: the longest licence wait "${start.longestWait.figure}" is not printed with its shard stamp`);
@@ -458,6 +462,8 @@ if (!STATIC_ONLY) {
   const bad = checkPricing(planted);
   control("builder reader: sees a typed-multiple price on every trade (EBITDA priced, marks missed, no stamp)", bad.findings.some((f) => /instead of the stated line/.test(f)) && bad.findings.some((f) => /not the trade card's/.test(f)) && bad.findings.some((f) => /no stamp|names the shard/.test(f)));
   /* The old verdict, leaning on a typed start cash of 328,451 (California restaurants), as it stood before 2026-10-15. */
+  const twice = (b: BuySide) => (b.state === "range" ? "The buy price is an estimate, and no start cost is held." : "No sale price or start cost is held, so cash cannot decide.");
+  control("verdict reader: sees the verdict say again that no start cost is held", checkVerdict(twice).some((f) => /again/.test(f)));
   const leaning = (b: BuySide) => (b.state === "range" && b.lowUsd! - 328451 > 328451 * 0.15 ? "On this estimate, buying costs more cash than starting fresh." : b.state === "range" && 328451 - b.highUsd! > 328451 * 0.15 ? "Estimate: buying costs less cash than starting, so check what you buy." : b.state === "range" ? "This estimate overlaps the cost to start, so cash does not decide." : "Cash does not decide this one without a sale price.");
   control("verdict reader: sees the old lean on a typed start cash", checkVerdict(leaning).some((f) => /leans on the cash/.test(f)));
   const longWinded = () => "On this estimate, buying costs more cash than starting fresh; we think so, and it can be worth it here because starting means a long ramp.";

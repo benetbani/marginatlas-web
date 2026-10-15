@@ -34,6 +34,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
+import { COPY } from "../../src/lib/spine/copy";
 import { red, redSummary } from "../../scripts/lib/red";
 
 const RULE = "start-side-held";
@@ -116,6 +117,24 @@ for (const abs of files) {
   for (const x of findings) fail(rel, `names a typed start table in code: ${x.text.slice(0, 160)}`, x.line);
 }
 for (const t of TABLES) if (existsSync(join(ROOT, t))) fail(t, "the typed table still exists: the ruling deletes it once nothing reads it");
+
+/* THE TWO PAGES' OWN WORDS (fix round 1, rulings 1 and 2): every line /opening and /buy-or-start print from their copy blocks is one line of twelve
+   words or fewer with no semicolon and no em dash, and a heading is four words or fewer. The verdict under /opening's lead figure was thirteen. */
+{
+  const words = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+  const heads = new Set(["licencesHead", "earningHead", "peersHead"]);
+  let read = 0;
+  for (const [block, table] of [["opening", COPY.opening], ["buyOrStart", COPY.buyOrStart]] as const) {
+    for (const [key, text] of Object.entries(table as Record<string, string>)) {
+      read++;
+      const cap = heads.has(key) ? 4 : 12;
+      if (words(text) > cap) fail("src/lib/spine/copy.ts", `COPY.${block}.${key} runs ${words(text)} words, over ${cap}: "${text}"`);
+      if (/[;\u2014]/.test(text)) fail("src/lib/spine/copy.ts", `COPY.${block}.${key} holds a semicolon or an em dash: "${text}"`);
+    }
+  }
+  if (read < 15) fail("src/lib/spine/copy.ts", `read ${read} lines of the two pages' copy, expected 15 or more`);
+  control("copy reader: a thirteen-word line reds", words("The licences to get, and how long the trade takes to earn back.") > 12);
+}
 
 /* THE WALK MUST REACH WHAT IT GUARDS: a gate that reads nothing passes everything. */
 if (files.length < 900) fail("src", `read ${files.length} source files under ${SRC}, expected 900 or more (975 on 2026-10-15)`);

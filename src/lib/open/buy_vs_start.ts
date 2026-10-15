@@ -46,6 +46,7 @@
  */
 import { buildOpeningPage, type StampedFigure } from "@/lib/open/opening_page";
 import { COPY } from "@/lib/spine/copy";
+import { OPEN_METRICS } from "@/lib/spine/open_rows";
 import type { Companion } from "@/components/spine/archetypes/BentoBand";
 import { buyOrStartDraws, subPageHref } from "@/lib/open/sub_page_gates";
 import { buySideFor, buyVerdict, type BuySide } from "@/lib/open/buy_side";
@@ -187,7 +188,8 @@ export async function buildBuyVsStart(
   const start: StartSide = {
     cashLine: COPY.buyOrStart.startCash,
     longestWait: opening.longestWait,
-    payback: opening.earning.find((c) => c.words === COPY.tradeOpen.payBack) ?? null,
+    /* Found by the figure's own metric in its stamp, never by its words: a copy edit cannot empty the row (review of 2026-10-15, Minor 10). */
+    payback: opening.earning.find((c) => c.prov?.src.endsWith(`:${OPEN_METRICS.payback}`)) ?? null,
   };
 
   // BUY side: the trade's own sale range off its shard, times this cell's take-home, through the one function the trade page's card calls.

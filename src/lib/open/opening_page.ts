@@ -58,6 +58,7 @@ import { buildPermits, type PermitsData } from "@/lib/spine/permits_rows";
 import { buildOpenFoot } from "@/lib/spine/open_rows";
 import type { Companion } from "@/components/spine/archetypes/BentoBand";
 import type { Provenance } from "@/lib/spine/provenance";
+import { COPY } from "@/lib/spine/copy";
 
 /** A finite, real number (not null, not NaN, not Infinity). */
 function isNum(n: number | null | undefined): n is number {
@@ -323,7 +324,7 @@ async function resolveSameBusinessElsewhere(
 /* What the page holds, said once under the lead figure. Until 2026-10-15 it named "the cost, the calendar, and the first crew",
    three typed figures that left the page that day. */
 function buildVerdict(): string {
-  return "The licences to get, and how long the trade takes to earn back.";
+  return COPY.opening.verdict;
 }
 
 /* ----------------------------------------------------------------------------

@@ -84,14 +84,15 @@ export function buyRangeText(buy: BuySide): string | null {
 /**
  * The verdict's two lines, each one sentence of twelve words or fewer, and neither leans (2026-10-15, release 2 job A). The line compared
  * the sale range with a start cash typed by hand (src/lib/markets/startup_capital_archetypes.ts) and leaned "cheaper" or "dearer" on it;
- * no start cost is held, so cash cannot decide, and the line says so. Where a range stands it says the range is an estimate.
+ * no start cost is held, so cash cannot decide. The hero says that once, where a reader meets it first (COPY.buyOrStart.startCash), so the
+ * verdict carries its own content: where a range stands it says the range is an estimate, and both lines point to what does decide.
  */
 const VERDICT = {
-  range: "The buy price is an estimate, and no start cost is held.",
-  noPrice: "No sale price or start cost is held, so cash cannot decide.",
+  range: "The buy range is an estimate, so weigh the wait and risk.",
+  noPrice: "No sale price is held, so weigh the wait and the risk.",
 };
 
-/** One line on the cash, with no lean: which of the two sides holds a figure, and that the one it holds is an estimate. */
+/** One line with no lean: whether the buy side holds a figure, that it is an estimate, and what decides instead. */
 export function buyVerdict(buy: BuySide): string {
   return buyRangeText(buy) ? VERDICT.range : VERDICT.noPrice;
 }

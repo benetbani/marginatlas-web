@@ -87,7 +87,7 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
             Build it from nothing, your way.
           </p>
           <div className="mt-4 flex flex-col gap-4">
-            <Row label="Cash needed" value={B.startCash} note={B.startCashNote} quiet />
+            {/* No cash row on this side: the hero says once that no start cost is held (fix round 1, ruling 2); the column carries what it does hold. */}
             {page.start.longestWait ? (
               <Row label={B.waitLabel} value={page.start.longestWait.figure} note={B.waitNote} prov={page.start.longestWait.prov} />
             ) : (

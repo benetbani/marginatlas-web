@@ -2199,6 +2199,8 @@ export const COPY = {
    *  dollars, weeks, first hires, a payback) left /opening, and the trade page's held figures stand in their place: the licences
    *  with their waits and fee bands, and the trade's first-year figures. Four-word headings, one supporting line each. */
   opening: {
+    /** The line under the lead figure (fix round 1: eleven words; the thirteen it had broke the twelve-word line). */
+    verdict: "The licences to get, and how long to earn it back.",
     leadWait: "Longest licence wait, an estimate",
     /** Under the months to break even where the place prints no licence list: "{words}" is the figure's own words ("To break even"). */
     leadEarning: "{words}, an estimate",
@@ -2216,7 +2218,6 @@ export const COPY = {
    *  longest licence wait where the weeks stood, and the trade's years to pay back where the typed payback stood. */
   buyOrStart: {
     startCash: "No start cost held yet.",
-    startCashNote: "no cost to open is held for this trade",
     waitLabel: "Longest licence wait",
     waitNote: "the slowest licence to get, an estimate",
     noWait: "No licence list here yet.",
