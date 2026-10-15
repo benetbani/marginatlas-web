@@ -33,7 +33,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { buildBuyVsStart } from "@/lib/open/buy_vs_start";
 import { fmtUSD } from "@/components/board/format";
-import { buyRangeText } from "@/lib/open/buy_side";
+import { buyMetaDescription } from "@/lib/open/buy_side";
 import { BuyVsStartHero } from "@/components/buy/BuyVsStartHero";
 import { BuyVsStartCompare } from "@/components/buy/BuyVsStartCompare";
 import { BuyVsStartCatches } from "@/components/buy/BuyVsStartCatches";
@@ -83,10 +83,12 @@ type Params = { country: string; geo: string; industry: string };
  */
 export async function generateStaticParams(): Promise<Params[]> {
   return [
-    // US restaurants, hotels, and software resolve a trusted local cell at state
-    // level with a revenue of their own. US legal-services is extrapolated
-    // everywhere and the London flagships stand on filled rows, so no legal
-    // flagship prerenders today.
+    // US software and restaurants resolve a trusted local cell at state level
+    // with a revenue of their own, and these five draw. The two US hotels-lodging
+    // entries below do not: their rows hold a filled revenue, the 2026-09-19
+    // guard refuses them, and they answer "Page not found" (see the header).
+    // US legal-services is extrapolated everywhere and the London flagships
+    // stand on filled rows, so no legal flagship prerenders today.
     { country: "us", geo: "california",  industry: "software-development" },
     { country: "us", geo: "california",  industry: "restaurants" },
     { country: "us", geo: "new-york",    industry: "restaurants" },
@@ -95,10 +97,10 @@ export async function generateStaticParams(): Promise<Params[]> {
     { country: "us", geo: "california",  industry: "hotels-lodging" },
     { country: "us", geo: "new-york",    industry: "hotels-lodging" },
 
-    // The one non-US flagship whose row holds its own revenue (tier P, state
-    // level). The cell page's featured aggregates (gb/gb legal, es511
-    // restaurants, de/de, fr/fr, it/it, jp/jp) do not resolve a trusted local
-    // cell either.
+    // The one non-US flagship, at state level (tier P). Its row holds a filled
+    // revenue, so it too answers "Page not found" (see the header). The cell
+    // page's featured aggregates (gb/gb legal, es511 restaurants, de/de, fr/fr,
+    // it/it, jp/jp) do not resolve a trusted local cell either.
     { country: "mx", geo: "mx-roo",     industry: "hotels-lodging" },
   ];
 }
@@ -115,10 +117,8 @@ export async function generateMetadata({
   const lower = page.businessName.toLowerCase();
   const title = `Buy or start a ${lower} in ${page.placeName}`;
   const startCash = fmtUSD(page.start.cashNeededUsd);
-  /* The buy figure in the description is the trade's sale range, an estimate; where the shard cannot price it the description names the start cash alone. */
-  const buyRange = buyRangeText(page.buy);
-  const buyClause = buyRange ? ` Buying might cost ${buyRange}, an estimate.` : "";
-  const desc = `Is it smarter to buy an existing ${lower} in ${page.placeName} or start one fresh? Starting costs about ${startCash}.${buyClause} The cash, the wait, and the honest catch on both sides.`;
+  /* The buy figure in the description is the trade's sale range, an estimate, built in src/lib/open/buy_side.ts (a gate runs it on a priced and an unpriced trade); where the shard cannot price it the description names the start cash alone. */
+  const desc = buyMetaDescription(lower, page.placeName, startCash, page.buy);
   /* An alias names its live trade's buy-or-start page (P1-C, 2026-10-09; src/lib/seo/alias_canonical.ts). */
   const canonical = tradeCanonicalPath(country, geo, industry, "buy-or-start");
   const ogPath = `/og/cell?country=${encodeURIComponent(

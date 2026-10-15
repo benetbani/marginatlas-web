@@ -68,6 +68,17 @@ export function buySideFor(industryId: string, takeHomeUsd: number | null | unde
 }
 
 /**
+ * The page's meta description, which Open Graph and Twitter reuse: the question, the start cash, and where a range stands the buy range as an estimate.
+ * Pure, so the gate runs it on a priced and an unpriced trade; the buy figure in it is the range text and nothing typed. Where the shard cannot price
+ * the trade the sentence is left out and the description names the start cash alone.
+ */
+export function buyMetaDescription(businessLower: string, placeName: string, startCashText: string, buy: BuySide): string {
+  const range = buyRangeText(buy);
+  const clause = range ? ` Buying might cost ${range}, an estimate.` : "";
+  return `Is it smarter to buy an existing ${businessLower} in ${placeName} or start one fresh? Starting costs about ${startCashText}.${clause} The cash, the wait, and the honest catch on both sides.`;
+}
+
+/**
  * The range as it prints: the trade page's own money grammar (src/lib/spine/money.ts, the one `14 worth` draws its two marks with), so
  * the same two figures read the same on both pages ("$86K to $171K"). Null in the stated state.
  */
@@ -76,12 +87,15 @@ export function buyRangeText(buy: BuySide): string | null {
   return `${usd(buy.lowUsd)} to ${usd(buy.highUsd)}`;
 }
 
-/** The verdict's four lines, each one sentence of twelve words or fewer. */
+/**
+ * The verdict's four lines, each one sentence of twelve words or fewer. The cheaper line keeps the caution the old verdict carried beside a low price
+ * ("a low price is exactly when to look hardest at what you are buying"), since it is the line a reader gets first where the range sits under the start cash.
+ */
 const VERDICT = {
   dearer: "On this estimate, buying costs more cash than starting fresh.",
-  cheaper: "On this estimate, buying costs less cash than starting fresh.",
+  cheaper: "Estimate: buying costs less cash than starting, so check what you buy.",
   overlap: "This estimate overlaps the cost to start, so cash does not decide.",
-  noPrice: "No sale price yet, so cash does not decide this one.",
+  noPrice: "Cash does not decide this one without a sale price.",
 };
 
 /**

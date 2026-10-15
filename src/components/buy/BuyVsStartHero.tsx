@@ -3,9 +3,9 @@
  *
  * The masthead of the buy-or-start page: a clean-data-tool hero, not a magazine
  * cover. No image, no gradient. It leads with the QUESTION, then sets the two
- * headline cash figures side by side, the cash to START fresh and the cash to BUY
- * an existing one, so the reader gets the whole decision in a glance. The honest
- * one-line verdict sits beneath, and a quiet link points back to the full cell
+ * headline cash figures side by side, the cash to START fresh and the sale range
+ * to BUY an existing one, so the reader gets the whole decision in a glance. One
+ * line on the cash sits beneath, and a quiet link points back to the full cell
  * economics.
  *
  * Layout: on a narrow screen the two cash figures stack; from sm they sit side by
@@ -67,8 +67,8 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
         </div>
       </div>
 
-      {/* The honest verdict, one quiet paragraph that names the catch on both
-          sides. */}
+      {/* The verdict, one quiet line on the cash that leans only outside the dead-band and says estimate (src/lib/open/buy_side.ts); the catch on each side
+          stands in the section below the card (BuyVsStartCatches). */}
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-cocoa-700 md:text-lg">
         {page.verdict}
       </p>

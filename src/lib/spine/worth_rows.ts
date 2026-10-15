@@ -108,8 +108,8 @@ export type SalePrice = {
   src: string;
 };
 
-export function worthSrc(industryId: string): string {
-  return `data/facts/industry/${industryId}.json:sale_exit.multiple_low + sale_exit.multiple_high, each times the owner take-home`;
+function worthSrc(industryId: string): string {
+  return `data/facts/industry/${industryId}.json:sale_exit.multiple_low + sale_exit.multiple_high`;
 }
 
 export function worthPrice(industryId: string, takeHome: number | null | undefined): SalePrice | null {

@@ -15,15 +15,20 @@
  *     text blanked: no number but 0 and 1 and the one dead-band (const DEAD_BAND = 0.15), no table of numbers by slug (a Record<string,
  *     number>, an index signature, three or more numeric properties), none of the old constants by name, the price built only through
  *     buySideFor and worthPrice. A typed price constant, a floor, a fraction or a multiple is a number in that file, so it reds.
- *  2. SOURCE of the two components, parsed with the TypeScript compiler: any element that prints a buy figure (the range, or a value
+ *  2. SOURCE of every file of the route that can print the buy figure (both named components, any other component under src/components/buy,
+ *     and the route page.tsx), parsed with the TypeScript compiler: any element that prints a buy figure (the range, or a value
  *     read off page.buy) carries data-src through provAttrs or a prov prop; Compare's Row spreads provAttrs on the value it prints; no
  *     component reads a multiple or says "owner earnings".
  *  3. THE BUILDER, on every one of the 243 trade shards at one take-home: the buy range equals the trade card's two marks to the dollar
  *     (the same function, so the two pages cannot disagree), its src names the shard file and both keys and its kind is estimate; every
  *     trade whose shard rests on EBITDA prints the card's stated line and no figure; a trade with no take-home prints the other stated line.
  *  4. THE VERDICT, on the edges of the dead-band: it leans only when the whole range is outside it, says estimate when a range stands,
+ *     carries a caution beside a lean toward buying,
  *     and each line is one sentence of twelve words or fewer with none of the words the copy laws refuse.
- *  5. THE RENDER of the two components on a priced trade and on an EBITDA trade: the figure carries data-src and data-kind and reads as a
+ *  5. THE META DESCRIPTION (Open Graph and Twitter reuse it), built by buyMetaDescription on a priced and an unpriced trade: the buy range in it
+ *     is the range text as an estimate and nothing typed, no digit outside the start cash and the range, no multiple; page.tsx builds it through
+ *     that function and reads no buy figure itself.
+ *  6. THE RENDER of the two components on a priced trade and on an EBITDA trade: the figure carries data-src and data-kind and reads as a
  *     range in the trade page's own grammar; the EBITDA trade prints the stated line, no figure and no stamp; no multiple anywhere.
  *
  * EACH READER PROVES ITSELF FIRST on a planted copy of the old defect (a reader that sees nothing would pass everything), and the walk
@@ -47,7 +52,7 @@ import { JSDOM } from "jsdom";
 import ts from "typescript";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
-import { buySideFor, buyVerdict, buyRangeText, type BuySide } from "../../src/lib/open/buy_side";
+import { buySideFor, buyVerdict, buyRangeText, buyMetaDescription, type BuySide } from "../../src/lib/open/buy_side";
 import { buildWorth, countWorthBases } from "../../src/lib/spine/worth_rows";
 import { COPY } from "../../src/lib/spine/copy";
 import { BuyVsStartHero } from "../../src/components/buy/BuyVsStartHero";
@@ -58,11 +63,13 @@ const RULE = "buy-price-held";
 const REMEDY = "price the purchase only through worthPrice (src/lib/spine/worth_rows.ts) in currency with its data-src and data-kind, withhold it with the trade card's stated line on an operating-earnings basis, and type no multiple, floor, fraction or table by slug into the buy-or-start builder";
 const arg = (name: string): string | undefined => process.argv.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3);
 const STATIC_ONLY = process.argv.includes("--static-only");
+const BUY_DIR = "src/components/buy";
 const PATHS = {
   buy: arg("buy") ?? "src/lib/open/buy_vs_start.ts",
   buySide: "src/lib/open/buy_side.ts",
-  hero: arg("hero") ?? "src/components/buy/BuyVsStartHero.tsx",
-  compare: arg("compare") ?? "src/components/buy/BuyVsStartCompare.tsx",
+  hero: arg("hero") ?? `${BUY_DIR}/BuyVsStartHero.tsx`,
+  compare: arg("compare") ?? `${BUY_DIR}/BuyVsStartCompare.tsx`,
+  page: arg("page") ?? "src/app/[country]/[geo]/[industry]/buy-or-start/page.tsx",
 };
 let failed = 0;
 const fail = (file: string, detail: string, line?: number) => {
@@ -137,7 +144,7 @@ function scanBuilder(text: string, role: "vs" | "side"): Finding[] {
     if (old) out.push({ line: k + 1, detail: `${old[1]} is one of the typed price constants this page used to hold` });
     if (/\.multiple\b/.test(ln)) out.push({ line: k + 1, detail: "the builder reads a multiple off the buy side, which prints a price and never a multiple" });
   });
-  if (numeric.length >= 3) out.push({ line: numeric[0], detail: `${numeric.length} numeric properties in a row of an object: a table of numbers by key` });
+  if (numeric.length >= 3) out.push({ line: numeric[0], detail: `${numeric.length} numeric property lines in the file: a table of numbers by key` });
   const joined = code.join("\n");
   if (role === "vs" && !/\bbuySideFor\(/.test(joined)) out.push({ line: 1, detail: "buildBuyVsStart does not price the buy side through buySideFor" });
   if (role === "side") {
@@ -169,7 +176,7 @@ const OLD_TABLE = [
   const f = scanBuilder(OLD_TABLE, "vs");
   const has = (re: RegExp) => f.some((x) => re.test(x.detail));
   control("source reader: sees the typed multiple 2.4, the 0.4 floor and the 10_000 floor as typed numbers", has(/number 2\.4\b/) && has(/number 0\.4\b/) && has(/number 10_000\b/));
-  control("source reader: sees the numeric record and the table of numbers by key", has(/Record<string, number>/) && has(/numeric properties in a row/));
+  control("source reader: sees the numeric record and the table of numbers by key", has(/Record<string, number>/) && has(/numeric property lines/));
   control("source reader: sees the old constants by name and a builder that does not price through buySideFor", has(/SDE_MULTIPLE_BY_SLUG|SDE_MULTIPLE_DEFAULT/) && has(/ASSET_FLOOR_FRACTION/) && has(/buySideFor/));
   control("source reader: a number inside a comment or a string is not read (the comment's 2.4, the template's 2.4)", !f.some((x) => (x.line === 1 && !/buySideFor/.test(x.detail)) || x.line === 11));
   const clean = ["const DEAD_BAND = 0.15;", "function f(n: number) { return n > 0 && n + 1 > startCash * (1 + DEAD_BAND); }", 'const s = "twelve 12 words";', "const t = `${a * (1 - DEAD_BAND)} costs 99`;"].join("\n");
@@ -180,8 +187,6 @@ const OLD_TABLE = [
 /** The real files, or the paths a proof run passed. */
 const buyText = readFileSync(PATHS.buy, "utf8");
 const sideText = readFileSync(PATHS.buySide, "utf8");
-const heroText = readFileSync(PATHS.hero, "utf8");
-const compareText = readFileSync(PATHS.compare, "utf8");
 const sourceRead = { lines: 0, files: 0 };
 for (const [file, text, role] of [[PATHS.buy, buyText, "vs"], [PATHS.buySide, sideText, "side"]] as const) {
   sourceRead.files++;
@@ -272,8 +277,22 @@ const OLD_COMPONENT = [
   ].join("\n");
   control("component reader: passes a stamped figure, a stamped Row and a stated line", scanComponent("good.tsx", good).length === 0);
 }
-for (const [file, text] of [[PATHS.hero, heroText], [PATHS.compare, compareText]] as const) {
-  for (const f of scanComponent(file, text)) fail(file, f.detail, f.line);
+/* EVERY FILE OF THE ROUTE THAT CAN PRINT THE BUY FIGURE: the two named components, any other component under src/components/buy (a new one is read
+   the day it is added), and the route's page.tsx, which prints the range in its description. */
+const ROUTE_FILES: string[] = [
+  PATHS.hero,
+  PATHS.compare,
+  ...readdirSync(BUY_DIR).filter((n) => n.endsWith(".tsx") && n !== "BuyVsStartHero.tsx" && n !== "BuyVsStartCompare.tsx").map((n) => `${BUY_DIR}/${n}`),
+  PATHS.page,
+];
+for (const file of ROUTE_FILES) {
+  for (const f of scanComponent(file, readFileSync(file, "utf8"))) fail(file, f.detail, f.line);
+}
+/* page.tsx builds its description through buyMetaDescription and never reads or formats a buy figure itself. */
+{
+  const pageCode = stripCommentLines(readFileSync(PATHS.page, "utf8").split("\n")).join("\n");
+  if (!/\bbuyMetaDescription\(/.test(pageCode)) fail(PATHS.page, "the page does not build its description through buyMetaDescription: the buy range in it is not the stamped range");
+  if (/\bbuy(?:Range|Clause)\b|\bpage\.buy\.(?:lowUsd|highUsd)\b/.test(pageCode)) fail(PATHS.page, "the page reads the buy range itself: the description must come from buyMetaDescription");
 }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------
@@ -342,10 +361,30 @@ function checkVerdict(verdict: (startCash: number, buy: BuySide) => string): str
     const says = /more cash/.test(v) ? "more" : /less cash/.test(v) ? "less" : null;
     if (says !== lean) out.push(`${label}: the verdict leans "${says}" where it must lean ${lean === null ? "nowhere" : `"${lean}"`}: "${v}"`);
     if (buy.state === "range" && !/\bestimate\b/i.test(v)) out.push(`${label}: a range stands and the verdict does not say estimate: "${v}"`);
+    if (lean === "less" && !/\b(check|look)\b/i.test(v)) out.push(`${label}: the verdict leans toward buying with no caution to look at what is bought: "${v}"`);
     for (const sentence of v.split(/(?<=[.!?])\s+/).filter(Boolean)) {
       if (sentence.trim().split(/\s+/).length > 12) out.push(`${label}: a sentence over twelve words: "${sentence}"`);
     }
-    if (/[;—]|\b(we|our|modell?ed|withheld|on file|multiple)\b/i.test(v)) out.push(`${label}: the verdict holds a semicolon, an em-dash or a word the copy laws refuse: "${v}"`);
+    if (/[;\u2014]|\b(we|our|modell?ed|withheld|on file|multiple)\b/i.test(v)) out.push(`${label}: the verdict holds a semicolon, an em-dash or a word the copy laws refuse: "${v}"`);
+  }
+  return out;
+}
+
+/** The meta description (Open Graph and Twitter reuse it) on a priced and an unpriced trade: the buy range in it is the range text and nothing typed, and no multiple. */
+function checkDescription(describe: (lower: string, place: string, startCash: string, buy: BuySide) => string): string[] {
+  const out: string[] = [];
+  const START_TEXT = "$328.5K";
+  for (const [id, label] of [["restaurants", "priced"], ["dental_practices", "unpriced"]] as const) {
+    const buy = buySideFor(id, TAKE);
+    const d = describe("restaurants", "California", START_TEXT, buy);
+    const range = buyRangeText(buy);
+    if (range && !d.includes(`Buying might cost ${range}, an estimate.`)) out.push(`${label}: the description does not carry the range as an estimate: "${d}"`);
+    if (!range && (/Buying might cost/.test(d) || /\$[\d.,]+[KM]?\s+to\s+\$/.test(d))) out.push(`${label}: the description prints a buy figure where no price stands: "${d}"`);
+    /* what is left once the start cash and the range are taken out holds no digit: nothing else in it is a figure */
+    let rest = d.split(START_TEXT).join("");
+    if (range) rest = rest.split(range).join("");
+    if (/\d/.test(rest)) out.push(`${label}: a digit stands in the description outside the start cash and the range: "${d}"`);
+    if (/multiple|owner earnings|\bx\b|[;\u2014]|\b(we|our|modell?ed|withheld|on file)\b/i.test(d)) out.push(`${label}: the description names a multiple or holds a word the copy laws refuse: "${d}"`);
   }
   return out;
 }
@@ -396,6 +435,8 @@ if (!STATIC_ONLY) {
   control("verdict reader: sees a lean taken from the range's midpoint, inside the band", checkVerdict(midBand).length > 0);
   const longWinded = () => "On this estimate, buying costs more cash than starting fresh; we think so, and it can be worth it here because starting means a long ramp.";
   control("verdict reader: sees a semicolon, a \"we\" and a sentence over twelve words", checkVerdict(longWinded).some((f) => /semicolon/.test(f)) && checkVerdict(longWinded).some((f) => /twelve words/.test(f)));
+  const typedDescription = (lower: string, place: string, start: string) => `Is it smarter to buy an existing ${lower} in ${place} or start one fresh? About ${start} to start, $131.4K to buy in at about 2x owner earnings.`;
+  control("description reader: sees a typed buy figure, a multiple and a figure where no price stands", checkDescription(typedDescription).length >= 3);
   const OldHero = ({ page }: { page: BuyVsStart }) => React.createElement("div", { className: "fig" }, `$${(page.buy.lowUsd ?? 0) * 2}`);
   const NoCompare = () => React.createElement("div", null, "about 2.4x owner earnings, an estimate");
   control("render reader: sees an unstamped figure, a multiple and a price on an EBITDA trade", checkRender(OldHero, NoCompare).length >= 3);
@@ -406,11 +447,13 @@ if (!STATIC_ONLY) {
   const bases = countWorthBases(ids);
   if (bases.sde !== real.sde || bases.other !== real.ebitda) fail("src/lib/spine/worth_rows.ts", `the card's basis count (${bases.sde} SDE, ${bases.other} other) is not what the buy side read (${real.sde} SDE, ${real.ebitda} other)`);
   for (const f of checkVerdict(buyVerdict)) fail("src/lib/open/buy_side.ts", f);
+  for (const f of checkDescription(buyMetaDescription)) fail("src/lib/open/buy_side.ts", f);
   for (const f of checkRender(BuyVsStartHero, BuyVsStartCompare)) fail("src/components/buy/BuyVsStartHero.tsx", f);
   /* THE WALK MUST REACH WHAT IT GUARDS: a gate that reads nothing passes everything. */
   if (ids.length < 240) fail("data/facts/industry", `read ${ids.length} trade shards, expected the 243`);
   if (real.sde < 150 || real.ebitda < 30) fail("data/facts/industry", `the buy side read ${real.sde} SDE and ${real.ebitda} operating-earnings shards, expected 150 or more and 30 or more`);
 }
+if (ROUTE_FILES.length < 4) fail(BUY_DIR, `read ${ROUTE_FILES.length} route files, expected the hero, the card, the catches and the page`);
 if (sourceRead.files < 2 || sourceRead.lines < 100) fail("src/lib/open", `read ${sourceRead.files} builder files and ${sourceRead.lines} code lines, expected both files and 100 or more lines`);
 
 if (failed > 0) {
@@ -419,6 +462,6 @@ if (failed > 0) {
 }
 console.log(
   STATIC_ONLY
-    ? `PASS  static-only: ${sourceRead.files} builder files (${sourceRead.lines} code lines) and 2 components read; no typed price, every buy figure stamped`
-    : `PASS  ${ids.length} trade shards priced through worthPrice (${counted.sde} to the dollar as the trade card, ${counted.ebitda} operating-earnings trades on the stated line, ${counted.none} without a pair); the verdict leans only outside the dead-band; ${sourceRead.files} builder files (${sourceRead.lines} code lines) and 2 components read, the figure stamped on a priced render and absent on a stated one`,
+    ? `PASS  static-only: ${sourceRead.files} builder files (${sourceRead.lines} code lines) and ${ROUTE_FILES.length} route files read; no typed price, every buy figure stamped`
+    : `PASS  ${ids.length} trade shards priced through worthPrice (${counted.sde} to the dollar as the trade card, ${counted.ebitda} operating-earnings trades on the stated line, ${counted.none} without a pair); the verdict leans only outside the dead-band; ${sourceRead.files} builder files (${sourceRead.lines} code lines) and ${ROUTE_FILES.length} route files read, the figure stamped on a priced render and absent on a stated one, the description built from the range`,
 );

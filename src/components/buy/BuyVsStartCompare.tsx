@@ -10,9 +10,11 @@
  *   - The risk read (where the danger sits on each path).
  *
  * The two columns share one visual language, the board's quiet label / display
- * figure treatment, with a warm-taupe divider between them. The BUY column is
- * marked "modeled" on its cash figure because the sale price is an archetype, not
- * a real listing, exactly the honesty the rest of the site keeps.
+ * figure treatment, with a warm-taupe divider between them. The BUY column's cash
+ * figure is the trade page's own sale range in currency, stamped with where it was
+ * read (data-src, data-kind) and called an estimate, because a sale price here is
+ * never a real listing; a trade that cannot be priced prints the card's stated
+ * line in the figure's place. Exactly the honesty the rest of the site keeps.
  *
  * Server component. Tokens only, mobile-first (the columns stack on a narrow
  * screen and sit side by side from sm), no raw hex, no em-dashes, no source-agency
