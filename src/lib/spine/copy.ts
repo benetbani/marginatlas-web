@@ -746,7 +746,7 @@ export const COPY = {
       allowance: { label: "Employment allowance", note: "off employer's National Insurance" },
       /* The rates from the file, never written here (a country's figure is the file's to hold), and in the note: "Profit taxed at
          19%" was a four-word label, the model laws' ROW SENTENCE, on the trade page's first render. */
-      "small-profits": { label: "Lower profit tax", note: "{rate} up to this; {pct} over {upper}" },
+      "small-profits": { label: "Lower profit tax", note: "{rate} up to this, {pct} over {upper}" },
     } as Record<string, { label: string; note: string; words?: string; unit?: string }>,
   },
   /** THE COUNTRY PAGE'S NEW SECTIONS (country_depth_rows.ts, 2026-09-25). Labels the same on every country; a note is the one short
