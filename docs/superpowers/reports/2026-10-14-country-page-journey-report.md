@@ -16,7 +16,13 @@ time; the full chain and the full typecheck ran on GitHub at each push. This rep
   today's page and turn when the page is composed from the slots.
 - **The check server's output**: `gh run view --log-failed` shows the Gate chain step's exit only (the chain writes to chain.txt, an
   artifact); I did not download artifacts (a download needs the owner's word), so the chain's per-gate detail comes from local runs. The
-  Typecheck step's result is read from the run each push.
+  Typecheck step's result is read from the run each push. From Task 6 on (the second builder, the controller's word) the run's
+  `check-outputs` artifact (tsc.txt, chain.txt) is downloaded and read each push.
+- **The base's own reds on the check server** (run 38491263640 on parallel-base 5e11c768, one commit past this branch's base 7c92b4af,
+  which adds the runner's fonts): harness-page-laws, fact-once, harness-laws, harness-links (LINK FLOOR on the two London trade pages, 6
+  links against 8, the database's fallback), provenance, type-floor, art-direction, census-fresh, home-answers, uk-city-sources, and
+  harness-archetypes and money-shown-own-rows by TIMEOUT (the sheet's database budgets). On this branch's runs harness-laws also carries
+  FIGURE FACE on every page, because the runner's font install (5e11c768) is not on this branch.
 - **Parent repo**: the dispatch says E:/atlas is absent; on this laptop it exists, but I followed the dispatch: no parent-repo file was
   edited (Task 7's MODEL.md and FOUNDER-VERDICTS.md texts are at the end of this report for the controller).
 
@@ -191,7 +197,7 @@ time; the full chain and the full typecheck ran on GitHub at each push. This rep
   country-slots, answer-type, signal-marks PASS on the four.
 - The country floor (Step 11): `FLOOR_BY_SURFACE.country` 13 to 10, Afghanistan's measured count. Floor census over 194 countries,
   before [[13,3],[14,1],[15,190]], now [[9,5],[10,140],[11,49]].
-- **Q5, for the owner (not decided here)**: five country pages that met the old floor fall under the new one and would stop indexing:
+- **Q5, decided by the owner on 2026-10-15, "Let them drop (Recommended)"; the floor stays at 10.** Five country pages that met the old floor fall under the new one and stop indexing (they stay on the site):
   /cu 15 to 9 (no hire slot, no wage floor on file), /lk 14 to 9 (no spend), /mo, /nr, /to 13 to 9 (no dealings). The plan says this goes
   to the owner before Task 5; per the dispatch I recorded it and went on, because the locks (Task 5) do not touch the floor. Each of the five
   draws ten slots in nine blocks (`scratchpad/journey/t4-nine.txt`).
@@ -248,3 +254,100 @@ time; the full chain and the full typecheck ran on GitHub at each push. This rep
 - Locks: the UK eight (spend, trades, running-costs, credit, filings, peers, exit, changes), Cambodia three (spend, running-costs, credit).
 - paywall-shape now PASS for the UK (red since Task 1F): "country-gb: 8 locked section(s); internal links 31 open, 32 locked (0 lost)".
   country-locks, paywall-levels, paywall-flag, locked-data, country-zones, doors, counts-fresh PASS; scoped typecheck 0.
+
+## Task 6: what the fold replaced leaves (36b62ee4)
+
+Taken over mid-task (the previous builder stopped at 00:14 UTC with 22 uncommitted changes). Read before touching: the staged deletions,
+both diffs and the two scoped typecheck halves (t6-tscA, t6-tscB, both 0). Its work was right and was kept whole: the nine components
+deleted, SpendCard and its story out, the obstacles and job market stories out, the survival-curve story drawn as slot 12 draws it, the
+builders and copy no source read, the type-floor and typed-figure entries of deleted files, the dead home door (/gb#first-years to
+/gb#lasting, an anchor Task 4 removed) and the tests' render checks of deleted drawings. One choice of it stands as a deviation:
+tests/home/duel.test.ts keeps its table-head checks (fix round F1, G8) by drawing RankedBars with the duel's own former props, because
+RankedBars with a phone head is live on six surfaces and the checks hold its head's classes, not the duel.
+
+Step 1, the list measured again on the tree (scratchpad/journey/t6-importers-now.txt, t6-builders-now.txt, t6-orphans.txt):
+
+| Name | Importers after Task 5 | Outcome |
+|---|---|---|
+| FromAbroad, HireAllIn, LeaseByLaw, IfItFails | none (their builders' comments) | deleted; the builders stay (slots 6, 7, 8, 13) |
+| FirmsLast, Duel | their tests' render checks | deleted with those checks; buildFirmsLast, buildDuel stay (slot 12) |
+| FirstYears, Obstacles, JobMarket | the story sheet, focal_values, allowlists | deleted with their stories, checks and entries |
+| AgeMix | the city view | kept |
+| BlockedSeat | city, trade, hood, industry, how-to views | kept |
+| SpendCard | the story sheet | removed with its story and its three imports |
+| buildCitiesSeat | a story, archetype-copy, model-laws-copy | deleted with country_cities_seat.ts, its stories (3 sheet instances) and both gates' checks of it; the covered-city-without-cards check it carried moved to the city cards' block |
+| seatOf | none (Task 4) | gone |
+| countryHeldToRegisters, buildLocalsNotes, buildCountryEmployment | trade, how-to, slot 7 | kept |
+| buildCountryInsurance, -Banking, -Paperwork, -Closing, buildEntryBillDetail | none | deleted |
+| hireEase (copy) | none | deleted |
+| listJobCountries | the job market story only | deleted |
+
+Found past the list, by the render-graph gate (red on the check server since Task 4, "8 components reached by nothing"; 2 after the
+deletions): `charts/DonutStat.tsx` (the banking ring) and `interact/CoverPicker.tsx` (the insurance cover picker), both drawn only by the
+old view. Deleted, with CoverPicker's fixture and three checks in the interact gate, DonutStat's names in the coverage list and the page
+laws' visual kinds, and part_tones' comment. Left, for the controller: `cityScaleSpread` (economics/country_metrics.ts, the old running
+costs' living scale, no caller since Task 4 and outside the list), and the country's seat stories on the sheet (GB:workforce, GB:easiest,
+and the setup, money, peers and locals instances) with archetype-copy's seat block: no country page seats a block since Task 4, but
+BlockedSeat and the seat copy stay (other pages draw them and the stories read the copy), so the plan's rule keeps them.
+
+Step 4, the words (scratchpad/journey/t6-copy-readers.txt; t6_copy_readers.mjs reads each member of each listed key, its blind spot a
+dynamic index, read by hand): deleted, besides the previous builder's (insurance, banking, paperwork, closing, the board's hiring row and
+hireEase, the bill's detail rows): chapters.money, .open, .firstYears; the kickers of fromAbroad, hireAllIn, leaseByLaw, ifItFails,
+financing, employment, jobMarket and firstYears.obstaclesKicker; rulesRows.insuranceWords, dismissalNote, dismissalSince, maternityNote,
+strikeWords and payments.centerWords, payout, payoutDay, payoutDays; pay.employerAdds; countrySpend.kicker, topLabel;
+countryExit.monthsLean, monthsLeanAlone; home.firmsLast.aria; blocked.cities; the locked lines hiring, employment, insurance, financing,
+banking (and, before, hire-all-in, lease-by-law, from-abroad, if-it-fails, job-market, firms-last, duel). Kept because read: blocked (the
+seat stories), chapters' city keys, the builders' words (fromAbroad.words and .state, hireAllIn, leaseByLaw, ifItFails, employment,
+financing, rulesRows, pay, jobMarket), customers, countryExit.climateLine and .world (country_exit_rows.ts), cities.prev and .next
+(the city cards), the city page's locked lines (age-mix, cities, locals, character-people).
+
+Step 5, the names (scratchpad/journey/t6-ids-now.txt): every allowlist or baseline hit on a gone country section is removed above; the
+rest are other pages (the city's age-mix and character-people, the trade's setup and locals), fixtures (fact_once's planted sections),
+the kept builders' gate names (hire-all-in, lease-by-law, from-abroad, if-it-fails, entry-bill-guard), data files and prose.
+fact_once_allow.json is empty; no baseline is keyed to a gone section, so none moved. The two home builders' headers (duel.ts,
+firms_last.ts) no longer say /gb draws their cards.
+
+Step 6: the full typecheck (`tsc --noEmit -p .`, a 4 GB heap, run once memory reached 1,150 MB) exit 0 after the last edit
+(t6-tsc2.txt); COUNTS 306 gates, no gate added or removed (t6-counts.txt). GATES over fresh renders (t6-gates.txt, t6-gates2.txt):
+pages-fresh, country-slots, answer-type, signal-marks, country-zones, country-locks, harness-page-laws, harness-copy-plain, line-rule,
+panels-opened, answer-fold, interact, loud-seats, doors, dead-anchors, archetype-copy, model-laws-copy, archetype-coverage, render-graph,
+counts-fresh, country-model, the copy gates, home-duel, home-firms-last, focal-values, no-typed-figures PASS. Red, each a standing
+condition: fact-once (industry and hood renders only), harness-laws (no country page; the London trade pages' closed-reading ROW
+SENTENCE and FOCAL over their baselines), provenance (the two London trade pages), type-floor (rhythm Task 3), harness-page-filter (the
+barbershops hole, below). harness-archetypes timed out at 360s rendering the sheet (each database read waits out its 4s budget under
+the placeholder URL), as it does on the check server; the three kinds this task changed were run alone instead: survival-curve
+(1 instance), blocked-seat (12) and ranked-bars (10), 0 design and 0 data reds at three widths (t6-arch-*.txt).
+
+### The check server's reds on this branch (2760fc3a)
+
+The check server's run of c5c79a80 (Task 5's report) was red on five gates the base is not red on (its chain.txt read against the base's,
+standing conditions above). Each was this branch's, and each is fixed at its source:
+- render-graph, "8 components reached by nothing": the six country components Task 4 stopped drawing (Duel, FirmsLast, FromAbroad,
+  HireAllIn, IfItFails, LeaseByLaw), DonutStat and CoverPicker; Task 6 deleted all eight (PASS; FirstYears, Obstacles and JobMarket were
+  reached by the story sheet only, the gate's workshop class).
+- retired-claims: slot 3's source note in country_slots.ts typed "105 countries", a count the gate retired; the note now says "every
+  country the city list covers" (PASS).
+- distance-ladder, 1 to 2: the answer fold's summary (Task 3A) padded 10 (py-2.5); it pads 12, the row still 44 on one line (PASS).
+- masthead: its scan expects nine `data-spine-body` wrappers; Task 4 drew every country from one body, so eight are left; the floor
+  reads eight, with the reason beside it (PASS). This is a scan-set floor following a measured fall, never a ratchet raised.
+- harness-page-filter: the barbershops hole, below.
+
+### The opened reading's hole on a trade page (the controller's item from Task 1E): left red, for a design decision
+
+`cell-gb-london-barbershops@768 #split: WHITE SPACE 375x120 inside a 720x327 card (panels open)`. The probe
+(scratchpad/journey/split_probe.mjs on the fresh render, t6-split-probe.txt), boxes from the card's border edge:
+
+| Width | State | Card | Left half ends | Legend (right half) | Under the legend |
+|---|---|---|---|---|---|
+| 768 | closed | 720x241 | 241 (the plus at 0,197, 344x44) | 376,52, 288x161, ends 213 | 28 |
+| 768 | open | 720x327 | 327 (the plus 344x130, two rows) | the same, ends 213 | 114 |
+| 1280 | closed | 605x319 | one column under 640 of card | 0,197, 605x66 | none beside |
+| 1280 | open | 605x405 | one column | the same | none beside |
+
+From 640 of card IncomeBreakdown stands in two halves, the plus in the left half under the bar and the legend spanning both rows on the
+right (a law of 2026-09-24, so a closed card leaves no air under the bar). Opened, the plus's two rows add 86 to the left half and the
+right half stands empty beside them. No fix is free of a design call: the opened rows across the card's full width put each figure about
+600 from its label (DISTANCES 5.7 rule 5 and LABEL GAP: a row's two ends within a third of the card); held to the left half's width they
+leave the same blank on the right; the plus under the legend leaves the blank under the bar instead; two rows a line across the card is a
+new form of DetailPanel for every trade page. So it stays red, no baseline touched, for the controller to put to the owner: where a
+plus opens inside a two-half card.
