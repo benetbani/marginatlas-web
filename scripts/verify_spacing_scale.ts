@@ -23,6 +23,11 @@
  * So: new spacing in the v2 components must land on a step. That is what stops
  * the continuum re-forming on the side the loop controls.
  *
+ * ITS SCOPE, said plainly (plan 2026-10-12 rhythm-air-inside, Task 7): it reads src/components/city2, country2 and spine2 (ROOTS), on its own
+ * older scale (6, 10, 14, 18, 22 and 26 included). Of the pages the site serves, only the trades index (/industries) draws from them, spine2's
+ * GlyphIcon and Place. The live spine's distances are held by distance-ladder (scripts/verify_distance_ladder.mjs, DISTANCES.md section 1) and
+ * its in-section rungs by spacing-pin (tests/spine/spacing_pin.test.ts).
+ *
  * Usage: npx tsx scripts/verify_spacing_scale.ts
  */
 import { readFileSync, readdirSync } from "node:fs";
