@@ -2,11 +2,12 @@
  * The country hero's rows say what they hold (plan 06, task B1). The United Kingdom's "total effective tax burden" (his words,
  * 2026-08-30) is worked out by the law engine on a stated profit, not typed; the salary row is the typical (median) salary;
  * the admin index carries its scale in its label and its last year, 2020, in its readout (plan 2026-10-13 country-page-journey, Task 3B); the company's own registration days (his ruling of 2026-09-20) are the registering slot's and the peers table's home row's, not the board's (rhythm Task 4).
- * Every country board holds three rows or more (the controller's ruling of 2026-10-15), checked first on a planted two-row board.
+ * Every country board draws three rows, or every row the country holds when it holds fewer (the controller's ruling of 2026-10-15), checked
+ * first on planted boards.
  *
  * Run: npx tsx tests/spine/hero_rows.test.ts
  */
-import { buildHeroBoard } from "../../src/lib/spine/hero_board";
+import { buildHeroBoard, heroBoardRows } from "../../src/lib/spine/hero_board";
 import { soleTraderTakeHome } from "../../src/lib/uk/law/take_home";
 import { buildPeerTable } from "../../src/lib/spine/peer_rows";
 import { COUNTRIES } from "../../src/lib/taxonomy";
@@ -38,16 +39,29 @@ check("the board holds no days-to-register row and no cost-to-register row (the 
 const de = buildHeroBoard("DE");
 check("Germany keeps its regime's rate and its own words", de.answer !== null && de.answerBasis === undefined);
 
-/* THREE ROWS IS THE BOARD'S FLOOR (the controller's ruling, 2026-10-15): every country page's board holds three rows or more. The rule is
-   checked first on a planted two-row board, so a floor that can no longer catch a thin board reds here rather than passing every country;
-   then on every country of the taxonomy, and a sweep that read no country is a red, not a pass. */
+/* THE BOARD'S FLOOR IS THREE ROWS, OR EVERY ROW THE COUNTRY HOLDS WHEN IT HOLDS FEWER (the controller's ruling, 2026-10-15; never an invented
+   row). The rows a country holds are the ones the board builder can draw for it (heroBoardRows, one figure each), not a typed list of
+   exceptions: Cuba holds two (clean dealing and admin ease; its pay is held back and it has no living cost), so its two pass. A board must
+   draw every row it holds and at least min(3, held). The rule is checked first on planted boards, so a floor that can no longer catch a thin
+   board, or a board that drops a held row, reds here rather than passing every country; a sweep that read no country is a red, not a pass. */
 const BOARD_FLOOR = 3;
-const underFloor = (b: { rows: unknown[] }) => b.rows.length < BOARD_FLOOR;
-const planted = { ...gb, iso2: "PLANTED", rows: gb.rows.slice(0, 2) };
-check("the floor catches a planted two-row board", underFloor(planted));
-const boards = COUNTRIES.map((c) => buildHeroBoard(c.code));
-const thin = boards.filter(underFloor).map((b) => `${b.iso2} (${b.rows.length})`);
-check(`every country board holds three rows or more, read on ${boards.length} countries; under the floor: ${thin.join(", ") || "none"}`, boards.length > 0 && thin.length === 0, "give the board a third true row from a held figure (never a placeholder), or have the owner rule the country off the floor");
+type Board = { iso2: string; rows: Array<{ key: string }> };
+const boardFault = (b: Board, held: ReadonlyArray<{ key: string }>): string | null => {
+  const drawn = new Set(b.rows.map((r) => r.key));
+  const dropped = held.filter((r) => !drawn.has(r.key)).map((r) => r.key);
+  if (dropped.length) return `${b.iso2} drops held row(s) ${dropped.join(", ")}`;
+  if (b.rows.length < Math.min(BOARD_FLOOR, held.length)) return `${b.iso2} draws ${b.rows.length} of ${held.length} held`;
+  return null;
+};
+const gbHeld = heroBoardRows("GB");
+check(`Britain holds three rows or more (${gbHeld.length}), so the planted boards below test the floor and not a thin country`, gbHeld.length >= BOARD_FLOOR);
+check("the floor catches a planted two-row board where three rows are held", boardFault({ iso2: "PLANTED", rows: gb.rows.slice(0, 2) }, gbHeld) !== null);
+const two = gbHeld.slice(0, 2);
+check("a planted country that holds two rows passes on its two", boardFault({ iso2: "PLANTED", rows: two }, two) === null);
+check("a planted country that holds two rows reds when its board drops one", boardFault({ iso2: "PLANTED", rows: two.slice(0, 1) }, two) !== null);
+const faults = COUNTRIES.map((c) => boardFault(buildHeroBoard(c.code), heroBoardRows(c.code))).filter((f): f is string => f !== null);
+const fewer = COUNTRIES.map((c) => ({ iso2: c.code, n: heroBoardRows(c.code).length })).filter((c) => c.n < BOARD_FLOOR).map((c) => `${c.iso2} (${c.n})`);
+check(`every country board draws every row it holds, three or all it holds when fewer, read on ${COUNTRIES.length} countries; holding fewer than three: ${fewer.join(", ") || "none"}; faults: ${faults.join("; ") || "none"}`, COUNTRIES.length > 0 && faults.length === 0, "draw every row heroBoardRows holds for the country (never a placeholder); a fourth source of a true row goes into heroBoardRows");
 
 const peers = buildPeerTable("GB");
 const home = peers?.rows.find((r) => r.home);

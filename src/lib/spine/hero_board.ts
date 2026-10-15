@@ -175,9 +175,13 @@ function placedRow(base: { key: string; icon: AtlasIconId; label: string; value:
   return { ...base, unit: "", level: null, placed: measure, signal, noSignal, readout };
 }
 
-export function buildHeroBoard(iso2In: string): HeroBoardData {
+/**
+ * THE ROWS A COUNTRY'S BOARD CAN DRAW, each from a figure the country holds (the controller's ruling of 2026-10-15: the board's floor is
+ * three rows, or every row the country holds when it holds fewer; never an invented row). buildHeroBoard draws exactly these, and the
+ * hero-rows check reads them as the country's held rows, so the floor follows the data, not a typed list of exceptions.
+ */
+export function heroBoardRows(iso2In: string): HeroBoardRow[] {
   const iso2 = iso2In.toUpperCase();
-  const facts = buildHeroFacts(iso2);
   const profile = getCountryProfile(iso2);
   const profileHeld = profile.iso2.toUpperCase() === iso2;
   const profileConfidence: HeroBoardRow["confidence"] = profileHeld && profile.tier === "A" ? "measured" : "modeled";
@@ -211,6 +215,16 @@ export function buildHeroBoard(iso2In: string): HeroBoardData {
   if (living != null && livingIndex != null && !ruleValue(iso2, "premises", "full-relief-limit")) {
     rows.push(placedRow({ key: "living", icon: "spending-power", label: COPY.journey.boardRows.living, value: String(living), confidence: "modeled", placement: placementOf(livingIndex, allCountryCostOfLivingIndices(), "countries") }, "cost-of-living", livingIndex, allCountryCostOfLivingIndices(), COPY.runningCosts.basisLiving));
   }
+  return rows;
+}
+
+export function buildHeroBoard(iso2In: string): HeroBoardData {
+  const iso2 = iso2In.toUpperCase();
+  const facts = buildHeroFacts(iso2);
+  const profile = getCountryProfile(iso2);
+  const profileHeld = profile.iso2.toUpperCase() === iso2;
+  const profileConfidence: HeroBoardRow["confidence"] = profileHeld && profile.tier === "A" ? "measured" : "modeled";
+  const rows = heroBoardRows(iso2);
 
   /* THE UNITED KINGDOM'S TAX ON PROFIT, WORKED OUT (plan 06, task B1): the hero printed a typed 20% under "total effective tax
      burden" (his words, 2026-08-30). The law engine's income tax and Class 4 national insurance on a stated profit, the median
