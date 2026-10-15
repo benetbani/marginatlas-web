@@ -225,6 +225,18 @@
       ]
     },
     {
+      "name": "figure-face",
+      "script": "scripts/harness/check_figure_face.mjs",
+      "args": [],
+      "browser": true,
+      "asserts": "check_figure_face , THE MODEL LAWS' FIGURE FACE LOAD TEST, HELD TO A RED AND A PASS (2026-10-15).",
+      "reads": [
+        "scratchpad/harness/figure-face",
+        "scripts/harness/check_model_laws.mjs"
+      ],
+      "claims": []
+    },
+    {
       "name": "harness-links",
       "script": "scripts/harness/check_page_links.mjs",
       "args": [

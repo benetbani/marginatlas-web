@@ -165,6 +165,9 @@ const GATES: Gate[] = [
      outside the chain for three weeks while the legal-form heads and the peers table's phone heads drew at 10px on three pages. */
   { name: "harness-readability", script: "scripts/harness/check_readability.mjs", args: ["--list"], browser: true },
   { name: "harness-laws", script: "scripts/harness/check_model_laws.mjs", args: ["--list", "--ratchet"], browser: true },
+  /* FIGURE FACE's load test held to a red on a face that does not exist and a pass on faces that load (2026-10-15): the old test compared the
+     figure face's digit width with the body face's, which are equal for Geist and Space Grotesk, so it redded where both loaded. */
+  { name: "figure-face", script: "scripts/harness/check_figure_face.mjs", browser: true },
   /* The walk over the links the rendered pages offer (2026-09-22, QUEUE ui:links-and-the-dead-link-walk): the shape of every internal href against src/app, the hygiene, and the floor of ways out per page type. No browser: it reads the same renders `pages-fresh` writes. `dead-links` beside it reads SOURCE literals and cannot see a link composed from data, which is every link on a spine page. */
   { name: "harness-links", script: "scripts/harness/check_page_links.mjs", args: ["--list"] },
   /* The page foot (masterplan step 31; QUEUE close:furniture-lines): every spine page type holds one "Report a mistake" link with

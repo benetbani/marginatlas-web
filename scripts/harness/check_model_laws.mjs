@@ -179,6 +179,10 @@
  *   SVG `<text>`, in a canvas, inside a map popup built after load, or inside
  *   a leaf that simply never got the class can be in the wrong face and this
  *   rule will call the page clean.
+ *   FIGURE FACE'S LOAD TEST (since 2026-10-15, the classic detection) cannot
+ *   distinguish an absent face from a present one whose ten tabular digits
+ *   at 600 measure as this machine's generic monospace and generic serif
+ *   both do; it is held to a red and a pass by scripts/harness/check_figure_face.mjs.
  *   UNMEASURED IS NOT PASSED. Until plan step 11 BLOCK, LABEL and COL read
  *   zero elements on every real page, because no component stamped their
  *   marker, and that was printed as UNMEASURED, not silently absorbed as
@@ -953,9 +957,19 @@ function inPage(ctx) {
           skipped, because with no face to draw in every figure would red and
           the report would be noise rather than a finding.
        2. FACE DID NOT LOAD , the token names a different family from the
-          body's, and a ten-digit probe in each measures the SAME width, so
-          the named face is not actually on this machine and every figure is
-          silently drawing a fallback. Also one red, also skips the pass.
+          body's, and the classic detection finds it absent: a ten-digit
+          probe measures the same width in `"<face>", monospace` as in
+          `monospace` alone, and the same in `"<face>", serif` as in `serif`,
+          so the browser fell through the named face to the generic both
+          times and every figure is silently drawing a fallback. Also one
+          red, also skips the pass. (Until 2026-10-15 this compared the
+          probe in the figure face against the body face, and Geist's and
+          Space Grotesk's tabular digits are the same width: it redded
+          wherever both faces really load, this build server and GitHub's
+          CI, and passed on a machine with neither installed. A measurement
+          artifact, CLAUDE.md working rule 1. The fixture gate
+          scripts/harness/check_figure_face.mjs holds the new test to a red
+          on a face that does not exist and a pass on an installed one.)
        3. Per figure , any visible `.fig` whose computed first family is not
           the declared figure face, named by its card.
 
@@ -963,7 +977,12 @@ function inPage(ctx) {
      text carrying `.fig`, so a number painted in an SVG `<text>`, in a canvas,
      inside a maplibre popup built after load, or inside a leaf that simply
      never got the class can be in the wrong face and this rule will call the
-     page clean. */
+     page clean. THE LOAD TEST'S OWN BLIND SPOT: it cannot distinguish a face
+     that is absent from one present whose ten tabular digits at 600 measure
+     exactly the width of this machine's generic monospace AND of its generic
+     serif, and it reads the face at weight 600 only, so a family loaded in
+     some weights and missing 600 reads as loaded if the browser synthesises
+     or substitutes a sibling weight. */
   {
     const probe = document.createElement("span");
     probe.setAttribute("style", "position:absolute;left:-9999px;top:0;font-size:100px;font-weight:600;white-space:pre;font-variant-numeric:tabular-nums lining-nums");
@@ -972,17 +991,20 @@ function inPage(ctx) {
     const first = (list) => (list || "").split(",")[0].replace(/^\s*["']|["']\s*$/g, "").trim();
     probe.style.fontFamily = "var(--font-num)";
     const figFace = first(getComputedStyle(probe).fontFamily);
-    const figW = probe.getBoundingClientRect().width;
     probe.style.fontFamily = getComputedStyle(document.body).fontFamily;
     const bodyFace = first(getComputedStyle(probe).fontFamily);
-    const bodyW = probe.getBoundingClientRect().width;
+    /* The classic detection: the face is loaded when the probe in the face before a generic measures other than the generic alone, for
+       either generic. Two generics, because a face can share one generic's digit width by chance and is unlikely to share both. */
+    const widthIn = (family) => { probe.style.fontFamily = family; return probe.getBoundingClientRect().width; };
+    const quoted = `"${figFace.replace(/["\\]/g, "")}"`;
+    const faceLoaded = !!figFace && ["monospace", "serif"].some((g) => Math.abs(widthIn(`${quoted}, ${g}`) - widthIn(g)) >= 0.5);
     probe.remove();
 
     const figs = [...document.querySelectorAll(".fig")].filter((f) => f.getClientRects().length && !hiddenFromSight(f));
     if (!figFace || figFace === bodyFace) {
       push("page", "FIGURE FACE", `--font-num resolves to the body face (${bodyFace || "nothing"}); no figure on this page can carry the display face`);
-    } else if (Math.abs(figW - bodyW) < 0.5) {
-      push("page", "FIGURE FACE", `${figFace} is declared as the figure face and renders at the body face's exact width; it did not load, and every figure is drawing a fallback`);
+    } else if (!faceLoaded) {
+      push("page", "FIGURE FACE", `${figFace} is declared as the figure face and measures as the generic monospace and the generic serif do; it did not load, and every figure is drawing a fallback`);
     } else if (figs.length === 0) {
       unmeasured.push("FIGURE FACE: no .fig elements on this page; the face is unmeasured, not passed");
     } else {
