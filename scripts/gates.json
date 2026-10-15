@@ -3980,6 +3980,19 @@
       "claims": []
     },
     {
+      "name": "start-side-held",
+      "script": "tests/open/start_side_held.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "NO PAGE OR BUILDER READS A TYPED START FIGURE (2026-10-15, release 2 job A; the controller's ruling on /srv/atlas/reports/start-capitals-investigation.md, option (c)).",
+      "reads": [
+        "src/lib/markets/opening_archetypes.ts",
+        "src/lib/markets/startup_capital_archetypes.ts",
+        "tests/open/start_side_held.test.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "uk-city-sources",
       "script": "tests/spine/uk_city_sources.test.ts",
       "args": [],
