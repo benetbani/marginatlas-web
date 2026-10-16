@@ -2845,7 +2845,6 @@ export const COPY = {
     levers: {
       title: "Your numbers",
       fixed: "fixed costs a month, whatever you sell",
-      basis: "Move any figure and every answer follows.",
       groups: { team: "Team", premises: "Premises", sales: "Sales", you: "You", loan: "Loan" },
       reset: "Reset",
       yourFigure: "Your figure.",

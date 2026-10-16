@@ -86,7 +86,11 @@ await browser.close();
 for (const s of bare) red({ rule: RULE, file: LIST, detail: `no page of the ${s} surface in ${LIST}, so no ${s} render was read`, remedy: `add a page of the ${s} surface to ${HARNESS_LIST}, the list the chain's harness gates read` });
 for (const f of missing) red({ rule: RULE, file: f, detail: "no render", remedy: RENDER_REMEDY });
 for (const [name, widths] of empty) red({ rule: RULE, file: `scratchpad/harness/pages/${name}.html`, detail: `${name}: no printed figure read at ${widths.join(" and ")}, and a spine page always prints figures, so nothing was read`, remedy: EMPTY_REMEDY });
-for (const x of found.values()) red({ rule: RULE, file: `scratchpad/harness/pages/${x.name}.html`, detail: `${x.rule}: "${x.figure}" prints in ${x.where}${x.src ? ` (data-src ${x.src})` : " (no data-src)"} at ${x.widths.join(" and ")}`, remedy: REMEDY });
+/* THE REMEDY NAMES THE SECTION THAT KEEPS IT (the spec's section 3 item 2; `keep`, scripts/lib/fact_once.mjs says how it is chosen). */
+const keepRemedy = (x) => (x.keep
+  ? `keep "${x.figure}" in ${x.keep}${x.where.includes(" and ") ? `, and where it prints again (${x.where.split(" and ").filter((s) => s !== x.keep).join(", ")}) say it in words without the number or drop that sentence` : ": its focal or its row prints it, not both"}; ${REMEDY}`
+  : `choose which of ${x.where} explains "${x.figure}" and keep it there; ${REMEDY}`);
+for (const x of found.values()) red({ rule: RULE, file: `scratchpad/harness/pages/${x.name}.html`, detail: `${x.rule}: "${x.figure}" prints in ${x.where}${x.src ? ` (data-src ${x.src})` : " (no data-src)"} at ${x.widths.join(" and ")}`, remedy: keepRemedy(x) });
 /* THE UNUSED ALLOWANCES. A page whose render is missing is already a red above and its entries are not judged twice. */
 const read = new Set(pages.map((p) => `${p.surface}-${p.slugs.join("-")}`).filter((n) => !missing.includes(`scratchpad/harness/pages/${n}.html`)));
 const listed = new Set(pages.map((p) => `${p.surface}-${p.slugs.join("-")}`));

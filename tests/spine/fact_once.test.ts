@@ -30,7 +30,7 @@ const srcLen = srcFrom === -1 ? -1 : libText.slice(srcFrom).search(/\r?\n\}\r?\n
 if (srcFrom === -1 || srcLen === -1) { red({ rule: RULE, file: LIB, detail: "no `function factOnceInPage(` ending at a closing brace in column 0", remedy: "keep the in-page reading one function declaration, whole, so the fixtures can run the source the gate hands the page" }); process.exit(1); }
 const inPageSrc = `${libText.slice(srcFrom, srcFrom + srcLen)}\n}`;
 
-type Red = { rule: string; figure: string; where: string; src: string | null };
+type Red = { rule: string; figure: string; where: string; src: string | null; keep: string | null };
 const run = (body: string): { figures: number; reds: Red[] } => {
   const dom = new JSDOM(`<!doctype html><html><body><main>${body}</main></body></html>`, { runScripts: "outside-only" });
   try {
@@ -46,6 +46,18 @@ const rules = (r: { reds: Red[] }) => r.reds.map((x) => `${x.rule}:${x.figure}:$
 check("the lib exports factOnceInPage, the function the gate imports and hands the page", typeof factOnceInPage === "function");
 let r = run(sec("take", `<span data-figure="">$133</span>`) + sec("setup", fig("$133")));
 check(`one figure in two sections, unstamped, is one fact twice: ACROSS (${rules(r)})`, rules(r) === "ACROSS:$133:setup and take");
+/* WHICH SECTION KEEPS IT (release 3 job C; the spec's section 3 item 2, the final review's Minor 3): the red names the section that should keep the figure. */
+const keeps = (x: { reds: Red[] }) => x.reds.map((y) => String(y.keep)).sort().join(" | ");
+r = run(`<div data-hero="1">${sec("take", `<span data-figure="">7%</span>`)}</div>` + sec("split", fig("7%")));
+check(`across the hero and a section, the section keeps a figure the hero only previews (keep: ${keeps(r)})`, r.reds.length === 1 && r.reds[0].keep === "split");
+r = run(`<div data-hero="1">${sec("take", fig("7%", ' style="font-size:48px"'))}</div>` + sec("benchmark", fig("7%")));
+check(`across the hero and a section, the hero keeps the page's answer, the figure it prints at 30 or more (keep: ${keeps(r)})`, r.reds.length === 1 && r.reds[0].keep === "take");
+r = run(sec("margins", fig("13%", ' style="font-size:30px"')) + sec("peers", fig("13%")));
+check(`across two sections, the one that prints it as its focal keeps it (keep: ${keeps(r)})`, r.reds.length === 1 && r.reds[0].keep === "margins");
+r = run(sec("cities", fig("$52K")) + sec("peers", fig("$52K")));
+check(`across two sections neither the hero nor a focal, no section is named and the gate asks for a choice (keep: ${keeps(r)})`, r.reds.length === 1 && r.reds[0].keep === null);
+r = run(sec("split", fig("7%", ' style="font-size:30px"') + fig("7%")));
+check(`a focal again in its own section keeps it in that section (keep: ${keeps(r)})`, r.reds.length === 1 && r.reds[0].keep === "split");
 r = run(sec("setup", fig("$133") + fig("$133")));
 check(`two members of one value in one table are the table's grammar, never a repeat (${rules(r) || "none"})`, r.reds.length === 0);
 r = run(sec("entry-bill", `<div data-focal="1" class="fig" style="font-size:30px">$133</div>` + fig("$133")));
@@ -84,6 +96,7 @@ check("the hero board's row value carries data-figure, so the gate reads a figur
 
 /* THE GATE CANNOT PASS HAVING READ NOTHING (the controller's ruling after the review of Task 1A): a spine surface the list holds no page of is a red, and so is a
    listed render that reads no printed figure at a width. The surfaces are read from the gate's own SPINE, not retyped here, and each must occur in the harness list's pages. */
+check("the gate's remedy names the section that keeps the figure (the red's keep), or asks for the choice where none can be told", /remedy: keepRemedy\(x\)/.test(gate) && /x\.keep/.test(gate), GATE, "build each repeat's remedy from its keep (scripts/lib/fact_once.mjs): keep the figure in that section, or choose between the two where keep is null");
 check("the gate reds a spine surface the list holds no page of and a render that reads no printed figure at a width", /SPINE\.filter\(\(s\) => !pages\.some\(/.test(gate) && /\.figures === 0/.test(gate), GATE, `red each SPINE surface with no page in the list (naming ${PAGES}) and each listed render whose factOnceInPage reads figures 0`);
 const spineNames = (/const SPINE = \[([^\]]*)\]/.exec(gate)?.[1] ?? "").split(",").map((s) => s.trim().replace(/^["']|["']$/g, "")).filter(Boolean);
 const harnessPages = (JSON.parse(readFileSync(PAGES, "utf8")) as { pages: Array<{ surface: string }> }).pages;

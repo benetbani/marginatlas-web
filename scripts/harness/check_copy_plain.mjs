@@ -134,8 +134,12 @@ function inPage(READER) {
     if (title && !hidden(title) && words(title.textContent) > TITLE_MAX) red(id, "TITLE LONG", `"${title.textContent.trim()}", ${words(title.textContent)} words`);
     /* A LIFTED LINE IS STILL A LINE (plan 2026-10-12 rhythm-air-inside, Task 3): the type floor raised supporting lines to 14, and a test by
        size alone would read none of them; the floor marks each one it lifts (data-line; the kit's Basis and Focal's placement carry their own
-       marks), so the law reads the same lines it read before. */
-    const lines = [...card.querySelectorAll("p")].filter((p) => !hidden(p) && !p.closest("table,li,dl,[role='table'],[data-note]") && (parseFloat(getComputedStyle(p).fontSize) <= MICRO_MAX || p.matches("[data-line], [data-basis], [data-placement]")) && p.textContent.trim());
+       marks), so the law reads the same lines it read before.
+       A FIGURE'S WORDS IN A KEPT CARD ARE A LINE (release 3 job C, 2026-10-16; the rhythm reform's final review, Minor 4): the zones lift a figure's
+       words to body text only in an open section, which is where they are the figure's own line and not a supporting one; in a kept box (a lever,
+       a picker, a door: data-keep-card) and outside a zone they stood at 12 before the floor and were read, so they still are. */
+    const OPEN_SECTION = "[data-zone] .spine-card:not([data-keep-card])";
+    const lines = [...card.querySelectorAll("p")].filter((p) => !hidden(p) && !p.closest("table,li,dl,[role='table'],[data-note]") && (parseFloat(getComputedStyle(p).fontSize) <= MICRO_MAX || p.matches("[data-line], [data-basis], [data-placement]") || (p.matches("[data-focal-words]") && !p.closest(OPEN_SECTION))) && p.textContent.trim());
     /* The page's hero is two or three columns, and a line under the figure and one under the rows do not stand in one place: it may hold two. */
     const cap = card.getAttribute("data-level") === "page" ? 2 : 1;
     lines.slice(cap).forEach((p) => red(id, "LINES", `a supporting line past the ${cap === 2 ? "hero's two" : "first"}: "${p.textContent.trim().slice(0, 70)}"`));
