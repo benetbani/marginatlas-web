@@ -529,16 +529,37 @@ if (!STATIC_ONLY) {
   for (const f of checkDescription(buyMetaDescription)) fail("src/lib/open/buy_side.ts", f);
   for (const f of checkRender(BuyVsStartHero, BuyVsStartCompare)) fail("src/components/buy/BuyVsStartHero.tsx", f);
   for (const f of checkBranches(BuyVsStartHero, BuyVsStartCompare)) fail("src/components/buy/BuyVsStartCompare.tsx", f);
-  /* THE HERO NEVER LEADS WITH A CONDITIONAL LICENCE (fix round 1, M-3): the reader of the condition on known names, then every shard's lead. */
+  /* THE HERO NEVER LEADS WITH A CONDITIONAL LICENCE (fix round 1, M-3; widened at release 3, the re-review's I-1): the reader of the
+     condition on known names, the eight live trades' own names the re-review found leading, then every shard's lead read against
+     NAMED_CONDITION, a word list kept here apart from isConditionalLicence, so a lead the function let through is seen by a reading that
+     did not choose it. Each lead is printed, so a reviewer can read them. */
   control("conditional reader: a licence \"(if serving alcohol)\", \"(only if serving)\", \"(where required)\" and \"(armed guards only)\" are conditional; \"(federal)\", \"(malpractice) insurance\" and a plain name are not", ["Liquor licence (if serving alcohol)", "Liquor licence (only if serving)", "Sign permit (where required)", "Firearms permit (armed guards only)"].every(isConditionalLicence) && !["Firearms licence (federal)", "Professional liability (malpractice) insurance", "Food service permit"].some(isConditionalLicence));
+  const EIGHT: Array<[string, string]> = [
+    ["bookstores_indie", "Food and hygiene permit where a cafe is run"],
+    ["carpenters_finish", "Trade or contractor licence where required"],
+    ["event_production", "Temporary alcohol and food-service permits where served"],
+    ["eyewear_optical", "Optician or optical-establishment licence where required"],
+    ["landscaping_lawn", "Landscaping or contractor licence where required"],
+    ["marketing_design", "General liability and employer cover where staffed"],
+    ["pet_training", "Professional certification (voluntary)"],
+    ["tutoring_centers", "Private-instruction or premises permit where required"],
+  ];
+  control("conditional reader: the eight live trades' optional or conditional names (pet training's \"(voluntary)\", \"where required\", \"where served\", \"where staffed\") are conditional, and \"Optional installer certification\" and \"a bonded facility, optional\" too", EIGHT.every(([, n]) => isConditionalLicence(n)) && isConditionalLicence("Optional installer certification / trade credential") && isConditionalLicence("Customs bond for a bonded facility, optional"));
+  const NAMED_CONDITION = /\b(?:optional|voluntary|if|where|when|unless)\b|\bonly\)|\(only\b|-required\b|\bnot legally\b/i;
+  control("the independent reading sees what the function must not let lead", EIGHT.every(([, n]) => NAMED_CONDITION.test(n)) && !NAMED_CONDITION.test("Food service permit"));
   let leadsChecked = 0;
+  const leads: string[] = [];
   for (const id of ids) {
     const pm = buildPermits(id, "US");
     if (!pm?.longestRequired) continue;
     leadsChecked++;
     const cell = pm.cells.find((c) => c.key === pm.longestRequired!.key);
-    if (!cell || isConditionalLicence(String(cell.label))) fail("src/lib/spine/permits_rows.ts", `${id}: the start side's lead "${cell?.label}" is a conditional licence`);
+    const label = String(cell?.label ?? "");
+    leads.push(`${id}: ${label} (${pm.longestRequired.days} days)`);
+    if (!cell || NAMED_CONDITION.test(label)) fail("src/lib/spine/permits_rows.ts", `${id}: the start side's lead "${cell?.label}" names a condition (optional, voluntary, or needed only if, where or when)`);
   }
+  for (const [id, n] of EIGHT) if (leads.some((l) => l.startsWith(`${id}: ${n} (`))) fail("src/lib/spine/permits_rows.ts", `${id} still leads with "${n}"`);
+  if (process.argv.includes("--leads")) for (const l of leads) console.log(`lead ${l}`);
   if (startFor("restaurants").longestWait?.figure === "75 days") fail("src/lib/open/opening_page.ts", "restaurants leads with the 75 days of the liquor licence (if serving alcohol)");
   if (leadsChecked < 200) fail("data/facts/industry", `checked ${leadsChecked} shards' required lead, expected 200 or more`);
   /* A CARD THAT PRINTS THE WAIT AGAIN is seen (the regression the review named: the wait row back in the card beside the hero's lead). */

@@ -97,17 +97,27 @@ export function isUsJurisdictionLicence(name: string): boolean {
 }
 
 /**
- * A LICENCE ONLY SOME SHOPS NEED (fix round 1 of release 3 job A, the review's M-3): the shard names the condition in the licence's own
- * name, a parenthetical such as "(if serving alcohol)", "(only if serving)", "(where required)", "(for cross-border work)", "(armed guards
- * only)" or "(often client-required, not legally required)". Such a licence still prints in the list; it never leads a hero as the wait to
- * open, which /opening and /buy-or-start state as the longest REQUIRED wait. Read off the words, so a condition the shard writes outside
- * a parenthetical, or in other words, is not seen; a name with no condition is taken as required.
+ * A LICENCE ONLY SOME SHOPS NEED (fix round 1 of release 3 job A, the review's M-3; widened at release 3, the re-review's I-1): the shard
+ * names the condition in the licence's own name, and a name is the only text a licence row carries (the shard holds `name`,
+ * `typical_days` and `typical_cost_band`, no note). Conditional when the name says, anywhere in it:
+ *  - it is optional or voluntary ("Professional certification (voluntary)", "Optional installer certification", "a bonded facility, optional");
+ *  - it is needed only if, where, when or unless something applies, in brackets or not ("(if serving alcohol)", "where required",
+ *    "where served", "where a cafe is run", "Production insurance and, where used, drone or pyro permits");
+ *  - a parenthetical that opens on "only", "for", "as required" or "often", or ends on "only" ("(armed guards only)", "(only if boxed)");
+ *  - someone other than the law requires it ("client-required", "carrier-required", "not legally required"), or "if applicable".
+ * Such a licence still prints in the list; it never leads a hero as the wait to open, which /opening and /buy-or-start state as the
+ * longest REQUIRED wait. Read off the words: a condition written in other words is not seen, and a name that joins a required licence
+ * to a conditional one ("national and where required territorial") reads as conditional, so the hero falls to the next wait rather than
+ * call a part-conditional licence required. A name with no condition is taken as required.
  */
 export function isConditionalLicence(name: string): boolean {
-  for (const m of name.matchAll(/\(([^)]*)\)/g)) {
-    const inner = m[1].trim().toLowerCase();
-    if (/^(?:if|only|where|when|for|as required|often|unless)\b/.test(inner)) return true;
-    if (/\bonly$|\bnot legally required\b|\bnot a licen[cs]e\b|\bif applicable\b/.test(inner)) return true;
+  const n = name.toLowerCase();
+  if (/\b(?:optional|voluntary|voluntarily)\b/.test(n)) return true;
+  if (/\b(?:if|where|when|whenever|unless)\b/.test(n)) return true;
+  if (/\b(?:client|carrier|lender|landlord)-required\b|\bnot legally required\b|\bnot a licen[cs]e\b/.test(n)) return true;
+  for (const m of n.matchAll(/\(([^)]*)\)/g)) {
+    const inner = m[1].trim();
+    if (/^(?:only|for|as required|often)\b/.test(inner) || /\bonly$/.test(inner)) return true;
   }
   return false;
 }
