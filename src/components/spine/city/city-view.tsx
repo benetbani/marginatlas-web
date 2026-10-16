@@ -941,7 +941,7 @@ export function SpineCityBody({ data = spineCitySeed, locked = false }: { data?:
        rhythm-air-inside, Task 6): on the 209 cities where who buys stands beside the season, four levels of halves ran in a row (opening,
        living, who buys, the crew). Measured at 1280 on seven of them, the living card and the runway end 20 to 31 apart at 2-1 (20 to 50 at
        3-2 and 2-3); the level of three stays three. LATENT (review M1): where neither who buys nor the crew level draws (crew and texture
-       both withheld; held by 252 of 252 today), this 2-1 stands beside the year's 2-1 and D3 reds: take 1-1 or 3-2 here in that state. */
+       both withheld; the data holds both on 252 of 252 cities today, so the state is dormant), this 2-1 stands beside the year's 2-1 and D3 reds: take 1-1 or 3-2 here in that state. */
     {
       key: "living",
       split: livingThree || earningsOnLiving ? "1-1-1" : "2-1",

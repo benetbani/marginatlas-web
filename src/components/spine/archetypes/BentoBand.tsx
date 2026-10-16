@@ -109,7 +109,7 @@
  * not from these numbers, because these numbers are the thing under test.
  */
 import * as React from "react";
-import { Basis, Box, Fig, Rail } from "@/components/spine/kit";
+import { Basis, Box, Fig, Rail, hasText } from "@/components/spine/kit";
 import type { AtlasIconId } from "@/components/brand/icons";
 import type { Provenance } from "@/lib/spine/provenance";
 
@@ -521,11 +521,13 @@ export function BentoMetric({
           plus and no basis or foot (the industry page's licences at 768) set
           its plus alone in the right half over an empty left one, so the plus
           then stands where the basis would have. */}
-      {detail && (basis || foot) ? (
+      {detail && (hasText(basis) || foot) ? (
         /* THE ROW STANDS 24 UNDER THE GROUP ABOVE, NOT THE BASIS ALONE (fix round 1 of rhythm-t6, the line rule on Manchester's premises):
            beside the basis from 560, the plus stood 0 under the figure while the basis took its 24, so the row carries the 24 and the basis
            in it takes none; stacked, the basis still stands 24 under the figure and the plus under it as before. */
-        <div className={`${basis ? "mt-6 " : ""}[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [@container(min-width:560px)]:items-baseline [@container(min-width:560px)]:gap-x-8`}>
+        /* THE 24 FOLLOWS THE SAME TEXT TEST AS THE LINE (rhythm-t6 review m-6): Basis draws nothing for a string of spaces, so the row's 24
+           asks hasText too, and never stands holding nothing. */
+        <div className={`${hasText(basis) ? "mt-6 " : ""}[@container(min-width:560px)]:grid [@container(min-width:560px)]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] [@container(min-width:560px)]:items-baseline [@container(min-width:560px)]:gap-x-8`}>
           <div>
             {basis ? <Basis beside>{basis}</Basis> : null}
             {foot ? <p data-line="" className="mt-1 text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]">{foot}</p> : null}

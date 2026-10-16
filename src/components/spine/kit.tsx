@@ -1159,7 +1159,7 @@ export function Focal({ figure, words, placement, prov, accent = false, live = f
 /** THE BASIS LINE (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1; MODEL PART 7: what the figure is and in what unit, never what it means): one line under a section's
  *  rows or drawing, 24 from them, the group step, the one piece a section prints its basis with. It is defined in ./basis.tsx, a module with no import but React; the reason
  *  it was split out (the home's retired CityRows and its retired foot test) is gone, and the split stays harmless: the kit re-exports it and every file imports it from here. */
-export { Basis } from "./basis";
+export { Basis, hasText } from "./basis";
 
 /* Stat , one figure with a locked scale contract. focal vs support keeps a >=1.6
  * type-scale contrast so the focal always dominates. Terracotta only on the focal. */
