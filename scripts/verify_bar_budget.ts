@@ -29,16 +29,16 @@ const ROOT = process.cwd();
 
 /* FORM-CATALOG.md family alignment (rulebook v1): the budget counts the FILL-bar
  * family only (a value length-encoded as filled width). Marker-on-track forms
- * (EaseScale, SpreadStrip, SpectraTable, dot strips) are the DOT/MARKER family
- * and do not count , they are the July-3 vocabulary the founder ratified. */
+ * (SpectraTable, dot strips; EaseScale and SpreadStrip were too until their deletion on
+ * 2026-10-16) are the DOT/MARKER family and do not count , they are the July-3 vocabulary
+ * the founder ratified. Meter and PhaseBar left this list the same day: the kit holds
+ * neither, so no file can draw them. */
 const PRIMITIVES = [
   "MiniBar",
   "IndexBar",
   "StackBar",
   "ShareStack",
   "Waterfall",
-  "Meter",
-  "PhaseBar",
   "RankBars",
   "CellScaleBar",
 ];

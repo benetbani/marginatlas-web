@@ -35,7 +35,7 @@ import { industryToSlug } from "@/lib/taxonomy";
 import {
   TERRA, TRACK, usd, usdMo, cap,
   Ico, Fig, Dots, DotsSet, StackBar, Donut, SampleTag,
-  Movement, Box, EaseScale, Head, Chip, KV, KVGrid, Expand, InlineDisclosure, Bullets,
+  Movement, Box, Head, Chip, KV, KVGrid, Expand, InlineDisclosure, Bullets,
   Even, WideRail, CatRows,
   Rail, Stat, InfoTip, SpectraTable,
 } from "@/components/spine/kit";
@@ -596,7 +596,8 @@ function HiringDials({ d }: { d: any }) {
   const detail = ([["Hiring", notes.hire], ["Contracts", notes.contract], ["Firing", notes.fire]] as Array<[string, string]>).filter(([, v]) => v);
   return (
     <Box><Head icon="hiring">How easy it is to hire and fire</Head>
-      <div className="mt-6"><EaseScale rows={rows} endLabels={["Harder / rigid", "Easier / flexible"]} /></div>
+      {/* The kit's EaseScale drew these three on a shared track; it had no caller on a page and was deleted (release 3 job C, 2026-10-16), so the dev page lists the words. */}
+      <div className="mt-6">{rows.map(([label, , word]) => <KV key={label} k={label} v={word} />)}</div>
       {detail.length ? (
         <div className="mt-4 space-y-2">{detail.map(([title, note]) => (
           <Expand key={title} name="hiring" title={title}>

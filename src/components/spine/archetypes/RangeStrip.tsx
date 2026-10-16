@@ -121,8 +121,11 @@ export type RangeStripProps = {
 const PAD = 6; // percent of the track kept clear at each end so end labels stay inside the box
 /* THE ROUND VALUES' ROW: a 6px tick under the track, its figure 9px under the track's line at the micro rung (12 tall), the names 14 lower. */
 const SCALE_ROW = 14;
-/* NAMES ABOVE (`namesAbove`), in px. A mark's block is its name (the micro rung, 12 on 12) and, 6 under it, its figure (the body rung, 14 on 14, or the lead's 30 on 30). */
+/* NAMES ABOVE (`namesAbove`), in px. A mark's block is its name (the body rung, 14 on 14) and, 6 under it, its figure (the body rung, 14 on 14, or the lead's 30 on 30).
+   A MARK'S NAME IS READER TEXT (release 3 job C, 2026-10-16; the rhythm reform's final review, Minor 2): it says what the mark is, as a legend does, so it
+   stands at 14 like the rest of the reader's words; NAME_H stays 12 for the round values' figures under the track, a value on the drawing's own scale. */
 const NAME_H = 12;
+const MARK_NAME_H = 14;
 const NAME_GAP = 6;
 const FIG_H = 14;
 const LEAD_H = 30;
@@ -201,7 +204,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
     /* THE DATA ABOVE THE TRACK, THE SCALE ALONE BELOW IT (the header says why). A mark is one block, its name over its figure, the
        blocks of a row bottom-aligned on one figure line, so the lead's name stands above the others'. Row 0 is the upper row; a
        stepped mark (row 1) stands a row lower, nearer the track, and the upper blocks' ticks reach up to them on a hairline. */
-    const blockH = (m: StripMark) => NAME_H + NAME_GAP + (m.lead ? LEAD_H : FIG_H);
+    const blockH = (m: StripMark) => MARK_NAME_H + NAME_GAP + (m.lead ? LEAD_H : FIG_H);
     const rowH = (r: number) => Math.max(0, ...placed.filter((_, i) => rows[i] === r).map((p) => blockH(p.m)));
     const h0 = rowH(0), h1 = rowH(1);
     const base = twoRows ? h0 + ROW_GAP + h1 : h0;
@@ -213,8 +216,8 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
           {/* each mark's name, then its figure under it, both over the tick */}
           {placed.map((p, i) => (
             <React.Fragment key={p.m.key}>
-              <div data-mark-label={p.m.key} data-type-allow="strip-marks" className="absolute whitespace-nowrap text-[length:var(--t-micro)] leading-none text-[var(--c-muted)]" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) }}>{p.m.label}</div>
-              <div data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) + NAME_H + NAME_GAP }}>
+              <div data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-body)] leading-none text-[var(--c-muted)]" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) }}>{p.m.label}</div>
+              <div data-mark={p.m.key} className="absolute whitespace-nowrap" style={{ ...align(p.x, !!p.m.lead), top: blockTop(i) + MARK_NAME_H + NAME_GAP }}>
                 <Fig className={figClass(p.m)} prov={p.m.prov}>{fmt(p.m.value)}</Fig>
               </div>
             </React.Fragment>
@@ -264,7 +267,7 @@ export function RangeStrip({ marks, scale = "linear", fmt, basis, note, extra, o
         ))}
         {/* the names, under their ticks, stepping to a second row when crowded */}
         {placed.map((p, i) => (
-          <div key={`l-${p.m.key}`} data-mark-label={p.m.key} data-type-allow="strip-marks" className="absolute whitespace-nowrap text-[length:var(--t-micro)] text-[var(--c-muted)]" style={{ ...align(p.x), top: (twoRows ? 60 : 48) + shift + scaleRow + rows[i] * 18 }}>{p.m.label}</div>
+          <div key={`l-${p.m.key}`} data-mark-label={p.m.key} className="absolute whitespace-nowrap text-[length:var(--t-body)] leading-none text-[var(--c-muted)]" style={{ ...align(p.x), top: (twoRows ? 60 : 48) + shift + scaleRow + rows[i] * 18 }}>{p.m.label}</div>
         ))}
       </div>
       {basis ? <Basis>{basis}</Basis> : null}
