@@ -118,7 +118,7 @@ export function DataSection({
 
       {section.modeled ? (
         <p className="mt-3 text-[11px] text-cocoa-500">
-          Modeled from national business demography. Directional.
+          Estimated from national counts of businesses.
         </p>
       ) : null}
 

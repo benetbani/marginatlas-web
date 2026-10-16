@@ -104,7 +104,6 @@ import { tradeHeadFigure } from "@/lib/spine/trade_head";
 import { AuPrimaryDataBadge } from "@/components/AuPrimaryDataBadge";
 // Reverted: InlineMidArticle temporarily removed.
 // import { InlineMidArticle } from "@/components/newsletter/NewsletterSignupVariants";
-import { IfYouOpenedToday } from "@/components/sections/IfYouOpenedToday";
 import { isPaywallOn, isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { lockablePath } from "@/lib/monetization/pro_route";
 import { renderCellRoute } from "./cell_spine";

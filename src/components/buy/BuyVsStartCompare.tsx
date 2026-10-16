@@ -6,11 +6,12 @@
  *
  *   - Cash needed up front: on the BUY side the sale range; on the START side
  *     the stated line, because no start cost is held (the typed start cash left
- *     on 2026-10-15, release 2 job A).
+ *     on 2026-10-15, release 2 job A). Said here, once, where the hero leads
+ *     with a held figure (release 3 job A); where it cannot, the hero says it.
  *   - Time: on the START side the longest licence wait and the trade's years to
  *     pay back, the trade page's own figures, stamped (they stand where typed
- *     weeks and a typed payback stood); on the BUY side day one, the whole point
- *     of buying.
+ *     weeks and a typed payback stood), less the one the hero leads with, so
+ *     each prints once; on the BUY side day one, the whole point of buying.
  *   - The risk read (where the danger sits on each path).
  *
  * The two columns share one visual language, the board's quiet label / display
@@ -26,7 +27,7 @@
  */
 import * as React from "react";
 import { provAttrs, type Provenance } from "@/lib/spine/provenance";
-import { buyRangeText } from "@/lib/open/buy_side";
+import { buyRangeText, startLead } from "@/lib/open/buy_side";
 import { COPY } from "@/lib/spine/copy";
 import type { BuyVsStart } from "@/lib/open/buy_vs_start";
 
@@ -69,6 +70,8 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
      figure's place, and no figure. */
   const buyRange = buyRangeText(page.buy);
   const B = COPY.buyOrStart;
+  /* The figure the hero leads the start side with (startLead): it leaves this column, and the cash row says the gap once in its place. */
+  const lead = startLead(page.start);
   return (
     <section className="mt-8">
       {/* ONE card, not two half-cards. This was a pair of hand-rolled opaque
@@ -87,13 +90,15 @@ export function BuyVsStartCompare({ page }: { page: BuyVsStart }) {
             Build it from nothing, your way.
           </p>
           <div className="mt-4 flex flex-col gap-4">
-            {/* No cash row on this side: the hero says once that no start cost is held (fix round 1, ruling 2); the column carries what it does hold. */}
-            {page.start.longestWait ? (
+            {/* The gap said once (fix round 1, ruling 2), here beside the buy side's cash row where the hero leads with a held figure; where
+                the hero holds none it says the gap itself and this row stays off. */}
+            {lead ? <Row label={B.cashLabel} value={page.start.cashLine} quiet /> : null}
+            {lead?.which === "wait" ? null : page.start.longestWait ? (
               <Row label={B.waitLabel} value={page.start.longestWait.figure} note={B.waitNote} prov={page.start.longestWait.prov} />
             ) : (
               <Row label={B.waitLabel} value={B.noWait} quiet />
             )}
-            {page.start.payback ? (
+            {lead?.which === "payback" ? null : page.start.payback ? (
               <Row label={B.paybackLabel} value={page.start.payback.figure} note={B.paybackNote} prov={page.start.payback.prov} />
             ) : null}
             <Row

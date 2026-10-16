@@ -58,6 +58,8 @@ export type PermitsData = {
   cells: KvCell[];
   /** The longest wait among the printed cells: the candidate's focal, first in the cells. Null when no cell prints. */
   longest: { key: string; days: number } | null;
+  /** The longest wait among the licences every shop of the trade needs (isConditionalLicence is false): what a hero may lead with. Null when none prints. */
+  longestRequired: { key: string; days: number } | null;
   /** The zero-day licences, withheld with this line; null when every licence prints. */
   withheld: string | null;
   basis: string;
@@ -94,6 +96,22 @@ export function isUsJurisdictionLicence(name: string): boolean {
   return /\bstate\b/i.test(name) && !/\b(?:state or national|national or state)\b/i.test(name);
 }
 
+/**
+ * A LICENCE ONLY SOME SHOPS NEED (fix round 1 of release 3 job A, the review's M-3): the shard names the condition in the licence's own
+ * name, a parenthetical such as "(if serving alcohol)", "(only if serving)", "(where required)", "(for cross-border work)", "(armed guards
+ * only)" or "(often client-required, not legally required)". Such a licence still prints in the list; it never leads a hero as the wait to
+ * open, which /opening and /buy-or-start state as the longest REQUIRED wait. Read off the words, so a condition the shard writes outside
+ * a parenthetical, or in other words, is not seen; a name with no condition is taken as required.
+ */
+export function isConditionalLicence(name: string): boolean {
+  for (const m of name.matchAll(/\(([^)]*)\)/g)) {
+    const inner = m[1].trim().toLowerCase();
+    if (/^(?:if|only|where|when|for|as required|often|unless)\b/.test(inner)) return true;
+    if (/\bonly$|\bnot legally required\b|\bnot a licen[cs]e\b|\bif applicable\b/.test(inner)) return true;
+  }
+  return false;
+}
+
 /** Where one licence's wait was read: the shard file and the licence's key. */
 export function permitDaysProv(industryId: string, rowKey: string): Provenance {
   return { src: `data/facts/industry/${industryId}.json:licensing.licences.${rowKey}.typical_days`, kind: "estimate" };
@@ -125,6 +143,7 @@ export function buildPermits(industryId: string, iso2?: string | null): PermitsD
   /* The longest wait first, the rest in the shard's order (a stable sort on one key). */
   const longest = rows.reduce<typeof rows[number] | null>((best, r) => (best == null || r.days > best.days ? r : best), null);
   const ordered = longest ? [longest, ...rows.filter((r) => r !== longest)] : rows;
+  const longestRequired = rows.filter((r) => !isConditionalLicence(r.name)).reduce<typeof rows[number] | null>((best, r) => (best == null || r.days > best.days ? r : best), null);
   /* EACH WAIT CARRIES ITS STAMP (2026-10-15, release 2 job A): the shard file and the licence's key, an estimate, the same on the trade page and on /opening, which draws this builder. */
   const cells: KvCell[] = ordered.map((r) => ({ key: r.key, label: r.name, value: daysFigure(r.days), note: r.band ? COPY.tradePermits.feeBand[r.band] : undefined, confidence: "modeled", prov: permitDaysProv(industryId, r.key) }));
   if (cells.length === 0 && zero === 0 && foreign === 0) return null;
@@ -135,6 +154,7 @@ export function buildPermits(industryId: string, iso2?: string | null): PermitsD
     industryId,
     cells,
     longest: longest ? { key: longest.key, days: longest.days } : null,
+    longestRequired: longestRequired ? { key: longestRequired.key, days: longestRequired.days } : null,
     withheld,
     basis: COPY.tradePermits.basis,
     foot: COPY.tradePermits.foot,

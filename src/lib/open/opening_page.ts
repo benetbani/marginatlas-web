@@ -369,7 +369,9 @@ export async function buildOpeningPage(
 
   // 4. The licences and the two first-year figures, through the trade page's own builders.
   const permits = buildPermits(industryId, country);
-  const lead = permits?.longest ? permits.cells.find((c) => c.key === permits.longest!.key) ?? null : null;
+  /* The lead is the longest wait among the licences every shop needs, never a conditional one such as a liquor licence "(if serving
+     alcohol)" (fix round 1, M-3); the list below still prints every licence with its wait. */
+  const lead = permits?.longestRequired ? permits.cells.find((c) => c.key === permits.longestRequired!.key) ?? null : null;
   const longestWait: StampedFigure | null =
     lead && lead.prov && typeof lead.value === "string" ? { figure: lead.value, prov: lead.prov } : null;
   const earning = buildOpenFoot(industryId);

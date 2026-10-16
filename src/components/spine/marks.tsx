@@ -32,7 +32,8 @@ const LABEL: Record<AtlasMarkId, string> = {
   modeled: "An estimate",
   "modeled-hatch": "An estimate",
   sample: "Sample, illustrative",
-  directional: "Directional, not exact",
+  /* the kind keeps its code name; its label is the words a reader sees (fix round 1 of release 3 job A, M-8: no method disclaimer) */
+  directional: "Approximate, not exact",
   "pro-lock": "Pro, locked",
   unlock: "Pro, unlocked",
   "free-tag": "Free plan",

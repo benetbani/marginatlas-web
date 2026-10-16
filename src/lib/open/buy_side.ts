@@ -84,7 +84,7 @@ export function buyRangeText(buy: BuySide): string | null {
 /**
  * The verdict's two lines, each one sentence of twelve words or fewer, and neither leans (2026-10-15, release 2 job A). The line compared
  * the sale range with a start cash typed by hand (src/lib/markets/startup_capital_archetypes.ts) and leaned "cheaper" or "dearer" on it;
- * no start cost is held, so cash cannot decide. The hero says that once, where a reader meets it first (COPY.buyOrStart.startCash), so the
+ * no start cost is held, so cash cannot decide. The page says that once (COPY.buyOrStart.startCash, startLead below), so the
  * verdict carries its own content: where a range stands it says the range is an estimate, and both lines point to what does decide.
  */
 const VERDICT = {
@@ -95,4 +95,18 @@ const VERDICT = {
 /** One line with no lean: whether the buy side holds a figure, that it is an estimate, and what decides instead. */
 export function buyVerdict(buy: BuySide): string {
   return buyRangeText(buy) ? VERDICT.range : VERDICT.noPrice;
+}
+
+/**
+ * WHAT LEADS THE START SIDE (release 3 job A, 2026-10-16): the hero printed the stated line "No start cost held yet." where the start
+ * cash had stood, a gap where a figure belongs. It leads instead with a held figure the page already prints: the longest licence wait,
+ * else the trade's years to pay back, each stamped with its shard key, an estimate. The gap is said once, lower down, in the compare
+ * card's cash row beside the buy side's own; where neither figure is held the hero keeps the stated line and the card says nothing more.
+ * The figure the hero leads with leaves the compare card's start column, so each figure prints once.
+ */
+export type StartLead = { which: "wait" | "payback"; figure: string; prov: Provenance; label: string };
+export function startLead(start: { longestWait: { figure: string; prov: Provenance | null } | null; payback: { figure: string; prov?: Provenance | null } | null }): StartLead | null {
+  if (start.longestWait?.prov) return { which: "wait", figure: start.longestWait.figure, prov: start.longestWait.prov, label: COPY.buyOrStart.leadWait };
+  if (start.payback?.prov) return { which: "payback", figure: start.payback.figure, prov: start.payback.prov, label: COPY.buyOrStart.leadPayback };
+  return null;
 }

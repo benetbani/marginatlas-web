@@ -20,7 +20,7 @@ import Link from "next/link";
 import { provAttrs } from "@/lib/spine/provenance";
 import { COPY } from "@/lib/spine/copy";
 import { T_H1 } from "@/lib/ui/typography";
-import { dealbreakerFor } from "@/lib/open/dealbreakers";
+import { dealbreakerFigure, dealbreakerFor } from "@/lib/open/dealbreakers";
 import type { OpeningPage } from "@/lib/open/opening_page";
 import { buyOrStartDraws, subPageHref } from "@/lib/open/sub_page_gates";
 
@@ -29,6 +29,10 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
   // single condition truly dominates. Null for everything else, so most pages
   // render nothing here.
   const dealbreaker = dealbreakerFor(page.industryId);
+  /* The held figure under it, where the trade's shard holds one (the rent share for restaurants), stamped; the typed "12% of sales" and the
+     "Directional" disclaimer that stood here left on 2026-10-16 (release 3 job A). */
+  const held = dealbreaker ? dealbreakerFigure(page.industryId) : null;
+  const [heldBefore, heldAfter] = COPY.opening.dealbreakerFigure.split("{pct}");
   const earning = page.earning[0];
   const lead = page.longestWait
     ? { figure: page.longestWait.figure, prov: page.longestWait.prov, label: COPY.opening.leadWait }
@@ -69,14 +73,22 @@ export function OpeningHero({ page }: { page: OpeningPage }) {
         {page.verdict}
       </p>
 
-      {/* The single dealbreaker, only where one condition truly dominates.
+      {/* The single dealbreaker, only where one condition truly dominates, and under it the trade's held figure where its shard holds one.
           Renders nothing for every other business. */}
       {dealbreaker ? (
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-cocoa-700">
-          <span className="font-semibold text-ink-900">Do not open unless</span>{" "}
-          {dealbreaker}. Directional, and worth being honest with yourself about
-          before anything else.
-        </p>
+        <div className="mt-3 max-w-2xl text-sm leading-relaxed text-cocoa-700">
+          <p>
+            <span className="font-semibold text-ink-900">{COPY.opening.dealbreakerLead}</span>{" "}
+            {dealbreaker}.
+          </p>
+          {held ? (
+            <p className="mt-1">
+              {heldBefore}
+              <span {...provAttrs(held.prov)} className="font-semibold tabular-nums text-ink-900">{held.figure}</span>
+              {heldAfter}
+            </p>
+          ) : null}
+        </div>
       ) : null}
 
       {/* Quiet links: back to the full economics, and across to the buy-or-start

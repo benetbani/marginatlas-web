@@ -40,7 +40,7 @@
  * Usage: npx tsx scripts/verify_pages_fresh.mjs
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { preflight } from "./harness/preflight.mjs";
 import { pageRenders, describeRenders, HARNESS_LIST, FRESH_DIR } from "./lib/page_renders.mjs";
 import { red, redSummary } from "./lib/red.mjs";
@@ -110,6 +110,10 @@ for (const e of entries) {
   if (!big) reds.push({ file: e.path, detail: `${e.name} is ${e.bytes} bytes, under the ${MIN_BYTES}-byte floor for a rendered page`, remedy: `open the file; a page this small drew no body, so read the adapter for ${e.surface} ${e.slugs.join(" ")}` });
   console.log(`  ${fresh && big ? "ok" : "x "} ${e.name.padEnd(28)} ${String(e.bytes).padStart(9)} bytes  written ${e.mtime.toISOString()}${fresh ? "" : "  (STALE)"}`);
 }
+
+/* THE FALLBACK STATE, WRITTEN BESIDE THE RENDERS (release 3 job A, fix round 1, I-4): a gate downstream that must not count a render drawn
+   from the adapters' fallbacks as read (held-bill's D) reads this file instead of guessing; the count and the lines as printed below. */
+writeFileSync(`${FRESH_DIR}/fresh_state.json`, JSON.stringify({ started: new Date(started).toISOString(), written: new Date().toISOString(), fallbacks: fallbacks.length, lines: fallbacks.map((f) => f.trim()), renders: entries.map((e) => e.name) }, null, 2) + "\n");
 
 console.log(`  Supabase URL: ${urlPresence}; query fallbacks in the render's output: ${fallbacks.length}${fallbacks.length ? " (the renders below carry the adapters' fallbacks, and the gates measure that state)" : ""}`);
 for (const f of fallbacks) console.log(`    ${f.trim()}`);

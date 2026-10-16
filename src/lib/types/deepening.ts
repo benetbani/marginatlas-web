@@ -149,6 +149,9 @@ export type SetupCosts = {
   payback_months_estimate?: number;
   refreshed_at?: string;
   grade?: "A" | "B" | "C" | "D";
+  /** Where the lines were measured (a register, a survey, a file and its key). No writer sets it yet: every bill the database holds was typed by
+   *  hand, and a block without it prints no bill (src/lib/spine/setup_items.ts). */
+  measured_src?: string;
 };
 
 // ---------------------------------------------------------------------------

@@ -162,7 +162,7 @@ function DensityLeaderboardSection({ board }: { board: DensityLeaderboard }) {
       <p className="mt-3 text-[11px] leading-relaxed text-cocoa-500">
         Density is firms per 10k residents for a typical local operator, a real
         count over the resident population in each place. Lower is more room to
-        enter, higher is a tighter market. Directional.
+        enter, higher is a tighter market.
       </p>
     </section>
   );

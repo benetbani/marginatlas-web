@@ -14,40 +14,52 @@
  * src/lib/taxonomy/industries.json. We deliberately do NOT list every business:
  * a dealbreaker line on a page that has no real dealbreaker would be noise.
  *
- * The conditions are honest and directional, written in the same warm,
- * plain-spoken voice as the rest of the page. No em-dashes, no source-agency
+ * The conditions are words, written in the same warm, plain-spoken voice as
+ * the rest of the page, and carry no figure. No em-dashes, no source-agency
  * names, tokens-only on the render side.
+ *
+ * NO TYPED FIGURE (release 3 job A, 2026-10-16). The restaurants line read "at
+ * rent under about 12% of sales", a threshold typed here with no source, and
+ * every line ended "Directional, and worth being honest with yourself about
+ * before anything else.", a method disclaimer the copy rules ban. The threshold
+ * left the words, and where the trade's shard holds its rent share as a held
+ * cost driver (`cost_structure.cost_drivers.<row>.pct_of_revenue`, tagged held)
+ * the page prints that figure in the line under the condition, stamped
+ * (dealbreakerFigure below); the disclaimer left every line.
  */
+import { industryRows } from "@/lib/facts/industry_shard";
+import type { Provenance } from "@/lib/spine/provenance";
+import type { Fact } from "@/lib/facts/types";
 
 /**
  * Per-industry dealbreaker conditions, keyed by canonical industry id.
  *
  * Each value is the tail of the sentence "Do not open unless ...", so it reads
- * as one clean line when the prefix is added at the render site.
+ * as one clean line when the prefix is added at the render site: the whole
+ * line twelve words or fewer, the copy rules' line (fix round 1 of release 3
+ * job A, M-4: six lines ran 13 to 17; the gate held-bill counts them).
  */
 const DEALBREAKERS: Record<string, string> = {
   // Hospitality and food: footfall and the rent ratio are the whole game.
-  restaurants:
-    "you can secure a high-footfall location at rent under about 12% of sales",
+  restaurants: "you can secure a high-footfall location",
   cafes_coffee: "you have steady daytime foot traffic",
 
   // Licensed drinking venues live or die on the license itself.
   bars_nightclubs: "you can actually get the liquor license",
 
   // Lodging is a heavy fixed base that only occupancy can carry.
-  hotels_lodging:
-    "you have the rooms and the occupancy to cover a heavy fixed base",
+  hotels_lodging: "occupancy can carry your heavy fixed costs",
 
   // Membership businesses: retention above churn is the survival line.
-  sports_fitness: "you can hold member retention above the churn line",
+  sports_fitness: "member retention can outrun churn",
 
   // Licensed clinical trades: the license and the fit-out capital come first.
-  dental_practices: "you have the license and the fit-out capital up front",
-  doctors_clinics: "you have the license and the fit-out capital up front",
-  veterinary_pet_care: "you have the license and the fit-out capital up front",
+  dental_practices: "you have the license and fit-out money ready",
+  doctors_clinics: "you have the license and fit-out money ready",
+  veterinary_pet_care: "you have the license and fit-out money ready",
 
   // Childcare is gated by ratios and licensing before anything else.
-  childcare_social: "you can meet the staff ratios and the licensing",
+  childcare_social: "you can meet staff ratios and licensing",
 
   // Pharmacies cannot trade without the permit.
   independent_pharmacy: "you can secure the license and permit",
@@ -71,4 +83,28 @@ export function dealbreakerFor(
 ): string | null {
   if (!industryId) return null;
   return DEALBREAKERS[industryId] ?? null;
+}
+
+/** Every trade id that holds a condition, so a gate reads every line the table holds and not only the live trades' (held-bill). */
+export function dealbreakerIds(): string[] {
+  return Object.keys(DEALBREAKERS);
+}
+
+/** The shard row whose share of sales stands under a trade's condition: the rent line, for the trades whose condition is the location. */
+const HELD_FIGURE: Record<string, string> = { restaurants: "rent_and_occupancy" };
+const DRIVERS = "cost_structure.cost_drivers.";
+
+/**
+ * The held figure under a trade's condition, or null: the trade's rent share of sales off its shard, only where the shard tags its drivers
+ * held (split_rows.ts reads the same tag; a modelled or placeholder driver prints nothing here), stamped with the file and key, an
+ * estimate (one figure for the trade, never the place's).
+ */
+export function dealbreakerFigure(industryId: string | null | undefined, rows: (id: string, prefix: string) => Fact[] = industryRows): { figure: string; prov: Provenance } | null {
+  if (!industryId) return null;
+  const row = HELD_FIGURE[industryId];
+  if (!row) return null;
+  /* `rows` is the shard's reader; a test hands in a planted shard to see the held-tag rule (fix round 1, M-2). */
+  const pct = rows(industryId, DRIVERS).find((f) => f.rowKey === row && f.metric === `${DRIVERS}*.pct_of_revenue`);
+  if (!pct || pct.tag !== "held" || typeof pct.value !== "number" || !Number.isFinite(pct.value) || pct.value <= 0) return null;
+  return { figure: `${Math.round(pct.value)}%`, prov: { src: `data/facts/industry/${industryId}.json:${DRIVERS}${row}.pct_of_revenue`, kind: "estimate" } };
 }

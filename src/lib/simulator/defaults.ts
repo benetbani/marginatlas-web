@@ -105,7 +105,7 @@ function notesOf(b: Omit<SimBundle, "notes">): Array<{ label: string; fact: stri
     holds(/turnover\.json/) ? S.register : null,
     holds(/premises\.json/) ? S.valuation : null,
     b.ukLaw || b.rates || b.tax.law === "uk" ? S.law : null,
-    holds(/^cells:|setup_costs:/) ? S.cell : null,
+    holds(/^cells:/) || b.opening.kind === "held" ? S.cell : null,
     holds(/recipes\.ts|facts\/industry\/|industry_cost_profile/) ? S.trade : null,
     holds(/facts\/city\/|facts\/country\/|city_wage_premium|economic_profile|country_metrics|country_rates/) ? S.place : null,
   ] as Array<{ label: string; fact: string } | null>).filter((n): n is { label: string; fact: string } => n !== null);
@@ -221,14 +221,16 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
     : lend !== null ? input(lend, est(`economic_profile:${place.iso2}.bank_lending_rate_pct x 100`), "country", fill(W.lines.loan.country, { country: inSentence(place.countryName) }))
     : input(null, null, "none", W.lines.loan.noRate);
 
-  /* THE MONEY TO OPEN IT: the cell's held bill, else fit-out for this floor space, the deposit and registration, else none with its line.
+  /* THE MONEY TO OPEN IT: the cell's held bill where its block names a measurement (none does today: every bill the database holds was typed by
+     hand, release 3 job A, so this branch stands for the first measured writer), else fit-out for this floor space, the deposit and registration
+     (its line says kit and stock are not in it), else none with its line.
      The trade's archetype at the city's prices stood before none until 2026-10-15: a capital typed by hand with no source
      (src/lib/markets/startup_capital_archetypes.ts), and it left with the trade page's own (release 2 job A). */
   let opening: OpeningRule;
   const fit = city("realestate.fit_out_cost_usd_sqm");
   if (cell?.setup) {
     const scope = cell.setup.scope;
-    opening = { kind: "held", lines: cell.setup.items.map((it, k) => ({ key: `held-${k}`, name: it.name, amount: pennies(money(it.usd) as number), stamp: est(`setup_costs:${place.industryId}:${scope}`) })), line: fill(W.lines.opening.held, { country: scope === place.iso2 ? inSentence(place.countryName) : scope }) };
+    opening = { kind: "held", lines: cell.setup.items.map((it, k) => ({ key: `held-${k}`, name: it.name, amount: pennies(money(it.usd) as number), stamp: est(cell.setup!.src) })), line: fill(W.lines.opening.held, { country: scope === place.iso2 ? inSentence(place.countryName) : scope }) };
   } else if (fit !== null && area.value !== null) {
     const lines: OpeningLine[] = [{ key: "fit-out", name: W.lines.openingItems.fitOut, amount: pennies((money(fit) as number) * area.value), stamp: est(`${csrc("realestate.fit_out_cost_usd_sqm")} x area`) }];
     const months = city("realestate.deposit_months");

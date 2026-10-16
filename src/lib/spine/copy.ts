@@ -2201,7 +2201,7 @@ export const COPY = {
   opening: {
     /** The line under the lead figure (fix round 1: eleven words; the thirteen it had broke the twelve-word line). */
     verdict: "The licences to get, and how long to earn it back.",
-    leadWait: "Longest licence wait, an estimate",
+    leadWait: "Longest required licence wait, an estimate",
     /** Under the months to break even where the place prints no licence list: "{words}" is the figure's own words ("To break even"). */
     leadEarning: "{words}, an estimate",
     noLead: "No licence or payback figures for this trade yet.",
@@ -2213,14 +2213,24 @@ export const COPY = {
     takeHomeLabel: "A typical owner keeps a year here",
     peersHead: "The same business elsewhere",
     peersLine: "What a typical owner keeps a year in other places.",
+    /** The dealbreaker (src/lib/open/dealbreakers.ts): its lead words, and the line under it where the trade's shard holds a held figure;
+     *  "{pct}" is that figure, stamped, and the line says it is an estimate (release 3 job A: the typed "about 12% of sales" and the "Directional"
+     *  disclaimer left; fix round 1, I-2: the estimate word). */
+    dealbreakerLead: "Do not open unless",
+    dealbreakerFigure: "Across the trade, rent and occupancy take {pct} of sales, an estimate.",
   },
-  /** THE BUY-OR-START PAGE'S START SIDE (the same day): no start cost is held, so the stated line stands where the cash stood, the
-   *  longest licence wait where the weeks stood, and the trade's years to pay back where the typed payback stood. */
+  /** THE BUY-OR-START PAGE'S START SIDE: no start cost is held. The hero leads with the longest required licence wait, else the trade's years
+   *  to pay back (release 3 job A and its fix round 1), and the compare card says the gap once in its cash row and carries the figure the hero
+   *  did not lead with; where neither is held the hero says the gap. */
   buyOrStart: {
     startCash: "No start cost held yet.",
-    waitLabel: "Longest licence wait",
-    waitNote: "the slowest licence to get, an estimate",
-    noWait: "No licence list here yet.",
+    /** The hero's start side leads with a held figure (release 3 job A), labelled as the buy side's "To buy, estimated" is. */
+    leadWait: "To start, the longest required licence wait, estimated",
+    leadPayback: "To start, the time to pay back, estimated",
+    cashLabel: "Cash needed",
+    waitLabel: "Longest required licence wait",
+    waitNote: "the slowest licence every shop needs, an estimate",
+    noWait: "No required licence wait here yet.",
     paybackLabel: "Time to pay back",
     paybackNote: "the trade's typical, an estimate",
   },
@@ -2885,7 +2895,7 @@ export const COPY = {
       owner: { off: "None by default. You keep the profit.", city: "Typical income in {city}.", country: "The country's median pay.", none: "No income figure is held here. Type yours." },
       target: { uk: "The profit you want each year, after tax.", world: "The profit you want each year, before tax." },
       loan: { amount: "None by default. Type a loan if you take one.", uk: "The UK start-up loan rate.", country: "{country}'s bank lending rate.", noRate: "No lending rate is held here. Type yours.", years: "Type the years to repay." },
-      opening: { held: "The trade's opening bill for {country}.", built: "Fit-out for this space, the deposit and registration.", none: "No cost to open is held for this trade." },
+      opening: { held: "The trade's opening bill for {country}.", built: "Fit-out, deposit and registration. Kit and stock are not in it.", none: "No cost to open is held for this trade." },
       openingItems: { fitOut: "Fit-out", deposit: "Lease deposit", registration: "Registration" },
       form: "Sole trader by default. Tax follows 2026-27 law.",
     },

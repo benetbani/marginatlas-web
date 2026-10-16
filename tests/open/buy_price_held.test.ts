@@ -59,7 +59,7 @@ import { COPY } from "../../src/lib/spine/copy";
 import { BuyVsStartHero } from "../../src/components/buy/BuyVsStartHero";
 import { BuyVsStartCompare } from "../../src/components/buy/BuyVsStartCompare";
 import type { BuyVsStart, StartSide } from "../../src/lib/open/buy_vs_start";
-import { buildPermits } from "../../src/lib/spine/permits_rows";
+import { buildPermits, isConditionalLicence } from "../../src/lib/spine/permits_rows";
 import { buildOpenFoot } from "../../src/lib/spine/open_rows";
 
 const RULE = "buy-price-held";
@@ -392,7 +392,8 @@ function checkDescription(describe: (noun: string, place: string, buy: BuySide) 
 /** The START side as buildBuyVsStart builds it (buy_vs_start.ts cannot load here: it imports the Supabase client), from the same two builders. */
 function startFor(industryId: string): StartSide {
   const permits = buildPermits(industryId, "US");
-  const lead = permits?.longest ? permits.cells.find((c) => c.key === permits.longest!.key) : null;
+  /* the longest REQUIRED wait, as opening_page.ts reads it: never a conditional licence (fix round 1, M-3) */
+  const lead = permits?.longestRequired ? permits.cells.find((c) => c.key === permits.longestRequired!.key) : null;
   return {
     cashLine: COPY.buyOrStart.startCash,
     longestWait: lead && lead.prov && typeof lead.value === "string" ? { figure: lead.value, prov: lead.prov } : null,
@@ -404,14 +405,49 @@ function startFor(industryId: string): StartSide {
 function checkStart(doc: Document, where: string, start: StartSide): string[] {
   const out: string[] = [];
   const text = doc.body.textContent ?? "";
-  /* SAID ONCE (fix round 1, ruling 2): the absence of a start cost is stated where a reader meets it first, the hero, and nowhere else. */
+  /* SAID ONCE (fix round 1, ruling 2): the absence of a start cost is stated once on the page: in the compare card's cash row where the hero leads
+     with a held figure, in the hero where it holds none (release 3 job A). */
   const said = text.split(COPY.buyOrStart.startCash).length - 1;
   if (said !== 1) out.push(`${where}: the start side's stated line prints ${said} times, not once`);
   if (/no start cost|no cost to open/i.test(text.split(COPY.buyOrStart.startCash).join(""))) out.push(`${where}: the absence of a start cost is said again in other words`);
-  if (!start.longestWait || !start.payback) out.push(`${where}: the fixture's start side holds no licence wait or no payback to check`);
   const src = (re: RegExp) => [...doc.querySelectorAll("[data-src]")].filter((el) => re.test(el.getAttribute("data-src") ?? ""));
-  if (start.longestWait && !src(/^data\/facts\/industry\/[a-z_]+\.json:licensing\.licences\.[^.]+\.typical_days$/).some((el) => el.textContent?.trim() === start.longestWait!.figure)) out.push(`${where}: the longest licence wait "${start.longestWait.figure}" is not printed with its shard stamp`);
-  if (start.payback && !src(/^data\/facts\/industry\/[a-z_]+\.json:first_year\.payback_years$/).some((el) => el.textContent?.trim() === start.payback!.figure)) out.push(`${where}: the years to pay back "${start.payback.figure}" are not printed with their shard stamp`);
+  /* EACH FIGURE ONCE (fix round 1, M-2): the wait and the payback each print exactly once, stamped, between the hero and the card. */
+  const waits = src(/^data\/facts\/industry\/[a-z_]+\.json:licensing\.licences\.[^.]+\.typical_days$/);
+  const paybacks = src(/^data\/facts\/industry\/[a-z_]+\.json:first_year\.payback_years$/);
+  if (start.longestWait && waits.filter((el) => el.textContent?.trim() === start.longestWait!.figure).length !== 1) out.push(`${where}: the longest required licence wait "${start.longestWait.figure}" prints ${waits.filter((el) => el.textContent?.trim() === start.longestWait!.figure).length} times stamped, not once`);
+  if (!start.longestWait && waits.length > 0) out.push(`${where}: a licence wait prints where the start side holds none`);
+  if (start.payback && paybacks.filter((el) => el.textContent?.trim() === start.payback!.figure).length !== 1) out.push(`${where}: the years to pay back "${start.payback.figure}" print ${paybacks.filter((el) => el.textContent?.trim() === start.payback!.figure).length} times stamped, not once`);
+  if (!start.payback && paybacks.length > 0) out.push(`${where}: a payback prints where the start side holds none`);
+  return out;
+}
+
+/**
+ * THE THREE BRANCHES OF THE START SIDE (fix round 1, M-2): the hero leads with the longest required wait where one is held, else with the
+ * years to pay back, else it keeps the stated line; in each, every figure and the stated line print once. Rendered on the restaurants start
+ * side with the wait, then the payback, taken out.
+ */
+function checkBranches(Hero: React.ComponentType<{ page: BuyVsStart }>, Compare: React.ComponentType<{ page: BuyVsStart }>): string[] {
+  const out: string[] = [];
+  const full = startFor("restaurants");
+  if (!full.longestWait || !full.payback) return ["restaurants' start side holds no required wait or no payback to branch on"];
+  const buy = buySideFor("restaurants", TAKE);
+  const branches: Array<[string, StartSide, "wait" | "payback" | "stated"]> = [
+    ["the required-wait branch", full, "wait"],
+    ["the payback branch", { ...full, longestWait: null }, "payback"],
+    ["the neither-held branch", { ...full, longestWait: null, payback: null }, "stated"],
+  ];
+  for (const [where, start, leads] of branches) {
+    const p: BuyVsStart = { businessName: "Restaurants", industryId: "restaurants", placeName: "California", country: "us", cellHref: "/us/california/restaurants", pageHref: "/us/california/restaurants", openingHref: "/us/california/restaurants/opening", start, buy, catches: { startUpside: "a", startCatch: "b", buyUpside: "c", buyCatch: "d" }, verdict: buyVerdict(buy) };
+    const doc = new JSDOM(`<body>${renderToStaticMarkup(React.createElement("div", null, React.createElement(Hero, { page: p }), React.createElement(Compare, { page: p })))}</body>`).window.document;
+    const hero = new JSDOM(`<body>${renderToStaticMarkup(React.createElement(Hero, { page: p }))}</body>`).window.document;
+    out.push(...checkStart(doc, where, start));
+    const heroStamps = [...hero.querySelectorAll("[data-src]")].map((el) => [el.getAttribute("data-src") ?? "", el.textContent?.trim() ?? ""] as const).filter(([src]) => !/sale_exit/.test(src));
+    const heroText = hero.body.textContent ?? "";
+    if (leads === "wait" && !heroStamps.some(([src, t]) => /licensing\.licences\./.test(src) && t === start.longestWait!.figure)) out.push(`${where}: the hero does not lead with the required wait`);
+    if (leads === "payback" && !heroStamps.some(([src, t]) => /first_year\.payback_years$/.test(src) && t === start.payback!.figure)) out.push(`${where}: the hero does not lead with the years to pay back`);
+    if (leads === "stated" && (!heroText.includes(COPY.buyOrStart.startCash) || heroStamps.length > 0)) out.push(`${where}: the hero does not keep the stated line alone`);
+    if (leads !== "stated" && heroText.includes(COPY.buyOrStart.startCash)) out.push(`${where}: the hero says the gap where it leads with a figure`);
+  }
   return out;
 }
 
@@ -432,6 +468,12 @@ function checkRender(Hero: React.ComponentType<{ page: BuyVsStart }>, Compare: R
   const rangeText = buyRangeText(priced.buy);
   if (!rangeText) { out.push("restaurants at the test take-home builds no range to render"); return out; }
   const a = render(priced);
+  /* THE HERO LEADS WITH A HELD FIGURE (release 3 job A, 2026-10-16): where the start side holds the longest licence wait or the years to pay back, the
+     hero's start side prints that figure, stamped, and not the stated line; the gap is said once, lower down (startLead, src/lib/open/buy_side.ts). */
+  const heroOnly = new JSDOM(`<body>${renderToStaticMarkup(React.createElement(Hero, { page: priced }))}</body>`).window.document;
+  const leadFig = priced.start.longestWait?.figure ?? priced.start.payback?.figure ?? null;
+  if (leadFig && (heroOnly.body.textContent ?? "").includes(COPY.buyOrStart.startCash)) out.push("the hero leads the start side with the stated line where a held figure stands (the longest licence wait or the years to pay back)");
+  if (leadFig && ![...heroOnly.querySelectorAll("[data-src]")].some((el) => el.textContent?.trim() === leadFig && /licensing\.licences\.|first_year\.payback_years/.test(el.getAttribute("data-src") ?? ""))) out.push(`the hero's start side does not lead with the held figure "${leadFig}", stamped`);
   const all = [...a.doc.querySelectorAll("[data-src]")];
   const stamped = all.filter((el) => /sale_exit/.test(el.getAttribute("data-src") ?? ""));
   if (stamped.length !== 2) out.push(`the priced render holds ${stamped.length} stamped buy figures, expected 2 (the hero's and the compare card's)`);
@@ -472,7 +514,11 @@ if (!STATIC_ONLY) {
   control("description reader: sees a typed buy figure, a multiple and a figure where no price stands", checkDescription(typedDescription).length >= 3);
   const OldHero = ({ page }: { page: BuyVsStart }) => React.createElement("div", { className: "fig" }, `$${(page.buy.lowUsd ?? 0) * 2} to start, ${page.start.cashLine.length} weeks`);
   const NoCompare = () => React.createElement("div", null, "about 2.4x owner earnings, an estimate");
-  control("render reader: sees an unstamped figure, a multiple, a price on an EBITDA trade and a start side with no stated line and no stamped wait", checkRender(OldHero, NoCompare).length >= 3 && checkRender(OldHero, NoCompare).some((f) => /stated line/.test(f)) && checkRender(OldHero, NoCompare).some((f) => /longest licence wait/.test(f)));
+  control("render reader: sees an unstamped figure, a multiple, a price on an EBITDA trade and a start side with no stated line and no stamped wait", checkRender(OldHero, NoCompare).length >= 3 && checkRender(OldHero, NoCompare).some((f) => /stated line/.test(f)) && checkRender(OldHero, NoCompare).some((f) => /longest required licence wait/.test(f)));
+
+  /* The hero as it stood before 2026-10-16: the start side's stated line where the held wait could lead; the real card beside it. */
+  const StatedHero = ({ page }: { page: BuyVsStart }) => React.createElement("header", null, React.createElement("p", null, page.start.cashLine), React.createElement("div", null, "To start fresh"));
+  control("render reader: sees a hero that leads the start side with the stated line where the held wait stands", checkRender(StatedHero, BuyVsStartCompare).some((f) => /leads the start side with the stated line/.test(f)) && checkRender(StatedHero, BuyVsStartCompare).some((f) => /does not lead with the held figure/.test(f)));
 
   const real = checkPricing(buySideFor);
   counted = { sde: real.sde, ebitda: real.ebitda, none: real.none };
@@ -482,6 +528,22 @@ if (!STATIC_ONLY) {
   for (const f of checkVerdict(buyVerdict)) fail("src/lib/open/buy_side.ts", f);
   for (const f of checkDescription(buyMetaDescription)) fail("src/lib/open/buy_side.ts", f);
   for (const f of checkRender(BuyVsStartHero, BuyVsStartCompare)) fail("src/components/buy/BuyVsStartHero.tsx", f);
+  for (const f of checkBranches(BuyVsStartHero, BuyVsStartCompare)) fail("src/components/buy/BuyVsStartCompare.tsx", f);
+  /* THE HERO NEVER LEADS WITH A CONDITIONAL LICENCE (fix round 1, M-3): the reader of the condition on known names, then every shard's lead. */
+  control("conditional reader: a licence \"(if serving alcohol)\", \"(only if serving)\", \"(where required)\" and \"(armed guards only)\" are conditional; \"(federal)\", \"(malpractice) insurance\" and a plain name are not", ["Liquor licence (if serving alcohol)", "Liquor licence (only if serving)", "Sign permit (where required)", "Firearms permit (armed guards only)"].every(isConditionalLicence) && !["Firearms licence (federal)", "Professional liability (malpractice) insurance", "Food service permit"].some(isConditionalLicence));
+  let leadsChecked = 0;
+  for (const id of ids) {
+    const pm = buildPermits(id, "US");
+    if (!pm?.longestRequired) continue;
+    leadsChecked++;
+    const cell = pm.cells.find((c) => c.key === pm.longestRequired!.key);
+    if (!cell || isConditionalLicence(String(cell.label))) fail("src/lib/spine/permits_rows.ts", `${id}: the start side's lead "${cell?.label}" is a conditional licence`);
+  }
+  if (startFor("restaurants").longestWait?.figure === "75 days") fail("src/lib/open/opening_page.ts", "restaurants leads with the 75 days of the liquor licence (if serving alcohol)");
+  if (leadsChecked < 200) fail("data/facts/industry", `checked ${leadsChecked} shards' required lead, expected 200 or more`);
+  /* A CARD THAT PRINTS THE WAIT AGAIN is seen (the regression the review named: the wait row back in the card beside the hero's lead). */
+  const TwiceCompare = ({ page }: { page: BuyVsStart }) => React.createElement("div", null, React.createElement(BuyVsStartCompare, { page }), page.start.longestWait ? React.createElement("div", { "data-src": page.start.longestWait.prov.src, "data-kind": "estimate" }, page.start.longestWait.figure) : null);
+  control("branch reader: sees the wait printed twice when the card prints it again beside the hero's lead", checkBranches(BuyVsStartHero, TwiceCompare).some((f) => /prints 2 times/.test(f)));
   /* THE WALK MUST REACH WHAT IT GUARDS: a gate that reads nothing passes everything. */
   if (ids.length < 240) fail("data/facts/industry", `read ${ids.length} trade shards, expected the 243`);
   if (real.sde < 150 || real.ebitda < 30) fail("data/facts/industry", `the buy side read ${real.sde} SDE and ${real.ebitda} operating-earnings shards, expected 150 or more and 30 or more`);
