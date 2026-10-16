@@ -619,7 +619,7 @@ export function Crew({ crew }: { crew: CityCrewData | null }) {
       fmt={usd}
       withheld={0}
       oneColumn
-      foot={crew.week ? { items: [{ figure: crew.week.figure, words: crew.week.words }] } : null}
+      foot={crew.week ? { items: [{ figure: crew.week.figure, words: crew.week.words, prov: crew.week.prov }] } : null}
     />
   );
 }

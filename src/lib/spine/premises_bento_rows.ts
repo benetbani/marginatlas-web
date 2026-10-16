@@ -60,6 +60,7 @@ import { cityHeldToSources, cityRegisterPlace } from "@/lib/uk/registers/registe
 import { convertToUsd } from "@/lib/finance/fx";
 import { factValue } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
+import type { Provenance } from "@/lib/spine/provenance";
 import { usd } from "@/components/spine/kit";
 import { COPY } from "@/lib/spine/copy";
 
@@ -70,7 +71,7 @@ const BY_SLUG = new Map(CITIES.map((c) => [c.slug, c]));
 /** One row of the details behind a figure (his plus): a label under three words, a figure with its unit. */
 export type PremisesDetailRow = { key: string; label: string; value: string; tag: FactTag };
 /** A metric cell: the figure as printed with its basis and tag, or the stated line where the figure would stand. `detail` holds the rows the shard has around the figure (two or more, else none), for his plus; `second` one companion figure beside it (a cell is never one number, clause 65). */
-export type PremisesMetric = { figure: string; basis: string; tag: FactTag; sample: boolean; value: number; detail?: { summary: string; rows: PremisesDetailRow[] }; second?: { figure: string; words: string } } | { withheld: string };
+export type PremisesMetric = { figure: string; basis: string; tag: FactTag; sample: boolean; value: number; detail?: { summary: string; rows: PremisesDetailRow[] }; second?: { figure: string; words: string; prov?: Provenance }; /** Where the figure came from (src/lib/spine/provenance.ts). */ prov?: Provenance } | { withheld: string };
 /** The count cell: the part in 100 with the rate it was rounded from, or the stated line. */
 export type PremisesCount = { part: number; whole: 100; rate: number; basis: string; tag: FactTag; sample: boolean } | { withheld: string };
 
@@ -150,7 +151,7 @@ function buildSourcedPremises(city: CityRow, iso2: string, geography: string): P
   const D = COPY.premisesBento.detail;
   if ("figure" in fitOut && rentFree && typeof rentFree.value === "number" && Number.isFinite(rentFree.value) && rentFree.value >= 0) {
     const m = rentFree.value;
-    fitOut.second = { figure: `${Number.isInteger(m) ? m : m.toFixed(1)} ${m === 1 ? D.units.months.one : D.units.months.many}`, words: D.companions.rentFree };
+    fitOut.second = { figure: `${Number.isInteger(m) ? m : m.toFixed(1)} ${m === 1 ? D.units.months.one : D.units.months.many}`, words: D.companions.rentFree, prov: { src: `data/facts/city/${iso2}-${city.slug}.json:realestate.rent_free_months`, kind: rentFree.tag === "held" ? "looked up" : "estimate" } };
   }
   const deposit: PremisesMetric = { withheld: W.deposit };
   const empty: PremisesCount = { withheld: W.empty };
@@ -187,6 +188,9 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
   const signedPct = (v: number) => `${v > 0 ? "+" : ""}${Number.isInteger(v) ? v : v.toFixed(1)}%`;
   const count = (v: number, unit: { one: string; many: string }) => `${Number.isInteger(v) ? v : v.toFixed(1)} ${v === 1 ? unit.one : unit.many}`;
   /* A signed figure: cityFigure() refuses a negative (a cost cannot be one), and a falling rent trend is a figure too, so the trend is read off the raw fact. */
+  /* WHERE A SHARD FIGURE CAME FROM (fix round 1 of rhythm-t6): the city shard's file and metric, "looked up" where the shard holds it,
+     else an estimate, as peer_rows.ts stamps the country shard. Two figures that print alike from two metrics are then two facts. */
+  const shardProv = (metric: string, tag: FactTag): Provenance => ({ src: `data/facts/city/${iso2}-${slug}.json:${metric}`, kind: tag === "held" ? "looked up" : "estimate" });
   const signedFigure = (metric: string): BankFigure | null => {
     const f = factValue(cityEntityId(iso2, slug), metric);
     return f && typeof f.value === "number" && Number.isFinite(f.value) ? { value: f.value, tag: f.tag } : null;
@@ -210,7 +214,7 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
      afternoon (lease term, rent-free months) is these two companions now. */
   const leaseFig = cityFigure(iso2, slug, "realestate.lease_term_years");
   const rentFreeFig = signedFigure("realestate.rent_free_months");
-  if ("figure" in fitOut && rentFreeFig && rentFreeFig.value >= 0) fitOut.second = { figure: count(rentFreeFig.value, D.units.months), words: D.companions.rentFree };
+  if ("figure" in fitOut && rentFreeFig && rentFreeFig.value >= 0) fitOut.second = { figure: count(rentFreeFig.value, D.units.months), words: D.companions.rentFree, prov: shardProv("realestate.rent_free_months", rentFreeFig.tag) };
   if ("figure" in rent && rentRows.length >= 2) rent.detail = { summary: D.rent.summary, rows: rentRows };
   const deposit = metric(
     cityFigure(iso2, slug, "realestate.deposit_months"),
@@ -218,6 +222,7 @@ export function buildPremisesBento(slug: string): PremisesBento | null {
     (v) => `${Math.round(v)} ${Math.round(v) === 1 ? COPY.premisesBento.months.one : COPY.premisesBento.months.many}`,
     W.deposit,
   );
+  if ("figure" in deposit) deposit.prov = shardProv("realestate.deposit_months", deposit.tag);
   if ("figure" in deposit && leaseFig && leaseFig.value > 0) deposit.second = { figure: count(leaseFig.value, D.units.years), words: D.companions.lease };
 
   /* The count: a rate in 100 is a count only between 0 and 100; a rate over

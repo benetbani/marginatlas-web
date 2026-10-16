@@ -78,6 +78,7 @@ export function premisesCells(bento: PremisesBento): BentoCell[] {
         sample={cell.sample}
         accent={accent}
         second={cell.second}
+        prov={cell.prov}
         detail={cell.detail ? <DetailPanel name={`premises-${key}`} summary={cell.detail.summary} rows={cell.detail.rows.map((r) => ({ label: r.label, value: r.value }))} /> : undefined}
       />
     ) : (
