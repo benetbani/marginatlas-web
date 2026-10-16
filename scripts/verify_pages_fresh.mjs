@@ -40,7 +40,7 @@
  * Usage: npx tsx scripts/verify_pages_fresh.mjs
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { preflight } from "./harness/preflight.mjs";
 import { pageRenders, describeRenders, HARNESS_LIST, FRESH_DIR } from "./lib/page_renders.mjs";
 import { red, redSummary } from "./lib/red.mjs";
@@ -110,6 +110,19 @@ for (const e of entries) {
   if (!big) reds.push({ file: e.path, detail: `${e.name} is ${e.bytes} bytes, under the ${MIN_BYTES}-byte floor for a rendered page`, remedy: `open the file; a page this small drew no body, so read the adapter for ${e.surface} ${e.slugs.join(" ")}` });
   console.log(`  ${fresh && big ? "ok" : "x "} ${e.name.padEnd(28)} ${String(e.bytes).padStart(9)} bytes  written ${e.mtime.toISOString()}${fresh ? "" : "  (STALE)"}`);
 }
+
+/* THE RENDERS' OWN STATE, WRITTEN (release 3 job C, 2026-10-16; the rhythm reform's final review, Important 2). render_page.tsx prints one
+   `state <page> fallbacks=<n>` line per page, the query ledger's fallback lines counted while that page rendered; this writes them to
+   RENDER_STATE, each page "fallback" when it counted one or more and "live" when none, so a gate that allows a repeat only one data state
+   prints (scripts/harness/fact_once_allow.json's `state`) can tell which state it read. A listed page with no state line is a red: the
+   state of what the gates read would be unknown. "live" means no query fell back, not that the page touched the database (the hood pages
+   read files only). */
+const RENDER_STATE = `${FRESH_DIR}/render_state.json`;
+const states = {};
+for (const m of stdout.matchAll(/^\s*state (\S+) fallbacks=(\d+)\s*$/gm)) states[m[1]] = { fallbacks: Number(m[2]), state: Number(m[2]) > 0 ? "fallback" : "live" };
+for (const e of entries) if (e.exists && !states[e.name]) reds.push({ file: RENDERER, detail: `${e.name} rendered with no state line, so whether it fell back is unknown`, remedy: "keep render_page.tsx printing `state <page> fallbacks=<n>` after each page of --list" });
+writeFileSync(RENDER_STATE, JSON.stringify({ written: new Date().toISOString(), pages: states }, null, 2) + "\n");
+console.log(`  render state written to ${RENDER_STATE}: ${Object.entries(states).map(([k, v]) => `${k} ${v.state}`).join(", ")}`);
 
 console.log(`  Supabase URL: ${urlPresence}; query fallbacks in the render's output: ${fallbacks.length}${fallbacks.length ? " (the renders below carry the adapters' fallbacks, and the gates measure that state)" : ""}`);
 for (const f of fallbacks) console.log(`    ${f.trim()}`);

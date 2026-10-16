@@ -39,14 +39,16 @@
     "figure": "1.5 years",
     "where": "rivals",
     "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
-    "reason": "The list's headline is the middle of its trades' years to pay back and sits on the Software development row's own figure, the same shard key, so the focal and the row it sums print alike. (Until 2026-10-15 the rows were a typed cost to open and the repeat was $30K; release 2 job A.)"
+    "reason": "The list's headline is the middle of its trades' years to pay back and sits on the Software development row's own figure, the same shard key, so the focal and the row it sums print alike. (Until 2026-10-15 the rows were a typed cost to open and the repeat was $30K; release 2 job A.) Bound to the live state (state \"live\", read from the render state pages-fresh writes): drawn from the adapters' fallbacks this page does not print the repeat (measured 2026-10-16, release 3 job C), so the entry is required to match only when no query fell back.",
+    "state": "live"
   },
   {
     "page": "cell-gb-london-barbershops",
     "figure": "$104K",
     "where": "spread and take",
     "law": "MODEL 8.6 row 01 spread: \"the typical mark is the card's one 30 in ink (the site's strip law, M3)\"",
-    "reason": "On this thin trade the page's answer is the typical yearly sales and the strip's typical mark is that same register figure, which the law makes the spread card's focal."
+    "reason": "On this thin trade the page's answer is the typical yearly sales and the strip's typical mark is that same register figure, which the law makes the spread card's focal. Bound to the live state (state \"live\", read from the render state pages-fresh writes): drawn from the adapters' fallbacks this page does not print the repeat (measured 2026-10-16, release 3 job C), so the entry is required to match only when no query fell back.",
+    "state": "live"
   },
   {
     "page": "cell-gb-london-barbershops",
@@ -60,7 +62,8 @@
     "figure": "1.5 years",
     "where": "rivals",
     "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
-    "reason": "The list's headline is the middle of its trades' years to pay back and sits on the Software development row's own figure, the same shard key, so the focal and the row it sums print alike. (Until 2026-10-15 the rows were a typed cost to open and the repeat was $30K; release 2 job A.)"
+    "reason": "The list's headline is the middle of its trades' years to pay back and sits on the Software development row's own figure, the same shard key, so the focal and the row it sums print alike. (Until 2026-10-15 the rows were a typed cost to open and the repeat was $30K; release 2 job A.) Bound to the live state (state \"live\", read from the render state pages-fresh writes): drawn from the adapters' fallbacks this page does not print the repeat (measured 2026-10-16, release 3 job C), so the entry is required to match only when no query fell back.",
+    "state": "live"
   },
   {
     "page": "hood-london",
@@ -186,7 +189,8 @@
     "figure": "13%",
     "where": "margins",
     "law": "MODEL PART 4: \"Every section card now takes exactly one focal at 30\"; PART 5, which \"binds every table, tier list, ranked list\", A LABEL NEVER STANDS WHERE A NUMBER GOES: \"Every row carries its own figure.\"",
-    "reason": "The card's focal is the middle of the trades it ranks, and the lower median is a figure one row holds, so the focal and the Cafés row print one margin."
+    "reason": "The card's focal is the middle of the trades it ranks, and the lower median is a figure one row holds, so the focal and the Cafés row print one margin. Bound to the live state (state \"live\", read from the render state pages-fresh writes): drawn from the adapters' fallbacks this page does not print the repeat (measured 2026-10-16, release 3 job C), so the entry is required to match only when no query fell back.",
+    "state": "live"
   },
   {
     "page": "country-DE",
@@ -207,13 +211,15 @@
     "figure": "7%",
     "where": "split and take",
     "law": "MODEL 8.6 row 00 take: \"companion cells net margin, firms trading here, a typical year's takings\"; row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"ONE builder for the page's every net figure\"",
-    "reason": "Read where no London register row is held (a render without the database, and any trade whose money is not shown): the hero's one companion is the net margin the model row names, and the split's focal is the same net from the one builder. With the register row the hero leads with break-even and prints no net, so nothing matches there."
+    "reason": "Read where no London register row is held (a render without the database, and any trade whose money is not shown): the hero's one companion is the net margin the model row names, and the split's focal is the same net from the one builder. With the register row the hero leads with break-even and prints no net, so nothing matches there. Bound to the fallback state (state \"fallback\"): measured 2026-10-16 (release 3 job C), it matches when the render falls back and matches nothing when the page is drawn from the database, so the entry is required to match only in that state.",
+    "state": "fallback"
   },
   {
     "page": "cell-gb-london-barbershops",
     "figure": "14%",
     "where": "split and take",
     "law": "MODEL 8.6 row 00 take: \"companion cells net margin, firms trading here, a typical year's takings\"; row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"ONE builder for the page's every net figure\"",
-    "reason": "Read where no London register row is held (a render without the database, and any trade whose money is not shown): the hero's one companion is the net margin the model row names, and the split's focal is the same net from the one builder. With the register row the hero leads with the typical yearly sales and prints no net, so nothing matches there."
+    "reason": "Read where no London register row is held (a render without the database, and any trade whose money is not shown): the hero's one companion is the net margin the model row names, and the split's focal is the same net from the one builder. With the register row the hero leads with the typical yearly sales and prints no net, so nothing matches there. Bound to the fallback state (state \"fallback\"): measured 2026-10-16 (release 3 job C), it matches when the render falls back and matches nothing when the page is drawn from the database, so the entry is required to match only in that state.",
+    "state": "fallback"
   }
 ]

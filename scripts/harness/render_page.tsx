@@ -183,7 +183,15 @@ async function main() {
     let missing = 0;
     for (const p of list.pages) {
       let out: string | null = null;
-      try { out = await renderOne(p.surface, p.slugs); } catch (e: any) { console.log(`  x ${p.surface} ${p.slugs.join(" ")}: ${String(e?.message ?? e)}`); }
+      /* THE PAGE'S OWN STATE (release 3 job C, 2026-10-16; the rhythm reform's final review, Important 2): the query ledger's fallback lines
+         (src/lib/query_log.ts, console.warn) counted while this page renders, printed as one `state` line that verify_pages_fresh.mjs writes
+         to the renders' state file, so a gate can tell a page drawn from the database from one drawn from the adapters' fallbacks. The pages
+         render one after another, so a line is this page's. */
+      let fellBack = 0;
+      const warn = console.warn;
+      console.warn = (...a: unknown[]) => { if (/\[cells\] .* falling back/.test(a.map(String).join(" "))) fellBack++; warn(...a); };
+      try { out = await renderOne(p.surface, p.slugs); } catch (e: any) { console.log(`  x ${p.surface} ${p.slugs.join(" ")}: ${String(e?.message ?? e)}`); } finally { console.warn = warn; }
+      if (out) console.log(`  state ${p.surface}-${p.slugs.join("-")} fallbacks=${fellBack}`);
       if (!out) { missing++; console.log(`  x NO RENDER: ${p.surface} ${p.slugs.join(" ")} is in ${path} and did not render`); }
     }
     console.log(`render_page --list: ${list.pages.length - missing} of ${list.pages.length} page(s) rendered from ${path}`);
