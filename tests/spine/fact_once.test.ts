@@ -10,6 +10,7 @@
 import { readFileSync } from "node:fs";
 import { JSDOM } from "jsdom";
 import { factOnceInPage } from "../../scripts/lib/fact_once.mjs";
+import { allowedBy, judgeAllowances } from "../../scripts/lib/fact_once_allow.mjs";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 
@@ -102,6 +103,33 @@ const spineNames = (/const SPINE = \[([^\]]*)\]/.exec(gate)?.[1] ?? "").split(",
 const harnessPages = (JSON.parse(readFileSync(PAGES, "utf8")) as { pages: Array<{ surface: string }> }).pages;
 const unlisted = spineNames.filter((s) => !harnessPages.some((p) => p.surface === s));
 check(`every spine surface the gate names (${spineNames.join(", ")}) occurs in ${PAGES}'s pages, so the gate cannot pass having read no render (missing: ${unlisted.join(", ") || "none"})`, spineNames.length > 0 && unlisted.length === 0, PAGES, `add a page of each spine surface the gate reads (${spineNames.join(", ")}) to ${PAGES}`);
+
+/* THE ALLOWANCES' STATE LOGIC (release 3, the rhythm-gates review, Important 1 and Minor 6): an entry matches only in its own state, and a
+   stated entry with no readable state matches nothing. The functions are the gate's own (scripts/lib/fact_once_allow.mjs), run on planted
+   entries and planted states, no browser. */
+{
+  const STATE_LIB = "scripts/lib/fact_once_allow.mjs";
+  const x = { figure: "7%", where: "split and take" };
+  const bound = [{ page: "cell-a", figure: "7%", where: "split and take", state: "fallback" }];
+  const plain = [{ page: "cell-a", figure: "7%", where: "split and take" }];
+  const live = { "cell-a": { state: "live" } };
+  const fell = { "cell-a": { state: "fallback" } };
+  check("a repeat bound to \"fallback\" in a live render is not allowed, so it reds", allowedBy(bound, "cell-a", x, live) === -1, STATE_LIB);
+  check("the same repeat in a fallback render is allowed by its entry", allowedBy(bound, "cell-a", x, fell) === 0, STATE_LIB);
+  check("a stated entry with no state file, or no state for its page, matches nothing", allowedBy(bound, "cell-a", x, null) === -1 && allowedBy(bound, "cell-a", x, { "cell-b": { state: "fallback" } }) === -1, STATE_LIB);
+  check("an entry with no state matches in every state and with no state file", [live, fell, null].every((st) => allowedBy(plain, "cell-a", x, st) === 0), STATE_LIB);
+  check("an entry matches only its own page, figure and place", allowedBy(plain, "cell-b", x, live) === -1 && allowedBy(plain, "cell-a", { ...x, figure: "8%" }, live) === -1 && allowedBy(plain, "cell-a", { ...x, where: "take" }, live) === -1, STATE_LIB);
+  const opts = (renderState: Record<string, { state: string }> | null, used: number[]) => ({ listed: new Set(["cell-a"]), read: new Set(["cell-a"]), used: new Set(used), renderState, stateFile: "state.json", listFile: "pages.json", allowFile: "allow.json", widths: [1280, 375] });
+  let j = judgeAllowances(bound, opts(live, []));
+  check(`a stated entry the render is not in is not required, and is no red (${j.notThisState.length} not required, ${j.stale.length} red)`, j.stale.length === 0 && j.notThisState.length === 1, STATE_LIB);
+  j = judgeAllowances(bound, opts(fell, []));
+  check(`a stated entry unused in its own state reds (${j.stale.length})`, j.stale.length === 1 && /in its own state \(fallback\)/.test(j.stale[0].detail), STATE_LIB);
+  j = judgeAllowances(bound, opts(null, []));
+  check(`a stated entry with no state file reds (${j.stale.length})`, j.stale.length === 1 && /does not exist/.test(j.stale[0].detail), STATE_LIB);
+  j = judgeAllowances([{ ...plain[0], state: "warm" }, { ...plain[0], page: "cell-z" }], opts(live, []));
+  check(`an unknown state and an unlisted page red (${j.stale.length})`, j.stale.length === 2, STATE_LIB);
+  check("the gate matches through allowedBy with the render state and judges through judgeAllowances", /allowedBy\(allow, name, x, renderState\)/.test(gate) && /judgeAllowances\(allow,/.test(gate) && !/allow\.findIndex\(/.test(gate), GATE, "match each repeat through allowedBy (scripts/lib/fact_once_allow.mjs) with the page's render state, never a findIndex of its own");
+}
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }
 console.log("spine/fact_once: all pass");

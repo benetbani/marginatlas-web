@@ -149,6 +149,7 @@
         "scripts/harness/fact_once_allow.json",
         "scripts/harness/pages.json",
         "scripts/lib/fact_once.mjs",
+        "scripts/lib/fact_once_allow.mjs",
         "src/components/spine/archetypes/HeroBoard.tsx"
       ],
       "claims": []

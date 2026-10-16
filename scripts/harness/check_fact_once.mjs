@@ -12,8 +12,9 @@
  * NO ALLOWANCE STANDS UNUSED (release 3 job C, 2026-10-16; the rhythm reform's final review, Important 2): an entry of the allowance file that
  * matched no repeat on its page at either width is a red, and so is an entry naming a page the list does not read, so the file can only hold
  * what a page prints today. An entry that exists for a data state the machine may not render carries `state` ("fallback", a page drawn from
- * the adapters' fallbacks, or "live", none fell back), and is required to match only when the page's render is in that state, read from the
- * state file pages-fresh writes (scratchpad/harness/pages/render_state.json); a stated entry with no state file to read is a red. BLIND
+ * the adapters' fallbacks, or "live", none fell back), and MATCHES and is required to match only when the page's render is in that state,
+ * read from the state file pages-fresh writes (scratchpad/harness/pages/render_state.json); a stated entry with no state to read matches
+ * nothing and is a red (release 3, the rhythm-gates review's Important 1: the logic is scripts/lib/fact_once_allow.mjs, tested). BLIND
  * SPOT: "fallback" is a count of the query ledger's fallback lines while the page rendered, so it cannot tell which query fell back, and an
  * entry bound to it is checked whenever any query of that page fell back.
  *
@@ -26,6 +27,7 @@ import { resolve } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
 import { factOnceInPage } from "../lib/fact_once.mjs";
+import { allowedBy, judgeAllowances } from "../lib/fact_once_allow.mjs";
 import { red, redSummary } from "../lib/red.mjs";
 
 await requireBrowser("fact-once", "each fact prints once (one figure, one provenance) on every spine page in scripts/harness/pages.json");
@@ -42,7 +44,6 @@ const ALLOW_FILE = "scripts/harness/fact_once_allow.json";
 const allow = JSON.parse(readFileSync(ALLOW_FILE, "utf8"));
 const pages = JSON.parse(readFileSync(LIST, "utf8")).pages.filter((p) => SPINE.includes(p.surface));
 const STATE_FILE = "scratchpad/harness/pages/render_state.json";
-const STATES = ["fallback", "live"];
 const renderState = existsSync(STATE_FILE) ? JSON.parse(readFileSync(STATE_FILE, "utf8")).pages ?? {} : null;
 /* WHICH ENTRY MATCHED (the staleness read): the index of every entry that allowed a repeat at any width. */
 const used = new Set();
@@ -73,7 +74,7 @@ for (const p of pages) {
       empty.get(name).push(w);
     }
     for (const x of r.reds) {
-      const hit = allow.findIndex((e) => e.page === name && e.figure === x.figure && e.where === x.where);
+      const hit = allowedBy(allow, name, x, renderState);
       if (hit >= 0) { used.add(hit); continue; }
       const key = `${name}|${x.rule}|${x.figure}|${x.where}`;
       if (!found.has(key)) found.set(key, { name, ...x, widths: [] });
@@ -94,21 +95,7 @@ for (const x of found.values()) red({ rule: RULE, file: `scratchpad/harness/page
 /* THE UNUSED ALLOWANCES. A page whose render is missing is already a red above and its entries are not judged twice. */
 const read = new Set(pages.map((p) => `${p.surface}-${p.slugs.join("-")}`).filter((n) => !missing.includes(`scratchpad/harness/pages/${n}.html`)));
 const listed = new Set(pages.map((p) => `${p.surface}-${p.slugs.join("-")}`));
-const stale = [];
-const notThisState = [];
-allow.forEach((e, i) => {
-  const at = `${ALLOW_FILE} entry ${i + 1} (${e.page}, "${e.figure}" in ${e.where})`;
-  if (e.state !== undefined && !STATES.includes(e.state)) { stale.push({ at, detail: `its state "${e.state}" is none of ${STATES.join(", ")}` }); return; }
-  if (!listed.has(e.page)) { stale.push({ at, detail: `names a page ${LIST} does not hold, so no render can match it` }); return; }
-  if (!read.has(e.page)) return;
-  if (e.state) {
-    if (!renderState) { stale.push({ at, detail: `is bound to the "${e.state}" state and ${STATE_FILE} does not exist, so the state of the render is unknown` }); return; }
-    const now = renderState[e.page]?.state;
-    if (!now) { stale.push({ at, detail: `is bound to the "${e.state}" state and ${STATE_FILE} holds no state for ${e.page}` }); return; }
-    if (now !== e.state) { notThisState.push(`entry ${i + 1} (${e.page}, ${e.where}) holds in the ${e.state} state; this render is ${now}`); return; }
-  }
-  if (!used.has(i)) stale.push({ at, detail: `matched no repeat on ${e.page} at ${WIDTHS.join(" or ")}${e.state ? ` in its own state (${e.state})` : ""}: the page no longer prints it, so the allowance is a standing permission` });
-});
+const { stale, notThisState } = judgeAllowances(allow, { listed, read, used, renderState, stateFile: STATE_FILE, listFile: LIST, allowFile: ALLOW_FILE, widths: WIDTHS });
 for (const n of notThisState) console.log(`  not required here: ${n}`);
 const STALE_REMEDY = "delete the entry if the page no longer prints the repeat in any state; if it prints it only in another data state, give the entry that state (\"fallback\" or \"live\") and say so in its reason";
 for (const x of stale) red({ rule: RULE, file: ALLOW_FILE, detail: `${x.at} ${x.detail}`, remedy: STALE_REMEDY });
