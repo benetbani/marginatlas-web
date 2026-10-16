@@ -11,9 +11,12 @@
  * range, stamped. One line sits beneath and leans nowhere, and a quiet link
  * points back to the full cell economics.
  *
- * Layout: on a narrow screen the two cash figures stack; from sm they sit side by
+ * Layout: on a narrow screen the two figures stack; from sm they sit side by
  * side, start leading. Figures are the board's display serif with tabular figures
- * so they align with every other money figure on the site.
+ * so they align with every other money figure on the site, both at the ladder's
+ * answer step (--t-answer, 40) so they read as a pair, and their labels at the
+ * reader-text floor, 14 (fix round 1 of release 3 job A, the review's I-1: they
+ * stood at 36/48 and 11, off the ladder).
  *
  * Server component. Tokens only, mobile-first, no raw hex, no em-dashes, no
  * source-agency names.
@@ -52,11 +55,11 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
             <>
               <div
                 {...provAttrs(lead.prov)}
-                className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl"
+                className="font-display text-[length:var(--t-answer)] font-semibold leading-none tabular-nums text-ink-900"
               >
                 {lead.figure}
               </div>
-              <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+              <div className="mt-2 text-sm font-semibold uppercase tracking-wide text-cocoa-500">
                 {lead.label}
               </div>
             </>
@@ -64,7 +67,7 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
             <>
               {/* Neither figure held: the stated line, as the buy side's own line stands where it cannot price. */}
               <p className="text-sm leading-snug text-cocoa-700">{page.start.cashLine}</p>
-              <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+              <div className="mt-2 text-sm font-semibold uppercase tracking-wide text-cocoa-500">
                 To start fresh
               </div>
             </>
@@ -75,14 +78,14 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
           {buyRange ? (
             <div
               {...provAttrs(page.buy.prov)}
-              className="font-display text-4xl font-semibold leading-none tabular-nums text-ink-900 md:text-5xl"
+              className="font-display text-[length:var(--t-answer)] font-semibold leading-none tabular-nums text-ink-900"
             >
               {buyRange}
             </div>
           ) : (
             <p className="text-sm leading-snug text-cocoa-700">{page.buy.line}</p>
           )}
-          <div className="mt-2 text-[11px] font-semibold uppercase tracking-wide text-cocoa-500">
+          <div className="mt-2 text-sm font-semibold uppercase tracking-wide text-cocoa-500">
             {buyRange ? "To buy, estimated" : "To buy"}
           </div>
         </div>
