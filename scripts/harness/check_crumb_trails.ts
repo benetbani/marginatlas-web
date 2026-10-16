@@ -41,6 +41,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import cityList from "../../data/cities/city_list_v1.json";
 import { requireBrowser } from "../lib/local_only.mjs";
+import { preflight } from "./preflight.mjs";
 import { crumbCutInPage } from "../lib/crumb_cut.mjs";
 import { Crumbs, type SpineCrumb } from "../../src/components/spine/Crumbs";
 import { buildCityCrumbs, buildHoodCrumbs, buildCellCrumbs, buildHowToCrumbs, buildIndustryCrumbs } from "../../src/lib/spine/crumb_rows";
@@ -56,6 +57,7 @@ const PER_SHAPE = 3;
 
 async function main() {
   await requireBrowser(GATE, "the trail back up on the longest trail of every shape the site draws, at 320, 375 and 768");
+  preflight({ browser: true, name: "check_crumb_trails" });
   const { chromium } = await import("playwright");
 
   /* THE TRAILS, through the pages' own builders. */
