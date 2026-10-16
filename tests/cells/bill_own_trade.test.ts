@@ -31,8 +31,8 @@ const TYPED_BILL = {
   grade: "B",
 } as unknown as NonNullable<Cell["setup_costs"]>;
 /* A planted measurement in the shape the reader takes (a data file and its key); the file is a fixture name, and the gate held-bill checks real
-   writers' files and keys exist. */
-const PLANTED_SRC = "data/fixtures/measured_bill.json:lines";
+   writers' files and keys exist. Built from parts, so counts.ts does not list a fixture name as a file this gate reads (the re-review's M-4). */
+const PLANTED_SRC = ["data", "fixtures/measured_bill.json:lines"].join("/");
 const RESTAURANT_BILL = { ...TYPED_BILL, measured_src: PLANTED_SRC } as unknown as Cell["setup_costs"];
 check("a block whose measured_src names no file and key (\"fixture:a measured bill\", \"survey\") prints no lines (fix round 1, I-3)", ["fixture:a measured bill", "survey", " "].every((m) => setupItemsFromCell({ setup_costs: { ...TYPED_BILL, measured_src: m } as unknown as Cell["setup_costs"], country: "GB" }) === undefined), FILE, "measured_src is a data file and key (data/<path>.json:<key>) or a named register (uk/registers/<file>.json:<key>), never any string");
 check("the bill as the import typed it (no measurement named) prints no lines, on its own trade too", setupItemsFromCell({ setup_costs: TYPED_BILL, country: "GB" }) === undefined && hasSetupCostData({ setup_costs: TYPED_BILL } as unknown as Cell) === false, FILE, "a bill prints only where its block names the measurement its lines were read from (measured_src, src/lib/spine/setup_items.ts); never print a typed bill");

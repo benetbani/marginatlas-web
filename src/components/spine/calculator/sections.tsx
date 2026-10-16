@@ -17,6 +17,7 @@ import { STACKED } from "@/components/spine/zones";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { inSentence } from "@/lib/spine/place_names";
 import { shown, type Format } from "@/lib/simulator/display";
+import { UK_2026_27 } from "@/lib/uk/law/params_2026_27";
 import type { BillLine, EngineResult, Out } from "@/lib/simulator/engine";
 import type { SimBundle, SimRole, SimState } from "@/lib/simulator/bundle";
 import type { Place } from "@/lib/simulator/place";
@@ -32,7 +33,7 @@ export const withYours = (text: string, o: Out, W: CalculatorWords): string => (
 export function reasonOf(o: Out, W: CalculatorWords): string {
   if (o.held) return "";
   const R = W.reasons;
-  const by: Record<string, string> = { needs: R.needs, "no-margin": R.noMargin, "no-sales": R.noSales, loss: R.loss, "no-ticket": R.noTicket, "no-opening": R.noOpening, "out-of-reach": R.outOfReach, "beyond-spread": R.beyondSpread, "no-spread": R.noSpread, "no-target": R.noTarget };
+  const by: Record<string, string> = { needs: R.needs, "no-margin": R.noMargin, "no-sales": R.noSales, loss: R.loss, "no-ticket": R.noTicket, "no-opening": R.noOpening, "out-of-reach": fill(R.outOfReach, { threshold: `£${UK_2026_27.businessRates.highValueThreshold.toLocaleString("en-GB")}` }), "beyond-spread": R.beyondSpread, "no-spread": R.noSpread, "no-target": R.noTarget };
   return by[o.reason] ?? "";
 }
 

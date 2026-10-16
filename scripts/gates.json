@@ -907,7 +907,6 @@
       "asserts": "verify_archetype_copy , the browser-free half of the archetype harness, so it can sit in the prebuild chain (no network, no secret, no browser).",
       "reads": [
         "data/facts/industry",
-        "data/fixtures/measured_bill.json:lines",
         "src/app"
       ],
       "claims": []
@@ -2695,7 +2694,6 @@
       "browser": false,
       "asserts": "A bill to open prints only on the trade it was written for (plan 06, task A3).",
       "reads": [
-        "data/fixtures/measured_bill.json:lines",
         "src/lib/spine/copy.ts",
         "src/lib/spine/open_rows.ts",
         "src/lib/spine/setup_items.ts"
@@ -4032,10 +4030,6 @@
       "browser": false,
       "asserts": "NO TYPED MONEY FIGURE ON THE OPENING SURFACES (release 3 job A, 2026-10-16; QUEUE uk:held-bill-provenance, the start-side job's leftovers).",
       "reads": [
-        "data/facts/country/GB.json:costs.license_setup_usd",
-        "data/facts/country/GB.json:no.such.key",
-        "data/facts/country/ZZ.json:costs.license_setup_usd",
-        "data/facts/industry/restaurants.json:first_year.payback_years",
         "scripts/import/deepening",
         "scripts/import/deepening/_bulk",
         "src/app/(site)/calculator/page.tsx",

@@ -45,16 +45,26 @@
  * exist passes A whatever the file holds. B reads string literals in the files listed and walked: a figure built by arithmetic on a
  * typed constant (`rate * 100`) or typed in a file outside those directories is not seen (no-typed-figures reads bare figures in markup,
  * start-side-held the two deleted tables, and the provenance ratchet unstamped figures on the harness pages). D reads three renders,
- * never /opening or /buy-or-start (buy-price-held renders those components on fixtures).
+ * never /opening or /buy-or-start (buy-price-held renders those components on fixtures). D's fallback count is a count of the query
+ * ledger's `[cells] ... falling back` lines, and withBudget logs on timeout only, so a query that fails fast is silent: this cannot tell
+ * zero fallback lines from a fast-failing query, and a render drawn that way reads as read (the floor of 20 stamped figures a render must
+ * hold is what limits the harm).
+ * D REDS ONLY THE `setup_costs:` STAMP, NOT EVERY OTHER BILL-SHAPED ONE (the re-review's M-3), and here is why: a bill line carries no
+ * mark of its own in the markup, only a data-src on an ordinary row, the same as the calculator's built opening lines stamped from the
+ * city shard, so a render cannot say which stamps are a bill's. The bill's one door is the reader, setupItemsFromCell, which prints a bill
+ * only stamped with its block's measured_src, and A checks every writer's measured_src names a file and key that exist; bill-own-trade
+ * proves the reader on a planted measured bill. D is the sight of the typed stamp gone, not the guard on a second door.
  *
  * Run: npx tsx tests/open/held_bill.test.ts [--root=<a checkout to read instead of this one>]
  */
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 import { FRESH_DIR } from "../../scripts/lib/page_renders.mjs";
+import { isMeasuredSource } from "../../src/lib/spine/setup_items";
 
 const RULE = "held-bill";
 /* ONE REMEDY PER FINDING CLASS (fix round 1, I-4). */
@@ -167,6 +177,10 @@ const FILES = [
 
 /** The directories the surfaces live in, walked by path from the root: every .ts and .tsx in them must be on FILES (fix round 1, I-4). */
 const WALKED = ["src/components/open", "src/components/buy", "src/components/spine/calculator", "src/lib/open", "src/lib/simulator"];
+/** THE WALK'S RED, one function the run and its control share: every walked file that the list does not name. */
+function walkedMissing(list: string[], found: string[]): string[] {
+  return found.filter((f) => !list.includes(f));
+}
 function walk(dir: string): string[] {
   if (!existsSync(dir)) return [];
   return readdirSync(dir).flatMap((n) => {
@@ -213,13 +227,15 @@ const wordCount = (line: string) => line.trim().split(/\s+/).filter(Boolean).len
 /** True when a measured_src names a file and a key that exist under the root: a data file's dotted key (or a fact shard's metric, its `*`
  *  filled by a row key), or a register file's key. */
 function measurementExists(root: string, src: string): boolean {
-  const m = /^(data\/[A-Za-z0-9_\/.-]+\.json|uk\/registers\/[A-Za-z0-9_.-]+\.json):([A-Za-z0-9_.*-]+)$/.exec(src.trim());
-  if (!m) return false;
-  const file = join(root, m[1].startsWith("uk/registers/") ? `data/${m[1]}` : m[1]);
+  /* THE SHAPE IS WRITTEN ONCE (the re-review's M-5), in setup_items.ts beside the reader that takes it; this checks only that it exists. */
+  if (!isMeasuredSource(src)) return false;
+  const at0 = src.trim().indexOf(":");
+  const rel = src.trim().slice(0, at0);
+  const file = join(root, rel.startsWith("uk/registers/") ? `data/${rel}` : rel);
   if (!existsSync(file)) return false;
   let doc: unknown;
   try { doc = JSON.parse(readFileSync(file, "utf8")); } catch { return false; }
-  const key = m[2];
+  const key = src.trim().slice(at0 + 1);
   const facts = (doc as { facts?: Array<{ metric: string; rowKey: string }> }).facts;
   if (Array.isArray(facts) && facts.some((f) => f.metric === key || f.metric.replace("*", f.rowKey) === key)) return true;
   let at: unknown = doc;
@@ -243,6 +259,10 @@ function judgeRender(html: string, fallbacks: number, accepted: Set<string>): { 
 
 /* ---------- controls: the reader proves itself first ---------- */
 
+/** A PLANTED PATH IS BUILT FROM PARTS (the re-review's M-4): counts.ts lists as a gate's reads every string literal that begins with a repo
+ *  root, so a negative control's path typed whole ("a file that does not exist") would stand in scripts/gates.json as a file this gate reads. */
+const plantedPath = (...parts: string[]) => parts.join("/");
+
 const GB_BLOCK = `UPDATE regional_cells\nSET setup_costs = '{\n  "registration": { "business_registration_fee": 20, "industry_licenses_fee": 1500, "total_estimated": 4000 },\n  "capital": { "property_fitout": 250000, "equipment_initial": 100000, "total_estimated": 422000 },\n  "grade": "B"\n}'::jsonb\nWHERE country = 'GB';`;
 const BULK_BLOCK = `UPDATE cells_master\nSET setup_costs = jsonb_build_object(\n  'registration', jsonb_build_object(\n    'business_registration_fee', 200,\n    'total_estimated', CASE country\n      WHEN 'US' THEN 3000\n      ELSE 3000 END\n  ),\n  'capital', jsonb_build_object(\n    'property_fitout', 100000,\n    'equipment_initial', 50000\n  ),\n  'grade', 'C'\n)\nWHERE country = 'US';`;
 /* The reader as it stood before this change: grade A or B with a country prints (src/lib/spine/setup_items.ts at 0beeee9a). */
@@ -262,12 +282,24 @@ const OLD_READER: Reader = (c) => {
   if (process.env.HB_DEBUG) console.log(JSON.stringify(hits));
   control("B sees \"12% of sales\" and \"$426K\" in strings, \"Directional\" in JSX text and a figure on a JSX text line of its own, and nothing in a template's code or in the comments", hits.length === 4 && hits.some((h) => h.s.includes("12%") && h.line === 2) && hits.some((h) => h.s === "$426K") && hits.some((h) => /Directional/.test(h.s)) && hits.some((h) => h.line === 10) && !hits.some((h) => h.line >= 6 && h.line <= 8));
   /* D on planted renders: a typed bill stamp reds, a stamp equal to an accepted measurement passes, and a render drawn from fallbacks is not read. */
-  const body = (stamp: string) => `<html><body>${"<p>padding</p>".repeat(900)}${Array.from({ length: 24 }, (_, i) => `<span data-src="data/facts/industry/restaurants.json:first_year.payback_years" data-kind="estimate">${i}</span>`).join("")}<b data-src="${stamp}" data-kind="estimate">$426K</b></body></html>`;
-  const PLANTED = "data/facts/country/GB.json:costs.license_setup_usd";
+  const body = (stamp: string) => `<html><body>${"<p>padding</p>".repeat(900)}${Array.from({ length: 24 }, (_, i) => `<span data-src="${plantedPath("data", "facts/industry/restaurants.json:first_year.payback_years")}" data-kind="estimate">${i}</span>`).join("")}<b data-src="${stamp}" data-kind="estimate">$426K</b></body></html>`;
+  const PLANTED = plantedPath("data", "facts/country/GB.json:costs.license_setup_usd");
   const typedR = judgeRender(body("setup_costs:restaurants:GB"), 0, new Set([PLANTED]));
   const measuredR = judgeRender(body(PLANTED), 0, new Set([PLANTED]));
   const fallenR = judgeRender(body("setup_costs:restaurants:GB"), 2, new Set([PLANTED]));
   control("D reds a planted render stamped setup_costs:, accepts one stamped with an accepted measurement, and does not read a render drawn from fallbacks", typedR.read && typedR.findings.some((f) => /typed bill/.test(f)) && measuredR.read && measuredR.findings.length === 0 && measuredR.accepted === 1 && !fallenR.read && fallenR.findings.length === 0);
+}
+
+/* THE WALK'S RED ON A PLANT (the re-review's M-2): a temp tree holding a listed file and an unlisted one, walked by path, reds the unlisted
+   one only, and a .md beside them is not walked. */
+{
+  const tmp = mkdtempSync(join(tmpdir(), "held-bill-walk-"));
+  mkdirSync(join(tmp, "open", "deep"), { recursive: true });
+  for (const n of ["open/Listed.tsx", "open/deep/Unlisted.ts", "open/notes.md"]) writeFileSync(join(tmp, n), "export {};\n");
+  const found = walk(join(tmp, "open")).map((p) => p.slice(tmp.length + 1)).sort();
+  const missing = walkedMissing(["open/Listed.tsx"], found);
+  rmSync(tmp, { recursive: true, force: true });
+  control("the walk reds a planted unlisted file in a nested directory, not the listed one, and walks no .md", found.length === 2 && missing.length === 1 && missing[0] === "open/deep/Unlisted.ts");
 }
 
 /* ---------- run ---------- */
@@ -278,10 +310,10 @@ async function main() {
   /* A PLANTED MEASURED BLOCK (fix round 1, I-3): a block naming a file and key that exist prints its lines with that measurement as its stamp;
      one naming a file that does not exist is refused by the existence check (the reader checks the shape only). */
   {
-    const PLANTED = "data/facts/country/GB.json:costs.license_setup_usd";
+    const PLANTED = plantedPath("data", "facts/country/GB.json:costs.license_setup_usd");
     const block: Block = { capital: { property_fitout: 1000 }, grade: "B", measured_src: PLANTED };
     const out = printed(setupItemsFromCell, block);
-    control("A: a planted measured block prints its line stamped with its measurement; a file and key that exist pass, a missing file and a bare word do not", out.length === 2 && out.every((o) => o!.src === PLANTED) && measurementExists(ROOT, PLANTED) && !measurementExists(ROOT, "data/facts/country/ZZ.json:costs.license_setup_usd") && !measurementExists(ROOT, "data/facts/country/GB.json:no.such.key") && !measurementExists(ROOT, "survey"));
+    control("A: a planted measured block prints its line stamped with its measurement; a file and key that exist pass, a missing file and a bare word do not", out.length === 2 && out.every((o) => o!.src === PLANTED) && measurementExists(ROOT, PLANTED) && !measurementExists(ROOT, plantedPath("data", "facts/country/ZZ.json:costs.license_setup_usd")) && !measurementExists(ROOT, plantedPath("data", "facts/country/GB.json:no.such.key")) && !measurementExists(ROOT, "survey"));
   }
   const accepted = new Set<string>();
 
@@ -317,7 +349,7 @@ async function main() {
     for (const h of typedIn(text)) fail(`${rel}:${h.line}`, `${h.why} in "${h.s.trim().slice(0, 90)}"`, h.why.startsWith("the method") ? "method" : "typedFigure");
   }
   const walked = WALKED.flatMap((d) => walk(join(ROOT, d))).map(relRoot).sort();
-  for (const f of walked) if (!FILES.includes(f)) fail(f, "a file in the surfaces' directories that the gate does not read", "unread");
+  for (const f of walkedMissing(FILES, walked)) fail(f, "a file in the surfaces' directories that the gate does not read", "unread");
   console.log(`B: ${FILES.length} surface files, ${nStrings} string literals read; ${walked.length} files walked in ${WALKED.length} directories`);
   if (nStrings < 300) fail("tests/open/held_bill.test.ts", `read ${nStrings} string literals over the surfaces, expected 300 or more`, "floor");
   if (walked.length < 25) fail("tests/open/held_bill.test.ts", `walked ${walked.length} files in ${WALKED.join(", ")}, expected 25 or more`, "floor");
@@ -329,7 +361,6 @@ async function main() {
   /* EXEMPT, by copy path and words, each with its reason, and each must still match (a stale exemption reds): a law's threshold or a data
      set's scope written into a line is a definition, not a reading of a place. */
   const EXEMPT: Array<{ path: string; has: string; why: string }> = [
-    { path: "COPY.calculator.reasons.outOfReach", has: "£500,000 rateable value", why: "the business-rates law's own threshold for the higher rule (UK_2026_27.businessRates.highValueThreshold, src/lib/uk/law/params_2026_27.ts, read by engine.ts), not a reading" },
     { path: "COPY.calculator.lines.sales.register", has: "under £5m", why: "the turnover register's own scope, the firms it counts, not a reading" },
   ];
   for (const e of EXEMPT) if (!copyLines.some(([path, s]) => path === e.path && s.includes(e.has))) fail("tests/open/held_bill.test.ts", `the exemption for ${e.path} ("${e.has}") no longer matches a line`, "floor");

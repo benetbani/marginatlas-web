@@ -62,7 +62,7 @@ async function main(): Promise<void> {
   const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
   const METHOD = [/\bmodell?ed\b/i, /\bwithheld\b/i, /\bon file\b/i, /\bnot gathered\b/i, /\bnot measured\b/i, /typical for the trade anywhere/i, /\bthe model\b/i, /\bplaceholder\b/i, /as on the opening card/i, /\bworked from\b/i, /\bwe\b/i];
   const LABEL = /^calculator\.(levers\.labels|levers\.groups|levers\.units|bill\.(?!teamNote|ratesNote|ratesStandard)|moves\.rows|month\.key|month\.(monthTab|yearTab|tick)|pick\.(country|city|trade|label)|answer\.(day|customers|firms|goal)|margin\.after|opening\.(total|yours)|sources\.\w+\.label|lines\.openingItems)\b/;
-  const PLACEHOLDERS = new Set(["country", "city", "pct", "n", "index", "m2", "sales", "last"]);
+  const PLACEHOLDERS = new Set(["country", "city", "pct", "n", "index", "m2", "sales", "last", "threshold"]);
   const faults: string[] = [];
   for (const [at, s] of strings) {
     if (s.trim() === "" && !at.endsWith(".runShare")) faults.push(`${at}: empty`);

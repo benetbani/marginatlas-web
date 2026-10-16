@@ -1132,8 +1132,9 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   }
   if (footFull !== ids.length) reds.push(`open: the foot's two companions resolve on ${footFull} of ${ids.length} shard ids, not all`);
   /* A held bill is a MEASURED one (release 3 job A: setup_items.ts prints a bill only where its block names its measurement, and the stamp is that
-     measurement); the fixtures carry a planted one in the shape the reader takes. */
-  const MEASURED = "data/fixtures/measured_bill.json:lines";
+     measurement); the fixtures carry a planted one in the shape the reader takes, its path built from parts so counts.ts does not list a
+     fixture name as a file this gate reads (the re-review's M-4). */
+  const MEASURED = ["data", "fixtures/measured_bill.json:lines"].join("/");
   const lines = { scope: "GB", src: MEASURED, items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }, { name: "Business registration", usd: 20 }] };
   const held = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: lines });
   if (!held || held.state !== "held" || held.rows.length !== 4 || held.tail !== null || held.tailLine !== null || held.value !== 390020 || held.figure !== usd(390020) || !held.accent || !held.sample || held.confidence !== "modeled" || held.prov?.kind !== "estimate" || held.prov?.src !== MEASURED || held.focalWords !== COPY.tradeOpen.heldScope.GB || held.basis !== COPY.tradeOpen.basisHeld || held.foot.length !== 2 || held.footLine !== null) reds.push("open (held): four lines do not build the total, the accent, the one basis and the foot as expected");
