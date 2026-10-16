@@ -38,7 +38,7 @@ export function judgeAllowances(allow, { listed, read, used, renderState, stateF
     if (!listed.has(e.page)) { stale.push({ at, detail: `names a page ${listFile} does not hold, so no render can match it` }); return; }
     if (!read.has(e.page)) return;
     if (e.state) {
-      if (!renderState) { stale.push({ at, detail: `is bound to the "${e.state}" state and ${stateFile} does not exist, so the state of the render is unknown` }); return; }
+      if (!renderState) { stale.push({ at, detail: `is bound to the "${e.state}" state and ${stateFile} is missing or stale, so the state of the render is unknown` }); return; }
       const now = stateOf(renderState, e.page);
       if (!now) { stale.push({ at, detail: `is bound to the "${e.state}" state and ${stateFile} holds no state for ${e.page}` }); return; }
       if (now !== e.state) { notThisState.push(`entry ${i + 1} (${e.page}, ${e.where}) holds in the ${e.state} state; this render is ${now}`); return; }

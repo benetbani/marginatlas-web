@@ -57,13 +57,14 @@
  *
  * Run: npx tsx tests/open/held_bill.test.ts [--root=<a checkout to read instead of this one>]
  */
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, utimesSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { stripCommentLines } from "../../scripts/lib/strip_comments";
 import { red, redSummary } from "../../scripts/lib/red";
 import { FRESH_DIR } from "../../scripts/lib/page_renders.mjs";
+import { readRenderState } from "../../scripts/lib/render_state.mjs";
 import { isMeasuredSource } from "../../src/lib/spine/setup_items";
 
 const RULE = "held-bill";
@@ -302,6 +303,34 @@ const OLD_READER: Reader = (c) => {
   control("the walk reds a planted unlisted file in a nested directory, not the listed one, and walks no .md", found.length === 2 && missing.length === 1 && missing[0] === "open/deep/Unlisted.ts");
 }
 
+/* THE STATE FILE'S FRESHNESS ON PLANTS (the controller's ruling e): a temp directory with one render and its state file; the state written
+   after the render reads fresh; the render redrawn after the state, a render older than the run, a page the file names no state for, and
+   no file at all, each read as a fault. */
+{
+  const tmp = mkdtempSync(join(tmpdir(), "held-bill-state-"));
+  const render = join(tmp, "cell-x.html");
+  writeFileSync(render, "<html></html>");
+  const at = (ms: number) => new Date(ms).toISOString();
+  const now = Date.now();
+  const state = (started: number, written: number, pages: Record<string, unknown>) => writeFileSync(join(tmp, "render_state.json"), JSON.stringify({ started: at(started), written: at(written), fallbacks: 0, pages }));
+  const live = { "cell-x": { fallbacks: 0, state: "live" } };
+  const t = now / 1000;
+  utimesSync(render, t, t);
+  state(now - 5_000, now + 100, live);
+  const fresh = readRenderState(tmp, ["cell-x"]).faults.length === 0;
+  utimesSync(render, t + 60, t + 60);
+  const redrawn = readRenderState(tmp, ["cell-x"]).faults.some((f: string) => /after/.test(f));
+  utimesSync(render, t - 60, t - 60);
+  const older = readRenderState(tmp, ["cell-x"]).faults.some((f: string) => /before the run/.test(f));
+  utimesSync(render, t, t);
+  state(now - 5_000, now + 100, {});
+  const noPage = readRenderState(tmp, ["cell-x"]).faults.some((f: string) => /no state for cell-x/.test(f));
+  rmSync(join(tmp, "render_state.json"));
+  const none = readRenderState(tmp, ["cell-x"]).faults.some((f: string) => /does not exist/.test(f));
+  rmSync(tmp, { recursive: true, force: true });
+  control("the state file reads fresh beside its render, and stale when the render was redrawn after it or drawn before its run, when it names no state for the page, and when it is missing", fresh && redrawn && older && noPage && none);
+}
+
 /* ---------- run ---------- */
 
 async function main() {
@@ -402,10 +431,11 @@ async function main() {
 
   /* D */
   const RENDERS = ["cell-gb-london-restaurants", "cell-gb-london-barbershops", "calculator-gb-london-restaurants"];
-  const statePath = join(ROOT, FRESH_DIR, "render_state.json");
-  let fallbacks = 0;
-  if (!existsSync(statePath)) fail(statePath, "pages-fresh wrote no fallback state beside the renders, so a render cannot be judged read", "render");
-  else fallbacks = Number((JSON.parse(readFileSync(statePath, "utf8")) as { fallbacks?: number }).fallbacks ?? 0);
+  /* THE STATE FILE, CHECKED FRESH against these renders (scripts/lib/render_state.mjs): missing or stale is a red, and is not read. */
+  const stateRead = readRenderState(join(ROOT, FRESH_DIR), RENDERS) as { file: string; state: { fallbacks?: number } | null; faults: string[] };
+  const statePath = stateRead.file;
+  for (const f of stateRead.faults) fail(statePath, `the renders' state file: ${f}`, "render");
+  const fallbacks = stateRead.faults.length === 0 ? Number(stateRead.state?.fallbacks ?? 0) : 0;
   for (const name of RENDERS) {
     const p = join(ROOT, FRESH_DIR, `${name}.html`);
     if (!existsSync(p)) { fail(p, "the render is missing", "render"); continue; }

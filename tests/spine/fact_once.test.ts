@@ -125,7 +125,7 @@ check(`every spine surface the gate names (${spineNames.join(", ")}) occurs in $
   j = judgeAllowances(bound, opts(fell, []));
   check(`a stated entry unused in its own state reds (${j.stale.length})`, j.stale.length === 1 && /in its own state \(fallback\)/.test(j.stale[0].detail), STATE_LIB);
   j = judgeAllowances(bound, opts(null, []));
-  check(`a stated entry with no state file reds (${j.stale.length})`, j.stale.length === 1 && /does not exist/.test(j.stale[0].detail), STATE_LIB);
+  check(`a stated entry with no state file reds (${j.stale.length})`, j.stale.length === 1 && /missing or stale/.test(j.stale[0].detail), STATE_LIB);
   j = judgeAllowances([{ ...plain[0], state: "warm" }, { ...plain[0], page: "cell-z" }], opts(live, []));
   check(`an unknown state and an unlisted page red (${j.stale.length})`, j.stale.length === 2, STATE_LIB);
   check("the gate matches through allowedBy with the render state and judges through judgeAllowances", /allowedBy\(allow, name, x, renderState\)/.test(gate) && /judgeAllowances\(allow,/.test(gate) && !/allow\.findIndex\(/.test(gate), GATE, "match each repeat through allowedBy (scripts/lib/fact_once_allow.mjs) with the page's render state, never a findIndex of its own");

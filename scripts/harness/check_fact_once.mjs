@@ -15,7 +15,7 @@
  * the adapters' fallbacks, or "live", none fell back), and MATCHES and is required to match only when the page's render is in that state,
  * read from the state file pages-fresh writes (scratchpad/harness/pages/render_state.json); a stated entry with no state to read matches
  * nothing and is a red (release 3, the rhythm-gates review's Important 1: the logic is scripts/lib/fact_once_allow.mjs, tested). BLIND
- * SPOT: "fallback" is a count of the query ledger's fallback lines while the page rendered, so it cannot tell which query fell back, and an
+ * SPOT (the state file itself is checked fresh against the renders it describes, scripts/lib/render_state.mjs: missing or stale reds): "fallback" is a count of the query ledger's fallback lines while the page rendered, so it cannot tell which query fell back, and an
  * entry bound to it is checked whenever any query of that page fell back.
  *
  *   node scripts/harness/check_fact_once.mjs --list[=scripts/harness/pages.json]
@@ -28,6 +28,7 @@ import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
 import { factOnceInPage } from "../lib/fact_once.mjs";
 import { allowedBy, judgeAllowances } from "../lib/fact_once_allow.mjs";
+import { readRenderState } from "../lib/render_state.mjs";
 import { red, redSummary } from "../lib/red.mjs";
 
 await requireBrowser("fact-once", "each fact prints once (one figure, one provenance) on every spine page in scripts/harness/pages.json");
@@ -44,7 +45,11 @@ const ALLOW_FILE = "scripts/harness/fact_once_allow.json";
 const allow = JSON.parse(readFileSync(ALLOW_FILE, "utf8"));
 const pages = JSON.parse(readFileSync(LIST, "utf8")).pages.filter((p) => SPINE.includes(p.surface));
 const STATE_FILE = "scratchpad/harness/pages/render_state.json";
-const renderState = existsSync(STATE_FILE) ? JSON.parse(readFileSync(STATE_FILE, "utf8")).pages ?? {} : null;
+/* THE STATE FILE IS CHECKED FRESH against the renders it describes (scripts/lib/render_state.mjs): a missing or stale one is a red, and a
+   stale one is not read, so no entry is matched or excused by the state of other renders. */
+const stateRead = readRenderState("scratchpad/harness/pages", pages.map((p) => `${p.surface}-${p.slugs.join("-")}`));
+const renderState = stateRead.state && stateRead.faults.length === 0 ? stateRead.state.pages : null;
+const STATE_REMEDY = "run pages-fresh (node node_modules/tsx/dist/cli.mjs scripts/verify_pages_fresh.mjs), which draws every render and writes their state in one run, then this gate";
 /* WHICH ENTRY MATCHED (the staleness read): the index of every entry that allowed a repeat at any width. */
 const used = new Set();
 const REMEDY = "keep the figure in the section whose job is to explain it, and elsewhere say it in words without the number or drop that sentence; the hero keeps only the page's answer; two facts that print alike each carry their own data-src (src/lib/spine/provenance.ts); a repeat a standing law forces goes in scripts/harness/fact_once_allow.json with the law named";
@@ -86,6 +91,7 @@ for (const p of pages) {
 await browser.close();
 for (const s of bare) red({ rule: RULE, file: LIST, detail: `no page of the ${s} surface in ${LIST}, so no ${s} render was read`, remedy: `add a page of the ${s} surface to ${HARNESS_LIST}, the list the chain's harness gates read` });
 for (const f of missing) red({ rule: RULE, file: f, detail: "no render", remedy: RENDER_REMEDY });
+for (const f of stateRead.faults) red({ rule: RULE, file: STATE_FILE, detail: `the renders' state file: ${f}`, remedy: STATE_REMEDY });
 for (const [name, widths] of empty) red({ rule: RULE, file: `scratchpad/harness/pages/${name}.html`, detail: `${name}: no printed figure read at ${widths.join(" and ")}, and a spine page always prints figures, so nothing was read`, remedy: EMPTY_REMEDY });
 /* THE REMEDY NAMES THE SECTION THAT KEEPS IT (the spec's section 3 item 2; `keep`, scripts/lib/fact_once.mjs says how it is chosen). */
 const keepRemedy = (x) => (x.keep
@@ -100,12 +106,13 @@ for (const n of notThisState) console.log(`  not required here: ${n}`);
 const STALE_REMEDY = "delete the entry if the page no longer prints the repeat in any state; if it prints it only in another data state, give the entry that state (\"fallback\" or \"live\") and say so in its reason";
 for (const x of stale) red({ rule: RULE, file: ALLOW_FILE, detail: `${x.at} ${x.detail}`, remedy: STALE_REMEDY });
 console.log(`fact-once allowances: ${allow.length} entr${allow.length === 1 ? "y" : "ies"}, ${used.size} matched a repeat, ${notThisState.length} bound to a state these renders are not in, ${stale.length} unused or unreadable`);
-const total = bare.length + missing.length + empty.size + found.size + stale.length;
+const total = bare.length + missing.length + stateRead.faults.length + empty.size + found.size + stale.length;
 if (total) {
   /* The count line is the one a truncated tail keeps, so it names the remedy of each kind of finding present. */
   const fix = [
     bare.length ? `add a page of each missing surface (${bare.join(", ")}) to ${HARNESS_LIST}` : "",
     missing.length ? RENDER_REMEDY : "",
+    stateRead.faults.length ? STATE_REMEDY : "",
     empty.size ? EMPTY_REMEDY : "",
     found.size ? REMEDY : "",
     stale.length ? STALE_REMEDY : "",
