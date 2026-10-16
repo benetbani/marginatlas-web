@@ -15,8 +15,8 @@
  *    number past a hundred, never a second lap.
  *  - THE FIGURE inside the ring at the focal rung (`size="focal"`, the default,
  *    a 144px ring); `accent` puts it in the accent text colour (the seat's
- *    declared loud moment), else ink. One caption under the ring at the micro
- *    rung, in grey.
+ *    declared loud moment), else ink. One caption under the ring at the body
+ *    rung (14), in grey (in ink2 beside the ring in the row form).
  *  - `size="lead"`: the figure at the lead rung (16px semibold, var(--t-lead))
  *    in a 96px ring, so a ring beside a card's focal figure is never a second
  *    30. Its caption takes `text-balance` (fix round 2b): in the 22ch box the
@@ -36,7 +36,7 @@
  *  - `layout="row"` (critique pass 2, P0.1): the ring at the left and its caption beside it, left-aligned, at the body rung (14 on 20)
  *    in ink2, at most 20ch wide, the two centred on one another (`flex items-center gap-4`), for a ring that stands in a card's drawing
  *    row (the home's joins), where the column form left a ring and a caption centred in a left-aligned card. The caption still
- *    balances its lines. The default, "column", is the ring over its centred micro caption, as every other ring draws.
+ *    balances its lines. The default, "column", is the ring over its centred caption, as every other ring draws.
  *  - THE LABEL (the closing cleanup of the same plan, item 13): the svg's
  *    account to a screen reader is the figure and the caption's words when a
  *    caption is given ("97 in 100 names found in the register"; a caption that

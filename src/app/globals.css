@@ -2629,7 +2629,7 @@ main > .av2:nth-child(1 of :not(script, link, style, noscript)) > .wrap {
      --t-small and --t-sub are RETIRED. They still resolve during this step so
      the reference sweep that follows is provably visual-neutral; they are
      deleted in the step after, and a gate stops them returning. */
-  --t-micro: 12px;   /* the floor for anything read: axis units, chips, column heads */
+  --t-micro: 12px;   /* a chart's tick and axis labels and a page foot's source line only, each named in scripts/harness/type_floor_allow.json; reader text, column heads included, is 14 (the type floor, plan 2026-10-12) */
   --t-small: 12px;   /* RETIRING: equal to micro so the sweep changes nothing */
   --t-body: 14px;    /* body prose. The default */
   --t-lead: 16px;    /* a lede, a card's first line */

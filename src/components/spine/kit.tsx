@@ -760,8 +760,8 @@ export function SampleTag({ note }: { note?: string }) {
   );
 }
 /* Head , subsection header. Rulebook v1 §R2 (founder 2026-07-11, reverses the S2 icon
- * deletion at subsection level): subsection titles carry the Ico tile on the LEFT of the
- * title again , "the subsections generally, they need icons to function". Every call site
+ * deletion at subsection level): subsection titles carry their icon on the LEFT of the
+ * title again (since 2026-10-13 the bare opener glyph, no tile, as Rail draws it) , "the subsections generally, they need icons to function". Every call site
  * already passes its icon id, so this is a kit-only restore. */
 export function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
   return (
@@ -1053,7 +1053,7 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
 
-/* Rail , the section opener: an Ico tile + kicker, one plain title line. Rulebook v1 §R2
+/* Rail , the section opener: one bare 32px terracotta glyph (no tile since 2026-10-13) + the title line. Rulebook v1 §R2
  * (founder 2026-07-11): subsection titles carry their icon on the LEFT again , the S2 icon
  * deletion is reversed at subsection level. The 2026-07-10 corrections still stand for the
  * REST of the header: NO section header states a conclusion , the verdict slot stays a
@@ -1131,7 +1131,7 @@ export function FocalWords({ children, className = "" }: { children: React.React
  *  where the figure stands among the countries (PART 6), and 24 to the next group. `beside`: the block stands beside another (a drawing, a
  *  column of rows) whose arrangement gives the distance, so it takes no margin; `className` adds to the wrapper (a margin a container query
  *  drops); `live` announces a figure a control changes; `accent` (plan 2026-10-08) the figure in --terra-text for a declared loud moment. A
- *  figure with a source stamps it (src/lib/spine/provenance.ts). Moved here from country/focal.tsx, which re-exports it. `placed`, `signal`
+ *  figure with a source stamps it (src/lib/spine/provenance.ts). Moved here from country/focal.tsx (that shim was deleted on 2026-10-16). `placed`, `signal`
  *  and `noSignal` (plan 2026-10-13 country-page-journey): a figure placed among the countries stamps its measure and draws its signal
  *  beside it. */
 export function Focal({ figure, words, placement, prov, accent = false, live = false, beside = false, className = "", wordsClassName = "", placed = null, signal = null, noSignal = null }: { figure: React.ReactNode; words?: React.ReactNode; placement?: string | null; prov?: Provenance | null; accent?: boolean; live?: boolean; beside?: boolean; className?: string; wordsClassName?: string; placed?: MeasureKey | null; signal?: Signalled | null; noSignal?: "set" | "fill" | null }) {
@@ -1157,8 +1157,8 @@ export function Focal({ figure, words, placement, prov, accent = false, live = f
 }
 
 /** THE BASIS LINE (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1; MODEL PART 7: what the figure is and in what unit, never what it means): one line under a section's
- *  rows or drawing, 24 from them, the group step, the one piece a section prints its basis with. It is defined in ./basis.tsx, a module with no import but React, because the home's
- *  server rows (archetypes/CityRows.tsx) must reach no client module and this file's closure does; the kit exports it as every other file imports it. */
+ *  rows or drawing, 24 from them, the group step, the one piece a section prints its basis with. It is defined in ./basis.tsx, a module with no import but React; the reason
+ *  it was split out (the home's retired CityRows and its retired foot test) is gone, and the split stays harmless: the kit re-exports it and every file imports it from here. */
 export { Basis } from "./basis";
 
 /* Stat , one figure with a locked scale contract. focal vs support keeps a >=1.6

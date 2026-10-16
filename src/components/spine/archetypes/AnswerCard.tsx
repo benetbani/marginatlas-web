@@ -18,7 +18,7 @@
  *  - THE LEVEL (city:verdict, the build loop's run 23): at page level the
  *    opener is the identity row and the page's only h1; at section level (a
  *    page's second answer, the city's verdict card) the opener is the section
- *    rail, an icon tile and a kicker, and no h1 is drawn, so a page keeps one
+ *    rail, its bare opener glyph and the title, and no h1 is drawn, so a page keeps one
  *    headline whatever its answer cards number. The harness reads the level
  *    and counts the h1s.
  *  - THE TRADE IDENTITY VARIANT (MODEL.md 8.7, plan step 34, 2026-09-18): a
@@ -78,8 +78,8 @@ export type AnswerCardProps = {
   absent?: { label: string; word: string; note: string };
   /** The rail's opener glyph at section level. */
   icon?: AtlasIconId;
-  /** THE TRADE IDENTITY VARIANT (MODEL.md 8.7 `00 take`: "the trade's 28px
-   * icon tile in the flag's seat"; plan step 34's first dispatch,
+  /** THE TRADE IDENTITY VARIANT (MODEL.md 8.7 `00 take` wrote "the trade's 28px
+   * icon tile in the flag's seat"; it is a bare glyph now, below; plan step 34's first dispatch,
    * 2026-09-18): a page whose subject is a trade anywhere has no flag and no
    * country mark, so the identity row draws the trade's own glyph (PART 5's
    * 28px trade mark; since 2026-10-12 bare and grey, no tile, by his rule
