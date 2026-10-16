@@ -133,10 +133,16 @@ code puts on the page>`.
 
 ## Latest handoff
 
-- **`docs/handoff/HANDOFF-marginatlas-2026-10-11.md` IS THE CURRENT HANDOFF, READ IT FIRST, starting at its update note and section 0**
+- **`docs/handoff/HANDOFF-marginatlas-2026-10-16.md` IS THE CURRENT HANDOFF, READ IT FIRST, then the files of its section 7**
+  (2026-10-16: releases 1 and 2 live, main 0beeee9a, release 3 built on the build server; the server is the reference machine and
+  runs the agents headless, the laptop session is the controller; the server's address reads `<server-ip>` in the repo copy, and
+  the laptop's git remote `server` holds it). The laptop's ledger `.superpowers/sdd/progress.md` and
+  `E:/atlas/design/loop/build/STATE.md` are newer than any handoff.
+- `docs/handoff/HANDOFF-marginatlas-2026-10-15.md` is the PRIOR handoff (2026-10-15: the four design fronts of 2026-10-12/13 on
+  their work branches, GitHub checks, the netcup server ordered).
+- `docs/handoff/HANDOFF-marginatlas-2026-10-11.md` was the CURRENT HANDOFF until 2026-10-15, starting at its update note and section 0
   (2026-10-11: the move to a new Claude Code account and the home reform's last loop on branch `home-introduction`: critique pass 4
-  at 93/100 with no P0 and no P1, rounds D1, D2, F1 and F2, the built page seen; nothing pushed, his word for the deploy). The
-  2026-10-04 handoff below is the PRIOR one.
+  at 93/100 with no P0 and no P1, rounds D1, D2, F1 and F2, the built page seen; nothing pushed, his word for the deploy).
 - `docs/handoff/HANDOFF-marginatlas-2026-10-04.md` was the CURRENT HANDOFF until 2026-10-11, starting at its section 0
   (2026-10-06 day: his deep goal DEPLOYED, `main` 50ecd9e5 live with every switch off, proven 23 of 23; section 0)
   (2026-10-06 morning, section 0b: the masterplan night, milestones 2 and 3 built behind their switches on branch `night-2026-10-05`, and his
