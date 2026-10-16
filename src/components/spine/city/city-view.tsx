@@ -956,7 +956,11 @@ export function SpineCityBody({ data = spineCitySeed, locked = false }: { data?:
        season end 6 to 10 apart at 2-3 and 1-2, 30 at 1-1; of those two, 2-3 leaves the demand card more room. */
     { key: "demand", split: "2-3", chapter: "01", label: "Who buys", body: demandBesideSeason ? [<Demand key="demand" demand={demand} />, <Season key="season" season={season} />] : [] },
     { key: "crew", split: "1-1", chapter: "01", label: "The crew", body: keep([crew ? <Crew key="crew" crew={crew} /> : null, texture ? <Texture key="texture" texture={texture} /> : null]) },
-    { key: "calendar", split: "2-1", stack: "lg", chapter: "01", label: "The year", body: calendar ? keep([<SpendCalendar key="calendar" calendar={calendar} />, earnings ? <Earnings key="earnings" strip={earnings} /> : null]) : [] },
+    /* THE YEAR STANDS AS HALVES FROM 768 (fix round 1 of rhythm-t6, 2026-10-16; review I1): stacked until 1024, the calendar took the
+       column's 720 at 768 and its head, the swing beside its words, could not fill it: the words stop at half the page (clause 51,
+       360 there), and with the 24s of the air inside a section the blank beside them grew to 180x126, the page filter's WHITE SPACE on
+       251 cities. As halves the card is 336, its head stacks under its own width rule, and the strip stands beside it. */
+    { key: "calendar", split: "2-1", chapter: "01", label: "The year", body: calendar ? keep([<SpendCalendar key="calendar" calendar={calendar} />, earnings ? <Earnings key="earnings" strip={earnings} /> : null]) : [] },
     { key: "earnings", split: "2-1", chapter: "02", label: "What customers earn", body: !calendar && earnings && !earningsOnLiving ? [<Earnings key="earnings" strip={earnings} />] : [] },
     { key: "districts", split: "2-1", stack: "lg", chapter: "02", label: "Where to trade", body: keep([districts ? <WhereToTrade key="districts" d={d} /> : null, trades ? <TradesHere key="trades" d={d} /> : null]) },
     { key: "peers", split: "1-1", chapter: "03", label: "The peers", body: keep([peersDrawn ? <CityPeers key="peers" d={d} zone /> : null, people ? <CharacterPeople key="people" people={people} /> : null]) },
