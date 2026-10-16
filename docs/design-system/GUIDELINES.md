@@ -15,7 +15,7 @@ around it.
 This document describes the v1 design system as it shipped on 2026-05-27:
 component API conventions, tokens, motion, accessibility floor, the catalog.
 Since then the site grew a second, larger layer of enforcement that this
-document never absorbed: 142 prebuild gates (`GATES` in
+document never absorbed: the prebuild chain (`GATES` in
 `scripts/prebuild_all.ts`) and four harness scripts that measure a live
 render (`scripts/harness/check_archetypes.mjs`, `check_page_holes.mjs`,
 `check_model_laws.mjs`, `check_readability.mjs`). Most of that layer is data
@@ -86,7 +86,7 @@ files.
 | An element declares one CSS `display` value, never two colliding in the same class string. | `one-display` | found and gated 2026-08-25 |
 | A drawing that carries a measurement (a fixed viewBox) never stretches its own geometry; it is given a fixed height too. | `no-scaling-drawings` | reached zero 2026-08-24 |
 | A mark placed by percentage stays inside its own track; nothing hangs off the end of a scale. | `scale-end-clamps` | (undated; "the 2026-08 loop") |
-| Spacing lands on the distance ladder's rungs (0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64), not a guess at the moment of writing. | `distance-ladder` (`src/components/spine`, the live pages); `spacing-scale` reads only the older `city2`, `country2` and `spine2` kits, on their own scale (of the pages the site serves, only the trades index, `/industries`, draws from them: spine2's glyph and place marks) | ladder 2026-09-23; the gate's name corrected 2026-10-12 |
+| Spacing lands on the distance ladder's rungs (0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64), not a guess at the moment of writing. | `distance-ladder` (`src/components/spine`, the live pages); `spacing-scale` reads only the older `city2`, `country2` and `spine2` kits, on their own scale (the trades index, `/industries`, and the atlas index, `/world`, draw spine2's `GlyphIcon` and `Place`, and the `/dev` routes draw all three kits) | ladder 2026-09-23; the gate's name corrected 2026-10-12 |
 | No level repeats the split of the level before it (a wide level holds none), never three equal halves in a row. | `art-direction` (D3, on the zones) | 2026-08-25; on the zones since 2026-10-12 |
 | One figure prints once on a page: it stays in the section whose job is to explain it. | `fact-once` | 2026-10-12 |
 | The icon scale is five sizes (18, 13, 24, 14, 16) and the radius scale is four tokens plus three named exceptions on the current v2 surface; nothing else. | `v2-scales` | (undated; DESIGN.md's scale, measured against the surface) |
