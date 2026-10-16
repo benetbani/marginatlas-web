@@ -2894,7 +2894,7 @@ export const COPY = {
       owner: { off: "None by default. You keep the profit.", city: "Typical income in {city}.", country: "The country's median pay.", none: "No income figure is held here. Type yours." },
       target: { uk: "The profit you want each year, after tax.", world: "The profit you want each year, before tax." },
       loan: { amount: "None by default. Type a loan if you take one.", uk: "The UK start-up loan rate.", country: "{country}'s bank lending rate.", noRate: "No lending rate is held here. Type yours.", years: "Type the years to repay." },
-      opening: { held: "The trade's opening bill for {country}.", built: "Fit-out for this space, the deposit and registration.", none: "No cost to open is held for this trade." },
+      opening: { held: "The trade's opening bill for {country}.", built: "Fit-out, deposit and registration. Kit and stock are not in it.", none: "No cost to open is held for this trade." },
       openingItems: { fitOut: "Fit-out", deposit: "Lease deposit", registration: "Registration" },
       form: "Sole trader by default. Tax follows 2026-27 law.",
     },
