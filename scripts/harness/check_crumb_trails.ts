@@ -8,7 +8,9 @@
  * No render of the chain reaches those names, so this draws them.
  *
  * WHAT IT DRAWS: every trail shape the site builds, through the builders the pages call (src/lib/spine/crumb_rows.ts) and the real
- * component (src/components/spine/Crumbs.tsx), the three longest trails of each shape by characters:
+ * component (src/components/spine/Crumbs.tsx), the three longest trails of each shape by characters, and the trail whose step is the
+ * widest at each position of each shape (release 3, the review's Minor 2: a cut needs one step wider than the line, which the longest
+ * whole trail need not hold):
  *   city            country / city, over every city of the list
  *   hood-hub        country / city / Districts, over every city the district spine admits
  *   hood-district   country / city / Districts / district, over every admitted district
@@ -17,7 +19,9 @@
  *   trade-city      country / city / trade, over every city and the five longest trade names
  *   trade-region    country / region / trade, over every region of every country and the five longest trade names
  * Each trail stands in SiteChrome's main and gutter (GUTTER, src/lib/nav.ts) on the site's own stylesheet, compiled from
- * src/app/globals.css as the harness renders compile it, and is read at 320, 375 and 768 by crumbCutInPage.
+ * src/app/globals.css as the harness renders compile it, and is read at 320, 375 and 768 by crumbCutInPage, then, after crumbFit
+ * (src/lib/spine/crumb_fit.ts, the trail's client script) has run in the page, by crumbWayInPage: no trail of three steps or more shows
+ * its first step alone with no mark, no link that gave way can be reached by a keyboard, and the trail cannot scroll.
  *
  * IT NEVER PASSES HAVING READ NOTHING, OR BLIND: a run that drew no trail, a width that read fewer navs than it drew or a nav with
  * no visible text is a red, and before reading the trails it reads a PLANT, the longest trail with the component's wrap and
@@ -42,7 +46,8 @@ import { pathToFileURL } from "node:url";
 import cityList from "../../data/cities/city_list_v1.json";
 import { requireBrowser } from "../lib/local_only.mjs";
 import { preflight } from "./preflight.mjs";
-import { crumbCutInPage } from "../lib/crumb_cut.mjs";
+import { crumbCutInPage, crumbWayInPage } from "../lib/crumb_cut.mjs";
+import { crumbFit } from "../../src/lib/spine/crumb_fit";
 import { Crumbs, type SpineCrumb } from "../../src/components/spine/Crumbs";
 import { buildCityCrumbs, buildHoodCrumbs, buildCellCrumbs, buildHowToCrumbs, buildIndustryCrumbs } from "../../src/lib/spine/crumb_rows";
 import { spineHoodDistricts } from "../../src/lib/spine/hood_scheme";
@@ -81,11 +86,21 @@ async function main() {
   for (const ind of INDUSTRIES) take("industry", buildIndustryCrumbs(ind.id));
   const said = (t: SpineCrumb[]) => t.map((s) => s.label).join(" / ");
   const drawn: { shape: string; trail: string; html: string }[] = [];
+  let widestAdded = 0;
   for (const [shape, trails] of [...shapes].sort()) {
     const seen = new Set<string>();
     const longest = [...trails].sort((a, b) => said(b).length - said(a).length).filter((t) => (seen.has(said(t)) ? false : (seen.add(said(t)), true))).slice(0, PER_SHAPE);
-    for (const t of longest) drawn.push({ shape, trail: said(t), html: renderToStaticMarkup(React.createElement(Crumbs, { items: t })) });
+    /* THE WIDEST STEP AT EACH POSITION, by characters, beside the longest whole trails. */
+    const taken = new Set(longest.map(said));
+    const widest: SpineCrumb[][] = [];
+    for (let p = 0; p < Math.max(...trails.map((t) => t.length)); p++) {
+      const best = [...trails].filter((t) => t.length > p).sort((a, b) => b[p].label.length - a[p].label.length)[0];
+      if (best && !taken.has(said(best))) { taken.add(said(best)); widest.push(best); }
+    }
+    widestAdded += widest.length;
+    for (const t of [...longest, ...widest]) drawn.push({ shape, trail: said(t), html: renderToStaticMarkup(React.createElement(Crumbs, { items: t })) });
   }
+  console.log(`${GATE}: ${drawn.length} trail(s) drawn, ${widestAdded} of them for the widest step at a position that no longest trail already held`);
   if (!drawn.length) { console.log(`RED ${GATE}: the builders gave no trail of two steps or more; the probe read nothing`); process.exit(1); }
 
   /* THE SITE'S STYLESHEET, compiled as scripts/harness/render_page.tsx compiles it, into a directory of its own. */
@@ -100,6 +115,12 @@ async function main() {
   const plant = longestAll.html.replace(/\bflex-wrap\b/, "flex-nowrap").replace(/\bmax-h-\[1lh\]/, "");
   const plantFile = join(dir, "plant.html"), trailsFile = join(dir, "trails.html");
   writeFileSync(plantFile, page([plant]));
+  /* THE SECOND PLANT, for the way-reading: a trail of three linked steps whose middle cannot fit a phone, drawn by the real component and
+     read WITHOUT its script, so its middle link sits on the hidden line, reachable, and its first step stands alone: the reading must see
+     both, or it is blind. */
+  const wayPlant = renderToStaticMarkup(React.createElement(Crumbs, { items: [{ label: "Slovenia", href: "/si" }, { label: "Municipality of Sveta Trojica v Slovenskih Goricah", href: "/si/sveta-trojica" }, { label: "Catering & food service contractors" }] }));
+  const wayPlantFile = join(dir, "way-plant.html");
+  writeFileSync(wayPlantFile, page([wayPlant]));
   writeFileSync(trailsFile, page(drawn.map((d) => d.html)));
 
   const reds: string[] = [];
@@ -111,6 +132,10 @@ async function main() {
       await tab.goto(pathToFileURL(plantFile).href, { waitUntil: "load" });
       await tab.evaluate(() => document.fonts && document.fonts.ready);
       const p = await tab.evaluate(crumbCutInPage);
+      await tab.goto(pathToFileURL(wayPlantFile).href, { waitUntil: "load" });
+      await tab.evaluate(() => document.fonts && document.fonts.ready);
+      const wp = await tab.evaluate(crumbWayInPage);
+      if (w === 320 && !(wp.faults.some((f) => f.msg.startsWith("LONE STEP")) && wp.faults.some((f) => f.msg.startsWith("HIDDEN LINK")))) reds.push(`BLIND at ${w}: the way plant (a linked middle step too wide for the line, its script not run) read ${wp.faults.length} fault(s) and must see LONE STEP and HIDDEN LINK`);
       if (w === 320 && (p.navs !== 1 || p.cuts.length === 0)) reds.push(`BLIND at ${w}: the plant ("${longestAll.trail}" on one line with nothing to give way) read ${p.navs} nav(s) and ${p.cuts.length} cut(s); the reading must see it cut`);
       await tab.goto(pathToFileURL(trailsFile).href, { waitUntil: "load" });
       await tab.evaluate(() => document.fonts && document.fonts.ready);
@@ -118,7 +143,14 @@ async function main() {
       if (r.navs !== drawn.length) reds.push(`READ SHORT at ${w}: ${drawn.length} trail(s) drawn and ${r.navs} nav(s) read`);
       if (r.runs < r.navs) reds.push(`READ NOTHING at ${w}: ${r.navs} nav(s) and ${r.runs} visible text run(s); every trail shows at least its first step`);
       for (const c of r.cuts) reds.push(`CRUMB CUT at ${w}: ${c.msg} ("${c.trail}")`);
-      console.log(`${GATE} @${w}: plant ${p.cuts.length} cut (must be over 0 at 320), ${r.navs} trail(s) read, ${r.runs} visible run(s), ${r.cuts.length} cut`);
+      /* THE TRAIL'S SCRIPT, run in the page as the site runs it after layout, then what gave way read. */
+      await tab.evaluate(`(() => { const fit = (${crumbFit.toString()}); for (const n of document.querySelectorAll('nav[aria-label="Breadcrumb"]')) fit(n); })()`);
+      const way = await tab.evaluate(crumbWayInPage);
+      const after = await tab.evaluate(crumbCutInPage);
+      for (const c of after.cuts) reds.push(`CRUMB CUT after the script at ${w}: ${c.msg} ("${c.trail}")`);
+      for (const f of way.faults) reds.push(`${f.msg} at ${w} ("${f.trail}")`);
+      if (way.navs !== drawn.length) reds.push(`READ SHORT after the script at ${w}: ${drawn.length} trail(s) drawn and ${way.navs} nav(s) read`);
+      console.log(`${GATE} @${w}: plant ${p.cuts.length} cut (must be over 0 at 320), ${r.navs} trail(s) read, ${r.runs} visible run(s), ${r.cuts.length} cut; after the script ${after.cuts.length} cut, ${way.faults.length} lone, reachable or scrolling`);
       await ctx.close();
     }
   } finally {
@@ -128,7 +160,7 @@ async function main() {
   for (const d of drawn) console.log(`  ${d.shape.padEnd(14)} ${String(d.trail.length).padStart(3)} chars  ${d.trail}`);
   if (reds.length) {
     for (const m of reds) console.log(`RED ${GATE}: ${m}`);
-    console.log(`RED ${GATE}: ${reds.length} red(s). Remedy: keep Crumbs a one-line nav that wraps into its hidden second line (flex-wrap, max-h-[1lh], overflow-hidden), each step after the first one unit with its slash, so a step gives way whole and the page's own step first; never an ellipsis, never a scroll`);
+    console.log(`RED ${GATE}: ${reds.length} red(s). Remedy: keep Crumbs a one-line nav that wraps into its hidden second line (flex-wrap, max-h-[1lh], overflow-clip), each step after the first one unit with its slash, so a step gives way whole and the page's own step first, a middle step that gave way shows the mark and leaves the tab order (crumbFit, src/lib/spine/crumb_fit.ts); never a cut label, never a scroll`);
     process.exit(1);
   }
   console.log(`PASS ${GATE}: ${drawn.length} trail(s) over ${shapes.size} shape(s) at ${WIDTHS.join(", ")}, none cut; the plant was seen cut`);

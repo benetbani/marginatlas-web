@@ -45,3 +45,47 @@ export function crumbCutInPage() {
   }
   return out;
 }
+
+/**
+ * WHAT GAVE WAY IS SAID, AND OUT OF REACH (release 3: the rhythm-gates review, Important 2 and Minor 1; read after crumbFit,
+ * src/lib/spine/crumb_fit.ts, has run on the nav). For every visible trail of three steps or more:
+ *  - LONE STEP: the visible line shows the first step alone, with no mark ("...") beside it, so nothing says a trail stood after it;
+ *  - HIDDEN LINK: a link on the hidden line that a keyboard can still reach (not inside an `inert` element, not display none);
+ *  - SCROLLS: the nav's overflow is not `clip`, so focus or script could scroll the trail sideways.
+ * WHAT THIS CANNOT SEE: a mark that some other text stands in for, and a trail whose script never ran (the static render; the probe runs
+ * crumbFit itself before this reads).
+ * Self-contained: page.evaluate serialises this function, so it may close over nothing.
+ */
+export function crumbWayInPage() {
+  /** @type {{ navs: number, faults: { trail: string, msg: string }[] }} */
+  const out = { navs: 0, faults: [] };
+  for (const nav of document.querySelectorAll('nav[aria-label="Breadcrumb"]')) {
+    if (!nav.getClientRects().length) continue;
+    out.navs++;
+    const trail = (nav.textContent || "").replace(/\s+/g, " ").trim();
+    const box = nav.getBoundingClientRect();
+    const cs = getComputedStyle(nav);
+    if (cs.overflowX !== "clip" || cs.overflowY !== "clip") out.faults.push({ trail, msg: `SCROLLS: the nav's overflow is ${cs.overflowX}/${cs.overflowY}, not clip, so focus can scroll the trail` });
+    const steps = Number(nav.getAttribute("data-crumbs") || "0");
+    const shown = [];
+    const walk = document.createTreeWalker(nav, NodeFilter.SHOW_TEXT);
+    for (let t = walk.nextNode(); t; t = walk.nextNode()) {
+      const txt = (t.textContent || "").trim();
+      if (!txt) continue;
+      const range = document.createRange();
+      range.selectNodeContents(t);
+      const r = range.getBoundingClientRect();
+      if (!r.width || r.top >= box.bottom - 0.5) continue;
+      shown.push(txt);
+    }
+    const words = shown.filter((s) => s !== "/");
+    if (steps >= 3 && words.length === 1 && !shown.includes("...")) out.faults.push({ trail, msg: `LONE STEP: a trail of ${steps} steps shows "${words[0]}" alone, with no mark that a step gave way` });
+    for (const a of nav.querySelectorAll("a[href]")) {
+      const r = a.getBoundingClientRect();
+      const gone = !a.getClientRects().length;
+      if (gone || r.top < box.bottom - 0.5) continue;
+      if (!a.closest("[inert]")) out.faults.push({ trail, msg: `HIDDEN LINK: "${(a.textContent || "").trim()}" gave way to the hidden line and a keyboard can still reach it` });
+    }
+  }
+  return out;
+}
