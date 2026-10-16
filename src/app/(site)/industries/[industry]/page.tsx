@@ -701,7 +701,7 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
                 Open any row for the full revenue, cost stack, and survival read.
                 For other countries, open that country&apos;s page, a raw dollar
                 figure is not adjusted for local prices, so we do not rank trades
-                across borders here. Modeled and directional.
+                across borders here. Every figure here is an estimate.
               </p>
 
               {stateRows.length >= 2 && (

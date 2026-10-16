@@ -689,8 +689,8 @@ export default async function CityPage({
                     load-bearing rather than descriptive. */}
                 <p className="mb-5 max-w-2xl text-sm leading-relaxed text-cocoa-700 md:text-base">
                   What a typical owner keeps here, trade by trade. A higher ease
-                  score means an easier start. Modeled from local business
-                  demography, directional.
+                  score means an easier start. Estimated from local counts
+                  of businesses.
                 </p>
                 <OwnerKeepTable
                   framed={false}
