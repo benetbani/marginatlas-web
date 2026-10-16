@@ -2219,8 +2219,9 @@ export const COPY = {
     dealbreakerLead: "Do not open unless",
     dealbreakerFigure: "Across the trade, rent and occupancy take {pct} of sales, an estimate.",
   },
-  /** THE BUY-OR-START PAGE'S START SIDE (the same day): no start cost is held, so the stated line stands where the cash stood, the
-   *  longest licence wait where the weeks stood, and the trade's years to pay back where the typed payback stood. */
+  /** THE BUY-OR-START PAGE'S START SIDE: no start cost is held. The hero leads with the longest required licence wait, else the trade's years
+   *  to pay back (release 3 job A and its fix round 1), and the compare card says the gap once in its cash row and carries the figure the hero
+   *  did not lead with; where neither is held the hero says the gap. */
   buyOrStart: {
     startCash: "No start cost held yet.",
     /** The hero's start side leads with a held figure (release 3 job A), labelled as the buy side's "To buy, estimated" is. */

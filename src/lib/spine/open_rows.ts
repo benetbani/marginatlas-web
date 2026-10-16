@@ -6,8 +6,11 @@
  * function returns whichever the cell is in, so the view never composes a
  * state of its own:
  *
- *  HELD, where the cell holds setup lines that name their country (`cell.setup_costs`
- *    through setup_items.ts, one bill per country, printed as its estimate; item 56 counts the cells): the
+ *  HELD, where the cell holds setup lines that name their country and the measurement they were read from
+ *    (`cell.setup_costs` through setup_items.ts, one bill per country, printed as its estimate, stamped with that
+ *    measurement). NO BLOCK REACHES THIS STATE TODAY: every bill the database holds was typed by hand and names no
+ *    measurement (release 3 job A, 2026-10-16), so every trade takes WITHHELD below; the state stands for the first
+ *    measured writer, and the stories and gates build it from a planted seed. The
  *    lines as members of one set for RankedBars, biggest first, the total at
  *    30 over them as the card's focal and never as a sum the bars are read
  *    to make (M2: the sum reading is `05`'s), the biggest line the leader
@@ -174,8 +177,9 @@ export function buildOpen(seed: any): OpenData | null {
   const foot = buildOpenFoot(industryId);
   const footLine = foot.length > 0 ? COPY.tradeOpen.foot : COPY.tradeOpen.footWithheld;
 
-  /* HELD: a bill that names its country, printed as that country's estimate (plan 2026-10-11, uk:held-bill-provenance): one bill for every row of a country,
-     never the place's own; a bill naming no country with words prints nothing. Rounded once here so the printed figure and the drawn bar are one number. */
+  /* HELD: a bill that names its country and its measurement, printed as that country's estimate (plan 2026-10-11, uk:held-bill-provenance; release 3
+     job A): one bill for every row of a country, never the place's own; a bill naming no country with words, or no measurement, prints nothing. No
+     block the database holds reaches here today (every one was typed by hand). Rounded once here so the printed figure and the drawn bar are one number. */
   const scope: string | null = typeof seed?.setup?.scope === "string" ? seed.setup.scope : null;
   const scopeWords = own(COPY.tradeOpen.heldScope, scope);
   /* The stamp names the measurement the lines were read from (setup_items.ts, fix round 1, I-3); a country's bill on a place's page is that place's

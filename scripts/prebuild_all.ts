@@ -1042,7 +1042,7 @@ const GATES: Gate[] = [
      pages and /calculator; /opening's dealbreaker typed "rent under about 12% of sales" and a "Directional" disclaimer. The gate feeds
      every setup_costs block those writers hold to the bill reader (none may print without a named measurement), reads the surfaces'
      string literals through strip_comments for a money or percent figure, asks every trade's dealbreaker, and reads the fresh London
-     renders for a bill stamp; red on 0beeee9a (15 findings), its readers proven on planted blocks and lines, never passing having read
+     renders for a bill stamp; red on 0beeee9a (14 findings at its first version, 21 since fix round 1), its readers proven on planted blocks and lines, never passing having read
      under 19 SQL files, 300 strings or the three renders. */
   { name: "held-bill", script: "tests/open/held_bill.test.ts" },
   /* Every UK city's page prints an official figure, says in its card's one line that a figure is an estimate, or withholds it:

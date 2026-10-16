@@ -221,7 +221,9 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
     : lend !== null ? input(lend, est(`economic_profile:${place.iso2}.bank_lending_rate_pct x 100`), "country", fill(W.lines.loan.country, { country: inSentence(place.countryName) }))
     : input(null, null, "none", W.lines.loan.noRate);
 
-  /* THE MONEY TO OPEN IT: the cell's held bill, else fit-out for this floor space, the deposit and registration, else none with its line.
+  /* THE MONEY TO OPEN IT: the cell's held bill where its block names a measurement (none does today: every bill the database holds was typed by
+     hand, release 3 job A, so this branch stands for the first measured writer), else fit-out for this floor space, the deposit and registration
+     (its line says kit and stock are not in it), else none with its line.
      The trade's archetype at the city's prices stood before none until 2026-10-15: a capital typed by hand with no source
      (src/lib/markets/startup_capital_archetypes.ts), and it left with the trade page's own (release 2 job A). */
   let opening: OpeningRule;
