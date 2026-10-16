@@ -9,6 +9,7 @@
   "industry-restaurants": 1,
   "hood-london": 1,
   "hood-london-city-of-london": 1,
+  "city-manchester": 1,
   "_reseed_history": [
     {
       "page": "city-london",
@@ -58,6 +59,13 @@
       "new": "1 and 2",
       "date": "2026-10-14",
       "reason": "Not a regression: a first measurement (plan 2026-10-13 country-page-journey, Task 1B). Cambodia and Germany joined scripts/harness/pages.json for the spec's replicability test, so this gate read their keys as 0. On the render of that day Cambodia's one full-width section with no wide form is the exit (Where to next); Germany's two are the peers table and the exit, the same two the country-gb-new re-seed of 2026-09-17 names (three full widths stand, R1). Written by hand so no other page's entry is touched. The count may fall and never rise."
+    },
+    {
+      "page": "city-manchester",
+      "old": null,
+      "new": 1,
+      "date": "2026-10-16",
+      "reason": "First measurement, not a raise: the page joined scripts/harness/pages.json in fix round 1 of rhythm-t6 (the state of 209 of 252 cities). Its one full-width section is the close, Where to next, full width by design as on London; the peers table, London's second, stands in a level of two here."
     }
   ]
 }

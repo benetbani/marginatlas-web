@@ -59,6 +59,11 @@ const LIST = "scripts/harness/pages.json";
 /* calculator 2 since plan 2026-10-13 cost-simulator: /calculator's distinct internal links as this walk counts them on its render (the sources foot's
    link to how the figures are made and the report link; the levers, the pickers and the bars navigate nowhere). */
 const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto: 3, home: 11, openings: 19, calculator: 2 };
+/* A PAGE'S OWN FLOOR, where a page of a surface joined the list below its surface's floor: its first measurement, never raised and never a
+   lowering of the surface's. city-manchester 5 (fix round 1 of rhythm-t6, 2026-10-16): the state of 209 of 252 cities, which draws no districts,
+   no neighbourhoods and no trades here, so its ways out are the trail and the close; the city floor of 16 was set on London, which draws all
+   three. Listed for the owner as the ways out those cities offer. */
+const LINK_FLOOR_PAGE = { "city-manchester": 5 };
 
 const surfaceOf = (name) =>
   name.startsWith("country-") ? "country" :
@@ -165,7 +170,7 @@ for (const f of files) {
       if (!tail.trim() || /<a\b/.test(tail)) bad.push(["(trail)", "the last step of the trail is a link; the last step is the page"]);
     }
   }
-  const floor = LINK_FLOOR[surface];
+  const floor = LINK_FLOOR_PAGE[name] ?? LINK_FLOOR[surface];
   rows.push({ name, surface, n: distinct.length, floor, bad });
   if (COUNTS_ONLY) continue;
   for (const [h, why] of bad) { console.log(`  ${name}: ${h}: ${why}`); reds++; }

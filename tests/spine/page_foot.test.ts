@@ -40,6 +40,7 @@ const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
   { file: "country-DE", path: "/de", dated: false },
   { file: "howto-GB", path: "/gb/how-to-open", dated: false },
   { file: "city-london", path: "/cities/london", dated: true },
+  { file: "city-manchester", path: "/cities/manchester", dated: false }, // the state of 209 of 252 cities joined the list (fix round 1 of rhythm-t6); no checked date is held for it
   { file: "cell-gb-london-restaurants", path: "/gb/london/restaurants", dated: true },
   { file: "cell-gb-london-barbershops", path: "/gb/london/barbershops", dated: true },
   { file: "industry-restaurants", path: "/industries/restaurants", dated: false },
