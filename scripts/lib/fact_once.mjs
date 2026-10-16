@@ -18,6 +18,13 @@
  * values ("£100, 1 day", "9 months, 1 day") reads as one text, so the "1 day" in it is never compared with a lone "1 day"; two facts that print
  * alike in two sections, neither stamped, read as one until one carries its data-src; a closed <details> is unread (R1 read the page so);
  * one width per call, so the gate opens 1280 and 375.
+ * WHICH SECTION KEEPS IT (release 3 job C, 2026-10-16; the spec's section 3 item 2, "the remedy names the section that should keep it"; the final
+ * review's Minor 3): each red carries `keep`, the section that should keep the figure, by the spec's section 2.3 ("the figure stays in the section
+ * whose job is to explain it; the hero keeps only the page's answer"): across the hero (a printing under [data-hero]) and a section, the hero
+ * where it prints the figure at 30 or more (the page's answer, whose home the hero is), else the section;
+ * across two sections, the one that prints it as its focal when only one does; inside one section, that section (its focal or its row, not
+ * both). Where neither side can be told (two sections, both or neither focal), `keep` is null and the gate says to choose between the two. ITS
+ * BLIND SPOT: "explains it" is read as "is not the hero" and "prints it at 30", never from what the section is about.
  */
 export function factOnceInPage() {
   const MARKS = ".fig, [data-src], [data-figure]";
@@ -42,7 +49,7 @@ export function factOnceInPage() {
   };
   const figs = [...document.querySelectorAll("main .fig, main [data-src], main [data-figure]")]
     .filter((el) => !el.querySelector(MARKS) && !hidden(el))
-    .map((el) => ({ text: fold(el.textContent), src: el.getAttribute("data-src") || null, section: sectionOf(el), focal: parseFloat(getComputedStyle(el).fontSize) >= 30 }))
+    .map((el) => ({ text: fold(el.textContent), src: el.getAttribute("data-src") || null, section: sectionOf(el), focal: parseFloat(getComputedStyle(el).fontSize) >= 30, hero: !!el.closest("[data-hero]") }))
     .filter((f) => /\d/.test(f.text) && !DATE.test(f.text));
   const byText = new Map();
   for (const f of figs) {
@@ -63,7 +70,8 @@ export function factOnceInPage() {
         const key = `${rule}|${figure}|${where}`;
         if (said.has(key)) continue;
         said.add(key);
-        reds.push({ rule, figure, where, src: a.src || b.src || null });
+        const keep = a.section === b.section ? a.section : a.hero !== b.hero ? ((a.hero ? a : b).focal ? (a.hero ? a : b).section : (a.hero ? b : a).section) : a.focal !== b.focal ? (a.focal ? a.section : b.section) : null;
+        reds.push({ rule, figure, where, src: a.src || b.src || null, keep });
       }
     }
   }

@@ -17,7 +17,7 @@
  * THE PLACEMENT LINE IS WHAT REPLACED THAT LABEL (MODEL.md PART 6, decision
  * 2, "placement instead of shouting"; PART 9 clause 5; plan step 31's sixth
  * dispatch, 2026-09-18, the work plan step 12 left owed when it stamped the
- * track `data-track="world"`). Beside each bar, at the micro rung in ink2,
+ * track `data-track="world"`). Beside each bar, at the body rung (14) in ink2,
  * one fixed sentence says where the figure sits among every country on file:
  * "Higher than {n} countries in ten", "Among the lowest tenth". The builder
  * (pay_rows.ts) writes it off the same sweep that finds the world's highest,

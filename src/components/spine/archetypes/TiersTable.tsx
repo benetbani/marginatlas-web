@@ -276,8 +276,8 @@ function FiguresTable({ heads, figures, fill = false }: { heads: TiersHeads; fig
        under 330 (a card's 303 at 375, a band's 288 at 320) still stands the name over its figures: beside two readings it would
        hold 136px, and "Skilled tradesperson and foreman" would need three lines of them (the archetype harness's TEXT CUT). */
     <div data-archetype="tiers-table" data-shape="figures" data-heads={nameHead ? 3 : 2} className={`[container-type:inline-size] ${fill ? "flex flex-1 flex-col" : ""}`}>
-      {/* THE HEADS, ONCE, AT EVERY WIDTH, at the micro rung a reader reads
-          (PART 5: never 10px). The name column's head reads on every width
+      {/* THE HEADS, ONCE, AT EVERY WIDTH, at the body rung (14 since the type floor of plan 2026-10-12: a column head is
+          reader text; PART 5: never 10px). The name column's head reads on every width
           here: a role is one of a set, not its own head the way a legal
           form's name is. */}
       <div className={`${GRID_FIGURES} items-end border-b border-[var(--c-border)] pb-2`}>

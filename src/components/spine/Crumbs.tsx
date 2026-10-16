@@ -22,8 +22,12 @@
  *  - A STEP WITHOUT A HREF IS TEXT. The callers resolve every destination
  *    through `page_targets.ts`, which refuses to claim a page the route would
  *    404 on, so a dead crumb cannot be built by accident.
- *  - ONE LINE. Over four steps the middle collapses to a mark (and from four, under 420px of window); the trail never
- *    wraps and never scrolls sideways.
+ *  - ONE LINE, AND NO LABEL IS EVER CUT. Each step after the first is one unit with its slash, and a unit that does not
+ *    fit the line gives way whole: the row wraps into a second line the nav's one-line height hides. The page's own step
+ *    is last, so it gives way first (the h1 under the trail says it), then the step before it; over four steps the middle
+ *    collapses to a mark as well. The trail never shows a second line, never scrolls sideways and never ends in an ellipsis.
+ *    Measured before this rule (2026-10-16, release 3 job C): 13 of 22 longest trails clipped mid-word at 320 and 375, the
+ *    London trade's "Catering &" among them; the page laws' CRUMB CUT and scripts/harness/check_crumb_trails.ts read it.
  *  - TWO STEPS AT LEAST. A trail of one is the page's own name said twice, so
  *    it draws nothing (a country page has nothing above it).
  *  - BODY RUNG (14, the type floor of plan 2026-10-12), muted, above the masthead, outside the levels: it is not a
@@ -41,30 +45,34 @@ export function Crumbs({ items }: { items: SpineCrumb[] }) {
   if (trail.length < 2) return null;
   const collapsed = trail.length > MAX_VISIBLE;
   const shown = collapsed ? [trail[0], ...trail.slice(trail.length - (MAX_VISIBLE - 1))] : trail;
-  /* AT 14, FOUR STEPS DO NOT FIT A PHONE (plan 2026-10-12 rhythm-air-inside, Task 3: "United Kingdom / London / Districts / City of London" is 365px at 14 and a
-     phone's line is 343): from four steps drawn, under 420px of window the middle steps and their slashes give way to the mark, first / ... / last, as the trail
-     already does over four steps. A step's anchor stays in the markup (hidden by CSS only), so the page's links read the same. */
-  const tall = shown.length >= MAX_VISIBLE;
+  /* AT 14, A TRAIL DOES NOT ALWAYS FIT A PHONE (plan 2026-10-12 rhythm-air-inside put it at 14; a phone's line is 288 at 320 and 343 at 375): the row
+     wraps (flex-wrap) inside a nav one line tall (max-h-[1lh]) that hides what wrapped, so a unit gone to the second line is gone whole, from the end.
+     The page's own step goes first; a step that gave way keeps its anchor in the markup (hidden by overflow), so the page's links read the same.
+     Replaces the rule of four steps under 420px of window, which collapsed the middle before the page's own step had given way. */
   return (
-    <nav aria-label="Breadcrumb" data-crumbs={String(trail.length)} className="mb-2 flex flex-nowrap items-center gap-2 overflow-hidden whitespace-nowrap text-[length:var(--t-body)] leading-none text-[var(--c-muted)]">
+    <nav aria-label="Breadcrumb" data-crumbs={String(trail.length)} className="mb-2 flex max-h-[1lh] flex-wrap items-center gap-2 overflow-hidden whitespace-nowrap text-[length:var(--t-body)] leading-none text-[var(--c-muted)]">
       {shown.map((c, i) => {
         const last = i === shown.length - 1;
+        const step = c.href && !last ? (
+          <Link href={c.href} className="rounded-sm text-[var(--c-muted)] no-underline transition-colors hover:text-[var(--c-ink2)]">
+            {c.label}
+          </Link>
+        ) : (
+          <span className={last ? "text-[var(--c-ink2)]" : undefined}>{c.label}</span>
+        );
+        if (i === 0) return <React.Fragment key={`${c.label}-${i}`}>{step}</React.Fragment>;
         return (
           <React.Fragment key={`${c.label}-${i}`}>
-            {i > 0 ? <span aria-hidden className={`text-[var(--c-border)]${tall && i >= 2 ? " max-[419px]:hidden" : ""}`}>/</span> : null}
-            {tall && i === 1 ? (
-              <>
-                <span aria-hidden className={`text-[var(--c-border)]${collapsed ? "" : " min-[420px]:hidden"}`}>...</span>
-                <span aria-hidden className={`text-[var(--c-border)]${collapsed ? "" : " min-[420px]:hidden"}`}>/</span>
-              </>
+            {collapsed && i === 1 ? (
+              <span data-crumb-step className="flex items-center gap-2">
+                <span aria-hidden className="text-[var(--c-border)]">/</span>
+                <span aria-hidden className="text-[var(--c-border)]">...</span>
+              </span>
             ) : null}
-            {c.href && !last ? (
-              <Link href={c.href} className={`rounded-sm text-[var(--c-muted)] no-underline transition-colors hover:text-[var(--c-ink2)]${tall && i >= 1 ? " max-[419px]:hidden" : ""}`}>
-                {c.label}
-              </Link>
-            ) : (
-              <span className={last ? "text-[var(--c-ink2)]" : tall && i >= 1 ? "max-[419px]:hidden" : undefined}>{c.label}</span>
-            )}
+            <span data-crumb-step className="flex items-center gap-2">
+              <span aria-hidden className="text-[var(--c-border)]">/</span>
+              {step}
+            </span>
           </React.Fragment>
         );
       })}

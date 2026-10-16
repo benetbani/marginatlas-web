@@ -6,7 +6,7 @@
  * their counts, no bar.
  */
 import * as React from "react";
-import { Box, Rail, Fig, Focal, Basis } from "@/components/spine/kit";
+import { Box, Rail, Fig, Focal } from "@/components/spine/kit";
 import { Range } from "@/components/spine/interact/Range";
 import { BOUNDS, HEADS_MAX, PAY_MAX, clampTo } from "@/lib/simulator/bounds";
 import type { Format } from "@/lib/simulator/display";
@@ -24,7 +24,9 @@ const TOGGLE = "tap-y rounded-md border border-[var(--c-line-strong)] px-3 py-2 
 
 function Group({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <section aria-labelledby={`levers-${id}`} data-lever-group={id} className="mt-8">
+    /* 24 FROM THE GROUP ABOVE (release 3 job C, 2026-10-16: the line rule read the levers' first group 32 under the focal block, its mb-6 and this
+       margin collapsing to the larger, once the calculator joined its scan set): the group step, so the focal block and each group stand 24 apart. */
+    <section aria-labelledby={`levers-${id}`} data-lever-group={id} className="mt-6">
       <h3 id={`levers-${id}`} data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-6 text-[var(--c-ink)]">{title}</h3>
       <ul className="mt-4 grid gap-6">{children}</ul>
     </section>
@@ -198,7 +200,9 @@ export function LeversCard({ W, bundle, state, r, fmt, set, active = null, onAct
         {row("loanYears", "count", U.years)}
         {row("opening", "money")}
       </Group>
-      {r.fixedYear.held ? <Basis>{W.levers.basis}</Basis> : null}
+      {/* NO BASIS UNDER THE LEVERS (release 3 job C, 2026-10-16): "Move any figure and every answer follows." stood here as the card's basis, a second
+          supporting line once the plain-copy law read a figure's words in a kept card (the final review's Minor 4), and it says how to use the card,
+          not what its figure is (MODEL PART 7); the spec drops such a line rather than loosening the law. */}
     </Box>
   );
 }

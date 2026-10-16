@@ -111,9 +111,19 @@ for (const e of entries) {
   console.log(`  ${fresh && big ? "ok" : "x "} ${e.name.padEnd(28)} ${String(e.bytes).padStart(9)} bytes  written ${e.mtime.toISOString()}${fresh ? "" : "  (STALE)"}`);
 }
 
-/* THE FALLBACK STATE, WRITTEN BESIDE THE RENDERS (release 3 job A, fix round 1, I-4): a gate downstream that must not count a render drawn
-   from the adapters' fallbacks as read (held-bill's D) reads this file instead of guessing; the count and the lines as printed below. */
-writeFileSync(`${FRESH_DIR}/fresh_state.json`, JSON.stringify({ started: new Date(started).toISOString(), written: new Date().toISOString(), fallbacks: fallbacks.length, lines: fallbacks.map((f) => f.trim()), renders: entries.map((e) => e.name) }, null, 2) + "\n");
+/* THE RENDERS' OWN STATE, WRITTEN ONCE (release 3 job C, 2026-10-16, the rhythm reform's final review, Important 2; and job A's fix round
+   1, I-4, whose fresh_state.json this file replaced at the merge of release 3: one file, one writer). render_page.tsx prints one
+   `state <page> fallbacks=<n>` line per page, the query ledger's fallback lines counted while that page rendered; this writes them to
+   RENDER_STATE, each page "fallback" when it counted one or more and "live" when none, beside the run's total and its lines. Two gates
+   read it: fact-once (an allowance bound to one data state, scripts/harness/fact_once_allow.json's `state`) and held-bill's D (a render
+   drawn from fallbacks is not read). A listed page with no state line is a red: the state of what the gates read would be unknown.
+   "live" means no query fell back, not that the page touched the database (the hood pages read files only). */
+const RENDER_STATE = `${FRESH_DIR}/render_state.json`;
+const states = {};
+for (const m of stdout.matchAll(/^\s*state (\S+) fallbacks=(\d+)\s*$/gm)) states[m[1]] = { fallbacks: Number(m[2]), state: Number(m[2]) > 0 ? "fallback" : "live" };
+for (const e of entries) if (e.exists && !states[e.name]) reds.push({ file: RENDERER, detail: `${e.name} rendered with no state line, so whether it fell back is unknown`, remedy: "keep render_page.tsx printing `state <page> fallbacks=<n>` after each page of --list" });
+writeFileSync(RENDER_STATE, JSON.stringify({ started: new Date(started).toISOString(), written: new Date().toISOString(), fallbacks: fallbacks.length, lines: fallbacks.map((f) => f.trim()), renders: entries.map((e) => e.name), pages: states }, null, 2) + "\n");
+console.log(`  render state written to ${RENDER_STATE}: ${Object.entries(states).map(([k, v]) => `${k} ${v.state}`).join(", ")}`);
 
 console.log(`  Supabase URL: ${urlPresence}; query fallbacks in the render's output: ${fallbacks.length}${fallbacks.length ? " (the renders below carry the adapters' fallbacks, and the gates measure that state)" : ""}`);
 for (const f of fallbacks) console.log(`    ${f.trim()}`);

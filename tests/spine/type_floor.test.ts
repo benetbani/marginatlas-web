@@ -70,8 +70,9 @@ check(`${LIST} holds ${list.length} places, each a key, a kind (axis or source),
 check("the list's one source place is the foot's licence line", list.filter((e) => e.kind === "source").map((e) => e.key).join() === "sources-foot", LIST, "the 12px rung stays for the source and licence line of a page's foot alone (spec section 2.2)");
 
 /* THE GATE'S WIRING. */
-const gate = readFileSync(GATE, "utf8");
-check("the gate reads the allowance list and the spine surfaces of the harness list, and parses with jsdom, no browser", /type_floor_allow\.json/.test(gate) && /\["country", "city", "cell", "industry", "hood"\]/.test(gate) && /new JSDOM\(/.test(gate) && !/chromium/.test(gate), GATE, "read scripts/harness/type_floor_allow.json and the country, city, cell, industry and hood surfaces of scripts/harness/pages.json, statically");
+/* Read through scripts/lib/strip_comments (the final review's Minor 6): a commented-out `new JSDOM(` must not satisfy the wiring check. */
+const gate = stripCommentLines(readFileSync(GATE, "utf8").split(/\r?\n/)).join("\n");
+check("the gate reads the allowance list and the spine surfaces of the harness list, and parses with jsdom, no browser", /type_floor_allow\.json/.test(gate) && /\["country", "city", "cell", "industry", "hood", "calculator"\]/.test(gate) && /new JSDOM\(/.test(gate) && !/chromium/.test(gate), GATE, "read scripts/harness/type_floor_allow.json and the country, city, cell, industry, hood and calculator surfaces of scripts/harness/pages.json, statically");
 
 /* THE SCAN SET HOLDS A PAGE OF EACH SURFACE (the review of Task 1A): the surfaces are read from the gate's own SPINE, not retyped here, and each must occur in the harness list's pages, so the gate cannot pass having read no render. */
 const spineNames = (/const SPINE = \[([^\]]*)\]/.exec(gate)?.[1] ?? "").split(",").map((s) => s.trim().replace(/^["']|["']$/g, "")).filter(Boolean);
@@ -113,9 +114,15 @@ const copyText = readFileSync("scripts/harness/check_copy_plain.mjs", "utf8");
 const copyFrom = copyText.indexOf("function inPage(");
 const copyLen = copyFrom === -1 ? -1 : copyText.slice(copyFrom).search(/\r?\n\}\r?\n/);
 const copySrc = copyFrom === -1 || copyLen === -1 ? null : `${copyText.slice(copyFrom, copyFrom + copyLen)}\n}`;
-const linesRed = (inner: string): number | null => {
+/* `card` wraps the inner lines: a bare card (the default), an open section in a zone, or a kept box in a zone (the final review's Minor 4). */
+const CARDS = {
+  bare: (inner: string) => `<section data-card id="c1"><h3>Costs</h3>${inner}</section>`,
+  open: (inner: string) => `<section data-zone="1-1"><div class="spine-card" data-card id="c1"><h3>Costs</h3>${inner}</div></section>`,
+  kept: (inner: string) => `<section data-zone="1-1"><div class="spine-card" data-keep-card="" data-card id="c1"><h3>Costs</h3>${inner}</div></section>`,
+};
+const linesRed = (inner: string, card: keyof typeof CARDS = "bare"): number | null => {
   if (copySrc === null) return null;
-  const dom = new JSDOM(`<!doctype html><html><body><main><section data-card id="c1"><h3>Costs</h3>${inner}</section></main></body></html>`, { runScripts: "outside-only" });
+  const dom = new JSDOM(`<!doctype html><html><body><main>${CARDS[card](inner)}</main></body></html>`, { runScripts: "outside-only" });
   try {
     const win = dom.window as unknown as { eval: (s: string) => unknown; Element: { prototype: { getClientRects: () => unknown[] } } };
     win.Element.prototype.getClientRects = function () { return [{}]; };
@@ -129,17 +136,19 @@ check("two lifted lines (14px, data-line) are a card's two supporting lines: one
 check("a basis and a placement at 14 are supporting lines too", linesRed('<p style="font-size:14px" data-basis="">Basis.</p><p style="font-size:14px" data-placement="">Higher than five countries in ten.</p>') === 1, COPY_FILE, COPY_REMEDY);
 check("a 14px paragraph the floor did not lift (body text beside a drawing) is not a line", linesRed('<p style="font-size:14px">Body.</p><p style="font-size:14px">Body two.</p>') === 0, COPY_FILE, COPY_REMEDY);
 check("below 13.5px the law is unchanged", linesRed('<p style="font-size:12px">One.</p><p style="font-size:12px">Two.</p>') === 1, COPY_FILE, COPY_REMEDY);
-check("the words of a section's figure at 14 are no supporting line (data-focal-words): the figure's own line, as on every zone today", linesRed('<p style="font-size:14px" data-focal-words="">What it is.</p><p style="font-size:14px" data-basis="">Basis.</p>') === 0, COPY_FILE, COPY_REMEDY);
+check("the words of a section's figure at 14 in an open section are no supporting line (data-focal-words): the figure's own line, as on every zone today", linesRed('<p style="font-size:14px" data-focal-words="">What it is.</p><p style="font-size:14px" data-basis="">Basis.</p>', "open") === 0, COPY_FILE, COPY_REMEDY);
+check("the words of a figure in a kept box are a supporting line, as they were at 12 before the floor (the final review's Minor 4): with a basis, one LINES red", linesRed('<p style="font-size:14px" data-focal-words="">What it is.</p><p style="font-size:14px" data-basis="">Basis.</p>', "kept") === 1, COPY_FILE, "read data-focal-words as a line except inside [data-zone] .spine-card:not([data-keep-card])");
+check("the words of a figure outside any zone are a supporting line too", linesRed('<p style="font-size:14px" data-focal-words="">What it is.</p><p style="font-size:14px" data-basis="">Basis.</p>') === 1, COPY_FILE, "read data-focal-words as a line except inside [data-zone] .spine-card:not([data-keep-card])");
 
 /* THE GATE NEVER PASSES HAVING READ NOTHING (the standing empty-scan ruling, Task 1A's review): a render with no visible character at 1280 is a red, since
-   a share over no characters is 0 and would pass. The gate runs on a temp tree (--dir the renders, --list the pages): five renders, one a page that drew
-   nothing, then the same five with text. BLIND SPOT: this proves the gate's own refusal on a planted render, not that a real render of the chain holds text. */
+   a share over no characters is 0 and would pass. The gate runs on a temp tree (--dir the renders, --list the pages): six renders, one a surface each, one a page that drew
+   nothing, then the same six with text. BLIND SPOT: this proves the gate's own refusal on a planted render, not that a real render of the chain holds text. */
 const tmp = mkdtempSync(join(tmpdir(), "type-floor-gate-"));
 const runGate = (renders: Record<string, string>) => {
   const dir = join(tmp, "pages");
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
-  const surfaces = ["country", "city", "cell", "industry", "hood"];
+  const surfaces = ["country", "city", "cell", "industry", "hood", "calculator"];
   for (const s of surfaces) writeFileSync(join(dir, `${s}-x.html`), renders[s] ?? `<!doctype html><html><body><main><p class="${B}">A visible line of reader text.</p></main></body></html>`);
   const listFile = join(tmp, "pages.json");
   writeFileSync(listFile, JSON.stringify({ pages: surfaces.map((s) => ({ surface: s, slugs: ["x"] })) }));
@@ -150,7 +159,7 @@ try {
   const empty = runGate({ cell: "<!doctype html><html><body><main></main></body></html>" });
   check(`a render that read no visible character is a red, not a pass (exit ${empty.status}; says so: ${/no visible character/.test(empty.out)})`, empty.status === 1 && /no visible character/.test(empty.out), GATE, "red a render with no visible character at 1280: nothing was measured, so nothing can be said to hold");
   const full = runGate({});
-  check(`the same five renders with text pass (exit ${full.status})`, full.status === 0 && /PASS type-floor: 5 render/.test(full.out), GATE, "a render with text under the share passes; only an empty one is red");
+  check(`the same six renders with text pass (exit ${full.status})`, full.status === 0 && /PASS type-floor: 6 render/.test(full.out), GATE, "a render with text under the share passes; only an empty one is red");
 } finally { rmSync(tmp, { recursive: true, force: true }); }
 
 if (failed > 0) { redSummary(RULE, failed, REMEDY, "checks failed"); process.exit(1); }

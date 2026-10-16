@@ -9,8 +9,7 @@
  * it takes the page's third loud moment is step 37's to weigh.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
-import { Focal } from "@/components/spine/country/focal";
+import { Box, Rail, Focal } from "@/components/spine/kit";
 import { FactRows } from "@/components/spine/archetypes/FactRows";
 import { isPaywallOn } from "@/lib/feature_flags";
 import { priceLine, yearlyHeadline } from "@/lib/monetization/plan";

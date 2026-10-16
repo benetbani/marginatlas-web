@@ -7,8 +7,7 @@
  * src/lib/home/us_restaurants.ts, stamped.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
-import { Focal } from "@/components/spine/country/focal";
+import { Box, Rail, Focal } from "@/components/spine/kit";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
 import { COPY } from "@/lib/spine/copy";
 import type { UsRestaurants as UsRestaurantsData, UsRestaurantsRow } from "@/lib/home/us_restaurants";

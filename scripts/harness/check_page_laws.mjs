@@ -53,6 +53,14 @@
  *                         at 8px because `rounded-t-sm` is 8px in this
  *                         config, the month bars at 2px; proven on the renders
  *                         that carried the 8px tops)
+ *   -- CRUMB CUT          the trail back up (Crumbs.tsx) at every width: a text
+ *                         run on the nav's visible line that crosses its edge,
+ *                         or a trail on two lines (release 3 job C, 2026-10-16:
+ *                         13 of 22 longest trails were cut mid-word at 320 and
+ *                         375 and no rule saw it, the crumb being outside every
+ *                         card; the reading is scripts/lib/crumb_cut.mjs, its
+ *                         blind spot stated there, and a nav whose visible line
+ *                         gave the reading no text is a red of its own)
  *   -- TAP SIZE           at 375, a control or a link in a card whose tap
  *                         (its box, its absolute `::before` or `::after`, a
  *                         box's labels) is under 44 tall or 24 wide
@@ -113,6 +121,7 @@ import { basename } from "node:path";
 import { preflight } from "./preflight.mjs";
 import { requireBrowser } from "../lib/local_only.mjs";
 import { openPanels, OPENED } from "../lib/open_panels.mjs";
+import { crumbCutInPage } from "../lib/crumb_cut.mjs";
 
 await requireBrowser("harness-page-laws", "the page laws of 2026-09-20 (levels, text measure, card feet, the hero's side, overlap, repeated kinds, parts) on every page in scripts/harness/pages.json");
 preflight({ browser: true, name: "check_page_laws" });
@@ -559,6 +568,10 @@ for (const file of files) {
     if (w >= 1280) levelSeen[name] = walk.levels;
     if (walk.cards === 0) reds.push({ page: name, w, id: "page", rule: "NO SECTIONS", msg: "no section card found under main; the render or the landmark is broken" });
     for (const r of walk.reds) reds.push({ page: name, w, ...r });
+    /* CRUMB CUT (scripts/lib/crumb_cut.mjs): the trail stands outside every card, so the card walk above never reads it. */
+    const crumb = await page.evaluate(crumbCutInPage);
+    for (const c of crumb.cuts) reds.push({ page: name, w, id: "crumb", rule: "CRUMB CUT", msg: `${c.msg} ("${c.trail.slice(0, 60)}")` });
+    if (crumb.navs > 0 && crumb.runs === 0) reds.push({ page: name, w, id: "crumb", rule: "CRUMB CUT", msg: "the page draws a trail and its visible line gave the reading no text; the reading measured nothing" });
     /* THE OPENED READING (plan 2026-10-13 country-page-journey, Task 1E; spec section 5): the card rules read again with every plus open; a red
        only the open page makes is the plus's, named so. Levels, zones and the page's kinds are read closed (a plus a reader opened is his). */
     if (await page.evaluate(openPanels)) {
@@ -566,7 +579,7 @@ for (const file of files) {
       const said = new Set(walk.reds.map((r) => `${r.id}␟${r.rule}`));
       for (const r of ow.reds) if (!said.has(`${r.id}␟${r.rule}`)) reds.push({ page: name, w, ...r, msg: `${r.msg}${OPENED}` });
     }
-    console.log(`${name}@${w}: ${walk.cards} cards, ${walk.reds.length} red(s)`);
+    console.log(`${name}@${w}: ${walk.cards} cards, ${walk.reds.length} red(s); trail ${crumb.navs ? `${crumb.runs} run(s) read, ${crumb.cuts.length} cut` : "none drawn"}`);
     await ctx.close();
   }
 }

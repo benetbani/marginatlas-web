@@ -7,9 +7,9 @@
  * trade notes) would draw an empty paragraph, and its 24 above would be 24 of air holding nothing. `hasText` reads strings, numbers, arrays and fragments; an element is taken to draw
  * what it draws.
  *
- * A MODULE OF ITS OWN, WITH NO IMPORT BUT REACT, and the kit re-exports it (src/components/spine/kit.tsx): archetypes/CityRows.tsx is the home's server component, which
- * tests/home/foot.test.ts holds to a static import closure that reaches no client module, and the kit's closure does (Rail's gloss draws InfoTip, a client component), so the
- * home's rows could not import the line from the kit. Every other file imports it from the kit.
+ * A MODULE OF ITS OWN, WITH NO IMPORT BUT REACT, and the kit re-exports it (src/components/spine/kit.tsx). It was split out for the home's server rows (CityRows.tsx),
+ * which a test held to an import closure with no client module; both are retired (plan 2026-10-13), so nothing needs the split now. Every file imports it from the kit,
+ * and only the kit imports this module.
  */
 import * as React from "react";
 

@@ -30,7 +30,7 @@
  *
  * A RENDER DRAWN FROM FALLBACKS IS NOT READ. pages-fresh renders with the live database, and where a query fails or runs over its budget
  * the adapters fall back and the page renders anyway; such a page cannot show a bill whatever the code does. pages-fresh writes its count
- * of fallbacks beside the renders (fresh_state.json); where it is above zero D reads nothing and says so the chain's own way, "3
+ * of fallbacks beside the renders (render_state.json, the one state file fact-once reads too); where it is above zero D reads nothing and says so the chain's own way, "3
  * deferred", which the summary lists as checks that could not run, never as passes. A and the reader's own test (bill-own-trade) are the
  * guarantee; D is the sight of it on a page.
  *
@@ -371,7 +371,7 @@ async function main() {
 
   /* D */
   const RENDERS = ["cell-gb-london-restaurants", "cell-gb-london-barbershops", "calculator-gb-london-restaurants"];
-  const statePath = join(ROOT, FRESH_DIR, "fresh_state.json");
+  const statePath = join(ROOT, FRESH_DIR, "render_state.json");
   let fallbacks = 0;
   if (!existsSync(statePath)) fail(statePath, "pages-fresh wrote no fallback state beside the renders, so a render cannot be judged read", "render");
   else fallbacks = Number((JSON.parse(readFileSync(statePath, "utf8")) as { fallbacks?: number }).fallbacks ?? 0);

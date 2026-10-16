@@ -244,7 +244,7 @@ export function MiniBar({ pct, accent = false }: { pct: number; accent?: boolean
  * bar (the cell page's "where the covers come from" row) with one shared,
  * self-omitting primitive that renders the bar AND its trailing figure together;
  * the row label stays the caller's own text. Honest scaling: an index value ABOVE
- * 100 EXTENDS the domain to meet it (PhaseBar's pattern) rather than clipping the
+ * 100 EXTENDS the domain to meet it (the retired PhaseBar's pattern) rather than clipping the
  * bar at the edge and understating an above-baseline value. Self-omits on a
  * null/non-finite value. */
 export function IndexBar({ value, kind = "pct", accent = false }: { value: number | null | undefined; kind?: "pct" | "index"; accent?: boolean }) {
@@ -446,50 +446,6 @@ export function Waterfall({ rows }: { rows: Array<[string, number, boolean?]> })
         <div className="h-5 overflow-hidden rounded" style={{ background: "#f0f0f0" }}><div className="h-full rounded" style={{ width: `${Math.max(0, Math.min(100, pct))}%`, background: kept ? TERRA : "#bdbdbd" }} role="img" aria-label={`${label} ${pct}%`} /></div>
         <Fig className="text-right text-[length:var(--t-body)] text-[var(--c-ink)]">{pct}%</Fig>
       </div>))}
-    </div>
-  );
-}
-/* percentile spread strip , p10..p90 with the typical (p50) marked. Cap 2 uses/page.
- * `neutral` renders the marker + track in ink/grey , for when the strip is SUPPORT beside
- * a box's one terracotta answer (the accent budget stays with the answer). */
-export function SpreadStrip({ p10, p50, p90, fmt, basis = "modelled" }: { p10: number; p50: number; p90: number; fmt: (n: number) => string; basis?: "measured" | "modelled" }) {
-  /* THE BAND SAYS WHERE ITS SHAPE CAME FROM. The ratified ruling on invented
-     bands is explicit: an unmarked band is a claim about spread that the figures
-     behind it do not support. One of the two paths that feeds this strip builds
-     the band by multiplying the typical figure by fixed constants, so it draws
-     the SAME SHAPE for a restaurant, a barbershop and a dental practice. That
-     mark existed in the data and was being thrown away one layer above here.
-     The strip prints no percentile words, so nothing a reader SEES changes. What
-     changes is the description read aloud, which now says "modelled" when the
-     shape is modelled, in the same words the other band component already uses.
-     THE DEFAULT IS MODELLED, so a caller that forgets to pass it understates its
-     own confidence rather than overstating it.
-     THE ACCENT GRADIENT IS GONE. This strip had a second mode that ran the track
-     from grey into a pale terracotta. It has exactly one caller and that caller
-     always asked for the plain one, so the accent branch drew on no page at all,
-     and it broke the same colour rule the risk scale broke. */
-  const span = Math.max(1, p90 - p10);
-  const mid = Math.max(2, Math.min(98, ((p50 - p10) / span) * 100));
-  const aria =
-    basis === "modelled"
-      ? `Estimated range from ${fmt(p10)} to ${fmt(p90)}, typical ${fmt(p50)}.`
-      : `Spread from ${fmt(p10)} at the bottom tenth to ${fmt(p90)} at the top tenth, typical ${fmt(p50)}.`;
-  return (
-    <div data-idea="I1">
-      <div className="relative h-2 rounded-full" role="img" aria-label={aria} style={{ background: TRACK }}>
-        <div className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${mid}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-      </div>
-      {/* THE THREE FIGURES WRAP RATHER THAN COLLIDE. Pushed to the two ends with
-          the typical in the middle, they had nothing stopping them meeting on a
-          narrow masthead.
-          TABULAR (F1, found 2026-09-08): p10 and p90 render alone in their span,
-          which is exactly the numeral-only text the art-direction gate scans for,
-          and neither carried the `fig` class, so neither got tabular-nums. p50
-          keeps its trailing " typical" word rather than a bare figure, which is
-          why the gate never flagged it, but it is given the same class for the
-          same reason its neighbours now carry it: three figures reading down (or
-          across) a strip like this are exactly what tabular numerals are for. */}
-      <div data-type-allow="scale-ends" className="mt-1 flex flex-wrap justify-between gap-x-3 text-[length:var(--t-micro)] text-[var(--c-muted)]"><span className="fig">{fmt(p10)}</span><span className="fig font-semibold text-[var(--c-ink)]">{fmt(p50)} typical</span><span className="fig">{fmt(p90)}</span></div>
     </div>
   );
 }
@@ -775,65 +731,6 @@ export function Box({ children, className = "", elevation = "card", density = "d
     </div>
   );
 }
-/* one shared left-to-right scale with N labelled markers. Optional 4th tuple = a who-for
- * subtitle under the label. Optional `endLabels` names the two ends of the shared track
- * (small muted uppercase, Meter's pattern) so the scale is never anonymous; rendered once
- * under the row set, aligned to the track column. Default undefined = the historical render.
- * `plain` = a NEUTRAL flat track: use it when the right end is NOT better (a demands /
- * characteristics read), so the warm end never asserts a direction the data lacks (rule 10). */
-export function EaseScale({ rows, endLabels }: { rows: Array<[string, number, string, string?]>; endLabels?: [string, string] }) {
-  /* THE TRACK IS FLAT. It used to fade from grey into a pale terracotta at the
-     right-hand end, which broke the site's one hard colour rule twice over: the
-     accent marks the answer and nothing else, and decoration never sits on top
-     of data. The fade also said the same thing the two end labels already say,
-     in a second language, so it carried no reading of its own.
-     THE VALUE LABEL IS ANCHORED AWAY FROM THE ENDS. It is centred on its own
-     marker, so a reading at either extreme pushed half the label outside the
-     card. The same fault, and the same fix, as the break-even marker. */
-  const anchor = (p: number) => (p < 14 ? "0%" : p > 86 ? "-100%" : "-50%");
-  return (
-    /* THE KEY ARRIVES BEFORE THE VALUES IT EXPLAINS, not after them. The two ends
-       of this scale, which are the only thing telling a reader which direction is
-       good, were printed UNDER four rows of readings. A reader met four marks on
-       four unlabelled tracks, worked out nothing, reached the bottom, and then had
-       to go back up and read them again knowing what the sides meant.
-       A chart's key is furniture and stays quiet, but quiet is about weight, not
-       about order. */
-    <div data-idea="I1" className="space-y-4">
-      {endLabels ? (
-        <div aria-hidden className="grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 sm:grid-cols-[150px_1fr]">
-          <span />
-          <div data-type-allow="scale-ends" className="flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{endLabels[0]}</span><span>{endLabels[1]}</span></div>
-        </div>
-      ) : null}
-      {rows.map(([label, pos, word, sub]) => (
-      <div key={label} className="hov -mx-2 grid grid-cols-[minmax(0,7.5rem)_1fr] items-center gap-3 rounded-md px-2 py-2 sm:grid-cols-[150px_1fr]">
-        <span className="min-w-0 text-[length:var(--t-body)] leading-tight text-[var(--c-ink2)]">{label}{sub ? <span className="mt-0.5 block text-[length:var(--t-body)] text-[var(--c-muted)]">{sub}</span> : null}</span>
-        <div className="relative h-1.5 rounded-full" role="img" aria-label={`${label}: ${word}`} style={{ background: TRACK }}>
-          <div className="absolute top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center" style={{ left: `${pos}%` }}>
-            <span className="h-3 w-3 rounded-full border-2 border-white" style={{ background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-          </div>
-          {/* TABULAR NUMERALS. Art direction F1: these values stack vertically down
-              the scale, one per row, and proportional numerals make 3/10 and 8/10
-              sit at visibly different widths so the column reads as ragged. */}
-          <span className="fig absolute -top-5 whitespace-nowrap text-[length:var(--t-body)] font-medium text-[var(--c-ink2)]" style={{ left: `${pos}%`, transform: `translateX(${anchor(pos)})` }}>{word}</span>
-        </div>
-      </div>))}
-    </div>
-  );
-}
-/* a slim labelled meter for a single 0-100 read (NOT a dial) */
-export function Meter({ value, left, right }: { value: number; left: string; right: string }) {
-  return (
-    <div data-idea="I1">
-      <div className="relative h-2 rounded-full" role="img" aria-label={`${value} out of 100`} style={{ background: "#e6e6e6" }}>
-        <div className="h-full rounded-full" style={{ width: `${value}%`, background: TERRA }} />
-        <div className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${value}%`, background: "#1a1a1a" }} />
-      </div>
-      <div data-type-allow="scale-ends" className="mt-1 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>{left}</span><span>{right}</span></div>
-    </div>
-  );
-}
 /* SampleTag , THE per-section sample marker (publish-critical, strategy 2026-07-07:
  * unsourced sections ship FILLED with sample data, clearly labeled, never shown as real).
  * Honest, unmissable, calm: the dashed "sample" AtlasMark + the word, in a dashed pill on
@@ -863,8 +760,8 @@ export function SampleTag({ note }: { note?: string }) {
   );
 }
 /* Head , subsection header. Rulebook v1 §R2 (founder 2026-07-11, reverses the S2 icon
- * deletion at subsection level): subsection titles carry the Ico tile on the LEFT of the
- * title again , "the subsections generally, they need icons to function". Every call site
+ * deletion at subsection level): subsection titles carry their icon on the LEFT of the
+ * title again (since 2026-10-13 the bare opener glyph, no tile, as Rail draws it) , "the subsections generally, they need icons to function". Every call site
  * already passes its icon id, so this is a kit-only restore. */
 export function Head({ children, sample, icon }: { children: React.ReactNode; sample?: boolean; icon?: AtlasIconId }) {
   return (
@@ -1053,7 +950,7 @@ export function KV({ k, v }: { k: string; v: React.ReactNode }) {
    now, so a scorecard hidden behind a disclosure would arrive as a DotsSet and
    the tripwire would wave it through on the very change that introduced it. */
 const GRAPHIC_TYPES: ReadonlySet<unknown> = new Set([
-  Gauge, Donut, StackBar, ShareStack, Waterfall, SpreadStrip, EaseScale, Meter, SpectraTable, Spectrum, Timeline, Spark, StruckLine, Dots, DotsSet, MiniBar, IndexBar, PhaseBar,
+  Gauge, Donut, StackBar, ShareStack, Waterfall, SpectraTable, Spectrum, Timeline, Spark, StruckLine, Dots, DotsSet, MiniBar, IndexBar,
 ]);
 function assertNoGraphics(children: React.ReactNode, where: string) {
   if (process.env.NODE_ENV === "production") return;
@@ -1156,7 +1053,7 @@ export function CatRows({ rows }: { rows: Array<[string, any]> }) {
 
 /* ===== SECTION ANATOMY PRIMITIVES (WI-3) ===== */
 
-/* Rail , the section opener: an Ico tile + kicker, one plain title line. Rulebook v1 §R2
+/* Rail , the section opener: one bare 32px terracotta glyph (no tile since 2026-10-13) + the title line. Rulebook v1 §R2
  * (founder 2026-07-11): subsection titles carry their icon on the LEFT again , the S2 icon
  * deletion is reversed at subsection level. The 2026-07-10 corrections still stand for the
  * REST of the header: NO section header states a conclusion , the verdict slot stays a
@@ -1234,7 +1131,7 @@ export function FocalWords({ children, className = "" }: { children: React.React
  *  where the figure stands among the countries (PART 6), and 24 to the next group. `beside`: the block stands beside another (a drawing, a
  *  column of rows) whose arrangement gives the distance, so it takes no margin; `className` adds to the wrapper (a margin a container query
  *  drops); `live` announces a figure a control changes; `accent` (plan 2026-10-08) the figure in --terra-text for a declared loud moment. A
- *  figure with a source stamps it (src/lib/spine/provenance.ts). Moved here from country/focal.tsx, which re-exports it. `placed`, `signal`
+ *  figure with a source stamps it (src/lib/spine/provenance.ts). Moved here from country/focal.tsx (that shim was deleted on 2026-10-16). `placed`, `signal`
  *  and `noSignal` (plan 2026-10-13 country-page-journey): a figure placed among the countries stamps its measure and draws its signal
  *  beside it. */
 export function Focal({ figure, words, placement, prov, accent = false, live = false, beside = false, className = "", wordsClassName = "", placed = null, signal = null, noSignal = null }: { figure: React.ReactNode; words?: React.ReactNode; placement?: string | null; prov?: Provenance | null; accent?: boolean; live?: boolean; beside?: boolean; className?: string; wordsClassName?: string; placed?: MeasureKey | null; signal?: Signalled | null; noSignal?: "set" | "fill" | null }) {
@@ -1260,8 +1157,8 @@ export function Focal({ figure, words, placement, prov, accent = false, live = f
 }
 
 /** THE BASIS LINE (plan 2026-10-12 rhythm-air-inside, Task 2B; spec section 2.1; MODEL PART 7: what the figure is and in what unit, never what it means): one line under a section's
- *  rows or drawing, 24 from them, the group step, the one piece a section prints its basis with. It is defined in ./basis.tsx, a module with no import but React, because the home's
- *  server rows (archetypes/CityRows.tsx) must reach no client module and this file's closure does; the kit exports it as every other file imports it. */
+ *  rows or drawing, 24 from them, the group step, the one piece a section prints its basis with. It is defined in ./basis.tsx, a module with no import but React; the reason
+ *  it was split out (the home's retired CityRows and its retired foot test) is gone, and the split stays harmless: the kit re-exports it and every file imports it from here. */
 export { Basis } from "./basis";
 
 /* Stat , one figure with a locked scale contract. focal vs support keeps a >=1.6
@@ -1523,96 +1420,3 @@ export function Timeline({ span, unit, phases = [], nodes, read, startLabel }: {
   );
 }
 
-/* ===== PHASE BAR (WI-6) , rulebook v2 S10/D1/D4, founder decision a (2026-07-09):
- * the placeholder "first year, month by month" milestone Timeline is scrapped
- * everywhere it appeared. It invented weekly milestones ("Lease + licence",
- * "Soft opening", "First clean profit"...) that no seed could actually know. The
- * ONLY two things a first-year read can honestly claim are WHEN the doors open
- * (a typed weeks-to-open table until 2026-10-15, deleted that day as a figure with no source) and WHEN the
- * trade crosses break-even (a seed's own ramp_to_breakeven_months, counted from
- * week 0, never from opening). PhaseBar draws ONE bar on a week axis with up to
- * three segments derived ONLY from those two anchors , no milestone list, no
- * invented weeks in between:
- *   Fit-out  , week 0 to openWeek (omitted when openWeek is null/0)
- *   Ramp     , openWeek to breakevenWeek
- *   Profit   , breakevenWeek to the axis end
- * SELF-OMITS (the D-rule: no anchor, no bar) when breakevenWeek is not a finite
- * positive number , a page with no honest break-even source renders nothing
- * rather than fabricate a tick. The break-even tick is the ONE terracotta mark in
- * the box (rationed accent); the three segments stay neutral, darkest to
- * lightest, on EXISTING kit tokens only (var(--c-line-strong) / var(--c-border) /
- * TRACK , no new hex), so the read is schematic, not a chart that needs a
- * caption. When breakevenWeek falls beyond horizonWeeks
- * the axis EXTENDS to meet it and the axis-end label states the true week , a
- * tick never draws past the drawn axis, and the bar never clips a late break-even
- * into a comforting lie. Segment labels + week ranges render as a swatch legend
- * below the bar (StackBar's legend pattern), so the read never needs prose. */
-export function PhaseBar({ openWeek, breakevenWeek, horizonWeeks = 52 }: { openWeek: number | null; breakevenWeek: number | null; horizonWeeks?: number }) {
-  if (breakevenWeek == null || !Number.isFinite(breakevenWeek) || breakevenWeek <= 0) return null;
-  const hasOpen = typeof openWeek === "number" && Number.isFinite(openWeek) && openWeek > 0;
-  const openAt = hasOpen ? Math.min(openWeek as number, breakevenWeek) : 0;
-  const horizon = Math.max(horizonWeeks, breakevenWeek);
-  const pct = (w: number) => Math.max(0, Math.min(100, (w / horizon) * 100));
-  const wk = (n: number) => `wk ${Math.round(n)}`;
-  const segs: Array<{ label: string; from: number; to: number; color: string }> = [];
-  /* THREE PHASES IN THREE NEAR-IDENTICAL GREYS. Line-strong, border and track
-     differ by a few percent of luminance, so at the size this renders the three
-     phases read as roughly two and the ramp-to-profit boundary vanishes entirely
-     under the break-even marker sitting on it. The phases are a SEQUENCE, so they
-     step from dark to light in the order they happen, which is also the order of
-     how much is at stake. */
-  if (openAt > 0) segs.push({ label: "Fit-out", from: 0, to: openAt, color: "var(--c-ink2)" });
-  if (breakevenWeek > openAt) segs.push({ label: "Ramp", from: openAt, to: breakevenWeek, color: "var(--c-line-strong)" });
-  if (horizon > breakevenWeek) segs.push({ label: "Profit", from: breakevenWeek, to: horizon, color: "var(--c-soft2)" });
-  const tickPct = pct(breakevenWeek);
-  /* THE ANSWER OUTRANKS THE LEGEND. This card measured a single type size across
-     its whole height, so "Break-even, week 26", the one thing the section exists
-     to say, carried exactly the same weight as "Fit-out wk 0-wk 16" underneath
-     it. Nothing led, so a reader had to read all of it to find the sentence that
-     mattered. The answer line below is set at body weight; the legend is not.
-     THIS NOTE LIVES HERE, NOT IN THE MARKUP. It was first written inside the JSX
-     as a plain block comment rather than a braced one, which is not a comment at
-     all in JSX, it is a text child, so five lines of working notes were printed
-     on the page for a reader to see. It also sat between the anchor below and the
-     placement it protects, far enough apart that the scale-end gate could no
-     longer see the clamp and counted the placement as unprotected. */
-  const tickAnchor = tickPct < 14 ? "0%" : tickPct > 86 ? "-100%" : "-50%";
-  const ariaLabel = `${segs.map((s) => `${s.label} ${wk(s.from)} to ${wk(s.to)}`).join(", ")}; break-even ${wk(breakevenWeek)}`;
-  return (
-    <div data-idea="I4">
-      <div className="relative pt-6">
-        {/* INK, NOT THE ACCENT (plan step 33's first dispatch, 2026-09-18): the
-            trade page's three loud moments are its `00 take`, `04 open` and
-            `08 clears` (MODEL.md 8.6's seat ledger), and PART 6 sends anything
-            terracotta that is not on the list to ink; this card's one caller is
-            the trade page's ramp, which `04` absorbs at its own dispatch. */}
-        <span className="absolute top-0 whitespace-nowrap text-[length:var(--t-body)] font-semibold text-[var(--c-ink)]" style={{ left: `${tickPct}%`, transform: `translateX(${tickAnchor})` }}>Break-even, week {Math.round(breakevenWeek)}</span>
-        {/* THE MARKER SITS OUTSIDE THE TRACK, not inside it.
-            The track hides its overflow so its segments keep the rounded ends,
-            and the break-even dot used to live inside that same box. A dot is
-            centred on its position, so at either extreme half of it was cut off
-            by the very rounding it was sharing a box with. It reaches an extreme
-            whenever break-even lands at or past the end of the horizon, which is
-            any ramp of a year or longer.
-            It cannot fire today: exactly one trade carries a ramp figure and it
-            puts the dot at the halfway mark. This is for the day a slower trade
-            gets one, which is the only day anybody would have noticed. */}
-        <div className="relative">
-          <div className="relative h-3 overflow-hidden rounded-full border border-[var(--c-border)]" role="img" aria-label={ariaLabel}>
-            <div className="flex h-full w-full">
-              {segs.map((s) => <div key={s.label} className="h-full border-r border-white/70 last:border-0" style={{ width: `${pct(s.to - s.from)}%`, background: s.color }} />)}
-            </div>
-          </div>
-          <span aria-hidden className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white" style={{ left: `${tickPct}%`, background: "var(--c-ink)", boxShadow: "0 0 0 1px var(--c-border)" }} />
-        </div>
-        {/* BOTH ENDS OF A RULER ARE WRITTEN ALIKE. This one read "0" at the left and
-            "WEEK 52" at the right, one bare and one carrying its unit, so a reader
-            had to work out that the bare end was also weeks. Notation N6. */}
-        <div data-type-allow="scale-ends" className="mt-2 flex justify-between text-[length:var(--t-micro)] text-[var(--c-muted)]"><span>week 0</span><span>week {Math.round(horizon)}</span></div>
-      </div>
-      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-[var(--c-border)] pt-2">
-        {segs.map((s) => <span key={s.label} className="inline-flex items-center gap-2 text-[length:var(--t-body)] text-[var(--c-ink2)]"><span className="h-3 w-3 rounded-sm" style={{ background: s.color }} />{s.label} <Fig className="text-[var(--c-ink)]">{wk(s.from)}-{wk(s.to)}</Fig></span>)}
-      </div>
-    </div>
-  );
-}

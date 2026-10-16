@@ -5,7 +5,7 @@
  * nothing of their own; the view seats them (industry-view.tsx).
  *
  * `00 take` (Masthead): the AnswerCard archetype in its trade identity
- * variant (the trade's icon tile in the flag's seat, the sector as the crumb
+ * variant (the trade's bare 28px glyph in the flag's seat, no tile since 2026-10-13, the sector as the crumb
  * under the h1), the net of every $100 at 40 in `--terra-text`, THE PAGE'S
  * ONLY 40 (8.7's seat one), off THE ONE NET BUILDER through
  * industry_hero_facts.ts (trade_net.ts with the engine absent, R7); the
