@@ -2201,7 +2201,7 @@ export const COPY = {
   opening: {
     /** The line under the lead figure (fix round 1: eleven words; the thirteen it had broke the twelve-word line). */
     verdict: "The licences to get, and how long to earn it back.",
-    leadWait: "Longest licence wait, an estimate",
+    leadWait: "Longest required licence wait, an estimate",
     /** Under the months to break even where the place prints no licence list: "{words}" is the figure's own words ("To break even"). */
     leadEarning: "{words}, an estimate",
     noLead: "No licence or payback figures for this trade yet.",
@@ -2224,12 +2224,12 @@ export const COPY = {
   buyOrStart: {
     startCash: "No start cost held yet.",
     /** The hero's start side leads with a held figure (release 3 job A), labelled as the buy side's "To buy, estimated" is. */
-    leadWait: "To start, the longest licence wait, estimated",
+    leadWait: "To start, the longest required licence wait, estimated",
     leadPayback: "To start, the time to pay back, estimated",
     cashLabel: "Cash needed",
-    waitLabel: "Longest licence wait",
-    waitNote: "the slowest licence to get, an estimate",
-    noWait: "No licence list here yet.",
+    waitLabel: "Longest required licence wait",
+    waitNote: "the slowest licence every shop needs, an estimate",
+    noWait: "No required licence wait here yet.",
     paybackLabel: "Time to pay back",
     paybackNote: "the trade's typical, an estimate",
   },

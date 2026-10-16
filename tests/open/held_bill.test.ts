@@ -213,7 +213,14 @@ async function main() {
   const words = (o: unknown, path: string): Array<[string, string]> => (typeof o === "string" ? [[path, o]] : o && typeof o === "object" ? Object.entries(o).flatMap(([k, v]) => words(v, `${path}.${k}`)) : []);
   const copyLines = ["tradeOpen", "opening", "buyOrStart"].flatMap((k) => words(COPY[k], `COPY.${k}`));
   for (const [path, s] of copyLines) if (FIGURE.test(s) || METHOD.test(s)) fail("src/lib/spine/copy.ts", `${path} holds a typed figure or method word: "${s}"`);
-  const dealMod = await mod<{ dealbreakerFor: (id: string) => string | null; dealbreakerIds?: () => string[]; dealbreakerFigure?: (id: string) => { figure: string; prov: { src: string; kind: string } } | null }>("src/lib/open/dealbreakers.ts");
+  type PlantedRow = { rowKey: string; metric: string; value: number; tag: string };
+  const dealMod = await mod<{ dealbreakerFor: (id: string) => string | null; dealbreakerIds?: () => string[]; dealbreakerFigure?: (id: string, rows?: (id: string, prefix: string) => PlantedRow[]) => { figure: string; prov: { src: string; kind: string } } | null }>("src/lib/open/dealbreakers.ts");
+  /* THE HELD TAG DECIDES (fix round 1, M-2): a planted shard whose rent driver is tagged modelled prints nothing; tagged held, it prints, stamped. */
+  if (dealMod.dealbreakerFigure) {
+    const planted = (tag: string) => () => [{ rowKey: "rent_and_occupancy", metric: "cost_structure.cost_drivers.*.pct_of_revenue", value: 9, tag }];
+    const asHeld = dealMod.dealbreakerFigure("restaurants", planted("held"));
+    control("C: a planted held rent driver prints its figure, stamped; the same driver tagged modelled or placeholder prints nothing", asHeld?.figure === "9%" && /rent_and_occupancy\.pct_of_revenue$/.test(asHeld.prov.src) && dealMod.dealbreakerFigure("restaurants", planted("modeled")) === null && dealMod.dealbreakerFigure("restaurants", planted("placeholder")) === null);
+  }
   const { INDUSTRIES } = await mod<{ INDUSTRIES: Array<{ id: string }> }>("src/lib/taxonomy.ts");
   /* every live trade, and every key the table holds (three keys are not live trades: their lines are read all the same) */
   const ids = [...new Set([...INDUSTRIES.map((i) => i.id), ...(dealMod.dealbreakerIds?.() ?? [])])];

@@ -29,6 +29,7 @@
  */
 import { industryRows } from "@/lib/facts/industry_shard";
 import type { Provenance } from "@/lib/spine/provenance";
+import type { Fact } from "@/lib/facts/types";
 
 /**
  * Per-industry dealbreaker conditions, keyed by canonical industry id.
@@ -98,11 +99,12 @@ const DRIVERS = "cost_structure.cost_drivers.";
  * held (split_rows.ts reads the same tag; a modelled or placeholder driver prints nothing here), stamped with the file and key, an
  * estimate (one figure for the trade, never the place's).
  */
-export function dealbreakerFigure(industryId: string | null | undefined): { figure: string; prov: Provenance } | null {
+export function dealbreakerFigure(industryId: string | null | undefined, rows: (id: string, prefix: string) => Fact[] = industryRows): { figure: string; prov: Provenance } | null {
   if (!industryId) return null;
   const row = HELD_FIGURE[industryId];
   if (!row) return null;
-  const pct = industryRows(industryId, DRIVERS).find((f) => f.rowKey === row && f.metric === `${DRIVERS}*.pct_of_revenue`);
+  /* `rows` is the shard's reader; a test hands in a planted shard to see the held-tag rule (fix round 1, M-2). */
+  const pct = rows(industryId, DRIVERS).find((f) => f.rowKey === row && f.metric === `${DRIVERS}*.pct_of_revenue`);
   if (!pct || pct.tag !== "held" || typeof pct.value !== "number" || !Number.isFinite(pct.value) || pct.value <= 0) return null;
   return { figure: `${Math.round(pct.value)}%`, prov: { src: `data/facts/industry/${industryId}.json:${DRIVERS}${row}.pct_of_revenue`, kind: "estimate" } };
 }
