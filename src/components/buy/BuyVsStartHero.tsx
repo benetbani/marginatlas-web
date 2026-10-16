@@ -50,7 +50,9 @@ export function BuyVsStartHero({ page }: { page: BuyVsStart }) {
 
       {/* The two sides of the cash, side by side. Start leads (the more common path); buy sits beside it as the alternative. */}
       <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-12">
-        <div className="shrink-0">
+        {/* The start side may narrow and wrap its label (the required-wait label runs long at 14), so the pair stays inside the column at 1280:
+            measured on 2026-10-16, the shrink-0 it had pushed the buy figure about 64px past the column's edge. */}
+        <div className="min-w-0 sm:flex-1">
           {lead ? (
             <>
               <div
