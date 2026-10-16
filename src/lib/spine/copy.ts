@@ -2214,9 +2214,10 @@ export const COPY = {
     peersHead: "The same business elsewhere",
     peersLine: "What a typical owner keeps a year in other places.",
     /** The dealbreaker (src/lib/open/dealbreakers.ts): its lead words, and the line under it where the trade's shard holds a held figure;
-     *  "{pct}" is that figure, stamped (release 3 job A: the typed "about 12% of sales" and the "Directional" disclaimer left). */
+     *  "{pct}" is that figure, stamped, and the line says it is an estimate (release 3 job A: the typed "about 12% of sales" and the "Directional"
+     *  disclaimer left; fix round 1, I-2: the estimate word). */
     dealbreakerLead: "Do not open unless",
-    dealbreakerFigure: "Rent and occupancy take {pct} of sales across the trade.",
+    dealbreakerFigure: "Across the trade, rent and occupancy take {pct} of sales, an estimate.",
   },
   /** THE BUY-OR-START PAGE'S START SIDE (the same day): no start cost is held, so the stated line stands where the cash stood, the
    *  longest licence wait where the weeks stood, and the trade's years to pay back where the typed payback stood. */

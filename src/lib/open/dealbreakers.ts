@@ -34,7 +34,9 @@ import type { Provenance } from "@/lib/spine/provenance";
  * Per-industry dealbreaker conditions, keyed by canonical industry id.
  *
  * Each value is the tail of the sentence "Do not open unless ...", so it reads
- * as one clean line when the prefix is added at the render site.
+ * as one clean line when the prefix is added at the render site: the whole
+ * line twelve words or fewer, the copy rules' line (fix round 1 of release 3
+ * job A, M-4: six lines ran 13 to 17; the gate held-bill counts them).
  */
 const DEALBREAKERS: Record<string, string> = {
   // Hospitality and food: footfall and the rent ratio are the whole game.
@@ -45,19 +47,18 @@ const DEALBREAKERS: Record<string, string> = {
   bars_nightclubs: "you can actually get the liquor license",
 
   // Lodging is a heavy fixed base that only occupancy can carry.
-  hotels_lodging:
-    "you have the rooms and the occupancy to cover a heavy fixed base",
+  hotels_lodging: "occupancy can carry your heavy fixed costs",
 
   // Membership businesses: retention above churn is the survival line.
-  sports_fitness: "you can hold member retention above the churn line",
+  sports_fitness: "member retention can outrun churn",
 
   // Licensed clinical trades: the license and the fit-out capital come first.
-  dental_practices: "you have the license and the fit-out capital up front",
-  doctors_clinics: "you have the license and the fit-out capital up front",
-  veterinary_pet_care: "you have the license and the fit-out capital up front",
+  dental_practices: "you have the license and fit-out money ready",
+  doctors_clinics: "you have the license and fit-out money ready",
+  veterinary_pet_care: "you have the license and fit-out money ready",
 
   // Childcare is gated by ratios and licensing before anything else.
-  childcare_social: "you can meet the staff ratios and the licensing",
+  childcare_social: "you can meet staff ratios and licensing",
 
   // Pharmacies cannot trade without the permit.
   independent_pharmacy: "you can secure the license and permit",
@@ -81,6 +82,11 @@ export function dealbreakerFor(
 ): string | null {
   if (!industryId) return null;
   return DEALBREAKERS[industryId] ?? null;
+}
+
+/** Every trade id that holds a condition, so a gate reads every line the table holds and not only the live trades' (held-bill). */
+export function dealbreakerIds(): string[] {
+  return Object.keys(DEALBREAKERS);
 }
 
 /** The shard row whose share of sales stands under a trade's condition: the rent line, for the trades whose condition is the location. */

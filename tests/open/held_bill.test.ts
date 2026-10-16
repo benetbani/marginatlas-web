@@ -148,6 +148,9 @@ function typedIn(text: string): Array<{ line: number; s: string; why: string }> 
   });
 }
 
+/** Words as a reader counts them: a figure such as "8%" is one. */
+const wordCount = (line: string) => line.trim().split(/\s+/).filter(Boolean).length;
+
 /* ---------- controls: the reader proves itself first ---------- */
 
 const GB_BLOCK = `UPDATE regional_cells\nSET setup_costs = '{\n  "registration": { "business_registration_fee": 20, "industry_licenses_fee": 1500, "total_estimated": 4000 },\n  "capital": { "property_fitout": 250000, "equipment_initial": 100000, "total_estimated": 422000 },\n  "grade": "B"\n}'::jsonb\nWHERE country = 'GB';`;
@@ -210,20 +213,27 @@ async function main() {
   const words = (o: unknown, path: string): Array<[string, string]> => (typeof o === "string" ? [[path, o]] : o && typeof o === "object" ? Object.entries(o).flatMap(([k, v]) => words(v, `${path}.${k}`)) : []);
   const copyLines = ["tradeOpen", "opening", "buyOrStart"].flatMap((k) => words(COPY[k], `COPY.${k}`));
   for (const [path, s] of copyLines) if (FIGURE.test(s) || METHOD.test(s)) fail("src/lib/spine/copy.ts", `${path} holds a typed figure or method word: "${s}"`);
-  const dealMod = await mod<{ dealbreakerFor: (id: string) => string | null; dealbreakerFigure?: (id: string) => { figure: string; prov: { src: string; kind: string } } | null }>("src/lib/open/dealbreakers.ts");
-  const { INDUSTRIES } = await import("../../src/lib/taxonomy");
-  const ids = (INDUSTRIES as Array<{ id: string }>).map((i) => i.id);
+  const dealMod = await mod<{ dealbreakerFor: (id: string) => string | null; dealbreakerIds?: () => string[]; dealbreakerFigure?: (id: string) => { figure: string; prov: { src: string; kind: string } } | null }>("src/lib/open/dealbreakers.ts");
+  const { INDUSTRIES } = await mod<{ INDUSTRIES: Array<{ id: string }> }>("src/lib/taxonomy.ts");
+  /* every live trade, and every key the table holds (three keys are not live trades: their lines are read all the same) */
+  const ids = [...new Set([...INDUSTRIES.map((i) => i.id), ...(dealMod.dealbreakerIds?.() ?? [])])];
   let nDeal = 0;
   for (const id of ids) {
     const d = dealMod.dealbreakerFor(id);
     if (!d) continue;
     nDeal++;
     if (/\d/.test(d)) fail("src/lib/open/dealbreakers.ts", `${id}'s dealbreaker types a figure: "${d}"`);
+    const line = `${String(COPY.opening?.dealbreakerLead ?? "Do not open unless")} ${d}.`;
+    if (wordCount(line) > 12) fail("src/lib/open/dealbreakers.ts", `${id}'s dealbreaker runs ${wordCount(line)} words, over the copy rules' twelve: "${line}"`);
     const f = dealMod.dealbreakerFigure?.(id);
     if (f && !(/^data\/facts\/industry\/[a-z_]+\.json:cost_structure\.cost_drivers\.[^.]+\.pct_of_revenue$/.test(f.prov.src) && f.prov.kind === "estimate")) fail("src/lib/open/dealbreakers.ts", `${id}'s held figure ${f.figure} carries no shard stamp: ${JSON.stringify(f.prov)}`);
   }
   console.log(`C: ${copyLines.length} copy lines, ${ids.length} trades asked, ${nDeal} dealbreakers read`);
-  if (ids.length < 138 || nDeal < 5) fail("src/lib/open/dealbreakers.ts", `asked ${ids.length} trades and read ${nDeal} dealbreakers, expected 138 and 5 or more`);
+  if (INDUSTRIES.length < 138 || nDeal < 13) fail("src/lib/open/dealbreakers.ts", `asked ${INDUSTRIES.length} live trades and read ${nDeal} dealbreakers, expected 138 and the table's 13 or more`);
+  /* THE HELD FIGURE'S LINE SAYS IT IS AN ESTIMATE (fix round 1, I-2): the figure is stamped an estimate, and the words a reader sees say so too. */
+  const figLine = String(COPY.opening?.dealbreakerFigure ?? "");
+  if (dealMod.dealbreakerFigure && !/\bestimate|\btypical/i.test(figLine)) fail("src/lib/spine/copy.ts", `COPY.opening.dealbreakerFigure prints an estimate without saying so: "${figLine}"`);
+  if (dealMod.dealbreakerFigure && wordCount(figLine.replace("{pct}", "8%")) > 12) fail("src/lib/spine/copy.ts", `COPY.opening.dealbreakerFigure runs over twelve words: "${figLine}"`);
   if (dealMod.dealbreakerFor("restaurants") && !dealMod.dealbreakerFigure?.("restaurants")) fail("src/lib/open/dealbreakers.ts", "restaurants' dealbreaker stands with no held figure under it (the rent share its shard holds)");
 
   /* D */
