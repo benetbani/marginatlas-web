@@ -15,7 +15,7 @@ around it.
 This document describes the v1 design system as it shipped on 2026-05-27:
 component API conventions, tokens, motion, accessibility floor, the catalog.
 Since then the site grew a second, larger layer of enforcement that this
-document never absorbed: 142 prebuild gates (`GATES` in
+document never absorbed: the prebuild chain (`GATES` in
 `scripts/prebuild_all.ts`) and four harness scripts that measure a live
 render (`scripts/harness/check_archetypes.mjs`, `check_page_holes.mjs`,
 `check_model_laws.mjs`, `check_readability.mjs`). Most of that layer is data
@@ -45,13 +45,16 @@ files.
 | A section card carries exactly one focal figure at 30, and nothing else in it sits between 16 and 30. | `check_model_laws.mjs: FOCAL` | 2026-09-08 |
 | A hero fact cell's own figure wraps to at most two lines. | `check_model_laws.mjs: TWO-LINE CELL` | 2026-09-08 |
 | A 10px size is for a mark a reader glances at, never a column head or a label a reader must read. | `check_readability.mjs: READ SIZE` | 2026-09-08 |
+| Reader text is 14px or larger; 12 stays for a chart's tick and axis labels and the source and licence line of a page's foot, each place named with its reason. | `type-floor` (renders), `type-floor-reader` (its reading and the source) | 2026-10-12 |
+| Inside a section: the title 24 above its first content, one group 24 from the next, a fact row 16 above and below, a focal figure 8 above its line, from the kit's Rail, Focal, Basis and FactRows. | `spacing-pin` (the source), `line-rule` (the renders); the hero's 64 under the bar: `check_page_laws.mjs: ZONE PAD` | 2026-10-12 |
 
 ### 0.2 Color, the accent, and the palette
 
 | Rule | Enforced by | Since |
 |---|---|---|
 | No cream, no warm paper tint, anywhere on the site. A ratchet: the count may only fall. | `no-cream` | 2026-08-16 (his ruling), gate registered in the 2026-08-17 purge |
-| The palette is terracotta plus cool neutrals only: no green, no amber, no brown, checked by hue rather than by class name. | `palette-membership` | 2026-08-09 |
+| The palette is terracotta plus cool neutrals only: no green, no amber, no brown, checked by hue rather than by class name. One named exception since 2026-10-13, his ruling: the signal's five colours inside `src/components/spine/signal/tokens.ts`, nowhere else. | `palette-membership` | 2026-08-09 |
+| A placed figure whose measure has an owner direction carries the signal (one triangle, its angle and colour the state in fifths of the placement, its word its accessible name); a measure with none carries no mark; the page carries one key line. | `signal`, `signal-marks` | 2026-10-13 |
 | A color class must resolve to a real step on the current palette; the stock Tailwind ramps were replaced, not extended, so a stray class now emits nothing rather than a stray hue. | `token-steps` | 2026-08-17 |
 | No raw hex in a component; pull from `design-tokens.ts`. | `no-hardcoded-hex` | (undated for the core baseline; the `ZERO_BASELINE_FILES` refinement is 2026-07-12) |
 | Every color token that carries text clears WCAG AA. | `token-contrast` | measured clean, then negative-tested, 2026-08-08 |
@@ -60,6 +63,7 @@ files.
 | The accent is derived from the value and a stated threshold at render time, never accepted as a hand-set flag from data. | `derived-accents` | 2026-07-26 |
 | A figure drawn against a world track carries one placement line beside it, one fixed wording, one direction, and the track's end is never labelled with whose figure it is. | `check_model_laws.mjs: PLACEMENT` | 2026-09-08 (the ruling behind it is 2026-09-07) |
 | Terracotta never appears on a heading, kicker, h1, border, hover state, link at rest, control, pill, icon stroke, or table cell. | not machine-checkable because no gate reads which UI role a color declaration is attached to; the spine's known offenders were corrected by hand and are named in MODEL.md PART 6 | 2026-09-07 |
+| A section's opener draws a bare 32px glyph in terracotta, no tile; no row draws an icon; a glyph inside a section is grey and never its opener's. | `tiles-openers` | 2026-10-13 |
 | On the home, terracotta stands in four places only: the wordmark, the question's moving words, the positioning line's mark and the band (the brand terracotta at full strength, `--terra-full` #c11c00, white type, one sentence). | `home-band` (the band's colour, ink and one statement), `home-shape` (the positioning line's mark), `loud-seats` (the band its one FIELD seat) | 2026-10-13 |
 | At most one loud card per band, no two loud cards on one horizontal level, at least two quiet cards between two loud ones. | not machine-checkable because judging a card's loudness and a page's pacing is a reading of the whole page, not a countable property; `art-direction`'s own section J marks pacing as judgment, not machine-checkable | 2026-08-25 |
 
@@ -70,7 +74,7 @@ files.
 | Full width is reserved for exactly three sections a page: the opening, one table, the close. Site-wide, on every live surface, not only the four reformed page types. | `fullwidth-sitewide` | 2026-08-27, narrowed to exactly three by his 2026-09-08 ruling ("three stands", R1) |
 | No lone card in a band; a band with one child is a fault. | `check_model_laws.mjs: LONE CARD` | 2026-09-08 (the ruling is 2026-09-07) |
 | Rows of equivalent elements are the same height, to the pixel, by construction. | `check_archetypes.mjs: UNEQUAL` (card-pager, city-cards, tiers-table, spectra-table, kv-grid, compare-table, mark-list rows) | 2026-09-04 (ruling 7) |
-| A page's block count clears its page type's floor: 21 country, 17 city, 16 trade, 12 industry, 7 neighbourhood (provisional). | `check_model_laws.mjs: BLOCK FLOOR` | 2026-09-08, five floors since 2026-09-17 |
+| A page's block count clears its page type's floor (`FLOOR_BY_SURFACE` in `scripts/harness/check_model_laws.mjs`, never typed here; the country's, the thin exemplar's measured count since 2026-10-13). | `check_model_laws.mjs: BLOCK FLOOR` | 2026-09-08, five floors since 2026-09-17 |
 | The home's catalog is one contents section of six numbered departments, each a title of four words or fewer, one line, at most four members chosen by a rule read from the code, and its door; a department is never padded. | `home-contents`; FOCAL names the `department` form (`check_model_laws.mjs`) | 2026-10-13 |
 | The largest empty rectangle inside a card stays under a quarter of the card each way, floored at 120px. Equal heights are fixed by pairing or filling content, never by unstretching a card. | `gathered-emptiness` (static artefacts), `check_page_holes.mjs: WHITE SPACE` (a live page), `check_archetypes.mjs: LONE STAT` (a story) | 2026-08-25 |
 | A card with no order for the eye (no text size at least 1.4x its own median) is a fault, except the four forms a ruling makes even: `compare-table`, `card-pager`, `pay-bars`, `terminus`. | `check_page_holes.mjs: NO LEAD` | 2026-09-07 |
@@ -82,12 +86,15 @@ files.
 | An element declares one CSS `display` value, never two colliding in the same class string. | `one-display` | found and gated 2026-08-25 |
 | A drawing that carries a measurement (a fixed viewBox) never stretches its own geometry; it is given a fixed height too. | `no-scaling-drawings` | reached zero 2026-08-24 |
 | A mark placed by percentage stays inside its own track; nothing hangs off the end of a scale. | `scale-end-clamps` | (undated; "the 2026-08 loop") |
-| Spacing lands on the ladder's own rungs, not a guess at the moment of writing. | `spacing-scale` | measured 2026-08-02 |
+| Spacing lands on the distance ladder's rungs (0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64), not a guess at the moment of writing. | `distance-ladder` (`src/components/spine`, the live pages); `spacing-scale` reads only the older `city2`, `country2` and `spine2` kits, on their own scale (the trades index, `/industries`, and the atlas index, `/world`, draw spine2's `GlyphIcon` and `Place`, and the `/dev` routes draw all three kits) | ladder 2026-09-23; the gate's name corrected 2026-10-12 |
+| No level repeats the split of the level before it (a wide level holds none), never three equal halves in a row. | `art-direction` (D3, on the zones) | 2026-08-25; on the zones since 2026-10-12 |
+| One figure prints once on a page: it stays in the section whose job is to explain it. | `fact-once` | 2026-10-12 |
 | The icon scale is five sizes (18, 13, 24, 14, 16) and the radius scale is four tokens plus three named exceptions on the current v2 surface; nothing else. | `v2-scales` | (undated; DESIGN.md's scale, measured against the surface) |
 | The two stylesheets (Tailwind and the spine CSS) declare the same type ladder; an off-ladder size may only shrink, never grow. | `type-ladder` | founder, 2026-08-21 |
 | A prose-width cap and a phone/tablet grid-pairing breakpoint may only shrink toward one true measure; `sm:` two-up pairings (which never fire on an actual phone) may not grow. | `width-discipline` | founder, 2026-08-21 |
 | A page's declared visual forms stay under its page type's cap; sameness itself is counted, not only whether each individual form is legal. | `form-variety` | 2026-09-01 |
-| A page's rendered sections match its own blueprint's SPINE table exactly, in order, with no unknown section and no missing one. | `blueprint-conformance` | 2026-08-29 |
+| A page's rendered sections match its own blueprint's SPINE table exactly, in order, with no unknown section and no missing one. Retired 2026-08-29 to 2026-09-17; on the country page the slots hold it since 2026-10-13: every country draws its slots in the model's order and types. | `country-slots` | 2026-08-29 |
+| A desktop pair joins two neighbouring slots of one stage; a slot left over stands alone; a chapter's opening zone starts D3 afresh. | `country-zones`, `art-direction` | 2026-10-13 |
 | A section is replaced, never deleted; sentences are cut, sections are not. | not fully machine-checkable beyond the block floor above, which catches a page falling below its count; a gate cannot distinguish a deliberate cut from a floor violation on its own | 2026-09-07 (decision 3) |
 
 ### 0.4 The grammar of a row
@@ -97,6 +104,7 @@ files.
 | A label is three words maximum (two for a spectra trait name), a noun phrase, one line at every width. | `check_model_laws.mjs: ROW SENTENCE`, `model-laws-copy` | 2026-09-08 (the ruling is 2026-09-07) |
 | A label sits in the very next column after its figure; never separated by leftover width, and never a `justify-between` row on a card wider than 420px. | `check_model_laws.mjs: LABEL GAP` | 2026-09-08 |
 | One unit per column, said once in the column head, never mixed and never repeated in a cell. | `check_model_laws.mjs: UNIT MIX` | 2026-09-08 |
+| One answer type a list (money, share, time, position, state, dated pair); a unit sits in the label or the head, never in the cell. | `answer-type` | 2026-10-13 |
 | A comparison table prints absolutes only: no "same," no signed or percent difference, no multiple, no bare word where a figure belongs, and the home row is never crowned as the best. | `check_model_laws.mjs: BANNED WORDS`, `model-laws-copy` | 2026-09-08 |
 | A label never stands where a number goes; a cell that cannot hold an honest figure is withheld with a stated line, never filled with a word. | `check_archetypes.mjs: NO FIGURE` (mark-list rows) | 2026-09-10 (his words) |
 | Featuring one member of a set requires a reason a reader would accept; a ranking is not automatically an answer. | `check_archetypes.mjs: ACCENT` (the ranked-bars pill and its `data-feature` declaration) | 2026-09-10 (task 14) |
@@ -119,7 +127,8 @@ files.
 | A universal list card's rows are one height by construction, the drawn row count matches the declared count, and a withheld member is named rather than left blank. | `check_archetypes.mjs: UNEQUAL`, `ROWS CUT`, `NO FIGURE` (mark-list) | 2026-09-10 (task B3) |
 | A universal list card's marks, where present, are all one height and one width, letterboxed rather than stretched. | `check_archetypes.mjs: MARK MISSING`, `MARK SIZE` (mark-list) | 2026-09-10, the width half 2026-09-11 |
 | An income breakdown's segments plus net sum to 100 within tolerance; no segment renders under six pixels wide; the legend names exactly the drawn segments, no more and no fewer. | `check_archetypes.mjs: DOES NOT ADD UP`, `SLIVER`, `LEGEND MISMATCH` (income-breakdown) | 2026-09-10 (task 11) |
-| A detail panel (the plus) is closed on arrival, its summary is one line, and nothing behind it is a graphic; a figure already visible collapsed is never repeated inside it. | `check_archetypes.mjs: OPEN ON LOAD`, `SUMMARY WRAP`, `HIDDEN GRAPHIC` | review wave 2026-09-08 |
+| A detail panel (the plus) is closed on arrival, its summary is one line, and nothing behind it is a graphic; a figure already visible collapsed is never repeated inside it. On the country page the plus is the answer fold: its head, its count and the plus at the row's end, two to eight rows of one type, the whole row a 44px target (the rule changes' own continuation the one named exception, Q6). | `check_archetypes.mjs: OPEN ON LOAD`, `SUMMARY WRAP`, `HIDDEN GRAPHIC`, `answer-fold` | review wave 2026-09-08 |
+| Every browser check that reads a section's content reads it with the panels open. | `panels-opened` | 2026-10-13 |
 | A terminus carries at most three doors and one pill, doors start with distinct words, and a door holds to one line from tablet width up. | `check_archetypes.mjs: OVERLOAD`, `NO HIERARCHY`, `REPETITION`, `BOTCHED MOBILE` (terminus) | (undated in this file) |
 | A ranked-bars card's tracks share one left edge and one length, and its bars rise in the order of their own values. | `check_archetypes.mjs: TRACKS ADRIFT`, `OUT OF ORDER` | 2026-09-10 (task 13) |
 | A figure drawn against a world track never rises above the world-maximum rule drawn on the same card. | `check_archetypes.mjs: WORLD MAX` | (undated in this file) |

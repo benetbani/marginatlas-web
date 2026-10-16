@@ -215,5 +215,40 @@
     "where": "split and take",
     "law": "MODEL 8.6 row 00 take: \"companion cells net margin, firms trading here, a typical year's takings\"; row 05 split: \"net pinned last, the net at 30 in ink\"; PART 9 clause 42: \"ONE builder for the page's every net figure\"",
     "reason": "Read where no London register row is held (a render without the database, and any trade whose money is not shown): the hero's one companion is the net margin the model row names, and the split's focal is the same net from the one builder. With the register row the hero leads with the typical yearly sales and prints no net, so nothing matches there."
+  },
+  {
+    "page": "city-manchester",
+    "figure": "$48K",
+    "where": "city-take and earnings",
+    "law": "MODEL 8.3 row 07 earnings: \"the typical is the card's 30 in ink, the site's strip law (M3)\"; PART 4: \"Every section card now takes exactly one focal at 30\"",
+    "reason": "The board keeps $48K as the page's answer. The earnings strip's typical mark is that card's one focal at 30, and the typical IS the customers' typical pay, so the law makes it print the same figure."
+  },
+  {
+    "page": "city-manchester",
+    "figure": "$48K",
+    "where": "city-take and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The peers table's own row (Manchester) prints its real typical pay beside the other cities' in the same column, as a comparison table must; the board keeps $48K as the page's answer."
+  },
+  {
+    "page": "city-manchester",
+    "figure": "$48K",
+    "where": "earnings and peers",
+    "law": "MODEL 8.3 row 07 earnings (the strip's typical is the card's 30, M3) and PART 5, THE HOME ROW (\"It prints its real figures like every other row.\")",
+    "reason": "Both second printings are forced by their own law: the strip's typical is the earnings card's focal, and the home row of the peers table prints the same pay the answer states."
+  },
+  {
+    "page": "city-manchester",
+    "figure": "$2,740",
+    "where": "crew",
+    "law": "MODEL PART 5, the MarkList's law: \"THE HEADLINE IS THE SET'S MIDDLE\" (one focal figure at 30)",
+    "reason": "The crew list's headline is the middle of its five roles, which is the Skilled worker row's own figure, so the focal and the row it sums print the same pay."
+  },
+  {
+    "page": "city-manchester",
+    "figure": "31",
+    "where": "city-take and peers",
+    "law": "MODEL PART 5, THE HOME ROW: \"It prints its real figures like every other row.\"",
+    "reason": "The board's cost of living row is Manchester's index on the city scale; the peers table's own row (Manchester) prints the same index beside the other cities' in the same column, as a comparison table must (fix round 1 of rhythm-t6, Manchester's first reading)."
   }
 ]

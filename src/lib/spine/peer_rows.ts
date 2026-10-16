@@ -161,6 +161,9 @@ export function buildCityPeerTable(seed: any): CityPeerTable | null {
       income: isNum(r.median_income_usd) && r.median_income_usd > 0 ? Math.round(r.median_income_usd) : null,
       visitors: isNum(r.visitors_m) && r.visitors_m > 0 ? Math.round(r.visitors_m * 10) / 10 : null,
     },
+    /* THE COST OF LIVING SAYS WHERE IT WAS READ (fix round 1 of rhythm-t6): the list's index, put on the city scale by our arithmetic, so a
+       peer's 40 and the crew's 40 hours on Manchester's page are two facts, as fact-once reads them. */
+    provs: { living: isNum(r.rent_index) ? { src: `data/cities/city_list_v1.json:${String(r.slug ?? r.name).toLowerCase()}:cost_of_living_index`, kind: "worked out" } : null },
   }));
   const all: PeerColumn[] = [
     { key: "living", head: COPY.cityPeers.cols.living, unit: "per", best: "min" },

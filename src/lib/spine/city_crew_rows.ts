@@ -40,6 +40,7 @@ import { queryFacts } from "@/lib/facts/store";
 import type { FactTag } from "@/lib/facts/types";
 import cityListJson from "../../../data/cities/city_list_v1.json";
 import { COPY } from "@/lib/spine/copy";
+import type { Provenance } from "@/lib/spine/provenance";
 import { cityHeldToSources } from "@/lib/uk/registers/register_city";
 
 type CityRow = { slug: string; name: string; iso2: string };
@@ -58,7 +59,7 @@ export type CityCrewData = {
   /** The set's own middle, which is what the card prints at 30. */
   middle: { label: string; value: number };
   /** The week those wages buy, the wage bill's other half; absent where the shard has no hours. */
-  week: { figure: string; words: string } | null;
+  week: { figure: string; words: string; /** Where the hours came from (fix round 1 of rhythm-t6). */ prov?: Provenance } | null;
   basis: string;
   tag: FactTag;
 };
@@ -102,7 +103,7 @@ export function buildCityCrew(slug: string): CityCrewData | null {
      would be a contradiction across two pages of one site. */
   const hours = cityFigure(iso2, slug, "labor.typical_workweek_hours");
   const week = hours && hours.value > 0
-    ? { figure: `${Math.round(hours.value * 10) / 10}`, words: COPY.cityCrew.week }
+    ? { figure: `${Math.round(hours.value * 10) / 10}`, words: COPY.cityCrew.week, prov: { src: `data/facts/city/${iso2}-${slug}.json:labor.typical_workweek_hours`, kind: hours.tag === "held" ? "looked up" : "estimate" } as Provenance }
     : null;
   return {
     slug,
