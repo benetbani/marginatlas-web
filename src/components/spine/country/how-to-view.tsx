@@ -8,7 +8,7 @@
  * the only full-width bands. Every row comes from howto_rows.
  */
 import * as React from "react";
-import { Box, Rail } from "@/components/spine/kit";
+import { Box, Rail, Basis } from "@/components/spine/kit";
 import { Zone } from "@/components/spine/zones";
 import { KvGrid } from "@/components/spine/archetypes/KvGrid";
 import { TiersTable } from "@/components/spine/archetypes/TiersTable";
@@ -92,8 +92,10 @@ export function HowToBody({ iso2 }: { iso2: string }) {
                   <Fig className="mt-1 block text-[length:var(--t-focal)] font-semibold leading-none text-[var(--c-ink)]">{d.steps.totalDays ?? String(d.steps.count)}</Fig>
                 </div>
                 <Stepper steps={d.steps.steps} />
-                {d.steps.basis ? <p className="mt-4 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.basis}</p> : null}
-                {d.steps.foot ? <p className="mt-1 text-[length:var(--t-micro)] leading-snug text-[var(--c-muted)]">{d.steps.foot}</p> : null}
+                {/* THE BASIS AND THE FOOT THROUGH THE KIT (release 3 job C, 2026-10-16; the rhythm reform's final review, Important 1): they were hand-rolled at 12,
+                    4 and 16 apart; the basis is the kit's Basis (14, 24 under the steps) and the foot a data-foot line at 14, 12 under it (DISTANCES 2.1), as turn-two.tsx draws its foot. */}
+                {d.steps.basis ? <Basis>{d.steps.basis}</Basis> : null}
+                {d.steps.foot ? <p data-line="" data-foot className={`${d.steps.basis ? "mt-3" : "mt-6"} text-[length:var(--t-body)] leading-snug text-[var(--c-muted)]`}>{d.steps.foot}</p> : null}
               </Box>
             ) : null}
             {d.tiers.length > 0 ? (
