@@ -24,7 +24,9 @@ const TOGGLE = "tap-y rounded-md border border-[var(--c-line-strong)] px-3 py-2 
 
 function Group({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <section aria-labelledby={`levers-${id}`} data-lever-group={id} className="mt-8">
+    /* 24 FROM THE GROUP ABOVE (release 3 job C, 2026-10-16: the line rule read the levers' first group 32 under the focal block, its mb-6 and this
+       margin collapsing to the larger, once the calculator joined its scan set): the group step, so the focal block and each group stand 24 apart. */
+    <section aria-labelledby={`levers-${id}`} data-lever-group={id} className="mt-6">
       <h3 id={`levers-${id}`} data-typography="custom" className="text-[length:var(--t-lead)] font-semibold leading-6 text-[var(--c-ink)]">{title}</h3>
       <ul className="mt-4 grid gap-6">{children}</ul>
     </section>

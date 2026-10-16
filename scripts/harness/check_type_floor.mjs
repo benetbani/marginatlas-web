@@ -1,8 +1,9 @@
 /**
  * check_type_floor , NO READER TEXT UNDER 14PX (plan 2026-10-12 rhythm-air-inside, Task 1A; spec
  * E:/atlas/docs/superpowers/specs/2026-10-12-rhythm-air-inside-design.md, section 3 item 1). On each spine render the chain draws (the
- * country, city, cell, industry and hood surfaces of scripts/harness/pages.json; the home is project 3's, the how-to page an appendix,
- * /new-businesses no spine view), the characters under 14px outside the allowance list are 20% or less of the characters visible at 1280.
+ * country, city, cell, industry, hood and calculator surfaces of scripts/harness/pages.json; the home is project 3's, the how-to page an appendix,
+ * /new-businesses no spine view; the calculator joined on 2026-10-16, release 3 job C, the final review's Important 1, and read 0 characters
+ * outside the allowance), the characters under 14px outside the allowance list are 20% or less of the characters visible at 1280.
  * Read as scripts/lib/type_floor.mjs reads (R1's method); its blind spot, stated there and printed here: no container query, no stylesheet
  * rule outside THE ZONES' size rules, one width. scripts/harness/type_floor_allow.json names each place the 12px rung stays (a chart's tick
  * and axis labels, the source and licence line of a page's foot) with its reason; a component marks the place with data-type-allow="<key>",
@@ -25,7 +26,7 @@ import { red, redSummary } from "../lib/red.mjs";
 preflight({ name: "check_type_floor" });
 
 const RULE = "type-floor";
-const SPINE = ["country", "city", "cell", "industry", "hood"];
+const SPINE = ["country", "city", "cell", "industry", "hood", "calculator"];
 const HARNESS_LIST = "scripts/harness/pages.json";
 const dirArg = process.argv.slice(2).find((a) => a.startsWith("--dir="));
 const PAGES_DIR = dirArg ? dirArg.slice("--dir=".length) : "scratchpad/harness/pages";

@@ -1,7 +1,9 @@
 /**
  * check_line_rule , EVERY SUPPORTING LINE STANDS WHERE ITS STRUCTURE PUTS IT (plan 2026-10-12 rhythm-air-inside, Task 2C; spec E:/atlas/docs/superpowers/specs/2026-10-12-
  * rhythm-air-inside-design.md, section 2.1; DISTANCES.md section 4, "the distance above a thing says what it belongs to"). On every spine render the chain draws (the country,
- * city, cell, industry and hood surfaces of scripts/harness/pages.json), at 1280, 768 and 375 (the beside and the stacked forms switch between them: RankedBars' head at a
+ * city, cell, industry, hood and calculator surfaces of scripts/harness/pages.json; the calculator joined on 2026-10-16, release 3 job C, the
+ * final review's Important 1, and its four reds, the levers' first group 32 under its figure and the month's basis 16 over its rows, 8 under
+ * its tabs on a phone, were fixed at the page), at 1280, 768 and 375 (the beside and the stacked forms switch between them: RankedBars' head at a
  * 560px card, Thresholds at 900), each figure's own line stands 8 under it with the next group 24 under the block, each basis 24 under the group above it with the next group
  * 24 below it, a foot or a detail panel 12 under a line, a basis is never a figure's own line drawn in the wrong face, and no line is empty. scripts/lib/line_rule.mjs says what
  * a line is, each rule, what is never a red, the tolerance, and its blind spot. The spacing pin (tests/spine/spacing_pin.test.ts) reads source classes and stayed green through
@@ -25,7 +27,7 @@ await requireBrowser("line-rule", "every supporting line (a figure's words, a ba
 preflight({ browser: true, name: "check_line_rule" });
 
 const RULE = "line-rule";
-const SPINE = ["country", "city", "cell", "industry", "hood"];
+const SPINE = ["country", "city", "cell", "industry", "hood", "calculator"];
 const WIDTHS = [1280, 768, 375];
 const HARNESS_LIST = "scripts/harness/pages.json";
 const args = process.argv.slice(2);

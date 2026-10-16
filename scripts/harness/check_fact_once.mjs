@@ -1,7 +1,8 @@
 /**
  * check_fact_once , EACH FACT PRINTS ONCE (plan 2026-10-12 rhythm-air-inside, Task 1B; spec E:/atlas/docs/superpowers/specs/2026-10-12-
- * rhythm-air-inside-design.md, sections 2.3 and 3 item 2). On every spine render the chain draws (the country, city, cell, industry and hood
- * surfaces of scripts/harness/pages.json), at 1280 and 375, no figure prints twice as one fact, read by scripts/lib/fact_once.mjs (what a
+ * rhythm-air-inside-design.md, sections 2.3 and 3 item 2). On every spine render the chain draws (the country, city, cell, industry, hood and
+ * calculator surfaces of scripts/harness/pages.json; the calculator joined on 2026-10-16, release 3 job C, the final review's Important 1, with
+ * no repeat), at 1280 and 375, no figure prints twice as one fact, read by scripts/lib/fact_once.mjs (what a
  * printed figure is, what one fact is and is not, and its blind spot). scripts/harness/fact_once_allow.json holds a repeat a standing law
  * forces (none expected): the page, the figure, where it prints, the law and the reason. Not a ratchet. A browser gate: what is visible is
  * what the page computes, so a phone list and the table it stands in for are one printing at each width.
@@ -31,7 +32,7 @@ await requireBrowser("fact-once", "each fact prints once (one figure, one proven
 preflight({ browser: true, name: "check_fact_once" });
 
 const RULE = "fact-once";
-const SPINE = ["country", "city", "cell", "industry", "hood"];
+const SPINE = ["country", "city", "cell", "industry", "hood", "calculator"];
 const WIDTHS = [1280, 375];
 const HARNESS_LIST = "scripts/harness/pages.json";
 const args = process.argv.slice(2);

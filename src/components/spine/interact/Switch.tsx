@@ -24,7 +24,7 @@ export function Switch({ id, label, views, className = "", panelClassName = "", 
   const tabs = React.useRef<Array<HTMLButtonElement | null>>([]);
   const go = (i: number) => { const n = (i + views.length) % views.length; setActive(n); tabs.current[n]?.focus(); };
   const tablist = (
-      <div role="tablist" aria-label={label} className={`${aside ? "" : "mb-4 "}inline-flex self-start rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] p-0.5`}>
+      <div role="tablist" aria-label={label} className={`${aside ? "max-sm:w-full " : "mb-4 "}inline-flex self-start rounded-md border border-[var(--c-border)] bg-[var(--c-soft)] p-0.5`}>
         {views.map((v, i) => (
           <button
             key={v.key}
@@ -42,7 +42,7 @@ export function Switch({ id, label, views, className = "", panelClassName = "", 
               else if (e.key === "Home") { e.preventDefault(); go(0); }
               else if (e.key === "End") { e.preventDefault(); go(views.length - 1); }
             }}
-            className={`tap-y min-h-6 rounded-sm px-3 py-1 text-[length:var(--t-body)] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${i === active ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-subtle" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
+            className={`${aside ? "max-sm:flex-1 " : ""}tap-y min-h-6 rounded-sm px-3 py-1 text-[length:var(--t-body)] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--c-ink)] ${i === active ? "bg-[var(--c-card)] text-[var(--c-ink)] shadow-subtle" : "text-[var(--c-muted)] hover:text-[var(--c-ink)]"}`}
           >
             {v.label}
           </button>
@@ -51,7 +51,11 @@ export function Switch({ id, label, views, className = "", panelClassName = "", 
   );
   return (
     <div data-switch={id} className={`flex flex-col ${className}`}>
-      {aside ? <div data-switch-row="" className="mb-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">{tablist}{aside}</div> : tablist}
+      {/* THE ASIDE IS A BASIS (the calculator's month): the group step holds round it (release 3 job C, 2026-10-16, the line rule once the calculator joined
+          its scan set: the rows stood 16 under it, and on a phone, wrapped under the tabs, it stood 8 under them), so the row keeps 24 below and 24 between
+          its wrapped lines. Under 640 the basis wraps under the tabs, so there the tabs take the row's width and share it (max-sm:w-full, max-sm:flex-1):
+          the pill's empty end beside the stacked basis read as a 157 by 162 hole in the page filter at 375. Without an aside the row is drawn as before. */}
+      {aside ? <div data-switch-row="" className="mb-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-6">{tablist}{aside}</div> : tablist}
       {views.map((v, i) => (
         <div
           key={v.key}
