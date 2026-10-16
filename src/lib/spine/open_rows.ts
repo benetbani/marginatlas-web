@@ -178,8 +178,11 @@ export function buildOpen(seed: any): OpenData | null {
      never the place's own; a bill naming no country with words prints nothing. Rounded once here so the printed figure and the drawn bar are one number. */
   const scope: string | null = typeof seed?.setup?.scope === "string" ? seed.setup.scope : null;
   const scopeWords = own(COPY.tradeOpen.heldScope, scope);
-  const heldProv: Provenance = { src: `setup_costs:${industryId ?? slug}:${scope}`, kind: "estimate" };
-  const items: Array<{ name?: unknown; usd?: unknown }> = scopeWords && Array.isArray(seed?.setup?.items) ? seed.setup.items : [];
+  /* The stamp names the measurement the lines were read from (setup_items.ts, fix round 1, I-3); a country's bill on a place's page is that place's
+     estimate, so the kind stays an estimate. A bill naming no measurement prints nothing. */
+  const measured: string | null = typeof seed?.setup?.src === "string" && seed.setup.src.trim() ? seed.setup.src.trim() : null;
+  const heldProv: Provenance = { src: measured ?? "", kind: "estimate" };
+  const items: Array<{ name?: unknown; usd?: unknown }> = scopeWords && measured && Array.isArray(seed?.setup?.items) ? seed.setup.items : [];
   const rows: BarRow[] = items
     .map((it, i) => ({ key: `line-${i}-${String(it.name ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`, name: String(it.name ?? "").trim(), value: isNum(it.usd) ? Math.round(it.usd) : 0, prov: heldProv }))
     .filter((r) => r.name && r.value > 0);

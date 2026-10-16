@@ -12,7 +12,7 @@ export type CellFacts = {
   typical: number | null;
   tenths: { p10: number; p25: number; p50: number; p75: number; p90: number } | null;
   firms: number | null;
-  setup: { items: Array<{ name: string; usd: number }>; scope: string } | null;
+  setup: { items: Array<{ name: string; usd: number }>; scope: string; src: string } | null;
 };
 
 const pos = (x: unknown): number | null => (typeof x === "number" && Number.isFinite(x) && x > 0 ? x : null);

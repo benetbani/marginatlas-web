@@ -30,17 +30,21 @@ const TYPED_BILL = {
   registration: { business_registration_fee: 20, industry_licenses_fee: 1_500, insurance_bond_initial: 2_000, certifications_initial: 500, total_estimated: 4_020 },
   grade: "B",
 } as unknown as NonNullable<Cell["setup_costs"]>;
-const RESTAURANT_BILL = { ...TYPED_BILL, measured_src: "fixture:a measured bill" } as unknown as Cell["setup_costs"];
+/* A planted measurement in the shape the reader takes (a data file and its key); the file is a fixture name, and the gate held-bill checks real
+   writers' files and keys exist. */
+const PLANTED_SRC = "data/fixtures/measured_bill.json:lines";
+const RESTAURANT_BILL = { ...TYPED_BILL, measured_src: PLANTED_SRC } as unknown as Cell["setup_costs"];
+check("a block whose measured_src names no file and key (\"fixture:a measured bill\", \"survey\") prints no lines (fix round 1, I-3)", ["fixture:a measured bill", "survey", " "].every((m) => setupItemsFromCell({ setup_costs: { ...TYPED_BILL, measured_src: m } as unknown as Cell["setup_costs"], country: "GB" }) === undefined), FILE, "measured_src is a data file and key (data/<path>.json:<key>) or a named register (uk/registers/<file>.json:<key>), never any string");
 check("the bill as the import typed it (no measurement named) prints no lines, on its own trade too", setupItemsFromCell({ setup_costs: TYPED_BILL, country: "GB" }) === undefined && hasSetupCostData({ setup_costs: TYPED_BILL } as unknown as Cell) === false, FILE, "a bill prints only where its block names the measurement its lines were read from (measured_src, src/lib/spine/setup_items.ts); never print a typed bill");
 
 const own = setupItemsFromCell({ setup_costs: RESTAURANT_BILL, country: "GB" });
-check("the restaurants page keeps its own bill: nine lines, 426,020, the UK's", own !== undefined && own.items.length === 9 && own.items.reduce((a, i) => a + i.usd, 0) === 426_020 && own.scope === "GB");
+check("a planted measured bill on its own trade prints its nine lines (426,020), as the UK's, carrying its measurement", own !== undefined && own.items.length === 9 && own.items.reduce((a, i) => a + i.usd, 0) === 426_020 && own.scope === "GB" && own.src === PLANTED_SRC);
 check("a cafe holding the restaurants row through the parent fallback prints no bill", setupItemsFromCell({ setup_costs: RESTAURANT_BILL, _fromParentIndustry: "restaurants", country: "GB" }) === undefined);
 const asCell = (extra: Partial<Cell>) => ({ setup_costs: RESTAURANT_BILL, country: "GB", ...extra }) as unknown as Cell;
 check("the older setup block refuses the parent's bill too", hasSetupCostData(asCell({ _fromParentIndustry: "restaurants" })) === false && hasSetupCostData(asCell({})) === true);
 
 /* WHOSE BILL IT IS (plan 2026-10-11 held-bill-provenance): one bill per country, grade B where typed by hand; the bulk files' grade C bill sets US lines everywhere. */
-const SCOPE = "a bill prints only as its country's estimate: setup_items.ts passes a grade A or B row with its country, open_rows.ts prints it under COPY.tradeOpen.heldScope, stamped setup_costs:<trade>:<country>";
+const SCOPE = "a bill prints only as its country's estimate: setup_items.ts passes a grade A or B row with its country and its measurement, open_rows.ts prints it under COPY.tradeOpen.heldScope, stamped with that measurement";
 const graded = (grade?: string) => ({ ...RESTAURANT_BILL, grade }) as unknown as Cell["setup_costs"];
 check("a grade C bill (US lines in every country) prints no lines", setupItemsFromCell({ setup_costs: graded("C"), country: "GB" }) === undefined, FILE, SCOPE);
 check("a bill with no grade prints no lines", setupItemsFromCell({ setup_costs: graded(), country: "GB" }) === undefined, FILE, SCOPE);
@@ -49,7 +53,8 @@ check("a bill with no grade prints no lines", setupItemsFromCell({ setup_costs: 
 const OPEN = "src/lib/spine/open_rows.ts";
 const seed = (setup: unknown, geo: string, city: string) => ({ meta: { iso2: "GB", geo, city, industry: "restaurants", industry_id: "restaurants" }, setup });
 const placed = [["london", "London"], ["manchester", "Manchester"], ["liverpool", "Liverpool"]].map(([g, c]) => buildOpen(seed(own, g, c)));
-check("London, Manchester, Liverpool: $426K under 'A UK-wide estimate', stamped setup_costs:restaurants:GB, an estimate, marked modelled", placed.every((o) => o?.state === "held" && o.figure === "$426K" && o.focalWords === "A UK-wide estimate" && o.prov?.src === "setup_costs:restaurants:GB" && o.prov.kind === "estimate" && o.rows.every((r) => r.prov?.kind === "estimate") && o.confidence === "modeled" && o.sample), OPEN, SCOPE);
+check("a planted measured bill on London, Manchester, Liverpool seeds: $426K under 'A UK-wide estimate', every figure stamped with the measurement itself, an estimate, marked modelled", placed.every((o) => o?.state === "held" && o.figure === "$426K" && o.focalWords === "A UK-wide estimate" && o.prov?.src === PLANTED_SRC && o.prov.kind === "estimate" && o.rows.every((r) => r.prov?.src === PLANTED_SRC && r.prov?.kind === "estimate") && o.confidence === "modeled" && o.sample), OPEN, SCOPE);
+check("a seed whose bill carries no measurement prints no bill, though it names its country", buildOpen(seed({ items: own?.items, scope: "GB" }, "london", "London"))?.state !== "held", OPEN, SCOPE);
 check("a bill that names no country prints no bill", buildOpen(seed({ items: own?.items }, "liverpool", "Liverpool"))?.state !== "held", OPEN, SCOPE);
 check("a bill of a country with no words prints no bill", buildOpen(seed({ ...own, scope: "FR" }, "liverpool", "Liverpool"))?.state !== "held", OPEN, SCOPE);
 

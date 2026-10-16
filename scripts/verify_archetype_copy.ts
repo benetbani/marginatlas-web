@@ -1131,15 +1131,18 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
     if (buildOpenFoot(id).length === 2) footFull++;
   }
   if (footFull !== ids.length) reds.push(`open: the foot's two companions resolve on ${footFull} of ${ids.length} shard ids, not all`);
-  const lines = { scope: "GB", items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }, { name: "Business registration", usd: 20 }] };
+  /* A held bill is a MEASURED one (release 3 job A: setup_items.ts prints a bill only where its block names its measurement, and the stamp is that
+     measurement); the fixtures carry a planted one in the shape the reader takes. */
+  const MEASURED = "data/fixtures/measured_bill.json:lines";
+  const lines = { scope: "GB", src: MEASURED, items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Lease deposit", usd: 40000 }, { name: "Business registration", usd: 20 }] };
   const held = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: lines });
-  if (!held || held.state !== "held" || held.rows.length !== 4 || held.tail !== null || held.tailLine !== null || held.value !== 390020 || held.figure !== usd(390020) || !held.accent || !held.sample || held.confidence !== "modeled" || held.prov?.kind !== "estimate" || held.focalWords !== COPY.tradeOpen.heldScope.GB || held.basis !== COPY.tradeOpen.basisHeld || held.foot.length !== 2 || held.footLine !== null) reds.push("open (held): four lines do not build the total, the accent, the one basis and the foot as expected");
+  if (!held || held.state !== "held" || held.rows.length !== 4 || held.tail !== null || held.tailLine !== null || held.value !== 390020 || held.figure !== usd(390020) || !held.accent || !held.sample || held.confidence !== "modeled" || held.prov?.kind !== "estimate" || held.prov?.src !== MEASURED || held.focalWords !== COPY.tradeOpen.heldScope.GB || held.basis !== COPY.tradeOpen.basisHeld || held.foot.length !== 2 || held.footLine !== null) reds.push("open (held): four lines do not build the total, the accent, the one basis and the foot as expected");
   if (held && held.rows.find((r) => r.key === held.biggestKey)?.name !== "Fit-out") reds.push("open (held): the biggest line is not the leader");
   /* THE CAP (open_rows.ts DRAWN_LINES_CAP): the exemplar's nine lines draw as the
      five biggest with the four smallest stated, count and sum, in the capped
      basis; the total is still every line's sum; a five-line bill draws all five
      and no tail line; a six-line bill states its one smallest line singular. */
-  const nine = { scope: "GB", items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Initial inventory", usd: 20000 }, { name: "Lease deposit", usd: 40000 }, { name: "Pre-opening marketing", usd: 12000 }, { name: "Business registration", usd: 20 }, { name: "Industry licences", usd: 1500 }, { name: "Insurance and bonds", usd: 2000 }, { name: "Certifications", usd: 500 }] };
+  const nine = { scope: "GB", src: MEASURED, items: [{ name: "Fit-out", usd: 250000 }, { name: "Equipment", usd: 100000 }, { name: "Initial inventory", usd: 20000 }, { name: "Lease deposit", usd: 40000 }, { name: "Pre-opening marketing", usd: 12000 }, { name: "Business registration", usd: 20 }, { name: "Industry licences", usd: 1500 }, { name: "Insurance and bonds", usd: 2000 }, { name: "Certifications", usd: 500 }] };
   const capped = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: nine });
   if (!capped || capped.rows.length !== 5 || capped.lines.length !== 9 || capped.value !== 426020 || !capped.tail || capped.tail.count !== 4 || capped.tail.sum !== 4020 || capped.tailLine !== "The four smaller costs, $4,020 together, are in the total." || capped.basis !== COPY.tradeOpen.basisHeldCapped) reds.push(`open (held, nine lines): the five biggest do not draw with the four smallest stated ("${capped?.tailLine}")`);
   if (capped && capped.rows.some((r) => r.value < 12000)) reds.push("open (held, nine lines): a line under the fifth biggest is drawn");
@@ -1150,6 +1153,8 @@ for (const c of (cityListJson as { cities: Array<{ slug: string; name: string; i
   /* WHOSE IT IS (plan 2026-10-11, uk:held-bill-provenance): the same nine lines with no country on the block print no bill; the card earns it back. */
   const unnamed = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { items: nine.items } });
   if (!unnamed || unnamed.state === "held") reds.push("open (held, no country): a bill naming no country prints");
+  const unmeasured = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" }, setup: { scope: "GB", items: nine.items } });
+  if (!unmeasured || unmeasured.state === "held") reds.push("open (held, no measurement): a bill naming no measurement prints");
   /* NO TYPED COST TO OPEN (2026-10-15, release 2 job A): the keyed baseline and its kinds of shop left; a trade with no bill and its shard earns it back, the
      two figures stamped with the shard's keys, on every shard id. */
   const base = buildOpen({ meta: { industry: "restaurants", industry_id: "restaurants" } });

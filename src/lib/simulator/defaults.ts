@@ -105,7 +105,7 @@ function notesOf(b: Omit<SimBundle, "notes">): Array<{ label: string; fact: stri
     holds(/turnover\.json/) ? S.register : null,
     holds(/premises\.json/) ? S.valuation : null,
     b.ukLaw || b.rates || b.tax.law === "uk" ? S.law : null,
-    holds(/^cells:|setup_costs:/) ? S.cell : null,
+    holds(/^cells:/) || b.opening.kind === "held" ? S.cell : null,
     holds(/recipes\.ts|facts\/industry\/|industry_cost_profile/) ? S.trade : null,
     holds(/facts\/city\/|facts\/country\/|city_wage_premium|economic_profile|country_metrics|country_rates/) ? S.place : null,
   ] as Array<{ label: string; fact: string } | null>).filter((n): n is { label: string; fact: string } => n !== null);
@@ -228,7 +228,7 @@ function worldBundle(place: Place, cell: CellFacts | null): SimBundle {
   const fit = city("realestate.fit_out_cost_usd_sqm");
   if (cell?.setup) {
     const scope = cell.setup.scope;
-    opening = { kind: "held", lines: cell.setup.items.map((it, k) => ({ key: `held-${k}`, name: it.name, amount: pennies(money(it.usd) as number), stamp: est(`setup_costs:${place.industryId}:${scope}`) })), line: fill(W.lines.opening.held, { country: scope === place.iso2 ? inSentence(place.countryName) : scope }) };
+    opening = { kind: "held", lines: cell.setup.items.map((it, k) => ({ key: `held-${k}`, name: it.name, amount: pennies(money(it.usd) as number), stamp: est(cell.setup!.src) })), line: fill(W.lines.opening.held, { country: scope === place.iso2 ? inSentence(place.countryName) : scope }) };
   } else if (fit !== null && area.value !== null) {
     const lines: OpeningLine[] = [{ key: "fit-out", name: W.lines.openingItems.fitOut, amount: pennies((money(fit) as number) * area.value), stamp: est(`${csrc("realestate.fit_out_cost_usd_sqm")} x area`) }];
     const months = city("realestate.deposit_months");
