@@ -4382,6 +4382,28 @@
       "claims": []
     },
     {
+      "name": "sourced-loader",
+      "script": "src/lib/sourced/load.test.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "THE SOURCED-DATA LOADER, ON FIXTURES (plan 2026-10-17 replicable pages, Task 4).",
+      "reads": [
+        "src/lib/sourced/load.ts"
+      ],
+      "claims": []
+    },
+    {
+      "name": "sourced-data",
+      "script": "scripts/verify_sourced_data.ts",
+      "args": [],
+      "browser": false,
+      "asserts": "verify_sourced_data , THE SOURCED FILES HOLD THE CONTRACT (plan 2026-10-17 replicable pages, Task 4; constitution law 14: every figure said at its level, and the law of data: never print a figure nobo",
+      "reads": [
+        "src/lib/sourced/schema.ts"
+      ],
+      "claims": []
+    },
+    {
       "name": "cross-geography-guard",
       "script": "scripts/verify_cross_geography_guard.ts",
       "args": [],
