@@ -23,8 +23,25 @@ import * as React from "react";
 import { COPY } from "@/lib/spine/copy";
 import { kitCssVars } from "@/lib/design-tokens";
 import { reportHref } from "@/lib/spine/report";
-import { d1, isUsdOnly, type IndustryV4, type Money, type V4Row } from "@/lib/spine/industry_v4";
+import { EU, d1, isUsdOnly, srcOf, type IndustryV4, type Money, type V4Row } from "@/lib/spine/industry_v4";
+import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import { CurrencySwitch } from "./currency-switch";
+import type { LoudSeat } from "@/lib/spine/loud_seats";
+import { Crumbs } from "@/components/spine/Crumbs";
+import { buildIndustryCrumbs } from "@/lib/spine/crumb_rows";
+
+/**
+ * THE LOUD MOMENTS OF v4 (the kit's LOUD law, METHODOLOGY 6.4 for this page: "the month columns are the page's second loud section (the
+ * hero the first)"), declared for the loud-seats gate, which holds a kit render (`data-composition="kit"`) to this table and not to the
+ * September view's. Seat one is the hero's answer, its 11.7 in terracotta. Seat two is the months: loud by its drawing, twelve columns in
+ * terracotta and no month featured, its figure in ink as the target draws it, so it carries no accent figure for the walk to count. No
+ * third: v4 draws two. Each column's best in the table is in terracotta by his ruling (FV 1789 to 1790), marked `data-founder-accent`.
+ */
+export const LOUD_SEATS_KIT = [
+  { seat: 1, card: "00 take", figure: "operating profit of every 100 of sales, the EU's, 11.7", state: "LIT", condition: "v4's hero answer in the kit's terracotta, on the one trade v4 draws (buildIndustryV4 returns null wherever a row is missing)" },
+  { seat: 2, card: "05 months", figure: "the twelve month columns, the season in terracotta", state: "HELD EMPTY", condition: "loud by its drawing, not a figure: METHODOLOGY 6.4 makes the columns the page's second loud section and the target prints the swing (46%) in ink, so no accent figure stands in the card" },
+  { seat: 3, card: "none", figure: "no third loud moment", state: "NO HONEST CANDIDATE", condition: "v4, approved by his Go of 2026-10-21, draws two loud sections (the hero and the months); the table's column winners are his ruling, not a seat" },
+] as const satisfies readonly LoudSeat[];
 
 const T = COPY.industryV4;
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{(\w+)\}/g, (_m, k) => vars[k] ?? "");
@@ -42,6 +59,20 @@ function M({ m }: { m: Money }) {
     </span>
   );
 }
+
+/** A printed figure with its provenance (`data-src`, the file and row it was read from), the mark the fact-once gate reads. */
+function S({ src, children }: { src: string; children: React.ReactNode }) {
+  return <span data-src={src}>{children}</span>;
+}
+/** The words under a card's figure, its own line (the line rule reads `data-focal-words`). */
+function Unit({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="k-unit" data-focal-words="">
+      {children}
+    </span>
+  );
+}
+const R = "restaurants";
 
 /** The kit's glyphs (kit_head.html's sprite), each in its 24 box; drawn at the hero cells' size. */
 const GLYPH: Record<string, React.ReactNode> = {
@@ -112,7 +143,7 @@ function Rows({ rows, className = "" }: { rows: Array<{ key: string; label: Reac
 /** One subsection: a title, the question, the figure, one drawing, at most one fold, the caption "Place, 2026." */
 function Card({ id, title, ask, tag, loud, per100, children, caption }: { id: string; title: string; ask: string; tag?: string; loud?: boolean; per100?: boolean; children: React.ReactNode; caption: string }) {
   return (
-    <article className="k-sub" data-section={id} data-block={id} data-card="" {...(loud ? { "data-loud": "" } : {})} {...(per100 ? { "data-per": "100" } : {})} aria-labelledby={`k-${id}`}>
+    <article id={id} className="k-sub spine-card" data-section={id} data-block={id} data-card="" {...(loud ? { "data-loud": "" } : {})} {...(per100 ? { "data-per": "100" } : {})} aria-labelledby={`k-${id}`}>
       <header>
         <h3 id={`k-${id}`}>
           {title}
@@ -155,12 +186,12 @@ function Hero({ v }: { v: IndustryV4 }) {
           <h1 id="k-ind-h">{T.nextDoor.names.restaurants}</h1>
           <p className="k-lede">{T.hero.lede}</p>
         </div>
-        <div className="k-fig-card" data-answer-card="" data-block="take" data-card="">
-          <div className="k-answer">
+        <div id="take" className="k-fig-card" data-archetype="answer-card" data-level="page" data-answers={SURFACE_ANSWERS.industry} data-block="take" data-card="">
+          <div className="k-answer" data-answer="">
             <div>
               <p className="k-al">{T.hero.answerLabel}</p>
               <p className="k-av">
-                <span className="k-big">{v.hero.answer}</span> {T.hero.answerUnit}
+                <span className="k-big" data-src={srcOf("SBS", "gross_operating_rate", R, EU)}>{v.hero.answer}</span> {T.hero.answerUnit}
               </p>
               <p className="k-as">{T.hero.basis}</p>
             </div>
@@ -170,10 +201,10 @@ function Hero({ v }: { v: IndustryV4 }) {
               <div className="k-cell" key={c.key}>
                 <p className="k-cl">
                   <Glyph id={glyph[c.key]} />
-                  {T.hero.cells[c.key]}
+                  <span>{T.hero.cells[c.key]}</span>
                 </p>
                 <p className="k-cv">
-                  {c.value}
+                  <S src={c.src}>{c.value}</S>
                   {c.country ? <span className="k-cn">{c.country}</span> : null}
                 </p>
               </div>
@@ -194,7 +225,7 @@ function Lasts({ v }: { v: IndustryV4 }) {
   return (
     <Card id="lasts" title={T.lasts.title} ask={T.lasts.ask} caption={T.eu}>
       <p className="k-fig">
-        {v.lasts.five}% <span className="k-unit">{T.lasts.unit}</span>
+        <S src={srcOf("DEMO", "survival_5y", R, EU)}>{v.lasts.five}%</S> <Unit>{T.lasts.unit}</Unit>
       </p>
       <table className="k-forms">
         <caption className="k-sr">{T.lasts.caption}</caption>
@@ -209,8 +240,8 @@ function Lasts({ v }: { v: IndustryV4 }) {
           {v.lasts.years.map((y) => (
             <tr key={y.key}>
               <th scope="row">{T.lasts.years[y.key as keyof typeof T.lasts.years]}</th>
-              <td data-l={T.lasts.head.trade}>{y.trade}</td>
-              <td data-l={T.lasts.head.all}>{y.all ?? "–"}</td>
+              <td data-l={T.lasts.head.trade}><S src={srcOf("DEMO", `survival_${y.key.slice(1)}y`, R, EU)}>{y.trade}</S></td>
+              <td data-l={T.lasts.head.all}>{y.all === null ? "–" : <S src={srcOf("DEMO", `survival_${y.key.slice(1)}y`, "all", EU)}>{y.all}</S>}</td>
             </tr>
           ))}
         </tbody>
@@ -228,13 +259,13 @@ function NextDoor({ v }: { v: IndustryV4 }) {
   return (
     <Card id="next-door" title={T.nextDoor.title} ask={T.nextDoor.ask} caption={T.eu}>
       <p className="k-fig">
-        {nd.rankWord} <span className="k-unit">{T.nextDoor.unit}</span>
+        {nd.rankWord} <Unit>{T.nextDoor.unit}</Unit>
       </p>
       <div className="k-tbars" data-kind="ranked-bars" role="img" aria-label={aria}>
         {nd.items.map((i) => (
           <div key={i.key} className={`k-tb${i.me ? " k-me" : ""}`}>
             <span className="k-tn">{name(i.key)}</span>
-            <span className="k-tv">{i.text}</span>
+            <span className="k-tv" data-src={i.src}>{i.text}</span>
             <span className="k-tr">
               <b style={{ width: pct(i.value) }} />
               <i className="k-mk" style={{ left: pct(nd.all.value) }} />
@@ -249,7 +280,7 @@ function NextDoor({ v }: { v: IndustryV4 }) {
       <Fold summary={T.nextDoor.fold}>
         {nd.items.map((i) => (
           <p className="k-def" key={i.key}>
-            <b>{name(i.key)}</b> {T.nextDoor.defs[i.key as keyof typeof T.nextDoor.defs]}
+            <b>{name(i.key)}</b> <span>{T.nextDoor.defs[i.key as keyof typeof T.nextDoor.defs]}</span>
           </p>
         ))}
       </Fold>
@@ -261,22 +292,22 @@ function NextDoor({ v }: { v: IndustryV4 }) {
 
 function Split({ v }: { v: IndustryV4 }) {
   const { trade: r, all: a } = v.split;
-  const bar = (name: string, p: { purchases: number; staff: number; left: number }) => {
+  const bar = (name: string, p: { purchases: number; staff: number; left: number }, t: string) => {
     const tot = p.purchases + p.staff + p.left;
     /* The three parts at their shares of 99.4 of the track, the two 2s of gap taking the rest (the target's own arithmetic). */
     const w = (x: number) => `${((x / tot) * 99.4).toFixed(2)}%`;
     return (
       <div className="k-kbar">
         <p className="k-kn">
-          {name}
-          <b>{d1(p.left)}</b>
+          <span>{name}</span>
+          <b data-src={srcOf("SBS", "gross_operating_rate", t, EU)}>{d1(p.left)}</b>
         </p>
         <div className="k-kt">
           <span className="k-kp" style={{ width: w(p.purchases) }}>
-            <i>{d1(p.purchases)}</i>
+            <i data-src={srcOf("SBS", "purchases_share", t, EU)}>{d1(p.purchases)}</i>
           </span>
           <span className="k-ks" style={{ width: w(p.staff) }}>
-            <i>{d1(p.staff)}</i>
+            <i data-src={srcOf("SBS", "staff_cost_share", t, EU)}>{d1(p.staff)}</i>
           </span>
           <span className="k-kk" style={{ width: w(p.left) }} />
         </div>
@@ -287,11 +318,11 @@ function Split({ v }: { v: IndustryV4 }) {
   return (
     <Card id="split" title={T.split.title} ask={T.split.ask} caption={T.eu} per100>
       <p className="k-fig">
-        {d1(r.staff)} <span className="k-unit">{fill(T.split.unit, { all: d1(a.staff) })}</span>
+        <S src={srcOf("SBS", "staff_cost_share", R, EU)}>{d1(r.staff)}</S> <Unit>{fill(T.split.unit, { all: d1(a.staff) })}</Unit>
       </p>
       <div className="k-kbars" data-kind="part-bar" role="img" aria-label={aria}>
-        {bar(T.split.rows.trade, r)}
-        {bar(T.split.rows.all, a)}
+        {bar(T.split.rows.trade, r, R)}
+        {bar(T.split.rows.all, a, "all")}
       </div>
       <ul className="k-akey">
         <li><i className="k-kp" />{T.split.key.purchases}</li>
@@ -308,21 +339,21 @@ function Year({ v }: { v: IndustryV4 }) {
   return (
     <Card id="year" title={T.year.title} ask={T.year.ask} caption={T.eu}>
       <p className="k-fig">
-        <M m={y.left} />
-        <span className="k-unit">{T.year.unit}</span>
+        <S src={srcOf("ECON", "surplus_per_business", R, EU)}><M m={y.left} /></S>
+        <Unit>{T.year.unit}</Unit>
       </p>
       <Rows
         className="k-year"
         rows={[
-          { key: "sales", label: T.year.rows.sales, value: <M m={y.sales} /> },
-          { key: "bought", label: T.year.rows.bought, value: <M m={y.bought} /> },
-          { key: "staff", label: T.year.rows.staff, value: <M m={y.staff} /> },
-          { key: "left", label: T.year.rows.left, value: <M m={y.leftRow} /> },
+          { key: "sales", label: T.year.rows.sales, value: <S src={srcOf("SBS", "sales_per_business", R, EU)}><M m={y.sales} /></S> },
+          { key: "bought", label: T.year.rows.bought, value: <S src={srcOf("ECON", "purchases_per_business", R, EU)}><M m={y.bought} /></S> },
+          { key: "staff", label: T.year.rows.staff, value: <S src={srcOf("ECON", "staff_cost_per_business", R, EU)}><M m={y.staff} /></S> },
+          { key: "left", label: T.year.rows.left, value: <S src={srcOf("ECON", "surplus_per_business", R, EU)}><M m={y.leftRow} /></S> },
         ]}
       />
       <p className="k-note">
         {T.year.note.split("{all}")[0]}
-        <M m={y.allLeft} />
+        <S src={srcOf("ECON", "surplus_per_business", "all", EU)}><M m={y.allLeft} /></S>
         {T.year.note.split("{all}")[1]}
       </p>
     </Card>
@@ -336,23 +367,23 @@ function Hour({ v }: { v: IndustryV4 }) {
   return (
     <Card id="hour" title={T.hour.title} ask={T.hour.ask} caption={T.eu}>
       <p className="k-fig">
-        <M m={h.leaves} />
-        <span className="k-unit">
-          {T.hour.unit.split("{all}")[0]}
-          <M m={h.allLeaves} />
-          {T.hour.unit.split("{all}")[1]}
-        </span>
+        <S src={srcOf("ECON", "surplus_per_hour", R, EU)}><M m={h.leaves} /></S>
+        <Unit>
+          <span>{T.hour.unit.split("{all}")[0]}</span>
+          <S src={srcOf("ECON", "surplus_per_hour", "all", EU)}><M m={h.allLeaves} /></S>
+          <span>{T.hour.unit.split("{all}")[1]}</span>
+        </Unit>
       </p>
       <div className="k-hstrip" data-kind="range-strip" role="img" aria-label={aria}>
         <span className="k-hl k-up" style={{ left: `${pos(h.costs).toFixed(1)}%` }}>
-          {T.hour.costs} <M m={h.costsMoney} />
+          {T.hour.costs} <S src={srcOf("ECON", "wage_cost_per_hour", R, EU)}><M m={h.costsMoney} /></S>
         </span>
         <span className="k-hr" data-rail="" />
         <span className="k-hgap" style={{ left: `${pos(h.costs).toFixed(1)}%`, width: `${(pos(h.adds) - pos(h.costs)).toFixed(1)}%` }} />
         <span className="k-hm k-c" data-mark="" style={{ left: `${pos(h.costs).toFixed(1)}%` }} />
         <span className="k-hm k-v" data-mark="" style={{ left: `${pos(h.adds).toFixed(1)}%` }} />
         <span className="k-hl k-dn" style={{ left: `${pos(h.adds).toFixed(1)}%` }}>
-          {T.hour.adds} <M m={h.addsMoney} />
+          {T.hour.adds} <S src={srcOf("ECON", "value_added_per_hour", R, EU)}><M m={h.addsMoney} /></S>
         </span>
       </div>
       <p className="k-note">{T.hour.note}</p>
@@ -365,13 +396,13 @@ function People({ v }: { v: IndustryV4 }) {
   return (
     <Card id="people" title={T.people.title} ask={T.people.ask} caption={T.eu}>
       <p className="k-fig">
-        {fill(T.people.fig, { n: p.persons })} <span className="k-unit">{fill(T.people.unit, { all: p.allPersons })}</span>
+        <S src={srcOf("SBS", "persons_per_business", R, EU)}>{fill(T.people.fig, { n: p.persons })}</S> <Unit>{fill(T.people.unit, { all: p.allPersons })}</Unit>
       </p>
       <Rows
         rows={[
-          { key: "wage", label: T.people.rows.wage, value: p.wage },
-          { key: "owners", label: T.people.rows.owners, value: p.owners },
-          { key: "jobs", label: T.people.rows.jobs, value: p.jobs },
+          { key: "wage", label: T.people.rows.wage, value: <S src={srcOf("ECON", "employees_per_business", R, EU)}>{p.wage}</S> },
+          { key: "owners", label: T.people.rows.owners, value: <S src={srcOf("ECON", "owners_per_business", R, EU)}>{p.owners}</S> },
+          { key: "jobs", label: T.people.rows.jobs, value: <S src={`derived:${srcOf("ECON", "employees_per_business", R, EU)}*fte_share`}>{p.jobs}</S> },
         ]}
       />
       <p className="k-note">{fill(T.people.note, { jobs: p.jobs })}</p>
@@ -384,13 +415,13 @@ function PutsBack({ v }: { v: IndustryV4 }) {
   return (
     <Card id="puts-back" title={T.putsBack.title} ask={T.putsBack.ask} caption={T.eu}>
       <p className="k-fig">
-        {b.share}%<span className="k-unit">{T.putsBack.unit}</span>
+        <S src={srcOf("ECON", "investment_share_of_surplus", R, EU)}>{b.share}%</S><Unit>{T.putsBack.unit}</Unit>
       </p>
       <Rows
         rows={[
-          { key: "put", label: T.putsBack.rows.put, value: <M m={b.put} /> },
-          { key: "left", label: T.putsBack.rows.left, value: <M m={b.left} /> },
-          { key: "all", label: T.putsBack.rows.all, value: fill(T.putsBack.allValue, { n: b.allShare }) },
+          { key: "put", label: T.putsBack.rows.put, value: <S src={srcOf("ECON", "investment_per_business", R, EU)}><M m={b.put} /></S> },
+          { key: "left", label: T.putsBack.rows.left, value: <S src={srcOf("ECON", "surplus_per_business", R, EU)}><M m={b.left} /></S> },
+          { key: "all", label: T.putsBack.rows.all, value: <S src={srcOf("ECON", "investment_share_of_surplus", "all", EU)}>{fill(T.putsBack.allValue, { n: b.allShare })}</S> },
         ]}
       />
       <p className="k-note">{T.putsBack.note}</p>
@@ -403,10 +434,10 @@ function SmallBig({ v }: { v: IndustryV4 }) {
   return (
     <Card id="small-big" title={T.smallBig.title} ask={T.smallBig.ask} caption={T.eu}>
       <p className="k-fig">
-        <M m={s.lead} />
-        <span className="k-unit">{fill(T.smallBig.unit, { n: s.smallShare })}</span>
+        <S src={srcOf("SIZE", "sales_per_business_by_size", R, EU, s.rows[0].key)}><M m={s.lead} /></S>
+        <Unit>{fill(T.smallBig.unit, { n: s.smallShare })}</Unit>
       </p>
-      <Rows rows={s.rows.map((r, i) => ({ key: r.key, label: T.smallBig.sizes[i], value: <M m={r.money} /> }))} />
+      <Rows rows={s.rows.map((r, i) => ({ key: r.key, label: T.smallBig.sizes[i], value: <S src={srcOf("SIZE", "sales_per_business_by_size", R, EU, r.key)}><M m={r.money} /></S> }))} />
       <p className="k-note">{fill(T.smallBig.note, { n: s.times })}</p>
     </Card>
   );
@@ -423,7 +454,9 @@ function PeerCell({ label, children, win }: { label: string; children: React.Rea
     );
   }
   return (
-    <td className={win ? "k-win" : undefined} data-l={label}>
+    /* Each column's best in terracotta is his ruling (FOUNDER-VERDICTS 1789 to 1790, "each column's winner in terracotta"), not one of the
+       page's loud seats: the cell says so (`data-founder-accent`), so the accent walk does not count it as a seat's figure. */
+    <td className={win ? "k-win" : undefined} data-l={label} {...(win ? { "data-founder-accent": "1" } : {})}>
       <span className="k-v">
         {win ? <Tick /> : null}
         {children}
@@ -437,18 +470,21 @@ function Table({ v }: { v: IndustryV4 }) {
   const [hGor, hSales, hPeople, hOpen] = T.table.heads;
   const tr = (r: V4Row) => {
     const eu = r.ownSurvey === "EU";
+    /* Each row's own files (the builder reads them): the European survey's, the UK's own and the US's own. */
+    const f = r.ownSurvey === "EU" ? { gor: "SBS", sales: "SBS", people: "SBS", open: "DEMO" } as const : r.ownSurvey === "GB" ? { gor: "UK_ABS", sales: "UK_ABS", people: "UK_ABS", open: "UK_DEMO" } as const : { gor: "US_EC", sales: "US_EC", people: "US_EC", open: "US_BED" } as const;
+    const src = (k: keyof typeof f, item: string) => srcOf(f[k], item, R, r.code);
     return (
       <tr key={r.code}>
         <th scope="row">{r.name}</th>
         <PeerCell label={hGor[0]} win={r.gor !== null && r.gor === t.best.gor}>
-          {r.gor === null ? null : d1(r.gor)}
+          {r.gor === null ? null : <S src={src("gor", "gross_operating_rate")}>{d1(r.gor)}</S>}
         </PeerCell>
         <PeerCell label={hSales[0]} win={eu && r.salesUsd !== null && r.salesUsd === t.best.salesUsd}>
-          {r.sales === null ? null : isUsdOnly(r.sales) ? <span className="k-usd">{r.sales.usdOnly}</span> : <M m={r.sales} />}
+          {r.sales === null ? null : <S src={src("sales", "sales_per_business")}>{isUsdOnly(r.sales) ? <span className="k-usd">{r.sales.usdOnly}</span> : <M m={r.sales} />}</S>}
         </PeerCell>
-        <PeerCell label={hPeople[0]}>{r.people}</PeerCell>
+        <PeerCell label={hPeople[0]}>{r.people === null ? null : <S src={src("people", r.ownSurvey === "US" ? "employees_per_business" : "persons_per_business")}>{r.people}</S>}</PeerCell>
         <PeerCell label={hOpen[0]} win={eu && r.open5 !== null && r.open5 === t.best.open5}>
-          {r.open5 === null ? null : `${d1(r.open5)}%`}
+          {r.open5 === null ? null : <S src={src("open", "survival_5y")}>{`${d1(r.open5)}%`}</S>}
         </PeerCell>
       </tr>
     );
@@ -471,7 +507,7 @@ function Table({ v }: { v: IndustryV4 }) {
     </table>
   );
   return (
-    <article className="k-sub k-wide" data-section="places" data-block="places" data-card="" aria-labelledby="k-places">
+    <article id="places" className="k-sub k-wide spine-card" data-section="places" data-block="places" data-card="" aria-labelledby="k-places">
       <header className="k-hsw">
         <div>
           <h3 id="k-places">{T.table.title}</h3>
@@ -503,7 +539,7 @@ function Months({ v }: { v: IndustryV4 }) {
   return (
     <Card id="months" title={T.months.title} tag={T.months.tag} ask={T.months.ask} caption={T.eu} loud>
       <p className="k-fig">
-        {m.swing}% <span className="k-unit">{fill(T.months.unit, { busiest: T.months.names[m.busiest], quietest: T.months.names[m.quietest] })}</span>
+        <S src={`derived:${srcOf("SEASON", "season_index_month", R, EU)}:busiest/quietest`}>{m.swing}%</S> <Unit>{fill(T.months.unit, { busiest: T.months.names[m.busiest], quietest: T.months.names[m.quietest] })}</Unit>
       </p>
       {/* The page's second loud section (METHODOLOGY 6.4): twelve columns from zero in the page's colour, no month featured. */}
       <div className="k-vchart" data-kind="month-columns" role="img" aria-label={aria}>
@@ -529,10 +565,10 @@ function Density({ v }: { v: IndustryV4 }) {
   return (
     <Card id="density" title={T.density.title} ask={T.density.ask} caption={T.density.caption}>
       <p className="k-fig">
-        {d.eu} <span className="k-lvl">{T.density.levels[d.level]}</span>
-        <span className="k-unit">{fill(T.density.unit, { n: String(d.count) })}</span>
+        <S src={`derived:${srcOf("SBS", "business_count", R, EU)}/${srcOf("POP", "population_1jan", "all", EU)}`}>{d.eu}</S> <span className="k-lvl">{T.density.levels[d.level]}</span>
+        <Unit>{fill(T.density.unit, { n: String(d.count) })}</Unit>
       </p>
-      <Rows rows={d.rows.map((r) => ({ key: r.name, label: label(r), value: r.value }))} />
+      <Rows rows={d.rows.map((r) => ({ key: r.name, label: label(r), value: <S src={`derived:${srcOf("SBS", "business_count", R, r.name)}/population_1jan`}>{r.value}</S> }))} />
     </Card>
   );
 }
@@ -557,7 +593,7 @@ function Donut({ v }: { v: IndustryV4 }) {
   return (
     <Card id="channels" title={T.donut.title} ask={T.donut.ask} caption={T.eu}>
       <p className="k-fig">
-        {v.donut.small}% <span className="k-unit">{T.donut.unit}</span>
+        <S src={srcOf("SIZE", "turnover_share_by_size", R, EU, "0 to 9 persons employed")}>{v.donut.small}%</S> <Unit>{T.donut.unit}</Unit>
       </p>
       <div className="k-drow">
         <svg className="k-dnut" viewBox="0 0 144 144" width="144" height="144" data-kind="donut" role="img" aria-label={aria}>
@@ -569,10 +605,10 @@ function Donut({ v }: { v: IndustryV4 }) {
             label: (
               <>
                 <i className="k-k" style={{ background: tone[p.key] }} />
-                {T.donut.parts[p.key]}
+                <span>{T.donut.parts[p.key]}</span>
               </>
             ),
-            value: `${d1(p.value)}%`,
+            value: <S src={p.key === "medium" ? `derived:${srcOf("SIZE", "turnover_share_by_size", R, EU)}:10 to 49` : srcOf("SIZE", "turnover_share_by_size", R, EU, ({ small: "0 to 9 persons employed", large: "50 to 249 persons employed", corporate: "250 persons employed or more" } as Record<string, string>)[p.key])}>{`${d1(p.value)}%`}</S>,
           }))}
         />
       </div>
@@ -583,7 +619,6 @@ function Donut({ v }: { v: IndustryV4 }) {
 
 /* ------------------------------------------------------------------ the exit */
 
-const DOOR_HREF = ["/gb/london/restaurants", "/gb/manchester/restaurants", "/compare"];
 const dateText = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 
 function Close({ v, path }: { v: IndustryV4; path: string }) {
@@ -592,9 +627,9 @@ function Close({ v, path }: { v: IndustryV4; path: string }) {
       <div className="k-chead">
         <h2 id="k-close-h">{T.close.title}</h2>
       </div>
-      <div className="k-doors">
+      <div className="k-doors" data-archetype="terminus" data-target="kit">
         {T.close.doors.map((d, i) => (
-          <a key={d.title} className={`k-door${i === 2 ? " k-cmp" : ""}`} href={DOOR_HREF[i]}>
+          <a key={d.title} className={`k-door${i === 2 ? " k-cmp" : ""}`} href={v.doors[i].href} data-door={d.city ?? "compare"} data-lands={d.city ? SURFACE_ANSWERS.cell : SURFACE_ANSWERS.compare}>
             <span className="k-dk">{d.kind}</span>
             <h3>{d.title}</h3>
             <p>{d.line}</p>
@@ -620,9 +655,12 @@ function Close({ v, path }: { v: IndustryV4; path: string }) {
 export function SpineIndustryV4Body({ v, path }: { v: IndustryV4; path: string }) {
   return (
     <div className="kit4" data-spine-body="" data-composition="kit" data-page="industry" style={kitCssVars() as React.CSSProperties}>
+      {/* THE TRAIL BACK UP (Crumbs.tsx, the site's rule since 2026-09-22, which the target predates and he never overruled): Trades /
+          sector / the trade, above the photograph. */}
+      <Crumbs items={buildIndustryCrumbs(v.trade)} />
       <Hero v={v} />
       <section className="k-chapter" aria-labelledby="k-c0" data-chapter="opening">
-        <h2 id="k-c0" className="k-sr">
+        <h2 id="k-c0" className="k-sr" data-typography="custom">
           {T.openingTitle}
         </h2>
         <div className="k-pair k-w57">

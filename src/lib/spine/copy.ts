@@ -3150,9 +3150,11 @@ export const COPY = {
     close: {
       title: "Where to next",
       doors: [
-        { kind: "A city", title: "Restaurants in London", line: "What one takes in, and what it keeps." },
-        { kind: "A city", title: "Restaurants in Manchester", line: "The same measures, for Manchester." },
-        { kind: "Side by side", title: "Restaurants in seven UK cities", line: "One trade, city by city." },
+        /* Each city door names its place here, beside the words that name it, so a door's label and its address cannot disagree
+           (the hardcoded-place gate's fault is a link that promises one place and lands on another). */
+        { kind: "A city", title: "Restaurants in London", line: "What one takes in, and what it keeps.", country: "gb", city: "london" },
+        { kind: "A city", title: "Restaurants in Manchester", line: "The same measures, for Manchester.", country: "gb", city: "manchester" },
+        { kind: "Side by side", title: "Restaurants in seven UK cities", line: "One trade, city by city.", country: null, city: null },
       ],
       how: "How the figures are calculated",
       report: "Report a mistake",

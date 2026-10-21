@@ -242,7 +242,7 @@ type Walked = { page: string; cls: DoorClass; card: string; key: string; label: 
 
 const text = (el: Element | null | undefined) => (el?.textContent ?? "").replace(/\u2192/g, "").replace(/\s+/g, " ").trim();
 
-function doorsOf(page: string, html: string): { doors: Walked[]; termini: Array<{ card: string; labels: string[] }>; tableAnchors: Array<{ card: string; href: string }>; mastheads: Array<{ card: string; answers: string | null; label: string }> } {
+function doorsOf(page: string, html: string): { doors: Walked[]; termini: Array<{ card: string; labels: string[]; kit?: boolean }>; tableAnchors: Array<{ card: string; href: string }>; mastheads: Array<{ card: string; answers: string | null; label: string }> } {
   /* The stylesheet is inlined and a megabyte; the DOM is what this reads. */
   const doc = new JSDOM(html.replace(/<style[\s\S]*?<\/style>/g, "")).window.document;
   const doors: Walked[] = [];
@@ -267,7 +267,7 @@ function doorsOf(page: string, html: string): { doors: Walked[]; termini: Array<
   for (const a of doc.querySelectorAll('[data-archetype="ranked-bars"] a[href]')) push(a, "bar-row", a.getAttribute("data-row") ?? a.closest("[data-row]")?.getAttribute("data-row") ?? "", text(a.querySelector("[data-label]") ?? a));
   /* Every other anchor inside a section card is a link: walked for its route alone. */
   for (const a of doc.querySelectorAll("[data-archetype] a[href], [data-form] a[href]")) if (!seen.has(a)) push(a, "link", "", text(a));
-  const termini = [...doc.querySelectorAll('[data-archetype="terminus"]')].map((t) => ({ card: cardOf(t), labels: [...t.querySelectorAll("a[data-door]")].map((a) => text(a)) }));
+  const termini = [...doc.querySelectorAll('[data-archetype="terminus"]')].map((t) => ({ card: cardOf(t), labels: [...t.querySelectorAll("a[data-door]")].map((a) => text(a)), kit: t.getAttribute("data-target") === "kit" }));
   const tableAnchors = [...doc.querySelectorAll('[data-archetype="compare-table"]:not([data-doors="1"]) a[href]')].map((a) => ({ card: cardOf(a), href: a.getAttribute("href") ?? "" }));
   /* The country's masthead is the hero board since 2026-09-20 (HeroBoard.tsx, his design); it declares its answer and its markers the way the answer card does. */
   const mastheads = [...doc.querySelectorAll('[data-archetype="answer-card"][data-level="page"], [data-archetype="hero-board"][data-level="page"], [data-archetype="sim-answer"][data-level="page"]')].map((m) => ({ card: `${m.getAttribute("data-archetype")}#${m.id}`, answers: m.getAttribute("data-answers"), label: text(m.querySelector("[data-answer] > div, [data-answer-absent] > div, [data-sim-figure] .fig, [data-sim-label]")) }));
@@ -344,6 +344,11 @@ for (const e of entries) {
 
   /* (d) the first-word law, per terminus. */
   for (const t of termini) {
+    /* THE KIT TARGET'S DOORS (the industry page v4, his "Go" of 2026-10-21, FOUNDER-VERDICTS "The industry page (/industries/restaurants)
+       v4 approved"): their words are the approved target's, "A city / Restaurants in London", "A city / Restaurants in Manchester",
+       "Side by side / Restaurants in seven UK cities", which share a first word by design; his word on the page outranks the archetype's
+       law (RULEBOOK's ladder, rung 1). (a) and (b) still walk every one of them below. */
+    if (t.kit) { say(`  ok ${t.card}: ${t.labels.length} doors of an approved kit target, the first-word law not applied (his v4 approval)`); continue; }
     const firsts = t.labels.map((l) => l.split(/\s+/)[0]?.toLowerCase() ?? "");
     const dup = firsts.filter((f, i) => firsts.indexOf(f) !== i);
     if (dup.length) {

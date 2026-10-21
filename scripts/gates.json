@@ -2061,6 +2061,7 @@
         "scripts/type_ladder_baseline.json",
         "src/app/dev/",
         "src/app/globals.css",
+        "src/lib/design-tokens.ts",
         "src/styles/atlas-spine.css"
       ],
       "claims": []

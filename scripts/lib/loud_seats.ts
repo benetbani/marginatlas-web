@@ -48,7 +48,9 @@ export type LoudState = (typeof LOUD_STATES)[number];
 
 export type LoudSeat = { seat: 1 | 2 | 3; card: string; figure: string; state: LoudState; condition: string; id?: string };
 export type LoudDeclaration = { page: SpinePage; file: string; line: number; seats: LoudSeat[] };
-export type LoudSeatsRead = { declarations: Map<SpinePage, LoudDeclaration>; faults: string[] };
+/* `kit`: a page's second view ported from an approved kit target (the industry page v4, his "Go" of 2026-10-21) declares its own
+   seats as LOUD_SEATS_KIT, beside the September view's LOUD_SEATS; a render whose body is `data-composition="kit"` is held to it. */
+export type LoudSeatsRead = { declarations: Map<SpinePage, LoudDeclaration>; kit: Map<SpinePage, LoudDeclaration>; faults: string[] };
 
 const NL = String.fromCharCode(10);
 
@@ -128,9 +130,9 @@ function lineAt(src: string, offset: number): number {
  * Parse one file's declaration. `null` when the file declares none; otherwise
  * the seats, or the faults (each a sentence naming the file and line).
  */
-export function parseLoudSeats(src: string, file: string): { seats: LoudSeat[]; line: number; faults: string[] } | null {
+export function parseLoudSeats(src: string, file: string, name: "LOUD_SEATS" | "LOUD_SEATS_KIT" = "LOUD_SEATS"): { seats: LoudSeat[]; line: number; faults: string[] } | null {
   const code = stripCommentLines(src.split(String.fromCharCode(13)).join("").split(NL)).join(NL);
-  const head = /export\s+const\s+LOUD_SEATS\b[^=]*=\s*\[/.exec(code);
+  const head = new RegExp(`export\\s+const\\s+${name}\\b[^=]*=\\s*\\[`).exec(code);
   if (!head) return null;
   const open = head.index + head[0].length - 1;
   const line = lineAt(code, head.index);
@@ -186,8 +188,16 @@ export function parseLoudSeats(src: string, file: string): { seats: LoudSeat[]; 
  */
 export function readLoudSeats(root = SPINE_ROOT): LoudSeatsRead {
   const declarations = new Map<SpinePage, LoudDeclaration>();
+  const kit = new Map<SpinePage, LoudDeclaration>();
   const faults: string[] = [];
   for (const file of spineViewFiles(root)) {
+    const kitParsed = parseLoudSeats(readFileSync(file, "utf8"), file, "LOUD_SEATS_KIT");
+    if (kitParsed) {
+      const page = pageOfSpineFile(file) as SpinePage;
+      faults.push(...kitParsed.faults);
+      if (kit.has(page)) faults.push(`${file}:${kitParsed.line}: a second LOUD_SEATS_KIT for the ${page} page; one kit declaration per page`);
+      else kit.set(page, { page, file, line: kitParsed.line, seats: kitParsed.seats });
+    }
     const parsed = parseLoudSeats(readFileSync(file, "utf8"), file);
     if (!parsed) continue;
     const page = pageOfSpineFile(file) as SpinePage;
@@ -198,5 +208,5 @@ export function readLoudSeats(root = SPINE_ROOT): LoudSeatsRead {
     declarations.set(page, { page, file, line: parsed.line, seats: parsed.seats });
   }
   for (const page of SPINE_PAGES) if (!declarations.has(page)) faults.push(`${SPINE_ROOT}/${page === "howto" ? "country/how-to-view.tsx" : page}: no LOUD_SEATS declared for the ${page} page; its view exports the three seats (MODEL.md PART 8's seat table for it)`);
-  return { declarations, faults };
+  return { declarations, kit, faults };
 }

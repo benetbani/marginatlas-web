@@ -745,7 +745,8 @@ export const tailwindColors = {
  */
 export const kit = {
   color: {
-    white: "#ffffff",
+    /* The site's one white (colors.white), never a second literal of it: the no-cream gate counts every #ffffff by its old name. */
+    white: colors.white,
     paper: "#f5f5f6",
     paper2: "#ececee",
     ink: "#0d0d0e",

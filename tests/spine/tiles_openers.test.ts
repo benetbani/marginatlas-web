@@ -151,7 +151,16 @@ for (const p of all.filter((x) => WITH_OPENERS.includes(x.surface) || GLYPHS_ONL
   const name = `${p.surface}-${p.slugs.join("-")}`;
   const file = `scratchpad/harness/pages/${name}.html`;
   if (!existsSync(file)) { check(`${name}: a render to read`, false, file, "run the pages-fresh gate"); continue; }
-  const r = readPage(readFileSync(file, "utf8"));
+  const html = readFileSync(file, "utf8");
+  const r = readPage(html);
+  /* A PAGE PORTED FROM AN APPROVED KIT TARGET OPENS ON NO GLYPH (the industry page v4, his "Go" of 2026-10-21): his newer rule "no icons
+     by titles and no decorative rules" (FOUNDER-VERDICTS 1624, 2026-10-18; RULEBOOK section 2 lists the opener glyph as dead) outranks
+     the opener of 2026-10-13. Such a render (its body `data-composition="kit"`) is read the other way: it passes holding no opener at all,
+     and reds on any. Its other glyphs (the hero cells' kit marks) are no `ma-glyph` and are not read here. */
+  if (/data-composition="kit"/.test(html)) {
+    check(`${name}: a kit page, ${r.openers} opener glyph(s) (none allowed, FV 1624)${r.reds.length ? `; ${r.reds.length} red(s): ${r.reds.slice(0, 8).join("; ")}` : ""}`, r.openers === 0 && r.reds.length === 0, file);
+    continue;
+  }
   const read = GLYPHS_ONLY.includes(p.surface) ? r.inner > 0 : r.openers > 0;
   check(`${name}: ${r.openers} opener glyph(s), ${r.inner} inner glyph(s)${read ? "" : ", NOTHING READ"}${r.reds.length ? `; ${r.reds.length} red(s): ${r.reds.slice(0, 8).join("; ")}${r.reds.length > 8 ? "; ..." : ""}` : ""}`, read && r.reds.length === 0, file);
 }

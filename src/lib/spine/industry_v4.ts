@@ -18,6 +18,7 @@
  */
 import { SOURCED, sourcedRows, yearOrder, type ResolvedRow } from "@/lib/sourced/load";
 import { convertFromUsd } from "@/lib/currency";
+import { COPY } from "@/lib/spine/copy";
 
 /* ------------------------------------------------------------------ the numbers' own rounding */
 
@@ -58,7 +59,7 @@ function tableSales(v: number, cur: Cur | "USD"): Money | { usdOnly: string } {
 /* ------------------------------------------------------------------ reading the files */
 
 /** The files this page reads, each by its id (data/sourced/<domain>/<id>.json). */
-const F = {
+export const F = {
   SBS: "eurostat-sbs-2023", // business/eurostat-sbs-2023.json: operating rate, shares, sales and persons a business, size shares
   SIZE: "eurostat-sbs-size", // business/eurostat-sbs-size.json: sales a business and share of sales by size (2024)
   DEMO: "eurostat-business-demography", // business/eurostat-business-demography.json: survival after 1, 2, 3 and 5 years
@@ -73,8 +74,14 @@ const F = {
   US_BED: "us-bls-bed", // business/us-bls-bed.json: the US row's five-year survival
 } as const;
 
+/** A figure's provenance stamp as the page prints it (`data-src`, the fact-once gate's reading of one fact): the file, the item, the
+ *  trade, the place and, where the file splits an item by it, the measure. A figure worked out of several rows says so ("derived"). */
+export function srcOf(file: keyof typeof F, item: string, trade: string, geo: string, measure?: string): string {
+  return `sourced/${F[file]}:${item}:${trade}:${geo}${measure ? `:${measure}` : ""}`;
+}
+
 /** The EU-27 aggregate's code in every Eurostat file this page reads (EU28 rows are the closed series' older aggregate, never read). */
-const EU = "EU27_2020";
+export const EU = "EU27_2020";
 /** The 27 member states, by the codes the Eurostat files use (Greece "GR"): who counts as the EU's own among a file's countries. */
 const EU27 = new Set(["AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO", "SE", "SI", "SK"]);
 
@@ -95,10 +102,10 @@ const sizeMeasure = (item: "sales_per_business_by_size" | "turnover_share_by_siz
 
 /* ------------------------------------------------------------------ the page's blocks */
 
-export type HeroCell = { key: "high" | "low" | "all" | "next"; value: string; country?: string };
+export type HeroCell = { key: "high" | "low" | "all" | "next"; value: string; country?: string; src: string };
 export type V4Hero = { answer: string; cells: HeroCell[] };
 export type V4Lasts = { five: string; years: Array<{ key: string; trade: string; all: string | null }> };
-export type V4NextDoor = { rankWord: string; items: Array<{ key: string; value: number; text: string; me: boolean }>; all: { value: number; text: string }; scaleTop: number };
+export type V4NextDoor = { rankWord: string; items: Array<{ key: string; value: number; text: string; me: boolean; src: string }>; all: { value: number; text: string }; scaleTop: number };
 export type V4Split = { trade: { purchases: number; staff: number; left: number }; all: { purchases: number; staff: number; left: number } };
 export type V4Year = { left: Money; sales: Money; bought: Money; staff: Money; leftRow: Money; allLeft: Money };
 export type V4Hour = { costs: number; adds: number; leaves: Money; costsMoney: Money; addsMoney: Money; allLeaves: Money; scaleTop: number };
@@ -126,6 +133,8 @@ export type IndustryV4 = {
   months: V4Months;
   density: V4Density;
   donut: V4Donut;
+  /** The exit's three doors: the trade's own pages in London and Manchester, and the side-by-side tool. */
+  doors: Array<{ href: string }>;
   /** The newest retrieval date among the files the page reads (ISO), for the exit's "Checked" line. */
   checked: string;
 };
@@ -163,10 +172,10 @@ function build(trade: "restaurants"): IndustryV4 | null {
   const hero: V4Hero = {
     answer: d1(gor),
     cells: [
-      { key: "high", value: d1(hi.value as number), country: hi.geo.name },
-      { key: "low", value: d1(lo.value as number), country: lo.geo.name },
-      { key: "all", value: d1(gorAll) },
-      { key: "next", value: d1(gorCafes) },
+      { key: "high", value: d1(hi.value as number), country: hi.geo.name, src: srcOf("SBS", "gross_operating_rate", trade, hi.geo.code) },
+      { key: "low", value: d1(lo.value as number), country: lo.geo.name, src: srcOf("SBS", "gross_operating_rate", trade, lo.geo.code) },
+      { key: "all", value: d1(gorAll), src: srcOf("SBS", "gross_operating_rate", "all", EU) },
+      { key: "next", value: d1(gorCafes), src: srcOf("SBS", "gross_operating_rate", "cafes", EU) },
     ],
   };
 
@@ -186,15 +195,15 @@ function build(trade: "restaurants"): IndustryV4 | null {
 
   /* ---- 02 the trades next door: five classes of section I on one survey, 2023. Hotels, event catering and canteens from
      business/eurostat-sbs-section-i-2023.json; bars and cafes and the trade itself from business/eurostat-sbs-2023.json. */
-  const nd: Array<{ key: string; v: number | null; me: boolean }> = [
-    { key: "hotels", v: one(F.SECTION_I, "gross_operating_rate", "hotels", EU), me: false },
-    { key: "eventCatering", v: one(F.SECTION_I, "gross_operating_rate", "event_catering", EU), me: false },
-    { key: "barsCafes", v: gorCafes, me: false },
-    { key: "restaurants", v: gor, me: true },
-    { key: "canteens", v: one(F.SECTION_I, "gross_operating_rate", "contract_catering", EU), me: false },
+  const nd: Array<{ key: string; v: number | null; me: boolean; src: string }> = [
+    { key: "hotels", v: one(F.SECTION_I, "gross_operating_rate", "hotels", EU), me: false, src: srcOf("SECTION_I", "gross_operating_rate", "hotels", EU) },
+    { key: "eventCatering", v: one(F.SECTION_I, "gross_operating_rate", "event_catering", EU), me: false, src: srcOf("SECTION_I", "gross_operating_rate", "event_catering", EU) },
+    { key: "barsCafes", v: gorCafes, me: false, src: srcOf("SBS", "gross_operating_rate", "cafes", EU) },
+    { key: "restaurants", v: gor, me: true, src: srcOf("SBS", "gross_operating_rate", trade, EU) },
+    { key: "canteens", v: one(F.SECTION_I, "gross_operating_rate", "contract_catering", EU), me: false, src: srcOf("SECTION_I", "gross_operating_rate", "contract_catering", EU) },
   ];
   if (nd.some((x) => x.v === null)) return null;
-  const ranked = nd.map((x) => ({ key: x.key, value: x.v as number, text: d1(x.v as number), me: x.me })).sort((a, b) => b.value - a.value);
+  const ranked = nd.map((x) => ({ key: x.key, value: x.v as number, text: d1(x.v as number), me: x.me, src: x.src })).sort((a, b) => b.value - a.value);
   const rank = ranked.findIndex((x) => x.me) + 1;
   const nextDoor: V4NextDoor = {
     rankWord: ({ 1: "1st", 2: "2nd", 3: "3rd" } as Record<number, string>)[rank] ?? `${rank}th`,
@@ -354,7 +363,12 @@ function build(trade: "restaurants"): IndustryV4 | null {
   const checked = SOURCED.filter((f) => ids.has(f.id)).map((f) => f.retrieved).sort().pop();
   if (!checked) return null;
 
-  return { trade, hero, lasts, nextDoor, split, year, hour, people, putsBack, smallBig, table, months, density, donut, checked };
+  /* ---- the exit's doors (MODEL 8.7 `11 close` as v4 draws it): each city door's place is read from its own words in
+     COPY.industryV4.close.doors (the target names London and Manchester), the trade's own page there; the third, the seven UK cities
+     side by side, goes to the compare tool (the site holds no seven-city page of one trade). */
+  const doors: IndustryV4["doors"] = COPY.industryV4.close.doors.map((d) => (d.country && d.city ? { href: `/${d.country}/${d.city}/${trade}` } : { href: "/compare" }));
+
+  return { doors, trade, hero, lasts, nextDoor, split, year, hour, people, putsBack, smallBig, table, months, density, donut, checked };
 }
 
 /** For the table's sales cell: a pair or a dollar figure alone. */

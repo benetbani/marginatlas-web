@@ -80,7 +80,7 @@
  * <file>, which verify_pages_fresh.mjs does for no list but the chain's own. A list that cannot be read, or that names no page, is a
  * red (exit 1); any other argument is a usage red (exit 2), never a silent run of the chain's list.
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
@@ -163,7 +163,9 @@ for (const m of MISSING) {
 const browser = await chromium.launch();
 let measuredTotal = 0, litTotal = 0, withheldTotal = 0, fieldTotal = 0;
 for (const entry of PRESENT) {
-  const d = declared.declarations.get(entry.surface);
+  /* A kit page (body `data-composition="kit"`, the industry page v4) is held to its own view's LOUD_SEATS_KIT (scripts/lib/loud_seats.ts). */
+  const isKit = /data-composition="kit"/.test(readFileSync(entry.path, "utf8"));
+  const d = isKit ? declared.kit.get(entry.surface) : declared.declarations.get(entry.surface);
   if (!d) { reds.push({ file: entry.path, detail: `the render's surface "${entry.surface}" has no declaration`, remedy: "the surface's view exports LOUD_SEATS" }); continue; }
   const ids = d.seats.map((s) => loudCardId(s)).filter((s) => s != null);
   const ctx = await browser.newContext({ viewport: { width: WIDTH, height: 1200 }, deviceScaleFactor: 1 });

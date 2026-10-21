@@ -51,8 +51,14 @@ export function accentWalk({ ids = [] } = {}) {
   const probe = (token) => { const d = document.createElement("div"); d.style.color = "var(" + token + ")"; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; };
   const accentRgb = probe("--terra-text");
   const accentReadable = accentRgb !== probe("--no-such-token-xyz");
+  /* A KIT PAGE'S ACCENT (the industry page v4, ported from the shared kit, his "Go" of 2026-10-21): its terracotta is the kit's
+     (`--k-terra`, set on its `.kit4` root from design-tokens `kit`), so it is resolved there and counted beside `--terra-text`. A page
+     with no `.kit4` root reads exactly as before. */
+  const kitRoot = document.querySelector(".kit4");
+  const kitRgb = kitRoot ? (() => { const d = document.createElement("div"); d.style.color = "var(--k-terra)"; kitRoot.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; })() : null;
+  const isAccent = (c) => c === accentRgb || (kitRgb !== null && c === kitRgb);
   const accents = !accentReadable ? [] : [...document.querySelectorAll("main *")]
-    .filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && getComputedStyle(el).color === accentRgb)
+    .filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && isAccent(getComputedStyle(el).color))
     .map((el) => ({ card: el.closest(CARD)?.id || el.closest(CLUSTER)?.id || el.closest(FIELD)?.id || "card", text: (el.textContent || "").trim().slice(0, 16) }));
   const fields = [...document.querySelectorAll("main " + FIELD)].filter((z) => z.getClientRects().length).map((z) => ({ id: z.id || "", label: z.getAttribute("data-zone-label") || "" }));
   const cards = {};
