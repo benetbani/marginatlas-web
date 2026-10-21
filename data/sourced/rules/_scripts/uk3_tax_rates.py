@@ -1,6 +1,9 @@
 """uk3: capital_gains_tax_rate and income_tax_rate for 2026-27, as GOV.UK's pages state them (read 2026-10-20), Scotland's
 bands confirmed against the Scottish Government's factsheet. Values typed from the pages' text, saved under
-/srv/atlas/runs/data-uk3/dl/ (gov_*.html, scot_it.html). Usage: python3 -I uk3_tax_rates.py OUT_JSON
+/srv/atlas/runs/data-uk3/dl/ (gov_*.html, scot_it.html). income_tax_allowance, employee_ni_rate and employee_ni_threshold added
+2026-10-21 for the city page's pay after tax (London v9), the last two from GOV.UK's "Rates and thresholds for employers 2026 to
+2027" (saved as /srv/atlas/runs/city-port/dl/gov_employer_rates_2026_27.html: Primary threshold GBP 12,570 per year; category A
+employee rate 8% from the Primary threshold to the Upper earnings limit). Usage: python3 -I uk3_tax_rates.py OUT_JSON
 """
 import json, sys
 
@@ -11,6 +14,8 @@ CGT_A = {"publisher": "HM Revenue & Customs (GOV.UK)", "title": "Capital Gains T
 BADR = {"publisher": "HM Revenue & Customs (GOV.UK)", "title": "Business Asset Disposal Relief", "url": "https://www.gov.uk/business-asset-disposal-relief"}
 IT = {"publisher": "HM Revenue & Customs (GOV.UK)", "title": "Income Tax rates and Personal Allowances", "url": "https://www.gov.uk/income-tax-rates"}
 SIT = {"publisher": "HM Revenue & Customs (GOV.UK)", "title": "Income Tax in Scotland", "url": "https://www.gov.uk/scottish-income-tax"}
+NI = {"publisher": "HM Revenue & Customs (GOV.UK)", "title": "Rates and thresholds for employers 2026 to 2027",
+      "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027"}
 SG = "https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/"
 GB = {"level": "country", "code": "GB", "name": "United Kingdom"}
 RUK = {"level": "region", "code": "GB-EWN", "name": "England, Wales and Northern Ireland"}
@@ -38,6 +43,12 @@ rows = [
     row("income_tax_rate", RUK, 20, "%", "Basic rate, taxable income GBP 12,571 to 50,270", "with the standard Personal Allowance of GBP 12,570", IT),
     row("income_tax_rate", RUK, 40, "%", "Higher rate, GBP 50,271 to 125,140", "with the standard Personal Allowance of GBP 12,570", IT),
     row("income_tax_rate", RUK, 45, "%", "Additional rate, over GBP 125,140", "no Personal Allowance on taxable income over GBP 125,140", IT),
+    row("income_tax_allowance", RUK, 12570, "GBP a year", "Personal Allowance, the standard",
+        "the income on which no income tax is paid; it goes down by GBP 1 for every GBP 2 of adjusted net income above GBP 100,000", IT),
+    row("employee_ni_rate", GB, 8, "%", "Class 1 National Insurance, employee, category A, earnings from the Primary threshold to the Upper earnings limit",
+        "deducted from an employee's pay through PAYE; 0% below the Primary threshold, 2% above the Upper earnings limit; read 2026-10-21", NI),
+    row("employee_ni_threshold", GB, 12570, "GBP a year", "Class 1 National Insurance, Primary threshold",
+        "GBP 242 a week, GBP 1,048 a month; read 2026-10-21", NI),
 ]
 sco_note = ("Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends "
             "and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; "
@@ -52,7 +63,7 @@ d = {"id": "rules-uk3-tax-rates-2026-27",
      "source": {"publisher": "HM Revenue & Customs (GOV.UK); Scotland confirmed by the Scottish Government", "title":
                 "Capital Gains Tax rates and allowances, Business Asset Disposal Relief, Income Tax rates and Personal Allowances, Income Tax in Scotland, tax year 2026 to 2027",
                 "url": IT["url"], "licence": "Open Government Licence v3.0"},
-     "retrieved": "2026-10-20", "rows": rows}
+     "retrieved": "2026-10-21", "rows": rows}
 with open(sys.argv[1], "w", encoding="utf-8") as f:
     json.dump(d, f, indent=2, ensure_ascii=False); f.write("\n")
 print(len(rows), "rows")

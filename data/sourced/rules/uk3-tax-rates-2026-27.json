@@ -6,7 +6,7 @@
     "url": "https://www.gov.uk/income-tax-rates",
     "licence": "Open Government Licence v3.0"
   },
-  "retrieved": "2026-10-20",
+  "retrieved": "2026-10-21",
   "rows": [
     {
       "item": "capital_gains_tax_rate",
@@ -150,6 +150,60 @@
         "publisher": "HM Revenue & Customs (GOV.UK)",
         "title": "Income Tax rates and Personal Allowances",
         "url": "https://www.gov.uk/income-tax-rates"
+      }
+    },
+    {
+      "item": "income_tax_allowance",
+      "geo": {
+        "level": "region",
+        "code": "GB-EWN",
+        "name": "England, Wales and Northern Ireland"
+      },
+      "value": 12570,
+      "unit": "GBP a year",
+      "year": "2026-27",
+      "measure": "Personal Allowance, the standard",
+      "note": "the income on which no income tax is paid; it goes down by GBP 1 for every GBP 2 of adjusted net income above GBP 100,000",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax rates and Personal Allowances",
+        "url": "https://www.gov.uk/income-tax-rates"
+      }
+    },
+    {
+      "item": "employee_ni_rate",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 8,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Class 1 National Insurance, employee, category A, earnings from the Primary threshold to the Upper earnings limit",
+      "note": "deducted from an employee's pay through PAYE; 0% below the Primary threshold, 2% above the Upper earnings limit; read 2026-10-21",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Rates and thresholds for employers 2026 to 2027",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027"
+      }
+    },
+    {
+      "item": "employee_ni_threshold",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 12570,
+      "unit": "GBP a year",
+      "year": "2026-27",
+      "measure": "Class 1 National Insurance, Primary threshold",
+      "note": "GBP 242 a week, GBP 1,048 a month; read 2026-10-21",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Rates and thresholds for employers 2026 to 2027",
+        "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027"
       }
     },
     {
