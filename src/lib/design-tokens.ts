@@ -780,6 +780,67 @@ export const kit = {
 } as const;
 
 /** The kit's tokens as the CSS variables globals.css's THE KIT PAGE reads (`--k-ink`, `--k-t-h1`, ...), for a page root's style. */
+/**
+ * KIT-VERSION 3'S TOKENS: sheets/kit/v3/tokens.json, the one source of version 3's look (his "The gallery is right: move the pages onto
+ * kit version 3, each at its next version.", 2026-10-21), copied here group for group so a page drawn on version 3 reads every colour,
+ * distance, corner, size, shadow and motion from the site's tokens. First reader: the industry page v6 (his "v6 is the approved industry
+ * target.", 2026-10-21), src/components/spine/industry/kit3-view.tsx, which sets them as the kit's own CSS variables (`kit3CssVars`:
+ * `--color-ink`, `--space-24`, `--font-size-focal`, `--shadow-card` ...) for globals.css, THE KIT 3 PAGE: THE INDUSTRY (`.kit3.k-industry`).
+ * Its own group: version 2's `kit` above stays exactly as the v4 port and London v9 read it. A colour version 2 already holds is named
+ * from it, never typed twice. The type-ladder gate holds `type` to tokens.json's ladder.
+ */
+export const kit3 = {
+  color: {
+    white: kit.color.white, paper: kit.color.paper, "paper-2": kit.color.paper2, line: kit.color.line, "line-2": kit.color.n4, n3: kit.color.n3,
+    faint: kit.color.faint, benchmark: "#8a969f", muted: kit.color.muted, "ink-2": kit.color.ink2, ink: kit.color.ink, terra: kit.color.terra,
+    "terra-soft": "#f9ebe9", band: "#c11c00", "photo-ground": "#dfe7ee",
+  },
+  space: { 2: "2px", 4: "4px", 8: "8px", 12: "12px", 16: "16px", 24: "24px", 32: "32px", 48: "48px", 64: "64px", 96: "96px", 128: "128px" },
+  gap: {
+    labelFigure: "4px", figureLine: "8px", titleQuestion: "4px", group: "24px", caption: "12px", rowPad: "12px", listList: "24px",
+    pair: "64px", pairTablet: "48px", stack: "24px", cardPad: "24px", cardPadPhone: "16px", panelPad: "16px", panelPadPhone: "12px",
+    platePad: "24px", platePadPhone: "16px", facePad: "16px", band: "64px", bandTablet: "48px", chapterHead: "24px",
+  },
+  radius: { card: "8px", plate: "12px", tiny: "2px", round: "999px" },
+  /* The ladder (REFORM-PLAN 3.3): six sizes, each with its one line; the display sizes only on [data-display]. */
+  type: {
+    size: { answer: "40px", focal: "30px", heading: "24px", title: "20px", lead: "16px", small: "14px" },
+    line: { answer: "44px", focal: "36px", heading: "32px", title: "28px", lead: "24px", small: "20px" },
+    display: { plateName: "72px", plateNamePhone: "44px", plateNameCountry: "56px", plateNameCountryPhone: "30px", homeQuestion: "66px", homeHeading: "40px", homeHeadingPhone: "30px" },
+  },
+  shadow: {
+    card: "0px 1px 2px 0px #0d0d0e0f, 0px 8px 20px -10px #0d0d0e1f",
+    plate: "0px 24px 48px -30px #0d0d0e8c",
+    overlay: "0px 1px 1px 0px #0d0d0e05, 0px 8px 16px -4px #0d0d0e0f, 0px 24px 32px -8px #0d0d0e14",
+  },
+  border: { hairline: "1px", focus: "2px" },
+  icon: { small: "16px", medium: "20px", large: "24px" },
+  duration: { feedback: "0.1s", exit: "0.15s", reveal: "0.2s", panel: "0.3s" },
+  easing: { standard: "cubic-bezier(0.2, 0, 0.38, 0.9)", enter: "cubic-bezier(0, 0, 0.38, 0.9)", leave: "cubic-bezier(0.2, 0, 1, 0.9)" },
+} as const;
+
+/** Version 3's tokens under the kit's own variable names (build/tokens.css): `--color-*`, `--rgb-*` (the colour's channels, for an
+ *  alpha), `--space-*`, `--gap-*`, `--radius-*`, `--font-size-*`, `--font-line-*`, `--font-display-*`, `--shadow-*`, `--border-*`,
+ *  `--icon-*`, `--duration-*`, `--easing-*`. */
+export function kit3CssVars(): Record<string, string> {
+  const out: Record<string, string> = {};
+  const kebab = (s: string) => s.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+  const rgb = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(" ");
+  for (const [k, v] of Object.entries(kit3.color)) { out[`--color-${k}`] = v; out[`--rgb-${k}`] = rgb(v); }
+  for (const [k, v] of Object.entries(kit3.space)) out[`--space-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.gap)) out[`--gap-${kebab(k)}`] = v;
+  for (const [k, v] of Object.entries(kit3.radius)) out[`--radius-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.type.size)) out[`--font-size-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.type.line)) out[`--font-line-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.type.display)) out[`--font-display-${kebab(k)}`] = v;
+  for (const [k, v] of Object.entries(kit3.shadow)) out[`--shadow-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.border)) out[`--border-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.icon)) out[`--icon-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.duration)) out[`--duration-${k}`] = v;
+  for (const [k, v] of Object.entries(kit3.easing)) out[`--easing-${k}`] = v;
+  return out;
+}
+
 export function kitCssVars(): Record<string, string> {
   const out: Record<string, string> = {};
   const kebab = (s: string) => s.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
