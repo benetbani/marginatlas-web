@@ -39,7 +39,9 @@ const PAGES: Array<{ file: string; path: string; dated: boolean }> = [
   { file: "country-KH", path: "/kh", dated: false },
   { file: "country-DE", path: "/de", dated: false },
   { file: "howto-GB", path: "/gb/how-to-open", dated: false },
-  { file: "city-london", path: "/cities/london", dated: true },
+  /* The city page v9 (his "v9 looks right", 2026-10-21) prints no register figure (no business count), so no register date backs a
+     checked line there (SCOPE below); its own source line dates its files, as the industry page v4's does. */
+  { file: "city-london", path: "/cities/london", dated: false },
   { file: "city-manchester", path: "/cities/manchester", dated: false }, // the state of 209 of 252 cities joined the list (fix round 1 of rhythm-t6); no checked date is held for it
   { file: "cell-gb-london-restaurants", path: "/gb/london/restaurants", dated: true },
   { file: "cell-gb-london-barbershops", path: "/gb/london/barbershops", dated: true },

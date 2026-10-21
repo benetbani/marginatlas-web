@@ -3800,6 +3800,7 @@
         "src/app/_design",
         "src/app/dev",
         "src/components",
+        "src/components/spine/city/sourced-view.tsx",
         "tests/copy/legacy_method_words.test.ts"
       ],
       "claims": []

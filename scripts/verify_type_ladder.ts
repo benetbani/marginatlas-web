@@ -143,7 +143,9 @@ if (wrongValue.length) {
    tokens (src/lib/design-tokens.ts `kit.type`), reach the page as `--k-t-*` variables, and the census above cannot see a size behind
    a variable: so this section is what holds them. It reds when the tokens drift from the kit's list, and when a `--k-t-` variable is
    read anywhere but a `.kit4` rule of globals.css (the kit page's scope), so the kit's sizes cannot leak onto another page unseen. */
-const KIT_SIZES = [72, 56, 48, 40, 32, 28, 25, 21, 20, 22, 19, 18, 17, 16, 15, 14];
+/* ... and the city page v9's name inside its card, 64, then 52 and 44 (its builder's EXTRA_CSS, `.ident h1`; his "v9 looks right",
+   2026-10-21): the last three, its own until the kit holds an identity of its own. */
+const KIT_SIZES = [72, 56, 48, 40, 32, 28, 25, 21, 20, 22, 19, 18, 17, 16, 15, 14, 64, 52, 44];
 {
   const tokens = readFileSync("src/lib/design-tokens.ts", "utf8");
   const block = tokens.match(/export const kit = \{[\s\S]*?\n {2}type: \{([\s\S]*?)\n {2}\},/);

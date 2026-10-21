@@ -7,7 +7,8 @@
  */
 import * as React from "react";
 
-export function CurrencySwitch({ label }: { label: string }) {
+/** `local`: the symbol of the page's own currency, the first button (the euro on the industry page, the pound on the city page v9). */
+export function CurrencySwitch({ label, local = "€" }: { label: string; local?: string }) {
   const [usd, setUsd] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
   const pick = (next: boolean) => {
@@ -18,7 +19,7 @@ export function CurrencySwitch({ label }: { label: string }) {
   return (
     <div ref={ref} className="k-switch" role="group" aria-label={label}>
       <button type="button" aria-pressed={!usd} onClick={() => pick(false)}>
-        €
+        {local}
       </button>
       <button type="button" aria-pressed={usd} onClick={() => pick(true)}>
         $

@@ -3275,3 +3275,197 @@ main :where(p, li, blockquote, dd) {
   .kit4 .k-forms td::before { content: attr(data-l); font-family: var(--k-f-text); font-weight: 400; font-size: var(--k-t-small); color: var(--k-muted); text-align: left; }
 }
 @media (prefers-reduced-motion: reduce) { .kit4 .k-fold summary svg { transition: none; } }
+
+/* =============================================================================
+   THE KIT PAGE: THE CITY, the city page v9 (his "v9 looks right. Record it as the approved London target", 2026-10-21), drawn by
+   src/components/spine/city/sourced-view.tsx on THE KIT PAGE above: the kit's city drawings (sheets/kit/kit.css sections 6 to 12) and
+   v9's own (sheets/city/v9/src/build_london_v9.py, EXTRA_CSS), section for section. Scoped under `.kit4[data-page="city"]` where a rule
+   differs from the industry page's, under `.kit4` where it draws a part only the city has. Colours and type sizes are the root's CSS
+   variables (design-tokens.ts `kit`); the two tints are the kit's terracotta mixed with its white, as v9 draws them.
+   ============================================================================= */
+.kit4[data-page="city"] { --k-terra-tint: color-mix(in srgb, var(--k-terra) 27%, var(--k-white)); }
+
+/* the hero: the name inside the one white card (MODEL PART 3's identity), the flag above it large, the panorama whole behind the card */
+/* the ground under the photograph white, as v9's page is (the site's own ground is a near-white) */
+.kit4 .k-city-hero { background: var(--k-white); box-shadow: 0 0 0 100vmax var(--k-white); clip-path: inset(0 -100vmax); }
+.kit4 .k-city-hero .k-pano { height: 820px; }
+.kit4 .k-city-hero .k-pano img { object-position: 46% 42%; }
+.kit4 .k-city-hero .k-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 560px); padding-top: 48px; padding-bottom: 64px; min-height: 820px; }
+.kit4 .k-ident { margin: 0 0 22px; }
+.kit4 .k-idtop { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+.kit4 .k-bigflag { display: block; flex: none; width: 150px; height: 75px; object-fit: contain; object-position: left top; }
+.kit4 .k-ident h1 { font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-id); line-height: 1; letter-spacing: -0.035em; margin: 16px 0 6px; color: var(--k-ink); }
+.kit4 .k-where { font-size: var(--k-t-lede); color: var(--k-ink2); }
+.kit4 .k-av .k-big .k-m .k-s, .kit4[data-cur="usd"] .k-av .k-big .k-m .k-p { font-size: var(--k-t-money); }
+.kit4[data-cur="usd"] .k-av .k-big .k-m .k-s { font-size: inherit; }
+.kit4 .k-cv .k-m .k-s, .kit4[data-cur="usd"] .k-cv .k-m .k-p { font-size: var(--k-t-small); }
+.kit4[data-cur="usd"] .k-cv .k-m .k-s { font-size: inherit; }
+/* an index's level: a pill, neutral (GUIDELINES: never terracotta on a pill) */
+.kit4 .k-cv .k-lvl { display: inline-block; vertical-align: 3px; margin-left: 6px; font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-small); line-height: 1.4; color: var(--k-ink); background: var(--k-white); border: 1px solid var(--k-n4); border-radius: 999px; padding: 1px 10px; letter-spacing: 0; }
+
+/* one start line for title, question and answer across the cards of a band (his 2026-10-21): each card's header, body and caption are
+   the band's three rows (a subgrid), so two partners' answers begin on one line */
+.kit4[data-page="city"] .k-pair { grid-template-rows: auto 1fr auto; }
+.kit4[data-page="city"] .k-pair > .k-sub { grid-row: span 3; display: grid; grid-template-rows: subgrid; row-gap: 18px; }
+.kit4[data-page="city"] .k-pair > .k-sub > .k-caption { margin: 0; }
+.kit4 .k-sub > .k-sbody { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+/* THE LINE RULE inside the body (DISTANCES 4, as THE KIT PAGE above): the group under the figure's block 24 below it */
+.kit4 .k-sbody > .k-fig + * { margin-top: 6px; }
+/* the loud card's figure in terracotta (the prime rent, MODEL 8.3 row 04) */
+.kit4 .k-sub[data-loud] .k-fig > [data-src] > .k-m .k-p, .kit4[data-cur="usd"] .k-sub[data-loud] .k-fig > [data-src] > .k-m .k-s { color: var(--k-terra); }
+
+/* one figure against its benchmark (FORM-LIBRARY BenchmarkPair): the figure, then what it is measured against, no chart */
+.kit4 .k-bench { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.kit4 .k-bench .k-bv { font-family: var(--k-f-fig); font-size: var(--k-t-head); font-weight: 600; color: var(--k-ink); font-variant-numeric: tabular-nums; }
+.kit4 .k-bench .k-bw { font-size: var(--k-t-text); color: var(--k-ink2); }
+
+/* the premises cluster (MODEL 8.3 `04 premises`, PART 10.8b): the boroughs tall on the wide side, the prime rent and the tax beside */
+.kit4 .k-premises { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-areas: "dist prime" "dist tax"; gap: var(--k-gap); align-items: stretch; }
+.kit4 .k-premises .k-c-dist { grid-area: dist; }
+.kit4 .k-premises .k-c-prime { grid-area: prime; }
+.kit4 .k-premises .k-c-tax { grid-area: tax; }
+/* rows in the cluster's narrow cards (the prime rent): the label, then the value at the row's end, as THE KIT PAGE's band of three draws
+   them, so "100 m², a month" keeps one line beside its sum */
+.kit4 .k-premises .k-kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+.kit4 .k-premises .k-kv dd { text-align: right; }
+
+/* the tax: the worked example, the bands behind their fold */
+.kit4 .k-example { background: var(--k-paper); border-radius: 12px; padding: 14px 16px; }
+.kit4 .k-example p { font-size: var(--k-t-text); color: var(--k-ink2); }
+.kit4 table.k-bands { width: 100%; border-collapse: collapse; font-size: var(--k-t-small); }
+.kit4 .k-bands th, .kit4 .k-bands td { padding: 10px 8px; border-bottom: 1px solid var(--k-line); text-align: right; vertical-align: top; }
+.kit4 .k-bands thead th { font-size: var(--k-t-small); font-weight: 600; color: var(--k-muted); vertical-align: bottom; }
+.kit4 .k-bands th[scope="row"], .kit4 .k-bands thead th:first-child { text-align: left; font-weight: 500; color: var(--k-ink); padding-left: 0; }
+.kit4 .k-usd-row { display: block; font-size: var(--k-t-small); color: var(--k-muted); font-weight: 400; }
+.kit4 .k-bands td { font-family: var(--k-f-fig); font-weight: 500; font-size: var(--k-t-body); color: var(--k-ink2); }
+.kit4 .k-bands td.k-lit { color: var(--k-ink); font-weight: 700; background: var(--k-paper2); border-radius: 6px; }
+
+/* kind "bar-ladder": the boroughs, one neutral bar and one ink figure each, London's average the mark on every track */
+.kit4 .k-rdist { display: grid; gap: 24px; }
+.kit4 .k-rg { margin: 0 0 8px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: baseline; font-size: var(--k-t-text); font-weight: 600; color: var(--k-ink); }
+.kit4 ol.k-rbars { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.kit4 .k-rbars li { display: grid; grid-template-columns: minmax(0, 23ch) 9.5em minmax(0, 1fr); column-gap: 16px; align-items: center; font-size: var(--k-t-text); color: var(--k-ink2); min-height: 20px; }
+.kit4 .k-rdist .k-rv { font-family: var(--k-f-fig); font-weight: 600; color: var(--k-ink); font-variant-numeric: tabular-nums; text-align: right; justify-self: end; }
+.kit4 .k-rdist .k-rv .k-m { flex-wrap: nowrap; }
+.kit4 .k-rbars .k-rt { position: relative; height: 12px; border-radius: 99px; background: var(--k-paper); }
+.kit4 .k-rbars .k-rt b { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--k-n4); }
+.kit4 .k-rbars .k-rt .k-mk { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--k-ink); border-radius: 1px; }
+/* the boroughs on a phone: the first rows, then one button for every borough (a desktop hides it: every row beside the cluster) */
+.kit4 .k-seeall { display: none; }
+
+/* the ring: one share of a whole, the cities' shares beside it */
+.kit4 .k-ringrow { display: grid; grid-template-columns: 144px minmax(0, 1fr); gap: 24px; align-items: center; }
+.kit4 .k-ring { width: 144px; height: 144px; }
+.kit4 .k-ring .k-rt { font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-money); fill: var(--k-ink); }
+.kit4 .k-kv.k-cities > div { grid-template-columns: minmax(0, 12ch) auto; padding: 5px 0; }
+.kit4 .k-kv.k-cities .k-none dd { color: var(--k-faint); }
+.kit4 .k-kv.k-stays > div { grid-template-columns: minmax(0, 16ch) auto; padding: 6px 0; }
+.kit4 .k-kv .k-tot dt, .kit4 .k-kv .k-tot dd { color: var(--k-ink); font-weight: 600; }
+/* the value in the column after its label, as the kit draws it (kit.css section 8): in the city's narrow cards (the prime rent beside
+   the boroughs) a value spread over the empty third column ran past the card's edge */
+.kit4[data-page="city"] .k-kv dd { grid-column: auto; }
+
+/* kind "tenths-strip": nine tenths on one scale, the subject over its country */
+.kit4 .k-strips { display: grid; gap: 18px; }
+.kit4 .k-sn { margin: 0 0 4px; font-size: var(--k-t-small); font-weight: 600; }
+.kit4 .k-sbar { position: relative; height: 28px; }
+.kit4 .k-sbar::before { content: ""; position: absolute; left: 0; right: 0; top: 13px; height: 2px; background: var(--k-line); }
+.kit4 .k-sbar .k-span { position: absolute; top: 12px; height: 4px; border-radius: 99px; background: var(--k-n3); }
+.kit4 .k-sbar .k-t { position: absolute; top: 6px; width: 2px; height: 16px; margin-left: -1px; background: var(--k-muted); border-radius: 1px; }
+.kit4 .k-sbar .k-t.k-md { top: 0; height: 28px; width: 3px; margin-left: -1.5px; background: var(--k-ink2); }
+.kit4 .k-sl { position: relative; height: 42px; margin-top: 6px; font-size: var(--k-t-small); color: var(--k-ink2); }
+.kit4 .k-sl.k-top { margin: 0 0 4px; }
+.kit4 .k-sl > span { position: absolute; top: 0; }
+.kit4 .k-sl > span.k-md { transform: translateX(-50%); font-weight: 600; color: var(--k-ink); text-align: center; }
+.kit4 .k-sl > span.k-end { transform: translateX(-100%); text-align: right; }
+.kit4 .k-sl .k-m { flex-direction: column; align-items: flex-start; row-gap: 0; font-family: var(--k-f-fig); font-weight: 600; }
+.kit4 .k-sl > span.k-md .k-m { align-items: center; }
+.kit4 .k-sl > span.k-end .k-m { align-items: flex-end; }
+.kit4[data-cur="usd"] .k-sl .k-m { flex-direction: column-reverse; }
+
+/* kind "part-bar": people by age, London's bar over the UK's, five groups in four greys and the featured group in terracotta */
+.kit4 .k-ages { display: grid; gap: 6px; }
+.kit4 .k-ages .k-an + .k-abar { margin-bottom: 12px; }
+.kit4 .k-an { font-size: var(--k-t-small); font-weight: 600; }
+.kit4 .k-abar { display: flex; gap: 2px; height: 32px; border-radius: 8px; overflow: hidden; }
+.kit4 .k-abar > span { display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.kit4 .k-sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 8px; vertical-align: -1px; }
+.kit4 .k-g0 { background: var(--k-n3); }
+.kit4 .k-g1 { background: var(--k-n4); }
+.kit4 .k-g2 { background: var(--k-terra); }
+.kit4 .k-g3 { background: var(--k-faint); }
+.kit4 .k-g4 { background: var(--k-paper2); box-shadow: inset 0 0 0 1px var(--k-n4); }
+.kit4 table.k-agetab { width: 100%; border-collapse: collapse; font-size: var(--k-t-text); }
+.kit4 .k-agetab th, .kit4 .k-agetab td { padding: 9px 0; border-bottom: 1px solid var(--k-line); text-align: right; }
+.kit4 .k-agetab thead th { font-size: var(--k-t-small); font-weight: 600; color: var(--k-muted); padding-top: 0; }
+.kit4 .k-agetab th[scope="row"], .kit4 .k-agetab thead th:first-child { text-align: left; font-weight: 500; color: var(--k-ink2); }
+.kit4 .k-agetab td { font-family: var(--k-f-fig); font-weight: 600; color: var(--k-ink); font-variant-numeric: tabular-nums; width: 28%; }
+.kit4 .k-agetab tr.k-me th[scope="row"] { color: var(--k-ink); font-weight: 600; }
+
+/* kind "month-columns" on the city page: twelve slim neutral columns, the busiest month the featured one; a phone prints the letter */
+.kit4[data-page="city"] .k-vb b { background: var(--k-n4); }
+.kit4[data-page="city"] .k-vcol.k-q3 .k-vb b { background: var(--k-ink); }
+.kit4[data-page="city"] .k-vcol.k-q3 .k-vm { color: var(--k-ink); font-weight: 600; }
+.kit4 .k-vm .k-ms { display: none; }
+
+/* the comparison table: London's own row on the near-white ground */
+.kit4 .k-peers tr.k-me th, .kit4 .k-peers tr.k-me td { background: var(--k-paper); }
+.kit4 .k-chapter:not(.k-tint) .k-peers tr.k-me th, .kit4 .k-chapter:not(.k-tint) .k-peers tr.k-me td { background: var(--k-white); }
+/* the links in v9's words underlined, as the kit draws them: the method under the hero's figures, the source line */
+.kit4[data-page="city"] :is(.k-cap a, .k-srcline a) { text-decoration: underline; }
+
+/* TERRACOTTA ON EACH SECTION'S FEATURED PART (his 2026-10-21: "a ratio of terracotta in almost every sextion ... in its different
+   forms ... the focal focus of the sextion or its featured part"), marked `data-focal`: the solid colour on a mark, a figure or a row,
+   its soft tint as a ground (the tax's worked example) */
+.kit4 [data-focal] .k-rbars .k-rt .k-mk, .kit4 [data-focal] .k-mkkey i { background: var(--k-terra); }
+.kit4 .k-example[data-focal] { background: var(--k-terra-soft); }
+.kit4 .k-example[data-focal] b .k-m .k-p, .kit4[data-cur="usd"] .k-example[data-focal] b .k-m .k-s { color: var(--k-terra); }
+.kit4 .k-kv > div[data-focal] dt, .kit4 .k-kv > div[data-focal] dd { color: var(--k-terra); font-weight: 600; }
+.kit4 .k-kv > div[data-focal] dd .k-m .k-p, .kit4[data-cur="usd"] .k-kv > div[data-focal] dd .k-m .k-s { color: var(--k-terra); }
+.kit4[data-page="city"] .k-vcol[data-focal] .k-vb b { background: var(--k-terra); }
+.kit4[data-page="city"] .k-vcol[data-focal] .k-vm { color: var(--k-terra); }
+.kit4 .k-strip.k-lit .k-sbar .k-t { background: var(--k-terra); }
+.kit4 .k-strip.k-lit .k-sbar .k-span { background: var(--k-terra-tint); }
+
+/* widths: the kit's 1080, 960, 640 and 560 */
+@media (max-width: 1080px) { .kit4 .k-city-hero .k-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); } }
+@media (max-width: 960px) {
+  .kit4 .k-city-hero .k-pano { height: 300px; }
+  /* v9 keeps its 48 above the card and 64 below it here too (its `.ch .hero-grid` outranks the kit's 960 rule), so the card meets the
+     photograph 24 above its foot */
+  .kit4 .k-city-hero .k-hero-grid { min-height: 0; }
+  .kit4 .k-city-hero .k-fig-card { margin-top: -72px; position: relative; }
+  /* the card across the tablet's width, as v9 draws it (THE KIT PAGE holds the industry's card to 560 here) */
+  .kit4 .k-city-hero .k-fig-card { max-width: none; }
+  .kit4 .k-bigflag { width: 120px; height: 60px; }
+  .kit4 .k-ident h1 { font-size: var(--k-t-id-md); }
+  .kit4 .k-premises { grid-template-columns: minmax(0, 1fr); grid-template-areas: "prime" "dist" "tax"; }
+}
+@media (max-width: 640px) {
+  /* a phone: the borough's name on its own line (one line for every borough, his 1719 to 1721), the bar and its figure under it */
+  .kit4 .k-rbars li { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "n n" "t v"; row-gap: 2px; column-gap: 12px; }
+  .kit4 .k-rbars .k-rn { grid-area: n; }
+  .kit4 .k-rbars .k-rt { grid-area: t; }
+  .kit4 .k-rbars li > .k-rv { grid-area: v; }
+  .kit4 .k-rg { grid-template-columns: minmax(0, 1fr); row-gap: 2px; }
+  .kit4 .k-rg .k-rv { justify-self: start; }
+  .kit4 .k-rdist:not(.k-all) .k-later { display: none; }
+  .kit4 .k-seeall { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 48px; padding: 0 16px; border: 0; border-radius: 12px; background: var(--k-paper); font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-text); color: var(--k-ink); cursor: pointer; }
+  .kit4 .k-seeall svg { width: 18px; height: 18px; flex: none; transition: transform .2s ease; }
+  .kit4 .k-seeall[aria-expanded="true"] svg { transform: rotate(45deg); }
+  .kit4 .k-ringrow { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .kit4 .k-peers tr.k-me th, .kit4 .k-peers tr.k-me td, .kit4 .k-chapter:not(.k-tint) .k-peers tr.k-me th, .kit4 .k-chapter:not(.k-tint) .k-peers tr.k-me td { background: transparent; }
+  .kit4 .k-peers tr.k-me { box-shadow: inset 0 0 0 2px var(--k-ink); }
+}
+@media (max-width: 560px) {
+  /* the kit's 20 card padding on a phone (the root's inline variables outrank a media rule on the root itself, so it is set here) */
+  .kit4[data-page="city"] .k-sub { padding: var(--k-pad-sm); }
+  .kit4 .k-bigflag { width: 96px; height: 48px; }
+  .kit4 .k-ident h1 { font-size: var(--k-t-id-sm); margin-top: 12px; }
+  .kit4 .k-where { font-size: var(--k-t-body); }
+  /* the hero's cells in one column, each title keeping its unit on one line (his 1719 to 1721): the icon beside the title */
+  .kit4[data-page="city"] .k-cl { flex-direction: row; align-items: center; gap: 8px; }
+  .kit4 .k-vm .k-ml { display: none; }
+  .kit4 .k-vm .k-ms { display: inline; }
+}
+@media (prefers-reduced-motion: reduce) { .kit4 .k-seeall svg { transition: none; } }

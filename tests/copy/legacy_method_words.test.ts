@@ -48,6 +48,14 @@ const WORDS: Array<[string, RegExp]> = [
   ["score", /\bscores?\b/i],
 ];
 
+/* HIS WORDS OUTRANK RULING 11 IN ONE PLACE (the rule ladder, rung 1): "Another figure should be connectivity, how well connected the
+   city is, a figure from 0 to 100, given as 77/100, with a pill that says, for example, high, as a good thing. The same for the
+   others." (FOUNDER-VERDICTS, 2026-10-20, the city and country hero tables). The city page v9 prints its two indices so, each with
+   the level its file names; that file and that score label only, so a "/100" anywhere else still reds. */
+const ALLOWED: Array<{ file: string; word: string; text: string }> = [
+  { file: "src/components/spine/city/sourced-view.tsx", word: "a score out of 100", text: "/100" },
+];
+
 const CODE_ATTRS = /^(className|class|id|key|href|src|style|role|type|name|as|rel|target|htmlFor|data-[\w-]+)$/;
 
 function files(dir: string, acc: string[] = []): string[] {
@@ -98,6 +106,7 @@ for (const file of scanned) {
         read++;
         for (const [word, re] of WORDS) {
           if (!re.test(t)) continue;
+          if (ALLOWED.some((a) => a.file === file && a.word === word && a.text === t)) break;
           findings.push({ file, line: src.getLineAndCharacterOfPosition(node.getStart(src)).line + 1, word, text: t.slice(0, 110) });
           break;
         }

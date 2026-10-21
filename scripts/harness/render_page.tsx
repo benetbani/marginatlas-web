@@ -30,6 +30,9 @@ const PUBLIC_URL = pathToFileURL(process.cwd() + "/public/").href;
 const mapAssets = (html: string) =>
   html
     .replace(/src="\/(cities|countries|spine|flags)\//g, (_m, d) => `src="${PUBLIC_URL}${d}/`)
+    /* A srcset's candidates too (the kit pages' photographs carry a 1200 and a 2400): the browser takes a srcset before the src, so an
+       unmapped one left the photograph blank in every render of a kit page (found on the city page v9's port, 2026-10-21). */
+    .replace(/srcSet="([^"]*)"/g, (_m: string, v: string) => `srcSet="${v.replace(/(^|,\s*)\/(cities|countries|spine|flags)\//g, (_x, pre, d) => `${pre}${PUBLIC_URL}${d}/`)}"`)
     .replace(/href="\/(cities|countries|spine|flags)\/([^"]*\.[a-z0-9]{2,5})"/g, (_m, d, file) => `href="${PUBLIC_URL}${d}/${file}"`);
 import { buildSpineCountrySeed } from "../../src/lib/spine/adapt_country";
 import { buildSpineCitySeed } from "../../src/lib/spine/adapt_city";
@@ -43,6 +46,8 @@ import { SpineCellBody } from "../../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../../src/components/spine/industry/industry-view";
 import { SpineIndustryV4Body } from "../../src/components/spine/industry/sourced-view";
 import { buildIndustryV4 } from "../../src/lib/spine/industry_v4";
+import { SpineCityV9Body } from "../../src/components/spine/city/sourced-view";
+import { buildCityV9 } from "../../src/lib/spine/city_v9";
 import { SpineHoodBody } from "../../src/components/spine/hood/hood-view";
 import { SpineShell } from "../../src/components/spine/shell";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
@@ -94,7 +99,8 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
   let selfShelled = false;
   switch (surface) {
     case "country": C = SpineCountryBody; data = await buildSpineCountrySeed(slugs[0]); break;
-    case "city": C = SpineCityBody; data = await buildSpineCitySeed(slugs[0]); break;
+    /* The route's own choice (src/app/(site)/cities/[slug]/city_spine.tsx): v9 where buildCityV9 holds the city, else the spine. */
+    case "city": { const v9 = buildCityV9(slugs[0]); if (v9) { C = (p: { data: unknown }) => React.createElement(SpineCityV9Body, { v: p.data as any, path: `/cities/${slugs[0]}` }); data = v9; } else { C = SpineCityBody; data = await buildSpineCitySeed(slugs[0]); } break; }
     case "cell": C = SpineCellBody; data = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); break;
     /* The route's own choice (src/app/(site)/industries/[industry]/page.tsx): v4 where buildIndustryV4 holds the trade, else the spine. */
     case "industry": { const v4 = buildIndustryV4(slugs[0]); if (v4) { C = (p: { data: unknown }) => React.createElement(SpineIndustryV4Body, { v: p.data as any, path: `/industries/${slugs[0]}` }); data = v4; } else { C = SpineIndustryBody; data = await buildSpineIndustrySeed(slugs[0]); } break; }

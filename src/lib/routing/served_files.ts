@@ -48,6 +48,8 @@ export const SERVED_FILES: ReadonlySet<string> = new Set([
   "/geo/countries-110m.json",
   "/london-cities.png",
   "/spine/_skyline.jpeg",
+  "/spine/city-london-1200.webp",
+  "/spine/city-london.webp",
   "/spine/industry-restaurants-1200.webp",
   "/spine/industry-restaurants.webp",
   "/spine/london.jpeg",

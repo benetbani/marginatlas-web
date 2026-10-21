@@ -758,6 +758,8 @@ export const kit = {
     n3: "#d6d6da",
     n4: "#c4c4c9",
     terra: "#c23a22",
+    /* The kit's soft terracotta (kit.css --terra-soft): a featured part's ground (the city page v9's worked tax example). */
+    terraSoft: "#f9ebe9",
     /* The donut's four neutrals, largest first (the target's who_sells: ink, muted, n4's step, n3). */
     donut2: "#a4a4ab",
     /* Card and plate shadows, the target's: ink at 55% and 35%. */
@@ -772,6 +774,8 @@ export const kit = {
     cell: "25px", cellSm: "21px",
     head: "20px", door: "22px",
     fig2: "19px", lede: "18px", money: "17px", body: "16px", text: "15px", small: "14px",
+    /* The city page v9's name inside its card (its builder's EXTRA_CSS, `.ident h1`): 64, then 52 and 44 (his 2026-10-21 on the name card). */
+    id: "64px", idMd: "52px", idSm: "44px",
   },
   /* The card and the hero card at the site's one card radius, 12 (his "one card radius across the site", 2026-08-27 verdicts 2, 4 and 7;
      DISTANCES 3.2; the radius-uniform gate), not the kit's 16 and 20, which he never ruled over it. The plates keep the kit's. */
