@@ -56,7 +56,11 @@ export function accentWalk({ ids = [] } = {}) {
      with no `.kit4` root reads exactly as before. */
   const kitRoot = document.querySelector(".kit4");
   const kitRgb = kitRoot ? (() => { const d = document.createElement("div"); d.style.color = "var(--k-terra)"; kitRoot.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; })() : null;
-  const isAccent = (c) => c === accentRgb || (kitRgb !== null && c === kitRgb);
+  /* ...and on KIT-VERSION 3 (the industry page v6, his "v6 is the approved industry target.", 2026-10-21) the kit's terracotta is
+     version 3's token, `--color-terra` (design-tokens `kit3`), read on its `.kit3` root the same way. */
+  const kit3Root = document.querySelector(".kit3");
+  const kit3Rgb = kit3Root ? (() => { const d = document.createElement("div"); d.style.color = "var(--color-terra)"; kit3Root.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; })() : null;
+  const isAccent = (c) => c === accentRgb || (kitRgb !== null && c === kitRgb) || (kit3Rgb !== null && c === kit3Rgb);
   const accents = !accentReadable ? [] : [...document.querySelectorAll("main *")]
     .filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && isAccent(getComputedStyle(el).color))
     .map((el) => ({ card: el.closest(CARD)?.id || el.closest(CLUSTER)?.id || el.closest(FIELD)?.id || "card", text: (el.textContent || "").trim().slice(0, 16) }));

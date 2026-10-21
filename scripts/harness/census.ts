@@ -413,11 +413,13 @@ function sectionsOf(file: string): Section[] {
     const kicker = kickerOf(block, copyAliases(scope));
     out.push({ page: pageOf(file), file: basename(file), id: reg === EVERY ? EVERY : id, component: fn?.name ?? "", kicker: reg && reg !== EVERY && kicker === "def.heading" ? reg.heading : kicker, archetype, builder: reg && reg !== EVERY ? PLAN_BUILDERS.get(reg.id) ?? builder : builder, at });
   }
-  /* A KIT VIEW'S CARDS (the industry page v4, src/components/spine/industry/sourced-view.tsx, which exports LOUD_SEATS_KIT): it draws no
-     Box; its sections are its own `Card` called with a literal id, and two cards stamped with a literal `data-block` (the hero's answer
-     card, the table). Each is a section of its page, its kicker the call's `title` as written, its builder buildIndustryV4. */
+  /* A KIT VIEW'S CARDS (a view that exports LOUD_SEATS_KIT: the industry page v6, src/components/spine/industry/kit3-view.tsx, which
+     replaced the v4 view on 2026-10-21, his "v6 is the approved industry target."): it draws no Box; its sections are its own `Sub`
+     (v4's `Card`) called with a literal id, and cards stamped with a literal `data-block` (the hero's answer card). Each is a section of
+     its page, its kicker the call's `title` as written, its builder the one whose type the view reads (buildIndustryV6, else V4). */
   if (/export\s+const\s+LOUD_SEATS_KIT\b/.test(src)) {
-    const kitRe = /<Card\s+id="([a-z][a-z0-9-]*)"|<(?:div|article)\b[^>]*?\sdata-block="([a-z][a-z0-9-]*)"/g;
+    const kitBuilder = /\bIndustryV6\b/.test(src) ? "buildIndustryV6" : "buildIndustryV4";
+    const kitRe = /<(?:Card|Sub)\s+id="([a-z][a-z0-9-]*)"|<(?:div|article)\b[^>]*?\sdata-block="([a-z][a-z0-9-]*)"/g;
     let km: RegExpExecArray | null;
     while ((km = kitRe.exec(src))) {
       const at = km.index;
@@ -425,7 +427,7 @@ function sectionsOf(file: string): Section[] {
       const tag = tagEnd === -1 ? "" : src.slice(at, tagEnd);
       const fn = fnAt(at);
       const title = /\btitle=\{([^}]*)\}/.exec(tag)?.[1] ?? "";
-      out.push({ page: pageOf(file), file: basename(file), id: km[1] ?? km[2], component: fn?.name ?? "", kicker: title, archetype: "kit", builder: "buildIndustryV4", at });
+      out.push({ page: pageOf(file), file: basename(file), id: km[1] ?? km[2], component: fn?.name ?? "", kicker: title, archetype: "kit", builder: kitBuilder, at });
     }
   }
   /* THE CARDS AN ARCHETYPE DRAWS (the header's SECTION): a card-owning

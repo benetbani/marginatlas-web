@@ -2,7 +2,8 @@
  * THE INDUSTRY PAGE, TARGET v4 (his "Go" of 2026-10-21, FOUNDER-VERDICTS "The industry page (/industries/restaurants) v4
  * approved"): the builder. Every figure the page prints is read here from data/sourced/ through the sourced-data loader
  * (src/lib/sourced/load.ts) and nowhere else: no modelled shard, no hand-typed number. Each figure names its file in a comment.
- * The view (src/components/spine/industry/sourced-view.tsx) arranges what this returns and computes nothing.
+ * Its own view (sourced-view.tsx) was retired on 2026-10-21 when v6 replaced v4 ("v6 is the approved industry target."); the v6 builder
+ * (src/lib/spine/industry_v6.ts) reads this one for every figure the two pages share.
  *
  * The target is sheets/industry/v4 (src/build_industry_v4.py, its index.html and shots); this module is that builder's arithmetic
  * on the site's files, so the two print the same numbers: one decimal half up as the publishers round, thousands as "€381k",

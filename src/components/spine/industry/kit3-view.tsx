@@ -33,7 +33,8 @@ import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
 import { Crumbs } from "@/components/spine/Crumbs";
 import { buildIndustryCrumbs } from "@/lib/spine/crumb_rows";
-import { CurrencySwitch3, OpenAll } from "./kit3-islands";
+import { CurrencySwitch3 } from "./currency-switch";
+import { OpenAll } from "./kit3-islands";
 
 /**
  * THE LOUD MOMENTS OF v6 (the kit's LOUD law; MOVING.md: "terracotta on each section's focal part inside data-focal, one a section
@@ -666,9 +667,9 @@ function WhatTheySay({ v }: { v: IndustryV6 }) {
 }
 
 /** 2. The question list (kit3.qlist): independent questions, several may open at once; "Open all" past five. No number on it. */
-function Owners({ id, list, block }: { id: string; list: { title: string; ask: string; items: ReadonlyArray<{ name: string; formula: string; answer: string }> }; block: string }) {
+type OwnerList = { title: string; ask: string; items: ReadonlyArray<{ name: string; formula: string; answer: string }> };
+function QList({ id, list }: { id: string; list: OwnerList }) {
   return (
-    <Sub id={block} title={list.title} ask={list.ask} caption={T.ratios.anyCountry}>
       <div className="qlist" id={id} data-disclosure="qlist">
         {list.items.length > 5 ? <OpenAll list={id} open={T.ratios.openAll} close={T.ratios.closeAll} /> : null}
         {list.items.map((q) => (
@@ -681,6 +682,21 @@ function Owners({ id, list, block }: { id: string; list: { title: string; ask: s
           </details>
         ))}
       </div>
+  );
+}
+function MoneyList() {
+  const L = T.ratios.money;
+  return (
+    <Sub id="money" title={L.title} ask={L.ask} caption={T.ratios.anyCountry}>
+      <QList id="qmoney" list={L} />
+    </Sub>
+  );
+}
+function Guests() {
+  const L = T.ratios.guests;
+  return (
+    <Sub id="guests" title={L.title} ask={L.ask} caption={T.ratios.anyCountry}>
+      <QList id="qguests" list={L} />
     </Sub>
   );
 }
@@ -967,8 +983,8 @@ export function SpineIndustryV6Body({ v, path }: { v: IndustryV6; path: string }
             <WhatTheySay v={v} />
           </div>
           <div className="pair">
-            <Owners id="qmoney" block="money" list={T.ratios.money} />
-            <Owners id="qguests" block="guests" list={T.ratios.guests} />
+            <MoneyList />
+            <Guests />
           </div>
         </div>
       </Chapter>

@@ -3673,7 +3673,10 @@ main :where(p, li, blockquote, dd) {
 /* ---- the site's own, on this page ---- */
 /* The site's section surface (.spine-card, by which the page gates find a section) carries a ground and a shadow: version 3's
    sections are open, no box (SURFACE), so on this page it draws none. */
-.kit3.k-industry .sub.spine-card { background: none; box-shadow: none; }
+.kit3.k-industry .sub.spine-card { background: var(--color-white); box-shadow: none; }
+/* ...and its ground is its band's own, never transparent (the frost-reads gate: a see-through card is the glass his 2026-09-07 ruling
+   removed), so the section is opaque and still has no box of its own (KIT 3 SURFACE reads a ground only where it differs). */
+.kit3.k-industry section.chapter.tint .sub.spine-card { background: var(--color-paper); }
 /* Edge to edge, as the target's bands run (its hero photograph and its tinted chapters span the window, the column 1160 inside): the
    page's root steps out of the site's content column (main, max-width 1120 with its padding) to the window's width. The window's
    width counts a classic scrollbar, so this page alone clips what would stand past the right edge. */
@@ -3700,3 +3703,7 @@ body:has(.kit3.k-industry) { overflow-x: clip; }
 /* The site's reset takes a link's underline away; the target's links keep the browser's (the doors, cards, take theirs off). */
 .kit3.k-industry a { text-decoration-line: underline; }
 .kit3.k-industry nav[data-crumbs] a { text-decoration-line: none; }
+/* Every printed figure in tabular numerals, in prose too (art direction F1: figures that stack line up), as the v4 page did. */
+.kit3.k-industry [data-src], .kit3.k-industry [data-src] * { font-variant-numeric: tabular-nums; }
+/* A link standing alone in a note (the table's "How the figures are calculated") is a tap of 44, as the hero's and the exit's are. */
+.kit3.k-industry .sbody > p.note > a:only-child { min-height: 44px; display: inline-flex; align-items: center; }

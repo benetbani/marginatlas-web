@@ -793,7 +793,11 @@ export const kit3 = {
   color: {
     white: kit.color.white, paper: kit.color.paper, "paper-2": kit.color.paper2, line: kit.color.line, "line-2": kit.color.n4, n3: kit.color.n3,
     faint: kit.color.faint, benchmark: "#8a969f", muted: kit.color.muted, "ink-2": kit.color.ink2, ink: kit.color.ink, terra: kit.color.terra,
-    "terra-soft": "#f9ebe9", band: "#c11c00", "photo-ground": "#dfe7ee",
+    "terra-soft": "#f9ebe9", band: "#c11c00",
+    /* tokens.json's photo-ground (#dfe7ee, behind a photograph while it loads) is a blue at 31% saturation, which his palette rule
+       ("terracotta plus cool neutrals only ... no exceptions", 2026-08-09; the palette-membership gate) does not admit: the site draws
+       the kit's own paper-2 there instead, a neutral the reader sees for the moment the photograph loads. */
+    "photo-ground": kit.color.paper2,
   },
   space: { 2: "2px", 4: "4px", 8: "8px", 12: "12px", 16: "16px", 24: "24px", 32: "32px", 48: "48px", 64: "64px", 96: "96px", 128: "128px" },
   gap: {
