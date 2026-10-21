@@ -810,7 +810,12 @@ function inPage(ctx) {
      the card"). A name is words, the reason the zone title above is left out, so `[data-city-name]` is left out of the same reading;
      a figure on a city card (its pay, at 14) is still read. Confirmed by the controller, and held to a country slot (final review M6,
      2026-10-15): a city name anywhere else (the home's cities, the city page's peers) is read as before. */
-  const headingOfZone = (el) => (!!el.closest("[data-zone]") && !!el.closest("[data-rail-title]")) || !!el.closest("[data-slot] [data-city-name]");
+  /* KIT-VERSION 3'S SECTION TITLE IS A RUNG OF ITS LADDER (40, 30, 24, 20, 16, 14; his "Go: build kit version 3 ... (type ladder ...)" and
+     his approval of the industry page v6 on it, 2026-10-21): a section's title stands at 20, a chapter's at 24, as words. A heading is words,
+     the reason the zone title is left out, so on a `.kit3` page an h1 to h3 is left out of the "between" reading; a figure between 16 and
+     30 beside a 30 still reds. */
+  const KIT3_HEADINGS = !!document.querySelector(".kit3");
+  const headingOfZone = (el) => (!!el.closest("[data-zone]") && !!el.closest("[data-rail-title]")) || !!el.closest("[data-slot] [data-city-name]") || (KIT3_HEADINGS && !!el.closest("h1, h2, h3"));
   const sizesOfBetween = (card) => [...card.querySelectorAll("*")]
     .filter((el) => el.children.length === 0 && el.getClientRects().length && (el.textContent || "").trim() && !hiddenFromSight(el) && !headingOfZone(el))
     .map((el) => parseFloat(getComputedStyle(el).fontSize));
@@ -854,10 +859,19 @@ function inPage(ctx) {
      page's answer at 48 (28 and 40 at 560 and under), which RULEBOOK Q1 keeps until he picks and which he approved on this page; so on a
      render whose body is `data-composition="kit"` the zero case reads those rungs (src/lib/design-tokens.ts kit.type, held to kit.css by
      the type-ladder gate). A kit card with no figure at its rung still reds. */
-  const KIT_PAGE = !!document.querySelector('[data-composition="kit"]');
+  /* KIT-VERSION 3'S RUNGS ARE THE LADDER'S (his "Go: build kit version 3 ... (type ladder, open sections ...)" and "The gallery is right:
+     move the pages onto kit version 3", 2026-10-21; RULEBOOK Q1 settled): a section's figure at 30 and the answer at 40 at every width,
+     so a kit page drawn on version 3 (a `.kit3` root: the industry page v6, his "v6 is the approved industry target.") reads this file's
+     own rungs. Its ratios chapter holds four sections with no figure line by the approved design, a table of seventeen ratios, the
+     same ratios in sentences and two lists of formulas with no number (his "The ratios chapter in v6 is right as it is."): those four,
+     by id, on that page only. Every other v6 section with no figure at 30 still reds. */
+  const KIT3_PAGE = !!document.querySelector(".kit3.k-industry");
+  const KIT3_NO_FIGURE = new Set(["ratios", "say", "money", "guests"]);
+  const KIT_PAGE = !!document.querySelector('[data-composition="kit"]') && !KIT3_PAGE;
   const [FOCAL_RUNG, ANSWER_RUNG] = KIT_PAGE ? (innerWidth <= 560 ? [28, 40] : [32, 48]) : [30, 40];
   for (const block of topBlocks) {
     if (!block.getClientRects().length || FOCAL_EXEMPT_FORMS.has(formOf(block))) continue;
+    if (KIT3_PAGE && KIT3_NO_FIGURE.has(block.id)) continue;
     const sizes = sizesOf(block);
     const at30 = sizes.filter((s) => Math.abs(s - FOCAL_RUNG) < 0.5).length;
     const at40 = sizes.filter((s) => Math.abs(s - ANSWER_RUNG) < 0.5).length;

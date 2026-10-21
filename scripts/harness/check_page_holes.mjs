@@ -134,6 +134,12 @@ function inPage() {
      band the sibling count reads, never a cell's own placement wrapper. */
   const CLUSTER = "[data-archetype='bento-band'][id]";
   for (const card of cards) {
+    /* AN OPEN SECTION HAS NO BOX TO HOLE (KIT-VERSION 3: his approval of KIT-VERSION 3 ("Go: build kit version 3 ... (type ladder, open sections, one card system ...)" and "The gallery is right: move the pages onto kit version 3", 2026-10-21) and of the industry page v6 drawn on it ("v6 is the approved industry target.")): on a `.kit3` page a section is open on its band, no ground and no
+       edge of its own, and the sections of a band share their four rows (his London v8 words, "the same line across the cards of one
+       band"), so the air under a shorter section is the band's, not a hole in a card. Version 3's own law reads emptiness only inside a box
+       (DENSITY BLANK, a `data-surface="card"`). So an open section (no `data-surface`) is not read here; a box on that page (the hero's
+       plate, a card) still is. */
+    if (card.closest(".kit3") && !card.hasAttribute("data-surface")) continue;
     const id = card.id || card.closest(CLUSTER)?.id || card.querySelector("[id]")?.id || (card.querySelector("h1,h2,h3")?.textContent || "").trim().toLowerCase() || "card";
     const cb = card.getBoundingClientRect(); const cs = getComputedStyle(card);
     const x0 = cb.left + parseFloat(cs.paddingLeft), x1 = cb.right - parseFloat(cs.paddingRight), y0 = cb.top + parseFloat(cs.paddingTop), y1 = cb.bottom - parseFloat(cs.paddingBottom);
@@ -161,11 +167,27 @@ function inPage() {
       /* a hairline is ink: row rules and dividers break the emptiness the eye would read as a hole */
       if (parseFloat(es.borderBottomWidth) > 0 && !/rgba\(0, 0, 0, 0\)/.test(es.borderBottomColor)) mark({ left: b0.left, right: b0.right, top: b0.bottom - 2, bottom: b0.bottom + 2 });
       if (parseFloat(es.borderTopWidth) > 0 && !/rgba\(0, 0, 0, 0\)/.test(es.borderTopColor)) mark({ left: b0.left, right: b0.right, top: b0.top - 2, bottom: b0.top + 2 });
+      /* A FILLED KIT 3 PANEL IS INK (version 3's `data-surface="panel"`, a cell of the hero, a fold): its ground is drawn to its edges, so
+         the eye reads no air inside it, whatever its words leave. Only a page drawn on version 3 declares surfaces. */
+      if (el.closest(".kit3") && el.getAttribute("data-surface") === "panel" && /rgba?\((?!0, 0, 0, 0)/.test(es.backgroundColor) && b0.width && b0.height) { mark(b0); continue; }
       const txt = (el.textContent || "").trim(); const isLeaf = el.children.length === 0 || el.tagName === "svg" || el.tagName === "IMG";
       if (!isLeaf || (!txt && el.tagName !== "svg" && el.tagName !== "IMG" && !es.backgroundColor.match(/rgba?\((?!0, 0, 0, 0)/))) continue;
       if (b0.width === 0 || b0.height === 0) continue;
       mark(b0);
     }
+    /* EVERY DRAWN LINE OF WORDS IS INK (2026-10-21, the trade port): the walk above marks a leaf's box, so a sentence that holds an element
+       (a money pair, a figure stamped with its source: "of every <£100> of tax due goes unpaid") inked only that element and read the
+       rest of its own line as air: the trade page v3 showed a 372 by 126 "hole" in the tips card made of its own two lines of words.
+       Each text run's line boxes are marked now, read off a Range (one rect a line), with the closed-plus rule above. This cannot make a
+       page redder: it only marks drawn words that were missed. */
+    { const tw = document.createTreeWalker(card, NodeFilter.SHOW_TEXT); let tn;
+      while ((tn = tw.nextNode())) {
+        if (!(tn.textContent || "").trim()) continue;
+        const pe = tn.parentElement; if (!pe || pe.getClientRects().length === 0) continue;
+        { const d = pe.closest("details"); if (d && !d.open) { const sum = d.querySelector(":scope > summary"); if (!sum || !sum.contains(pe)) continue; } }
+        const rg = document.createRange(); rg.selectNodeContents(tn);
+        for (const rc of rg.getClientRects()) if (rc.width > 0.5 && rc.height > 0.5) mark(rc);
+      } }
     let best = { area: 0, w: 0, h: 0 }; const hts = new Array(COLS).fill(0);
     for (let rr = 0; rr < nRows; rr++) {
       for (let cc = 0; cc < COLS; cc++) hts[cc] = grid[rr][cc] ? 0 : hts[cc] + 1;

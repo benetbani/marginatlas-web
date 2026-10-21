@@ -159,6 +159,10 @@ function inPage({ width, pageName, opened = false }) {
   const isVisual = (card) => { const own = card.getAttribute("data-visual"); if (own === "1") return true; if (own === "0") return false; return VISUAL.has(archetypeOf(card)); };
   const variantOf = (card) => { const el = archetypeEl(card); const own = card.getAttribute("data-variant"); if (own) return own; return VARIANT_KEYS.map((k) => el.getAttribute(k) ?? card.getAttribute(k) ?? "").join("|"); };
   const hiddenLeaf = (el) => { const d = el.closest("details"); if (d && !d.open) { const sum = d.querySelector(":scope > summary"); if (!sum || !sum.contains(el)) return true; } return false; };
+  /* A FILLED KIT 3 PANEL IS INK (version 3's `data-surface="panel"`: a cell of the hero, his approval of version 3 and of the industry
+     page v6 on it, 2026-10-21): its ground is drawn to its edges, so the hero's cells end where their grounds end, not where their words
+     do. Only a page drawn on version 3 declares surfaces. */
+  const kit3Panel = (el, es) => !!el.closest(".kit3") && el.getAttribute("data-surface") === "panel" && /rgba?\((?!0, 0, 0, 0)/.test(es.backgroundColor);
   const isInk = (el, es) => { const txt = (el.textContent || "").trim(); const leaf = el.children.length === 0 || el.tagName === "svg" || el.tagName === "IMG"; if (!leaf) return false; if (txt || el.tagName === "svg" || el.tagName === "IMG") return true; return /rgba?\((?!0, 0, 0, 0)/.test(es.backgroundColor); };
   const reds = [];
   const red = (id, rule, msg) => reds.push({ id, rule, msg });
@@ -212,6 +216,7 @@ function inPage({ width, pageName, opened = false }) {
       const es = getComputedStyle(el);
       const b = el.getBoundingClientRect();
       if (parseFloat(es.borderBottomWidth) > 0 && !/rgba\(0, 0, 0, 0\)/.test(es.borderBottomColor)) { lastInk = Math.max(lastInk, b.bottom); rightInk = Math.max(rightInk, b.right); }
+      if (kit3Panel(el, es) && b.width && b.height) { lastInk = Math.max(lastInk, b.bottom); rightInk = Math.max(rightInk, b.right); }
       if (!isInk(el, es) || b.width === 0 || b.height === 0) continue;
       lastInk = Math.max(lastInk, b.bottom); rightInk = Math.max(rightInk, b.right);
       const txt = (el.textContent || "").replace(/\s+/g, " ").trim();
@@ -286,7 +291,12 @@ function inPage({ width, pageName, opened = false }) {
     /* 52 HERO SIDE BLANK */
     if (card === heroCard && width >= 768 && rightInk > -Infinity) { const share = (rightInk - x0) / (x1 - x0); if (share < 0.75) red(id, "HERO SIDE BLANK", `the hero's ink ends at ${Math.round(share * 100)} percent of its width; the right ${Math.round((1 - share) * 100)} percent is empty (clause 52)`); }
     /* 51 TEXT WIDE */
-    if (width >= 768) for (const t of texts) { if (t.inTable || t.txt.length < 60) continue; if (t.rect.width > contentW / 2 + 1) red(id, "TEXT WIDE", `a run of text measures ${Math.round(t.rect.width)}px, over half the page's ${Math.round(contentW)}px: "${t.txt.slice(0, 48)}..." (clause 51)`); }
+    /* THE HERO PLATE'S BASIS LINE ON KIT-VERSION 3 is one line under its answer, as the approved industry page v6 draws it at every width
+       over 560 ("v6 is the approved industry target.", 2026-10-21): 79 characters, the reading measure's own length, not a paragraph run
+       across the page. Held to half the page it wraps and leaves the plate's right side a hole (the page filter's WHITE SPACE). That one
+       line (`.kit3 .fig-card .as`) is not read here; every other run is. */
+    const kit3Basis = (t) => !!t.el && !!t.el.closest(".kit3 .fig-card .as");
+    if (width >= 768) for (const t of texts) { if (t.inTable || t.txt.length < 60 || kit3Basis(t)) continue; if (t.rect.width > contentW / 2 + 1) red(id, "TEXT WIDE", `a run of text measures ${Math.round(t.rect.width)}px, over half the page's ${Math.round(contentW)}px: "${t.txt.slice(0, 48)}..." (clause 51)`); }
     /* 56 TEXT OUT OF BOX and TEXT OVERLAP */
     for (const t of texts) { if (t.rect.right > x1 + 1 || t.rect.left < x0 - 1) red(id, "TEXT OUT OF BOX", `"${t.txt.slice(0, 40)}" runs ${Math.round(Math.max(t.rect.right - x1, x0 - t.rect.left))}px past the card's box (clause 56)`); }
     /* 56 TEXT CUT: text the reader cannot read because its box cut it, to an ellipsis or at a clamp. Blind spot: text clipped by an

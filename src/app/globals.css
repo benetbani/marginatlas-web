@@ -3469,3 +3469,441 @@ main :where(p, li, blockquote, dd) {
   .kit4 .k-vm .k-ms { display: inline; }
 }
 @media (prefers-reduced-motion: reduce) { .kit4 .k-seeall svg { transition: none; } }
+   THE KIT 3 PAGE: THE INDUSTRY. The industry page v6 (his "v6 is the approved industry target.", 2026-10-21, FOUNDER-VERDICTS "The
+   industry page (/industries/restaurants) v6 approved"), drawn by src/components/spine/industry/kit3-view.tsx in KIT-VERSION 3's
+   forms (his "The gallery is right: move the pages onto kit version 3, each at its next version.", 2026-10-21). The rules are
+   sheets/kit/v3/kit3.css and the target builder's own CSS (sheets/industry/v6/src/build_industry_v6.py, EXTRA_CSS), section for
+   section, every selector under the page's one root `.kit3.k-industry`, so nothing here reaches another page and THE KIT PAGE above
+   (version 2, which the v4 view and London v9 read) is untouched. The class names are the kit's own (`.sub`, `.fig`, `.pair`,
+   `.caption` ...): the KIT 3 laws (probe_laws.mjs) read some of them, and the site's rules of those names all live under `.av2`.
+   Left out: the parts this page never draws (the kit's own header, sheet and footer, the home's pieces, the signal, the other drawing
+   kinds) and @keyframes. Every colour, distance, corner, size, shadow and motion is a variable of version 3's tokens (`--color-*`,
+   `--space-*`, `--font-size-*`, `--shadow-*` ...: design-tokens.ts `kit3`, set by the view's `kit3CssVars`); no hex is typed below.
+   The kit's two faces are the site's own slots (Geist in --font-sans, Space Grotesk in --font-num).
+   ============================================================================= */
+.kit3.k-industry { --font-family-text: var(--font-sans), Geist, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; --font-family-figure: var(--font-num); }
+/* ---- sheets/kit/v3/kit3.css, scoped ---- */
+/* Margin Atlas, the shared kit's stylesheet. KIT-VERSION 3 (2026-10-21).
+   Every value is a token from tokens.json (build/tokens.css, generated; kit3.py puts it first), except the hairline's 1px, a tap
+   target's 44 and a drawing's own geometry where DIST 3.2 fixes it. The rules are REFORM-PLAN-2026-10-21.md section 3 as he approved
+   it ("Go: build kit version 3 and its gallery with the visible changes (type ladder, open sections, one card system, logo only in
+   the header)", 2026-10-21) and his words of the same day (FV 2109, FV 2128); the laws that hold them are probes/probe_laws.mjs.
+   Sections are OPEN: no box, the title is their edge; side by side 64 apart (48 under 1024), stacked 24, a hairline, 24. In one
+   band the sections share four rows (subgrid): title and question, figure, body, caption, so every title and every answer begins
+   on one line (his FV 2109). Boxes, each declared with data-surface (the SURFACE law reads the hook, never a class):
+     card     the one card: something the reader presses or a door. White, a hairline edge, corner 8, the card shadow, padding 24
+              (16 under 560); on hover its edge one step darker and its title underlined; never lifts
+     panel    a group inside a section or a plate: the other ground, corner 8, padding 16 (12 under 560)
+     photo    a photograph that is itself the thing (a home card): corner 12
+     plate    white over a photograph, corner 12, the plate shadow, padding 24 (16), the small face plate 16
+     overlay  a popover, a sheet, a menu: white, a hairline, corner 12, the overlay shadow, padding 16
+   Type: the ladder 40, 30, 24, 20, 16, 14 with their lines; the plate's place name and the home's display headings the two named
+   exceptions. Terracotta: the page's answer, and each section's focal part (data-focal) in its forms: the colour, the soft tint, the
+   border (his FV 2109, FV 2128). Hover only on what can be pressed. The logo once, in the header. Icons 16, 20, 24. */
+/* ---------- 1. Composite type (size/line) from the tokens ---------- */
+.kit3.k-industry { --type-answer: var(--font-size-answer)/var(--font-line-answer); --type-focal: var(--font-size-focal)/var(--font-line-focal); --type-heading: var(--font-size-heading)/var(--font-line-heading); --type-title: var(--font-size-title)/var(--font-line-title); --type-lead: var(--font-size-lead)/var(--font-line-lead); --type-small: var(--font-size-small)/var(--font-line-small); --pad-card: var(--gap-card-pad); --pad-panel: var(--gap-panel-pad); --pad-plate: var(--gap-plate-pad); --band-pad: var(--gap-band); --pair-gap: var(--gap-pair); color-scheme: light; }
+/* version 2's names for the colours and faces, so a page's own CSS reads while it moves; new CSS names the tokens (--color-*) */
+.kit3.k-industry { --white: var(--color-white); --paper: var(--color-paper); --paper-2: var(--color-paper-2); --ink: var(--color-ink); --ink-2: var(--color-ink-2); --muted: var(--color-muted); --dek: var(--color-muted); --faint: var(--color-faint); --line: var(--color-line); --n3: var(--color-n3); --n4: var(--color-line-2); --terra: var(--color-terra); --terra-soft: var(--color-terra-soft); --band: var(--color-band); --mark: var(--color-terra); --f-text: var(--font-family-text); --f-fig: var(--font-family-figure); --ease: var(--easing-standard); }
+/* ---------- 2. Base ---------- */
+.kit3.k-industry { margin: 0; background: var(--color-white); color: var(--color-ink); font: 400 var(--type-lead) var(--font-family-text); }
+.kit3.k-industry p, .kit3.k-industry dd, .kit3.k-industry dt, .kit3.k-industry li { text-wrap: pretty; }
+.kit3.k-industry a { color: inherit; text-decoration-thickness: var(--border-hairline); text-underline-offset: 3px; }
+.kit3.k-industry :focus-visible { outline: var(--border-focus) solid var(--color-ink); outline-offset: var(--border-focus); }
+.kit3.k-industry .wrap { max-width: 1160px; margin: 0 auto; padding-left: max(var(--space-16), env(safe-area-inset-left, 0px)); padding-right: max(var(--space-16), env(safe-area-inset-right, 0px)); }
+.kit3.k-industry .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.kit3.k-industry .nowrap { white-space: nowrap; }
+.kit3.k-industry h1, .kit3.k-industry h2, .kit3.k-industry h3, .kit3.k-industry h4 { margin: 0; font-weight: 600; }
+.kit3.k-industry p, .kit3.k-industry dl, .kit3.k-industry dd, .kit3.k-industry ol, .kit3.k-industry ul, .kit3.k-industry figure { margin: 0; }
+.kit3.k-industry small { font: 400 var(--type-small) var(--font-family-text); }
+.kit3.k-industry svg.i16 { width: var(--icon-small); height: var(--icon-small); flex: none; }
+.kit3.k-industry svg.i20 { width: var(--icon-medium); height: var(--icon-medium); flex: none; }
+.kit3.k-industry svg.i24 { width: var(--icon-large); height: var(--icon-large); flex: none; }
+/* a link in running text: underlined; hover thickens the line */
+.kit3.k-industry :is(p, li, dd, td) > a:not([data-surface]) { transition: text-decoration-thickness var(--duration-feedback) var(--easing-standard); }
+.kit3.k-industry :is(p, li, dd, td) > a:not([data-surface]):is(:hover, .is-hover) { text-decoration-thickness: var(--border-focus); }
+/* ---------- 3. The money pair: local first, its dollars in parentheses; the switch puts dollars first ---------- */
+.kit3.k-industry .m { display: inline-flex; align-items: baseline; flex-wrap: wrap; column-gap: .3em; white-space: nowrap; }
+.kit3.k-industry .m .s, .kit3.k-industry[data-cur="usd"] .m .p { color: var(--color-muted); font: 400 var(--type-small) var(--font-family-text); letter-spacing: 0; }
+.kit3.k-industry .m .s::before, .kit3.k-industry[data-cur="usd"] .m .p::before { content: "("; }
+.kit3.k-industry .m .s::after, .kit3.k-industry[data-cur="usd"] .m .p::after { content: ")"; }
+.kit3.k-industry[data-cur="usd"] .m { flex-direction: row-reverse; justify-content: flex-end; }
+.kit3.k-industry[data-cur="usd"] .m .s { color: inherit; font: inherit; letter-spacing: inherit; }
+.kit3.k-industry[data-cur="usd"] .m .s::before, .kit3.k-industry[data-cur="usd"] .m .s::after { content: none; }
+.kit3.k-industry :is(.av .big, .fig) > .m .s, .kit3.k-industry[data-cur="usd"] :is(.av .big, .fig) > .m .p { font: 400 var(--type-lead) var(--font-family-text); }
+/* ---------- 4. Controls: the ink button, the outlined button, the round arrow, the view switch, fields, a tag ---------- */
+.kit3.k-industry .btn { display: inline-flex; align-items: center; gap: var(--space-8); min-height: 44px; padding: 0 var(--space-16); border: 0; border-radius: var(--radius-card); background: var(--color-ink); color: var(--color-white); font: 600 var(--type-small) var(--font-family-text); text-decoration: none; cursor: pointer; transition: background-color var(--duration-feedback) var(--easing-standard); }
+.kit3.k-industry .btn:is(:hover, .is-hover) { background: var(--color-ink-2); }
+.kit3.k-industry .btn:is(:active, .is-pressed) { background: var(--color-ink); outline: var(--border-focus) solid var(--color-ink-2); outline-offset: calc(-2 * var(--border-focus)); }
+.kit3.k-industry .btn.line { background: var(--color-white); color: var(--color-ink); border: var(--border-hairline) solid var(--color-faint); }
+.kit3.k-industry .btn.line:is(:hover, .is-hover) { background: var(--color-paper); }
+.kit3.k-industry .btn.line:is(:active, .is-pressed) { background: var(--color-paper-2); outline: 0; }
+.kit3.k-industry .round { width: 44px; height: 44px; box-sizing: border-box; border: var(--border-hairline) solid var(--color-ink); background: var(--color-white); border-radius: var(--radius-round); display: grid; place-items: center; flex: none; color: var(--color-ink); }
+.kit3.k-industry .is-focus { outline: var(--border-focus) solid var(--color-ink); outline-offset: var(--border-focus); }
+.kit3.k-industry .switch { display: inline-flex; border: var(--border-hairline) solid var(--color-faint); border-radius: var(--radius-card); overflow: hidden; flex: none; align-self: flex-start; }
+.kit3.k-industry .switch button { min-width: 44px; height: 44px; padding: 0 var(--space-12); border: 0; border-radius: 0; background: var(--color-white); font: 600 var(--type-lead) var(--font-family-text); color: var(--color-ink-2); cursor: pointer; transition: background-color var(--duration-feedback) var(--easing-standard); }
+.kit3.k-industry .switch button:is(:hover, .is-hover) { background: var(--color-paper-2); }
+.kit3.k-industry .switch button[aria-pressed="true"] { background: var(--color-ink); color: var(--color-white); }
+.kit3.k-industry .etag { display: inline-block; vertical-align: 2px; margin-left: var(--space-8); padding: 0 var(--space-8); border-radius: var(--radius-round); background: var(--color-paper-2); font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink-2); white-space: nowrap; }
+/* ---------- 5. The header: the logo once, as the link home; the menu opens a sheet under 960 ---------- */
+/* ---------- 6. Bands, chapters and open sections ---------- */
+.kit3.k-industry section.chapter { padding-block: var(--band-pad); }
+.kit3.k-industry section.chapter.tint { background: var(--color-paper); }
+.kit3.k-industry .chead { display: flex; align-items: baseline; gap: var(--space-12); margin-bottom: var(--gap-chapter-head); }
+.kit3.k-industry .num { font: 600 var(--type-small) var(--font-family-text); color: var(--color-muted); font-variant-numeric: tabular-nums; }
+.kit3.k-industry .chead h2 { font: 600 var(--type-heading) var(--font-family-text); color: var(--color-ink); letter-spacing: -0.01em; }
+/* a section: its title is its edge; title and question, the figure, the body, the caption (kit3.card writes the four parts) */
+.kit3.k-industry .sub { display: grid; align-content: start; min-width: 0; }
+.kit3.k-industry .sub > header { display: grid; gap: var(--gap-title-question); align-content: start; }
+.kit3.k-industry .sub > header h3 { font: 600 var(--type-title) var(--font-family-text); letter-spacing: -0.005em; }
+.kit3.k-industry .sub .ask { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .sub > .sfig:not(:empty), .kit3.k-industry .sub > .sbody, .kit3.k-industry .sub > .caption { margin-top: var(--gap-group); }
+.kit3.k-industry .sub > .sbody { display: grid; gap: var(--gap-group); align-content: start; min-width: 0; container-type: inline-size; }
+/* a drawing beside its rows stacks over them when its section is narrow (two sections side by side at 768) */
+@container (max-width: 440px) {
+  .kit3.k-industry .sbody :is(.ringrow, .unitrow, .nestrow) { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .kit3.k-industry .sbody :is(.ringrow, .unitrow, .nestrow) > dl { justify-self: stretch; }
+  .kit3.k-industry .sbody .kv:not(.stack) > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-12); }
+  .kit3.k-industry .sbody .kv:not(.stack) dd { text-align: right; }
+}
+/* side by side: the sections of one band share four rows, so titles and answers begin on one line */
+.kit3.k-industry .pair, .kit3.k-industry .cluster.c3 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto auto 1fr auto; column-gap: var(--pair-gap); align-items: start; }
+.kit3.k-industry .pair.w75 { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.kit3.k-industry .cluster.c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kit3.k-industry .pair > .sub, .kit3.k-industry .cluster.c3 > .sub { grid-row: span 4; grid-template-rows: subgrid; align-self: stretch; }
+/* stacked: 24, a hairline, 24 */
+.kit3.k-industry .band-stack { display: grid; }
+.kit3.k-industry .band-stack > * + * { margin-top: var(--gap-stack); padding-top: var(--gap-stack); border-top: var(--border-hairline) solid var(--color-line); }
+.kit3.k-industry .fig { display: grid; gap: var(--gap-figure-line); justify-items: start; font: 600 var(--type-focal) var(--font-family-figure); letter-spacing: -0.015em; font-variant-numeric: tabular-nums; }
+.kit3.k-industry .fig .unit { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); letter-spacing: 0; }
+.kit3.k-industry .caption { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .note { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .plain { font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink); max-width: 68ch; }
+.kit3.k-industry .lt { font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink); }
+.kit3.k-industry .group { display: grid; gap: var(--space-8); }
+.kit3.k-industry .group + .group { margin-top: calc(var(--gap-list-list) - var(--gap-group)); }
+.kit3.k-industry figure.drawn { display: grid; gap: var(--gap-caption); }
+.kit3.k-industry figure.drawn figcaption { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+/* ---------- 7. Boxes: the hooks; a component declares which ---------- */
+.kit3.k-industry [data-surface="card"] { position: relative; display: flex; flex-direction: column; background: var(--color-white); border: var(--border-hairline) solid var(--color-line); border-radius: var(--radius-card); box-shadow: var(--shadow-card); padding: var(--pad-card); color: var(--color-ink); text-decoration: none; transition: border-color var(--duration-feedback) var(--easing-standard); }
+.kit3.k-industry a[data-surface="card"]:is(:hover, .is-hover) { border-color: var(--color-line-2); }
+.kit3.k-industry [data-surface="card"][data-tone="ink"] { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-white); }
+.kit3.k-industry a[data-surface="card"][data-tone="ink"]:is(:hover, .is-hover) { border-color: var(--color-ink); background: var(--color-ink-2); }
+.kit3.k-industry [data-surface="panel"] { background: var(--color-paper); border-radius: var(--radius-card); padding: var(--pad-panel); }
+.kit3.k-industry section.chapter.tint [data-surface="panel"] { background: var(--color-white); }
+.kit3.k-industry section.chapter :is([data-surface="plate"], [data-surface="card"], [data-surface="overlay"]) [data-surface="panel"] { background: var(--color-paper); }
+.kit3.k-industry :where(div[data-surface="panel"]) { display: grid; gap: var(--space-4); align-content: start; }
+.kit3.k-industry [data-surface="photo"] { position: relative; display: block; border-radius: var(--radius-plate); overflow: hidden; background: var(--color-photo-ground); isolation: isolate; }
+.kit3.k-industry [data-surface="plate"] { background: var(--color-white); border-radius: var(--radius-plate); padding: var(--pad-plate); box-shadow: var(--shadow-plate); }
+.kit3.k-industry [data-surface="overlay"] { background: var(--color-white); border: var(--border-hairline) solid var(--color-line); border-radius: var(--radius-plate); padding: var(--gap-panel-pad); box-shadow: var(--shadow-overlay); }
+/* a section's focal part (data-focal): terracotta in its forms (his FV 2109, FV 2128) */
+/* ---------- 8. Rows: a label column of fixed width, the value beside it, rows 12 apart; a list under a list has its own title ---------- */
+.kit3.k-industry dl.kv { display: grid; gap: var(--gap-row-pad); }
+.kit3.k-industry .kv > div { display: grid; grid-template-columns: minmax(0, 22ch) minmax(0, 1fr); column-gap: var(--space-24); align-items: baseline; }
+.kit3.k-industry .kv dt { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .kv dd { font: 600 var(--type-lead) var(--font-family-figure); font-variant-numeric: tabular-nums; }
+.kit3.k-industry .kv.facts dd { font: 600 var(--type-title) var(--font-family-figure); }
+.kit3.k-industry .kv .tot :is(dt, dd) { color: var(--color-ink); font-weight: 600; }
+.kit3.k-industry .kv .k { display: inline-block; width: 12px; height: 12px; border-radius: var(--radius-tiny); margin-right: var(--space-8); vertical-align: -1px; }
+.kit3.k-industry .kv .of { display: block; font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .kv .none dd { color: var(--color-muted); }
+.kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv > div { grid-template-columns: minmax(0, 1fr) auto; }
+.kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv dd { text-align: right; }
+.kit3.k-industry .kv.stack > div, .kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv.stack > div { grid-template-columns: 1fr; row-gap: var(--gap-label-figure); }
+.kit3.k-industry .kv.stack dd, .kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv.stack dd { text-align: left; }
+/* ---------- 9. Tables: a row 12 above and below its text with a hairline, the head rule, figures right and tabular ---------- */
+.kit3.k-industry table.peers, .kit3.k-industry table.forms { width: 100%; border-collapse: collapse; }
+.kit3.k-industry :is(.peers, .forms) :is(th, td) { padding: var(--gap-row-pad) var(--space-8); border-bottom: var(--border-hairline) solid var(--color-line); text-align: right; vertical-align: top; }
+.kit3.k-industry :is(.peers, .forms) thead th { border-bottom-color: var(--color-line-2); vertical-align: bottom; font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink); }
+.kit3.k-industry :is(.peers, .forms) thead th small { display: block; font-weight: 400; color: var(--color-muted); }
+.kit3.k-industry :is(.peers, .forms) :is(thead th:first-child, tbody th) { text-align: left; padding-left: 0; }
+.kit3.k-industry :is(.peers, .forms) tbody th { font: 600 var(--type-lead) var(--font-family-text); }
+.kit3.k-industry :is(.peers, .forms) td { font: 500 var(--type-lead) var(--font-family-figure); font-variant-numeric: tabular-nums; }
+.kit3.k-industry :is(.peers, .forms) td .m { flex-direction: column; align-items: flex-end; row-gap: 0; }
+.kit3.k-industry[data-cur="usd"] :is(.peers, .forms) td .m { flex-direction: column-reverse; }
+.kit3.k-industry .peers tr.me :is(th, td) { background: var(--color-paper); }
+.kit3.k-industry section.chapter.tint .peers tr.me :is(th, td) { background: var(--color-white); }
+.kit3.k-industry .peers td.win { color: var(--color-terra); font-weight: 600; }
+.kit3.k-industry .peers td.none { color: var(--color-muted); }
+.kit3.k-industry .peers td .v { display: inline-flex; align-items: baseline; justify-content: flex-end; gap: var(--space-2); }
+.kit3.k-industry .tk { width: 14px; height: 14px; margin-right: var(--space-4); vertical-align: -1px; color: var(--color-terra); flex: none; }
+.kit3.k-industry .key { display: flex; gap: var(--space-8); align-items: baseline; font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+/* steps: a numbered list */
+/* ---------- 10. The signal: one triangle in five states, its colour on the triangle only, the word in ink ---------- */
+/* ---------- 11. Disclosure: seven kinds, one job each (REFORM-PLAN 3.7); data-disclosure names the kind ---------- */
+/* 1 the fold: one under a section, closed on arrival, on a panel */
+.kit3.k-industry details.fold { padding-block: 0; }
+.kit3.k-industry .fold > summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); min-height: 48px; padding: 0; font: 600 var(--type-small) var(--font-family-text); cursor: pointer; }
+.kit3.k-industry .fold > summary::-webkit-details-marker, .kit3.k-industry .qlist summary::-webkit-details-marker { display: none; }
+.kit3.k-industry .fold > summary:hover span, .kit3.k-industry .qlist summary:hover span { text-decoration: underline; text-underline-offset: 3px; }
+.kit3.k-industry .fold > summary svg, .kit3.k-industry .qlist summary svg { transition: transform var(--duration-reveal) var(--easing-standard); }
+.kit3.k-industry .fold[open] > summary svg { transform: rotate(45deg); }
+.kit3.k-industry .fold-in { padding: 0 0 var(--pad-panel); display: grid; gap: var(--space-8); }
+.kit3.k-industry .fold-in .note { color: var(--color-ink-2); }
+/* 2 the question list: independent questions, a hairline between, several may open; "Open all" past five */
+.kit3.k-industry .qlist { display: grid; }
+.kit3.k-industry .qlist details { border-bottom: var(--border-hairline) solid var(--color-line); }
+.kit3.k-industry .qlist details:first-of-type { border-top: var(--border-hairline) solid var(--color-line); }
+.kit3.k-industry .qlist summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); min-height: 48px; padding-block: var(--space-12); font: 600 var(--type-lead) var(--font-family-text); cursor: pointer; }
+.kit3.k-industry .qlist details[open] summary svg { transform: rotate(180deg); }
+.kit3.k-industry .qlist .qa { padding: 0 0 var(--space-16); font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink-2); max-width: 68ch; }
+.kit3.k-industry .qlist .openall { justify-self: start; margin-bottom: var(--space-8); }
+/* 3 the view switch: .switch (section 4). 4 show more: the rest of a long list behind one button (his FV 2109) */
+/* 5 the definition: a term with a dotted line opens a popover on click, under 60 words */
+/* 6 the sheet: the phone menu (a dialog), from the right */
+/* 7 the reveal: a photograph card's figures behind its face, on a click or a tap, a crossfade (FV 1848; never a hover card, never a flip) */
+/* ---------- 12. Drawings, one of each kind a page (data-kind), at DIST 3.2's sizes, read through hooks ---------- */
+.kit3.k-industry .akey { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-12) var(--space-24); font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .akey i { display: inline-block; width: 12px; height: 12px; border-radius: var(--radius-tiny); margin-right: var(--space-8); vertical-align: -1px; }
+.kit3.k-industry .akey i.dash { height: 0; border-top: var(--border-focus) dashed var(--color-ink); border-radius: 0; vertical-align: 3px; }
+.kit3.k-industry .ink { background: var(--color-ink); }
+.kit3.k-industry .ink2 { background: var(--color-ink-2); }
+.kit3.k-industry .n3 { background: var(--color-n3); }
+.kit3.k-industry .bm { background: var(--color-benchmark); }
+.kit3.k-industry .p2 { background: var(--color-paper-2); }
+.kit3.k-industry .l2 { background: var(--color-line-2); }
+.kit3.k-industry .tc { background: var(--color-terra); }
+.kit3.k-industry .ts { background: var(--color-terra-soft); }
+/* ranked-bars: parts of a whole, biggest first, the rest pinned last; the bar and its track 12 */
+.kit3.k-industry .rbars { display: grid; gap: var(--gap-row-pad); }
+.kit3.k-industry .rb { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-8) var(--space-12); align-items: baseline; font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .rb .tr { grid-column: 1 / -1; height: 12px; border-radius: var(--radius-round); background: var(--color-paper); position: relative; overflow: hidden; }
+.kit3.k-industry section.chapter.tint .rb .tr { background: var(--color-white); }
+.kit3.k-industry .rb .tr b { position: absolute; inset: 0 auto 0 0; border-radius: var(--radius-round); background: var(--color-ink-2); }
+.kit3.k-industry .rb.rest .tr b { background: var(--color-n3); }
+.kit3.k-industry .rb[data-focal] .tr b { background: var(--color-terra); }
+.kit3.k-industry .rb .tv { font: 600 var(--type-lead) var(--font-family-figure); color: var(--color-ink); font-variant-numeric: tabular-nums; }
+/* columns: a ranking as columns from one floor, the figure over each, the name under, a dashed reference across */
+/* month-columns: twelve slim columns, the busiest in ink, the busiest one the focal */
+.kit3.k-industry .vchart { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); height: 200px; gap: var(--space-4); }
+.kit3.k-industry .vcol { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); min-width: 0; }
+.kit3.k-industry .vb { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+.kit3.k-industry .vb b { display: block; width: 16px; border-radius: var(--radius-tiny) var(--radius-tiny) 0 0; background: var(--color-line-2); }
+.kit3.k-industry .vcol.top .vb b { background: var(--color-ink); }
+.kit3.k-industry .vcol[data-focal] .vb b { background: var(--color-terra); }
+.kit3.k-industry .vm { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .vcol.top .vm, .kit3.k-industry .vcol[data-focal] .vm { color: var(--color-ink); font-weight: 600; }
+.kit3.k-industry .vm .ms { display: none; }
+/* part-bar: shares of a whole side by side, the bar 32 */
+.kit3.k-industry .kbars { display: grid; gap: var(--space-16); }
+.kit3.k-industry .kn { margin-bottom: var(--space-8); display: flex; justify-content: space-between; gap: var(--space-12); font: 600 var(--type-small) var(--font-family-text); }
+.kit3.k-industry .kn b { font-family: var(--font-family-figure); }
+.kit3.k-industry .kt { display: flex; gap: var(--space-2); height: 32px; border-radius: var(--radius-card); overflow: hidden; }
+.kit3.k-industry .kt span { display: flex; align-items: center; padding-left: var(--space-8); overflow: hidden; }
+.kit3.k-industry .kt i { font: 600 var(--type-small) var(--font-family-text); font-style: normal; white-space: nowrap; }
+.kit3.k-industry .kt .n3 { color: var(--color-ink); }
+.kit3.k-industry .kt .ink2 { color: var(--color-white); }
+/* stacked-column: one column of what a month costs, a dashed line of what is left after tax */
+.kit3.k-industry .month { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: var(--space-24); align-items: end; }
+/* rails: range-strip (marks on one rail, the strip 60), tenths-strip, dot-strip; the rail 8, a mark 16 */
+.kit3.k-industry .rstrip { position: relative; height: 60px; }
+.kit3.k-industry .rstrip .rail { position: absolute; left: 0; right: 0; top: 26px; height: 8px; border-radius: var(--radius-round); background: var(--color-paper-2); }
+.kit3.k-industry .rstrip .mk { position: absolute; top: 22px; width: 16px; height: 16px; margin-left: -8px; border-radius: var(--radius-round); background: var(--color-ink-2); box-shadow: 0 0 0 var(--border-focus) var(--color-white); }
+.kit3.k-industry .rstrip .mk[data-focal] { background: var(--color-terra); }
+.kit3.k-industry .rstrip .lab { position: absolute; top: 0; transform: translateX(-50%); font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink); white-space: nowrap; }
+.kit3.k-industry .rstrip .lab.dn { top: auto; bottom: 0; }
+.kit3.k-industry .rstrip .lab.r { transform: translateX(-100%); }
+/* rings: ring (one share) and donut (parts), 144 */
+.kit3.k-industry .ringrow { display: grid; grid-template-columns: 144px minmax(0, 1fr); gap: var(--space-24); align-items: center; }
+.kit3.k-industry svg.ring, .kit3.k-industry svg.donut { width: 144px; height: 144px; display: block; }
+/* units: pictogram (one against many), unit-grid (a hundred squares of 10) */
+.kit3.k-industry .unitrow { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-24); align-items: start; }
+/* areas: nested-squares, each a share of the one around it by area, on one corner */
+.kit3.k-industry .nestrow { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: var(--space-24); align-items: end; }
+/* lines: line, its plot 96 tall; words and dots laid over a stretched SVG */
+/* ---------- 13. The spine hero: a bright photograph, the name on a plate, the answer and the eight cells on a plate ---------- */
+.kit3.k-industry .city-hero { position: relative; }
+.kit3.k-industry .pano { position: absolute; left: 0; right: 0; top: 0; height: 700px; overflow: hidden; background: var(--color-photo-ground); }
+.kit3.k-industry .pano img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 46% 42%; }
+.kit3.k-industry .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: var(--space-48); padding-top: var(--space-48); padding-bottom: var(--space-64); }
+.kit3.k-industry .title-plate { position: absolute; left: max(var(--space-16), env(safe-area-inset-left, 0px)); top: 656px; transform: translateY(-100%); max-width: 460px; display: grid; gap: var(--space-8); }
+.kit3.k-industry .crumb { display: flex; align-items: center; gap: var(--space-8); font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .title-plate h1 { font: 600 var(--font-display-plate-name)/1 var(--font-family-text); letter-spacing: -0.035em; }
+.kit3.k-industry .lede { font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .fig-card { grid-column: 2; display: grid; gap: var(--gap-group); }
+.kit3.k-industry .answer { display: flex; justify-content: space-between; gap: var(--space-16); align-items: flex-start; }
+.kit3.k-industry .answer > div { display: grid; gap: var(--gap-label-figure); }
+.kit3.k-industry .al { font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .av { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--space-8); font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .av .big { font: 600 var(--type-answer) var(--font-family-figure); letter-spacing: -0.02em; color: var(--color-terra); }
+.kit3.k-industry .as { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .cells { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
+.kit3.k-industry .cell { min-width: 0; display: grid; gap: var(--space-8); align-content: start; }
+.kit3.k-industry .cl { display: flex; align-items: center; gap: var(--space-8); font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink); }
+.kit3.k-industry .cv { font: 600 var(--type-title) var(--font-family-figure); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.kit3.k-industry .cap { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-12); align-items: center; font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .cap a { color: var(--color-ink); font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; }
+/* ---------- 14. Cards: the exit's doors, cities, reading cards; the source line ---------- */
+.kit3.k-industry .doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-24); }
+.kit3.k-industry .door { gap: var(--space-8); min-height: 176px; padding-bottom: 72px; }
+.kit3.k-industry .door .dk { font: 600 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .door h3 { font: 600 var(--type-title) var(--font-family-text); }
+.kit3.k-industry .door p { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .door .round { position: absolute; right: var(--space-24); bottom: var(--space-24); }
+.kit3.k-industry .door[data-tone="ink"] :is(p, .dk) { color: var(--color-n3); }
+.kit3.k-industry .door[data-tone="ink"] .round { border-color: var(--color-white); }
+.kit3.k-industry .srcline { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-24); align-items: center; margin-top: var(--space-24); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .srcline a { color: var(--color-ink-2); min-height: 44px; display: inline-flex; align-items: center; }
+/* ---------- 15. The home's pieces: the question box, the marks, the photograph card, a collection's head, the band ---------- */
+/* ---------- 16. The foot: the email row, the footer ---------- */
+/* ---------- 17. Widths: 1080, 1024, 960, 768, 640, 560 ---------- */
+@media (max-width: 1080px) {
+  .kit3.k-industry .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 480px); }
+}
+@media (max-width: 1023px) {
+  .kit3.k-industry { --band-pad: var(--gap-band-tablet); --pair-gap: var(--gap-pair-tablet); }
+}
+@media (max-width: 960px) {
+  .kit3.k-industry .pano { position: relative; height: 300px; }
+  .kit3.k-industry .hero-grid { display: block; padding-top: 0; padding-bottom: var(--space-48); }
+  .kit3.k-industry .title-plate { position: relative; left: auto; top: auto; transform: none; margin-top: -48px; max-width: none; }
+  .kit3.k-industry .title-plate h1 { font-size: var(--font-display-plate-name-country); }
+  .kit3.k-industry .fig-card { margin-top: var(--space-16); }
+  .kit3.k-industry .doors { grid-template-columns: 1fr; }
+}
+@media (max-width: 767px) {
+  /* sections stack: 24, a hairline, 24 */
+  .kit3.k-industry .pair, .kit3.k-industry .pair.w75, .kit3.k-industry .cluster.c3 { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .kit3.k-industry :is(.pair, .cluster.c3) > .sub + .sub { margin-top: var(--gap-stack); padding-top: var(--gap-stack); border-top: var(--border-hairline) solid var(--color-line); }
+}
+@media (max-width: 640px) {
+  /* the comparison table becomes one block a row: no sideways scroll */
+  .kit3.k-industry table.peers, .kit3.k-industry .peers tbody, .kit3.k-industry .peers tr, .kit3.k-industry .peers th, .kit3.k-industry .peers td { display: block; }
+  .kit3.k-industry .peers thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .kit3.k-industry .peers tr { padding-block: var(--gap-row-pad); border-bottom: var(--border-hairline) solid var(--color-line); }
+  .kit3.k-industry .peers tr.me { background: var(--color-paper); padding-inline: var(--space-8); border-radius: var(--radius-card); }
+  .kit3.k-industry section.chapter.tint .peers tr.me { background: var(--color-white); }
+  .kit3.k-industry .peers tr.me :is(th, td) { background: transparent; }
+  .kit3.k-industry .peers tbody th { padding: 0 0 var(--space-4); border: 0; }
+  .kit3.k-industry .peers td { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-12); padding: var(--space-4) 0; border: 0; }
+  .kit3.k-industry .peers td::before { content: attr(data-l); text-align: left; font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+  .kit3.k-industry .peers td .m { flex-direction: row; }
+  .kit3.k-industry[data-cur="usd"] .peers td .m { flex-direction: row-reverse; }
+  .kit3.k-industry .ringrow, .kit3.k-industry .unitrow, .kit3.k-industry .nestrow { grid-template-columns: 1fr; justify-items: start; }
+}
+@media (max-width: 560px) {
+  .kit3.k-industry { --pad-card: var(--gap-card-pad-phone); --pad-panel: var(--gap-panel-pad-phone); --pad-plate: var(--gap-plate-pad-phone); }
+  .kit3.k-industry .cl { flex-direction: column; align-items: flex-start; }
+  .kit3.k-industry .cl svg { width: var(--icon-medium); height: var(--icon-medium); }
+  .kit3.k-industry .title-plate h1 { font-size: var(--font-display-plate-name-phone); }
+  .kit3.k-industry .kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-12); }
+  .kit3.k-industry .kv dd { text-align: right; }
+  .kit3.k-industry .vb b { width: 12px; }
+  .kit3.k-industry .vm .ml { display: none; }
+  .kit3.k-industry .vm .ms { display: inline; }
+  .kit3.k-industry .month { grid-template-columns: 64px minmax(0, 1fr); gap: var(--space-16); }
+  .kit3.k-industry .forms thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .kit3.k-industry .forms, .kit3.k-industry .forms tbody, .kit3.k-industry .forms tr, .kit3.k-industry .forms th, .kit3.k-industry .forms td { display: block; }
+  .kit3.k-industry .forms tr { padding-block: var(--gap-row-pad); border-bottom: var(--border-hairline) solid var(--color-line); }
+  .kit3.k-industry .forms :is(th, td) { border: 0; padding: var(--space-4) 0; }
+  .kit3.k-industry .forms td { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-12); }
+  .kit3.k-industry .forms td::before { content: attr(data-l); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); text-align: left; }
+  .kit3.k-industry .forms td .m { flex-direction: row; }
+  .kit3.k-industry[data-cur="usd"] .forms td .m { flex-direction: row-reverse; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kit3.k-industry *, .kit3.k-industry *::before, .kit3.k-industry *::after { transition: none !important; animation: none !important; }
+}
+/* ---- the page's own: sheets/industry/v6/src/build_industry_v6.py EXTRA_CSS, scoped ---- */
+/* the industry hero: no money in the answer, so no switch; the hero as tall as its photograph; the card at its content */
+.kit3.k-industry .city-hero.ind .hero-grid { min-height: 700px; box-sizing: border-box; }
+.kit3.k-industry .city-hero.ind .pano img { object-position: 50% 90%; }
+.kit3.k-industry .city-hero.ind .fig-card { align-self: start; }
+.kit3.k-industry .cv .cn { margin-left: var(--space-8); font: 500 var(--type-small) var(--font-family-text); color: var(--color-ink-2); letter-spacing: 0; }
+/* the opening band at five to seven, the ratios at two to one */
+.kit3.k-industry .pair.w57 { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.kit3.k-industry .pair.w21 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+/* the trades next door: all businesses marked on every track */
+.kit3.k-industry .rb .tr .mk { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--color-ink); }
+.kit3.k-industry .mkkey { display: flex; align-items: center; gap: var(--space-8); font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .mkkey i { width: 2px; height: 16px; background: var(--color-ink); }
+.kit3.k-industry .def2 { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .def2 b { color: var(--color-ink); }
+/* the part bar's profit and its key */
+.kit3.k-industry .kt .tc, .kit3.k-industry .akey i.tc { background: var(--color-terra); }
+.kit3.k-industry .kv.year > div:last-child :is(dt, dd) { color: var(--color-ink); font-weight: 700; }
+/* an hour of work: what the hour leaves between the two marks, the section's focal part */
+.kit3.k-industry .hstrip .gap { position: absolute; top: 26px; height: 8px; background: var(--color-terra); }
+.kit3.k-industry .hstrip .lab { width: max-content; }
+.kit3.k-industry .hstrip .lab .m { flex-wrap: nowrap; font-family: var(--font-family-figure); }
+/* the ratios: the name opens its glossary entry, the formula under it */
+.kit3.k-industry .ratios th[scope="row"] { padding-right: var(--space-12); }
+.kit3.k-industry .ratios .rname { display: block; color: var(--color-ink); text-underline-offset: 3px; }
+.kit3.k-industry .ratios .rf { display: block; margin-top: var(--space-4); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .ratios td { white-space: nowrap; }
+/* the range: the lowest country over the highest, right-aligned as every figure of the table */
+.kit3.k-industry .ratios td.rng { text-align: right; }
+.kit3.k-industry .ratios .lh { display: inline-grid; gap: var(--space-4); justify-items: end; }
+.kit3.k-industry .ratios .lh > span { display: inline-flex; align-items: baseline; gap: var(--space-8); }
+.kit3.k-industry .ratios .lh .cn { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .ratios .lh .m { font-variant-numeric: tabular-nums; }
+.kit3.k-industry .says { padding-left: var(--space-16); display: grid; gap: var(--space-12); font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink); }
+.kit3.k-industry .says .m { font-family: var(--font-family-figure); font-weight: 600; }
+.kit3.k-industry .kinds3 p { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .kinds3 b { color: var(--color-ink); }
+/* the table's currency switch above it */
+.kit3.k-industry .tsw { display: flex; justify-content: flex-end; }
+.kit3.k-industry .akey i.fa, .kit3.k-industry .kv .k.fa { background: var(--color-faint); }
+/* below 960 the ratios' pair stacks as the kit stacks a pair below 768; the months take their one-letter labels */
+@media (max-width: 960px) {
+  .kit3.k-industry .pair.w21 { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .kit3.k-industry .pair.w21 > .sub + .sub { margin-top: var(--gap-stack); padding-top: var(--gap-stack); border-top: var(--border-hairline) solid var(--color-line); }
+  .kit3.k-industry .vm .ml { display: none; }
+  .kit3.k-industry .vm .ms { display: inline; }
+  .kit3.k-industry .city-hero.ind .hero-grid { min-height: 0; }
+}
+@media (max-width: 767px) {
+  .kit3.k-industry .pair.w57 { grid-template-columns: minmax(0, 1fr); }
+}
+/* on a phone the range stands under its label, the lowest over the highest */
+@media (max-width: 560px) {
+  .kit3.k-industry .ratios td.rng { flex-direction: column; align-items: flex-end; gap: var(--space-4); }
+  .kit3.k-industry .ratios td.rng::before { align-self: flex-start; }
+}
+@media (max-width: 560px) {
+  .kit3.k-industry .city-hero.ind .cells { grid-template-columns: minmax(0, 1fr); }
+}
+/* ---- the site's own, on this page ---- */
+/* The site's section surface (.spine-card, by which the page gates find a section) carries a ground and a shadow: version 3's
+   sections are open, no box (SURFACE), so on this page it draws none. */
+.kit3.k-industry .sub.spine-card { background: var(--color-white); box-shadow: none; }
+/* ...and its ground is its band's own, never transparent (the frost-reads gate: a see-through card is the glass his 2026-09-07 ruling
+   removed), so the section is opaque and still has no box of its own (KIT 3 SURFACE reads a ground only where it differs). */
+.kit3.k-industry section.chapter.tint .sub.spine-card { background: var(--color-paper); }
+/* Edge to edge, as the target's bands run (its hero photograph and its tinted chapters span the window, the column 1160 inside): the
+   page's root steps out of the site's content column (main, max-width 1120 with its padding) to the window's width. The window's
+   width counts a classic scrollbar, so this page alone clips what would stand past the right edge. */
+.kit3.k-industry { margin-inline: calc(50% - 50vw); }
+body:has(.kit3.k-industry) { overflow-x: clip; }
+/* The site's trail back up (Crumbs.tsx), in the kit's column and on its ladder: 14 on its line of 20, each step a tap of 44, the
+   marks between at the muted ink (4.5:1 on white). */
+.kit3.k-industry > .crumbs { padding-block: 0; }
+.kit3.k-industry nav[data-crumbs] { max-height: 44px; margin: 0; font-size: var(--font-size-small); line-height: var(--font-line-small); color: var(--color-muted); }
+.kit3.k-industry nav[data-crumbs] > * { line-height: var(--font-line-small); }
+.kit3.k-industry nav[data-crumbs] a { min-height: 44px; display: inline-flex; align-items: center; color: var(--color-muted); }
+.kit3.k-industry nav[data-crumbs] span { color: var(--color-muted); }
+.kit3.k-industry nav[data-crumbs] > span:last-child { color: var(--color-ink-2); }
+/* The kit's own measures on this page: version 3 sets its prose at 68ch (.plain, a question list's answer) and a section's question to
+   one line at 1280 (the ALIGN law, his FV 2109), so the site's default cap on running text (main :where(p, li, dd), his 2026-08-21
+   "narrow the words, keep the pictures wide", 536 at its widest) gives way to them here, as the approved target draws them. */
+.kit3.k-industry :where(p, li, blockquote, dd) { max-width: none; }
+/* The site's Geist (next/font's file) sets a line about 2% wider than the Geist the target was drawn with (Google Fonts'): "The ratios in
+   plain words, against the average business." measures 360 against 352 in a column of 355, and wraps. The questions are tightened by a
+   hundredth of an em so each stays one line at 1280, as in the target (the ALIGN law, his FV 2109). */
+.kit3.k-industry .sub .ask { letter-spacing: -0.01em; }
+/* The site's reset takes a list's markers away; the target's "What they say" keeps the browser's discs. */
+.kit3.k-industry ul.says { list-style: disc; }
+/* The site's reset takes a link's underline away; the target's links keep the browser's (the doors, cards, take theirs off). */
+.kit3.k-industry a { text-decoration-line: underline; }
+.kit3.k-industry nav[data-crumbs] a { text-decoration-line: none; }
+/* Every printed figure in tabular numerals, in prose too (art direction F1: figures that stack line up), as the v4 page did. */
+.kit3.k-industry [data-src], .kit3.k-industry [data-src] * { font-variant-numeric: tabular-nums; }
+/* A link standing alone in a note (the table's "How the figures are calculated") is a tap of 44, as the hero's and the exit's are. */
+.kit3.k-industry .sbody > p.note > a:only-child { min-height: 44px; display: inline-flex; align-items: center; }
+/* ...the kit's `font` shorthand on a money pair's halves, the answer and the part bar's labels resets them, so they are named again. */
+.kit3.k-industry .m :is(.p, .s), .kit3.k-industry .av .big, .kit3.k-industry .kt i { font-variant-numeric: tabular-nums; }
+/* The reading measure on this page (his "narrow the words, keep the pictures wide", 2026-08-21; the readability gate's 78 a line and
+   the page laws' half a page under 1024): a note and the table's key at 32em, never past half the page; a section's question at half
+   the page under 1024, and free at 1024 and over, where version 3 keeps each question to its one line. */
+.kit3.k-industry :is(.note, .key > span, .def2) { max-width: min(32em, var(--measure-half)); }
+@media (max-width: 1023px) { .kit3.k-industry .sub > header .ask { max-width: var(--measure-half); } }
+.kit3.k-industry :is(.av .big, .fig) > .m :is(.p, .s), .kit3.k-industry[data-cur="usd"] :is(.av .big, .fig) > .m :is(.p, .s) { font-variant-numeric: tabular-nums; }
