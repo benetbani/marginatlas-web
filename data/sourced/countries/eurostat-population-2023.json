@@ -1,0 +1,593 @@
+{
+ "id": "eurostat-population-2023",
+ "source": {
+  "publisher": "Eurostat",
+  "title": "Population on 1 January by age and sex (demo_pjan)",
+  "url": "https://ec.europa.eu/eurostat/databrowser/view/demo_pjan/default/table",
+  "table": "demo_pjan, sex T, age TOTAL, 2023",
+  "licence": "Eurostat copyright notice: free reuse with acknowledgement of the source (Commission Decision 2011/833/EU), https://ec.europa.eu/eurostat/help/copyright-notice"
+ },
+ "retrieved": "2026-10-21",
+ "rows": [
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 447695350,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023",
+   "note": "Eurostat flags this value as: break in time series, estimated, provisional."
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 11742796,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 6447710,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 10827529,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 5932654,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 83118501,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023",
+   "note": "Eurostat flags this value as: break in time series."
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 1365884,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 5271395,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 10401868,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 48085361,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 68277210,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023",
+   "note": "Eurostat flags this value as: provisional."
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 3850894,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 58997201,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 949084,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 1895239,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 2857279,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 660809,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9599744,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 542051,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 17811291,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 9104772,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 36753736,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023",
+   "note": "Eurostat flags this value as: estimated, provisional."
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 10516621,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 19055228,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023",
+   "note": "Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 2116972,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 5428792,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 5563970,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 10521556,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 387758,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "LI",
+    "name": "Liechtenstein"
+   },
+   "value": 39677,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 5488984,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 8815385,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 616695,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 2492278,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 1829954,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 3736357,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 2761785,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 6641197,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023",
+   "note": "Eurostat flags this value as: break in time series."
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 85279553,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "AM",
+    "name": "Armenia"
+   },
+   "value": 2977130,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  },
+  {
+   "item": "population_1jan",
+   "trade": "all",
+   "officialClass": "Population on 1 January, both sexes, all ages",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 10127145,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January 2023"
+  }
+ ]
+}

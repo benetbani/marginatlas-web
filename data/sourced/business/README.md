@@ -34,3 +34,32 @@ class. The class actually counted is always in `officialClass`, and a division-w
 Rules for using these rows on a page: a count compares only within one country, one register and one population source; a
 ranking draws only one harmonised source (Eurostat SBS, the UK beside it); the gross operating rate is never "profit"; every
 printed figure carries its own year.
+
+
+## Added for the industry page (/industries/restaurants, target v3 approved 2026-10-21)
+
+| file | what it holds | level | licence |
+|---|---|---|---|
+| `eurostat-sbs-section-i-2023.json` | Eurostat sbs_ovw_act 2023, the rest of NACE section I: 55.10 hotels, 55.20 holiday lets, 55.30 camping, 55.90 other accommodation, 56.21 event catering, 56.29 contract catering (canteens); the same six items and arithmetic as `eurostat-sbs-2023.json` (`scripts/industry_section_i.py`) | country, EU | Eurostat copyright notice |
+| `us-economic-census-2022-firms.json` | US 2022 Economic Census, firms by employment size (EC2200SIZEEMPFIRM), the national all-firms line for NAICS 7225, 722511, 722513, 722515, 812111: employer firms, sales a firm, paid employees a firm (`scripts/us_ec_firms.py`) | country | US federal work, public domain |
+| `eu-season-estimate-2025.json` | an ESTIMATE, rows marked `"estimate": true`: the EU's food and drink service sales each month of 2025 against the year's average month (100), worked out from `eurostat-sts-turnover-month.json` and `eurostat-sbs-2023.json` (`scripts/eu_season_estimate.py`) | EU | Eurostat copyright notice (its two inputs) |
+
+Reading rules for these files:
+- The trades next door rank only beside `eurostat-sbs-2023.json`'s 56.10 and 56.30 rows of the same year and geography (one survey).
+- The US rows count employer firms only, and their employees without the owners: never set beside a European "persons employed
+  per enterprise" as the same measure; a page says what the US counts. The US has no operating profit in this census.
+- How the EU's months are worked out (the method page's words): the EU publishes no monthly sales index for restaurants. Each
+  member's own index for food and drink service (not seasonally adjusted, 2021 = 100) is divided by its own average month of 2025,
+  so every country's twelve months read against 100. The countries are then averaged month by month, each weighted by its
+  restaurants' yearly sales (2023: the number of restaurants times their average sales). Ireland publishes no monthly index and is
+  left out; the 26 others hold 98.3% of the EU restaurants' sales. The index counts restaurants, cafes and bars together, because
+  no finer class is published each month. The page marks the result "Estimate".
+
+### How a trade makes its money (2026-10-21, his words: "where does the margin come from"; official figures only)
+
+| file | what it holds | level | licence |
+|---|---|---|---|
+| `eurostat-sbs-economics-2023.json` | Eurostat sbs_ovw_act 2023 for restaurants, beverage serving, hairdressing and beauty and the business economy: wage cost and value added an hour worked (published) and what the hour leaves (worked out); the year's sales, purchases, staff cost, operating surplus and investment a business (worked out from the survey's totals); employees and owners a business; full-time share; investment as a share of the surplus (`scripts/industry_economics.py`) | country, EU | Eurostat copyright notice |
+
+Reading rule: a worked-out row says how in its note; the surplus is before the owner's own pay, depreciation, interest and tax and
+is never called net profit (his /gb word for it: operating profit).

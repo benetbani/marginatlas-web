@@ -1120,6 +1120,16 @@ const GATES: Gate[] = [
   { name: "au-anchor-render", script: "scripts/verify_au_primary_anchor_render.ts" },
   { name: "layering", script: "scripts/verify_layering.ts" },
   { name: "section-order", script: "scripts/verify_section_order.ts" },
+  /* THE SOURCED-DATA LOADER (plan 2026-10-17 replicable pages, Task 4): sourcedRows, sourcedOne and sourcesFor on fixtures in the
+     contract shape (a row's own source overrides its file's, the latest year wins, a missing trade is null, a null value carries its
+     note), and the shape's judge red on a planted bad file. Red on a planted fault 2026-10-17 (sourcedOne taking the oldest year).
+     Copied from uk4-final on the industry port (2026-10-21), the loader brought file by file. */
+  { name: "sourced-loader", script: "src/lib/sourced/load.test.ts" },
+  /* THE SOURCED FILES HOLD THE CONTRACT (plan 2026-10-17 replicable pages, Task 4): every row under data/sourced/ has its source URL,
+     year, unit and geo level (a null its note), each file id once, and src/lib/sourced/files.ts imports exactly those files. Red
+     first 2026-10-17 on nothing read, on the planted file, and on a planted duplicate file (its id twice, the index stale).
+     Copied from uk4-final on the industry port (2026-10-21). */
+  { name: "sourced-data", script: "scripts/verify_sourced_data.ts" },
   { name: "cross-geography-guard", script: "scripts/verify_cross_geography_guard.ts" },
   { name: "page-sections", script: "scripts/verify_page_sections.ts" },
   { name: "bar-budget", script: "scripts/verify_bar_budget.ts" },

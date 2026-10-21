@@ -34,3 +34,13 @@ Reading rules a builder must keep:
 
 Licences: each file's `source.licence` says what was read. The BIS allows free use naming it, on condition that including the
 statistics in a commercial product adds no charge for its users.
+
+
+## Added for the industry page (2026-10-21)
+
+| File | Items | Source | Coverage |
+|---|---|---|---|
+| eurostat-population-2023.json | `population_1jan` | Eurostat demo_pjan, population on 1 January 2023, both sexes, all ages (`_scripts/eurostat_population.py`) | 2023, every country Eurostat publishes and the EU of 27 |
+
+Reading rule: `population_1jan` is the denominator of the industry page's restaurants for every 10,000 people (the 2023 enterprise
+count of `business/eurostat-sbs-2023.json` over it). A country office's own count stays `population` in `business/populations.json`.

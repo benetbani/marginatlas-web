@@ -1,0 +1,20 @@
+{
+  "id": "fixture-it-business",
+  "source": {
+    "publisher": "Eurostat",
+    "title": "Business demography by size class and NACE Rev. 2 activity (bd_size)",
+    "url": "https://ec.europa.eu/eurostat/databrowser/view/bd_size/default/table",
+    "licence": "Eurostat copyright notice: free reuse with acknowledgement of the source"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    { "item": "survival_1y", "trade": "restaurants", "officialClass": "NACE Rev. 2 I56 Food and beverage service activities", "geo": { "level": "country", "code": "IT", "name": "Italy" }, "value": 87.3, "unit": "%", "year": "2024" },
+    { "item": "survival_3y", "trade": "restaurants", "officialClass": "NACE Rev. 2 I56 Food and beverage service activities", "geo": { "level": "country", "code": "IT", "name": "Italy" }, "value": 62.6, "unit": "%", "year": "2024" },
+    { "item": "survival_5y", "trade": "restaurants", "officialClass": "NACE Rev. 2 I56 Food and beverage service activities", "geo": { "level": "country", "code": "IT", "name": "Italy" }, "value": 46.7, "unit": "%", "year": "2020",
+      "source": { "publisher": "Eurostat", "title": "Business demography by size class and NACE Rev. 2 activity, 2004-2020 (bd_9bd_sz_cl_r2)", "url": "https://ec.europa.eu/eurostat/databrowser/view/bd_9bd_sz_cl_r2/default/table" } },
+    { "item": "sales_per_business", "trade": "restaurants", "officialClass": "NACE Rev. 2 56.10", "geo": { "level": "country", "code": "IT", "name": "Italy" }, "value": 332000, "unit": "EUR", "year": "2023",
+      "source": { "publisher": "Eurostat", "title": "Enterprises by detailed NACE Rev. 2 activity and special aggregates (sbs_ovw_act)", "url": "https://ec.europa.eu/eurostat/databrowser/view/sbs_ovw_act/default/table" } },
+    { "item": "minimum_wage", "geo": { "level": "country", "code": "IT", "name": "Italy" }, "value": null, "unit": "EUR", "year": "2026", "note": "Italy sets no statutory minimum wage: pay floors come from national collective agreements.",
+      "source": { "publisher": "Eurostat", "title": "Monthly minimum wages, bi-annual data (earn_mw_cur): no value for Italy, which has no national minimum wage (series flag m)", "url": "https://ec.europa.eu/eurostat/databrowser/view/earn_mw_cur/default/table" } }
+  ]
+}

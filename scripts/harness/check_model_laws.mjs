@@ -850,11 +850,17 @@ function inPage(ctx) {
      PART 4's WHO HOLDS NO 30 in the same plan (Task 8). By form, wherever the form stands. */
   const CONTENTS_BY_HIS_SPEC = ["department"];
   const FOCAL_EXEMPT_FORMS = new Set([...EVEN_BY_RULING, "note-list", ...KEPT_BY_HIS_RULING_31, ...CONTENTS_BY_HIS_SPEC]);
+  /* A KIT PAGE'S RUNGS (the industry page v4, his "Go" of 2026-10-21): the page draws the shared kit's sizes, a card's figure at 32 and the
+     page's answer at 48 (28 and 40 at 560 and under), which RULEBOOK Q1 keeps until he picks and which he approved on this page; so on a
+     render whose body is `data-composition="kit"` the zero case reads those rungs (src/lib/design-tokens.ts kit.type, held to kit.css by
+     the type-ladder gate). A kit card with no figure at its rung still reds. */
+  const KIT_PAGE = !!document.querySelector('[data-composition="kit"]');
+  const [FOCAL_RUNG, ANSWER_RUNG] = KIT_PAGE ? (innerWidth <= 560 ? [28, 40] : [32, 48]) : [30, 40];
   for (const block of topBlocks) {
     if (!block.getClientRects().length || FOCAL_EXEMPT_FORMS.has(formOf(block))) continue;
     const sizes = sizesOf(block);
-    const at30 = sizes.filter((s) => Math.abs(s - 30) < 0.5).length;
-    const at40 = sizes.filter((s) => Math.abs(s - 40) < 0.5).length;
+    const at30 = sizes.filter((s) => Math.abs(s - FOCAL_RUNG) < 0.5).length;
+    const at40 = sizes.filter((s) => Math.abs(s - ANSWER_RUNG) < 0.5).length;
     if (at30 > 0) any30 = true;
     if (at30 === 0 && at40 === 0) push(idOfCard(block), "FOCAL", "no focal figure at 30 in this card (PART 4: every section card takes exactly one)");
   }

@@ -96,6 +96,8 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineIndustryBody } from "@/components/spine/industry/industry-view";
 import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
+import { buildIndustryV4 } from "@/lib/spine/industry_v4";
+import { SpineIndustryV4Body } from "@/components/spine/industry/sourced-view";
 import { robotsFor } from "@/lib/seo/indexable";
 import { industryCanonicalPath } from "@/lib/seo/alias_canonical";
 
@@ -189,6 +191,17 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // never the bundled illustrative seed. A slug that resolves to no industry falls
   // through to notFound(), matching the non-spine page. Flag OFF path untouched.
   if (isSpineReformEnabledFor("industry")) {
+    /* THE INDUSTRY PAGE v4 (his "Go" of 2026-10-21, FOUNDER-VERDICTS "The industry page (/industries/restaurants) v4 approved"): a trade
+       whose every v4 section fills from data/sourced/ draws v4 (src/lib/spine/industry_v4.ts says which: restaurants today); every other
+       trade draws the September spine below, unchanged. The harness (scripts/harness/render_page.tsx) asks the same question. */
+    const v4 = buildIndustryV4(industry);
+    if (v4) {
+      return (
+        <SpineShell>
+          <SpineIndustryV4Body v={v4} path={`/industries/${industry.toLowerCase()}`} />
+        </SpineShell>
+      );
+    }
     const spineData = await buildSpineIndustrySeed(industry);
     if (!spineData) notFound();
     return (

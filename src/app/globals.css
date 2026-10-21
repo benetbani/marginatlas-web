@@ -2988,3 +2988,290 @@ main :where(p, li, blockquote, dd) {
 [data-card] :is(a[href], button:not(:disabled), summary, label[for]):active {
   opacity: 0.7;
 }
+
+/* =============================================================================
+   THE KIT PAGE: the industry page v4 (his "Go" of 2026-10-21, FOUNDER-VERDICTS "The industry page (/industries/restaurants) v4
+   approved"), drawn by src/components/spine/industry/sourced-view.tsx. The rules are sheets/kit/kit.css (KIT-VERSION 2) and the
+   target builder's extra CSS (sheets/industry/v4/src/build_industry_v4.py, EXTRA_CSS), section for section, scoped under `.kit4`
+   and every class prefixed `k-` so the site's own `.fig`, `.note` or `.sub` never reach in. Colours and type sizes are the CSS
+   variables the root sets from src/lib/design-tokens.ts `kit` (`kitCssVars`): no hex and no type size is typed below. Distances
+   are the kit's own (its 28 card padding, its 20 gap), which DISTANCES' ladder does not hold: the target he approved draws them.
+   ============================================================================= */
+.kit4 { --k-f-text: var(--font-sans), ui-sans-serif, system-ui, sans-serif; --k-f-fig: var(--font-num); color: var(--k-ink); font-family: var(--k-f-text); font-size: var(--k-t-body); line-height: 1.55; }
+.kit4 p, .kit4 dd, .kit4 dt, .kit4 li { text-wrap: pretty; }
+.kit4 a { color: inherit; }
+.kit4 :focus-visible { outline: 2px solid var(--k-ink); outline-offset: 3px; border-radius: 6px; }
+.kit4 h1, .kit4 h2, .kit4 h3, .kit4 p { margin: 0; }
+/* every printed figure in tabular numerals (art direction F1: figures that stack line up) */
+.kit4 [data-src], .kit4 [data-src] *, .kit4 .k-kt i, .kit4 .k-vm { font-variant-numeric: tabular-nums; }
+.kit4 .k-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* the money pair: local first, its dollars in parentheses; the switch (data-cur="usd" on the root) puts dollars first */
+.kit4 .k-m { display: inline-flex; align-items: baseline; flex-wrap: wrap; column-gap: .3em; white-space: nowrap; }
+.kit4 .k-m .k-s, .kit4[data-cur="usd"] .k-m .k-p { color: var(--k-muted); font-weight: 400; font-size: max(var(--k-t-small), .72em); font-family: var(--k-f-text); letter-spacing: 0; }
+.kit4 .k-m .k-s::before, .kit4[data-cur="usd"] .k-m .k-p::before { content: "("; }
+.kit4 .k-m .k-s::after, .kit4[data-cur="usd"] .k-m .k-p::after { content: ")"; }
+.kit4[data-cur="usd"] .k-m { flex-direction: row-reverse; justify-content: flex-end; }
+.kit4[data-cur="usd"] .k-m .k-s { color: inherit; font-weight: inherit; font-size: inherit; font-family: inherit; letter-spacing: inherit; }
+.kit4[data-cur="usd"] .k-m .k-s::before, .kit4[data-cur="usd"] .k-m .k-s::after { content: none; }
+.kit4 .k-switch { display: inline-flex; border: 1px solid var(--k-n4); border-radius: 12px; padding: 3px; gap: 2px; flex: none; }
+.kit4 .k-switch button { width: 44px; height: 44px; border: 0; background: transparent; border-radius: 9px; font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-text); color: var(--k-ink2); cursor: pointer; }
+.kit4 .k-switch button[aria-pressed="true"] { background: var(--k-ink); color: var(--k-white); }
+
+/* chapters: a muted number and one plain title; the bands alternate white and the tint, each running the full width */
+.kit4 .k-chapter { position: relative; padding-block: 80px; background: var(--k-white); box-shadow: 0 0 0 100vmax var(--k-white); clip-path: inset(0 -100vmax); }
+.kit4 .k-chapter.k-tint { background: var(--k-paper); box-shadow: 0 0 0 100vmax var(--k-paper); }
+.kit4 .k-chead { display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; }
+.kit4 .k-num { font-weight: 600; font-size: var(--k-t-small); line-height: 1.3; color: var(--k-muted); font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.kit4 .k-chead h2 { font-weight: 600; font-size: var(--k-t-head); line-height: 1.3; color: var(--k-ink); letter-spacing: -0.005em; }
+.kit4 .k-pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--k-gap); align-items: stretch; }
+.kit4 .k-pair.k-w75 { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.kit4 .k-pair.k-w57 { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.kit4 .k-pair.k-next { margin-top: var(--k-gap); }
+/* a pair whose fold the reader opened lets its other card keep its own height, so no blank grows inside it under the fold's rows */
+.kit4 .k-pair:has(details[open]) { align-items: start; }
+
+/* the hero: a bright photograph, the name on a white plate, the answer on a white card; as tall as its photograph */
+.kit4 .k-hero { position: relative; }
+.kit4 .k-pano { position: absolute; top: 0; left: 50%; width: 100vw; margin-left: -50vw; height: 700px; overflow: hidden; background: var(--k-paper2); }
+.kit4 .k-pano img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 90%; }
+.kit4 .k-hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: 40px; padding-top: 52px; padding-bottom: 72px; min-height: 700px; box-sizing: border-box; }
+.kit4 .k-title-plate { position: absolute; left: 0; top: 656px; transform: translateY(-100%); background: var(--k-white); border-radius: var(--k-r-title); padding: 20px 28px 22px; box-shadow: 0 18px 40px -26px var(--k-shadow); max-width: 460px; }
+.kit4 .k-crumb { display: flex; align-items: center; gap: 10px; font-size: var(--k-t-text); font-weight: 600; color: var(--k-ink2); }
+.kit4 .k-title-plate h1 { font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-h1); line-height: 1; letter-spacing: -0.035em; margin: 8px 0 8px; }
+.kit4 .k-lede { font-size: var(--k-t-lede); color: var(--k-ink2); }
+.kit4 .k-fig-card { grid-column: 2; align-self: start; background: var(--k-white); border-radius: var(--k-r-hero); padding: 26px 26px 18px; box-shadow: 0 24px 48px -30px var(--k-shadow); }
+.kit4 .k-answer { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.kit4 .k-answer > div { flex: 1 1 auto; min-width: 0; }
+.kit4 .k-al { font-size: var(--k-t-text); font-weight: 600; color: var(--k-ink2); }
+.kit4 .k-av { margin: 2px 0 2px; font-size: var(--k-t-body); color: var(--k-ink2); }
+.kit4 .k-av { display: flex; align-items: baseline; flex-wrap: wrap; column-gap: .3em; }
+.kit4 .k-av .k-avu { flex: 1 1 auto; }
+.kit4 .k-av .k-big { font-family: var(--k-f-fig); font-size: var(--k-t-answer); font-weight: 600; letter-spacing: -0.02em; color: var(--k-terra); line-height: 1.05; }
+.kit4 .k-as { font-size: var(--k-t-small); color: var(--k-muted); }
+/* the kit's lines run their card's width, as the target draws them (the site's prose measure, main :where(p, dd), held the notes and
+   the answer to half a wide card at 768 and left the other half blank, the page filter's WHITE SPACE) */
+.kit4 p, .kit4 dd, .kit4 li { max-width: none; }
+/* ... save the card's sentences, held to the reading measure (the readability gate's 78 characters a line; the site's 68ch) */
+.kit4 .k-ask, .kit4 .k-note, .kit4 .k-key, .kit4 .k-fig .k-unit, .kit4 .k-as { max-width: 32em; }
+.kit4 .k-foot2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 32px; align-items: start; }
+@media (max-width: 640px) { .kit4 .k-foot2 { grid-template-columns: minmax(0, 1fr); } }
+.kit4 .k-cells { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.kit4 .k-cell { background: var(--k-paper); border-radius: 12px; padding: 12px 14px 13px; min-width: 0; }
+.kit4 .k-cl { display: flex; align-items: center; gap: 8px; font-size: var(--k-t-text); font-weight: 600; color: var(--k-ink); }
+.kit4 .k-cl svg { width: 22px; height: 22px; flex: none; color: var(--k-ink); }
+.kit4 .k-cl > span { flex: 1 1 auto; min-width: 0; }
+.kit4 .k-cv { font-family: var(--k-f-fig); font-size: var(--k-t-cell); font-weight: 600; letter-spacing: -0.01em; margin-top: 6px; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.kit4 .k-cv { display: flex; align-items: baseline; }
+.kit4 .k-cv > :last-child { flex: 1 1 auto; min-width: 0; }
+.kit4 .k-cv .k-cn { margin-left: 8px; font-family: var(--k-f-text); font-weight: 500; font-size: var(--k-t-text); line-height: 1; color: var(--k-ink2); letter-spacing: 0; }
+.kit4 .k-cap { margin-top: 14px; font-size: var(--k-t-small); color: var(--k-muted); display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; }
+.kit4 .k-cap a { color: var(--k-ink); font-weight: 600; text-underline-offset: 3px; min-height: 44px; display: inline-flex; align-items: center; }
+
+/* the card: a title, the question, the figure, one drawing, at most one fold, a caption */
+.kit4 .k-sub { background: var(--k-white); border-radius: var(--k-r-card); padding: var(--k-pad); display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.kit4 .k-chapter:not(.k-tint) .k-sub { background: var(--k-paper); }
+.kit4 .k-sub.k-wide { gap: 14px; }
+/* THE LINE RULE (DISTANCES 4, the site's ruled distances, which the kit's 6 and 18 predate): a figure's own words 8 under it (above),
+   and the group under the figure's block 24 below it: the card's 18 gap and 6 more. */
+.kit4 .k-sub > .k-fig + * { margin-top: 6px; }
+/* The site's card surface (.spine-card, which the page gates find a section by) carries a shadow the kit's cards do not. */
+.kit4 .k-sub.spine-card { box-shadow: none; }
+.kit4 .k-sub header h3 { font-weight: 600; font-size: var(--k-t-head); line-height: 1.25; letter-spacing: -0.005em; }
+.kit4 .k-sub .k-ask { margin-top: 6px; font-size: var(--k-t-text); color: var(--k-muted); }
+.kit4 .k-etag { display: inline-block; vertical-align: 2px; margin-left: 8px; font-weight: 600; font-size: var(--k-t-small); color: var(--k-ink2); background: var(--k-paper2); border-radius: 99px; padding: 1px 10px; white-space: nowrap; }
+.kit4 .k-fig { font-family: var(--k-f-fig); font-size: var(--k-t-fig); font-weight: 600; letter-spacing: -0.015em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.kit4 .k-fig > .k-m .k-s, .kit4[data-cur="usd"] .k-fig > .k-m .k-p { font-size: var(--k-t-fig2); }
+.kit4[data-cur="usd"] .k-fig > .k-m .k-s { font-size: inherit; }
+.kit4 .k-fig .k-unit { display: block; margin-top: 8px; font-family: var(--k-f-text); font-size: var(--k-t-text); font-weight: 400; color: var(--k-ink2); letter-spacing: 0; line-height: 1.45; }
+.kit4 .k-fig .k-unit .k-m { white-space: nowrap; }
+/* a figure followed by its words takes its whole line (it does already: the words are a block), so the line reads as drawn */
+.kit4 .k-fig > [data-src]:has(+ .k-unit) { display: block; }
+.kit4 .k-caption { margin-top: auto; padding-top: 4px; font-size: var(--k-t-small); color: var(--k-muted); }
+.kit4 .k-note { font-size: var(--k-t-small); color: var(--k-muted); }
+.kit4 .k-note .k-line, .kit4 .k-unit .k-line { display: block; }
+.kit4 .k-note a { min-height: 44px; display: inline-flex; align-items: center; text-underline-offset: 3px; }
+.kit4 .k-sub header.k-hsw { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+
+/* rows: the value beside its label, never across the card */
+.kit4 dl.k-kv { margin: 0; display: grid; gap: 2px; }
+.kit4 .k-kv > div { display: grid; grid-template-columns: minmax(0, 22ch) auto 1fr; column-gap: 20px; align-items: baseline; padding: 7px 0; }
+.kit4 .k-kv dt { font-size: var(--k-t-text); color: var(--k-ink2); }
+.kit4 .k-kv dt { display: flex; align-items: baseline; }
+.kit4 .k-kv dt > span { flex: 1 1 auto; min-width: 0; }
+/* the value in the column after its label, its box running to the card's edge (the kit's empty third column, given to the value) */
+.kit4 .k-kv dd { grid-column: 2 / -1; max-width: none; }
+.kit4 .k-kv dd > [data-src] { display: block; }
+.kit4 .k-kv dd { margin: 0; font-family: var(--k-f-fig); font-size: var(--k-t-money); font-weight: 600; font-variant-numeric: tabular-nums; }
+.kit4 .k-kv .k-k { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
+.kit4 .k-kv.k-year > div:last-child dt, .kit4 .k-kv.k-year > div:last-child dd { color: var(--k-ink); font-weight: 700; }
+
+/* the fold: one a card at most, closed on arrival */
+.kit4 details.k-fold { border-radius: 12px; background: var(--k-paper); }
+.kit4 .k-chapter:not(.k-tint) details.k-fold { background: var(--k-white); }
+.kit4 .k-fold summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; padding: 0 16px; font-size: var(--k-t-text); font-weight: 600; cursor: pointer; }
+.kit4 .k-fold summary::-webkit-details-marker { display: none; }
+.kit4 .k-fold summary svg { width: 18px; height: 18px; flex: none; transition: transform .2s ease; }
+.kit4 .k-fold[open] summary svg { transform: rotate(45deg); }
+.kit4 .k-fold-in { padding: 0 16px 14px; display: grid; gap: 8px; }
+.kit4 .k-def { margin: 0 0 10px; font-size: var(--k-t-text); color: var(--k-ink2); }
+.kit4 .k-def b { display: block; color: var(--k-ink); font-weight: 600; }
+
+/* the comparison table (each column's best in terracotta with a tick) and the small table of the forms */
+.kit4 table.k-peers { width: 100%; border-collapse: collapse; }
+.kit4 .k-peers th, .kit4 .k-peers td { padding: 14px 10px; border-bottom: 1px solid var(--k-line); text-align: right; vertical-align: top; }
+.kit4 .k-peers thead th { font-size: var(--k-t-small); font-weight: 600; color: var(--k-ink); vertical-align: bottom; }
+.kit4 .k-peers thead th small { display: block; font-size: var(--k-t-small); font-weight: 400; color: var(--k-muted); }
+.kit4 .k-peers thead th:first-child, .kit4 .k-peers tbody th { text-align: left; padding-left: 0; }
+.kit4 .k-peers tbody th { font-size: var(--k-t-body); font-weight: 600; }
+.kit4 .k-peers td { font-family: var(--k-f-fig); font-size: var(--k-t-body); font-weight: 500; font-variant-numeric: tabular-nums; }
+.kit4 .k-peers td .k-m { flex-direction: column; align-items: flex-end; row-gap: 0; }
+.kit4[data-cur="usd"] .k-peers td .k-m { flex-direction: column-reverse; }
+.kit4 .k-peers td.k-win { color: var(--k-terra); font-weight: 700; }
+.kit4 .k-peers td.k-none { color: var(--k-faint); }
+.kit4 .k-peers td .k-usd { font-family: var(--k-f-fig); }
+.kit4 .k-tk { width: 14px; height: 14px; margin-right: 4px; vertical-align: -1px; color: var(--k-terra); flex: none; }
+.kit4 .k-peers td .k-v { display: inline-flex; align-items: baseline; justify-content: flex-end; gap: 2px; }
+.kit4 .k-key { display: flex; gap: 8px; align-items: baseline; font-size: var(--k-t-small); color: var(--k-ink2); }
+.kit4 table.k-forms { width: 100%; border-collapse: collapse; }
+.kit4 .k-forms th, .kit4 .k-forms td { padding: 13px 8px; border-bottom: 1px solid var(--k-line); text-align: right; vertical-align: top; font-size: var(--k-t-text); }
+.kit4 .k-forms thead th { font-size: var(--k-t-small); font-weight: 600; color: var(--k-muted); vertical-align: bottom; }
+.kit4 .k-forms th[scope="row"], .kit4 .k-forms thead th:first-child { text-align: left; padding-left: 0; }
+.kit4 .k-forms th[scope="row"] { font-weight: 600; color: var(--k-ink); }
+.kit4 .k-forms td { font-family: var(--k-f-fig); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* the drawings, one of each kind (data-kind on the drawing's own element) */
+.kit4 .k-akey { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: var(--k-t-small); color: var(--k-ink2); }
+.kit4 .k-akey i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+/* kind "part-bar": two bars of 100, operating profit in terracotta (his FV 1665, 1919) */
+.kit4 .k-kbars { display: grid; gap: 16px; }
+.kit4 .k-kn { margin: 0 0 6px; display: flex; justify-content: space-between; gap: 12px; font-size: var(--k-t-text); font-weight: 600; }
+.kit4 .k-kn b { font-family: var(--k-f-fig); }
+.kit4 .k-kn > span { flex: 1 1 auto; min-width: 0; }
+.kit4 .k-kt { display: flex; gap: 2px; height: 32px; border-radius: 8px; overflow: hidden; background: var(--k-paper2); }
+.kit4 .k-kt span { display: flex; align-items: center; padding-left: 8px; overflow: hidden; }
+.kit4 .k-kt i { flex: 1 1 auto; min-width: 0; font-style: normal; font-size: var(--k-t-small); font-weight: 600; white-space: nowrap; }
+.kit4 .k-kp { background: var(--k-n3); color: var(--k-ink); } .kit4 .k-ks { background: var(--k-ink2); color: var(--k-white); } .kit4 .k-kk { background: var(--k-terra); }
+/* kind "month-columns": twelve slim columns, the loud section's season in the page's colour, no month featured */
+.kit4 .k-vchart { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); height: 220px; gap: 4px; }
+.kit4 .k-vcol { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.kit4 .k-vb { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+.kit4 .k-vb b { display: block; width: 16px; border-radius: 4px 4px 0 0; background: var(--k-terra); }
+.kit4 .k-vm { font-size: var(--k-t-small); color: var(--k-muted); line-height: 1; }
+/* kind "ranked-bars": five trades on one scale, all businesses marked, the trade in ink */
+.kit4 .k-tbars { position: relative; display: grid; gap: 16px; }
+.kit4 .k-tb { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; font-size: var(--k-t-text); color: var(--k-ink2); }
+.kit4 .k-tb .k-tr { grid-column: 1 / -1; height: 12px; border-radius: 99px; background: var(--k-white); position: relative; }
+.kit4 .k-tb .k-tr b { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--k-n4); }
+.kit4 .k-tb .k-tr .k-mk { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--k-ink); border-radius: 1px; }
+.kit4 .k-tb .k-tv { font-family: var(--k-f-fig); font-weight: 600; color: var(--k-ink); text-align: right; font-variant-numeric: tabular-nums; }
+.kit4 .k-tb.k-me .k-tr b { background: var(--k-ink); }
+.kit4 .k-tb.k-me .k-tn { color: var(--k-ink); font-weight: 600; }
+.kit4 .k-mkkey { font-size: var(--k-t-small); color: var(--k-ink2); display: flex; align-items: center; gap: 8px; }
+.kit4 .k-mkkey i { width: 2px; height: 16px; background: var(--k-ink); border-radius: 1px; display: inline-block; }
+/* kind "range-strip": an hour's cost and what it adds on one rail (the strip 60, rail 8, marks 16) */
+.kit4 .k-hstrip { position: relative; height: 60px; margin: 4px 8px 0; }
+.kit4 .k-hr { position: absolute; left: 0; right: 0; top: 26px; height: 8px; border-radius: 99px; background: var(--k-n3); }
+.kit4 .k-hgap { position: absolute; top: 26px; height: 8px; background: var(--k-ink); }
+.kit4 .k-hm { position: absolute; top: 22px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--k-white); box-shadow: inset 0 0 0 3px var(--k-ink2); }
+.kit4 .k-hm.k-v { background: var(--k-ink); box-shadow: none; }
+.kit4 .k-hl { position: absolute; transform: translateX(-100%); width: max-content; white-space: nowrap; font-size: var(--k-t-small); line-height: 20px; color: var(--k-ink2); }
+.kit4 .k-hl.k-up { top: 0; } .kit4 .k-hl.k-dn { top: 40px; }
+.kit4 .k-hl .k-m { flex-wrap: nowrap; font-family: var(--k-f-fig); font-weight: 600; color: var(--k-ink); }
+/* the density's level, a word in ink beside its figure; the pill raises the figure's line box, so its words come 5 nearer (8 seen) */
+.kit4 .k-fig:has(.k-lvl) .k-unit { margin-top: 3px; }
+.kit4 .k-fig .k-lvl { display: inline-block; vertical-align: 6px; margin-left: 10px; padding: 2px 12px; border-radius: 99px; background: var(--k-paper2); font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-small); line-height: 1.5; color: var(--k-ink); letter-spacing: 0; }
+/* the band of three: the months, the density, who makes the sales */
+.kit4 .k-cluster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--k-gap); align-items: stretch; }
+.kit4 .k-cluster .k-drow .k-kv > div { padding: 4px 0; }
+/* rows in the band of three's narrow cards: the label, then the value at the row's end, as the target draws them there */
+.kit4 .k-cluster .k-kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+.kit4 .k-cluster .k-kv dd { grid-column: auto; text-align: right; }
+.kit4 .k-drow { display: grid; gap: 18px; }
+/* the donut centred in its card (the target draws it at the card's left; centred, no blank stands beside it, the page filter's WHITE SPACE) */
+.kit4 .k-dnut { width: 144px; height: 144px; display: block; justify-self: center; }
+
+/* the exit: three doors and the source line */
+.kit4 .k-doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--k-gap); }
+.kit4 .k-door { position: relative; display: flex; flex-direction: column; gap: 6px; min-height: 176px; padding: 24px 24px 64px; border-radius: var(--k-r-card); text-decoration: none; background: var(--k-paper); }
+.kit4 .k-dk { font-size: var(--k-t-small); font-weight: 600; color: var(--k-muted); }
+.kit4 .k-door h3 { font-weight: 600; font-size: var(--k-t-door); line-height: 1.2; }
+.kit4 .k-door p { font-size: var(--k-t-text); color: var(--k-muted); }
+.kit4 .k-go-r { position: absolute; right: 20px; bottom: 20px; width: 44px; height: 44px; border: 1px solid var(--k-ink); background: var(--k-white); border-radius: 50%; display: grid; place-items: center; color: var(--k-ink); }
+.kit4 .k-go-r svg { width: 16px; height: 16px; }
+.kit4 .k-door.k-cmp { background: var(--k-ink); color: var(--k-white); }
+.kit4 .k-door.k-cmp p, .kit4 .k-door.k-cmp .k-dk { color: var(--k-white); opacity: .8; }
+.kit4 .k-srcline { display: flex; flex-wrap: wrap; gap: 4px 28px; align-items: center; margin-top: 28px; font-size: var(--k-t-small); color: var(--k-muted); }
+.kit4 .k-srcline a { color: var(--k-ink2); text-underline-offset: 3px; min-height: 44px; display: inline-flex; align-items: center; }
+
+/* widths: the kit's 1080, 1000, 960, 640 and 560 */
+@media (max-width: 1080px) { .kit4 .k-hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 480px); } }
+@media (max-width: 1000px) {
+  .kit4 .k-cluster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .kit4 .k-cluster > :nth-child(3) { grid-column: 1 / -1; }
+  /* the card across both halves in two columns of its own: its words on the left, the donut and its key on the right, so no sentence
+     runs over half the page (the page laws' clause 51) and no half of the card stands blank (the page filter's WHITE SPACE) */
+  .kit4 .k-cluster > :nth-child(3) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-content: start; }
+  .kit4 .k-cluster > :nth-child(3) > * { grid-column: 1; }
+  .kit4 .k-cluster > :nth-child(3) > .k-drow { grid-column: 2; grid-row: 1 / span 4; }
+}
+@media (max-width: 960px) {
+  /* a wide card's lines under half the page (the page laws' clause 51) */
+  .kit4 .k-wide .k-ask, .kit4 .k-as { max-width: 340px; }
+  /* the hero's answer card at the kit's desktop width on a tablet, so its short lines do not leave half a wide card blank */
+  .kit4 .k-fig-card { max-width: 560px; }
+  /* rows in a half: the label, then the value at the row's end (the kit's phone rows), so no value runs past a narrow card */
+  .kit4 .k-kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+  .kit4 .k-kv dd { grid-column: auto; text-align: right; }
+  .kit4 .k-pano { position: relative; height: 300px; }
+  .kit4 .k-hero-grid { display: block; padding-top: 0; padding-bottom: 48px; min-height: 0; }
+  .kit4 .k-title-plate { position: relative; left: auto; top: auto; transform: none; margin-top: -56px; max-width: none; padding: 18px 20px 20px; }
+  .kit4 .k-title-plate h1 { font-size: var(--k-t-h1-md); }
+  .kit4 .k-fig-card { margin-top: 16px; padding: 20px 18px 14px; }
+  /* THE TABLET IN HALVES (the site's band rule, zones.tsx, "side by side from 768, in equal halves there"; his words of 2026-10-20 on
+     "a huge white space" in sections): the kit stacks each pair under 960, which left every card's right half blank at 768, the page
+     filter's WHITE SPACE. From 641 to 960 each pair stands in two halves and the band of three as two over one; one column under 641. */
+  .kit4 .k-pair, .kit4 .k-pair.k-w75, .kit4 .k-pair.k-w57 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .kit4 .k-doors { grid-template-columns: minmax(0, 1fr); }
+  .kit4 .k-chapter { padding-block: 56px; }
+  .kit4 .k-peers th, .kit4 .k-peers td { padding: 12px 6px; }
+}
+@media (max-width: 640px) {
+  .kit4 .k-pair, .kit4 .k-pair.k-w75, .kit4 .k-pair.k-w57, .kit4 .k-cluster { grid-template-columns: minmax(0, 1fr); }
+  .kit4 .k-cluster > :nth-child(3) { display: flex; }
+  /* the donut centred in its card on a phone, so no blank stands beside it */
+  .kit4 .k-dnut { justify-self: center; }
+  /* the comparison table becomes one block a row: no sideways scroll */
+  .kit4 table.k-peers, .kit4 .k-peers tbody, .kit4 .k-peers tr, .kit4 .k-peers th, .kit4 .k-peers td { display: block; }
+  .kit4 .k-peers thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .kit4 .k-peers tr { background: var(--k-paper); border-radius: 12px; padding: 14px 16px 6px; margin-bottom: 12px; }
+  .kit4 .k-chapter:not(.k-tint) .k-peers tr { background: var(--k-white); }
+  .kit4 .k-peers tbody th { font-size: var(--k-t-lede); padding: 0 0 6px; border: 0; }
+  .kit4 .k-peers td { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; text-align: right; }
+  .kit4 .k-peers td:last-child { border-bottom: 0; }
+  .kit4 .k-peers td::before { content: attr(data-l); text-align: left; font-family: var(--k-f-text); font-size: var(--k-t-small); font-weight: 400; color: var(--k-ink2); }
+  .kit4 .k-peers td .k-m { flex-direction: row; }
+  .kit4[data-cur="usd"] .k-peers td .k-m { flex-direction: row-reverse; }
+}
+@media (max-width: 560px) {
+  .kit4 { --k-pad: var(--k-pad-sm); }
+  .kit4 .k-av .k-big { font-size: var(--k-t-answer-sm); }
+  .kit4 .k-cells { gap: 8px; grid-template-columns: minmax(0, 1fr); }
+  .kit4 .k-cell { padding: 10px 11px 11px; }
+  .kit4 .k-cl { font-size: var(--k-t-small); flex-direction: column; align-items: flex-start; gap: 6px; } .kit4 .k-cl svg { width: 20px; height: 20px; }
+  .kit4 .k-fig-card { padding: 18px 14px 12px; }
+  .kit4 .k-cv { font-size: var(--k-t-cell-sm); }
+  .kit4 .k-fig { font-size: var(--k-t-fig-sm); }
+  .kit4 .k-vb b { width: 12px; }
+  .kit4 .k-kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+  .kit4 .k-kv dd { text-align: right; }
+  .kit4 .k-sub header.k-hsw { flex-direction: column; }
+  .kit4 .k-forms thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .kit4 .k-forms, .kit4 .k-forms tbody, .kit4 .k-forms tr, .kit4 .k-forms th, .kit4 .k-forms td { display: block; }
+  .kit4 .k-forms tr { padding: 10px 0; border-bottom: 1px solid var(--k-line); }
+  .kit4 .k-forms th, .kit4 .k-forms td { border: 0; padding: 3px 0; }
+  .kit4 .k-forms th[scope="row"] { font-size: var(--k-t-body); padding-bottom: 6px; }
+  .kit4 .k-forms td { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; text-align: right; }
+  .kit4 .k-forms td::before { content: attr(data-l); font-family: var(--k-f-text); font-weight: 400; font-size: var(--k-t-small); color: var(--k-muted); text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { .kit4 .k-fold summary svg { transition: none; } }

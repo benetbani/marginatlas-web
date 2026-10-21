@@ -229,6 +229,7 @@ const collect = () => {
       w: Math.round(cb.width),
       h: Math.round(cb.height),
       prose,
+      kit: !!c.closest('[data-composition="kit"]'),
       inkPct: Math.min(100, Math.round((ink / inner) * 100)),
       accents,
       nestedBoxes,
@@ -573,13 +574,18 @@ const collect = () => {
     .filter(([, ys]) => ys.size > 1)
     .map(([t, ys]) => `"${t.slice(0, 36)}" at ${[...ys].sort((a, b) => a - b).join(", ")}`);
 
-  return { sections, pageAccents, frontRepeats, looseNumerals, zoneSplits, zoneStarts, levelGaps, pairGaps, keptPads, sameForAll, falseLegends, wideDomains };
+  /* A KIT PAGE (body `data-composition="kit"`): the industry page v4, drawn in the approved target's chapters and bands, not in zones. */
+  const kit = !!document.querySelector('[data-composition="kit"]');
+  return { sections, pageAccents, frontRepeats, looseNumerals, zoneSplits, zoneStarts, levelGaps, pairGaps, keptPads, sameForAll, falseLegends, wideDomains, kit };
 };
 
 const RULES = [
   /* E1's exemption is capped at ONE section per page, so it cannot be applied by
      the rule table, which sees one section at a time. It is applied below. */
-  { key: "prose", rule: "E1", why: "over 220 characters of prose", test: (s) => s.prose > 220 && !s.editorial, show: (s) => `${s.prose} chars` },
+  /* E1 on a kit page: not read. The industry page v4's cards carry the approved target's own sentences (his "Go" of 2026-10-21, after his
+     "openly discussed the raw reality ... where does the margin come from", FOUNDER-VERDICTS 2026-10-21): the question, the figure's words
+     and one note a card, 239 to 414 characters, which his word on the page sets over the 220 budget of 2026-08-25. `kit` is the card's page. */
+  { key: "prose", rule: "E1", why: "over 220 characters of prose", test: (s) => s.prose > 220 && !s.editorial && !s.kit, show: (s) => `${s.prose} chars` },
   { key: "ink", rule: "E2", why: "under 60% ink coverage", test: (s) => s.inkPct < 60, show: (s) => `${s.inkPct}% ink of ${s.h}px` },
   { key: "accents", rule: "C2", why: "more than two accent marks", test: (s) => s.accents > 2, show: (s) => `${s.accents} accents` },
   { key: "nested", rule: "A5", why: "a bordered box inside the card", test: (s) => s.nestedBoxes > 0, show: (s) => `${s.nestedBoxes} nested` },
@@ -620,8 +626,14 @@ function judge(result) {
   for (const x of [...new Set(result.sameForAll)]) lines.push(`  H3  ${x}`);
 
   /* D6 AND D3 ON THE ZONES, judged in node from what the page measured (scripts/lib/zone_rhythm.mjs). */
-  const ladder = zoneLadder(result);
-  const rhythm = zoneRhythm(result.zoneSplits, result.zoneStarts);
+  /* THE KIT PAGE IS EXEMPT FROM D3 AND D6, BY DESIGN AND WITH ITS REASON (the rule below: "a surface that draws no zone by design must be
+     exempted here, with its reason"): the industry page v4 lays out the approved target's chapters and bands (his "Go" of 2026-10-21,
+     FOUNDER-VERDICTS "The industry page (/industries/restaurants) v4 approved"; sheets/kit/kit.css: chapters 80 apart, pairs 20 apart,
+     cards padded 28, two pairs of halves in a row in chapter 01), which his word on the page sets over DISTANCES 2.5's rungs and the zone
+     rhythm. Every other rule of this gate reads it as any page. */
+  if (result.kit) lines.push("  D3  D6  not read: a kit page draws the approved target's chapters, not zones (his v4 Go)");
+  const ladder = result.kit ? [] : zoneLadder(result);
+  const rhythm = result.kit ? [] : zoneRhythm(result.zoneSplits, result.zoneStarts);
   counts.ladder = ladder.length;
   for (const l of ladder) lines.push(`  D6  ${l}`);
 
@@ -662,7 +674,7 @@ for (const m of missing) console.log(missingLine(RULE, m));
    of the baseline's write and its compare, so no baseline can absorb it and none can be written over it. EVERY RENDER THIS GATE READS IS A
    BAND PAGE (the nine surfaces of scripts/harness/pages.json each draw their levels with Zone: country, howto, city, cell, industry, hood,
    home, openings, calculator), so none is exempt; a surface that draws no zone by design must be exempted here, with its reason, when it joins that list. */
-const unread = pages.filter((p) => !p.result.zoneSplits.length);
+const unread = pages.filter((p) => !p.result.zoneSplits.length && !p.result.kit);
 if (unread.length) {
   for (const p of unread) console.log(`x ${RULE} ${p.path}: ${NO_ZONE_READ}`);
   process.exit(1);

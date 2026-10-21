@@ -1,0 +1,19 @@
+{
+  "id": "fixture-uk-business",
+  "source": {
+    "publisher": "ONS",
+    "title": "Non-financial business economy, UK (Annual Business Survey), Sections A to S, 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    { "item": "sales_per_business", "trade": "restaurants", "officialClass": "SIC 56.1 Restaurants and mobile food service activities", "geo": { "level": "country", "code": "GB", "name": "United Kingdom" }, "value": 528000, "unit": "GBP", "year": "2024", "measure": "turnover per enterprise" },
+    { "item": "business_count", "trade": "restaurants", "officialClass": "SIC 56101 Licensed restaurants", "geo": { "level": "region", "code": "E12000007", "name": "London" }, "value": 9560, "unit": "local units", "year": "2026-03",
+      "source": { "publisher": "ONS", "title": "UK Business Counts, local units (NM_141_1), via Nomis", "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_141_1" } },
+    { "item": "business_count", "trade": "restaurants", "officialClass": "SIC 56101 Licensed restaurants", "geo": { "level": "region", "code": "E12000007", "name": "London" }, "value": 7865, "unit": "enterprises", "year": "2026-03", "measure": "enterprises",
+      "source": { "publisher": "ONS", "title": "UK Business Counts, enterprises (NM_142_1), via Nomis", "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_142_1" } },
+    { "item": "survival_1y", "trade": "restaurants", "officialClass": "SIC 561", "geo": { "level": "country", "code": "GB", "name": "United Kingdom" }, "value": 94.0, "unit": "%", "year": "2024",
+      "source": { "publisher": "ONS", "title": "Business demography, UK: 2024", "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable" } }
+  ]
+}

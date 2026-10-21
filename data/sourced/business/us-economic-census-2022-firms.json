@@ -1,0 +1,238 @@
+{
+ "id": "us-economic-census-2022-firms",
+ "source": {
+  "publisher": "US Census Bureau",
+  "title": "2022 Economic Census: Selected Statistics by Employment Size of Firm (EC2200SIZEEMPFIRM)",
+  "url": "https://www2.census.gov/programs-surveys/economic-census/data/2022/sector00/EC2200SIZEEMPFIRM.zip",
+  "table": "EC2200SIZEEMPFIRM, the United States, all firms (employment size code 001)",
+  "licence": "US federal work, public domain"
+ },
+ "retrieved": "2026-10-21",
+ "rows": [
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2022 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 452314,
+   "unit": "employer firms",
+   "measure": "number of employer firms",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022."
+  },
+  {
+   "item": "sales_per_business",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2022 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 1768900,
+   "unit": "USD",
+   "measure": "mean sales, value of shipments or revenue per employer firm (receipts divided by firms), rounded to 100 USD",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: USD 800,120,264 thousand over 452,314 firms."
+  },
+  {
+   "item": "employees_per_business",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2022 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 24.3,
+   "unit": "paid employees per firm",
+   "measure": "mean paid employees per employer firm (employees divided by firms); owners not counted",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: 11,008,410 paid employees over 452,314 firms."
+  },
+  {
+   "item": "business_count",
+   "trade": "full_service_restaurants",
+   "officialClass": "NAICS 2022 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 224403,
+   "unit": "employer firms",
+   "measure": "number of employer firms",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022."
+  },
+  {
+   "item": "sales_per_business",
+   "trade": "full_service_restaurants",
+   "officialClass": "NAICS 2022 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 1661300,
+   "unit": "USD",
+   "measure": "mean sales, value of shipments or revenue per employer firm (receipts divided by firms), rounded to 100 USD",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: USD 372,803,601 thousand over 224,403 firms."
+  },
+  {
+   "item": "employees_per_business",
+   "trade": "full_service_restaurants",
+   "officialClass": "NAICS 2022 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 22.9,
+   "unit": "paid employees per firm",
+   "measure": "mean paid employees per employer firm (employees divided by firms); owners not counted",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: 5,146,760 paid employees over 224,403 firms."
+  },
+  {
+   "item": "business_count",
+   "trade": "limited_service_restaurants",
+   "officialClass": "NAICS 2022 722513: Limited-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 166733,
+   "unit": "employer firms",
+   "measure": "number of employer firms",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022."
+  },
+  {
+   "item": "sales_per_business",
+   "trade": "limited_service_restaurants",
+   "officialClass": "NAICS 2022 722513: Limited-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 2152300,
+   "unit": "USD",
+   "measure": "mean sales, value of shipments or revenue per employer firm (receipts divided by firms), rounded to 100 USD",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: USD 358,864,144 thousand over 166,733 firms."
+  },
+  {
+   "item": "employees_per_business",
+   "trade": "limited_service_restaurants",
+   "officialClass": "NAICS 2022 722513: Limited-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 28.8,
+   "unit": "paid employees per firm",
+   "measure": "mean paid employees per employer firm (employees divided by firms); owners not counted",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: 4,807,245 paid employees over 166,733 firms."
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS 2022 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 58462,
+   "unit": "employer firms",
+   "measure": "number of employer firms",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022."
+  },
+  {
+   "item": "sales_per_business",
+   "trade": "cafes",
+   "officialClass": "NAICS 2022 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 1073700,
+   "unit": "USD",
+   "measure": "mean sales, value of shipments or revenue per employer firm (receipts divided by firms), rounded to 100 USD",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: USD 62,769,408 thousand over 58,462 firms."
+  },
+  {
+   "item": "employees_per_business",
+   "trade": "cafes",
+   "officialClass": "NAICS 2022 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 16.8,
+   "unit": "paid employees per firm",
+   "measure": "mean paid employees per employer firm (employees divided by firms); owners not counted",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: 982,117 paid employees over 58,462 firms."
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2022 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 6370,
+   "unit": "employer firms",
+   "measure": "number of employer firms",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022."
+  },
+  {
+   "item": "sales_per_business",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2022 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 261100,
+   "unit": "USD",
+   "measure": "mean sales, value of shipments or revenue per employer firm (receipts divided by firms), rounded to 100 USD",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: USD 1,663,159 thousand over 6,370 firms."
+  },
+  {
+   "item": "employees_per_business",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2022 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "year": "2022",
+   "value": 4.3,
+   "unit": "paid employees per firm",
+   "measure": "mean paid employees per employer firm (employees divided by firms); owners not counted",
+   "note": "Employer firms only (a firm is all the establishments of one company), all firms of the class in 2022. Derived: 27,231 paid employees over 6,370 firms."
+  }
+ ]
+}

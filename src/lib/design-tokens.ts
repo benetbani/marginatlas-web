@@ -727,3 +727,65 @@ export const tailwindColors = {
      was read. */
   chart: colors.chart,
 } as const;
+
+// =============================================================
+// The shared kit's look (KIT-VERSION 2, 2026-10-21), for the pages ported from the approved targets
+// =============================================================
+
+/**
+ * THE KIT'S TOKENS: the values of `sheets/kit/kit.css` section 1 (the targets' shared stylesheet, KIT-VERSION 2), held here so a
+ * page ported from an approved target draws its look through the site's tokens and no component types a hex or a pixel (the
+ * brief I1, 2026-10-21: "where a token is missing, add it there"). First reader: the industry page v4 (his "Go" of 2026-10-21,
+ * FOUNDER-VERDICTS "The industry page (/industries/restaurants) v4 approved"), src/components/spine/industry/sourced-view.tsx, which
+ * sets them as CSS variables on its root (`kitCssVars`) for the rules in globals.css, THE KIT PAGE.
+ *
+ * THE TYPE SIZES ARE THE TARGET'S, NOT THE SITE'S LADDER, AND SAY WHY: RULEBOOK Q1 (the kit's own open question) keeps "the targets'
+ * sizes until he picks", and he approved v4 drawn at them (h1 72, the answer 48, a card's figure 32, a hero cell 25). The type-ladder
+ * gate (scripts/verify_type_ladder.ts) holds this list to kit.css's sizes and to the one root that reads them.
+ */
+export const kit = {
+  color: {
+    /* The site's one white (colors.white), never a second literal of it: the no-cream gate counts every #ffffff by its old name. */
+    white: colors.white,
+    paper: "#f5f5f6",
+    paper2: "#ececee",
+    ink: "#0d0d0e",
+    ink2: "#3f3f44",
+    muted: "#5f5f67",
+    dek: "#6b6b73",
+    faint: "#8c8c94",
+    line: "#e2e2e4",
+    n3: "#d6d6da",
+    n4: "#c4c4c9",
+    terra: "#c23a22",
+    /* The donut's four neutrals, largest first (the target's who_sells: ink, muted, n4's step, n3). */
+    donut2: "#a4a4ab",
+    /* Card and plate shadows, the target's: ink at 55% and 35%. */
+    shadow: "rgba(13,13,14,.55)",
+    shadowSoft: "rgba(13,13,14,.35)",
+  },
+  /* Type, px: the kit's every size, named by its job; `*Md` at 960 and under, `*Sm` at 560 and under. */
+  type: {
+    h1: "72px", h1Md: "56px",
+    answer: "48px", answerSm: "40px",
+    fig: "32px", figSm: "28px",
+    cell: "25px", cellSm: "21px",
+    head: "20px", door: "22px",
+    fig2: "19px", lede: "18px", money: "17px", body: "16px", text: "15px", small: "14px",
+  },
+  /* The card and the hero card at the site's one card radius, 12 (his "one card radius across the site", 2026-08-27 verdicts 2, 4 and 7;
+     DISTANCES 3.2; the radius-uniform gate), not the kit's 16 and 20, which he never ruled over it. The plates keep the kit's. */
+  radius: { card: "12px", plate: "12px", hero: "12px", title: "18px" },
+  space: { gap: "20px", pad: "28px", padSm: "20px" },
+} as const;
+
+/** The kit's tokens as the CSS variables globals.css's THE KIT PAGE reads (`--k-ink`, `--k-t-h1`, ...), for a page root's style. */
+export function kitCssVars(): Record<string, string> {
+  const out: Record<string, string> = {};
+  const kebab = (s: string) => s.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+  for (const [k, v] of Object.entries(kit.color)) out[`--k-${kebab(k)}`] = v;
+  for (const [k, v] of Object.entries(kit.type)) out[`--k-t-${kebab(k)}`] = v;
+  for (const [k, v] of Object.entries(kit.radius)) out[`--k-r-${kebab(k)}`] = v;
+  for (const [k, v] of Object.entries(kit.space)) out[`--k-${kebab(k)}`] = v;
+  return out;
+}
